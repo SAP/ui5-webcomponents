@@ -26,6 +26,7 @@ describe("Menu interaction", () => {
 
 		assert.strictEqual(await menuItems.length, 7, "There are proper count of menu items in the top level menu");
 		assert.strictEqual(await listItems.length, 7, "There are proper count of list items in the top level menu popover list");
+		assert.strictEqual(await listItems[0].getAttribute("additional-text"), await menuItems[0].getAttribute("additional-text"), "The first list item has proper additional text set");
 		assert.strictEqual(await listItems[1].getAttribute("disabled"), "true", "The second list item is disabled");
 		assert.strictEqual(await listItems[2].getAttribute("starts-section"), "", "The third list item has separator addded");
 		assert.ok(await listItems[3].$(".ui5-menu-item-icon-end"), "The third list item has sub-items and must have arrow right icon after the text");
@@ -118,5 +119,9 @@ describe("Menu Accessibility", () => {
 
 		assert.strictEqual(await list.getAttribute("accessible-role"), "menu", "There is proper 'menu' role for the menu list");
 		assert.strictEqual(await listItems[0].getAttribute("accessible-role"), "menuitem", "There is proper 'menuitem' role for the menu list items");
+		assert.strictEqual(
+			await listItems[0].getAttribute("accessible-name"),
+			"New File Opens a file explorer",
+			"There is additional description added");
 	});
 });

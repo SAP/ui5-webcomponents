@@ -16,6 +16,7 @@ class StaticAreaItem extends HTMLElement {
 		super();
 		this._rendered = false;
 		this.attachShadow({ mode: "open" });
+		this.pureTagName = "ui5-static-area-item";
 	}
 
 	/**
@@ -36,6 +37,7 @@ class StaticAreaItem extends HTMLElement {
 	 */
 	update() {
 		if (this._rendered) {
+			this.setAttribute(this.pureTagName, "");
 			this._updateContentDensity();
 			this._updateDirection();
 			updateShadowRoot(this.ownerElement, true);

@@ -72,9 +72,19 @@ describe("Table general interaction", () => {
 	it("tests row aria-label value", async () => {
 		const row = await browser.$("#roll-0").shadow$(".ui5-table-row-root");
 
-		const EXPECTED_TEXT = "Product Notebook Basic 15HT-1000 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR. 1 of 5";
+		const EXPECTED_TEXT = "Product Notebook Basic 15HT-1000 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR. 2 of 6";
 
 		assert.strictEqual(await row.getAttribute("aria-label"), EXPECTED_TEXT,
+			"The aria-label value is correct.");
+	});
+
+	it("tests header's row aria-label value", async () => {
+		const table = await browser.$("#tbl");
+		const tableHeader = await table.shadow$(".ui5-table-header-row");
+
+		const EXPECTED_TEXT = "Header Row 1 of 6 Product Supplier Dimensions Weight Price";
+
+		assert.strictEqual(await tableHeader.getAttribute("aria-label"), EXPECTED_TEXT,
 			"The aria-label value is correct.");
 	});
 

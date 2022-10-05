@@ -318,38 +318,38 @@
 	font-size: var(--sapFontSmallSize);
 }
 
-:host ::-webkit-scrollbar {
+:host :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 	border-top-right-radius: var(--sapField_BorderCornerRadius);
 	border-bottom-right-radius: var(--sapField_BorderCornerRadius);
 }
 
-:host([readonly]) ::-webkit-scrollbar {
+:host([readonly]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Error"]) ::-webkit-scrollbar {
+:host([value-state="Error"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_InvalidBackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Warning"]) ::-webkit-scrollbar {
+:host([value-state="Warning"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_WarningBackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Information"]) ::-webkit-scrollbar {
+:host([value-state="Information"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_InformationBackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([value-state="Success"]) ::-webkit-scrollbar {
+:host([value-state="Success"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_SuccessBackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 }
 
-:host([focused]) ::-webkit-scrollbar {
+:host([focused]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background-image: none;
 }

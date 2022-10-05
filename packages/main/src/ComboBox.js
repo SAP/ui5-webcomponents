@@ -43,7 +43,6 @@ import {
 	INPUT_SUGGESTIONS_TITLE,
 	SELECT_OPTIONS,
 	LIST_ITEM_POSITION,
-	LIST_ITEM_SELECTED,
 	LIST_ITEM_GROUP_HEADER,
 } from "./generated/i18n/i18n-defaults.js";
 
@@ -986,13 +985,12 @@ class ComboBox extends UI5Element {
 		const currentItem = this._filteredItems[indexOfItem];
 		const isGroupItem = currentItem && currentItem.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
-		const itemSelectionText = ComboBox.i18nBundle.getText(LIST_ITEM_SELECTED);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
 		if (isGroupItem) {
 			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite");
 		} else {
-			announce(`${itemPositionText} ${itemSelectionText}`, "Polite");
+			announce(`${itemPositionText}`, "Polite");
 		}
 	}
 

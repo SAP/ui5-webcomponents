@@ -32,7 +32,7 @@ const metadata = {
 		/**
 		* Defines whether the selection of a tree node is displayed as partially selected.
 		* <br><br>
-		* <b>Note:</b> The indeterminate state can be set only programatically and can’t be achieved by user
+		* <b>Note:</b> The indeterminate state can be set only programmatically and can’t be achieved by user
 		* interaction, meaning that the resulting visual state depends on the values of the <code>indeterminate</code>
 		* and <code>selected</code> properties:
 		* <ul>
@@ -111,6 +111,18 @@ const metadata = {
 		additionalTextState: {
 			type: ValueState,
 			defaultValue: ValueState.None,
+		},
+
+		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		accessibleName: {
+			type: String,
 		},
 
 		/**

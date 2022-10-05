@@ -33,10 +33,14 @@ const boot = async () => {
 		registerCurrentRuntime();
 
 		const OpenUI5Support = getFeature("OpenUI5Support");
+		const isOpenUI5Loaded = OpenUI5Support ? OpenUI5Support.isLoaded() : false;
 		const F6Navigation = getFeature("F6Navigation");
+
 		if (OpenUI5Support) {
 			await OpenUI5Support.init();
-		} else if (F6Navigation) {
+		}
+
+		if (F6Navigation && !isOpenUI5Loaded) {
 			F6Navigation.init();
 		}
 

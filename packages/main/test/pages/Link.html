@@ -2,12 +2,10 @@
 <html>
 
 <head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
 	<title>Playground</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
@@ -100,7 +98,7 @@
 
 	<section class="group">
 		<h2>Link opens a dialog</h2>
-		<ui5-link id="signInLink">Sign in</ui5-link>
+		<ui5-link accessible-role="button" id="signInLink">Sign in</ui5-link>
 		<ui5-dialog id="signInDialog" header-text="Sign in form">
 			<section class="login-form">
 				<div>
@@ -123,7 +121,7 @@
 
 	<section class="group">
 		<h2>Link with prevent default and modifiers</h2>
-		<ui5-link id="modifierLink">Link 1</ui5-link>
+		<ui5-link accessible-role="button" id="modifierLink">Link 1</ui5-link>
 		<span id="modifierResult"></span>
 	</section>
 

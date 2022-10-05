@@ -3,8 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
-
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
 
@@ -35,9 +35,9 @@ const metadata = {
 		 * <br>
 		 *
 		 * To browse all available icons, see the
-		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Icons</ui5-link>,
-		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">SAP Fiori Tools</ui5-link> and
-		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Business Suite</ui5-link> collections.
+		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Icons</ui5-link>,
+		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">SAP Fiori Tools</ui5-link> and
+		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Business Suite</ui5-link> collections.
 		 * <br>
 		 *
 		 * Example:
@@ -121,7 +121,7 @@ const metadata = {
 		 */
 		pathData: {
 			type: String,
-			noAttribute: true,
+			multiple: true,
 		},
 
 		/**
@@ -186,15 +186,15 @@ const metadata = {
  * <ul>
  * <li>
  * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons" class="api-table-content-cell-link">@ui5/webcomponents-icons</ui5-link> represents the "SAP-icons" collection and includes the following
- * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons" class="api-table-content-cell-link">icons</ui5-link>.
+ * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons" class="api-table-content-cell-link">icons</ui5-link>.
  * </li>
  * <li>
  * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt" class="api-table-content-cell-link">@ui5/webcomponents-icons-tnt</ui5-link> represents the "tnt" collection and includes the following
- * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">icons</ui5-link>.
+ * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">icons</ui5-link>.
  * </li>
  * <li>
  * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite" class="api-table-content-cell-link">@ui5/webcomponents-icons-icons-business-suite</ui5-link> represents the "business-suite" collection and includes the following
- * <ui5-link target="_blank" href="https://sapui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols" class="api-table-content-cell-link">icons</ui5-link>.
+ * <ui5-link target="_blank" href="https://ui5.sap.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols" class="api-table-content-cell-link">icons</ui5-link>.
  * </li>
  * </ul>
  *
@@ -354,9 +354,16 @@ class Icon extends UI5Element {
 			/* eslint-disable-next-line */
 			return console.warn("Icon name property is required", this);
 		}
+
 		let iconData = getIconDataSync(name);
 		if (!iconData) {
 			iconData = await getIconData(name);
+		}
+
+		this.viewBox = iconData.viewBox || "0 0 512 512";
+		if (iconData.customTemplate) {
+			iconData.pathData = [];
+			this.customSvg = executeTemplate(iconData.customTemplate, this);
 		}
 
 		if (iconData === ICON_NOT_FOUND) {
@@ -373,7 +380,7 @@ class Icon extends UI5Element {
 
 		// in case a new valid name is set, show the icon
 		this.invalid = false;
-		this.pathData = iconData.pathData;
+		this.pathData = Array.isArray(iconData.pathData) ? iconData.pathData : [iconData.pathData];
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;

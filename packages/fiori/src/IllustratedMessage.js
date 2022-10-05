@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -23,6 +24,19 @@ const metadata = {
 	languageAware: true,
 	managedSlots: true,
 	properties: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
+
+		/**
+		 * Receives id(or many ids) of the elements that label the component.
+		 *
+		 * @type {String}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.7.0
+		 */
+		 accessibleNameRef: {
+			type: String,
+			defaultValue: "",
+		},
 		/**
 		 * Defines the title of the component.
 		 * <br><br>
@@ -222,6 +236,18 @@ const metadata = {
 		subtitle: {
 			type: HTMLElement,
 		},
+		/**
+		 * Defines the title of the component.
+		 * <br><br>
+		 * <b>Note:</b> Using this slot, the default title text of illustration and the value of <code>title</code> property will be overwritten.
+		 * @type {HTMLElement}
+		 * @slot title
+		 * @public
+		 * @since 1.7.0
+		 */
+		title: {
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		//
@@ -371,6 +397,17 @@ class IllustratedMessage extends UI5Element {
 		}
 	}
 
+	_setSVGAccAttrs() {
+		const svg = this.shadowRoot.querySelector(".ui5-illustrated-message-illustration svg");
+		if (svg && this.ariaLabelText !== "") {
+			svg.setAttribute("aria-label", this.ariaLabelText);
+		}
+	}
+
+	onAfterRendering() {
+		this._setSVGAccAttrs();
+	}
+
 	/**
 	 * Modifies the IM styles in accordance to the `size` property's value.
 	 * Note: The resize handler has no effect when size is different than "Auto".
@@ -393,6 +430,10 @@ class IllustratedMessage extends UI5Element {
 		}
 	}
 
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
+	}
+
 	get effectiveIllustration() {
 		switch (this.media) {
 		case IllustratedMessage.MEDIA.SPOT:
@@ -410,6 +451,10 @@ class IllustratedMessage extends UI5Element {
 		return !!this.subtitle.length;
 	}
 
+	get hasFormattedTitle() {
+		return !!this.title.length;
+	}
+
 	get effectiveTitleText() {
 		return this.titleText ? this.titleText : this.illustrationTitle;
 	}
@@ -419,11 +464,11 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	get hasTitle() {
-		return this.titleText || this.illustrationTitle;
+		return this.hasFormattedTitle || this.titleText || this.illustrationTitle;
 	}
 
 	get hasSubtitle() {
-		return this.subtitleText || this.illustrationSubtitle;
+		return this.hasFormattedSubtitle || this.subtitleText || this.illustrationSubtitle;
 	}
 
 	get hasActions() {

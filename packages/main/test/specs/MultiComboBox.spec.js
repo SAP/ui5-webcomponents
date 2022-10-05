@@ -41,6 +41,20 @@ describe("MultiComboBox general interaction", () => {
 			});
 		});
 
+		it("Apply focus", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const focusBtn = await browser.$("#focus-mcb");
+
+			assert.notOk(await mcb.getProperty("focused"), "MultiComboBox should not be focused.");
+
+			await focusBtn.click();
+
+			assert.ok(await mcb.getProperty("focused"), "MultiComboBox should be focused.");
+		});
+
+
 		it("MultiComboBox open property is set correctly", async () => {
 			const mcb = await browser.$("#multi1");
 			const icon = await browser.$("#multi1").shadow$("[input-icon]");
@@ -362,56 +376,56 @@ describe("MultiComboBox general interaction", () => {
 
 		it("Tests autocomplete(type-ahead)", async () => {
 			let hasSelection;
-	
+
 			const input = await browser.$("#mcb").shadow$("input");
 			const EXPTECTED_VALUE = "Compact";
-	
+
 			await input.click();
 			await input.keys("com");
-	
+
 			hasSelection = await browser.execute(() =>{
 				const input = document.getElementById("mcb").shadowRoot.querySelector("input");
 				return input.selectionEnd - input.selectionStart > 0;
 			});
-	
-	
+
+
 			assert.strictEqual(await input.getProperty("value"), EXPTECTED_VALUE, "Value is autocompleted");
 			assert.strictEqual(hasSelection, true, "Autocompleted text is selected");
 		});
-	
+
 		it("Tests disabled autocomplete(type-ahead)", async () => {
 			let hasSelection;
-	
+
 			const input = await browser.$("#mcb-no-typeahead").shadow$("input");
-	
+
 			await input.click();
 			await input.keys("c");
-	
+
 			assert.strictEqual(await input.getProperty("value"), "c", "Value is not autocompleted");
 		});
 
 		it("Should make a selection on ENTER and discard on ESC", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
-	
+
 			let tokens;
-	
+
 			const mcb = await browser.$("#mcb");
 			const sExpected = "Cosy";
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
-	
+
 			await mcb.click();
 			await mcb.keys("c");
 			await mcb.keys("Enter");
-	
+
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-	
+
 			assert.strictEqual(await mcb.getProperty("value"), "", "Value is autocompleted");
 			assert.strictEqual(tokens.length, 1, "should have one token");
-	
+
 			await mcb.click();
 			await mcb.keys("c");
 			await mcb.keys("Escape");
-	
+
 			assert.strictEqual(await mcb.getProperty("value"), "c", "Value is autocompleted");
 		});
 
@@ -661,6 +675,24 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.keys("ArrowUp");
 
 			assert.equal(await mcb.getProperty("value"), "Longest word in the world 2", "Last value should be selected");
+		});
+
+		it ("Clicking delete icon should delete token and place the focus on the previous one", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			const secondToken = tokens[1];
+			const deleteIcon =  await tokens[0].shadow$("ui5-icon");
+
+			await secondToken.click();
+			await deleteIcon.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(await tokens.length, 2, "should have two tokens");
+			assert.equal(await tokens[0].getProperty("focused"), true, "Previous token is focused");
+			assert.equal(await tokens[0].getProperty("text"), "Condensed", "The selected token should not be deleted.");
 		});
 
 		it ("BACKSPACE should delete token and place the focus on the previous one", async () => {
@@ -1334,7 +1366,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await mcb2.getAttribute("placeholder"), "", "Shouldn't have placeholder when there are tokens");
 		});
 
-		it("placeholder tests for programatically selected items", async () => {
+		it("placeholder tests for programmatically selected items", async () => {
 			const innerInputSel = "#ui5-multi-combobox-input";
 
 			const mcb1 = await browser.$("#mcb-init-selected-item");
@@ -1351,7 +1383,7 @@ describe("MultiComboBox general interaction", () => {
 			toggleItemBtn1.click();
 
 			innerInput1 = await mcb1.shadow$(innerInputSel);
-			assert.strictEqual(await innerInput1.getAttribute("placeholder"), "Placeholder", "Should have placeholder as the item is programatically deselected");
+			assert.strictEqual(await innerInput1.getAttribute("placeholder"), "Placeholder", "Should have placeholder as the item is programmatically deselected");
 
 			// No preselected item
 			assert.strictEqual(await innerInput2.getAttribute("placeholder"), "Placeholder", "Should have placeholder as no item is selected");
@@ -1359,7 +1391,7 @@ describe("MultiComboBox general interaction", () => {
 			toggleItemBtn2.click();
 
 			innerInput2 = await mcb2.shadow$(innerInputSel);
-			assert.strictEqual(await innerInput2.getAttribute("placeholder"), "", "Shouldn't have placeholder as an item is programatically selected");
+			assert.strictEqual(await innerInput2.getAttribute("placeholder"), "", "Shouldn't have placeholder as an item is programmatically selected");
 		});
 
 		it ("Should not open value state message when component is in readonly state", async () => {

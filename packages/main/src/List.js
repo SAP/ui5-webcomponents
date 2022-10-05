@@ -13,6 +13,7 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -343,6 +344,7 @@ const metadata = {
 			detail: {
 				selectedItems: { type: Array },
 				previouslySelectedItems: { type: Array },
+				targetItem: { type: HTMLElement }, // protected, holds the event target item
 				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
 			},
 		},
@@ -624,6 +626,15 @@ class List extends UI5Element {
 		};
 	}
 
+	get classes() {
+		return {
+			root: {
+				"ui5-list-root": true,
+				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
+			},
+		};
+	}
+
 	initItemNavigation() {
 		this._itemNavigation = new ItemNavigation(this, {
 			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
@@ -692,6 +703,7 @@ class List extends UI5Element {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: event.detail.selectionComponentPressed,
+				targetItem: event.detail.item,
 				key: event.detail.key,
 			});
 		}

@@ -14,7 +14,6 @@ import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
-	LIST_ITEM_SELECTED,
 } from "../generated/i18n/i18n-defaults.js";
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -239,7 +238,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: this.selectedItemIndex + 1,
 			listSize: allItems.length,
-			itemText: item.textContent,
+			itemText: this._getRealItems()[this.selectedItemIndex].description,
 		};
 
 		// If the item is "Inactive", prevent selection with SPACE or ENTER
@@ -259,8 +258,24 @@ class Suggestions {
 	}
 
 	/* Private methods */
-	onItemPress(oEvent) {
-		this.onItemSelected(oEvent.detail.selectedItems[0], false /* keyboardUsed */);
+	onItemPress(event) {
+		let pressedItem;
+		const isPressEvent = event.type === "ui5-item-click";
+
+		// Only use the press event if the item is already selected, in all other cases we are listening for 'ui5-selection-change' from the list
+		// Also we have to check if the selection-change is fired by the list's 'item-click' event handling, to avoid double handling on our side
+		if ((isPressEvent && !event.detail.item.selected) || (this._handledPress && !isPressEvent)) {
+			return;
+		}
+
+		if (isPressEvent && event.detail.item.selected) {
+			pressedItem = event.detail.item;
+			this._handledPress = true;
+		} else {
+			pressedItem = event.detail.selectedItems[0];
+		}
+
+		this.onItemSelected(pressedItem, false /* keyboardUsed */);
 	}
 
 	_beforeOpen() {
@@ -420,7 +435,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: nextIdx + 1,
 			listSize: items.length,
-			itemText: currentItem.textContent,
+			itemText: this._getRealItems()[items.indexOf(currentItem)].description,
 		};
 
 		if (previousItem) {
@@ -520,10 +535,9 @@ class Suggestions {
 	}
 
 	get itemSelectionAnnounce() {
-		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize),
-			itemSelectionText = Suggestions.i18nBundle.getText(LIST_ITEM_SELECTED);
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 
-		return `${itemPositionText} ${this.accInfo.itemText} ${itemSelectionText}`;
+		return `${this.accInfo.itemText} ${itemPositionText}`;
 	}
 
 	getRowText(suggestion) {

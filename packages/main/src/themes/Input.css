@@ -25,7 +25,7 @@
 	background-color: var(--_ui5_input_background_color);
 }
 
-:host([focused]) {
+:host([focused]:not([opened])) {
 	border-color: var(--_ui5_input_focused_border_color);
 	background-color: var(--sapField_Focus_Background);
 }
@@ -34,7 +34,7 @@
 	position: relative;
 }
 
-:host([focused]) .ui5-input-focusable-element::after {
+:host([focused]:not([opened])) .ui5-input-focusable-element::after {
 	content: var(--ui5_input_focus_pseudo_element_content);
 	position: absolute;
 	pointer-events: none;
@@ -221,12 +221,12 @@
 	background: var(--sapField_Hover_BackgroundStyle);
 	background-color: var(--sapField_Hover_Background);
 }
-:host(:not([value-state]):not([readonly])[focused]:hover),
-:host([value-state="None"]:not([readonly])[focused]:hover) {
+:host(:not([value-state]):not([readonly])[focused]:not([opened]):hover),
+:host([value-state="None"]:not([readonly])[focused]:not([opened]):hover) {
 	box-shadow: none;
 }
 
-:host([focused]) .ui5-input-root::before {
+:host([focused]):not([opened]) .ui5-input-root::before {
 	content: none;
 }
 
@@ -254,12 +254,12 @@
 	border-color: var(--_ui5_input_value_state_error_border_color);
 }
 
-:host([value-state="Error"][focused]:not([readonly])) {
+:host([value-state="Error"][focused]:not([opened]):not([readonly])) {
 	background-color: var(--_ui5_input_focused_value_state_error_background);
 	border-color: var(--_ui5_input_focused_value_state_error_border_color);
 }
 
-:host([value-state="Error"][focused]:not([readonly])) .ui5-input-focusable-element:after {
+:host([value-state="Error"][focused]:not([opened]):not([readonly])) .ui5-input-focusable-element:after {
 	border-color: var(--_ui5_input_focused_value_state_error_focus_outline_color);
 }
 
@@ -267,7 +267,8 @@
 	background-color: var(--_ui5-input-value-state-error-border-botom-color);
 }
 
-:host([value-state="Error"]:not([readonly]):not([focused]):hover) {
+:host([value-state="Error"]:not([readonly]):not([focused]):hover),
+:host([value-state="Error"]:not([readonly])[focused][opened]:hover) {
 	background-color: var(--_ui5_input_value_state_error_hover_background);
 	box-shadow: var(--_ui5_input_value_state_error_hover_box_shadow);
 }
@@ -284,12 +285,12 @@
 	border-color: var(--_ui5_input_value_state_warning_border_color);
 }
 
-:host([value-state="Warning"][focused]:not([readonly])) {
+:host([value-state="Warning"][focused]:not([opened]):not([readonly])) {
 	background-color: var(--_ui5_input_focused_value_state_warning_background);
 	border-color: var(--_ui5_input_focused_value_state_warning_border_color);
 }
 
-:host([value-state="Warning"][focused]:not([readonly])) .ui5-input-focusable-element:after {
+:host([value-state="Warning"][focused]:not([opened]):not([readonly])) .ui5-input-focusable-element:after {
 	border-color: var(--_ui5_input_focused_value_state_warning_focus_outline_color);
 }
 
@@ -297,7 +298,8 @@
 	background-color: var(--_ui5_input_value_state_warning_border_botom_color);
 }
 
-:host([value-state="Warning"]:not([readonly]):not([focused]):hover) {
+:host([value-state="Warning"]:not([readonly]):not([focused]):hover),
+:host([value-state="Warning"]:not([readonly])[focused][opened]:hover)  {
 	background-color: var(--sapField_Hover_Background);
 	box-shadow: var(--_ui5_input_value_state_warning_hover_box_shadow);
 }
@@ -309,12 +311,12 @@
 	border-width: var(--_ui5_input_value_state_success_border_width);
 }
 
-:host([value-state="Success"][focused]:not([readonly])) {
+:host([value-state="Success"][focused]:not([opened]):not([readonly])) {
 	background-color: var(--_ui5_input_focused_value_state_success_background);
 	border-color: var(--_ui5_input_focused_value_state_success_border_color);
 }
 
-:host([value-state="Success"][focused]:not([readonly])) .ui5-input-focusable-element:after {
+:host([value-state="Success"][focused]:not([opened]):not([readonly])) .ui5-input-focusable-element:after {
 	border-color: var(--_ui5_input_focused_value_state_success_focus_outline_color);
 }
 
@@ -322,7 +324,8 @@
 	background-color: var(--_ui5_input_value_state_success_border_botom_color);
 }
 
-:host([value-state="Success"]:not([readonly]):not([focused]):hover) {
+:host([value-state="Success"]:not([readonly]):not([focused]):hover),
+:host([value-state="Success"]:not([readonly])[focused][opened]:hover) {
 	background-color: var(--sapField_Hover_Background);
 	box-shadow: var(--_ui5_input_value_state_success_hover_box_shadow);
 }
@@ -334,7 +337,7 @@
 	border-width: var(--_ui5_input_information_border_width);
 }
 
-:host([value-state="Information"][focused]:not([readonly])) {
+:host([value-state="Information"][focused]:not([opened]):not([readonly])) {
 	background-color: var(--_ui5_input_focused_value_state_information_background);
 	border-color: var(--_ui5_input_focused_value_state_information_border_color);
 }
@@ -343,7 +346,8 @@
 	background-color: var(--_ui5_input_value_success_information_border_botom_color);
 }
 
-:host([value-state="Information"]:not([readonly]):not([focused]):hover) {
+:host([value-state="Information"]:not([readonly]):not([focused]):hover),
+:host([value-state="Information"]:not([readonly])[focused][opened]:hover) {
 	background-color: var(--sapField_Hover_Background);
 	box-shadow: var(--_ui5_input_value_state_information_hover_box_shadow);
 }

@@ -1,6 +1,6 @@
 <div id="{{this._id}}"
 	class="{{this.stripClasses}}"
-	tabindex="{{this._tabIndex}}"
+	tabindex="-1"
 	role="tab"
 	aria-posinset="{{this._posinset}}"
 	aria-setsize="{{this._setsize}}"
@@ -14,7 +14,13 @@
 >
 	{{#if this.icon}}
 		<div class="ui5-tab-strip-item-icon-outer">
-			<ui5-icon name="{{this.icon}}" class="ui5-tab-strip-item-icon"></ui5-icon>
+			<ui5-icon id="{{this._id}}-icon" name="{{this.icon}}" class="ui5-tab-strip-item-icon"></ui5-icon>
+		</div>
+	{{/if}}
+
+	{{#if this._designDescription}}
+		<div id="{{this._id}}-designDescription" class="ui5-tab-strip-design-description">
+			{{this._designDescription}}
 		</div>
 	{{/if}}
 

@@ -85,6 +85,21 @@ describe("Tree proxies properties to list", () => {
 
 		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected when we prevent the click event.");
 	});
+
+	it("selectionChange event provides targetItem parameter", async () => {
+		const selectionChangeTargetItemResult = await browser.$("#selectionChangeTargetItemResult");
+		const tree = await browser.$("#treeIndeterminate");
+		const listItems = await tree.shadow$$("ui5-li-tree");
+		const firstTreeItem = await tree.$("#item1");
+		let firstTreeItemId, targetItemId;
+
+		await listItems[0].click();
+
+		firstTreeItemId = await firstTreeItem.getProperty("id");
+		targetItemId = await selectionChangeTargetItemResult.getProperty("value");
+
+		assert.strictEqual(targetItemId, firstTreeItemId, "targetItem parameter holds correct tree item");
+	});
 });
 
 describe("Tree has screen reader support", () => {
@@ -127,6 +142,29 @@ describe("Tree has screen reader support", () => {
 				"aria-expanded is correct.");
 		});
 
+	});
+
+	it ("Tree's internal List receives aria-label from the accessibleName property", async () => {
+		const tree = await browser.$("#tree");
+		const list = await tree.shadow$("ui5-list");
+		assert.strictEqual(await list.shadow$("ul").getAttribute("aria-label"), "Tree with accessibleName", "list aria label is correct");
+	});
+
+	it ("Tree's internal List receives aria-label from the accessibleNameRef property", async () => {
+		const tree = await browser.$("#preventable-click-event");
+		const list = await tree.shadow$("ui5-list");
+		const treeLabel = await browser.$("#tree-label");
+		assert.strictEqual(await list.shadow$("ul").getAttribute("aria-label"), await treeLabel.getHTML(false), "list aria label is correct");
+	});
+
+	it ("Tree list item receives aria-labelledby from the accessibleName property", async () => {
+		const tree = await browser.$("#tree");
+		const listTreeItem = await tree.shadow$("ui5-li-tree");
+		const listItem = await listTreeItem.shadow$("li");
+		const liAriaLabelledBy = await listItem.getAttribute("aria-labelledby");
+		const ariaLabelText = await listItem.$(`#${liAriaLabelledBy}`).getText();
+
+		assert.strictEqual(ariaLabelText, "Tree item with accessibleName", "aria label text is correct");
 	});
 
 });

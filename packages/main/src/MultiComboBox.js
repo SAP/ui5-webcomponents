@@ -1082,7 +1082,7 @@ class MultiComboBox extends UI5Element {
 			if (isCut) {
 				const cutResult = this._tokenizer._fillClipboard("cut", selectedTokens);
 				selectedTokens.forEach(token => {
-					this._tokenizer._tokenDelete(event, token);
+					this._tokenizer._tokenKeyboardDelete(event, token);
 				});
 
 				this.focus();

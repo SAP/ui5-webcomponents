@@ -28,7 +28,8 @@
 .ui5-tc__separator[hidden],
 .ui5-tab-strip-item[hidden],
 .ui5-tab-strip-item--textOnly[hidden],
-.ui5-tab-strip-item.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--inline[hidden] {
+.ui5-tab-strip-item.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--inline[hidden],
+.ui5-tab-strip-design-description {
 	display: none;
 }
 

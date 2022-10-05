@@ -309,6 +309,55 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await input4.getProperty("value"), "-1", "Removed properly");
 	});
 
+	it("tests removing fractional part of numeric value with 'e' notation and minus signs", async () => {
+		const input = await browser.$("#input-number35");
+		const inputResult = await browser.$("#input-number35_eventValue");
+
+		await input.click();
+
+
+
+		// -1.33e-2
+		// Press Backspace to remove the "2" character
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "", "Value is empty string");
+
+		// -1.33e-
+		// Press Backspace to remove the "-" character
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "", "Value is empty string");
+
+		// -1.33e
+		// Press Backspace to remove the "e" character
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "-1.33", "Value is -1.33");
+
+		// -1.33
+		// Press Backspace to remove the number "3"
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "-1.3", "Value is -1.3");
+
+		// -1.3
+		// Press Backspace to remove the number "3"
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "-1", "Value is -1");
+
+		// -1.
+		// Press Backspace to remove the "." character
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "-1", "Value is -1");
+
+		// -1
+		// Press Backspace to remove the number "1"
+		await input.keys("Backspace");
+		assert.strictEqual(await inputResult.getProperty("value"), "", "Value is empty string");
+
+		// -
+		// Press 2 to add the number "2"
+		await input.keys("2");
+		assert.strictEqual(await inputResult.getProperty("value"), "-2", "Value is -2");
+	});
+
 	it("handles suggestions", async () => {
 		await browser.url(`test/pages/Input.html`);
 
@@ -408,6 +457,62 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputResult.getValue(), "", "suggestionItemSelected event is not called");
 	});
 
+	it("should select typeaheaded item on mouse click and remove value text selection", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput").shadow$("input");
+		const changeEventResult = await browser.$("#inputResult").shadow$("input");
+		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("C");
+		await browser.pause(300);
+
+		const firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		await firstSuggestion.click();
+
+		valueNotSelected = await browser.execute(() =>{
+			const input = document.getElementById("myInput").shadowRoot.querySelector("input");
+			return input.selectionEnd - input.selectionStart === 0;
+		});
+
+		assert.strictEqual(await changeEventResult.getValue(), "1", "Change is fired once");
+		assert.strictEqual(await suggestionSelectEventResult.getValue(), "1", "suggestion-item-select is fired once");
+		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
+	});
+
+	it("should select typeaheaded item on mouse click and remove value text selection", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput").shadow$("input");
+		const changeEventResult = await browser.$("#inputResult").shadow$("input");
+		const suggestionSelectEventResult = await browser.$("#input-selection-event-test").shadow$("input");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await suggestionsInput.click();
+		await suggestionsInput.keys("C");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+		await suggestionsInput.keys("ArrowDown");
+
+		const secondSuggestion = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[1];
+		await secondSuggestion.click();
+
+		valueNotSelected = await browser.execute(() =>{
+			const input = document.getElementById("myInput").shadowRoot.querySelector("input");
+			return input.selectionEnd - input.selectionStart === 0;
+		});
+
+		assert.strictEqual(await suggestionsInput.getValue(), "Cuba", "Item is selected");
+		assert.strictEqual(await changeEventResult.getValue(), "1", "Change is fired once");
+		assert.strictEqual(await suggestionSelectEventResult.getValue(), "1", "suggestion-item-select is fired once");
+		assert.strictEqual(await valueNotSelected, true, "Value is no longer type aheaded (autocompleted)");
+	});
 
 	it("should remove input's focus when group header item is clicked", async () => {
 		await browser.url(`test/pages/Input.html`);
@@ -545,7 +650,7 @@ describe("Input general interaction", () => {
 
 		assert.strictEqual(ariaHiddenText, "Value State Information Informative entry", "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText, "Informative entry", "Displayed value state message text is correct");
-	
+
 		await inputSuccess.click();
 		assert.strictEqual(await inputSuccess.shadow$(".ui5-hidden-text").getText(), "Value State Success", "Hidden screen reader text is correct");
 	});
@@ -804,6 +909,71 @@ describe("Input general interaction", () => {
 		await input.click();
 
 		assert.ok(await popover.isDisplayedInViewport(), "The popover is visible");
+	});
+
+	it("Private property for input value should be in sync, when value gets updated programatically - #5635", async () => {
+		const inputChange = await browser.$("#input-change-1").shadow$("input");
+		const clearButton = await browser.$("#clear-button");
+		const changeCount = await browser.$("#input-change-count-1");
+
+		await inputChange.click();
+		await inputChange.keys("1");
+		await inputChange.keys("2");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called");
+
+		// clear the input
+		await clearButton.click();
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is not called again, since the value is changed programatically");
+
+		// Type the same value once again.
+		await inputChange.click();
+		await inputChange.keys("1");
+		await inputChange.keys("2");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "2", "The change event is called now, since the value is updated");
+	});
+
+	it("Change event should be fired only once, when a user types a value identical to a item and presses ENTER - #3732", async () => {
+		const inputChange = await browser.$("#input-change-2").shadow$("input");
+		const changeCount = await browser.$("#input-change-count-2");
+
+		await inputChange.click();
+		await inputChange.keys("s");
+		await inputChange.keys("o");
+		await inputChange.keys("f");
+		await inputChange.keys("Enter");
+
+		// Assert
+		assert.strictEqual(await changeCount.getHTML(false), "1", "The change event is called only once");
+	});
+
+	it("Value should be updated correctly, when using DEL - #4340", async () => {
+		const inputChange = await browser.$("#input-change-3").shadow$("input");
+		const changeValue = await browser.$("#input-change-value-3");
+
+		await inputChange.click();
+
+		// go to previous element
+		await inputChange.keys(["Shift", "Tab"]);
+
+		// go to input
+		await browser.keys("Tab");
+
+		// delete value
+		await inputChange.keys("Delete");
+
+		// focus out
+		await inputChange.keys("Tab");
+
+		// Assert
+		assert.strictEqual(await changeValue.getHTML(false), "", "The change event should pass a correct value");
 	});
 });
 
@@ -1257,7 +1427,6 @@ describe("Lazy loading", () => {
 		await inner.click();
 		await inner.keys("S");
 
-		
 		await browser.waitUntil(() => respPopover.getProperty("opened"), {
 			timeout: 2000,
 			timeoutMsg: "Popover should be displayed"
