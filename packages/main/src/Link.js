@@ -128,12 +128,17 @@ const metadata = {
 
 		/**
 		 * Defines the ARIA role of the component.
-		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.15
+		 *
+		 * <b>Note:</b> Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
+		 *
+		 * @type {string}
+		 * @defaultvalue "link"
+		 * @public
+		 * @since 1.9.0
 		 */
-		 accessibleRole: {
+		accessibleRole: {
 			type: String,
+			defaultValue: "link",
 		},
 
 		/**
@@ -334,7 +339,7 @@ class Link extends UI5Element {
 	}
 
 	get effectiveAccRole() {
-		return this.accessibleRole || "link";
+		return this.accessibleRole.toLowerCase();
 	}
 
 	static async onDefine() {
