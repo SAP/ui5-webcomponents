@@ -7,6 +7,7 @@ let initialized = false;
 let initialConfig = {
 	animationMode: "full",
 	theme: DEFAULT_THEME,
+	themeRoots: {},
 	rtl: null,
 	language: null,
 	calendarType: null,
@@ -24,6 +25,16 @@ const getAnimationMode = () => {
 const getTheme = () => {
 	initConfiguration();
 	return initialConfig.theme;
+};
+
+const getThemeRoots = () => {
+	initConfiguration();
+	return initialConfig.themeRoots;
+};
+
+const getThemeRoot = () => {
+	initConfiguration();
+	return initialConfig.themeRoots[getTheme()];
 };
 
 const getRTL = () => {
@@ -106,7 +117,19 @@ const parseURLParameters = () => {
 	});
 };
 
-const normalizeParamValue = (param, value) => {
+const normalizeThemeRootParamValue = value => {
+	const themeRootObj = {};
+	const theme = value.split("@")[0];
+	let themeRoot = value.split("@")[1];
+
+	themeRoot += (themeRoot.slice(-1) === "/" ? "" : "/");
+
+	themeRootObj[theme] = themeRoot;
+
+	return merge(initialConfig.themeRoots, themeRootObj);
+};
+
+const normalizeThemeParamValue = (param, value) => {
 	if (param === "theme" && value.includes("@")) { // the theme parameter might have @<URL-TO-THEME> in the value - strip this
 		return value.split("@")[0];
 	}
@@ -122,9 +145,15 @@ const applyURLParam = (key, value, paramType) => {
 		value = booleanMapping.get(lowerCaseValue);
 	}
 
-	value = normalizeParamValue(param, value);
+	if (param === "theme") {
+		initialConfig.theme = normalizeThemeParamValue(param, value);
 
-	initialConfig[param] = value;
+		if (value && value.includes("@")) {
+			initialConfig.themeRoots = normalizeThemeRootParamValue(value);
+		}
+	} else {
+		initialConfig[param] = value;
+	}
 };
 
 const applyOpenUI5Configuration = () => {
@@ -157,6 +186,8 @@ const initConfiguration = () => {
 export {
 	getAnimationMode,
 	getTheme,
+	getThemeRoot,
+	getThemeRoots,
 	getRTL,
 	getLanguage,
 	getFetchDefaultLanguage,

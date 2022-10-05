@@ -2,6 +2,7 @@ import whenDOMReady from "./util/whenDOMReady.js";
 import insertFontFace from "./FontFace.js";
 import insertSystemCSSVars from "./SystemCSSVars.js";
 import { getTheme } from "./config/Theme.js";
+import { attachStylesToHead } from "./config/ThemeRoots.js";
 import applyTheme from "./theming/applyTheme.js";
 import { registerCurrentRuntime } from "./Runtimes.js";
 import { getFeature } from "./FeaturesRegistry.js";
@@ -40,6 +41,7 @@ const boot = async () => {
 			F6Navigation.init();
 		}
 
+		attachStylesToHead();
 		await whenDOMReady();
 		await applyTheme(getTheme());
 		OpenUI5Support && OpenUI5Support.attachListeners();
