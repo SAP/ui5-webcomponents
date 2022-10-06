@@ -1,22 +1,18 @@
 import { Story, Preview, ArgsTable } from "@storybook/addon-docs";
 import { html } from "lit-html";
 
-import argTypes from "./argsTypes.js";
-import Description from "./Description.md";
-
 <Meta
   title="Components/{{name}}"
-  argTypes={argTypes}
+  argTypes={
+   {{args}}
+  }
 />
 
 # {{name}}
 
-<Description />
-
-<br />
-<br />
-
 {{stories}}
+
+{{description}}
 
 <br/>
 <br/>
