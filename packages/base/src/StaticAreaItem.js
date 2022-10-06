@@ -70,7 +70,7 @@ class StaticAreaItem extends HTMLElement {
 
 	_updateAdditionalAttrs() {
 		this.setAttribute(this.pureTagName, "");
-		this.toggleAttribute(this.popupIntegrationAttr, this.ownerElement.hasAttribute(this.popupIntegrationAttr));
+		this.setAttribute(this.popupIntegrationAttr, "");
 	}
 
 	/**
