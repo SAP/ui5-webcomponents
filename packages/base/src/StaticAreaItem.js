@@ -38,9 +38,9 @@ class StaticAreaItem extends HTMLElement {
 	 */
 	update() {
 		if (this._rendered) {
+			this._updateAdditionalAttrs();
 			this._updateContentDensity();
 			this._updateDirection();
-			this._updateAdditionalAttrs();
 			updateShadowRoot(this.ownerElement, true);
 		}
 	}
