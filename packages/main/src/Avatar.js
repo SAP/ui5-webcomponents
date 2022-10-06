@@ -352,13 +352,9 @@ class Avatar extends UI5Element {
 			return this.initials;
 		}
 
-		if (!areInitialsValid) {
-			// if initials are not valid,an icon should be shown inside the avatar
-			this.icon = "employee";
-			return this.icon;
-		}
-
-		return this;
+		// if initials are not valid,an icon should be shown inside the avatar
+		this.icon = "employee";
+		return this.icon;
 	}
 
 	get accessibleNameText() {
@@ -388,7 +384,7 @@ class Avatar extends UI5Element {
 		const avatar = this.getDomRef(),
 			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
 		if (this.initials && this.initials.length === 3) {
-			if (avatarInitials.scrollWidth > avatar.scrollWidth) {
+			if (avatarInitials.scrollWidth >= avatar.scrollWidth) {
 				this.icon = "employee";
 			}
 		}
