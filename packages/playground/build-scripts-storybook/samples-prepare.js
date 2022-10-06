@@ -1,4 +1,5 @@
 const fs = require('fs/promises');
+const fsDir = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
 
@@ -17,7 +18,7 @@ const EXCLUDE_LIST = [
 	"FlexibleColumnLayout.sample.html",
 	"IllustratedMessage.sample.html",
 	"Input.sample.html",
-	// "List.sample.html",
+	"List.sample.html",
 	"MultiInput.sample.html",
 	"MessageStrip.sample.html",
 	"NotificationListGroupItem.sample.html",
@@ -36,6 +37,22 @@ const EXCLUDE_LIST = [
 	"UploadCollection.sample.html",
 	"Wizard.sample.html",
 ]
+
+const UI5WC_TO_STORYBOOK_TYPES_MAP = {
+	'string': 'text',
+	'String': 'text',
+	'array': 'object',
+	'Array': 'object',
+	'boolean': 'boolean',
+	'object': 'object',
+	'Object': 'object',
+	'Integer': 'number',
+	'Float': 'number',
+	'Number': 'number',
+	'File': 'file',
+	'HTMLElement': 'text',
+	'CSSColor': 'color'
+}
 
 const main = async () => {
 	const template = await fs.readFile(path.join(__dirname, '../stories/template.mdx'), 'utf8');
@@ -98,7 +115,24 @@ const main = async () => {
 				snippets.push(section.html().trim());
 			});
 
-			await fs.writeFile(path.join(process.cwd(), `/docs/components/${file.replace('.sample.html', '.stories.mdx')}`), getStory(api, file.split('.')[0], snippets))
+			let storyDir = path.join(process.cwd(), `/_storiesGenerated/${package}`);
+
+			if (!fsDir.existsSync(storyDir)){ // check if the package folder exists and creates one if it doesn't
+				fsDir.mkdirSync(storyDir);
+			}
+
+			storyDir += `/${file.substring(0, file.indexOf('.'))}`;
+
+			if (!fsDir.existsSync(storyDir)){ // check if the component folder exists and creates one if it doesn't
+				fsDir.mkdirSync(storyDir);
+			}
+			storyDir += `/${file.replace('.sample.html', '.stories.mdx')}`;
+
+			const storyData = getStory(api, file.split('.')[0], snippets);
+
+			await fs.writeFile(storyDir, storyData.storyContent);
+			await fs.writeFile(storyDir.substring(0, storyDir.lastIndexOf('/')) + '/Description.md', storyData.storyDescription);
+			await fs.writeFile(storyDir.substring(0, storyDir.lastIndexOf('/')) + '/argsTypes.js', `export default ` + storyData.storyArgsTypes);
 		});
 	});
 
@@ -108,15 +142,23 @@ const main = async () => {
 
 		if (moduleAPI?.properties) {
 			moduleAPI.properties.forEach(prop => {
+				const controlType = UI5WC_TO_STORYBOOK_TYPES_MAP[prop.type] || 'select';
 				args[prop.name] = {
 					description: prop.description,
-					control: prop.type,
+					control: controlType,
 					table: {
 						defaultValue: {
-							summary: prop.defaultValue,
-						}
+							summary: prop.defaultValue
+						},
+						category: "Properties"
 					},
 				};
+				if (controlType === 'select') {
+					const typeEnum = api.symbols.find(s => s.module === 'types/' + prop.type);
+					if (typeEnum && Array.isArray(typeEnum.properties)) {
+						args[prop.name].options = typeEnum.properties.map(a => a.type);
+					}
+				}
 			});
 		}
 
@@ -143,11 +185,13 @@ const main = async () => {
 
 		const storyContent = template
 			.replace(/{{stories}}/g, stories.join("\n"))
-			.replace(/{{name}}/g, data.name)
-			.replace(/{{description}}/g, data.description)
-			.replace(/{{args}}/g, JSON.stringify(data.args), null, 2); // spacing level = 2
+			.replace(/{{name}}/g, data.name); // spacing level = 2
 
-		return storyContent;
+		return {
+			storyContent: storyContent,
+			storyDescription: data.description,
+			storyArgsTypes: JSON.stringify(data.args, null, "\t")
+		}
 	};
 
 	function snippetsToStories(snippets) {
