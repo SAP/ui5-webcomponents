@@ -1,7 +1,7 @@
-commit f256d0b2f36d9a085e1e0b2843c3f10a63800fc2
+commit 66168972b54c6d20801be5ced4bb6ca04506ad75
 Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Thu Oct 6 09:25:39 2022 +0300
+Date:   Thu Oct 6 10:38:26 2022 +0300
 
-    fix(ui5-tabcontainer): translate semantic design aria description (#5883)
+    fix(ui5-radio-button): improve acc (#5880)
     
-    * fix(ui5-tabcontainer): translate semantic design aria description
+    * fix(ui5-radio-button): improve acc
