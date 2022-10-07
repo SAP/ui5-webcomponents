@@ -430,8 +430,20 @@
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 }
 
+.ui5-input-clear-icon-wrapper {
+	height: 100%;
+	padding: 0;
+	width: var(--_ui5_input_icon_width);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+}
 
-
+[ui5-icon].ui5-input-clear-icon {
+	padding: 0;
+	color: inherit;
+}
 
 /* Chrome, Safari, Edge, Opera */
 [inner-input]::-webkit-outer-spin-button,
