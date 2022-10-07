@@ -1,3 +1,7 @@
+html, body, #content {
+    height: 100%;
+}
+
 .openui51auto {
     background-color: var(--sapBackgroundColor);
 }
