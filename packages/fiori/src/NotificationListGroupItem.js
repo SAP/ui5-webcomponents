@@ -114,9 +114,9 @@ const metadata = {
  *
  * <h3>ES6 Module Import</h3>
  *
- * <code>import "@ui5/webcomponents/dist/NotificationListGroupItem.js";</code>
+ * <code>import "@ui5/webcomponents-fiori/dist/NotificationListGroupItem.js";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
+ * <code>import "@ui5/webcomponents-fiori/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListGroupItem
