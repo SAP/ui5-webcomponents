@@ -307,7 +307,7 @@ class IllustratedMessage extends UI5Element {
 		super();
 
 		this._handleResize = this.handleResize.bind(this);
-		this._lastKnownBCRForMedia = {}; // this will store the last known BoundingClientRect data of the IllustratedMessage DOM node for a given media (e.g. "Spot")
+		this._lastKnownOffsetWidthForMedia = {}; // this will store the last known offsetWidth of the IllustratedMessage DOM node for a given media (e.g. "Spot")
 	}
 
 	static get metadata() {
@@ -392,7 +392,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	_applyMedia() {
-		const bcr = this.getBoundingClientRect().toJSON();
+		const currOffsetWidth = this.offsetWidth;
 		let newMedia = "";
 
 		if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.BASE) {
@@ -404,15 +404,11 @@ class IllustratedMessage extends UI5Element {
 		} else {
 			newMedia = IllustratedMessage.MEDIA.SCENE;
 		}
-		const lastKnownBCR = this._lastKnownBCRForMedia[newMedia];
-		if (!(lastKnownBCR && shallowEqual(bcr, lastKnownBCR))) {
+		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia];
+		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth)) { // prevents infinite resize
 			this.media = newMedia;
-			this._storeLastKnownBCRForMedia(bcr, newMedia);
+			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
 		}
-	}
-
-	_storeLastKnownBCRForMedia(bcr, media) {
-		this._lastKnownBCRForMedia[media] = { ...bcr };
 	}
 
 	_setSVGAccAttrs() {
