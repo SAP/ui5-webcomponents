@@ -34,6 +34,10 @@
  *   native
  *
  *   noattribute
+ * 
+ *   controlledByEvents
+ * 
+ *   formProperties
  *
  *   allowPreventDefault
  *
@@ -2106,6 +2110,34 @@ exports.defineTags = function(dictionary) {
 		mustHaveValue: false,
 		onTagged: function(doclet, tag) {
 			doclet.noattribute = true;
+		}
+	});
+
+	dictionary.defineTag('controlledByEvents', {
+		mustHaveValue: false,
+		onTagged: function(doclet, tag) {
+			if (tag.value) {
+				doclet.controlledByEvents = doclet.controlledByEvents || [];
+				tag.value.split(" ").forEach(function($) {
+					if ( doclet.controlledByEvents.indexOf($) < 0 ) {
+						doclet.controlledByEvents.push($);
+					}
+				});
+			}
+		}
+	});
+
+	dictionary.defineTag('formProperties', {
+		mustHaveValue: false,
+		onTagged: function(doclet, tag) {
+			if (tag.value) {
+				doclet.formProperties = doclet.formProperties || [];
+				tag.value.split(/\s*,\s*/g).forEach(function($) {
+					if ( doclet.formProperties.indexOf($) < 0 ) {
+						doclet.formProperties.push($);
+					}
+				});
+			}
 		}
 	});
 };

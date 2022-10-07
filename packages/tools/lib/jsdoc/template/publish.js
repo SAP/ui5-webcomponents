@@ -2657,6 +2657,10 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 	if (symbol.appenddocs) {
 		attrib("appenddocs", symbol.appenddocs);
 	}
+	if ( symbol.formProperties ) {
+		attrib("formProperties", symbol.formProperties);
+	}
+
 	if ( symbol.__ui5.resource ) {
 		attrib("resource", symbol.__ui5.resource);
 	}
@@ -2818,6 +2822,10 @@ function createAPIJSON4Symbol(symbol, omitDefaults) {
 					}
 					if ( member.since ) {
 						attrib("since", extractVersion(member.since));
+					}
+
+					if ( member.controlledByEvents ) {
+						attrib("controlledByEvents", member.controlledByEvents);
 					}
 
 					var type = listTypes(member.type);
@@ -3865,7 +3873,7 @@ function createAPIJS(symbols, filename) {
 
 	var output = [];
 
-	var rkeywords = /^(?:abstract|as|boolean|break|byte|case|catch|char|class|continue|const|debugger|default|delete|do|double|else|enum|export|extends|false|final|finally|float|for|function|goto|if|implements|import|in|instanceof|int|interface|is|long|namespace|native|new|null|noattribute|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|use|var|void|volatile|while|with)$/;
+	var rkeywords = /^(?:abstract|as|boolean|break|byte|case|catch|char|class|continue|controlledByEvents|const|debugger|default|delete|do|double|else|enum|export|extends|false|final|finally|float|for|function|formProperties|goto|if|implements|import|in|instanceof|int|interface|is|long|namespace|native|new|null|noattribute|package|private|protected|public|return|short|static|super|switch|synchronized|this|throw|throws|transient|true|try|typeof|use|var|void|volatile|while|with)$/;
 
 	function isNoKeyword($) { return !rkeywords.test($.name); }
 
