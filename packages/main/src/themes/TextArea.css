@@ -64,10 +64,13 @@
 	background-color: var(--_ui5_textarea_background_color);
 	border-color: var(--sapField_BorderColor);
 	border-radius: var(--sapField_BorderCornerRadius);
-	border-color: inherit;
 	border-width: var(--_ui5_textarea_inner_border_width);
 	border-style: var(--sapField_BorderStyle);
 	outline: none;
+}
+
+:host([value-state]) .ui5-textarea-wrapper {
+	border-color: inherit;
 }
 
 :host([focused]) .ui5-textarea-wrapper {
@@ -139,7 +142,7 @@
 	line-height: var(--_ui5_textarea_line_height);
 	visibility: hidden;
 	width: 100%;
-	max-height: 100%;
+	max-height: 94vh;
 	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height) * var(--sapFontSize)));
 	word-break: break-all;
 	padding: var(--_ui5_textarea_padding);

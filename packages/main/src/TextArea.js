@@ -181,7 +181,6 @@ const metadata = {
 		/**
 		 * Enables the component to automatically grow and shrink dynamically with its content.
 		 * <br><br>
-		 * <b>Note:</b> If set to <code>true</code>, the CSS <code>height</code> property is ignored.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -576,7 +575,13 @@ class TextArea extends UI5Element {
 	}
 
 	get styles() {
+		const growingDiv = this.shadowRoot.querySelector(".ui5-textarea-mirror");
+		const scrollHeight = growingDiv && growingDiv.scrollHeight;
+
 		return {
+			inner: {
+				"overflow-y": scrollHeight && scrollHeight > getComputedStyle(growingDiv)["max-height"] ? "auto": "hidden"
+			},
 			valueStateMsgPopover: {
 				"max-width": `${this._width}px`,
 			},
