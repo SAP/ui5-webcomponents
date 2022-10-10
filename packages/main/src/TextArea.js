@@ -580,7 +580,7 @@ class TextArea extends UI5Element {
 
 		return {
 			inner: {
-				"overflow-y": scrollHeight && scrollHeight > getComputedStyle(growingDiv)["max-height"] ? "auto": "hidden"
+				"overflow-y": scrollHeight && scrollHeight > getComputedStyle(growingDiv)["max-height"] ? "auto" : "hidden",
 			},
 			valueStateMsgPopover: {
 				"max-width": `${this._width}px`,
