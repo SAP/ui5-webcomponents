@@ -4,23 +4,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
 
-    <title>Button</title>
+    <title>OpenUI5 + UI5 Web Components</title>
 
     <script id='sap-ui-bootstrap'
             src='https://sdk.openui5.org/resources/sap-ui-core.js'
             data-sap-ui-theme='sap_belize_hcb'
-            data-sap-ui-libs='sap.m'
+            data-sap-ui-libs='sap.m, sap.ui.core'
             data-sap-ui-preload="async"
     ></script>
+
     <script>
         sap.ui.getCore().attachInit(function() {
-			var btn = new sap.m.Button({
-				text:'OpenUI5',
+			const dialog = new sap.m.Dialog({
+                content: [
+                    new sap.ui.core.HTML({
+                        content: '<ui5-date-picker id="myDatepicker" value="Aug 14, 2018" data-sap-ui-integration-popup-content></ui5-date-picker>'
+                    }),
+                ]
+            });
+
+            const dialog2 = new sap.m.Dialog({
+                content: [
+                    new sap.ui.core.HTML({
+                        content: '<ui5-calendar id="myCalendar" value="Aug 14, 2018"></ui5-calendar>'
+                    }),
+                ]
+            });
+
+			const btn = new sap.m.Button({
+				text: "DialogWithDatePicker",
 				press: function() {
-					alert("Hello!")
-				}
+					dialog.open();
+				},
 			});
-			btn.placeAt('content');
+
+			const btn2 = new sap.m.Button({
+				text: "DialogWithCalendar",
+				press: function() {
+					dialog2.open();
+				},
+			});
+
+            const page = new sap.m.Page({
+                content: [
+                    dialog, dialog2, btn, btn2
+                ],
+            });
+
+			page.placeAt('content');
         });
     </script>
 
@@ -35,18 +66,16 @@
         }
     </script>
 
-
     <script src="../../bundle.esm.js" type="module"></script>
 
-<link rel="stylesheet" type="text/css" href="./styles/OpenUI5.css">
+	<link rel="stylesheet" type="text/css" href="./styles/OpenUI5.css">
 </head>
 
 <body class="openui51auto">
 
-<ui5-button icon="download">Web Component</ui5-button>
-<ui5-datepicker></ui5-datepicker>
+	<ui5-button icon="download">Web Component</ui5-button>
+	<ui5-datepicker></ui5-datepicker>
 
-<div id='content'></div>
-
+	<div id='content'></div>
 </body>
 </html>
