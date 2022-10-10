@@ -4,7 +4,7 @@
  * @param attributes - optional attributes to add to the tag
  * @returns {HTMLElement}
  */
-const createLinkInHead = (href, attributes = {}, successCallback) => {
+const createLinkInHead = (href, attributes = {}) => {
 	const link = document.createElement("link");
 	link.type = "text/css";
 	link.rel = "stylesheet";
@@ -13,10 +13,12 @@ const createLinkInHead = (href, attributes = {}, successCallback) => {
 
 	link.href = href;
 
-	link.addEventListener("load", successCallback);
-
 	document.head.appendChild(link);
-	return link;
+
+	return new Promise(resolve => {
+		link.addEventListener("load", resolve);
+		link.addEventListener("error", resolve);
+	});
 };
 
 export default createLinkInHead;

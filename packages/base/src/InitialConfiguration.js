@@ -1,13 +1,14 @@
 import merge from "./thirdparty/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
+import validateThemeRoot from "./validateThemeRoot.js";
 
 let initialized = false;
 
 let initialConfig = {
 	animationMode: "full",
 	theme: DEFAULT_THEME,
-	themeRoots: {},
+	themeRoot: null,
 	rtl: null,
 	language: null,
 	calendarType: null,
@@ -27,14 +28,9 @@ const getTheme = () => {
 	return initialConfig.theme;
 };
 
-const getThemeRoots = () => {
-	initConfiguration();
-	return initialConfig.themeRoots;
-};
-
 const getThemeRoot = () => {
 	initConfiguration();
-	return initialConfig.themeRoots[getTheme()];
+	return initialConfig.themeRoot;
 };
 
 const getRTL = () => {
@@ -118,15 +114,9 @@ const parseURLParameters = () => {
 };
 
 const normalizeThemeRootParamValue = value => {
-	const themeRootObj = {};
-	const theme = value.split("@")[0];
-	let themeRoot = value.split("@")[1];
+	const themeRoot = value.split("@")[1];
 
-	themeRoot += (themeRoot.slice(-1) === "/" ? "" : "/");
-
-	themeRootObj[theme] = themeRoot;
-
-	return merge(initialConfig.themeRoots, themeRootObj);
+	return validateThemeRoot(themeRoot);
 };
 
 const normalizeThemeParamValue = (param, value) => {
@@ -149,7 +139,7 @@ const applyURLParam = (key, value, paramType) => {
 		initialConfig.theme = normalizeThemeParamValue(param, value);
 
 		if (value && value.includes("@")) {
-			initialConfig.themeRoots = normalizeThemeRootParamValue(value);
+			initialConfig.themeRoot = normalizeThemeRootParamValue(value);
 		}
 	} else {
 		initialConfig[param] = value;
@@ -187,7 +177,6 @@ export {
 	getAnimationMode,
 	getTheme,
 	getThemeRoot,
-	getThemeRoots,
 	getRTL,
 	getLanguage,
 	getFetchDefaultLanguage,
