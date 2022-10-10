@@ -4,10 +4,12 @@
 	--_ui5-textarea_disabled_background: var(--sapField_ReadOnly_Background);
 	--_ui5_textarea_disabled_border_color: var(--sapField_ReadOnly_BorderColor);
 	--_ui5_textarea_padding: 0.625rem 0.75rem;
+	--__ui5_textarea_min_height: 2.5rem;
 }
 
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-	--_ui5_textarea_padding: 0.1875rem 0.5rem; 
+	--_ui5_textarea_padding: 0.1875rem 0.5rem;
+	--__ui5_textarea_min_height: 1.625rem;
 }
