@@ -1,7 +1,7 @@
-commit a50a22fc1b6fd7a7d94acc90fbf82c8c37266f97
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Fri Oct 7 18:16:33 2022 +0300
+commit af203b94e1143bb01ecd596d5583c90da8f77eba
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Mon Oct 10 08:53:18 2022 +0300
 
-    fix(ui5-notifications): add missing imports for used icons (#5907)
+    fix(BarcodeScannerDialog): imports of UMD modules work in all kinds o… (#5901)
     
-    Fixes #5905
+    fix(BarcodeScannerDialog): imports of UMD modules work in all kinds of dev tools
