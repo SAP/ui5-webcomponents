@@ -575,13 +575,7 @@ class TextArea extends UI5Element {
 	}
 
 	get styles() {
-		const growingDiv = this.shadowRoot.querySelector(".ui5-textarea-mirror");
-		const scrollHeight = growingDiv && growingDiv.scrollHeight;
-
 		return {
-			inner: {
-				"overflow-y": (this.growing && !this.growingMaxLines) && (scrollHeight && scrollHeight > getComputedStyle(growingDiv)["max-height"]) ? "auto" : "hidden",
-			},
 			valueStateMsgPopover: {
 				"max-width": `${this._width}px`,
 			},

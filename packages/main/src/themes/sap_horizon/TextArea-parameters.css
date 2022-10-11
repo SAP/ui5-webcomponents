@@ -29,7 +29,6 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-	--_ui5_textarea_padding: 0.313rem 0.5rem;
 	--_ui5_textarea_information_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_textarea_error_warning_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_textarea_custom_icon_padding: .3125rem .5rem .25rem .5rem;

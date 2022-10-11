@@ -7,6 +7,7 @@
 :host {
 	width: 100%;
 	color: var(--sapField_TextColor);
+	min-height: var(--__ui5_textarea_min_height);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
@@ -44,7 +45,7 @@
 .ui5-textarea-root {
 	width: 100%;
 	height: inherit;
-	min-height: var(--_ui5_textarea_height);
+	min-height: var(--__ui5_textarea_min_height);
 	display: inline-flex;
 	vertical-align: top;
 	outline: none;
@@ -108,7 +109,6 @@
 	box-sizing: content-box;
 	width: 100%;
 	min-width: 6rem;
-	min-height: var(--__ui5_textarea_min_height);
 	height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize));
 	margin: 0;
 	padding: var(--_ui5_textarea_padding);
@@ -145,7 +145,7 @@
 	visibility: hidden;
 	width: 100%;
 	max-height: 94vh;
-	min-height: var(--__ui5_textarea_min_height);
+	min-height: calc((var(--_textarea_rows) * var(--_ui5_textarea_line_height)) * var(--sapFontSize));
 	word-break: break-all;
 	padding: var(--_ui5_textarea_padding);
 	font-size: var(--sapFontSize);
@@ -153,13 +153,15 @@
 	white-space: pre-wrap;
 }
 
-:host([growing]) .ui5-textarea-root, :host([growing]) .ui5-textarea-wrapper, :host([growing]) .ui5-textarea-mirror {
+:host([growing][style*="height"]) .ui5-textarea-root, :host([growing][style*="height"]) .ui5-textarea-wrapper,
+:host([growing][style*="height"]) .ui5-textarea-mirror, :host([growing][style*="height"]) .ui5-textarea-inner {
 	height: inherit;
+	min-height: var(--__ui5_textarea_min_height);
 }
 
 :host(:not([growing])[style*="height"]) .ui5-textarea-inner {
-	box-sizing: border-box;
 	height: inherit;
+	box-sizing: border-box;
 }
 
 :host([rows]) .ui5-textarea-inner {
@@ -184,7 +186,7 @@
 }
 
 :host([rows = "1"][growing]) .ui5-textarea-inner, :host([growing-max-lines = "1"]) .ui5-textarea-inner  {
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_vertical_padding) + (var(--_ui5_textarea_inner_border_width) * 2));
+	min-height: calc(var(--__ui5_textarea_min_height));
 }
 
 :host(:not([growing])[rows = "1"]) .ui5-textarea-inner {
@@ -196,12 +198,8 @@
 	max-height: 100%;
 }
 
-:host(:not([growing]):not([growing-max-lines])[show-exceeded-text]) .ui5-textarea-inner {
-	height: calc(100% - 48px);
-}
-
-:host(:not([growing]):not([growing-max-lines])[rows = "1"][show-exceeded-text]) .ui5-textarea-inner {
-	height: calc((var(--_ui5_textarea_line_height) * var(--sapFontSize)) - 48px);
+:host(:not([growing]):not([growing-max-lines]):not([rows = "1"])[show-exceeded-text]) .ui5-textarea-inner {
+	height: calc(100% - 21px);
 }
 
 :host([readonly]) {
