@@ -3,41 +3,6 @@ const fsDir = require('fs');
 const path = require('path');
 const cheerio = require('cheerio');
 
-const EXCLUDE_LIST = [
-	"AvatarGroup.sample.html",
-	"BarcodeScannerDialog.sample.html",
-	"BusyIndicator.sample.html",
-	"Button.sample.html",
-	"Card.sample.html",
-	"Carousel.sample.html",
-	"CheckBox.sample.html",
-	"ComboBox.sample.html",
-	"DateTimePicker.sample.html",
-	"Dialog.sample.html",
-	"FileUploader.sample.html",
-	"FlexibleColumnLayout.sample.html",
-	"IllustratedMessage.sample.html",
-	"Input.sample.html",
-	"List.sample.html",
-	"MultiInput.sample.html",
-	"MessageStrip.sample.html",
-	"NotificationListGroupItem.sample.html",
-	"Page.sample.html",
-	"NotificationListItem.sample.html",
-	"Panel.sample.html",
-	"Popover.sample.html",
-	"ProductSwitch.sample.html",
-	"ResponsivePopover.sample.html",
-	"ShellBar.sample.html",
-	"SideNavigation.sample.html",
-	"TabContainer.sample.html",
-	"Table.sample.html",
-	"Toast.sample.html",
-	"Tree.sample.html",
-	"UploadCollection.sample.html",
-	"Wizard.sample.html",
-]
-
 const UI5WC_TO_STORYBOOK_TYPES_MAP = {
 	'string': 'text',
 	'String': 'text',
@@ -62,12 +27,6 @@ const main = async () => {
 	];
 
 	const components = [];
-
-	// TODO: handle new components 
-	// Add new components here
-	const newComponents = [
-		"Menu",
-	];
 
 	packages.forEach(async package => {
 		const samplesPath = `../${package}/test/samples/`;
@@ -94,9 +53,6 @@ const main = async () => {
 		const files = await fs.readdir(samplesPath);
 
 		files.forEach(async (file) => {
-			if (EXCLUDE_LIST.includes(file)) {
-				return;
-			}
 			console.error('Preparing samples...', file);
 
 			//Copy samples
@@ -112,7 +68,7 @@ const main = async () => {
 				const section = $(snippet).parent();
 				section.find("pre").remove();
 
-				snippets.push(section.html().trim());
+				snippets.push(section.html().trim().replace(/(^[ \t]*\n)/gm, "")); // remove empty lines from a sample/snippet
 			});
 
 			let storyDir = path.join(process.cwd(), `/_storiesGenerated/${package}`);
@@ -140,6 +96,16 @@ const main = async () => {
 		const args = {};
 		const moduleAPI = api.symbols.find(s => s.module === module);
 
+		if (moduleAPI?.events) {
+			moduleAPI.events.forEach(event => {
+				args[event.name] = {
+					action: event.name,
+					table: {
+						category: "Events"
+					},
+				};
+			})
+		}
 		if (moduleAPI?.properties) {
 			moduleAPI.properties.forEach(prop => {
 				const controlType = UI5WC_TO_STORYBOOK_TYPES_MAP[prop.type] || 'select';
@@ -163,10 +129,13 @@ const main = async () => {
 		}
 
 		if (moduleAPI?.slots) {
-			moduleAPI.slots.forEach(prop => {
-				args[prop.name] = {
-					description: prop.description,
-					control: prop.type,
+			moduleAPI.slots.forEach(slot => {
+				args[slot.name] = {
+					description: slot.description,
+					control: slot.type,
+					table: {
+						category: "Slots"
+					},
 				};
 			});
 		}
@@ -199,11 +168,11 @@ const main = async () => {
 			let content = snippet
 				.replaceAll('\`', '\\`')
 			return `
-<Preview>
+<Canvas>
 	<Story name="default-${index}">
 		{html\`${content}\`}
 	</Story>
-</Preview>`
+</Canvas>`
 		});
 	}
 };
