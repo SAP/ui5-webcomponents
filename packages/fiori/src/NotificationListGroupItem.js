@@ -6,6 +6,11 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
+// Icons
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+
 // Texts
 import {
 	NOTIFICATION_LIST_GROUP_ITEM_TXT,

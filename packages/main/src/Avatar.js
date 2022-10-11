@@ -216,10 +216,10 @@ const metadata = {
 		 * <br/><br/>
 		 * Example:
 		 * <br/><br/>
-		 * &lt;ui5-avatar><br/>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-badge slot="badge"><br/>
-		 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-icon slot="icon" name="employee">&lt;/ui5-icon><br/>
-		 * &nbsp;&nbsp;&nbsp;&nbsp&lt;/ui5-badge><br/>
+		 * &lt;ui5-avatar><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-badge slot="badge"><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-icon slot="icon" name="employee">&lt;/ui5-icon><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;/ui5-badge><br>
 		 * &lt;/ui5-avatar>
 		 * <br/><br/>
 		 * <ui5-avatar initials="AB" color-scheme="Accent1">

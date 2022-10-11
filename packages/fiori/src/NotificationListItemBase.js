@@ -18,6 +18,15 @@ import NotificationOverflowActionsPopoverTemplate from "./generated/templates/No
 import NotificationOverflowActionsPopoverCss from "./generated/themes/NotificationOverflowActionsPopover.css.js";
 
 /**
+ * Defines the icons corresponding to the notification's priority.
+ */
+const ICON_PER_PRIORITY = {
+	[Priority.High]: "message-error",
+	[Priority.Medium]: "message-warning",
+	[Priority.Low]: "message-success",
+};
+
+/**
  * @public
  */
 const metadata = {
@@ -152,14 +161,6 @@ class NotificationListItemBase extends ListItemBase {
 		return NotificationOverflowActionsPopoverCss;
 	}
 
-	static priorityIconsMappings() {
-		return {
-			"High": "message-error",
-			"Medium": "message-warning",
-			"Low": "message-success",
-		};
-	}
-
 	get hasTitleText() {
 		return !!this.titleText.length;
 	}
@@ -169,7 +170,7 @@ class NotificationListItemBase extends ListItemBase {
 	}
 
 	get priorityIcon() {
-		return NotificationListItemBase.priorityIconsMappings()[this.priority];
+		return ICON_PER_PRIORITY[this.priority];
 	}
 
 	get overflowButtonDOM() {

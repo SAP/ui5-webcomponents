@@ -10,6 +10,10 @@ import Popover from "@ui5/webcomponents/dist/Popover.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
+// Icons
+import "@ui5/webcomponents-icons/dist/overflow.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+
 // Texts
 import {
 	NOTIFICATION_LIST_ITEM_TXT,
