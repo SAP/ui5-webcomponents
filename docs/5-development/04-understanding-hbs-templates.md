@@ -187,17 +187,30 @@ In the `Demo.hbs` file:
 In this example, even though we're looping over an item from the array, we can still access the global context and use the `name` property of the web component instance.
 
 
-## 4. `.hbs` syntax
+## 4. The `.hbs` syntax
 
 You can use the following features when writing `.hbs` templates:
 
-### Expressions
+### Bindings
+
+You can access any property from the context (generally the web component instance) in your `.hbs` template.
+
+In `Demo.js`:
+
+```js
+this.tooltip = "Some tooltip";
+this.txt = "Some text";
+```
+
+In `Demo.hbs`:
 
 ```html
 <button title="{{tooltip}}">{{txt}}<button/>
 ```
 
-*Note:* You must still create valid HTML and use expressions for attribute values or text nodes, for example the following is **not allowed**:
+*Note:* You must always create valid HTML, so you can only use bindings for attribute values or text nodes.
+
+For example, the following is **not allowed**:
 
 ```html
 <{{tag}} {{attr}}="Hello">This will not compile</{{tag}}>
@@ -205,21 +218,63 @@ You can use the following features when writing `.hbs` templates:
 
 You can access object properties:
 
+In `Demo.js`:
+
+```js
+this.person = {
+	name: "John",
+	lastName: "Smith"
+}
+```
+
+In `Demo.hbs`:
+
 ```html
 <p>{{person.name}} {{person.lastName}}</p>
 ```
 
-but you cannot create expressions. The following is **not allowed**:
+but you cannot use expressions inside `.hbs` templates. The following is **not allowed**:
 
 ```html
 <p>{{person.name + " " + person.lastName}}</p>
 ```
 
+Instead, you should pre-calculate the required value in the `.js` file and use it directly in the template:
+
+In `Demo.js`:
+
+```js
+get fullName() {
+	return `${this.person.name} ${this.person.lastName}`;
+}
+```
+
+In `Demo.hbs`:
+
+```html
+<p>{{fullName}}</p>
+```
+
+
 ### Conditional statements
+
+You can use `if`, `else` and `unless` to create conditions.
+
+Examples:
 
 ```html
 {{#if hasText}}
 	<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
+{{/if}}
+```
+
+or
+
+```html
+{{#if hasText}}
+	<label class="has-text"><span>{{text}}</span></label>
+{{else}}
+	<label class="empty-label"></label>
 {{/if}}
 ```
 
@@ -271,6 +326,8 @@ and then use this value in `Demo.hbs`:
 
 ### Loops
 
+You can use `each` to loop over arrays.
+
 In the `Demo.js` file:
 
 ```js
@@ -306,6 +363,8 @@ See the previous section (especially the "Context in loops" part) for more examp
 
 ### Property assignment (the `.` prefix)
 
+The `.` prefix allows you to bind by property, rather than by attribute.
+
 Consider the following example:
 
 ```js
@@ -335,13 +394,13 @@ The result in the DOM would be:
 <div id="myId" data-info="Some data">Some text</div>
 ```
 
-There would be no `item` attribute in the DOM at all, but the following code:
+There would be no `item` in the DOM at all, but the following code:
 
 ```js
 document.getElementById("myId").item
 ```
 
-would return the `item` object.
+would return the `item` object because it was set as a property.
 
 ### Boolean attribute assignment (the `?` prefix)
 
@@ -369,7 +428,7 @@ this.disabled = false;
 />
 ```
 
-Since the `checked`, `readonly` and `disabled` attributes are all `Boolean`, they must not be in the DOM if we want the `<input>` to be interactable.
+Since the `checked`, `readonly` and `disabled` attributes are all `Boolean`, they must not be in the DOM if we want the `<input>` to be interactive.
 
 The output in DOM would be:
 
@@ -415,7 +474,8 @@ even though `checked`, `readonly` and `disabled` are equal to `false`, the resul
 />
 ```
 
-which is not what we expect, since boolean HTML attributes don't need to have a value at all to be set, only their presence is required.
+which is not what we want, since boolean HTML attributes don't need to have a value at all to be considered set, only their presence is required.
+Therefore, always bind boolean attributes with `?`. 
 
 ### Event handlers assignment (the `@` prefix)
 
@@ -437,7 +497,8 @@ In `Demo.hbs`:
 
 Style maps are an easy and useful tool to apply multiple styles to an element dynamically.
 
-In order to use a style map in your `.hbs` template you must bind a `styles` property (or as in the next example, a getter called `styles`):
+In order to use a style map in your `.hbs` template you must bind a `styles` property (or as in the next example, a getter called `styles`).
+Any binding to a `styles` object on a `style` attribute will be treated as a style map.
 
 In `Demo.js`:
 
@@ -482,7 +543,7 @@ this.styles = "display: none; visibility: hidden";
 <div style="{{styles}}"></div>
 ```
 
-In the first example we build a style value manually, and in the second example we pass a string with hard-coded styles as a string. None of these are CSP-compliant.
+In the first example we build a style value manually, and in the second example we pass hard-coded styles as a string. None of these are CSP-compliant.
 The correct way would be to pass objects (as in the first example), in which case a style map will be used.
 
 ### Class maps
@@ -498,9 +559,9 @@ get classes() {
 			"ui5-demo-main": true,
 			"ui5-demo-mobile": isPhone()
 		},
-        content :{
-		    "ui5-content-wide": this.width > 1024	
-        },
+		content :{
+			"ui5-content-wide": this.width > 1024	
+		},
 		section: {
 			"ui5-section": true,
 			"ui5-section-with-items": this.items.length > 0,
@@ -517,7 +578,7 @@ get classes() {
 </article>
 ```
 
-Here, all 3 html elements will have their classes applied based on the conditions in the definition of the class map. Some entries in the class map
+Here, all 3 HTML elements will have their classes applied based on the conditions in the definition of the class map. Some entries in the class map
 are unconditional (`ui5-demo-main` and `ui5-section`) so these classes will always be set, however the rest are going to be set only if certain criteria are met.
 
 ### Partials
@@ -601,4 +662,4 @@ In `Demo2.hbs`:
 {{/inline}}
 ```
 
-Then the `Demo2` component will use the `.hbs` file of the `Demo` component, however with its own versio of its partials.
+Then the `Demo2` component will use the `.hbs` file of the `Demo` component, however with its own version of its partials.
