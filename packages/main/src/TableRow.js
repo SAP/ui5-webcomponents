@@ -14,7 +14,11 @@ import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
-import { ARIA_LABEL_ROW_SELECTION } from "./generated/i18n/i18n-defaults.js";
+import { 
+	ARIA_LABEL_ROW_SELECTION,
+	LIST_ITEM_NOT_SELECTED,
+	LIST_ITEM_SELECTED
+ } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
@@ -384,12 +388,19 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
+		const isSelected = this.selected ? TableRow.i18nBundle.getText(LIST_ITEM_SELECTED) : TableRow.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
+		const isRowSelectable = this.isSingleSelect || this.isMultiSelect;
 		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
-		return `${ariaLabel}. ${this._ariaPosition}`;
+		
+		if (isRowSelectable) {
+			return `${ariaLabel}. ${this._ariaPosition}. ${isSelected}`;
+		} else {
+			return `${ariaLabel}. ${this._ariaPosition}`;
+		}
 	}
 
 	get ariaLabelRowSelection() {
