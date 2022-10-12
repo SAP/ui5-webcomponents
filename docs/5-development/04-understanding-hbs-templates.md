@@ -2,7 +2,30 @@
 
 The preferred way to write the renderers for UI5 Web Components (and supported directly by the build tools) is to use standard Handlebars templates with some additional custom syntax.
 
-## 1. Handlebars compilation
+## Table of contents
+1. [Handlebars compilation](#compilation)
+2. [Design goals](#design_goals)
+3. [The context in `.hbs` files](#context)
+    - [Global context](#constxt_global)
+    - [Context in loops](#constxt_loops)
+    - [Accessing the global context from loops](#constxt_loops_accessing)
+4. [The `.hbs` syntax](#syntax)
+    - [Bindings](#syntax_bindings)
+    - [Conditions](#syntax_conditional)
+    - [Loops](#syntax_loops)
+    - [Property assignment (the `.` prefix)](#syntax_dot)
+    - [Boolean attribute assignment (the `?` prefix)](#syntax_question_mark)
+    - [Event handlers assignment (the `@` prefix)](#syntax_at)
+    - [Style maps](#syntax_style_maps)
+    - [Class maps](#syntax_class_maps)
+    - [Partials](#syntax_partials)
+    - [Include](#syntax_include)
+5. [Using the `slot` element](#slots)
+    - [Rendering slots](#slots_rendering)
+    - [Individual slots](#slots_individual)
+
+
+## 1. Handlebars compilation <a name="compilation"></a>
 
 [Handlebars](https://handlebarsjs.com/guide/#simple-expressions) templates (`.hbs`) are compiled during build/development to [lit-html](https://lit.dev/docs/v1/lit-html/introduction/) templates (`.lit.js`) and the lit templates are what's actually executed during runtime.
 
@@ -26,7 +49,7 @@ and later tree-shaken by the bundler and bundled along with the rest of the comp
 
 Therefore, the `.hbs` file is there just for convenience, the end result will always be optimized lit-html.
 
-## 2. Design goals of the Handlebars templates
+## 2. Design goals of the Handlebars templates <a name="design_goals"></a>
 
  - **Declarative**: write HTML in a form as close as possible to what will eventually end up in the DOM (rather than writing template functions directly)
  - **Abstract**: the template could be compiled to other formats in the future (not just lit-html) so it should only use universal concepts and no lit-specific features
@@ -34,9 +57,9 @@ Therefore, the `.hbs` file is there just for convenience, the end result will al
  
 For all the above reasons, we would suggest you use `.hbs` templates, and have them compiled to lit-html, instead of directly writing `lit-html` renderers, although that's also possible if you prefer so.
 
-## 3. The context in `.hbs` files
+## 3. The context in `.hbs` files <a name="context"></a>
 
-### 3.1 Global context
+### 3.1 Global context <a name="context_global"></a>
 
 The context in the `.bhs` file is the **web component instance**, and you do not have to write the `this` keyword (although you can).
 Therefore, you can directly use metadata entities (property, slot, event names) or any other Javascript property on the component directly:
@@ -64,7 +87,7 @@ The following code will have exactly the same result:
 
 but `this` is optional, so it's almost never used.
 
-### 3.2 Context in loops
+### 3.2 Context in loops  <a name="context_loops"></a>
 
 In a loop the context is always the current item, and not the component itself. Example:
 
@@ -156,7 +179,7 @@ The result in the DOM would be:
 
 In this example, the first usage of `this` (in the nested `#each`) is the nested array (f.e. `[1, 2, 3]`), and the second usage of `this` inside the `span` is the number itself.
 
-### 3.3 Accessing the global context from loops
+### 3.3 Accessing the global context from loops  <a name="context_loops_accessing"></a>
 
 You can access the global context inside loops with the "one-level-up" expression: `../`
 
@@ -187,11 +210,11 @@ In the `Demo.hbs` file:
 In this example, even though we're looping over an item from the array, we can still access the global context and use the `name` property of the web component instance.
 
 
-## 4. The `.hbs` syntax
+## 4. The `.hbs` syntax <a name="syntax"></a>
 
 You can use the following features when writing `.hbs` templates:
 
-### Bindings
+### Bindings <a name="syntax_bindings"></a>
 
 You can access any property from the context (generally the web component instance) in your `.hbs` template.
 
@@ -256,7 +279,7 @@ In `Demo.hbs`:
 ```
 
 
-### Conditional statements
+### Conditions <a name="syntax_conditional"></a>
 
 You can use `if`, `else` and `unless` to create conditions.
 
@@ -324,7 +347,7 @@ and then use this value in `Demo.hbs`:
 {{/if}}
 ```
 
-### Loops
+### Loops <a name="syntax_loops"></a>
 
 You can use `each` to loop over arrays.
 
@@ -361,7 +384,7 @@ In the `Demo.hbs` file:
 
 See the previous section (especially the "Context in loops" part) for more examples and the meaning of the `this` keyword in loops.
 
-### Property assignment (the `.` prefix)
+### Property assignment (the `.` prefix) <a name="syntax_dot"></a>
 
 The `.` prefix allows you to bind by property, rather than by attribute.
 
@@ -402,7 +425,7 @@ document.getElementById("myId").item
 
 would return the `item` object because it was set as a property.
 
-### Boolean attribute assignment (the `?` prefix)
+### Boolean attribute assignment (the `?` prefix) <a name="syntax_question_mark"></a>
 
 The `?` prefix signifies that an attribute must not be set in DOM at all, if the bound value is falsy.
 
@@ -477,7 +500,7 @@ even though `checked`, `readonly` and `disabled` are equal to `false`, the resul
 which is not what we want, since boolean HTML attributes don't need to have a value at all to be considered set, only their presence is required.
 Therefore, always bind boolean attributes with `?`. 
 
-### Event handlers assignment (the `@` prefix)
+### Event handlers assignment (the `@` prefix) <a name="syntax_at"></a>
 
 You can bind events as follows:
 
@@ -493,7 +516,7 @@ In `Demo.hbs`:
 <button @click="{{onClick}}"></button>
 ```
 
-### Style maps
+### Style maps <a name="syntax_style_maps"></a>
 
 Style maps are an easy and useful tool to apply multiple styles to an element dynamically.
 
@@ -546,7 +569,7 @@ this.styles = "display: none; visibility: hidden";
 In the first example we build a style value manually, and in the second example we pass hard-coded styles as a string. None of these are CSP-compliant.
 The correct way would be to pass objects (as in the first example), in which case a style map will be used.
 
-### Class maps
+### Class maps <a name="syntax_class_maps"></a>
 
 Class maps are an easy tool to set multiple classes to an element - either conditionally, or unconditionally.
 
@@ -581,7 +604,7 @@ get classes() {
 Here, all 3 HTML elements will have their classes applied based on the conditions in the definition of the class map. Some entries in the class map
 are unconditional (`ui5-demo-main` and `ui5-section`) so these classes will always be set, however the rest are going to be set only if certain criteria are met.
 
-### Partials
+### Partials <a name="syntax_partials"></a>
 
 You can use partials to reuse code in `.hbs` templates:
 
@@ -636,7 +659,7 @@ In `Demo.hbs`:
 
 Here we define two empty partials (`beforeContent` and `afterContent`) for others to implement.
 
-### Include
+### Include <a name="syntax_include"></a>
 
 You can include other `.hbs` files with `{{>include "PATH_TO_FILE"}}` where `PATH_TO_FILE` is a relative or absolute path to the `.hbs` file you want to include.
 
@@ -671,3 +694,116 @@ In `Demo2.hbs`:
 ```
 
 Then the `Demo2` component will use the `.hbs` file of the `Demo` component, however with its own version of its partials.
+
+## 5. Using the `slot` element <a name="slots"></a>
+
+### Rendering slots <a name="slots_rendering"></a>
+
+The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element allows you to render children, nested in your web component in a desired place in the shadow DOM.
+You should render each slot, defined in your component's metadata (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)), somewhere in the `.bhs` template.
+
+To render the default slot simply render a `slot` tag:
+
+```html
+<slot></slot>
+```
+
+and to render a named slot:
+
+```html
+<slot name="tabs"></slot>
+```
+
+Here's a real-world example of a "page" component:
+
+In `Page.js` (metadata object):
+
+```js
+slots: {
+	header: {
+		type: HTMLElement
+	},
+	"default": {
+		type: HTMLElement,
+		propertyName: "content"
+	},
+	footer: {
+		type: HTMLElement
+	}
+}
+```
+
+In `Page.hbs`:
+
+```html
+<div class="ui5-page-root">
+	<header class="ui5-page-header-root" id="ui5-page-header">
+		<slot name="header"></slot>
+	</header>
+
+	<section part="content" class="ui5-page-content-root" style="{{styles.content}}">
+		<slot></slot>
+	</section>
+
+	<footer class="ui5-page-footer-root" style="{{styles.footer}}">
+		<slot name="footer"></slot>
+	</footer>
+</div>
+
+```
+
+We render 3 `slot` elements - a default slot (unnamed) and 2 named slots - respectively with `name` equal to `header` and `footer`.
+
+All children, passed to the component, with no `slot` attribute will be then rendered by the browser where the default `<slot></slot>` is,
+and all children with attributes `slot="header"` / `slot="footer"` will be rendered where the respective named `slot` is.
+
+### Individual slots <a name="slots_individual"></a>
+
+All children, assigned to a certain `slot`, are rendered by the browser next to each other in the exact order in which they were passed to the component.
+Sometimes, however, each child must be placed separately in the shadow root, potentially wrapped in other HTML elements, to satisfy the UX design of the component. 
+
+The `individualSlots` slot metadata configuration setting (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)) allows you to have a separate physical slot for each child belonging to a certain slot.
+
+However, setting `individualSlots: true` in the metadata configuration only creates an `_individualSlot` property on each element belonging to the slot, but does not create any slots automatically.
+The individual slots must be explicitly rendered by the developer in the `.hbs` template.
+
+To do so, simply render a `slot` with a `name` property equal to the `_individualSlot` value for each child.
+
+Here's an example:
+
+In `Demo.js` (metadata object):
+
+```js
+{
+	slots: {
+		"default": {
+			type: HTMLElement,
+			propertyName: "items",
+			individualSlots: true
+		}
+	}
+}
+```
+
+Since `propertyName` is set to `items`, the children of the default slot will be accessible on the web component instance with `this.items`;
+and since `individualSlots` is set to `true`, every child in `this.items` (every child slotted in the default slot) will have an `_individualSlots` property created by the framework. 
+
+In `Demo.hbs` you must render a slot for each child with `name` equal to the `_individualSlot` property value for this child:
+
+```html
+{{#each items}}
+	 <div class="item-wrapper">
+		<slot name="{{_individualSlot}}"></slot>
+	</div>
+{{/each}}
+```
+
+The resulting DOM form the loop above will look like this:
+
+```html
+<div class="item-wrapper"><slot name="items-1"></slot></div>
+<div class="item-wrapper"><slot name="items-2"></slot></div>
+<div class="item-wrapper"><slot name="items-3"></slot></div>
+```
+
+This allows you to have arbitrary DOM around each child and implement complex UX design, otherwise impossible if all children were just normally slotted next to each other in a single slot.
