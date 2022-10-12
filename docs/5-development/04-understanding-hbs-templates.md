@@ -638,7 +638,7 @@ Here we define two empty partials (`beforeContent` and `afterContent`) for other
 
 ### Include
 
-You can include other `.hbs` files with `{{>include "PATH_TO_FILE"}}` where `PATH_TO_FILE` is a relative or absolute path to the `.bhs` file you want to include.
+You can include other `.hbs` files with `{{>include "PATH_TO_FILE"}}` where `PATH_TO_FILE` is a relative or absolute path to the `.hbs` file you want to include.
 
 Example:
 
