@@ -1,13 +1,23 @@
-commit 6a30f81fc9fccc2c2716e3da635a084192f6b6b7
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Oct 11 23:33:55 2022 -0700
+commit b9ffaa6f0353e9e8136019978299548021555643
+Author: TeodorTaushanov <teodor.taushanov@sap.com>
+Date:   Wed Oct 12 09:44:43 2022 +0300
 
-    Translation Delivery (#5923)
+    fix(ui5-label): improve "for" attribute accessibility reading (#5872)
     
-    * chore: translation delivery
+    * fix(ui5-radiobutton): improved accessibility
     
-    Change-Id: I1dee7907804038e2fd298fe1257e63f5ecd5d01b
+    * fix(ui5-radiobutton): improved accessibility
     
-    * chore: translation delivery
+    * fix(ui5-radiobutton): improved accessibility
     
-    Change-Id: I12fb16b19b71aa947adf3c2307c9687385c2907f
+    * fix(ui5-label): remove radio button changes
+    
+    * fix(ui5-label): remove radio button changes
+    
+    * fix(ui5-label): add tests, improve samples and docs
+    
+    * fix(ui5-label): use correct root element, remove "for" attr inside the shadow root
+    
+    * fix(ui5-label): fix samples
+    
+    * fix(ui5-label): update documentation
