@@ -55,7 +55,7 @@ In the `Demo.hbs` file you can just use them directly:
 <p>{{age}}</p>
 ```
 
-The following code will have the exactly same result:
+The following code will have exactly the same result:
 
 ```html
 <p>{{this.fullName}}</p>
@@ -484,7 +484,7 @@ You can bind events as follows:
 In `Demo.js`:
 
 ```js
-this.onCLick = () => {};
+this.onClick = event => {};
 ```
 
 In `Demo.hbs`:
@@ -644,6 +644,14 @@ Example:
 
 ```html
 {{>include "./Demo.hbs"}}
+```
+
+Paths to `.hbs` files from other `node_modules/` libraries are also supported.
+
+Example:
+
+```html
+{{>include "@ui5/webcomponents/src/Popup.hbs"}}
 ```
 
 The most common use case for `{{>include}}` is to include an `.hbs` file that has extension points (hooks) and implement them. Given the example from the previous section (about Partials), consider the following:
