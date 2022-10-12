@@ -5,6 +5,7 @@ import * as defaultFioriTexts from "./dist/generated/i18n/i18n-defaults.js";
 import "./dist/Assets.js";
 
 import "./bundle.common.js";
+import "./dist/illustrations/AllIllustrations.js";
 import BarcodeScannerDialog from "./dist/BarcodeScannerDialog.js";
 
 testAssets.defaultTexts = {...testAssets.defaultTexts, ...defaultFioriTexts };

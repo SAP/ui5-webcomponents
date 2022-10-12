@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -349,8 +349,12 @@ class IllustratedMessage extends UI5Element {
 		return [Title];
 	}
 
-	onBeforeRendering() {
-		const illustrationData = getIllustrationDataSync(this.name);
+	async onBeforeRendering() {
+		let illustrationData = getIllustrationDataSync(this.name);
+
+		if (!illustrationData) {
+			illustrationData = await getIllustrationData(this.name);
+		}
 
 		if (illustrationData === ILLUSTRATION_NOT_FOUND) {
 			this.invalid = true;
