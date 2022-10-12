@@ -149,6 +149,12 @@ class SegmentedButton extends UI5Element {
 	onBeforeRendering() {
 		const items = this.getSlottedNodes("items");
 
+		for (let i = 0; i < items.length; i++) {
+			if (items[i].pressed) {
+				this._itemNavigation.setCurrentItem(items[i]);
+			}
+		}
+
 		items.forEach((item, index, arr) => {
 			item.posInSet = index + 1;
 			item.sizeOfSet = arr.length;
