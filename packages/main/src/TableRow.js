@@ -14,11 +14,11 @@ import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
-import { 
+import {
 	ARIA_LABEL_ROW_SELECTION,
 	LIST_ITEM_NOT_SELECTED,
-	LIST_ITEM_SELECTED
- } from "./generated/i18n/i18n-defaults.js";
+	LIST_ITEM_SELECTED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
@@ -395,12 +395,12 @@ class TableRow extends UI5Element {
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
-		
+
 		if (isRowSelectable) {
 			return `${ariaLabel}. ${this._ariaPosition}. ${isSelected}`;
-		} else {
-			return `${ariaLabel}. ${this._ariaPosition}`;
 		}
+
+		return `${ariaLabel}. ${this._ariaPosition}`;
 	}
 
 	get ariaLabelRowSelection() {
