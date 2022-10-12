@@ -699,7 +699,7 @@ Then the `Demo2` component will use the `.hbs` file of the `Demo` component, how
 
 ### Rendering slots <a name="slots_rendering"></a>
 
-The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element allows you to render children, nested in your web component in a desired place in the shadow DOM.
+The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element allows you to render children, nested in your web component, in a desired place in the shadow DOM.
 You should render each slot, defined in your component's metadata (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)), somewhere in the `.bhs` template.
 
 To render the default slot simply render a `slot` tag:
@@ -754,7 +754,7 @@ In `Page.hbs`:
 
 We render 3 `slot` elements - a default slot (unnamed) and 2 named slots - respectively with `name` equal to `header` and `footer`.
 
-All children, passed to the component, with no `slot` attribute will be then rendered by the browser where the default `<slot></slot>` is,
+All children, passed to the component, with no `slot` attribute will then be rendered by the browser where the default `<slot></slot>` is,
 and all children with attributes `slot="header"` / `slot="footer"` will be rendered where the respective named `slot` is.
 
 ### Individual slots <a name="slots_individual"></a>
@@ -798,7 +798,7 @@ In `Demo.hbs` you must render a slot for each child with `name` equal to the `_i
 {{/each}}
 ```
 
-The resulting DOM form the loop above will look like this:
+The resulting DOM from the loop above will look like this:
 
 ```html
 <div class="item-wrapper"><slot name="items-1"></slot></div>
@@ -806,4 +806,4 @@ The resulting DOM form the loop above will look like this:
 <div class="item-wrapper"><slot name="items-3"></slot></div>
 ```
 
-This allows you to have arbitrary DOM around each child and implement complex UX design, otherwise impossible if all children were just normally slotted next to each other in a single slot.
+This allows you to have arbitrary DOM around each child and implement complex UX design, otherwise impossible if all children were just normally rendered next to each other in a single slot.
