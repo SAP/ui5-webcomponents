@@ -19,6 +19,8 @@ const UI5WC_TO_STORYBOOK_TYPES_MAP = {
 	'CSSColor': 'color'
 }
 
+const STORIES_ROOT_FOLDER_NAME = '_storiesGenerated';
+
 const main = async () => {
 	const template = await fs.readFile(path.join(__dirname, '../stories/template.mdx'), 'utf8');
 	const packages = [
@@ -49,7 +51,7 @@ const main = async () => {
 		const samplesPath = `../${package}/test/samples/`;
 		const api = JSON.parse((await fs.readFile(`../${package}/dist/api.json`)).toString());
 
-
+		// api.symbols.filter(symbol => symbol.kind === 'class')
 		const files = await fs.readdir(samplesPath);
 
 		files.forEach(async (file) => {
@@ -70,29 +72,44 @@ const main = async () => {
 
 				snippets.push(section.html().trim().replace(/(^[ \t]*\n)/gm, "")); // remove empty lines from a sample/snippet
 			});
-
-			let storyDir = path.join(process.cwd(), `/_storiesGenerated/${package}`);
-
-			if (!fsDir.existsSync(storyDir)){ // check if the package folder exists and creates one if it doesn't
-				fsDir.mkdirSync(storyDir);
+			await generateStory(package, file, api, snippets);
+			const appendDocs = api.symbols.find(s => s.module === file.split('.')[0]).appenddocs;
+			if (appendDocs) {
+				for (const currSymbol of appendDocs.split(' ')) {
+					await generateStory(package, currSymbol + '.sample.html', api, null, file.split('.')[0])
+				}
 			}
-
-			storyDir += `/${file.substring(0, file.indexOf('.'))}`;
-
-			if (!fsDir.existsSync(storyDir)){ // check if the component folder exists and creates one if it doesn't
-				fsDir.mkdirSync(storyDir);
-			}
-			storyDir += `/${file.replace('.sample.html', '.stories.mdx')}`;
-
-			const storyData = getStory(api, file.split('.')[0], snippets);
-
-			await fs.writeFile(storyDir, storyData.storyContent);
-			await fs.writeFile(storyDir.substring(0, storyDir.lastIndexOf('/')) + '/Description.md', storyData.storyDescription);
-			await fs.writeFile(storyDir.substring(0, storyDir.lastIndexOf('/')) + '/argsTypes.js', `export default ` + storyData.storyArgsTypes);
 		});
 	});
 
-	function getAPI(api, module) {
+	async function generateStory(package, file, api, snippets, parentStoryName) {
+
+		const storyData = getStoryData(api, file.split('.')[0], snippets, parentStoryName);
+		const storyDir = createStoryDirectory(package, file);
+
+		await fs.writeFile(storyDir, storyData.storyContent);
+		await fs.writeFile(storyDir.substring(0, storyDir.lastIndexOf('/')) + '/Description.md', storyData.storyDescription);
+		await fs.writeFile(storyDir.substring(0, storyDir.lastIndexOf('/')) + '/argsTypes.js', `export default ` + storyData.storyArgsTypes);
+	};
+
+	function createStoryDirectory(package, file) {
+		let storyDir = path.join(process.cwd(), `/${STORIES_ROOT_FOLDER_NAME}/${package}`);
+
+		if (!fsDir.existsSync(storyDir)){ // check if the package folder exists and creates one if it doesn't
+			fsDir.mkdirSync(storyDir);
+		}
+
+		storyDir += `/${file.substring(0, file.indexOf('.'))}`;
+
+		if (!fsDir.existsSync(storyDir)){ // check if the component folder exists and creates one if it doesn't
+			fsDir.mkdirSync(storyDir);
+		}
+		storyDir += `/${file.replace('.sample.html', '.stories.mdx')}`;
+
+		return storyDir;
+	};
+
+	function getAPIData(api, module) {
 		const args = {};
 		const moduleAPI = api.symbols.find(s => s.module === module);
 
@@ -147,14 +164,14 @@ const main = async () => {
 		};
 	}
 
-	function getStory(api, module, snippets) {
-		const data = getAPI(api, module);
+	function getStoryData(api, module, snippets, parentStoryName) {
+		const data = getAPIData(api, module);
 
 		const stories = snippetsToStories(snippets);
 
 		const storyContent = template
 			.replace(/{{stories}}/g, stories.join("\n"))
-			.replace(/{{name}}/g, data.name); // spacing level = 2
+			.replace(/{{name}}/g, parentStoryName? `${parentStoryName}/${data.name}` : data.name); // spacing level = 2
 
 		return {
 			storyContent: storyContent,
@@ -164,16 +181,28 @@ const main = async () => {
 	};
 
 	function snippetsToStories(snippets) {
-		return snippets.map((snippet, index) => {
-			let content = snippet
-				.replaceAll('\`', '\\`')
-			return `
+		if (snippets) {
+			return snippets.map((snippet, index) => {
+				let content = snippet
+					.replaceAll('\`', '\\`')
+				return `
 <Canvas>
 	<Story name="default-${index}">
 		{html\`${content}\`}
 	</Story>
 </Canvas>`
-		});
+			});
+		} else {
+				return 	[`
+<Canvas>
+	<Story name="placeholder">
+		{html\`<h3>Placeholder Story</h3>
+	<div class="snippet">
+		<h5>Add your story here</h5>
+	</div>\`}
+	</Story>
+</Canvas>`]
+		}
 	}
 };
 
