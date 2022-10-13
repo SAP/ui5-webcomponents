@@ -31,7 +31,7 @@ The preferred way to write the renderers for UI5 Web Components (and supported d
 
 Example:
 
-The following `src/Demo.hbs` template:
+The following `src/Demo.hbs` template
 
 ```html
 <button>{{text}}</button>
@@ -51,11 +51,11 @@ Therefore, the `.hbs` file is there just for convenience, the end result will al
 
 ## 2. Design goals of the Handlebars templates <a name="design_goals"></a>
 
- - **Declarative**: write HTML in a form as close as possible to what will eventually end up in the DOM (rather than writing template functions directly)
- - **Abstract**: the template could be compiled to other formats in the future (not just lit-html) so it should only use universal concepts and no lit-specific features
- - **Separation of concerns**: the template must be as simple as possible with no complex expressions or calculations - variables that control structures (f.e. `{{#if` statements) should be pre-calculated. 
+ - **Declarative**: write HTML in a form as close as possible to what will eventually be in the DOM (rather than writing template functions directly).
+ - **Abstract**: the template could be compiled to other formats in the future (not just lit-html) so it should only use universal concepts and no lit-specific features.
+ - **Separation of concerns**: the template must be as simple as possible with no complex expressions or calculations - variables that control structures (for example, `{{#if` statements) should be precalculated. 
  
-For all the above reasons, we would suggest you use `.hbs` templates, and have them compiled to lit-html, instead of directly writing `lit-html` renderers, although that's also possible if you prefer so.
+For these reasons, we would suggest you use `.hbs` templates and have them compiled to lit-html, instead of directly writing `lit-html` renderers, although that's also possible if you prefer so.
 
 ## 3. The context in `.hbs` files <a name="context"></a>
 
@@ -89,7 +89,9 @@ but `this` is optional, so it's almost never used.
 
 ### 3.2 Context in loops  <a name="context_loops"></a>
 
-In a loop the context is always the current item, and not the component itself. Example:
+In a loop the context is always the current item, and not the component itself. 
+
+Example:
 
 In the `Demo.js` file:
 
@@ -149,7 +151,7 @@ Here, each `div` inside the loop gets assigned an `item` property that points to
 
 Here's another example for the `this` keyword:
 
-In `Demo.js`
+In the `Demo.js` file:
 
 ```js
 this.numbers = [
@@ -158,7 +160,7 @@ this.numbers = [
 ];
 ```
 
-In `Demo.hbs`
+In the `Demo.hbs` file:
 
 ```html
 {{#each numbers}}
@@ -177,7 +179,7 @@ The result in the DOM would be:
 <div><span>4</span><span>5</span><span>6</span></div>
 ```
 
-In this example, the first usage of `this` (in the nested `#each`) is the nested array (f.e. `[1, 2, 3]`), and the second usage of `this` inside the `span` is the number itself.
+In this example, the first usage of `this` (in the nested `#each`) is the nested array (фор еьампле, `[1, 2, 3]`), and the second usage of `this` inside the `span` is the number itself.
 
 ### 3.3 Accessing the global context from loops  <a name="context_loops_accessing"></a>
 
@@ -218,14 +220,14 @@ You can use the following features when writing `.hbs` templates:
 
 You can access any property from the context (generally the web component instance) in your `.hbs` template.
 
-In `Demo.js`:
+In the `Demo.js` file:
 
 ```js
 this.tooltip = "Some tooltip";
 this.txt = "Some text";
 ```
 
-In `Demo.hbs`:
+In the `Demo.hbs` file:
 
 ```html
 <button title="{{tooltip}}">{{txt}}<button/>
@@ -241,7 +243,7 @@ For example, the following is **not allowed**:
 
 You can access object properties:
 
-In `Demo.js`:
+In the `Demo.js` file:
 
 ```js
 this.person = {
@@ -250,7 +252,7 @@ this.person = {
 }
 ```
 
-In `Demo.hbs`:
+In the `Demo.hbs` file:
 
 ```html
 <p>{{person.name}} {{person.lastName}}</p>
@@ -262,9 +264,9 @@ but you cannot use expressions inside `.hbs` templates. The following is **not a
 <p>{{person.name + " " + person.lastName}}</p>
 ```
 
-Instead, you should pre-calculate the required value in the `.js` file and use it directly in the template:
+Instead, you should precalculate the required value in the `.js` file and use it directly in the template:
 
-In `Demo.js`:
+In the `Demo.js` file:
 
 ```js
 get fullName() {
@@ -272,7 +274,7 @@ get fullName() {
 }
 ```
 
-In `Demo.hbs`:
+In the `Demo.hbs` file:
 
 ```html
 <p>{{fullName}}</p>
@@ -309,7 +311,7 @@ or
 {{/unless}}
 ```
 
-You can chain if-else-if as follows:
+You can chain if-else-if, as follows:
 
 ```html
 {{#if hasImage}}
@@ -329,7 +331,7 @@ Again, you cannot use expressions, so the following is **not allowed**:
 {{/if}}
 ```
 
-Instead, you should have a pre-calculated value in your `.js file`, for example:
+Instead, you should have a precalculated value in your `.js file`, for example:
 
 In `Demo.js`:
 
@@ -451,7 +453,7 @@ this.disabled = false;
 />
 ```
 
-Since the `checked`, `readonly` and `disabled` attributes are all `Boolean`, they must not be in the DOM if we want the `<input>` to be interactive.
+Since the `checked`, `readonly`, and `disabled` attributes are all `Boolean`, they must not be in the DOM if we want the `<input>` to be interactive.
 
 The output in DOM would be:
 
@@ -467,7 +469,7 @@ The output in DOM would be:
 
 All attributes that had the `?` prefix and were bound to a falsy value are gone from DOM.
 
-However, if one did not use the `?` prefix:
+However, if you did not use the `?` prefix:
 
 ```html
 <input
@@ -482,7 +484,7 @@ However, if one did not use the `?` prefix:
 />
 ```
 
-even though `checked`, `readonly` and `disabled` are equal to `false`, the resulting DOM would be:
+even though `checked`, `readonly`, and `disabled` are equal to `false`, the resulting DOM would be:
 
 ```html
 <input
@@ -504,13 +506,13 @@ Therefore, always bind boolean attributes with `?`.
 
 You can bind events as follows:
 
-In `Demo.js`:
+In the `Demo.js` file:
 
 ```js
 this.onClick = event => {};
 ```
 
-In `Demo.hbs`:
+In the `Demo.hbs` file:
 
 ```html
 <button @click="{{onClick}}"></button>
@@ -523,7 +525,7 @@ Style maps are an easy and useful tool to apply multiple styles to an element dy
 In order to use a style map in your `.hbs` template you must bind a `styles` property (or as in the next example, a getter called `styles`).
 Any binding to a `styles` object on a `style` attribute will be treated as a style map.
 
-In `Demo.js`:
+In the `Demo.js` file:
 
 ```js
 get styles() {
@@ -540,7 +542,7 @@ get styles() {
 }
 ```
 
-In `Demo.hbs`:
+In the `Demo.hbs` file:
 
 ```html
 <div style="{{styles.root}}">
@@ -554,7 +556,7 @@ After the following code is run, both the `div` and the `footer` will have the r
 **Important:** do not build styles manually. Always use style maps as they are CSP-compliant and they will not build style strings and assign them,
 but will use Javascript APIs to apply each style/CSS variable separately.
 
-The following is an anti-pattern and is not allowed in the latest version of the handlebars-to-lit compiler:
+The following is an anti-pattern and is **not allowed** in the latest version of the handlebars-to-lit compiler:
 
 ```js
 this.display = "block";
@@ -608,7 +610,7 @@ are unconditional (`ui5-demo-main` and `ui5-section`) so these classes will alwa
 
 You can use partials to reuse code in `.hbs` templates:
 
-You can define a partial with `{{#*inline "NAME"}}` and use it with `{{>NAME}}` where `NAME` is the name of the partial
+You can define a partial with `{{#*inline "NAME"}}` and use it with `{{>NAME}}` where `NAME` is the name of the partial.
 
 Consider the following example:
 
