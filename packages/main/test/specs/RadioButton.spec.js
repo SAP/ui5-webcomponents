@@ -18,12 +18,19 @@ describe("Rendering", () => {
 		assert.strictEqual(await disabledRadioButtonRoot.getAttribute("aria-disabled"), "true", "aria-disabled = true");
 		assert.strictEqual(await disabledRadioButtonInput.getAttribute("disabled"), "true", "internal input is disabled");
 
-
 		const readOnlyRadioButtonRoot = await browser.$("#groupRbReadOnly").shadow$(".ui5-radio-root");
 		const readOnlyRadioButtonInput = await browser.$("#groupRbReadOnly").shadow$("input");
 
 		assert.notOk(await readOnlyRadioButtonRoot.getAttribute("aria-readonly"), "aria-readonly is not set to the root level");
 		assert.strictEqual(await readOnlyRadioButtonInput.getAttribute("readonly"), "true", "internal input is readonly");
+
+		const requiredRadioButtonInput = await browser.$("#formRadioBtnRequired").shadow$("input");
+		const requiredRadioButtonFormSupportInputRequiredAttr = await browser.executeAsync(done => {
+			done(document.getElementById("formRadioBtnRequired").shadowRoot.querySelector("slot").assignedNodes()[0].getAttribute("required"));
+		});
+
+		assert.ok(await requiredRadioButtonInput.getAttribute("required"), "required attribute is set");
+		assert.strictEqual(requiredRadioButtonFormSupportInputRequiredAttr, "" ,"required attribute is set");
 	});
 });
 

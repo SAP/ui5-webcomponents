@@ -490,10 +490,6 @@ class RadioButton extends UI5Element {
 		};
 	}
 
-	get ariaReadonly() {
-		return this.readonly ? "true" : undefined;
-	}
-
 	get ariaDisabled() {
 		return this.disabled ? "true" : undefined;
 	}
