@@ -53,15 +53,6 @@ const IComboBoxItem = "sap.ui.webcomponents.main.IComboBoxItem";
 const IColorPaletteItem = "sap.ui.webcomponents.main.IColorPaletteItem";
 
 /**
- * Interface for form components.
- *
- * @name sap.ui.webcomponents.main.IFormComponent
- * @interface
- * @public
- */
-const IFormComponent = "sap.ui.webcomponents.main.IFormComponent";
-
-/**
  * Interface for components that represent an icon, usable in numerous higher-order components
  *
  * @name sap.ui.webcomponents.main.IIcon
@@ -194,7 +185,6 @@ export {
 	ICalendarDate,
 	IColorPaletteItem,
 	IComboBoxItem,
-	IFormComponent,
 	IIcon,
 	IInput,
 	IInputSuggestionItem,
