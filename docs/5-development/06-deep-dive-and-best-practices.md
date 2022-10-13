@@ -483,8 +483,8 @@ The usage of the event by the app will be exactly like in the case of a native H
 ```js
 const list = document.getElementsByTagName("my-items-list")[0];
 list.addEventListener("selectionChange", (event) => {
-	console.log(event.details.item);
-	console.log(event.details.oldItem);
+	console.log(event.detail.item);
+	console.log(event.detail.oldItem);
 });
 ```
 
@@ -727,9 +727,11 @@ Example:
 constructor() {
 	super();
 
-	this._filteredItems = []; // initialize a variable for later use
-	
-	this._handleResizeBound = this._handleResize.bind(this); // bind a method once so that you can pass the same function to register/deregister-based helpers
+	// initialize a variable for later use
+	this._filteredItems = [];
+
+	// bind a method once so that you can pass the same function to register/deregister-based helpers
+	this._handleResizeBound = this._handleResize.bind(this); 
 
 	// do one-time work when the first instance of a component is created
 	if (!isGlobalHandlerAttached) {
@@ -885,7 +887,7 @@ properties: {
 	/**
 	 * @private
 	 */
-	width: {
+	_width: {
 		type: Integer
 	}
 }
