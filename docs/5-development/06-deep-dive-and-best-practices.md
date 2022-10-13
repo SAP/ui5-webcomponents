@@ -197,8 +197,7 @@ The *default* slot on the other hand must be defined with the `default` key in t
 
 ```js
 slots: {
-	"default":
-	{
+	"default": {
 		type: Node,
 	}
 }
@@ -226,7 +225,7 @@ However, you can change this by setting `managedSlots: true` in the `metadata` o
 
 ```js
 managedSlots: true,
-	slots:	{
+slots:	{
 	items: {
 		type: HTMLElement
 	},
@@ -350,13 +349,13 @@ Here is an example how to fire an event from your component:
 
 1. Declare the event in your `metadata` (optional, but highly recommended for documentation purposes and clarity):
 
-```html
+```js
 events: {
-    toggle: {}
+	toggle: {}
 }
 ```
 
-3. In the `.hbs` template you usually bind an event listener to some part of your component's HTML like this:
+2. In the `.hbs` template bind an event listener to some part of your component's HTML to be able to take action on user interaction:
 
 ```html
 <div class="my-panel">
@@ -403,14 +402,14 @@ Here's how:
 
 1. Declare the event in your `metadata` and describe its parameters (again, optional, but good for consistency and documentation purposes):
 
-```html
+```js
 events: {
-    selectionChange: {
-        detail: {
-            item: { type: HTMLElement },
-            oldItem: { type: HTMLElement }
-        }
-    }
+	selectionChange: {
+		detail: {
+			item: { type: HTMLElement },
+			oldItem: { type: HTMLElement }
+		}
+	}
 }
 ```
 
@@ -425,11 +424,11 @@ class MyItemsList extends UI5Element {
 	
 	onSelectionChange(event) {
 		...
-        
+		
 		this.fireEvent("selectionChange", {
 			item: item,
-            oldItem: oldItem,
-        });
+			oldItem: oldItem,
+		});
 	}
 }
 ```
@@ -455,34 +454,34 @@ For example, consider a component with the following metadata:
 ```js
 {
 	tag: "my-demo-component",
-    properties: {
-        text: {
-            type: String,
-            defaultValue: "Hello"
-        },
-        selected: {
-            type: Boolean,
-            noAttribute: true    
-        }
-    },
-    managedSlots: true,
-    slots: {
+	properties: {
+		text: {
+			type: String,
+			defaultValue: "Hello"
+		},
+		selected: {
+			type: Boolean,
+			noAttribute: true	
+		}
+	},
+	managedSlots: true,
+	slots: {
 		"default": {
 			type: Node,
-            propertyName: "items",
-            invalidateOnChildChange: true
-        },
-        "icon": {
+			propertyName: "items",
+			invalidateOnChildChange: true
+		},
+		"icon": {
 			type: HTMLElement
-        }
-    },
-    events: {
+		}
+	},
+	events: {
 		change: {
 			detail: {
 				newText: {type: String}
-            }
-        }
-    }
+			}
+		}
+	}
 }
 ```
 
@@ -506,13 +505,13 @@ In this component's `.hbs` you are expected to render the two slots and to bind 
 
 ```html
 <div class="my-demo-component">
-    <header>
-        <slot name="icon"></slot>
-        <input class="demo-input" value="{{text}}" @change="{{onInputChange}}">
-    </header>
-    <div>
-        <slot></slot>
-    </div>
+	<header>
+		<slot name="icon"></slot>
+		<input class="demo-input" value="{{text}}" @change="{{onInputChange}}">
+	</header>
+	<div>
+		<slot></slot>
+	</div>
 </div>
 ```
 
@@ -521,12 +520,12 @@ and in the component's class you are expected to fire the event, for example:
 ```js
 class MyDemoComponent extends HTMLElement {
 	...
-    onInputChange(event) {
+	onInputChange(event) {
 		const newText = this.shadowRoot.querySelector(".demo-input").value;
 		this.text = newText;
 		event.stopPropagation();
 		this.fireEvent("change", { newText });
-    }
+	}
 }
 ```
 
