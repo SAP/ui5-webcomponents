@@ -179,7 +179,7 @@ The result in the DOM would be:
 <div><span>4</span><span>5</span><span>6</span></div>
 ```
 
-In this example, the first usage of `this` (in the nested `#each`) is the nested array (фор еьампле, `[1, 2, 3]`), and the second usage of `this` inside the `span` is the number itself.
+In this example, the first usage of `this` (in the nested `#each`) is the nested array (for example, `[1, 2, 3]`), and the second usage of `this` inside the `span` is the number itself.
 
 ### 3.3 Accessing the global context from loops  <a name="context_loops_accessing"></a>
 
