@@ -92,7 +92,7 @@ metadata: {
 	properties: {
 		numbers: {
 			type: Integer,
-            multiple: true
+			multiple: true
 		}
 	}
 }
@@ -113,9 +113,9 @@ The alternative would be to use *abstract* items, for example:
 
 ```html
 <my-component>
-    <my-item slot="numbers" value="1"></my-item>
-    <my-item slot="numbers" value="2"></my-item>
-    <my-item slot="numbers" value="3"></my-item>
+	<my-item slot="numbers" value="1"></my-item>
+	<my-item slot="numbers" value="2"></my-item>
+	<my-item slot="numbers" value="3"></my-item>
 </my-component>
 ```
 
