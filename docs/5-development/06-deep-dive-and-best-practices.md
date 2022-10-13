@@ -9,7 +9,7 @@ Before proceeding, please make sure you've read the other articles from this sec
 
 as this article will expand on many of the notions, introduced there.
 
-## Understanding metadata
+## Metadata deep dive
 
 The `static get metadata()` method defines the public API of your component. Among other things, here you define:
  - the tag name
@@ -80,7 +80,50 @@ Most property types can have a `defaultValue` set. `Boolean` is always `false` b
 
 You can also create custom property types by extending `@ui5/webcomponents-base/dist/DataType.js` and implementing its methods for your type.
 
-#### Example
+#### Properties with `multiple: true`
+
+If you configure a property with `multiple: true`, it will be an array of elements of the given `type`, and will be treated by the framework exactly like
+a property of type `Object` would be (as arrays are technically objects) - for example, it will not have an attribute counterpart.
+
+Example:
+
+```js
+metadata: {
+	properties: {
+		numbers: {
+			type: Integer,
+            multiple: true
+		}
+	}
+}
+```
+
+```js
+myComponent.numbers = [1, 2, 3];
+```
+
+Properties with `multiple: true` are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript).
+Their most common use case is as *private* properties for communication between related components - for example the higher-order "date picker" component
+communicates with its "day picker", "month picker" and "year picker" parts by means of private `multiple` properties (to pass arrays of selected dates).
+
+If you need to use a property with `multiple: true` as part of your component's public API, that is fine, but bear in mind the limitations 
+(no declarative support as with all Objects, so no attribute for this property).
+
+The alternative would be to use *abstract* items, for example:
+
+```html
+<my-component>
+    <my-item slot="numbers" value="1"></my-item>
+    <my-item slot="numbers" value="2"></my-item>
+    <my-item slot="numbers" value="3"></my-item>
+</my-component>
+```
+
+Here instead of having a `numbers` property of type `Integer`, configured with `multiple: true`, we have a `numbers` slot, and inside this slot we pass abstract items with
+a `value` property of type `Integer`. This is now completely declarative, and is preferable unless the number of items is very large (in which case the 
+solution with the multiple property would likely be better).
+
+#### Examples
 
 Example of defining properties:
 
@@ -447,7 +490,7 @@ list.addEventListener("selectionChange", (event) => {
 
 ### Wrapping up metadata
 
-Metadata determines most of your component's API. Describe its tag properties, slots and events there.
+Metadata determines most of your component's API - describe its tag name, properties, slots and events there.
 
 For example, consider a component with the following metadata:
 
@@ -487,7 +530,7 @@ For example, consider a component with the following metadata:
 
 This metadata conveys the following:
 
-This component will have the following properties, created for it by the framework:
+This component will have the following getters/setters, created for it by the framework:
  - `this.text` (getter/setter, due to the `text` property) with default value of "Hello"
  - `this.selected` (getter/setter, due to the `selected` property) with default value of `false` (all Booleans are `false` by default in HTML and `defaultValue` cannot be configured for them)
  - `this.items` (getter only, due to having `managedSlots: true` and the `propertyName` of the default slot being `items`) - an array of all *Text Nodes and HTML Elements* in the default slot
@@ -495,6 +538,8 @@ This component will have the following properties, created for it by the framewo
 
 The component will have only 1 attribute:
  - `text` due to the `text` property (the other property has `noAttribute: true` set)
+
+When the `text` property changes, the `text` attribute will also be reflected and vice-versa.
 
 The component fires 1 event:
  - `change` with one string parameter: `newText`
@@ -692,7 +737,7 @@ constructor() {
 		isGlobalHandlerAttached = true;
 	}
 
-	// initialize the item navigation
+	// initialize a helper class for the instance
 	this._itemNavigation = new ItemNavigation(this, {
 		navigationMode: NavigationMode.Horizontal,
 		getItemsCallback: () => this._getFocusableItems(),
@@ -706,14 +751,182 @@ Use `onBeforeRendering` to prepare variables to be used in the `.hbs` template.
 
 What to do:
  - prepare calculated (derived) state for use in the renderer
- - 
 
 What not to do:
  - do not try to access the DOM (use `onAfterRendering` instead)
- - 
+
+Let's take for example a component with the following metadata:
+
+```js
+{
+	properties: {
+		filter: {
+			type: String
+		}
+	},
+	managedSlots: true,
+	slots: {
+		"default": {
+			type: HTMLElement,
+			propertyName: "items",
+			individualSlots: true
+		}
+	}
+}
+```
+
+This component has a `filter` property and a `default` slot that we want to call `items` (thus accessible with `this.items`).
+
+Let's imagine we want to only show the items whose `name` property matches the value of our `filter` property - so we filter the items by name.
+
+```js
+constructor() {
+	super();
+	this._filteredItems = [];
+}
+onBeforeRendering() {
+	this._filteredItems = this.items.filter(item => item.name.includes(this.filter));
+}
+```
+
+In `onBeforeRendering` we prepare a `_filteredItems` array with some of the component's children (only the ones that have the `this.filter` text as part of their `name` property)
+
+And finally, in the `.hbs` template we have for example:
+
+```html
+<div class="my-filter-component">
+	{{#each _filteredItems}}
+		<div class="my-filtered-item">
+			<slot name="{{_individualSlot}}"></slot>
+		</div>
+	{{/each}}
+</div>
+```
+
+We loop over the `_fiteredItems` array that we prepared in `onBeforeRendering` and for each child we render a `slot` based on the child's `_individualSlot` property,
+created automatically by the framework due to the default slot's metadata configuration (`individualSlots: true`).
+
+The usage of this component would be for example:
+
+```html
+<my-filter-component filter="John">
+	<my-filter-item name="John Smith"></my-filter-item>
+	<my-filter-item name="Jane Doe"></my-filter-item>
+	<my-filter-item name="Jack Johnson"></my-filter-item>
+</my-filter-component>
+```
+
+The user would only see the first and third items as these are the only ones we rendered an individual slot for (the ones matching the `filter` value of "John").
+
+In summary: `onBeforeRendering` is the best place to prepare all the variables you are going to need in the `.hbs` template.
 
 ### 3. `onAfterRendering`
 
-### 4. `onEnterDOM`
+The `onAfterRendering` lifecycle hook allows you to access the DOM every time the component is rendered.
 
-### 5. `onExitDOM`
+You should avoid using this method whenever possible. It's best to delegate all HTML manipulation to the framework: change the state of the component,
+the component will be invalidated, the template will be executed with the latest state, and DOM will be updated accordingly.
+It is an anti-pattern to manually change the DOM.
+
+In some cases, however, you must directly access the DOM since certain operations can only be performed imperatively (and not via the template):
+ - setting the focus
+ - manually scrolling an element to a certain position
+ - calling a public method on a DOM Element (f.e. to close a popup)
+ - reading the sizes of DOM Elements
+
+Example:
+
+```html
+<div class="my-demo-component">
+	<input id="first">
+	<input id="second">
+</div>
+```
+
+```js
+onAfterRendering() {
+	this.shadowRoot.querySelector("#second").focus();
+	this._totalWidth = this.shadowRoot.querySelector("div.my-demo-component").offsetWidth;
+}
+```
+
+### 4. `onEnterDOM` and `onExitDOM`
+
+Unlike `onBeforeRendering` and `onAfterRendering`, which sound like parts of the same flow (but are not, and are actually used for completely independent tasks),
+`onEnterDOM` and `onExitDOM` should almost always be used together, therefore they are presented as a whole in this article.
+
+ - `onEnterDOM` is executed during the web component's standard `connectedCallback` method's execution
+ - `onExitDOM` is executed during the web component's standard `disconnectedCallback` method's execution
+
+If you have prior experience with web component development, you could think of `onEnterDOM` as `connectedCallback` and of `onExitDOM` as `disconnectedCallback`.
+
+Note that these hooks are completely independent of the component's rendering lifecycle, and are solely related to its insertion and removal from DOM.
+
+Normally, when a web component is created, for example:
+
+```js
+const b = document.createElement("ui5-button");
+```
+
+it is already fully operational, although it isn't in DOM yet. Therefore, you should use `onEnterDOM` and `onExitDOM` only for functionality, related to
+the component being in the DOM tree at all (and not to rendering, stying or anything related to the shadow root).
+
+Common use cases are:
+ - registering/de-registering a ResizeHandler
+ - working with Intersection observer
+ - any work you want to carry out only if the component is in the DOM
+
+Probably the best example of these hooks is the usage of the `ResizeHandler` helper class.
+
+The component has a private `_width` property, defined in its metadata:
+
+```js
+properties: {
+	/**
+	 * @private
+	 */
+	width: {
+		type: Integer
+	}
+}
+```
+
+and the following code in its class:
+
+```js
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+
+class MyComponent extends UI5Element {
+	constructor() {
+		super();
+		this._fnOnResize = this._onResize.bind(this);
+	}
+	
+	onEnterDOM() {
+		ResizeHandler.register(this, this._fnOnResize);
+	}
+
+	onExitDOM() {
+		ResizeHandler.deregister(this, this._fnOnResize);
+	}
+
+	_onResize() {
+		this._width = this.offsetWidth;
+	}
+
+	get styles() {
+		return {
+			valueStateMsgPopover: {
+				"max-width": `${this._width}px`,
+			},
+		};
+	}
+}
+```
+
+In the `constructor` we bind the `_onResize` method to the component's instance to get a function with the correct context,
+and then in `onEnterDOM` and `onExitDOM` we register/deregister this function with the `ResizeHandler` helper class.
+
+Then, whenever the component resizes, the `ResizeHandler` will trigger the callback, the metadata `_width` property will be updated to a new value in `_onResize`,
+the component will be invalidated, and the template will be executed with the new value of `_width`, respectively `styles`. 
