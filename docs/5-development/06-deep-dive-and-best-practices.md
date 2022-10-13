@@ -1,6 +1,6 @@
 # Deep dive and best practices
 
-This tutorial will cover some of the finer details and best practices when designing and developing UI5 Web Components.
+This tutorial will cover some finer details and best practices when designing and developing UI5 Web Components.
 
 Before proceeding, please make sure you've read the other articles from this section, especially:
  - [Developing Custom UI5 Web Components](./02-custom-UI5-Web-Components.md)
@@ -31,13 +31,16 @@ and then the usage is:
 <my-component></my-component>
 ```
 
+The `tag`, as defined in `metadata`, is sometimes also referred to as the "pure tag", meaning it is not suffixed.
+See [Scoping](../2-advanced/03-scoping.md) for more on using a suffix with tag names.
+
 ### Properties
 
 #### Properties are managed state
 
-For each property, defined in metadata, a getter/setter pair will be automatically created on your component's prototype for that property.
+The framework will create a getter/setter pair on your component's prototype for each property, defined in metadata.
 
-Example:
+For example, after setting this metadata configuration:
 
 ```js
 metadata: {
@@ -49,35 +52,33 @@ metadata: {
 }
 ```
 
-For example, a getter and setter pair with the name `text` will be created for this component's prototype.
-You can then use `text` on your component's instance as you would use any other property:
+you can use the `text` getter/setter on this component's instances:
 
 ```js
 let t = myComponent.text;
 myComponent.text = "New text";
 ```
 
-The important part is that whenever `text` is accessed or changed, the framework-defined getter/setter will be called and thus the framework will be notified and in control.
+Whenever `text` is read or set, the framework-defined getter/setter will be called and thus the framework will be in control of the property.
 
 #### Properties vs attributes
 
 The `properties` section defines both properties and attributes for your component. By default, for each property (`camelCase` name) an attribute with the
-same name but in `kebab-case` is supported. Properties of type `Object` have no attribute counterparts. If you wish for a property not to have an attribute regardless of type, you can configure it with `noAttribute: true`.
+same name but in `kebab-case` is supported. Properties of type `Object` have no attribute counterparts. If you wish to not have an attribute for a given property regardless of type, you can configure it with `noAttribute: true`.
 
-#### Public and private properties
+#### Public vs private properties
 
-You can define both *public* and *private* properties. The usual convention is that private properties start with an `_`, but this is not required. It's also important
-to know that the framework does not distinguish between public and private properties - the important thing is that all properties, defined in the metadata,
-are considered *component state*, therefore cause the component to be invalidated and subsequently re-rendered when changed. So, public properties are simply the ones
-you decide to document for your users, but technically all properties are equal.
+The framework does not distinguish between *public* and *private* properties. You can treat some properties as private in a sense that you can document them as such and not advertise them to users.
+The usual convention is that private properties start with an `_`, but this is not mandatory. In the end, all properties defined in the metadata, public or private,
+are *component state*, therefore cause the component to be invalidated and subsequently re-rendered, when changed.
 
-#### Property types and default value
+#### Property types and default values
 
-The most common types of properties are `String`, `Boolean`, `Object`, `Integer` and `Float`. The last two are custom types that you must import (do not exist in the browser).
+The most common types of properties are `String`, `Boolean`, `Object`, `Integer` and `Float`. The last two are custom types, provided by the framework, that you must import (do not exist in the browser).
 
-Most property types can have a `defaultValue` set. `Boolean` is always `false` by default and `Object` is always `{}` by default.
+Most property types can have a `defaultValue` set. `Boolean` is always `false` by default and `Object` is always `{}` by default, so `defaultValue` is not allowed for these types.
 
-You can create custom property types by extending `@ui5/webcomponents-base/dist/DataType.js` and implementing its methods for your type.
+You can also create custom property types by extending `@ui5/webcomponents-base/dist/DataType.js` and implementing its methods for your type.
 
 #### Example
 
@@ -107,6 +108,9 @@ metadata: {
 		data: {
 			type: Object
 		},
+		/**
+		 * @private
+		 */
 		_isPhone: {
 			type: Boolean
 		}
@@ -126,6 +130,11 @@ As for private properties, the best practice is to **only** change them internal
 Both public and private properties are great ways to create CSS selectors for your component with the `:host()` selector. The `:host()` selector targets the custom element itself, and can be combined with other selectors:
 
 ```css
+:host {
+	height: 5rem;
+	width: 5rem;
+}
+
 :host([size="XS"]) {
 	height: 2rem;
 	width: 2rem;
@@ -136,7 +145,7 @@ Both public and private properties are great ways to create CSS selectors for yo
 <my-comopnent size="XS"></my-comopnent> <!-- :host() targets my-component -->
 ```
 
-Here for example, if the `size` property is set to `XS` (respectively the attribute with the same name), the component's dimensions change. 
+Here for example, if the `size` property (respectively the attribute with the same name) is set to `XS`, the component's dimensions will be changed from `5rem` to `2rem`. 
 Using attribute selectors is the best practice as you don't have to set CSS classes on your component - you can write CSS selectors with `:host()` by attribute. 
 
 #### Metadata properties vs normal JS properties
@@ -151,11 +160,379 @@ constructor() {
 }
 ```
 
-However, only metadata-defined properties are managed by the framework: cause invalidation, are converted to attributes and vice-versa, etc.
+However, only metadata-defined properties are managed by the framework: cause invalidation and are converted to/from attributes.
+Feel free to create as many regular JS properties for the purpose of your component's functionality as you need, but bear in mind
+that they will not be managed by the framework.
 
 ### Slots
 
+While *properties* define the objective characteristics of a component, *slots* define the way a component can nest other HTML elements.
+You don't need to define slots for every component - some components are not meant to hold any other HTML elements, and are fully operated by properties and events alone.
 
+You implement slots by configuring them with the `slots` metadata object, and rendering respective `<slot>` elements in your `.hbs` template.
+
+You can read more about the `slot` HTML Element [here](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot).
+
+#### Default slot and named slots
+
+For *named* slots you set the name you wish to use for the slot as the key in the `slots` metadata object.
+
+Example:
+
+```js
+slots: {
+	items: {
+		type: HTMLElement
+	},
+	footer: {
+		type: HTMLElement
+	}
+}
+```
+
+and then in your `.hbs` template you render respectively `<slot name="items"></slot>` and `<slot name="footer"></slot>`.
+
+
+The *default* slot on the other hand must be defined with the `default` key in the `slots` metadata object (also note the quotes around the `default` key as it is a reserved word):
+
+```js
+slots: {
+	"default":
+	{
+		type: Node,
+	}
+}
+```
+
+and then in the `.hbs` template you render `<slot></slot>`.
+
+
+#### Slot types
+
+Unlike properties, slots can be of only two types: `HTMLElement` and `Node`.
+
+`HTMLElement` means the slot accepts only other HTML Elements. You can use this type for any slot (default or named).
+
+`Node` means that the slot can accept both HTML Elements and Text nodes, and is allowed only for the `default` slot. 
+The reason for this restriction is that text nodes in HTML cannot have attributes, hence they cannot be slotted as HTML Elements can.
+As a result, text can only go the default slot, hence `Node` is applicable only for default slots.
+
+#### Are slots managed state?
+
+Unlike metadata *properties*, which are always managed state (see the previous section), *slots* are not managed by the framework by default. 
+Changes to slots do not trigger lifecycle events such as invalidation.
+
+However, you can change this by setting `managedSlots: true` in the `metadata` object. This setting is global and affects all slots for your component.
+
+```js
+managedSlots: true,
+	slots:	{
+	items: {
+		type: HTMLElement
+	},
+	footer: {
+		type: HTMLElement
+	}
+}
+```
+
+Now, if children are added/removed/rearranged in any of the above slots, the component will be invalidated.
+
+#### Slot accessors
+
+Additionally, when you set `managedSlots: true`, you get a **read-only** accessor for the children in that slot.
+
+Taking the example from above:
+```js
+managedSlots: true,
+slots:	{
+	items: {
+		type: HTMLElement
+	},
+	footer: {
+		type: HTMLElement
+	}
+}
+```
+
+you will get the following accessors on your component's instances:
+
+```js
+const childrenInItems = this.items; // array of all children in the items slot
+const childrenInFooter = this.footer; // array of all children in the footer slot
+```
+
+Finally, it's possible to define the property name for the accessor of the *default* slot (as using the `default` key is not convenient in Javascript).
+You can do this with the `propertyName` setting:
+
+```js
+managedSlots: true,
+slots: {
+	"default": {
+		type: Node,
+		propertyName: "content"
+	},
+	items: {
+		type: HTMLElement
+	},
+	footer: {
+		type: HTMLElement
+	}
+}
+
+```
+
+```js
+const childrenInDefaultSlot = this.content; // array of all children in the default slot
+const childrenInItems = this.items; // array of all children in the items slot
+const childrenInFooter = this.footer; // array of all children in the footer slot
+```
+
+These getters are helpful if your code needs to analyze/communicate with the children in a certain slot. They are also often used in the `.hbs`
+template where you need for example to loop over the items of a component.
+
+#### Individual slots
+
+All children, assigned to a certain `slot`, are rendered by the browser next to each other in the exact order in which they were passed to the component.
+Sometimes, however, each child must be placed separately in the shadow root, potentially wrapped in other HTML elements, to satisfy the UX design of the component.
+
+The `individualSlots` slot metadata configuration setting (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)) allows you to have a separate physical slot for each child belonging to a certain slot.
+
+Example:
+
+```js
+{
+	managedSlots: true,
+	slots: {
+		"default": {
+			type: HTMLElement,
+			propertyName: "items",
+			individualSlots: true
+		}
+	}
+}
+```
+
+The framework will then create an `_individualSlot` property on each child, belonging to the slot. Just render these slots in the `.hbs` template
+to have all children belonging to the slot displayed by the browser separately in your HTML markup of choice. 
+
+For more information on individual slots and how to render them in the `.hbs` template click [here](./04-understanding-hbs-templates.md#slots_individual).
+
+#### The invalidateOnChildChange setting
+
+There is one last configuration setting for slots - `invalidateOnChildChange`. When set to `true`, whenever a child in a certain slot is invalidated,
+your component will be invalidated as well.
+
+```js
+managedSlots: true,
+slots: {
+	"default": {
+		type: HTMLElement,
+		propertyName: "items",
+		invalidateOnChildChange: true
+	},
+}
+```
+
+Now, the component will be invalidated not only when children are added/removed/rearranged, but also when children themselves change. This is very handy
+for components working with abstract items.
+
+Read more about abstract items and `invalidateOnChildChange` in the [Invalidation](#invalidation) section later in this article.
+
+### Events
+
+Most components fire *events* to notify the application of user interaction.
+
+You can list the events fired by your component in the `events` metadata object, but this is optional and mostly done for documentation purposes.
+Any event that you dispatch from your component will reach the application anyway.
+
+Here is an example how to fire an event from your component:
+
+1. Declare the event in your `metadata` (optional, but highly recommended for documentation purposes and clarity):
+
+```html
+events: {
+    toggle: {}
+}
+```
+
+3. In the `.hbs` template you usually bind an event listener to some part of your component's HTML like this:
+
+```html
+<div class="my-panel">
+	<button class="my-panel-toggle" @click="{{onPanelToggleClick}}">Toggle</button>
+	<div class="my-panel-body">
+		<slot></slot>
+	</div>
+</div>
+```
+
+In this example we have a simplified "panel" component consisting of a toggle button and a slot for the panel content.
+We bind the `click` event of the `<button>` we'll use for toggling our panel to the `onPanelToggleClick` method.
+
+For more on the `.hbs` template syntax and event listeners click [here](./04-understanding-hbs-templates.md#syntax_at).
+
+3. Implement the event handler in your component:
+
+```js
+class MyPanel extends UI5Element {
+	...
+	
+	onPanelToggleClick(event) {
+		this.togglePanel(); // do some work when the user clicks the button
+		this.fireEvent("toggle"); // fire the event
+	}
+}
+```
+
+The `fireEvent` method is provided by the base `UI5Element.js` class and is therefore available to all components. The best practice is to always use
+this method instead of simply calling the standard `dispatchEvent` function as `fireEvent` has framework-related enhanced functionality.
+
+That's all it takes to manage an event's lifecycle! Now your component's users may listen for the `toggle` event:
+
+```js
+const panel = document.getElementsByTagName("my-panel")[0];
+panel.addEventListener("toggle", () => {});
+```
+
+#### Working with event parameters
+
+The above example demonstrated an event with no parameters. However, you can send arbitrary data to the app when firing an event.
+
+Here's how:
+
+1. Declare the event in your `metadata` and describe its parameters (again, optional, but good for consistency and documentation purposes):
+
+```html
+events: {
+    selectionChange: {
+        detail: {
+            item: { type: HTMLElement },
+            oldItem: { type: HTMLElement }
+        }
+    }
+}
+```
+
+Here we define a `selectionChange` event which gives the app two pieces of information: `item` (the newly selected item) and `oldItem` (the previously selected item).
+Respectively they will be accessible by the app with `event.detail.item` and `event.detail.oldItem` in the event handler, exactly like it works with native browser events.
+
+2. Pass the data when firing the event:
+
+```js
+class MyItemsList extends UI5Element {
+	...
+	
+	onSelectionChange(event) {
+		...
+        
+		this.fireEvent("selectionChange", {
+			item: item,
+            oldItem: oldItem,
+        });
+	}
+}
+```
+
+To pass parameters, simply provide a second parameter of type `Object` to `fireEvent` with keys for all event parameters.
+
+The usage of the event by the app will be exactly like in the case of a native HTML element:
+
+```js
+const list = document.getElementsByTagName("my-items-list")[0];
+list.addEventListener("selectionChange", (event) => {
+	console.log(event.details.item);
+	console.log(event.details.oldItem);
+});
+```
+
+### Wrapping up metadata
+
+Metadata determines most of your component's API. Describe its tag properties, slots and events there.
+
+For example, consider a component with the following metadata:
+
+```js
+{
+	tag: "my-demo-component",
+    properties: {
+        text: {
+            type: String,
+            defaultValue: "Hello"
+        },
+        selected: {
+            type: Boolean,
+            noAttribute: true    
+        }
+    },
+    managedSlots: true,
+    slots: {
+		"default": {
+			type: Node,
+            propertyName: "items",
+            invalidateOnChildChange: true
+        },
+        "icon": {
+			type: HTMLElement
+        }
+    },
+    events: {
+		change: {
+			detail: {
+				newText: {type: String}
+            }
+        }
+    }
+}
+```
+
+This metadata conveys the following:
+
+This component will have the following properties, created for it by the framework:
+ - `this.text` (getter/setter, due to the `text` property) with default value of "Hello"
+ - `this.selected` (getter/setter, due to the `selected` property) with default value of `false` (all Booleans are `false` by default in HTML and `defaultValue` cannot be configured for them)
+ - `this.items` (getter only, due to having `managedSlots: true` and the `propertyName` of the default slot being `items`) - an array of all *Text Nodes and HTML Elements* in the default slot
+ - `this.icon` (getter only, due to having `managedSlots: true` and the `icon` slot) - an array of all HTML Elements in the `icon` slot 
+
+The component will have only 1 attribute:
+ - `text` due to the `text` property (the other property has `noAttribute: true` set)
+
+The component fires 1 event:
+ - `change` with one string parameter: `newText`
+
+This component will be invalidated whenever any of its properties changes, any of its slots has new/removed/rearranged children, and additionally when any UI5 Web Component in the `default` slot is invalidated. 
+
+In this component's `.hbs` you are expected to render the two slots and to bind an event listener for the event:
+
+```html
+<div class="my-demo-component">
+    <header>
+        <slot name="icon"></slot>
+        <input class="demo-input" value="{{text}}" @change="{{onInputChange}}">
+    </header>
+    <div>
+        <slot></slot>
+    </div>
+</div>
+```
+
+and in the component's class you are expected to fire the event, for example:
+
+```js
+class MyDemoComponent extends HTMLElement {
+	...
+    onInputChange(event) {
+		const newText = this.shadowRoot.querySelector(".demo-input").value;
+		this.text = newText;
+		event.stopPropagation();
+		this.fireEvent("change", { newText });
+    }
+}
+```
+
+Whenever the user stops typing in the `<input>` and its `change` event is fired, our component's `onInputChange` event handler will be executed.
+There we get the new value of the input, update the `text` metadata property to reflect its new state, stop the input's native `change` event from propagating since we'll be firing our custom event
+with the same name (and we don't want the user to get 2 events with the same name), and finally we fire our metadata event (`change`) with the `newText` parameter.
 
 ## Understanding rendering
 
@@ -194,7 +571,7 @@ Example:
 The `ui5-option` component does not provide a template, and is therefore never rendered. However, the `ui5-select` component, which is a physical component that has a template, 
 renders HTML corresponding to each of its children (`ui5-option` instances) as part of its own shadow DOM.
 
-### What is invalidation?
+### What is invalidation? <a name="invalidation"></a>
 
 Invalidation means scheduling an already rendered component for asynchronous re-rendering (in the next animation frame). If an already invalidated component gets changed
 again, before having been re-rendered, this will have no downside - it's in the queue of components to be re-rendered anyway.
@@ -222,15 +599,17 @@ Changes to slots do not cause an invalidation by default. Most components do not
 The most common example for this are simple general-purpose containers (completely agnostic of their content).
 
 ```js
-slots: {
-	"default": {
-		type: HTMLElement
-	},
-	header: {
-		type: HTMLElement
-	},
-	footer: {
-		type: HTMLElement
+metadata: {
+	slots: {
+		"default": {
+			type: HTMLElement
+		},
+		header: {
+			type: HTMLElement
+		},
+		footer: {
+			type: HTMLElement
+		}
 	}
 }
 ```
@@ -240,7 +619,7 @@ This component will not invalidate when children are added/removed from any of i
 However, some components render differently based on whether they have children or not (e.g. show counters/other UX elements for the number of children, f.e. carousel; or have special styles when empty or have a child in a specific slot, f.e. button with an icon).
 If that is the case for the component you're building, set `managedSlots: true` in your component's metadata. Thus, your component will become invalidated whenever children are added, removed or swap places in any of its slots.
 
-```.js
+```js
 managedSlots: true,
 slots: {
 	"default": {
@@ -261,7 +640,7 @@ And finally, there are components that not only need to render differently based
 whenever their children change. This holds true for all components that work with abstract items (such as select with options, combo box with combo box items)
 because these abstract items do not have a template (do not render themselves) and therefore rely on their parent to render some DOM for them in its own shadow root. So, when they get invalidated, they must also invalidate their parent.
 
-```.js
+```js
 managedSlots: true,
 slots: {
 	"default": {
@@ -277,7 +656,7 @@ slots: {
 }
 ```
 
-Only changes to children in the "default" slot will trigger invalidation for this comopnent. Note that `invalidateOnChildChange` is defined per slot (and not globally like `managedSlots`).
+Only changes to children in the "default" slot will trigger invalidation for this component. Note that `invalidateOnChildChange` is defined per slot (and not globally like `managedSlots`).
 Finally, `invalidateOnChildChange` allows for more fine-granular rules when exactly children can invalidate their parents - see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md).
 
 ## Lifecycle hooks
