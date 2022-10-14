@@ -1148,7 +1148,7 @@ For each component, having a **static area** part, a `ui5-static-area-item` cust
 ```
 
 In this example 3 UI5 Web Components are used: `ui5-select`, `ui5-date-picker`, and `ui5-button`. 
-Since two of them have static parts, the framework has created a `ui5-static-area` (one for the whole page) and inside it a `ui5-static-area-item`
+Since two of them have static area parts, the framework has created a `ui5-static-area` (one for the whole page) and inside it a `ui5-static-area-item`
 for each component with a static area part.
 
 Thus, the HTML, defining the `ui5-select` and `ui5-date-picker` components is split in two parts of the HTML page:
@@ -1194,7 +1194,7 @@ class MySelect extends UI5Element {
 }
 ```
 
-then when the user clicks the `button`, and the `ui5-popover` opens (due to its `open` property having been set to true),
+then when the user clicks the `button`, and the `ui5-popover` opens (due to its `open` property having been set to `true`),
 this popover might be partially or entirely "cut" or misplaced, depending on the position of the component on the page.
 
 Example 1:
@@ -1269,8 +1269,8 @@ The `MySelectDropdown.hbs` file:
 ```
 
 Also, create the CSS of the component in 2 files:
- - `MySelect.css` (with definitions for the select itself, f.e. `.my-select {}`)
- - `MySelectDropdown.css` (with definitions for the dropdown only, f.e. `#dropdown {}`)
+ - `MySelect.css` (with styles for the select itself, f.e. `.my-select {}`)
+ - `MySelectDropdown.css` (with styles for the dropdown only, f.e. `#dropdown {}`)
 
 2. Pass the new template and CSS to the component class
 
