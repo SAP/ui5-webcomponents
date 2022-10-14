@@ -25,7 +25,11 @@ as this article will expand on many of the notions, introduced there.
    - [`onBeforeRendering`](#lifecycle_before)
    - [`onAfterRendering`](#lifecycle_after)
    - [`onEnterDOM` and `onExitDOM`](#lifecycle_dom)
-
+4. [The static area](#static)
+    - [Preface](#static_preface)
+    - [What is the static area and why is it needed?](#static_what_why)
+    - [Using the static area?](#static_using)
+    - [Accessing the static area item](#static_accessing)
 
 ## Metadata deep dive <a name="metadata"></a>
 
@@ -33,6 +37,7 @@ The `static get metadata()` method defines the public API of your component. Amo
  - the tag name
  - what properties/attributes (and of what type) your component supports
  - what slots your component supports
+ - what events your component fires
 
 ### Tag <a name="metadata_tag"></a>
 
@@ -52,11 +57,77 @@ and then the usage is:
 The `tag`, as defined in `metadata`, is sometimes also referred to as the "pure tag", meaning it is not suffixed.
 See [Scoping](../2-advanced/03-scoping.md) for more on using a suffix with tag names.
 
+Important: the pure tag name of every UI5 Web Component is always set as an **attribute** to the component too.
+
+For example, when you create a `ui5-button`:
+
+```html
+<ui5-button id="b1" class="button1" design="Emphasized"></ui5-button>
+```
+
+the framework will create an empty attribute with the name `ui5-button` too, so the actual DOM would look like this:
+
+```html
+<ui5-button id="b1" class="button1" design="Emphasized" ui5-button></ui5-button>
+```
+
+Even if a suffix for tag names is configured (as described in [Scoping](../2-advanced/03-scoping.md)), the attribute with
+the pure tag name will be the same.
+
+For example, if the configured suffix is `-demo` and all components are used with this suffix:
+
+```html
+<ui5-button-demo id="b1" class="button1" design="Emphasized" ui5-button></ui5-button-demo>
+```
+
+the **attribute** will still be the same (`ui5-button` as opposed to the tag name of `ui5-button-demo`).
+
+Therefore, the best practice when developing UI5 Web Components is to write CSS selectors for the shadow roots using
+attribute selectors, instead of tag selectors.
+
+For example, if the `.hbs` file of the component looks like this:
+
+```html
+<div class="my-component">
+    <ui5-button id="openBtn">Open</ui5-button>
+    <div>
+        <slot></slot>
+    </div>
+    <ui5-list></ui5-list>
+</div>
+```
+
+you should not write selectors by tag name for the UI5 Web Components in the `.css` file:
+
+```css
+ui5-button {
+    width: 50px;
+}
+```
+
+because, as stated above, the tag name could be suffixed and is not guaranteed to always be the same as the pure tag name.
+
+Instead, use the attribute selector:
+
+```css
+[ui5-button] {
+    width: 50px;
+}
+```
+
+or another type of selector (for example by ID):
+
+```css
+#openBtn {
+    width: 50px;
+}
+```
+
 ### Properties <a name="metadata_properties"></a>
 
 #### Properties are managed state
 
-The framework will create a getter/setter pair on your component's prototype for each property, defined in metadata.
+The framework will create a getter/setter pair on your component's prototype for each property, defined in the metadata.
 
 For example, after setting this metadata configuration:
 
@@ -92,7 +163,7 @@ are *component state*, therefore cause the component to be invalidated and subse
 
 #### Property types and default values
 
-The most common types of properties are `String`, `Boolean`, `Object`, `Integer` and `Float`. The last two are custom types, provided by the framework, that you must import (do not exist in the browser).
+The most common types of properties are `String`, `Boolean`, `Object`, `Integer` and `Float`. The last two are custom types, provided by the framework, that you must import (they do not exist in the browser).
 
 Most property types can have a `defaultValue` set. `Boolean` is always `false` by default and `Object` is always `{}` by default, so `defaultValue` is not allowed for these types.
 
@@ -101,7 +172,7 @@ You can also create custom property types by extending `@ui5/webcomponents-base/
 #### Properties with `multiple: true`
 
 If you configure a property with `multiple: true`, it will be an array of elements of the given `type`, and will be treated by the framework exactly as
-a property of type `Object` would be (as arrays are technically objects) - for example, it will not have an attribute counterpart.
+a property of type `Object` would be (as arrays are technically objects). For example, it will not have an attribute counterpart.
 
 Example:
 
@@ -121,8 +192,8 @@ myComponent.numbers = [1, 2, 3];
 ```
 
 Properties with `multiple: true` are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript).
-Their most common use case is as *private* properties for communication between related components - for example the higher-order "date picker" component
-communicates with its "day picker", "month picker" and "year picker" parts by means of private `multiple` properties (to pass arrays of selected dates).
+Their most common use case is as *private* properties for communication between related components. For example, the higher-order "date picker" component
+communicates with its "day picker", "month picker", and "year picker" parts by means of private `multiple` properties (to pass arrays of selected dates).
 
 If you need to use a property with `multiple: true` as part of your component's public API, that is fine, but bear in mind the limitations 
 (no declarative support as with all Objects, so no attribute for this property).
@@ -539,13 +610,13 @@ Example:
 
 ```html
 <div class="my-component">
-    <button @click="{{onNativeButtonClick}}">Click me</button>
-    <ui5-button @ui5-click="{{onUI5ButtonClick}}">Click me</ui5-button>
-    
-    <input @change="{{onNativeInputChange}}" />
-    <ui5-input @ui5-change="{{onUI5InputChange}}"></ui5-input>
-    
-    <ui5-list @ui5-item-click="{{onUI5ListItemClick}}"></ui5-list>
+	<button @click="{{onNativeButtonClick}}">Click me</button>
+	<ui5-button @ui5-click="{{onUI5ButtonClick}}">Click me</ui5-button>
+	
+	<input @change="{{onNativeInputChange}}" />
+	<ui5-input @ui5-change="{{onUI5InputChange}}"></ui5-input>
+	
+	<ui5-list @ui5-item-click="{{onUI5ListItemClick}}"></ui5-list>
 </div>
 ```
 
@@ -557,13 +628,13 @@ If we used the non-prefixed versions:
 
 ```html
 <div class="my-component">
-    <button @click="{{onNativeButtonClick}}">Click me</button>
-    <ui5-button @click="{{onUI5ButtonClick}}">Click me</ui5-button>
-    
-    <input @change="{{onNativeInputChange}}" />
-    <ui5-input @change="{{onUI5InputChange}}"></ui5-input>
-    
-    <ui5-list @item-click="{{onUI5ListItemClick}}"></ui5-list>
+	<button @click="{{onNativeButtonClick}}">Click me</button>
+	<ui5-button @click="{{onUI5ButtonClick}}">Click me</ui5-button>
+	
+	<input @change="{{onNativeInputChange}}" />
+	<ui5-input @change="{{onUI5InputChange}}"></ui5-input>
+	
+	<ui5-list @item-click="{{onUI5ListItemClick}}"></ui5-list>
 </div>
 ```
 
@@ -696,7 +767,7 @@ Example:
 ```
 
 The `ui5-option` component does not provide a template, and is therefore never rendered. However, the `ui5-select` component, which is a physical component that has a template, 
-renders HTML corresponding to each of its children (`ui5-option` instances) as part of its own shadow DOM. <a na
+renders HTML corresponding to each of its children (`ui5-option` instances) as part of its own shadow DOM.
 
 ### What is invalidation? <a name="invalidation"></a>
 
@@ -914,10 +985,10 @@ the component will be invalidated, the template will be executed with the latest
 It is an anti-pattern to manually change the DOM.
 
 In some cases, however, you must directly access the DOM since certain operations can only be performed imperatively (and not via the template):
- - setting the focus
- - manually scrolling an element to a certain position
- - calling a public method on a DOM Element (f.e. to close a popup)
- - reading the sizes of DOM Elements
+ - setting the focus;
+ - manually scrolling an element to a certain position;
+ - calling a public method on a DOM Element (for example, to close a popup);
+ - reading the sizes of DOM Elements;
 
 Example:
 
@@ -959,7 +1030,7 @@ the component being in the DOM tree at all (and not to rendering, stying or anyt
 Common use cases are:
  - registering/de-registering a ResizeHandler
  - working with Intersection observer
- - any work you want to carry out only if the component is in the DOM
+ - any work you want to carry out only if the component is in the DOM;
 
 Probably the best example of these hooks is the usage of the `ResizeHandler` helper class.
 
@@ -1015,3 +1086,314 @@ and then in `onEnterDOM` and `onExitDOM` we register/deregister this function wi
 
 Then, whenever the component resizes, the `ResizeHandler` will trigger the callback, the metadata `_width` property will be updated to a new value in `_onResize`,
 the component will be invalidated, and the template will be executed with the new value of `_width`, respectively `styles`. 
+
+## The static area <a name="static"></a>
+
+### Preface <a name="static_preface"></a>
+
+This section expands on the UI5 Web Component class structure, so if you haven't, please check [Developing Custom UI5 Web Components](./02-custom-UI5-Web-Components.md) first.
+
+Normally, the whole HTML markup of a UI5 Web Component is found in one place - the shadow DOM of the custom element itself.
+
+Example:
+
+```html
+<ui5-button id="button">Click me</ui5-button>
+```
+
+All HTML, belonging to this `ui5-button` instance is in its own shadow DOM.
+
+Respectively, in the class where the button component is defined, we provide one template and one piece of CSS:
+
+```js
+import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
+import buttonCss from "./generated/themes/Button.css.js";
+
+class Button extends UI5Element {
+	...
+	
+	static get styles() {
+		return buttonCss;
+	}
+
+	static get template() {
+		return ButtonTemplate;
+	}
+
+}
+```
+
+These are respectively the template and CSS that are going to be used in the component's shadow DOM.
+
+However, there are more complex components, whose HTML is split in two parts - the custom element's shadow DOM (as is the case with the button),
+but also a so called **static area** part, holding all popups this component might open. This is the case with most components that have any kind of 
+popup-related functionality (dropdowns, rich tooltips, popovers, dialogs). Prominent examples are `ui5-select`, `ui5-combobox`, `ui5-textarea`, `ui5-date-picker`.
+
+### What is the static area and why is it needed? <a name="static_what_why"></a>
+
+The static area is a special *singleton* custom element (`ui5-static-area`), placed automatically by the framework as the first child of the `body`.
+For each component, having a **static area** part, a `ui5-static-area-item` custom element is created inside the static area. 
+
+```html
+<body>
+	<ui5-static-area> <!-- created automatically only once -->
+		<ui5-static-area-item></ui5-static-area-item> <!-- created automatically for the ui5-select -->
+		<ui5-static-area-item></ui5-static-area-item> <!-- created automatically for the ui5-date-picker -->
+	</ui5-static-area>
+
+	<ui5-select></ui5-select> <!-- needs a static area part -->
+	<ui5-date-picker></ui5-date-picker> <!-- needs a static area part -->
+	<ui5-button></ui5-button> <!-- does not need a static area part -->
+</body>
+```
+
+In this example 3 UI5 Web Components are used: `ui5-select`, `ui5-date-picker` and `ui5-button`. 
+Since two of them have static parts, the framework has created a `ui5-static-area` (one for the whole page) and inside it a `ui5-static-area-item`
+for each component with a static area part.
+
+Thus, the HTML, defining the `ui5-select` and `ui5-date-picker` components is split in two parts of the HTML page:
+ - the shadow DOM of the custom element itself (`ui5-select`, `ui5-date-picker`)
+ - the shadow DOM of the `static-area-item`, created for the respective component.
+
+**This is necessary because such a split is the only way to guarantee that a popup (dropdown, rich tooltip, popover, etc.) will always be
+positioned correctly on the HTML page**, even if parts of the page have:
+ - `transform: translate`
+ - `overflow: hidden`
+ - `z-index`
+
+Since the `ui5-statia-area` is a top-level `body` child, it is guaranteed to be on top of everything else on the page with the correct CSS styles,
+regardless of the page structure and [stacking context](https://developer.mozilla.org/en-US/docs/Glossary/Stacking_context).
+
+If we did not use a static area, for example as in a component, defined like this:
+
+In the `MySelect.js` file:
+
+```html
+<div class="my-select">
+	<h1>Click to open the dropdown:</h1>
+	<button @click="{{onOpenDropdownClick}}">Dropdown</button>
+	
+	<ui5-popover id="#popover" ?open="{{dropdownOpen}}">
+		<ui5-list>
+			{{#each dropdownItems}}
+				<ui5-li>{{text}}</ui5-li>
+			{{/each}}
+		</ui5-list>
+	</ui5-popover>
+</div>
+```
+
+In the `MySelect.js` file:
+
+```js
+class MySelect extends UI5Element {
+	...
+	onOpenDropdownClick(event) {
+		this.dropdownOpen = true;
+	}
+}
+```
+
+then when the user clicks the `button`, and the `ui5-popover` opens (due to its `open` property having been set to true),
+this popover might be partially or entirely "cut" or misplaced, depending on the position of the component on the page.
+
+Example 1:
+
+```html
+<body>
+	<my-select></my-select>
+</body>
+```
+
+Here the `my-select` component would work just fine as it is the only component on the page and no other components create a stacking context or overflow.
+
+However, consider example 2:
+
+```html
+<body>
+	<div style="height: 20px; overflow: hidden;">
+		<my-select></my-select>
+	</div>
+</body>
+```
+
+Now, when the popover opens, only a `20px`-high strip of it would be visible due to the parent element's CSS.
+
+This is an oversimplified example that could easily be fixed, but in real-world scenarios there are often parts of the HTML page we cannot
+influence which cause problems with popups. 
+
+### Using the static area <a name="static_using"></a>
+
+Here is how we can rework the component from the example above to take advantage of the static area:
+
+1. Split the template and CSS of the component:
+
+Instead of having the dropdown (`ui5-popover`) in the main template:
+
+```html
+<div class="my-select">
+	<h1>Click to open the dropdown:</h1>
+	<button @click="{{onOpenDropdownClick}}">Dropdown</button>
+	
+	<ui5-popover id="#popover" ?open="{{dropdownOpen}}">
+		<ui5-list>
+			{{#each dropdownItems}}
+				<ui5-li>{{text}}</ui5-li>
+			{{/each}}
+		</ui5-list>
+	</ui5-popover>
+</div>
+```
+
+split `MySelect.hbs` into `MySelect.hbs` and `MySelectDropdown.hbs`:
+
+In the `MySelect.hbs` file:
+
+```html
+<div class="my-select">
+	<h1>Click to open the dropdown:</h1>
+	<button @click="{{onOpenDropdownClick}}">Dropdown</button>
+</div>
+```
+
+In the `MySelectDropdown.hbs` file:
+
+```html
+<ui5-popover id="#popover" ?open="{{dropdownOpen}}">
+    <ui5-list>
+        {{#each dropdownItems}}
+            <ui5-li>{{text}}</ui5-li>
+        {{/each}}
+    </ui5-list>
+</ui5-popover>
+```
+
+Also, create the CSS of the component in 2 files:
+ - `MySelect.css` (with definitions for the select itself, f.e. `.my-select {}`)
+ - `MySelectDropdown.css` (with definitions for the dropdown only, f.e. `#dropdown {}`)
+
+2. Pass the new template and CSS to the component class
+
+In the `MySelect.js` file:
+
+```js
+import MySelectTemplate from "./generated/templates/MySelect.lit.js";
+import MySelectDropdownTemplate from "./generated/templates/MySelectDropdown.lit.js";
+
+import mySelectCss from "./generated/themes/MySelect.css.js";
+import mySelectDropdownCss from "./generated/themes/MySelectDropdown.css.js";
+
+class MySelect extends UI5Element {
+	...
+	
+	static get styles() {
+		return mySelectCss;
+	}
+	
+	static get staticAreaStyles() {
+		return mySelectDropdownCss;
+	}
+    
+	static get template() {
+		return MySelectTemplate;
+	}
+
+	static get staticAreaTemplate() {
+		return MySelectDropdownTemplate;
+	}
+
+}
+```
+
+Creating the `static get staticAreaTemplate()` method is the indication that your component has a static area part,
+and will trigger the respective framework functionality to support it.
+
+3. Use the `async getStaticAreaItemDomRef()` method to create the static area item **on demand**, whenever necessary.
+
+```js
+class MySelect extends UI5Element {
+	...
+
+	async onOpenDropdownClick() {
+		await this.getStaticAreaItemDomRef(); // this line is new compared to the old implementation
+		this.dropdownOpen = true;
+    }
+
+}
+```
+
+This is all that's needed to make your component work with the static area.
+
+**Important:** please note that the static area item is only created **on demand** - when you call the `async getStaticAreaItemDomRef()` function.
+For most components this is when the user opens a menu/dropdown/hovers over an element for a tooltip, etc.
+
+Let's go over the whole process in more detail:
+
+ 1. The browser renders a `<my-select></my-select>` component:
+
+```html
+<body>
+    <my-select></my-select>
+</body>
+```
+
+The shadow root of the `my-select` component will be created with the content from the `MySelect.hbs` template, as it was provided as `static get template()`.
+Note that until this point nothing related to the static area has happened. The lifecycle of this component so far is not much different than that of a `ui5-button`.
+
+2. The user interacts with the component (clicks the "Dropdown" button)
+
+This will trigger the `onOpenDropdownClick` event handler we've bound in `MySelect.hbs`
+and once the first line of this event handler is executed (the `await this.getStatiAreaItemDomRef` part):
+
+```js
+async onOpenDropdownClick() {
+	await this.getStaticAreaItemDomRef();
+    this.dropdownOpen = true;
+}
+```
+
+the framework creates the `ui5-static-area` and a `ui5-static-area-item` and executes creates its shadow root with the content from the `MySelectDropdown.hbs` template, as it was provided as `static get staticAreaTemplate()`.
+
+The DOM would then look like this:
+
+```html
+<body>
+    <ui5-static-area>
+        <ui5-static-area-item>
+            #shadow-root <!-- The MySelectDropdown.hbs template was rendered here -->
+        </ui5-static-area-item>
+    </ui5-static-area>
+
+    <my-select>
+        #shadow-root <!-- The MySelect.hbs template was rendered here -->
+    </my-select>
+</body>
+```
+
+If the user hadn't clicked the button, the static area part would not have been created at all.
+
+### Accessing the static area item <a name="static_accessing"></a>
+
+The `async getStaticAreaItemDomRef()` function from the example above:
+
+```js
+async onOpenDropdownClick() {
+	await this.getStaticAreaItemDomRef();
+    this.dropdownOpen = true;
+}
+```
+
+returns a reference to the `shadowRoot` of the static area item for this component.
+
+You can therefore access it like this:
+
+```js
+const staticAreaItem = await this.getStaticAreaItemDomRef();
+const popover = staticAreaItem.querySelector("[ui5-popover]");
+```
+
+Here, we get a reference to the static area item's shadow root in `staticAreaItem`, and then get an instance of the `ui5-popover` element
+by using the attribute selector (`[ui5-popover]`), as is the best practice. See [Tag](#metadata_tag) in the [Metadata deep dive](#metadata) section above. 
+
+Also, note that no matter how many times you call `getStaticAreaItemDomRef`, the static area item will be created only
+the first time, and then only the reference will be returned.
