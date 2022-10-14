@@ -17,17 +17,17 @@ as this article will expand on many of the notions, introduced there.
    - [Events](#metadata_events) 
    - [Wrapping up metadata](#metadata_wrapping_up) 
 2. [Understanding rendering](#rendering)
-   - [What is rendering](#rendering_def)
+   - [What is rendering?](#rendering_def)
    - [Physical and logical components](#rendering_physical_logical)
    - [What is invalidation?](#invalidation)
 3. [Lifecycle hooks](#lifecycle)
-   - [`constructor`](#lifecyle_constructor)
-   - [`onBeforeRendering`](#lifecyle_before)
-   - [`onAfterRendering`](#lifecyle_after)
-   - [`onEnterDOM` and `onExitDOM`](#lifecyle_dom)
+   - [`constructor`](#lifecycle_constructor)
+   - [`onBeforeRendering`](#lifecycle_before)
+   - [`onAfterRendering`](#lifecycle_after)
+   - [`onEnterDOM` and `onExitDOM`](#lifecycle_dom)
 
 
-## Metadata deep dive <a name="metadata></a>
+## Metadata deep dive <a name="metadata"></a>
 
 The `static get metadata()` method defines the public API of your component. Among other things, here you define:
  - the tag name
