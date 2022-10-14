@@ -79,6 +79,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @formEvents change
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -274,6 +275,8 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RadioButton
  * @extends sap.ui.webcomponents.base.UI5Element
+ * @formAssociated
+ * @formProperties checked
  * @tagname ui5-radio-button
  * @public
  */

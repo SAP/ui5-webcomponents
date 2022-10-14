@@ -46,6 +46,7 @@ const metadata = {
 		 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @formEvents change
 		 * @public
 		 */
 		checked: {
@@ -169,6 +170,8 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Switch
  * @extends sap.ui.webcomponents.base.UI5Element
+ * @formAssociated
+ * @formProperties checked
  * @tagname ui5-switch
  * @public
  * @since 0.8.0

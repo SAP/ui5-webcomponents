@@ -71,6 +71,8 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DateRangePicker
  * @extends DatePicker
+ * @formAssociated
+ * @formProperties value
  * @tagname ui5-daterange-picker
  * @since 1.0.0-rc.8
  * @public

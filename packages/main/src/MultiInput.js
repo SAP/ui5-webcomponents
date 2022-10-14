@@ -99,6 +99,8 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MultiInput
  * @extends Input
+ * @formAssociated
+ * @formProperties value
  * @tagname ui5-multi-input
  * @appenddocs Token
  * @since 1.0.0-rc.9
