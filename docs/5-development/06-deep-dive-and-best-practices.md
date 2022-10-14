@@ -100,7 +100,7 @@ You can also create custom property types by extending `@ui5/webcomponents-base/
 
 #### Properties with `multiple: true`
 
-If you configure a property with `multiple: true`, it will be an array of elements of the given `type`, and will be treated by the framework exactly like
+If you configure a property with `multiple: true`, it will be an array of elements of the given `type`, and will be treated by the framework exactly as
 a property of type `Object` would be (as arrays are technically objects) - for example, it will not have an attribute counterpart.
 
 Example:
