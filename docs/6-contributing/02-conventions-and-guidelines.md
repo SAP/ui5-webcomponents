@@ -5,7 +5,7 @@ You may also find an ESLint integration for your favorite IDE [here](https://esl
 
 ## Testing
 Integration testing is based on [Webdriver.io](https://webdriver.io/). You can run all tests using `npm run test`.
-If reasonable, take the time and write a test for the proposed change or fix. Learn more about testing at the [Testing UI5 Web Components page](https://github.com/SAP/ui5-webcomponents/blob/main/docs/5-development/04-testing-UI5-Web-Components.md).
+If reasonable, take the time and write a test for the proposed change or fix. Learn more about testing at the [Testing UI5 Web Components page](https://github.com/SAP/ui5-webcomponents/blob/main/docs/5-development/05-testing-UI5-Web-Components.md).
 
 ## Git Guidelines
 

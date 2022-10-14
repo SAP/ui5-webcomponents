@@ -88,6 +88,23 @@ describe("Table general interaction", () => {
 			"The aria-label value is correct.");
 	});
 
+	it("tests selectable row aria-label value", async () => {
+		await browser.url(`test/pages/TableSelection.html`);
+
+		const row = await browser.$("#firstRowSingleSelect");
+		const rowRoot = await browser.$("#firstRowSingleSelect").shadow$(".ui5-table-row-root");
+
+		let EXPECTED_TEXT = "Product Notebook Basic 15 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR Row Type Active. 2 of 5. Not Selected";
+
+		assert.strictEqual(await rowRoot.getAttribute("aria-label"), EXPECTED_TEXT, "The aria-label value is correct.");
+
+		await row.setProperty("selected", true);
+
+		EXPECTED_TEXT = "Product Notebook Basic 15 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR Row Type Active. 2 of 5. Selected";
+
+		assert.strictEqual(await rowRoot.getAttribute("aria-label"), EXPECTED_TEXT, "The aria-label value is correct.");
+	});
+
 	describe("Accessibility", () => {
 		before(async () => {
 			await browser.url(`test/pages/Table.html`);

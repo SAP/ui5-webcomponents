@@ -38,7 +38,7 @@ The server will reload the pages whenever you make changes in the code.
 
 - [Development Conventions and Guidelines](./docs/6-contributing/02-conventions-and-guidelines.md);
 - [Developing Custom UI5 Web Components](./docs/5-development/02-custom-UI5-Web-Components.md);
-- [Testing UI5 Web Components](./docs/5-development/04-testing-UI5-Web-Components.md);
+- [Testing UI5 Web Components](./docs/5-development/05-testing-UI5-Web-Components.md);
 - [Understanding UI5 Web Components Metadata](./docs/5-development/03-understanding-components-metadata.md).
 
 **4.2.** Create a local branch within your fork and work with it as usual.
