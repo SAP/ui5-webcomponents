@@ -14,12 +14,14 @@
 	data-sap-focus-ref
 	part="row"
 	role="row"
+	navigated="{{navigated}}"
+	dir="{{effectiveDir}}"
 >
 
 	{{#if isMultiSelect}}
-		<td 
-			class="ui5-table-multi-select-cell" 
-			aria-hidden="true" 
+		<td
+			class="ui5-table-multi-select-cell"
+			aria-hidden="true"
 			role="presentation"
 		>
 			<ui5-checkbox

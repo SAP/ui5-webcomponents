@@ -98,7 +98,17 @@ const metadata = {
 		active: {
 			type: Boolean,
 		},
-
+		/**
+		 * Indicates if the table row is navigated.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.9.0
+		 * @public
+		*/
+		navigated: {
+			type: Boolean,
+		},
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
