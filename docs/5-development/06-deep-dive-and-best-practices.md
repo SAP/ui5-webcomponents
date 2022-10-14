@@ -26,10 +26,10 @@ as this article will expand on many of the notions, introduced there.
    - [`onAfterRendering`](#lifecycle_after)
    - [`onEnterDOM` and `onExitDOM`](#lifecycle_dom)
 4. [The static area](#static)
-    - [Preface](#static_preface)
-    - [What is the static area and why is it needed?](#static_what_why)
-    - [Using the static area?](#static_using)
-    - [Accessing the static area item](#static_accessing)
+	- [Preface](#static_preface)
+	- [What is the static area and why is it needed?](#static_what_why)
+	- [Using the static area?](#static_using)
+	- [Accessing the static area item](#static_accessing)
 
 ## Metadata deep dive <a name="metadata"></a>
 
@@ -85,23 +85,23 @@ the **attribute** will still be the same (`ui5-button` as opposed to the tag nam
 Therefore, the best practice when developing UI5 Web Components is to write CSS selectors for the shadow roots using
 attribute selectors, instead of tag selectors.
 
-For example, if the `.hbs` file of the component looks like this:
+For example, if the `Demo.hbs` file looks like this:
 
 ```html
 <div class="my-component">
-    <ui5-button id="openBtn">Open</ui5-button>
-    <div>
-        <slot></slot>
-    </div>
-    <ui5-list></ui5-list>
+	<ui5-button id="openBtn">Open</ui5-button>
+	<div>
+		<slot></slot>
+	</div>
+	<ui5-list></ui5-list>
 </div>
 ```
 
-you should not write selectors by tag name for the UI5 Web Components in the `.css` file:
+you should not write selectors by tag name for other components in the `Demo.css` file:
 
 ```css
 ui5-button {
-    width: 50px;
+	width: 50px;
 }
 ```
 
@@ -111,7 +111,7 @@ Instead, use the attribute selector:
 
 ```css
 [ui5-button] {
-    width: 50px;
+	width: 50px;
 }
 ```
 
@@ -119,7 +119,7 @@ or another type of selector (for example by ID):
 
 ```css
 #openBtn {
-    width: 50px;
+	width: 50px;
 }
 ```
 
@@ -1091,7 +1091,7 @@ the component will be invalidated, and the template will be executed with the ne
 
 ### Preface <a name="static_preface"></a>
 
-This section expands on the UI5 Web Component class structure, so if you haven't, please check [Developing Custom UI5 Web Components](./02-custom-UI5-Web-Components.md) first.
+This section expands on the UI5 Web Components class structure, so if you haven't, please check [Developing Custom UI5 Web Components](./02-custom-UI5-Web-Components.md) first.
 
 Normally, the whole HTML markup of a UI5 Web Component is found in one place - the shadow DOM of the custom element itself.
 
@@ -1147,7 +1147,7 @@ For each component, having a **static area** part, a `ui5-static-area-item` cust
 </body>
 ```
 
-In this example 3 UI5 Web Components are used: `ui5-select`, `ui5-date-picker` and `ui5-button`. 
+In this example 3 UI5 Web Components are used: `ui5-select`, `ui5-date-picker`, and `ui5-button`. 
 Since two of them have static parts, the framework has created a `ui5-static-area` (one for the whole page) and inside it a `ui5-static-area-item`
 for each component with a static area part.
 
@@ -1247,7 +1247,7 @@ Instead of having the dropdown (`ui5-popover`) in the main template:
 
 split `MySelect.hbs` into `MySelect.hbs` and `MySelectDropdown.hbs`:
 
-In the `MySelect.hbs` file:
+The `MySelect.hbs` file:
 
 ```html
 <div class="my-select">
@@ -1256,15 +1256,15 @@ In the `MySelect.hbs` file:
 </div>
 ```
 
-In the `MySelectDropdown.hbs` file:
+The `MySelectDropdown.hbs` file:
 
 ```html
 <ui5-popover id="#popover" ?open="{{dropdownOpen}}">
-    <ui5-list>
-        {{#each dropdownItems}}
-            <ui5-li>{{text}}</ui5-li>
-        {{/each}}
-    </ui5-list>
+	<ui5-list>
+		{{#each dropdownItems}}
+			<ui5-li>{{text}}</ui5-li>
+		{{/each}}
+	</ui5-list>
 </ui5-popover>
 ```
 
@@ -1274,7 +1274,7 @@ Also, create the CSS of the component in 2 files:
 
 2. Pass the new template and CSS to the component class
 
-In the `MySelect.js` file:
+The `MySelect.js` file:
 
 ```js
 import MySelectTemplate from "./generated/templates/MySelect.lit.js";
@@ -1293,7 +1293,7 @@ class MySelect extends UI5Element {
 	static get staticAreaStyles() {
 		return mySelectDropdownCss;
 	}
-    
+	
 	static get template() {
 		return MySelectTemplate;
 	}
@@ -1317,12 +1317,12 @@ class MySelect extends UI5Element {
 	async onOpenDropdownClick() {
 		await this.getStaticAreaItemDomRef(); // this line is new compared to the old implementation
 		this.dropdownOpen = true;
-    }
+	}
 
 }
 ```
 
-This is all that's needed to make your component work with the static area.
+This is all it takes to make your component work with the static area.
 
 **Important:** please note that the static area item is only created **on demand** - when you call the `async getStaticAreaItemDomRef()` function.
 For most components this is when the user opens a menu/dropdown/hovers over an element for a tooltip, etc.
@@ -1333,7 +1333,7 @@ Let's go over the whole process in more detail:
 
 ```html
 <body>
-    <my-select></my-select>
+	<my-select></my-select>
 </body>
 ```
 
@@ -1348,25 +1348,25 @@ and once the first line of this event handler is executed (the `await this.getSt
 ```js
 async onOpenDropdownClick() {
 	await this.getStaticAreaItemDomRef();
-    this.dropdownOpen = true;
+	this.dropdownOpen = true;
 }
 ```
 
-the framework creates the `ui5-static-area` and a `ui5-static-area-item` and executes creates its shadow root with the content from the `MySelectDropdown.hbs` template, as it was provided as `static get staticAreaTemplate()`.
+the framework will create the `ui5-static-area` and a `ui5-static-area-item` and will create its shadow root with the content from the `MySelectDropdown.hbs` template, as it was provided as `static get staticAreaTemplate()`.
 
 The DOM would then look like this:
 
 ```html
 <body>
-    <ui5-static-area>
-        <ui5-static-area-item>
-            #shadow-root <!-- The MySelectDropdown.hbs template was rendered here -->
-        </ui5-static-area-item>
-    </ui5-static-area>
+	<ui5-static-area>
+		<ui5-static-area-item>
+			#shadow-root <!-- The MySelectDropdown.hbs template was rendered here -->
+		</ui5-static-area-item>
+	</ui5-static-area>
 
-    <my-select>
-        #shadow-root <!-- The MySelect.hbs template was rendered here -->
-    </my-select>
+	<my-select>
+		#shadow-root <!-- The MySelect.hbs template was rendered here -->
+	</my-select>
 </body>
 ```
 
@@ -1379,7 +1379,7 @@ The `async getStaticAreaItemDomRef()` function from the example above:
 ```js
 async onOpenDropdownClick() {
 	await this.getStaticAreaItemDomRef();
-    this.dropdownOpen = true;
+	this.dropdownOpen = true;
 }
 ```
 
@@ -1392,8 +1392,7 @@ const staticAreaItem = await this.getStaticAreaItemDomRef();
 const popover = staticAreaItem.querySelector("[ui5-popover]");
 ```
 
-Here, we get a reference to the static area item's shadow root in `staticAreaItem`, and then get an instance of the `ui5-popover` element
+First, we get a reference to the static area item's shadow root in `staticAreaItem`, and then we get the instance of the `ui5-popover` element
 by using the attribute selector (`[ui5-popover]`), as is the best practice. See [Tag](#metadata_tag) in the [Metadata deep dive](#metadata) section above. 
 
-Also, note that no matter how many times you call `getStaticAreaItemDomRef`, the static area item will be created only
-the first time, and then only the reference will be returned.
+Also, note that no matter how many times you call `getStaticAreaItemDomRef`, the static area item will be created only the first time.
