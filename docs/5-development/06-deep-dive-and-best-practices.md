@@ -488,6 +488,71 @@ list.addEventListener("selectionChange", (event) => {
 });
 ```
 
+#### Events and noConflict mode 
+
+By default, when using the `fireEvent` method, as demonstrated above, actually not just one, but two custom events are fired: one with the name, provided as the first argument to `fireEvent`,
+and one more with the same name, but prefixed by `ui5-`.
+
+For example, the following code:
+
+```js
+fireEvent("toggle");
+```
+
+will dispatch two [custom events](https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events) by default:
+ - `toggle`
+ - `ui5-toggle`
+
+However, if you set the [noConflict](../2-advanced/01-configuration.md#no_conflict) configuration setting to `true`, only the **prefixed** event will be dispatched.
+
+So, when `noConflict: true` is configured, the same code: 
+
+```js
+fireEvent("toggle");
+```
+
+would result in just:
+ - `ui5-toggle`
+
+Therefore, the best practice when binding to events, **fired by other UI5 Web Components** in your `.hbs` template, is to 
+always use the prefixed (`ui5-`) event.
+
+Example:
+
+```html
+<div class="my-component">
+    <button @click="{{onNativeButtonClick}}">Click me</button>
+    <ui5-button @ui5-click="{{onUI5ButtonClick}}">Click me</ui5-button>
+    
+    <input @change="{{onNativeInputChange}}" />
+    <ui5-input @ui5-change="{{onUI5InputChange}}"></ui5-input>
+    
+    <ui5-list @ui5-item-click="{{onUI5ListItemClick}}"></ui5-list>
+</div>
+```
+
+Please note the following:
+ - For native HTML elements (`input`, `button`) we bind to their respective events (`change`, `click`) normally.
+ - For other UI5 Web Components (`ui5-button`, `ui5-input`, `ui5-list`), rendered by our component, we bind to the `ui5-` events as these are guaranteed to be dispatched even when `noConflict` is configured to `true`.
+
+If we used the non-prefixed versions:
+
+```html
+<div class="my-component">
+    <button @click="{{onNativeButtonClick}}">Click me</button>
+    <ui5-button @click="{{onUI5ButtonClick}}">Click me</ui5-button>
+    
+    <input @change="{{onNativeInputChange}}" />
+    <ui5-input @change="{{onUI5InputChange}}"></ui5-input>
+    
+    <ui5-list @item-click="{{onUI5ListItemClick}}"></ui5-list>
+</div>
+```
+
+this would work well only with the default configuration (where `noConflict` is `false` and both events are fired), but our code would
+"break" the moment an app sets `noConflict: true` since that would suppress UI5 Web Components from firing the non-prefixed versions and 
+our event handlers (`onUI5ButtonClick`, `onUI5InputChange`, etc.) would never be executed.
+
 ### Wrapping up metadata
 
 Metadata determines most of your component's API - describe its tag name, properties, slots and events there.
