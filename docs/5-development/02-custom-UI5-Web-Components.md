@@ -457,6 +457,8 @@ Here, we see the `pleaseWaitText` getter, defined in the previous step.
 As explained above, the `.hbs` file is transformed by the build script to a `.js` file in the `lit-html` syntax. More specifically, this file
 is provided to the Web Component class.
 
+For a full description of the `.hbs` template features and syntax, see [Understanding the Handlebars (`.hbs`) templates](./04-understanding-hbs-templates.md).
+
 ## The CSS
 <a name="css"></a>
 
