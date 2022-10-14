@@ -9,14 +9,32 @@ Before proceeding, please make sure you've read the other articles from this sec
 
 as this article will expand on many of the notions, introduced there.
 
-## Metadata deep dive
+## Table of contents
+1. [Metadata deep dive](#metadata)
+   - [Tag](#metadata_tag) 
+   - [Properties](#metadata_properties) 
+   - [Slots](#metadata_slots) 
+   - [Events](#metadata_events) 
+   - [Wrapping up metadata](#metadata_wrapping_up) 
+2. [Understanding rendering](#rendering)
+   - [What is rendering](#rendering_def)
+   - [Physical and logical components](#rendering_physical_logical)
+   - [What is invalidation?](#invalidation)
+3. [Lifecycle hooks](#lifecycle)
+   - [`constructor`](#lifecyle_constructor)
+   - [`onBeforeRendering`](#lifecyle_before)
+   - [`onAfterRendering`](#lifecyle_after)
+   - [`onEnterDOM` and `onExitDOM`](#lifecyle_dom)
+
+
+## Metadata deep dive <a name="metadata></a>
 
 The `static get metadata()` method defines the public API of your component. Among other things, here you define:
  - the tag name
  - what properties/attributes (and of what type) your component supports
  - what slots your component supports
 
-### Tag
+### Tag <a name="metadata_tag"></a>
 
 The tag name must include a `-` as required for any custom element:
 
@@ -34,7 +52,7 @@ and then the usage is:
 The `tag`, as defined in `metadata`, is sometimes also referred to as the "pure tag", meaning it is not suffixed.
 See [Scoping](../2-advanced/03-scoping.md) for more on using a suffix with tag names.
 
-### Properties
+### Properties <a name="metadata_properties"></a>
 
 #### Properties are managed state
 
@@ -207,7 +225,7 @@ However, only metadata-defined properties are managed by the framework: cause in
 Feel free to create as many regular JS properties for the purpose of your component's functionality as you need, but bear in mind
 that they will not be managed by the framework.
 
-### Slots
+### Slots <a name="metadata_slots"></a>
 
 While *properties* define the objective characteristics of a component, *slots* define the way a component can nest other HTML elements.
 You don't need to define slots for every component - some components are not meant to hold any other HTML elements, and are fully operated by properties and events alone.
@@ -381,7 +399,7 @@ for components working with abstract items.
 
 Read more about abstract items and `invalidateOnChildChange` in the [Invalidation](#invalidation) section later in this article.
 
-### Events
+### Events <a name="metadata_events"></a>
 
 Most components fire *events* to notify the application of user interaction.
 
@@ -553,7 +571,7 @@ this would work well only with the default configuration (where `noConflict` is 
 "break" the moment an app sets `noConflict: true` since that would suppress UI5 Web Components from firing the non-prefixed versions and 
 our event handlers (`onUI5ButtonClick`, `onUI5InputChange`, etc.) would never be executed.
 
-### Wrapping up metadata
+### Wrapping up metadata <a name="metadata_wrapping_up"></a>
 
 Metadata determines most of your component's API - describe its tag name, properties, slots and events there.
 
@@ -643,13 +661,13 @@ Whenever the user stops typing in the `<input>` and its `change` event is fired,
 There we get the new value of the input, update the `text` metadata property to reflect its new state, stop the input's native `change` event from propagating since we'll be firing our custom event
 with the same name (and we don't want the user to get 2 events with the same name), and finally we fire our metadata event (`change`) with the `newText` parameter.
 
-## Understanding rendering
+## Understanding rendering <a name="rendering"></a>
 
-### What is rendering?
+### What is rendering? <a name="rendering_def"></a>
 
 In the context of UI5 Web Components the notion of **rendering** means **creating the content of a shadow root** (building the shadow DOM).
 
-### Physical and logical components
+### Physical and logical components <a name="rendering_physical_logical"></a>
 
 Each component that provides a `static get template()` method will be rendered (will have its shadow DOM built) initially and every time it gets invalidated.
 
@@ -678,7 +696,7 @@ Example:
 ```
 
 The `ui5-option` component does not provide a template, and is therefore never rendered. However, the `ui5-select` component, which is a physical component that has a template, 
-renders HTML corresponding to each of its children (`ui5-option` instances) as part of its own shadow DOM.
+renders HTML corresponding to each of its children (`ui5-option` instances) as part of its own shadow DOM. <a na
 
 ### What is invalidation? <a name="invalidation"></a>
 
@@ -768,11 +786,11 @@ slots: {
 Only changes to children in the "default" slot will trigger invalidation for this component. Note that `invalidateOnChildChange` is defined per slot (and not globally like `managedSlots`).
 Finally, `invalidateOnChildChange` allows for more fine-granular rules when exactly children can invalidate their parents - see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md).
 
-## Lifecycle hooks
+## Lifecycle hooks <a name="lifecycle"></a>
 
 Using the right lifecycle hook for the task is crucial to a well-designed and performant component.
 
-### 1. `constructor`
+### 1. `constructor` <a name="lifecycle_constructor"></a>
 
 Use the constructor for one-time initialization tasks.
 
@@ -812,7 +830,7 @@ constructor() {
 }
 ```
 
-### 2. `onBeforeRendering`
+### 2. `onBeforeRendering` <a name="lifecycle_before"></a>
 
 Use `onBeforeRendering` to prepare variables to be used in the `.hbs` template.
 
@@ -887,7 +905,7 @@ The user would only see the first and third items as these are the only ones we 
 
 In summary: `onBeforeRendering` is the best place to prepare all the variables you are going to need in the `.hbs` template.
 
-### 3. `onAfterRendering`
+### 3. `onAfterRendering` <a name="lifecycle_after"></a>
 
 The `onAfterRendering` lifecycle hook allows you to access the DOM every time the component is rendered.
 
@@ -917,7 +935,7 @@ onAfterRendering() {
 }
 ```
 
-### 4. `onEnterDOM` and `onExitDOM`
+### 4. `onEnterDOM` and `onExitDOM` <a name="lifecycle_dom"></a>
 
 Unlike `onBeforeRendering` and `onAfterRendering`, which sound like parts of the same flow (but are not, and are actually used for completely independent tasks),
 `onEnterDOM` and `onExitDOM` should almost always be used together, therefore they are presented as a whole in this article.
