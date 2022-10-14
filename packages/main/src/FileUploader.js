@@ -112,6 +112,7 @@ const metadata = {
 		 * Defines the name/names of the file/files to upload.
 		 * @type {string}
 		 * @defaultvalue ""
+		 * @formEvents change
 		 * @public
 		 */
 		value: {
@@ -230,6 +231,8 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.FileUploader
  * @extends UI5Element
+ * @formAssociated
+ * @formProperties value
  * @tagname ui5-file-uploader
  * @public
  */
