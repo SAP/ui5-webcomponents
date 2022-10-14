@@ -126,7 +126,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @controlledByEvents change
+		 * @formEvents change
 		 * @public
 		 */
 		checked: {

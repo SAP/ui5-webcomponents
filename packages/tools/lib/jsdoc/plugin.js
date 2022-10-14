@@ -35,7 +35,7 @@
  *
  *   noattribute
  * 
- *   controlledByEvents
+ *   formEvents
  * 
  *   formAssociated
  *
@@ -2115,14 +2115,14 @@ exports.defineTags = function(dictionary) {
 		}
 	});
 
-	dictionary.defineTag('controlledByEvents', {
+	dictionary.defineTag('formEvents', {
 		mustHaveValue: false,
 		onTagged: function(doclet, tag) {
 			if (tag.value) {
-				doclet.controlledByEvents = doclet.controlledByEvents || [];
+				doclet.formEvents = doclet.formEvents || [];
 				tag.value.split(" ").forEach(function($) {
-					if ( doclet.controlledByEvents.indexOf($) < 0 ) {
-						doclet.controlledByEvents.push($);
+					if ( doclet.formEvents.indexOf($) < 0 ) {
+						doclet.formEvents.push($);
 					}
 				});
 			}
