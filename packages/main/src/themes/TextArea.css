@@ -15,27 +15,15 @@
 	line-height: var(--_ui5_textarea_line_height);
 	Letter-spacing: normal;
 	word-spacing: normal;
+	margin: var(--_ui5_textarea_margin);
 }
 
-:host([disabled]) .ui5-textarea-wrapper{
-	opacity: var(--_ui5_textarea_disabled_opacity);
-	cursor: default;
-	pointer-events: none;
-	border-color: var(--sapField_ReadOnly_BorderColor);
-	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
-	color: var(--sapContent_DisabledTextColor);
-}
-
-:host([disabled]) .ui5-textarea-wrapper {
-	background: var(--_ui5_textarea_disabled_background);
-}
-
-:host(:not([value-state]):not([readonly]):not([disabled]):not([focused])) .ui5-textarea-wrapper {
+:host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--_ui5_textarea_background_color);
 }
 
-:host(:not([value-state]):not([readonly]):not([focused]):hover) .ui5-textarea-wrapper {
+:host(:not([value-state]):not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
 	box-shadow: var(--_ui5_textarea_hover_box_shadow);
 	background: var(--sapField_Hover_BackgroundStyle);
 	background-color: var(--sapField_Hover_Background);
@@ -71,6 +59,15 @@
 	outline: none;
 }
 
+:host([disabled]) .ui5-textarea-wrapper{
+	opacity: var(--_ui5_textarea_disabled_opacity);
+	cursor: default;
+	pointer-events: none;
+	border-color: var(--sapField_ReadOnly_BorderColor);
+	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
+	color: var(--sapContent_DisabledTextColor);
+}
+
 :host([value-state]) .ui5-textarea-wrapper {
 	border-color: inherit;
 }
@@ -80,7 +77,6 @@
 	background-image: none;
 	box-shadow: var(--_ui5_textarea_focus_box_shadow);
 }
-
 
 :host([focused]) .ui5-textarea-wrapper::after {
 	content: var(--_ui5_textarea_focus_pseudo_element_content);
@@ -160,6 +156,7 @@
 }
 
 :host(:not([growing])[style*="height"]) .ui5-textarea-inner {
+	min-height: var(--__ui5_textarea_min_height);
 	height: inherit;
 	box-sizing: border-box;
 }
@@ -199,7 +196,7 @@
 }
 
 :host(:not([growing]):not([growing-max-lines]):not([rows = "1"])[show-exceeded-text]) .ui5-textarea-inner {
-	height: calc(100% - 21px);
+	height: calc(100% - var(--_ui5_textarea_exceeded_text_height));
 }
 
 :host([readonly]) {
