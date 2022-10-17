@@ -283,6 +283,8 @@ const metadata = {
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-select
  * @appenddocs Option
+ * @formAssociated
+ * @formProperties value
  * @public
  * @since 0.8.0
  */
@@ -358,13 +360,25 @@ class Select extends UI5Element {
 	}
 
 	/**
-	 * Currently selected option.
+	 * Currently selected <code>ui5-option</code> element.
 	 * @readonly
 	 * @type { sap.ui.webcomponents.main.ISelectOption }
 	 * @public
 	 */
 	get selectedOption() {
 		return this._filteredItems.find(option => option.selected);
+	}
+
+	/**
+	 * Currently selected value.
+	 * @readonly
+	 * @type { String }
+	 * @formEvents change
+	 * @since 1.9.0
+	 * @public
+	 */
+	 get value() {
+		return this.selectedOption.value;
 	}
 
 	async _toggleRespPopover() {
