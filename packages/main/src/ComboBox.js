@@ -991,7 +991,7 @@ class ComboBox extends UI5Element {
 		if (isGroupItem) {
 			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite");
 		} else {
-			announce(`${currentItemAdditionalText} ${itemPositionText}`, "Polite");
+			announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), "Polite");
 		}
 	}
 
