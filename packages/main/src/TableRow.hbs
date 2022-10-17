@@ -13,9 +13,12 @@
 	aria-selected="{{this.selected}}"
 	data-sap-focus-ref
 	part="row"
+<<<<<<< HEAD
 	role="row"
 	navigated="{{navigated}}"
 	dir="{{effectiveDir}}"
+=======
+>>>>>>> origin
 >
 
 	{{#if isMultiSelect}}
@@ -48,7 +51,7 @@
 
 {{#if shouldPopin}}
 	{{#each popinCells}}
-		<tr part="popin-row" role="row" class="{{this.classes}}"
+		<tr part="popin-row" class="{{this.classes}}"
 			@click="{{../_onrowclick}}"
 			@keydown="{{../_onkeydown}}"
 			@keyup="{{../_onkeyup}}">
