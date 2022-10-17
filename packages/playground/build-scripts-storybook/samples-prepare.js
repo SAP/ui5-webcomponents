@@ -110,9 +110,18 @@ const main = async () => {
 	};
 
 	function getAPIData(api, module) {
-		const args = {};
 		const moduleAPI = api.symbols.find(s => s.module === module);
+		const args = getArgsTypes(api, moduleAPI);
 
+		return {
+			args,
+			name: moduleAPI.basename,
+			description: moduleAPI.description
+		};
+	}
+
+	function getArgsTypes(api, moduleAPI) {
+		let args = {};
 		if (moduleAPI?.events) {
 			moduleAPI.events.forEach(event => {
 				args[event.name] = {
@@ -157,11 +166,15 @@ const main = async () => {
 			});
 		}
 
-		return {
-			args,
-			name: moduleAPI.basename,
-			description: moduleAPI.description
-		};
+		// recursively merging the args from the parent/parents
+		if(moduleAPI['extends'] && moduleAPI.extends !== 'UI5Element') {
+			const moduleAPIBeingExtended = api.symbols.find(s => s.module === moduleAPI.extends);
+			if (moduleAPIBeingExtended) {
+				args = {...args, ...getArgsTypes(api, moduleAPIBeingExtended)};
+			}
+		}
+
+		return args;
 	}
 
 	function getStoryData(api, module, snippets, parentStoryName) {
@@ -175,7 +188,7 @@ const main = async () => {
 
 		return {
 			storyContent: storyContent,
-			storyDescription: data.description,
+			storyDescription: data.description.replaceAll('<br>', '<br/>'),
 			storyArgsTypes: JSON.stringify(data.args, null, "\t")
 		}
 	};
