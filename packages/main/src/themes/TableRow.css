@@ -97,19 +97,11 @@
 	position: relative;
 }
 :host([navigated]) tr:after {
-    display: block;
     content: '';
 	width: 100%;
 	position: absolute;
 	inset: 0px;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	background: transparent;
 	border-inline-end: 3px solid var(--sapList_SelectionBorderColor);
 	box-sizing: border-box;
 	pointer-events: none;
-	margin-top: -0.5px;
-	margin-bottom: 0.5px;
 }
