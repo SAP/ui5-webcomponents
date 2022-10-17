@@ -23,11 +23,15 @@
 	background-color: var(--_ui5_textarea_background_color);
 }
 
-:host(:not([value-state]):not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
-	box-shadow: var(--_ui5_textarea_hover_box_shadow);
+:host(:not([value-state]):not([readonly]):not([disabled]):hover) .ui5-textarea-wrapper {
+	box-shadow: var(--_ui5_textarea_focus_box_shadow);
 	background: var(--sapField_Hover_BackgroundStyle);
 	background-color: var(--sapField_Hover_Background);
 	border: var(--_ui5_textarea_hover_border);
+}
+
+:host(:not([value-state]):not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
+	box-shadow: var(--_ui5_textarea_hover_box_shadow);
 }
 
 .ui5-textarea-root {
@@ -290,7 +294,8 @@
 
 :host([value-state="Error"]) .ui5-textarea-inner,
 :host([value-state="Warning"]) .ui5-textarea-inner {
-	font-weight: var(--_ui5_textarea_error_warning_font_style);
+	font-style: var(--_ui5_textarea_error_warning_font_style);
+	font-weight: var(--_ui5_textarea_error_warning_font_weight);
 	text-indent: var(--_ui5_textarea_error_warning_text_indent);
 }
 
