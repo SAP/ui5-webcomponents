@@ -5831,7 +5831,7 @@
 
 <p>The following <code class="highlighter-rouge">src/Demo.hbs</code> template</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button&gt;&lt;/button&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button&gt;&lt;/button&gt;</span>
 </code></pre></div></div>
 
 <p>will be compiled to <code class="highlighter-rouge">dist/generated/templates/DemoTemplate.lit.js</code> with the following content:</p>
@@ -5870,13 +5870,13 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file you can just use them directly:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 <span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
 <p>The following code will have exactly the same result:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 <span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
@@ -5908,7 +5908,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span>
 		 <span class="na">role=</span><span class="s">"option"</span>
 		 <span class="na">aria-posinset=</span><span class="s">""</span>
@@ -5918,7 +5918,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 </code></pre></div></div>
 
 <p>Again, you can use the <code class="highlighter-rouge">this</code> keyword, but it’s not necessary. The following code will be the same as the one above:</p>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span>
 		 <span class="na">role=</span><span class="s">"option"</span>
 		 <span class="na">aria-posinset=</span><span class="s">""</span>
@@ -5931,7 +5931,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>Example:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span>
 		 <span class="na">.item=</span><span class="s">""</span>
 	<span class="nt">&gt;&lt;/div&gt;</span>
@@ -5952,7 +5952,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div&gt;</span>
 		
 			<span class="nt">&lt;span&gt;&lt;/span&gt;</span>
@@ -5990,7 +5990,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
 
 </code></pre></div></div>
@@ -6013,14 +6013,14 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="na">title=</span><span class="s">""</span><span class="nt">&gt;&lt;button/&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="na">title=</span><span class="s">""</span><span class="nt">&gt;&lt;button/&gt;</span>
 </code></pre></div></div>
 
 <p><em>Note:</em> You must always create valid HTML, so you can only use bindings for attribute values or text nodes.</p>
 
 <p>For example, the following is <strong>not allowed</strong>:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span> <span class="err">="</span><span class="na">Hello</span><span class="err">"</span><span class="nt">&gt;</span>This will not compile<span class="nt">&lt;/&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span> <span class="err">="</span><span class="na">Hello</span><span class="err">"</span><span class="nt">&gt;</span>This will not compile<span class="nt">&lt;/&gt;</span>
 </code></pre></div></div>
 
 <p>You can access object properties:</p>
@@ -6035,12 +6035,12 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;</span> <span class="nt">&lt;/p&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;</span> <span class="nt">&lt;/p&gt;</span>
 </code></pre></div></div>
 
 <p>but you cannot use expressions inside <code class="highlighter-rouge">.hbs</code> templates. The following is <strong>not allowed</strong>:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
 <p>Instead, you should precalculate the required value in the <code class="highlighter-rouge">.js</code> file and use it directly in the template:</p>
@@ -6054,7 +6054,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
 <h3 id="conditions-">Conditions <a name="syntax_conditional"></a></h3>
@@ -6063,14 +6063,14 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>Examples:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;label</span> <span class="na">class=</span><span class="s">"ui5-badge-text"</span><span class="nt">&gt;&lt;bdi&gt;&lt;slot&gt;&lt;/slot&gt;&lt;/bdi&gt;&lt;/label&gt;</span>
 
 </code></pre></div></div>
 
 <p>or</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;label</span> <span class="na">class=</span><span class="s">"has-text"</span><span class="nt">&gt;&lt;span&gt;&lt;/span&gt;&lt;/label&gt;</span>
 
 	<span class="nt">&lt;label</span> <span class="na">class=</span><span class="s">"empty-label"</span><span class="nt">&gt;&lt;/label&gt;</span>
@@ -6079,14 +6079,14 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>or</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;p&gt;</span>Some content<span class="nt">&lt;/p&gt;</span>
 
 </code></pre></div></div>
 
 <p>You can chain if-else-if, as follows:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;slot&gt;&lt;/slot&gt;</span>
 
 	<span class="nt">&lt;ui5-icon</span> <span class="na">class=</span><span class="s">"ui5-avatar-icon"</span> <span class="na">name=</span><span class="s">""</span> <span class="na">accessible-name=</span><span class="s">""</span><span class="nt">&gt;&lt;/ui5-icon&gt;</span>
@@ -6097,7 +6097,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>Again, you cannot use expressions, so the following is <strong>not allowed</strong>:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;p&gt;</span>Show admin functionality<span class="nt">&lt;/p&gt;</span>
 
 </code></pre></div></div>
@@ -6113,7 +6113,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>and then use this value in <code class="highlighter-rouge">Demo.hbs</code>:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;p&gt;</span>Show admin functionality<span class="nt">&lt;/p&gt;</span>
 
 </code></pre></div></div>
@@ -6142,7 +6142,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span>
 		 <span class="na">role=</span><span class="s">"option"</span>
 		 <span class="na">aria-posinset=</span><span class="s">""</span>
@@ -6168,7 +6168,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 <span class="k">this</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Some text</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span>
 		<span class="na">id=</span><span class="s">""</span>
 		<span class="na">data-info=</span><span class="s">""</span>
 		<span class="na">.item=</span><span class="s">""</span>
@@ -6202,7 +6202,7 @@ The result in the DOM would be:</p>
 <span class="k">this</span><span class="p">.</span><span class="nx">disabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
 </code></pre></div></div>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span>
 	<span class="na">id=</span><span class="s">"-CB"</span>
 	<span class="na">type=</span><span class="s">'checkbox'</span>
 	<span class="err">?</span><span class="na">checked=</span><span class="s">""</span>
@@ -6231,7 +6231,7 @@ The result in the DOM would be:</p>
 
 <p>However, if you did not use the <code class="highlighter-rouge">?</code> prefix:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span>
 	<span class="na">id=</span><span class="s">"-CB"</span>
 	<span class="na">type=</span><span class="s">'checkbox'</span>
 	<span class="na">checked=</span><span class="s">""</span>
@@ -6271,7 +6271,7 @@ Therefore, always bind boolean attributes with <code class="highlighter-rouge">?
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="err">@</span><span class="na">click=</span><span class="s">""</span><span class="nt">&gt;&lt;/button&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="err">@</span><span class="na">click=</span><span class="s">""</span><span class="nt">&gt;&lt;/button&gt;</span>
 </code></pre></div></div>
 
 <h3 id="style-maps-">Style maps <a name="syntax_style_maps"></a></h3>
@@ -6299,7 +6299,7 @@ Any binding to a <code class="highlighter-rouge">styles</code> object on a <code
 
 <p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">""</span><span class="nt">&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">""</span><span class="nt">&gt;</span>
 	Some content
 	<span class="nt">&lt;footer</span> <span class="na">style=</span><span class="s">""</span><span class="nt">&gt;&lt;/footer&gt;</span>
 <span class="nt">&lt;/div&gt;</span>
@@ -6316,7 +6316,7 @@ but will use Javascript APIs to apply each style/CSS variable separately.</p>
 <span class="k">this</span><span class="p">.</span><span class="nx">styles</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">display: none; visibility: hidden</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display: "</span><span class="nt">&gt;&lt;/div&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">"display: "</span><span class="nt">&gt;&lt;/div&gt;</span>
 <span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
 </code></pre></div></div>
 
@@ -6347,7 +6347,7 @@ The correct way would be to pass objects (as in the first example), in which cas
 <span class="p">}</span>
 </code></pre></div></div>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">""</span><span class="nt">&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;article</span> <span class="na">class=</span><span class="s">""</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
 	<span class="nt">&lt;section</span> <span class="na">class=</span><span class="s">""</span><span class="nt">&gt;&lt;/section&gt;</span>
 <span class="nt">&lt;/article&gt;</span>
@@ -6364,7 +6364,7 @@ are unconditional (<code class="highlighter-rouge">ui5-demo-main</code> and <cod
 
 <p>Consider the following example:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div&gt;</span>
 	
 <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;p&gt;</span>Some more content<span class="nt">&lt;/p&gt;</span>
@@ -6387,7 +6387,7 @@ are unconditional (<code class="highlighter-rouge">ui5-demo-main</code> and <cod
 
 <p>In <code class="highlighter-rouge">Demo.hbs</code>:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;section&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;section&gt;</span>
 	<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"first-fe"</span> <span class="na">data-ui5-focus-trap</span> <span class="na">tabindex=</span><span class="s">"0"</span> <span class="err">@</span><span class="na">focusin=</span><span class="err">&gt;</span><span class="s">&lt;/span</span><span class="nt">&gt;</span>
 
 	
@@ -6415,21 +6415,21 @@ are unconditional (<code class="highlighter-rouge">ui5-demo-main</code> and <cod
 
 <p>Example:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 </code></pre></div></div>
 
 <p>Paths to <code class="highlighter-rouge">.hbs</code> files from other <code class="highlighter-rouge">node_modules/</code> libraries are also supported.</p>
 
 <p>Example:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 </code></pre></div></div>
 
 <p>The most common use case for `` is to include an <code class="highlighter-rouge">.hbs</code> file that has extension points (hooks) and implement them. Given the example from the previous section (about Partials), consider the following:</p>
 
 <p>In <code class="highlighter-rouge">Demo2.hbs</code>:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
 
 	<span class="nt">&lt;span&gt;</span>Implementation here<span class="nt">&lt;/span&gt;</span>
@@ -6479,7 +6479,7 @@ You should render each slot, defined in your component’s metadata (see <a href
 
 <p>In <code class="highlighter-rouge">Page.hbs</code>:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ui5-page-root"</span><span class="nt">&gt;</span>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ui5-page-root"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"ui5-page-header-root"</span> <span class="na">id=</span><span class="s">"ui5-page-header"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;slot</span> <span class="na">name=</span><span class="s">"header"</span><span class="nt">&gt;&lt;/slot&gt;</span>
 	<span class="nt">&lt;/header&gt;</span>
@@ -6532,7 +6532,7 @@ and since <code class="highlighter-rouge">individualSlots</code> is set to <code
 
 <p>In <code class="highlighter-rouge">Demo.hbs</code> you must render a slot for each child with <code class="highlighter-rouge">name</code> equal to the <code class="highlighter-rouge">_individualSlot</code> property value for this child:</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item-wrapper"</span><span class="nt">&gt;</span>
 		<span class="nt">&lt;slot</span> <span class="na">name=</span><span class="s">""</span><span class="nt">&gt;&lt;/slot&gt;</span>
 	<span class="nt">&lt;/div&gt;</span>

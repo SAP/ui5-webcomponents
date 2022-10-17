@@ -1,5 +1,5 @@
-commit 30a592680b7683d1942b3f121723f8804fa0f879
+commit f4ecb3fadf32d039c6c7cdee9dbe44ec1e8b3ba7
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Oct 17 11:37:38 2022 +0300
+Date:   Mon Oct 17 13:59:37 2022 +0300
 
-    docs: some more metadata settings (#5945)
+    docs: use handlebars language (#5947)
