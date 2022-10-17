@@ -290,4 +290,4 @@ import "my-ui5-webcomponents/dist/SomeOtherComponent.js";
 import "my-ui5-webcomponents/dist/YetAnotherComponent.js";
 ```
 
-Next: [Developing Custom UI5 Web Components](../custom-ui5-web-components)
+Next: [Developing Custom UI5 Web Components](./02-custom-UI5-Web-Components.md)

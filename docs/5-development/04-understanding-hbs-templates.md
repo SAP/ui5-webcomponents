@@ -53,7 +53,7 @@ Therefore, the `.hbs` file is there just for convenience, the end result will al
 
  - **Declarative**: write HTML in a form as close as possible to what will eventually be in the DOM (rather than writing template functions directly).
  - **Abstract**: the template could be compiled to other formats in the future (not just lit-html) so it should only use universal concepts and no lit-specific features.
- - **Separation of concerns**: the template must be as simple as possible with no complex expressions or calculations - variables that control structures (for example, `{{#if` statements) should be precalculated. 
+ - **Separation of concerns**: the template must be as simple as possible with no complex expressions or calculations - variables that control structures (for example, `if` statements) should be precalculated. 
  
 For these reasons, we would suggest you use `.hbs` templates and have them compiled to lit-html, instead of directly writing `lit-html` renderers, although that's also possible if you prefer so.
 
@@ -809,3 +809,5 @@ The resulting DOM from the loop above will look like this:
 ```
 
 This allows you to have arbitrary DOM around each child and implement complex UX design, otherwise impossible if all children were just normally rendered next to each other in a single slot.
+
+Next: [Testing UI5 Web Components](./05-testing-UI5-Web-Components.md)
