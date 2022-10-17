@@ -1,5 +1,5 @@
-commit 9ef586d5f96d2888e7e116287538274dfdb13608
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Oct 17 10:39:24 2022 +0300
+commit 30a592680b7683d1942b3f121723f8804fa0f879
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Oct 17 11:37:38 2022 +0300
 
-    Update 04-understanding-hbs-templates.md
+    docs: some more metadata settings (#5945)

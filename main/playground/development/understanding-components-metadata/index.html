@@ -6155,7 +6155,38 @@ rendering on the presence/absence/type of children.</p>
  in order to display a link on its Tab Strip for each Tab child. Therefore, it would need to be invalidated whenever
  Tabs are added/removed, in order to update its own state and visualization.</p>
 
-<p>Next: <a href="../testing-ui5-web-components">Testing UI5 Web Components</a></p>
+<h2 id="language-aware-components">Language-aware components</h2>
+
+<p>The <code class="highlighter-rouge">languageAware</code> metadata setting determines if the component should be re-rendered whenever the language changes.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nl">"languageAware"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>You should use this setting if your component has translatable texts, therefore needs to be re-rendered when the app
+changes the language.</p>
+
+<h2 id="theme-aware-components">Theme-aware components</h2>
+
+<p>The <code class="highlighter-rouge">themeAware</code> metadata setting determines if the component should re-render whenever the theme changes.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nl">"themeAware"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p><strong>Important: You should almost never use this setting.</strong></p>
+
+<p>Normally components are built in such a way that their structure
+is exactly the same for all themes and whenever the theme changes <em>only CSS Variables are changed</em> and the component itself
+does not need to be re-rendered - the browser automatically updates the styles when CSS Variables get new values.</p>
+
+<p>However, there are some very rare cases where a component must behave differently (opposed to just look differently) based on the theme.
+For example, the <code class="highlighter-rouge">ui5-icon</code> component must show different versions of the icons based on the theme. Use the <code class="highlighter-rouge">themeAware</code> setting
+in these exceptional cases to guarantee that your component will be re-rendered on theme change.</p>
+
+<p>Next: <a href="./04-understanding-hbs-templates.md">Understanding the Handlebars (<code class="highlighter-rouge">.hbs</code>) templates</a></p>
 
 
 <footer class="footer-wrapper">
