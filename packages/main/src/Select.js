@@ -378,7 +378,7 @@ class Select extends UI5Element {
 	 * @public
 	 */
 	 get value() {
-		return this.selectedOption.value;
+		return this.selectedOption && this.selectedOption.textContent;
 	}
 
 	async _toggleRespPopover() {
