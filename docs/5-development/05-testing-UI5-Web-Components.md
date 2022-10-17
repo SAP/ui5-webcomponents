@@ -246,4 +246,5 @@ You have 2 options:
  `yarn add -D @wdio/sync`
 
  Just installing the package (with no extra configuration) is enough to let WebdriverIO run the *synchronous* tests.
- 
+
+Next: [Deep dive and best practices](./06-deep-dive-and-best-practices.md)

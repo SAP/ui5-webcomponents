@@ -23,6 +23,7 @@ class FormSupport {
 			nativeInput.setAttribute("tabindex", "-1");
 			nativeInput.required = element.required;
 			nativeInput.setAttribute("data-ui5-form-support", "");
+			nativeInput.setAttribute("aria-hidden", "true");
 
 			nativeInput.addEventListener("focusin", event => element.focus());
 

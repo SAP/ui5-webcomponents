@@ -33,7 +33,24 @@ const getAriaLabelledByTexts = (el, ownerDocument, readyIds = "") => {
 	return result;
 };
 
+/**
+ * @param {HTMLElement} el Defines the HTMLElement, for which you need to get all related "label for" texts
+ */
+const getAssociatedLabelForTexts = el => {
+	const results = [];
+	const labels = el.getRootNode().querySelectorAll(`[ui5-label][for="${el.id}"],label[for="${el.id}"]`);
+
+	labels.forEach(label => results.push(label.textContent));
+
+	if (results.length) {
+		return results.join(" ");
+	}
+
+	return undefined;
+};
+
 export {
 	getEffectiveAriaLabelText,
 	getAriaLabelledByTexts,
+	getAssociatedLabelForTexts,
 };
