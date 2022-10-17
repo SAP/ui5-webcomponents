@@ -1,7 +1,5 @@
-commit fed99ed5a51730aa2fd4cf016f68a17b6f770154
-Author: Elena Stoyanova <elena.stoyanova@sap.com>
-Date:   Wed Oct 12 12:51:31 2022 +0300
+commit 9ef586d5f96d2888e7e116287538274dfdb13608
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Oct 17 10:39:24 2022 +0300
 
-    fix(form support): remove additional fields from ACC tree (#5922)
-    
-    FIXES: #5917
+    Update 04-understanding-hbs-templates.md
