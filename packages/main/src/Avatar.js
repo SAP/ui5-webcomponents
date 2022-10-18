@@ -348,10 +348,7 @@ class Avatar extends UI5Element {
 		const validInitials = /^[a-zA-Z]{1,3}$/,
 			  areInitialsValid = this.initials && validInitials.test(this.initials);
 
-		if (!areInitialsValid) {
-			// if initials are not valid,an icon should be shown inside the avatar
-			this._setFallbackIcon();
-		} else {
+		if (areInitialsValid) {
 			return this.initials;
 		}
 
@@ -377,9 +374,14 @@ class Avatar extends UI5Element {
 
 	onEnterDOM() {
 		this._checkInitialsWidth();
+
+		if (!this.validInitials) {
+			// if initials are not valid,an icon should be shown inside the avatar
+			this._setFallbackIcon();
+		}
 	}
 
-	_setFallbackIcon () {
+	_setFallbackIcon() {
 		// the default icon shown inside the avatar,
 		// when the initials are not valid
 		this.icon = "employee";
