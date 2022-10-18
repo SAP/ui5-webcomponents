@@ -255,13 +255,13 @@
 	/* Firefox 19+ */
 	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 	font-style: var(--_ui5_textarea_error_placeholder_font_style);
-	color: var(--_ui5_textarea_error_placeholder_color);
+	color: var(--_ui5_textarea_placeholder_color);
 }
 
 :host([value-state="Warning"]) .ui5-textarea-inner::-webkit-input-placeholder {
 	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 	font-style: var(--_ui5_textarea_error_placeholder_font_style);
-	color: var(--_ui5_textarea_error_placeholder_color);
+	color: var(--_ui5_textarea_placeholder_color);
 }
 
 :host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
@@ -387,6 +387,10 @@
 	color: var(--sapContent_LabelColor);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSmallSize);
+}
+
+:host([readonly]) .ui5-textarea-exceeded-text, :host([disabled]) .ui5-textarea-exceeded-text  {
+	display: none;
 }
 
 :host :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
