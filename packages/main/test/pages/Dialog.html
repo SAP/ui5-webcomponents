@@ -485,6 +485,31 @@
 		<span>Hello World!</span>
 	</ui5-dialog>
 </div>
+	<div>
+		<ui5-title level="H3">Open Dialog from list</ui5-title>
+		<ui5-list id="listContainerId" mode="SingleSelect">
+			<ui5-li>Test1</ui5-li>
+			<ui5-li id="listContainerItemId">Test2</ui5-li>
+			<ui5-li>Test3</ui5-li>
+		</ui5-list>
+		<ui5-dialog id="listContainerDialogId">
+			<ui5-button id="listContainerDialogCloseBtnId">Close</ui5-button>
+		</ui5-dialog>
+		<script>
+			const listContainer = document.getElementById("listContainerId");
+			const listContainerDialog = document.getElementById("listContainerDialogId");
+			const listContainerDialogCloseBtn = document.getElementById("listContainerDialogCloseBtnId");
+
+			listContainer.addEventListener("ui5-selectionChange", function (event) {
+				listContainerDialog.show();
+			});
+
+			listContainerDialogCloseBtn.addEventListener("click", function (event) {
+				listContainerDialog.close();
+			});
+		</script>
+	</div>
+
 	<div id="scrollHelper" class="dialog9scrollHelper">
 		<span>Scroll Helper</span>
 		<ui5-button id="scrolledBtn" class="scrolledBtn">open</ui5-button>
@@ -496,7 +521,7 @@
 		});
 
 		cbScrollable.addEventListener("ui5-change", function () {
-			console.error("change")
+			console.error("change");
 			scrollHelper.style.display = cbScrollable.checked ? "block" : "none";
 		});
 
