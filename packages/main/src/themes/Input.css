@@ -440,6 +440,10 @@
 	box-sizing: border-box;
 }
 
+:host([value-state]:not([value-state="None"])) .ui5-input-clear-icon-wrapper {
+	height: 100%;
+}
+
 [ui5-icon].ui5-input-clear-icon {
 	padding: 0;
 	color: inherit;
@@ -448,6 +452,6 @@
 /* Chrome, Safari, Edge, Opera */
 [inner-input]::-webkit-outer-spin-button,
 [inner-input]::-webkit-inner-spin-button {
-  -webkit-appearance: inherit;
-  margin: inherit;
+	-webkit-appearance: inherit;
+	margin: inherit;
 }
