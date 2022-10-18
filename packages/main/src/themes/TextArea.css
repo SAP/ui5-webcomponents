@@ -63,12 +63,11 @@
 	outline: none;
 }
 
-:host([disabled]) .ui5-textarea-wrapper{
+:host([disabled]) .ui5-textarea-wrapper {
 	opacity: var(--_ui5_textarea_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
 	border-color: var(--sapField_ReadOnly_BorderColor);
-	-webkit-text-fill-color: var(--sapContent_DisabledTextColor);
 	color: var(--sapContent_DisabledTextColor);
 }
 
@@ -186,10 +185,6 @@
 	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize));
 }
 
-:host([rows = "1"][growing]) .ui5-textarea-inner, :host([growing-max-lines = "1"]) .ui5-textarea-inner  {
-	min-height: calc(var(--__ui5_textarea_min_height));
-}
-
 :host(:not([growing])[rows = "1"]) .ui5-textarea-inner {
 	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize));
 }
@@ -214,6 +209,7 @@
 :host([readonly]) .ui5-textarea-root .ui5-textarea-wrapper {
 	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--sapField_ReadOnly_Background);
+	border-color: var(--sapField_ReadOnly_BorderColor);
 }
 
 :host([show-exceeded-text]) .ui5-textarea-root {
@@ -255,21 +251,17 @@
 	color: var(--_ui5_textarea_error_placeholder_color);
 }
 
-:host([value-state="Error"]) .ui5-textarea-inner:-moz-placeholder {
-	/* Firefox 18- */
+:host([value-state="Warning"]) .ui5-textarea-inner::-moz-placeholder {
+	/* Firefox 19+ */
 	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
 	font-style: var(--_ui5_textarea_error_placeholder_font_style);
 	color: var(--_ui5_textarea_error_placeholder_color);
 }
 
 :host([value-state="Warning"]) .ui5-textarea-inner::-webkit-input-placeholder {
-	/* Chrome/Opera/Safari */
 	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
-}
-
-:host([value-state="Warning"]) .ui5-textarea-inner::-moz-placeholder {
-	/* Firefox 19+ */
-	font-weight: var(--_ui5_textarea_value_state_error_warning_placeholder_font_weight);
+	font-style: var(--_ui5_textarea_error_placeholder_font_style);
+	color: var(--_ui5_textarea_error_placeholder_color);
 }
 
 :host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
