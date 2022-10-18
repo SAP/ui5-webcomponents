@@ -11,10 +11,11 @@
 	@touchend="{{_ontouchend}}"
 	aria-label="{{ariaLabelText}}"
 	aria-selected="{{this.selected}}"
+	aria-current="{{_ariaCurrent}}"
 	data-sap-focus-ref
 	part="row"
 	role="row"
-	navigated="{{navigated}}"
+	data-ui5-dir="{{effectiveDir}}"
 >
 
 	{{#if isMultiSelect}}
@@ -62,3 +63,5 @@
 		</tr>
 	{{/each}}
 {{/if}}
+
+

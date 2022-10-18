@@ -321,6 +321,10 @@ class TableRow extends UI5Element {
 		return this.getRootNode().activeElement.hasAttribute(attr);
 	}
 
+	get _ariaCurrent() {
+		return this.navigated ? true : undefined;
+	}
+
 	activate() {
 		if (this.type === TableRowType.Active) {
 			this.active = true;

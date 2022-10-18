@@ -521,6 +521,26 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await inner.getValue(), "a b", "space should be visible");
 		});
 	});
+
+	describe("Navigated property", () => {
+		before(async () => {
+			await browser.url(`test/pages/Table.html`);
+		});
+
+		it("Should apply aria-current when navigated property is true", async () => {
+			const table = await browser.$("#tblLessCells");
+			const row = await table.$$("ui5-table-row")[0];
+
+			assert.strictEqual(await row.shadow$("tr").getAttribute("aria-current"), "true", "Table row aria-current attribute is set correctly.");
+		});
+
+		it("Aria-current should not be present when navigated property is false", async () => {
+			const table = await browser.$("#tblLessCells");
+			const row = await table.$$("ui5-table-row")[1];
+
+			assert.notOk(await row.shadow$("tr").getAttribute("aria-current"), "Table row aria-current attribute is not present.");
+		});
+	});
 });
 
 describe("Table keyboard interaction", () => {
