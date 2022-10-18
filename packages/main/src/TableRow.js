@@ -219,8 +219,11 @@ class TableRow extends UI5Element {
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
 		const isRowFocused = this._activeElementHasAttribute("ui5-table-row");
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
+		const rowElements = Array.from(this.shadowRoot.querySelectorAll("tr") || []);
+		const elements = rowElements.map(getLastTabbableElement);
+		const lastFocusableElement = elements.pop();
 
-		if (isTabNext(event) && activeElement === (getLastTabbableElement(this) || this.root)) {
+		if (isTabNext(event) && activeElement === (lastFocusableElement || this.root)) {
 			this.fireEvent("_forward-after", { target: activeElement });
 		}
 

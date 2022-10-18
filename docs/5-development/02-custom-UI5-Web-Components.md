@@ -447,7 +447,7 @@ is the `name` property of your `package.json` file.
 The template of the Web Component is in the `Demo.hbs` file.
 In this particular example it looks like this:
 
-```html
+```handlebars
 <div>This is: ui5-demo. {{pleaseWaitText}}</div>
 ```
 
@@ -456,6 +456,8 @@ Here, we see the `pleaseWaitText` getter, defined in the previous step.
 
 As explained above, the `.hbs` file is transformed by the build script to a `.js` file in the `lit-html` syntax. More specifically, this file
 is provided to the Web Component class.
+
+For a full description of the `.hbs` template features and syntax, see [Understanding the Handlebars (`.hbs`) templates](./04-understanding-hbs-templates.md).
 
 ## The CSS
 <a name="css"></a>
@@ -494,4 +496,4 @@ Respectively, the definitions file for, let's say `sap_fiori_3`, contains:
 What's important to understand here is that you author all the `.css` files listed in the table above, but the build script
 generates from them a single `.js` file for you, and this is namely the file you pass to the Web Component class: `generated/themes/Demo.css.js`.
 
-Next: [Understanding UI5 Web Components Metadata](../understanding-components-metadata)
+Next: [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)

@@ -124,9 +124,28 @@ describe("Table general interaction", () => {
 
 			assert.strictEqual(await innerTable.getAttribute("aria-label"), await tableLabel.getHTML(false), "Table aria-label attribute is correct.");
 		});
+
+		it("Should have correct focus handling when having popin rows", async () => {
+			await browser.url(`test/pages/TableAllPopin.html`);
+			await browser.setWindowSize(500, 1200);
+
+			const input = await $("#tbl2 #interactive");
+			const btn = await $("#btn-focused");
+			const secondInput = await $("#input-second-focused");
+
+			await input.click();
+			await browser.keys("Tab");
+
+			assert.equal(await btn.getProperty("focused"), true, "Button is focused")
+
+			await browser.keys("Tab");
+			assert.equal(await secondInput.getProperty("focused"), true, "Input is focused")
+
+			await browser.setWindowSize(1600, 1200);
+		});
 	});
 
-	describe("Growing Table on 'More' button press", () => {
+	describe("Growing Table on 'More' button press", async () => {
 		it("tests the 'load-more' event", async () => {
 			await browser.url(`test/pages/TableGrowingWithButton.html`);
 
@@ -153,7 +172,7 @@ describe("Table general interaction", () => {
 		});
 	});
 
-	describe("Growing Table on Scroll", () => {
+	describe("Growing Table on Scroll", async () => {
 		it("tests the 'load-more' event", async () => {
 			await browser.url(`test/pages/TableGrowingWithScroll.html`);
 
@@ -170,7 +189,7 @@ describe("Table general interaction", () => {
 		});
 	});
 
-	describe("Table selection modes", () => {
+	describe("Table selection modes", async () => {
 		it("test click over Active/Inactive row in SingleSelect mode", async () => {
 			await browser.url("test/pages/TableSelection.html");
 			const table = await browser.$("#single");
@@ -523,7 +542,7 @@ describe("Table general interaction", () => {
 	});
 });
 
-describe("Table keyboard interaction", () => {
+describe("Table keyboard interaction", async () => {
 	it("Tab/Shift+Tab", async () => {
 		await browser.url(`test/pages/TableSelection.html`);
 

@@ -250,4 +250,37 @@ When `managedSlots` is set to `true`:
  in order to display a link on its Tab Strip for each Tab child. Therefore, it would need to be invalidated whenever
  Tabs are added/removed, in order to update its own state and visualization.
 
-Next: [Testing UI5 Web Components](../testing-ui5-web-components)
+## Language-aware components
+
+The `languageAware` metadata setting determines if the component should be re-rendered whenever the language changes.
+
+```json
+{
+	"languageAware": true
+}
+```
+
+You should use this setting if your component has translatable texts, therefore needs to be re-rendered when the app
+changes the language.
+
+## Theme-aware components
+
+The `themeAware` metadata setting determines if the component should re-render whenever the theme changes.
+
+```json
+{
+	"themeAware": true
+}
+```
+
+**Important: You should almost never use this setting.**
+
+Normally components are built in such a way that their structure
+is exactly the same for all themes and whenever the theme changes *only CSS Variables are changed* and the component itself
+does not need to be re-rendered - the browser automatically updates the styles when CSS Variables get new values.
+
+However, there are some very rare cases where a component must behave differently (opposed to just look differently) based on the theme.
+For example, the `ui5-icon` component must show different versions of the icons based on the theme. Use the `themeAware` setting
+in these exceptional cases to guarantee that your component will be re-rendered on theme change.
+
+Next: [Understanding the Handlebars (`.hbs`) templates](./04-understanding-hbs-templates.md)
