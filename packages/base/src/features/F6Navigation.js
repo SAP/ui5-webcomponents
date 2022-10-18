@@ -54,24 +54,20 @@ class F6Navigation {
 			const nextIndex = this.groups.indexOf(this.selectedGroup);
 			let nextElement = null;
 
-			if (nextIndex > -1) {
-				if (nextIndex - 1 < 0) {
-					nextElement = this.groups[this.groups.length - 1];
-				} else {
-					// Handle the situation where the first focusable element of two neighbor groups is the same
-					// For example:
-					// <ui5-flexible-column-layout>
-					//     <ui5-list>
-					//         <ui5-li>List Item</ui5-li>
-					//     </ui5-list>
-					// </ui5-flexible-column-layout>
-					// Here for both FCL & List the firstFoccusableElement is the same (the ui5-li)
+			if (nextIndex > 0) {
+				// Handle the situation where the first focusable element of two neighbor groups is the same
+				// For example:
+				// <ui5-flexible-column-layout>
+				//     <ui5-list>
+				//         <ui5-li>List Item</ui5-li>
+				//     </ui5-list>
+				// </ui5-flexible-column-layout>
+				// Here for both FCL & List the firstFoccusableElement is the same (the ui5-li)
 
-					const firstFocusable = await getFirstFocusableElement(this.groups[nextIndex - 1], true);
-					const shouldSkipParent = firstFocusable === await getFirstFocusableElement(this.groups[nextIndex], true);
+				const firstFocusable = await getFirstFocusableElement(this.groups[nextIndex - 1], true);
+				const shouldSkipParent = firstFocusable === await getFirstFocusableElement(this.groups[nextIndex], true);
 
-					nextElement = this.groups[shouldSkipParent ? nextIndex - 2 : nextIndex - 1];
-				}
+				nextElement = this.groups[shouldSkipParent ? nextIndex - 2 : nextIndex - 1];
 			} else {
 				nextElement = this.groups[this.groups.length - 1];
 			}
@@ -86,26 +82,27 @@ class F6Navigation {
 	}
 
 	updateGroups() {
-		this.setSelectedGroup(document.activeElement);
+		this.setSelectedGroup();
 		this.groups = getFastNavigationGroups(document.body);
 	}
 
-	setSelectedGroup(element) {
+	setSelectedGroup(element = document) {
+		const htmlElement = document.querySelector("html");
 		element = this.deepActive(element);
 
-		while (element && element.getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== document.querySelector("html")) {
+		while (element && element.getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== htmlElement) {
 			element = element.parentElement ? element.parentNode : element.parentNode.host;
 		}
 
 		this.selectedGroup = element;
 	}
 
-	deepActive(element) {
-		if (element.shadowRoot) {
-			return this.deepActive(element.shadowRoot);
+	deepActive(root) {
+		if (root.activeElement && root.activeElement.shadowRoot) {
+			return this.deepActive(root.activeElement.shadowRoot);
 		}
 
-		return element.activeElement;
+		return root.activeElement;
 	}
 
 	destroy() {

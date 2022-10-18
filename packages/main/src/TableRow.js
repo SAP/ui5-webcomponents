@@ -14,7 +14,11 @@ import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
-import { ARIA_LABEL_ROW_SELECTION } from "./generated/i18n/i18n-defaults.js";
+import {
+	ARIA_LABEL_ROW_SELECTION,
+	LIST_ITEM_NOT_SELECTED,
+	LIST_ITEM_SELECTED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
@@ -215,8 +219,11 @@ class TableRow extends UI5Element {
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
 		const isRowFocused = this._activeElementHasAttribute("ui5-table-row");
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
+		const rowElements = Array.from(this.shadowRoot.querySelectorAll("tr") || []);
+		const elements = rowElements.map(getLastTabbableElement);
+		const lastFocusableElement = elements.pop();
 
-		if (isTabNext(event) && activeElement === (getLastTabbableElement(this) || this.root)) {
+		if (isTabNext(event) && activeElement === (lastFocusableElement || this.root)) {
 			this.fireEvent("_forward-after", { target: activeElement });
 		}
 
@@ -384,11 +391,18 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
+		const isSelected = this.selected ? TableRow.i18nBundle.getText(LIST_ITEM_SELECTED) : TableRow.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
+		const isRowSelectable = this.isSingleSelect || this.isMultiSelect;
 		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
+
+		if (isRowSelectable) {
+			return `${ariaLabel}. ${this._ariaPosition}. ${isSelected}`;
+		}
+
 		return `${ariaLabel}. ${this._ariaPosition}`;
 	}
 

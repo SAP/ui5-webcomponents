@@ -19,7 +19,9 @@ const metadata = {
 		/**
 		 * Defines whether an asterisk character is added to the component text.
 		 * <br><br>
-		 * <b>Note:</b> Usually indicates that user input is required.
+		 * <b>Note:</b> Usually indicates that user input (bound with the <code>for</code> property) is required.
+		 * In that case the <code>required</> property of
+		 * the corresponding input should also be set.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
