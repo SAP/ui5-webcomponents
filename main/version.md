@@ -1,5 +1,7 @@
-commit f4ecb3fadf32d039c6c7cdee9dbe44ec1e8b3ba7
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Oct 17 13:59:37 2022 +0300
+commit 9fd81e2097e5099c04567961e9df97049fb8e6cc
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Oct 18 11:57:33 2022 +0300
 
-    docs: use handlebars language (#5947)
+    fix(ui5-table): enable focus navigation in popin content (#5900)
+    
+    FIXES: https://github.com/SAP/ui5-webcomponents/issues/5761
