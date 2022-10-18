@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>ui5-input</title>
+
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+
+</head>
+
+<body class="sapUiSizeCompact">
+	<ui5-listbox id="lb"></ui5-listbox>
+	<br>
+	<ui5-button id="btn">Open Suggestion List</ui5-button>
+	<br>
+
+	<ui5-input show-suggestions listbox="lb"></ui5-input>
+
+	<br>
+
+	<ui5-input show-suggestions>
+		<ui5-suggestion-item text="Compact"></ui5-suggestion-item>
+		<ui5-suggestion-item text="AAA"></ui5-suggestion-item>
+		<ui5-suggestion-item text="KKK"></ui5-suggestion-item>
+	</ui5-input>
+
+	<script>
+		const customListItemContent = name => `<div class="flex root">
+				<ui5-avatar>
+					<img src="./img/John_Miller.png" />
+				</ui5-avatar>
+				
+				<div class="flex flex-v info">
+					<ui5-link>${name}</ui5-link>
+					<span>Sales Manager</span>
+				</div>
+
+				<ui5-button class="action">Send Request</ui5-button>
+			</div>`
+
+		const listbox = document.getElementById("lb");
+		
+		["Martin Hristov", "Ivaylo Ivanov", "Ivaylo Plashkov", "Dimitar Dimitrov", "Nikolay Kolarov", "Nikolay Deshev", "Hristo Petrov"].forEach(_ => {
+			const item = document.createElement("ui5-li-custom");
+
+			item.text = _;
+
+			item.innerHTML = customListItemContent(_);
+
+			listbox.appendChild(item);
+		});
+
+		document.getElementById("btn").addEventListener("click", e => {
+			lb.open(e.target);
+		});
+
+	</script>
+
+	<style>
+
+		.flex {
+			display: flex;
+		}
+		
+		.flex-v {
+			flex-direction: column;
+		}
+
+		.root {
+			width: 100%;
+    	justify-content: space-between;
+			align-items: center;
+			padding: .5rem.75rem;
+			box-sizing: border-box;
+		}
+
+		.info,
+		.action {
+			margin-left: 1rem;
+		}
+	</style>
+</body>
+</html>

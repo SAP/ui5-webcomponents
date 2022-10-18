@@ -1,0 +1,7 @@
+#popup {
+	width: var(--_ui5_listbox_list_width);
+}
+
+#popup::part(content) {
+	padding: 0;
+}

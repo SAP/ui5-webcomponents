@@ -92,6 +92,10 @@ class CustomListItem extends ListItem {
 		result.main["ui5-custom-li-root"] = true;
 		return result;
 	}
+
+	get effectiveTitle() {
+		return this.text;
+	}
 }
 
 CustomListItem.define();

@@ -266,6 +266,16 @@ const metadata = {
 		},
 
 		/**
+		 * Defines id for a custom picker
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		 listbox: {
+			type: String,
+		},
+
+		/**
 		 * Defines the inner stored value of the component.
 		 * <br><br>
 		 * <b>Note:</b> The property is updated upon typing. In some special cases the old value is kept (e.g. deleting the value after the dot in a float)
@@ -657,6 +667,18 @@ class Input extends UI5Element {
 		ResizeHandler.deregister(this, this._handleResizeBound);
 	}
 
+	get listBoxPopup() {
+		return document.getElementById(this.listbox);
+	}
+
+	get hasItems() {
+		if (this.listbox) {
+			return !!this.listBoxPopup._getItems().length;
+		}
+
+		return !!this.items.length;
+	}
+
 	onBeforeRendering() {
 		if (!this._keepInnerValue) {
 			this._innerValue = this.value;
@@ -669,8 +691,6 @@ class Input extends UI5Element {
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
-		this.FormSupport = getFeature("FormSupport");
-		const hasItems = this.suggestionItems.length;
 		const hasValue = !!this.value;
 		const isFocused = this.shadowRoot.querySelector("input") === getActiveElement();
 
@@ -679,7 +699,7 @@ class Input extends UI5Element {
 		} else if (this._forceOpen) {
 			this.open = true;
 		} else {
-			this.open = hasValue && hasItems && isFocused && this.isTyping;
+			this.open = hasValue && this.hasItems && isFocused && this.isTyping;
 		}
 
 		if (this.FormSupport) {
@@ -712,9 +732,10 @@ class Input extends UI5Element {
 		if (this.Suggestions && this.showSuggestions) {
 			this.Suggestions.toggle(this.open, {
 				preventFocusRestore: true,
+				target: this,
 			});
 
-			this._listWidth = await this.Suggestions._getListWidth();
+			this._listWidth = this.Suggestions._getListWidth();
 		}
 
 		if (this.shouldDisplayOnlyValueStateMessage) {
@@ -819,7 +840,7 @@ class Input extends UI5Element {
 		const itemPressed = !!(this.Suggestions && this.Suggestions.onEnter(event));
 		const innerInput = this.getInputDOMRefSync();
 		// Check for autocompleted item
-		const matchingItem = this.suggestionItems.find(item => {
+		const matchingItem = this.items.find(item => {
 			return (item.text && item.text === this.value) || (item.textContent === this.value);
 		});
 
@@ -833,7 +854,7 @@ class Input extends UI5Element {
 			}
 		}
 
-		if (this._isPhone && !this.suggestionItems.length) {
+		if (this._isPhone && !this.items.length) {
 			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
 
@@ -944,7 +965,7 @@ class Input extends UI5Element {
 
 		const toBeFocused = event.relatedTarget;
 
-		if (toBeFocused && toBeFocused.classList.contains(this._id)) {
+		if ((toBeFocused && toBeFocused.classList.contains(this._id)) || (this.listbox && this.listBoxPopup.contains(toBeFocused))) {
 			return;
 		}
 
@@ -1087,12 +1108,12 @@ class Input extends UI5Element {
 	}
 
 	_startsWithMatchingItems(str) {
-		const textProp = this.suggestionItems[0].text ? "text" : "textContent";
-		return Filters.StartsWith(str, this.suggestionItems, textProp);
+		const textProp = this.items[0].text ? "text" : "textContent";
+		return Filters.StartsWith(str, this.items, textProp);
 	}
 
 	_getFirstMatchingItem(current) {
-		if (!this.suggestionItems.length) {
+		if (!this.items.length) {
 			return;
 		}
 
@@ -1186,7 +1207,7 @@ class Input extends UI5Element {
 	 * @public
 	 */
 	openPicker() {
-		if (!this.suggestionItems.length || this.disabled || this.readonly) {
+		if (!this.items.length || this.disabled || this.readonly) {
 			return;
 		}
 
@@ -1198,12 +1219,20 @@ class Input extends UI5Element {
 			return;
 		}
 
-		const Suggestions = getFeature("InputSuggestions");
+		const customPicker = document.getElementById(this.listbox);
 
-		if (Suggestions) {
-			this.Suggestions = new Suggestions(this, "suggestionItems", true);
+		if (!customPicker) {
+			const Suggestions = getFeature("InputSuggestions");
+
+			if (Suggestions) {
+				this.Suggestions = new Suggestions(this, "suggestionItems", true);
+			} else {
+				throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
+			}
 		} else {
-			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
+			this.Suggestions = customPicker;
+
+			this.Suggestions.component = this;
 		}
 	}
 
@@ -1338,7 +1367,7 @@ class Input extends UI5Element {
 
 	getSuggestionByListItem(item) {
 		const key = parseInt(item.getAttribute("data-ui5-key"));
-		return this.suggestionItems[key];
+		return this.items[key];
 	}
 
 	/**
@@ -1574,7 +1603,7 @@ class Input extends UI5Element {
 	}
 
 	get availableSuggestionsCount() {
-		if (this.showSuggestions && (this.value || this.Suggestions.isOpened())) {
+		if (this.showSuggestions && (this.value || (this.Suggestions && this.Suggestions.isOpened()))) {
 			switch (this.suggestionsTexts.length) {
 			case 0:
 				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
@@ -1678,6 +1707,14 @@ class Input extends UI5Element {
 		}
 
 		return value;
+	}
+
+	get items() {
+		if (this.listbox) {
+			return this.listBoxPopup._getItems();
+		}
+
+		return this.suggestionItems;
 	}
 
 	static get dependencies() {
