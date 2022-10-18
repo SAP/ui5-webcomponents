@@ -431,7 +431,7 @@
 }
 
 .ui5-input-clear-icon-wrapper {
-	height: 100%;
+	height: var(--_ui5_input_icon_wrapper_height);
 	padding: 0;
 	width: var(--_ui5_input_icon_width);
 	display: flex;
