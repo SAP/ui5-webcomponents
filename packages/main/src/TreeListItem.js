@@ -306,7 +306,7 @@ class TreeListItem extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return this.ariaRoledescription ? undefined : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL); // make translatable
+		return this.ariaRoledescription ? undefined : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
