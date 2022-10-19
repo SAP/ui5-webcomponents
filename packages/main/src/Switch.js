@@ -120,6 +120,19 @@ const metadata = {
 			type: String,
 			defaultValue: "",
 		},
+
+		/**
+		 * Defines the tooltip of the component.
+		 * <br>
+		 * <b>Note:</b> If applicable an external label reference should always be the preferred option to provide context to the <code>ui5-switch</code> component over a tooltip.
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.9.0
+		 */
+		 tooltip: {
+			type: String,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
 
