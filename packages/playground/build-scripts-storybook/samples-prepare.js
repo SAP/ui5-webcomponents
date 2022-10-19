@@ -22,7 +22,6 @@ const UI5WC_TO_STORYBOOK_TYPES_MAP = {
 const STORIES_ROOT_FOLDER_NAME = '_storiesGenerated';
 
 const main = async () => {
-	const template = await fs.readFile(path.join(__dirname, '../stories/template.mdx'), 'utf8');
 	const packages = [
 		"fiori",
 		"main",
@@ -64,32 +63,23 @@ const main = async () => {
 			let result = (await fs.readFile(path.join(samplesPath, file))).toString();
 			const $ = cheerio.load(result);
 
-			const snippets = [];
-
-			$('.snippet').each((i, snippet) => {
-				const section = $(snippet).parent();
-				section.find("pre").remove();
-
-				snippets.push(section.html().trim().replace(/(^[ \t]*\n)/gm, "")); // remove empty lines from a sample/snippet
-			});
-			await generateStory(package, file, api, snippets);
+			await generateStoryDoc(package, file, api);
 			const appendDocs = api.symbols.find(s => s.module === file.split('.')[0]).appenddocs;
 			if (appendDocs) {
 				for (const currSymbol of appendDocs.split(' ')) {
-					await generateStory(package, currSymbol + '.sample.html', api, null, file.split('.')[0])
+					await generateStoryDoc(package, currSymbol + '.sample.html', api)
 				}
 			}
 		});
 	});
 
-	async function generateStory(package, file, api, snippets, parentStoryName) {
+	async function generateStoryDoc(package, file, api) {
 
-		const storyData = getStoryData(api, file.split('.')[0], snippets, parentStoryName);
+		const apiData = getAPIData(api, file.split('.')[0]);
 		const storyDir = createStoryDirectory(package, file);
 
-		await fs.writeFile(storyDir, storyData.storyContent);
-		await fs.writeFile(storyDir.substring(0, storyDir.lastIndexOf('/')) + '/Description.md', storyData.storyDescription);
-		await fs.writeFile(storyDir.substring(0, storyDir.lastIndexOf('/')) + '/argsTypes.js', `export default ` + storyData.storyArgsTypes);
+		await fs.writeFile(storyDir + '/Description.md', apiData.storyDescription);
+		await fs.writeFile(storyDir + '/argsTypes.js', `export default ` + apiData.storyArgsTypes);
 	};
 
 	function createStoryDirectory(package, file) {
@@ -104,7 +94,6 @@ const main = async () => {
 		if (!fsDir.existsSync(storyDir)){ // check if the component folder exists and creates one if it doesn't
 			fsDir.mkdirSync(storyDir);
 		}
-		storyDir += `/${file.replace('.sample.html', '.stories.mdx')}`;
 
 		return storyDir;
 	};
@@ -114,9 +103,8 @@ const main = async () => {
 		const args = getArgsTypes(api, moduleAPI);
 
 		return {
-			args,
-			name: moduleAPI.basename,
-			description: moduleAPI.description
+			storyDescription: moduleAPI.description.replaceAll('<br>', '<br/>'),
+			storyArgsTypes: JSON.stringify(args, null, "\t")
 		};
 	}
 
@@ -177,46 +165,6 @@ const main = async () => {
 		return args;
 	}
 
-	function getStoryData(api, module, snippets, parentStoryName) {
-		const data = getAPIData(api, module);
-
-		const stories = snippetsToStories(snippets);
-
-		const storyContent = template
-			.replace(/{{stories}}/g, stories.join("\n"))
-			.replace(/{{name}}/g, parentStoryName? `${parentStoryName}/${data.name}` : data.name); // spacing level = 2
-
-		return {
-			storyContent: storyContent,
-			storyDescription: data.description.replaceAll('<br>', '<br/>'),
-			storyArgsTypes: JSON.stringify(data.args, null, "\t")
-		}
-	};
-
-	function snippetsToStories(snippets) {
-		if (snippets) {
-			return snippets.map((snippet, index) => {
-				let content = snippet
-					.replaceAll('\`', '\\`')
-				return `
-<Canvas>
-	<Story name="default-${index}">
-		{html\`${content}\`}
-	</Story>
-</Canvas>`
-			});
-		} else {
-				return 	[`
-<Canvas>
-	<Story name="placeholder">
-		{html\`<h3>Placeholder Story</h3>
-	<div class="snippet">
-		<h5>Add your story here</h5>
-	</div>\`}
-	</Story>
-</Canvas>`]
-		}
-	}
 };
 
 main();
