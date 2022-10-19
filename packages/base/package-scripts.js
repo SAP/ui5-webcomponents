@@ -15,7 +15,7 @@ const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/compo
 const scripts = {
 	clean: "rimraf dist && rimraf .port",
 	lint: `eslint . ${eslintConfig}`,
-	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles",
+	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateAPI",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
@@ -39,6 +39,7 @@ const scripts = {
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
+	generateAPI: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 	watch: {
 		default: 'concurrently "nps watch.src" "nps watch.styles"',
 		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles"',
