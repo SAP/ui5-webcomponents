@@ -15,7 +15,7 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.33ab5c36.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.4450b801.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Avatar.html.62cc0573.css'>
 </head>
 
@@ -150,6 +150,7 @@
 			<img src='https://sap.github.io/ui5-webcomponents/main/assets/woman_avatar_5.7316a316.png' alt="Woman image">
 		</ui5-avatar>
 		<ui5-avatar id="myAvatar4" initials="SF" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar id="myAvatar5" initials="WWW" shape="Square" size="M"></ui5-avatar>
 	</section>
 
 	<section>
@@ -176,7 +177,7 @@
 				<ui5-icon slot="icon" name="accept"></ui5-icon>
 			</ui5-badge>
 		</ui5-avatar>
-	
+
 		<ui5-avatar size="XL">
 			<img src='https://sap.github.io/ui5-webcomponents/main/assets/John_Miller.fc9d0d73.png' alt="John Miller">
 			<ui5-badge slot="badge">
@@ -197,7 +198,7 @@
 				<ui5-icon slot="icon" name="add-employee"></ui5-icon>
 			</ui5-badge>
 		</ui5-avatar>
-	
+
 		<ui5-avatar shape="Square" size="L">
 			<img src='https://sap.github.io/ui5-webcomponents/main/assets/John_Miller.fc9d0d73.png' alt="John Miller">
 			<ui5-badge slot="badge">
@@ -246,6 +247,18 @@
 	<ui5-avatar size="XL" shape="Square">
 		<img src='https://sap.github.io/ui5-webcomponents/main/assets/Lamp_avatar_01.ab251b40.jpg' alt="Woman 1" class="avatar-image1">
 	</ui5-avatar>
+
+	<section>
+		<h3>Avatar with three initials</h3>
+		<ui5-avatar initials="ABC" color-scheme="Accent1"></ui5-avatar>
+		<ui5-avatar initials="ABC" color-scheme="Accent2" size="XL"></ui5-avatar>
+
+
+		<h3>Avatar with three overflowing initials - icon should be shown</h3>
+		<ui5-avatar initials="WWW" color-scheme="Accent1" size="XS"></ui5-avatar>
+		<ui5-avatar initials="WWW" color-scheme="Accent2" size="XL"></ui5-avatar>
+
+	</section>
 
 
 </body>
