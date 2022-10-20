@@ -99,7 +99,7 @@
 }
 
 :host([navigated]) tr[data-ui5-dir="rtl"] {
-	box-shadow: inset  0.1875rem 0 0 0 var(--sapList_SelectionBorderColor);
+	box-shadow: inset 0.1875rem 0 0 0 var(--sapList_SelectionBorderColor);
 }
 
 
