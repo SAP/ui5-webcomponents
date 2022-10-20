@@ -598,6 +598,29 @@ describe("Accessibility", async () => {
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
 	});
 
+	it ("Announce item with additional text on selection", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#combobox-two-column-layout");
+		const arrow = await combo.shadow$("[input-icon]");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
+		const itemAnnouncement1 = "DZ List item 1 of 10";
+		const itemAnnouncement2 = "AR List item 2 of 10";
+
+		await arrow.click();
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), "", "Span value should be empty.")
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
+
+		await input.keys("ArrowDown");
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement2, "Span value is correct.")
+	});
+
 	it ("Announce group item when accessed via keyboard", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
