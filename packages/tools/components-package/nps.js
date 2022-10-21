@@ -32,7 +32,7 @@ const getScripts = (options) => {
 		// no custom configuration - use default from tools project
 		eslintConfig = `--config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
 	}
-		
+
 	const scripts = {
 		clean: 'rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
@@ -61,7 +61,8 @@ const getScripts = (options) => {
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			bundle: `vite build ${viteConfig}`,
-			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
+			customElementManifest: `node "${LIB}/generate-custom-element-manifest/index.js"`,
+			api: `jsdoc -c "${LIB}/jsdoc/config.json" && nps build.customElementManifest`,
 			illustrations: illustrationsScript
 		},
 		copy: {
