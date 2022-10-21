@@ -25,6 +25,7 @@ const metadata = {
 		 *
 		 * @type {Float}
 		 * @defaultvalue 0
+		 * @formEvents change input
 		 * @public
 		 */
 		value: {
@@ -101,6 +102,8 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Slider
  * @extends SliderBase
  * @tagname ui5-slider
+ * @formAssociated
+ * @formProperties value
  * @since 1.0.0-rc.11
  * @public
  */
