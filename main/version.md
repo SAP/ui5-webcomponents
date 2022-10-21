@@ -1,5 +1,5 @@
-commit bf2fc4b43bea86d330eb66fbe60dc226e9e9f550
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Wed Oct 19 12:17:48 2022 +0300
+commit f200a76ef667f867cdd4d323aba0d1e0eb00f53d
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Oct 21 17:33:03 2022 +0300
 
-    feat(ui5-barcodescanner): downgraded to lower helper version (#5925)
+    fix(ui5-li): apply proper border radius to avatar with image (#5942)
