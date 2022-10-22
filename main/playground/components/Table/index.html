@@ -5806,7 +5806,7 @@
 	.hcb .header {
 		color: #fff;
 	}
-	
+
 	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
 		text-align: end;
 	}
@@ -6310,6 +6310,12 @@
 	document.getElementById("singleSelectTbl").insertAdjacentHTML('beforeend', html);
 	document.getElementById("multiSelectTbl").insertAdjacentHTML('beforeend', html);
 
+	document.getElementById("singleSelectTbl").addEventListener("ui5-selection-change", function(event) {
+		if (event.detail.previouslySelectedRows.length) {
+			event.detail.previouslySelectedRows[0].removeAttribute("navigated");
+		}
+		event.detail.selectedRows[0].setAttribute("navigated", '');
+	});
 
 	document.getElementById("toggleSticky").addEventListener("click", function(event) {
 		document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
@@ -7257,7 +7263,7 @@
 </section>
 
 <section class="table-grouping-example-single">
-	<h3>Table with grouping (SingleSelect)</h3>
+	<h3>Table with grouping (SingleSelect - click on item to set navigated)</h3>
 
 	<div class="snippet flex-column">
 		<!-- Header -->
@@ -7341,7 +7347,15 @@
 		<span class="nt">&lt;ui5-table-cell&gt;&lt;span&gt;</span>USA<span class="nt">&lt;/span&gt;&lt;/ui5-table-cell&gt;</span>
 	<span class="nt">&lt;/ui5-table-row&gt;</span>
 <span class="nt">&lt;/ui5-table&gt;</span>
-	</code></pre></figure></pre>
+
+<span class="nt">&lt;script&gt;</span>
+	<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">singleSelectTbl</span><span class="dl">"</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-selection-change</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">previouslySelectedRows</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+			<span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">previouslySelectedRows</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">removeAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">navigated</span><span class="dl">"</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="nx">event</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">selectedRows</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">setAttribute</span><span class="p">(</span><span class="dl">"</span><span class="s2">navigated</span><span class="dl">"</span><span class="p">,</span> <span class="dl">''</span><span class="p">);</span>
+	<span class="p">});</span>
+<span class="nt">&lt;/script&gt;</span></code></pre></figure></pre>
 </section>
 
 <section class="table-grouping-example-multi">
@@ -7823,6 +7837,18 @@ The <code>ui5-table-row</code> component represents a row in the <code>ui5-table
             
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          navigated
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Indicates if the table row is navigated.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.9.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           selected
                             <br>
                         </div>
@@ -7833,7 +7859,7 @@ The <code>ui5-table-row</code> component represents a row in the <code>ui5-table
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           type
                             <br>
