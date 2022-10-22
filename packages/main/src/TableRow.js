@@ -102,7 +102,17 @@ const metadata = {
 		active: {
 			type: Boolean,
 		},
-
+		/**
+		 * Indicates if the table row is navigated.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.9.0
+		 * @public
+		*/
+		navigated: {
+			type: Boolean,
+		},
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
@@ -312,6 +322,10 @@ class TableRow extends UI5Element {
 
 	_activeElementHasAttribute(attr) {
 		return this.getRootNode().activeElement.hasAttribute(attr);
+	}
+
+	get _ariaCurrent() {
+		return this.navigated ? true : undefined;
 	}
 
 	activate() {
