@@ -1,5 +1,7 @@
-commit b0ee8e4f0c52670ab3abb2f55f108d3d8e85a7e8
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Oct 24 16:01:35 2022 +0300
+commit ca992b28de371068a64485eab7678fa8aadd3d31
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Oct 24 16:38:29 2022 +0300
 
-    docs: improve the handlebars document (#5969)
+    build: generate api.json for base package (#5959)
+    
+    Let's start generating api.json for the base package as well - there are classes, especially data types used within components, for example (valueState, type: ValueState). This way, the API picture will be more complete.
