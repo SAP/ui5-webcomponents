@@ -1,6 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	TAB_ARIA_DESIGN_POSITIVE,
+	TAB_ARIA_DESIGN_NEGATIVE,
+	TAB_ARIA_DESIGN_CRITICAL,
+	TAB_ARIA_DESIGN_NEUTRAL,
+} from "./generated/i18n/i18n-defaults.js";
+
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
@@ -20,6 +28,13 @@ import TabInOverflowTemplate from "./generated/templates/TabInOverflowTemplate.l
 import css from "./generated/themes/Tab.css.js";
 import stripCss from "./generated/themes/TabInStrip.css.js";
 import overflowCss from "./generated/themes/TabInOverflow.css.js";
+
+const DESIGN_DESCRIPTIONS = {
+	[SemanticColor.Positive]: TAB_ARIA_DESIGN_POSITIVE,
+	[SemanticColor.Negative]: TAB_ARIA_DESIGN_NEGATIVE,
+	[SemanticColor.Neutral]: TAB_ARIA_DESIGN_NEUTRAL,
+	[SemanticColor.Critical]: TAB_ARIA_DESIGN_CRITICAL,
+};
 
 /**
  * @public
@@ -337,6 +352,10 @@ class Tab extends UI5Element {
 			labels.push(`${this._id}-icon`);
 		}
 
+		if (this._designDescription) {
+			labels.push(`${this._id}-designDescription`);
+		}
+
 		return labels.join(" ");
 	}
 
@@ -395,6 +414,14 @@ class Tab extends UI5Element {
 		}
 	}
 
+	get _designDescription() {
+		if (this.design === SemanticColor.Default) {
+			return null;
+		}
+
+		return Tab.i18nBundle.getText(DESIGN_DESCRIPTIONS[this.design]);
+	}
+
 	get semanticIconClasses() {
 		const classes = ["ui5-tab-semantic-icon"];
 
@@ -425,6 +452,10 @@ class Tab extends UI5Element {
 
 	get overflowState() {
 		return (this.disabled || this.isSingleClickArea) ? ListItemType.Inactive : ListItemType.Active;
+	}
+
+	static async onDefine() {
+		Tab.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 }
 

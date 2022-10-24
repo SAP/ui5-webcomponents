@@ -300,6 +300,7 @@ class ListItem extends ListItemBase {
 			return;
 		}
 
+		event.preventDefault();
 		this.fireEvent("_press", { item: this, selected: this.selected, key: event.key });
 	}
 

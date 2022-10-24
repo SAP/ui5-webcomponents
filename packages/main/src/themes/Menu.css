@@ -16,7 +16,8 @@
 	vertical-align: middle;
 	padding-inline-start: 0.5rem;
 	pointer-events: none;
-	float: var(--_ui5-menu_item_icon_float); /* TODO: refactor icon positioning as float and inline-block are incompatible */
+	position: absolute;
+	inset-inline-end: var(--_ui5_menu_item_submenu_icon_right);
 }
 
 .ui5-menu-item-no-icon-end {
@@ -25,7 +26,12 @@
 	display: inline-block;
 	vertical-align: middle;
 	padding-inline-start: 0.5rem;
-	float: var(--_ui5-menu_item_icon_float); /* TODO: refactor icon positioning a float and inline-block are incompatible */
+	pointer-events: none;
+	inset-inline-end: var(--_ui5_menu_item_submenu_icon_right);
+}
+
+.ui5-menu-item[additional-text] .ui5-menu-item-no-icon-end {
+	display: none;
 }
 
 .ui5-menu-item-dummy-icon {
@@ -34,6 +40,7 @@
 	display: inline-block;
 	vertical-align: middle;
 	padding-inline-end: 0.5rem;
+	pointer-events: none;
 }
 
 .ui5-menu-dialog-header {
@@ -67,6 +74,16 @@
 	margin-right: 1rem;
 }
 
+.ui5-menu-item::part(title) {
+    font-size: var(--sapFontSize);
+	padding-top: 0.125rem;
+}
+
+.ui5-menu-item[icon]:not([is-phone])::part(title),
+.ui5-menu-item[is-phone]:not([icon=""])::part(title) {
+	padding-top: 0;
+}
+
 .ui5-menu-item:not([is-phone])::part(native-li) {
 	padding: var(--_ui5_menu_item_padding);
 }
@@ -86,4 +103,10 @@
 .ui5-menu-rp[sub-menu] {
 	margin-top: 0.25rem;
 	margin-inline: var(--_ui5_menu_submenu_margin_offset);
+}
+
+.ui5-menu-item::part(additional-text) {
+	margin-inline-start: var(--_ui5_menu_item_additional_text_start_margin);
+	color: var(--sapContent_LabelColor);
+	min-width: max-content;
 }

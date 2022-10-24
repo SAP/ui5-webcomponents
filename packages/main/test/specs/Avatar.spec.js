@@ -46,6 +46,14 @@ describe("Avatar", () => {
 		assert.ok(await initials.isExisting(), "initials are rendered");
 	});
 
+	it("tests rendering of icon when initials are overflowing ", async () => {
+		const avatar = await browser.$("#myAvatar5");
+		const icon = await avatar.shadow$(".ui5-avatar-icon");
+
+		// icon is rendered
+		assert.ok(await icon.isExisting(), "icon should be rendered, when the initials are overflowing");
+	});
+
 	it("Tests noConflict 'ui5-click' event is thrown for interactive avatars", async () => {
 		const avatarRoot = await browser.$("#interactive-avatar").shadow$(".ui5-avatar-root");
 		const input = await browser.$("#click-event");

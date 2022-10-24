@@ -4,7 +4,6 @@
 	type="{{this.overflowState}}"
 	aria-disabled="{{this.effectiveDisabled}}"
 	aria-selected="{{this.effectiveSelected}}"
-	aria-labelledby="{{this.ariaLabelledBy}}"
 	._realTab="{{this}}"
 	style="{{this._style}}"
 >
@@ -13,14 +12,17 @@
 			{{#if this.semanticIconName}}
 				<ui5-icon class="{{this.semanticIconClasses}}" name="{{this.semanticIconName}}"></ui5-icon>
 			{{/if}}
-
 			{{#if this.icon}}
 				<ui5-icon name="{{this.icon}}"></ui5-icon>
 			{{/if}}
 			{{this.text}}
-
 			{{#if this.additionalText}}
 				({{this.additionalText}})
+			{{/if}}
+			{{#if this._designDescription}}
+				<div id="{{this._id}}-designDescription" class="ui5-hidden-text">
+					{{this._designDescription}}
+				</div>
 			{{/if}}
 		</div>
 	</div>

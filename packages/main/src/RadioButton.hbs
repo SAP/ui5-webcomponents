@@ -1,10 +1,9 @@
 <div class="ui5-radio-root {{classes.main}}"
 	role="radio"
 	aria-checked="{{checked}}"
-	aria-readonly="{{ariaReadonly}}"
 	aria-disabled="{{ariaDisabled}}"
-	aria-label="{{ariaLabelText}}"
 	aria-describedby="{{ariaDescribedBy}}"
+	aria-label="{{ariaLabelText}}"
 	tabindex="{{tabIndex}}"
 	@click="{{_onclick}}"
 	@keydown="{{_onkeydown}}"
@@ -19,7 +18,7 @@
 			<circle class="ui5-radio-svg-outer" cx="50%" cy="50%" r="50%" />
 			<circle class="ui5-radio-svg-inner" cx="50%" cy="50%" />
 		</svg>
- 		<input type='radio' ?checked="{{checked}}" ?readonly="{{readonly}}" ?disabled="{{disabled}}" name="{{name}}" data-sap-no-tab-ref/>
+		<input type='radio' ?required="{{required}}" ?checked="{{checked}}" ?readonly="{{readonly}}" ?disabled="{{ariaDisabled}}" name="{{name}}"  data-sap-no-tab-ref/>
 	</div>
 
 	{{#if text}}
@@ -29,4 +28,5 @@
 	{{#if hasValueState}}
 		<span id="{{_id}}-descr" class="ui5-hidden-text">{{valueStateText}}</span>
 	{{/if}}
+	<slot name="formSupport"></slot>
 </div>

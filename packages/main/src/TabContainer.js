@@ -1145,6 +1145,11 @@ class TabContainer extends UI5Element {
 		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
 	}
 
+	async _closeRespPopover() {
+		this.responsivePopover = await this._respPopover();
+		this.responsivePopover.close();
+	}
+
 	get classes() {
 		return {
 			root: {

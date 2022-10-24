@@ -41,6 +41,20 @@ describe("MultiComboBox general interaction", () => {
 			});
 		});
 
+		it("Apply focus", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const focusBtn = await browser.$("#focus-mcb");
+
+			assert.notOk(await mcb.getProperty("focused"), "MultiComboBox should not be focused.");
+
+			await focusBtn.click();
+
+			assert.ok(await mcb.getProperty("focused"), "MultiComboBox should be focused.");
+		});
+
+
 		it("MultiComboBox open property is set correctly", async () => {
 			const mcb = await browser.$("#multi1");
 			const icon = await browser.$("#multi1").shadow$("[input-icon]");

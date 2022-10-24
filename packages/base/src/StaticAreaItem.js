@@ -17,6 +17,7 @@ class StaticAreaItem extends HTMLElement {
 		this._rendered = false;
 		this.attachShadow({ mode: "open" });
 		this.pureTagName = "ui5-static-area-item";
+		this.popupIntegrationAttr = "data-sap-ui-integration-popup-content";
 	}
 
 	/**
@@ -37,7 +38,7 @@ class StaticAreaItem extends HTMLElement {
 	 */
 	update() {
 		if (this._rendered) {
-			this.setAttribute(this.pureTagName, "");
+			this._updateAdditionalAttrs();
 			this._updateContentDensity();
 			this._updateDirection();
 			updateShadowRoot(this.ownerElement, true);
@@ -65,6 +66,11 @@ class StaticAreaItem extends HTMLElement {
 		} else {
 			this.removeAttribute("dir");
 		}
+	}
+
+	_updateAdditionalAttrs() {
+		this.setAttribute(this.pureTagName, "");
+		this.setAttribute(this.popupIntegrationAttr, "");
 	}
 
 	/**

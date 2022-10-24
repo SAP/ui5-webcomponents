@@ -136,7 +136,7 @@ Now all date-related components will use the `Islamic` calendar type by default.
 
 <a name="noConflict"></a>
 
-### noConflict
+### noConflict <a name="no_conflict"></a>
 
 By default, UI5 Web Components fire all custom events twice - once with the documented name (e.g. `change`), and once more with a `ui5-` prefix (e.g. `ui5-change`).
 For example, when the `ui5-switch` is toggled, it fires a `change` event, but also a `ui5-change` event.
