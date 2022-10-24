@@ -4,6 +4,7 @@ const path = require("path");
 // https://github.com/webcomponents/custom-elements-manifest/blob/main/schema.json
 
 const camelToKebabMap = new Map();
+const forbiddenAttributeTypes = ["object", "array"];
 
 const camelToKebabCase = string => {
 	if (!camelToKebabMap.has(string)) {
@@ -60,12 +61,12 @@ const generateCustomElementExport = entity => {
 
 const generateJavaScriptModule = entity => {
 	return {
-		"kind": "javascript-module",
-		"path": `${entity.basename}.js`,
-		"declarations": [
-			generateCustomElementDeclaration(entity)
+		kind: "javascript-module",
+		path: `${entity.basename}.js`,
+		declarations: [
+			generateCustomElementDeclaration(entity),
 		],
-		"exports": [
+		exports: [
 			generateJavaScriptExport(entity),
 			generateCustomElementExport(entity),
 		]
@@ -77,35 +78,35 @@ const generateSingleClassField = (classField) => {
 		default: classField.defaultValue,
 		// Whether the property is deprecated.
 		//If the value is a string, it's the reason for the deprecation.
-		deprecated: !!classField.deprecated, // TODO: Check how entity is marked as deprecated
+		deprecated: !!classField.deprecated,
 		// A markdown description.
 		description: classField.description,
-		inheritedFrom: {}, // #/definitions/Reference
+		// inheritedFrom: {}, // #/definitions/Reference
 		kind: "field",
 		name: classField.name,
 		privacy: classField.visibility,
-		source: {}, // #/definitions/SourceReference
+		// source: {}, // #/definitions/SourceReference
 		static: false,
 		// A markdown summary suitable for display in a listing.
-		summary: "",
+		// summary: "",
 		type: generateType(classField.type),
 	}
 };
 
 const generateSingleParameter = (parameter) => {
 	return {
-		default: {},
+		// default: "",
 		// Whether the property is deprecated.\nIf the value is a string, it's the reason for the deprecation.
 		deprecated: false,
 		// A markdown description of the field.
-		description: "",
+		description: parameter.description,
 		name: parameter.name,
 		// Whether the parameter is optional. Undefined implies non-optional.
 		optional: parameter.optional,
 		// Whether the parameter is a rest parameter. Only the last parameter may be a rest parameter.\nUndefined implies single parameter.
-		rest: false,
+		// rest: false,
 		// A markdown summary suitable for display in a listing.
-		summary: "",
+		// summary: "",
 		type: generateType(parameter.type)
 	}
 }
@@ -124,10 +125,10 @@ const generateSingleClassMethod = (classMethod) => {
 	return {
 		// Whether the function is deprecated.
 		//If the value is a string, it's the reason for the deprecation.
-		deprecated: !!classMethod.deprecated, // TODO: Check how entity is marked as deprecated
+		deprecated: !!classMethod.deprecated,
 		// A markdown description.
 		description: classMethod.description,
-		inheritedFrom: {}, // #/definitions/Reference
+		// inheritedFrom: {}, // #/definitions/Reference
 		kind: "method",
 		name: classMethod.name,
 		parameters: generateParameters(classMethod.parameters || []),
@@ -139,10 +140,10 @@ const generateSingleClassMethod = (classMethod) => {
 			summary: "",
 			type: classMethod.returnValue ? generateType(classMethod.returnValue) : undefined
 		},
-		source: {}, // #/definitions/SourceReference
+		// source: {}, // #/definitions/SourceReference
 		static: false,
 		// A markdown summary suitable for display in a listing.
-		summary: "",
+		// summary: "",
 	}
 };
 
@@ -179,8 +180,8 @@ const generateType = (type) => {
 		// system and syntax. For example, a documentation viewer could display the
 		// type `Array<FooElement | BarElement>` with cross-references to `FooElement`
 		// and `BarElement` without understanding arrays, generics, or union types.
-		references: [], // #/definitions/TypeReference
-		source: {}, // #/definitions/SourceReference
+		// references: [], // #/definitions/TypeReference
+		// source: {}, // #/definitions/SourceReference
 		// The full string representation of the type, in whatever type syntax is
 		// used, such as JSDoc, Closure, or TypeScript.
 		text: type
@@ -196,15 +197,15 @@ const generateSingleAttribute = (attribute) => {
 		default: attribute.defaultValue,
 		// Whether the attribute is deprecated.
 		// If the value is a string, it's the reason for the deprecation.
-		deprecated: !!attribute.deprecated, // TODO: Check how entity is marked as deprecated
+		deprecated: !!attribute.deprecated,
 		// A markdown description.
 		description: attribute.description,
 		// The name of the field this attribute is associated with, if any.
 		fieldName: attribute.name,
-		inheritedFrom: {}, // #/definitions/Reference
+		// inheritedFrom: {}, // #/definitions/Reference
 		name: camelToKebabCase(attribute.name),
 		// A markdown summary suitable for display in a listing.
-		summary: "",
+		// summary: "",
 		// The type that the attribute will be serialized/deserialized as.
 		type: generateType(attribute.type)
 	}
@@ -224,13 +225,13 @@ const generateSingleEvent = (event) => {
 	return {
 		// Whether the event is deprecated.
 		// If the value is a string, it's the reason for the deprecation.
-		deprecated: !!event.deprecated,  // TODO: Check how entity is marked as deprecated
+		deprecated: !!event.deprecated,
 		// A markdown description.
 		description: event.description,
-		inheritedFrom: {}, // #/definitions/Reference
+		// inheritedFrom: {}, // #/definitions/Reference
 		name: event.name,
 		// A markdown summary suitable for display in a listing.
-		summary: "",
+		// summary: "",
 		// The type of the event object that's fired.
 		type: generateType("CustomEvent") // #/definitions/Type
 	}
@@ -250,13 +251,13 @@ const generateSingleSlot = (slot) => {
 	return {
 		// Whether the slot is deprecated.
 		// If the value is a string, it's the reason for the deprecation.
-		deprecated: !!slot.deprecated, // TODO: Check how entity is marked as deprecated
+		deprecated: !!slot.deprecated,
 		// A markdown description.
 		description: slot.description,
 		// The slot name, or the empty string for an unnamed slot.
 		name: slot.name,
 		// A markdown summary suitable for display in a listing.
-		summary: ""
+		// summary: ""
 	}
 }
 
@@ -292,20 +293,20 @@ const generateCustomElementDeclaration = (entity) => {
 	const slots = entity.slots || [];
 	const events = entity.events || [];
 	const attributes = (entity.properties || []).filter(property => {
-		return property.type.toLowerCase !== "array" && property.type.toLowerCase !== "object";
+		return property.noattribute !== "true" && property.readonly !== "true" && !forbiddenAttributeTypes.includes(property.type.toLowerCase());
 	});
 	const classFields = (entity.properties || []);
 
 	return {
 		// The attributes that this element is known to understand.
 		attributes: generateAttributes(attributes),
-		cssParts: [], // #/definitions/CssPart
-		cssProperties: [], // #/definitions/CssCustomProperty
+		// cssParts: [], // #/definitions/CssPart
+		// cssProperties: [], // #/definitions/CssCustomProperty
 		// Distinguishes a regular JavaScript class from a custom element class
 		customElement: true,
-		demos: [], // #/definitions/Demo
+		// demos: [], // #/definitions/Demo
 		// Whether the class or mixin is deprecated. If the value is a string, it's the reason for the deprecation.
-		deprecated: !!entity.deprecated, // TODO: Check how entity is marked as deprecated
+		deprecated: !!entity.deprecated,
 		// A markdown description of the class.
 		description: entity.description,
 		// The events that this element fires.
@@ -321,19 +322,19 @@ const generateCustomElementDeclaration = (entity) => {
 		// first. This may read backwards from the common order in JavaScript, but
 		// matches the order of language used to describe mixin application, like
 		// \"S with A, B\".
-		mixins: [], // #/definitions/Reference
+		// mixins: [], // #/definitions/Reference
 		name: entity.basename,
 		// The shadow dom content slots that this element accepts.
 		slots: generateSlots(slots),
-		source: {}, // #/definitions/SourceReference
+		// source: {}, // #/definitions/SourceReference
 		// A markdown summary suitable for display in a listing.
-		summary: "",
+		// summary: "",
 		// The superclass of this class.
 
 		// If this class is defined with mixin
 		// applications, the prototype chain includes the mixin applications
 		// and the true superclass is computed from them.
-		superclass: {}, // #/definitions/Reference
+		// superclass: {}, // #/definitions/Reference
 		// An optional tag name that should be specified if this is a
 		// self-registering element.
 
