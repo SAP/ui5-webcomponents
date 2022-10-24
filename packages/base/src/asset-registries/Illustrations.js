@@ -14,37 +14,28 @@ const registerIllustration = (name, { dialogSvg, sceneSvg, spotSvg, set, title, 
 	});
 };
 
-const registerIllustrationLoader = async (collectionName, loader) => {
-	loaders.set(collectionName, loader);
+const registerIllustrationLoader = async (illustrationName, loader) => {
+	loaders.set(illustrationName, loader);
 };
 
-const _loadIllustrationCollectionOnce = async collectionName => {
-	if (!loaders.has(collectionName)) {
-		throw new Error(`No loader registered for the ${collectionName} illustrations collection. Probably you forgot to import the "AllIllustrations.js" module for the respective package.`);
+const _loadIllustrationCollectionOnce = async illustrationName => {
+	let temp;
+	if (illustrationName.startsWith("Tnt")) {
+		illustrationName = illustrationName.substring(3);
+		temp = `Tnt${illustrationName}`;
+	} else {
+		temp = illustrationName;
 	}
-	const loadIllustrations = loaders.get(collectionName);
-	return loadIllustrations(collectionName);
-};
-
-const _fillRegistry = bundleData => {
-	Object.keys(bundleData.data).forEach(illustrationName => {
-		const illustrationData = bundleData.data[illustrationName];
-
-		registerIllustration(illustrationName, {
-			dialogSvg: illustrationData.dialogSvg,
-			sceneSvg: illustrationData.sceneSvg,
-			spotSvg: illustrationData.spotSvg,
-			set: bundleData.set,
-			title: illustrationData.title,
-			subtitle: illustrationData.subtitle,
-		});
-	});
+	if (!loaders.has(illustrationName.replace("Tnt", ""))) {
+		throw new Error(`No loader registered for the ${illustrationName} illustration. You probably forgot to import the "AllIllustrations.js".`);
+	}
+	const loadIllustrations = loaders.get(illustrationName);
+	return loadIllustrations(temp);
 };
 
 const _parseName = name => {
-	const [set, illustrationName] = name.split("/");
+	const illustrationName = name;
 	return {
-		set,
 		illustrationName,
 	};
 };
@@ -56,48 +47,20 @@ const getIllustrationDataSync = nameProp => {
 		set = "tnt";
 		nameProp = nameProp.replace(/^Tnt/, "");
 	}
-
-	return registry.get(`${set}/${nameProp}`) || ILLUSTRATION_NOT_FOUND;
+	return registry.get(`${set}/${nameProp}`);
 };
 
 const getIllustrationData = async nameProp => {
-	const { set, illustrationName } = _parseName(nameProp);
-
-	if (set === "fiori") {
-		await _loadIllustrationCollectionOnce("fiori");
-	} else if (set === "tnt") {
-		await _loadIllustrationCollectionOnce("tnt");
-	} else {
-		throw new Error(`No loader registered for the ${set} illustrations collection. Probably you forgot to import the "AllIllustrations.js" module for the respective package.`);
-	} // eslint-disable-line
-
-	if(!registry.has(`${set}/${illustrationName}`)) {
-		_fillRegistry({
-			set,
-			data: {
-				[illustrationName]: {
-					dialogSvg: "",
-					sceneSvg: "",
-					spotSvg: "",
-					title: "",
-					subtitle: "",
-				},
-			},
-		})
-	}
-
-	return registry.get(`${set}/${illustrationName}`) || ILLUSTRATION_NOT_FOUND;
+	const { illustrationName } = _parseName(nameProp);
+	await _loadIllustrationCollectionOnce(illustrationName);
+	return registry.get(`${illustrationName}`) || ILLUSTRATION_NOT_FOUND;
 };
 
 // test page usage only
 const _getRegisteredNames = async () => {
-
-	// Load all illustrations
-	await _loadIllustrationCollectionOnce("fiori");
-	await _loadIllustrationCollectionOnce("tnt");
-	
+	await _loadIllustrationCollectionOnce("UnableToLoad");
 	return [...registry.keys()];
-}
+};
 
 export {
 	getIllustrationDataSync,

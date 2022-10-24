@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
+const FIORI = path.join(__dirname, `../../fiori/`);
 
 
 const getScripts = (options) => {
@@ -56,8 +57,9 @@ const getScripts = (options) => {
 				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
-				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
+				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n build.jsonImports.illustrations",
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
+				illustrations: `node "${LIB}/generate-json-imports/illustrations.js" ${FIORI}/dist/illustrations ${FIORI}/dist/illustrations/tnt dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			bundle: `vite build ${viteConfig}`,

@@ -9,7 +9,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
-import "./illustrations/BeforeSearch.js";
 
 // Styles
 import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js";
@@ -352,16 +351,12 @@ class IllustratedMessage extends UI5Element {
 	async onBeforeRendering() {
 		let illustrationData = getIllustrationDataSync(this.name);
 
-		if (!illustrationData) {
+		if (illustrationData === undefined) {
 			illustrationData = await getIllustrationData(this.name);
 		}
 
 		if (illustrationData === ILLUSTRATION_NOT_FOUND) {
 			this.invalid = true;
-			const illustrationPath = this.name.includes("Tnt") ? `tnt/${this.name.replace("Tnt", "")}` : this.name;
-
-			/* eslint-disable-next-line */
-			return console.warn(`Required illustration is not registered. You can either import the illustration as a module in order to use it e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js".`);
 		}
 
 		this.invalid = false;
