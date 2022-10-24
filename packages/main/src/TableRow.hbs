@@ -11,14 +11,16 @@
 	@touchend="{{_ontouchend}}"
 	aria-label="{{ariaLabelText}}"
 	aria-selected="{{this.selected}}"
+	aria-current="{{_ariaCurrent}}"
 	data-sap-focus-ref
 	part="row"
+	data-ui5-dir="{{effectiveDir}}"
 >
 
 	{{#if isMultiSelect}}
-		<td 
-			class="ui5-table-multi-select-cell" 
-			aria-hidden="true" 
+		<td
+			class="ui5-table-multi-select-cell"
+			aria-hidden="true"
 			role="presentation"
 		>
 			<ui5-checkbox
@@ -60,3 +62,5 @@
 		</tr>
 	{{/each}}
 {{/if}}
+
+
