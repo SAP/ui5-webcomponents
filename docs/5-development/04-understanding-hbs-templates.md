@@ -280,6 +280,29 @@ In the `Demo.hbs` file:
 <p>{{fullName}}</p>
 ```
 
+Finally, it is possible to pass HTML elements, and they will be rendered:
+
+In the `Demo.js` file:
+
+```js
+this.message = document.createElement("div");
+this.message.textContent = "Hello";
+```
+
+In the `Demo.hbs` file:
+
+```handlebars
+<p>{{message}}</p>
+```
+
+The result in DOM would be:
+
+```html
+<p><div>Hello</div></p>
+```
+
+*Note:* Although this technique is allowed and has its uses (such as cloning slotted elements to another component),
+passing HTML directly is strongly discouraged. The best practice is to always write your HTML explicitly in the template. 
 
 ### Conditions <a name="syntax_conditional"></a>
 
