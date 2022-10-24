@@ -1,21 +1,5 @@
-commit 3c2a8a3079f7d5598c281b294e184ae960db7470
-Author: Zornitsa Dimova <69695835+zori369@users.noreply.github.com>
-Date:   Sat Oct 22 19:02:56 2022 +0300
+commit b0ee8e4f0c52670ab3abb2f55f108d3d8e85a7e8
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Oct 24 16:01:35 2022 +0300
 
-    feat(ui5-table-row): added navigated property (#5946)
-    
-    * feat(ui5-table-row): added navigated property
-    
-    * feat(ui5-table-row): added navigated property
-    
-    * feat(ui5-table-row): code review changes
-    
-    * feat(ui5-table-row): code review changes
-    
-    * feat(ui5-table-row): using box shadow as a solution
-    
-    * feat(ui5-table-row): sample added
-    
-    * fix(ui5-table): fix playground example
-    
-    Co-authored-by: Zornitsa Dimova <zornitsa.dimova@sap.com>
+    docs: improve the handlebars document (#5969)
