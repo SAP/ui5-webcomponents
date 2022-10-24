@@ -314,7 +314,7 @@ this.userInput = `<strong>Arg</strong>entina`;
 In the `Demo.hbs` file:
 
 ```handlebars
-<div>{{{userInput}}}</p>
+<div>{{{userInput}}}</div>
 ```
 
 Thus, if the user has typed "Arg" (while typing "Argentina"), this part of the name will be highlighted.
