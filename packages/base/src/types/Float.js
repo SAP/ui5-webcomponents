@@ -7,7 +7,7 @@ import DataType from "./DataType.js";
  * @constructor
  * @extends DataType
  * @author SAP SE
- * @alias sap.ui.webcomponents.base.types.Integer
+ * @alias sap.ui.webcomponents.base.types.Float
  * @public
  * @enum {number}
  */
