@@ -34,7 +34,7 @@ function HTMLLitVisitor(debug) {
 	this.blocks = {};
 	this.result = "";
 	this.mainBlock = "";
-	this.blockPath = "context";
+	this.blockLevel = 0;
 	this.blockParameters = ["context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
 	this.debug = debug;
@@ -57,7 +57,6 @@ HTMLLitVisitor.prototype.Program = function(program) {
 		this.blocks[this.prevKey()] += this.currentKey() + "(" + this.blockParameters.join(", ") + ")";
 	} else {
 		this.mainBlock = this.currentKey();
-		this.paths.push(this.blockPath);
 	}
 
 	this.blocks[this.currentKey()] += "html`";
@@ -173,7 +172,7 @@ function visitEachBlock(block) {
 
 	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item, index) => item._id || index, (item, index) => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
-	this.blockPath = "item";
+	this.blockLevel++;
 
 	if (this.blockParameters.indexOf("item") === -1) {
 		bParamAdded = true;
@@ -185,8 +184,7 @@ function visitEachBlock(block) {
 		this.blockParameters.shift("item");
 		this.blockParameters.shift("index");
 	}
-	this.blockPath = "context";
-
+	this.blockLevel--;
 	this.blocks[this.currentKey()] += ") }";
 }
 
@@ -195,12 +193,52 @@ function normalizePath(sPath) {
 
 	//read carefully - https://github.com/wycats/handlebars.js/issues/1028
 	//kpdecker commented on May 20, 2015
-	if (result.indexOf("../") === 0) {
-		let absolutePath = replaceAll(this.paths[this.paths.length - 1], ".", "/") + "/" + result;
+
+	if (result.indexOf("@root") === 0) {
+		// Trying to access root context via the HBS "@root" variable.
+		// Example: {{@root.property}} compiles to "context.property" - called from anywhere within the template.
+		result = result.replace("@root", "context");
+
+	} else if (result.indexOf("../") === 0) {
+		let absolutePath;
+		const levelsUp = (result.match(/..\//g) || []).length;
+
+		if (this.blockLevel <= levelsUp) {
+			// Trying to access root context from nested loops.
+			// Example: {{../../property}} compiles to "context.property" - when currently in a nested level loop.
+			// Example: {{../../../property}} compile to "context.property" - when requested levels are not present. fallback to root context.
+			absolutePath = `context.${replaceAll(result,"../", "")}`;
+		} else {
+			// Trying to access upper context (one-level-up) and based on the current lelev, that could be "context" or "item".
+			// Example: {{../property}} compiles to "context.property" - when called in a top level loop.
+			// Example: {{../property}} compiles to "item.property" - when called in a nested level loop.
+			// TODO: the second example, although correctly generated to "item.property", "item" will point to the current object within the nested loop,
+			// not the upper level loop as intended. So accessing the upper loop from nested loop is currently not working.
+			absolutePath = replaceAll(this.paths[this.paths.length - 1 - levelsUp], ".", "/") + "/" + result;
+		}
+
 		result = replaceAll(path.normalize(absolutePath), path.sep, ".");
+
 	} else {
-		result = result ? replaceAll(this.blockPath + "/" + result, "/", ".") : this.blockPath;
+		// When neither "@root", nor "../" are used, use the following contexts:
+		// - use "context" - for the top level of execution, e.g "this.blockLevel = 0".
+		// - use "item" - for any nested level, e.g "this.blockLevel > 0".
+		// Example:
+		//
+		// {{text}} -> compiles to "context.text"
+		// {{#each items}}
+				// Item text: {{text}}</div> -> compiles to "item.text"
+				// 	{{#each words}}
+				// 			 Word text: {{text}}</div> -> compiles to "item.text"
+				// 	{{/each}}
+				// 	Item text: {{text}}</div> -> compiles to "item.text"
+		// {{/each}}
+		// {{text}} -> compiles to "context.text"
+
+		const blockPath = this.blockLevel > 0 ? "item" : "context";
+		result = result ? replaceAll(blockPath + "/" + result, "/", ".") : blockPath;
 	}
+
 	return result;
 }
 
