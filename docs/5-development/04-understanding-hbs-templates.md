@@ -218,7 +218,7 @@ You can use the following features when writing `.hbs` templates:
 
 ### Bindings <a name="syntax_bindings"></a>
 
-You can access any property from the context (generally the web component instance) in your `.hbs` template.
+You can access any property from the context (generally the web component instance) in your `.hbs` template with `{{` and `}}`.
 
 In the `Demo.js` file:
 
@@ -280,19 +280,58 @@ In the `Demo.hbs` file:
 <p>{{fullName}}</p>
 ```
 
-Finally, it is possible to pass HTML elements, and they will be rendered:
+By default, all content that you pass is _escaped_ for security purposes.
+However, you can pass **arbitrary HTML** with `{{{` and `}}}`:
 
 In the `Demo.js` file:
 
 ```js
-this.message = document.createElement("div");
-this.message.textContent = "Hello";
+this.unsafeMessage = `<span>This is unsafe content</span>`;
 ```
 
 In the `Demo.hbs` file:
 
 ```handlebars
-<p>{{message}}</p>
+<p>{{{unsafeMessage}}}</p>
+```
+
+The result in DOM would be:
+
+```html
+<p><span>This is unsafe content</span></p>
+```
+
+*Note:* Using `{{{` and `}}}` is strongly discouraged and should be avoided whenever possible. If you must use it, make sure you've sanitized
+your HTML manually beforehand. A common use-case for the `{{{` and `}}}` binding is to manually add `<strong>` tags to parts of a string
+to implement highlighting while the user is typing. Here's an example:
+
+In the `Demo.js` file:
+
+```js
+this.userInput = `<strong>Arg</strong>entina`;
+```
+
+In the `Demo.hbs` file:
+
+```handlebars
+<div>{{{userInput}}}</p>
+```
+
+Thus, if the user has typed "Arg" (while typing "Argentina"), this part of the name will be highlighted.
+
+Finally, it is possible to pass HTML elements (not just strings as in all examples above), and they will be rendered:
+
+In the `Demo.js` file:
+
+```js
+this.messageDiv = document.createElement("div");
+this.messageDiv.textContent = "Hello";
+```
+
+In the `Demo.hbs` file:
+
+```handlebars
+<p>{{messageDiv}}</p>
 ```
 
 The result in DOM would be:
@@ -300,6 +339,9 @@ The result in DOM would be:
 ```html
 <p><div>Hello</div></p>
 ```
+
+*Note:* This is not to be confused with `{{{` and `}}}`. The `{{{` and `}}}` binding expects a _string, containing HTML_,
+while the example above demonstrates passing an _HTML element_ (hence `Object`, not `String`) directly.
 
 *Note:* Although this technique is allowed and has its uses (such as cloning slotted elements to another component),
 passing HTML directly is strongly discouraged. The best practice is to always write your HTML explicitly in the template. 
