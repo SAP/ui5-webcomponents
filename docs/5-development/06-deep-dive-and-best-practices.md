@@ -489,7 +489,7 @@ events: {
 
 2. In the `.hbs` template bind an event listener to some part of your component's HTML to be able to take action on user interaction:
 
-```html
+```handlebars
 <div class="my-panel">
 	<button class="my-panel-toggle" @click="{{onPanelToggleClick}}">Toggle</button>
 	<div class="my-panel-body">
@@ -608,7 +608,7 @@ always use the prefixed (`ui5-`) event.
 
 Example:
 
-```html
+```handlebars
 <div class="my-component">
 	<button @click="{{onNativeButtonClick}}">Click me</button>
 	<ui5-button @ui5-click="{{onUI5ButtonClick}}">Click me</ui5-button>
@@ -626,7 +626,7 @@ Please note the following:
 
 If we used the non-prefixed versions:
 
-```html
+```handlebars
 <div class="my-component">
 	<button @click="{{onNativeButtonClick}}">Click me</button>
 	<ui5-button @click="{{onUI5ButtonClick}}">Click me</ui5-button>
@@ -702,7 +702,7 @@ This component will be invalidated whenever any of its properties changes, any o
 
 In this component's `.hbs` you are expected to render the two slots and to bind an event listener for the event:
 
-```html
+```handlebars
 <div class="my-demo-component">
 	<header>
 		<slot name="icon"></slot>
@@ -949,7 +949,7 @@ In `onBeforeRendering` we prepare a `_filteredItems` array with some of the comp
 
 And finally, in the `.hbs` template we have for example:
 
-```html
+```handlebars
 <div class="my-filter-component">
 	{{#each _filteredItems}}
 		<div class="my-filtered-item">
@@ -1168,7 +1168,7 @@ If we did not use a static area, for example as in a component, defined like thi
 
 In the `MySelect.js` file:
 
-```html
+```handlebars
 <div class="my-select">
 	<h1>Click to open the dropdown:</h1>
 	<button @click="{{onOpenDropdownClick}}">Dropdown</button>
@@ -1230,7 +1230,7 @@ Here is how we can rework the component from the example above to take advantage
 
 Instead of having the dropdown (`ui5-popover`) in the main template:
 
-```html
+```handlebars
 <div class="my-select">
 	<h1>Click to open the dropdown:</h1>
 	<button @click="{{onOpenDropdownClick}}">Dropdown</button>
@@ -1249,7 +1249,7 @@ split `MySelect.hbs` into `MySelect.hbs` and `MySelectDropdown.hbs`:
 
 The `MySelect.hbs` file:
 
-```html
+```handlebars
 <div class="my-select">
 	<h1>Click to open the dropdown:</h1>
 	<button @click="{{onOpenDropdownClick}}">Dropdown</button>
@@ -1258,7 +1258,7 @@ The `MySelect.hbs` file:
 
 The `MySelectDropdown.hbs` file:
 
-```html
+```handlebars
 <ui5-popover id="#popover" ?open="{{dropdownOpen}}">
 	<ui5-list>
 		{{#each dropdownItems}}

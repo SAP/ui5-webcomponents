@@ -319,6 +319,27 @@ describe("Dialog general interaction", () => {
 
 		assert.ok(isBlockLayerHidden, "the block layer is hidden");
 	});
+
+	it("tests that ENTER on list item that opens Dialog doesn't trigger click event inside the focused element of the Dialog", async () => {
+		const dialog = await browser.$("#listContainerDialogId");
+		const listContainerItem = await browser.$("#listContainerItemId");
+		await listContainerItem.scrollIntoView();
+		await listContainerItem.click();
+
+		assert.ok(await dialog.isDisplayedInViewport(), "Dialog remains open");
+
+		await browser.keys("Escape");
+		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed");
+
+
+		await browser.keys("ArrowDown");
+		await browser.keys("Enter");
+
+		assert.ok(await dialog.isDisplayedInViewport(), "Dialog remains open");
+
+		await browser.keys("Escape");
+		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed");
+	});
 });
 
 
