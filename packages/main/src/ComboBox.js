@@ -984,6 +984,7 @@ class ComboBox extends UI5Element {
 
 	_announceSelectedItem(indexOfItem) {
 		const currentItem = this._filteredItems[indexOfItem];
+		const currentItemAdditionalText = currentItem.additionalText;
 		const isGroupItem = currentItem && currentItem.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
@@ -991,7 +992,7 @@ class ComboBox extends UI5Element {
 		if (isGroupItem) {
 			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite");
 		} else {
-			announce(`${itemPositionText}`, "Polite");
+			announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), "Polite");
 		}
 	}
 

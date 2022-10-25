@@ -447,7 +447,7 @@ is the `name` property of your `package.json` file.
 The template of the Web Component is in the `Demo.hbs` file.
 In this particular example it looks like this:
 
-```html
+```handlebars
 <div>This is: ui5-demo. {{pleaseWaitText}}</div>
 ```
 
