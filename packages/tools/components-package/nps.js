@@ -59,7 +59,7 @@ const getScripts = (options) => {
 			jsonImports: {
 				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n build.jsonImports.illustrations",
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
-				illustrations: `node "${LIB}/generate-json-imports/illustrations.js" ${FIORI}/dist/illustrations ${FIORI}/dist/illustrations/tnt dist/generated/json-imports`,
+				illustrations: `node "${LIB}/generate-json-imports/illustrations.js" ${FIORI}/dist/illustrations ${FIORI}/dist/illustrations/tnt dist/generated/js-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			bundle: `vite build ${viteConfig}`,

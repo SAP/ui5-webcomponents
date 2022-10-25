@@ -21,12 +21,12 @@ const generate = async () => {
 	// dynamic imports for Fiori illustrations
 	const fioriAvailableIllustrationsArray = `[${fioriIllustrationsOnFileSystem.filter(
 		// skipping the items starting with sapIllus-Dialog, sapIllus-Scene, sapIllus-Spot since they are included in the illustration's js file
-		line => !line.startsWith("sapIllus-Dialog") && !line.startsWith("sapIllus-Scene") && !line.startsWith("sapIllus-Spot")).map(illustrationName => `"${illustrationName.replace('.js', '')}"`).join(", ")}]`;
+		line => !line.startsWith("sapIllus-Dialog") && !line.startsWith("sapIllus-Scene") && !line.startsWith("sapIllus-Spot") && !line.startsWith("AllIllustrations")).map(illustrationName => `"${illustrationName.replace('.js', '')}"`).join(", ")}]`;
 
 	const fioriDynamicImportLines = fioriIllustrationsOnFileSystem.map(illustrationName =>
 		`\t\tcase "${illustrationName.replace('.js', '')}": return (await import("../../illustrations/${illustrationName}")).default;`).filter(
 			// skipping the items starting with sapIllus-Dialog, sapIllus-Scene, sapIllus-Spot since they are included in the illustration's js file
-			line => !line.startsWith("\t\tcase \"sapIllus-Dialog") && !line.startsWith("\t\tcase \"sapIllus-Scene") && !line.startsWith("\t\tcase \"sapIllus-Spot")).join("\n");
+			line => !line.startsWith("\t\tcase \"sapIllus-Dialog") && !line.startsWith("\t\tcase \"sapIllus-Scene") && !line.startsWith("\t\tcase \"sapIllus-Spot") && !line.startsWith("\t\tcase \"AllIllustrations")).join("\n");
 
 	// dynamic imports for Tnt illustrations
 	const tntAvailableIllustrationsArray = `[${tntIllustrationsOnFileSystem.filter(
@@ -62,6 +62,7 @@ ${tntDynamicImportLines}
 	${tntAvailableIllustrationsArray}.forEach(illustrationName => registerIllustrationLoader(illustrationName, loadAndCheck));`;
 	
 
+	await fs.mkdir(path.dirname(outputFile), { recursive: true });
 	await fs.writeFile(outputFile, contentDynamic, {recursive: true});
 	return Promise.all([fs.writeFile(outputFile, contentDynamic)]);
 };
