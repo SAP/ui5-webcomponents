@@ -61,7 +61,7 @@ For these reasons, we would suggest you use `.hbs` templates and have them compi
 
 ### 3.1 Global context <a name="context_global"></a>
 
-The context in the `.bhs` file is the **web component instance**, and you do not have to write the `this` keyword (although you can).
+The context in the `.hbs` file is the **web component instance**, and you do not have to write the `this` keyword (although you can).
 Therefore, you can directly use metadata entities (property, slot, event names) or any other Javascript property on the component directly:
 
 In the `Demo.js` file:
@@ -218,7 +218,7 @@ You can use the following features when writing `.hbs` templates:
 
 ### Bindings <a name="syntax_bindings"></a>
 
-You can access any property from the context (generally the web component instance) in your `.hbs` template.
+You can access any property from the context (generally the web component instance) in your `.hbs` template with `{{` and `}}`.
 
 In the `Demo.js` file:
 
@@ -280,6 +280,71 @@ In the `Demo.hbs` file:
 <p>{{fullName}}</p>
 ```
 
+By default, all content that you pass is _escaped_ for security purposes.
+However, you can pass **arbitrary HTML** with `{{{` and `}}}`:
+
+In the `Demo.js` file:
+
+```js
+this.unsafeMessage = `<span>This is unsafe content</span>`;
+```
+
+In the `Demo.hbs` file:
+
+```handlebars
+<p>{{{unsafeMessage}}}</p>
+```
+
+The result in DOM would be:
+
+```html
+<p><span>This is unsafe content</span></p>
+```
+
+*Note:* Using `{{{` and `}}}` is strongly discouraged and should be avoided whenever possible. If you must use it, make sure you've sanitized
+your HTML manually beforehand. A common use-case for the `{{{` and `}}}` binding is to manually add `<strong>` tags to parts of a string
+to implement highlighting while the user is typing. Here's an example:
+
+In the `Demo.js` file:
+
+```js
+this.userInput = `<strong>Arg</strong>entina`;
+```
+
+In the `Demo.hbs` file:
+
+```handlebars
+<div>{{{userInput}}}</div>
+```
+
+Thus, if the user has typed "Arg" (while typing "Argentina"), this part of the name will be highlighted.
+
+Finally, it is possible to pass HTML elements (not just strings as in all examples above), and they will be rendered:
+
+In the `Demo.js` file:
+
+```js
+this.messageDiv = document.createElement("div");
+this.messageDiv.textContent = "Hello";
+```
+
+In the `Demo.hbs` file:
+
+```handlebars
+<p>{{messageDiv}}</p>
+```
+
+The result in DOM would be:
+
+```html
+<p><div>Hello</div></p>
+```
+
+*Note:* This is not to be confused with `{{{` and `}}}`. The `{{{` and `}}}` binding expects a _string, containing HTML_,
+while the example above demonstrates passing an _HTML element_ (hence `Object`, not `String`) directly.
+
+*Note:* Although this technique is allowed and has its uses (such as cloning slotted elements to another component),
+passing HTML directly is strongly discouraged. The best practice is to always write your HTML explicitly in the template. 
 
 ### Conditions <a name="syntax_conditional"></a>
 
@@ -384,7 +449,29 @@ In the `Demo.hbs` file:
 {{/each}}
 ```
 
-See the previous section (especially the "Context in loops" part) for more examples and the meaning of the `this` keyword in loops.
+See the previous section (especially the [Context in loops](#context_loops) part) for more examples and the meaning of the `this` keyword in loops.
+
+You can access the index of the currently looped item with the special `{{@index}}` variable. Note that `{{@index}}` is zero-based.
+
+For example, the following template:
+
+```handlebars
+{{#each items}}
+	<div id="{{id}}"
+		 part="item-{{@index}}"
+	>{{text}}</div>
+{{/each}}
+```
+
+will produce:
+
+```html
+<div id="item1" part="item-0"></div>
+<div id="item2" part="item-1"></div>
+```
+
+This is a common technique to create unique [shadow parts](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) for items
+within a UI5 Web Component.
 
 ### Property assignment (the `.` prefix) <a name="syntax_dot"></a>
 
@@ -575,7 +662,7 @@ The correct way would be to pass objects (as in the first example), in which cas
 
 Class maps are an easy tool to set multiple classes to an element - either conditionally, or unconditionally.
 
-In order to use a class map in your `.hbs` template you must bind a `classes` property (or as in the next example, a getter called `classes`):
+In order to use a class map in your `.hbs` template you must bind a `classes` property (or as in the next example, a getter called `classes`) to a `class` attribute:
 
 ```js
 get classes() {
@@ -661,6 +748,9 @@ In `Demo.hbs`:
 
 Here we define two empty partials (`beforeContent` and `afterContent`) for others to implement.
 
+*Note:* Partials do not have their own context. When a partial is processed, its content is treated as if directly
+written at the partial's insertion point.
+
 ### Include <a name="syntax_include"></a>
 
 You can include other `.hbs` files with `{{>include "PATH_TO_FILE"}}` where `PATH_TO_FILE` is a relative or absolute path to the `.hbs` file you want to include.
@@ -702,7 +792,7 @@ Then the `Demo2` component will use the `.hbs` file of the `Demo` component, how
 ### Rendering slots <a name="slots_rendering"></a>
 
 The [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element allows you to render children, nested in your web component, in a desired place in the shadow DOM.
-You should render each slot, defined in your component's metadata (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)), somewhere in the `.bhs` template.
+You should render each slot, defined in your component's metadata (see [Understanding UI5 Web Components Metadata](./03-understanding-components-metadata.md)), somewhere in the `.hbs` template.
 
 To render the default slot simply render a `slot` tag:
 
