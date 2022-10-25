@@ -306,6 +306,7 @@ class IllustratedMessage extends UI5Element {
 		super();
 
 		this._handleResize = this.handleResize.bind(this);
+		this._lastKnownOffsetWidthForMedia = {}; // this will store the last known offsetWidth of the IllustratedMessage DOM node for a given media (e.g. "Spot")
 	}
 
 	static get metadata() {
@@ -386,14 +387,26 @@ class IllustratedMessage extends UI5Element {
 			return;
 		}
 
+		this._applyMedia();
+	}
+
+	_applyMedia() {
+		const currOffsetWidth = this.offsetWidth;
+		let newMedia = "";
+
 		if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.BASE) {
-			this.media = IllustratedMessage.MEDIA.BASE;
+			newMedia = IllustratedMessage.MEDIA.BASE;
 		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.SPOT) {
-			this.media = IllustratedMessage.MEDIA.SPOT;
+			newMedia = IllustratedMessage.MEDIA.SPOT;
 		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.DIALOG) {
-			this.media = IllustratedMessage.MEDIA.DIALOG;
+			newMedia = IllustratedMessage.MEDIA.DIALOG;
 		} else {
-			this.media = IllustratedMessage.MEDIA.SCENE;
+			newMedia = IllustratedMessage.MEDIA.SCENE;
+		}
+		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia];
+		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth)) { // prevents infinite resize
+			this.media = newMedia;
+			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
 		}
 	}
 

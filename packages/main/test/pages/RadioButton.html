@@ -132,6 +132,36 @@
 
 	<div id="rbGroupContainer"></div>
 
+	<ui5-title level="H2">Form Support</ui5-title><br>
+	<form>
+		<div aria-labelledby="formRadioGroupTitle1" aria-required="true" role="radiogroup" class="radio-section">
+			<ui5-title id="formRadioGroupTitle1">Select:</ui5-title>
+			<ui5-radio-button id="formRadioBtnRequired" value="optionA" name="formGroup" text="Option A" required></ui5-radio-button>
+			<ui5-radio-button value="optionB" name="formGroup" text="Option B"></ui5-radio-button>
+			<ui5-radio-button value="optionC" name="formGroup" text="Option C"></ui5-radio-button>
+		</div>
+		<input type="submit">
+	</form>
+
+	<ui5-title level="H2">Form Support - native HTML</ui5-title><br>
+	<form>
+		Select:
+		<br/>
+		<label>
+			<input type="radio" name="nativeFormGroup" value="optionA" required>Option A
+		</label>
+		<br/>
+		<label>
+			<input type="radio" name="nativeFormGroup" value="optionB">Option B
+		</label>
+		<br/>
+		<label>
+			<input type="radio" name="nativeFormGroup" value="optionC">Option C
+		</label>
+		<br/>
+		<input type="submit">
+	</form>
+
 	<script>
 		var counter = 0;
 		var groupEventCounter = 0;
