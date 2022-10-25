@@ -5,15 +5,15 @@ import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	SIDE_NAVIGATION_POPOVER_ACC_TEXT,
 	SIDE_NAVIGATION_POPOVER_LIST_ARIA_ROLE,
 	SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE,
-	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE
+	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -244,7 +244,7 @@ class SideNavigation extends UI5Element {
 	get ariaRoleDescNavigationListItem() {
 		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE);
 	}
-	
+
 	handleTreeItemClick(event) {
 		const treeItem = event.detail.item;
 		const item = treeItem.associatedItem;
