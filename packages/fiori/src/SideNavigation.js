@@ -7,6 +7,14 @@ import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	SIDE_NAVIGATION_POPOVER_ACC_TEXT,
+	SIDE_NAVIGATION_POPOVER_LIST_ARIA_ROLE,
+	SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE,
+	SIDE_NAVIGATION_LIST_ARIA_ROLE,
+	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
@@ -218,9 +226,25 @@ class SideNavigation extends UI5Element {
 	}
 
 	get accSideNavigationPopoverText() {
-		return "Navigation"; // make translatable
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_ACC_TEXT);
 	}
 
+	get ariaRoleDescPopoverNavigationList() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_LIST_ARIA_ROLE);
+	}
+
+	get ariaRoleDescPopoverNavigationListItem() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE);
+	}
+
+	get ariaRoleDescNavigationList() {
+		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ARIA_ROLE) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_LIST_ARIA_ROLE);
+	}
+
+	get ariaRoleDescNavigationListItem() {
+		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE);
+	}
+	
 	handleTreeItemClick(event) {
 		const treeItem = event.detail.item;
 		const item = treeItem.associatedItem;
@@ -303,6 +327,13 @@ class SideNavigation extends UI5Element {
 				callback(currentSubitem);
 			});
 		});
+	}
+
+	static async onDefine() {
+		[SideNavigation.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			super.onDefine(),
+		]);
 	}
 }
 

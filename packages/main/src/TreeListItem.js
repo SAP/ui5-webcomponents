@@ -310,7 +310,6 @@ class TreeListItem extends ListItem {
 	}
 
 	get _accInfo() {
-		// this.textContent should be added when this._minimal ???
 		const accInfoSettings = {
 			role: this._minimal ? "menuitemradio" : "treeitem",
 			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
@@ -325,6 +324,7 @@ class TreeListItem extends ListItem {
 			accInfoSettings.ariaChecked = this.selected;
 		} else {
 			accInfoSettings.ariaSelected = this.selected;
+			accInfoSettings.ariaChecked = this.selected; // fix for AMP tool issue: "This LI (role=treeitem) does not have an aria-checked attribute"
 		}
 
 		return accInfoSettings;
