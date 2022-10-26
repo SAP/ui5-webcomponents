@@ -41,7 +41,7 @@ const getScripts = (options) => {
 		prepare: {
 			default: "nps clean prepare.all",
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.api" "nps build.illustrations"',
-			styleRelated: "nps build.styles build.jsonImports",
+			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		build: {
 			default: "nps lint prepare build.bundle",
@@ -57,10 +57,13 @@ const getScripts = (options) => {
 				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
-				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n build.jsonImports.illustrations",
+				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
-				illustrations: `node "${LIB}/generate-js-imports/illustrations.js" ${FIORI}/dist/illustrations ${FIORI}/dist/illustrations/tnt dist/generated/js-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
+			},
+			jsImports: {
+				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrations",
+				illustrations: `node "${LIB}/generate-js-imports/illustrations.js" ${FIORI}/dist/illustrations ${FIORI}/dist/illustrations/tnt dist/generated/js-imports`,
 			},
 			bundle: `vite build ${viteConfig}`,
 			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
