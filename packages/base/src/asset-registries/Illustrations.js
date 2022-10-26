@@ -30,12 +30,6 @@ const _loadIllustrationOnce = async illustrationName => {
 	return illustrationPromises.get(illustrationName);
 };
 
-const _parseName = name => {
-	return {
-		illustrationName: name,
-	};
-};
-
 const getIllustrationDataSync = nameProp => {
 	let set = "fiori";
 
@@ -46,8 +40,7 @@ const getIllustrationDataSync = nameProp => {
 	return registry.get(`${set}/${nameProp}`);
 };
 
-const getIllustrationData = async nameProp => {
-	const { illustrationName } = _parseName(nameProp);
+const getIllustrationData = async illustrationName => {
 	await _loadIllustrationOnce(illustrationName);
 	return registry.get(`${illustrationName}`) || ILLUSTRATION_NOT_FOUND;
 };
