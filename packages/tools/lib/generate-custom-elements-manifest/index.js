@@ -1,4 +1,4 @@
-const fs = require("fs");
+const fs = require("fs").promises;
 // https://github.com/webcomponents/custom-elements-manifest/blob/main/schema.json
 
 const camelToKebabMap = new Map();
@@ -330,14 +330,19 @@ const generate = async () => {
 		require.resolve("@ui5/webcomponents-base/dist/api.json"),
 		require.resolve("@ui5/webcomponents-fiori/dist/api.json"),
 	];
+	let apiFiles = [];
 
-	const apiFiles = apiFilesPaths.map(apiFilePath => JSON.parse(fs.readFileSync(apiFilePath))).forEach(apiFile => {
-		apiFile.symbols.forEach(symbol => {
+	await Promise.all(apiFilesPaths.map(async (apiFilePath) => {
+		const file = JSON.parse(await fs.readFile(apiFilePath));
+
+		apiFiles.push(file);
+
+		file.symbols.forEach(symbol => {
 			apiIndex.set(symbol.name, symbol);
 		});
-	});
+	}));
 
-	apiFilesPaths.forEach((apiFilePath, index) => {
+	await Promise.all(apiFilesPaths.map(async (apiFilePath, index) => {
 		let customElementsManifest = {
 			schemaVersion: "1.0.0",
 			readme: "",
@@ -350,8 +355,8 @@ const generate = async () => {
 			}
 		});
 
-		fs.writeFileSync(apiFilePath.replace("/api.json", "/custom-elements.json"), JSON.stringify(customElementsManifest));
-	});
+		await fs.writeFile(apiFilePath.replace("/api.json", "/custom-elements.json"), JSON.stringify(customElementsManifest));
+	}));
 };
 
 generate().then(() => {
