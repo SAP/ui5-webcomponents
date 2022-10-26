@@ -155,16 +155,9 @@
 	white-space: pre-wrap;
 }
 
-:host([growing][style*="height"]) .ui5-textarea-root, :host([growing][style*="height"]) .ui5-textarea-wrapper,
-:host([growing][style*="height"]) .ui5-textarea-mirror, :host([growing][style*="height"]) .ui5-textarea-inner {
+:host([style*="height"]) .ui5-textarea-root, :host([growing][style*="height"]) .ui5-textarea-wrapper {
 	height: inherit;
 	min-height: var(--__ui5_textarea_min_height);
-}
-
-:host(:not([growing])[style*="height"]) .ui5-textarea-inner {
-	min-height: var(--__ui5_textarea_min_height);
-	height: inherit;
-	box-sizing: border-box;
 }
 
 :host([rows]) .ui5-textarea-inner {
