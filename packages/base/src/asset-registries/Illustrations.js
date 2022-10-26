@@ -20,22 +20,14 @@ const registerIllustrationLoader = async (illustrationName, loader) => {
 };
 
 const _loadIllustrationOnce = async illustrationName => {
-	let temporaryVariable;
-	if (illustrationName.startsWith("Tnt")) {
-		illustrationName = illustrationName.substring(3);
-		temporaryVariable = `Tnt${illustrationName}`;
-	} else {
-		temporaryVariable = illustrationName;
-	}
-	if (!illustrationPromises.has(temporaryVariable)) {
+	if (!illustrationPromises.has(illustrationName)) {
 		if (!loaders.has(illustrationName)) {
-			throw new Error(`No loader registered for the ${temporaryVariable} illustrations collection. Probably you forgot to import the "AllIllustrations.js" module for the respective package.`);
+			throw new Error(`No loader registered for the ${illustrationName} illustrations collection. Probably you forgot to import the "AllIllustrations.js" module for the respective package.`);
 		}
 		const loadIllustrations = loaders.get(illustrationName);
-		illustrationPromises.set(temporaryVariable, loadIllustrations(temporaryVariable));
+		illustrationPromises.set(illustrationName, loadIllustrations(illustrationName));
 	}
-
-	return illustrationPromises.get(temporaryVariable);
+	return illustrationPromises.get(illustrationName);
 };
 
 const _parseName = name => {

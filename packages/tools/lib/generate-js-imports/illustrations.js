@@ -31,7 +31,7 @@ const generate = async () => {
 	// dynamic imports for Tnt illustrations
 	const tntAvailableIllustrationsArray = `[${tntIllustrationsOnFileSystem.filter(
 		// skipping the items starting with tnt-Dialog, tnt-Scene, tnt-Spot since they are included in the illustration's js file
-		line => !line.startsWith("tnt-Dialog") && !line.startsWith("tnt-Scene") && !line.startsWith("tnt-Spot")).map(illustrationName => `"${illustrationName.replace('.js', '')}"`).join(", ")}]`;
+		line => !line.startsWith("tnt-Dialog") && !line.startsWith("tnt-Scene") && !line.startsWith("tnt-Spot")).map(illustrationName => `"Tnt${illustrationName.replace('.js', '')}"`).join(", ")}]`;
 
 	const tntDynamicImportLines = tntIllustrationsOnFileSystem.map(illustrationName =>
 		`\t\tcase "Tnt${illustrationName.replace('.js', '')}": return (await import("../../illustrations/tnt/${illustrationName}")).default;`).filter(
@@ -51,9 +51,6 @@ ${tntDynamicImportLines}
 };
 	const loadAndCheck = async (illustrationName) => {
 		const data = await loadIllustration(illustrationName);
-		if (illustrationName === "BeforeSearch") {
-			console.warn("[Illustrations] You are either using the BeforeSearch illustration or you have a typo in the illustration name.");
-		}
 		return data;
 	}
 

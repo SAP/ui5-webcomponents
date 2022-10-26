@@ -9,6 +9,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustratedMessageTemplate from "./generated/templates/IllustratedMessageTemplate.lit.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
+import "./illustrations/BeforeSearch.js";
 
 // Styles
 import IllustratedMessageCss from "./generated/themes/IllustratedMessage.css.js";
