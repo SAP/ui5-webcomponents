@@ -34,6 +34,7 @@ const metadata = {
 		 * @type {Float}
 		 * @defaultvalue 0
 		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		startValue: {
@@ -47,6 +48,7 @@ const metadata = {
 		 * @type {Float}
 		 * @defaultvalue 100
 		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		endValue: {
@@ -114,8 +116,6 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RangeSlider
  * @extends SliderBase
- * @formAssociated
- * @formProperties startValue endValue
  * @tagname ui5-range-slider
  * @since 1.0.0-rc.11
  * @public

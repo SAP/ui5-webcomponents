@@ -37,9 +37,7 @@
  * 
  *   formEvents
  * 
- *   formAssociated
- *
- *   formProperties
+ *   formProperty
  *
  *   allowPreventDefault
  *
@@ -2129,17 +2127,10 @@ exports.defineTags = function(dictionary) {
 		}
 	});
 
-	dictionary.defineTag('formProperties', {
+	dictionary.defineTag('formProperty', {
 		mustHaveValue: false,
 		onTagged: function(doclet, tag) {
-			if (tag.value) {
-				doclet.formProperties = doclet.formProperties || [];
-				tag.value.split(/\s*,\s*/g).forEach(function($) {
-					if ( doclet.formProperties.indexOf($) < 0 ) {
-						doclet.formProperties.push($);
-					}
-				});
-			}
+			doclet.formProperty = true;
 		}
 	});
 

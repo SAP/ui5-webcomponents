@@ -113,6 +113,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -231,8 +232,6 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.FileUploader
  * @extends UI5Element
- * @formAssociated
- * @formProperties value
  * @tagname ui5-file-uploader
  * @public
  */

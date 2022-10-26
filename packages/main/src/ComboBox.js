@@ -81,6 +81,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -377,8 +378,6 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ComboBox
  * @extends UI5Element
- * @formAssociated
- * @formProperties value
  * @tagname ui5-combobox
  * @appenddocs ComboBoxItem ComboBoxGroupItem
  * @public

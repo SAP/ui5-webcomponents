@@ -58,6 +58,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -370,8 +371,6 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DatePicker
  * @extends DateComponentBase
- * @formAssociated
- * @formProperties value
  * @tagname ui5-date-picker
  * @public
  */

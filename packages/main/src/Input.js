@@ -260,6 +260,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue ""
 		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -567,8 +568,6 @@ const metadata = {
  * @alias sap.ui.webcomponents.main.Input
  * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-input
- * @formAssociated
- * @formProperties value
  * @appenddocs SuggestionItem SuggestionGroupItem
  * @implements sap.ui.webcomponents.main.IInput
  * @public

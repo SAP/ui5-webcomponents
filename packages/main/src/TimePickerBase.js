@@ -51,6 +51,7 @@ const metadata = {
 		 * @type {string}
 		 * @defaultvalue undefined
 		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -153,8 +154,6 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimePickerBase
  * @extends UI5Element
- * @formAssociated
- * @formProperties value
  * @public
  * @since 1.0.0-rc.6
  */

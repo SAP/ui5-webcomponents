@@ -109,8 +109,6 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimePicker
  * @extends TimePickerBase
- * @formAssociated
- * @formProperties value
  * @tagname ui5-time-picker
  * @public
  * @since 1.0.0-rc.6

@@ -127,6 +127,7 @@ const metadata = {
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 */
 		checked: {
@@ -280,8 +281,6 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.CheckBox
  * @extends sap.ui.webcomponents.base.UI5Element
- * @formAssociated
- * @formProperties checked
  * @tagname ui5-checkbox
  * @public
  */
