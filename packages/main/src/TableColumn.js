@@ -31,7 +31,7 @@ const metadata = {
 		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue Infinity
 		 * @public
 		 */

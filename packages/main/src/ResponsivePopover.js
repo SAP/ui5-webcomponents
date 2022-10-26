@@ -74,7 +74,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ResponsivePopover
- * @extends Popover
+ * @extends sap.ui.webcomponents.main.Popover
  * @tagname ui5-responsive-popover
  * @since 1.0.0-rc.6
  * @public

@@ -120,7 +120,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>maxlength</code> property is set,
 		 * the component turns into "Warning" state once the characters exceeds the limit.
 		 * In this case, only the "Error" state is considered and can be applied.
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.7
 		 * @public
@@ -140,7 +140,7 @@ const metadata = {
 		 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
 		 * </ul>
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -152,7 +152,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of characters that the <code>value</code> can have.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultValue null
 		 * @public
 		 */
@@ -193,7 +193,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of lines that the component can grow.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */

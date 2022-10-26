@@ -47,7 +47,7 @@ const metadata = {
 		 * <li><code>Attention</code></li>
 		 * </ul>
 		 *
-		 * @type {ButtonDesign}
+		 * @type {sap.ui.webcomponents.main.types.ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -315,7 +315,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Button
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-button
  * @implements sap.ui.webcomponents.main.IButton
  * @public

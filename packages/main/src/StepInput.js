@@ -42,7 +42,7 @@ const metadata = {
 		/**
 		 * Defines a value of the component.
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -54,7 +54,7 @@ const metadata = {
 		/**
 		 * Defines a minimum value of the component.
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @public
 		 */
 		min: {
@@ -64,7 +64,7 @@ const metadata = {
 		/**
 		 * Defines a maximum value of the component.
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @public
 		 */
 		max: {
@@ -74,7 +74,7 @@ const metadata = {
 		/**
 		 * Defines a step of increasing/decreasing the value of the component.
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -95,7 +95,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -177,7 +177,7 @@ const metadata = {
 		/**
 		 * Determines the number of digits after the decimal point of the component.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -356,7 +356,7 @@ const INITIAL_SPEED = 120; // milliseconds
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.StepInput
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-step-input
  * @since 1.0.0-rc.13
  * @public

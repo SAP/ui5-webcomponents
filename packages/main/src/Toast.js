@@ -28,7 +28,7 @@ const metadata = {
 		 * <b>Note:</b> The minimum supported value is <code>500</code> ms
 		 * and even if a lower value is set, the duration would remain <code>500</code> ms.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 3000
 		 * @public
 		 */
@@ -53,7 +53,7 @@ const metadata = {
 		 * <li><code>BottomEnd</code></li>
 		 * </ul>
 		 *
-		 * @type {ToastPlacement}
+		 * @type {sap.ui.webcomponents.main.types.ToastPlacement}
 		 * @defaultvalue "BottomCenter"
 		 * @public
 		 */
@@ -137,7 +137,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Toast
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-toast
  * @public
  * @since 1.0.0-rc.6

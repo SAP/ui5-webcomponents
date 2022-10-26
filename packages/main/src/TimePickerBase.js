@@ -69,7 +69,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -151,7 +151,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimePickerBase
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @public
  * @since 1.0.0-rc.6
  */

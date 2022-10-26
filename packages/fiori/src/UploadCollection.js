@@ -47,7 +47,7 @@ const metadata = {
 		 * <li><code>Delete</code></li>
 		 * </ul>
 		 *
-		 * @type {ListMode}
+		 * @type {sap.ui.webcomponents.main.types.ListMode}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -96,12 +96,12 @@ const metadata = {
 		/**
 		 * Indicates what overlay to show when files are being dragged.
 		 *
-		 * @type {UploadCollectionDnDOverlayMode}
+		 * @type {sap.ui.webcomponents.fiori.types.UploadCollectionDnDOverlayMode}
 		 * @defaultvalue "None"
 		 * @private
 		 */
 		_dndOverlayMode: {
-			type: String,
+			type: UploadCollectionDnDOverlayMode,
 			defaultValue: UploadCollectionDnDOverlayMode.None,
 		},
 
@@ -207,7 +207,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.UploadCollection
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-upload-collection
  * @appenddocs UploadCollectionItem
  * @public

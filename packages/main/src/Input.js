@@ -243,7 +243,7 @@ const metadata = {
 		 * that use different soft keyboard layouts depending on the given input type.</li>
 		 * </ul>
 		 *
-		 * @type {InputType}
+		 * @type {sap.ui.webcomponents.main.types.InputType}
 		 * @defaultvalue "Text"
 		 * @public
 		 */
@@ -337,7 +337,7 @@ const metadata = {
 		 * Sets the maximum number of characters available in the input field.
 		 * <br><br>
 		 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
@@ -1263,7 +1263,7 @@ class Input extends UI5Element {
 
 	/**
 	 * The suggestion item on preview.
-	 * @type { sap.ui.webcomponents.main.IInputSuggestionItem }
+	 * @type {sap.ui.webcomponents.main.IInputSuggestionItem}
 	 * @readonly
 	 * @public
 	 */

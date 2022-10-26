@@ -31,7 +31,7 @@ const metadata = {
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 *
 		 * @public
-		 * @type {SwitchDesign}
+		 * @type {sap.ui.webcomponents.main.types.SwitchDesign}
 		 * @defaultValue "Textual"
 		 */
 		design: {

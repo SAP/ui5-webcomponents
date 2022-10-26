@@ -28,7 +28,7 @@ const InvisibleMessageModes = {
  * @class
  * Different types of InvisibleMessageMode.
  *
- * @extends DataType
+ * @extends sap.ui.webcomponents.base.types.DataType
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.base.types.InvisibleMessageMode

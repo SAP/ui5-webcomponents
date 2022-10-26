@@ -56,7 +56,7 @@ const metadata = {
 		/**
 		 * Keeps recently focused list in order to focus it on next dialog open.
 		 *
-		 * @type {Object}
+		 * @type {object}
 		 * @private
 		 */
 		 _recentlyFocused: {
@@ -66,7 +66,7 @@ const metadata = {
 		/**
 		 * Stores settings of the dialog before the initial open.
 		 *
-		 * @type {Object}
+		 * @type {object}
 		 * @private
 		 */
 		 _initialSettings: {
@@ -76,7 +76,7 @@ const metadata = {
 		/**
 		 * Stores settings of the dialog after confirmation.
 		 *
-		 * @type {Object}
+		 * @type {object}
 		 * @private
 		 */
 		 _confirmedSettings: {
@@ -86,7 +86,7 @@ const metadata = {
 		/**
 		 * Stores current settings of the dialog.
 		 *
-		 * @type {Object}
+		 * @type {object}
 		 * @private
 		 */
 		 _currentSettings: {
@@ -220,7 +220,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.ViewSettingsDialog
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-view-settings-dialog
  * @appenddocs SortItem FilterItem FilterItemOption
  * @since 1.0.0-rc.16

@@ -130,7 +130,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -229,7 +229,7 @@ const metadata = {
  * @since 1.0.0-rc.6
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.FileUploader
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-file-uploader
  * @public
  */
@@ -310,7 +310,7 @@ class FileUploader extends UI5Element {
 	/**
 	 * FileList of all selected files.
 	 * @readonly
-	 * @type { FileList }
+	 * @type {FileList}
 	 * @public
 	 */
 	get files() {

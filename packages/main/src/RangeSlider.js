@@ -31,7 +31,7 @@ const metadata = {
 		 * Defines start point of a selection - position of a first handle on the slider.
 		 * <br><br>
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -43,7 +43,7 @@ const metadata = {
 		 * Defines end point of a selection - position of a second handle on the slider.
 		 * <br><br>
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 100
 		 * @public
 		 */
@@ -111,7 +111,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RangeSlider
- * @extends SliderBase
+ * @extends sap.ui.webcomponents.main.SliderBase
  * @tagname ui5-range-slider
  * @since 1.0.0-rc.11
  * @public
