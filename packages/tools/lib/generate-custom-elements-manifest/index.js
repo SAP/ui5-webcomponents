@@ -326,16 +326,17 @@ const filterPublicApi = array => {
 
 const generate = async () => {
 	const apiFilesPaths = [
-		require.resolve("@ui5/webcomponents/dist/api.json"),
 		require.resolve("@ui5/webcomponents-base/dist/api.json"),
+		require.resolve("@ui5/webcomponents/dist/api.json"),
 		require.resolve("@ui5/webcomponents-fiori/dist/api.json"),
 	];
-	let apiFiles = [];
+
+	let apiFiles = new Map();
 
 	await Promise.all(apiFilesPaths.map(async (apiFilePath) => {
 		const file = JSON.parse(await fs.readFile(apiFilePath));
 
-		apiFiles.push(file);
+		apiFiles.set(apiFilePath, file);
 
 		file.symbols.forEach(symbol => {
 			apiIndex.set(symbol.name, symbol);
@@ -349,7 +350,7 @@ const generate = async () => {
 			modules: [],
 		};
 
-		apiFiles[index].symbols.forEach(entity => {
+		apiFiles.get(apiFilePath).symbols.forEach(entity => {
 			if (entity.tagname) {
 				customElementsManifest.modules.push(generateJavaScriptModule(entity));
 			}
