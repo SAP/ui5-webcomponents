@@ -1,10 +1,5 @@
-commit da7ae70b6a672d3dac3defa0387fe910bd9594f7
-Author: Boyan Rakilovski <boyan.rakilovski@sap.com>
-Date:   Wed Oct 26 11:22:02 2022 +0300
+commit b36be95bf05036fb390039928f77885efb79f9ad
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Wed Oct 26 12:43:28 2022 +0300
 
-    fix(ui5-time-picker): enable text spacing (#5940)
-    
-    - Text spacing is now applied when custom styles
-    are provided to the parent element.
-    
-    Fixes: #5792
+    fix(ui5-multi-input): import value help icon (#5972)
