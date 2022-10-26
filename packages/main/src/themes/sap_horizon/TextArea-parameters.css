@@ -26,11 +26,19 @@
 	--_ui5_textarea_error_warning_custom_icon_padding: .625rem .625rem .5rem .625rem;
 	--_ui5_textarea_focus_outline_color: var(--sapField_Active_BorderColor);
 	--_ui5_textarea_value_state_focus_offset: 0;
+	--_ui5_textarea_padding_top_error_warning: 0.5rem;
+	--_ui5_textarea_padding_bottom_error_warning: 0.4375rem;
+	--_ui5_textarea_padding_top_information: 0.5rem;
+	--_ui5_textarea_padding_bottom_information: 0.4375rem;
 }
 
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
+	--_ui5_textarea_padding_top_error_warning: 0.1875rem;
+	--_ui5_textarea_padding_bottom_error_warning: 0.125rem;
+	--_ui5_textarea_padding_top_information: 0.1875rem;
+	--_ui5_textarea_padding_bottom_information: 0.125rem;
 	--_ui5_textarea_information_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_textarea_error_warning_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_textarea_custom_icon_padding: .3125rem .5rem .25rem .5rem;
