@@ -36,8 +36,6 @@ const _loadIllustrationOnce = async illustrationName => {
 	}
 
 	return illustrationPromises.get(temporaryVariable);
-	// const loadIllustrations = loaders.get(illustrationName);
-	// return loadIllustrations(temporaryVariable);
 };
 
 const _parseName = name => {
