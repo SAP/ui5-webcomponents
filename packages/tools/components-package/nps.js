@@ -61,8 +61,7 @@ const getScripts = (options) => {
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			bundle: `vite build ${viteConfig}`,
-			customElementManifest: `node "${LIB}/generate-custom-element-manifest/index.js"`,
-			api: `jsdoc -c "${LIB}/jsdoc/config.json" && nps build.customElementManifest`,
+			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 			illustrations: illustrationsScript
 		},
 		copy: {
