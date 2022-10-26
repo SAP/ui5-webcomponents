@@ -15,6 +15,7 @@ import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
 import Tokenizer from "./Tokenizer.js";
 import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/value-help.js";
 
 /**
  * @public
