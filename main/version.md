@@ -1,5 +1,12 @@
-commit b36be95bf05036fb390039928f77885efb79f9ad
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Wed Oct 26 12:43:28 2022 +0300
+commit ca40efdd1465903a2dc0d50f31f5213a34dbe7a1
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Thu Oct 27 10:21:13 2022 +0300
 
-    fix(ui5-multi-input): import value help icon (#5972)
+    feat(ui5-li): introduce deleteButton slot (#5971)
+    
+    * feat(ui5-li): introduce deleteButton slot
+    
+    Introduced delete button slot, that allows custom delete button.
+    If the slot is unused, the default delete button will be used instead.
+    
+    Closes: #5826

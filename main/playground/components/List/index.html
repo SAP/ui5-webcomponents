@@ -6002,12 +6002,22 @@
 			<ui5-li>Argentina</ui5-li>
 			<ui5-li>Bulgaria</ui5-li>
 			<ui5-li>China</ui5-li>
+			<ui5-li>Denmark
+				<div slot="deleteButton">
+					<ui5-button>Custom Delete Button</ui5-button>
+				</div>
+			</ui5-li>
 		</ui5-list>
 	</div>
 	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-list</span> <span class="na">id=</span><span class="s">"myList5"</span> <span class="na">mode=</span><span class="s">"Delete"</span> <span class="na">header-text=</span><span class="s">"Note: The list items removal is up to application developers"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-li&gt;</span>Argentina<span class="nt">&lt;/ui5-li&gt;</span>
 	<span class="nt">&lt;ui5-li&gt;</span>Bulgaria<span class="nt">&lt;/ui5-li&gt;</span>
 	<span class="nt">&lt;ui5-li&gt;</span>China<span class="nt">&lt;/ui5-li&gt;</span>
+	<span class="nt">&lt;ui5-li&gt;</span>Denmark
+		<span class="nt">&lt;div</span> <span class="na">slot=</span><span class="s">"deleteButton"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;ui5-button&gt;</span>Custom Delete Button<span class="nt">&lt;/ui5-button&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+	<span class="nt">&lt;/ui5-li&gt;</span>
 <span class="nt">&lt;/ui5-list&gt;</span>
 	</code></pre></figure></pre>
 </section>
@@ -6509,6 +6519,11 @@ This is a list item, providing the most common use cases such as <code>text</cod
                       <div class="cell api-table-content-cell">Node [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the text of the component. <br><br> <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.</div>
                     </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">deleteButton</div>
+                      <div class="cell api-table-content-cell">sap.ui.webcomponents.main.IButton</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the delete button, displayed in "Delete" mode. <b>Note:</b> While the slot allows custom buttons, to match design guidelines, please use the <code>ui5-button</code> component. <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.</div>
+                    </div>
             
                 </div>
             
@@ -6609,6 +6624,11 @@ The component accepts arbitrary HTML content to allow full customization.
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
                       <div class="cell api-table-content-cell">Node [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the component.</div>
+                    </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">deleteButton</div>
+                      <div class="cell api-table-content-cell">sap.ui.webcomponents.main.IButton</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the delete button, displayed in "Delete" mode. <b>Note:</b> While the slot allows custom buttons, to match design guidelines, please use the <code>ui5-button</code> component. <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.</div>
                     </div>
             
                 </div>
