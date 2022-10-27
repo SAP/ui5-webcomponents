@@ -60,7 +60,7 @@ ng serve -o
 
 ## Two-Way Data Binding
 
-As the offical [Angular docs](https://angular.io/guide/two-way-binding#adding-two-way-data-binding) suggests, we can use combination of property and event bindings to implement two-way data binding. Let's explore the following example, that creates a "SizerComponent".
+As the offical [Angular documentation](https://angular.io/guide/two-way-binding#adding-two-way-data-binding) suggests, we can use combination of property and event bindings to implement two-way data binding. Let's explore the following example, that creates a "SizerComponent".
 
 Example:
 
