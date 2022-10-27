@@ -177,7 +177,7 @@
 	max-height: calc((var(--_textarea_growing_max_lines) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
-:host([rows="1"]) .ui5-textarea-inner {
+:host([rows="1"]) .ui5-textarea-inner, :host([growing-max-lines="1"]) .ui5-textarea-inner {
 	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
@@ -204,11 +204,6 @@
 :host([rows="1"][value-state="Information"]) .ui5-textarea-inner {
 	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
 	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_information) + var(--_ui5_textarea_padding_bottom_information));
-}
-
-:host([growing-max-lines = "1"]) .ui5-textarea-inner {
-	height: 100%;
-	max-height: 100%;
 }
 
 :host([readonly]) {
