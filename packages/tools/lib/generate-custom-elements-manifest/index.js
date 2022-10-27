@@ -343,7 +343,11 @@ const generate = async () => {
 		});
 	}));
 
-	await Promise.all(apiFilesPaths.map(async (apiFilePath, index) => {
+	await Promise.all(apiFilesPaths.map(async (apiFilePath) => {
+		if (apiFilePath.includes("base")) {
+			return;
+		}
+
 		let customElementsManifest = {
 			schemaVersion: "1.0.0",
 			readme: "",
