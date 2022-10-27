@@ -367,19 +367,6 @@ class Select extends UI5Element {
 		return this._filteredItems.find(option => option.selected);
 	}
 
-	/**
-	 * Currently selected value.
-	 * @readonly
-	 * @type { String }
-	 * @formEvents change
-	 * @formProperty
-	 * @since 1.9.0
-	 * @public
-	 */
-	get value() {
-		return this.selectedOption && this.selectedOption.textContent;
-	}
-
 	async _toggleRespPopover() {
 		this._iconPressed = true;
 		this.responsivePopover = await this._respPopover();
