@@ -58,12 +58,75 @@ import "@ui5/webcomponents/dist/Button.js";
 ng serve -o
 ```
 
-## Additional Info
+## Two-Way Data Binding
 
-### Two-Way Data Binding
+As the offical [Angular docs](https://angular.io/guide/two-way-binding#adding-two-way-data-binding) suggests, we can use combination of property and event bindings to implement two-way data binding. Let's explore the following example, that creates a "SizerComponent".
 
-You can use two-way data binding with the following components: CheckBox, RadioButton, Input, DatePicker, Switch, TextArea.
-In order to use it, you have to use a library called [Origami](https://github.com/hotforfeature/origami) that provides advanced support for two-way data binding of custom elements.
+Example:
+
+First, we create the "SizerComponent" class and make use of the "@Input" and "@Output" decorators to mark the only "size" class field as an input/output property and a single method "inc" to increment the "size" field, but more imporant - emits "sizeChange" event (following the framework recommendations to use "inputChange" pattern for an event name).
+
+```js
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Label.js";
+
+@Component({
+  selector: 'app-sizer',
+  templateUrl: './sizer.component.html',
+})
+export class SizerComponent {
+  @Input()  size: number = 16;
+  @Output() sizeChange = new EventEmitter<number>();
+
+  inc() {
+    this.size = this.size + 1;
+    this.sizeChange.emit(this.size);
+  };
+}
+```
+
+Then, in the template we have a Label to display the "size" value and also it's "font-size" style, bound to it. And, a Button that upon click calls the "inc" method to change the "size" value.
+```html
+<section>
+  <ui5-label [style.font-size.px]="size">FontSize: {{size}}px</ui5-label>
+  <ui5-button type="button" (click)="inc()">Inc Size</ui5-button>
+</section>
+```
+
+After we created the "SizerComponent", it's time to use it.
+For the purpose, we have "AppComponent" with a single "fontSizePx" class filed.
+```js
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  fontSizePx = 16;
+}
+
+```
+
+The "AppComponent" has a simple template. It uses the "SizerComponent" and the "fontSizePx" is two-way bound to the "SizerComponent".
+
+```html
+<app-sizer [(size)]="fontSizePx"></app-sizer>
+<ui5-label [style.font-size.px]="fontSizePx">FontSize: {{fontSizePx}}px</ui5-label>
+```
+
+How it works:
+- In the "AppComponent", "fontSizePx" establishes the initial "SizerComponent.size" value by setting the value to 16.
+
+- Clicking the button of the "SizerComponent" updates the "AppComponent.fontSizePx".
+
+- The revised "AppComponent.fontSizePx" value updates the style binding, which makes the displayed texts both in "AppComponent" and "SizerComponent" larger.
+
+## Two-Way Data Binding with Form components
+
+Two-way binding with form components ("CheckBox", "RadioButton", "Input", "DatePicker", "Switch", "TextArea") requires the usage of "NgModel" directive. However, custom elements does not work with "NgModel" out of the box as with native HTML elements. To make it work, you can use a library called [Origami](https://github.com/hotforfeature/origami) that provides advanced support for two-way data binding of custom elements.
 
 Example:
 
