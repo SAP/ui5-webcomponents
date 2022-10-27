@@ -91,6 +91,8 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */

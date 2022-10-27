@@ -46,6 +46,8 @@ const metadata = {
 		 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 */
 		checked: {

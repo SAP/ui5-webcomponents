@@ -358,7 +358,7 @@ class Select extends UI5Element {
 	}
 
 	/**
-	 * Currently selected option.
+	 * Currently selected <code>ui5-option</code> element.
 	 * @readonly
 	 * @type { sap.ui.webcomponents.main.ISelectOption }
 	 * @public

@@ -50,6 +50,8 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue undefined
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {

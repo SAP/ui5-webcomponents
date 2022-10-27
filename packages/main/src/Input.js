@@ -259,6 +259,8 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {

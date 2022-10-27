@@ -33,6 +33,8 @@ const metadata = {
 		 *
 		 * @type {Float}
 		 * @defaultvalue 0
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		startValue: {
@@ -45,6 +47,8 @@ const metadata = {
 		 *
 		 * @type {Float}
 		 * @defaultvalue 100
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		endValue: {

@@ -112,6 +112,8 @@ const metadata = {
 		 * Defines the name/names of the file/files to upload.
 		 * @type {string}
 		 * @defaultvalue ""
+		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 */
 		value: {

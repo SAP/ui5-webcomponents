@@ -25,6 +25,8 @@ const metadata = {
 		 *
 		 * @type {Float}
 		 * @defaultvalue 0
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
