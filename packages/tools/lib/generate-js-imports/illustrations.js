@@ -6,14 +6,14 @@ const generate = async () => {
 	const tntInputFolder = path.normalize(process.argv[3]);
 	const outputFile = path.normalize(`${process.argv[4]}/Illustrations.js`);
 
-	const dirs = await fs.readdir(fioriInputFolder);
-	const fioriIllustrationsOnFileSystem = dirs.map(illustrationName => {
+	const dir = await fs.readdir(fioriInputFolder);
+	const fioriIllustrationsOnFileSystem = dir.map(illustrationName => {
 		const fioriMatches = illustrationName.match(/.*\.js$/);
 		return fioriMatches ? illustrationName : undefined;
 	}).filter(key => !!key);
 
-	const tntDirs = await fs.readdir(tntInputFolder);
-	const tntIllustrationsOnFileSystem = tntDirs.map(illustrationName => {
+	const tntDir = await fs.readdir(tntInputFolder);
+	const tntIllustrationsOnFileSystem = tntDir.map(illustrationName => {
 		const tntMatches = illustrationName.match(/.*\.js$/);
 		return tntMatches ? illustrationName : undefined;
 	}).filter(key => !!key);
@@ -60,7 +60,6 @@ ${tntDynamicImportLines}
 	
 
 	await fs.mkdir(path.dirname(outputFile), { recursive: true });
-	await fs.writeFile(outputFile, contentDynamic, {recursive: true});
 	return Promise.all([fs.writeFile(outputFile, contentDynamic)]);
 };
 
