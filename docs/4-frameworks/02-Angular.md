@@ -80,8 +80,7 @@ export class SizerComponent {
   @Output() sizeChange = new EventEmitter<number>();
 
   inc() {
-    this.size = this.size + 1;
-    this.sizeChange.emit(this.size);
+    this.sizeChange.emit(++this.size);
   };
 }
 ```
