@@ -101,6 +101,24 @@
 		</ui5-table-column>
 	</ui5-table>
 
+	<ui5-table class="demo-table" accessible-name="Table label" id="tblLessCells">
+		<ui5-table-column id="column-1" slot="columns">
+			<ui5-label>City</ui5-label>
+		</ui5-table-column>
+
+		<ui5-table-row navigated>
+			<ui5-table-cell><span>Dublin</span> <ui5-button>click</ui5-button></ui5-table-cell>
+		</ui5-table-row>
+
+		<ui5-table-row>
+			<ui5-table-cell><ui5-label for="myInput">Sofia</ui5-label> <ui5-input id="myInput">click</ui5-input></ui5-table-cell>
+		</ui5-table-row>
+
+		<ui5-table-row >
+			<ui5-table-cell>London <input /> </ui5-table-cell>
+		</ui5-table-row>
+	</ui5-table>
+
 	<!-- Test row click -->
 	<ui5-title>Test row click</ui5-title>
 	<ui5-table class="demo-table" id="testRowClick">

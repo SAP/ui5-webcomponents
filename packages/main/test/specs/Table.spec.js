@@ -106,7 +106,7 @@ describe("Table general interaction", () => {
 		});
 
 		it("Should apply aria-label from the accessibleName property", async () => {
-			const table = await browser.$("#tblLessColumns");
+			const table = await browser.$("#tblLessCells");
 			const innerTable = await table.shadow$("table");
 
 			assert.strictEqual(await innerTable.getAttribute("aria-label"), "Table label", "Table aria-label attribute is correct.");
