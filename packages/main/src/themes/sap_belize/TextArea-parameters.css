@@ -13,6 +13,5 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-	--_ui5_textarea_padding: 0.1875rem 0.5rem;
 	--__ui5_textarea_min_height: 1.625rem;
 }
