@@ -1,9 +1,5 @@
-commit d7beb2cbfe71e7fc790088cda8e857be5f16853a
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Oct 27 02:43:28 2022 -0700
+commit 078a65302f7c7a3e53a06dc1df4b4cc94531c809
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Oct 27 23:50:31 2022 +0300
 
-    Translation Delivery (#5975)
-    
-    chore: translation delivery
-    
-    Change-Id: I97fa3c4d410e06dac0c9e7819c73232c2296c1f4
+    docs(framework): align jsdoc types (#5973)
