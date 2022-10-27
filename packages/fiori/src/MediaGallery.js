@@ -133,7 +133,7 @@ const metadata = {
 		 * <li><code>Bottom</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.MediaGalleryMenuVerticalAlign.prototype}
+		 * @type {sap.ui.webcomponents.fiori.types.MediaGalleryMenuVerticalAlign}
 		 * @defaultvalue "Bottom"
 		 * @public
 		 */
