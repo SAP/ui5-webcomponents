@@ -109,9 +109,6 @@
 :host([navigated]) .ui5-table-div-navigated {
 	width: 0.1875rem;
     position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-	left: 0;
+	inset: 0;
     background-color: var(--sapList_SelectionBorderColor);
 }
