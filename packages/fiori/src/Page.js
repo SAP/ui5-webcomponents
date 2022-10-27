@@ -30,12 +30,12 @@ const metadata = {
 		 * <li><code>Transparent</code></li>
 		 * <li><code>List</code></li>
 		 * </ul>
-		 * @type {PageBackgroundDesign}
+		 * @type {sap.ui.webcomponents.fiori.types.PageBackgroundDesign}
 		 * @defaultvalue "Solid"
 		 * @public
 		 */
 		backgroundDesign: {
-			type: String,
+			type: PageBackgroundDesign,
 			defaultValue: PageBackgroundDesign.Solid,
 		},
 
@@ -154,7 +154,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.Page
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-page
  * @since 1.0.0-rc.12
  * @public

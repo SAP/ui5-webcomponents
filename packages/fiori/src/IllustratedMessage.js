@@ -28,7 +28,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.7.0
@@ -180,7 +180,7 @@ const metadata = {
 		 * You can import them removing the <code>Tnt</code> prefix like this:
 		 * <br>
 		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
-		 * @type {IllustrationMessageType}
+		 * @type {sap.ui.webcomponents.fiori.types.IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
 		 */
@@ -203,7 +203,7 @@ const metadata = {
 		 * As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
 		 * elements of the component are displayed differently on the different breakpoints/illustration sizes.
 		 *
-		 * @type {IllustrationMessageSize}
+		 * @type {sap.ui.webcomponents.fiori.types.IllustrationMessageSize}
 		 * @defaultvalue "Auto"
 		 * @public
 		 * @since 1.5.0
@@ -296,7 +296,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.IllustratedMessage
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-illustrated-message
  * @public
  * @since 1.0.0-rc.15

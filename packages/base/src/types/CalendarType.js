@@ -41,7 +41,7 @@ const CalendarTypes = {
  * @class
  * Different calendar types.
  *
- * @extends DataType
+ * @extends sap.ui.webcomponents.base.types.DataType
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.base.types.CalendarType

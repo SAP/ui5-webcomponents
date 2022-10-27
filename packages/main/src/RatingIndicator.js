@@ -42,7 +42,7 @@ const metadata = {
 		 * <li>1.3 - 1.7 -> 1.5</li>
 		 * <li>1.8 - 1.9 -> 2</li>
 		 * <ul>
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -53,7 +53,7 @@ const metadata = {
 
 		/**
 		 * The number of displayed rating symbols.
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 5
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -169,7 +169,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.RatingIndicator
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-rating-indicator
  * @public
  * @since 1.0.0-rc.8

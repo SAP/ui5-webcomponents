@@ -47,7 +47,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.DayPicker.prototype */ {
 		/**
 		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
-		 * @type {Array}
+		 * @type {array}
 		 * @public
 		 */
 		selectedDates: {
@@ -64,7 +64,7 @@ const metadata = {
 		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
 		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 		 * </ul>
-		 * @type {CalendarSelectionMode}
+		 * @type {sap.ui.webcomponents.main.types.CalendarSelectionMode}
 		 * @defaultvalue "Single"
 		 * @public
 		 */
@@ -90,7 +90,7 @@ const metadata = {
 		},
 
 		/**
-		 * @type {Object}
+		 * @type {object}
 		 * @private
 		 */
 		_weeks: {
@@ -149,7 +149,7 @@ const DAYS_IN_WEEK = 7;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DayPicker
- * @extends CalendarPart
+ * @extends sap.ui.webcomponents.main.CalendarPart
  * @tagname ui5-daypicker
  * @public
  */

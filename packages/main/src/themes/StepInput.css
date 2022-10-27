@@ -4,6 +4,9 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
+	line-height: normal;
+	letter-spacing: normal;
+	word-spacing: normal;
 }
 
 :host {
@@ -150,6 +153,9 @@
 	position: relative;
 	padding: 0px 2.5rem 0px 2.4375rem;
 	outline: none;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
 }
 
 :host .ui5-step-input-input[readonly] { 
@@ -163,6 +169,9 @@
 
 :host .ui5-step-input-root {
 	white-space: nowrap;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
 }
 
 :host .ui5-step-input-input[text-align=left] {

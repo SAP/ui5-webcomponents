@@ -24,7 +24,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {WrappingType}
+		 * @type {sap.ui.webcomponents.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -37,7 +37,7 @@ const metadata = {
 		 * Defines the component level.
 		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 		 *
-		 * @type {TitleLevel}
+		 * @type {sap.ui.webcomponents.main.types.TitleLevel}
 		 * @defaultvalue "H2"
 		 * @public
 		*/
