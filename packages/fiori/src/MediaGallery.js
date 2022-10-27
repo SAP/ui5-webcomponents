@@ -95,7 +95,7 @@ const metadata = {
 		 * <li><code>Horizontal</code></li>
 		 * </ul>
 		 *
-		 * @type {MediaGalleryLayout}
+		 * @type {sap.ui.webcomponents.fiori.types.MediaGalleryLayout}
 		 * @defaultvalue "Auto"
 		 * @public
 		 */
@@ -114,7 +114,7 @@ const metadata = {
 		 * <li><code>Right</code></li>
 		 * </ul>
 		 *
-		 * @type {MediaGalleryMenuHorizontalAlign}
+		 * @type {sap.ui.webcomponents.fiori.types.MediaGalleryMenuHorizontalAlign}
 		 * @defaultvalue "Left"
 		 * @public
 		 */
@@ -133,7 +133,7 @@ const metadata = {
 		 * <li><code>Bottom</code></li>
 		 * </ul>
 		 *
-		 * @type {MediaGalleryMenuVerticalAlign}
+		 * @type {sap.ui.webcomponents.fiori.types.MediaGalleryMenuVerticalAlign}
 		 * @defaultvalue "Bottom"
 		 * @public
 		 */
@@ -153,7 +153,7 @@ const metadata = {
 		 * <li><code>Horizontal</code></li>
 		 * </ul>
 		 *
-		 * @type {MediaGalleryLayout}
+		 * @type {sap.ui.webcomponents.fiori.types.MediaGalleryLayout}
 		 * @defaultvalue "Vertical"
 		 * @private
 		 */
@@ -254,7 +254,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.MediaGallery
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-media-gallery
  * @appenddocs MediaGalleryItem
  * @public

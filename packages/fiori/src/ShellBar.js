@@ -812,7 +812,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the <code>logo</code> DOM ref.
-	 * @type { HTMLElement }
+	 * @type {HTMLElement}
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -823,7 +823,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the <code>copilot</code> DOM ref.
-	 * @type { HTMLElement }
+	 * @type {HTMLElement}
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -834,7 +834,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the <code>notifications</code> icon DOM ref.
-	 * @type { HTMLElement }
+	 * @type {HTMLElement}
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -845,7 +845,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the <code>overflow</code> icon DOM ref.
-	 * @type { HTMLElement }
+	 * @type {HTMLElement}
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -856,7 +856,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the <code>profile</code> icon DOM ref.
-	 * @type { HTMLElement }
+	 * @type {HTMLElement}
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -867,7 +867,7 @@ class ShellBar extends UI5Element {
 
 	/**
 	 * Returns the <code>product-switch</code> icon DOM ref.
-	 * @type { HTMLElement }
+	 * @type {HTMLElement}
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16

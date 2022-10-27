@@ -38,7 +38,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and <code>"Warning"</code>.
 		 *
-		 * @type {MessageStripDesign}
+		 * @type {sap.ui.webcomponents.main.types.MessageStripDesign}
 		 * @defaultvalue "Information"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -147,7 +147,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MessageStrip
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-message-strip
  * @public
  * @since 0.9.0

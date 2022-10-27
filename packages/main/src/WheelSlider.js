@@ -134,7 +134,7 @@ const CELL_SIZE_COZY = 46;
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.WheelSlider
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-wheelslider
  * @public
  * @since 1.0.0-rc.6

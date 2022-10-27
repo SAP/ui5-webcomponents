@@ -73,7 +73,7 @@ const metadata = {
 		 * <li><code>Attention</code></li>
 		 * </ul>
 		 *
-		 * @type {ButtonDesign}
+		 * @type {sap.ui.webcomponents.main.types.ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -120,7 +120,7 @@ const metadata = {
 		/**
 		 * Accessibility-related properties for inner elements of the Split Button
 		 *
-		 * @type {Object}
+		 * @type {object}
 		 * @private
 		 */
 		_splitButtonAccInfo: {
@@ -272,7 +272,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SplitButton
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-split-button
  * @public
  * @since 1.1.0

@@ -33,7 +33,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *
-		 * @type {ListItemType}
+		 * @type {sap.ui.webcomponents.main.types.ListItemType}
 		 * @defaultvalue "Active"
 		 * @public
 		*/
@@ -150,7 +150,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ListItem
- * @extends ListItemBase
+ * @extends sap.ui.webcomponents.main.ListItemBase
  * @public
  */
 class ListItem extends ListItemBase {

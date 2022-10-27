@@ -32,7 +32,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SuggestionGroupItem
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-suggestion-group-item
  * @implements sap.ui.webcomponents.main.IInputSuggestionItem
  * @public

@@ -273,7 +273,7 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected item.
 	 *
 	 * @readonly
-	 * @type { sap.ui.webcomponents.main.ISegmentedButtonItem }
+	 * @type {sap.ui.webcomponents.main.ISegmentedButtonItem}
 	 * @public
 	 */
 	get selectedItem() {

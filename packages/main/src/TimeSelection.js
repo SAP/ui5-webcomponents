@@ -160,7 +160,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimeSelection
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-time-selection
  * @private
  * @since 1.0.0-rc.12
