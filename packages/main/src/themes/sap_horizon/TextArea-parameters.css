@@ -1,7 +1,6 @@
 @import "../base/TextArea-parameters.css";
 
 :root {
-	--_ui5-textarea-border: none;
 	--_ui5_textarea_hover_border: none;
 	--_ui5_textarea_hover_box_shadow: var(--sapContent_Interaction_Shadow);
 	--_ui5_textarea_hover_focus_box_shadow: none;
