@@ -22,7 +22,7 @@ const registerIllustrationLoader = async (illustrationName, loader) => {
 const _loadIllustrationOnce = async illustrationName => {
 	if (!illustrationPromises.has(illustrationName)) {
 		if (!loaders.has(illustrationName)) {
-			throw new Error(`No loader registered for the ${illustrationName} illustrations collection. Probably you forgot to import the "AllIllustrations.js" module for the respective package.`);
+			throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module.`);
 		}
 		const loadIllustrations = loaders.get(illustrationName);
 		illustrationPromises.set(illustrationName, loadIllustrations(illustrationName));
@@ -41,8 +41,14 @@ const getIllustrationDataSync = nameProp => {
 };
 
 const getIllustrationData = async illustrationName => {
+	let set = "fiori";
+
 	await _loadIllustrationOnce(illustrationName);
-	return registry.get(`${illustrationName}`) || ILLUSTRATION_NOT_FOUND;
+	if (illustrationName.startsWith("Tnt")) {
+		set = "tnt";
+		illustrationName = illustrationName.replace(/^Tnt/, "");
+	}
+	return registry.get(`${set}/${illustrationName}`) || ILLUSTRATION_NOT_FOUND;
 };
 
 export {

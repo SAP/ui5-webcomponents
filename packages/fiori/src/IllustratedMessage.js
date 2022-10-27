@@ -212,6 +212,15 @@ const metadata = {
 			type: IllustrationMessageSize,
 			defaultValue: IllustrationMessageSize.Auto,
 		},
+		dialogSvg: {
+			type: String,
+		},
+		sceneSvg: {
+			type: String,
+		},
+		spotSvg: {
+			type: String,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		/**
@@ -358,6 +367,10 @@ class IllustratedMessage extends UI5Element {
 
 		if (illustrationData === ILLUSTRATION_NOT_FOUND) {
 			this.invalid = true;
+			const illustrationPath = this.name.includes("Tnt") ? `tnt/${this.name.replace("Tnt", "")}` : this.name;
+
+			/* eslint-disable-next-line */
+			return console.warn(`Required illustration is not registered. You can either import the specific illustration as a module - e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js" or import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module to fetch any existing illustration on demand`);
 		}
 
 		this.invalid = false;
