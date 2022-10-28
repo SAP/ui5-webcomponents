@@ -1,5 +1,5 @@
-commit 0d62770cace54fd9aef73d9632dd06d8a83680e9
+commit c7e2668cdab83eb32f90b4f6dc6249cda6fba674
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Oct 28 17:08:42 2022 +0300
+Date:   Fri Oct 28 17:09:08 2022 +0300
 
-    feat(framework): generate custom elements manifest (#5964)
+    fix(theming): add custom theme support for external CSS (#5887)
