@@ -32,7 +32,7 @@ const getScripts = (options) => {
 		// no custom configuration - use default from tools project
 		eslintConfig = `--config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
 	}
-		
+
 	const scripts = {
 		clean: 'rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,

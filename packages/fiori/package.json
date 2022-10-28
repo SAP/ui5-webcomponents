@@ -8,6 +8,7 @@
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "private": false,
+  "customElements": "./dist/custom-elements.json",
   "keywords": [
     "openui5",
     "sapui5",
