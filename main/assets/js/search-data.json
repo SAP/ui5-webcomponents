@@ -1409,7 +1409,7 @@
   "202": {
     "id": "202",
     "title": "Table",
-    "content": "&lt;!DOCTYPE html&gt; Web components Table Lower table size to 650px Lower table size to 500px Products table - resize your browser to make some columns pop-in Toggle Sticky Column Header Product Supplier Dimensions Weight Price Number of poppedColumns: Product Supplier Dimensions Weight Price Product Supplier 3 columns, but 1 cell City Supplier Country Dublin click Sofia click London 1 column, but 3 cells City Dublin Sofia London Madrid Rome Barcelona Test row click City Supplier Country Dublin J.M. Brothers USA Sofia J.M. Brothers USA London J.M. Brothers USA",
+    "content": "&lt;!DOCTYPE html&gt; Web components Table Lower table size to 650px Lower table size to 500px Products table - resize your browser to make some columns pop-in Toggle Sticky Column Header Product Supplier Dimensions Weight Price Number of poppedColumns: Product Supplier Dimensions Weight Price Product Supplier City Dublin click Sofia click London Test row click City Supplier Country Dublin J.M. Brothers USA Sofia J.M. Brothers USA London J.M. Brothers USA",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/Table/",
     "relUrl": "/playground/main/pages/Table/"
   },
@@ -1430,7 +1430,7 @@
   "205": {
     "id": "205",
     "title": "Table All Popin",
-    "content": "&lt;!DOCTYPE html&gt; Web components Table Product Supplier Dimensions Weight Price Notebook Basic 15 Very Best Screens 30 x 18 x 3 cm 4.2 KG 956 EUR Notebook Basic 17 Very Best Screens 40 x 18 x 3 cm 4.6 KG 1956 EUR Notebook Basic 19 Very Best Screens 50 x 18 x 3 cm 4.9 KG 2956 EUR Product Supplier Dimensions Weight",
+    "content": "&lt;!DOCTYPE html&gt; Web components Table Product Supplier Dimensions Weight Price Notebook Basic 15 Very Best Screens 30 x 18 x 3 cm 4.2 KG 956 EUR Notebook Basic 17 Very Best Screens 40 x 18 x 3 cm 4.6 KG 1956 EUR Notebook Basic 19 Very Best Screens 50 x 18 x 3 cm 4.9 KG 2956 EUR Product Supplier Dimensions Weight SingleSelect table (click on an item to set as navigated) Product Supplier Dimensions Weight Price Notebook Basic 15 Very Best Screens 30 x 18 x 3 cm 4.2 KG 956 EUR Notebook Basic 17 Very Best Screens 40 x 18 x 3 cm 4.6 KG 1956 EUR Notebook Basic 19 Very Best Screens 50 x 18 x 3 cm 4.9 KG 2956 EUR",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/TableAllPopin/",
     "relUrl": "/playground/main/pages/TableAllPopin/"
   },

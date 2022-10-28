@@ -1,5 +1,13 @@
-commit 078a65302f7c7a3e53a06dc1df4b4cc94531c809
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Oct 27 23:50:31 2022 +0300
+commit ba264afb386f256ccaecd4a056acb95429fb58c3
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Fri Oct 28 09:52:27 2022 +0300
 
-    docs(framework): align jsdoc types (#5973)
+    fix(ui5-table-row): refactor navigated property (#5976)
+    
+    * fix(ui5-table-row): refactor navigated property
+    
+    * fix(ui5-table-row): update samples
+    
+    * fix(ui5-table-row): fix failing tests
+    
+    * fix(ui5-table-row): update samples
