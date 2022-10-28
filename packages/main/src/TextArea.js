@@ -411,7 +411,6 @@ class TextArea extends UI5Element {
 
 		this.exceeding = this._exceededTextProps.leftCharactersCount < 0;
 		this._setCSSParams();
-
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
@@ -421,6 +420,14 @@ class TextArea extends UI5Element {
 	}
 
 	onAfterRendering() {
+		const nativeTextArea = this.getInputDomRef();
+
+		if (this.rows === 1) {
+			nativeTextArea.setAttribute("rows", 1);
+		} else {
+			nativeTextArea.removeAttribute("rows");
+		}
+
 		this.toggleValueStateMessage(this.openValueStateMsgPopover);
 		this._firstRendering = false;
 	}

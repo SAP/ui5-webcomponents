@@ -13,7 +13,7 @@
 	font-style: normal;
 	box-sizing: border-box;
 	line-height: var(--_ui5_textarea_line_height);
-	Letter-spacing: normal;
+	letter-spacing: normal;
 	word-spacing: normal;
 	margin: var(--_ui5_textarea_margin);
 }
@@ -177,15 +177,23 @@
 	max-height: calc((var(--_textarea_growing_max_lines) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
-:host([rows="1"]) .ui5-textarea-inner, :host([growing-max-lines="1"]) .ui5-textarea-inner {
+:host([rows="1"]) .ui5-textarea-inner {
 	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
-	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+}
+
+:host([growing-max-lines="1"]) .ui5-textarea-inner {
+	max-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+}
+
+:host([rows="1"][growing-max-lines]) .ui5-textarea-inner {
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
+	max-height: calc((var(--_textarea_growing_max_lines) * var(--_ui5_textarea_line_height)) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top) + var(--_ui5_textarea_padding_bottom));
 }
 
 :host([rows="1"][value-state="Error"]) .ui5-textarea-inner,
 :host([rows="1"][value-state="Warning"]) .ui5-textarea-inner {
-	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
-	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize)  + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
+	height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
+	min-height: calc(var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_error_warning));
 }
 
 :host([value-state="Error"]) .ui5-textarea-mirror,
