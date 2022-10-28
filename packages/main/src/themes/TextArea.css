@@ -18,7 +18,7 @@
 	margin: var(--_ui5_textarea_margin);
 }
 
-:host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper {
+:host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper, :host([value-state][disabled]) .ui5-textarea-wrapper {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--_ui5_textarea_background_color);
 }
@@ -286,22 +286,22 @@
 	border-color: var(--_ui5_textarea_value_state_error_border_color);
 }
 
-:host([value-state="Error"][focused]:not([readonly])) .ui5-textarea-wrapper {
+:host([value-state="Error"][focused]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
 	background-color: var(--_ui5_textarea_focused_value_state_error_background);
 	border-color: var(--_ui5_textarea_focused_value_state_error_border_color);
 }
 
-:host([value-state="Error"][focused]:not([readonly])) .ui5-textarea-wrapper:after {
+:host([value-state="Error"][focused]:not([readonly]):not([disabled])) .ui5-textarea-wrapper:after {
 	border-color: var(--_ui5_textarea_focused_value_state_error_focus_outline_color);
 }
 
-:host([value-state="Error"]:not([readonly]):not([focused]):hover) .ui5-textarea-wrapper {
+:host([value-state="Error"]:not([readonly]):not([focused]):not([disabled]):hover) .ui5-textarea-wrapper {
 	background-color: var(--_ui5_textarea_error_hover_background_color);
 	box-shadow: var(--_ui5_textarea_value_state_error_hover_box_shadow);
 }
 
-:host([value-state="Error"]) .ui5-textarea-inner,
-:host([value-state="Warning"]) .ui5-textarea-inner {
+:host([value-state="Error"]:not([disabled])) .ui5-textarea-inner,
+:host([value-state="Warning"]:not([disabled])) .ui5-textarea-inner {
 	font-style: var(--_ui5_textarea_error_warning_font_style);
 	font-weight: var(--_ui5_textarea_error_warning_font_weight);
 	text-indent: var(--_ui5_textarea_error_warning_text_indent);
