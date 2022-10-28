@@ -360,7 +360,7 @@ const generate = async () => {
 			}
 		});
 
-		await fs.writeFile(apiFilePath.replace("/api.json", "/custom-elements.json"), JSON.stringify(customElementsManifest));
+		await fs.writeFile(apiFilePath.replace("api.json", "custom-elements.json"), JSON.stringify(customElementsManifest));
 	}));
 };
 
