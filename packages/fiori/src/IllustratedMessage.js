@@ -212,12 +212,33 @@ const metadata = {
 			type: IllustrationMessageSize,
 			defaultValue: IllustrationMessageSize.Auto,
 		},
+		/**
+		* Illustration breakpoint variant for the <code>Dialog</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.8.0
+		*/
 		dialogSvg: {
 			type: String,
 		},
+		/**
+		* Illustration breakpoint variant for the <code>Scene</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.8.0
+		*/
 		sceneSvg: {
 			type: String,
 		},
+		/**
+		* Illustration breakpoint variant for the <code>Spot</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.8.0
+		*/
 		spotSvg: {
 			type: String,
 		},
