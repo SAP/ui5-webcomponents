@@ -217,7 +217,7 @@ const metadata = {
 		*
 		* @private
 		* @type {String}
-		* @since 1.8.0
+		* @since 1.9.0
 		*/
 		dialogSvg: {
 			type: String,
@@ -227,7 +227,7 @@ const metadata = {
 		*
 		* @private
 		* @type {String}
-		* @since 1.8.0
+		* @since 1.9.0
 		*/
 		sceneSvg: {
 			type: String,
@@ -237,7 +237,7 @@ const metadata = {
 		*
 		* @private
 		* @type {String}
-		* @since 1.8.0
+		* @since 1.9.0
 		*/
 		spotSvg: {
 			type: String,
