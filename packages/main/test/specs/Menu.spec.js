@@ -13,6 +13,19 @@ describe("Menu interaction", () => {
 		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
 	});
 
+	it("Menu opens after setting of opener and open", async () => {
+		await browser.url(`test/pages/Menu.html`);
+		const openerButton = await browser.$("#btnAddOpener");
+		const openButton = await browser.$("#btnToggleOpen");
+
+		openerButton.click();
+		openButton.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
+	});
+
 	it("Top level menu items appearance", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
@@ -101,6 +114,26 @@ describe("Menu interaction", () => {
 		await browser.keys("Enter");
 
 		assert.strictEqual(await selectionInput.getAttribute("value"), "New File", "Pressing [Enter] on first item fires an event");
+	});
+
+	it("Events firing on open/close of the menu", async () => {
+		await browser.url(`test/pages/Menu.html`);
+		const openButton = await browser.$("#btnOpen");
+
+		openButton.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		await browser.keys("Esc");
+
+		const eventLoggerValue = await browser.$("#EventLogger").getAttribute("value");
+
+		assert.notEqual(eventLoggerValue.indexOf("before-open"), -1, "'before-open' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("after-open"), -1, "'after-open' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("before-close"), -1, "'before-close' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
 	});
 });
 

@@ -9,7 +9,7 @@ const metadata = {
 		/**
 		 * Defines the text of the tree item.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultValue ""
 		 * @public
 		 */
@@ -156,7 +156,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MenuItem
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-menu-item
  * @implements sap.ui.webcomponents.main.IMenuItem
  * @since 1.3.0

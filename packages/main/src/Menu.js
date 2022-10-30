@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import {
 	isLeft,
 	isRight,
@@ -42,6 +43,29 @@ const metadata = {
 		 */
 		 headerText: {
 			type: String,
+		},
+
+		/**
+		 * Indicates if the menu is open
+		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.9.0
+		 */
+		open: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the ID or DOM Reference of the element that the menu is shown at
+		 * @public
+		 * @type {DOMReference}
+		 * @defaultvalue ""
+		 * @since 1.9.0
+		 */
+		opener: {
+			type: DOMReference,
+			defaultValue: "",
 		},
 
 		/**
@@ -140,7 +164,7 @@ const metadata = {
 		 * @param {string} text The text of the currently clicked menu item.
 		 * @public
 		 */
-		 "item-click": {
+		"item-click": {
 			detail: {
 				item: {
 					type: Object,
@@ -149,7 +173,50 @@ const metadata = {
 					type: String,
 				},
 			},
-		 },
+		},
+
+		/**
+		 * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webcomponents.main.Menu#before-open
+		 * @allowPreventDefault
+		 * @since 1.9.0
+		 */
+		"before-open": {},
+
+		/**
+		 * Fired after the menu is opened. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webcomponents.main.Menu#after-open
+		 * @since 1.9.0
+		 */
+		"after-open": {},
+
+		/**
+		 * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webcomponents.main.Menu#before-close
+		 * @allowPreventDefault
+		 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+		 * @since 1.9.0
+		 */
+		"before-close": {
+			detail: {
+				escPressed: { type: Boolean },
+			},
+		},
+
+		/**
+		 * Fired after the menu is closed. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webcomponents.main.Menu#after-close
+		 * @since 1.9.0
+		 */
+		"after-close": {},
 	},
 };
 
@@ -185,7 +252,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Menu
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-menu
  * @appenddocs MenuItem
  * @since 1.3.0
@@ -275,6 +342,22 @@ class Menu extends UI5Element {
 		});
 	}
 
+	onAfterRendering() {
+		if (!this.opener) {
+			return;
+		}
+		if (this.open) {
+			const rootNode = this.getRootNode();
+			const opener = this.opener instanceof HTMLElement ? this.opener : rootNode && rootNode.getElementById(this.opener);
+
+			if (opener) {
+				this.showAt(opener);
+			}
+		} else {
+			this.close();
+		}
+	}
+
 	/**
 	 * Shows the Menu near the opener element.
 	 * @param {HTMLElement} opener the element that the popover is shown at
@@ -316,13 +399,6 @@ class Menu extends UI5Element {
 	async _getPopover() {
 		this._popover = (await this.getStaticAreaItemDomRef()).querySelector("[ui5-responsive-popover]");
 		return this._popover;
-	}
-
-	_beforePopoverClose() {
-		if (Object.keys(this._openedSubMenuItem).length) {
-			this._openedSubMenuItem._preventSubMenuClose = false;
-			this._closeItemSubMenu(this._openedSubMenuItem);
-		}
 	}
 
 	_navigateBack() {
@@ -494,6 +570,40 @@ class Menu extends UI5Element {
 			// prepares and opens sub-menu on tablet
 			this._prepareSubMenuDesktopTablet(item, opener, actionId);
 		}
+	}
+
+	_beforePopoverOpen(event) {
+		const prevented = !this.fireEvent("before-open", {}, true, false);
+
+		if (prevented) {
+			this.open = false;
+			event.preventDefault();
+		}
+	}
+
+	_afterPopoverOpen() {
+		this.open = true;
+		this.fireEvent("after-open");
+	}
+
+	_beforePopoverClose(event) {
+		const prevented = !this.fireEvent("before-close", { escPressed: event.detail.escPressed	}, true, false);
+
+		if (prevented) {
+			this.open = true;
+			event.preventDefault();
+			return;
+		}
+
+		if (Object.keys(this._openedSubMenuItem).length) {
+			this._openedSubMenuItem._preventSubMenuClose = false;
+			this._closeItemSubMenu(this._openedSubMenuItem);
+		}
+	}
+
+	_afterPopoverClose() {
+		this.open = false;
+		this.fireEvent("after-close");
 	}
 }
 
