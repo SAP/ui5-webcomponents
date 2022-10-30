@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -212,6 +212,36 @@ const metadata = {
 			type: IllustrationMessageSize,
 			defaultValue: IllustrationMessageSize.Auto,
 		},
+		/**
+		* Illustration breakpoint variant for the <code>Dialog</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.9.0
+		*/
+		dialogSvg: {
+			type: String,
+		},
+		/**
+		* Illustration breakpoint variant for the <code>Scene</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.9.0
+		*/
+		sceneSvg: {
+			type: String,
+		},
+		/**
+		* Illustration breakpoint variant for the <code>Spot</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.9.0
+		*/
+		spotSvg: {
+			type: String,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
 		/**
@@ -350,15 +380,19 @@ class IllustratedMessage extends UI5Element {
 		return [Title];
 	}
 
-	onBeforeRendering() {
-		const illustrationData = getIllustrationDataSync(this.name);
+	async onBeforeRendering() {
+		let illustrationData = getIllustrationDataSync(this.name);
+
+		if (illustrationData === undefined) {
+			illustrationData = await getIllustrationData(this.name);
+		}
 
 		if (illustrationData === ILLUSTRATION_NOT_FOUND) {
 			this.invalid = true;
 			const illustrationPath = this.name.includes("Tnt") ? `tnt/${this.name.replace("Tnt", "")}` : this.name;
 
 			/* eslint-disable-next-line */
-			return console.warn(`Required illustration is not registered. You can either import the illustration as a module in order to use it e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js".`);
+			return console.warn(`Required illustration is not registered. You can either import the specific illustration as a module - e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js" or import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module to fetch any existing illustration on demand`);
 		}
 
 		this.invalid = false;
