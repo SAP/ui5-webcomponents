@@ -29,11 +29,12 @@
   },
   "dependencies": {
     "@sap-theming/theming-base-content": "11.1.41",
-    "@ui5/webcomponents-base": "1.8.0"
+    "@ui5/webcomponents-base": "1.8.0",
+    "chromedriver": "107.0.2"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.8.0",
-    "chromedriver": "105.0.1",
+    "chromedriver": "107.0.2",
     "cssnano": "^4.1.11",
     "globby": "^13.1.1",
     "json-beautify": "^1.1.1",
