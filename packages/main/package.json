@@ -44,8 +44,7 @@
     "@ui5/webcomponents-base": "1.8.0",
     "@ui5/webcomponents-icons": "1.8.0",
     "@ui5/webcomponents-localization": "1.8.0",
-    "@ui5/webcomponents-theming": "1.8.0",
-    "chromedriver": "107.0.2"
+    "@ui5/webcomponents-theming": "1.8.0"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.8.0",
