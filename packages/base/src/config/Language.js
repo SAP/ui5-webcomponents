@@ -1,4 +1,3 @@
-// @ts-check
 import {
 	getLanguage as getConfiguredLanguage,
 	getFetchDefaultLanguage as getConfiguredFetchDefaultLanguage,

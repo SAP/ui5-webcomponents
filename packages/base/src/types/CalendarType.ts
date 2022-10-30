@@ -5,36 +5,13 @@ import DataType from "./DataType.js";
  * @lends sap.ui.webcomponents.base.types.CalendarType.prototype
  * @public
  */
-const CalendarTypes = {
-	/**
-	 * @public
-	 * @type {Gregorian}
-	 */
-	Gregorian: "Gregorian",
-
-	/**
-	 * @public
-	 * @type {Islamic}
-	 */
-	Islamic: "Islamic",
-
-	/**
-	 * @public
-	 * @type {Japanese}
-	 */
-	Japanese: "Japanese",
-
-	/**
-	 * @public
-	 * @type {Buddhist}
-	 */
-	Buddhist: "Buddhist",
-
-	/**
-	 * @public
-	 * @type {Persian}
-	 */
-	Persian: "Persian",
+// TODO jsdoc members
+enum CalendarTypes {
+	Gregorian = "Gregorian",
+	Islamic = "Islamic",
+	Japanese = "Japanese",
+	Buddhist = "Buddhist",
+	Persian = "Persian",
 };
 
 /**
@@ -49,7 +26,7 @@ const CalendarTypes = {
  * @enum {string}
  */
 class CalendarType extends DataType {
-	static isValid(value) {
+	static isValid(value: CalendarTypes) {
 		return !!CalendarTypes[value];
 	}
 }
@@ -57,3 +34,4 @@ class CalendarType extends DataType {
 CalendarType.generateTypeAccessors(CalendarTypes);
 
 export default CalendarType;
+export { CalendarTypes };

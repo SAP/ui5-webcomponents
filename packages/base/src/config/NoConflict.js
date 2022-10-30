@@ -1,4 +1,3 @@
-// @ts-check
 import { getNoConflict as getConfiguredNoConflict } from "../InitialConfiguration.js";
 
 // Fire these events even with noConflict: true

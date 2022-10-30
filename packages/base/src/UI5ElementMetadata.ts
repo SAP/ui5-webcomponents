@@ -4,22 +4,53 @@ import { camelToKebabCase } from "./util/StringHelper.js";
 import { getSlottedElements } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 
+type SlotInvalidationType = {
+	properties: boolean | Array<string>,
+	slots: boolean | Array<string>,
+}
+type SlotType = {
+	type: typeof Node | typeof HTMLElement,
+	propertyName: string,
+	individualSlots?: boolean,
+	invalidateOnChildChange?: boolean | SlotInvalidationType,
+}
+type PropertyType =  {
+	multiple?: boolean,
+	type: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
+	defaultValue?: any,
+	noAttribute?: boolean
+}
+
+type MetadataObjType = {
+	tag: string,
+	altTag?: string,
+	managedSlots?: boolean,
+	properties?: {[key: string]: PropertyType},
+	slots?: {[key: string]: SlotType},
+	events: Array<object>,
+	fastNavigation?: boolean,
+	themeAware?: boolean,
+	languageAware?: boolean,
+};
+
 /**
  *
  * @class
  * @public
  */
 class UI5ElementMetadata {
-	constructor(metadata) {
+	metadata: MetadataObjType;
+	_initialState: object | undefined;
+
+	constructor(metadata: MetadataObjType) {
 		this.metadata = metadata;
 	}
 
 	getInitialState() {
 		if (Object.prototype.hasOwnProperty.call(this, "_initialState")) {
-			return this._initialState;
+			return this._initialState!;
 		}
-
-		const initialState = {};
+		const initialState: {[key: string]: any} = {};
 		const slotsAreManaged = this.slotsAreManaged();
 
 		// Initialize properties
@@ -48,7 +79,7 @@ class UI5ElementMetadata {
 		// Initialize slots
 		if (slotsAreManaged) {
 			const slots = this.getSlots();
-			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
+			for (const [slotName, slotData] of Object.entries<SlotType>(slots)) { // eslint-disable-line
 				const propertyName = slotData.propertyName || slotName;
 				initialState[propertyName] = [];
 			}
@@ -60,21 +91,21 @@ class UI5ElementMetadata {
 
 	/**
 	 * Only intended for use by UI5Element.js
-	 * @protected
+	 * @friend TODO
 	 */
-	static validatePropertyValue(value, propData) {
+	static validatePropertyValue(value: any, propData: PropertyType) {
 		const isMultiple = propData.multiple;
 		if (isMultiple) {
-			return value.map(propValue => validateSingleProperty(propValue, propData));
+			return value.map((propValue: any) => validateSingleProperty(propValue, propData));
 		}
 		return validateSingleProperty(value, propData);
 	}
 
 	/**
 	 * Only intended for use by UI5Element.js
-	 * @protected
+	 * @friend was protected, use internal and strip internal
 	 */
-	static validateSlotValue(value, slotData) {
+	static validateSlotValue(value: any, slotData: SlotType) {
 		return validateSingleSlot(value, slotData);
 	}
 
@@ -124,7 +155,7 @@ class UI5ElementMetadata {
 	 * @param propName
 	 * @returns {boolean}
 	 */
-	hasAttribute(propName) {
+	hasAttribute(propName: string) {
 		const propData = this.getProperties()[propName];
 		return propData.type !== Object && !propData.noAttribute && !propData.multiple;
 	}
@@ -237,7 +268,7 @@ class UI5ElementMetadata {
 	 * @param name the name of the property/slot that changed
 	 * @returns {boolean}
 	 */
-	shouldInvalidateOnChildChange(slotName, type, name) {
+	shouldInvalidateOnChildChange(slotName: string, type: "property" | "slot", name: string) {
 		const config = this.getSlots()[slotName].invalidateOnChildChange;
 
 		// invalidateOnChildChange was not set in the slot metadata - by default child changes do not affect the component
@@ -297,7 +328,7 @@ class UI5ElementMetadata {
 	}
 }
 
-const validateSingleProperty = (value, propData) => {
+const validateSingleProperty = (value: any, propData: PropertyType) => {
 	const propertyType = propData.type;
 
 	if (propertyType === Boolean) {
@@ -310,11 +341,11 @@ const validateSingleProperty = (value, propData) => {
 		return typeof value === "object" ? value : propData.defaultValue;
 	}
 	if (isDescendantOf(propertyType, DataType)) {
-		return propertyType.isValid(value) ? value : propData.defaultValue;
+		return (propertyType as typeof DataType).isValid(value) ? value : propData.defaultValue;
 	}
 };
 
-const validateSingleSlot = (value, slotData) => {
+const validateSingleSlot = (value: any, slotData: SlotType) => {
 	value && getSlottedElements(value).forEach(el => {
 		if (!(el instanceof slotData.type)) {
 			throw new Error(`${el} is not of type ${slotData.type}`);
@@ -325,3 +356,4 @@ const validateSingleSlot = (value, slotData) => {
 };
 
 export default UI5ElementMetadata;
+export type { PropertyType };

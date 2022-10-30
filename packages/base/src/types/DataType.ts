@@ -14,22 +14,23 @@ class DataType {
 	 * @abstract
 	 * @returns {Boolean}
 	 */
-	static isValid(value) {
+	static isValid(value: any): boolean {
+		return false;
 	}
 
-	static attributeToProperty(attributeValue) {
+	static attributeToProperty(attributeValue: string | boolean) {
 		return attributeValue;
 	}
 
-	static propertyToAttribute(propertyValue) {
+	static propertyToAttribute(propertyValue: any) {
 		return `${propertyValue}`;
 	}
 
-	static valuesAreEqual(value1, value2) {
+	static valuesAreEqual(value1: any, value2: any) {
 		return value1 === value2;
 	}
 
-	static generateTypeAccessors(types) {
+	static generateTypeAccessors(types: {[key: string]: any}) {
 		Object.keys(types).forEach(type => {
 			Object.defineProperty(this, type, {
 				get() {

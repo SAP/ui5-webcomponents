@@ -2,18 +2,18 @@ import AnimationQueue from "./AnimationQueue.js";
 import animationConfig from "./config.js";
 
 export default ({
-	beforeStart = animationConfig.identity,
+	beforeStart = () => {},
 	duration = animationConfig.defaultDuration,
 	element = animationConfig.element,
 	progress: progressCallback = animationConfig.identity,
 }) => {
-	let start = null;
+	let start: number | null = null;
 	let stopped = false;
-	let animationFrame;
-	let stop;
-	let animate;
+	let animationFrame: number;
+	let stop: () => void;
+	let animate: (timestamp: number) => void;
 
-	const promise = new Promise((resolve, reject) => {
+	const promise = new Promise<void>((resolve, reject) => {
 		animate = timestamp => {
 			start = start || timestamp;
 
@@ -23,7 +23,9 @@ export default ({
 			if (timeElapsed <= duration) {
 				const progress = 1 - remaining / duration; // easing formula (currently linear)
 				progressCallback(progress);
-				animationFrame = !stopped && requestAnimationFrame(animate);
+				if (!stopped) {
+					animationFrame = requestAnimationFrame(animate);
+				}
 			} else {
 				progressCallback(1);
 				resolve();

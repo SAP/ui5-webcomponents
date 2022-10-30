@@ -3,13 +3,13 @@ import animationConfig from "./config.js";
 
 export default ({
 	element = animationConfig.element,
-	duration = animationConfig.duration,
+	duration = animationConfig.defaultDuration,
 	progress: progressCallback = animationConfig.identity,
 	dx = 0,
 	dy = 0,
 }) => {
-	let scrollLeft;
-	let scrollTop;
+	let scrollLeft: number;
+	let scrollTop: number;
 
 	return animate({
 		beforeStart: () => {
@@ -18,11 +18,11 @@ export default ({
 		},
 		duration,
 		element,
-		progress: progress => {
+		progress: (progress) => {
 			progressCallback(progress);
 
-			element.scrollLeft = scrollLeft + (progress * dx); // easing - linear
-			element.scrollTop = scrollTop + (progress * dy); // easing - linear
+			element.scrollLeft = scrollLeft + (progress! * dx); // easing - linear
+			element.scrollTop = scrollTop + (progress! * dy); // easing - linear
 		},
 	});
 };

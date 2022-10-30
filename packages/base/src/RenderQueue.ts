@@ -1,12 +1,17 @@
+import UI5Element from "./UI5Element.js";
+
 const MAX_PROCESS_COUNT = 10;
 
 class RenderQueue {
+	list: Array<UI5Element>;
+	lookup: Set<UI5Element>;
+
 	constructor() {
 		this.list = []; // Used to store the web components in order
 		this.lookup = new Set(); // Used for faster search
 	}
 
-	add(webComponent) {
+	add(webComponent: UI5Element) {
 		if (this.lookup.has(webComponent)) {
 			return;
 		}
@@ -15,7 +20,7 @@ class RenderQueue {
 		this.lookup.add(webComponent);
 	}
 
-	remove(webComponent) {
+	remove(webComponent: UI5Element) {
 		if (!this.lookup.has(webComponent)) {
 			return;
 		}
@@ -36,7 +41,7 @@ class RenderQueue {
 		return this.list.length === 0;
 	}
 
-	isAdded(webComponent) {
+	isAdded(webComponent: UI5Element) {
 		return this.lookup.has(webComponent);
 	}
 
@@ -46,7 +51,7 @@ class RenderQueue {
 	 *
 	 * @param callback - function with one argument (the web component to be processed)
 	 */
-	process(callback) {
+	process(callback: (el: UI5Element) => void) {
 		let webComponent;
 		const stats = new Map();
 

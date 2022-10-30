@@ -1,4 +1,3 @@
-// @ts-check
 import { getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 import applyTheme from "../theming/applyTheme.js";

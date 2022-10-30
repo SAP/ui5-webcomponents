@@ -2,7 +2,7 @@
     // Change this to match your project
     "include": ["src/**/*"],
     "compilerOptions": {
-      "target": "ES6",
+      "target": "ES2021",
       // Tells TypeScript to read JS files, as
       // normally they are ignored as source files
       "allowJs": true,
@@ -15,6 +15,8 @@
       // Removing this would place the .d.ts files
       // next to the .js files
       "outDir": "dist",
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "sourceMap": true,
+      "strict": true
     }
   }

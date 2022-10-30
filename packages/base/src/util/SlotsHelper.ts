@@ -3,7 +3,7 @@
  * @param node Text node or HTML element
  * @returns {string}
  */
-const getSlotName = node => {
+const getSlotName = (node: Node) => {
 	// Text nodes can only go to the default slot
 	if (!(node instanceof HTMLElement)) {
 		return "default";
@@ -20,19 +20,20 @@ const getSlotName = node => {
 	return "default";
 };
 
-const isSlot = el => el && el instanceof HTMLElement && el.localName === "slot";
+const isSlot = (el: Node) => {
+	return el && el instanceof HTMLElement && el.localName === "slot";
+}
 
-const getSlottedElements = el => {
+const getSlottedElements = (el: Node) => {
 	if (isSlot(el)) {
-		return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
+		return (el as HTMLSlotElement).assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
 	}
 
 	return [el];
 };
 
-const getSlottedElementsList = elList => {
-	const reducer = (acc, curr) => acc.concat(getSlottedElements(curr));
-	return elList.reduce(reducer, []);
+const getSlottedElementsList = (elList: Array<Node>) => {
+	return elList.reduce((acc, curr) => acc.concat(getSlottedElements(curr)), [] as Array<Node>);
 };
 
 export {

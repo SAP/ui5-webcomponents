@@ -1,8 +1,12 @@
 import CalendarType from "../types/CalendarType.js";
 import { getCalendarType as getConfiguredCalendarType } from "../InitialConfiguration.js";
 import "./FormatSettings.js";
+import { CalendarTypes } from "../types/CalendarType";
 
-let calendarType;
+let calendarType: CalendarTypes;
+
+
+
 
 /**
  *	Get the configured or default calendar type
@@ -11,14 +15,14 @@ let calendarType;
  */
 const getCalendarType = () => {
 	if (calendarType === undefined) {
-		calendarType = getConfiguredCalendarType();
+		calendarType = getConfiguredCalendarType() as CalendarTypes;
 	}
 
 	if (CalendarType.isValid(calendarType)) {
 		return calendarType;
 	}
 
-	return CalendarType.Gregorian;
+	return CalendarTypes.Gregorian;
 };
 
 export { getCalendarType }; // eslint-disable-line

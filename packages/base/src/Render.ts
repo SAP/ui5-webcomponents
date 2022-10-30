@@ -2,18 +2,19 @@ import EventProvider from "./EventProvider.js";
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
+import UI5Element from "./UI5Element.js";
 
-const registeredElements = new Set();
+const registeredElements = new Set<UI5Element>();
 const eventProvider = new EventProvider();
 
 const invalidatedWebComponents = new RenderQueue(); // Queue for invalidated web components
 
-let renderTaskPromise,
-	renderTaskPromiseResolve;
+let renderTaskPromise: Promise<void> | undefined,
+	renderTaskPromiseResolve: undefined | ((value: void | PromiseLike<void>) => void);
 
-let mutationObserverTimer;
+let mutationObserverTimer: ReturnType<typeof setTimeout> | undefined;
 
-let queuePromise;
+let queuePromise: Promise<void> | null;
 
 /**
  * Schedules a render task (if not already scheduled) to render the component
@@ -21,7 +22,7 @@ let queuePromise;
  * @param webComponent
  * @returns {Promise}
  */
-const renderDeferred = async webComponent => {
+const renderDeferred = async (webComponent: UI5Element) => {
 	// Enqueue the web component
 	invalidatedWebComponents.add(webComponent);
 
@@ -34,7 +35,7 @@ const renderDeferred = async webComponent => {
  *
  * @param webComponent
  */
-const renderImmediately = webComponent => {
+const renderImmediately = (webComponent: UI5Element) => {
 	eventProvider.fireEvent("beforeComponentRender", webComponent);
 	registeredElements.add(webComponent);
 	webComponent._render();
@@ -45,7 +46,7 @@ const renderImmediately = webComponent => {
  *
  * @param webComponent
  */
-const cancelRender = webComponent => {
+const cancelRender = (webComponent: UI5Element) => {
 	invalidatedWebComponents.remove(webComponent);
 	registeredElements.delete(webComponent);
 };
@@ -55,7 +56,7 @@ const cancelRender = webComponent => {
  */
 const scheduleRenderTask = async () => {
 	if (!queuePromise) {
-		queuePromise = new Promise(resolve => {
+		queuePromise = new Promise<void>(resolve => {
 			window.requestAnimationFrame(() => {
 				// Render all components in the queue
 
@@ -91,7 +92,7 @@ const whenDOMUpdated = () => {
 		return renderTaskPromise;
 	}
 
-	renderTaskPromise = new Promise(resolve => {
+	renderTaskPromise = new Promise<void>(resolve => {
 		renderTaskPromiseResolve = resolve;
 		window.requestAnimationFrame(() => {
 			if (invalidatedWebComponents.isEmpty()) {
@@ -143,12 +144,13 @@ const _resolveTaskPromise = () => {
  * @param {Object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
  * @returns {Promise<void>}
  */
-const reRenderAllUI5Elements = async filters => {
-	registeredElements.forEach(element => {
-		const tag = element.constructor.getMetadata().getTag();
+const reRenderAllUI5Elements = async (filters?: {tag?: string, rtlAware?: boolean, languageAware?: boolean, themeAware?: boolean}) => {
+	registeredElements.forEach((element: UI5Element) => {
+		const ctor = element.constructor as typeof UI5Element;
+		const tag = ctor.getMetadata().getTag();
 		const rtlAware = isRtlAware(element.constructor);
-		const languageAware = element.constructor.getMetadata().isLanguageAware();
-		const themeAware = element.constructor.getMetadata().isThemeAware();
+		const languageAware = ctor.getMetadata().isLanguageAware();
+		const themeAware = ctor.getMetadata().isThemeAware();
 		if (!filters || (filters.tag === tag) || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware) || (filters.themeAware && themeAware)) {
 			renderDeferred(element);
 		}
@@ -156,11 +158,11 @@ const reRenderAllUI5Elements = async filters => {
 	await renderFinished();
 };
 
-const attachBeforeComponentRender = listener => {
+const attachBeforeComponentRender = (listener: () => void) => {
 	eventProvider.attachEvent("beforeComponentRender", listener);
 };
 
-const detachBeforeComponentRender = listener => {
+const detachBeforeComponentRender = (listener: () => void) => {
 	eventProvider.detachEvent("beforeComponentRender", listener);
 };
 

@@ -1,4 +1,3 @@
-// @ts-check
 import { getRTL as getConfiguredRTL } from "../InitialConfiguration.js";
 import { getLanguage } from "./Language.js";
 import getDesigntimePropertyAsArray from "../util/getDesigntimePropertyAsArray.js";
