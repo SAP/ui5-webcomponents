@@ -82,7 +82,7 @@
 		<h3 class="header-title">Event logger</h3>
 	</header>
 	<div class="samples-margin">
-		<ui5-textarea id="eventLogger" style="width: 500px; height: 100px;"></ui5-textarea>
+		<ui5-input id="eventLogger" style="width: 100%;"></ui5-input>
 	</div>
 
 	<script>
@@ -113,24 +113,24 @@
 		menu.addEventListener("ui5-before-open", function(event) {
 			eventLogger.value = "";
 			preventBeforeOpen.checked && event.preventDefault();
-			eventLogger.value = "* [before-open]" + (preventBeforeOpen.checked ? "[prevented]" : "") + "\n";
+			eventLogger.value = "* [before-open]" + (preventBeforeOpen.checked ? "[prevented]" : "") + " ";
 		});
 
 		menu.addEventListener("ui5-after-open", function() {
 			var opener = menu.opener.id ? menu.opener.id : menu.opener;
 			openerInput.value = opener;
-			eventLogger.value += "* [after-open]\n";
+			eventLogger.value += "* [after-open] ";
 		});
 
 		menu.addEventListener("ui5-before-close", function(event) {
 			preventBeforeClose.checked && event.preventDefault();
-			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Esc]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + "\n";
+			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Esc]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + " ";
 		});
 
 		menu.addEventListener("ui5-after-close", function() {
 			openerInput.value = "";
 			btnToggleOpen.pressed = false;
-			eventLogger.value += "* [after-close]\n";
+			eventLogger.value += "* [after-close]";
 		});
 
 		direction.addEventListener("change", function() {
