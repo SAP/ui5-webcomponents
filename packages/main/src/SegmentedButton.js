@@ -43,9 +43,9 @@ const metadata = {
 
 		/**
 		 * Defines the items of <code>ui5-segmented-button</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Multiple items are allowed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
 		 * @type {sap.ui.webcomponents.main.ISegmentedButtonItem[]}
 		 * @slot items
@@ -81,7 +81,7 @@ const metadata = {
  * The <code>ui5-segmented-button</code> shows a group of items. When the user clicks or taps
  * one of the items, it stays in a pressed state. It automatically resizes the items
  * to fit proportionally within the component. When no width is set, the component uses the available width.
- * <br><br>
+ * <br /><br />
  * <b>Note:</b> There can be just one selected <code>item</code> at a time.
  *
  * <h3>ES6 Module Import</h3>

@@ -11,7 +11,7 @@ const metadata = {
 		/**
 		 * Defines a description that can contain HTML.
 		 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
-		 * <br>
+		 * <br />
 		 * @type {HTMLElement}
 		 * @since 1.0.0-rc.8
 		 * @slot
@@ -34,7 +34,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-li-suggestion-item</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>title - Used to style the title of the suggestion list item</li>

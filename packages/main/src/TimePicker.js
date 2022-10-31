@@ -17,7 +17,7 @@ const metadata = {
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * component has no value.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 		 *
@@ -63,7 +63,7 @@ const metadata = {
  * <li>Using the sliders that are displayed in a popup</li>
  * <li>Typing it in directly in the input field</li>
  * </ul>
- * <br><br>
+ * <br /><br />
  * When the user makes an entry and chooses the enter key, the sliders shows the corresponding time.
  * When the user directly triggers the sliders display, the actual time is displayed.
  * For the <code>ui5-time-picker</code>
@@ -72,16 +72,16 @@ const metadata = {
  *
  * If a time is entered by typing it into
  * the input field, it must fit to the used time format.
- * <br><br>
+ * <br /><br />
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
  * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
- * <br><br>
+ * <br /><br />
  * For example, if the <code>format-pattern</code> is "HH:mm:ss",
  * a valid value string is "11:42:35" and the same is displayed in the input.
  *
  * <h3>Keyboard handling</h3>
  * [F4], [ALT]+[UP], [ALT]+[DOWN] Open/Close picker dialog and move focus to it.
- * <br>
+ * <br />
  * When closed:
  * <ul>
  * <li>[PAGEUP] - Increments hours by 1. If 12 am is reached, increment hours to 1 pm and vice versa.</li>

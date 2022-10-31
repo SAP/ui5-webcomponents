@@ -57,7 +57,7 @@ const metadata = {
 		/**
 		 * Defines the header of the <code>ui5-side-navigation</code>.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
 		 *
 		 * @public
@@ -128,14 +128,14 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigation.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationItem.js";</code> (for <code>ui5-side-navigation-item</code>)
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents-fiori/dist/SideNavigationSubItem.js";</code> (for <code>ui5-side-navigation-sub-item</code>)
  *
  * @constructor

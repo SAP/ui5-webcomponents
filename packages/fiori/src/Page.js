@@ -21,9 +21,9 @@ const metadata = {
 
 		/**
 		 * Defines the background color of the <code>ui5-page</code>.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>Solid</code></li> (default)
@@ -53,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines if the footer should float over the content.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
 		 * @type {boolean}
 		 * @defaultvalue true

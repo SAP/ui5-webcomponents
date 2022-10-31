@@ -63,7 +63,7 @@ const metadata = {
 
 		/**
 		 * Defines if the step is <selected>selected</code>.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false

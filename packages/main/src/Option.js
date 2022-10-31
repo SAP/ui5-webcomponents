@@ -20,7 +20,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is in disabled state.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A disabled component is hidden.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -44,7 +44,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>icon</code> source URI.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
@@ -92,7 +92,7 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.Option.prototype */ {
 		/**
 		 * Defines the text of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 		 *
 		 * @type {Node[]}

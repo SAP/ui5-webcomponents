@@ -58,7 +58,7 @@ const metadata = {
 
 		/**
 		 * Defines the type of selection used in the day picker component.
-		 * Accepted property values are:<br>
+		 * Accepted property values are:<br />
 		 * <ul>
 		 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
 		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
@@ -75,7 +75,7 @@ const metadata = {
 
 		/**
 		 * Defines the visibility of the week numbers column.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:<b> For calendars other than Gregorian,
 		 * the week numbers are not displayed regardless of what is set.

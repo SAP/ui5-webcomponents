@@ -51,7 +51,7 @@ const metadata = {
 
 		/**
 		 * Defines the component header.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When <code>header</code> is set, the
 		 * <code>headerText</code> property is ignored.
 		 *
@@ -65,7 +65,7 @@ const metadata = {
 
 		/**
 		 * Defines the items of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.IListItem[]}
@@ -81,7 +81,7 @@ const metadata = {
 
 		/**
 		 * Defines the component header text.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
 		 *
 		 * @type {string}
@@ -116,7 +116,7 @@ const metadata = {
 
 		/**
 		 * Defines the mode of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
 		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
@@ -142,7 +142,7 @@ const metadata = {
 
 		/**
 		 * Defines the item separator style that is used.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Notes:</b>
 		 * <ul>
 		 * <li>Avalaible options are <code>All</code>, <code>Inner</code>, and <code>None</code>.</li>
@@ -163,17 +163,17 @@ const metadata = {
 		/**
 		 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
 		 * or via user scroll. In both cases <code>load-more</code> event is fired.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * Available options:
-		 * <br><br>
+		 * <br /><br />
 		 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the list,
 		 * pressing of which triggers the <code>load-more</code> event.
-		 * <br>
+		 * <br />
 		 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the list;
-		 * <br>
+		 * <br />
 		 * <code>None</code> (default) - The growing is off.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * on IE the component will fallback to <code>growing="Button"</code>.
@@ -238,7 +238,7 @@ const metadata = {
 
 		/**
 		 * Defines the accessible role of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * @public
 		 * @type {string}
 		 * @defaultvalue "list"
@@ -284,7 +284,7 @@ const metadata = {
 
 		/**
 		 * Fired when the <code>Close</code> button of any item is clicked
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),
 		 * not to be confused with <code>item-delete</code>.
 		 *
@@ -301,7 +301,7 @@ const metadata = {
 
 		/**
 		 * Fired when the <code>Toggle</code> button of any item is clicked.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
 		 *
 		 * @event sap.ui.webcomponents.main.List#item-toggle
@@ -317,7 +317,7 @@ const metadata = {
 
 		/**
 		 * Fired when the Delete button of any item is pressed.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the component <code>mode</code> property is set to <code>Delete</code>.
 		 *
@@ -351,7 +351,7 @@ const metadata = {
 
 		/**
 		 * Fired when the user scrolls to the bottom of the list.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The event is fired when the <code>growing='Scroll'</code> property is enabled.
 		 *
 		 * @event sap.ui.webcomponents.main.List#load-more
@@ -369,28 +369,28 @@ const metadata = {
  *
  * The <code>ui5-list</code> component allows displaying a list of items, advanced keyboard
  * handling support for navigating between items, and predefined modes to improve the development efficiency.
- * <br><br>
+ * <br /><br />
  * The <code>ui5-list</code> is a container for the available list items:
  * <ul>
  * <li><code>ui5-li</code></li>
  * <li><code>ui5-li-custom</code></li>
  * <li><code>ui5-li-groupheader</code></li>
  * </ul>
- * <br><br>
+ * <br /><br />
  * To benefit from the built-in selection mechanism, you can use the available
  * selection modes, such as
  * <code>SingleSelect</code>, <code>MultiSelect</code> and <code>Delete</code>.
- * <br><br>
+ * <br /><br />
  * Additionally, the <code>ui5-list</code> provides header, footer, and customization for the list item separators.
  *
- * <br><br>
+ * <br /><br />
  * <h3>Keyboard Handling</h3>
  *
  * <h4>Basic Navigation</h4>
  * The <code>ui5-list</code> provides advanced keyboard handling.
  * When a list is focused the user can use the following keyboard
  * shortcuts in order to perform a navigation:
- * <br>
+ * <br />
  *
  * <ul>
  * <li>[UP/DOWN] - Navigates up and down the items</li>
@@ -409,16 +409,16 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/List.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/StandardListItem.js";</code> (for <code>ui5-li</code>)
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/CustomListItem.js";</code> (for <code>ui5-li-custom</code>)
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/GroupHeaderListItem.js";</code> (for <code>ui5-li-groupheader</code>)
  *
  * @constructor

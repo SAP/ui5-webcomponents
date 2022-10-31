@@ -85,7 +85,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -141,7 +141,7 @@ const metadata = {
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * component has no value.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
 		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
 		 *
@@ -157,11 +157,11 @@ const metadata = {
 		/**
 		 * Determines the name with which the component will be submitted in an HTML form.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
 		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> When set, a native <code>input</code> HTML element
 		 * will be created inside the component so that it can be submitted as
 		 * part of an HTML form. Do not use this property unless you need to submit a form.
@@ -272,10 +272,10 @@ const metadata = {
 	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement}
@@ -321,7 +321,7 @@ const INITIAL_SPEED = 120; // milliseconds
  *
  * The <code>ui5-step-input</code> consists of an input field and buttons with icons to increase/decrease the value
  * with the predefined step.
- * <br><br>
+ * <br /><br />
  * The user can change the value of the component by pressing the increase/decrease buttons,
  * by typing a number directly, by using the keyboard up/down and page up/down,
  * or by using the mouse scroll wheel. Decimal values are supported.
@@ -333,7 +333,7 @@ const INITIAL_SPEED = 120; // milliseconds
  * App developers can set a maximum and minimum value for the <code>StepInput</code>.
  * The increase/decrease button and the up/down keyboard navigation become disabled when
  * the value reaches the max/min or a new value is entered from the input which is greater/less than the max/min.
- * <br><br>
+ * <br /><br />
  * <h4>When to use:</h4>
  * <ul>
  * <li>To adjust amounts, quantities, or other values quickly.</li>

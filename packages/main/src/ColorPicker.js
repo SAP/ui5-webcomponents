@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Defines the currently selected color of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
 		 * @type {sap.ui.webcomponents.base.types.CSSColor}
 		 * @public

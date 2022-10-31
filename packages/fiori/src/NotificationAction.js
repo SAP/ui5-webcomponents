@@ -20,7 +20,7 @@ const metadata = {
 
 		/**
 		 * Defines if the action is disabled.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
 		 *
 		 * @type {boolean}
@@ -34,7 +34,7 @@ const metadata = {
 		/**
 		 * Defines the action design.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * <ul>
 		 * <li><code>Default</code></li>
@@ -55,7 +55,7 @@ const metadata = {
 
 		/**
 		 * Defines the <code>icon</code> source URI.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b>
 		 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
 		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.

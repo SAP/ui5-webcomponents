@@ -40,7 +40,7 @@ const metadata = {
 		 * Defines the visibility of the time view in <code>phoneMode</code>.
 		 * For more information, see the <code>phoneMode</code> property.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The date view would be displayed by default.
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -94,7 +94,7 @@ const metadata = {
  * Use the <code>DateTimePicker</code> if you need a combined date and time input component.
  * Don't use it if you want to use either date, or time value.
  * In this case, use the <code>DatePicker</code> or the <code>TimePicker</code> components instead.
- * <br><br>
+ * <br /><br />
  * The user can set date/time by:
  * <ul>
  * <li>using the calendar and the time selectors</li>
@@ -106,31 +106,31 @@ const metadata = {
  * <h3>Formatting</h3>
  *
  * The value entered by typing into the input field must fit to the used date/time format.
- * <br><br>
+ * <br /><br />
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
  * For more information, see <ui5-link target="_blank" href="https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
- * <br><br>
+ * <br /><br />
  * <b>Example:</b> the following format <code>dd/MM/yyyy, hh:mm:ss aa</code>
  * corresponds the <code>13/04/2020, 03:16:16 AM</code> value.
- * <br>
+ * <br />
  * The small 'h' defines "12" hours format and the "aa" symbols - "AM/PM" time periods.
  *
- * <br><br>
+ * <br /><br />
  * <b>Example:</b> the following format <code>dd/MM/yyyy, HH:mm:ss</code>
  * corresponds the <code>13/04/2020, 15:16:16</code> value.
- * <br>
+ * <br />
  * The capital 'H' indicates "24" hours format.
  *
- * <br><br>
+ * <br /><br />
  * <b>Note:</b> If the <code>formatPattern</code> does NOT include time,
  * the <code>DateTimePicker</code> will fallback to the default time format according to the locale.
  *
- * <br><br>
+ * <br /><br />
  * <b>Note:</b> If no placeholder is set to the <code>DateTimePicker</code>,
  * the current <code>formatPattern</code> is displayed as a placeholder.
  * If another placeholder is needed, it must be set or in case no placeholder is needed - it can be set to an empty string.
  *
- * <br><br>
+ * <br /><br />
  * <b>Note:</b> If the user input does NOT match the <code>formatPattern</code>,
  * the <code>DateTimePicker</code> makes an attempt to parse it based on the
  * locale settings.

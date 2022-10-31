@@ -60,7 +60,7 @@ const metadata = {
 
 		/**
 		 * Defines the component rows.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITableRow[]}
@@ -76,7 +76,7 @@ const metadata = {
 
 		/**
 		 * Defines the configuration for the columns of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
 		 * @type {sap.ui.webcomponents.main.ITableColumn[]}
@@ -109,9 +109,9 @@ const metadata = {
 		 * Defines the text that will be displayed inside the growing button at the bottom of the table,
 		 * meant for loading more rows upon press.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> If not specified a built-in text will be displayed.
-		 * <br>
+		 * <br />
 		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 		 *
 		 * @type {string}
@@ -126,7 +126,7 @@ const metadata = {
 		/**
 		 * Defines the subtext that will be displayed under the <code>growingButtonText</code>.
 		 *
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> This property takes effect if <code>growing</code> is set to <code>Button</code>.
 		 *
 		 * @type {string}
@@ -153,16 +153,16 @@ const metadata = {
 		/**
 		 * Defines whether the table will have growing capability either by pressing a <code>More</code> button,
 		 * or via user scroll. In both cases <code>load-more</code> event is fired.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * Available options:
-		 * <br><br>
+		 * <br /><br />
 		 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the table, pressing of which triggers the <code>load-more</code> event.
-		 * <br>
+		 * <br />
 		 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the table;
-		 * <br>
+		 * <br />
 		 * <code>None</code> (default) - The growing is off.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
@@ -206,7 +206,7 @@ const metadata = {
 		/**
 		 * Determines whether the column headers remain fixed at the top of the page during
 		 * vertical scrolling as long as the Web Component is in the viewport.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Restrictions:</b>
 		 * <ul>
 		 * <li>Browsers that do not support this feature:
@@ -235,7 +235,7 @@ const metadata = {
 
 		/**
 		 * Defines the mode of the component.
-		 * <br><br>
+		 * <br /><br />
 		 * Available options are:
 		 * <ul>
 		 * <li><code>MultiSelect</code></li>
@@ -352,7 +352,7 @@ const metadata = {
 
 		/**
 		 * Fired when the user presses the <code>More</code> button or scrolls to the table's end.
-		 * <br><br>
+		 * <br /><br />
 		 *
 		 * <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
 		 * @event sap.ui.webcomponents.main.Table#load-more
@@ -387,10 +387,10 @@ const metadata = {
  *
  * The <code>ui5-table</code> component provides a set of sophisticated and convenient functions for responsive table design.
  * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
- * <br><br>
+ * <br /><br />
  * To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the
  * order of the item <code>cells</code> in the <code>rows</code>.
- * <br><br>
+ * <br /><br />
  * Desktop and tablet devices are supported.
  * On tablets, special consideration should be given to the number of visible columns
  * and rows due to the limited performance of some devices.
@@ -398,17 +398,17 @@ const metadata = {
  * <h3>Selection</h3>
  * To benefit from the selection mechanism of <code>ui5-table</code> component, you can use the available selection modes:
  * <code>SingleSelect</code> and <code>MultiSelect</code>.
- * <br>
+ * <br />
  * In additition to the used mode, you can also specify the <code>ui5-table-row</code> type choosing between
  * <code>Active</code> or <code>Inactive</code>.
- * <br><br>
+ * <br /><br />
  * In <code>SingleSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row via mouse or
  * by pressing the <code>Space</code> or <code>Enter</code> keys.
- * <br>
+ * <br />
  * In <code>MultiSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row by pressing the
  * <code>Space</code> key when a row is on focus or via mouse click over the selection checkbox of the row.
  * In order to select all the available rows at once, you can use the selection checkbox presented in the table's header.
- * <br><br>
+ * <br /><br />
  * <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
  *
  * <h3>Keyboard Handling</h3>
@@ -417,9 +417,9 @@ const metadata = {
  * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
  * In order to use this functionality, you need to import the following module:
  * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
+ * <br /><br />
  * Furthermore, you can interact with <code>ui5-table</code> via the following keys.
- * <br>
+ * <br />
  *
  * <ul>
  * <li>[F7] - If focus is on an interactive control inside an item, moves focus to the corresponding item.</li>
@@ -435,11 +435,11 @@ const metadata = {
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Table.js";</code>
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/TableColumn.js";</code> (for <code>ui5-table-column</code>)
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/TableRow.js";</code> (for <code>ui5-table-row</code>)
- * <br>
+ * <br />
  * <code>import "@ui5/webcomponents/dist/TableCell.js";</code> (for <code>ui5-table-cell</code>)
  *
  * @constructor

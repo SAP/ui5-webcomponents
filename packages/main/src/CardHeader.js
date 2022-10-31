@@ -107,7 +107,7 @@ const metadata = {
 
 		/**
 		 * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
-		 * <br><br>
+		 * <br /><br />
 		 * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
 		 * @event sap.ui.webcomponents.main.CardHeader#click
 		 * @public
@@ -130,7 +130,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
+ * <br />
  * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>root - Used to style the root DOM element of the CardHeader</li>
