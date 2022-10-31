@@ -32,6 +32,7 @@ import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
+import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -224,6 +225,44 @@ const metadata = {
 		 */
 		mediaRange: {
 			type: String,
+		},
+
+		/**
+		 * Defines the background color of the Tab Container's header.
+		 *
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Solid</code></li>
+		 * <li><code>Transparent</code></li>
+		 * </ul>
+		 *
+		 * @type {TabContainerBackgroundDesign}
+		 * @defaultvalue "Solid"
+		 * @private
+		 */
+		headerBackgroundDesign: {
+			type: TabContainerBackgroundDesign,
+			defaultValue: TabContainerBackgroundDesign.Solid,
+		},
+
+		/**
+		 * Defines the background color of the Tab Container's content.
+		 *
+		 * <br><br>
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Solid</code></li>
+		 * <li><code>Transparent</code></li>
+		 * </ul>
+		 *
+		 * @type {TabContainerBackgroundDesign}
+		 * @defaultvalue "Solid"
+		 * @private
+		 */
+		contentBackgroundDesign: {
+			type: TabContainerBackgroundDesign,
+			defaultValue: TabContainerBackgroundDesign.Solid,
 		},
 
 		_selectedTab: {
