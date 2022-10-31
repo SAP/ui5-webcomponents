@@ -129,7 +129,7 @@ describe("Menu interaction", () => {
 
 		await browser.keys("Esc");
 
-		const eventLoggerValue = eventLogger.getAttribute("value");
+		const eventLoggerValue = await eventLogger.getAttribute("value");
 
 		assert.notEqual(eventLoggerValue.indexOf("before-open"), -1, "'before-open' event is fired");
 		assert.notEqual(eventLoggerValue.indexOf("after-open"), -1, "'after-open' event is fired");
