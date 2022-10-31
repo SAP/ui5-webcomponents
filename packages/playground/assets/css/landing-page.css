@@ -657,13 +657,6 @@ html {
     white-space: nowrap;
 }
 
-.navbar-left-container {
-    display: var(--navbar-left-container-display);
-    align-items: var(--navbar-left-container-align-items);
-    justify-content: var(--navbar-left-container-justify-content);
-    width: 100%;
-}
-
 .navbar-right-container {
     display: var(--navbar-right-container-display);
     align-items: var(--navbar-right-container-align-items);
@@ -720,10 +713,6 @@ html {
 .navbar .link:hover::after {
     transform-origin: bottom left;
     transform: scaleX(1);
-}
-
-.navbar .large-text {
-    font-size: var(--navbar-large-text-font-size);
 }
 
 .top-content-container {
