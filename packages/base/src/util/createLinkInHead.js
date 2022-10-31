@@ -12,8 +12,13 @@ const createLinkInHead = (href, attributes = {}) => {
 	Object.entries(attributes).forEach(pair => link.setAttribute(...pair));
 
 	link.href = href;
+
 	document.head.appendChild(link);
-	return link;
+
+	return new Promise(resolve => {
+		link.addEventListener("load", resolve);
+		link.addEventListener("error", resolve);
+	});
 };
 
 export default createLinkInHead;

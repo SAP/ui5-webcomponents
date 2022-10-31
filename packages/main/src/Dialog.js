@@ -146,7 +146,7 @@ const metadata = {
 		 * Defines the state of the <code>Dialog</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -206,7 +206,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Dialog
- * @extends Popup
+ * @extends sap.ui.webcomponents.main.Popup
  * @tagname ui5-dialog
  * @public
  */

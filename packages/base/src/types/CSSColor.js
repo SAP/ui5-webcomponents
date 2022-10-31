@@ -4,7 +4,7 @@ import DataType from "./DataType.js";
  * @class
  * CSSColor data type.
  *
- * @extends DataType
+ * @extends sap.ui.webcomponents.base.types.DataType
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.base.types.CSSColor

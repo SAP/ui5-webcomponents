@@ -59,7 +59,7 @@ const metadata = {
 		 * <li><code>Large</code></li>
 		 * </ul>
 		 *
-		 * @type {BusyIndicatorSize}
+		 * @type {sap.ui.webcomponents.main.types.BusyIndicatorSize}
 		 * @defaultvalue "Medium"
 		 * @public
 		 */
@@ -82,7 +82,7 @@ const metadata = {
 		/**
 		 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultValue 1000
 		 * @public
 		 */
@@ -139,7 +139,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.BusyIndicator
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-busy-indicator
  * @public
  * @since 0.12.0

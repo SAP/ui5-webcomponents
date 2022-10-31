@@ -90,6 +90,9 @@
 
 	{{#if renderDeleteButton}}
 		<div class="ui5-li-deletebtn">
+			{{#if hasDeleteButtonSlot}}
+				<slot name="deleteButton"></slot>
+			{{else}}
 			<ui5-button
 				tabindex="-1"
 				data-sap-no-tab-ref
@@ -100,6 +103,7 @@
 				@click="{{onDelete}}"
 				tooltip="{{deleteText}}"
 			></ui5-button>
+			{{/if}}
 		</div>
 	{{/if}}
 

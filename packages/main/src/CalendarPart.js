@@ -12,7 +12,7 @@ const metadata = {
 		/**
 		 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
 		 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @protected
 		 */
 		timestamp: {
@@ -31,7 +31,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.CalendarPart
- * @extends DateComponentBase
+ * @extends sap.ui.webcomponents.main.DateComponentBase
  * @public
  */
 class CalendarPart extends DateComponentBase {

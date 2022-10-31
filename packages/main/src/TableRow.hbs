@@ -43,6 +43,10 @@
 			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
 	{{/if}}
+
+	<td class="ui5-table-row-navigated">
+		<div class="ui5-table-div-navigated"></div>
+	</td>
 </tr>
 
 {{#if shouldPopin}}
@@ -58,6 +62,10 @@
 				<div>
 					<slot name="{{this.cell._individualSlot}}"></slot>
 				</div>
+			</td>
+
+			<td class="ui5-table-row-navigated">
+				<div class="ui5-table-div-navigated"></div>
 			</td>
 		</tr>
 	{{/each}}

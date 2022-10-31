@@ -3,6 +3,9 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+	line-height: normal;
+	letter-spacing: normal;
+	word-spacing: normal;
 }
 
 :host {
@@ -19,10 +22,19 @@
 	background: var(--sapField_Hover_Background);
 }
 
+.ui5-time-picker-root {
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
+}
+
 :host .ui5-time-picker-input {
 	width: 100%;
 	color: inherit;
 	background-color: inherit;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
 }
 
 .ui5-time-picker-input-icon-button {

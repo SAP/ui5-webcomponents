@@ -30,7 +30,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.MonthPicker.prototype */ {
 		/**
 		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
-		 * @type {Array}
+		 * @type {array}
 		 * @public
 		 */
 		selectedDates: {
@@ -79,7 +79,7 @@ const ROW_SIZE = 3; // Months per row (4 rows of 3 months each)
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MonthPicker
- * @extends CalendarPart
+ * @extends sap.ui.webcomponents.main.CalendarPart
  * @tagname ui5-monthpicker
  * @public
  */

@@ -34,7 +34,7 @@ const metadata = {
 	 	* <li><code>Horizontal</code></li>
 		 * </ul>
 		 *
-		 * @type {TimelineLayout}
+		 * @type {sap.ui.webcomponents.fiori.types.TimelineLayout}
 		 * @defaultvalue "Vertical"
 		 * @since 1.0.0-rc.15
 		 * @public
@@ -87,7 +87,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.Timeline
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-timeline
  * @appenddocs TimelineItem
  * @public

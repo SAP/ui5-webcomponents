@@ -23,7 +23,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The value should be a valid CSS color.
 		 *
-		 * @type {CSSColor}
+		 * @type {sap.ui.webcomponents.base.types.CSSColor}
 		 * @public
 		 */
 		value: {
