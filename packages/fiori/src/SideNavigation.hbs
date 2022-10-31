@@ -1,4 +1,4 @@
-<div class="ui5-sn-root" role={{accSideNavigationPopoverText}}>
+<div class="ui5-sn-root" role="{{accSideNavigationPopoverText}}">
 	{{> header }}
 
 	{{#if items.length}}
@@ -6,7 +6,7 @@
 			id="ui5-sn-items-tree"
 			class="ui5-sn-items-tree"
 			mode="None"
-			aria-roledescription={{ariaRoleDescNavigationList}}
+			aria-roledescription="{{ariaRoleDescNavigationList}}"
 			?_minimal="{{collapsed}}"
 			_toggle-button-end
 			@ui5-item-click="{{handleTreeItemClick}}"
@@ -20,7 +20,7 @@
 					?has-children="{{this.item.items.length}}"
 					?expanded="{{this.item.expanded}}"
 					?selected="{{this.selected}}"
-					aria-roledescription={{ariaRoleDescNavigationListItem}}
+					aria-roledescription="{{this.item.ariaRoleDescNavigationListItem}}"
 				>
 					{{#unless ../collapsed}}
 						{{#each this.item.items}}
@@ -30,7 +30,7 @@
 								title="{{this._tooltip}}"
 								icon="{{this.icon}}"
 								?selected="{{this.selected}}"
-								aria-roledescription={{ariaRoleDescNavigationListItem}}
+								aria-roledescription="{{this.ariaRoleDescNavigationListItem}}"
 							>
 							</ui5-tree-item>
 						{{/each}}

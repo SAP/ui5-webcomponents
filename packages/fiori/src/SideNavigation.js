@@ -13,7 +13,6 @@ import {
 	SIDE_NAVIGATION_POPOVER_LIST_ARIA_ROLE,
 	SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE,
-	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -239,10 +238,6 @@ class SideNavigation extends UI5Element {
 
 	get ariaRoleDescNavigationList() {
 		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ARIA_ROLE) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_LIST_ARIA_ROLE);
-	}
-
-	get ariaRoleDescNavigationListItem() {
-		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE);
 	}
 
 	handleTreeItemClick(event) {

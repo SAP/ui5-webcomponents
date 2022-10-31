@@ -1,4 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE,
+	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE,
+} from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @public
@@ -86,6 +91,17 @@ class SideNavigationSubItem extends UI5Element {
 
 	get _tooltip() {
 		return this.title || this.text;
+	}
+
+	get ariaRoleDescNavigationListItem() {
+		return this.collapsed ? SideNavigationSubItem.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE) : SideNavigationSubItem.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_LIST_ITEMS_ARIA_ROLE);
+	}
+
+	static async onDefine() {
+		[SideNavigationSubItem.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			super.onDefine(),
+		]);
 	}
 }
 
