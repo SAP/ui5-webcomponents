@@ -46,11 +46,12 @@ const main = async () => {
 
 	components.sort();
 
+	const baseAPI = JSON.parse((await fs.readFile(`../base/dist/api.json`)).toString());
+
 	packages.forEach(async package => {
 		const samplesPath = `../${package}/test/samples/`;
 		const api = JSON.parse((await fs.readFile(`../${package}/dist/api.json`)).toString());
 
-		// api.symbols.filter(symbol => symbol.kind === 'class')
 		const files = await fs.readdir(samplesPath);
 
 		files.forEach(async (file) => {
@@ -134,7 +135,7 @@ const main = async () => {
 					},
 				};
 				if (controlType === 'select') {
-					const typeEnum = api.symbols.find(s => s.module === 'types/' + prop.type);
+					const typeEnum = api.symbols.find(s => s.module === 'types/' + prop.type) || baseAPI.symbols.find(s => s.module === 'types/' + prop.type);
 					if (typeEnum && Array.isArray(typeEnum.properties)) {
 						args[prop.name].options = typeEnum.properties.map(a => a.type);
 					}
@@ -155,11 +156,9 @@ const main = async () => {
 		}
 
 		// recursively merging the args from the parent/parents
-		if(moduleAPI['extends'] && moduleAPI.extends !== 'UI5Element') {
-			const moduleAPIBeingExtended = api.symbols.find(s => s.module === moduleAPI.extends);
-			if (moduleAPIBeingExtended) {
-				args = {...args, ...getArgsTypes(api, moduleAPIBeingExtended)};
-			}
+		const moduleAPIBeingExtended = api.symbols.find(s => s.module === moduleAPI.extends) || baseAPI.symbols.find(s => s.module === moduleAPI.extends);
+		if (moduleAPIBeingExtended) {
+			args = {...args, ...getArgsTypes(api, moduleAPIBeingExtended)};
 		}
 
 		return args;
