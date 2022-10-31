@@ -20,12 +20,6 @@
     box-sizing: border-box;
 }
 
-:root {
-    --github-icon-width: 2rem;
-    --github-icon-height: 2rem;
-    --orange-text-color: #FE7520;
-}
-
 body {
     background: var(--background-image) no-repeat center;
     -webkit-background-size: var(--background-size);
@@ -43,8 +37,6 @@ html {
 }
 
 /* ---------------------------------------- 2560PX ---------------------------------------- */
-
-@media screen and (max-width: 2560px) {
 
     /* REM Units based on 16px root font size. */
 
@@ -69,7 +61,6 @@ html {
         --navbar-right-container-display: flex;
         --navbar-right-container-align-items: center;
         --navbar-right-container-justify-content: flex-end;
-        --navbar-button-display: none;
         --navbar-button-width: 5rem;
         --navbar-button-height: 2rem;
         --navbar-button-cursor: pointer;
@@ -96,12 +87,12 @@ html {
         --navbar-link-color: #000;
         --top-content-container-align-items: center;
         --top-content-container-display: flex;
-        --top-content-container-width: 47.563rem;
+        --top-content-container-width: 50.563rem;
         --top-content-container-height: 15.5rem;
         --top-content-container-justify-content: center;
-        --top-content-description-width: 100%;
+        --top-content-version-text-font-size: 1.125rem;
         --top-content-margin-top: 8.875rem;
-        --top-content-margin-inline-start: 14.688rem;
+        --top-content-margin-inline-start: 20.688rem;
         --top-content-button-mt: 1.125rem;
         --top-content-button-font-size: 1.5rem;
         --top-content-button-width: 11.5rem;
@@ -120,10 +111,9 @@ html {
         --top-content-illustration-1-title-margin-bottom: 2.125rem;
         --top-content-illustration-2-margin-top: 34rem;
         --top-content-illustration-2-margin-rigth: 43rem;
-        --top-content-illustration-2-text-align: right;
         --top-content-illustration-3-margin-inline-start: 45rem;
         --top-content-illustration-3-margin-top: 34.5rem;
-        --top-content-illustrations-text-align: left;
+        --top-content-illustrations-text-align: end;
         --top-content-illustrations-white-space: nowrap;
         --mid-content-example-container-width: 100%;
         --mid-content-example-container-height: 20rem;
@@ -185,7 +175,7 @@ html {
         --compatibility-container-margin-inline-end: 13.75rem;
         --testimonials-display: block;
         --testimonials-width: 65rem;
-        --testimonials-margin-top: 27.813rem;
+        --testimonials-margin-top: 32.813rem;
         --testimonials-margin-inline-start: 38.875rem;
         --testimonials-margin-inline-end: 22.875rem;
         --testimonials-title-margin-inline-end: 12.25rem;
@@ -216,6 +206,9 @@ html {
         --footer-title-margin-bottom: 1.563rem;
         --footer-left-container-margin-inline-start: 16.563rem;
         --footer-align-items: flex-start;
+        --github-icon-width: 2rem;
+        --github-icon-height: 2rem;
+        --orange-text-color: #FE7520;
     }
 
 /* ---------------------------------------- 1920PX ---------------------------------------- */
@@ -229,7 +222,6 @@ html {
         --body-height: 4550px;
         --top-content-container-align-items: center;
         --top-content-container-display: flex;
-        --top-content-container-width: 47.563rem;
         --top-content-container-height: 15.5rem;
         --top-content-container-justify-content: center;
         --top-content-margin-top: 8.875rem;
@@ -297,7 +289,7 @@ html {
         --body-height: 3930px;
         --navbar-large-text-font-size: 1.375rem;
         --top-content-container-width: 40.563rem;
-        --top-content-container-height: 15.5rem;
+        --top-content-container-height: 15.25rem;
         --top-content-margin-top: 5.875rem;
         --top-content-margin-inline-start: 13.688rem;
         --top-content-header-font-size: 3.5rem;
@@ -417,16 +409,17 @@ html {
     :root {
         --background-image: url("../illustrations/background-svgs/Landing\ 1440px\ -\ 950px\ -\ v2\ 1.svg");
         --top-content-container-width: 35.563rem;
-        --top-content-container-height: 17.75rem;
-        --top-content-description-width: 75%;
-        --top-content-margin-top: 4.875rem;
+        --top-content-container-height: 16.5rem;
+        --top-content-header-font-size: 2.65rem;
+        --top-content-description-font-size: 1.25rem;
+        --top-content-margin-top: 5.875rem;
         --top-illustration-text-font-size: 1.1rem;
         --top-content-illustration-1-margin-top: 8rem;
         --top-content-illustration-1-margin-inline-start: 26rem;
         --top-content-illustration-1-title-margin-bottom: 1.725rem;
         --top-content-illustration-2-margin-top: 18rem;
         --top-content-illustration-2-margin-rigth: 25rem;
-        --top-content-illustration-3-margin-inline-start: 28rem;
+        --top-content-illustration-3-margin-inline-start: 26rem;
         --top-content-illustration-3-margin-top: 17.75rem;
         --mid-content-datepicker-container-div-margin-inline-end-left-child: 4rem;
         --compatibility-container-title-font-size: 2rem;
@@ -447,9 +440,10 @@ html {
         --body-height: 2509px;
         --navbar-link-font-size: 0.875rem;
         --navbar-font-size: 0.875rem;
+        --top-content-version-text-font-size: 0.75rem;
+        --top-content-description-font-size: 1rem;
         --top-content-container-width: 25.563rem;
         --top-content-container-height: 10.5rem;
-        --top-content-description-width: 90%;
         --top-content-margin-top: 2.875rem;
         --top-content-margin-inline-start: 2.688rem;
         --top-content-button-mt: 1.125rem;
@@ -461,12 +455,12 @@ html {
         --top-content-illustrations-container-mt: -5rem;
         --top-content-illustrations-header-font-size: 1.75rem;
         --top-content-illustrations-text-font-size: 1;
-        --top-content-illustration-1-margin-inline-start: 22rem;
+        --top-content-illustration-1-margin-inline-start: 25rem;
         --top-content-illustration-1-margin-top: 21.5rem;
         --top-content-illustration-1-title-margin-bottom: 0.75rem;
         --top-content-illustration-2-margin-top: 13.75rem;
-        --top-content-illustration-2-margin-rigth: 21.25rem;
-        --top-content-illustration-3-margin-inline-start: 20.25rem;
+        --top-content-illustration-2-margin-rigth: 23.25rem;
+        --top-content-illustration-3-margin-inline-start: 24.25rem;
         --top-content-illustration-3-margin-top: 12.30rem;
         --mid-content-example-container-margin-top: 7rem;
         --mid-content-example-header-font-size: 1.5rem;
@@ -530,7 +524,7 @@ html {
 
 /* ---------------------------------------- 667PX ---------------------------------------- */
 
-@media screen and (max-width: 631px) {
+@media screen and (max-width: 667px) {
     body {
         --background-image: url("../illustrations/background-svgs/Landing\ -\ 667px.svg");
         --body-height: 3072px;
@@ -550,7 +544,6 @@ html {
         --top-content-illustration-1-title-margin-bottom: 0.25rem;
         --top-content-illustration-2-margin-top: 17.75rem;
         --top-content-illustration-2-margin-rigth: 0;
-        --top-content-illustration-2-text-align: center;
         --top-content-illustration-3-margin-inline-start: 0;
         --top-content-illustration-3-margin-top: 20.30rem;
         --top-content-illustrations-text-align: center;
@@ -620,6 +613,7 @@ html {
 @media screen and (max-width: 448px) {
     body {
         --background-image: url("../illustrations/background-svgs/Landing\ -\ 667px-test.svg");
+        --top-content-description-font-size: 0.85rem;
         --testimonials-container-title-font-size: 1.35rem;
         --testimonials-width: 18rem;
         --testimonials-slide-text-font-size: 0.75rem;
@@ -635,13 +629,14 @@ html {
     body {
         --background-image: url("../illustrations/background-svgs/Landing\ -\ 375px.svg");
         --body-height: 3072px;
-        --top-content-container-width: 11.563rem;
+        --top-content-description-font-size: 0.75rem;
+        --top-content-container-width: 15.563rem;
         --top-content-container-height: 11.5rem;
         --top-content-button-mt: 1rem;
         --top-content-button-font-size: 1rem;
         --top-content-button-width: 8.875rem;
         --top-content-button-height: 2.875rem;
-        --top-content-header-font-size: 1.875rem;
+        --top-content-header-font-size: 1.5rem;
         --top-content-text-font-size: 0.875rem;
         --top-content-illustrations-container-mt: 14rem;
         --mid-content-example-container-margin-top: 7.75rem;
@@ -662,13 +657,6 @@ html {
     white-space: nowrap;
 }
 
-.navbar-left-container {
-    display: var(--navbar-left-container-display);
-    align-items: var(--navbar-left-container-align-items);
-    justify-content: var(--navbar-left-container-justify-content);
-    width: 100%;
-}
-
 .navbar-right-container {
     display: var(--navbar-right-container-display);
     align-items: var(--navbar-right-container-align-items);
@@ -678,7 +666,6 @@ html {
 
 /* THE 'Blog' BUTTON */
 .navbar-button {
-    display: var(--navbar-button-display);
     width: var(--navbar-button-width);
     height: var(--navbar-button-height);
     border: var(--navbar-button-border);
@@ -728,32 +715,6 @@ html {
     transform: scaleX(1);
 }
 
-.navbar .large-text {
-    font-size: var(--navbar-large-text-font-size);
-}
-
-/* THE 'Check it' BUTTON */
-.navbar .item.button {
-    display: flex;
-    justify-content: center;
-    width: var(--navbar-check-it-button-width);
-    height: var(--navbar-check-it-button-height);
-    font-size: var(--navbar-font-size);
-    font-weight: var(--navbar-check-it-button-font-weight);
-    font-family: var(--navbar-check-it-button-font-family);
-    color: var(--navbar-check-it-button-font-color);
-    background: var(--navbar-check-it-button-background);
-    padding: var(--navbar-check-it-button-padding);
-    box-shadow: var(--navbar-check-it-button-box-shadow);
-    border-radius: var(--navbar-check-it-button-border-radius);
-}
-
-.navbar .item.button:hover {
-    background-color: var(--navbar-check-it-button-font-color);
-    color: var(--navbar-check-it-button-background);
-    border: 1px solid var(--navbar-check-it-button-background);
-}
-
 .top-content-container {
     display: var(--top-content-container-display);
     width: var(--top-content-container-width);
@@ -772,12 +733,20 @@ html {
 }
 
 .top-content-container .description {
+    font-size: var(--top-content-description-font-size);
     margin-bottom: var(--top-content-margin-bottom);
-    width: var(--top-content-description-width);
+}
+
+.version a {
+    color: var(--orange-text-color);
 }
 
 .top-content-container .orange {
     color: var(--orange-text-color);
+}
+
+.top-content-container .version {
+    font-size: var(--top-content-version-text-font-size);
 }
 
 .top-content-container .welcome-section {
@@ -821,6 +790,7 @@ html {
 
 .illustration-text-1 .text {
     font-size: var(--top-content-illustrations-text-font-size);
+    font-family: "72-Light";
     white-space: var(--top-content-illustrations-white-space);
 }
 
@@ -829,7 +799,7 @@ html {
 .illustration-text-2 {
     margin-top: var(--top-content-illustration-2-margin-top);
     margin-inline-end: var(--top-content-illustration-2-margin-rigth);
-    text-align: var(--top-content-illustration-2-text-align);
+    text-align: var(--top-content-illustrations-text-align);
 }
 
 .illustration-text-2 .title {
@@ -839,6 +809,7 @@ html {
 
 .illustration-text-2 .text {
     font-size: var(--top-content-illustrations-text-font-size);
+    font-family: "72-Light";
     white-space: var(--top-content-illustrations-white-space);
 }
 
@@ -857,6 +828,7 @@ html {
 
 .illustration-text-3 .text {
     font-size: var(--top-content-illustrations-text-font-size);
+    font-family: "72-Light";
     white-space: var(--top-content-illustrations-white-space);
 }
 
@@ -1196,5 +1168,3 @@ html {
         width: var(--footer-icon-sap-width);
         height: var(--footer-icon-sap-height);
     }
-
-}
