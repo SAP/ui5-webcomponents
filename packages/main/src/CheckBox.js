@@ -126,6 +126,8 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 */
 		checked: {
@@ -157,7 +159,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -175,7 +177,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {WrappingType}
+		 * @type {sap.ui.webcomponents.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */

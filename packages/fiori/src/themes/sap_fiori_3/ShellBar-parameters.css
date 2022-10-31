@@ -1,0 +1,5 @@
+@import "../base/ShellBar-parameters.css";
+
+[ui5-shellbar] {
+	--_ui5_button_focused_border: 0.0625rem dotted var(--sapContent_ContrastFocusColor);
+}

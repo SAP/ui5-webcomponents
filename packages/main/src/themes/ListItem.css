@@ -147,7 +147,7 @@
 	margin-top: var(--_ui5_list_item_img_top_margin);
 	margin-bottom: var(--_ui5_list_item_img_bottom_margin);
 	margin-inline-end: var(--_ui5_list_item_img_hn_margin);
-	border-radius: 0.25rem;
+	border-radius: var(--ui5-avatar-border-radius);
 }
 
 .ui5-li-img-inner {

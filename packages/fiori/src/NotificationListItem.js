@@ -10,6 +10,10 @@ import Popover from "@ui5/webcomponents/dist/Popover.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
+// Icons
+import "@ui5/webcomponents-icons/dist/overflow.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+
 // Texts
 import {
 	NOTIFICATION_LIST_ITEM_TXT,
@@ -46,7 +50,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
 		 * and a <code>ShowMore/Less</code> button would be displayed.
-		 * @type {WrappingType}
+		 * @type {sap.ui.webcomponents.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -164,7 +168,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListItem
- * @extends NotificationListItemBase
+ * @extends sap.ui.webcomponents.fiori.NotificationListItemBase
  * @tagname ui5-li-notification
  * @appenddocs NotificationAction
  * @since 1.0.0-rc.8

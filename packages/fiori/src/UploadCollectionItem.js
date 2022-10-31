@@ -121,7 +121,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Expected values are in the interval [0, 100].
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -135,7 +135,7 @@ const metadata = {
 		 * Also if set to <code>Error</code>, a refresh button is shown. When this icon is pressed <code>retry</code> event is fired.
 		 * If set to <code>Uploading</code>, a terminate button is shown. When this icon is pressed <code>terminate</code> event is fired.
 		 *
-		 * @type {UploadState}
+		 * @type {sap.ui.webcomponents.fiori.types.UploadState}
 		 * @defaultvalue "Ready"
 		 * @public
 		 */
@@ -243,7 +243,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.UploadCollectionItem
- * @extends ListItem
+ * @extends sap.ui.webcomponents.main.ListItem
  * @tagname ui5-upload-collection-item
  * @public
  * @implements sap.ui.webcomponents.fiori.IUploadCollectionItem

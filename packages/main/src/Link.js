@@ -76,7 +76,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
-		 * @type {LinkDesign}
+		 * @type {sap.ui.webcomponents.main.types.LinkDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -93,7 +93,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {WrappingType}
+		 * @type {sap.ui.webcomponents.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -128,12 +128,17 @@ const metadata = {
 
 		/**
 		 * Defines the ARIA role of the component.
-		 * @defaultvalue ""
-		 * @private
-		 * @since 1.0.0-rc.15
+		 *
+		 * <b>Note:</b> Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
+		 *
+		 * @type {string}
+		 * @defaultvalue "link"
+		 * @public
+		 * @since 1.9.0
 		 */
-		 accessibleRole: {
+		accessibleRole: {
 			type: String,
+			defaultValue: "link",
 		},
 
 		/**
@@ -334,7 +339,7 @@ class Link extends UI5Element {
 	}
 
 	get effectiveAccRole() {
-		return this.accessibleRole || "link";
+		return this.accessibleRole.toLowerCase();
 	}
 
 	static async onDefine() {

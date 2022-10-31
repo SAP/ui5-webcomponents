@@ -19,7 +19,9 @@ const metadata = {
 		/**
 		 * Defines whether an asterisk character is added to the component text.
 		 * <br><br>
-		 * <b>Note:</b> Usually indicates that user input is required.
+		 * <b>Note:</b> Usually indicates that user input (bound with the <code>for</code> property) is required.
+		 * In that case the <code>required</> property of
+		 * the corresponding input should also be set.
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
@@ -37,7 +39,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {WrappingType}
+		 * @type {sap.ui.webcomponents.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */

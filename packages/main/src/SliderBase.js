@@ -20,7 +20,7 @@ const metadata = {
 		/**
 		 * Defines the minimum value of the slider.
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -31,7 +31,7 @@ const metadata = {
 		/**
 		 * Defines the maximum value of the slider.
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 100
 		 * @public
 		 */
@@ -44,7 +44,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -59,7 +59,7 @@ const metadata = {
 		 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
 		 * tickmark will be labelled, which means every 4th value number.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */

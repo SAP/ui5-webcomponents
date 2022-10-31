@@ -48,7 +48,7 @@ const metadata = {
 		 * <li><code>Bottom</code></li>
 		 * </ul>
 		 *
-		 * @type {PopoverPlacementType}
+		 * @type {sap.ui.webcomponents.main.types.PopoverPlacementType}
 		 * @defaultvalue "Right"
 		 * @public
 		 */
@@ -68,7 +68,7 @@ const metadata = {
 		 * <li><code>Stretch</code></li>
 		 * </ul>
 		 *
-		 * @type {PopoverHorizontalAlign}
+		 * @type {sap.ui.webcomponents.main.types.PopoverHorizontalAlign}
 		 * @defaultvalue "Center"
 		 * @public
 		 */
@@ -88,7 +88,7 @@ const metadata = {
 		 * <li><code>Stretch</code></li>
 		 * </ul>
 		 *
-		 * @type {PopoverVerticalAlign}
+		 * @type {sap.ui.webcomponents.main.types.PopoverVerticalAlign}
 		 * @defaultvalue "Center"
 		 * @public
 		 */
@@ -148,7 +148,7 @@ const metadata = {
 		/**
 		 * Defines the ID or DOM Reference of the element that the popover is shown at
 		 * @public
-		 * @type {DOMReference}
+		 * @type {sap.ui.webcomponents.base.types.DOMReference}
 		 * @defaultvalue ""
 		 * @since 1.2.0
 		 */
@@ -278,7 +278,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Popover
- * @extends Popup
+ * @extends sap.ui.webcomponents.main.Popup
  * @tagname ui5-popover
  * @since 1.0.0-rc.6
  * @public

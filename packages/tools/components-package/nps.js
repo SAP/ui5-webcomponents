@@ -1,6 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
+const FIORI = path.join(__dirname, `../../fiori/`);
 
 
 const getScripts = (options) => {
@@ -32,7 +33,7 @@ const getScripts = (options) => {
 		// no custom configuration - use default from tools project
 		eslintConfig = `--config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
 	}
-		
+
 	const scripts = {
 		clean: 'rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
@@ -40,7 +41,7 @@ const getScripts = (options) => {
 		prepare: {
 			default: "nps clean prepare.all",
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.api" "nps build.illustrations"',
-			styleRelated: "nps build.styles build.jsonImports",
+			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		build: {
 			default: "nps lint prepare build.bundle",
@@ -59,6 +60,10 @@ const getScripts = (options) => {
 				default: "mkdirp dist/generated/json-imports && nps build.jsonImports.themes build.jsonImports.i18n",
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
+			},
+			jsImports: {
+				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrations",
+				illustrations: `node "${LIB}/generate-js-imports/illustrations.js" ${FIORI}/dist/illustrations ${FIORI}/dist/illustrations/tnt dist/generated/js-imports`,
 			},
 			bundle: `vite build ${viteConfig}`,
 			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,

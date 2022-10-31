@@ -1,5 +1,39 @@
 const assert = require("chai").assert;
 
+describe("Rendering", () => {
+	before(async () => {
+		await browser.url(`test/pages/RadioButton.html`);
+	});
+
+	it("DOM structure", async () => {
+		const radioButtonRoot = await browser.$("#testRbtn1").shadow$(".ui5-radio-root");
+		const radioButtonInput = await browser.$("#testRbtn1").shadow$("input");
+
+		assert.notOk(await radioButtonRoot.getAttribute("aria-disabled"), "aria-disabled is not set");
+		assert.notOk(await radioButtonInput.getAttribute("disabled"), "internal input is not disabled");
+
+		const disabledRadioButtonRoot = await browser.$("#testRbtn").shadow$(".ui5-radio-root");
+		const disabledRadioButtonInput = await browser.$("#testRbtn").shadow$("input");
+
+		assert.strictEqual(await disabledRadioButtonRoot.getAttribute("aria-disabled"), "true", "aria-disabled = true");
+		assert.strictEqual(await disabledRadioButtonInput.getAttribute("disabled"), "true", "internal input is disabled");
+
+		const readOnlyRadioButtonRoot = await browser.$("#groupRbReadOnly").shadow$(".ui5-radio-root");
+		const readOnlyRadioButtonInput = await browser.$("#groupRbReadOnly").shadow$("input");
+
+		assert.notOk(await readOnlyRadioButtonRoot.getAttribute("aria-readonly"), "aria-readonly is not set to the root level");
+		assert.strictEqual(await readOnlyRadioButtonInput.getAttribute("readonly"), "true", "internal input is readonly");
+
+		const requiredRadioButtonInput = await browser.$("#formRadioBtnRequired").shadow$("input");
+		const requiredRadioButtonFormSupportInputRequiredAttr = await browser.executeAsync(done => {
+			done(document.getElementById("formRadioBtnRequired").shadowRoot.querySelector("slot").assignedNodes()[0].getAttribute("required"));
+		});
+
+		assert.ok(await requiredRadioButtonInput.getAttribute("required"), "required attribute is set");
+		assert.strictEqual(requiredRadioButtonFormSupportInputRequiredAttr, "" ,"required attribute is set");
+	});
+});
+
 describe("RadioButton general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/RadioButton.html`);
@@ -18,7 +52,7 @@ describe("RadioButton general interaction", () => {
 
 	it("tests change event upon ENTER", async () => {
 		const radioButton1 = await browser.$("#rb1").shadow$(".ui5-radio-root");
-		const radioButton2 = await browser.$("#rb2").shadow$(".ui5-radio-root");;
+		const radioButton2 = await browser.$("#rb2").shadow$(".ui5-radio-root");
 		const field = await browser.$("#field");
 
 		await radioButton1.click();
@@ -32,8 +66,8 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests change event upon SPACE", async () => {
-		const radioButton1 = await browser.$("#rb2").shadow$(".ui5-radio-root");;
-		const radioButton2 = await browser.$("#rb3").shadow$(".ui5-radio-root");;
+		const radioButton1 = await browser.$("#rb2").shadow$(".ui5-radio-root");
+		const radioButton2 = await browser.$("#rb3").shadow$(".ui5-radio-root");
 		const field = await browser.$("#field");
 
 		await radioButton1.click();
@@ -47,7 +81,7 @@ describe("RadioButton general interaction", () => {
 	});
 
 	it("tests change event not fired, when disabled", async () => {
-		const radioButton = await browser.$("#rb4").shadow$(".ui5-radio-root");;
+		const radioButton = await browser.$("#rb4").shadow$(".ui5-radio-root");
 		const field = await browser.$("#field");
 
 		await radioButton.click();
@@ -207,7 +241,7 @@ describe("RadioButton general interaction", () => {
 
 		radioButtons = await rbContainer.$$(`ui5-radio-button`);
 		radioButtonsShadowRoots = await Promise.all(radioButtons.map(rb => rb.shadow$(`.ui5-radio-root`)));
-		
+
 		assert.strictEqual(await radioButtonsShadowRoots[0].getAttribute("tabindex"), "0", `first radio button has tabindex="0"`);
 		assert.strictEqual(await radioButtonsShadowRoots[1].getAttribute("tabindex"), "-1", `second radio button has tabindex="-1"`);
 		assert.strictEqual(await radioButtonsShadowRoots[2].getAttribute("tabindex"), "-1", `third radio button has tabindex="-1"`);

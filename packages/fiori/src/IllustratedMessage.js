@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { getIllustrationDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -28,7 +28,7 @@ const metadata = {
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
 		 *
-		 * @type {String}
+		 * @type {string}
 		 * @defaultvalue ""
 		 * @public
 		 * @since 1.7.0
@@ -180,7 +180,7 @@ const metadata = {
 		 * You can import them removing the <code>Tnt</code> prefix like this:
 		 * <br>
 		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
-		 * @type {IllustrationMessageType}
+		 * @type {sap.ui.webcomponents.fiori.types.IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
 		 */
@@ -203,7 +203,7 @@ const metadata = {
 		 * As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
 		 * elements of the component are displayed differently on the different breakpoints/illustration sizes.
 		 *
-		 * @type {IllustrationMessageSize}
+		 * @type {sap.ui.webcomponents.fiori.types.IllustrationMessageSize}
 		 * @defaultvalue "Auto"
 		 * @public
 		 * @since 1.5.0
@@ -211,6 +211,36 @@ const metadata = {
 		size: {
 			type: IllustrationMessageSize,
 			defaultValue: IllustrationMessageSize.Auto,
+		},
+		/**
+		* Illustration breakpoint variant for the <code>Dialog</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.9.0
+		*/
+		dialogSvg: {
+			type: String,
+		},
+		/**
+		* Illustration breakpoint variant for the <code>Scene</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.9.0
+		*/
+		sceneSvg: {
+			type: String,
+		},
+		/**
+		* Illustration breakpoint variant for the <code>Spot</code> size.
+		*
+		* @private
+		* @type {String}
+		* @since 1.9.0
+		*/
+		spotSvg: {
+			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
@@ -296,7 +326,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.IllustratedMessage
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-illustrated-message
  * @public
  * @since 1.0.0-rc.15
@@ -306,6 +336,7 @@ class IllustratedMessage extends UI5Element {
 		super();
 
 		this._handleResize = this.handleResize.bind(this);
+		this._lastKnownOffsetWidthForMedia = {}; // this will store the last known offsetWidth of the IllustratedMessage DOM node for a given media (e.g. "Spot")
 	}
 
 	static get metadata() {
@@ -349,15 +380,19 @@ class IllustratedMessage extends UI5Element {
 		return [Title];
 	}
 
-	onBeforeRendering() {
-		const illustrationData = getIllustrationDataSync(this.name);
+	async onBeforeRendering() {
+		let illustrationData = getIllustrationDataSync(this.name);
+
+		if (illustrationData === undefined) {
+			illustrationData = await getIllustrationData(this.name);
+		}
 
 		if (illustrationData === ILLUSTRATION_NOT_FOUND) {
 			this.invalid = true;
 			const illustrationPath = this.name.includes("Tnt") ? `tnt/${this.name.replace("Tnt", "")}` : this.name;
 
 			/* eslint-disable-next-line */
-			return console.warn(`Required illustration is not registered. You can either import the illustration as a module in order to use it e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js".`);
+			return console.warn(`Required illustration is not registered. You can either import the specific illustration as a module - e.g. "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js" or import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module to fetch any existing illustration on demand`);
 		}
 
 		this.invalid = false;
@@ -386,14 +421,26 @@ class IllustratedMessage extends UI5Element {
 			return;
 		}
 
+		this._applyMedia();
+	}
+
+	_applyMedia() {
+		const currOffsetWidth = this.offsetWidth;
+		let newMedia = "";
+
 		if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.BASE) {
-			this.media = IllustratedMessage.MEDIA.BASE;
+			newMedia = IllustratedMessage.MEDIA.BASE;
 		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.SPOT) {
-			this.media = IllustratedMessage.MEDIA.SPOT;
+			newMedia = IllustratedMessage.MEDIA.SPOT;
 		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.DIALOG) {
-			this.media = IllustratedMessage.MEDIA.DIALOG;
+			newMedia = IllustratedMessage.MEDIA.DIALOG;
 		} else {
-			this.media = IllustratedMessage.MEDIA.SCENE;
+			newMedia = IllustratedMessage.MEDIA.SCENE;
+		}
+		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia];
+		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth)) { // prevents infinite resize
+			this.media = newMedia;
+			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
 		}
 	}
 

@@ -84,7 +84,7 @@ const metadata = {
 		 * <li><code>Circle</code></li>
 		 * <li><code>Square</code></li>
 		 * </ul>
-		 * @type {AvatarShape}
+		 * @type {sap.ui.webcomponents.main.types.AvatarShape}
 		 * @defaultvalue "Circle"
 		 * @public
 		 */
@@ -104,7 +104,7 @@ const metadata = {
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
 		 * </ul>
-		 * @type {AvatarSize}
+		 * @type {sap.ui.webcomponents.main.types.AvatarSize}
 		 * @defaultvalue "S"
 		 * @public
 		 */
@@ -138,7 +138,7 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * </ul>
-		 * @type {AvatarColorScheme}
+		 * @type {sap.ui.webcomponents.main.types.AvatarColorScheme}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
@@ -219,7 +219,7 @@ const metadata = {
 		 * &lt;ui5-avatar><br>
 		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-badge slot="badge"><br>
 		 * &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-icon slot="icon" name="employee">&lt;/ui5-icon><br>
-		 * &nbsp;&nbsp;&nbsp;&nbsp&lt;/ui5-badge><br>
+		 * &nbsp;&nbsp;&nbsp;&nbsp;&lt;/ui5-badge><br>
 		 * &lt;/ui5-avatar>
 		 * <br><br>
 		 * <ui5-avatar initials="AB" color-scheme="Accent1">
@@ -276,7 +276,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Avatar
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-avatar
  * @since 1.0.0-rc.6
  * @implements sap.ui.webcomponents.main.IAvatar
@@ -314,7 +314,7 @@ class Avatar extends UI5Element {
 	/**
 	 * Returns the effective avatar size.
 	 * @readonly
-	 * @type { String }
+	 * @type {string}
 	 * @defaultValue "S"
 	 * @private
 	 */
@@ -326,7 +326,7 @@ class Avatar extends UI5Element {
 	/**
 	 * Returns the effective background color.
 	 * @readonly
-	 * @type { String }
+	 * @type {string}
 	 * @defaultValue "Accent6"
 	 * @private
 	 */
@@ -344,9 +344,11 @@ class Avatar extends UI5Element {
 	}
 
 	get validInitials() {
-		const validInitials = /^[a-zA-Z]{1,2}$/;
+		// initials should consist of only 1,2 or 3 latin letters
+		const validInitials = /^[a-zA-Z]{1,3}$/,
+			  areInitialsValid = this.initials && validInitials.test(this.initials);
 
-		if (this.initials && validInitials.test(this.initials)) {
+		if (areInitialsValid) {
 			return this.initials;
 		}
 
@@ -368,6 +370,35 @@ class Avatar extends UI5Element {
 
 	onBeforeRendering() {
 		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+	}
+
+	onEnterDOM() {
+		this._checkInitialsWidth();
+
+		if (!this.validInitials) {
+			// if initials are not valid,an icon should be shown inside the avatar
+			this._setFallbackIcon();
+		}
+	}
+
+	_setFallbackIcon() {
+		// the default icon shown inside the avatar,
+		// when the initials are not valid
+		this.icon = "employee";
+		return this.icon;
+	}
+
+	_checkInitialsWidth() {
+		// if initials` width is bigger than the avatar,
+		// an icon should be shown inside the avatar
+		const avatar = this.getDomRef(),
+			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
+		if (this.initials && this.initials.length === 3) {
+			if (avatarInitials.scrollWidth >= avatar.scrollWidth) {
+				this.icon = "employee";
+			}
+		}
+		return this.icon;
 	}
 
 	_onClickHandler(event) {

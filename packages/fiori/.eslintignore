@@ -8,3 +8,4 @@ rollup.config*.js
 wdio.conf.js
 postcss.config.js
 package-scripts.js
+src/illustrations/js-imports/illustrations.js

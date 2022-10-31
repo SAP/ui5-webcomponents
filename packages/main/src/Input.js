@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
 	isPhone,
-	isSafari,
 	isAndroid,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -24,7 +23,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -244,7 +243,7 @@ const metadata = {
 		 * that use different soft keyboard layouts depending on the given input type.</li>
 		 * </ul>
 		 *
-		 * @type {InputType}
+		 * @type {sap.ui.webcomponents.main.types.InputType}
 		 * @defaultvalue "Text"
 		 * @public
 		 */
@@ -260,6 +259,8 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -292,7 +293,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -338,7 +339,7 @@ const metadata = {
 		 * Sets the maximum number of characters available in the input field.
 		 * <br><br>
 		 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
@@ -1264,7 +1265,7 @@ class Input extends UI5Element {
 
 	/**
 	 * The suggestion item on preview.
-	 * @type { sap.ui.webcomponents.main.IInputSuggestionItem }
+	 * @type {sap.ui.webcomponents.main.IInputSuggestionItem}
 	 * @readonly
 	 * @public
 	 */
@@ -1284,20 +1285,9 @@ class Input extends UI5Element {
 		const inputValue = await this.getInputValue();
 		const isUserInput = action === this.ACTION_USER_INPUT;
 
-		const input = await this.getInputDOMRef();
-		const cursorPosition = input.selectionStart;
-
 		this.value = inputValue;
 		this.highlightValue = inputValue;
 		this.valueBeforeItemPreview = inputValue;
-
-		if (isSafari()) {
-			// When setting the value by hand, Safari moves the cursor when typing in the middle of the text (See #1761)
-			setTimeout(() => {
-				input.selectionStart = cursorPosition;
-				input.selectionEnd = cursorPosition;
-			}, 0);
-		}
 
 		if (isUserInput) { // input
 			this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
@@ -1480,7 +1470,7 @@ class Input extends UI5Element {
 				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this),
+				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this),
 			},
 		};
 	}

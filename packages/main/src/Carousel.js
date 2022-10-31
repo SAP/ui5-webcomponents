@@ -52,7 +52,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -63,7 +63,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -74,7 +74,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -112,7 +112,7 @@ const metadata = {
 
 		/**
 		 * Defines the index of the initially selected item.
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @private
 		 */
@@ -133,7 +133,7 @@ const metadata = {
 		 * When set to "Content", the arrows are placed on the sides of the current page.
 		 * <br>
 		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
-		 * @type {CarouselArrowsPlacement}
+		 * @type {sap.ui.webcomponents.main.types.CarouselArrowsPlacement}
 		 * @defaultvalue "Content"
 		 * @public
 		 */
@@ -265,7 +265,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Carousel
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-carousel
  * @since 1.0.0-rc.6
  * @public

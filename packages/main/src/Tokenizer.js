@@ -96,7 +96,7 @@ const metadata = {
 		/**
 		 * Indicates the value state of the related input component.
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @private
 		 */
@@ -132,7 +132,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Tokenizer
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-tokenizer
  * @usestextcontent
  * @private

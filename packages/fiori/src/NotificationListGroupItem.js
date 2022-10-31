@@ -6,6 +6,11 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
 
+// Icons
+import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+
 // Texts
 import {
 	NOTIFICATION_LIST_GROUP_ITEM_TXT,
@@ -120,7 +125,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListGroupItem
- * @extends NotificationListItemBase
+ * @extends sap.ui.webcomponents.fiori.NotificationListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
  * @appenddocs NotificationAction

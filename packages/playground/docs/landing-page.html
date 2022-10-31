@@ -13,10 +13,11 @@ nav_exclude: true
     <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3,react,angular,vue">
     <link type="image/x-icon" href="{{"assets/images/favicon.ico" | absolute_url}}" rel="shortcut icon">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.25.0/themes/prism.css">
-    <script id="sap-ui-config" type="application/json">
+
+    <script data-ui5-config type="application/json">
         {
-            "theme": "sap_fiori_3",
-            "language": "EN"
+          "theme": "sap_horizon",
+          "language": "EN"
         }
     </script>
 
@@ -33,10 +34,6 @@ nav_exclude: true
 
     <!---------------------------------------- NAVBAR ---------------------------------------->
     <nav class="navbar">
-        <div class="navbar-left-container">
-            <div class="item large-text">The First Stable Release 1.0 is Here!</div>
-            <a href="{{"/playground/components" | absolute_url}}" class="item button">Check it</a>
-        </div>
 
         <div class="navbar-right-container">
             <a href="{{"/playground/getting-started/first-steps" | absolute_url}}" class="item link">Documentation</a>
@@ -55,6 +52,7 @@ nav_exclude: true
             <section class="welcome-section">
                 <h1 class="title">UI5&nbsp;<span class="orange">Web Components</span></h1>
                 <div class="description">Enterprise-flavored sugar on top of native APIs!</div>
+                <p class="version">Latest Version: <a href="https://github.com/SAP/ui5-webcomponents/releases/tag/v1.8.0">1.8.0</a></p>
                 <a href="{{"/playground/components" | absolute_url}}" class="get-started-button">Get Started</a>
             </section>
         </div>

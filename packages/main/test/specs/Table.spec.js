@@ -31,11 +31,6 @@ describe("Table general interaction", () => {
 		assert.ok(await noDataRow.isExisting(), 'noData div is present');
 	});
 
-	it("tests if table with more columns than cells is rendered", async () => {
-		const tblLessCells = await browser.$("#tblLessCells");
-		assert.ok(await tblLessCells.isExisting(), 'table with more columns is rendered without JS errors.');
-	});
-
 	it("tests if popinChange is fired when min-width is reacted (500px)", async () => {
 		let tableLabel = await browser.$("#tableLabel");
 		const btn = await browser.$("#size-btn-500");
@@ -88,13 +83,30 @@ describe("Table general interaction", () => {
 			"The aria-label value is correct.");
 	});
 
+	it("tests selectable row aria-label value", async () => {
+		await browser.url(`test/pages/TableSelection.html`);
+
+		const row = await browser.$("#firstRowSingleSelect");
+		const rowRoot = await browser.$("#firstRowSingleSelect").shadow$(".ui5-table-row-root");
+
+		let EXPECTED_TEXT = "Product Notebook Basic 15 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR Row Type Active. 2 of 5. Not Selected";
+
+		assert.strictEqual(await rowRoot.getAttribute("aria-label"), EXPECTED_TEXT, "The aria-label value is correct.");
+
+		await row.setProperty("selected", true);
+
+		EXPECTED_TEXT = "Product Notebook Basic 15 Supplier Very Best Screens Dimensions 30 x 18 x 3 cm Weight 4.2 KG Price 956 EUR Row Type Active. 2 of 5. Selected";
+
+		assert.strictEqual(await rowRoot.getAttribute("aria-label"), EXPECTED_TEXT, "The aria-label value is correct.");
+	});
+
 	describe("Accessibility", () => {
 		before(async () => {
 			await browser.url(`test/pages/Table.html`);
 		});
 
 		it("Should apply aria-label from the accessibleName property", async () => {
-			const table = await browser.$("#tblLessColumns");
+			const table = await browser.$("#tblLessCells");
 			const innerTable = await table.shadow$("table");
 
 			assert.strictEqual(await innerTable.getAttribute("aria-label"), "Table label", "Table aria-label attribute is correct.");
@@ -107,9 +119,28 @@ describe("Table general interaction", () => {
 
 			assert.strictEqual(await innerTable.getAttribute("aria-label"), await tableLabel.getHTML(false), "Table aria-label attribute is correct.");
 		});
+
+		it("Should have correct focus handling when having popin rows", async () => {
+			await browser.url(`test/pages/TableAllPopin.html`);
+			await browser.setWindowSize(500, 1200);
+
+			const input = await $("#tbl2 #interactive");
+			const btn = await $("#btn-focused");
+			const secondInput = await $("#input-second-focused");
+
+			await input.click();
+			await browser.keys("Tab");
+
+			assert.equal(await btn.getProperty("focused"), true, "Button is focused")
+
+			await browser.keys("Tab");
+			assert.equal(await secondInput.getProperty("focused"), true, "Input is focused")
+
+			await browser.setWindowSize(1600, 1200);
+		});
 	});
 
-	describe("Growing Table on 'More' button press", () => {
+	describe("Growing Table on 'More' button press", async () => {
 		it("tests the 'load-more' event", async () => {
 			await browser.url(`test/pages/TableGrowingWithButton.html`);
 
@@ -136,7 +167,7 @@ describe("Table general interaction", () => {
 		});
 	});
 
-	describe("Growing Table on Scroll", () => {
+	describe("Growing Table on Scroll", async () => {
 		it("tests the 'load-more' event", async () => {
 			await browser.url(`test/pages/TableGrowingWithScroll.html`);
 
@@ -153,7 +184,7 @@ describe("Table general interaction", () => {
 		});
 	});
 
-	describe("Table selection modes", () => {
+	describe("Table selection modes", async () => {
 		it("test click over Active/Inactive row in SingleSelect mode", async () => {
 			await browser.url("test/pages/TableSelection.html");
 			const table = await browser.$("#single");
@@ -504,9 +535,29 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await inner.getValue(), "a b", "space should be visible");
 		});
 	});
+
+	describe("Navigated property", () => {
+		before(async () => {
+			await browser.url(`test/pages/Table.html`);
+		});
+
+		it("Should apply aria-current when navigated property is true", async () => {
+			const table = await browser.$("#tblLessCells");
+			const row = await table.$$("ui5-table-row")[0];
+
+			assert.strictEqual(await row.shadow$("tr").getAttribute("aria-current"), "true", "Table row aria-current attribute is set correctly.");
+		});
+
+		it("Aria-current should not be present when navigated property is false", async () => {
+			const table = await browser.$("#tblLessCells");
+			const row = await table.$$("ui5-table-row")[1];
+
+			assert.notOk(await row.shadow$("tr").getAttribute("aria-current"), "Table row aria-current attribute is not present.");
+		});
+	});
 });
 
-describe("Table keyboard interaction", () => {
+describe("Table keyboard interaction", async () => {
 	it("Tab/Shift+Tab", async () => {
 		await browser.url(`test/pages/TableSelection.html`);
 

@@ -9,7 +9,7 @@ describe("General API", () => {
 		const labelRoot = await browser.$("#basic-label").shadow$(".ui5-label-root");
 
 		assert.ok(labelRoot, "Label is rendered");
-	})
+	});
 
 	it("changes text of ui5-label", async () => {
 		const INITIAL_TEXT = "Basic Label";
@@ -53,6 +53,8 @@ describe("General API", () => {
 		it("should focus ui5-input on click", async () => {
 			const label = await browser.$("#label-for-ui5-input");
 			const field = await browser.$("#form-ui5-input");
+
+			assert.strictEqual(await label.getText(), await field.shadow$("input").getAttribute("aria-label"), "input aria-label is correct");
 
 			await label.click();
 

@@ -19,7 +19,7 @@ const metadata = {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
-		 * @type {CalendarType}
+		 * @type {sap.ui.webcomponents.base.types.CalendarType}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -29,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the secondary calendar type.
 		 * If not set, the calendar will only show the primary calendar type.
-		 * @type {CalendarType}
+		 * @type {sap.ui.webcomponents.base.types.CalendarType}
 		 * @since 1.0.0-rc.16
 		 * @defaultvalue undefined
 		 * @public

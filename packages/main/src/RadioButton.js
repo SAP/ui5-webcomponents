@@ -71,6 +71,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines whether the component is required.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.9.0
+		 */
+		required: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines whether the component is checked or not.
 		 * <br><br>
 		 * <b>Note:</b> The property value can be changed with user interaction,
@@ -79,6 +91,8 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 * @since 1.0.0-rc.15
 		 */
@@ -109,7 +123,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -172,7 +186,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {WrappingType}
+		 * @type {sap.ui.webcomponents.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -363,8 +377,9 @@ class RadioButton extends UI5Element {
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
-				nativeInput.disabled = element.disabled || !element.checked;
-				nativeInput.value = element.checked ? element.value : "";
+				nativeInput.value = element.value;
+				nativeInput.type = "radio";
+				nativeInput.checked = element.checked;
 			});
 		} else if (this.value) {
 			console.warn(`In order for the "value" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -475,10 +490,6 @@ class RadioButton extends UI5Element {
 				"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			},
 		};
-	}
-
-	get ariaReadonly() {
-		return this.readonly ? "true" : undefined;
 	}
 
 	get ariaDisabled() {

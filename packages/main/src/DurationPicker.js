@@ -26,7 +26,7 @@ const metadata = {
 
 		/**
 		 * Defines the selection step for the minutes
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @public
 		 * @defaultValue 1
 		 * @since 1.0.0-rc.8
@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Defines the selection step for the seconds
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @public
 		 * @defaultValue 1
 		 * @since 1.0.0-rc.8
@@ -162,7 +162,7 @@ const pad = number => {
  * @since 1.0.0-rc.7
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DurationPicker
- * @extends TimePickerBase
+ * @extends sap.ui.webcomponents.main.TimePickerBase
  * @tagname ui5-duration-picker
  * @private
  */

@@ -14,7 +14,11 @@ import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
-import { ARIA_LABEL_ROW_SELECTION } from "./generated/i18n/i18n-defaults.js";
+import {
+	ARIA_LABEL_ROW_SELECTION,
+	LIST_ITEM_NOT_SELECTED,
+	LIST_ITEM_SELECTED,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
@@ -44,7 +48,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the mode of the row (None, SingleSelect, MultiSelect).
-		 * @type {TableMode}
+		 * @type {sap.ui.webcomponents.main.types.TableMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15
 		 * @private
@@ -65,7 +69,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
 		 * while with type <code>Inactive</code> - will not.
 		 *
-		 * @type {TableRowType}
+		 * @type {sap.ui.webcomponents.main.types.TableRowType}
 		 * @defaultvalue "Inactive"
 		 * @since 1.0.0-rc.15
 		 * @public
@@ -98,7 +102,17 @@ const metadata = {
 		active: {
 			type: Boolean,
 		},
-
+		/**
+		 * Indicates if the table row is navigated.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.9.0
+		 * @public
+		*/
+		navigated: {
+			type: Boolean,
+		},
 		_columnsInfo: {
 			type: Object,
 			multiple: true,
@@ -215,8 +229,11 @@ class TableRow extends UI5Element {
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
 		const isRowFocused = this._activeElementHasAttribute("ui5-table-row");
 		const checkboxPressed = event.target.classList.contains("ui5-multi-select-checkbox");
+		const rowElements = Array.from(this.shadowRoot.querySelectorAll("tr") || []);
+		const elements = rowElements.map(getLastTabbableElement);
+		const lastFocusableElement = elements.pop();
 
-		if (isTabNext(event) && activeElement === (getLastTabbableElement(this) || this.root)) {
+		if (isTabNext(event) && activeElement === (lastFocusableElement || this.root)) {
 			this.fireEvent("_forward-after", { target: activeElement });
 		}
 
@@ -307,6 +324,10 @@ class TableRow extends UI5Element {
 		return this.getRootNode().activeElement.hasAttribute(attr);
 	}
 
+	get _ariaCurrent() {
+		return this.navigated ? true : undefined;
+	}
+
 	activate() {
 		if (this.type === TableRowType.Active) {
 			this.active = true;
@@ -384,11 +405,18 @@ class TableRow extends UI5Element {
 	}
 
 	get ariaLabelText() {
+		const isSelected = this.selected ? TableRow.i18nBundle.getText(LIST_ITEM_SELECTED) : TableRow.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
+		const isRowSelectable = this.isSingleSelect || this.isMultiSelect;
 		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
 			const cellText = this.getCellText(cell);
 			return `${columText} ${cellText}`;
 		}).join(" ");
+
+		if (isRowSelectable) {
+			return `${ariaLabel}. ${this._ariaPosition}. ${isSelected}`;
+		}
+
 		return `${ariaLabel}. ${this._ariaPosition}`;
 	}
 

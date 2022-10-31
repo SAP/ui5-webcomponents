@@ -9,7 +9,6 @@
 		<thead>
 			<tr
 				id="{{_columnHeader.id}}"
-				role="row"
 				class="ui5-table-header-row"
 				aria-label="{{ariaLabelText}}"
 				tabindex="{{_columnHeader._tabIndex}}"
@@ -34,6 +33,7 @@
 				{{#each visibleColumns}}
 					<slot name="{{this._individualSlot}}"></slot>
 				{{/each}}
+				<th class="ui5-table-header-row-navigated"></th>
 			</tr>
 		</thead>
 
@@ -44,7 +44,7 @@
 
 			{{#unless rows.length}}
 				{{#unless hideNoData}}
-					<tr class="ui5-table-no-data-row-root" role="row">
+					<tr class="ui5-table-no-data-row-root">
 						<td colspan="{{visibleColumnsCount}}" role="cell">
 
 							<div class="ui5-table-no-data-row">

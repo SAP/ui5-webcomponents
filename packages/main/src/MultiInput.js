@@ -15,6 +15,7 @@ import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
 import Tokenizer from "./Tokenizer.js";
 import Icon from "./Icon.js";
+import "@ui5/webcomponents-icons/dist/value-help.js";
 
 /**
  * @public
@@ -98,7 +99,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MultiInput
- * @extends Input
+ * @extends sap.ui.webcomponents.main.Input
  * @tagname ui5-multi-input
  * @appenddocs Token
  * @since 1.0.0-rc.9

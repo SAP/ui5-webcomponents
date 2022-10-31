@@ -4,8 +4,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import { BrowserMultiFormatReader, NotFoundException } from "@zxing/library/umd/index.js";
-
+import * as ZXing from "@zxing/library/umd/index.min.js";
 // Template
 import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDialogTemplate.lit.js";
 
@@ -17,6 +16,11 @@ import {
 	BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT,
 	BARCODE_SCANNER_DIALOG_LOADING_TXT,
 } from "./generated/i18n/i18n-defaults.js";
+
+// some tools handle named exports from UMD files and the window object is not assigned but the imports work (vitejs)
+// other tools do not handle named exports (they are undefined after the import), but the window global is assigned and can be used (web dev server)
+const effectiveZXing = { ...ZXing, ...window.ZXing };
+const { BrowserMultiFormatReader, NotFoundException } = effectiveZXing;
 
 const defaultMediaConstraints = {
 	audio: false,
@@ -102,7 +106,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.BarcodeScannerDialog
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-barcode-scanner-dialog
  * @public
  * @since 1.0.0-rc.15
