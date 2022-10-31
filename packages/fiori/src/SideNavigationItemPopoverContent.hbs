@@ -8,7 +8,7 @@
 
 	<ui5-list
 		mode="None"
-		aria-roledescription={{ariaRoleDescPopoverNavigationList}}
+		aria-roledescription="{{ariaRoleDescPopoverNavigationList}}"
 		role="tree"
 		@ui5-item-click="{{handleListItemClick}}"
 	>
@@ -16,8 +16,8 @@
 			title="{{_popoverContent.mainItem._tooltip}}"
 			role="treeitem"
 			aria-level="1"
-			ria-checked="{{this.selected}}"
-			aria-roledescription={{ariaRoleDescPopoverNavigationListItem}}
+			aria-selected="{{this.selected}}"
+			aria-roledescription="{{ariaRoleDescPopoverNavigationListItem}}"
 			?selected="{{_popoverContent.mainItemSelected}}"
 			.associatedItem="{{_popoverContent.mainItem}}"
 		>{{_popoverContent.mainItem.text}}</ui5-li>
@@ -27,8 +27,8 @@
 				title="{{this._tooltip}}"
 				role="treeitem"
 				aria-level="2"
-				aria-checked="{{this.selected}}"
-				aria-roledescription={{ariaRoleDescPopoverNavigationListItem}}
+				aria-selected="{{this.selected}}"
+				aria-roledescription="{{ariaRoleDescPopoverNavigationListItem}}"
 				?selected="{{this.selected}}"
 				.associatedItem="{{this}}"
 			>{{this.text}}</ui5-li>
