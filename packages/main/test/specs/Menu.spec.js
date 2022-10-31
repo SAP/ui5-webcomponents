@@ -125,10 +125,11 @@ describe("Menu interaction", () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 		const listItems = await popover.$("ui5-list").$$("ui5-li");
+		const eventLogger = await browser.$("#eventLogger");
 
 		await browser.keys("Esc");
 
-		const eventLoggerValue = await browser.$("#eventLogger").getAttribute("value");
+		const eventLoggerValue = eventLogger.getAttribute("value");
 
 		assert.notEqual(eventLoggerValue.indexOf("before-open"), -1, "'before-open' event is fired");
 		assert.notEqual(eventLoggerValue.indexOf("after-open"), -1, "'after-open' event is fired");
