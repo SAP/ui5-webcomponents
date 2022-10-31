@@ -9,7 +9,6 @@
 	--_ui5_textarea_error_warning_font_style: italic;
 	--_ui5_textarea_error_hover_background_color: var(--sapField_InvalidBackground);
 	--_ui5_textarea_information_border_width: var(--sapField_BorderWidth);
-	--_ui5_textarea_focus_outline_offset: -5px;
 	--_ui5_textarea_error_warning_border_style: dashed;
 	--_ui5_textarea_padding_top_information: 0.4375rem;
 	--_ui5_textarea_padding_bottom_information: 0.4375rem;

@@ -2,8 +2,6 @@
 
 :root {
 	--__ui5_textarea_min_height: 2.5rem;
-	--_ui5-textarea_disabled_background: var(--sapField_ReadOnly_Background);
-	--_ui5_textarea_disabled_border_color: var(--sapField_ReadOnly_BorderColor);
 	--_ui5_textarea_padding_top_error_warning: 0.5rem;
 	--_ui5_textarea_padding_bottom_error_warning: 0.5rem;
 	--_ui5_textarea_padding_top_information: 0.5rem;
