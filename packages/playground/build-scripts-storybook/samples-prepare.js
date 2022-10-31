@@ -113,31 +113,35 @@ const main = async () => {
 		let args = {};
 		if (moduleAPI?.events) {
 			moduleAPI.events.forEach(event => {
-				args[event.name] = {
-					action: event.name,
-					table: {
-						category: "Events"
-					},
-				};
+				if (event.visibility && event.visibility === 'public') {
+					args[event.name] = {
+						action: event.name,
+						table: {
+							category: "Events"
+						},
+					};
+				}
 			})
 		}
 		if (moduleAPI?.properties) {
 			moduleAPI.properties.forEach(prop => {
-				const controlType = UI5WC_TO_STORYBOOK_TYPES_MAP[prop.type] || 'select';
-				args[prop.name] = {
-					description: prop.description,
-					control: controlType,
-					table: {
-						defaultValue: {
-							summary: prop.defaultValue
+				if (prop.visibility && prop.visibility === 'public') {
+					const controlType = UI5WC_TO_STORYBOOK_TYPES_MAP[prop.type] || 'select';
+					args[prop.name] = {
+						description: prop.description,
+						control: controlType,
+						table: {
+							defaultValue: {
+								summary: prop.defaultValue
+							},
+							category: "Properties"
 						},
-						category: "Properties"
-					},
-				};
-				if (controlType === 'select') {
-					const typeEnum = api.symbols.find(s => s.module === 'types/' + prop.type) || baseAPI.symbols.find(s => s.module === 'types/' + prop.type);
-					if (typeEnum && Array.isArray(typeEnum.properties)) {
-						args[prop.name].options = typeEnum.properties.map(a => a.type);
+					};
+					if (controlType === 'select') {
+						const typeEnum = api.symbols.find(s => s.module === 'types/' + prop.type) || baseAPI.symbols.find(s => s.module === 'types/' + prop.type);
+						if (typeEnum && Array.isArray(typeEnum.properties)) {
+							args[prop.name].options = typeEnum.properties.map(a => a.type);
+						}
 					}
 				}
 			});
@@ -145,13 +149,15 @@ const main = async () => {
 
 		if (moduleAPI?.slots) {
 			moduleAPI.slots.forEach(slot => {
-				args[slot.name] = {
-					description: slot.description,
-					control: slot.type,
-					table: {
-						category: "Slots"
-					},
-				};
+				if (slot.visibility && slot.visibility === 'public') {
+					args[slot.name] = {
+						description: slot.description,
+						control: slot.type,
+						table: {
+							category: "Slots"
+						},
+					};
+				}
 			});
 		}
 
