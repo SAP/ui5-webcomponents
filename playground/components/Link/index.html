@@ -715,6 +715,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started/using-assets/" class="navigation-list-link">
@@ -723,6 +725,8 @@
                       </a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -1328,6 +1332,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/using-i18n-for-apps/" class="navigation-list-link">
@@ -1858,6 +1866,10 @@
                       </a>
                       
                     </li>
+                  
+                
+                  
+                
                   
                 
                   
@@ -2610,9 +2622,17 @@
                 
                   
                 
+                  
+                
+                  
+                
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -2977,8 +2997,48 @@
                   
                     <li class="navigation-list-item ">
                       
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/understanding-hbs-templates/" class="navigation-list-link">
+                        <div class="component-name">Understanding hbs templates</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
                       <a href="https://sap.github.io/ui5-webcomponents/playground/development/testing-ui5-web-components/" class="navigation-list-link">
                         <div class="component-name">Testing UI5 Web Components</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/deep-dive-and-best-practices/" class="navigation-list-link">
+                        <div class="component-name">Deep dive and best practices</div>
                         
                       </a>
                       
@@ -3143,27 +3203,13 @@
                 
                   
                 
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
-                  
-                
               </ul>
             
           </li>
+        
+      
+    
+      
         
       
     
@@ -3509,6 +3555,10 @@
                       </a>
                       
                     </li>
+                  
+                
+                  
+                
                   
                 
                   
@@ -4189,6 +4239,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.3.1.md/" class="navigation-list-link">
@@ -4197,6 +4249,8 @@
                       </a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -4820,6 +4874,8 @@
                   
                 
                   
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/playground/components/BarcodeScannerDialog/" class="navigation-list-link">
@@ -4828,6 +4884,8 @@
                       </a>
                       
                     </li>
+                  
+                
                   
                 
                   
@@ -5830,16 +5888,31 @@ If there is not enough space, the text of the <code>ui5-link</code> becomes trun
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleRole
+                            <br>
+                                 <code>accessible-role</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;link&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the ARIA role of the component.
+            
+            <b>Note:</b> Use the "button" role in cases when navigation is not expected to occur and the href property is not defined.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.9.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           design
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">LinkDesign</div>
+                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.LinkDesign</div>
                         <div class="cell api-table-content-cell">&quot;Default&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the component design. <br><br> <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           disabled
                             <br>
@@ -5850,7 +5923,7 @@ If there is not enough space, the text of the <code>ui5-link</code> becomes trun
                             Defines whether the component is disabled. <br><br> <b>Note:</b> When disabled, the click event cannot be triggered by the user.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           href
                             <br>
@@ -5861,7 +5934,7 @@ If there is not enough space, the text of the <code>ui5-link</code> becomes trun
                             Defines the component href. <br><br> <b>Note:</b> Standard hyperlink behavior is supported.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           target
                             <br>
@@ -5876,13 +5949,13 @@ If there is not enough space, the text of the <code>ui5-link</code> becomes trun
             <b>This property must only be used when the <code>href</code> property is set.</b>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           wrappingType
                             <br>
                                  <code>wrapping-type</code>
                         </div>
-                        <div class="cell api-table-content-cell">WrappingType</div>
+                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.WrappingType</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines how the text of a component will be displayed when there is not enough space. Available options are: <ul> <li><code>None</code> - The text will be truncated with an ellipsis.</li> <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li> </ul>
