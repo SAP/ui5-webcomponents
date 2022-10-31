@@ -51,6 +51,7 @@
     "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js",
     "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/\" \"./docs/\"",
     "prepare:samples:next": "node ./build-scripts-storybook/samples-prepare.js",
+    "prepare:samples:initial": "node ./build-scripts-storybook/samples-initial-stories.js",
     "prepare:documentation:next": "node ./build-scripts-storybook/documentation-prepare.js \"../../docs/\" \"./docs/\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
