@@ -1,5 +1,7 @@
 import { useOptions } from './useOptions';
 import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
+// import ui5
+import "@ui5/webcomponents-fiori/bundle.esm.js";
 
 export const parameters = {
   actions: { argTypesRegex: "^ui5-[a-z].*" },

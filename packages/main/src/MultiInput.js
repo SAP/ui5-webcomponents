@@ -88,8 +88,8 @@ const metadata = {
  * User can choose interaction for creating tokens.
  * Fiori Guidelines say that user should create tokens when:
  * <ul>
- * <li>Type a value in the input and press enter or focus out the input field (<code>change</code> event is fired)
- * <li>Select a value from the suggestion list</li> (<code>suggestion-item-select</code> event is fired)
+ * <li>Type a value in the input and press enter or focus out the input field (<code>change</code> event is fired)</li>
+ * <li>Select a value from the suggestion list (<code>suggestion-item-select</code> event is fired)</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>

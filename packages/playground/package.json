@@ -29,6 +29,7 @@
   },
   "scripts": {
     "build": "yarn install:dependencies && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist",
+    "build:next": "npm run prepare:samples:initial && npm-run-all --parallel prepare:next:* && npm run build-storybook && npm-run-all --parallel copy:next:*",
     "build_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist",
     "build:main": "yarn install:dependencies && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
     "build:main_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
@@ -47,14 +48,18 @@
     "copy:samples": "node ./build-scripts/samples-prepare.js",
     "prepare:bundle": "npm run build:bundle",
     "prepare:assets": "npm run clean:assets && npm run copy:assets",
+    "prepare:next:assets": "npm run prepare:assets",
     "prepare:samples": "npm run clean:samples && npm run copy:samples",
     "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js",
     "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/\" \"./docs/\"",
-    "prepare:samples:next": "node ./build-scripts-storybook/samples-prepare.js",
+    "prepare:next:samples": "node ./build-scripts-storybook/samples-prepare.js",
     "prepare:samples:initial": "node ./build-scripts-storybook/samples-initial-stories.js",
-    "prepare:documentation:next": "node ./build-scripts-storybook/documentation-prepare.js \"../../docs/\" \"./docs/\"",
+    "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js \"../../docs/\" \"./docs/\"",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook -o ./dist/playground",
+    "copy:next:assets": "copy-and-watch \"./assets/**/*\" \"./dist/assets\"",
+    "copy:next::index": "copy-and-watch \"./index.html\" \"./dist/\"",
+    "copy:next:nojekyll": "copy-and-watch \"./.nojekyll\" \"./dist/\""
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.11"

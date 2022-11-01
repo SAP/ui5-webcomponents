@@ -122,10 +122,10 @@ const metadata = {
 
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br /><br />
+		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br />
+		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
@@ -140,7 +140,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
 		/**
 		 * Defines the value of the component.
-		 * <br /><br />
+		 * <br><br>
 		 * <b>Note:</b> The property is updated upon typing.
 		 *
 		 * @type {string}
@@ -191,7 +191,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is in disabled state.
-		 * <br /><br />
+		 * <br><br>
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
@@ -204,7 +204,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br /><br />
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -225,7 +225,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is read-only.
-		 * <br /><br />
+		 * <br><br>
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -405,7 +405,7 @@ const metadata = {
  * you can open or close the drop-down by pressing <code>F4</code>, <code>ALT+UP</code> or <code>ALT+DOWN</code> keys.
  * Once the drop-down is opened, you can use the <code>UP</code> and <code>DOWN</code> arrow keys
  * to navigate through the available options and select one by pressing the <code>Space</code> or <code>Enter</code> keys.
- * <br />
+ * <br>
  *
  * <h4>Tokens</h4>
  * <ul>
@@ -417,7 +417,7 @@ const metadata = {
  * <h3>CSS Shadow Parts</h3>
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br />
+ * <br>
  * The <code>ui5-multi-combobox</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>token-{index} - Used to style each token(where <code>token-0</code> corresponds to the first item)</li>

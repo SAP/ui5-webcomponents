@@ -29,7 +29,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.RangeSlider.prototype */  {
 		/**
 		 * Defines start point of a selection - position of a first handle on the slider.
-		 * <br /><br />
+		 * <br><br>
 		 *
 		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 0
@@ -43,7 +43,7 @@ const metadata = {
 		},
 		/**
 		 * Defines end point of a selection - position of a second handle on the slider.
-		 * <br /><br />
+		 * <br><br>
 		 *
 		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 100

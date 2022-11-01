@@ -91,10 +91,10 @@ const metadata = {
 
 		/**
 		 * Defines the "live" value of the component.
-		 * <br /><br />
+		 * <br><br>
 		 * <b>Note:</b> If we have an item e.g. "Bulgaria", "B" is typed, "ulgaria" is typed ahead, value will be "Bulgaria", filterValue will be "B".
 		 *
-		 * <br /><br />
+		 * <br><br>
 		 * <b>Note:</b> Initially the filter value is synced with value.
 		 *
 		 * @type {string}
@@ -120,7 +120,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is in disabled state.
-		 * <br /><br />
+		 * <br><br>
 		 * <b>Note:</b> A disabled component is completely noninteractive.
 		 *
 		 * @type {boolean}
@@ -133,7 +133,7 @@ const metadata = {
 
 		/**
 		 * Defines the value state of the component.
-		 * <br /><br />
+		 * <br><br>
 		 * Available options are:
 		 * <ul>
 		 * <li><code>None</code></li>
@@ -154,7 +154,7 @@ const metadata = {
 
 		/**
 		 * Defines whether the component is read-only.
-		 * <br /><br />
+		 * <br><br>
 		 * <b>Note:</b> A read-only component is not editable,
 		 * but still provides visual feedback upon user interaction.
 		 *
@@ -274,10 +274,10 @@ const metadata = {
 
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br /><br />
+		 * <br><br>
 		 *
 		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br />
+		 * <br>
 		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 		 * when the <code>ui5-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 		 * @type {HTMLElement[]}
@@ -312,7 +312,7 @@ const metadata = {
 
 		/**
 		 * Fired when typing in input.
-		 * <br /><br />
+		 * <br><br>
 		 * <b>Note:</b> filterValue property is updated, input is changed.
 		 * @event
 		 * @public
@@ -355,7 +355,7 @@ const metadata = {
  * <h3>Keyboard Handling</h3>
  *
  * The <code>ui5-combobox</code> provides advanced keyboard handling.
- * <br />
+ * <br>
  *
  * <ul>
  * <li>[F4], [ALT]+[UP], or [ALT]+[DOWN] - Toggles the picker.</li>

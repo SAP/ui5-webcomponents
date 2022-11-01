@@ -72,6 +72,10 @@ packages/playground/docs/frameworks/
 packages/playground/docs/getting-started/
 packages/playground/docs/FAQ.md
 
+# Ignore the generated storybook related files
+packages/playground/_storiesGenerated/**/*/argsTypes.js
+packages/playground/_storiesGenerated/**/*/Description.md
+
 packages/main/test/pages/fix.js
 packages/fiori/test/pages/fix.js
 

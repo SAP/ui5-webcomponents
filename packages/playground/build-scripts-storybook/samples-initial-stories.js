@@ -53,8 +53,13 @@ const main = async () => {
 			$('.snippet').each((i, snippet) => {
 				const section = $(snippet).parent();
 				section.find("pre").remove();
+				const rawHtml = section
+					.html()
+					.trim()
+					.replace(/(^[ \t]*\n)/gm, "") // remove empty lines from a sample/snippet
+					.replaceAll("<br>", "<br/>");
 
-				snippets.push(section.html().trim().replace(/(^[ \t]*\n)/gm, "")); // remove empty lines from a sample/snippet
+				snippets.push(rawHtml);
 			});
 			await generateStory(package, file, api, snippets);
 			const appendDocs = api.symbols.find(s => s.module === file.split('.')[0]).appenddocs;

@@ -1,13 +1,12 @@
 module.exports = {
   "stories": [
-    "../**/index.stories.mdx",
+    "../docs/**/*.stories.mdx",
     "../_storiesGenerated/**/*.stories.mdx",
     "../**/*.stories.@(js|jsx|ts|tsx)",
   ],
   "addons": [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
-    "@storybook/addon-toolbar"
+    "@storybook/addon-essentials"
   ],
   "framework": "@storybook/web-components",
   "core": {
@@ -15,5 +14,9 @@ module.exports = {
   },
   "features": {
     "storyStoreV7": true
+  },
+  viteFinal: (config) => {
+    config.base = process.env.NODE_ENV === 'production' ? '/ui5-webcomponents/playground/' : '/';
+    return config
   }
 }

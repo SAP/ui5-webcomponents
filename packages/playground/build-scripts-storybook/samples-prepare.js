@@ -128,7 +128,7 @@ const main = async () => {
 				if (prop.visibility && prop.visibility === 'public') {
 					const controlType = UI5WC_TO_STORYBOOK_TYPES_MAP[prop.type] || 'select';
 					args[prop.name] = {
-						description: prop.description,
+						description: prop.description.replaceAll('<br>', '<br/>'),
 						control: controlType,
 						table: {
 							defaultValue: {
@@ -151,7 +151,7 @@ const main = async () => {
 			moduleAPI.slots.forEach(slot => {
 				if (slot.visibility && slot.visibility === 'public') {
 					args[slot.name] = {
-						description: slot.description,
+						description: slot.description.replaceAll('<br>', '<br/>'),
 						control: slot.type,
 						table: {
 							category: "Slots"
