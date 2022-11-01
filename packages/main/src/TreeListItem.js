@@ -317,7 +317,7 @@ class TreeListItem extends ListItem {
 		const accInfoSettings = {
 			role: this._minimal ? "menuitemradio" : "treeitem",
 			ariaExpanded: this.showToggleButton && !this._minimal ? this.expanded : undefined,
-			ariaLevel: this._minimal ? undefined: this.level,
+			ariaLevel: this._minimal ? undefined : this.level,
 			posinset: this._posinset,
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
