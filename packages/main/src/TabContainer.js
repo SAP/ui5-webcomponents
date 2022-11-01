@@ -237,9 +237,10 @@ const metadata = {
 		 * <li><code>Transparent</code></li>
 		 * </ul>
 		 *
-		 * @type {TabContainerBackgroundDesign}
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
 		 * @defaultvalue "Solid"
-		 * @private
+		 * @since 1.10.0
+		 * @public
 		 */
 		headerBackgroundDesign: {
 			type: TabContainerBackgroundDesign,
@@ -256,9 +257,10 @@ const metadata = {
 		 * <li><code>Transparent</code></li>
 		 * </ul>
 		 *
-		 * @type {TabContainerBackgroundDesign}
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
 		 * @defaultvalue "Solid"
-		 * @private
+		 * @since 1.10.0
+		 * @public
 		 */
 		contentBackgroundDesign: {
 			type: TabContainerBackgroundDesign,

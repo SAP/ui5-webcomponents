@@ -676,15 +676,15 @@
 		<h2>Background design</h2>
 		<div class="design-options">
 			<div role="radiogroup" id="radioGroup-headerDesign" class="radio-button-group">
-				<ui5-title level="H4">Header Background</ui5-title>
-				<ui5-radio-button text="Solid" checked value-state="None" name="Group1"></ui5-radio-button>
-				<ui5-radio-button text="Transparent" value-state="None" name="Group1"></ui5-radio-button>
+				<ui5-label>Header Background</ui5-label>
+				<ui5-radio-button text="Solid" checked name="Group1"></ui5-radio-button>
+				<ui5-radio-button text="Transparent" name="Group1"></ui5-radio-button>
 			</div>
 
 			<div role="radiogroup2" id="radioGroup-contentDesign" class="radio-button-group">
-				<ui5-title level="H4">Content Background</ui5-title>
-				<ui5-radio-button text="Solid" value-state="None" name="Group2"></ui5-radio-button>
-				<ui5-radio-button text="Transparent" checked value-state="None" name="Group2"></ui5-radio-button>
+				<ui5-label>Content Background</ui5-label>
+				<ui5-radio-button text="Solid" name="Group2"></ui5-radio-button>
+				<ui5-radio-button text="Transparent" checked name="Group2"></ui5-radio-button>
 			</div>
 		</div>
 		<ui5-tabcontainer id="tabContainerBackgroundDesign" header-background-design="Solid" content-background-design="Transparent">
@@ -858,11 +858,11 @@
 		const radioGroupHeaderDesign = document.getElementById("radioGroup-headerDesign");
 		const radioGroupContentDesign = document.getElementById("radioGroup-contentDesign");
 		const tabContainerBackgroundDesign = document.getElementById("tabContainerBackgroundDesign");
-		radioGroupHeaderDesign.addEventListener("change", function(e) {
+		radioGroupHeaderDesign.addEventListener("change", function (e) {
 			tabContainerBackgroundDesign.headerBackgroundDesign = e.target.text;
 		});
 
-		radioGroupContentDesign.addEventListener("change", function(e) {
+		radioGroupContentDesign.addEventListener("change", function (e) {
 			tabContainerBackgroundDesign.contentBackgroundDesign = e.target.text;
 		});
 

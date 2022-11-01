@@ -1,19 +1,20 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
+ * Background design for the header and content of Tab Container
  * @lends sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype
  * @public
  */
 const TabContainerBackgroundDesigns = {
 	/**
-	 * Solid color
+	 * A Solid background color.
 	 * @public
 	 * @type {Solid}
 	 */
 	Solid: "Solid",
 
 	/**
-	 * Transparent color
+	 * A Transparent background color.
 	 * @public
 	 * @type {Transparent}
 	 */
