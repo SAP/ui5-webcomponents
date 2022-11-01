@@ -346,7 +346,7 @@ const metadata = {
  * <h3>Structure</h3>
  * The <code>ui5-combobox</code> consists of the following elements:
  * <ul>
- * <li> Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value.
+ * <li> Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value.</li>
  * <li> Drop-down arrow - expands\collapses the option list.</li>
  * <li> Option list - the list of available options.</li>
  * </ul>

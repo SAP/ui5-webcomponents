@@ -140,7 +140,7 @@ const metadata = {
  *
  * <h3>Usage</h3>
  *
- * <h4>When to use:</h4
+ * <h4>When to use:</h4>
  * Use the color picker if:
  * <ul>
  * <li> users need to select any color freely.</li>

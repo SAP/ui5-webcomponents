@@ -391,8 +391,8 @@ const metadata = {
  * <h3>Structure</h3>
  * The <code>ui5-multi-combobox</code> consists of the following elements:
  * <ul>
- * <li> Tokenizer - a list of tokens with selected options.
- * <li> Input field - displays the selected option/s as token/s. Users can type to filter the list.
+ * <li> Tokenizer - a list of tokens with selected options.</li>
+ * <li> Input field - displays the selected option/s as token/s. Users can type to filter the list.</li>
  * <li> Drop-down arrow - expands\collapses the option list.</li>
  * <li> Option list - the list of available options.</li>
  * </ul>
