@@ -440,8 +440,13 @@
 	box-sizing: border-box;
 }
 
-:host([value-state]:not([value-state="None"])) .ui5-input-clear-icon-wrapper {
-	height: 100%;
+:host([value-state]:not([value-state="None"]):not([value-state="Success"])) .ui5-input-clear-icon-wrapper {
+	height: var(--_ui5_input_icon_wrapper_state_height);
+	vertical-align: top;
+}
+
+:host([value-state="Success"]) .ui5-input-clear-icon-wrapper {
+	height: var(--_ui5_input_icon_wrapper_success_state_height);
 }
 
 [ui5-icon].ui5-input-clear-icon {

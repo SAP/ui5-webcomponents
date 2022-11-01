@@ -63,6 +63,8 @@
 	--_ui5-input_error_placeholder_color: var(--sapField_PlaceholderTextColor);
 	--_ui5_input_icon_width: 2.25rem;
 	--_ui5_input_icon_wrapper_height: 100%;
+	--_ui5_input_icon_wrapper_state_height: 100%;
+	--_ui5_input_icon_wrapper_success_state_height: 100%;
 }
 
 [data-ui5-compact-size],
