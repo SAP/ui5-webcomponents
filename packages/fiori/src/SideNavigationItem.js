@@ -129,6 +129,10 @@ class SideNavigationItem extends UI5Element {
 	get _tooltip() {
 		return this.title || this.text;
 	}
+
+	get _ariaHasPopup() {
+		return (this.parentNode.collapsed && this.items.length) ? "tree" : undefined;
+	}
 }
 
 SideNavigationItem.define();

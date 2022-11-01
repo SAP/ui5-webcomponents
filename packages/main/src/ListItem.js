@@ -110,9 +110,8 @@ const metadata = {
 			defaultValue: ListMode.None,
 		},
 
-		_ariaHasPopup: {
+		ariaHaspopup: {
 			type: String,
-			noAttribute: true,
 		},
 
 	},
@@ -421,7 +420,7 @@ class ListItem extends ListItemBase {
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this._ariaHasPopup || undefined,
+			ariaHaspopup: this.ariaHaspopup || undefined,
 		};
 	}
 

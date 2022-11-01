@@ -35,7 +35,8 @@
             @ui5-step-out="{{../_onListItemStepOut}}"
             @mouseover="{{../_onListItemMouseOver}}"
             @mouseout="{{../_onListItemMouseOut}}"
-			aria-roledescription="{{this.treeItem.ariaRoleDescription}}"
+            aria-roledescription="{{this.treeItem.ariaRoleDescription}}"
+            aria-haspopup="{{this.treeItem.ariaHaspopup}}"
             exportparts="icon, toggle-icon"
         >
             {{> treeListItemContent}}

@@ -140,6 +140,10 @@ const metadata = {
 			type: String,
 			defaultValue: undefined,
 		},
+
+		ariaHaspopup: {
+			type: String
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {

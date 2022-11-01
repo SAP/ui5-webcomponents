@@ -20,6 +20,7 @@
 					?has-children="{{this.item.items.length}}"
 					?expanded="{{this.item.expanded}}"
 					?selected="{{this.selected}}"
+					aria-haspopup="{{this.item._ariaHasPopup}}"
 					aria-roledescription="{{../ariaRoleDescNavigationListItem}}"
 				>
 					{{#unless ../collapsed}}
