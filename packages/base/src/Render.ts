@@ -158,11 +158,11 @@ const reRenderAllUI5Elements = async (filters?: {tag?: string, rtlAware?: boolea
 	await renderFinished();
 };
 
-const attachBeforeComponentRender = (listener: () => void) => {
+const attachBeforeComponentRender = (listener: Function) => {
 	eventProvider.attachEvent("beforeComponentRender", listener);
 };
 
-const detachBeforeComponentRender = (listener: () => void) => {
+const detachBeforeComponentRender = (listener: Function) => {
 	eventProvider.detachEvent("beforeComponentRender", listener);
 };
 
