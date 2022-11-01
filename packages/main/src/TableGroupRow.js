@@ -44,7 +44,7 @@ const metadata = {
 		 * <li><code>SingleSelect</code></li>
 		 * <li><code>MultiSelect</code></li>
 		 * </ul>
-		 * @type {TableMode}
+		 * @type {sap.ui.webcomponents.main.types.TableMode}
 		 * @defaultvalue "None"
 		 * @private
 		 */

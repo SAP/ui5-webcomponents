@@ -106,7 +106,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.BarcodeScannerDialog
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-barcode-scanner-dialog
  * @public
  * @since 1.0.0-rc.15

@@ -103,7 +103,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -172,7 +172,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TreeItem
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-tree-item
  * @public
  * @implements sap.ui.webcomponents.main.ITreeItem

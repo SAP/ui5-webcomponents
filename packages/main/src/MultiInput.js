@@ -99,7 +99,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MultiInput
- * @extends Input
+ * @extends sap.ui.webcomponents.main.Input
  * @tagname ui5-multi-input
  * @appenddocs Token
  * @since 1.0.0-rc.9

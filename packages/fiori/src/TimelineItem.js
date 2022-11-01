@@ -95,7 +95,7 @@ const metadata = {
 		/**
 		 * Defines the items orientation.
 		 *
-		 * @type {TimelineLayout}
+		 * @type {sap.ui.webcomponents.fiori.types.TimelineLayout}
 		 * @defaultvalue "Vertical"
 		 * @private
 		 */
@@ -139,7 +139,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.TimelineItem
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-timeline-item
  * @implements sap.ui.webcomponents.fiori.ITimelineItem
  * @public

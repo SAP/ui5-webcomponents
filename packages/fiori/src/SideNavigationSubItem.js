@@ -73,7 +73,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.SideNavigationSubItem
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-side-navigation-sub-item
  * @public
  * @since 1.0.0-rc.8

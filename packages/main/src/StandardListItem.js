@@ -76,7 +76,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -104,7 +104,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> this property takes affect only if text node is provided to default slot of the component
-		 * @type {WrappingType}
+		 * @type {sap.ui.webcomponents.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @private
 		 * @since 1.5.0
@@ -162,7 +162,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.StandardListItem
- * @extends ListItem
+ * @extends sap.ui.webcomponents.main.ListItem
  * @tagname ui5-li
  * @implements sap.ui.webcomponents.main.IListItem
  * @public

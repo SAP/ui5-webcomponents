@@ -41,6 +41,7 @@ const getConfigurationSettingsObject = () => {
 		animationMode: config.getAnimationMode(),
 		language: config.getLanguage(),
 		theme: config.getTheme(),
+		themeRoot: config.getThemeRoot(),
 		rtl: config.getRTL(),
 		calendarType: config.getCalendarType(),
 		formatSettings: {

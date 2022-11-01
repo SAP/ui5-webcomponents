@@ -109,7 +109,7 @@ const metadata = {
 		 * Depending on the usage, you can change the role from the default <code>Form</code>
 		 * to <code>Region</code> or <code>Complementary</code>.
 		 *
-		 * @type {PanelAccessibleRole}
+		 * @type {sap.ui.webcomponents.main.types.PanelAccessibleRole}
 		 * @defaultvalue "Form"
 		 * @public
 		 */
@@ -123,7 +123,7 @@ const metadata = {
 		 * set by the <code>headerText</code>.
 		 * <br><br>
 		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
-		 * @type {TitleLevel}
+		 * @type {sap.ui.webcomponents.main.types.TitleLevel}
 		 * @defaultvalue "H2"
 		 * @public
 		*/

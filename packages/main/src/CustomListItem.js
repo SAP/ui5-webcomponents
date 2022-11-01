@@ -49,7 +49,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.CustomListItem
- * @extends ListItem
+ * @extends sap.ui.webcomponents.main.ListItem
  * @tagname ui5-li-custom
  * @implements sap.ui.webcomponents.main.IListItem
  * @public

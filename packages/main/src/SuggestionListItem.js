@@ -45,7 +45,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SuggestionListItem
- * @extends StandardListItem
+ * @extends sap.ui.webcomponents.main.StandardListItem
  * @tagname ui5-li-suggestion-item
  */
 class SuggestionListItem extends StandardListItem {

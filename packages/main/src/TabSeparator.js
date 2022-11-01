@@ -26,7 +26,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TabSeparator
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-tab-separator
  * @implements sap.ui.webcomponents.main.ITab
  * @public

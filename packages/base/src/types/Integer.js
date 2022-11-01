@@ -5,7 +5,7 @@ import DataType from "./DataType.js";
  * Integer data type.
  *
  * @constructor
- * @extends DataType
+ * @extends sap.ui.webcomponents.base.types.DataType
  * @author SAP SE
  * @alias sap.ui.webcomponents.base.types.Integer
  * @public

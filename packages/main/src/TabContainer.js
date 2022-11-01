@@ -141,7 +141,7 @@ const metadata = {
 		 * <li><code>Bottom</code></li>
 		 * </ul>
 		 *
-		 * @type {TabContainerTabsPlacement}
+		 * @type {sap.ui.webcomponents.main.types.TabContainerTabsPlacement}
 		 * @defaultvalue "Top"
 		 * @since 1.0.0-rc.7
 		 * @private
@@ -182,7 +182,7 @@ const metadata = {
 		 * <li><code>Inline</code></li>
 		 * </ul>
 		 *
-		 * @type {TabLayout}
+		 * @type {sap.ui.webcomponents.main.types.TabLayout}
 		 * @defaultvalue "Standard"
 		 * @public
 		 */
@@ -207,7 +207,7 @@ const metadata = {
 		 * <li><code>StartAndEnd</code></li>
 		 * </ul>
 		 *
-		 * @type {TabsOverflowMode}
+		 * @type {sap.ui.webcomponents.main.types.TabsOverflowMode}
 		 * @defaultvalue "End"
 		 * @since 1.1.0
 		 * @public

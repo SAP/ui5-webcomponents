@@ -65,7 +65,7 @@ const metadata = {
 		 * <li><code>End</code></li>
 		 * </ul>
 		 *
-		 * @type {SideContentPosition}
+		 * @type {sap.ui.webcomponents.fiori.types.SideContentPosition}
 		 * @defaultvalue "End"
 		 * @public
 		 *
@@ -89,7 +89,7 @@ const metadata = {
 		 * <li><code>NeverShow</code></li>
 		 * </ul>
 		 *
-		 * @type {SideContentVisibility}
+		 * @type {sap.ui.webcomponents.fiori.types.SideContentVisibility}
 		 * @defaultvalue "ShowAboveS"
 		 * @public
 		 *
@@ -112,7 +112,7 @@ const metadata = {
 		 * <li><code>OnMinimumWidth</code></li>
 		 * </ul>
 		 *
-		 * @type {SideContentFallDown}
+		 * @type {sap.ui.webcomponents.fiori.types.SideContentFallDown}
 		 * @defaultvalue "OnMinimumWidth"
 		 * @public
 		 *
@@ -300,7 +300,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.DynamicSideContent
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-dynamic-side-content
  * @public
  * @since 1.1.0
