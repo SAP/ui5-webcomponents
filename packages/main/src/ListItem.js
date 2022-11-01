@@ -1,3 +1,4 @@
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
@@ -114,6 +115,9 @@ const metadata = {
 			type: String,
 		},
 
+		_level: {
+			type: Integer,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -416,7 +420,7 @@ class ListItem extends ListItemBase {
 		return {
 			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
-			ariaLevel: undefined,
+			ariaLevel: this._level || undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,

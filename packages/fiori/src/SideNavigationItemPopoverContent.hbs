@@ -9,13 +9,13 @@
 	<ui5-list
 		mode="None"
 		aria-roledescription="{{ariaRoleDescPopoverNavigationList}}"
-		role="tree"
+		accessible-role="tree"
 		@ui5-item-click="{{handleListItemClick}}"
 	>
 		<ui5-li
 			title="{{_popoverContent.mainItem._tooltip}}"
 			role="treeitem"
-			aria-level="1"
+			_level="1"
 			aria-selected="{{this.selected}}"
 			aria-roledescription="{{ariaRoleDescPopoverNavigationListItem}}"
 			?selected="{{_popoverContent.mainItemSelected}}"
@@ -26,7 +26,7 @@
 			<ui5-li
 				title="{{this._tooltip}}"
 				role="treeitem"
-				aria-level="2"
+				_level="2"
 				aria-selected="{{this.selected}}"
 				aria-roledescription="{{ariaRoleDescPopoverNavigationListItem}}"
 				?selected="{{this.selected}}"
