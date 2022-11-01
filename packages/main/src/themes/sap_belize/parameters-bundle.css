@@ -1,4 +1,4 @@
-@import "../base/sizes-parameters.css";
+@import "./sizes-parameters.css";
 @import "../base/rtl-parameters.css";
 @import "../base/Avatar-parameters.css";
 @import "../base/AvatarGroup-parameters.css";
@@ -40,7 +40,7 @@
 @import "./TableRow-parameters.css";
 @import "../base/TableGroupRow-parameters.css";
 @import "../base/GrowingButton-parameters.css";
-@import "../base/TextArea-parameters.css";
+@import "./TextArea-parameters.css";
 @import "./TimePicker-parameters.css";
 @import "../base/Toast-parameters.css";
 @import "../base/ToggleButton-parameters.css";
