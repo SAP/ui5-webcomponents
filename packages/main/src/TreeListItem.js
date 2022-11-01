@@ -161,7 +161,7 @@ const metadata = {
 		},
 
 		ariaHaspopup: {
-			type: String
+			type: String,
 		},
 
 	},
@@ -322,7 +322,7 @@ class TreeListItem extends ListItem {
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
-			ariaHaspopup: this.ariaHaspopup || undefined
+			ariaHaspopup: this.ariaHaspopup || undefined,
 		};
 
 		if (this._minimal) {

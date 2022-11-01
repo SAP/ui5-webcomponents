@@ -142,7 +142,7 @@ const metadata = {
 		},
 
 		ariaHaspopup: {
-			type: String
+			type: String,
 		},
 	},
 	managedSlots: true,
