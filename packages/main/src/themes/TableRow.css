@@ -42,6 +42,22 @@
 	font-size: var(--sapFontSize);
 }
 
+.ui5-table-cell-display-inline {
+	display: inline-flex;
+	margin-inline-start: 0.5rem;
+}
+
+/* change line-hight of ui5-label
+between the element I add a class to and the element that I want to style
+there is a slot, so I use slotted, but that makes it inpossible to access the grandchild
+and I can not override the style I want to*/
+.ui5-table-cell-display-inline ::slotted(*) {
+	padding-top: 0;
+	line-height: 1 !important;
+}
+/* accordding to margins and paddings: the <td role="cell"> parent element
+becomes higher than its children - spans for no reason and has a padding-top that should be removed*/
+
 .ui5-table-multi-select-cell {
 	padding: .25rem 0;
 	box-sizing: border-box;

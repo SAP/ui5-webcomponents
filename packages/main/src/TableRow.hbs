@@ -55,12 +55,19 @@
 				{{#if this.popinText}}
 					<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
 				{{/if}}
-				<div>
-					<slot name="{{this.cell._individualSlot}}"></slot>
-				</div>
+				{{#if popinDisplayInline}}
+					<span class="ui5-table-cell-display-inline">
+						<slot name="{{this.cell._individualSlot}}"></slot>
+					</span>
+				{{else}}
+					<div>
+						<slot name="{{this.cell._individualSlot}}"></slot>
+					</div>
+				{{/if}}
 			</td>
 		</tr>
 	{{/each}}
 {{/if}}
+
 
 

@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
+import popinDisplay from "./types/TableCellPopinDisplayType";
 
 // Styles
 import styles from "./generated/themes/TableColumn.css.js";
@@ -63,6 +64,26 @@ const metadata = {
 		 */
 		demandPopin: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines how the popin row is displayed.
+		 *
+		 * <br><br>
+		 * <b>The available values are:</b>
+		 *
+		 * <ul>
+		 * <li><code>Block</code></li>
+		 * <li><code>Inline</code></li>
+		 * </ul>
+		 *
+		 * @type {popinDisplay}
+		 * @defaultvalue "Block"
+		 * @public
+		 */
+		popinDisplay: {
+			type: popinDisplay,
+			defaultValue: popinDisplay.Block,
 		},
 
 		/**

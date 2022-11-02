@@ -365,7 +365,7 @@ class TableRow extends UI5Element {
 		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
 		this._columnsInfo.forEach((info, index) => {
 			const cell = this.cells[index];
-
+			const popinDisplay = info.popinDisplay === "Inline";
 			if (!cell) {
 				return;
 			}
@@ -379,8 +379,8 @@ class TableRow extends UI5Element {
 					cell,
 					popinText: info.popinText,
 					classes: `ui5-table-popin-row ${allColumnsPoppedInClass} ${popinHeaderClass}`,
+					popinDisplayInline: popinDisplay,
 				});
-
 				cell.popined = true;
 			} else {
 				cell.popined = false;
