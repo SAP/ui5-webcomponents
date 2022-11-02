@@ -120,7 +120,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>maxlength</code> property is set,
 		 * the component turns into "Warning" state once the characters exceeds the limit.
 		 * In this case, only the "Error" state is considered and can be applied.
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.7
 		 * @public
@@ -140,7 +140,7 @@ const metadata = {
 		 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
 		 * </ul>
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -152,7 +152,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of characters that the <code>value</code> can have.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultValue null
 		 * @public
 		 */
@@ -181,7 +181,6 @@ const metadata = {
 		/**
 		 * Enables the component to automatically grow and shrink dynamically with its content.
 		 * <br><br>
-		 * <b>Note:</b> If set to <code>true</code>, the CSS <code>height</code> property is ignored.
 		 * @type {boolean}
 		 * @defaultvalue false
 		 * @public
@@ -193,7 +192,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of lines that the component can grow.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -411,12 +410,7 @@ class TextArea extends UI5Element {
 		this._mirrorText = this._tokenizeText(this.value);
 
 		this.exceeding = this._exceededTextProps.leftCharactersCount < 0;
-
-		if (this.growingMaxLines) {
-			// this should be complex calc between line height and paddings - TODO: make it stable
-			this._maxHeight = `${this.growingMaxLines * 1.4 * 14 + 9}px`;
-		}
-
+		this._setCSSParams();
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
@@ -426,6 +420,14 @@ class TextArea extends UI5Element {
 	}
 
 	onAfterRendering() {
+		const nativeTextArea = this.getInputDomRef();
+
+		if (this.rows === 1) {
+			nativeTextArea.setAttribute("rows", 1);
+		} else {
+			nativeTextArea.removeAttribute("rows");
+		}
+
 		this.toggleValueStateMessage(this.openValueStateMsgPopover);
 		this._firstRendering = false;
 	}
@@ -490,6 +492,11 @@ class TextArea extends UI5Element {
 		}
 	}
 
+	_setCSSParams() {
+		this.style.setProperty("--_textarea_rows", this.rows || "2");
+		this.style.setProperty("--_textarea_growing_max_lines", this.growingMaxLines);
+	}
+
 	toggleValueStateMessage(toggle) {
 		if (toggle) {
 			this.openPopover();
@@ -500,7 +507,7 @@ class TextArea extends UI5Element {
 
 	async openPopover() {
 		this.popover = await this._getPopover();
-		this.popover && this.popover.showAt(this.shadowRoot.querySelector(".ui5-textarea-inner"));
+		this.popover && this.popover.showAt(this.shadowRoot.querySelector(".ui5-textarea-root .ui5-textarea-wrapper"));
 	}
 
 	async closePopover() {
@@ -575,21 +582,7 @@ class TextArea extends UI5Element {
 	}
 
 	get styles() {
-		const lineHeight = 1.4 * 16;
-		const mainHeight = (this.rows * lineHeight) + (this.showExceededText ? 32 : 0);
-
 		return {
-			mirror: {
-				"max-height": this._maxHeight,
-			},
-			main: {
-				width: "100%",
-				height: (this.rows && !this.growing) ? `${mainHeight}px` : "100%",
-			},
-			focusDiv: {
-				"height": (this.showExceededText ? "calc(100% - 26px)" : "100%"),
-				"max-height": (this._maxHeight),
-			},
 			valueStateMsgPopover: {
 				"max-width": `${this._width}px`,
 			},

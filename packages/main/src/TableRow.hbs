@@ -11,14 +11,16 @@
 	@touchend="{{_ontouchend}}"
 	aria-label="{{ariaLabelText}}"
 	aria-selected="{{this.selected}}"
+	aria-current="{{_ariaCurrent}}"
 	data-sap-focus-ref
 	part="row"
+	data-ui5-dir="{{effectiveDir}}"
 >
 
 	{{#if isMultiSelect}}
-		<td 
-			class="ui5-table-multi-select-cell" 
-			aria-hidden="true" 
+		<td
+			class="ui5-table-multi-select-cell"
+			aria-hidden="true"
 			role="presentation"
 		>
 			<ui5-checkbox
@@ -41,6 +43,10 @@
 			<slot name="{{this._individualSlot}}"></slot>
 		{{/each}}
 	{{/if}}
+
+	<td class="ui5-table-row-navigated">
+		<div class="ui5-table-div-navigated"></div>
+	</td>
 </tr>
 
 {{#if shouldPopin}}
@@ -57,6 +63,12 @@
 					<slot name="{{this.cell._individualSlot}}"></slot>
 				</div>
 			</td>
+
+			<td class="ui5-table-row-navigated">
+				<div class="ui5-table-div-navigated"></div>
+			</td>
 		</tr>
 	{{/each}}
 {{/if}}
+
+

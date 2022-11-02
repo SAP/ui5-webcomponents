@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>ui5-input</title>
+	<script src="../../bundle.esm.js" type="module"></script>
+</head>
+
+<style>
+	.wrapper {
+		padding: .5rem;
+		box-sizing: border-box;
+		border: 1px grey dashed;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+	}
+
+	.field {
+		margin-top: .25rem;
+		display: block;
+	}
+
+	.field,
+	.fields {
+		width: 540px
+	}
+
+	#slider {
+		margin-top: 1rem;
+		width: 540px;
+	}
+</style>
+
+<body>
+	<div class="wrapper">
+
+		<div class="fields">
+			<ui5-input placeholder="input" class="field"></ui5-input>
+			<ui5-multi-input placeholder="multi-input" class="field"></ui5-multi-input>
+			<ui5-step-input placeholder="step-input" class="field"></ui5-step-input>
+			<ui5-textarea placeholder="textarea" class="field"></ui5-textarea>
+			<ui5-combobox placeholder="combobox" class="field"></ui5-combobox>
+			<ui5-multi-combobox placeholder="multi-combobox" class="field"></ui5-multi-combobox>
+			<ui5-select placeholder="select" class="field"></ui5-select>
+			<ui5-datetime-picker placeholder="datetime-picker" class="field"></ui5-datetime-picker>
+			<ui5-daterange-picker placeholder="daterange-picker" class="field"></ui5-daterange-picker>
+			<ui5-time-picker placeholder="time-picker" class="field"></ui5-time-picker>
+			<ui5-duration-picker placeholder="duration-picker" class="field"></ui5-duration-picker>
+		</div>
+
+
+		<ui5-slider id="slider" show-tickmarks value="540" min="0" max="540" step="1" label-interval="1"></ui5-slider>
+
+		<ui5-label id="label-width">fields width: 540</ui5-label>
+	</div>
+
+	<script>
+		const fields = document.querySelectorAll(".field");
+
+		document.getElementById("slider").addEventListener("input", event => {
+			Array.from(fields).forEach(el => {
+				el.style.width = `${event.target.value}px`;
+				document.getElementById("label-width").textContent = `Field width: ${event.target.value}px`;
+			})
+		});
+	</script>
+</body>
+</html>

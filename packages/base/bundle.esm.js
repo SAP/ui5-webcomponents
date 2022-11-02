@@ -10,6 +10,7 @@ import "./test/elements/NoShadowDOM.js";
 import "./test/elements/Parent.js";
 import "./test/elements/Child.js";
 import "./test/elements/WithStaticArea.js";
+import "./test/elements/WithComplexTemplate.js";
 import "./test/elements/GenericExt.js";
 
 // Test themes - CSS Vars for the sap_fiori_3, sap_fiori_3_dark, sap_belize and sap_belize_hcb themes

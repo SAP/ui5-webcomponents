@@ -23,8 +23,10 @@ const metadata = {
 		/**
 		 * Current value of the slider
 		 *
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 0
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -99,7 +101,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Slider
- * @extends SliderBase
+ * @extends sap.ui.webcomponents.main.SliderBase
  * @tagname ui5-slider
  * @since 1.0.0-rc.11
  * @public

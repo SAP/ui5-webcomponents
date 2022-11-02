@@ -26,6 +26,7 @@ html,
 
 .customTextArea::part(textarea) {
     background: bisque;
+	border-radius: var(--sapField_BorderCornerRadius);
 }
 
 .textarea1auto {

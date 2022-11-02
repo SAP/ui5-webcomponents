@@ -61,7 +61,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
 		 * in 67%/33% proportion.
-		 * @type {FCLLayout}
+		 * @type {sap.ui.webcomponents.fiori.types.FCLLayout}
 		 * @defaultvalue "OneColumn"
 		 * @public
 		 */
@@ -126,7 +126,7 @@ const metadata = {
 		/**
 		* Defines the component width in px.
 		*
-		* @type {Float}
+		* @type {sap.ui.webcomponents.base.types.Float}
 		* @defaultvalue 0
 		* @private
 		*/
@@ -140,7 +140,7 @@ const metadata = {
 		* based on both the <code>layout</code> property and the screen size.
 		* Example: [67%, 33%, 0], [25%, 50%, 25%], etc.
 		*
-		* @type {Object}
+		* @type {object}
 		* @defaultvalue undefined
 		* @private
 		*/
@@ -152,7 +152,7 @@ const metadata = {
 		/**
 		* Defines the visible columns count - 1, 2 or 3.
 		*
-		* @type {Integer}
+		* @type {sap.ui.webcomponents.base.types.Integer}
 		* @defaultvalue 1
 		* @private
 		*/
@@ -164,7 +164,7 @@ const metadata = {
 		/**
 		 * Allows the user to replace the whole layouts configuration
 		 *
-		 * @type {Object}
+		 * @type {object}
 		 * @private
 		 * @sap-restricted
 		 */
@@ -209,8 +209,8 @@ const metadata = {
 		 * Fired when the layout changes via user interaction by clicking the arrows
 		 * or by changing the component size due to resizing.
 		 *
-		 * @param {FCLLayout} layout The current layout
-		 * @param {Array} columnLayout The effective column layout, f.e [67%, 33%, 0]
+		 * @param {sap.ui.webcomponents.fiori.types.FCLLayout} layout The current layout
+		 * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
 		 * @param {boolean} startColumnVisible Indicates if the start column is currently visible
 		 * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
 		 * @param {boolean} endColumnVisible Indicates if the end column is currently visible
@@ -276,7 +276,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.FlexibleColumnLayout
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-flexible-column-layout
  * @public
  * @since 1.0.0-rc.8
@@ -493,7 +493,7 @@ class FlexibleColumnLayout extends UI5Element {
 	 * <b>For example:</b> ["67%", "33%", 0], ["100%", 0, 0], ["25%", "50%", "25%"], etc,
 	 * where the numbers represents the width of the start, middle and end columns.
 	 * @readonly
-	 * @type { Array }
+	 * @type {array}
 	 * @defaultvalue ["100%", 0, 0]
 	 * @public
 	 */
@@ -505,7 +505,7 @@ class FlexibleColumnLayout extends UI5Element {
 	 * Returns if the <code>start</code> column is visible.
 	 * @readonly
 	 * @defaultvalue true
-	 * @type { boolean }
+	 * @type {boolean}
 	 * @public
 	 */
 	get startColumnVisible() {
@@ -519,7 +519,7 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	 * Returns if the <code>middle</code> column is visible.
 	 * @readonly
-	 * @type { boolean }
+	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -534,7 +534,7 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	 * Returns if the <code>end</code> column is visible.
 	 * @readonly
-	 * @type { boolean }
+	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -549,7 +549,7 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	 * Returns the number of currently visible columns.
 	 * @readonly
-	 * @type { Integer }
+	 * @type {sap.ui.webcomponents.base.types.Integer}
 	 * @defaultvalue 1
 	 * @public
 	 */

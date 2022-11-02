@@ -30,7 +30,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.YearPicker.prototype */ {
 		/**
 		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
-		 * @type {Array}
+		 * @type {array}
 		 * @public
 		 */
 		selectedDates: {
@@ -74,7 +74,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.YearPicker
- * @extends CalendarPart
+ * @extends sap.ui.webcomponents.main.CalendarPart
  * @tagname ui5-yearpicker
  * @public
  */

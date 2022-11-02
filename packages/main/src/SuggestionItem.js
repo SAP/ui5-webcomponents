@@ -28,7 +28,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
 		 * while when <code>Inactive</code> or <code>Detail</code> - will not.
 		 *
-		 * @type {ListItemType}
+		 * @type {sap.ui.webcomponents.main.types.ListItemType}
 		 * @defaultvalue "Active"
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -101,7 +101,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br><br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15
 		 * @public
@@ -124,7 +124,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SuggestionItem
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-suggestion-item
  * @implements sap.ui.webcomponents.main.IInputSuggestionItem
  * @public

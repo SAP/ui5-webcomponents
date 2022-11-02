@@ -147,7 +147,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.WizardTab
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-wizard-tab
  * @private
  */

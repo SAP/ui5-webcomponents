@@ -57,6 +57,8 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -75,7 +77,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -368,7 +370,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DatePicker
- * @extends DateComponentBase
+ * @extends sap.ui.webcomponents.main.DateComponentBase
  * @tagname ui5-date-picker
  * @public
  */
@@ -811,7 +813,7 @@ class DatePicker extends DateComponentBase {
 	 * Currently selected date represented as a Local JavaScript Date instance.
 	 *
 	 * @readonly
-	 * @type { Date }
+	 * @type {Date}
 	 * @public
 	 */
 	get dateValue() {

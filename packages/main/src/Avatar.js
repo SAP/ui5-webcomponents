@@ -84,7 +84,7 @@ const metadata = {
 		 * <li><code>Circle</code></li>
 		 * <li><code>Square</code></li>
 		 * </ul>
-		 * @type {AvatarShape}
+		 * @type {sap.ui.webcomponents.main.types.AvatarShape}
 		 * @defaultvalue "Circle"
 		 * @public
 		 */
@@ -104,7 +104,7 @@ const metadata = {
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
 		 * </ul>
-		 * @type {AvatarSize}
+		 * @type {sap.ui.webcomponents.main.types.AvatarSize}
 		 * @defaultvalue "S"
 		 * @public
 		 */
@@ -138,7 +138,7 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * </ul>
-		 * @type {AvatarColorScheme}
+		 * @type {sap.ui.webcomponents.main.types.AvatarColorScheme}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
@@ -276,7 +276,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Avatar
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-avatar
  * @since 1.0.0-rc.6
  * @implements sap.ui.webcomponents.main.IAvatar
@@ -314,7 +314,7 @@ class Avatar extends UI5Element {
 	/**
 	 * Returns the effective avatar size.
 	 * @readonly
-	 * @type { String }
+	 * @type {string}
 	 * @defaultValue "S"
 	 * @private
 	 */
@@ -326,7 +326,7 @@ class Avatar extends UI5Element {
 	/**
 	 * Returns the effective background color.
 	 * @readonly
-	 * @type { String }
+	 * @type {string}
 	 * @defaultValue "Accent6"
 	 * @private
 	 */

@@ -72,7 +72,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ListItemBase
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @public
  */
 class ListItemBase extends UI5Element {

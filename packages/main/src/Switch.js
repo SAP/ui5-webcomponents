@@ -31,7 +31,7 @@ const metadata = {
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 *
 		 * @public
-		 * @type {SwitchDesign}
+		 * @type {sap.ui.webcomponents.main.types.SwitchDesign}
 		 * @defaultValue "Textual"
 		 */
 		design: {
@@ -46,6 +46,8 @@ const metadata = {
 		 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 */
 		checked: {

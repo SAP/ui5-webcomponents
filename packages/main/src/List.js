@@ -120,7 +120,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
 		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
-		 * @type {ListMode}
+		 * @type {sap.ui.webcomponents.main.types.ListMode}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -151,7 +151,7 @@ const metadata = {
 		 * item doesn't have a bottom separator.</li>
 		 * </ul>
 		 *
-		 * @type {ListSeparators}
+		 * @type {sap.ui.webcomponents.main.types.ListSeparators}
 		 * @defaultvalue "All"
 		 * @public
 		 */
@@ -177,7 +177,7 @@ const metadata = {
 		 *
 		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * on IE the component will fallback to <code>growing="Button"</code>.
-		 * @type {ListGrowingMode}
+		 * @type {sap.ui.webcomponents.main.types.ListGrowingMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.13
 		 * @public
@@ -202,7 +202,7 @@ const metadata = {
 		/**
 		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultValue 1000
 		 * @public
 		 */
@@ -424,7 +424,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.List
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-list
  * @appenddocs StandardListItem CustomListItem GroupHeaderListItem
  * @public

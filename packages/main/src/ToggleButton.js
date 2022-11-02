@@ -47,7 +47,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ToggleButton
- * @extends Button
+ * @extends sap.ui.webcomponents.main.Button
  * @tagname ui5-toggle-button
  * @public
  */

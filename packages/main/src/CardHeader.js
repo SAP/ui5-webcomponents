@@ -90,7 +90,7 @@ const metadata = {
 		 * Define the <code>aria-level</code> attribute of the component
 		 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
 		 * @private
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultValue 3
 		 */
 		ariaLevel: {
