@@ -1,14 +1,16 @@
 const path = require("path");
 const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
-const FIORI = path.join(__dirname, `../../fiori/`);
-
 
 const getScripts = (options) => {
 
-	let illustrations = options.illustrationsData || [];
+	let illustrations = illustrationsImports = options.illustrationsData || [];
 	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
 	let illustrationsScript = illustrations.join(" && ");
+
+	// create file with all illustrations' imports
+	illustrationsImports = illustrationsImports.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath.replace("/tnt", "")} ${illustrations.destinationPath} dist/generated/js-imports`);
+	let illustrationsImportsScript = illustrationsImports.join(" && ");
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -63,11 +65,11 @@ const getScripts = (options) => {
 			},
 			jsImports: {
 				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrations",
-				illustrations: `node "${LIB}/generate-js-imports/illustrations.js" ${FIORI}/dist/illustrations ${FIORI}/dist/illustrations/tnt dist/generated/js-imports`,
+				illustrations: illustrationsImportsScript,
 			},
 			bundle: `vite build ${viteConfig}`,
 			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-			illustrations: illustrationsScript
+			illustrations: illustrationsScript,
 		},
 		copy: {
 			default: "nps copy.src copy.props",
