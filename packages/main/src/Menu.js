@@ -45,6 +45,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the accessible ARIA name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.9.0
+		 */
+		 accessibleName: {
+			type: String,
+		},
+
+		/**
 		 * Defines if the menu is sub-menu (not first-level).
 		 * @type {boolean}
 		 * @defaultvalue false
