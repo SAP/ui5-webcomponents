@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/SAP/ui5-webcomponents/compare/v1.8.0...v1.9.0) (2022-10-31)
+
+
+### Bug Fixes
+
+* **playground:** fix styles breaking on larger screens and visual issues ([#5988](https://github.com/SAP/ui5-webcomponents/issues/5988)) ([93ef131](https://github.com/SAP/ui5-webcomponents/commit/93ef1315a2ce9ca49b594e5de5b15f4709900e54))
+
+
+
+
+
 # [1.8.0](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.8.0) (2022-10-03)
 
 
