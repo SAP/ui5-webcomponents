@@ -1,7 +1,5 @@
-commit f4322636803bf19a4fbed256afd38592335aa93e
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Tue Nov 1 14:24:35 2022 +0200
+commit eb2b727d530ba2e7355b65240c2a821adc90af5b
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Wed Nov 2 14:51:45 2022 +0200
 
-    chore: bump theming-base-content to v11.1.42 (#5993)
-    
-    Fixes #5496
+    chore: add test page for input widths (#5996)
