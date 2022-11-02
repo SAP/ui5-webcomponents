@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/SAP/ui5-webcomponents/compare/v1.8.0...v1.9.0) (2022-10-31)
+
+
+### Bug Fixes
+
+* **framework:** fix contexts management in hbs-2-lit compiler ([#5958](https://github.com/SAP/ui5-webcomponents/issues/5958)) ([94d1619](https://github.com/SAP/ui5-webcomponents/commit/94d16199ed7dc79b21d99a0637533e93af54c90a)), closes [#4701](https://github.com/SAP/ui5-webcomponents/issues/4701)
+
+
+### Features
+
+* **framework:** fetch illustrations on demand ([#5927](https://github.com/SAP/ui5-webcomponents/issues/5927)) ([f8e1033](https://github.com/SAP/ui5-webcomponents/commit/f8e1033643626261dcad8a38f65c325ba9aff99f))
+* **framework:** generate custom elements manifest ([#5964](https://github.com/SAP/ui5-webcomponents/issues/5964)) ([0d62770](https://github.com/SAP/ui5-webcomponents/commit/0d62770cace54fd9aef73d9632dd06d8a83680e9))
+
+
+
+
+
 # [1.8.0](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.8.0) (2022-10-03)
 
 
