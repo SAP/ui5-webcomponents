@@ -228,7 +228,6 @@
   "--sapField_BorderStyle",
   "--sapField_BorderWidth",
   "--sapField_Focus_Background",
-  "--sapField_Focus_BorderColor",
   "--sapField_Hover_Background",
   "--sapField_Hover_BackgroundStyle",
   "--sapField_Hover_BorderColor",
