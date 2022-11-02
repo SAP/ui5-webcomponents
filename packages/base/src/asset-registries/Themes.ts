@@ -44,7 +44,7 @@ const _getThemeProperties = async (packageName: string, themeName: string) => {
 		console.error(packageName, e.message); /* eslint-disable-line */
 		return;
 	}
-	const themeProps = typeof data === "string" ? data : data._;
+	const themeProps = (data as any)._ || data; // todo remove _ everywhere
 
 	themeStyles.set(`${packageName}_${themeName}`, themeProps);
 	return themeProps;

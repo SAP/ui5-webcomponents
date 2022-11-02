@@ -3,17 +3,18 @@ import { getFeature } from "./FeaturesRegistry.js";
 // @ts-ignore
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 import validateThemeRoot from "./validateThemeRoot.js";
-import {ObjectWithDynamicKeys} from "./types";
+import { ObjectWithDynamicKeys } from "./types";
+import type OpenUI5Support from "./features/OpenUI5Support";
 
 let initialized = false;
 
 type InitialConfig = {
 	animationMode: string, // TODO enum
 	theme: string,
-	themeRoot: string | null,
-	rtl: boolean | null,
-	language: string | null,
-	calendarType: string | null, // TODO enum
+	themeRoot: string | undefined,
+	rtl: boolean | undefined,
+	language: string | undefined,
+	calendarType: string | undefined, // TODO enum
 	noConflict: boolean,
 	formatSettings: { firstDayOfWeek?: number },
 	fetchDefaultLanguage: boolean,
@@ -22,10 +23,10 @@ type InitialConfig = {
 let initialConfig: InitialConfig = {
 	animationMode: "full",
 	theme: DEFAULT_THEME,
-	themeRoot: null,
-	rtl: null,
-	language: null,
-	calendarType: null,
+	themeRoot: undefined,
+	rtl: undefined,
+	language: undefined,
+	calendarType: undefined,
 	noConflict: false, // no URL
 	formatSettings: {},
 	fetchDefaultLanguage: false,
@@ -165,12 +166,12 @@ const applyURLParam = (key: string, value: string, paramType: string) => {
 };
 
 const applyOpenUI5Configuration = () => {
-	const OpenUI5Support = getFeature("OpenUI5Support");
-	if (!OpenUI5Support || !OpenUI5Support.isLoaded()) {
+	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
+	if (!openUI5Support || !openUI5Support.isLoaded()) {
 		return;
 	}
 
-	const OpenUI5Config = OpenUI5Support.getConfigurationSettingsObject();
+	const OpenUI5Config = openUI5Support.getConfigurationSettingsObject();
 	initialConfig = merge(initialConfig, OpenUI5Config);
 };
 

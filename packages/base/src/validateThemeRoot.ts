@@ -53,8 +53,6 @@ const validateThemeRoot = (themeRoot: string) => {
 	} catch (e) {
 		// Catch if URL is not correct
 	}
-
-	return null;
 };
 
 export default validateThemeRoot;
