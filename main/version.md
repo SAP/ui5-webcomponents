@@ -1,5 +1,5 @@
-commit 03e15e38d628f6466bb4c3c44c75e3ebf8a42423
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Nov 2 18:13:39 2022 +0200
+commit 26423dd2e014e7fbfea9bbf8b14561f73956c623
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Thu Nov 3 09:46:44 2022 +0200
 
-    chore: release v1.9.0 (#5990)
+    fix(ui5-table-row): add aria-hidden to hidden elements (#5998)
