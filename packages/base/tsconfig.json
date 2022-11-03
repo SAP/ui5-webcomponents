@@ -17,6 +17,11 @@
       "outDir": "dist",
       "skipLibCheck": true,
       "sourceMap": true,
-      "strict": true
+      "strict": true,
+      "moduleResolution": "node",
+      // "lib": [
+      //       "dom",
+      //       "dom.iterable",
+      // ]
     }
   }

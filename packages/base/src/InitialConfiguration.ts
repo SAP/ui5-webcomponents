@@ -3,12 +3,12 @@ import { getFeature } from "./FeaturesRegistry.js";
 // @ts-ignore
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 import validateThemeRoot from "./validateThemeRoot.js";
-import { ObjectWithDynamicKeys } from "./types";
 import type OpenUI5Support from "./features/OpenUI5Support";
 
 let initialized = false;
 
 type InitialConfig = {
+	[key: string]: any,
 	animationMode: string, // TODO enum
 	theme: string,
 	themeRoot: string | undefined,
@@ -161,7 +161,7 @@ const applyURLParam = (key: string, value: string, paramType: string) => {
 			initialConfig.themeRoot = normalizeThemeRootParamValue(value);
 		}
 	} else {
-		(initialConfig as ObjectWithDynamicKeys)[param] = value; // TODO runtime check
+		initialConfig[param] = value;
 	}
 };
 

@@ -141,14 +141,14 @@ const _resolveTaskPromise = () => {
  * etc...
  *
  * @public
- * @param {Object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
+ * @param {object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
  * @returns {Promise<void>}
  */
 const reRenderAllUI5Elements = async (filters?: {tag?: string, rtlAware?: boolean, languageAware?: boolean, themeAware?: boolean}) => {
 	registeredElements.forEach((element: UI5Element) => {
 		const ctor = element.constructor as typeof UI5Element;
 		const tag = ctor.getMetadata().getTag();
-		const rtlAware = isRtlAware(element.constructor);
+		const rtlAware = isRtlAware(ctor);
 		const languageAware = ctor.getMetadata().isLanguageAware();
 		const themeAware = ctor.getMetadata().isThemeAware();
 		if (!filters || (filters.tag === tag) || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware) || (filters.themeAware && themeAware)) {
