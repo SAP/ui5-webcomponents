@@ -566,18 +566,18 @@ describe("Table general interaction", () => {
 			await browser.url(`test/pages/Table.html`);
 		});
 
-		it("Should apply class ui5-table-cell-inline when popin-display property is Inline", async () => {
-			const table = await browser.$("#tblLessCells");
-			const row = await table.$$("ui5-table-row")[0];
+		it("Popin-display property should have value Inline", async () => {
+			const table = await browser.$("#tbl");
+			const column = await table.$$("ui5-table-column")[2];
 
-			assert.strictEqual(await row.shadow$("tr").getAttribute("aria-current"), "true", "Table row aria-current attribute is set correctly.");
+			assert.strictEqual(await column.getAttribute("popin-display"), "Inline", "Table row popin-display property is set to Inline.");
 		});
 
-		it("Should not apply class ui5-table-cell-inline when popin-display property is Block", async () => {
-			const table = await browser.$("#tblLessCells");
-			const row = await table.$$("ui5-table-row")[1];
+		it("Popin-display should have value Block by default", async () => {
+			const table = await browser.$("#tbl");
+			const column = await table.$$("ui5-table-column")[2];
 
-			assert.notOk(await row.shadow$("tr").getAttribute("aria-current"), "Table row aria-current attribute is not present.");
+			assert.notOk(await column.getAttribute("popin-display"), "Block", "Table row popin-display property is set by default.");
 		});
 	});
 });

@@ -48,14 +48,8 @@
 	display: -ms-inline-flexbox;
 	margin-inline-start: 0.5rem;
 }
-
-/* .ui5-table-cell-display-inline ::slotted(*) {
-	padding-top: 0;
-	line-height: 1 !important;
-} */
 /* accordding to margins and paddings: the <td role="cell"> parent element
 becomes higher than its children - spans for no reason and has a padding-top that should be removed*/
-/* fix problem with git and push changes */
 
 .ui5-table-multi-select-cell {
 	padding: .25rem 0;
