@@ -8,9 +8,8 @@ const getScripts = (options) => {
 	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
 	let illustrationsScript = illustrations.join(" && ");
 
-	// create file with all illustrations' imports
-	illustrationsImports = illustrationsImports.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath.replace("/tnt", "")} ${illustrations.destinationPath} dist/generated/js-imports`);
-	let illustrationsImportsScript = illustrationsImports.join(" && ");
+	// the generated illustrations' paths
+	let illustrationPaths = illustrationsImports.map(illustrations => illustrations.destinationPath);
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -65,7 +64,7 @@ const getScripts = (options) => {
 			},
 			jsImports: {
 				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrations",
-				illustrations: illustrationsImportsScript,
+				illustrations: options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationPaths[0]} ${illustrationPaths[1]} dist/generated/js-imports` : "",
 			},
 			bundle: `vite build ${viteConfig}`,
 			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
