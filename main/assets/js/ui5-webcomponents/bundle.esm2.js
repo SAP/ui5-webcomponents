@@ -376,7 +376,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "",
   isNext: false,
-  buildTime: 1667480058
+  buildTime: 1667490905
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -32021,7 +32021,8 @@ class Table extends UI5Element {
       }
       this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
     }
-    if (this._hiddenColumns.length !== hiddenColumns.length) {
+    const hiddenColumnsChange = this._hiddenColumns.length !== hiddenColumns.length || this._hiddenColumns.some((column, index) => column !== hiddenColumns[index]);
+    if (hiddenColumnsChange) {
       this._hiddenColumns = hiddenColumns;
       if (hiddenColumns.length) {
         this.fireEvent("popin-change", {

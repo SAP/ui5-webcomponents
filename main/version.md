@@ -1,9 +1,11 @@
-commit dbf428d41dd1796ae0d19bdc02bcca7d6f3d7687
-Author: Siyana Todorova <72251110+s-todorova@users.noreply.github.com>
-Date:   Thu Nov 3 14:52:24 2022 +0200
+commit 8b6c1e18913a839339171d974ee922c36590dcd9
+Author: Nikolay Deshev <nikolay.deshev@sap.com>
+Date:   Thu Nov 3 17:53:26 2022 +0200
 
-    feat(ui5-tabcontainer): add background design properties (#5989)
+    fix(ui5-table): fix resize handling for table with pop-in columns (#6008)
     
-    Add headerBackgroundDesign and contentBackgroundDesign properties
+    * fix(ui5-table): fix resize handling for table with popin columns
     
-    Fixes #5696
+    issue #5522
+    
+    * fix(ui5-table): fix resize handling for table with pop-in columns
