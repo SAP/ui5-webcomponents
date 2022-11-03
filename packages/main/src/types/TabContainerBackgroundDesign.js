@@ -19,11 +19,18 @@ const TabContainerBackgroundDesigns = {
 	 * @type {Transparent}
 	 */
 	Transparent: "Transparent",
+
+	/**
+	 * A Translucent background color.
+	 * @public
+	 * @type {Translucent}
+	 */
+	 Translucent: "Translucent",
 };
 
 /**
  * @class
- * Defines the Tab Container's header and content background color
+ * Defines the Tab Container's header and content background colors
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.types.TabContainerBackgroundDesign

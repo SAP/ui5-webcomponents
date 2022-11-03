@@ -192,7 +192,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the overflow mode of the tab strip. If you have a large number of tabs, only the tabs that can fit on screen will be visible.
+		 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
 		 * All other tabs that can 't fit on the screen are available in an overflow tab "More".
 		 *
 		 * <br><br>
@@ -228,7 +228,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the background color of the Tab Container's header.
+		 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 		 *
 		 * <br><br>
 		 * Available options are:
@@ -248,7 +248,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the background color of the Tab Container's content.
+		 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 		 *
 		 * <br><br>
 		 * Available options are:
