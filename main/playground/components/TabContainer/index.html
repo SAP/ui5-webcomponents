@@ -6248,6 +6248,76 @@
 	</code></pre></figure></pre>
 </section>
 
+<!-- Background Design -->
+
+<section>
+	<style>
+		.radio-button-group {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.design-options {
+			display: flex;
+			gap: 2rem;
+		}
+	</style>
+	<h3>TabContainer Design Background</h3>
+	<div class="snippet">
+		<div class="design-options">
+			<div role="radiogroup" id="radioGroup-headerDesign" class="radio-button-group">
+				<ui5-label>Header Background</ui5-label>
+				<ui5-radio-button text="Solid" checked name="Group1"></ui5-radio-button>
+				<ui5-radio-button text="Transparent" name="Group1"></ui5-radio-button>
+				<ui5-radio-button text="Translucent" name="Group1"></ui5-radio-button>
+			</div>
+
+			<div role="radiogroup2" id="radioGroup-contentDesign" class="radio-button-group">
+				<ui5-label>Content Background</ui5-label>
+				<ui5-radio-button text="Solid" name="Group2"></ui5-radio-button>
+				<ui5-radio-button text="Transparent" checked name="Group2"></ui5-radio-button>
+				<ui5-radio-button text="Translucent" name="Group2"></ui5-radio-button>
+			</div>
+		</div>
+		<ui5-tabcontainer id="tabContainerBackgroundDesign" header-background-design="Solid" content-background-design="Transparent">
+			<ui5-tab text="Tab 1" selected>
+				<ui5-label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita voluptates accusamus est quibusdam inventore ipsam?</ui5-label>
+			</ui5-tab>
+			<ui5-tab text="Tab 2">
+				<ui5-label>Accusamus minus aperiam sunt ipsam eos quos et maxime facilis tempora neque ratione nemo laborum expedita aliquid officiis nisi, necessitatibus quasi distinctio?</ui5-label>
+			</ui5-tab>
+			<ui5-tab text="Tab 3">
+				<ui5-label>Dolores totam perferendis numquam incidunt obcaecati, id quo at alias rem deserunt praesentium repellat ipsum commodi consequuntur veniam et ducimus animi qui nobis accusantium tenetur eveniet culpa non!</ui5-label>
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+		<script>
+			const radioGroupHeaderDesign = document.getElementById("radioGroup-headerDesign");
+			const radioGroupContentDesign = document.getElementById("radioGroup-contentDesign");
+			const tabContainerBackgroundDesign = document.getElementById("tabContainerBackgroundDesign");
+			radioGroupHeaderDesign.addEventListener("change", function (e) {
+				tabContainerBackgroundDesign.headerBackgroundDesign = e.target.text;
+			});
+
+			radioGroupContentDesign.addEventListener("change", function (e) {
+				tabContainerBackgroundDesign.contentBackgroundDesign = e.target.text;
+			});
+		</script>
+	</div>
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-tabcontainer</span> <span class="na">id=</span><span class="s">"tabContainerBackgroundDesign"</span> <span class="na">header-background-design=</span><span class="s">"Solid"</span> <span class="na">content-background-design=</span><span class="s">"Transparent"</span><span class="nt">&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 1"</span> <span class="na">selected</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-label&gt;</span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita voluptates accusamus est quibusdam inventore ipsam?<span class="nt">&lt;/ui5-label&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 2"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-label&gt;</span>Accusamus minus aperiam sunt ipsam eos quos et maxime facilis tempora neque ratione nemo laborum expedita aliquid officiis nisi, necessitatibus quasi distinctio?<span class="nt">&lt;/ui5-label&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+	<span class="nt">&lt;ui5-tab</span> <span class="na">text=</span><span class="s">"Tab 3"</span><span class="nt">&gt;</span>
+		<span class="nt">&lt;ui5-label&gt;</span>Dolores totam perferendis numquam incidunt obcaecati, id quo at alias rem deserunt praesentium repellat ipsum commodi consequuntur veniam et ducimus animi qui nobis accusantium tenetur eveniet culpa non!<span class="nt">&lt;/ui5-label&gt;</span>
+	<span class="nt">&lt;/ui5-tab&gt;</span>
+<span class="nt">&lt;/ui5-tabcontainer&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 
     <div class="page-container">
       <div class="api-container">
@@ -6312,6 +6382,19 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          contentBackgroundDesign
+                            <br>
+                                 <code>content-background-design</code>
+                        </div>
+                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype</div>
+                        <div class="cell api-table-content-cell">&quot;Solid&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.10.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           fixed
                             <br>
                         </div>
@@ -6319,6 +6402,19 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell">false</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines whether the tabs are in a fixed state that is not expandable/collapsible by user interaction.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          headerBackgroundDesign
+                            <br>
+                                 <code>header-background-design</code>
+                        </div>
+                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype</div>
+                        <div class="cell api-table-content-cell">&quot;Solid&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.10.0</div>
                         </div>
                       </div>
                       <div class="row api-table-roll-odd">
@@ -6358,7 +6454,7 @@ The <code>ui5-tabcontainer</code> can hold two types of entities: <ul> <li><code
                         <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.TabsOverflowMode</div>
                         <div class="cell api-table-content-cell">&quot;End&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the overflow mode of the tab strip. If you have a large number of tabs, only the tabs that can fit on screen will be visible. All other tabs that can 't fit on the screen are available in an overflow tab "More".
+                            Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible. All other tabs that can 't fit on the screen are available in an overflow tab "More".
             
             <br><br> <b>Note:</b> Only one overflow at the end would be displayed by default, but when set to <code>StartAndEnd</code>, there will be two overflows on both ends, and tab order will not change on tab selection.
             

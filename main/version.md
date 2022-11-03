@@ -1,5 +1,9 @@
-commit 26423dd2e014e7fbfea9bbf8b14561f73956c623
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Thu Nov 3 09:46:44 2022 +0200
+commit dbf428d41dd1796ae0d19bdc02bcca7d6f3d7687
+Author: Siyana Todorova <72251110+s-todorova@users.noreply.github.com>
+Date:   Thu Nov 3 14:52:24 2022 +0200
 
-    fix(ui5-table-row): add aria-hidden to hidden elements (#5998)
+    feat(ui5-tabcontainer): add background design properties (#5989)
+    
+    Add headerBackgroundDesign and contentBackgroundDesign properties
+    
+    Fixes #5696
