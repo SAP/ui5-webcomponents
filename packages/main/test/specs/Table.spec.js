@@ -560,6 +560,26 @@ describe("Table general interaction", () => {
 			assert.notOk(await row.shadow$("tr").getAttribute("aria-current"), "Table row aria-current attribute is not present.");
 		});
 	});
+	// test here
+	describe("Display cell inline or block according to property popin-display", () => {
+		before(async () => {
+			await browser.url(`test/pages/Table.html`);
+		});
+
+		it("Should apply class ui5-table-cell-inline when popin-display property is Inline", async () => {
+			const table = await browser.$("#tblLessCells");
+			const row = await table.$$("ui5-table-row")[0];
+
+			assert.strictEqual(await row.shadow$("tr").getAttribute("aria-current"), "true", "Table row aria-current attribute is set correctly.");
+		});
+
+		it("Should not apply class ui5-table-cell-inline when popin-display property is Block", async () => {
+			const table = await browser.$("#tblLessCells");
+			const row = await table.$$("ui5-table-row")[1];
+
+			assert.notOk(await row.shadow$("tr").getAttribute("aria-current"), "Table row aria-current attribute is not present.");
+		});
+	});
 });
 
 describe("Table keyboard interaction", async () => {
