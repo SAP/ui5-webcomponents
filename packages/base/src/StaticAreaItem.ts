@@ -44,7 +44,7 @@ class StaticAreaItem extends HTMLElement {
 			this._updateAdditionalAttrs();
 			this._updateContentDensity();
 			this._updateDirection();
-			updateShadowRoot(this.ownerElement, true);
+			updateShadowRoot(this.ownerElement!, true);
 		}
 	}
 
@@ -86,7 +86,7 @@ class StaticAreaItem extends HTMLElement {
 		this._updateContentDensity();
 		if (!this._rendered) {
 			this._rendered = true;
-			updateShadowRoot(this.ownerElement, true);
+			updateShadowRoot(this.ownerElement!, true);
 		}
 		await renderFinished(); // Wait for the content of the ui5-static-area-item to be rendered
 		return this.shadowRoot;

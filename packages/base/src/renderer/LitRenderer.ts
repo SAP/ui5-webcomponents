@@ -4,7 +4,6 @@ import {
 	svg,
 	TemplateResult,
 	RenderOptions,
-	// @ts-ignore
 } from "lit-html";
 
 
@@ -18,13 +17,13 @@ type StylesDescriptor = string | Array<string>;
 const effectiveHtml = (strings: TemplateStringsArray, ...values: unknown[]) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
 	const fn = litStatic ? litStatic.html : html;
-	return fn(strings, values);
+	return fn(strings, ...values);
 };
 
 const effectiveSvg = (strings: TemplateStringsArray, ...values: unknown[]) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
 	const fn = litStatic ? litStatic.svg : svg;
-	return fn(strings, values);
+	return fn(strings, ...values);
 };
 
 const litRender = (templateResult: TemplateResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: StylesDescriptor, forStaticArea: boolean, options: RenderOptions) => {

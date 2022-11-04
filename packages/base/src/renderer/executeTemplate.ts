@@ -1,6 +1,8 @@
 import { getCustomElementsScopingSuffix, shouldScopeCustomElement } from "../CustomElementsScopeUtils.js";
 import UI5Element from "../UI5Element.js";
 
+type TemplateFunction = (component: UI5Element, tagsToScope: Array<string>, scope: string | undefined) => object;
+
 /**
  * Runs a component's template with the component's current state, while also scoping HTML
  *
@@ -9,7 +11,7 @@ import UI5Element from "../UI5Element.js";
  * @public
  * @returns {*}
  */
-const executeTemplate = (template: (component: UI5Element, tagsToScope: Array<string>, scope: string | undefined) => {}, component: UI5Element) => {
+const executeTemplate = (template: TemplateFunction, component: UI5Element) => {
 	const tagsToScope = getTagsToScope(component);
 	const scope = getCustomElementsScopingSuffix();
 	return template(component, tagsToScope, scope);
@@ -35,3 +37,4 @@ const getTagsToScope = (component: UI5Element) => {
 };
 
 export default executeTemplate;
+export type { TemplateFunction };

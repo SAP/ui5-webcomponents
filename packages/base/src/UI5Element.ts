@@ -20,6 +20,7 @@ import getClassCopy from "./util/getClassCopy.js";// todo
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js"; // todo
 import { ObjectWithDynamicKeys } from "./types.js";
+import { TemplateFunction } from "./renderer/executeTemplate.js";
 
 let autoId = 0;
 
@@ -86,13 +87,14 @@ abstract class UI5Element extends HTMLElement {
 	onAfterRendering?: Function;
 	_onComponentStateFinalized?: Function;
 	_getRealDomRef?: Function;
-	
+
 	staticAreaItem?: StaticAreaItem;
-	
-	static template?: Function;
-	static staticAreaTemplate?: Function;
+
+	static template?: TemplateFunction;
+	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
-	
+	static render: Function;
+
 	constructor() {
 		super();
 
@@ -299,7 +301,7 @@ abstract class UI5Element extends HTMLElement {
 			// Listen for any invalidation on the child if invalidateOnChildChange is true or an object (ignore when false or not set)
 			if (instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
 				const childChangeListener = this._getChildChangeListener(slotName);
-					
+
 				if (childChangeListener) {
 					child.attachInvalidate.call(child, childChangeListener);
 				}
