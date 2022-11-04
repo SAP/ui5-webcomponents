@@ -158,5 +158,66 @@ describe("Component Behavior", () => {
 
 			await selectionChangeCheckbox.click();
 		});
+
+		it("Tests ACC roles and more when expanded", async () => {
+			const sideNavigation = await browser.$("#sn1");
+			const sideNavigationRoot = await sideNavigation.shadow$(".ui5-sn-root");
+			const sideNavigationTree = await sideNavigation.shadow$("ui5-tree");
+			const sideNavigationTreeItem = await sideNavigationTree.shadow$("ui5-li-tree").shadow$("li");
+
+			role = await browser.executeAsync(done => {
+				const sn = document.getElementById("sn1");
+				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_ARIA_ROLE));
+			});
+			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), role, "Role of the SideNavigation root element is correctly set");
+
+			roleDescription = await browser.executeAsync(done => {
+				const sn = document.getElementById("sn1");
+				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC));
+			});
+			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree element is correctly set");
+
+			// items
+			roleDescriptionItem = await browser.executeAsync(done => {
+				const sn = document.getElementById("sn1");
+				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC));
+			});
+			assert.strictEqual(await sideNavigationTreeItem.getAttribute("aria-roledescription"), roleDescriptionItem, "Role description of the SideNavigation tree item is correctly set");
+			assert.notExists(await sideNavigationTreeItem.getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
+		});
+
+		it("Tests ACC roles and more when collapsed", async () => {
+			await browser.$("#sn1").setProperty("collapsed", true);
+
+			const sideNavigation = await browser.$("#sn1");
+			const sideNavigationRoot = await sideNavigation.shadow$(".ui5-sn-root");
+			const sideNavigationTree = await sideNavigation.shadow$("ui5-tree");
+			const sideNavigationTreeItem1 = await sideNavigationTree.shadow$$("ui5-li-tree")[0].shadow$("li"); //with no sub-items
+			const sideNavigationTreeItem2= await sideNavigationTree.shadow$$("ui5-li-tree")[1].shadow$("li"); //with sub-items
+
+			role = await browser.executeAsync(done => {
+				const sn = document.getElementById("sn1");
+				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_ARIA_ROLE));
+			});
+			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), role, "Role of the SideNavigation root element is correctly set");
+
+			roleDescription = await browser.executeAsync(done => {
+				const sn = document.getElementById("sn1");
+				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC));
+			});
+			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree element is correctly set");
+
+			// items
+			roleDescriptionItem = await browser.executeAsync(done => {
+				const sn = document.getElementById("sn1");
+				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC));
+			});
+			assert.strictEqual(await sideNavigationTreeItem1.getAttribute("aria-roledescription"), roleDescriptionItem, "Role description of the SideNavigation tree item is correctly set");
+			assert.notExists(await sideNavigationTreeItem1.getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
+			assert.strictEqual(await sideNavigationTreeItem2.getAttribute("aria-haspopup"), "tree", "There is 'aria-haspopup' with correct value");
+
+			// clean up
+			await browser.$("#sn1").setProperty("collapsed", false);
+		});
 	});
 });

@@ -88,6 +88,13 @@ const metadata = {
 			defaultValue: "listitem",
 		},
 
+		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
 		ariaRoledescription: {
 			type: String,
 			defaultValue: undefined,
@@ -111,6 +118,12 @@ const metadata = {
 			defaultValue: ListMode.None,
 		},
 
+		/**
+		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+		 * @type String
+		 * @since 1.10.0
+		 * @protected
+		 */
 		ariaHaspopup: {
 			type: String,
 		},

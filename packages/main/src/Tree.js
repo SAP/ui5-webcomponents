@@ -103,6 +103,14 @@ const metadata = {
 			defaultValue: "",
 		},
 
+		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+
 		ariaRoledescription: {
 			type: String,
 			defaultValue: undefined,
