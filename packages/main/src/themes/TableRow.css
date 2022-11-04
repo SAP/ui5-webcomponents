@@ -43,9 +43,6 @@
 }
 
 .ui5-table-cell-display-inline {
-	/* display: inline-flex;
-	display: -webkit-inline-flex;
-	display: -ms-inline-flexbox; */
 	margin-inline-start: 0.5rem;
 }
 
@@ -53,8 +50,6 @@
 	display: flex;
 	align-items: center;
 }
-/* accordding to margins and paddings: the <td role="cell"> parent element
-becomes higher than its children - spans for no reason and has a padding-top that should be removed*/
 
 .ui5-table-multi-select-cell {
 	padding: .25rem 0;
