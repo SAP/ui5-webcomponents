@@ -335,7 +335,7 @@ abstract class UI5Element extends HTMLElement {
 		let invalidated = false;
 		for (const [slotName, slotData] of Object.entries(slotsMap)) { // eslint-disable-line
 			const propertyName = slotData.propertyName || slotName;
-			if (!arraysAreEqual(slotsCachedContentMap.get(propertyName), this._state[propertyName])) {
+			if (!arraysAreEqual(slotsCachedContentMap.get(propertyName)!, this._state[propertyName])) {
 				_invalidate.call(this, {
 					type: "slot",
 					name: propertyNameToSlotMap.get(propertyName)!,

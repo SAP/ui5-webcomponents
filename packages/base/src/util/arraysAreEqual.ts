@@ -1,4 +1,4 @@
-const arraysAreEqual = (arr1, arr2) => {
+const arraysAreEqual = (arr1: Array<any>, arr2: Array<any>) => {
 	if (arr1.length !== arr2.length) {
 		return false;
 	}

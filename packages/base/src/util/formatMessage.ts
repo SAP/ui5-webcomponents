@@ -1,6 +1,6 @@
 const messageFormatRegEX = /('')|'([^']+(?:''[^']*)*)(?:'|$)|\{([0-9]+(?:\s*,[^{}]*)?)\}|[{}]/g;
 
-const formatMessage = (text, values) => {
+const formatMessage = (text: string, values: Array<number>) => {
 	values = values || [];
 
 	return text.replace(messageFormatRegEX, ($0, $1, $2, $3, offset) => {
