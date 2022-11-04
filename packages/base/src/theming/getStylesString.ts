@@ -10,7 +10,7 @@ const getStylesString = (styles: Array<StyleData> | StyleData) => {
 	return typeof styles === "string" ? styles : styles.content;
 };
 
-const flatten = (arr: Array<any>): any => {
+const flatten = (arr: Array<any>): Array<any> => {
 	return arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val), []);
 };
 

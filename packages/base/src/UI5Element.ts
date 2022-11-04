@@ -37,6 +37,8 @@ type ChangeInfo = {
 	oldValue?: any,
 }
 
+type StylesDescriptor = string | Array<string>;
+
 /**
  * Triggers re-rendering of a UI5Element instance due to state change.
  * @param {ChangeInfo} changeInfo An object with information about the change that caused invalidation.
@@ -973,7 +975,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get styles() {
+	static get styles(): StylesDescriptor {
 		return "";
 	}
 
@@ -981,7 +983,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the Static Area CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get staticAreaStyles() {
+	static get staticAreaStyles(): StylesDescriptor {
 		return "";
 	}
 
@@ -1100,4 +1102,4 @@ const instanceOfUI5Element = (object: any): object is UI5Element => {
 
 export default UI5Element;
 export { instanceOfUI5Element };
-export type { ChangeInfo };
+export type { ChangeInfo, StylesDescriptor };

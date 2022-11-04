@@ -10,9 +10,7 @@ import {
 import { getFeature } from "../FeaturesRegistry.js";
 import type { LitStatic } from "../CustomElementsScope.js"
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
-import UI5Element from "../UI5Element.js";
-
-type StylesDescriptor = string | Array<string>;
+import UI5Element, { StylesDescriptor } from "../UI5Element.js";
 
 const effectiveHtml = (strings: TemplateStringsArray, ...values: unknown[]) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");

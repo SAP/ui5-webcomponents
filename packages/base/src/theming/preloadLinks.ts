@@ -1,10 +1,11 @@
 import getEffectiveLinksHrefs from "./getEffectiveLinksHrefs.js";
 import createLinkInHead from "../util/createLinkInHead.js";
 import { shouldUseLinks, shouldPreloadLinks } from "../CSP.js";
+import UI5Element from "../UI5Element.js";
 
-const preloaded = new Set();
+const preloaded = new Set<string>();
 
-const preloadLinks = ElementClass => {
+const preloadLinks = (ElementClass: typeof UI5Element) => {
 	if (!shouldUseLinks() || !shouldPreloadLinks()) {
 		return;
 	}
