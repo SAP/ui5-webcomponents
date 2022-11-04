@@ -658,7 +658,6 @@ class UI5Element extends HTMLElement {
 	 *
 	 * @public
 	 */
-	// TODO chech return type
 	getDomRef() {
 		// If a component set _getRealDomRef to its children, use the return value of this function
 		if (typeof this._getRealDomRef === "function") {
@@ -674,7 +673,7 @@ class UI5Element extends HTMLElement {
 			console.warn(`The shadow DOM for ${(this.constructor as typeof UI5Element).getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
 		}
 
-		return children[0];
+		return children[0] as HTMLElement;
 	}
 
 	/**
@@ -780,7 +779,7 @@ class UI5Element extends HTMLElement {
 	 * @returns {String|undefined}
 	 */
 	get effectiveDir() {
-		markAsRtlAware(this.constructor); // if a UI5 Element calls this method, it's considered to be rtl-aware
+		markAsRtlAware(this.constructor as typeof UI5Element); // if a UI5 Element calls this method, it's considered to be rtl-aware
 		return getEffectiveDir(this);
 	}
 
@@ -1070,4 +1069,14 @@ class UI5Element extends HTMLElement {
 	}
 }
 
+/**
+ * Always use duck-typing to cover all runtimes on the page.
+ * @returns {boolean}
+ */
+const instanceOfUI5Element = (object: any): object is UI5Element => {
+	return "isUI5Element" in object;
+}
+
 export default UI5Element;
+
+export { instanceOfUI5Element }

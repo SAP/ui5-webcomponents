@@ -1,0 +1,62 @@
+import {
+	render,
+	html,
+	svg,
+	TemplateResult,
+	RenderOptions,
+	// @ts-ignore
+} from "lit-html";
+
+
+import { getFeature } from "../FeaturesRegistry.js";
+import type { LitStatic } from "../CustomElementsScope.js"
+import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
+import UI5Element from "../UI5Element.js";
+
+type StylesDescriptor = string | Array<string>;
+
+const effectiveHtml = (strings: TemplateStringsArray, ...values: unknown[]) => {
+	const litStatic = getFeature<typeof LitStatic>("LitStatic");
+	const fn = litStatic ? litStatic.html : html;
+	return fn(strings, values);
+};
+
+const effectiveSvg = (strings: TemplateStringsArray, ...values: unknown[]) => {
+	const litStatic = getFeature<typeof LitStatic>("LitStatic");
+	const fn = litStatic ? litStatic.svg : svg;
+	return fn(strings, values);
+};
+
+const litRender = (templateResult: TemplateResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: StylesDescriptor, forStaticArea: boolean, options: RenderOptions) => {
+	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
+	if (openUI5Enablement && !forStaticArea) {
+		templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host as UI5Element, templateResult);
+	}
+
+	if (typeof styleStrOrHrefsArr === "string") {
+		templateResult = effectiveHtml`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
+	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
+		templateResult = effectiveHtml`${styleStrOrHrefsArr.map(href => effectiveHtml`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
+	}
+	render(templateResult, container, options);
+};
+
+const scopeTag = (tag: string, tags: Array<string>, suffix: string) => {
+	const litStatic = getFeature<typeof LitStatic>("LitStatic");
+	if (litStatic) {
+		return litStatic.unsafeStatic((tags || []).includes(tag) ? `${tag}-${suffix}` : tag);
+	}
+};
+
+export {
+	effectiveHtml as html,
+	effectiveSvg as svg,
+};
+export { scopeTag };
+export { repeat } from "lit-html/directives/repeat.js";
+export { classMap } from "lit-html/directives/class-map.js";
+export { styleMap } from "./directives/style-map.js";
+export { ifDefined } from "lit-html/directives/if-defined.js";
+export { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+
+export default litRender;
