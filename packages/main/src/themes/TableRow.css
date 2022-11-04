@@ -48,6 +48,10 @@
 	display: -ms-inline-flexbox;
 	margin-inline-start: 0.5rem;
 }
+
+.ui5-table-display-inline-container {
+	background-color: red;
+}
 /* accordding to margins and paddings: the <td role="cell"> parent element
 becomes higher than its children - spans for no reason and has a padding-top that should be removed*/
 
