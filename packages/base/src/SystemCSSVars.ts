@@ -1,4 +1,5 @@
 import { hasStyle, createStyle } from "./ManagedStyles.js";
+// @ts-ignore
 import systemCSSVars from "./generated/css/SystemCSSVars.css.js";
 
 const insertSystemCSSVars = () => {
