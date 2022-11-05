@@ -360,8 +360,8 @@ class Icon extends UI5Element {
 			iconData = await getIconData(name);
 		}
 
-		this.viewBox = iconData.viewBox || "0 0 512 512";
-		if (iconData.customTemplate) {
+		this.viewBox = (iconData && iconData.viewBox) || "0 0 512 512";
+		if (iconData && iconData.customTemplate) {
 			iconData.pathData = [];
 			this.customSvg = executeTemplate(iconData.customTemplate, this);
 		}
