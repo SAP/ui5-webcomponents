@@ -177,7 +177,7 @@ const metadata = {
 		 * @public
 		 * @since 1.1.0
 		 */
-		 accessibleNameRef: {
+		accessibleNameRef: {
 			type: String,
 			defaultValue: "",
 		},
@@ -390,9 +390,12 @@ class Button extends UI5Element {
 			return;
 		}
 		event.isMarked = "button";
+
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport && this.submits) {
-			FormSupport.triggerFormSubmit(this);
+			setTimeout(() => {
+				FormSupport.triggerFormSubmit(this);
+			}, 0);
 		}
 
 		if (isSafari()) {
