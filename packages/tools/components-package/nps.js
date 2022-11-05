@@ -4,12 +4,13 @@ const LIB = path.join(__dirname, `../lib/`);
 
 const getScripts = (options) => {
 
-	let illustrations = illustrationsImports = options.illustrationsData || [];
+	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
+	let illustrations = illustrationsData = options.illustrationsData || [];
 	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
-	let illustrationsScript = illustrations.join(" && ");
+	let createIllustrationsJSImportsScript = illustrations.join(" && ");
 
-	// the generated illustrations' paths
-	let illustrationPaths = illustrationsImports.map(illustrations => illustrations.destinationPath);
+	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
+	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -63,12 +64,12 @@ const getScripts = (options) => {
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			jsImports: {
-				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrations",
-				illustrations: options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationPaths[0]} ${illustrationPaths[1]} dist/generated/js-imports` : "",
+				default: "mkdirp dist/generated/js-imports && nps build.jsImports.createIllustrationsLoadersScript",
+				createIllustrationsLoadersScript: options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "",
 			},
 			bundle: `vite build ${viteConfig}`,
 			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-			illustrations: illustrationsScript,
+			illustrations: createIllustrationsJSImportsScript,
 		},
 		copy: {
 			default: "nps copy.src copy.props",
