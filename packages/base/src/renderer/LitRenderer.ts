@@ -4,27 +4,24 @@ import {
 	svg,
 	TemplateResult,
 	RenderOptions,
-	// @ts-ignore
 } from "lit-html";
 
 
 import { getFeature } from "../FeaturesRegistry.js";
 import type { LitStatic } from "../CustomElementsScope.js"
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
-import UI5Element from "../UI5Element.js";
-
-type StylesDescriptor = string | Array<string>;
+import UI5Element, { StylesDescriptor } from "../UI5Element.js";
 
 const effectiveHtml = (strings: TemplateStringsArray, ...values: unknown[]) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
 	const fn = litStatic ? litStatic.html : html;
-	return fn(strings, values);
+	return fn(strings, ...values);
 };
 
 const effectiveSvg = (strings: TemplateStringsArray, ...values: unknown[]) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
 	const fn = litStatic ? litStatic.svg : svg;
-	return fn(strings, values);
+	return fn(strings, ...values);
 };
 
 const litRender = (templateResult: TemplateResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: StylesDescriptor, forStaticArea: boolean, options: RenderOptions) => {

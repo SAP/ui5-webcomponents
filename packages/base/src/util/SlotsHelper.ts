@@ -20,13 +20,9 @@ const getSlotName = (node: Node) => {
 	return "default";
 };
 
-const isSlot = (el: Node) => {
-	return el && el instanceof HTMLElement && el.localName === "slot";
-}
-
 const getSlottedElements = (el: Node) => {
-	if (isSlot(el)) {
-		return (el as HTMLSlotElement).assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
+	if (el instanceof HTMLSlotElement) {
+		return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
 	}
 
 	return [el];
@@ -38,7 +34,6 @@ const getSlottedElementsList = (elList: Array<Node>) => {
 
 export {
 	getSlotName,
-	isSlot,
 	getSlottedElements,
 	getSlottedElementsList,
 };

@@ -4,12 +4,13 @@ import { getFeature } from "./FeaturesRegistry.js";
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 import validateThemeRoot from "./validateThemeRoot.js";
 import type OpenUI5Support from "./features/OpenUI5Support";
+import AnimationMode from "./types/AnimationMode.js";
 
 let initialized = false;
 
 type InitialConfig = {
 	[key: string]: any,
-	animationMode: string, // TODO enum
+	animationMode: AnimationMode,
 	theme: string,
 	themeRoot: string | undefined,
 	rtl: boolean | undefined,
@@ -21,7 +22,7 @@ type InitialConfig = {
 };
 
 let initialConfig: InitialConfig = {
-	animationMode: "full",
+	animationMode: AnimationMode.Full,
 	theme: DEFAULT_THEME,
 	themeRoot: undefined,
 	rtl: undefined,
