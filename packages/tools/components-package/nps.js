@@ -5,8 +5,8 @@ const LIB = path.join(__dirname, `../lib/`);
 const getScripts = (options) => {
 
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
-	let illustrations = illustrationsData = options.illustrationsData || [];
-	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
+	let illustrationsData = options.illustrationsData || [];
+	illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
 	let createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
