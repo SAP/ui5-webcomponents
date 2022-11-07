@@ -305,9 +305,7 @@ class Popover extends Popup {
 	}
 
 	onAfterRendering() {
-		debugger
 		if (!this.isOpen() && this.open) {
-			debugger
 			const opener = this.opener instanceof HTMLElement ? this.opener : this.getRootNode().getElementById(this.opener);
 			if (!opener) {
 				console.warn("Valid opener id is required."); // eslint-disable-line
