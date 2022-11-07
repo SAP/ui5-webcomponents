@@ -1,7 +1,9 @@
 import { attachLanguageChange } from "../locale/languageChange.js";
 import getLocale from "../locale/getLocale.js";
+// @ts-ignore
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import type OpenUI5Support from "../features/OpenUI5Support";
 
 const localeDataMap = new Map();
 const loaders = new Map();
@@ -15,7 +17,7 @@ const M_ISO639_OLD_TO_NEW = {
 	"in": "id",
 };
 
-const _showAssetsWarningOnce = localeId => {
+const _showAssetsWarningOnce = (localeId: string) => {
 	if (warningShown) {
 		return;
 	}
@@ -25,9 +27,9 @@ const _showAssetsWarningOnce = localeId => {
 	warningShown = true;
 };
 
-const calcLocale = (language, region, script) => {
+const calcLocale = (language: string, region: string, script: string) => {
 	// normalize language and handle special cases
-	language = (language && M_ISO639_OLD_TO_NEW[language]) || language;
+	language = (language && M_ISO639_OLD_TO_NEW[language as keyof typeof M_ISO639_OLD_TO_NEW]) || language;
 	// Special case 1: in an SAP context, the inclusive language code "no" always means Norwegian Bokmal ("nb")
 	if (language === "no") {
 		language = "nb";
@@ -78,12 +80,12 @@ const calcLocale = (language, region, script) => {
 };
 
 // internal set data
-const setLocaleData = (localeId, content) => {
+const setLocaleData = (localeId: string, content: any) => {
 	localeDataMap.set(localeId, content);
 };
 
 // external getSync
-const getLocaleData = localeId => {
+const getLocaleData = (localeId: string) => {
 	// if there is no loader, the default fallback was fetched and a warning was given - use default locale instead
 	if (!loaders.has(localeId)) {
 		localeId = DEFAULT_LOCALE;
@@ -98,7 +100,7 @@ const getLocaleData = localeId => {
 };
 
 // load bundle over the network once
-const _loadCldrOnce = localeId => {
+const _loadCldrOnce = (localeId: string) => {
 	const loadCldr = loaders.get(localeId);
 
 	if (!cldrPromises.get(localeId)) {
@@ -109,13 +111,13 @@ const _loadCldrOnce = localeId => {
 };
 
 // external getAsync
-const fetchCldr = async (language, region, script) => {
+const fetchCldr = async (language: string, region: string, script: string) => {
 	const localeId = calcLocale(language, region, script);
 
 	// reuse OpenUI5 CLDR if present
-	const OpenUI5Support = getFeature("OpenUI5Support");
-	if (OpenUI5Support) {
-		const cldrContent = OpenUI5Support.getLocaleDataObject();
+	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
+	if (openUI5Support) {
+		const cldrContent = openUI5Support.getLocaleDataObject();
 		if (cldrContent) {
 			// only if openui5 actually returned valid content
 			setLocaleData(localeId, cldrContent);
@@ -127,7 +129,7 @@ const fetchCldr = async (language, region, script) => {
 	try {
 		const cldrContent = await _loadCldrOnce(localeId);
 		setLocaleData(localeId, cldrContent);
-	} catch (e) {
+	} catch (e: any) {
 		if (!reportedErrors.has(e.message)) {
 			reportedErrors.add(e.message);
 			console.error(e.message); /* eslint-disable-line */
@@ -135,12 +137,12 @@ const fetchCldr = async (language, region, script) => {
 	}
 };
 
-const registerLocaleDataLoader = (localeId, loader) => {
+const registerLocaleDataLoader = (localeId: string, loader: Function) => {
 	loaders.set(localeId, loader);
 };
 
 // register default loader for "en" from ui5 CDN (dev workflow without assets)
-registerLocaleDataLoader("en", async runtimeLocaleId => {
+registerLocaleDataLoader("en", async () => {
 	return (await fetch(`https://sdk.openui5.org/1.103.0/resources/sap/ui/core/cldr/en.json`)).json();
 });
 

@@ -1,9 +1,16 @@
-let suf;
-let rulesObj = {
+let suf: string;
+
+type Rules = {
+	include: Array<RegExp>,
+	exclude: Array<RegExp>,
+};
+
+let rulesObj: Rules = {
 	include: [/^ui5-/],
 	exclude: [],
 };
-const tagsCache = new Map(); // true/false means the tag should/should not be cached, undefined means not known yet.
+
+const tagsCache = new Map<string, boolean>(); // true/false means the tag should/should not be cached, undefined means not known yet.
 
 /**
  * Sets the suffix to be used for custom elements scoping, f.e. pass "demo" to get tags such as "ui5-button-demo".
@@ -12,7 +19,7 @@ const tagsCache = new Map(); // true/false means the tag should/should not be ca
  * @public
  * @param suffix The scoping suffix
  */
-const setCustomElementsScopingSuffix = suffix => {
+const setCustomElementsScopingSuffix = (suffix: string) => {
 	if (!suffix.match(/^[a-zA-Z0-9_-]+$/)) {
 		throw new Error("Only alphanumeric characters and dashes allowed for the scoping suffix");
 	}
@@ -39,7 +46,7 @@ const getCustomElementsScopingSuffix = () => {
  * @param rules Object with "include" and "exclude" properties, both arrays of regular expressions. Note that "include"
  * rules are applied first and "exclude" rules second.
  */
-const setCustomElementsScopingRules = rules => {
+const setCustomElementsScopingRules = (rules: Rules) => {
 	if (!rules || !rules.include) {
 		throw new Error(`"rules" must be an object with at least an "include" property`);
 	}
@@ -76,7 +83,7 @@ const getCustomElementsScopingRules = () => {
  * @public
  * @param tag
  */
-const shouldScopeCustomElement = tag => {
+const shouldScopeCustomElement = (tag: string) => {
 	if (!tagsCache.has(tag)) {
 		const result = rulesObj.include.some(rule => tag.match(rule)) && !rulesObj.exclude.some(rule => tag.match(rule));
 		tagsCache.set(tag, result);
@@ -92,7 +99,7 @@ const shouldScopeCustomElement = tag => {
  * @param tag
  * @returns {String}
  */
-const getEffectiveScopingSuffixForTag = tag => {
+const getEffectiveScopingSuffixForTag = (tag: string) => {
 	if (shouldScopeCustomElement(tag)) {
 		return getCustomElementsScopingSuffix();
 	}

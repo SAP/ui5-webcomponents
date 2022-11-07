@@ -2,36 +2,56 @@ import getSharedResource from "../getSharedResource.js";
 import IconCollectionsAlias from "../assets-meta/IconCollectionsAlias.js";
 import { getEffectiveDefaultIconCollection } from "../config/Icons.js";
 
-const loaders = new Map();
-const registry = getSharedResource("SVGIcons.registry", new Map());
-const iconCollectionPromises = getSharedResource("SVGIcons.promises", new Map());
+type IconLoader = (collectionName: string) => Promise<CollectionData>;
+
+type CollectionData = {
+	collection: string,
+	packageName: string,
+	version?: string,
+	data: {
+		[key: string]: {
+			path: string,
+			paths: Array<string>,
+			ltr: boolean,
+			acc: object
+		}
+	}
+};
+
+type IconData = {
+	collection?: string,
+	pathData: string | Array<string>,
+	ltr: boolean,
+	accData: object,
+	packageName: string,
+	customTemplate?: string,
+	viewBox?: string,
+};
+
+const loaders = new Map<string, IconLoader>();
+const registry = getSharedResource<Map<string, IconData>>("SVGIcons.registry", new Map());
+const iconCollectionPromises = getSharedResource<Map<string, Promise<CollectionData>>>("SVGIcons.promises", new Map());
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 
-/**
- * @deprecated
- */
-const registerIconBundle = async (collectionName, bundleData) => {
-	throw new Error("This method has been removed. Use `registerIconLoader` instead.");
-};
-
-const registerIconLoader = async (collectionName, loader) => {
+const registerIconLoader = async (collectionName: string, loader: IconLoader) => {
 	loaders.set(collectionName, loader);
 };
 
-const _loadIconCollectionOnce = async collectionName => {
+const _loadIconCollectionOnce = async (collectionName: string) => {
 	if (!iconCollectionPromises.has(collectionName)) {
 		if (!loaders.has(collectionName)) {
 			throw new Error(`No loader registered for the ${collectionName} icons collection. Probably you forgot to import the "AllIcons.js" module for the respective package.`);
 		}
-		const loadIcons = loaders.get(collectionName);
+
+		const loadIcons = loaders.get(collectionName)!;
 		iconCollectionPromises.set(collectionName, loadIcons(collectionName));
 	}
 
 	return iconCollectionPromises.get(collectionName);
 };
 
-const _fillRegistry = bundleData => {
+const _fillRegistry = (bundleData: CollectionData) => {
 	Object.keys(bundleData.data).forEach(iconName => {
 		const iconData = bundleData.data[iconName];
 
@@ -41,28 +61,28 @@ const _fillRegistry = bundleData => {
 			accData: iconData.acc,
 			collection: bundleData.collection,
 			packageName: bundleData.packageName,
-		 });
+		});
 	});
 };
 
 // set
-const registerIcon = (name, { pathData, ltr, accData, collection, packageName, customTemplate, viewBox } = {}) => { // eslint-disable-line
-	if (!collection) {
-		collection = getEffectiveDefaultIconCollection();
+const registerIcon = (name: string, iconData: IconData) => { // eslint-disable-line
+	if (!iconData.collection) {
+		iconData.collection = getEffectiveDefaultIconCollection();
 	}
 
-	const key = `${collection}/${name}`;
+	const key = `${iconData.collection}/${name}`;
 	registry.set(key, {
-		pathData,
-		ltr,
-		accData,
-		packageName,
-		customTemplate,
-		viewBox,
+		pathData: iconData.pathData,
+		ltr: iconData.ltr,
+		accData: iconData.accData,
+		packageName: iconData.packageName,
+		customTemplate: iconData.customTemplate,
+		viewBox: iconData.viewBox,
 	});
 };
 
-const _parseName = name => {
+const _parseName = (name: string) => {
 	// silently support ui5-compatible URIs
 	if (name.startsWith("sap-icon://")) {
 		name = name.replace("sap-icon://", "");
@@ -84,18 +104,18 @@ const _parseName = name => {
 	return { name, collection, registryKey };
 };
 
-const getIconDataSync = nameProp => {
-	const { registryKey } = _parseName(nameProp);
+const getIconDataSync = (name: string) => {
+	const { registryKey } = _parseName(name);
 	return registry.get(registryKey);
 };
 
-const getIconData = async nameProp => {
-	const { collection, registryKey } = _parseName(nameProp);
+const getIconData = async (name: string) => {
+	const { collection, registryKey } = _parseName(name);
 
-	let iconData = ICON_NOT_FOUND;
+	let iconData: string | CollectionData = ICON_NOT_FOUND;
 	try {
-		iconData = await _loadIconCollectionOnce(collection);
-	} catch (e) {
+		iconData = (await _loadIconCollectionOnce(collection))!;
+	} catch (e: any) {
 		console.error(e.message); /* eslint-disable-line */
 	}
 
@@ -105,7 +125,7 @@ const getIconData = async nameProp => {
 
 	if (!registry.has(registryKey)) {
 		// not filled by another await. many getters will await on the same loader, but fill only once
-		_fillRegistry(iconData);
+		_fillRegistry(iconData as CollectionData);
 	}
 	return registry.get(registryKey);
 };
@@ -119,16 +139,15 @@ const _getRegisteredNames = async () => {
 	return Array.from(registry.keys());
 };
 
-const _normalizeCollection = collectionName => {
-	if (IconCollectionsAlias[collectionName]) {
-		return IconCollectionsAlias[collectionName];
+const _normalizeCollection = (collectionName: string) => {
+	if (IconCollectionsAlias[collectionName as keyof typeof IconCollectionsAlias]) {
+		return IconCollectionsAlias[collectionName as keyof typeof IconCollectionsAlias];
 	}
 
 	return collectionName;
 };
 
 export {
-	registerIconBundle,
 	registerIconLoader,
 	getIconData,
 	getIconDataSync,

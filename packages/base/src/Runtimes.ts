@@ -1,17 +1,33 @@
+// @ts-ignore
 import VersionInfo from "./generated/VersionInfo.js";
 import getSharedResource from "./getSharedResource.js";
 
-let currentRuntimeIndex;
+type VersionInfoData = {
+	version: string,
+	major: number,
+	minor: number,
+	patch: number,
+	suffix: string,
+	isNext: boolean,
+	buildTime: number,
+}
+
+type RuntimeData = VersionInfoData & {
+	alias: string,
+	description: string,
+};
+
+let currentRuntimeIndex: number;
 let currentRuntimeAlias = "";
 
-const compareCache = new Map();
+const compareCache = new Map<string, number>();
 
 /**
  * Central registry where all runtimes register themselves by pushing an object.
  * The index in the registry servers as an ID for the runtime.
  * @type {*}
  */
-const Runtimes = getSharedResource("Runtimes", []);
+const Runtimes = getSharedResource<Array<RuntimeData>>("Runtimes", []);
 
 /**
  * Registers the current runtime in the shared runtimes resource registry
@@ -41,10 +57,10 @@ const getCurrentRuntimeIndex = () => {
  * @param index2 The index of the second runtime to compare
  * @returns {number}
  */
-const compareRuntimes = (index1, index2) => {
+const compareRuntimes = (index1: number, index2: number) => {
 	const cacheIndex = `${index1},${index2}`;
 	if (compareCache.has(cacheIndex)) {
-		return compareCache.get(cacheIndex);
+		return compareCache.get(cacheIndex)!;
 	}
 
 	const runtime1 = Runtimes[index1];
@@ -90,7 +106,7 @@ const compareRuntimes = (index1, index2) => {
  * Set an alias for the the current app/library/microfrontend which will appear in debug messages and console warnings
  * @param alias
  */
-const setRuntimeAlias = alias => {
+const setRuntimeAlias = (alias: string) => {
 	currentRuntimeAlias = alias;
 };
 

@@ -3,7 +3,7 @@
  * @param fn {Function}
  * @param delay {Integer}
  */
-let debounceInterval: NodeJS.Timeout | null = null;
+let debounceInterval: ReturnType<typeof setTimeout> | null = null;
 
 const debounce = (fn: Function, delay: number) => {
 	clearTimeout(debounceInterval as NodeJS.Timeout);

@@ -1,40 +1,42 @@
-import setToArray from "./util/setToArray.js";
 import getSharedResource from "./getSharedResource.js";
 import { getCurrentRuntimeIndex, compareRuntimes, getAllRuntimes } from "./Runtimes.js";
 
-const Tags = getSharedResource("Tags", new Map());
+const Tags = getSharedResource<Map<string, number>>("Tags", new Map());
 
-const Definitions = new Set();
-let Failures = {};
-let failureTimeout;
+const Definitions = new Set<string>();
+let Failures = new Map<number, Set<string>>();
+let failureTimeout: ReturnType<typeof setTimeout> | undefined;
 
-const UNKNOWN_RUNTIME = "unknown";
+const UNKNOWN_RUNTIME = -1;
 
-const registerTag = tag => {
+const registerTag = (tag: string) => {
 	Definitions.add(tag);
 	Tags.set(tag, getCurrentRuntimeIndex());
 };
 
-const isTagRegistered = tag => {
+const isTagRegistered = (tag: string) => {
 	return Definitions.has(tag);
 };
 
 const getAllRegisteredTags = () => {
-	return setToArray(Definitions);
+	return [...Definitions.values()];
 };
 
-const recordTagRegistrationFailure = tag => {
+const recordTagRegistrationFailure = (tag: string) => {
 	let tagRegRuntimeIndex = Tags.get(tag);
 	if (tagRegRuntimeIndex === undefined) {
 		tagRegRuntimeIndex = UNKNOWN_RUNTIME; // If the tag is taken, but not registered in Tags, then a version before 1.1.0 defined it => use the "unknown" key
 	}
-	Failures[tagRegRuntimeIndex] = Failures[tagRegRuntimeIndex] || new Set();
-	Failures[tagRegRuntimeIndex].add(tag);
+
+	if (!Failures.has(tagRegRuntimeIndex)) {
+		Failures.set(tagRegRuntimeIndex, new Set());
+	}
+	Failures.get(tagRegRuntimeIndex)!.add(tag);
 
 	if (!failureTimeout) {
 		failureTimeout = setTimeout(() => {
 			displayFailedRegistrations();
-			Failures = {};
+			Failures = new Map();
 			failureTimeout = undefined;
 		}, 1000);
 	}
@@ -51,8 +53,8 @@ const displayFailedRegistrations = () => {
 		message = `${message}\nLoading order (versions before 1.1.0 not listed): ${allRuntimes.map(runtime => `\n${runtime.description}`).join("")}`;
 	}
 
-	Object.keys(Failures).forEach(otherRuntimeIndex => {
-		let comparison;
+	[...Failures.keys()].forEach(otherRuntimeIndex => {
+		let comparison: number;
 		let otherRuntime;
 
 		if (otherRuntimeIndex === UNKNOWN_RUNTIME) { // version < 1.1.0 defined the tag
@@ -73,7 +75,7 @@ const displayFailedRegistrations = () => {
 		} else {
 			compareWord = "the same";
 		}
-		message = `${message}\n\n"${currentRuntime.description}" failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntime.description}": ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`;
+		message = `${message}\n\n"${currentRuntime.description}" failed to define ${Failures.get(otherRuntimeIndex)!.size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntime.description}": ${([...Failures.get(otherRuntimeIndex)!]).sort().join(", ")}.`;
 
 		if (comparison > 0) {
 			message = `${message}\nWARNING! If your code uses features of the above web components, unavailable in ${otherRuntime.description}, it might not work as expected!`;
