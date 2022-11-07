@@ -1,0 +1,15 @@
+@import "../base/TextArea-parameters.css";
+
+:root {
+	--__ui5_textarea_min_height: 2.5rem;
+	--_ui5_textarea_padding_top_error_warning: 0.5rem;
+	--_ui5_textarea_padding_bottom_error_warning: 0.5rem;
+	--_ui5_textarea_padding_top_information: 0.5rem;
+	--_ui5_textarea_padding_bottom_information: 0.5rem;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--__ui5_textarea_min_height: 1.625rem;
+}
