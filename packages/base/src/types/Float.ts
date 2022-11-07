@@ -12,13 +12,13 @@ import DataType from "./DataType.js";
  * @enum {number}
  */
 class Float extends DataType {
-	static isValid(value) {
+	static override isValid(value: any) {
 		// Assuming that integers are floats as well!
 		return Number(value) === value;
 	}
 
-	static attributeToProperty(attributeValue) {
-		return parseFloat(attributeValue);
+	static override attributeToProperty(attributeValue: string) {
+		return `${parseFloat(attributeValue)}`;
 	}
 }
 

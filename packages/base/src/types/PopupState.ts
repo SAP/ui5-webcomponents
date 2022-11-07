@@ -5,34 +5,34 @@ import DataType from "./DataType.js";
  * @lends sap.ui.webcomponents.base.types.PopupState.prototype
  * @public
  */
-const PopupStates = {
+enum PopupStates {
 	/**
 	 * Open and currently not changing states.
 	 * @public
 	 * @type {OPEN}
 	 */
-	OPEN: "OPEN",
+	OPEN= "OPEN",
 
 	/**
 	 * Closed and currently not changing states.
 	 * @public
 	 * @type {CLOSED}
 	 */
-	CLOSED: "CLOSED",
+	CLOSED= "CLOSED",
 
 	/**
 	 * Already left the CLOSED state, is not OPEN yet, but in the process of getting OPEN.
 	 * @public
 	 * @type {OPENING}
 	 */
-	OPENING: "OPENING",
+	OPENING= "OPENING",
 
 	/**
 	 * Still open, but in the process of going to the CLOSED state.
 	 * @public
 	 * @type {CLOSING}
 	 */
-	CLOSING: "CLOSING",
+	CLOSING= "CLOSING",
 };
 
 /**
@@ -47,7 +47,7 @@ const PopupStates = {
  * @enum {string}
  */
 class PopupState extends DataType {
-	static isValid(value) {
+	static isValid(value: PopupStates) {
 		return !!PopupStates[value];
 	}
 }

@@ -12,12 +12,12 @@ import DataType from "./DataType.js";
  * @enum {number}
  */
 class Integer extends DataType {
-	static isValid(value) {
+	static override isValid(value: any) {
 		return Number.isInteger(value);
 	}
 
-	static attributeToProperty(attributeValue) {
-		return parseInt(attributeValue);
+	static override attributeToProperty(attributeValue: string){
+		return `${parseInt(attributeValue)}`;
 	}
 }
 

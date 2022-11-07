@@ -22,8 +22,8 @@ class DataType {
 		return attributeValue;
 	}
 
-	static propertyToAttribute(propertyValue: any) {
-		return `${propertyValue}`;
+	static propertyToAttribute(propertyValue: any): string | null {
+		return propertyValue === null ? null : `${propertyValue}`;
 	}
 
 	static valuesAreEqual(value1: any, value2: any) {

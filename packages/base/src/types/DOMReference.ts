@@ -12,11 +12,11 @@ import DataType from "./DataType.js";
  * @public
  */
 class DOMReference extends DataType {
-	static isValid(value) {
+	static override isValid(value: string | HTMLElement) {
 		return (typeof value === "string" || value instanceof HTMLElement);
 	}
 
-	static propertyToAttribute(propertyValue) {
+	static override propertyToAttribute(propertyValue: string | HTMLElement) {
 		if (propertyValue instanceof HTMLElement) {
 			return null;
 		}

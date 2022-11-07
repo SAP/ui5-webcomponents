@@ -5,7 +5,7 @@ import DataType from "./DataType.js";
  * @lends sap.ui.webcomponents.base.types.InvisibleMessageMode.prototype
  * @public
  */
-const InvisibleMessageModes = {
+enum InvisibleMessageModes {
 
 	/**
      * Indicates that updates to the region should be presented at the next graceful opportunity,
@@ -13,14 +13,14 @@ const InvisibleMessageModes = {
 	 * @public
 	 * @type {Polite}
      */
-	Polite: "Polite",
+	Polite= "Polite",
 
 	/**
      * Indicates that updates to the region have the highest priority and should be presented to the user immediately.
 	 * @public
 	 * @type {Assertive}
      */
-	Assertive: "Assertive",
+	Assertive= "Assertive",
 
 };
 
@@ -36,7 +36,7 @@ const InvisibleMessageModes = {
  * @enum {string}
  */
 class InvisibleMessageMode extends DataType {
-	static isValid(value) {
+	static override isValid(value: InvisibleMessageModes) {
 		return !!InvisibleMessageModes[value];
 	}
 }
