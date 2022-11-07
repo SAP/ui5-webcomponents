@@ -73,8 +73,9 @@ packages/playground/docs/getting-started/
 packages/playground/docs/FAQ.md
 
 # Ignore the generated storybook related files
-packages/playground/_storiesGenerated/**/*/argsTypes.js
-packages/playground/_storiesGenerated/**/*/Description.md
+packages/playground/_stories/**/*/argTypes.js
+packages/playground/.storybook/custom-elements.json
+packages/playground/docs/**/*.mdx
 
 packages/main/test/pages/fix.js
 packages/fiori/test/pages/fix.js

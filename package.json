@@ -29,7 +29,6 @@
     "lint:scope:fiori": "yarn workspace @ui5/webcomponents-fiori nps scope.lint",
     "bundle:main": "yarn workspace @ui5/webcomponents nps build.bundle",
     "bundle:fiori": "yarn workspace @ui5/webcomponents-fiori nps build.bundle",
-    "build:playground:next": "yarn build && yarn copy-css && yarn workspace @ui5/webcomponents-playground build:next",
     "build:playground": "yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground build",
     "build:playground:main": "yarn build:main && yarn build:fiori && yarn copy-css && yarn workspace @ui5/webcomponents-playground build:main",
     "build:playground_as_admin": "yarn build && yarn copy-css && yarn workspace @ui5/webcomponents-playground build_as_admin",

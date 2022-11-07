@@ -18,7 +18,7 @@ jobs:
       run: |
         export NODE_OPTIONS="--max_old_space_size=4096"
         yarn install
-        yarn build:playground:next
+        yarn build:playground_as_admin
 
     - name: Write version.md
       run: git log -1 &>> packages/playground/dist/version.md
