@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.2](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.7.2) (2022-11-07)
+
+
+### Features
+
+* **ui5-avatar:** support of 3 letters is enabled ([#5870](https://github.com/SAP/ui5-webcomponents/issues/5870)) ([dc533c5](https://github.com/SAP/ui5-webcomponents/commit/dc533c56284198ab80ddb671a0598f3b507fda2f))
+
+
+
+
+
 ## [1.7.1](https://github.com/SAP/ui5-webcomponents/compare/v1.7.0...v1.7.1) (2022-09-08)
 
 
