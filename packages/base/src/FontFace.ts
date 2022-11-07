@@ -1,13 +1,16 @@
 import { hasStyle, createStyle } from "./ManagedStyles.js";
 import { getFeature } from "./FeaturesRegistry.js";
+// @ts-ignore
 import fontFaceCSS from "./generated/css/FontFace.css.js";
+// @ts-ignore
 import overrideFontFaceCSS from "./generated/css/OverrideFontFace.css.js";
+import OpenUI5Support from "./features/OpenUI5Support.js";
 
 const insertFontFace = () => {
-	const OpenUI5Support = getFeature("OpenUI5Support");
+	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 
 	// Only set the main font if there is no OpenUI5 support, or there is, but OpenUI5 is not loaded
-	if (!OpenUI5Support || !OpenUI5Support.isLoaded()) {
+	if (!openUI5Support || !openUI5Support.isLoaded()) {
 		insertMainFontFace();
 	}
 

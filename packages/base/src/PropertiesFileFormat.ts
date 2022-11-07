@@ -1,9 +1,11 @@
-const flatstr = typeof chrome === "object" || typeof v8 === "object" ? (s, iConcatOps) => {
+import { ObjectWithDynamicKeys } from "./types";
+
+const flatstr = typeof window.chrome === "object" || typeof window.v8 === "object" ? (s: string, iConcatOps: number) => {
 	if (iConcatOps > 2 && 40 * iConcatOps > s.length) {
 		Number(s);
 	}
 	return s;
-} : s => s;
+} : (s: string) => s;
 
 const rLines = /(?:\r\n|\r|\n|^)[ \t\f]*/;
 const rEscapesOrSeparator = /(\\u[0-9a-fA-F]{0,4})|(\\.)|(\\$)|([ \t\f]*[ \t\f:=][ \t\f]*)/g;
@@ -21,20 +23,20 @@ const mEscapes = {
  * @returns a object with key/value pairs parsed from the .properties file format
  * @public
  */
-const parseProperties = sText => {
+const parseProperties = (sText: string) => {
 	const properties = {},
 		aLines = sText.split(rLines);
 
 	let sLine,
 		rMatcher,
 		sKey,
-		sValue,
+		sValue: string,
 		i,
 		m,
 		iLastIndex,
-		iConcatOps;
+		iConcatOps: number;
 
-	const append = s => {
+	const append = (s: string) => {
 		if (sValue) {
 			sValue = `${sValue}${s}`;
 			iConcatOps++;
@@ -66,7 +68,7 @@ const parseProperties = sText => {
 					}
 					append(String.fromCharCode(parseInt(m[1].slice(2), 16)));
 				} else if (m[2]) {
-					append(mEscapes[m[2]] || m[2].slice(1));
+					append(mEscapes[m[2] as keyof typeof mEscapes] || m[2].slice(1));
 				} else if (m[3]) {
 					sLine = aLines[++i];
 					iLastIndex = 0;
@@ -86,7 +88,7 @@ const parseProperties = sText => {
 				sKey = sValue;
 				sValue = "";
 			}
-			properties[sKey] = flatstr(sValue, sValue ? iConcatOps : 0);
+			(properties as ObjectWithDynamicKeys)[sKey] = flatstr(sValue, sValue ? iConcatOps! : 0);
 		}
 	}
 	return properties;

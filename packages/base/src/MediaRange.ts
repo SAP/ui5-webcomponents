@@ -1,4 +1,9 @@
-const querySets = {};
+const querySets = new Map<string, RangeSet>();
+
+type RangeSet = {
+	borders: Array<number>,
+	names: Array<string>,
+}
 
 /**
  * Initializes a screen width media query range set.
@@ -18,20 +23,15 @@ const querySets = {};
  *
  * @param {string} name The name of the range set to be initialized.
  * The name must be a valid id and consist only of letters and numeric digits.
- *
  * @param {int[]} [borders] The range borders
- *
  * @param {string[]} [names] The names of the ranges. The names must be a valid id and consist only of letters and digits.
- *
  * @name MediaRange.initRangeSet
- * @function
- * @public
  */
-const _initRangeSet = (name, borders, names) => {
-	querySets[name] = {
+const _initRangeSet = (name: string, borders: Array<number>, names: Array<string>) => {
+	querySets.set(name, {
 		borders,
-		names,
-	};
+		names
+	});
 };
 
 /**
@@ -49,8 +49,8 @@ const _initRangeSet = (name, borders, names) => {
  * @function
  * @public
  */
-const _getCurrentRange = (name, width = window.innerWidth) => {
-	const querySet = querySets[name];
+const _getCurrentRange = (name: string, width = window.innerWidth) => {
+	const querySet = querySets.get(name);
 	let i = 0;
 
 	if (!querySet) {
@@ -73,7 +73,7 @@ const _getCurrentRange = (name, width = window.innerWidth) => {
  * @name MediaRange.RANGESETS
  * @public
  */
-const RANGESETS = {
+enum RANGESETS {
 	/**
 	 * A 4-step range set (S-M-L-XL).
 	 *
@@ -88,7 +88,7 @@ const RANGESETS = {
 	 * @name MediaRange.RANGESETS.RANGE_4STEPS
 	 * @public
 	 */
-	RANGE_4STEPS: "4Step",
+	RANGE_4STEPS = "4Step",
 };
 
 /**

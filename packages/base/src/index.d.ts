@@ -2,6 +2,8 @@ export {};
 
 declare global {
 	interface Window {
-	  sap: any;
+		sap: any;
+		chrome: any;
+		v8: any;
 	}
 }

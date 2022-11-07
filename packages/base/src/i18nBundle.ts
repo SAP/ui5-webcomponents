@@ -3,14 +3,23 @@ import formatMessage from "./util/formatMessage.js";
 
 const I18nBundleInstances = new Map();
 
-let customGetI18nBundle;
+let customGetI18nBundle: I18nBundleGetter;
+
+type I18nText = {
+	key: string,
+	defaultText: string,
+};
+type GetText = (textObj: I18nText, ...params: Array<number | string>) => string;
+type I18nBundleGetter = (packageName: string) => Promise<{ getText: GetText }>;
 
 /**
  * @class
  * @public
  */
 class I18nBundle {
-	constructor(packageName) {
+	packageName: string;
+
+	constructor(packageName: string) {
 		this.packageName = packageName;
 	}
 
@@ -22,7 +31,7 @@ class I18nBundle {
 	 * @param params Values for the placeholders
 	 * @returns {*}
 	 */
-	getText(textObj, ...params) {
+	getText(textObj: I18nText, ...params: Array<number | string>) {
 		if (typeof textObj === "string") {
 			textObj = { key: textObj, defaultText: textObj };
 		}
@@ -41,7 +50,7 @@ class I18nBundle {
 	}
 }
 
-const getI18nBundleSync = packageName => {
+const getI18nBundleSync = (packageName: string) => {
 	if (I18nBundleInstances.has(packageName)) {
 		return I18nBundleInstances.get(packageName);
 	}
@@ -59,7 +68,7 @@ const getI18nBundleSync = packageName => {
  * @public
  * @param customGet the function to use instead of the standard getI18nBundle implementation
  */
-const registerCustomI18nBundleGetter = customGet => {
+const registerCustomI18nBundleGetter = (customGet: I18nBundleGetter) => {
 	customGetI18nBundle = customGet;
 };
 
@@ -70,7 +79,7 @@ const registerCustomI18nBundleGetter = customGet => {
  * @param packageName
  * @returns {Promise<I18nBundle>}
  */
-const getI18nBundle = async packageName => {
+const getI18nBundle = async (packageName: string) => {
 	if (customGetI18nBundle) {
 		return customGetI18nBundle(packageName);
 	}
