@@ -1,4 +1,4 @@
-//@ts-ignore
+// @ts-ignore
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 export default () => {

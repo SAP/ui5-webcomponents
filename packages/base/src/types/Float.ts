@@ -13,12 +13,11 @@ import DataType from "./DataType.js";
  */
 class Float extends DataType {
 	static override isValid(value: any) {
-		// Assuming that integers are floats as well!
 		return Number(value) === value;
 	}
 
 	static override attributeToProperty(attributeValue: string) {
-		return `${parseFloat(attributeValue)}`;
+		return parseFloat(attributeValue);
 	}
 }
 

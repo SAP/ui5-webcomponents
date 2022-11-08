@@ -31,7 +31,7 @@ const impliesRTL = (language: string) => {
 const getRTL = () => {
 	const configurationRTL = getConfiguredRTL();
 
-	if (configurationRTL !== null) {
+	if (configurationRTL !== undefined) {
 		return !!configurationRTL;
 	}
 

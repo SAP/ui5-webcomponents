@@ -16,8 +16,8 @@ class Integer extends DataType {
 		return Number.isInteger(value);
 	}
 
-	static override attributeToProperty(attributeValue: string){
-		return `${parseInt(attributeValue)}`;
+	static override attributeToProperty(attributeValue: string) {
+		return parseInt(attributeValue);
 	}
 }
 

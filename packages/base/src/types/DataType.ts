@@ -18,7 +18,7 @@ class DataType {
 		return false;
 	}
 
-	static attributeToProperty(attributeValue: string | boolean) {
+	static attributeToProperty(attributeValue: string | boolean): any {
 		return attributeValue;
 	}
 

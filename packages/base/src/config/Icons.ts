@@ -3,8 +3,8 @@ import { getTheme, isThemeFamily } from "./Theme.js";
 const IconCollectionConfiguration = new Map<string, string>();
 
 enum IconCollection {
-	v4= "SAP-icons",
-	v5= "SAP-icons-v5",
+	v4 = "SAP-icons",
+	v5 = "SAP-icons-v5",
 }
 
 /**

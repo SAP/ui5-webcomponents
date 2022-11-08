@@ -13,6 +13,22 @@ import getActiveElement from "../util/getActiveElement.js";
 import NavigationMode from "../types/NavigationMode.js";
 import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 
+import type UI5Element from "../UI5Element.js";
+import { instanceOfUI5Element } from "../UI5Element.js";
+import { ObjectWithDynamicKeys } from "../types.js";
+
+type TabbableObject = {id?: string, _tabIndex: string};
+
+type ItemNavigationOptions = {
+	currentIndex: number,
+	navigationMode: NavigationMode,
+	rowSize: number
+	skipItemsSize: number,
+	behavior: ItemNavigationBehavior,
+	getItemsCallback: () => Array<TabbableObject>,
+	affectedPropertiesNames: Array<string>,
+};
+
 /**
  * The ItemNavigation class manages the calculations to determine the correct "tabindex" for a group of related items inside a root component.
  * Important: ItemNavigation only does the calculations and does not change "tabindex" directly, this is a responsibility of the developer.
@@ -47,6 +63,16 @@ import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
  * @public
  */
 class ItemNavigation {
+	rootWebComponent: UI5Element;
+
+	_getItems: () => Array<TabbableObject>;
+	_currentIndex: number;
+	_rowSize: number;
+	_behavior: ItemNavigationBehavior;
+	_navigationMode: NavigationMode;
+	_affectedPropertiesNames: Array<string>;
+	_skipItemsSize: number | null;
+
 	/**
 	 *
 	 * @param rootWebComponent the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
@@ -61,23 +87,17 @@ class ItemNavigation {
 	 *  - getItemsCallback: function that, when called, returns an array with all items the user can navigate among
 	 *  - affectedPropertiesNames: a list of metadata properties on the root component which, upon user navigation, will be reassigned by address thus causing the root component to invalidate
 	 */
-	constructor(rootWebComponent, options = {}) {
-		this._setRootComponent(rootWebComponent);
-		this._initOptions(options);
-	}
-
-	_setRootComponent(rootWebComponent) {
+	constructor(rootWebComponent: UI5Element, options: ItemNavigationOptions) {
 		if (!rootWebComponent.isUI5Element) {
 			throw new Error("The root web component must be a UI5 Element instance");
 		}
+
 		this.rootWebComponent = rootWebComponent;
 		this.rootWebComponent.addEventListener("keydown", this._onkeydown.bind(this));
 		this.rootWebComponent._onComponentStateFinalized = () => {
 			this._init();
 		};
-	}
 
-	_initOptions(options) {
 		if (typeof options.getItemsCallback !== "function") {
 			throw new Error("getItemsCallback is required");
 		}
@@ -89,6 +109,7 @@ class ItemNavigation {
 		this._navigationMode = options.navigationMode || NavigationMode.Auto;
 		this._affectedPropertiesNames = options.affectedPropertiesNames || [];
 		this._skipItemsSize = options.skipItemsSize || null;
+
 	}
 
 	/**
@@ -98,7 +119,7 @@ class ItemNavigation {
 	 * @public
 	 * @param current the new selected item
 	 */
-	setCurrentItem(current) {
+	setCurrentItem(current: TabbableObject) {
 		const currentItemIndex = this._getItems().indexOf(current);
 
 		if (currentItemIndex === -1) {
@@ -116,7 +137,7 @@ class ItemNavigation {
 	 * @public
 	 * @param newRowSize
 	 */
-	setRowSize(newRowSize) {
+	setRowSize(newRowSize: number) {
 		this._rowSize = newRowSize;
 	}
 
@@ -126,7 +147,7 @@ class ItemNavigation {
 		});
 	}
 
-	_onkeydown(event) {
+	_onkeydown(event: KeyboardEvent) {
 		if (!this._canNavigate()) {
 			return;
 		}
@@ -260,6 +281,7 @@ class ItemNavigation {
 		if (this._skipItemsSize === null) {
 			// Move the focus to the very top (as Home).
 			this._currentIndex -= this._currentIndex;
+			return;
 		}
 
 		if (this._currentIndex + 1 > this._skipItemsSize) {
@@ -270,6 +292,7 @@ class ItemNavigation {
 			// Otherwise, move the focus to the very top (as Home).
 			this._currentIndex -= this._currentIndex;
 		}
+
 	}
 
 	/**
@@ -279,6 +302,7 @@ class ItemNavigation {
 		if (this._skipItemsSize === null) {
 			// Move the focus to the very bottom (as End).
 			this._currentIndex = this._getItems().length - 1;
+			return;
 		}
 
 		const currentToEndRange = this._getItems().length - this._currentIndex - 1;
@@ -300,8 +324,8 @@ class ItemNavigation {
 		}
 
 		this._affectedPropertiesNames.forEach(propName => {
-			const prop = this.rootWebComponent[propName];
-			this.rootWebComponent[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
+			const prop = (this.rootWebComponent as ObjectWithDynamicKeys)[propName];
+			(this.rootWebComponent as ObjectWithDynamicKeys)[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
 		});
 	}
 
@@ -341,7 +365,7 @@ class ItemNavigation {
 			return;
 		}
 
-		if (currentItem.isUI5Element) {
+		if (instanceOfUI5Element(currentItem)) {
 			return currentItem.getFocusDomRef();
 		}
 

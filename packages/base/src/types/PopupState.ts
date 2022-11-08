@@ -11,28 +11,28 @@ enum PopupStates {
 	 * @public
 	 * @type {OPEN}
 	 */
-	OPEN= "OPEN",
+	OPEN = "OPEN",
 
 	/**
 	 * Closed and currently not changing states.
 	 * @public
 	 * @type {CLOSED}
 	 */
-	CLOSED= "CLOSED",
+	CLOSED = "CLOSED",
 
 	/**
 	 * Already left the CLOSED state, is not OPEN yet, but in the process of getting OPEN.
 	 * @public
 	 * @type {OPENING}
 	 */
-	OPENING= "OPENING",
+	OPENING = "OPENING",
 
 	/**
 	 * Still open, but in the process of going to the CLOSED state.
 	 * @public
 	 * @type {CLOSING}
 	 */
-	CLOSING= "CLOSING",
+	CLOSING = "CLOSING",
 };
 
 /**

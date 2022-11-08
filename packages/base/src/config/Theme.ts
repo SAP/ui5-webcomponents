@@ -9,7 +9,7 @@ let curTheme: string;
  * @returns {String} the current theme name
  * @public
  */
-const getTheme = () => {
+const getTheme = (): string => {
 	if (curTheme === undefined) {
 		curTheme = getConfiguredTheme();
 	}

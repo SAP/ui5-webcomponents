@@ -1,7 +1,16 @@
 // @ts-ignore
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 
-type ThemeData = {_: string} | string;
+type ThemeData = {_: { 
+		packageName: string,
+		content: string,
+		fileName: string,
+}} | { 
+	packageName: string,
+	content: string,
+	fileName: string,
+} | string;
+
 type ThemeLoaderFunction = (themeName: string) => Promise<ThemeData>;
 
 const themeStyles = new Map<string, string>();
