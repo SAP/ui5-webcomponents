@@ -31,7 +31,7 @@ const metadata = {
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 *
 		 * @public
-		 * @type {SwitchDesign}
+		 * @type {sap.ui.webcomponents.main.types.SwitchDesign}
 		 * @defaultValue "Textual"
 		 */
 		design: {
@@ -46,6 +46,8 @@ const metadata = {
 		 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
 		 * @type {boolean}
 		 * @defaultvalue false
+		 * @formEvents change
+		 * @formProperty
 		 * @public
 		 */
 		checked: {
@@ -119,6 +121,19 @@ const metadata = {
 		 accessibleNameRef: {
 			type: String,
 			defaultValue: "",
+		},
+
+		/**
+		 * Defines the tooltip of the component.
+		 * <br>
+		 * <b>Note:</b> If applicable an external label reference should always be the preferred option to provide context to the <code>ui5-switch</code> component over a tooltip.
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.9.0
+		 */
+		 tooltip: {
+			type: String,
 		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {

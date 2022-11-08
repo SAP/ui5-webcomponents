@@ -70,7 +70,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.DateRangePicker
- * @extends DatePicker
+ * @extends sap.ui.webcomponents.main.DatePicker
  * @tagname ui5-daterange-picker
  * @since 1.0.0-rc.8
  * @public
@@ -93,7 +93,7 @@ class DateRangePicker extends DatePicker {
 	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
 	 *
 	 * @readonly
-	 * @type { Date }
+	 * @type {Date}
 	 * @public
 	 */
 	get dateValue() {
@@ -104,7 +104,7 @@ class DateRangePicker extends DatePicker {
 	 * <b>Note:</b> The getter method is inherited and not supported. If called it will return an empty value.
 	 *
 	 * @readonly
-	 * @type { Date }
+	 * @type {Date}
 	 * @public
 	 */
 	get dateValueUTC() {
@@ -157,7 +157,7 @@ class DateRangePicker extends DatePicker {
 	 * Returns the start date of the currently selected range as JavaScript Date instance.
 	 *
 	 * @readonly
-	 * @type { Date }
+	 * @type {Date}
 	 * @public
 	 */
 	get startDateValue() {
@@ -168,7 +168,7 @@ class DateRangePicker extends DatePicker {
 	 * Returns the end date of the currently selected range as JavaScript Date instance.
 	 *
 	 * @readonly
-	 * @type { Date }
+	 * @type {Date}
 	 * @public
 	 */
 	get endDateValue() {

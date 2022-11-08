@@ -101,52 +101,22 @@
 		</ui5-table-column>
 	</ui5-table>
 
-	<!-- 3 columns, but 1 cell -->
-	<ui5-title>3 columns, but 1 cell</ui5-title>
-	<ui5-table class="demo-table" id="tblLessCells">
+	<ui5-table class="demo-table" accessible-name="Table label" id="tblLessCells">
 		<ui5-table-column id="column-1" slot="columns">
 			<ui5-label>City</ui5-label>
 		</ui5-table-column>
 
-		<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier">
-			<ui5-label>Supplier</ui5-label>
-		</ui5-table-column>
-
-		<ui5-table-column id="column-3" slot="columns" min-width="500" popin-text="Country" demand-popin>
-			<div class="column-content">
-				<ui5-label>Country</ui5-label>
-			</div>
-		</ui5-table-column>
-
-		<ui5-table-row >
+		<ui5-table-row navigated>
 			<ui5-table-cell><span>Dublin</span> <ui5-button>click</ui5-button></ui5-table-cell>
 		</ui5-table-row>
+
 		<ui5-table-row>
 			<ui5-table-cell><ui5-label for="myInput">Sofia</ui5-label> <ui5-input id="myInput">click</ui5-input></ui5-table-cell>
 		</ui5-table-row>
+
 		<ui5-table-row >
 			<ui5-table-cell>London <input /> </ui5-table-cell>
 		</ui5-table-row>
-	</ui5-table>
-
-	<!-- 1 column, but 3 cells -->
-	<ui5-title>1 column, but 3 cells</ui5-title>
-	<ui5-table class="demo-table" id="tblLessColumns" accessible-name="Table label">
-		<ui5-table-column id="column-1" slot="columns">
-			<ui5-label>City</ui5-label>
-		</ui5-table-column>
-
-		<ui5-table-row>
-			<ui5-table-cell>Dublin</ui5-table-cell>
-			<ui5-table-cell>Sofia</ui5-table-cell>
-			<ui5-table-cell>London</ui5-table-cell>
-		</ui5-table-row>
-		<ui5-table-row>
-			<ui5-table-cell>Madrid</ui5-table-cell>
-			<ui5-table-cell>Rome</ui5-table-cell>
-			<ui5-table-cell>Barcelona</ui5-table-cell>
-		</ui5-table-row>
-
 	</ui5-table>
 
 	<!-- Test row click -->

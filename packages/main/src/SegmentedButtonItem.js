@@ -14,7 +14,7 @@ const metadata = {
 		/**
 		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
-		 * @type {ButtonDesign}
+		 * @type {sap.ui.webcomponents.main.types.ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -86,7 +86,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.SegmentedButtonItem
- * @extends ToggleButton
+ * @extends sap.ui.webcomponents.main.ToggleButton
  * @tagname ui5-segmented-button-item
  * @implements sap.ui.webcomponents.main.ISegmentedButtonItem
  * @public

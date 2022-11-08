@@ -71,12 +71,12 @@ const metadata = {
 		 * <li><code>Group</code></li>
 		 * <li><code>Individual</code></li>
 		 * </ul>
-		 * @type {AvatarGroupType}
+		 * @type {sap.ui.webcomponents.main.types.AvatarGroupType}
 		 * @defaultValue "Group"
 		 * @public
 		 */
 		type: {
-			type: String,
+			type: AvatarGroupType,
 			defaultValue: AvatarGroupType.Group,
 		},
 
@@ -229,7 +229,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.AvatarGroup
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-avatar-group
  * @since 1.0.0-rc.11
  * @public
@@ -278,7 +278,7 @@ class AvatarGroup extends UI5Element {
 	/**
 	 * Returns an array containing the <code>ui5-avatar</code> instances that are currently not displayed due to lack of space.
 	 * @readonly
-	 * @type { HTMLElement[] }
+	 * @type {HTMLElement[]}
 	 * @defaultValue []
 	 * @public
 	 */
@@ -289,7 +289,7 @@ class AvatarGroup extends UI5Element {
 	/**
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
-	 * @type { AvatarColorScheme[] }
+	 * @type {sap.ui.webcomponents.main.types.AvatarColorScheme[]}
 	 * @defaultValue []
 	 * @public
 	 */

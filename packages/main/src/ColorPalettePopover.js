@@ -58,7 +58,7 @@ const metadata = {
 		/**
 		 * Defines the default color of the component.
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-		 * @type {CSSColor}
+		 * @type {sap.ui.webcomponents.base.types.CSSColor}
 		 * @public
 		 */
 		defaultColor: {
@@ -120,7 +120,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ColorPalettePopover
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-color-palette-popover
  * @public
  * @since 1.0.0-rc.16

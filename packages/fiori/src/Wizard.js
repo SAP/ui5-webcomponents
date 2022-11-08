@@ -79,7 +79,7 @@ const metadata = {
 		 * <b>Note:</b> Supported values are between 0.5 and 1
 		 * and values out of the range will be normalized to 0.5 and 1 respectively.
 		 * @private
-		 * @type {Float}
+		 * @type {sap.ui.webcomponents.base.types.Float}
 		 * @defaultvalue 0.7
 		 * @since 1.0.0-rc.13
 		 */
@@ -224,7 +224,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.Wizard
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-wizard
  * @since 1.0.0-rc.10
  * @appenddocs WizardStep

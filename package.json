@@ -9,7 +9,7 @@
     "ui5"
   ],
   "scripts": {
-    "build": "npm-run-all --sequential build:prerequisitesWithLint build:bundles",
+    "build": "npm-run-all --sequential build:prerequisitesWithLint build:bundles build:customElementsManifest",
     "build:bundles": "npm-run-all --parallel bundle:main bundle:fiori",
     "build:prerequisitesWithLint": "npm-run-all --parallel build:prerequisites lint:main lint:fiori",
     "build:prerequisites": "npm-run-all --parallel build:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori",
@@ -21,6 +21,7 @@
     "build:icons-tnt": "yarn workspace @ui5/webcomponents-icons-tnt build",
     "build:main": "yarn workspace @ui5/webcomponents build",
     "build:fiori": "yarn workspace @ui5/webcomponents-fiori build",
+    "build:customElementsManifest": "node packages/tools/lib/generate-custom-elements-manifest/index.js",
     "lint:main": "yarn workspace @ui5/webcomponents lint",
     "lint:fiori": "yarn workspace @ui5/webcomponents-fiori lint",
     "lint:scope": "npm-run-all --parallel lint:scope:main lint:scope:fiori",

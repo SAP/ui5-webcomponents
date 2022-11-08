@@ -18,7 +18,7 @@
 	.hcb .header {
 		color: #fff;
 	}
-	
+
 	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
 		text-align: end;
 	}
@@ -526,6 +526,12 @@
 	document.getElementById("singleSelectTbl").insertAdjacentHTML('beforeend', html);
 	document.getElementById("multiSelectTbl").insertAdjacentHTML('beforeend', html);
 
+	document.getElementById("singleSelectTbl").addEventListener("ui5-selection-change", function(event) {
+		if (event.detail.previouslySelectedRows.length) {
+			event.detail.previouslySelectedRows[0].removeAttribute("navigated");
+		}
+		event.detail.selectedRows[0].setAttribute("navigated", '');
+	});
 
 	document.getElementById("toggleSticky").addEventListener("click", function(event) {
 		document.getElementById("tbl").stickyColumnHeader = !document.getElementById("tbl").stickyColumnHeader
@@ -1475,7 +1481,7 @@
 </section>
 
 <section class="table-grouping-example-single">
-	<h3>Table with grouping (SingleSelect)</h3>
+	<h3>Table with grouping (SingleSelect - click on item to set navigated)</h3>
 
 	<div class="snippet flex-column">
 		<!-- Header -->
@@ -1560,7 +1566,18 @@
 		<ui5-table-cell><span>USA</span></ui5-table-cell>
 	</ui5-table-row>
 </ui5-table>
-	</xmp></pre>
+
+<script>
+	document.getElementById("singleSelectTbl").addEventListener("ui5-selection-change", function(event) {
+		if (event.detail.previouslySelectedRows.length) {
+			event.detail.previouslySelectedRows[0].removeAttribute("navigated");
+		}
+		event.detail.selectedRows[0].setAttribute("navigated", '');
+	});
+</script>
+
+
+</xmp></pre>
 </section>
 
 <section class="table-grouping-example-multi">

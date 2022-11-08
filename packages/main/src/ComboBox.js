@@ -80,6 +80,8 @@ const metadata = {
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
+		 * @formEvents change input
+		 * @formProperty
 		 * @public
 		 */
 		value: {
@@ -141,7 +143,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -375,7 +377,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ComboBox
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-combobox
  * @appenddocs ComboBoxItem ComboBoxGroupItem
  * @public
@@ -983,6 +985,7 @@ class ComboBox extends UI5Element {
 
 	_announceSelectedItem(indexOfItem) {
 		const currentItem = this._filteredItems[indexOfItem];
+		const currentItemAdditionalText = currentItem.additionalText;
 		const isGroupItem = currentItem && currentItem.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
@@ -990,7 +993,7 @@ class ComboBox extends UI5Element {
 		if (isGroupItem) {
 			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, "Polite");
 		} else {
-			announce(`${itemPositionText}`, "Polite");
+			announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), "Polite");
 		}
 	}
 

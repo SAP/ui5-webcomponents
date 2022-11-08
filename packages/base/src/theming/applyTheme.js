@@ -3,6 +3,7 @@ import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
+import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoots.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
 
@@ -40,7 +41,7 @@ const loadComponentPackages = async theme => {
 	});
 };
 
-const detectExternalTheme = () => {
+const detectExternalTheme = async theme => {
 	// If theme designer theme is detected, use this
 	const extTheme = getThemeDesignerTheme();
 	if (extTheme) {
@@ -56,11 +57,15 @@ const detectExternalTheme = () => {
 				themeName: OpenUI5Support.getConfigurationSettingsObject().theme, // just themeName, baseThemeName is only relevant for custom themes
 			};
 		}
+	} else if (getThemeRoot()) {
+		await attachCustomThemeStylesToHead(theme);
+
+		return getThemeDesignerTheme();
 	}
 };
 
 const applyTheme = async theme => {
-	const extTheme = detectExternalTheme();
+	const extTheme = await detectExternalTheme(theme);
 
 	// Only load theme_base properties if there is no externally loaded theme, or there is, but it is not being loaded
 	if (!extTheme || theme !== extTheme.themeName) {

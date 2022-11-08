@@ -33,7 +33,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *
-		 * @type {ListItemType}
+		 * @type {sap.ui.webcomponents.main.types.ListItemType}
 		 * @defaultvalue "Active"
 		 * @public
 		*/
@@ -123,6 +123,23 @@ const metadata = {
 		_focused: {},
 		"_selection-requested": {},
 	},
+	managedSlots: true,
+	slots: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
+
+		/**
+		 * Defines the delete button, displayed in "Delete" mode.
+		 * <b>Note:</b> While the slot allows custom buttons, to match
+		 * design guidelines, please use the <code>ui5-button</code> component.
+		 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
+		 * @type {sap.ui.webcomponents.main.IButton}
+		 * @since 1.9.0
+		 * @slot
+		 * @public
+		 */
+		deleteButton: {
+			type: HTMLElement,
+		},
+	},
 };
 
 /**
@@ -133,7 +150,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ListItem
- * @extends ListItemBase
+ * @extends sap.ui.webcomponents.main.ListItemBase
  * @public
  */
 class ListItem extends ListItemBase {
@@ -295,6 +312,7 @@ class ListItem extends ListItemBase {
 			return;
 		}
 
+		event.preventDefault();
 		this.fireEvent("_press", { item: this, selected: this.selected, key: event.key });
 	}
 
@@ -374,6 +392,10 @@ class ListItem extends ListItemBase {
 
 	get deleteText() {
 		return ListItem.i18nBundle.getText(DELETE);
+	}
+
+	get hasDeleteButtonSlot() {
+		return !!this.deleteButton.length;
 	}
 
 	get _accessibleNameRef() {

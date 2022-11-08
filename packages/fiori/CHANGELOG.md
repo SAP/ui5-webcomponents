@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/SAP/ui5-webcomponents/compare/v1.8.0...v1.9.0) (2022-10-31)
+
+
+### Bug Fixes
+
+* **BarcodeScannerDialog:** imports of UMD modules work in all kinds o… ([#5901](https://github.com/SAP/ui5-webcomponents/issues/5901)) ([af203b9](https://github.com/SAP/ui5-webcomponents/commit/af203b94e1143bb01ecd596d5583c90da8f77eba))
+* **ui5-illustrated-message:** prevent infinite resize ([#5882](https://github.com/SAP/ui5-webcomponents/issues/5882)) ([a8413ad](https://github.com/SAP/ui5-webcomponents/commit/a8413adb6933202da4ff8695823ea840d1be07bb)), closes [#5852](https://github.com/SAP/ui5-webcomponents/issues/5852)
+* **ui5-notifications:** add missing imports for used icons ([#5907](https://github.com/SAP/ui5-webcomponents/issues/5907)) ([a50a22f](https://github.com/SAP/ui5-webcomponents/commit/a50a22fc1b6fd7a7d94acc90fbf82c8c37266f97)), closes [#5905](https://github.com/SAP/ui5-webcomponents/issues/5905)
+* **ui5-shellbar:** outline buttons color on focus fixed for quartz ([#5868](https://github.com/SAP/ui5-webcomponents/issues/5868)) ([f61df7e](https://github.com/SAP/ui5-webcomponents/commit/f61df7ec8d9e0530f69b1735388ab277b667fa94))
+
+
+### Features
+
+* **framework:** fetch illustrations on demand ([#5927](https://github.com/SAP/ui5-webcomponents/issues/5927)) ([f8e1033](https://github.com/SAP/ui5-webcomponents/commit/f8e1033643626261dcad8a38f65c325ba9aff99f))
+* **framework:** generate custom elements manifest ([#5964](https://github.com/SAP/ui5-webcomponents/issues/5964)) ([0d62770](https://github.com/SAP/ui5-webcomponents/commit/0d62770cace54fd9aef73d9632dd06d8a83680e9))
+* **ui5-barcodescanner:** downgraded to lower helper version ([#5925](https://github.com/SAP/ui5-webcomponents/issues/5925)) ([bf2fc4b](https://github.com/SAP/ui5-webcomponents/commit/bf2fc4b43bea86d330eb66fbe60dc226e9e9f550))
+
+
+
+
+
 # [1.8.0](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.8.0) (2022-10-03)
 
 

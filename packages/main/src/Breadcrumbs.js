@@ -69,7 +69,7 @@ const metadata = {
 		 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
 		 * The last item contains only plain text and is not a link.
 		 *
-		 * @type {BreadcrumbsDesign}
+		 * @type {sap.ui.webcomponents.main.types.BreadcrumbsDesign}
 		 * @defaultvalue "Standard"
 		 * @public
 		*/
@@ -92,7 +92,7 @@ const metadata = {
 		 * <li><code>GreaterThan</code></li>
 		 * </ul>
 		 *
-		 * @type {BreadcrumbsSeparatorStyle}
+		 * @type {sap.ui.webcomponents.main.types.BreadcrumbsSeparatorStyle}
 		 * @defaultvalue "Slash"
 		 * @public
 		 */
@@ -104,7 +104,7 @@ const metadata = {
 		/**
 		 * Holds the number of items in the overflow.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultvalue 0
 		 * @private
 		 */
@@ -172,7 +172,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Breadcrumbs
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-breadcrumbs
  * @appenddocs BreadcrumbsItem
  * @public

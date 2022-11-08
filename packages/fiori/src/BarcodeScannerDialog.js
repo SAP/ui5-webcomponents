@@ -4,7 +4,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-import * as ZXing from "@zxing/library/umd/index.js";
+import * as ZXing from "@zxing/library/umd/index.min.js";
 // Template
 import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDialogTemplate.lit.js";
 
@@ -106,7 +106,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.BarcodeScannerDialog
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-barcode-scanner-dialog
  * @public
  * @since 1.0.0-rc.15

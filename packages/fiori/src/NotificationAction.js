@@ -44,7 +44,7 @@ const metadata = {
 		 * <li><code>Transparent</code></li>
 		 * </ul>
 		 *
-		 * @type {ButtonDesign}
+		 * @type {sap.ui.webcomponents.main.types.ButtonDesign}
 		 * @defaultvalue "Transparent"
 		 * @public
 		 */
@@ -83,7 +83,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationAction
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-notification-action
  * @implements sap.ui.webcomponents.fiori.INotificationAction
  * @public

@@ -28,7 +28,7 @@ const metadata = {
 		 * <li><code>FloatingFooter</code></li>
 		 * </ul>
 		 *
-		 * @type {BarDesign}
+		 * @type {sap.ui.webcomponents.fiori.types.BarDesign}
 		 * @defaultvalue "Header"
 		 * @public
 		 */
@@ -117,7 +117,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.Bar
  * @implements sap.ui.webcomponents.fiori.IBar
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-bar
  * @public
  * @since 1.0.0-rc.11

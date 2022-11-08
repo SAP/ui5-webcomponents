@@ -2,12 +2,16 @@ const path = require("path");
 const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
 
-
 const getScripts = (options) => {
 
-	let illustrations = options.illustrationsData || [];
-	illustrations = illustrations.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
-	let illustrationsScript = illustrations.join(" && ");
+	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
+	const illustrationsData = options.illustrationsData || [];
+	illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
+	const createIllustrationsJSImportsScript = illustrations.join(" && ");
+
+	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
+	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
+	const createIllustrationsLoadersScript = options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "";
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -32,7 +36,7 @@ const getScripts = (options) => {
 		// no custom configuration - use default from tools project
 		eslintConfig = `--config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
 	}
-		
+
 	const scripts = {
 		clean: 'rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
@@ -40,7 +44,7 @@ const getScripts = (options) => {
 		prepare: {
 			default: "nps clean prepare.all",
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.api" "nps build.illustrations"',
-			styleRelated: "nps build.styles build.jsonImports",
+			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		build: {
 			default: "nps lint prepare build.bundle",
@@ -60,9 +64,13 @@ const getScripts = (options) => {
 				themes: `node "${LIB}/generate-json-imports/themes.js" dist/generated/assets/themes dist/generated/json-imports`,
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
+			jsImports: {
+				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrationsLoaders",
+				illustrationsLoaders: createIllustrationsLoadersScript,
+			},
 			bundle: `vite build ${viteConfig}`,
 			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
-			illustrations: illustrationsScript
+			illustrations: createIllustrationsJSImportsScript,
 		},
 		copy: {
 			default: "nps copy.src copy.props",

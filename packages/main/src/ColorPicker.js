@@ -40,7 +40,7 @@ const metadata = {
 		 * Defines the currently selected color of the component.
 		 * <br><br>
 		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-		 * @type {CSSColor}
+		 * @type {sap.ui.webcomponents.base.types.CSSColor}
 		 * @public
 		 */
 		color: {
@@ -159,7 +159,7 @@ const metadata = {
  * @author SAP SE
  * @since 1.0.0-rc.12
  * @alias sap.ui.webcomponents.main.ColorPicker
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-color-picker
  * @public
  */

@@ -125,7 +125,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.fiori.NotificationListGroupItem
- * @extends NotificationListItemBase
+ * @extends sap.ui.webcomponents.fiori.NotificationListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
  * @appenddocs NotificationAction

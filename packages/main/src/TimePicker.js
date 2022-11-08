@@ -108,7 +108,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TimePicker
- * @extends TimePickerBase
+ * @extends sap.ui.webcomponents.main.TimePickerBase
  * @tagname ui5-time-picker
  * @public
  * @since 1.0.0-rc.6
@@ -138,7 +138,7 @@ class TimePicker extends TimePickerBase {
 	 * Currently selected time represented as JavaScript Date instance
 	 *
 	 * @readonly
-	 * @type { Date }
+	 * @type {Date}
 	 * @public
 	 */
 	get dateValue() {

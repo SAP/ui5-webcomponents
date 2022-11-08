@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-fiori",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "UI5 Web Components: webcomponents.fiori",
   "ui5": {
     "webComponentsPackage": true
@@ -8,6 +8,7 @@
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "private": false,
+  "customElements": "./dist/custom-elements.json",
   "keywords": [
     "openui5",
     "sapui5",
@@ -39,14 +40,14 @@
     "directory": "packages/fiori"
   },
   "dependencies": {
-    "@ui5/webcomponents": "1.8.0",
-    "@ui5/webcomponents-base": "1.8.0",
-    "@ui5/webcomponents-icons": "1.8.0",
-    "@ui5/webcomponents-theming": "1.8.0",
-    "@zxing/library": "^0.18.3"
+    "@ui5/webcomponents": "1.9.0",
+    "@ui5/webcomponents-base": "1.9.0",
+    "@ui5/webcomponents-icons": "1.9.0",
+    "@ui5/webcomponents-theming": "1.9.0",
+    "@zxing/library": "^0.17.1"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.8.0",
-    "chromedriver": "105.0.1"
+    "@ui5/webcomponents-tools": "1.9.0",
+    "chromedriver": "106.0.1"
   }
 }

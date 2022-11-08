@@ -8,6 +8,12 @@
  * @public
  */
 class DataType {
+	/**
+	 * Checks if the value is valid for its data type.
+ 	 * @public
+	 * @abstract
+	 * @returns {Boolean}
+	 */
 	static isValid(value) {
 	}
 

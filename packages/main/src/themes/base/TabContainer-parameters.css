@@ -5,6 +5,10 @@
 	--_ui5_tc_header_height_text_with_additional_text: var(--_ui5_tc_item_text_only_with_additional_text_height);
 	--_ui5_tc_header_box_shadow: var(--sapContent_HeaderShadow);
 	--_ui5_tc_header_border_bottom: 0.125rem solid var(--sapObjectHeader_Background);
+	--_ui5_tc_header_background: var(--sapObjectHeader_Background);
+	--_ui5_tc_header_background_translucent: var(--sapObjectHeader_Background);
+	--_ui5_tc_content_background: var(--sapBackgroundColor);
+	--_ui5_tc_content_background_translucent: var(--sapGroup_ContentBackground);
 
 	/* Header Item */
 	--_ui5_tc_headeritem_padding: 0 1rem;

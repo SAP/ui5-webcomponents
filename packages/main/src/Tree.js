@@ -35,7 +35,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @public
-		 * @type {ListMode}
+		 * @type {sap.ui.webcomponents.main.types.ListMode}
 		 * @defaultValue "None"
 		 */
 		mode: {
@@ -307,7 +307,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Tree
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-tree
  * @appenddocs TreeItem
  * @public

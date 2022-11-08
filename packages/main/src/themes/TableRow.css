@@ -27,7 +27,7 @@
 	border-top: 1px solid var(--sapList_BorderColor);
 }
 
-.ui5-table-popin-row td {
+.ui5-table-popin-row td:not(.ui5-table-row-navigated) {
 	padding-top: .5rem;
 	padding-inline-start: 1rem;
 }
@@ -90,4 +90,25 @@
 :host([selected][type="Active"]) .ui5-table-row-root:hover:not(:active),
 :host([selected][mode="SingleSelect"]) .ui5-table-row-root:hover:not(:active) {
 	background-color: var(--sapList_Hover_SelectionBackground);
+}
+
+/** Navigated **/
+:host([navigated]) .ui5-table-row-root:focus .ui5-table-div-navigated {
+    width: 0.09375rem;
+	top: 2px;
+	inset-inline-end: 2px;
+	bottom: 1px;
+}
+
+:host([navigated]) .ui5-table-row-navigated {
+    vertical-align: middle;
+    padding: 0;
+    position: relative;
+}
+
+:host([navigated]) .ui5-table-div-navigated {
+	width: 0.1875rem;
+    position: absolute;
+	inset: 0;
+    background-color: var(--sapList_SelectionBorderColor);
 }
