@@ -1,8 +1,8 @@
 const rClickable = /^(?:a|area)$/i;
 const rFocusable = /^(?:input|select|textarea|button)$/i;
 
-const isNodeClickable = node => {
-	if (node.disabled) {
+const isNodeClickable = (node: HTMLElement): boolean => {
+	if ((node as HTMLButtonElement).disabled) {
 		return false;
 	}
 
@@ -13,7 +13,7 @@ const isNodeClickable = node => {
 
 	return rFocusable.test(node.nodeName)
 		|| (rClickable.test(node.nodeName)
-		&& node.href);
+		&& !!(node as HTMLLinkElement).href);
 };
 
 export default isNodeClickable;

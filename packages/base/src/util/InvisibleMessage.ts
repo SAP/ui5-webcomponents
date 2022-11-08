@@ -2,10 +2,10 @@ import InvisibleMessageMode from "../types/InvisibleMessageMode.js";
 import getSingletonElementInstance from "./getSingletonElementInstance.js";
 import { attachBoot } from "../Boot.js";
 
-let politeSpan;
-let assertiveSpan;
+let politeSpan: HTMLElement;
+let assertiveSpan: HTMLElement;
 
-const setOutOfViewportStyles = el => {
+const setOutOfViewportStyles = (el: HTMLElement) => {
 	el.style.position = "absolute";
 	el.style.clip = "rect(1px,1px,1px,1px)";
 	el.style.userSelect = "none";
@@ -45,7 +45,7 @@ attachBoot(() => {
  * @param {sap.ui.core.InvisibleMessageMode} mode The mode to be inserted in the aria-live attribute.
  * @public
  */
-const announce = (message, mode) => {
+const announce = (message: string, mode: InvisibleMessageMode) => {
 	// If no type is presented, fallback to polite announcement.
 	const span = mode === InvisibleMessageMode.Assertive ? assertiveSpan : politeSpan;
 

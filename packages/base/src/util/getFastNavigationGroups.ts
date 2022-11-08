@@ -1,10 +1,10 @@
-let groups = [];
+let groups: Array<HTMLElement> = [];
 
-const isFastNavGroupElemenet = $el => {
+const isFastNavGroupElemenet = ($el: HTMLElement) => {
 	return $el.getAttribute("data-sap-ui-fastnavgroup") === "true";
 };
 
-const isElementVisible = $el => {
+const isElementVisible = ($el: HTMLElement) => {
 	const style = window.getComputedStyle($el);
 
 	return style.width !== "0px"
@@ -14,7 +14,7 @@ const isElementVisible = $el => {
 		&& style.visibility !== "hidden";
 };
 
-const findFastNavigationGroups = (container, startFromContainer) => {
+const findFastNavigationGroups = (container: HTMLElement, startFromContainer?: boolean) => {
 	let child,
 		assignedElements,
 		index = 0;
@@ -29,7 +29,7 @@ const findFastNavigationGroups = (container, startFromContainer) => {
 
 	if (container.shadowRoot) {
 		child = container.shadowRoot.firstChild;
-	} else if (container.assignedNodes && container.assignedNodes()) {
+	} else if (container instanceof HTMLSlotElement && container.assignedNodes()) {
 		assignedElements = container.assignedNodes();
 		child = assignedElements[0];
 	} else if (startFromContainer) {
@@ -39,20 +39,20 @@ const findFastNavigationGroups = (container, startFromContainer) => {
 	}
 
 	while (child) {
-		const originalChild = child;
+		const originalChild: HTMLElement = child as HTMLElement;
 		if (!child) {
 			return;
 		}
 
 		if (child.nodeType === 1) {
-			findFastNavigationGroups(child, false);
+			findFastNavigationGroups(child as HTMLElement, false);
 		}
 
 		child = assignedElements && assignedElements.length ? assignedElements[++index] : originalChild.nextElementSibling;
 	}
 };
 
-const getFastNavigationGroups = container => {
+const getFastNavigationGroups = (container: HTMLElement) => {
 	groups = [];
 
 	findFastNavigationGroups(container, true);
