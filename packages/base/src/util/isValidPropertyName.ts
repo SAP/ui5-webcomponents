@@ -14,7 +14,7 @@ const allowList = [
  * @param name
  * @returns {boolean}
  */
-const isValidPropertyName = name => {
+const isValidPropertyName = (name: string) => {
 	if (allowList.includes(name) || name.startsWith("aria")) {
 		return true;
 	}

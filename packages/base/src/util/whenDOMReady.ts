@@ -1,5 +1,5 @@
 const whenDOMReady = () => {
-	return new Promise(resolve => {
+	return new Promise<void>(resolve => {
 		if (document.body) {
 			resolve();
 		} else {

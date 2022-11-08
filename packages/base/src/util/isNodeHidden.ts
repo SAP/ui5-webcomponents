@@ -1,4 +1,4 @@
-const isNodeHidden = node => {
+const isNodeHidden = (node: HTMLElement) => {
 	if (node.nodeName === "SLOT") {
 		return false;
 	}

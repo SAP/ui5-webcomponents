@@ -2,7 +2,7 @@
  * Determines if the element is within the viewport.
  * @param el {HTMLElement}
  */
-const isElementInView = el => {
+const isElementInView = (el: HTMLElement) => {
 	const rect = el.getBoundingClientRect();
 
 	return (

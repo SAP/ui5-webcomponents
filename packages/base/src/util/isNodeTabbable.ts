@@ -1,6 +1,6 @@
 import isNodeHidden from "./isNodeHidden.js";
 
-const isNodeTabbable = node => {
+const isNodeTabbable = (node: HTMLElement) => {
 	if (!node) {
 		return false;
 	}
@@ -21,7 +21,7 @@ const isNodeTabbable = node => {
 	}
 
 	if (nodeName === "a" || /input|select|textarea|button|object/.test(nodeName)) {
-		return !node.disabled;
+		return !(node as HTMLLinkElement).disabled;
 	}
 };
 
