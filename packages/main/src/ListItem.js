@@ -110,6 +110,10 @@ const metadata = {
 			noAttribute: true,
 		},
 
+		navigated: {
+			type: Boolean,
+		},
+
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -196,7 +200,7 @@ class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering(...params) {
-		this.actionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
+		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._mode !== ListMode.Delete);
 	}
 
 	onEnterDOM() {
@@ -214,13 +218,14 @@ class ListItem extends ListItemBase {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
-		const itemActive = this.type === ListItemType.Active;
+		const itemActive = this.type === ListItemType.Active,
+			  navigationItem = this.type === ListItemType.Navigation;
 
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if ((isSpace(event) || isEnter(event)) && itemActive) {
+		if ((isSpace(event) || isEnter(event)) && (itemActive || navigationItem)) {
 			this.activate();
 		}
 
@@ -294,7 +299,7 @@ class ListItem extends ListItemBase {
 	}
 
 	activate() {
-		if (this.type === ListItemType.Active) {
+		if (this.type === ListItemType.Active || this.type === ListItemType.Navigation) {
 			this.active = true;
 		}
 	}
@@ -362,6 +367,14 @@ class ListItem extends ListItemBase {
 
 	get typeDetail() {
 		return this.type === ListItemType.Detail;
+	}
+
+	get typeNavigation() {
+		return this.type === ListItemType.Navigation;
+	}
+
+	get navigated() {
+		return this.navigated;
 	}
 
 	get typeActive() {
