@@ -27,6 +27,16 @@
 	outline-color: var(--sapContent_ContrastFocusColor);
 }
 
+/* navigated */
+:host([navigated]) .ui5-li-root .ui5-li-navigated {
+	width: 0.1875rem;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: var(--sapList_SelectionBorderColor);
+}
+
 /* active */
 :host([active][actionable]) .ui5-li-root .ui5-li-icon {
 	color: var(--sapList_Active_TextColor);
