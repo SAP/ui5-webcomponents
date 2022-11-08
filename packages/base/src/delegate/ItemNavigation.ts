@@ -66,11 +66,17 @@ class ItemNavigation {
 	rootWebComponent: UI5Element;
 
 	_getItems: () => Array<TabbableObject>;
+
 	_currentIndex: number;
+
 	_rowSize: number;
+
 	_behavior: ItemNavigationBehavior;
+
 	_navigationMode: NavigationMode;
+
 	_affectedPropertiesNames: Array<string>;
+
 	_skipItemsSize: number | null;
 
 	/**
@@ -109,7 +115,6 @@ class ItemNavigation {
 		this._navigationMode = options.navigationMode || NavigationMode.Auto;
 		this._affectedPropertiesNames = options.affectedPropertiesNames || [];
 		this._skipItemsSize = options.skipItemsSize || null;
-
 	}
 
 	/**

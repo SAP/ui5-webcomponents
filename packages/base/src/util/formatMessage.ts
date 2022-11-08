@@ -3,7 +3,7 @@ const messageFormatRegEX = /('')|'([^']+(?:''[^']*)*)(?:'|$)|\{([0-9]+(?:\s*,[^{
 const formatMessage = (text: string, values: Array<number | string>) => {
 	values = values || [];
 
-	return text.replace(messageFormatRegEX, ($0, $1, $2, $3, offset) => {
+	return text.replace(messageFormatRegEX, ($0, $1, $2, $3, offset: number) => {
 		if ($1) {
 			return '\''; /* eslint-disable-line */
 		}

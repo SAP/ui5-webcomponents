@@ -1,4 +1,4 @@
-const getMetaTagValue =  (metaTagName: string) => {
+const getMetaTagValue = (metaTagName: string) => {
 	const metaTag = document.querySelector(`META[name="${metaTagName}"]`),
 		metaTagContent = metaTag && metaTag.getAttribute("content");
 

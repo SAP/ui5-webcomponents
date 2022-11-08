@@ -1,6 +1,6 @@
 import { getUrl } from "../CSP.js";
 import { getFeature } from "../FeaturesRegistry.js";
-import UI5Element from "../UI5Element";
+import UI5Element from "../UI5Element.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 
 const flatten = (arr: Array<any>): Array<any> => {

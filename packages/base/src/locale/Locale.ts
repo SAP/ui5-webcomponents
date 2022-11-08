@@ -2,11 +2,17 @@ const rLocale = /^((?:[A-Z]{2,3}(?:-[A-Z]{3}){0,3})|[A-Z]{4}|[A-Z]{5,8})(?:-([A-
 
 class Locale {
 	sLocaleId: string;
+
 	sLanguage: string | null;
+
 	sScript: string | null;
+
 	sRegion: string | null;
+
 	sVariant: string | null;
+
 	sExtension: string | null;
+
 	sPrivateUse: string | null;
 
 	constructor(sLocaleId: string) {

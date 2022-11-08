@@ -1,5 +1,5 @@
-import { registerFeature } from "../FeaturesRegistry.js";
 import { TemplateResult } from "lit-html";
+import { registerFeature } from "../FeaturesRegistry.js";
 // @ts-ignore
 import BusyIndicatorStyles from "../generated/css/BusyIndicator.css.js";
 import merge from "../thirdparty/merge.js";
@@ -11,9 +11,13 @@ import UI5Element from "../UI5Element.js";
 
 class OpenUI5Element extends UI5Element {
 	__isBusy?: boolean;
+
 	isOpenUI5Component?: boolean;
+
 	__suppressFocusIn?: Function;
+
 	__suppressFocusBack?: Function;
+
 	__redirectFocus?: boolean;
 }
 

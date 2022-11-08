@@ -6,7 +6,7 @@
 let debounceInterval: ReturnType<typeof setTimeout> | null = null;
 
 const debounce = (fn: Function, delay: number) => {
-	clearTimeout(debounceInterval as NodeJS.Timeout);
+	debounceInterval && clearTimeout(debounceInterval);
 	debounceInterval = setTimeout(() => {
 		debounceInterval = null;
 		fn();
