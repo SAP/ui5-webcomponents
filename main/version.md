@@ -1,5 +1,8 @@
-commit ddf765428a19642d6b60c7b8d1793f1dc79e56bd
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Fri Nov 4 09:39:37 2022 +0200
+commit 8d91c98cf2a6ba4766e7183e09a935d94c06157e
+Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
+Date:   Tue Nov 8 13:05:10 2022 +0200
 
-    chore: bump theming-base-content to v11.1.44 (#6003)
+    fix(framework): fix paths for generating illustration imports in nps (#5997)
+    
+    - Illustrations are now being fetched from the proper paths;
+    - Small refactoring;
