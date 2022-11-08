@@ -5,12 +5,13 @@ const LIB = path.join(__dirname, `../lib/`);
 const getScripts = (options) => {
 
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
-	let illustrationsData = options.illustrationsData || [];
+	const illustrationsData = options.illustrationsData || [];
 	illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
-	let createIllustrationsJSImportsScript = illustrations.join(" && ");
+	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
 	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
+	const createIllustrationsLoadersScript = options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "";
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -64,8 +65,8 @@ const getScripts = (options) => {
 				i18n: `node "${LIB}/generate-json-imports/i18n.js" dist/generated/assets/i18n dist/generated/json-imports`,
 			},
 			jsImports: {
-				default: "mkdirp dist/generated/js-imports && nps build.jsImports.createIllustrationsLoadersScript",
-				createIllustrationsLoadersScript: options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "",
+				default: "mkdirp dist/generated/js-imports && nps build.jsImports.illustrationsLoaders",
+				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
 			bundle: `vite build ${viteConfig}`,
 			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
