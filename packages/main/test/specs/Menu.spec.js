@@ -1,7 +1,6 @@
 const assert = require("chai").assert;
 
 describe("Menu interaction", () => {
-
 	it("Menu opens after button click", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
@@ -119,15 +118,11 @@ describe("Menu interaction", () => {
 	it("Events firing on open/close of the menu", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
-
-		openButton.click();
-
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
 		const eventLogger = await browser.$("#eventLogger");
 
-		await browser.keys("Esc");
+		openButton.click();
+		await browser.pause(100);
+		await browser.keys("Escape");
 
 		const eventLoggerValue = await eventLogger.getValue();
 

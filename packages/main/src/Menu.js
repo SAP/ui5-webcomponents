@@ -50,7 +50,7 @@ const metadata = {
 		 * @public
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @since 1.9.0
+		 * @since 1.10.0
 		 */
 		open: {
 			type: Boolean,
@@ -61,7 +61,7 @@ const metadata = {
 		 * @public
 		 * @type {DOMReference}
 		 * @defaultvalue ""
-		 * @since 1.9.0
+		 * @since 1.10.0
 		 */
 		opener: {
 			type: DOMReference,
@@ -181,7 +181,7 @@ const metadata = {
 		 * @public
 		 * @event sap.ui.webcomponents.main.Menu#before-open
 		 * @allowPreventDefault
-		 * @since 1.9.0
+		 * @since 1.10.0
 		 */
 		"before-open": {},
 
@@ -190,7 +190,7 @@ const metadata = {
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Menu#after-open
-		 * @since 1.9.0
+		 * @since 1.10.0
 		 */
 		"after-open": {},
 
@@ -201,7 +201,7 @@ const metadata = {
 		 * @event sap.ui.webcomponents.main.Menu#before-close
 		 * @allowPreventDefault
 		 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
-		 * @since 1.9.0
+		 * @since 1.10.0
 		 */
 		"before-close": {
 			detail: {
@@ -214,7 +214,7 @@ const metadata = {
 		 *
 		 * @public
 		 * @event sap.ui.webcomponents.main.Menu#after-close
-		 * @since 1.9.0
+		 * @since 1.10.0
 		 */
 		"after-close": {},
 	},
