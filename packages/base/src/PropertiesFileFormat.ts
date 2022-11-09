@@ -1,5 +1,3 @@
-import { ObjectWithDynamicKeys } from "./types";
-
 const flatstr = typeof window.chrome === "object" || typeof window.v8 === "object" ? (s: string, iConcatOps: number) => {
 	if (iConcatOps > 2 && 40 * iConcatOps > s.length) {
 		Number(s);
@@ -88,7 +86,7 @@ const parseProperties = (sText: string) => {
 				sKey = sValue;
 				sValue = "";
 			}
-			(properties as ObjectWithDynamicKeys)[sKey] = flatstr(sValue, sValue ? iConcatOps! : 0);
+			(properties as Record<string, any>)[sKey] = flatstr(sValue, sValue ? iConcatOps! : 0);
 		}
 	}
 	return properties;

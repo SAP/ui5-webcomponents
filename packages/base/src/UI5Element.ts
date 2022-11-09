@@ -19,7 +19,6 @@ import arraysAreEqual from "./util/arraysAreEqual.js";// todo
 import getClassCopy from "./util/getClassCopy.js";// todo
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js"; // todo
-import { ObjectWithDynamicKeys } from "./types.js";
 import { TemplateFunction } from "./renderer/executeTemplate.js";
 
 let autoId = 0;
@@ -82,7 +81,7 @@ abstract class UI5Element extends HTMLElement {
 	_slotChangeListeners: Map<string, EventListener>;
 	_domRefReadyPromise: Promise<void> & {_deferredResolve?: (value: void | PromiseLike<void>) => void};
 	_doNotSyncAttributes: Set<string>;
-	_state: ObjectWithDynamicKeys;
+	_state: Record<string, any>;
 	onEnterDOM?: Function;
 	onExitDOM?: Function;
 	onBeforeRendering?: Function;
@@ -276,7 +275,7 @@ abstract class UI5Element extends HTMLElement {
 			if (slotData.individualSlots) {
 				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
 				autoIncrementMap.set(slotName, nextIndex);
-				(child as ObjectWithDynamicKeys)._individualSlot = `${slotName}-${nextIndex}`;
+				(child as Record<string, any>)._individualSlot = `${slotName}-${nextIndex}`;
 			}
 
 			// Await for not-yet-defined custom elements
@@ -442,7 +441,7 @@ abstract class UI5Element extends HTMLElement {
 			} else if (isDescendantOf(propertyTypeClass, DataType)) {
 				newValue = (propertyTypeClass as typeof DataType).attributeToProperty(newValue);
 			}
-			(this as ObjectWithDynamicKeys)[nameInCamelCase] = newValue;
+			(this as Record<string, any>)[nameInCamelCase] = newValue;
 		}
 	}
 
@@ -485,7 +484,7 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * @private
 	 */
-	_upgradeProperty(this: ObjectWithDynamicKeys, prop: string) {
+	_upgradeProperty(this: Record<string, any>, prop: string) {
 		if (this.hasOwnProperty(prop)) { // eslint-disable-line
 			const value = this[prop];
 			delete this[prop];
@@ -660,7 +659,7 @@ abstract class UI5Element extends HTMLElement {
 	_assignIndividualSlotsToChildren() {
 		const domChildren = Array.from(this.children);
 
-		domChildren.forEach((child: ObjectWithDynamicKeys) => {
+		domChildren.forEach((child: Record<string, any>) => {
 			if (child._individualSlot) {
 				child.setAttribute("slot", child._individualSlot);
 			}
@@ -790,7 +789,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Useful when there are transitive slots in nested component scenarios and you don't want to get a list of the slots, but rather of their content.
 	 * @public
 	 */
-	getSlottedNodes(this: ObjectWithDynamicKeys, slotName: string) {
+	getSlottedNodes(this: Record<string, any>, slotName: string) {
 		return getSlottedElementsList(this[slotName]);
 	}
 

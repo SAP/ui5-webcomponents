@@ -1,7 +1,6 @@
 import { reRenderAllUI5Elements } from "../Render.js";
 import getSharedResource from "../getSharedResource.js";
 import EventProvider from "../EventProvider.js";
-import {ObjectWithDynamicKeys} from "../types";
 
 const eventProvider = getSharedResource("CustomStyle.eventProvider", new EventProvider());
 const CUSTOM_CSS_CHANGE = "CustomCSSChange";
@@ -18,7 +17,7 @@ const fireCustomCSSChange = (tag: string) => {
 	return eventProvider.fireEvent(CUSTOM_CSS_CHANGE, tag);
 };
 
-const customCSSFor = getSharedResource<ObjectWithDynamicKeys>("CustomStyle.customCSSFor", {});
+const customCSSFor = getSharedResource<Record<string, any>>("CustomStyle.customCSSFor", {});
 
 // Listen to the eventProvider, in case other copies of this CustomStyle module fire this
 // event, and this copy would therefore need to reRender the ui5 webcomponents; but

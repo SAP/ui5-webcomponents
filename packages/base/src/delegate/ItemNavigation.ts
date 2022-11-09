@@ -15,7 +15,6 @@ import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 
 import type UI5Element from "../UI5Element.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
-import { ObjectWithDynamicKeys } from "../types.js";
 
 type TabbableObject = {id?: string, _tabIndex: string};
 
@@ -329,8 +328,8 @@ class ItemNavigation {
 		}
 
 		this._affectedPropertiesNames.forEach(propName => {
-			const prop = (this.rootWebComponent as ObjectWithDynamicKeys)[propName];
-			(this.rootWebComponent as ObjectWithDynamicKeys)[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
+			const prop = (this.rootWebComponent as Record<string, any>)[propName];
+			(this.rootWebComponent as Record<string, any>)[propName] = Array.isArray(prop) ? [...prop] : { ...prop };
 		});
 	}
 

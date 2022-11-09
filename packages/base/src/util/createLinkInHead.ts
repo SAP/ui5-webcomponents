@@ -1,11 +1,9 @@
-import { ObjectWithDynamicKeys } from "../types";
-
 /**
  * Creates a <link> tag in the <head> tag
  * @param href - the CSS
  * @param attributes - optional attributes to add to the tag
  */
-const createLinkInHead = (href: string, attributes?: ObjectWithDynamicKeys) => {
+const createLinkInHead = (href: string, attributes?: Record<string, any>) => {
 	const link = document.createElement("link");
 	link.type = "text/css";
 	link.rel = "stylesheet";

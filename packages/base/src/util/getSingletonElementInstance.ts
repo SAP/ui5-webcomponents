@@ -1,15 +1,13 @@
-import { ObjectWithDynamicKeys } from "../types";
-
 const getSingletonElementInstance = (tag: string, parentElement: HTMLElement = document.body) => {
 	let el = document.querySelector(tag);
 
 	if (el) {
-		return el as ObjectWithDynamicKeys;
+		return el as Record<string, any>;
 	}
 
 	el = document.createElement(tag);
 
-	return parentElement.insertBefore(el, parentElement.firstChild) as ObjectWithDynamicKeys;
+	return parentElement.insertBefore(el, parentElement.firstChild) as Record<string, any>;
 };
 
 export default getSingletonElementInstance;

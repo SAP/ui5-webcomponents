@@ -1,7 +1,5 @@
-import { ObjectWithDynamicKeys } from "../types";
-
 const getEffectiveAriaLabelText = (el: HTMLElement) => {
-	const accessibleEl = el as ObjectWithDynamicKeys;
+	const accessibleEl = el as Record<string, any>;
 
 	if (!accessibleEl.accessibleNameRef) {
 		if (accessibleEl.accessibleName) {
@@ -19,7 +17,7 @@ const getEffectiveAriaLabelText = (el: HTMLElement) => {
  * @param {HTMLElement} el Defines the HTMLElement, for which you need to get all related texts
  */
 const getAriaLabelledByTexts = (el: HTMLElement) => {
-	const ids = (el as ObjectWithDynamicKeys).accessibleNameRef.split(" ");
+	const ids = (el as Record<string, any>).accessibleNameRef.split(" ");
 	const owner = el.getRootNode() as HTMLElement;
 	let result = "";
 
