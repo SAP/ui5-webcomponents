@@ -7,7 +7,7 @@ type PopupUtilsDataType = {
 	currentZIndex: number
 };
 
-const PopupUtilsData = getSharedResource<PopupUtilsDataType>("PopupUtilsData", { currentZIndex: 100});
+const PopupUtilsData = getSharedResource<PopupUtilsDataType>("PopupUtilsData", { currentZIndex: 100 });
 
 const getFocusedElement = () => {
 	const element = getActiveElement() as HTMLElement;

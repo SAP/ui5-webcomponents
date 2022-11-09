@@ -30,7 +30,7 @@ type RangeSet = {
 const _initRangeSet = (name: string, borders: Array<number>, names: Array<string>) => {
 	querySets.set(name, {
 		borders,
-		names
+		names,
 	});
 };
 
@@ -89,7 +89,7 @@ enum RANGESETS {
 	 * @public
 	 */
 	RANGE_4STEPS = "4Step",
-};
+}
 
 /**
  * API for screen width changes.

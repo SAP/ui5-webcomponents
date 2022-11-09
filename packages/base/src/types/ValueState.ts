@@ -11,7 +11,7 @@ import DataType from "./DataType.js";
  * @public
  * @enum {string}
  */
- class ValueState extends DataType {
+class ValueState extends DataType {
 	static override isValid(value: ValueStates) {
 		return !!ValueStates[value];
 	}

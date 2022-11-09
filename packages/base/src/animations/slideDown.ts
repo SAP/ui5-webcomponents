@@ -56,11 +56,11 @@ export default ({
 			element.style.display = "block";
 			// END OF WORKAROUND
 
-			element.style.paddingTop = (paddingTop * progress) + "px";
-			element.style.paddingBottom = (paddingBottom * progress) + "px";
-			element.style.marginTop = (marginTop * progress) + "px";
-			element.style.marginBottom = (marginBottom * progress) + "px";
-			element.style.height = (height * progress) + "px";
+			element.style.paddingTop = `${(paddingTop * progress)}px`;
+			element.style.paddingBottom = `${(paddingBottom * progress)}px`;
+			element.style.marginTop = `${(marginTop * progress)}px`;
+			element.style.marginBottom = `${(marginBottom * progress)}px`;
+			element.style.height = `${(height * progress)}px`;
 		},
 	});
 

@@ -1,4 +1,4 @@
-import UI5Element from "../UI5Element";
+import UI5Element from "../UI5Element.js";
 
 const getClassCopy = (klass: typeof UI5Element, constructorCallback: Function) => {
 	return class classCopy extends klass {

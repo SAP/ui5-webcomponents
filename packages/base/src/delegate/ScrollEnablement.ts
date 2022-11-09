@@ -8,27 +8,16 @@ const touchEndEventName = supportsTouch() ? "touchend" : "mouseup";
 
 class ScrollEnablement extends EventProvider {
 	containerComponent: UI5Element;
-
 	mouseMove: Function;
-
 	mouseUp: Function;
-
 	touchStart: Function;
-
 	cachedValue: { dragX: number, dragY: number };
-
 	startX: number;
-
 	startY: number;
-
 	_container?: HTMLElement;
-
 	supportsTouch = supportsTouch();
-
 	_canScroll?: boolean;
-
 	_prevDragX?: number;
-
 	_prevDragY?: number;
 
 	constructor(containerComponent: UI5Element) {
@@ -124,8 +113,8 @@ class ScrollEnablement extends EventProvider {
 		}
 
 		const rect = this._container!.getBoundingClientRect();
-		const x = this.supportsTouch ? (touch as TouchInit).clientX: (event as MouseEvent).x;
-		const y = this.supportsTouch ? (touch as TouchInit).clientY: (event as MouseEvent).y;
+		const x = this.supportsTouch ? (touch as TouchInit).clientX : (event as MouseEvent).x;
+		const y = this.supportsTouch ? (touch as TouchInit).clientY : (event as MouseEvent).y;
 
 		return x! >= rect.left && x! <= rect.right
 			&& y! >= rect.top && y! <= rect.bottom;

@@ -93,19 +93,19 @@ class F6Navigation {
 	setSelectedGroup(root: DocumentOrShadowRoot = window.document) {
 		const htmlElement = window.document.querySelector("html");
 		let element: Element | null | ParentNode = this.deepActive(root);
-	 
+
 		while (element && (element as Element).getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== htmlElement) {
 		   element = element.parentElement ? element.parentNode : (element.parentNode as ShadowRoot).host;
 		}
-	 
+
 		this.selectedGroup = element as HTMLElement;
 	 }
-	 
+
 	 deepActive(root: DocumentOrShadowRoot): Element | null {
 		if (root.activeElement && root.activeElement.shadowRoot) {
 		   return this.deepActive(root.activeElement.shadowRoot);
 		}
-	 
+
 		return root.activeElement;
 	 }
 

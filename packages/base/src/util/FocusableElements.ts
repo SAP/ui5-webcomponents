@@ -30,7 +30,7 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 
 	if (container.shadowRoot) {
 		child = forward ? container.shadowRoot.firstChild : container.shadowRoot.lastChild;
-	} else if (container instanceof HTMLSlotElement && container.assignedNodes() ) {
+	} else if (container instanceof HTMLSlotElement && container.assignedNodes()) {
 		const assignedElements = container.assignedNodes();
 		child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
 	} else if (startFromContainer) {

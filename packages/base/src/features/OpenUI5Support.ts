@@ -11,7 +11,6 @@ const getCore = () => {
 };
 
 class OpenUI5Support {
-
 	static isLoaded() {
 		return !!getCore();
 	}

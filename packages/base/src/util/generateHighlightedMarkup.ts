@@ -2,8 +2,6 @@ import escapeRegex from "./escapeRegex.js";
 // @ts-ignore
 import encodeXML from "../sap/base/security/encodeXML.js";
 
-type ReplaceFunction = (substring: string, ...args: any[]) => string;
-
 // utility to replace all occurances of a string
 function replaceAll(text: string, find: string, replace: any, caseInsensitive: boolean) {
 	return text.replace(new RegExp(escapeRegex(find), `${caseInsensitive ? "i" : ""}g`), replace);

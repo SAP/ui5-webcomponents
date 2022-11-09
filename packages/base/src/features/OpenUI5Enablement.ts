@@ -8,18 +8,7 @@ import {
 } from "../Keys.js";
 
 import UI5Element from "../UI5Element.js";
-
-class OpenUI5Element extends UI5Element {
-	__isBusy?: boolean;
-
-	isOpenUI5Component?: boolean;
-
-	__suppressFocusIn?: Function;
-
-	__suppressFocusBack?: Function;
-
-	__redirectFocus?: boolean;
-}
+import OpenUI5Element from "./OpenUI5Element.js";
 
 const busyIndicatorMetadata = {
 	properties: {
@@ -31,7 +20,7 @@ const busyIndicatorMetadata = {
 
 class OpenUI5Enablement {
 
-	static wrapTemplateResultInBusyMarkup (html: (strings: TemplateStringsArray, ...values: unknown[]) => TemplateResult, host: OpenUI5Element, templateResult: TemplateResult) {
+	static wrapTemplateResultInBusyMarkup(html: (strings: TemplateStringsArray, ...values: unknown[]) => TemplateResult, host: OpenUI5Element, templateResult: TemplateResult) {
 		if (host.isOpenUI5Component && host.__isBusy) {
 			templateResult = html`
 			<div class="busy-indicator-wrapper">
@@ -58,16 +47,16 @@ class OpenUI5Enablement {
 		return templateResult;
 	}
 
-	static enrichBusyIndicatorSettings (element: typeof UI5Element) {
+	static enrichBusyIndicatorSettings(element: typeof UI5Element) {
 		OpenUI5Enablement.enrichBusyIndicatorMetadata(element);
 		OpenUI5Enablement.enrichBusyIndicatorMethods(element.prototype);
-	};
+	}
 
-	static enrichBusyIndicatorMetadata (element: typeof UI5Element) {
+	static enrichBusyIndicatorMetadata(element: typeof UI5Element) {
 		element.metadata = merge(element.metadata, busyIndicatorMetadata);
-	};
+	}
 
-	static enrichBusyIndicatorMethods (UI5ElementPrototype: typeof OpenUI5Element.prototype) {
+	static enrichBusyIndicatorMethods(UI5ElementPrototype: typeof OpenUI5Element.prototype) {
 		Object.defineProperties(UI5ElementPrototype, {
 			"__redirectFocus": { value: true, writable: true },
 			"__suppressFocusBack": {
@@ -121,11 +110,11 @@ class OpenUI5Enablement {
 
 			return children[0] as HTMLElement;
 		};
-	};
+	}
 
 	static getBusyIndicatorStyles () {
 		return BusyIndicatorStyles;
-	};
+	}
 }
 
 registerFeature("OpenUI5Enablement", OpenUI5Enablement);
