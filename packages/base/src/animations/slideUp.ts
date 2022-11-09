@@ -7,20 +7,20 @@ export default ({
 	progress: progressCallback = animationConfig.identity,
 }) => {
 	// Get Computed styles
-	let computedStyles,
-		paddingTop,
-		paddingBottom,
-		marginTop,
-		marginBottom,
-		height;
+	let computedStyles: CSSStyleDeclaration,
+		paddingTop: number,
+		paddingBottom: number,
+		marginTop: number,
+		marginBottom: number,
+		height: number;
 
 	// Store inline styles
-	let storedOverflow,
-		storedPaddingTop,
-		storedPaddingBottom,
-		storedMarginTop,
-		storedMarginBottom,
-		storedHeight;
+	let storedOverflow: string,
+		storedPaddingTop: string,
+		storedPaddingBottom: string,
+		storedMarginTop: string,
+		storedMarginBottom: string,
+		storedHeight: string;
 
 	const animation = animate({
 		beforeStart: () => {

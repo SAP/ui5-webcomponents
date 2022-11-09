@@ -6,18 +6,18 @@ export default ({
 	duration = animationConfig.defaultDuration,
 	progress: progressCallback = animationConfig.identity,
 }) => {
-	let computedStyles,
-		paddingTop,
-		paddingBottom,
-		marginTop,
-		marginBottom,
-		height;
-	let storedOverflow,
-		storedPaddingTop,
-		storedPaddingBottom,
-		storedMarginTop,
-		storedMarginBottom,
-		storedHeight;
+	let computedStyles: CSSStyleDeclaration,
+		paddingTop: number,
+		paddingBottom: number,
+		marginTop: number,
+		marginBottom: number,
+		height: number;
+	let storedOverflow: string,
+		storedPaddingTop: string,
+		storedPaddingBottom: string,
+		storedMarginTop: string,
+		storedMarginBottom: string,
+		storedHeight: string;
 
 	const animation = animate({
 		beforeStart: () => {
@@ -41,11 +41,11 @@ export default ({
 			storedHeight = element.style.height;
 
 			element.style.overflow = "hidden";
-			element.style.paddingTop = 0;
-			element.style.paddingBottom = 0;
-			element.style.marginTop = 0;
-			element.style.marginBottom = 0;
-			element.style.height = 0;
+			element.style.paddingTop = "0";
+			element.style.paddingBottom = "0";
+			element.style.marginTop = "0";
+			element.style.marginBottom = "0";
+			element.style.height = "0";
 		},
 		duration,
 		element,
