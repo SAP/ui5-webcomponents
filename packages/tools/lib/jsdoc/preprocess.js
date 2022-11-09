@@ -46,22 +46,20 @@ const processFile = async (fileName) => {
 	} else { // Normal enum
 		const typeName = path.parse(fileName).name;
 
-		const gettersCode = typeData.map(item => {
-			return `${item.comment}\n get ${item.key}() { return "${item.value}" }`;
+		const matches = fileContent.match(/^\/\*\*[^\/]+\//gm);
+		const comment = matches[0];
+
+		const propsCode = typeData.map(item => {
+			return `${item.comment}\n get ${item.key}() { return "${item.value}"; }`;
 		}).join("\n");
 
 		const newClassCode = `
-		/**
-		 * @class
-		 * @constructor
-		 * @author SAP SE
-		 * @public
-		 * @enum {string}
-		 */
+		${comment}
 		class ${typeName} {
-			${gettersCode}
-		}
-		`;
+			${propsCode}
+		};
+
+		export default ${typeName};`;
 
 		fileContent = newClassCode;
 	}

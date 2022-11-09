@@ -1,3 +1,12 @@
+/**
+ * Different navigation modes for ItemNavigation.
+ *
+ * @class
+ * @enum {string}
+ * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.base.types.NavigationMode
+ */
 enum NavigationMode {
 	/**
 	 * @public

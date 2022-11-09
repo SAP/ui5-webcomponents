@@ -1,31 +1,34 @@
 
 		/**
-		 * @class
-		 * @constructor
-		 * @author SAP SE
-		 * @public
-		 * @enum {string}
-		 */
+ * Different types of AnimationMode.
+ *
+ * @class
+ * @enum {string}
+ * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.base.types.AnimationMode
+ */
 		class AnimationMode {
 			/**
      * @public
      * @type {Full}
      */
- get Full() { return "full" }
+ get Full() { return "full"; }
 /**
      * @public
      * @type {Basic}
      */
- get Basic() { return "basic" }
+ get Basic() { return "basic"; }
 /**
      * @public
      * @type {Minimal}
      */
- get Minimal() { return "minimal" }
+ get Minimal() { return "minimal"; }
 /**
      * @public
      * @type {None}
      */
- get None() { return "none" }
-		}
-		
+ get None() { return "none"; }
+		};
+
+		export default AnimationMode;

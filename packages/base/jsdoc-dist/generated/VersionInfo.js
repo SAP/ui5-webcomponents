@@ -5,6 +5,6 @@ const VersionInfo = {
 	patch: 0,
 	suffix: "",
 	isNext: false,
-	buildTime: 1667986646,
+	buildTime: 1667998422,
 };
 export default VersionInfo;

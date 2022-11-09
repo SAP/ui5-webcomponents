@@ -1,8 +1,11 @@
 /**
  * Different types of AnimationMode.
+ *
+ * @class
  * @enum {string}
  * @public
- * @lends sap.ui.webcomponents.base.types.AnimationMode.prototype
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.base.types.AnimationMode
  */
 enum AnimationMode {
 	/**

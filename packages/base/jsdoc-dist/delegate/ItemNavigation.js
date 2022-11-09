@@ -40,7 +40,7 @@ class ItemNavigation {
     /**
      *
      * @param rootWebComponent the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
-     * @param options Object with configuration options:
+     * @param {ItemNavigationOptions} options Object with configuration options:
      *  - currentIndex: the index of the item that will be initially selected (from which navigation will begin)
      *  - navigationMode (Auto|Horizontal|Vertical): whether the items are displayed horizontally (Horizontal), vertically (Vertical) or as a matrix (Auto) meaning the user can navigate in both directions (up/down and left/right)
      *  - rowSize: tells how many items per row there are when the items are not rendered as a flat list but rather as a matrix. Relevant for navigationMode=Auto

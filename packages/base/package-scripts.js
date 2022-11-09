@@ -43,10 +43,10 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	generateTemplates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d test/elements -o dist/generated/templates`,
 	generateAPI: {
-		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc",
+		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
 		prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,
 		preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/`,
-		jsdoc: `jsdoc -c "${LIB}/jsdoc/config.json"`,
+		jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
 		cleanup: "rimraf jsdoc-dist/"
 	},
 	watch: {

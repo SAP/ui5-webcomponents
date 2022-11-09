@@ -1,10 +1,15 @@
 /**
- * @private
  * Different behavior for ItemNavigation.
+ *
+ * @class
+ * @enum {string}
+ * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.base.types.ItemNavigationBehavior
  */
 enum ItemNavigationBehavior {
 	/**
-	 * Static behavior= navigations stops at the first or last item.
+	 * Static behavior: navigations stops at the first or last item.
 	 * @public
 	 * @type {Static}
  	 */
