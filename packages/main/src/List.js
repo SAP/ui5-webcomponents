@@ -256,9 +256,10 @@ const metadata = {
 		 * @defaultvalue undefined
 		 * @since 1.10.0
 		 */
-		ariaRoledescription: {
+		 accessibleRoleDescription: {
 			type: String,
 			defaultValue: undefined,
+			noAttribute: true,
 		},
 
 		/**

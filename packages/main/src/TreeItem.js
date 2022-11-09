@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import HasPopup from "./types/HasPopup.js";
 
 /**
  * @public
@@ -143,19 +144,20 @@ const metadata = {
 		 * @defaultvalue undefined
 		 * @since 1.10.0
 		 */
-		ariaRoledescription: {
+		 accessibleRoleDescription: {
 			type: String,
 			defaultValue: undefined,
+			noAttribute: true,
 		},
 
 		/**
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-		 * @type String
+		 * @type {sap.ui.webcomponents.main.types.HasPopup}
 		 * @since 1.10.0
 		 * @protected
 		 */
 		ariaHaspopup: {
-			type: String,
+			type: HasPopup,
 		},
 	},
 	managedSlots: true,

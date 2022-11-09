@@ -19,6 +19,7 @@ import {
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
+import HasPopup from "./types/HasPopup.js";
 
 /**
  * @public
@@ -95,9 +96,10 @@ const metadata = {
 		 * @defaultvalue undefined
 		 * @since 1.10.0
 		 */
-		ariaRoledescription: {
+		 accessibleRoleDescription: {
 			type: String,
 			defaultValue: undefined,
+			noAttribute: true,
 		},
 
 		/**
@@ -120,12 +122,12 @@ const metadata = {
 
 		/**
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-		 * @type String
+		 * @type {sap.ui.webcomponents.main.types.HasPopup}
 		 * @since 1.10.0
 		 * @protected
 		 */
 		ariaHaspopup: {
-			type: String,
+			type: HasPopup,
 		},
 
 		_level: {

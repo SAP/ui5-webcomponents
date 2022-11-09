@@ -162,14 +162,13 @@ describe("Component Behavior", () => {
 		it("Tests ACC roles and more when expanded", async () => {
 			const sideNavigation = await browser.$("#sn1");
 			const sideNavigationRoot = await sideNavigation.shadow$(".ui5-sn-root");
-			const sideNavigationTree = await sideNavigation.shadow$("ui5-tree");
-			const sideNavigationTreeItem = await sideNavigationTree.shadow$("ui5-li-tree").shadow$("li");
+			const sideNavigationTree = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").shadow$("ul");
+			const sideNavigationTreeItem = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-li-tree").shadow$("li");
+			const sideNavigationFixedItemsTree = await sideNavigation.shadow$$("ui5-tree")[1];
+			const sideNavigationFixedItemsTreeElement = sideNavigationFixedItemsTree.shadow$("ui5-list").shadow$("ul");
+			const sideNavigationFixedItemsTreeItem = await sideNavigationFixedItemsTree.shadow$("ui5-li-tree").shadow$("li");
 
-			role = await browser.executeAsync(done => {
-				const sn = document.getElementById("sn1");
-				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_ARIA_ROLE));
-			});
-			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), role, "Role of the SideNavigation root element is correctly set");
+			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), "navigation", "Role of the SideNavigation root element is correctly set");
 
 			roleDescription = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
@@ -184,6 +183,11 @@ describe("Component Behavior", () => {
 			});
 			assert.strictEqual(await sideNavigationTreeItem.getAttribute("aria-roledescription"), roleDescriptionItem, "Role description of the SideNavigation tree item is correctly set");
 			assert.notExists(await sideNavigationTreeItem.getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
+
+			// fixed items
+			assert.strictEqual(await sideNavigationFixedItemsTreeElement.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation fixed tree element is correctly set");
+			assert.strictEqual(await sideNavigationFixedItemsTreeItem.getAttribute("aria-roledescription"), roleDescriptionItem, "Role description of the SideNavigation fixed tree item is correctly set");
+			assert.notExists(await sideNavigationFixedItemsTreeItem.getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
 		});
 
 		it("Tests ACC roles and more when collapsed", async () => {
@@ -191,15 +195,16 @@ describe("Component Behavior", () => {
 
 			const sideNavigation = await browser.$("#sn1");
 			const sideNavigationRoot = await sideNavigation.shadow$(".ui5-sn-root");
-			const sideNavigationTree = await sideNavigation.shadow$("ui5-tree");
-			const sideNavigationTreeItem1 = await sideNavigationTree.shadow$$("ui5-li-tree")[0].shadow$("li"); //with no sub-items
-			const sideNavigationTreeItem2= await sideNavigationTree.shadow$$("ui5-li-tree")[1].shadow$("li"); //with sub-items
+			const sideNavigationTree = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-list").shadow$("ul");
+			const sideNavigationTreeItem1 = await sideNavigation.shadow$("ui5-tree").shadow$$("ui5-li-tree")[0].shadow$("li"); // with no sub-items
+			const sideNavigationTreeItem2= await sideNavigation.shadow$("ui5-tree").shadow$$("ui5-li-tree")[1].shadow$("li"); // with sub-items
+			const sideNavigationFixedItemsTree = await sideNavigation.shadow$$("ui5-tree")[1];
+			const sideNavigationFixedItemsTreeElement = sideNavigationFixedItemsTree.shadow$("ui5-list").shadow$("ul");
+			const sideNavigationFixedItemsTreeItem1 = await sideNavigationFixedItemsTree.shadow$$("ui5-li-tree")[0].shadow$("li"); // with sub-items
+			const sideNavigationFixedItemsTreeItem2 = await sideNavigationFixedItemsTree.shadow$$("ui5-li-tree")[1].shadow$("li"); // with no sub-items
 
-			role = await browser.executeAsync(done => {
-				const sn = document.getElementById("sn1");
-				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_ARIA_ROLE));
-			});
-			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), role, "Role of the SideNavigation root element is correctly set");
+
+			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), "navigation", "Role of the SideNavigation root element is correctly set");
 
 			roleDescription = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
@@ -214,7 +219,13 @@ describe("Component Behavior", () => {
 			});
 			assert.strictEqual(await sideNavigationTreeItem1.getAttribute("aria-roledescription"), roleDescriptionItem, "Role description of the SideNavigation tree item is correctly set");
 			assert.notExists(await sideNavigationTreeItem1.getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
-			assert.strictEqual(await sideNavigationTreeItem2.getAttribute("aria-haspopup"), "tree", "There is 'aria-haspopup' with correct value");
+			assert.strictEqual(await sideNavigationTreeItem2.getAttribute("aria-haspopup"), "Tree", "There is 'aria-haspopup' with correct value");
+
+			// fixed items
+			assert.strictEqual(await sideNavigationFixedItemsTreeElement.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation fixed tree element is correctly set");
+			assert.strictEqual(await sideNavigationFixedItemsTreeItem1.getAttribute("aria-roledescription"), roleDescriptionItem, "Role description of the SideNavigation fixed tree item is correctly set");
+			assert.strictEqual(await sideNavigationFixedItemsTreeItem1.getAttribute("aria-haspopup"), "Tree", "There is 'aria-haspopup' with correct value");
+			assert.notExists(await sideNavigationFixedItemsTreeItem2.getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);

@@ -9,7 +9,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 import {
-	SIDE_NAVIGATION_ARIA_ROLE,
+	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
 	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC,
 	SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
@@ -225,8 +225,8 @@ class SideNavigation extends UI5Element {
 		};
 	}
 
-	get accSideNavigationRole() {
-		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_ARIA_ROLE);
+	get accSideNavigationPopoverHiddenText() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT);
 	}
 
 	get ariaRoleDescPopoverNavigationList() {

@@ -18,6 +18,8 @@ import TreeListItemTemplate from "./generated/templates/TreeListItemTemplate.lit
 // Styles
 import treeListItemCss from "./generated/themes/TreeListItem.css.js";
 
+import HasPopup from "./types/HasPopup.js";
+
 /**
  * @public
  */
@@ -162,19 +164,20 @@ const metadata = {
 		 * @defaultvalue undefined
 		 * @since 1.10.0
 		 */
-		ariaRoledescription: {
+		 accessibleRoleDescription: {
 			type: String,
 			defaultValue: undefined,
+			noAttribute: true,
 		},
 
 		/**
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-		 * @type String
+		 * @type {sap.ui.webcomponents.main.types.HasPopup}
 		 * @since 1.10.0
 		 * @protected
 		 */
 		ariaHaspopup: {
-			type: String,
+			type: HasPopup,
 		},
 
 	},
@@ -323,7 +326,7 @@ class TreeListItem extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return this.ariaRoledescription ? undefined : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return this.accessibleRoleDescription ? undefined : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
