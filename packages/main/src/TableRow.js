@@ -48,7 +48,7 @@ const metadata = {
 	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
 		/**
 		 * Defines the mode of the row (None, SingleSelect, MultiSelect).
-		 * @type {TableMode}
+		 * @type {sap.ui.webcomponents.main.types.TableMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15
 		 * @private
@@ -69,7 +69,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
 		 * while with type <code>Inactive</code> - will not.
 		 *
-		 * @type {TableRowType}
+		 * @type {sap.ui.webcomponents.main.types.TableRowType}
 		 * @defaultvalue "Inactive"
 		 * @since 1.0.0-rc.15
 		 * @public

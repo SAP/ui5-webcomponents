@@ -41,7 +41,7 @@ const metadata = {
 		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
 		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 		 * </ul>
-		 * @type {CalendarSelectionMode}
+		 * @type {sap.ui.webcomponents.main.types.CalendarSelectionMode}
 		 * @defaultvalue "Single"
 		 * @public
 		 */
@@ -240,7 +240,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Calendar
- * @extends CalendarPart
+ * @extends sap.ui.webcomponents.main.CalendarPart
  * @tagname ui5-calendar
  * @appenddocs CalendarDate
  * @public

@@ -166,7 +166,7 @@ const metadata = {
 		 *
 		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
-		 * @type {TableGrowingMode}
+		 * @type {sap.ui.webcomponents.main.types.TableGrowingMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.12
 		 * @public
@@ -194,7 +194,7 @@ const metadata = {
 		/**
 		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @defaultValue 1000
 		 * @public
 		 */
@@ -242,7 +242,7 @@ const metadata = {
 		 * <li><code>SingleSelect</code></li>
 		 * <li><code>None</code></li>
 		 * <ul>
-		 * @type {TableMode}
+		 * @type {sap.ui.webcomponents.main.types.TableMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15
 		 * @public
@@ -1068,8 +1068,10 @@ class Table extends UI5Element {
 			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
+		const hiddenColumnsChange = (this._hiddenColumns.length !== hiddenColumns.length) || this._hiddenColumns.some((column, index) => column !== hiddenColumns[index]);
+
 		// invalidate only if hidden columns count has changed
-		if (this._hiddenColumns.length !== hiddenColumns.length) {
+		if (hiddenColumnsChange) {
 			this._hiddenColumns = hiddenColumns;
 			if (hiddenColumns.length) {
 				this.fireEvent("popin-change", {

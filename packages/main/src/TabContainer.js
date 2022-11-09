@@ -32,6 +32,7 @@ import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
+import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -140,7 +141,7 @@ const metadata = {
 		 * <li><code>Bottom</code></li>
 		 * </ul>
 		 *
-		 * @type {TabContainerTabsPlacement}
+		 * @type {sap.ui.webcomponents.main.types.TabContainerTabsPlacement}
 		 * @defaultvalue "Top"
 		 * @since 1.0.0-rc.7
 		 * @private
@@ -181,7 +182,7 @@ const metadata = {
 		 * <li><code>Inline</code></li>
 		 * </ul>
 		 *
-		 * @type {TabLayout}
+		 * @type {sap.ui.webcomponents.main.types.TabLayout}
 		 * @defaultvalue "Standard"
 		 * @public
 		 */
@@ -191,7 +192,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the overflow mode of the tab strip. If you have a large number of tabs, only the tabs that can fit on screen will be visible.
+		 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
 		 * All other tabs that can 't fit on the screen are available in an overflow tab "More".
 		 *
 		 * <br><br>
@@ -206,7 +207,7 @@ const metadata = {
 		 * <li><code>StartAndEnd</code></li>
 		 * </ul>
 		 *
-		 * @type {TabsOverflowMode}
+		 * @type {sap.ui.webcomponents.main.types.TabsOverflowMode}
 		 * @defaultvalue "End"
 		 * @since 1.1.0
 		 * @public
@@ -224,6 +225,32 @@ const metadata = {
 		 */
 		mediaRange: {
 			type: String,
+		},
+
+		/**
+		 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+		 *
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
+		 * @defaultvalue "Solid"
+		 * @since 1.10.0
+		 * @public
+		 */
+		headerBackgroundDesign: {
+			type: TabContainerBackgroundDesign,
+			defaultValue: TabContainerBackgroundDesign.Solid,
+		},
+
+		/**
+		 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+		 *
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
+		 * @defaultvalue "Solid"
+		 * @since 1.10.0
+		 * @public
+		 */
+		contentBackgroundDesign: {
+			type: TabContainerBackgroundDesign,
+			defaultValue: TabContainerBackgroundDesign.Solid,
 		},
 
 		_selectedTab: {

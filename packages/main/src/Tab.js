@@ -139,7 +139,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> The design depends on the current theme.
-		 * @type {SemanticColor}
+		 * @type {sap.ui.webcomponents.main.types.SemanticColor}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -184,7 +184,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.Tab
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-tab
  * @implements sap.ui.webcomponents.main.ITab
  * @public

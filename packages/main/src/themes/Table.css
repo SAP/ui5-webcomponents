@@ -16,6 +16,12 @@ table {
 	border-collapse: collapse;
 }
 
+.ui5-table-header-row-navigated {
+    width: 0.1875rem;
+    background: var(--sapList_HeaderBackground);
+    vertical-align: middle;
+}
+
 .ui5-table-header-row {
 	color: var(--sapTextColor);
 	height: var(--ui5_table_header_row_height);

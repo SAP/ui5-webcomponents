@@ -391,4 +391,75 @@
 	</xmp></pre>
 </section>
 
+<!-- Background Design -->
+
+<section>
+	<style>
+		.radio-button-group {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.design-options {
+			display: flex;
+			gap: 2rem;
+		}
+	</style>
+	<h3>TabContainer Design Background</h3>
+	<div class="snippet">
+		<div class="design-options">
+			<div role="radiogroup" id="radioGroup-headerDesign" class="radio-button-group">
+				<ui5-label>Header Background</ui5-label>
+				<ui5-radio-button text="Solid" checked name="Group1"></ui5-radio-button>
+				<ui5-radio-button text="Transparent" name="Group1"></ui5-radio-button>
+				<ui5-radio-button text="Translucent" name="Group1"></ui5-radio-button>
+			</div>
+
+			<div role="radiogroup2" id="radioGroup-contentDesign" class="radio-button-group">
+				<ui5-label>Content Background</ui5-label>
+				<ui5-radio-button text="Solid" name="Group2"></ui5-radio-button>
+				<ui5-radio-button text="Transparent" checked name="Group2"></ui5-radio-button>
+				<ui5-radio-button text="Translucent" name="Group2"></ui5-radio-button>
+			</div>
+		</div>
+		<ui5-tabcontainer id="tabContainerBackgroundDesign" header-background-design="Solid" content-background-design="Transparent">
+			<ui5-tab text="Tab 1" selected>
+				<ui5-label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita voluptates accusamus est quibusdam inventore ipsam?</ui5-label>
+			</ui5-tab>
+			<ui5-tab text="Tab 2">
+				<ui5-label>Accusamus minus aperiam sunt ipsam eos quos et maxime facilis tempora neque ratione nemo laborum expedita aliquid officiis nisi, necessitatibus quasi distinctio?</ui5-label>
+			</ui5-tab>
+			<ui5-tab text="Tab 3">
+				<ui5-label>Dolores totam perferendis numquam incidunt obcaecati, id quo at alias rem deserunt praesentium repellat ipsum commodi consequuntur veniam et ducimus animi qui nobis accusantium tenetur eveniet culpa non!</ui5-label>
+			</ui5-tab>
+		</ui5-tabcontainer>
+
+		<script>
+			const radioGroupHeaderDesign = document.getElementById("radioGroup-headerDesign");
+			const radioGroupContentDesign = document.getElementById("radioGroup-contentDesign");
+			const tabContainerBackgroundDesign = document.getElementById("tabContainerBackgroundDesign");
+			radioGroupHeaderDesign.addEventListener("change", function (e) {
+				tabContainerBackgroundDesign.headerBackgroundDesign = e.target.text;
+			});
+
+			radioGroupContentDesign.addEventListener("change", function (e) {
+				tabContainerBackgroundDesign.contentBackgroundDesign = e.target.text;
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tabcontainer id="tabContainerBackgroundDesign" header-background-design="Solid" content-background-design="Transparent">
+	<ui5-tab text="Tab 1" selected>
+		<ui5-label>Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita voluptates accusamus est quibusdam inventore ipsam?</ui5-label>
+	</ui5-tab>
+	<ui5-tab text="Tab 2">
+		<ui5-label>Accusamus minus aperiam sunt ipsam eos quos et maxime facilis tempora neque ratione nemo laborum expedita aliquid officiis nisi, necessitatibus quasi distinctio?</ui5-label>
+	</ui5-tab>
+	<ui5-tab text="Tab 3">
+		<ui5-label>Dolores totam perferendis numquam incidunt obcaecati, id quo at alias rem deserunt praesentium repellat ipsum commodi consequuntur veniam et ducimus animi qui nobis accusantium tenetur eveniet culpa non!</ui5-label>
+	</ui5-tab>
+</ui5-tabcontainer>
+	</xmp></pre>
+</section>
+
 <!-- JSDoc marker -->

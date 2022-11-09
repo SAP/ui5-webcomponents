@@ -22,7 +22,7 @@ const metadata = {
 	properties: {
 		/**
 		 * Already normalized by Calendar
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @public
 		 */
 		timestamp: {
@@ -31,7 +31,7 @@ const metadata = {
 
 		/**
 		 * Already normalized by Calendar
-		 * @type {CalendarType}
+		 * @type {sap.ui.webcomponents.base.types.CalendarType}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -42,7 +42,7 @@ const metadata = {
 		 * Already normalized by Calendar
 		 * @sience 1.0.0-rc.16
 		 * @defaultvalue undefined
-		 * @type {CalendarType}
+		 * @type {sap.ui.webcomponents.base.types.CalendarType}
 		 * @public
 		 */
 		secondaryCalendarType: {
@@ -51,7 +51,7 @@ const metadata = {
 
 		/**
 		 * Stores information for month button for secondary calendar type
-		 * @type {Object}
+		 * @type {object}
 		 * @private
 		*/
 		buttonTextForSecondaryCalendarType: {

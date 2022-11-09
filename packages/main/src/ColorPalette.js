@@ -69,7 +69,7 @@ const metadata = {
 		/**
 		 * Defines the default color of the color palette
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-		 * @type {CSSColor}
+		 * @type {sap.ui.webcomponents.base.types.CSSColor}
 		 * @private
 		 * @since 1.0.0-rc.16
 		 */
@@ -79,7 +79,7 @@ const metadata = {
 
 		/**
 		 * Defines the selected color.
-		 * @type {CSSColor}
+		 * @type {sap.ui.webcomponents.base.types.CSSColor}
 		 * @private
 		 */
 		_selectedColor: {
@@ -88,7 +88,7 @@ const metadata = {
 
 		/**
 		 * Defines if the palette is in Popup or Embeded mode.
-		 * @type {CSSColor}
+		 * @type {sap.ui.webcomponents.base.types.CSSColor}
 		 * @private
 		 */
 		popupMode: {
@@ -146,7 +146,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.ColorPalette
- * @extends UI5Element
+ * @extends sap.ui.webcomponents.base.UI5Element
  * @tagname ui5-color-palette
  * @since 1.0.0-rc.12
  * @appenddocs ColorPaletteItem

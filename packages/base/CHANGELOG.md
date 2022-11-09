@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/SAP/ui5-webcomponents/compare/v1.8.0...v1.9.0) (2022-10-31)
+
+
+### Bug Fixes
+
+* **f6navigation:** correct activeElement when shadow root doesn't exist ([#5910](https://github.com/SAP/ui5-webcomponents/issues/5910)) ([f8a69b2](https://github.com/SAP/ui5-webcomponents/commit/f8a69b23e350712b3ce723325633ea498b1527a6))
+* **framework:** fix contexts management in hbs-2-lit compiler ([#5958](https://github.com/SAP/ui5-webcomponents/issues/5958)) ([94d1619](https://github.com/SAP/ui5-webcomponents/commit/94d16199ed7dc79b21d99a0637533e93af54c90a)), closes [#4701](https://github.com/SAP/ui5-webcomponents/issues/4701)
+* make static are items recognizable to openui5 dialogs ([#5888](https://github.com/SAP/ui5-webcomponents/issues/5888)) ([efaa1d6](https://github.com/SAP/ui5-webcomponents/commit/efaa1d6e60f965ef0f8479adcd823e1bf5396992)), closes [#5634](https://github.com/SAP/ui5-webcomponents/issues/5634)
+* **theming:** add custom theme support for external CSS ([#5887](https://github.com/SAP/ui5-webcomponents/issues/5887)) ([c7e2668](https://github.com/SAP/ui5-webcomponents/commit/c7e2668cdab83eb32f90b4f6dc6249cda6fba674))
+* **ui5-label:** improve "for" attribute accessibility reading ([#5872](https://github.com/SAP/ui5-webcomponents/issues/5872)) ([b9ffaa6](https://github.com/SAP/ui5-webcomponents/commit/b9ffaa6f0353e9e8136019978299548021555643))
+
+
+### Features
+
+* **framework:** fetch illustrations on demand ([#5927](https://github.com/SAP/ui5-webcomponents/issues/5927)) ([f8e1033](https://github.com/SAP/ui5-webcomponents/commit/f8e1033643626261dcad8a38f65c325ba9aff99f))
+
+
+
+
+
 # [1.8.0](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.8.0) (2022-10-03)
 
 

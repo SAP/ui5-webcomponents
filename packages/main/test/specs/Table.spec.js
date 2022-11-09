@@ -31,11 +31,6 @@ describe("Table general interaction", () => {
 		assert.ok(await noDataRow.isExisting(), 'noData div is present');
 	});
 
-	it("tests if table with more columns than cells is rendered", async () => {
-		const tblLessCells = await browser.$("#tblLessCells");
-		assert.ok(await tblLessCells.isExisting(), 'table with more columns is rendered without JS errors.');
-	});
-
 	it("tests if popinChange is fired when min-width is reacted (500px)", async () => {
 		let tableLabel = await browser.$("#tableLabel");
 		const btn = await browser.$("#size-btn-500");
@@ -111,7 +106,7 @@ describe("Table general interaction", () => {
 		});
 
 		it("Should apply aria-label from the accessibleName property", async () => {
-			const table = await browser.$("#tblLessColumns");
+			const table = await browser.$("#tblLessCells");
 			const innerTable = await table.shadow$("table");
 
 			assert.strictEqual(await innerTable.getAttribute("aria-label"), "Table label", "Table aria-label attribute is correct.");

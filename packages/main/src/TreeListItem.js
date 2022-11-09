@@ -29,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 		 *
-		 * @type {Integer}
+		 * @type {sap.ui.webcomponents.base.types.Integer}
 		 * @public
 		 * @defaultValue 1
 		 */
@@ -93,7 +93,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {ValueState}
+		 * @type {sap.ui.webcomponents.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -233,7 +233,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.TreeListItem
- * @extends ListItem
+ * @extends sap.ui.webcomponents.main.ListItem
  * @tagname ui5-li-tree
  * @public
  * @since 1.0.0-rc.8

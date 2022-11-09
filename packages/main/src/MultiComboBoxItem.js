@@ -23,7 +23,7 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webcomponents.main.MultiComboBoxItem
- * @extends ComboBoxItem
+ * @extends sap.ui.webcomponents.main.ComboBoxItem
  * @tagname ui5-mcb-item
  * @implements sap.ui.webcomponents.main.IMultiComboBoxItem
  * @public

@@ -49,7 +49,7 @@ const metadata = {
 		 * <li><code>Wide</code></li>
 		 * </ul>
 		 *
-		 * @type {MediaGalleryItemLayout}
+		 * @type {sap.ui.webcomponents.fiori.types.MediaGalleryItemLayout}
 		 * @defaultvalue "Square"
 		 * @public
 		 */

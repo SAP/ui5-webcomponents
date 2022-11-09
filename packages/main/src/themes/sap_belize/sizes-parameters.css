@@ -4,6 +4,8 @@
 	/* SplitButton */
 	--_ui5_split_button_middle_separator_height: 2.5rem;
 	--_ui5_split_button_text_button_width: 2.5rem;
+	--_ui5_textarea_padding_top: 0.5625rem;
+	--_ui5_textarea_padding_bottom: 0.5625rem;
 }
 
 [data-ui5-compact-size],
