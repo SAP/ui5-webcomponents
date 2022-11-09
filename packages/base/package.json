@@ -28,6 +28,7 @@
     "start": "nps start",
     "build": "nps build",
     "test": "nps test",
+    "jsdoc": "nps generateAPI",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {

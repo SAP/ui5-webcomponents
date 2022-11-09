@@ -9,7 +9,7 @@
     "ui5"
   ],
   "scripts": {
-    "build": "npm-run-all --sequential build:prerequisitesWithLint build:bundles",
+    "build": "npm-run-all --sequential build:prerequisitesWithLint build:bundles build:customElementsManifest",
     "build:bundles": "npm-run-all --parallel bundle:main bundle:fiori",
     "build:prerequisitesWithLint": "npm-run-all --parallel build:prerequisites lint:main lint:fiori",
     "build:prerequisites": "npm-run-all --parallel build:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori",
