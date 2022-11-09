@@ -449,7 +449,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_updateAttribute(name: string, newValue: any) {
-		const ctor = this.constructor as typeof UI5Element
+		const ctor = this.constructor as typeof UI5Element;
 
 		if (!ctor.getMetadata().hasAttribute(name)) {
 			return;
@@ -586,7 +586,7 @@ abstract class UI5Element extends HTMLElement {
 	 *
 	 * @public
 	 */
-	onInvalidation(changeInfo: ChangeInfo) {};
+	onInvalidation(changeInfo: ChangeInfo) {}
 
 	/**
 	 * Do not call this method directly, only intended to be called by js

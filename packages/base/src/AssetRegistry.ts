@@ -1,4 +1,3 @@
-
 import { registerI18nLoader } from "./asset-registries/i18n.js";
 import { registerLocaleDataLoader } from "./asset-registries/LocaleData.js";
 import { registerThemePropertiesLoader } from "./asset-registries/Themes.js";

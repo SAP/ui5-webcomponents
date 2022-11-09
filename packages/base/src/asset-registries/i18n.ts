@@ -36,7 +36,6 @@ const getI18nBundleData = (packageName: string) => {
 	return bundleData.get(packageName);
 };
 
-
 const _hasLoader = (packageName: string, localeId: string) => {
 	const bundleKey = `${packageName}/${localeId}`;
 	return loaders.has(bundleKey);

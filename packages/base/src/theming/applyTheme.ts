@@ -1,6 +1,6 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
 import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
-import getThemeDesignerTheme, {ThemeDescriptor} from "./getThemeDesignerTheme.js";
+import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoots.js";

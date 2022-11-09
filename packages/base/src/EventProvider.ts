@@ -1,4 +1,4 @@
-type EventRegistry = Map<String, Array<Function>>;
+type EventRegistry = Map<string, Array<Function>>;
 
 class EventProvider {
 	_eventRegistry: EventRegistry;

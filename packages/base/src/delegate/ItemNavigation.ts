@@ -296,7 +296,6 @@ class ItemNavigation {
 			// Otherwise, move the focus to the very top (as Home).
 			this._currentIndex -= this._currentIndex;
 		}
-
 	}
 
 	/**

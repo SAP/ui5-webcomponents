@@ -8,13 +8,15 @@ type SlotInvalidation = {
 	properties: boolean | Array<string>,
 	slots: boolean | Array<string>,
 }
+
 type Slot = {
 	type: typeof Node | typeof HTMLElement,
 	propertyName: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
 }
-type Property =  {
+
+type Property = {
 	multiple?: boolean,
 	type: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
 	defaultValue?: any,

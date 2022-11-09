@@ -1,7 +1,6 @@
 type TaskType =	() => Promise<void>;
 const tasks = new WeakMap<HTMLElement, Array<TaskType>>();
 
-
 class AnimationQueue {
 	static get tasks() {
 		return tasks;
