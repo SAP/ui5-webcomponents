@@ -1,6 +1,6 @@
 {
 	"source": {
-		"include": "dist",
+		"include": "jsdoc-dist",
 		"excludePattern": "(/|\\\\)library-all\\.js|(/|\\\\).*-preload\\.js|^jquery-.*\\.js|^sap-.*\\.js|.+Renderer\\.lit\\.js|.*library\\.js|thirdparty"
 	},
 	"opts" : {

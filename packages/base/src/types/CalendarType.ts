@@ -5,12 +5,31 @@ import DataType from "./DataType.js";
  * @lends sap.ui.webcomponents.base.types.CalendarType.prototype
  * @public
  */
-// TODO jsdoc members
 enum CalendarTypes {
+	/**
+	 * @public
+	 * @type {Gregorian}
+	 */
 	Gregorian = "Gregorian",
+	/**
+	 * @public
+	 * @type {Islamic}
+	 */
 	Islamic = "Islamic",
+	/**
+	 * @public
+	 * @type {Japanese}
+	 */
 	Japanese = "Japanese",
+	/**
+	 * @public
+	 * @type {Buddhist}
+	 */
 	Buddhist = "Buddhist",
+	/**
+	 * @public
+	 * @type {Persian}
+	 */
 	Persian = "Persian",
 }
 
