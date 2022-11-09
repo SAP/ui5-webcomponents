@@ -56,6 +56,22 @@ describe("Attributes propagation", () => {
 		assert.notOk(await innertextAreaWarning.getAttribute("aria-invalid"), "aria-invalid is not rendered");
 		assert.strictEqual(await innertextAreaError.getAttribute("aria-invalid"), "true", "aria-invalid is set to true");
 	});
+
+	it("Tests aria-label is set to match the label text when label is for that text area", async () => {
+		const textArea = await browser.$("#taWithLabelID").shadow$("textarea");
+
+		const EXPECTED_ARIA_LABEL = "This should be in arial-label property of the text area";
+		assert.strictEqual(await textArea.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
+			"The aria-label is correctly set internally.");
+	});
+
+	it("Tests aria-label is set directly from the property aria-label of the text area", async () => {
+		const textArea = await browser.$("#taWithLabelID2").shadow$("textarea");
+
+		const EXPECTED_ARIA_LABEL = "Here aria label should be this one";
+		assert.strictEqual(await textArea.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
+			"The aria-label is correctly set internally.");
+	});
 });
 
 describe("disabled and readonly textarea", () => {
