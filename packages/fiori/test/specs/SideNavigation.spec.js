@@ -191,6 +191,7 @@ describe("Component Behavior", () => {
 		});
 
 		it("Tests ACC roles and more when collapsed", async () => {
+			// act
 			await browser.$("#sn1").setProperty("collapsed", true);
 
 			const sideNavigation = await browser.$("#sn1");
