@@ -1,6 +1,6 @@
-const fs = require("fs");
-const path = require("path");
-const rimraf = require("rimraf");
+const fs = require('fs');
+const path = require('path');
+const rimraf = require('rimraf');
 const capitalizeFirst = str => str.substr(0, 1).toUpperCase() + str.substr(1);
 
 const srcPath = path.resolve(process.argv[2]); // where to find the .mds

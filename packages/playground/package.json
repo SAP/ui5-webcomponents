@@ -29,7 +29,7 @@
   },
   "scripts": {
     "build": "yarn install:dependencies && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist",
-    "build:next": "npm-run-all --parallel prepare:next:* && npm run build-storybook",
+    "build:next": "npm run build-storybook",
     "build_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist && npm run build:next",
     "build:main": "yarn install:dependencies && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
     "build:main_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
@@ -54,7 +54,7 @@
     "prepare:next:samples": "node ./build-scripts-storybook/samples-prepare.js",
     "prepare:next:manifest": "node ./build-scripts-storybook/parse-manifest.js",
     "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js \"../../docs/\" \"./docs/\"",
-    "storybook": "npm run prepare:next:samples && start-storybook -p 6006",
-    "build-storybook": "build-storybook -o ./dist/_playground"
+    "storybook": "npm-run-all --parallel prepare:next:* && start-storybook -p 6006",
+    "build-storybook": "npm-run-all --parallel prepare:next:* && build-storybook -o ./dist/_playground"
   }
 }

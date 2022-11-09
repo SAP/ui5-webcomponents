@@ -34,7 +34,7 @@ TypeGroup.args = {
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
     <img
-      src="../../../assets/images/avatars/woman_avatar_5.png"
+      src="../assets/images/avatars/woman_avatar_5.png"
       alt="Woman Avatar 5"
     />
   </ui5-avatar>`,
@@ -51,7 +51,7 @@ TypeIndividual.args = {
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
     <img
-      src="../../../assets/images/avatars/woman_avatar_5.png"
+      src="../assets/images/avatars/woman_avatar_5.png"
       alt="Woman Avatar 5"
     />
   </ui5-avatar>`,

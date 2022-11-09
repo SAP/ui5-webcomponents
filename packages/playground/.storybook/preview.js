@@ -4,7 +4,9 @@ import customElements from "../.storybook/custom-elements.json";
 import { setCustomElementsManifest } from "@storybook/web-components";
 import { useOptions } from "./useOptions";
 
-setCustomElementsManifest(customElements);
+if (customElements?.modules) {
+    setCustomElementsManifest(customElements);
+}
 
 export const parameters = {
     actions: { argTypesRegex: "^ui5-[a-z].*" }, // automatically match ui5-* events for actions
@@ -16,7 +18,7 @@ export const parameters = {
     },
     docs: {
         iframeHeight: "300px", // stories including script tags are loaded in an iframe, this is the height of the iframe
-        transformSource: (source) =>
+        transformSource: (source) => // this is called before rendering of the "code" inside the preview of the stories
             source
                 // Clean empty boolean attribute values
                 .replace(/=\"\"/g, "")
