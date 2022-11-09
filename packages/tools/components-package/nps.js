@@ -3,7 +3,6 @@ const fs = require("fs");
 const LIB = path.join(__dirname, `../lib/`);
 const FIORI = path.join(__dirname, `../../fiori/`);
 
-
 const getScripts = (options) => {
 
 	let illustrations = options.illustrationsData || [];
