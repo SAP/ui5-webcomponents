@@ -1097,7 +1097,7 @@ abstract class UI5Element extends HTMLElement {
  */
 const instanceOfUI5Element = (object: any): object is UI5Element => {
 	return "isUI5Element" in object;
-}
+};
 
 export default UI5Element;
 export { instanceOfUI5Element };

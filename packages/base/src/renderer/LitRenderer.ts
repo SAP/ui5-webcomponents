@@ -6,9 +6,8 @@ import {
 	RenderOptions,
 } from "lit-html";
 
-
 import { getFeature } from "../FeaturesRegistry.js";
-import type { LitStatic } from "../CustomElementsScope.js"
+import type { LitStatic } from "../CustomElementsScope.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 import UI5Element, { StylesDescriptor } from "../UI5Element.js";
 

@@ -3,5 +3,6 @@ enum NavigationMode {
 	Vertical = "Vertical",
 	Horizontal = "Horizontal",
 	Paging = "Paging",
-};
+}
+
 export default NavigationMode;

@@ -33,7 +33,7 @@ enum PopupStates {
 	 * @type {CLOSING}
 	 */
 	CLOSING = "CLOSING",
-};
+}
 
 /**
  * @class

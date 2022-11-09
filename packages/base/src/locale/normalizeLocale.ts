@@ -21,7 +21,7 @@ const normalizeLocale = (locale: string) => {
 	let m;
 
 	if (!locale) {
-		return DEFAULT_LOCALE;
+		return DEFAULT_LOCALE as string;
 	}
 
 	if (typeof locale === "string" && (m = localeRegEX.exec(locale.replace(/_/g, "-")))) {/* eslint-disable-line */

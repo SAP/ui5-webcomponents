@@ -12,7 +12,7 @@ enum CalendarTypes {
 	Japanese = "Japanese",
 	Buddhist = "Buddhist",
 	Persian = "Persian",
-};
+}
 
 /**
  * @class

@@ -12,5 +12,6 @@ enum ItemNavigationBehavior {
 	* Cycling behavior: navigating past the last item continues with the first and vice versa.
  	*/
 	Cyclic = "Cyclic",
-};
+}
+
 export default ItemNavigationBehavior;

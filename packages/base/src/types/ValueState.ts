@@ -57,8 +57,7 @@ enum ValueStates {
 	 * @type {Information}
 	 */
 	Information = "Information",
-};
-
+}
 
 ValueState.generateTypeAccessors(ValueStates);
 

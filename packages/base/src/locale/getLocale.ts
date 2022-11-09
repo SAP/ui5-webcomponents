@@ -2,7 +2,7 @@ import detectNavigatorLanguage from "../util/detectNavigatorLanguage.js";
 import { getLanguage as getConfigLanguage } from "../config/Language.js";
 import Locale from "./Locale.js";
 
-const cache = new Map();
+const cache = new Map<string, Locale>();
 
 const getLocaleInstance = (lang: string) => {
 	if (!cache.has(lang)) {

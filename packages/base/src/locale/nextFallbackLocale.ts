@@ -9,7 +9,7 @@ import { DEFAULT_LOCALE } from "../generated/AssetParameters.js";
  */
 const nextFallbackLocale = (locale: string) => {
 	if (!locale) {
-		return DEFAULT_LOCALE;
+		return DEFAULT_LOCALE as string;
 	}
 
 	if (locale === "zh_HK") {
@@ -23,7 +23,7 @@ const nextFallbackLocale = (locale: string) => {
 	}
 
 	// for any language but the default, fallback to the default first before falling back to the 'raw' language (empty string)
-	return locale !== DEFAULT_LOCALE ? DEFAULT_LOCALE : "";
+	return locale !== DEFAULT_LOCALE ? DEFAULT_LOCALE as string : "";
 };
 
 export default nextFallbackLocale;

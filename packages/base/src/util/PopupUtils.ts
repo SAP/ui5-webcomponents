@@ -1,7 +1,7 @@
 import getSharedResource from "../getSharedResource.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import getActiveElement from "./getActiveElement.js";
-import type OpenUI5Support from "../features/OpenUI5Support.js"
+import type OpenUI5Support from "../features/OpenUI5Support.js";
 
 type PopupUtilsDataType = {
 	currentZIndex: number

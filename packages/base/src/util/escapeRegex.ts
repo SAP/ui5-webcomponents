@@ -6,6 +6,6 @@
  */
 const escapeRegex = (text: string) => {
 	return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
+};
 
 export default escapeRegex;
