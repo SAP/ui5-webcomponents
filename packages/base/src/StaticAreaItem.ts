@@ -53,7 +53,7 @@ class StaticAreaItem extends HTMLElement {
 	 * @private
 	 */
 	_updateContentDensity() {
-		if (getEffectiveContentDensity(this.ownerElement) === "compact") {
+		if (getEffectiveContentDensity(this.ownerElement!) === "compact") {
 			this.classList.add("sapUiSizeCompact");
 			this.classList.add("ui5-content-density-compact");
 		} else {
