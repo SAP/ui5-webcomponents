@@ -13,16 +13,16 @@ enum InvisibleMessageModes {
 	 * @public
 	 * @type {Polite}
      */
-	Polite= "Polite",
+	Polite = "Polite",
 
 	/**
      * Indicates that updates to the region have the highest priority and should be presented to the user immediately.
 	 * @public
 	 * @type {Assertive}
      */
-	Assertive= "Assertive",
+	Assertive = "Assertive",
 
-};
+}
 
 /**
  * @class
