@@ -203,7 +203,6 @@ describe("Component Behavior", () => {
 			const sideNavigationFixedItemsTreeItem1 = await sideNavigationFixedItemsTree.shadow$$("ui5-li-tree")[0].shadow$("li"); // with sub-items
 			const sideNavigationFixedItemsTreeItem2 = await sideNavigationFixedItemsTree.shadow$$("ui5-li-tree")[1].shadow$("li"); // with no sub-items
 
-
 			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), "navigation", "Role of the SideNavigation root element is correctly set");
 
 			roleDescription = await browser.executeAsync(done => {
