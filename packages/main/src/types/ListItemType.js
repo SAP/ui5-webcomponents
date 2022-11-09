@@ -27,7 +27,7 @@ const ListItemTypes = {
 	Detail: "Detail",
 
 	/**
-	 * Enables the type of navigation, which is specified to add an arrow to the right side of the items and fires navigate-click event.
+	 * Enables the type of navigation, which is specified to add an arrow at the end of the items and fires navigate-click event.
 	 * @public
 	 * @type {Navigation}
 	 */
