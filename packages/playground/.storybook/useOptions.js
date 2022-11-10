@@ -14,11 +14,13 @@ export const useOptions = (StoryFn) => {
     };
 
     useEffect(() => {
-        var Conf = window["sap-ui-webcomponents-bundle"].configuration;
+        const Conf = window["sap-ui-webcomponents-bundle"].configuration;
+        const currentTheme = themes[theme.replace(/ /g, "")]
 
-        Conf.setTheme(themes[theme.replace(/ /g, "")]);
+        Conf.setTheme(currentTheme);
 
         document.body.setAttribute("dir", rtl === "RTL" ? "rtl" : "ltr");
+        document.body.setAttribute("data-ui5-theme", currentTheme);
 
         document.body.classList.remove("sapUiSizeCozy");
         document.body.classList.remove("sapUiSizeCompact");
