@@ -1,5 +1,5 @@
-commit 515035ce06852b8c19a05caf054df41dc437cc7d
+commit 5a61da88c2130f145f2f8841cedeaeeed934a7ca
 Author: ilhan007 <ilhan.myumyun@sap.com>
-Date:   Wed Nov 2 18:16:45 2022 +0200
+Date:   Thu Nov 10 23:37:03 2022 +0200
 
-    Merge branch 'main' into latest-release-website
+    chore: update landing page
