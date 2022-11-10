@@ -15,11 +15,13 @@ const getThemeRoot = () => {
 const setThemeRoot = (theme: string, newThemeRoot: string) => {
 	themeRoot = validateThemeRoot(newThemeRoot);
 
-	attachCustomThemeStylesToHead(theme);
+	if (themeRoot) {
+		attachCustomThemeStylesToHead(theme);
+	}
 };
 
 const formatThemeLink = (theme: string) => {
-	return `${getThemeRoot()}Base/baseLib/${theme}/css_variables.css`;
+	return `${getThemeRoot()!}Base/baseLib/${theme}/css_variables.css`;
 };
 
 const attachCustomThemeStylesToHead = async (theme: string) => {

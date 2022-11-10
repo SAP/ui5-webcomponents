@@ -5,13 +5,13 @@ import { getFirstFocusableElement } from "../util/FocusableElements.js";
 import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 
 class F6Navigation {
-	keydownHandler: (event: KeyboardEvent) => Promise<void> = async () => {};
+	static _instance: F6Navigation;
+	keydownHandler: (event: KeyboardEvent) => void;
 	selectedGroup: HTMLElement | null = null;
 	groups: Array<HTMLElement | null> = [];
 
-	// TODO: replace init with a constructor
-	init() {
-		this.keydownHandler = this._keydownHandler.bind(this);
+	constructor() {
+		this.keydownHandler = this._keydownHandler.bind(this) as (event: KeyboardEvent) => void;
 		this.attachEventListeners();
 	}
 
@@ -112,9 +112,16 @@ class F6Navigation {
 	destroy() {
 		this.removeEventListeners();
 	}
+
+	static init() {
+		if (!this._instance) {
+			this._instance = new F6Navigation();
+		}
+
+		return this._instance;
+	}
 }
 
-const F6HelperInstance = new F6Navigation();
-registerFeature("F6Navigation", F6HelperInstance);
+registerFeature("F6Navigation", F6Navigation);
 
 export default F6Navigation;

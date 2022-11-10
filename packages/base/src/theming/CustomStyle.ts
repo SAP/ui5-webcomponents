@@ -4,7 +4,7 @@ import EventProvider from "../EventProvider.js";
 
 type CustomCSSChangeCallback = (tag: string) => any;
 
-const eventProvider = getSharedResource("CustomStyle.eventProvider", new EventProvider());
+const eventProvider = getSharedResource("CustomStyle.eventProvider", new EventProvider<string, void>());
 const CUSTOM_CSS_CHANGE = "CustomCSSChange";
 
 const attachCustomCSSChange = (listener: CustomCSSChangeCallback) => {
@@ -19,7 +19,7 @@ const fireCustomCSSChange = (tag: string) => {
 	return eventProvider.fireEvent(CUSTOM_CSS_CHANGE, tag);
 };
 
-const customCSSFor = getSharedResource<Record<string, any>>("CustomStyle.customCSSFor", {});
+const customCSSFor = getSharedResource<Record<string, Array<string>>>("CustomStyle.customCSSFor", {});
 
 // Listen to the eventProvider, in case other copies of this CustomStyle module fire this
 // event, and this copy would therefore need to reRender the ui5 webcomponents; but

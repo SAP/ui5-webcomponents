@@ -1,8 +1,8 @@
 import EventProvider from "../EventProvider.js";
 
-type ThemeLoadedCallback = (theme: string) => any;
+type ThemeLoadedCallback = (theme: string) => void;
 
-const eventProvider = new EventProvider();
+const eventProvider = new EventProvider<string, void>();
 const THEME_LOADED = "themeLoaded";
 
 const attachThemeLoaded = (listener: ThemeLoadedCallback) => {

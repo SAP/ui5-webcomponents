@@ -1,14 +1,11 @@
-type EventRegistry = Map<string, Array<EventCallback>>;
-type EventCallback = (...args: any[]) => any;
-
-class EventProvider {
-	_eventRegistry: EventRegistry;
+class EventProvider<EventListenerArgs, EventListenerReturn> {
+	_eventRegistry: Map<string, Array<(param: EventListenerArgs) => EventListenerReturn>>;
 
 	constructor() {
 		this._eventRegistry = new Map();
 	}
 
-	attachEvent(eventName: string, fnFunction: EventCallback) {
+	attachEvent(eventName: string, fnFunction: (param: EventListenerArgs) => EventListenerReturn) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -22,7 +19,7 @@ class EventProvider {
 		}
 	}
 
-	detachEvent(eventName: string, fnFunction: EventCallback) {
+	detachEvent(eventName: string, fnFunction: (param: EventListenerArgs) => EventListenerReturn) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -47,7 +44,7 @@ class EventProvider {
 	 * @param data optional data to pass to each event listener
 	 * @returns {Array} an array with the results of all event listeners
 	 */
-	fireEvent(eventName: string, data?: any) {
+	fireEvent(eventName: string, data: EventListenerArgs) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -67,11 +64,11 @@ class EventProvider {
 	 * @param data optional data to pass to each event listener
 	 * @returns {Promise} a promise that will resolve when all listeners have resolved
 	 */
-	fireEventAsync(eventName: string, data?: any) {
+	fireEventAsync(eventName: string, data: EventListenerArgs) {
 		return Promise.all(this.fireEvent(eventName, data));
 	}
 
-	isHandlerAttached(eventName: string, fnFunction: EventCallback) {
+	isHandlerAttached(eventName: string, fnFunction: (param: EventListenerArgs) => EventListenerReturn) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -88,4 +85,3 @@ class EventProvider {
 }
 
 export default EventProvider;
-export type { EventCallback };

@@ -1,6 +1,6 @@
-import { getFormatSettings } from "../InitialConfiguration.js";
+import { getFormatSettings, FormatSettings } from "../InitialConfiguration.js";
 
-let formatSettings: {firstDayOfWeek: number};
+let formatSettings: FormatSettings;
 
 /**
  * Get the first day of the week from the configured format settings or based on the current locale
@@ -8,7 +8,7 @@ let formatSettings: {firstDayOfWeek: number};
  */
 const getFirstDayOfWeek = () => {
 	if (formatSettings === undefined) {
-		formatSettings = getFormatSettings() as {firstDayOfWeek: number}; // TODO remove after converting InitialConfiguration to .ts
+		formatSettings = getFormatSettings();
 	}
 
 	return formatSettings.firstDayOfWeek;

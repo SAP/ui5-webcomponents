@@ -2,7 +2,7 @@ import getEffectiveStyle from "./getEffectiveStyle.js";
 import { attachCustomCSSChange } from "./CustomStyle.js";
 import UI5Element from "../UI5Element.js";
 
-const constructableStyleMap = new Map();
+const constructableStyleMap = new Map<string, Array<CSSStyleSheet>>();
 
 attachCustomCSSChange((tag: string) => {
 	constructableStyleMap.delete(`${tag}_normal`); // there is custom CSS only for the component itself, not for its static area part
@@ -25,7 +25,7 @@ const getConstructableStyle = (ElementClass: typeof UI5Element, forStaticArea = 
 		constructableStyleMap.set(key, [style]);
 	}
 
-	return constructableStyleMap.get(key);
+	return constructableStyleMap.get(key)!;
 };
 
 export default getConstructableStyle;

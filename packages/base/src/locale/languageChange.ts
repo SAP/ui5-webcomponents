@@ -1,8 +1,8 @@
 import EventProvider from "../EventProvider.js";
 
-type LanguageChangeCallback = (lang: string) => any;
+type LanguageChangeCallback = (lang: string) => Promise<void | Array<void>>;
 
-const eventProvider = new EventProvider();
+const eventProvider = new EventProvider<string, Promise<void | Array<void>>>();
 const LANG_CHANGE = "languageChange";
 
 const attachLanguageChange = (listener: LanguageChangeCallback) => {

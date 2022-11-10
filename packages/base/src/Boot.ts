@@ -21,7 +21,7 @@ const attachBoot = async (listener: () => void) => {
 };
 
 const boot = async (): Promise<void> => {
-	if (bootPromise) {
+	if (bootPromise !== undefined) {
 		return bootPromise;
 	}
 
@@ -36,7 +36,7 @@ const boot = async (): Promise<void> => {
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isLoaded() : false;
-		const f6Navigation = getFeature<F6Navigation>("F6Navigation");
+		const f6Navigation = getFeature<typeof F6Navigation>("F6Navigation");
 
 		if (openUI5Support) {
 			await openUI5Support.init();

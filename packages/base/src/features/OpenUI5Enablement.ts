@@ -9,6 +9,7 @@ import {
 
 import UI5Element from "../UI5Element.js";
 import OpenUI5Element from "./OpenUI5Element.js";
+import { StyleData } from "../index.js";
 
 const busyIndicatorMetadata = {
 	properties: {
@@ -101,16 +102,15 @@ class OpenUI5Enablement {
 			}
 
 			if (this.__isBusy) {
-				const busyDomEl = children[0].querySelector(".busy-indicator-wrapper > :not([busy-indicator-before-span]):not(.busy-indicator-overlay):not(.busy-indicator-busy-area)") as HTMLElement;
-				return busyDomEl ? busyDomEl : undefined;
+				return children[0].querySelector(".busy-indicator-wrapper > :not([busy-indicator-before-span]):not(.busy-indicator-overlay):not(.busy-indicator-busy-area)") as HTMLElement;
 			}
 
 			return children[0] as HTMLElement;
 		};
 	}
 
-	static getBusyIndicatorStyles () {
-		return BusyIndicatorStyles;
+	static getBusyIndicatorStyles() {
+		return BusyIndicatorStyles as StyleData;
 	}
 }
 

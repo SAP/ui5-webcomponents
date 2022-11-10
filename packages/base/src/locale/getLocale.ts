@@ -23,7 +23,7 @@ const convertToLocaleOrNull = (lang: string) => {
 		// ignore
 	}
 
-	return new Locale(DEFAULT_LOCALE);
+	return new Locale(DEFAULT_LOCALE as string);
 };
 
 /**

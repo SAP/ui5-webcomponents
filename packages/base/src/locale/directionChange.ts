@@ -2,7 +2,7 @@ import EventProvider from "../EventProvider.js";
 
 type DirectionChangeCallback = () => any;
 
-const eventProvider = new EventProvider();
+const eventProvider = new EventProvider<undefined, void>();
 const DIR_CHANGE = "directionChange";
 
 /**
@@ -24,7 +24,7 @@ const detachDirectionChange = (listener: DirectionChangeCallback) => {
 };
 
 const fireDirectionChange = () => {
-	return eventProvider.fireEvent(DIR_CHANGE);
+	return eventProvider.fireEvent(DIR_CHANGE, undefined);
 };
 
 export {

@@ -6,13 +6,15 @@ import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 import { getFetchDefaultLanguage } from "../config/Language.js";
 
+type I18nLoader = (localeId: string) => Promise<Record<string, string>>;
+
 // contains package names for which the warning has been shown
 const warningShown = new Set();
 const reportedErrors = new Set();
 
-const bundleData = new Map();
-const bundlePromises = new Map();
-const loaders = new Map();
+const bundleData = new Map<string, Record<string, string> | null>();
+const bundlePromises = new Map<string, Promise<Record<string, string>>>();
+const loaders = new Map<string, I18nLoader>();
 
 /**
  * Registers i18n loader function for given package and locale.
@@ -22,13 +24,13 @@ const loaders = new Map();
  * @param {string} localeId locale that this loader can handle
  * @param {function} loader async function that will be passed a localeId and should return a JSON object
  */
-const registerI18nLoader = (packageName: string, localeId: string, loader: (localeId: string) => object) => {
+const registerI18nLoader = (packageName: string, localeId: string, loader: I18nLoader) => {
 	// register loader by key
 	const bundleKey = `${packageName}/${localeId}`;
 	loaders.set(bundleKey, loader);
 };
 
-const _setI18nBundleData = (packageName: string, data: object | null) => {
+const _setI18nBundleData = (packageName: string, data: Record<string, string> | null) => {
 	bundleData.set(packageName, data);
 };
 
@@ -46,11 +48,11 @@ const _loadMessageBundleOnce = (packageName: string, localeId: string) => {
 	const bundleKey = `${packageName}/${localeId}`;
 	const loadMessageBundle = loaders.get(bundleKey);
 
-	if (!bundlePromises.get(bundleKey)) {
+	if (loadMessageBundle && !bundlePromises.get(bundleKey)) {
 		bundlePromises.set(bundleKey, loadMessageBundle(localeId));
 	}
 
-	return bundlePromises.get(bundleKey);
+	return bundlePromises.get(bundleKey)!;
 };
 
 const _showAssetsWarningOnce = (packageName: string) => {
@@ -103,7 +105,7 @@ const fetchI18nBundle = async (packageName: string) => {
 };
 
 // When the language changes dynamically (the user calls setLanguage), re-fetch all previously fetched bundles
-attachLanguageChange(() => {
+attachLanguageChange((lang: string /* eslint-disable-line */) => {
 	const allPackages = [...bundleData.keys()];
 	return Promise.all(allPackages.map(fetchI18nBundle));
 });

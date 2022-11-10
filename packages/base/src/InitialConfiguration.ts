@@ -8,6 +8,8 @@ import AnimationMode from "./types/AnimationMode.js";
 
 let initialized = false;
 
+type FormatSettings = { firstDayOfWeek?: number };
+
 type InitialConfig = {
 	[key: string]: any,
 	animationMode: AnimationMode,
@@ -17,7 +19,7 @@ type InitialConfig = {
 	language: string | undefined,
 	calendarType: string | undefined, // TODO enum
 	noConflict: boolean,
-	formatSettings: { firstDayOfWeek?: number },
+	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,
 };
 
@@ -204,3 +206,5 @@ export {
 	getCalendarType,
 	getFormatSettings,
 };
+
+export type { FormatSettings };

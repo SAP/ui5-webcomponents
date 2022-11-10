@@ -2,28 +2,23 @@ import { getUrl } from "../CSP.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import UI5Element from "../UI5Element.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
-
-const flatten = (arr: Array<any>): Array<any> => {
-	return arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val), []);
-};
+import { StyleData, StyleDataInfo } from "../index.js";
 
 const getEffectiveLinksHrefs = (ElementClass: typeof UI5Element, forStaticArea = false) => {
-	let stylesData = ElementClass[forStaticArea ? "staticAreaStyles" : "styles"];
-	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
+	const stylesData: StyleData | Array<StyleData> = ElementClass[forStaticArea ? "staticAreaStyles" : "styles"];
+	const stylesDataArray: Array<StyleData> = Array.isArray(stylesData) ? stylesData : [stylesData];
 
 	if (!stylesData) {
 		return;
 	}
 
-	if (!Array.isArray(stylesData)) {
-		stylesData = [stylesData];
-	}
+	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
 
 	if (openUI5Enablement) {
-		stylesData.push(openUI5Enablement.getBusyIndicatorStyles());
+		stylesDataArray.push(openUI5Enablement.getBusyIndicatorStyles());
 	}
 
-	return flatten(stylesData).filter(data => !!data).map(data => getUrl(data.packageName, data.fileName));
+	return stylesDataArray.flat().filter(data => !!data).map(data => getUrl((data as StyleDataInfo).packageName, (data as StyleDataInfo).fileName));
 };
 
 export default getEffectiveLinksHrefs;

@@ -4,10 +4,10 @@ import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 import UI5Element from "./UI5Element.js";
 
-type BeforeComponentRenderCallback = (webComponent: UI5Element) => any;
+type BeforeComponentRenderCallback = (webComponent: UI5Element) => void;
 
 const registeredElements = new Set<UI5Element>();
-const eventProvider = new EventProvider();
+const eventProvider = new EventProvider<UI5Element, void>();
 
 const invalidatedWebComponents = new RenderQueue(); // Queue for invalidated web components
 

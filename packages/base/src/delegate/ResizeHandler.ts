@@ -59,7 +59,7 @@ class ResizeHandler {
 	 */
 	static register(element: HTMLElement, callback: ResizeObserverCallback) {
 		let effectiveElement: HTMLElement | undefined = element;
- 
+
 		if (instanceOfUI5Element(effectiveElement)) {
 			effectiveElement = effectiveElement.getDomRef();
 		}

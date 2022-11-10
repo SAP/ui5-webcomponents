@@ -1,19 +1,11 @@
 // @ts-ignore
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
+import { StyleData, StyleDataInfo } from "../index.js";
 
-type ThemeData = {_: {
-		packageName: string,
-		content: string,
-		fileName: string,
-}} | {
-	packageName: string,
-	content: string,
-	fileName: string,
-} | string;
-
+type ThemeData = {_: StyleDataInfo} | StyleDataInfo | string;
 type ThemeLoaderFunction = (themeName: string) => Promise<ThemeData>;
 
-const themeStyles = new Map<string, string>();
+const themeStyles = new Map<string, StyleData>();
 const loaders = new Map<string, ThemeLoaderFunction>();
 const registeredPackages = new Set<string>();
 const registeredThemes = new Set<string>();
@@ -33,7 +25,7 @@ const getThemeProperties = async (packageName: string, themeName: string) => {
 	if (!registeredThemes.has(themeName)) {
 		const regThemesStr = [...registeredThemes.values()].join(", ");
 		console.warn(`You have requested a non-registered theme ${themeName} - falling back to ${DEFAULT_THEME}. Registered themes are: ${regThemesStr}`); /* eslint-disable-line */
-		return _getThemeProperties(packageName, DEFAULT_THEME);
+		return _getThemeProperties(packageName, DEFAULT_THEME as string);
 	}
 
 	return _getThemeProperties(packageName, themeName);
@@ -53,7 +45,7 @@ const _getThemeProperties = async (packageName: string, themeName: string) => {
 		console.error(packageName, e.message); /* eslint-disable-line */
 		return;
 	}
-	const themeProps = (data as any)._ || data; // todo remove _ everywhere
+	const themeProps = (data as {_: StyleDataInfo})._ || data; // refactor: remove _ everywhere
 
 	themeStyles.set(`${packageName}_${themeName}`, themeProps);
 	return themeProps;

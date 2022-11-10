@@ -6,7 +6,7 @@ import UI5Element from "../UI5Element.js";
 const scrollEventName = "scroll";
 const touchEndEventName = supportsTouch() ? "touchend" : "mouseup";
 
-class ScrollEnablement extends EventProvider {
+class ScrollEnablement<EventListenerArgs, EventListenerReturn> extends EventProvider<EventListenerArgs, EventListenerReturn> {
 	containerComponent: UI5Element;
 	mouseMove: (event: MouseEvent | TouchEvent) => void;
 	mouseUp: (event: MouseEvent | TouchEvent) => void;
@@ -32,7 +32,7 @@ class ScrollEnablement extends EventProvider {
 		// On Android devices touchmove is thrown one more time than neccessary (together with touchend)
 		// so we have to cache the previus coordinates in order to provide correct parameters in the
 		// event for Android
-		this.cachedValue = { dragX: 0, dragY: 0};
+		this.cachedValue = { dragX: 0, dragY: 0 };
 
 		// In components like Carousel you need to know if the user has clicked on something or swiped
 		// in order to throw the needed event or not
@@ -40,11 +40,11 @@ class ScrollEnablement extends EventProvider {
 		this.startY = 0;
 
 		if (this.supportsTouch) {
-			containerComponent.addEventListener("touchstart", this.touchStart as any, { passive: true });
-			containerComponent.addEventListener("touchmove", this.mouseMove as any, { passive: true });
-			containerComponent.addEventListener("touchend", this.mouseUp as any, { passive: true });
+			containerComponent.addEventListener("touchstart", this.touchStart, { passive: true });
+			containerComponent.addEventListener("touchmove", this.mouseMove, { passive: true });
+			containerComponent.addEventListener("touchend", this.mouseUp, { passive: true });
 		} else {
-			containerComponent.addEventListener("mousedown", this.touchStart as any, { passive: true });
+			containerComponent.addEventListener("mousedown", this.touchStart, { passive: true });
 		}
 	}
 
@@ -127,8 +127,8 @@ class ScrollEnablement extends EventProvider {
 		}
 
 		if (!this.supportsTouch) {
-			document.addEventListener("mouseup", this.mouseUp as any, { passive: true });
-			document.addEventListener("mousemove", this.mouseMove as any, { passive: true });
+			document.addEventListener("mouseup", this.mouseUp, { passive: true });
+			document.addEventListener("mousemove", this.mouseMove, { passive: true });
 		} else {
 			// Needed only on mobile
 			this.startX = touch!.pageX;
@@ -165,7 +165,7 @@ class ScrollEnablement extends EventProvider {
 		this.fireEvent(scrollEventName, {
 			isLeft: dragX! > this._prevDragX!,
 			isRight: dragX! < this._prevDragX!,
-		});
+		} as unknown as EventListenerArgs);
 
 		this.cachedValue.dragX = this._prevDragX!;
 		this.cachedValue.dragY = this._prevDragY!;
@@ -202,14 +202,14 @@ class ScrollEnablement extends EventProvider {
 		this.fireEvent(touchEndEventName, {
 			isLeft: _dragX < this._prevDragX!,
 			isRight: _dragX > this._prevDragX!,
-		});
+		} as unknown as EventListenerArgs);
 
 		this._prevDragX = dragX;
 		this._prevDragY = dragY;
 
 		if (!this.supportsTouch) {
-			document.removeEventListener("mousemove", this.mouseMove as any);
-			document.removeEventListener("mouseup", this.mouseUp as any);
+			document.removeEventListener("mousemove", this.mouseMove);
+			document.removeEventListener("mouseup", this.mouseUp);
 		}
 	}
 }

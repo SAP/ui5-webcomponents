@@ -1,23 +1,22 @@
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata, { Slot } from "./UI5ElementMetadata.js";
-import EventProvider, { EventCallback } from "./EventProvider.js";
+import EventProvider from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
-import StaticAreaItem from "./StaticAreaItem.js"; // todo
-import updateShadowRoot from "./updateShadowRoot.js"; // todo
+import StaticAreaItem from "./StaticAreaItem.js";
+import updateShadowRoot from "./updateShadowRoot.js";
 import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
-import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js"; // todo
+import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
 import { skipOriginalEvent } from "./config/NoConflict.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 import DataType from "./types/DataType.js";
-import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js"; // todo
-import isValidPropertyName from "./util/isValidPropertyName.js"; // todo
+import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
+import isValidPropertyName from "./util/isValidPropertyName.js";
 import { getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
-import arraysAreEqual from "./util/arraysAreEqual.js";// todo
-import getClassCopy from "./util/getClassCopy.js";// todo
+import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
-import preloadLinks from "./theming/preloadLinks.js"; // todo
+import preloadLinks from "./theming/preloadLinks.js";
 import { TemplateFunction } from "./renderer/executeTemplate.js";
 
 let autoId = 0;
@@ -36,6 +35,12 @@ type ChangeInfo = {
 }
 
 type StylesDescriptor = string | Array<string>;
+
+type InvalidationInfo = ChangeInfo & { target: UI5Element };
+
+type InvalidationCallback = (param: InvalidationInfo) => void;
+
+type SlotChangeListener = (this: HTMLSlotElement, ev: Event) => any;
 
 /**
  * Triggers re-rendering of a UI5Element instance due to state change.
@@ -73,11 +78,11 @@ abstract class UI5Element extends HTMLElement {
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
-	_eventProvider: EventProvider;
+	_eventProvider: EventProvider<ChangeInfo & {target: UI5Element}, void>;
 	_inDOM: boolean;
 	_fullyConnected: boolean;
-	_childChangeListeners: Map<string, EventListener>;
-	_slotChangeListeners: Map<string, EventListener>;
+	_childChangeListeners: Map<string, InvalidationCallback>;
+	_slotChangeListeners: Map<string, SlotChangeListener>;
 	_domRefReadyPromise: Promise<void> & {_deferredResolve?: (value: void | PromiseLike<void>) => void};
 	_doNotSyncAttributes: Set<string>;
 	_state: Record<string, any>;
@@ -382,20 +387,20 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * Attach a callback that will be executed whenever the component is invalidated
 	 *
-	 * @param {EventCallback} callback
+	 * @param {InvalidationInfo} callback
 	 * @public
 	 */
-	attachInvalidate(callback: EventCallback) {
+	attachInvalidate(callback: (param: InvalidationInfo) => void) {
 		this._eventProvider.attachEvent("invalidate", callback);
 	}
 
 	/**
 	 * Detach the callback that is executed whenever the component is invalidated
 	 *
-	 * @param {EventCallback} callback
+	 * @param {InvalidationInfo} callback
 	 * @public
 	 */
-	detachInvalidate(callback: EventCallback) {
+	detachInvalidate(callback: (param: InvalidationInfo) => void) {
 		this._eventProvider.detachEvent("invalidate", callback);
 	}
 
@@ -508,7 +513,7 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	_getChildChangeListener(slotName: string) {
 		if (!this._childChangeListeners.has(slotName)) {
-			this._childChangeListeners.set(slotName, this._onChildChange.bind(this, slotName) as unknown as EventListener); // intended conversion to EventListener
+			this._childChangeListeners.set(slotName, this._onChildChange.bind(this, slotName));
 		}
 		return this._childChangeListeners.get(slotName);
 	}
@@ -524,14 +529,14 @@ abstract class UI5Element extends HTMLElement {
 		if (!this._slotChangeListeners.has(slotName)) {
 			this._slotChangeListeners.set(slotName, this._onSlotChange.bind(this, slotName));
 		}
-		return this._slotChangeListeners.get(slotName);
+		return this._slotChangeListeners.get(slotName)!;
 	}
 
 	/**
 	 * @private
 	 */
 	_attachSlotChange(child: HTMLSlotElement, slotName: string) {
-		const slotChangeListener = this._getSlotChangeListener(slotName) as EventListener;
+		const slotChangeListener = this._getSlotChangeListener(slotName);
 		if (slotChangeListener) {
 			child.addEventListener("slotchange", slotChangeListener);
 		}
@@ -541,7 +546,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	_detachSlotChange(child: HTMLSlotElement, slotName: string) {
-		child.removeEventListener("slotchange", this._getSlotChangeListener(slotName) as EventListener);
+		child.removeEventListener("slotchange", this._getSlotChangeListener(slotName));
 	}
 
 	/**

@@ -1,7 +1,7 @@
 import { registerI18nLoader, fetchI18nBundle, getI18nBundleData } from "./asset-registries/i18n.js";
 import formatMessage from "./util/formatMessage.js";
 
-const I18nBundleInstances = new Map();
+const I18nBundleInstances = new Map<string, I18nBundle>();
 
 let customGetI18nBundle: I18nBundleGetter;
 
@@ -52,7 +52,7 @@ class I18nBundle {
 
 const getI18nBundleSync = (packageName: string) => {
 	if (I18nBundleInstances.has(packageName)) {
-		return I18nBundleInstances.get(packageName);
+		return I18nBundleInstances.get(packageName)!;
 	}
 
 	const i18nBundle = new I18nBundle(packageName);

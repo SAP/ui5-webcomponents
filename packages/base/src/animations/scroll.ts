@@ -18,7 +18,7 @@ export default ({
 		},
 		duration,
 		element,
-		progress: (progress) => {
+		progress: progress => {
 			progressCallback(progress);
 
 			element.scrollLeft = scrollLeft + (progress! * dx); // easing - linear

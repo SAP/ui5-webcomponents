@@ -3,6 +3,11 @@ type ThemeDescriptor = {
 	baseThemeName?: string,
 };
 
+type ThemeMetadata = {
+	Path: string,
+	Extends: Array<string>,
+};
+
 const warnings = new Set<string>();
 
 const getThemeMetadata = () => {
@@ -48,7 +53,7 @@ const parseThemeMetadata = (metadataString: string) => {
 			}
 		}
 		try {
-			return JSON.parse(paramsString);
+			return JSON.parse(paramsString) as ThemeMetadata;
 		} catch (ex) {
 			if (!warnings.has("parse")) {
 				console.warn("Malformed theme metadata string, unable to parse JSON"); // eslint-disable-line
@@ -58,9 +63,13 @@ const parseThemeMetadata = (metadataString: string) => {
 	}
 };
 
-const processThemeMetadata = (metadata: {Path: string, Extends: Array<string>}): ThemeDescriptor | undefined => {
+const processThemeMetadata = (metadata: ThemeMetadata | undefined): ThemeDescriptor | undefined => {
 	let themeName;
 	let baseThemeName;
+
+	if (!metadata) {
+		return;
+	}
 
 	try {
 		themeName = metadata.Path.match(/\.([^.]+)\.css_variables$/)![1];

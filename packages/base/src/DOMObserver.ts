@@ -1,4 +1,4 @@
-const observers = new WeakMap<Node, MutationObserver>(); 
+const observers = new WeakMap<Node, MutationObserver>();
 
 /**
  * @param node
