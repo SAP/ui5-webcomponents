@@ -27,6 +27,10 @@
 	border-radius: var(--ui5-icon-focus-border-radius);
 }
 
+:host([interactive]) {
+	cursor: pointer;
+}
+
 .ui5-icon-root {
 	display:flex;
 	height: 100%;
