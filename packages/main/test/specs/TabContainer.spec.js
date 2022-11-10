@@ -274,4 +274,15 @@ describe("TabContainer general interaction", () => {
 		assert.ok(await nestedTabParentInTabStrip.isDisplayed(), "last tab in strip is visible");
 		assert.ok(await nestedTabParentInTabStrip.hasClass("ui5-tab-strip-item--selected"), "last tab is selected");
 	});
+
+	it("tests more than one selected tab", async () => {
+		const tabContainer = await browser.$("#tcAllTabsSelected");
+		const allTabs = await tabContainer.$$("ui5-tab");
+
+		assert.ok(await allTabs[0].getProperty("selected"), "Only the first tab should be selected");
+
+		for (let i = 1; i <= 5; i++) {
+			assert.notOk(await allTabs[i].getProperty("selected"), "No other tabs should be selected");
+		}
+	});
 });
