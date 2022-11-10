@@ -154,10 +154,11 @@ const metadata = {
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
 		 * @type {sap.ui.webcomponents.main.types.HasPopup}
 		 * @since 1.10.0
-		 * @protected
+		 * @private
 		 */
 		ariaHaspopup: {
 			type: HasPopup,
+			noAttribute: true,
 		},
 	},
 	managedSlots: true,
