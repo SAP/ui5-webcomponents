@@ -2,6 +2,7 @@ import getSharedResource from "../getSharedResource.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import getActiveElement from "./getActiveElement.js";
 import type OpenUI5Support from "../features/OpenUI5Support.js";
+import type DOMReference from "../types/DOMReference.js";
 
 type PopupUtilsDataType = {
 	currentZIndex: number
@@ -11,7 +12,7 @@ const PopupUtilsData = getSharedResource<PopupUtilsDataType>("PopupUtilsData", {
 
 const getFocusedElement = () => {
 	const element = getActiveElement() as HTMLElement;
-	return (element && typeof (element as HTMLElement).focus === "function") ? element : null;
+	return (element && typeof element.focus === "function") ? element : null;
 };
 
 const isFocusedElementWithinNode = (node: HTMLElement) => {
@@ -67,7 +68,7 @@ const isClickInRect = (event: MouseEvent | TouchEvent, rect: DOMRect) => {
 };
 
 interface PopupInterface { // Replace with Popup.js
-	showAt: Function,
+	showAt: (opener: DOMReference, preventInitialFocus: boolean) => Promise<void>,
 	open: boolean,
 }
 

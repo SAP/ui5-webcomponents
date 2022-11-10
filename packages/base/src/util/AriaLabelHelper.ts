@@ -1,5 +1,10 @@
+type AccessibleElement = HTMLElement & {
+	accessibleNameRef: string,
+	accessibleName: string,
+}
+
 const getEffectiveAriaLabelText = (el: HTMLElement) => {
-	const accessibleEl = el as Record<string, any>;
+	const accessibleEl = el as AccessibleElement;
 
 	if (!accessibleEl.accessibleNameRef) {
 		if (accessibleEl.accessibleName) {
@@ -17,13 +22,13 @@ const getEffectiveAriaLabelText = (el: HTMLElement) => {
  * @param {HTMLElement} el Defines the HTMLElement, for which you need to get all related texts
  */
 const getAriaLabelledByTexts = (el: HTMLElement) => {
-	const ids = (el as Record<string, any>).accessibleNameRef.split(" ");
+	const ids = (el as AccessibleElement).accessibleNameRef.split(" ");
 	const owner = el.getRootNode() as HTMLElement;
 	let result = "";
 
 	ids.forEach((elementId: string, index: number) => {
 		const element = owner.querySelector(`[id='${elementId}']`);
-		result += `${element ? element.textContent : ""}`;
+		result += `${element && element.textContent ? element.textContent : ""}`;
 
 		if (index < ids.length - 1) {
 			result += " ";

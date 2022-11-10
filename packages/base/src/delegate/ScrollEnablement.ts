@@ -8,9 +8,9 @@ const touchEndEventName = supportsTouch() ? "touchend" : "mouseup";
 
 class ScrollEnablement extends EventProvider {
 	containerComponent: UI5Element;
-	mouseMove: Function;
-	mouseUp: Function;
-	touchStart: Function;
+	mouseMove: (event: MouseEvent | TouchEvent) => void;
+	mouseUp: (event: MouseEvent | TouchEvent) => void;
+	touchStart: (event: MouseEvent | TouchEvent) => void;
 	cachedValue: { dragX: number, dragY: number };
 	startX: number;
 	startY: number;

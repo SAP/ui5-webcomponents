@@ -1,21 +1,23 @@
 import { instanceOfUI5Element } from "../UI5Element.js";
 
+type ResizeObserverCallback = () => void;
+
 let resizeObserver: ResizeObserver;
-const observedElements = new Map<HTMLElement, Array<Function>>();
+const observedElements = new Map<HTMLElement, Array<ResizeObserverCallback>>();
 
 const getResizeObserver = () => {
 	if (!resizeObserver) {
 		resizeObserver = new window.ResizeObserver(entries => {
 			entries.forEach(entry => {
 				const callbacks = observedElements.get(entry.target as HTMLElement);
-				callbacks?.forEach((callback: Function) => callback());
+				callbacks?.forEach((callback: ResizeObserverCallback) => callback());
 			});
 		});
 	}
 	return resizeObserver;
 };
 
-let observe = (element: HTMLElement, callback: Function) => {
+let observe = (element: HTMLElement, callback: ResizeObserverCallback) => {
 	const callbacks = observedElements.get(element) || [];
 
 	// if no callbacks have been added for this element - start observing it
@@ -27,13 +29,13 @@ let observe = (element: HTMLElement, callback: Function) => {
 	observedElements.set(element, [...callbacks, callback]);
 };
 
-let unobserve = (element: HTMLElement, callback: Function) => {
+let unobserve = (element: HTMLElement, callback: ResizeObserverCallback) => {
 	const callbacks = observedElements.get(element) || [];
 	if (callbacks.length === 0) {
 		return;
 	}
 
-	const filteredCallbacks = callbacks.filter((fn: Function) => fn !== callback);
+	const filteredCallbacks = callbacks.filter((fn: ResizeObserverCallback) => fn !== callback);
 	if (filteredCallbacks.length === 0) {
 		getResizeObserver().unobserve(element);
 		observedElements.delete(element);
@@ -55,13 +57,15 @@ class ResizeHandler {
 	 * @param {*} element UI5 Web Component or DOM Element to be observed
 	 * @param {*} callback Callback to be executed
 	 */
-	static register(element: HTMLElement, callback: Function) {
-		if (instanceOfUI5Element(element)) {
-			element = element.getDomRef();
+	static register(element: HTMLElement, callback: ResizeObserverCallback) {
+		let effectiveElement: HTMLElement | undefined = element;
+ 
+		if (instanceOfUI5Element(effectiveElement)) {
+			effectiveElement = effectiveElement.getDomRef();
 		}
 
-		if (element instanceof HTMLElement) {
-			observe(element, callback);
+		if (effectiveElement instanceof HTMLElement) {
+			observe(effectiveElement, callback);
 		} else {
 			console.warn("Cannot register ResizeHandler for element", element); // eslint-disable-line
 		}
@@ -73,13 +77,15 @@ class ResizeHandler {
 	 * @param {*} element UI5 Web Component or DOM Element to be unobserved
 	 * @param {*} callback Callback to be removed
 	 */
-	static deregister(element: HTMLElement, callback: Function) {
-		if (instanceOfUI5Element(element)) {
-			element = element.getDomRef();
+	static deregister(element: HTMLElement, callback: ResizeObserverCallback) {
+		let effectiveElement: HTMLElement | undefined = element;
+
+		if (instanceOfUI5Element(effectiveElement)) {
+			effectiveElement = effectiveElement.getDomRef();
 		}
 
-		if (element instanceof HTMLElement) {
-			unobserve(element, callback);
+		if (effectiveElement instanceof HTMLElement) {
+			unobserve(effectiveElement, callback);
 		} else {
 			console.warn("Cannot deregister ResizeHandler for element", element); // eslint-disable-line
 		}

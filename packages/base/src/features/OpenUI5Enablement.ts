@@ -19,7 +19,6 @@ const busyIndicatorMetadata = {
 };
 
 class OpenUI5Enablement {
-
 	static wrapTemplateResultInBusyMarkup(html: (strings: TemplateStringsArray, ...values: unknown[]) => TemplateResult, host: OpenUI5Element, templateResult: TemplateResult) {
 		if (host.isOpenUI5Component && host.__isBusy) {
 			templateResult = html`
@@ -61,15 +60,13 @@ class OpenUI5Enablement {
 			"__redirectFocus": { value: true, writable: true },
 			"__suppressFocusBack": {
 				get() {
-					const that = this;
-
 					return {
 						handleEvent: (e: KeyboardEvent) => {
 							if (isTabPrevious(e)) {
-								const beforeElem = that.shadowRoot.querySelector("[busy-indicator-before-span]");
-								that.__redirectFocus = false;
+								const beforeElem = this.shadowRoot.querySelector("[busy-indicator-before-span]");
+								this.__redirectFocus = false;
 								beforeElem.focus();
-								that.__redirectFocus = true;
+								this.__redirectFocus = true;
 							}
 						},
 						capture: true,

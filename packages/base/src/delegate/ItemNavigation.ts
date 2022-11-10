@@ -372,11 +372,12 @@ class ItemNavigation {
 			return currentItem.getFocusDomRef();
 		}
 
-		if (!this.rootWebComponent.getDomRef()) {
+		const currentItemDOMRef = this.rootWebComponent.getDomRef();
+		if (!currentItemDOMRef) {
 			return;
 		}
 
-		return this.rootWebComponent.getDomRef().querySelector(`#${currentItem.id}`);
+		return currentItemDOMRef.querySelector(`#${currentItem.id}`) as HTMLElement;
 	}
 }
 

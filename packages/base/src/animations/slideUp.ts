@@ -1,7 +1,7 @@
 import animationConfig from "./config.js";
 import animate from "./animate.js";
 
-export default ({
+export default async ({
 	element = animationConfig.element,
 	duration = animationConfig.defaultDuration,
 	progress: progressCallback = animationConfig.identity,
@@ -55,17 +55,18 @@ export default ({
 		},
 	});
 
-	animation.promise().then(oReason => {
-		if (!(oReason instanceof Error)) {
-			element.style.overflow = storedOverflow;
-			element.style.paddingTop = storedPaddingTop;
-			element.style.paddingBottom = storedPaddingBottom;
-			element.style.marginTop = storedMarginTop;
-			element.style.marginBottom = storedMarginBottom;
-			element.style.height = storedHeight;
-			element.style.display = "none";
-		}
-	});
+	const reason = await animation.promise();
+
+	if (!(reason instanceof Error)) {
+		// beforeStart is called before these assignments - "!" non-null assertion is safe.
+		element.style.overflow = storedOverflow!;
+		element.style.paddingTop = storedPaddingTop!;
+		element.style.paddingBottom = storedPaddingBottom!;
+		element.style.marginTop = storedMarginTop!;
+		element.style.marginBottom = storedMarginBottom!;
+		element.style.height = storedHeight!;
+		element.style.display = "none";
+	}
 
 	return animation;
 };

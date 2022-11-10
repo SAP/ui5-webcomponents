@@ -1,7 +1,7 @@
 import merge from "./thirdparty/merge.js";
 import { boot } from "./Boot.js";
 import UI5ElementMetadata, { Slot } from "./UI5ElementMetadata.js";
-import EventProvider from "./EventProvider.js";
+import EventProvider, { EventCallback } from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 import StaticAreaItem from "./StaticAreaItem.js"; // todo
 import updateShadowRoot from "./updateShadowRoot.js"; // todo
@@ -13,7 +13,6 @@ import getEffectiveDir from "./locale/getEffectiveDir.js";
 import DataType from "./types/DataType.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js"; // todo
 import isValidPropertyName from "./util/isValidPropertyName.js"; // todo
-import isDescendantOf from "./util/isDescendantOf.js"; // todo
 import { getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";// todo
 import getClassCopy from "./util/getClassCopy.js";// todo
@@ -82,19 +81,19 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & {_deferredResolve?: (value: void | PromiseLike<void>) => void};
 	_doNotSyncAttributes: Set<string>;
 	_state: Record<string, any>;
-	onEnterDOM?: Function;
-	onExitDOM?: Function;
-	onBeforeRendering?: Function;
-	onAfterRendering?: Function;
-	_onComponentStateFinalized?: Function;
-	_getRealDomRef?: Function;
+	onEnterDOM?: () => void;
+	onExitDOM?: () => void;
+	onBeforeRendering?: () => void;
+	onAfterRendering?: () => void;
+	_onComponentStateFinalized?: () => void;
+	_getRealDomRef?: () => HTMLElement;
 
 	staticAreaItem?: StaticAreaItem;
 
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
-	static render: Function;
+	static render: UnknownFunction;
 
 	constructor() {
 		super();
@@ -383,20 +382,20 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * Attach a callback that will be executed whenever the component is invalidated
 	 *
-	 * @param {Function} callback
+	 * @param {EventCallback} callback
 	 * @public
 	 */
-	attachInvalidate(callback: Function) {
+	attachInvalidate(callback: EventCallback) {
 		this._eventProvider.attachEvent("invalidate", callback);
 	}
 
 	/**
 	 * Detach the callback that is executed whenever the component is invalidated
 	 *
-	 * @param {Function} callback
+	 * @param {EventCallback} callback
 	 * @public
 	 */
-	detachInvalidate(callback: Function) {
+	detachInvalidate(callback: EventCallback) {
 		this._eventProvider.detachEvent("invalidate", callback);
 	}
 
@@ -438,7 +437,7 @@ abstract class UI5Element extends HTMLElement {
 			const propertyTypeClass = properties[nameInCamelCase].type;
 			if (propertyTypeClass === Boolean) {
 				newValue = newValue !== null;
-			} else if (isDescendantOf(propertyTypeClass, DataType)) {
+			} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
 				newValue = (propertyTypeClass as typeof DataType).attributeToProperty(newValue);
 			}
 			(this as Record<string, any>)[nameInCamelCase] = newValue;
@@ -465,7 +464,7 @@ abstract class UI5Element extends HTMLElement {
 			} else if (newValue === false && attrValue !== null) {
 				this.removeAttribute(attrName);
 			}
-		} else if (isDescendantOf(propertyTypeClass, DataType)) {
+		} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
 			const newAttrValue = (propertyTypeClass as typeof DataType).propertyToAttribute(newValue);
 			if (newAttrValue === null) { // null means there must be no attribute for the current value of the property
 				this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
@@ -695,7 +694,7 @@ abstract class UI5Element extends HTMLElement {
 			console.warn(`The shadow DOM for ${(this.constructor as typeof UI5Element).getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`); // eslint-disable-line
 		}
 
-		return children[0];
+		return children[0] as HTMLElement;
 	}
 
 	/**
@@ -706,7 +705,7 @@ abstract class UI5Element extends HTMLElement {
 	getFocusDomRef() {
 		const domRef = this.getDomRef();
 		if (domRef) {
-			const focusRef = domRef.querySelector("[data-sap-focus-ref]");
+			const focusRef = domRef.querySelector("[data-sap-focus-ref]") as HTMLElement;
 			return focusRef || domRef;
 		}
 	}
@@ -906,12 +905,12 @@ abstract class UI5Element extends HTMLElement {
 				set(value) {
 					let isDifferent;
 					value = this.constructor.getMetadata().constructor.validatePropertyValue(value, propData);
-
+					const propertyTypeClass = propData.type;
 					const oldState = this._state[prop];
 					if (propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
 						isDifferent = !arraysAreEqual(oldState, value);
-					} else if (isDescendantOf(propData.type, DataType)) {
-						isDifferent = !(propData.type as typeof DataType).valuesAreEqual(oldState, value);
+					} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
+						isDifferent = !(propertyTypeClass as typeof DataType).valuesAreEqual(oldState, value);
 					} else {
 						isDifferent = oldState !== value;
 					}
@@ -1044,7 +1043,6 @@ abstract class UI5Element extends HTMLElement {
 		]);
 
 		const tag = this.getMetadata().getTag();
-		const altTag = this.getMetadata().getAltTag();
 
 		const definedLocally = isTagRegistered(tag);
 		const definedGlobally = customElements.get(tag);
@@ -1056,13 +1054,6 @@ abstract class UI5Element extends HTMLElement {
 			registerTag(tag);
 			window.customElements.define(tag, this as unknown as CustomElementConstructor);
 			preloadLinks(this);
-
-			if (altTag && !customElements.get(altTag)) {
-				registerTag(altTag);
-				window.customElements.define(altTag, getClassCopy(this, () => {
-					console.log(`The ${altTag} tag is deprecated and will be removed in the next release, please use ${tag} instead.`); // eslint-disable-line
-				}));
-			}
 		}
 		return this;
 	}

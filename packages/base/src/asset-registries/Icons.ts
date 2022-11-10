@@ -34,7 +34,7 @@ const iconCollectionPromises = getSharedResource<Map<string, Promise<CollectionD
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 
-const registerIconLoader = async (collectionName: string, loader: IconLoader) => {
+const registerIconLoader = (collectionName: string, loader: IconLoader) => {
 	loaders.set(collectionName, loader);
 };
 

@@ -1,5 +1,4 @@
 import DataType from "./types/DataType.js";
-import isDescendantOf from "./util/isDescendantOf.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
 import { getSlottedElements } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
@@ -26,7 +25,6 @@ type Property = {
 
 type Metadata = {
 	tag: string,
-	altTag?: string,
 	managedSlots?: boolean,
 	properties?: {[key: string]: Property},
 	slots?: {[key: string]: Slot},
@@ -132,24 +130,6 @@ class UI5ElementMetadata {
 		}
 
 		return `${pureTag}-${suffix}`;
-	}
-
-	/**
-	 * Used to get the tag we need to register for backwards compatibility
-	 * @public
-	 */
-	getAltTag() {
-		const pureAltTag = this.metadata.altTag;
-		if (!pureAltTag) {
-			return;
-		}
-
-		const suffix = getEffectiveScopingSuffixForTag(pureAltTag);
-		if (!suffix) {
-			return pureAltTag;
-		}
-
-		return `${pureAltTag}-${suffix}`;
 	}
 
 	/**
@@ -343,7 +323,7 @@ const validateSingleProperty = (value: any, propData: Property) => {
 	if (propertyType === Object) {
 		return typeof value === "object" ? value : propData.defaultValue;
 	}
-	if (isDescendantOf(propertyType, DataType)) {
+	if ((propertyType as typeof DataType).isDataTypeClass) {
 		return (propertyType as typeof DataType).isValid(value) ? value : propData.defaultValue;
 	}
 };

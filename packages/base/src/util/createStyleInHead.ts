@@ -4,7 +4,7 @@
  * @param attributes - optional attributes to add to the tag
  * @returns {HTMLElement}
  */
-const createStyleInHead = (cssText: string, attributes?: Record<string, any>) => {
+const createStyleInHead = (cssText: string, attributes?: Record<string, string>) => {
 	const style = document.createElement("style");
 	style.type = "text/css";
 

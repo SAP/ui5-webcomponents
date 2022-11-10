@@ -3,8 +3,8 @@ import escapeRegex from "./escapeRegex.js";
 import encodeXML from "../sap/base/security/encodeXML.js";
 
 // utility to replace all occurances of a string
-function replaceAll(text: string, find: string, replace: any, caseInsensitive: boolean) {
-	return text.replace(new RegExp(escapeRegex(find), `${caseInsensitive ? "i" : ""}g`), replace);
+function replaceAll(text: string, find: string, replace: string | ((substring: string, ...args: any[]) => string), caseInsensitive: boolean) {
+	return text.replaceAll(new RegExp(escapeRegex(find), `${caseInsensitive ? "i" : ""}g`), replace as string);
 }
 
 /**
@@ -32,7 +32,7 @@ function generateHighlightedMarkup(text: string, textToHighlight: string) {
 	const openToken = makeToken("12");
 	const closeToken = makeToken("34");
 	// wrap every occurance of the textToHighlight using the open/close tokens (instead of markup at this point)
-	let result = encodeXML(replaceAll(text, textToHighlight, (match: string) => `${openToken}${match}${closeToken}`, true));
+	let result = encodeXML(replaceAll(text, textToHighlight, (match: string) => `${openToken}${match}${closeToken}`, true)) as string;
 	// now replace the open and close tokens with the markup that we expect
 	[[openToken, "<b>"], [closeToken, "</b>"]].forEach(([find, replace]) => {
 		result = replaceAll(result, find, replace, false);

@@ -3,7 +3,7 @@ const messageFormatRegEX = /('')|'([^']+(?:''[^']*)*)(?:'|$)|\{([0-9]+(?:\s*,[^{
 const formatMessage = (text: string, values: Array<number | string>) => {
 	values = values || [];
 
-	return text.replace(messageFormatRegEX, ($0, $1, $2, $3, offset: number) => {
+	return text.replace(messageFormatRegEX, ($0, $1, $2, $3: string | number, offset: number) => {
 		if ($1) {
 			return '\''; /* eslint-disable-line */
 		}
@@ -13,7 +13,8 @@ const formatMessage = (text: string, values: Array<number | string>) => {
 		}
 
 		if ($3) {
-			return String(values[parseInt($3)]);
+			const ind = typeof $3 === "string" ? parseInt($3) : $3;
+			return String(values[ind]);
 		}
 
 		throw new Error(`[i18n]: pattern syntax error at pos ${offset}`);

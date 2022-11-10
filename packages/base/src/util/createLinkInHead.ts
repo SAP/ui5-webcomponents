@@ -3,7 +3,7 @@
  * @param href - the CSS
  * @param attributes - optional attributes to add to the tag
  */
-const createLinkInHead = (href: string, attributes?: Record<string, any>) => {
+const createLinkInHead = (href: string, attributes?: Record<string, string>) => {
 	const link = document.createElement("link");
 	link.type = "text/css";
 	link.rel = "stylesheet";

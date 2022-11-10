@@ -14,6 +14,7 @@ class DataType {
 	 * @abstract
 	 * @returns {Boolean}
 	 */
+	// eslint-disable-next-line
 	static isValid(value: any): boolean {
 		return false;
 	}
@@ -23,14 +24,14 @@ class DataType {
 	}
 
 	static propertyToAttribute(propertyValue: any): string | null {
-		return propertyValue === null ? null : `${propertyValue}`;
+		return propertyValue === null ? null : String(propertyValue);
 	}
 
 	static valuesAreEqual(value1: any, value2: any) {
 		return value1 === value2;
 	}
 
-	static generateTypeAccessors(types: {[key: string]: any}) {
+	static generateTypeAccessors(types: {[key: string]: string}) {
 		Object.keys(types).forEach(type => {
 			Object.defineProperty(this, type, {
 				get() {
@@ -38,6 +39,10 @@ class DataType {
 				},
 			});
 		});
+	}
+
+	static get isDataTypeClass() {
+		return true;
 	}
 }
 

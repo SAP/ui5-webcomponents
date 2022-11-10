@@ -1,5 +1,6 @@
 import isNodeHidden from "./isNodeHidden.js";
 import isNodeClickable from "./isNodeClickable.js";
+import { instanceOfUI5Element } from "../UI5Element.js";
 
 const isFocusTrap = (el: HTMLElement) => {
 	return el.hasAttribute("data-ui5-focus-trap");
@@ -26,17 +27,17 @@ const isElemFocusable = (el: HTMLElement) => {
 };
 
 const findFocusableElement = async (container: HTMLElement, forward: boolean, startFromContainer?: boolean): Promise<HTMLElement | null> => {
-	let child: any;
+	let child: HTMLElement | undefined;
 
 	if (container.shadowRoot) {
-		child = forward ? container.shadowRoot.firstChild : container.shadowRoot.lastChild;
+		child = forward ? container.shadowRoot.firstChild as HTMLElement : container.shadowRoot.lastChild as HTMLElement;
 	} else if (container instanceof HTMLSlotElement && container.assignedNodes()) {
 		const assignedElements = container.assignedNodes();
-		child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
+		child = forward ? assignedElements[0] as HTMLElement : assignedElements[assignedElements.length - 1] as HTMLElement;
 	} else if (startFromContainer) {
 		child = container;
 	} else {
-		child = forward ? container.firstElementChild : container.lastElementChild;
+		child = forward ? container.firstElementChild as HTMLElement : container.lastElementChild as HTMLElement;
 	}
 
 	let focusableDescendant;
@@ -44,9 +45,9 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 	/* eslint-disable no-await-in-loop */
 
 	while (child) {
-		const originalChild = child;
+		const originalChild: HTMLElement | undefined = child;
 
-		if (child.isUI5Element) {
+		if (instanceOfUI5Element(child)) {
 			child = await child.getFocusDomRefAsync();
 		}
 
@@ -65,7 +66,7 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 			}
 		}
 
-		child = forward ? originalChild.nextSibling : originalChild.previousSibling;
+		child = forward ? originalChild.nextSibling as HTMLElement : originalChild.previousSibling as HTMLElement;
 	}
 
 	/* eslint-enable no-await-in-loop */

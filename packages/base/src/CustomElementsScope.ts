@@ -15,7 +15,6 @@ import {
 } from "./CustomElementsScopeUtils.js";
 import { registerFeature } from "./FeaturesRegistry.js";
 
-
 class LitStatic {
 	static html = html;
 	static svg = svg;

@@ -15,7 +15,7 @@ let bootPromise: Promise<void>;
  * @public
  * @param listener
  */
-const attachBoot = async (listener: Function) => {
+const attachBoot = async (listener: () => void) => {
 	await boot();
 	listener();
 };

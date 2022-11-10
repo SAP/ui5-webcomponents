@@ -2,14 +2,16 @@ import { reRenderAllUI5Elements } from "../Render.js";
 import getSharedResource from "../getSharedResource.js";
 import EventProvider from "../EventProvider.js";
 
+type CustomCSSChangeCallback = (tag: string) => any;
+
 const eventProvider = getSharedResource("CustomStyle.eventProvider", new EventProvider());
 const CUSTOM_CSS_CHANGE = "CustomCSSChange";
 
-const attachCustomCSSChange = (listener: Function) => {
+const attachCustomCSSChange = (listener: CustomCSSChangeCallback) => {
 	eventProvider.attachEvent(CUSTOM_CSS_CHANGE, listener);
 };
 
-const detachCustomCSSChange = (listener: Function) => {
+const detachCustomCSSChange = (listener: CustomCSSChangeCallback) => {
 	eventProvider.detachEvent(CUSTOM_CSS_CHANGE, listener);
 };
 

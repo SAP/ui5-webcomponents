@@ -11,7 +11,6 @@ import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
  */
 const metadata = {
 	tag: "ui5-toggle-button",
-	altTag: "ui5-togglebutton",
 	properties: /** @lends sap.ui.webcomponents.main.ToggleButton.prototype */ {
 		/**
 		 * Determines whether the component is displayed as pressed.

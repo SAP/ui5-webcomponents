@@ -1,7 +1,7 @@
 import animationConfig from "./config.js";
 import animate from "./animate.js";
 
-export default ({
+export default async ({
 	element = animationConfig.element,
 	duration = animationConfig.defaultDuration,
 	progress: progressCallback = animationConfig.identity,
@@ -64,14 +64,15 @@ export default ({
 		},
 	});
 
-	animation.promise().then(() => {
-		element.style.overflow = storedOverflow;
-		element.style.paddingTop = storedPaddingTop;
-		element.style.paddingBottom = storedPaddingBottom;
-		element.style.marginTop = storedMarginTop;
-		element.style.marginBottom = storedMarginBottom;
-		element.style.height = storedHeight;
-	});
+	await animation.promise();
+
+	// beforeStart is called before these assignments - "!" non-null assertion is safe.
+	element.style.overflow = storedOverflow!;
+	element.style.paddingTop = storedPaddingTop!;
+	element.style.paddingBottom = storedPaddingBottom!;
+	element.style.marginTop = storedMarginTop!;
+	element.style.marginBottom = storedMarginBottom!;
+	element.style.height = storedHeight!;
 
 	return animation;
 };

@@ -50,6 +50,8 @@ const normalizeLocale = (locale: string) => {
 
 		return language + (region ? "_" + region + (variants ? "_" + variants.replace("-", "_") : "") : ""); /* eslint-disable-line */
 	}
+
+	return DEFAULT_LOCALE as string;
 };
 
 export default normalizeLocale;

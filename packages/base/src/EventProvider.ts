@@ -1,4 +1,5 @@
-type EventRegistry = Map<string, Array<Function>>;
+type EventRegistry = Map<string, Array<EventCallback>>;
+type EventCallback = (...args: any[]) => any;
 
 class EventProvider {
 	_eventRegistry: EventRegistry;
@@ -7,7 +8,7 @@ class EventProvider {
 		this._eventRegistry = new Map();
 	}
 
-	attachEvent(eventName: string, fnFunction: Function) {
+	attachEvent(eventName: string, fnFunction: EventCallback) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -21,7 +22,7 @@ class EventProvider {
 		}
 	}
 
-	detachEvent(eventName: string, fnFunction: Function) {
+	detachEvent(eventName: string, fnFunction: EventCallback) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -70,7 +71,7 @@ class EventProvider {
 		return Promise.all(this.fireEvent(eventName, data));
 	}
 
-	isHandlerAttached(eventName: string, fnFunction: Function) {
+	isHandlerAttached(eventName: string, fnFunction: EventCallback) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -87,3 +88,4 @@ class EventProvider {
 }
 
 export default EventProvider;
+export type { EventCallback };

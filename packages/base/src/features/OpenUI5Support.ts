@@ -3,7 +3,8 @@ import { setTheme } from "../config/Theme.js";
 import { getCurrentZIndex } from "../util/PopupUtils.js";
 
 type OpenUI5PopupType = {
-	setInitialZIndex: (zIndex: number) => void
+	setInitialZIndex: (zIndex: number) => void,
+	getNextZIndex: () => number,
 };
 
 const getCore = () => {
@@ -101,7 +102,7 @@ class OpenUI5Support {
 			return;
 		}
 
-		const Popup = window.sap.ui.require("sap/ui/core/Popup");
+		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5PopupType;
 		return Popup.getNextZIndex();
 	}
 
@@ -111,7 +112,7 @@ class OpenUI5Support {
 			return;
 		}
 
-		const Popup = window.sap.ui.require("sap/ui/core/Popup");
+		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5PopupType;
 		Popup.setInitialZIndex(getCurrentZIndex());
 	}
 }

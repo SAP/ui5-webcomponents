@@ -1,6 +1,8 @@
 import detectNavigatorLanguage from "../util/detectNavigatorLanguage.js";
 import { getLanguage as getConfigLanguage } from "../config/Language.js";
 import Locale from "./Locale.js";
+// @ts-ignore
+import { DEFAULT_LOCALE } from "../generated/AssetParameters.js";
 
 const cache = new Map<string, Locale>();
 
@@ -9,7 +11,7 @@ const getLocaleInstance = (lang: string) => {
 		cache.set(lang, new Locale(lang));
 	}
 
-	return cache.get(lang);
+	return cache.get(lang)!;
 };
 
 const convertToLocaleOrNull = (lang: string) => {
@@ -20,13 +22,15 @@ const convertToLocaleOrNull = (lang: string) => {
 	} catch (e) {
 		// ignore
 	}
+
+	return new Locale(DEFAULT_LOCALE);
 };
 
 /**
  * Returns the locale based on the parameter or configured language Configuration#getLanguage
  * If no language has been configured - a new locale based on browser language is returned
  */
-const getLocale = (lang?: string) => {
+const getLocale = (lang?: string): Locale => {
 	if (lang) {
 		return convertToLocaleOrNull(lang);
 	}

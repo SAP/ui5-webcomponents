@@ -5,10 +5,12 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.
 import { getFeature } from "../FeaturesRegistry.js";
 import type OpenUI5Support from "../features/OpenUI5Support";
 
-const localeDataMap = new Map();
-const loaders = new Map();
-const cldrPromises = new Map();
-const reportedErrors = new Set();
+type LocaleDataLoader = (locale: string) => Promise<any>;
+
+const localeDataMap = new Map<string, any>();
+const loaders = new Map<string, LocaleDataLoader>();
+const cldrPromises = new Map<string, Promise<any>>();
+const reportedErrors = new Set<string>();
 let warningShown = false;
 
 const M_ISO639_OLD_TO_NEW = {
@@ -101,9 +103,13 @@ const getLocaleData = (localeId: string) => {
 
 // load bundle over the network once
 const _loadCldrOnce = (localeId: string) => {
-	const loadCldr = loaders.get(localeId);
-
 	if (!cldrPromises.get(localeId)) {
+		const loadCldr = loaders.get(localeId);
+
+		if (!loadCldr) {
+			throw new Error(`CLDR data for locale ${localeId} is not loaded!`);
+		}
+
 		cldrPromises.set(localeId, loadCldr(localeId));
 	}
 
@@ -137,7 +143,7 @@ const fetchCldr = async (language: string, region: string, script: string) => {
 	}
 };
 
-const registerLocaleDataLoader = (localeId: string, loader: Function) => {
+const registerLocaleDataLoader = (localeId: string, loader: LocaleDataLoader) => {
 	loaders.set(localeId, loader);
 };
 

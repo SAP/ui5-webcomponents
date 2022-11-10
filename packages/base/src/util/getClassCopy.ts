@@ -1,6 +1,6 @@
 import UI5Element from "../UI5Element.js";
 
-const getClassCopy = (klass: typeof UI5Element, constructorCallback: Function) => {
+const getClassCopy = (klass: typeof UI5Element, constructorCallback: () => void) => {
 	return class classCopy extends klass {
 		constructor() {
 			super();

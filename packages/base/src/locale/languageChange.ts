@@ -1,13 +1,15 @@
 import EventProvider from "../EventProvider.js";
 
+type LanguageChangeCallback = (lang: string) => any;
+
 const eventProvider = new EventProvider();
 const LANG_CHANGE = "languageChange";
 
-const attachLanguageChange = (listener: Function) => {
+const attachLanguageChange = (listener: LanguageChangeCallback) => {
 	eventProvider.attachEvent(LANG_CHANGE, listener);
 };
 
-const detachLanguageChange = (listener: Function) => {
+const detachLanguageChange = (listener: LanguageChangeCallback) => {
 	eventProvider.detachEvent(LANG_CHANGE, listener);
 };
 

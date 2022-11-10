@@ -26,7 +26,7 @@ const registerIllustration = (name: string, data: IllustrationData) => {
 	});
 };
 
-const registerIllustrationLoader = async (illustrationName: string, loader: IllustrationLoader) => {
+const registerIllustrationLoader = (illustrationName: string, loader: IllustrationLoader) => {
 	loaders.set(illustrationName, loader);
 };
 

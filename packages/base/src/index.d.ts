@@ -6,4 +6,6 @@ declare global {
 		chrome: any;
 		v8: any;
 	}
+
+	type UnknownFunction = (...args: any[]) => any;
 }

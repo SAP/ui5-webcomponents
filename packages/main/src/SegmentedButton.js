@@ -22,7 +22,6 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
  */
 const metadata = {
 	tag: "ui5-segmented-button",
-	altTag: "ui5-segmentedbutton",
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {
 		/**

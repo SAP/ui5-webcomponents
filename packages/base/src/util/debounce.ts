@@ -5,7 +5,7 @@
  */
 let debounceInterval: ReturnType<typeof setTimeout> | null = null;
 
-const debounce = (fn: Function, delay: number) => {
+const debounce = (fn: () => void, delay: number) => {
 	debounceInterval && clearTimeout(debounceInterval);
 	debounceInterval = setTimeout(() => {
 		debounceInterval = null;

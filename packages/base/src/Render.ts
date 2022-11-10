@@ -4,6 +4,8 @@ import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
 import UI5Element from "./UI5Element.js";
 
+type BeforeComponentRenderCallback = (webComponent: UI5Element) => any;
+
 const registeredElements = new Set<UI5Element>();
 const eventProvider = new EventProvider();
 
@@ -158,11 +160,11 @@ const reRenderAllUI5Elements = async (filters?: {tag?: string, rtlAware?: boolea
 	await renderFinished();
 };
 
-const attachBeforeComponentRender = (listener: Function) => {
+const attachBeforeComponentRender = (listener: BeforeComponentRenderCallback) => {
 	eventProvider.attachEvent("beforeComponentRender", listener);
 };
 
-const detachBeforeComponentRender = (listener: Function) => {
+const detachBeforeComponentRender = (listener: BeforeComponentRenderCallback) => {
 	eventProvider.detachEvent("beforeComponentRender", listener);
 };
 

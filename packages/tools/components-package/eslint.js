@@ -5,6 +5,33 @@ module.exports = {
 	},
 	"root": true,
 	"extends": "airbnb-base",
+	overrides: [{
+		files: ["*.ts", "*.tsx"],
+		parser: "@typescript-eslint/parser",
+		plugins: ["@typescript-eslint"],
+		extends: [
+			"plugin:@typescript-eslint/recommended",
+			"plugin:@typescript-eslint/recommended-requiring-type-checking"
+		],
+		parserOptions: {
+		  "project": ["./tsconfig.json", "./packages/*/tsconfig.json"],
+		},
+		/**
+		 * Typescript Rules
+		 */
+		rules: {
+			"no-shadow": "off",
+			"@typescript-eslint/no-shadow": ["error"],
+			"@typescript-eslint/no-unsafe-member-access": "off",
+			"@typescript-eslint/no-floating-promises": "off",
+			"@typescript-eslint/no-explicit-any": "off",
+			"@typescript-eslint/no-unsafe-assignment": "off",
+			"@typescript-eslint/ban-ts-comment": "off",
+			"@typescript-eslint/no-unsafe-call": "off",
+			"@typescript-eslint/no-non-null-assertion": "off",
+			"lines-between-class-members": "off",
+		}
+	}],
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module"
