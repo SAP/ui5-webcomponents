@@ -1,8 +1,9 @@
-commit 8d91c98cf2a6ba4766e7183e09a935d94c06157e
-Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
-Date:   Tue Nov 8 13:05:10 2022 +0200
+commit f1999bd231d97c65b87f0c4998a09f4a44685fe5
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Thu Nov 10 11:50:46 2022 +0200
 
-    fix(framework): fix paths for generating illustration imports in nps (#5997)
+    fix(ui5-dynamic-side-content): fix tab order when side content position is 'Start' (#6025)
     
-    - Illustrations are now being fetched from the proper paths;
-    - Small refactoring;
+    * fix(ui5-dynamic-side-content): fix tab order when side content position is 'Start'
+    
+    * fix(ui5-dynamic-side-content): adapt side content position tests
