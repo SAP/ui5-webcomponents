@@ -4,19 +4,21 @@ describe("'sideContentPosition' property: ", () => {
 	it("set to 'End'", async () => {
 		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
+		const dynamicSideContentRoot = await dynamicSideContent.shadow$(".ui5-dsc-root");
 
 		await dynamicSideContent.setAttribute("side-content-position", "End");
-		assert.strictEqual((await dynamicSideContent.shadow$(".ui5-dsc-main").getCSSProperty("order")).value, 1, "The main content have order 1");
-		assert.strictEqual((await dynamicSideContent.shadow$(".ui5-dsc-side").getCSSProperty("order")).value, 2, "The side content have order 2");
+
+		assert.notEqual((await dynamicSideContentRoot.$("*").getAttribute("class")).indexOf("ui5-dsc-main"), -1, "The main content container is the first element in the shadow root");
 	});
 
 	it("set to 'Start'", async () => {
 		await browser.url(`test/pages/DynamicSideContent.html`);
 		const dynamicSideContent = await browser.$("ui5-dynamic-side-content");
+		const dynamicSideContentRoot = await dynamicSideContent.shadow$(".ui5-dsc-root");
 
 		await dynamicSideContent.setAttribute("side-content-position", "Start");
-		assert.strictEqual((await dynamicSideContent.shadow$(".ui5-dsc-main").getCSSProperty("order")).value, 2, "The main content have order 2");
-		assert.strictEqual((await dynamicSideContent.shadow$(".ui5-dsc-side").getCSSProperty("order")).value, 1, "The side content have order 1");
+
+		assert.notEqual((await dynamicSideContentRoot.$("*").getAttribute("class")).indexOf("ui5-dsc-side"), -1, "The side content container is the first element in the shadow root");
 	});
 });
 
