@@ -594,7 +594,7 @@ class TextArea extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		const effectiveAriaLabelText = this.ariaLabel || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
+		const effectiveAriaLabelText = getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
 
 		if (this.showExceededText) {
 			if (effectiveAriaLabelText) {
