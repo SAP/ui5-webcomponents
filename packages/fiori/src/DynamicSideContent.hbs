@@ -2,12 +2,27 @@
 	class="ui5-dsc-root"
 	style="{{styles.root}}"
 >
+
+	{{#if _isSideContentFirst}}
+		{{> sideContent}}
+		{{> mainContent}}
+	{{else}}
+		{{> mainContent}}
+		{{> sideContent}}
+	{{/if}}
+
+</div>
+
+{{#*inline "mainContent"}}
 	<div
 		class="{{classes.main}}"
 		style="{{styles.main}}"
 	>
 		<slot></slot>
 	</div>
+{{/inline}}
+
+{{#*inline "sideContent"}}
 	<aside
 		role="complementary"
 		aria-label="{{accInfo.label}}"
@@ -16,5 +31,4 @@
 	>
 		<slot name="sideContent"></slot>
 	</aside>
-
-</div>
+{{/inline}}
