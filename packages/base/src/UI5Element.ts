@@ -1028,7 +1028,7 @@ abstract class UI5Element extends HTMLElement {
 	/**
 	 * Returns a promise that resolves whenever all dependencies for this UI5 Web Component have resolved
 	 *
-	 * @returns {Promise<Array<typeof UI5Element>>}
+	 * @returns {Promise}
 	 */
 	static whenDependenciesDefined(): Promise<Array<typeof UI5Element>> {
 		return Promise.all(this.getUniqueDependencies().map(dep => dep.define()));
