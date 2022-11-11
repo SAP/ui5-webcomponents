@@ -1,9 +1,7 @@
-commit f1999bd231d97c65b87f0c4998a09f4a44685fe5
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Thu Nov 10 11:50:46 2022 +0200
+commit 92b9dc99ea4c598f22111dfea3a435e55c585dfc
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Fri Nov 11 11:44:04 2022 +0200
 
-    fix(ui5-dynamic-side-content): fix tab order when side content position is 'Start' (#6025)
+    fix(ui5-side-navigation): fixed accessibility roles and attributes when Side Navigation is collapsed (#5877)
     
-    * fix(ui5-dynamic-side-content): fix tab order when side content position is 'Start'
-    
-    * fix(ui5-dynamic-side-content): adapt side content position tests
+    PartOf: #5827

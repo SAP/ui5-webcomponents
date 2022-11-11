@@ -376,7 +376,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "",
   isNext: false,
-  buildTime: 1668073954
+  buildTime: 1668159937
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -8781,14 +8781,14 @@ class BusyIndicator extends UI5Element {
   }
 }
 BusyIndicator.define();
-const block0$1J = (context, tags, suffix) => effectiveHtml`<div class="${o$1(context.classes.root)}" @focusin="${context._onfocusin}" @keydown="${context._onkeydown}"><div class="ui5-list-scroll-container">${context.header.length ? block1$1p() : void 0}${context.shouldRenderH1 ? block2$1b(context) : void 0}${context.hasData ? block3$Z(context) : void 0}<span id="${l(context._id)}-modeLabel" class="ui5-hidden-text">${l(context.ariaLabelModeText)}</span><ul id="${l(context._id)}-listUl" class="ui5-list-ul" role="${l(context.accessibleRole)}" aria-label="${l(context.ariaLabelTxt)}" aria-labelledby="${l(context.ariaLabelledBy)}"><slot></slot>${context.showNoDataText ? block4$O(context) : void 0}</ul>${context.growsWithButton ? block5$H(context) : void 0}${context.footerText ? block6$y(context) : void 0}${context.hasData ? block7$t(context) : void 0}<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span></div>${context.busy ? block8$s(context, tags, suffix) : void 0}</div> `;
+const block0$1J = (context, tags, suffix) => effectiveHtml`<div class="${o$1(context.classes.root)}" @focusin="${context._onfocusin}" @keydown="${context._onkeydown}"><div class="ui5-list-scroll-container">${context.header.length ? block1$1p() : void 0}${context.shouldRenderH1 ? block2$1b(context) : void 0}${context.hasData ? block3$Z(context) : void 0}<span id="${l(context._id)}-modeLabel" class="ui5-hidden-text">${l(context.ariaLabelModeText)}</span><ul id="${l(context._id)}-listUl" class="ui5-list-ul" role="${l(context.accessibleRole)}" aria-label="${l(context.ariaLabelTxt)}" aria-labelledby="${l(context.ariaLabelledBy)}" aria-roledescription="${l(context.accessibleRoleDescription)}"><slot></slot>${context.showNoDataText ? block4$O(context) : void 0}</ul>${context.growsWithButton ? block5$H(context) : void 0}${context.footerText ? block6$y(context) : void 0}${context.hasData ? block7$t(context) : void 0}<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span></div>${context.busy ? block8$s(context, tags, suffix) : void 0}</div> `;
 const block1$1p = (context, tags, suffix) => effectiveHtml`<slot name="header" />`;
 const block2$1b = (context, tags, suffix) => effectiveHtml`<header id="${l(context.headerID)}" class="ui5-list-header">${l(context.headerText)}</header>`;
-const block3$Z = (context, tags, suffix) => effectiveHtml`<div id="${l(context._id)}-before" tabindex="0" class="ui5-list-focusarea"></div>`;
+const block3$Z = (context, tags, suffix) => effectiveHtml`<div id="${l(context._id)}-before" tabindex="0" role="none" class="ui5-list-focusarea"></div>`;
 const block4$O = (context, tags, suffix) => effectiveHtml`<li id="${l(context._id)}-nodata" class="ui5-list-nodata" tabindex="${l(context.noDataTabIndex)}"><div id="${l(context._id)}-nodata-text" class="ui5-list-nodata-text">${l(context.noDataText)}</div></li>`;
 const block5$H = (context, tags, suffix) => effectiveHtml`<div growing-button><div tabindex="0" role="button" id="${l(context._id)}-growing-btn" aria-labelledby="${l(context._id)}-growingButton-text" ?active="${context._loadMoreActive}" @click="${context._onLoadMoreClick}" @keydown="${context._onLoadMoreKeydown}" @keyup="${context._onLoadMoreKeyup}" @mousedown="${context._onLoadMoreMousedown}" @mouseup="${context._onLoadMoreMouseup}" growing-button-inner><span id="${l(context._id)}-growingButton-text" growing-button-text>${l(context._growingButtonText)}</span></div></div>`;
 const block6$y = (context, tags, suffix) => effectiveHtml`<footer id="${l(context._id)}-footer" class="ui5-list-footer">${l(context.footerText)}</footer>`;
-const block7$t = (context, tags, suffix) => effectiveHtml`<div id="${l(context._id)}-after" tabindex="0" class="ui5-list-focusarea"></div>`;
+const block7$t = (context, tags, suffix) => effectiveHtml`<div id="${l(context._id)}-after" tabindex="0" role="none" class="ui5-list-focusarea"></div>`;
 const block8$s = (context, tags, suffix) => suffix ? effectiveHtml`<div class="ui5-list-busy-row"><${scopeTag("ui5-busy-indicator", tags, suffix)} delay="${l(context.busyDelay)}" active size="Medium" class="ui5-list-busy-ind" style="${styleMap(context.styles.busyInd)}" data-sap-focus-ref></${scopeTag("ui5-busy-indicator", tags, suffix)}></div>` : effectiveHtml`<div class="ui5-list-busy-row"><ui5-busy-indicator delay="${l(context.busyDelay)}" active size="Medium" class="ui5-list-busy-ind" style="${styleMap(context.styles.busyInd)}" data-sap-focus-ref></ui5-busy-indicator></div>`;
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
@@ -8853,6 +8853,11 @@ const metadata$1R = {
     accessibleRole: {
       type: String,
       defaultValue: "list"
+    },
+    accessibleRoleDescription: {
+      type: String,
+      defaultValue: void 0,
+      noAttribute: true
     },
     _inViewport: {
       type: Boolean
@@ -12253,6 +12258,19 @@ CheckBox.define();
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var styles$i = { packageName: "@ui5/webcomponents", fileName: "themes/ListItem.css", content: ".ui5-hidden-text{position:absolute;clip:rect(1px,1px,1px,1px);user-select:none;left:-1000px;top:-1000px;pointer-events:none;font-size:0}:host([actionable]:not([disabled])){cursor:pointer}:host([selected][actionable]:not([active]):hover){background:var(--sapList_Hover_SelectionBackground)}:host([active][actionable]),:host([selected][active][actionable]){background:var(--sapList_Active_Background)}:host([actionable]:not([active]):not([selected]):hover){background:var(--sapList_Hover_Background)}:host([active][actionable]) .ui5-li-root.ui5-li--focusable .ui5-li-content:focus,:host([active][actionable]) .ui5-li-root.ui5-li--focusable:focus{outline-color:var(--sapContent_ContrastFocusColor)}:host([active][actionable]) .ui5-li-root .ui5-li-icon{color:var(--sapList_Active_TextColor)}:host([active][actionable]) .ui5-li-additional-text,:host([active][actionable]) .ui5-li-desc,:host([active][actionable]) .ui5-li-title{color:var(--sapList_Active_TextColor)}:host([additional-text-state=Warning]) .ui5-li-additional-text{color:var(--sapCriticalTextColor)}:host([additional-text-state=Success]) .ui5-li-additional-text{color:var(--sapPositiveTextColor)}:host([additional-text-state=Error]) .ui5-li-additional-text{color:var(--sapNegativeTextColor)}:host([additional-text-state=Information]) .ui5-li-additional-text{color:var(--sapInformativeTextColor)}:host([has-title][description]){height:5rem}:host([has-title][image]){height:5rem}:host([image]) .ui5-li-content{height:3rem}:host([description]) .ui5-li-root{padding:1rem}:host([description]) .ui5-li-content{height:3rem}:host([has-title][description]) .ui5-li-title{padding-bottom:.375rem}.ui5-li-text-wrapper{display:flex;flex-direction:column;flex:auto;min-width:1px;line-height:normal}:host([description]) .ui5-li-text-wrapper{height:100%;justify-content:space-between;padding:.125rem 0}.ui5-li-description-info-wrapper{display:flex;justify-content:space-between}.ui5-li-title{color:var(--sapTextColor);font-size:var(--_ui5_list_item_title_size)}.ui5-li-additional-text,.ui5-li-desc,:host(:not([wrapping-type=Normal])) .ui5-li-title{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}:host([wrapping-type=Normal]){height:auto}:host([wrapping-type=Normal]) .ui5-li-content{margin:var(--_ui5_list_item_content_vertical_offset) 0}.ui5-li-desc{color:var(--sapContent_LabelColor);font-size:var(--sapFontSize)}.ui5-li-additional-text{margin:0 .25rem;color:var(--sapNeutralTextColor);font-size:.875rem;min-width:3.75rem;text-align:end;max-width:40%}:host([description]) .ui5-li-additional-text{align-self:flex-end}.ui5-li-img{width:var(--_ui5_list_item_img_size);min-width:var(--_ui5_list_item_img_size);height:var(--_ui5_list_item_img_size);min-height:var(--_ui5_list_item_img_size);margin-top:var(--_ui5_list_item_img_top_margin);margin-bottom:var(--_ui5_list_item_img_bottom_margin);margin-inline-end:var(--_ui5_list_item_img_hn_margin);border-radius:var(--ui5-avatar-border-radius)}.ui5-li-img-inner{object-fit:contain}.ui5-li-icon{min-width:var(--_ui5_list_item_icon_size);min-height:var(--_ui5_list_item_icon_size);color:var(--sapContent_NonInteractiveIconColor);padding-inline-end:var(--_ui5_list_item_icon_padding-inline-end)}.ui5-li-content{display:flex;align-items:center;flex:auto;overflow:hidden}.ui5-li-deletebtn,.ui5-li-detailbtn{display:flex;align-items:center;margin-left:var(--_ui5_list_buttons_left_space)}.ui5-li-multisel-cb,.ui5-li-singlesel-radiobtn{flex-shrink:0}:host([description]) .ui5-li-singlesel-radiobtn{align-self:flex-start;margin-top:var(--_ui5_list_item_selection_btn_margin_top)}:host([description]) .ui5-li-multisel-cb{align-self:flex-start;margin-top:var(--_ui5_list_item_selection_btn_margin_top)}:host([_mode=SingleSelectBegin]) .ui5-li-root{padding-inline:0 1rem}:host([_mode=MultiSelect]) .ui5-li-root{padding-inline:0 1rem}:host([_mode=SingleSelectEnd]) .ui5-li-root{padding-inline:1rem 0}:host [ui5-checkbox].ui5-li-singlesel-radiobtn{margin-right:var(--_ui5_list_item_cb_margin_right)}" };
+const PopupTypes = {
+  Dialog: "Dialog",
+  Grid: "Grid",
+  ListBox: "ListBox",
+  Menu: "Menu",
+  Tree: "Tree"
+};
+class HasPopup extends DataType {
+  static isValid(value) {
+    return !!PopupTypes[value];
+  }
+}
+HasPopup.generateTypeAccessors(PopupTypes);
 const metadata$1G = {
   languageAware: true,
   properties: {
@@ -12273,6 +12291,11 @@ const metadata$1G = {
       type: String,
       defaultValue: "listitem"
     },
+    accessibleRoleDescription: {
+      type: String,
+      defaultValue: void 0,
+      noAttribute: true
+    },
     accessibleRole: {
       type: String
     },
@@ -12280,9 +12303,12 @@ const metadata$1G = {
       type: ListMode,
       defaultValue: ListMode.None
     },
-    _ariaHasPopup: {
-      type: String,
+    ariaHaspopup: {
+      type: HasPopup,
       noAttribute: true
+    },
+    _level: {
+      type: Integer
     }
   },
   events: {
@@ -12487,11 +12513,11 @@ class ListItem extends ListItemBase {
     return {
       role: this.accessibleRole || this.role,
       ariaExpanded: void 0,
-      ariaLevel: void 0,
+      ariaLevel: this._level || void 0,
       ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
       ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
       ariaSelectedText: this.ariaSelectedText,
-      ariaHaspopup: this._ariaHasPopup || void 0
+      ariaHaspopup: this.ariaHaspopup || void 0
     };
   }
   static async onDefine() {
@@ -12722,7 +12748,7 @@ class Avatar extends UI5Element {
   }
 }
 Avatar.define();
-const block0$1x = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}">${context.placeSelectionElementBefore ? block1$1f(context, tags, suffix) : void 0}<div id="${l(context._id)}-content" class="ui5-li-content">${context.displayImage ? block7$r(context, tags, suffix) : void 0}${context.displayIconBegin ? block8$q(context, tags, suffix) : void 0}<div class="ui5-li-text-wrapper"><span part="title" class="ui5-li-title"><slot></slot></span>${context.description ? block9$k(context) : void 0}${!context.typeActive ? block11$a(context) : void 0}</div>${!context.description ? block12$a(context) : void 0}</div>${context.displayIconEnd ? block14$9(context, tags, suffix) : void 0}${context.typeDetail ? block15$8(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block16$7(context, tags, suffix) : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li> `;
+const block0$1x = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-roledescription="${l(context.accessibleRoleDescription)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}" aria-selected="${l(context._accInfo.ariaSelected)}" aria-checked="${l(context._accInfo.ariaChecked)}">${context.placeSelectionElementBefore ? block1$1f(context, tags, suffix) : void 0}<div id="${l(context._id)}-content" class="ui5-li-content">${context.displayImage ? block7$r(context, tags, suffix) : void 0}${context.displayIconBegin ? block8$q(context, tags, suffix) : void 0}<div class="ui5-li-text-wrapper"><span part="title" class="ui5-li-title"><slot></slot></span>${context.description ? block9$k(context) : void 0}${!context.typeActive ? block11$a(context) : void 0}</div>${!context.description ? block12$a(context) : void 0}</div>${context.displayIconEnd ? block14$9(context, tags, suffix) : void 0}${context.typeDetail ? block15$8(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block16$7(context, tags, suffix) : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li> `;
 const block1$1f = (context, tags, suffix) => effectiveHtml`${context.modeSingleSelect ? block2$11(context, tags, suffix) : void 0}${context.modeMultiSelect ? block3$R(context, tags, suffix) : void 0}${context.renderDeleteButton ? block4$I(context, tags, suffix) : void 0}`;
 const block2$11 = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-radio-button", tags, suffix)} ?disabled="${context.isInactive}" accessible-name="${l(context._accInfo.ariaLabelRadioButton)}" tabindex="-1" id="${l(context._id)}-singleSelectionElement" class="ui5-li-singlesel-radiobtn" ?checked="${context.selected}" @click="${context.onSingleSelectionComponentPress}"></${scopeTag("ui5-radio-button", tags, suffix)}>` : effectiveHtml`<ui5-radio-button ?disabled="${context.isInactive}" accessible-name="${l(context._accInfo.ariaLabelRadioButton)}" tabindex="-1" id="${l(context._id)}-singleSelectionElement" class="ui5-li-singlesel-radiobtn" ?checked="${context.selected}" @click="${context.onSingleSelectionComponentPress}"></ui5-radio-button>`;
 const block3$R = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-checkbox", tags, suffix)} ?disabled="${context.isInactive}" ?indeterminate=${context.indeterminate} tabindex="-1" id="${l(context._id)}-multiSelectionElement" class="ui5-li-multisel-cb" ?checked="${context.selected}" accessible-name="${l(context._accInfo.ariaLabel)}" @click="${context.onMultiSelectionComponentPress}"></${scopeTag("ui5-checkbox", tags, suffix)}>` : effectiveHtml`<ui5-checkbox ?disabled="${context.isInactive}" ?indeterminate=${context.indeterminate} tabindex="-1" id="${l(context._id)}-multiSelectionElement" class="ui5-li-multisel-cb" ?checked="${context.selected}" accessible-name="${l(context._accInfo.ariaLabel)}" @click="${context.onMultiSelectionComponentPress}"></ui5-checkbox>`;
@@ -12812,7 +12838,7 @@ class StandardListItem extends ListItem {
   }
 }
 StandardListItem.define();
-const block0$1w = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}">${context.placeSelectionElementBefore ? block1$1e(context, tags, suffix) : void 0}<div id="${l(context._id)}-content" class="ui5-li-content">${context.displayImage ? block7$q(context, tags, suffix) : void 0}${context.displayIconBegin ? block8$p(context, tags, suffix) : void 0}<div class="ui5-li-text-wrapper">${context.hasTitle ? block9$j() : void 0}${context.hasDescription ? block10$b(context) : void 0}${!context.typeActive ? block14$8(context) : void 0}</div>${!context.hasDescription ? block15$7(context) : void 0}</div>${context.displayIconEnd ? block17$4(context, tags, suffix) : void 0}${context.typeDetail ? block18$4(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block19$3(context, tags, suffix) : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li> `;
+const block0$1w = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-roledescription="${l(context.accessibleRoleDescription)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}" aria-selected="${l(context._accInfo.ariaSelected)}" aria-checked="${l(context._accInfo.ariaChecked)}">${context.placeSelectionElementBefore ? block1$1e(context, tags, suffix) : void 0}<div id="${l(context._id)}-content" class="ui5-li-content">${context.displayImage ? block7$q(context, tags, suffix) : void 0}${context.displayIconBegin ? block8$p(context, tags, suffix) : void 0}<div class="ui5-li-text-wrapper">${context.hasTitle ? block9$j() : void 0}${context.hasDescription ? block10$b(context) : void 0}${!context.typeActive ? block14$8(context) : void 0}</div>${!context.hasDescription ? block15$7(context) : void 0}</div>${context.displayIconEnd ? block17$4(context, tags, suffix) : void 0}${context.typeDetail ? block18$4(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block19$3(context, tags, suffix) : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li> `;
 const block1$1e = (context, tags, suffix) => effectiveHtml`${context.modeSingleSelect ? block2$10(context, tags, suffix) : void 0}${context.modeMultiSelect ? block3$Q(context, tags, suffix) : void 0}${context.renderDeleteButton ? block4$H(context, tags, suffix) : void 0}`;
 const block2$10 = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-radio-button", tags, suffix)} ?disabled="${context.isInactive}" accessible-name="${l(context._accInfo.ariaLabelRadioButton)}" tabindex="-1" id="${l(context._id)}-singleSelectionElement" class="ui5-li-singlesel-radiobtn" ?checked="${context.selected}" @click="${context.onSingleSelectionComponentPress}"></${scopeTag("ui5-radio-button", tags, suffix)}>` : effectiveHtml`<ui5-radio-button ?disabled="${context.isInactive}" accessible-name="${l(context._accInfo.ariaLabelRadioButton)}" tabindex="-1" id="${l(context._id)}-singleSelectionElement" class="ui5-li-singlesel-radiobtn" ?checked="${context.selected}" @click="${context.onSingleSelectionComponentPress}"></ui5-radio-button>`;
 const block3$Q = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-checkbox", tags, suffix)} ?disabled="${context.isInactive}" ?indeterminate=${context.indeterminate} tabindex="-1" id="${l(context._id)}-multiSelectionElement" class="ui5-li-multisel-cb" ?checked="${context.selected}" accessible-name="${l(context._accInfo.ariaLabel)}" @click="${context.onMultiSelectionComponentPress}"></${scopeTag("ui5-checkbox", tags, suffix)}>` : effectiveHtml`<ui5-checkbox ?disabled="${context.isInactive}" ?indeterminate=${context.indeterminate} tabindex="-1" id="${l(context._id)}-multiSelectionElement" class="ui5-li-multisel-cb" ?checked="${context.selected}" accessible-name="${l(context._accInfo.ariaLabel)}" @click="${context.onMultiSelectionComponentPress}"></ui5-checkbox>`;
@@ -19126,19 +19152,6 @@ const collection$W = "SAP-icons";
 const packageName$W = "@ui5/webcomponents-icons";
 registerIcon(name$X, { pathData: pathData$W, ltr: ltr$W, collection: collection$W, packageName: packageName$W });
 isThemeFamily("sap_horizon") ? pathData$X : pathData$W;
-const PopupTypes = {
-  Dialog: "Dialog",
-  Grid: "Grid",
-  ListBox: "ListBox",
-  Menu: "Menu",
-  Tree: "Tree"
-};
-class HasPopup extends DataType {
-  static isValid(value) {
-    return !!PopupTypes[value];
-  }
-}
-HasPopup.generateTypeAccessors(PopupTypes);
 var fnEqual = function(a2, b2, maxDepth, contains, depth) {
   if (typeof maxDepth == "boolean") {
     contains = maxDepth;
@@ -31014,7 +31027,7 @@ const walk = (tabs, callback) => {
   });
 };
 TabContainer.define();
-const block0$E = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}">${context.placeSelectionElementBefore ? block1$u(context, tags, suffix) : void 0}<div id="${l(context._id)}-content" class="ui5-li-content"><slot></slot></div>${context.typeDetail ? block7$c(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block8$b(context, tags, suffix) : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li> `;
+const block0$E = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-roledescription="${l(context.accessibleRoleDescription)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}" aria-selected="${l(context._accInfo.ariaSelected)}" aria-checked="${l(context._accInfo.ariaChecked)}">${context.placeSelectionElementBefore ? block1$u(context, tags, suffix) : void 0}<div id="${l(context._id)}-content" class="ui5-li-content"><slot></slot></div>${context.typeDetail ? block7$c(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block8$b(context, tags, suffix) : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li> `;
 const block1$u = (context, tags, suffix) => effectiveHtml`${context.modeSingleSelect ? block2$n(context, tags, suffix) : void 0}${context.modeMultiSelect ? block3$j(context, tags, suffix) : void 0}${context.renderDeleteButton ? block4$i(context, tags, suffix) : void 0}`;
 const block2$n = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-radio-button", tags, suffix)} ?disabled="${context.isInactive}" accessible-name="${l(context._accInfo.ariaLabelRadioButton)}" tabindex="-1" id="${l(context._id)}-singleSelectionElement" class="ui5-li-singlesel-radiobtn" ?checked="${context.selected}" @click="${context.onSingleSelectionComponentPress}"></${scopeTag("ui5-radio-button", tags, suffix)}>` : effectiveHtml`<ui5-radio-button ?disabled="${context.isInactive}" accessible-name="${l(context._accInfo.ariaLabelRadioButton)}" tabindex="-1" id="${l(context._id)}-singleSelectionElement" class="ui5-li-singlesel-radiobtn" ?checked="${context.selected}" @click="${context.onSingleSelectionComponentPress}"></ui5-radio-button>`;
 const block3$j = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-checkbox", tags, suffix)} ?disabled="${context.isInactive}" ?indeterminate=${context.indeterminate} tabindex="-1" id="${l(context._id)}-multiSelectionElement" class="ui5-li-multisel-cb" ?checked="${context.selected}" accessible-name="${l(context._accInfo.ariaLabel)}" @click="${context.onMultiSelectionComponentPress}"></${scopeTag("ui5-checkbox", tags, suffix)}>` : effectiveHtml`<ui5-checkbox ?disabled="${context.isInactive}" ?indeterminate=${context.indeterminate} tabindex="-1" id="${l(context._id)}-multiSelectionElement" class="ui5-li-multisel-cb" ?checked="${context.selected}" accessible-name="${l(context._accInfo.ariaLabel)}" @click="${context.onMultiSelectionComponentPress}"></ui5-checkbox>`;
@@ -33117,6 +33130,15 @@ const metadata$w = {
     },
     title: {
       type: String
+    },
+    accessibleRoleDescription: {
+      type: String,
+      defaultValue: void 0,
+      noAttribute: true
+    },
+    ariaHaspopup: {
+      type: HasPopup,
+      noAttribute: true
     }
   },
   managedSlots: true,
@@ -33153,7 +33175,7 @@ const collection$u = "SAP-icons";
 const packageName$u = "@ui5/webcomponents-icons";
 registerIcon(name$v, { pathData: pathData$u, ltr: ltr$u, collection: collection$u, packageName: packageName$u });
 isThemeFamily("sap_horizon") ? pathData$v : pathData$u;
-const block0$q = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}"><div class="ui5-li-tree-toggle-box" style="${styleMap(context.styles.preContent)}">${context._showToggleButtonBeginning ? block1$l(context, tags, suffix) : void 0}</div>${context.placeSelectionElementBefore ? block2$g(context, tags, suffix) : void 0}<div id="${l(context._id)}-content" class="ui5-li-content">${context.icon ? block8$7(context, tags, suffix) : void 0}<div class="ui5-li-tree-text-wrapper">${context._showTitle ? block9$5() : void 0}${context.additionalText ? block10$3(context) : void 0}</div></div>${context._showToggleButtonEnd ? block11$3(context, tags, suffix) : void 0}${context.typeDetail ? block12$3(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block13$3(context, tags, suffix) : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li> `;
+const block0$q = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-roledescription="${l(context.accessibleRoleDescription)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}" aria-selected="${l(context._accInfo.ariaSelected)}" aria-checked="${l(context._accInfo.ariaChecked)}"><div class="ui5-li-tree-toggle-box" style="${styleMap(context.styles.preContent)}">${context._showToggleButtonBeginning ? block1$l(context, tags, suffix) : void 0}</div>${context.placeSelectionElementBefore ? block2$g(context, tags, suffix) : void 0}<div id="${l(context._id)}-content" class="ui5-li-content">${context.icon ? block8$7(context, tags, suffix) : void 0}<div class="ui5-li-tree-text-wrapper">${context._showTitle ? block9$5() : void 0}${context.additionalText ? block10$3(context) : void 0}</div></div>${context._showToggleButtonEnd ? block11$3(context, tags, suffix) : void 0}${context.typeDetail ? block12$3(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block13$3(context, tags, suffix) : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li> `;
 const block1$l = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-icon", tags, suffix)} part="toggle-icon" class="ui5-li-tree-toggle-icon" name="${l(context._toggleIconName)}" show-tooltip accessible-name="${l(context.iconAccessibleName)}" @click="${context._toggleClick}"></${scopeTag("ui5-icon", tags, suffix)}>` : effectiveHtml`<ui5-icon part="toggle-icon" class="ui5-li-tree-toggle-icon" name="${l(context._toggleIconName)}" show-tooltip accessible-name="${l(context.iconAccessibleName)}" @click="${context._toggleClick}"></ui5-icon>`;
 const block2$g = (context, tags, suffix) => effectiveHtml`${context.modeSingleSelect ? block3$c(context, tags, suffix) : void 0}${context.modeMultiSelect ? block4$b(context, tags, suffix) : void 0}${context.renderDeleteButton ? block5$a(context, tags, suffix) : void 0}`;
 const block3$c = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-radio-button", tags, suffix)} ?disabled="${context.isInactive}" accessible-name="${l(context._accInfo.ariaLabelRadioButton)}" tabindex="-1" id="${l(context._id)}-singleSelectionElement" class="ui5-li-singlesel-radiobtn" ?checked="${context.selected}" @click="${context.onSingleSelectionComponentPress}"></${scopeTag("ui5-radio-button", tags, suffix)}>` : effectiveHtml`<ui5-radio-button ?disabled="${context.isInactive}" accessible-name="${l(context._accInfo.ariaLabelRadioButton)}" tabindex="-1" id="${l(context._id)}-singleSelectionElement" class="ui5-li-singlesel-radiobtn" ?checked="${context.selected}" @click="${context.onSingleSelectionComponentPress}"></ui5-radio-button>`;
@@ -33219,6 +33241,15 @@ const metadata$v = {
     _posinset: {
       type: Integer,
       defaultValue: 1,
+      noAttribute: true
+    },
+    accessibleRoleDescription: {
+      type: String,
+      defaultValue: void 0,
+      noAttribute: true
+    },
+    ariaHaspopup: {
+      type: HasPopup,
       noAttribute: true
     }
   },
@@ -33295,18 +33326,25 @@ class TreeListItem extends ListItem {
     return this.textContent.length && !this._minimal;
   }
   get _ariaLabel() {
-    return TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+    return this.accessibleRoleDescription ? void 0 : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
   }
   get _accInfo() {
-    return {
-      role: "treeitem",
-      ariaExpanded: this.showToggleButton ? this.expanded : void 0,
-      ariaLevel: this.level,
+    const accInfoSettings = {
+      role: this._minimal ? "menuitemradio" : "treeitem",
+      ariaExpanded: this.showToggleButton && !this._minimal ? this.expanded : void 0,
+      ariaLevel: this._minimal ? void 0 : this.level,
       posinset: this._posinset,
       setsize: this._setsize,
       ariaSelectedText: this.ariaSelectedText,
-      listItemAriaLabel: !this.accessibleName ? this._ariaLabel : void 0
+      listItemAriaLabel: !this.accessibleName ? this._ariaLabel : void 0,
+      ariaHaspopup: this.ariaHaspopup || void 0
     };
+    if (this._minimal) {
+      accInfoSettings.ariaChecked = this.selected;
+    } else {
+      accInfoSettings.ariaSelected = this.selected;
+    }
+    return accInfoSettings;
   }
   _toggleClick(event) {
     event.stopPropagation();
@@ -33340,8 +33378,8 @@ class TreeListItem extends ListItem {
   }
 }
 TreeListItem.define();
-const block0$p = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-list", tags, suffix)} .mode="${l(context.mode)}" .headerText="${l(context.headerText)}" .footerText="${l(context.footerText)}" .noDataText="${l(context.noDataText)}" .accessibleRole="${l(context._role)}" .accessibleName="${l(context._label)}" @ui5-item-click="${l(context._onListItemClick)}" @ui5-item-delete="${l(context._onListItemDelete)}" @ui5-selection-change="${l(context._onListSelectionChange)}" class="ui5-tree-root"><slot name="header" slot="header"></slot>${c(context._listItems, (item, index) => item._id || index, (item, index) => block1$k(item, index, context, tags, suffix))}</${scopeTag("ui5-list", tags, suffix)}> ` : effectiveHtml`<ui5-list .mode="${l(context.mode)}" .headerText="${l(context.headerText)}" .footerText="${l(context.footerText)}" .noDataText="${l(context.noDataText)}" .accessibleRole="${l(context._role)}" .accessibleName="${l(context._label)}" @ui5-item-click="${l(context._onListItemClick)}" @ui5-item-delete="${l(context._onListItemDelete)}" @ui5-selection-change="${l(context._onListSelectionChange)}" class="ui5-tree-root"><slot name="header" slot="header"></slot>${c(context._listItems, (item, index) => item._id || index, (item, index) => block1$k(item, index, context, tags, suffix))}</ui5-list> `;
-const block1$k = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-li-tree", tags, suffix)} type="Active" level="${l(item.level)}" icon="${l(item.treeItem.icon)}" ?indeterminate="${item.treeItem.indeterminate}" additional-text="${l(item.treeItem.additionalText)}" additional-text-state="${l(item.treeItem.additionalTextState)}" title="${l(item.treeItem.title)}" accessible-name="${l(item.treeItem.accessibleName)}" ?_toggle-button-end="${l(context._toggleButtonEnd)}" ?_minimal="${l(context._minimal)}" .treeItem="${l(item.treeItem)}" .expanded="${l(item.treeItem.expanded)}" .selected="${l(item.treeItem.selected)}" .showToggleButton="${l(item.treeItem.requiresToggleButton)}" ._posinset="${l(item.posinset)}" ._setsize="${l(item.size)}" @ui5-toggle="${l(context._onListItemToggle)}" @ui5-step-in="${l(context._onListItemStepIn)}" @ui5-step-out="${l(context._onListItemStepOut)}" @mouseover="${context._onListItemMouseOver}" @mouseout="${context._onListItemMouseOut}" exportparts="icon, toggle-icon">${l(item.treeItem.text)}</${scopeTag("ui5-li-tree", tags, suffix)}>` : effectiveHtml`<ui5-li-tree type="Active" level="${l(item.level)}" icon="${l(item.treeItem.icon)}" ?indeterminate="${item.treeItem.indeterminate}" additional-text="${l(item.treeItem.additionalText)}" additional-text-state="${l(item.treeItem.additionalTextState)}" title="${l(item.treeItem.title)}" accessible-name="${l(item.treeItem.accessibleName)}" ?_toggle-button-end="${l(context._toggleButtonEnd)}" ?_minimal="${l(context._minimal)}" .treeItem="${l(item.treeItem)}" .expanded="${l(item.treeItem.expanded)}" .selected="${l(item.treeItem.selected)}" .showToggleButton="${l(item.treeItem.requiresToggleButton)}" ._posinset="${l(item.posinset)}" ._setsize="${l(item.size)}" @ui5-toggle="${l(context._onListItemToggle)}" @ui5-step-in="${l(context._onListItemStepIn)}" @ui5-step-out="${l(context._onListItemStepOut)}" @mouseover="${context._onListItemMouseOver}" @mouseout="${context._onListItemMouseOut}" exportparts="icon, toggle-icon">${l(item.treeItem.text)}</ui5-li-tree>`;
+const block0$p = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-list", tags, suffix)} .mode="${l(context.mode)}" .headerText="${l(context.headerText)}" .footerText="${l(context.footerText)}" .noDataText="${l(context.noDataText)}" .accessibleRole="${l(context._role)}" .accessibleName="${l(context._label)}" .accessibleRoleDescription="${l(context.accessibleRoleDescription)}" @ui5-item-click="${l(context._onListItemClick)}" @ui5-item-delete="${l(context._onListItemDelete)}" @ui5-selection-change="${l(context._onListSelectionChange)}" class="ui5-tree-root"><slot name="header" slot="header"></slot>${c(context._listItems, (item, index) => item._id || index, (item, index) => block1$k(item, index, context, tags, suffix))}</${scopeTag("ui5-list", tags, suffix)}> ` : effectiveHtml`<ui5-list .mode="${l(context.mode)}" .headerText="${l(context.headerText)}" .footerText="${l(context.footerText)}" .noDataText="${l(context.noDataText)}" .accessibleRole="${l(context._role)}" .accessibleName="${l(context._label)}" .accessibleRoleDescription="${l(context.accessibleRoleDescription)}" @ui5-item-click="${l(context._onListItemClick)}" @ui5-item-delete="${l(context._onListItemDelete)}" @ui5-selection-change="${l(context._onListSelectionChange)}" class="ui5-tree-root"><slot name="header" slot="header"></slot>${c(context._listItems, (item, index) => item._id || index, (item, index) => block1$k(item, index, context, tags, suffix))}</ui5-list> `;
+const block1$k = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-li-tree", tags, suffix)} type="Active" level="${l(item.level)}" icon="${l(item.treeItem.icon)}" ?indeterminate="${item.treeItem.indeterminate}" additional-text="${l(item.treeItem.additionalText)}" additional-text-state="${l(item.treeItem.additionalTextState)}" title="${l(item.treeItem.title)}" accessible-name="${l(item.treeItem.accessibleName)}" ?_toggle-button-end="${l(context._toggleButtonEnd)}" ?_minimal="${l(context._minimal)}" .treeItem="${l(item.treeItem)}" .expanded="${l(item.treeItem.expanded)}" .selected="${l(item.treeItem.selected)}" .showToggleButton="${l(item.treeItem.requiresToggleButton)}" ._posinset="${l(item.posinset)}" ._setsize="${l(item.size)}" @ui5-toggle="${l(context._onListItemToggle)}" @ui5-step-in="${l(context._onListItemStepIn)}" @ui5-step-out="${l(context._onListItemStepOut)}" @mouseover="${context._onListItemMouseOver}" @mouseout="${context._onListItemMouseOut}" .accessibleRoleDescription="${l(item.treeItem.accessibleRoleDescription)}" .ariaHaspopup="${l(item.treeItem.ariaHaspopup)}" exportparts="icon, toggle-icon">${l(item.treeItem.text)}</${scopeTag("ui5-li-tree", tags, suffix)}>` : effectiveHtml`<ui5-li-tree type="Active" level="${l(item.level)}" icon="${l(item.treeItem.icon)}" ?indeterminate="${item.treeItem.indeterminate}" additional-text="${l(item.treeItem.additionalText)}" additional-text-state="${l(item.treeItem.additionalTextState)}" title="${l(item.treeItem.title)}" accessible-name="${l(item.treeItem.accessibleName)}" ?_toggle-button-end="${l(context._toggleButtonEnd)}" ?_minimal="${l(context._minimal)}" .treeItem="${l(item.treeItem)}" .expanded="${l(item.treeItem.expanded)}" .selected="${l(item.treeItem.selected)}" .showToggleButton="${l(item.treeItem.requiresToggleButton)}" ._posinset="${l(item.posinset)}" ._setsize="${l(item.size)}" @ui5-toggle="${l(context._onListItemToggle)}" @ui5-step-in="${l(context._onListItemStepIn)}" @ui5-step-out="${l(context._onListItemStepOut)}" @mouseover="${context._onListItemMouseOver}" @mouseout="${context._onListItemMouseOut}" .accessibleRoleDescription="${l(item.treeItem.accessibleRoleDescription)}" .ariaHaspopup="${l(item.treeItem.ariaHaspopup)}" exportparts="icon, toggle-icon">${l(item.treeItem.text)}</ui5-li-tree>`;
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var TreeCss = { packageName: "@ui5/webcomponents", fileName: "themes/Tree.css", content: ".ui5-hidden-text{position:absolute;clip:rect(1px,1px,1px,1px);user-select:none;left:-1000px;top:-1000px;pointer-events:none;font-size:0}:host(:not([hidden])){display:block;width:100%}.ui5-tree-root{height:100%;width:100%}" };
@@ -33367,6 +33405,11 @@ const metadata$u = {
     accessibleNameRef: {
       type: String,
       defaultValue: ""
+    },
+    accessibleRoleDescription: {
+      type: String,
+      defaultValue: void 0,
+      noAttribute: true
     },
     _listItems: {
       type: Object,
@@ -33453,7 +33496,7 @@ class Tree extends UI5Element {
     return this.getDomRef();
   }
   get _role() {
-    return "tree";
+    return this._minimal ? "menubar" : "tree";
   }
   get _label() {
     return getEffectiveAriaLabelText(this);
@@ -36951,6 +36994,11 @@ const IM_SUBTITLE_SUCCESSSCREEN = { key: "IM_SUBTITLE_SUCCESSSCREEN", defaultTex
 const IM_TITLE_UPLOADCOLLECTION = { key: "IM_TITLE_UPLOADCOLLECTION", defaultText: "Drop files here" };
 const IM_SUBTITLE_UPLOADCOLLECTION = { key: "IM_SUBTITLE_UPLOADCOLLECTION", defaultText: "You can also upload several files at once." };
 const DSC_SIDE_ARIA_LABEL = { key: "DSC_SIDE_ARIA_LABEL", defaultText: "Side Content" };
+const SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT = { key: "SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT", defaultText: "Navigation" };
+const SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC = { key: "SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC", defaultText: "Navigation List Menu Bar" };
+const SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC = { key: "SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC", defaultText: "Navigation List Menu Item" };
+const SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC = { key: "SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC", defaultText: "Navigation List Tree" };
+const SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC = { key: "SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC", defaultText: "Navigation List Tree Item" };
 var defaultFioriTexts = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT,
@@ -37068,7 +37116,12 @@ var defaultFioriTexts = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.def
   IM_SUBTITLE_SUCCESSSCREEN,
   IM_TITLE_UPLOADCOLLECTION,
   IM_SUBTITLE_UPLOADCOLLECTION,
-  DSC_SIDE_ARIA_LABEL
+  DSC_SIDE_ARIA_LABEL,
+  SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
+  SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
+  SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC,
+  SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
+  SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC
 }, Symbol.toStringTag, { value: "Module" }));
 const loadThemeProperties = async (themeName) => {
   switch (themeName) {
@@ -39819,24 +39872,24 @@ class ProductSwitchItem extends UI5Element {
   }
 }
 ProductSwitchItem.define();
-const block0$g = (context, tags, suffix) => effectiveHtml`<div class="ui5-sn-root">${context.showHeader ? block1$e() : void 0}${context.items.length ? block2$a(context, tags, suffix) : void 0}<div class="ui5-sn-spacer"></div>${context.fixedItems.length ? block6$6(context, tags, suffix) : void 0}</div> `;
+const block0$g = (context, tags, suffix) => effectiveHtml`<div class="ui5-sn-root" role="navigation">${context.showHeader ? block1$e() : void 0}${context.items.length ? block2$a(context, tags, suffix) : void 0}<div class="ui5-sn-spacer"></div>${context.fixedItems.length ? block6$6(context, tags, suffix) : void 0}</div> `;
 const block1$e = (context, tags, suffix) => effectiveHtml`<slot name="header"></slot>`;
-const block2$a = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree", tags, suffix)} id="ui5-sn-items-tree" class="ui5-sn-items-tree" mode="None" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}">${c(context._items, (item, index) => item._id || index, (item, index) => block3$7(item, index, context, tags, suffix))}</${scopeTag("ui5-tree", tags, suffix)}>` : effectiveHtml`<ui5-tree id="ui5-sn-items-tree" class="ui5-sn-items-tree" mode="None" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}">${c(context._items, (item, index) => item._id || index, (item, index) => block3$7(item, index, context, tags, suffix))}</ui5-tree>`;
-const block3$7 = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree-item", tags, suffix)} icon="${l(item.item.icon)}" .associatedItem="${l(item.item)}" text="${l(item.item.text)}" title="${l(item.item._tooltip)}" ?has-children="${item.item.items.length}" ?expanded="${item.item.expanded}" ?selected="${item.selected}">${!context.collapsed ? block4$7(item, index, context, tags, suffix) : void 0}</${scopeTag("ui5-tree-item", tags, suffix)}>` : effectiveHtml`<ui5-tree-item icon="${l(item.item.icon)}" .associatedItem="${l(item.item)}" text="${l(item.item.text)}" title="${l(item.item._tooltip)}" ?has-children="${item.item.items.length}" ?expanded="${item.item.expanded}" ?selected="${item.selected}">${!context.collapsed ? block4$7(item, index, context, tags, suffix) : void 0}</ui5-tree-item>`;
+const block2$a = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree", tags, suffix)} id="ui5-sn-items-tree" class="ui5-sn-items-tree" mode="None" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationList)}" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}">${c(context._items, (item, index) => item._id || index, (item, index) => block3$7(item, index, context, tags, suffix))}</${scopeTag("ui5-tree", tags, suffix)}>` : effectiveHtml`<ui5-tree id="ui5-sn-items-tree" class="ui5-sn-items-tree" mode="None" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationList)}" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}">${c(context._items, (item, index) => item._id || index, (item, index) => block3$7(item, index, context, tags, suffix))}</ui5-tree>`;
+const block3$7 = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree-item", tags, suffix)} icon="${l(item.item.icon)}" .associatedItem="${l(item.item)}" text="${l(item.item.text)}" title="${l(item.item._tooltip)}" ?has-children="${item.item.items.length}" ?expanded="${item.item.expanded}" ?selected="${item.selected}" .ariaHaspopup="${l(item.item._ariaHasPopup)}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationListItem)}">${!context.collapsed ? block4$7(item, index, context, tags, suffix) : void 0}</${scopeTag("ui5-tree-item", tags, suffix)}>` : effectiveHtml`<ui5-tree-item icon="${l(item.item.icon)}" .associatedItem="${l(item.item)}" text="${l(item.item.text)}" title="${l(item.item._tooltip)}" ?has-children="${item.item.items.length}" ?expanded="${item.item.expanded}" ?selected="${item.selected}" .ariaHaspopup="${l(item.item._ariaHasPopup)}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationListItem)}">${!context.collapsed ? block4$7(item, index, context, tags, suffix) : void 0}</ui5-tree-item>`;
 const block4$7 = (item, index, context, tags, suffix) => effectiveHtml`${c(item.item.items, (item2, index2) => item2._id || index2, (item2, index2) => block5$6(item2, index2, context, tags, suffix))}`;
-const block5$6 = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree-item", tags, suffix)} .associatedItem="${l(item)}" text="${l(item.text)}" title="${l(item._tooltip)}" icon="${l(item.icon)}" ?selected="${item.selected}"></${scopeTag("ui5-tree-item", tags, suffix)}>` : effectiveHtml`<ui5-tree-item .associatedItem="${l(item)}" text="${l(item.text)}" title="${l(item._tooltip)}" icon="${l(item.icon)}" ?selected="${item.selected}"></ui5-tree-item>`;
-const block6$6 = (context, tags, suffix) => suffix ? effectiveHtml`<div><div class="ui5-sn-bottom-content-border"><span></span></div><${scopeTag("ui5-tree", tags, suffix)} id="ui5-sn-fixed-items-tree" mode="None" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}">${c(context._fixedItems, (item, index) => item._id || index, (item, index) => block7$5(item, index, context, tags, suffix))}</${scopeTag("ui5-tree", tags, suffix)}></div>` : effectiveHtml`<div><div class="ui5-sn-bottom-content-border"><span></span></div><ui5-tree id="ui5-sn-fixed-items-tree" mode="None" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}">${c(context._fixedItems, (item, index) => item._id || index, (item, index) => block7$5(item, index, context, tags, suffix))}</ui5-tree></div>`;
-const block7$5 = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree-item", tags, suffix)} icon="${l(item.item.icon)}" .associatedItem="${l(item.item)}" text="${l(item.item.text)}" title="${l(item.item._tooltip)}" ?has-children="${item.item.items.length}" ?expanded="${item.item.expanded}" ?selected="${item.selected}">${!context.collapsed ? block8$5(item, index, context, tags, suffix) : void 0}</${scopeTag("ui5-tree-item", tags, suffix)}>` : effectiveHtml`<ui5-tree-item icon="${l(item.item.icon)}" .associatedItem="${l(item.item)}" text="${l(item.item.text)}" title="${l(item.item._tooltip)}" ?has-children="${item.item.items.length}" ?expanded="${item.item.expanded}" ?selected="${item.selected}">${!context.collapsed ? block8$5(item, index, context, tags, suffix) : void 0}</ui5-tree-item>`;
+const block5$6 = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree-item", tags, suffix)} .associatedItem="${l(item)}" text="${l(item.text)}" title="${l(item._tooltip)}" icon="${l(item.icon)}" ?selected="${item.selected}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationListItem)}"></${scopeTag("ui5-tree-item", tags, suffix)}>` : effectiveHtml`<ui5-tree-item .associatedItem="${l(item)}" text="${l(item.text)}" title="${l(item._tooltip)}" icon="${l(item.icon)}" ?selected="${item.selected}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationListItem)}"></ui5-tree-item>`;
+const block6$6 = (context, tags, suffix) => suffix ? effectiveHtml`<div><div class="ui5-sn-bottom-content-border"><span></span></div><${scopeTag("ui5-tree", tags, suffix)} id="ui5-sn-fixed-items-tree" mode="None" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationList)}">${c(context._fixedItems, (item, index) => item._id || index, (item, index) => block7$5(item, index, context, tags, suffix))}</${scopeTag("ui5-tree", tags, suffix)}></div>` : effectiveHtml`<div><div class="ui5-sn-bottom-content-border"><span></span></div><ui5-tree id="ui5-sn-fixed-items-tree" mode="None" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationList)}">${c(context._fixedItems, (item, index) => item._id || index, (item, index) => block7$5(item, index, context, tags, suffix))}</ui5-tree></div>`;
+const block7$5 = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree-item", tags, suffix)} icon="${l(item.item.icon)}" .associatedItem="${l(item.item)}" text="${l(item.item.text)}" title="${l(item.item._tooltip)}" ?has-children="${item.item.items.length}" ?expanded="${item.item.expanded}" ?selected="${item.selected}" .ariaHaspopup="${l(item.item._ariaHasPopup)}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationListItem)}">${!context.collapsed ? block8$5(item, index, context, tags, suffix) : void 0}</${scopeTag("ui5-tree-item", tags, suffix)}>` : effectiveHtml`<ui5-tree-item icon="${l(item.item.icon)}" .associatedItem="${l(item.item)}" text="${l(item.item.text)}" title="${l(item.item._tooltip)}" ?has-children="${item.item.items.length}" ?expanded="${item.item.expanded}" ?selected="${item.selected}" .ariaHaspopup="${l(item.item._ariaHasPopup)}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationListItem)}">${!context.collapsed ? block8$5(item, index, context, tags, suffix) : void 0}</ui5-tree-item>`;
 const block8$5 = (item, index, context, tags, suffix) => effectiveHtml`${c(item.item.items, (item2, index2) => item2._id || index2, (item2, index2) => block9$4(item2, index2, context, tags, suffix))}`;
-const block9$4 = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree-item", tags, suffix)} .associatedItem="${l(item)}" text="${l(item.text)}" title="${l(item._tooltip)}" ?selected="${item.selected}"></${scopeTag("ui5-tree-item", tags, suffix)}>` : effectiveHtml`<ui5-tree-item .associatedItem="${l(item)}" text="${l(item.text)}" title="${l(item._tooltip)}" ?selected="${item.selected}"></ui5-tree-item>`;
-const block0$f = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-responsive-popover", tags, suffix)} vertical-align="Top" class="ui5-side-navigation-popover"><${scopeTag("ui5-list", tags, suffix)} mode="None" @ui5-item-click="${l(context.handleListItemClick)}"><${scopeTag("ui5-li", tags, suffix)} title="${l(context._popoverContent.mainItem._tooltip)}" ?selected="${context._popoverContent.mainItemSelected}" .associatedItem="${l(context._popoverContent.mainItem)}">${l(context._popoverContent.mainItem.text)}</${scopeTag("ui5-li", tags, suffix)}>${c(context._popoverContent.subItems, (item, index) => item._id || index, (item, index) => block1$d(item, index, context, tags, suffix))}</${scopeTag("ui5-list", tags, suffix)}></${scopeTag("ui5-responsive-popover", tags, suffix)}>` : effectiveHtml`<ui5-responsive-popover vertical-align="Top" class="ui5-side-navigation-popover"><ui5-list mode="None" @ui5-item-click="${l(context.handleListItemClick)}"><ui5-li title="${l(context._popoverContent.mainItem._tooltip)}" ?selected="${context._popoverContent.mainItemSelected}" .associatedItem="${l(context._popoverContent.mainItem)}">${l(context._popoverContent.mainItem.text)}</ui5-li>${c(context._popoverContent.subItems, (item, index) => item._id || index, (item, index) => block1$d(item, index, context, tags, suffix))}</ui5-list></ui5-responsive-popover>`;
-const block1$d = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-li", tags, suffix)} title="${l(item._tooltip)}" ?selected="${item.selected}" .associatedItem="${l(item)}">${l(item.text)}</${scopeTag("ui5-li", tags, suffix)}>` : effectiveHtml`<ui5-li title="${l(item._tooltip)}" ?selected="${item.selected}" .associatedItem="${l(item)}">${l(item.text)}</ui5-li>`;
+const block9$4 = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree-item", tags, suffix)} .associatedItem="${l(item)}" text="${l(item.text)}" title="${l(item._tooltip)}" ?selected="${item.selected}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationListItem)}"></${scopeTag("ui5-tree-item", tags, suffix)}>` : effectiveHtml`<ui5-tree-item .associatedItem="${l(item)}" text="${l(item.text)}" title="${l(item._tooltip)}" ?selected="${item.selected}" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationListItem)}"></ui5-tree-item>`;
+const block0$f = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-responsive-popover", tags, suffix)} vertical-align="Top" class="ui5-side-navigation-popover" aria-labelledby="${l(context._id)}-sideNavigationPopoverText" aria-modal="true"><span id="${l(context._id)}-sideNavigationPopoverText" class="ui5-hidden-text">${l(context.accSideNavigationPopoverHiddenText)}</span><${scopeTag("ui5-list", tags, suffix)} mode="None" .ariaRoleDescription="${l(context.ariaRoleDescPopoverNavigationList)}" accessible-role="tree" @ui5-item-click="${l(context.handleListItemClick)}"><${scopeTag("ui5-li", tags, suffix)} title="${l(context._popoverContent.mainItem._tooltip)}" accessible-role="treeitem" _level="1" aria-selected="${l(context.selected)}" .ariaRoleDescription="${l(context.ariaRoleDescPopoverNavigationListItem)}" ?selected="${context._popoverContent.mainItemSelected}" .associatedItem="${l(context._popoverContent.mainItem)}">${l(context._popoverContent.mainItem.text)}</${scopeTag("ui5-li", tags, suffix)}>${c(context._popoverContent.subItems, (item, index) => item._id || index, (item, index) => block1$d(item, index, context, tags, suffix))}</${scopeTag("ui5-list", tags, suffix)}></${scopeTag("ui5-responsive-popover", tags, suffix)}>` : effectiveHtml`<ui5-responsive-popover vertical-align="Top" class="ui5-side-navigation-popover" aria-labelledby="${l(context._id)}-sideNavigationPopoverText" aria-modal="true"><span id="${l(context._id)}-sideNavigationPopoverText" class="ui5-hidden-text">${l(context.accSideNavigationPopoverHiddenText)}</span><ui5-list mode="None" .ariaRoleDescription="${l(context.ariaRoleDescPopoverNavigationList)}" accessible-role="tree" @ui5-item-click="${l(context.handleListItemClick)}"><ui5-li title="${l(context._popoverContent.mainItem._tooltip)}" accessible-role="treeitem" _level="1" aria-selected="${l(context.selected)}" .ariaRoleDescription="${l(context.ariaRoleDescPopoverNavigationListItem)}" ?selected="${context._popoverContent.mainItemSelected}" .associatedItem="${l(context._popoverContent.mainItem)}">${l(context._popoverContent.mainItem.text)}</ui5-li>${c(context._popoverContent.subItems, (item, index) => item._id || index, (item, index) => block1$d(item, index, context, tags, suffix))}</ui5-list></ui5-responsive-popover>`;
+const block1$d = (item, index, context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-li", tags, suffix)} title="${l(item._tooltip)}" accessible-role="treeitem" _level="2" aria-selected="${l(item.selected)}" .ariaRoleDescription="${l(item.ariaRoleDescPopoverNavigationListItem)}" ?selected="${item.selected}" .associatedItem="${l(item)}">${l(item.text)}</${scopeTag("ui5-li", tags, suffix)}>` : effectiveHtml`<ui5-li title="${l(item._tooltip)}" accessible-role="treeitem" _level="2" aria-selected="${l(item.selected)}" .ariaRoleDescription="${l(item.ariaRoleDescPopoverNavigationListItem)}" ?selected="${item.selected}" .associatedItem="${l(item)}">${l(item.text)}</ui5-li>`;
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents-fiori", "sap_fiori_3", () => defaultTheme);
 var SideNavigationCss = { packageName: "@ui5/webcomponents-fiori", fileName: "themes/SideNavigation.css", content: ":host(:not([hidden])){display:inline-block;width:15rem;height:100%;transition:width .25s;--_ui5-tree-toggle-box-width:var(--_ui5_side_navigation_icon_padding);--_ui5_list_item_icon_size:var(--_ui5_side_navigation_icon_size);--_ui5-tree-toggle-icon-size:var(--_ui5_side_navigation_toggle_icon_size);--_ui5_list_item_title_size:var(--sapFontLargeSize);--_ui5_list_item_icon_padding-inline-end:var(--_ui5_side_navigation_icon_padding);--_ui5-tree-indent-step:var(--_ui5_side_navigation_indent_step)}:host([collapsed]){width:var(--_ui5_side_navigation_collapsed_state_width)}.ui5-sn-root{height:100%;display:flex;flex-direction:column;box-sizing:border-box;background:var(--sapList_Background);border-right:var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);box-shadow:var(--sapContent_Shadow0)}.ui5-sn-items-tree{overflow:auto}.ui5-sn-bottom-content-border{width:100%;padding:0 1rem;margin:.25rem 0;display:flex;justify-content:center;box-sizing:border-box}:host([collapsed]) .ui5-sn-bottom-content-border{padding:0 .5rem}.ui5-sn-bottom-content-border>span{width:100%;height:.125rem;background:var(--_ui5_side_navigation_separator_backgound)}.ui5-sn-spacer{flex:1;min-height:0}[ui5-tree]::part(toggle-icon){color:var(--sapContent_NonInteractiveIconColor);flex-shrink:0}[ui5-tree]::part(icon){color:var(--_ui5_side_navigation_icon_color)}" };
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents-fiori", "sap_fiori_3", () => defaultTheme);
-var SideNavigationPopoverCss = { packageName: "@ui5/webcomponents-fiori", fileName: "themes/SideNavigationPopover.css", content: ".ui5-side-navigation-popover::part(content){padding:0}" };
+var SideNavigationPopoverCss = { packageName: "@ui5/webcomponents-fiori", fileName: "themes/SideNavigationPopover.css", content: ".ui5-side-navigation-popover::part(content){padding:0}.ui5-hidden-text{position:absolute;clip:rect(1px,1px,1px,1px);user-select:none;left:-1000px;top:-1000px;pointer-events:none;font-size:0}" };
 const metadata$j = {
   tag: "ui5-side-navigation",
   managedSlots: true,
@@ -39931,6 +39984,21 @@ class SideNavigation extends UI5Element {
       subItems: item.items
     };
   }
+  get accSideNavigationPopoverHiddenText() {
+    return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT);
+  }
+  get ariaRoleDescPopoverNavigationList() {
+    return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC);
+  }
+  get ariaRoleDescPopoverNavigationListItem() {
+    return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC);
+  }
+  get ariaRoleDescNavigationList() {
+    return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC);
+  }
+  get ariaRoleDescNavigationListItem() {
+    return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC);
+  }
   handleTreeItemClick(event) {
     const treeItem = event.detail.item;
     const item = treeItem.associatedItem;
@@ -39997,6 +40065,12 @@ class SideNavigation extends UI5Element {
       });
     });
   }
+  static async onDefine() {
+    [SideNavigation.i18nBundle] = await Promise.all([
+      getI18nBundle("@ui5/webcomponents"),
+      super.onDefine()
+    ]);
+  }
 }
 SideNavigation.define();
 const metadata$i = {
@@ -40037,6 +40111,9 @@ class SideNavigationItem extends UI5Element {
   }
   get _tooltip() {
     return this.title || this.text;
+  }
+  get _ariaHasPopup() {
+    return this.parentNode.collapsed && this.items.length ? HasPopup.Tree : void 0;
   }
 }
 SideNavigationItem.define();
@@ -41547,7 +41624,7 @@ const collection$c = "SAP-icons";
 const packageName$c = "@ui5/webcomponents-icons";
 registerIcon(name$c, { pathData: pathData$c, ltr: ltr$c, collection: collection$c, packageName: packageName$c });
 isThemeFamily("sap_horizon") ? pathData$d : pathData$c;
-const block0$8 = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}">${context.placeSelectionElementBefore ? block1$7() : void 0}<div id="${l(context._id)}-content" class="ui5-li-content"><div class="ui5-uci-thumbnail"><slot name="thumbnail"></slot></div><div class="ui5-uci-content-and-edit-container"><div class="ui5-uci-content-and-progress"><div class="ui5-uci-content">${context._editing ? block2$5(context, tags, suffix) : block3$4(context, tags, suffix)}<div class="ui5-uci-description"><slot></slot></div></div>${context._showProgressIndicator ? block6$3(context, tags, suffix) : void 0}</div><div class="ui5-uci-edit-buttons">${context._editing ? block7$3(context, tags, suffix) : block8$3(context, tags, suffix)}</div></div></div>${context.typeDetail ? block13$1(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block14$1() : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li>`;
+const block0$8 = (context, tags, suffix) => effectiveHtml`<li part="native-li" tabindex="${l(context.tabIndex)}" class="${o$1(context.classes.main)}" @focusin="${context._onfocusin}" @focusout="${context._onfocusout}" @keyup="${context._onkeyup}" @keydown="${context._onkeydown}" @mouseup="${context._onmouseup}" @mousedown="${context._onmousedown}" @touchstart="${context._ontouchstart}" @touchend="${context._ontouchend}" @click="${context._onclick}" role="${l(context._accInfo.role)}" aria-expanded="${l(context._accInfo.ariaExpanded)}" title="${l(context.title)}" aria-level="${l(context._accInfo.ariaLevel)}" aria-haspopup="${l(context._accInfo.ariaHaspopup)}" aria-posinset="${l(context._accInfo.posinset)}" aria-roledescription="${l(context.accessibleRoleDescription)}" aria-setsize="${l(context._accInfo.setsize)}" aria-describedby="${l(context._id)}-invisibleText-describedby" aria-labelledby="${l(context._accessibleNameRef)}" aria-disabled="${l(context.ariaDisabled)}" aria-selected="${l(context._accInfo.ariaSelected)}" aria-checked="${l(context._accInfo.ariaChecked)}">${context.placeSelectionElementBefore ? block1$7() : void 0}<div id="${l(context._id)}-content" class="ui5-li-content"><div class="ui5-uci-thumbnail"><slot name="thumbnail"></slot></div><div class="ui5-uci-content-and-edit-container"><div class="ui5-uci-content-and-progress"><div class="ui5-uci-content">${context._editing ? block2$5(context, tags, suffix) : block3$4(context, tags, suffix)}<div class="ui5-uci-description"><slot></slot></div></div>${context._showProgressIndicator ? block6$3(context, tags, suffix) : void 0}</div><div class="ui5-uci-edit-buttons">${context._editing ? block7$3(context, tags, suffix) : block8$3(context, tags, suffix)}</div></div></div>${context.typeDetail ? block13$1(context, tags, suffix) : void 0}${context.placeSelectionElementAfter ? block14$1() : void 0}<span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context._accInfo.listItemAriaLabel)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleText-describedby" class="ui5-hidden-text">${l(context._accInfo.ariaSelectedText)}</span></li>`;
 const block1$7 = (context, tags, suffix) => effectiveHtml``;
 const block2$5 = (context, tags, suffix) => suffix ? effectiveHtml`<div class="ui5-uci-edit-container"><${scopeTag("ui5-input", tags, suffix)} id="ui5-uci-edit-input" data-sap-focus-ref @focusin="${context._onInputFocusin}" @keydown="${context._onInputKeyDown}"></${scopeTag("ui5-input", tags, suffix)}><span class="ui5-uci-file-extension">${l(context._fileExtension)}</span></div>` : effectiveHtml`<div class="ui5-uci-edit-container"><ui5-input id="ui5-uci-edit-input" data-sap-focus-ref @focusin="${context._onInputFocusin}" @keydown="${context._onInputKeyDown}"></ui5-input><span class="ui5-uci-file-extension">${l(context._fileExtension)}</span></div>`;
 const block3$4 = (context, tags, suffix) => effectiveHtml`${context.fileNameClickable ? block4$4(context, tags, suffix) : block5$3(context)}`;
