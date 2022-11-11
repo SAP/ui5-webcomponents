@@ -277,6 +277,11 @@ describe("TabContainer general interaction", () => {
 
 	it("tests effective selected tab", async () => {
 		const tabContainer = await browser.$("#tabContainerAddTabsProgrammatically");
+		const allInitialTabs = await tabContainer.$$("ui5-tab");
+
+		// Assert
+		assert.ok(await allInitialTabs[0].getProperty("selected"), "The first tab should be selected");
+		assert.notOk(await allInitialTabs[1].getProperty("selected"), "The second tab should not be selected");
 
 		// Act
 		await browser.$("#buttonAddTabs").click();
