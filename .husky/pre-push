@@ -1,5 +1,5 @@
 #!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-. "$(dirname "$0")/common.sh"
+#. "$(dirname "$0")/_/husky.sh"
+#. "$(dirname "$0")/common.sh"
 
-yarn husky:pre-push
+#yarn husky:pre-push
