@@ -29,7 +29,7 @@ type LocaleData = {
 
 type Locale = {
 	getFirstDayOfWeek: () => number,
-	_get: () => string,
+	_get: () => object,
 };
 
 const getCore = () => {

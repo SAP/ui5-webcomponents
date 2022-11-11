@@ -8,6 +8,8 @@ import { getFeature } from "./FeaturesRegistry.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type F6Navigation from "./features/F6Navigation.js";
 
+type PromiseResolve = (value: void | PromiseLike<void>) => void;
+
 let bootPromise: Promise<void>;
 
 /**
@@ -25,13 +27,7 @@ const boot = async (): Promise<void> => {
 		return bootPromise;
 	}
 
-	/* eslint-disable no-alert, no-async-promise-executor */
-	/*
-		Note(since we disable eslint rule):
-		If an async executor function throws an error, the error will be lost and won't cause the newly-constructed Promise to reject.
-		This could make it difficult to debug and handle some errors.
-	*/
-	bootPromise = new Promise(async resolve => {
+	const bootExecutor = async (resolve: PromiseResolve) => {
 		registerCurrentRuntime();
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
@@ -53,8 +49,9 @@ const boot = async (): Promise<void> => {
 		insertSystemCSSVars();
 
 		resolve();
-	});
-	/* eslint-enable no-alert, no-async-promise-executor */
+	};
+
+	bootPromise = new Promise(bootExecutor as (resolve: PromiseResolve) => void);
 
 	return bootPromise;
 };

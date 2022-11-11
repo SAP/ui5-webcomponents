@@ -2,8 +2,7 @@ import getSharedResource from "../getSharedResource.js";
 
 type IllustrationLoader = (illustrationName: string) => Promise<IllustrationData>;
 
-type IllustrationData = {
-	set?: string,
+type IllustrationProperties = {
 	dialogSvg: string,
 	sceneSvg: string,
 	spotSvg: string,
@@ -11,8 +10,12 @@ type IllustrationData = {
 	subtitle: string,
 };
 
+type IllustrationData = IllustrationProperties & {
+	set: string,
+};
+
 const loaders = new Map<string, IllustrationLoader>();
-const registry = getSharedResource<Map<string, IllustrationData>>("SVGIllustration.registry", new Map());
+const registry = getSharedResource<Map<string, IllustrationProperties>>("SVGIllustration.registry", new Map());
 const illustrationPromises = getSharedResource<Map<string, Promise<IllustrationData>>>("SVGIllustration.promises", new Map());
 const ILLUSTRATION_NOT_FOUND = "ILLUSTRATION_NOT_FOUND";
 

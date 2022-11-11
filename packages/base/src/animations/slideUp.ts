@@ -1,11 +1,6 @@
-import animationConfig from "./config.js";
-import animate from "./animate.js";
+import animate, { duration } from "./animate.js";
 
-export default async ({
-	element = animationConfig.element,
-	duration = animationConfig.defaultDuration,
-	progress: progressCallback = animationConfig.identity,
-}) => {
+const slideUp = async (element: HTMLElement) => {
 	// Get Computed styles
 	let computedStyles: CSSStyleDeclaration,
 		paddingTop: number,
@@ -25,7 +20,8 @@ export default async ({
 	const animation = animate({
 		beforeStart: () => {
 			// Get Computed styles
-			computedStyles = getComputedStyle(element);
+			const el = element;
+			computedStyles = getComputedStyle(el);
 			paddingTop = parseFloat(computedStyles.paddingTop);
 			paddingBottom = parseFloat(computedStyles.paddingBottom);
 			marginTop = parseFloat(computedStyles.marginTop);
@@ -33,20 +29,18 @@ export default async ({
 			height = parseFloat(computedStyles.height);
 
 			// Store inline styles
-			storedOverflow = element.style.overflow;
-			storedPaddingTop = element.style.paddingTop;
-			storedPaddingBottom = element.style.paddingBottom;
-			storedMarginTop = element.style.marginTop;
-			storedMarginBottom = element.style.marginBottom;
-			storedHeight = element.style.height;
+			storedOverflow = el.style.overflow;
+			storedPaddingTop = el.style.paddingTop;
+			storedPaddingBottom = el.style.paddingBottom;
+			storedMarginTop = el.style.marginTop;
+			storedMarginBottom = el.style.marginBottom;
+			storedHeight = el.style.height;
 
-			element.style.overflow = "hidden";
+			el.style.overflow = "hidden";
 		},
 		duration,
 		element,
-		progress(progress) {
-			progressCallback(progress);
-
+		advance: progress => {
 			element.style.paddingTop = `${paddingTop - (paddingTop * progress)}px`;
 			element.style.paddingBottom = `${paddingBottom - (paddingBottom * progress)}px`;
 			element.style.marginTop = `${marginTop - (marginTop * progress)}px`;
@@ -70,3 +64,5 @@ export default async ({
 
 	return animation;
 };
+
+export default slideUp;

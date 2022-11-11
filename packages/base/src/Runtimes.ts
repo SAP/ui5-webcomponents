@@ -35,10 +35,12 @@ const Runtimes = getSharedResource<Array<RuntimeData>>("Runtimes", []);
 const registerCurrentRuntime = () => {
 	if (currentRuntimeIndex === undefined) {
 		currentRuntimeIndex = Runtimes.length;
+		const versionInfo = VersionInfo as VersionInfoData;
+
 		Runtimes.push({
-			...VersionInfo,
+			...versionInfo,
 			alias: currentRuntimeAlias,
-			description: `Runtime ${currentRuntimeIndex} - ver ${VersionInfo.version}${currentRuntimeAlias ? ` (${currentRuntimeAlias})` : ""}`,
+			description: `Runtime ${currentRuntimeIndex} - ver ${versionInfo.version}${currentRuntimeAlias ? ` (${currentRuntimeAlias})` : ""}`,
 		});
 	}
 };

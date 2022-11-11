@@ -1,3 +1,5 @@
+import { PropertyValue } from "../UI5ElementMetadata.js";
+
 /**
  * Base class for all data types.
  *
@@ -19,7 +21,7 @@ class DataType {
 		return false;
 	}
 
-	static attributeToProperty(attributeValue: string | boolean): any {
+	static attributeToProperty(attributeValue: string | null): PropertyValue {
 		return attributeValue;
 	}
 

@@ -91,11 +91,9 @@ class ScrollEnablement<EventListenerArgs, EventListenerReturn> extends EventProv
 			return;
 		}
 
-		return scroll({
-			element: this._container,
-			dx,
-			dy,
-		});
+		if (this._container) {
+			return scroll(this._container, dx, dy);
+		}
 	}
 
 	getScrollLeft() {

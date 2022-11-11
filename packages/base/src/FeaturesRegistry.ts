@@ -5,7 +5,7 @@ const registerFeature = (name: string, feature: object) => {
 };
 
 const getFeature = <T>(name: string): T => {
-	return features.get(name);
+	return features.get(name) as T;
 };
 
 export {

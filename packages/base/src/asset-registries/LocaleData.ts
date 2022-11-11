@@ -5,11 +5,15 @@ import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.
 import { getFeature } from "../FeaturesRegistry.js";
 import type OpenUI5Support from "../features/OpenUI5Support";
 
-type LocaleDataLoader = (locale: string) => Promise<any>;
+const defaultLocale = DEFAULT_LOCALE as string;
+const supportedtLocale = SUPPORTED_LOCALES as string;
 
-const localeDataMap = new Map<string, any>();
+type LocaleDataLoader = (locale: string) => Promise<CLDRData>;
+type CLDRData = Record<string, object | boolean | string>;
+
+const localeDataMap = new Map<string, CLDRData>();
 const loaders = new Map<string, LocaleDataLoader>();
-const cldrPromises = new Map<string, Promise<any>>();
+const cldrPromises = new Map<string, Promise<CLDRData>>();
 const reportedErrors = new Set<string>();
 let warningShown = false;
 
@@ -53,7 +57,7 @@ const calcLocale = (language: string, region: string, script: string) => {
 
 	// try language + region
 	let localeId = `${language}_${region}`;
-	if (SUPPORTED_LOCALES.includes(localeId)) {
+	if (supportedtLocale.includes(localeId)) {
 		if (loaders.has(localeId)) {
 			// supported and has loader
 			return localeId;
@@ -61,7 +65,7 @@ const calcLocale = (language: string, region: string, script: string) => {
 
 		// supported, no loader - fallback to default and warn
 		_showAssetsWarningOnce(localeId);
-		return DEFAULT_LOCALE;
+		return defaultLocale;
 	}
 
 	// not supported, try language only
@@ -74,15 +78,15 @@ const calcLocale = (language: string, region: string, script: string) => {
 
 		// supported, no loader - fallback to default and warn
 		_showAssetsWarningOnce(localeId);
-		return DEFAULT_LOCALE;
+		return defaultLocale;
 	}
 
 	// not supported - fallback to default locale
-	return DEFAULT_LOCALE;
+	return defaultLocale;
 };
 
 // internal set data
-const setLocaleData = (localeId: string, content: any) => {
+const setLocaleData = (localeId: string, content: CLDRData) => {
 	localeDataMap.set(localeId, content);
 };
 
@@ -90,7 +94,7 @@ const setLocaleData = (localeId: string, content: any) => {
 const getLocaleData = (localeId: string) => {
 	// if there is no loader, the default fallback was fetched and a warning was given - use default locale instead
 	if (!loaders.has(localeId)) {
-		localeId = DEFAULT_LOCALE;
+		localeId = defaultLocale;
 	}
 
 	const content = localeDataMap.get(localeId);
@@ -126,7 +130,7 @@ const fetchCldr = async (language: string, region: string, script: string) => {
 		const cldrContent = openUI5Support.getLocaleDataObject();
 		if (cldrContent) {
 			// only if openui5 actually returned valid content
-			setLocaleData(localeId, cldrContent);
+			setLocaleData(localeId, cldrContent as CLDRData);
 			return;
 		}
 	}
@@ -134,8 +138,9 @@ const fetchCldr = async (language: string, region: string, script: string) => {
 	// fetch it
 	try {
 		const cldrContent = await _loadCldrOnce(localeId);
-		setLocaleData(localeId, cldrContent);
-	} catch (e: any) {
+		setLocaleData(localeId, cldrContent as CLDRData);
+	} catch (error: unknown) {
+		const e = error as Error;
 		if (!reportedErrors.has(e.message)) {
 			reportedErrors.add(e.message);
 			console.error(e.message); /* eslint-disable-line */
@@ -149,7 +154,8 @@ const registerLocaleDataLoader = (localeId: string, loader: LocaleDataLoader) =>
 
 // register default loader for "en" from ui5 CDN (dev workflow without assets)
 registerLocaleDataLoader("en", async () => {
-	return (await fetch(`https://sdk.openui5.org/1.103.0/resources/sap/ui/core/cldr/en.json`)).json();
+	const cldrContent = await fetch(`https://sdk.openui5.org/1.103.0/resources/sap/ui/core/cldr/en.json`);
+	return cldrContent.json() as Promise<CLDRData>;
 });
 
 // When the language changes dynamically (the user calls setLanguage),

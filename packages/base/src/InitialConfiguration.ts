@@ -17,7 +17,7 @@ type InitialConfig = {
 	themeRoot: string | undefined,
 	rtl: boolean | undefined,
 	language: string | undefined,
-	calendarType: string | undefined, // TODO enum
+	calendarType: string | undefined, // Refactor: change to Enum
 	noConflict: boolean,
 	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,

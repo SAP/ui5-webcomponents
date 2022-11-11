@@ -1,33 +1,34 @@
 import AnimationQueue from "./AnimationQueue.js";
-import animationConfig from "./config.js";
 
-export default ({
-	beforeStart = () => {},
-	duration = animationConfig.defaultDuration,
-	element = animationConfig.element,
-	progress: progressCallback = animationConfig.identity,
-}) => {
+type AnimateOptions = {
+	beforeStart?: () => void,
+	duration: number,
+	element: HTMLElement,
+	advance: (p: number) => void,
+};
+
+const animate = (options: AnimateOptions) => {
 	let start: number | null = null;
 	let stopped = false;
 	let animationFrame: number;
 	let stop: () => void;
-	let animate: (timestamp: number) => void;
+	let advanceAnimation: (timestamp: number) => void;
 
 	const promise = new Promise<void>((resolve, reject) => {
-		animate = timestamp => {
+		advanceAnimation = timestamp => {
 			start = start || timestamp;
 
 			const timeElapsed = timestamp - start;
-			const remaining = duration - timeElapsed;
+			const remaining = options.duration - timeElapsed;
 
-			if (timeElapsed <= duration) {
-				const progress = 1 - remaining / duration; // easing formula (currently linear)
-				progressCallback(progress);
+			if (timeElapsed <= options.duration) {
+				const currentAdvance = 1 - remaining / options.duration; // easing formula (currently linear)
+				options.advance(currentAdvance);
 				if (!stopped) {
-					animationFrame = requestAnimationFrame(animate);
+					animationFrame = requestAnimationFrame(advanceAnimation);
 				}
 			} else {
-				progressCallback(1);
+				options.advance(1);
 				resolve();
 			}
 		};
@@ -37,11 +38,14 @@ export default ({
 			cancelAnimationFrame(animationFrame);
 			reject(new Error("animation stopped"));
 		};
-	}).catch(oReason => oReason);
+	}).catch((reason: Error) => reason);
 
-	AnimationQueue.push(element, () => {
-		beforeStart();
-		requestAnimationFrame(animate);
+	AnimationQueue.push(options.element, () => {
+		if (typeof options.beforeStart === "function") {
+			options.beforeStart();
+		}
+
+		requestAnimationFrame(advanceAnimation);
 
 		return new Promise(resolve => {
 			promise.then(() => resolve());
@@ -53,3 +57,8 @@ export default ({
 		stop: () => stop,
 	};
 };
+const duration = 400;
+
+export { duration };
+export type { AnimateOptions };
+export default animate;

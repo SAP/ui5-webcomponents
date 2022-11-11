@@ -1,11 +1,6 @@
-import animationConfig from "./config.js";
-import animate from "./animate.js";
+import animate, { duration } from "./animate.js";
 
-export default async ({
-	element = animationConfig.element,
-	duration = animationConfig.defaultDuration,
-	progress: progressCallback = animationConfig.identity,
-}) => {
+const slideDown = async (element: HTMLElement) => {
 	let computedStyles: CSSStyleDeclaration,
 		paddingTop: number,
 		paddingBottom: number,
@@ -49,9 +44,7 @@ export default async ({
 		},
 		duration,
 		element,
-		progress(progress) {
-			progressCallback(progress);
-
+		advance: progress => {
 			// WORKAROUND
 			element.style.display = "block";
 			// END OF WORKAROUND
@@ -76,3 +69,5 @@ export default async ({
 
 	return animation;
 };
+
+export default slideDown;

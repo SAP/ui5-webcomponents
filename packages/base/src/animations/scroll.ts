@@ -1,13 +1,6 @@
-import animate from "./animate.js";
-import animationConfig from "./config.js";
+import animate, { duration } from "./animate.js";
 
-export default ({
-	element = animationConfig.element,
-	duration = animationConfig.defaultDuration,
-	progress: progressCallback = animationConfig.identity,
-	dx = 0,
-	dy = 0,
-}) => {
+const scroll = (element: HTMLElement, dx: number, dy: number) => {
 	let scrollLeft: number;
 	let scrollTop: number;
 
@@ -18,11 +11,11 @@ export default ({
 		},
 		duration,
 		element,
-		progress: progress => {
-			progressCallback(progress);
-
-			element.scrollLeft = scrollLeft + (progress! * dx); // easing - linear
-			element.scrollTop = scrollTop + (progress! * dy); // easing - linear
+		advance: progress => {
+			element.scrollLeft = scrollLeft + (progress * dx); // easing - linear
+			element.scrollTop = scrollTop + (progress * dy); // easing - linear
 		},
 	});
 };
+
+export default scroll;

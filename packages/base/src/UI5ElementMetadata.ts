@@ -13,15 +13,19 @@ type Slot = {
 	propertyName: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
-}
+};
+
+type SlotValue = Node;
 
 type Property = {
 	multiple?: boolean,
 	type: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
-	defaultValue?: any,
+	defaultValue?: PropertyValue,
 	noAttribute?: boolean,
 	compareValues?: boolean,
 }
+
+type PropertyValue = boolean | number | string | object | undefined | null | DataType;
 
 type Metadata = {
 	tag: string,
@@ -51,7 +55,7 @@ class UI5ElementMetadata {
 		if (Object.prototype.hasOwnProperty.call(this, "_initialState")) {
 			return this._initialState!;
 		}
-		const initialState: {[key: string]: any} = {};
+		const initialState: {[key: string]: Array<SlotValue> | PropertyValue} = {};
 		const slotsAreManaged = this.slotsAreManaged();
 
 		// Initialize properties
@@ -94,10 +98,10 @@ class UI5ElementMetadata {
 	 * Only intended for use by UI5Element.js
 	 * @friend TODO
 	 */
-	static validatePropertyValue(value: any, propData: Property) {
+	static validatePropertyValue(value: PropertyValue, propData: Property) {
 		const isMultiple = propData.multiple;
-		if (isMultiple) {
-			return value.map((propValue: any) => validateSingleProperty(propValue, propData));
+		if (isMultiple && Array.isArray(value)) {
+			return value.map((propValue: PropertyValue) => validateSingleProperty(propValue, propData));
 		}
 		return validateSingleProperty(value, propData);
 	}
@@ -106,7 +110,7 @@ class UI5ElementMetadata {
 	 * Only intended for use by UI5Element.js
 	 * @friend was protected, use internal and strip internal
 	 */
-	static validateSlotValue(value: any, slotData: Slot) {
+	static validateSlotValue(value: Node, slotData: Slot) {
 		return validateSingleSlot(value, slotData);
 	}
 
@@ -158,7 +162,7 @@ class UI5ElementMetadata {
 	 * @returns {string[]}
 	 */
 	getAttributesList() {
-		return this.getPropertiesList().filter(this.hasAttribute, this).map(camelToKebabCase);
+		return this.getPropertiesList().filter(this.hasAttribute.bind(this)).map(camelToKebabCase);
 	}
 
 	/**
@@ -191,7 +195,7 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	hasIndividualSlots() {
-		return this.slotsAreManaged() && Object.entries(this.getSlots()).some(([_slotName, slotData]) => slotData.individualSlots);
+		return this.slotsAreManaged() && Object.values(this.getSlots()).some(slotData => slotData.individualSlots);
 	}
 
 	/**
@@ -311,7 +315,7 @@ class UI5ElementMetadata {
 	}
 }
 
-const validateSingleProperty = (value: any, propData: Property) => {
+const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 	const propertyType = propData.type;
 
 	if (propertyType === Boolean) {
@@ -328,10 +332,10 @@ const validateSingleProperty = (value: any, propData: Property) => {
 	}
 };
 
-const validateSingleSlot = (value: any, slotData: Slot) => {
+const validateSingleSlot = (value: Node, slotData: Slot) => {
 	value && getSlottedElements(value).forEach(el => {
 		if (!(el instanceof slotData.type)) {
-			throw new Error(`${el} is not of type ${slotData.type}`);
+			throw new Error(`The element is not of type ${slotData.type.toString()}`);
 		}
 	});
 
@@ -339,4 +343,10 @@ const validateSingleSlot = (value: any, slotData: Slot) => {
 };
 
 export default UI5ElementMetadata;
-export type { Property, Slot };
+export type {
+	Property,
+	PropertyValue,
+	Slot,
+	SlotValue,
+	Metadata,
+};

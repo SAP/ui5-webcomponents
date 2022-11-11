@@ -53,7 +53,7 @@ class RenderQueue {
 	 */
 	process(callback: (el: UI5Element) => void) {
 		let webComponent;
-		const stats = new Map();
+		const stats = new Map<UI5Element, number>();
 
 		webComponent = this.shift();
 		while (webComponent) {
