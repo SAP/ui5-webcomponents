@@ -178,7 +178,7 @@ const metadata = {
 		 */
 		ariaHaspopup: {
 			type: HasPopup,
-			// noAttribute: true,
+			noAttribute: true,
 		},
 
 	},
