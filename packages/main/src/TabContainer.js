@@ -413,16 +413,8 @@ class TabContainer extends UI5Element {
 		// update selected tab
 		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
 		if (selectedTabs.length) {
-			if (selectedTabs.length > 1) {
-				console.warn("More than one tab is selected"); // eslint-disable-line
-			}
+			this._selectedTab._selected = false;
 			this._selectedTab = selectedTabs[0];
-			selectedTabs.forEach(item => {
-				if (item !== this._selectedTab) {
-					item.selected = false;
-					item._selected = false;
-				}
-			});
 		} else {
 			this._selectedTab = this._allItemsAndSubItems[0];
 			this._selectedTab._selected = true;
