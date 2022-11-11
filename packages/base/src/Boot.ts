@@ -13,7 +13,7 @@ type PromiseResolve = (value: void | PromiseLike<void>) => void;
 let bootPromise: Promise<void>;
 
 /**
- * Attach a callback that will be executed on boot
+ * Attach  a callback that will be executed on boot
  * @public
  * @param listener
  */
