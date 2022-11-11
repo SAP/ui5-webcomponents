@@ -9,7 +9,7 @@ import { getFeature } from "./FeaturesRegistry.js";
 let bootPromise;
 
 /**
- * Attach a callback that will be executed on boot
+ * Attach    a callback that will be executed on boot
  * @public
  * @param listener
  */
