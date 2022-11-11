@@ -1,9 +1,8 @@
-commit 68350bc57f50d0f220321a05fb59238bef3dde96
-Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
-Date:   Fri Nov 11 14:19:54 2022 +0200
+commit 66ea5f228ee16d8910a955913f41e0741174963a
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Nov 11 16:58:01 2022 +0200
 
-    fix(ui5-illustrated-message): i18n texts are fixed (#6037)
+    chore: release v1.9.1 (#6038)
     
-    fix(i18n): ui-illustrated-message texts are fixed
-    
-    Fixes: #5974
+    Release patch to fix severe issue in tools affecting third-party component libraries using our tools
+    framework: fix paths for generating illustration imports in nps (#5997) (e932f7d
