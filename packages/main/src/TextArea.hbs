@@ -1,38 +1,39 @@
 <div
 	class="{{classes.root}}"
-	style="{{styles.main}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
 >
-	{{#if growing}}
-		<div id="{{_id}}-mirror" style="{{styles.mirror}}" class="ui5-textarea-mirror" aria-hidden="true">
-			{{#each _mirrorText}}
-				{{this.text}}
 
-				<br />
-			{{/each}}
-		</div>
-	{{/if}}
 
-	<textarea
-		id="{{_id}}-inner"
-		class="ui5-textarea-inner"
-		placeholder="{{placeholder}}"
-		?disabled="{{disabled}}"
-		?readonly="{{readonly}}"
-		aria-label="{{ariaLabelText}}"
-		aria-describedby="{{ariaDescribedBy}}"
-		aria-invalid="{{ariaInvalid}}"
-		aria-required="{{required}}"
-		maxlength="{{_exceededTextProps.calcedMaxLength}}"
-		.value="{{value}}"
-		@input="{{_oninput}}"
-		@change="{{_onchange}}"
-		@keyup="{{_onkeyup}}"
-		@keydown="{{_onkeydown}}"
-		data-sap-focus-ref
-		part="textarea">
-	</textarea>
+	<div class="ui5-textarea-wrapper">
+		{{#if growing}}
+			<div id="{{_id}}-mirror" class="ui5-textarea-mirror" aria-hidden="true" >
+				{{#each _mirrorText}}
+					{{this.text}}
+					<br />
+				{{/each}}
+			</div>
+		{{/if}}
+		<textarea
+			id="{{_id}}-inner"
+			class="ui5-textarea-inner"
+			placeholder="{{placeholder}}"
+			?disabled="{{disabled}}"
+			?readonly="{{readonly}}"
+			aria-label="{{ariaLabelText}}"
+			aria-describedby="{{ariaDescribedBy}}"
+			aria-invalid="{{ariaInvalid}}"
+			aria-required="{{required}}"
+			maxlength="{{_exceededTextProps.calcedMaxLength}}"
+			.value="{{value}}"
+			@input="{{_oninput}}"
+			@change="{{_onchange}}"
+			@keyup="{{_onkeyup}}"
+			@keydown="{{_onkeydown}}"
+			data-sap-focus-ref
+			part="textarea">
+		</textarea>
+	</div>
 
 	{{> afterTextarea}}
 

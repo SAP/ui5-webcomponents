@@ -1068,8 +1068,10 @@ class Table extends UI5Element {
 			this.columns[visibleColumnsIndexes[visibleColumnsIndexes.length - 1]].last = true;
 		}
 
+		const hiddenColumnsChange = (this._hiddenColumns.length !== hiddenColumns.length) || this._hiddenColumns.some((column, index) => column !== hiddenColumns[index]);
+
 		// invalidate only if hidden columns count has changed
-		if (this._hiddenColumns.length !== hiddenColumns.length) {
+		if (hiddenColumnsChange) {
 			this._hiddenColumns = hiddenColumns;
 			if (hiddenColumns.length) {
 				this.fireEvent("popin-change", {

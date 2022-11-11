@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.9.0](https://github.com/SAP/ui5-webcomponents/compare/v1.8.0...v1.9.0) (2022-10-31)
+
+
+### Bug Fixes
+
+* **form support:** remove additional fields from ACC tree ([#5922](https://github.com/SAP/ui5-webcomponents/issues/5922)) ([fed99ed](https://github.com/SAP/ui5-webcomponents/commit/fed99ed5a51730aa2fd4cf016f68a17b6f770154)), closes [#5917](https://github.com/SAP/ui5-webcomponents/issues/5917)
+* make static are items recognizable to openui5 dialogs ([#5888](https://github.com/SAP/ui5-webcomponents/issues/5888)) ([efaa1d6](https://github.com/SAP/ui5-webcomponents/commit/efaa1d6e60f965ef0f8479adcd823e1bf5396992)), closes [#5634](https://github.com/SAP/ui5-webcomponents/issues/5634)
+* **ui5-combobox:** announce additional text of selected item ([#5943](https://github.com/SAP/ui5-webcomponents/issues/5943)) ([4c1ca7d](https://github.com/SAP/ui5-webcomponents/commit/4c1ca7db79b8c26b621d45bf4e3a788b24315cb3))
+* **ui5-icon:** visualize the icons properly in Safari ([#5871](https://github.com/SAP/ui5-webcomponents/issues/5871)) ([3f255d9](https://github.com/SAP/ui5-webcomponents/commit/3f255d9410f1c583a58db5d6c2c4a7232c929995))
+* **ui5-input:** type composition characters correctly ([#5869](https://github.com/SAP/ui5-webcomponents/issues/5869)) ([5f61d11](https://github.com/SAP/ui5-webcomponents/commit/5f61d1190e4d592ad69a256b8890840869d5cfb7))
+* **ui5-label:** improve "for" attribute accessibility reading ([#5872](https://github.com/SAP/ui5-webcomponents/issues/5872)) ([b9ffaa6](https://github.com/SAP/ui5-webcomponents/commit/b9ffaa6f0353e9e8136019978299548021555643))
+* **ui5-li:** apply proper border radius to avatar with image ([#5942](https://github.com/SAP/ui5-webcomponents/issues/5942)) ([f200a76](https://github.com/SAP/ui5-webcomponents/commit/f200a76ef667f867cdd4d323aba0d1e0eb00f53d))
+* **ui5-listitem:** prevent default event action when fire custom press event ([#5928](https://github.com/SAP/ui5-webcomponents/issues/5928)) ([ed1efcc](https://github.com/SAP/ui5-webcomponents/commit/ed1efccc2190512dbafbaffd76f88471c0f3467e))
+* **ui5-multi-input:** import value help icon ([#5972](https://github.com/SAP/ui5-webcomponents/issues/5972)) ([b36be95](https://github.com/SAP/ui5-webcomponents/commit/b36be95bf05036fb390039928f77885efb79f9ad))
+* **ui5-radio-button:** improve acc ([#5880](https://github.com/SAP/ui5-webcomponents/issues/5880)) ([6616897](https://github.com/SAP/ui5-webcomponents/commit/66168972b54c6d20801be5ced4bb6ca04506ad75))
+* **ui5-tabcontainer:** translate semantic design aria description ([#5883](https://github.com/SAP/ui5-webcomponents/issues/5883)) ([f256d0b](https://github.com/SAP/ui5-webcomponents/commit/f256d0b2f36d9a085e1e0b2843c3f10a63800fc2))
+* **ui5-table-row:** refactor navigated property ([#5976](https://github.com/SAP/ui5-webcomponents/issues/5976)) ([ba264af](https://github.com/SAP/ui5-webcomponents/commit/ba264afb386f256ccaecd4a056acb95429fb58c3))
+* **ui5-table:** announce whether a row is selected or not ([#5930](https://github.com/SAP/ui5-webcomponents/issues/5930)) ([4d34fe9](https://github.com/SAP/ui5-webcomponents/commit/4d34fe9eb9a343634774292b2eac7c12d5876b30))
+* **ui5-table:** enable focus navigation in popin content ([#5900](https://github.com/SAP/ui5-webcomponents/issues/5900)) ([9fd81e2](https://github.com/SAP/ui5-webcomponents/commit/9fd81e2097e5099c04567961e9df97049fb8e6cc))
+* **ui5-table:** remove role row as it is redundant ([#5939](https://github.com/SAP/ui5-webcomponents/issues/5939)) ([a7fe699](https://github.com/SAP/ui5-webcomponents/commit/a7fe6994505986245571a5d28f070e4990e3b4a2))
+* **ui5-time-picker:** enable text spacing ([#5940](https://github.com/SAP/ui5-webcomponents/issues/5940)) ([da7ae70](https://github.com/SAP/ui5-webcomponents/commit/da7ae70b6a672d3dac3defa0387fe910bd9594f7)), closes [#5792](https://github.com/SAP/ui5-webcomponents/issues/5792)
+
+
+### Features
+
+* **framework:** generate custom elements manifest ([#5964](https://github.com/SAP/ui5-webcomponents/issues/5964)) ([0d62770](https://github.com/SAP/ui5-webcomponents/commit/0d62770cace54fd9aef73d9632dd06d8a83680e9))
+* **ui5-avatar:** support of 3 letters is enabled ([#5870](https://github.com/SAP/ui5-webcomponents/issues/5870)) ([43338e1](https://github.com/SAP/ui5-webcomponents/commit/43338e1dba3053f4af273de78e86f5c36b7aa2a3))
+* **ui5-li:** introduce deleteButton slot ([#5971](https://github.com/SAP/ui5-webcomponents/issues/5971)) ([ca40efd](https://github.com/SAP/ui5-webcomponents/commit/ca40efdd1465903a2dc0d50f31f5213a34dbe7a1)), closes [#5826](https://github.com/SAP/ui5-webcomponents/issues/5826)
+* **ui5-link:** make acceessibleRole property public ([#5879](https://github.com/SAP/ui5-webcomponents/issues/5879)) ([6ce8b2d](https://github.com/SAP/ui5-webcomponents/commit/6ce8b2dee9cbf0ccbe2d310a241f02c173d85cd9)), closes [#5686](https://github.com/SAP/ui5-webcomponents/issues/5686)
+* **ui5-radiobutton:** add "required" property ([#5937](https://github.com/SAP/ui5-webcomponents/issues/5937)) ([621b87a](https://github.com/SAP/ui5-webcomponents/commit/621b87a4f62a41ee603255b2982efb6d34782da3))
+* **ui5-switch:** provide tooltip property ([#5954](https://github.com/SAP/ui5-webcomponents/issues/5954)) ([5b5db73](https://github.com/SAP/ui5-webcomponents/commit/5b5db734e1e3ff475867b5e8d243b146163ee14e)), closes [#5552](https://github.com/SAP/ui5-webcomponents/issues/5552)
+* **ui5-table-row:** added navigated property ([#5946](https://github.com/SAP/ui5-webcomponents/issues/5946)) ([3c2a8a3](https://github.com/SAP/ui5-webcomponents/commit/3c2a8a3079f7d5598c281b294e184ae960db7470))
+
+
+
+
+
 # [1.8.0](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.8.0) (2022-10-03)
 
 
