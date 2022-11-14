@@ -104,6 +104,20 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
 		 * An array, containing a flat structure of list items to render
 		 *
 		 * @private
@@ -348,7 +362,7 @@ class Tree extends UI5Element {
 	}
 
 	get _role() {
-		return "tree";
+		return this._minimal ? "menubar" : "tree";
 	}
 
 	get _label() {

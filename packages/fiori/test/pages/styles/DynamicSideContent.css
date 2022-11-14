@@ -9,7 +9,7 @@ body, html {
 	background-color: var(--sapBackgroundColor);
 }
 
-.content-padding * {
+.content-padding > * {
 	padding: 0.5rem;
 }
 

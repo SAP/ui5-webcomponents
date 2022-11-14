@@ -1,6 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+
 import ListItemType from "./types/ListItemType.js";
+
+import HasPopup from "./types/HasPopup.js";
+
 
 /**
  * @public
@@ -138,6 +142,7 @@ const metadata = {
 		},
 
 		/**
+
 		 * Defines the visual indication and behavior of the list items.
 		 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
 		 * <br><br>
@@ -165,6 +170,28 @@ const metadata = {
 			type: Boolean,
 		},
 
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
+		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @since 1.10.0
+		 * @private
+		 */
+		ariaHaspopup: {
+			type: HasPopup,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {

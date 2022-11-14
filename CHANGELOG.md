@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.1](https://github.com/SAP/ui5-webcomponents/compare/v1.9.0...v1.9.1) (2022-11-10)
+
+
+### Bug Fixes
+
+* **framework:** fix paths for generating illustration imports in nps ([#5997](https://github.com/SAP/ui5-webcomponents/issues/5997)) ([e932f7d](https://github.com/SAP/ui5-webcomponents/commit/e932f7d069ebf10f73219bff7154558b7b0d849e))
+
+
+
+
+
 # [1.9.0](https://github.com/SAP/ui5-webcomponents/compare/v1.8.0...v1.9.0) (2022-10-31)
 
 

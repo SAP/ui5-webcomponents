@@ -1,3 +1,4 @@
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
@@ -18,6 +19,7 @@ import {
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
+import HasPopup from "./types/HasPopup.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -91,6 +93,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
 		 * Used to define the role of the list item.
 		 *
 		 * @private
@@ -108,10 +123,17 @@ const metadata = {
 			defaultValue: ListMode.None,
 		},
 
-		_ariaHasPopup: {
-			type: String,
+		/**
+		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @since 1.10.0
+		 * @private
+		 */
+		ariaHaspopup: {
+			type: HasPopup,
 			noAttribute: true,
 		},
+
 
 		/**
 		 * The navigated state of the list item.
@@ -125,6 +147,9 @@ const metadata = {
 			type: Boolean,
 		},
 
+		_level: {
+			type: Integer,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -432,11 +457,11 @@ class ListItem extends ListItemBase {
 		return {
 			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
-			ariaLevel: undefined,
+			ariaLevel: this._level || undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this._ariaHasPopup || undefined,
+			ariaHaspopup: this.ariaHaspopup || undefined,
 		};
 	}
 
