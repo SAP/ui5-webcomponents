@@ -9,7 +9,7 @@ import {
 
 import UI5Element from "../UI5Element.js";
 import OpenUI5Element from "./OpenUI5Element.js";
-import { StyleData } from "../index.js";
+import { StyleData } from "../ManagedStyles.js";
 
 const busyIndicatorMetadata = {
 	properties: {

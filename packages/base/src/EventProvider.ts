@@ -1,11 +1,11 @@
-class EventProvider<EventListenerArgs, EventListenerReturn> {
-	_eventRegistry: Map<string, Array<(param: EventListenerArgs) => EventListenerReturn>>;
+class EventProvider<EventListenerParam, EventListenerReturn> {
+	_eventRegistry: Map<string, Array<(param: EventListenerParam) => EventListenerReturn>>;
 
 	constructor() {
 		this._eventRegistry = new Map();
 	}
 
-	attachEvent(eventName: string, fnFunction: (param: EventListenerArgs) => EventListenerReturn) {
+	attachEvent(eventName: string, fnFunction: (param: EventListenerParam) => EventListenerReturn) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -19,7 +19,7 @@ class EventProvider<EventListenerArgs, EventListenerReturn> {
 		}
 	}
 
-	detachEvent(eventName: string, fnFunction: (param: EventListenerArgs) => EventListenerReturn) {
+	detachEvent(eventName: string, fnFunction: (param: EventListenerParam) => EventListenerReturn) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -44,7 +44,7 @@ class EventProvider<EventListenerArgs, EventListenerReturn> {
 	 * @param data optional data to pass to each event listener
 	 * @returns {Array} an array with the results of all event listeners
 	 */
-	fireEvent(eventName: string, data: EventListenerArgs) {
+	fireEvent(eventName: string, data: EventListenerParam) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 
@@ -64,11 +64,11 @@ class EventProvider<EventListenerArgs, EventListenerReturn> {
 	 * @param data optional data to pass to each event listener
 	 * @returns {Promise} a promise that will resolve when all listeners have resolved
 	 */
-	fireEventAsync(eventName: string, data: EventListenerArgs) {
+	fireEventAsync(eventName: string, data: EventListenerParam) {
 		return Promise.all(this.fireEvent(eventName, data));
 	}
 
-	isHandlerAttached(eventName: string, fnFunction: (param: EventListenerArgs) => EventListenerReturn) {
+	isHandlerAttached(eventName: string, fnFunction: (param: EventListenerParam) => EventListenerReturn) {
 		const eventRegistry = this._eventRegistry;
 		const eventListeners = eventRegistry.get(eventName);
 

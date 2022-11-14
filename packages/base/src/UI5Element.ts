@@ -3,6 +3,7 @@ import { boot } from "./Boot.js";
 import UI5ElementMetadata, {
 	Slot,
 	SlotValue,
+	State,
 	PropertyValue,
 	Metadata,
 } from "./UI5ElementMetadata.js";
@@ -23,6 +24,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import { TemplateFunction } from "./renderer/executeTemplate.js";
+import { PromiseResolve } from "./types.js";
 
 let autoId = 0;
 
@@ -33,7 +35,7 @@ type ChangeInfo = {
 	type: "property" | "slot",
 	name: string,
 	reason?: string,
-	child?: Node,
+	child?: SlotValue,
 	target?: UI5Element,
 	newValue?: PropertyValue,
 	oldValue?: PropertyValue,
@@ -83,14 +85,14 @@ abstract class UI5Element extends HTMLElement {
 	__id?: string;
 	_suppressInvalidation: boolean;
 	_changedState: Array<ChangeInfo>;
-	_eventProvider: EventProvider<ChangeInfo & {target: UI5Element}, void>;
+	_eventProvider: EventProvider<InvalidationInfo, void>;
 	_inDOM: boolean;
 	_fullyConnected: boolean;
 	_childChangeListeners: Map<string, ChildChangeListener>;
 	_slotChangeListeners: Map<string, SlotChangeListener>;
-	_domRefReadyPromise: Promise<void> & {_deferredResolve?: (value: void | PromiseLike<void>) => void};
+	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
-	_state: Record<string, Array<SlotValue> | PropertyValue>;
+	_state: State;
 	onEnterDOM?: () => void;
 	onExitDOM?: () => void;
 	onBeforeRendering?: () => void;
@@ -103,7 +105,7 @@ abstract class UI5Element extends HTMLElement {
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
-	static render: UnknownFunction;
+	static render: (...args: any[]) => any;
 
 	constructor() {
 		super();
@@ -370,7 +372,7 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	_clearSlot(slotName: string, slotData: Slot) {
 		const propertyName = slotData.propertyName || slotName;
-		const children = this._state[propertyName] as Array<Node>;
+		const children = this._state[propertyName] as Array<SlotValue>;
 
 		children.forEach(child => {
 			if (instanceOfUI5Element(child)) {

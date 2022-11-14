@@ -2,7 +2,8 @@ import EventProvider from "./EventProvider.js";
 import RenderQueue from "./RenderQueue.js";
 import { getAllRegisteredTags } from "./CustomElementsRegistry.js";
 import { isRtlAware } from "./locale/RTLAwareRegistry.js";
-import UI5Element from "./UI5Element.js";
+import type UI5Element from "./UI5Element.js";
+import { PromiseResolve, Timeout } from "./types.js";
 
 type BeforeComponentRenderCallback = (webComponent: UI5Element) => void;
 
@@ -12,9 +13,9 @@ const eventProvider = new EventProvider<UI5Element, void>();
 const invalidatedWebComponents = new RenderQueue(); // Queue for invalidated web components
 
 let renderTaskPromise: Promise<void> | undefined,
-	renderTaskPromiseResolve: undefined | ((value: void | PromiseLike<void>) => void);
+	renderTaskPromiseResolve: PromiseResolve | undefined;
 
-let mutationObserverTimer: ReturnType<typeof setTimeout> | undefined;
+let mutationObserverTimer: Timeout | undefined;
 
 let queuePromise: Promise<void> | null;
 

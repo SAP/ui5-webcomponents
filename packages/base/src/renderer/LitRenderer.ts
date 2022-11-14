@@ -51,6 +51,7 @@ export {
 export { scopeTag };
 export { repeat } from "lit-html/directives/repeat.js";
 export { classMap } from "lit-html/directives/class-map.js";
+// @ts-ignore style-map is a JS file
 export { styleMap } from "./directives/style-map.js";
 export { ifDefined } from "lit-html/directives/if-defined.js";
 export { unsafeHTML } from "lit-html/directives/unsafe-html.js";

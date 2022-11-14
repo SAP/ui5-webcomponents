@@ -1,4 +1,6 @@
-import { getFormatSettings, FormatSettings } from "../InitialConfiguration.js";
+import { getFormatSettings } from "../InitialConfiguration.js";
+
+type FormatSettings = { firstDayOfWeek?: number };
 
 let formatSettings: FormatSettings;
 
@@ -15,3 +17,4 @@ const getFirstDayOfWeek = () => {
 };
 
 export { getFirstDayOfWeek }; // eslint-disable-line
+export type { FormatSettings };

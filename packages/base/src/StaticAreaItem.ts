@@ -4,7 +4,7 @@ import { renderFinished } from "./Render.js";
 import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
-import UI5Element from "./UI5Element.js";
+import type UI5Element from "./UI5Element.js";
 
 const pureTagName = "ui5-static-area-item";
 const popupIntegrationAttr = "data-sap-ui-integration-popup-content";

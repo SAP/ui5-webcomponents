@@ -7,8 +7,7 @@ import { registerCurrentRuntime } from "./Runtimes.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type F6Navigation from "./features/F6Navigation.js";
-
-type PromiseResolve = (value: void | PromiseLike<void>) => void;
+import { PromiseResolve } from "./types.js";
 
 let bootPromise: Promise<void>;
 

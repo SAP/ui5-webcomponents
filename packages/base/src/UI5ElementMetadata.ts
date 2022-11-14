@@ -32,11 +32,13 @@ type Metadata = {
 	managedSlots?: boolean,
 	properties?: {[key: string]: Property},
 	slots?: {[key: string]: Slot},
-	events: Array<object>,
+	events?: Array<object>,
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
 };
+
+type State = Record<string, PropertyValue | Array<SlotValue>>;
 
 /**
  *
@@ -45,7 +47,7 @@ type Metadata = {
  */
 class UI5ElementMetadata {
 	metadata: Metadata;
-	_initialState: object | undefined;
+	_initialState: State | undefined;
 
 	constructor(metadata: Metadata) {
 		this.metadata = metadata;
@@ -55,7 +57,7 @@ class UI5ElementMetadata {
 		if (Object.prototype.hasOwnProperty.call(this, "_initialState")) {
 			return this._initialState!;
 		}
-		const initialState: {[key: string]: Array<SlotValue> | PropertyValue} = {};
+		const initialState: State = {};
 		const slotsAreManaged = this.slotsAreManaged();
 
 		// Initialize properties
@@ -95,8 +97,10 @@ class UI5ElementMetadata {
 	}
 
 	/**
-	 * Only intended for use by UI5Element.js
-	 * @friend TODO
+	 * Validates the property's value and returns it if correct
+	 * or returns the default value if not.
+	 * <b>Note:</b> Only intended for use by UI5Element.js
+	 * @public
 	 */
 	static validatePropertyValue(value: PropertyValue, propData: Property) {
 		const isMultiple = propData.multiple;
@@ -107,8 +111,10 @@ class UI5ElementMetadata {
 	}
 
 	/**
-	 * Only intended for use by UI5Element.js
-	 * @friend was protected, use internal and strip internal
+	 * Validates the slot's value and returns it if correct
+	 * or throws an exception if not.
+	 * <b>Note:</b> Only intended for use by UI5Element.js
+	 * @pubic
 	 */
 	static validateSlotValue(value: Node, slotData: Slot) {
 		return validateSingleSlot(value, slotData);
@@ -348,5 +354,6 @@ export type {
 	PropertyValue,
 	Slot,
 	SlotValue,
+	State,
 	Metadata,
 };

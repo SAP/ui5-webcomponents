@@ -1,4 +1,4 @@
-import { StyleData } from "../index.js";
+import { StyleData } from "../ManagedStyles.js";
 
 const getStylesString = (styles: Array<StyleData> | StyleData) => {
 	if (Array.isArray(styles)) {

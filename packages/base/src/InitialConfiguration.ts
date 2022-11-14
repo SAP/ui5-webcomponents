@@ -4,11 +4,10 @@ import { getFeature } from "./FeaturesRegistry.js";
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 import validateThemeRoot from "./validateThemeRoot.js";
 import type OpenUI5Support from "./features/OpenUI5Support";
+import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 
 let initialized = false;
-
-type FormatSettings = { firstDayOfWeek?: number };
 
 type InitialConfig = {
 	[key: string]: any,
@@ -206,5 +205,3 @@ export {
 	getCalendarType,
 	getFormatSettings,
 };
-
-export type { FormatSettings };

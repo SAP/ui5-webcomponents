@@ -91,3 +91,8 @@ export {
 	removeStyle,
 	createOrUpdateStyle,
 };
+
+export type {
+	StyleData,
+	StyleDataCSP,
+};

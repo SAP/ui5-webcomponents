@@ -2,7 +2,6 @@ import {
 	html,
 	svg,
 	unsafeStatic,
-	// @ts-ignore
 } from "lit-html/static.js";
 
 import {
