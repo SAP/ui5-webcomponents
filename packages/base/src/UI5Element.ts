@@ -450,7 +450,10 @@ abstract class UI5Element extends HTMLElement {
 				newPropertyValue = newValue !== null;
 			} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
 				newPropertyValue = (propertyTypeClass as typeof DataType).attributeToProperty(newValue);
+			} else {
+				newPropertyValue = newValue as string;
 			}
+
 			(this as Record<string, any>)[nameInCamelCase] = newPropertyValue;
 		}
 	}
