@@ -8,22 +8,20 @@ type CollectionData = {
 	collection: string,
 	packageName: string,
 	version?: string,
-	data: {
-		[key: string]: {
-			path: string,
-			paths: Array<string>,
-			ltr: boolean,
-			acc: object
-		}
-	}
+	data: Record<string, {
+		path: string,
+		paths: Array<string>,
+		ltr: boolean,
+		acc: object
+	}>,
 };
 
 type IconData = {
 	collection?: string,
+	packageName: string,
 	pathData: string | Array<string>,
 	ltr: boolean,
 	accData: object,
-	packageName: string,
 	customTemplate?: string,
 	viewBox?: string,
 };
@@ -115,7 +113,8 @@ const getIconData = async (name: string) => {
 	let iconData: string | CollectionData = ICON_NOT_FOUND;
 	try {
 		iconData = (await _loadIconCollectionOnce(collection))!;
-	} catch (e: any) {
+	} catch (error: unknown) {
+		const e = error as Error;
 		console.error(e.message); /* eslint-disable-line */
 	}
 

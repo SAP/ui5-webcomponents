@@ -5,10 +5,11 @@ type FormatSettings = { firstDayOfWeek?: number };
 let formatSettings: FormatSettings;
 
 /**
- * Get the first day of the week from the configured format settings or based on the current locale
+ * Returns the first day of the week from the configured format settings or based on the current locale.
+ * @public
  * @returns {Number} 0 (Sunday) through 6 (Saturday)
  */
-const getFirstDayOfWeek = () => {
+const getFirstDayOfWeek = (): number | undefined => {
 	if (formatSettings === undefined) {
 		formatSettings = getFormatSettings();
 	}

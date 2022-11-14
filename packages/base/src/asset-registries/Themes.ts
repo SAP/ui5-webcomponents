@@ -3,14 +3,14 @@ import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 import { StyleData, StyleDataCSP } from "../ManagedStyles.js";
 
 type ThemeData = {_: StyleDataCSP } | StyleDataCSP | string;
-type ThemeLoaderFunction = (themeName: string) => Promise<ThemeData>;
+type ThemeLoader = (themeName: string) => Promise<ThemeData>;
 
 const themeStyles = new Map<string, StyleData>();
-const loaders = new Map<string, ThemeLoaderFunction>();
+const loaders = new Map<string, ThemeLoader>();
 const registeredPackages = new Set<string>();
 const registeredThemes = new Set<string>();
 
-const registerThemePropertiesLoader = (packageName: string, themeName: string, loader: ThemeLoaderFunction) => {
+const registerThemePropertiesLoader = (packageName: string, themeName: string, loader: ThemeLoader) => {
 	loaders.set(`${packageName}/${themeName}`, loader);
 	registeredPackages.add(packageName);
 	registeredThemes.add(themeName);
@@ -41,7 +41,8 @@ const _getThemeProperties = async (packageName: string, themeName: string) => {
 	let data;
 	try {
 		data = await loader(themeName);
-	} catch (e: any) {
+	} catch (error: unknown) {
+		const e = error as Error;
 		console.error(packageName, e.message); /* eslint-disable-line */
 		return;
 	}

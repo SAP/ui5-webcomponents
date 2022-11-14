@@ -9,10 +9,11 @@ let curLanguage: string | undefined;
 let fetchDefaultLanguage: boolean;
 
 /**
- * Returns the currently configured language, or the browser language as a fallback
+ * Returns the currently configured language, or the browser language as a fallback.
+ * @public
  * @returns {string}
  */
-const getLanguage = () => {
+const getLanguage = (): string | undefined => {
 	if (curLanguage === undefined) {
 		curLanguage = getConfiguredLanguage();
 	}
@@ -21,12 +22,13 @@ const getLanguage = () => {
 
 /**
  * Changes the current language, re-fetches all message bundles, updates all language-aware components
- * and returns a promise that resolves when all rendering is done
+ * and returns a promise that resolves when all rendering is done.
  *
  * @param {string} language
+ * @public
  * @returns {Promise<void>}
  */
-const setLanguage = async (language: string) => {
+const setLanguage = async (language: string): Promise<void> => {
 	if (curLanguage === language) {
 		return;
 	}
@@ -42,6 +44,7 @@ const setLanguage = async (language: string) => {
  * fetched over the network instead of using the inlined one.
  * <b>Note:</b> By default the language will not be fetched.
  *
+ * @public
  * @param {boolean} fetchDefaultLang
  */
 const setFetchDefaultLanguage = (fetchDefaultLang: boolean) => {
@@ -50,9 +53,10 @@ const setFetchDefaultLanguage = (fetchDefaultLang: boolean) => {
 
 /**
  * Returns if the default language, that is inlined, should be fetched over the network.
+ * @public
  * @returns {boolean}
  */
-const getFetchDefaultLanguage = () => {
+const getFetchDefaultLanguage = (): boolean => {
 	if (fetchDefaultLanguage === undefined) {
 		setFetchDefaultLanguage(getConfiguredFetchDefaultLanguage());
 	}

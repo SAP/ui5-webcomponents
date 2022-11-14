@@ -21,7 +21,7 @@ const setThemeRoot = (theme: string, newThemeRoot: string) => {
 };
 
 const formatThemeLink = (theme: string) => {
-	return `${getThemeRoot()!}Base/baseLib/${theme}/css_variables.css`;
+	return `${getThemeRoot()!}Base/baseLib/${theme}/css_variables.css`; // theme root is always set.
 };
 
 const attachCustomThemeStylesToHead = async (theme: string) => {

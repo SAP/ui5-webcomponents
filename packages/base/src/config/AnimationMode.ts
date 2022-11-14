@@ -1,4 +1,3 @@
-// @ts-check2
 import { getAnimationMode as getConfiguredAnimationMode } from "../InitialConfiguration.js";
 import AnimationMode from "../types/AnimationMode.js";
 
@@ -6,9 +5,10 @@ let curAnimationMode: AnimationMode;
 
 /**
  * Returns the animation mode - "full", "basic", "minimal" or "none".
+ * @public
  * @returns { AnimationMode }
  */
-const getAnimationMode = () => {
+const getAnimationMode = (): AnimationMode => {
 	if (curAnimationMode === undefined) {
 		curAnimationMode = getConfiguredAnimationMode();
 	}

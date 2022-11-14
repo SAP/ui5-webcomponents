@@ -6,14 +6,15 @@ import nextFallbackLocale from "../locale/nextFallbackLocale.js";
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 import { getFetchDefaultLanguage } from "../config/Language.js";
 
-type I18nLoader = (localeId: string) => Promise<Record<string, string>>;
+type I18nLoader = (localeId: string) => Promise<I18nData>;
+type I18nData = Record<string, string>;
 
 // contains package names for which the warning has been shown
 const warningShown = new Set();
 const reportedErrors = new Set();
 
-const bundleData = new Map<string, Record<string, string> | null>();
-const bundlePromises = new Map<string, Promise<Record<string, string>>>();
+const bundleData = new Map<string, I18nData | null>();
+const bundlePromises = new Map<string, Promise<I18nData>>();
 const loaders = new Map<string, I18nLoader>();
 
 /**
@@ -30,7 +31,7 @@ const registerI18nLoader = (packageName: string, localeId: string, loader: I18nL
 	loaders.set(bundleKey, loader);
 };
 
-const _setI18nBundleData = (packageName: string, data: Record<string, string> | null) => {
+const _setI18nBundleData = (packageName: string, data: I18nData | null) => {
 	bundleData.set(packageName, data);
 };
 
@@ -52,7 +53,7 @@ const _loadMessageBundleOnce = (packageName: string, localeId: string) => {
 		bundlePromises.set(bundleKey, loadMessageBundle(localeId));
 	}
 
-	return bundlePromises.get(bundleKey)!;
+	return bundlePromises.get(bundleKey)!; // Investigate if i18n loader exists and this won't return undefined.
 };
 
 const _showAssetsWarningOnce = (packageName: string) => {
@@ -96,7 +97,8 @@ const fetchI18nBundle = async (packageName: string) => {
 	try {
 		const data = await _loadMessageBundleOnce(packageName, localeId);
 		_setI18nBundleData(packageName, data);
-	} catch (e: any) {
+	} catch (error: unknown) {
+		const e = error as Error;
 		if (!reportedErrors.has(e.message)) {
 			reportedErrors.add(e.message);
 			console.error(e.message); /* eslint-disable-line */

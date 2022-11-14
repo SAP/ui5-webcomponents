@@ -11,10 +11,10 @@ enum IconCollection {
  * Sets the default icon collection (SAP-icons font v4 or SAP-icons font v5) per theme,
  * which will be applied in case icon collection is not specified.
  *
- * Note: by default SAP-icons-v5 is used in SAP Horizon and SAP-icons-v4 for all the rest.
+ * Note: by default SAP-icons-v5 is used in all SAP Horizon variants and SAP-icons-v4 for all the rest.
  * @public
  * @param {string} theme
- * @param {string} collectionName
+ * @param {IconCollection} collectionName
  */
 const setDefaultIconCollection = (theme: string, collectionName: "horizon" | IconCollection) => {
 	if (collectionName === "horizon") {
@@ -29,9 +29,10 @@ const setDefaultIconCollection = (theme: string, collectionName: "horizon" | Ico
  * that is configured.
  *
  * @param {string} theme
- * @returns {string}
+ * @public
+ * @returns {string | undefined}
  */
-const getDefaultIconCollection = (theme: string) => {
+const getDefaultIconCollection = (theme: string): string | undefined => {
 	return IconCollectionConfiguration.get(theme);
 };
 

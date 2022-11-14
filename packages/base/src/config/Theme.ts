@@ -5,9 +5,9 @@ import applyTheme from "../theming/applyTheme.js";
 let curTheme: string;
 
 /**
- * Gets the current theme
- * @returns {String} the current theme name
+ * Returns the current theme.
  * @public
+ * @returns {string} the current theme name
  */
 const getTheme = (): string => {
 	if (curTheme === undefined) {
@@ -18,12 +18,12 @@ const getTheme = (): string => {
 };
 
 /**
- * Applies a new theme after fetching its assets from the network
- * @param {String} theme the name of the new theme
- * @returns {Promise} a promise that is resolved when the new theme assets have been fetched and applied to the DOM
+ * Applies a new theme after fetching its assets from the network.
  * @public
+ * @param {string} theme the name of the new theme
+ * @returns {Promise<void>} a promise that is resolved when the new theme assets have been fetched and applied to the DOM
  */
-const setTheme = async (theme: string) => {
+const setTheme = async (theme: string): Promise<void> => {
 	if (curTheme === theme) {
 		return;
 	}
@@ -38,7 +38,7 @@ const setTheme = async (theme: string) => {
 /**
  * Returns if the given theme name is the one currently applied.
  * @private
- * @param {String} theme
+ * @param {string} theme
  * @returns {boolean}
  */
 const isTheme = (theme: string) => {
@@ -47,9 +47,9 @@ const isTheme = (theme: string) => {
 };
 
 /**
- * Returns if the current theme is part of given theme family
+ * Returns if the current theme is part of given theme family.
  * @private
- * @param {String} theme the theme family
+ * @param {string} theme the theme family
  * @returns {boolean}
  */
 const isThemeFamily = (theme: string) => {
