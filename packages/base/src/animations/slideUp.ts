@@ -1,6 +1,6 @@
 import animate, { duration } from "./animate.js";
 
-const slideUp = async (element: HTMLElement) => {
+const slideUp = (element: HTMLElement) => {
 	// Get Computed styles
 	let computedStyles: CSSStyleDeclaration,
 		paddingTop: number,
@@ -49,18 +49,17 @@ const slideUp = async (element: HTMLElement) => {
 		},
 	});
 
-	const reason = await animation.promise();
-
-	if (!(reason instanceof Error)) {
-		// beforeStart is called before these assignments - "!" non-null assertion is safe.
-		element.style.overflow = storedOverflow!;
-		element.style.paddingTop = storedPaddingTop!;
-		element.style.paddingBottom = storedPaddingBottom!;
-		element.style.marginTop = storedMarginTop!;
-		element.style.marginBottom = storedMarginBottom!;
-		element.style.height = storedHeight!;
-		element.style.display = "none";
-	}
+	animation.promise().then(reason => {
+		if (!(reason instanceof Error)) {
+			element.style.overflow = storedOverflow;
+			element.style.paddingTop = storedPaddingTop;
+			element.style.paddingBottom = storedPaddingBottom;
+			element.style.marginTop = storedMarginTop;
+			element.style.marginBottom = storedMarginBottom;
+			element.style.height = storedHeight;
+			element.style.display = "none";
+		}
+	});
 
 	return animation;
 };

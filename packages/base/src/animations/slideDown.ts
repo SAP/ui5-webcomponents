@@ -1,6 +1,6 @@
 import animate, { duration } from "./animate.js";
 
-const slideDown = async (element: HTMLElement) => {
+const slideDown = (element: HTMLElement) => {
 	let computedStyles: CSSStyleDeclaration,
 		paddingTop: number,
 		paddingBottom: number,
@@ -57,15 +57,14 @@ const slideDown = async (element: HTMLElement) => {
 		},
 	});
 
-	await animation.promise();
-
-	// beforeStart is called before these assignments - "!" non-null assertion is safe.
-	element.style.overflow = storedOverflow!;
-	element.style.paddingTop = storedPaddingTop!;
-	element.style.paddingBottom = storedPaddingBottom!;
-	element.style.marginTop = storedMarginTop!;
-	element.style.marginBottom = storedMarginBottom!;
-	element.style.height = storedHeight!;
+	animation.promise().then(() => {
+		element.style.overflow = storedOverflow;
+		element.style.paddingTop = storedPaddingTop;
+		element.style.paddingBottom = storedPaddingBottom;
+		element.style.marginTop = storedMarginTop;
+		element.style.marginBottom = storedMarginBottom;
+		element.style.height = storedHeight;
+	});
 
 	return animation;
 };
