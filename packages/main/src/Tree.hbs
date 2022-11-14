@@ -13,7 +13,7 @@
     <slot name="header" slot="header"></slot>
     {{#each _listItems}}
         <ui5-li-tree
-            type="Active"
+            .type="{{this.treeItem.type}}"
             level="{{this.level}}"
             icon="{{this.treeItem.icon}}"
             ?indeterminate="{{this.treeItem.indeterminate}}"
@@ -35,7 +35,16 @@
             @mouseover="{{../_onListItemMouseOver}}"
             @mouseout="{{../_onListItemMouseOut}}"
             exportparts="icon, toggle-icon"
+            .navigated='{{this.treeItem.navigated}}'
         >
+        {{#if typeNavigation}}
+			<ui5-icon name ="slim-arrow-right"></ui5-icon>
+		{{/if}}
+
+        {{#if navigated}}
+			<div class="ui5-li-navigated"></div>
+		{{/if}}
+
             {{> treeListItemContent}}
         </ui5-li-tree>
     {{/each}}
