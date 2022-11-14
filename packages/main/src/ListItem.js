@@ -134,7 +134,6 @@ const metadata = {
 			noAttribute: true,
 		},
 
-
 		/**
 		 * The navigated state of the list item.
 		 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.

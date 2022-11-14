@@ -5,7 +5,6 @@ import ListItemType from "./types/ListItemType.js";
 
 import HasPopup from "./types/HasPopup.js";
 
-
 /**
  * @public
  */
@@ -170,6 +169,7 @@ const metadata = {
 			type: Boolean,
 		},
 
+		/**
 		 * Defines the description for the accessible role of the component.
 		 * @protected
 		 * @type {string}
