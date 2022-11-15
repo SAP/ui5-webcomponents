@@ -1080,11 +1080,11 @@ class Input extends UI5Element {
 		// "1 => 1"
 		// "1. => ''"  <-- this causes troubles
 		// "1.5 => 1.5"
-		if (this.isTypeNumber && Number.isNaN(event.target.valueAsNumber) && !(event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")) {
+		if (this.type === "Number" && Number.isNaN(event.target.valueAsNumber) && !(event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")) {
 			this._keepInnerValue = true;
-		} else {
-			this.fireEventByAction(this.ACTION_USER_INPUT, event);
 		}
+
+		this.fireEventByAction(this.ACTION_USER_INPUT, event);
 
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
