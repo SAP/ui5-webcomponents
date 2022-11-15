@@ -1,19 +1,5 @@
-commit e73ec210df94ffc10cec8ac6a17d22354962ac46
-Author: kskondov <konstantin.kondov@sap.com>
-Date:   Tue Nov 15 11:26:28 2022 +0200
+commit 5302c6e05bd71198a598248ede250bb1b1832abe
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Tue Nov 15 17:26:11 2022 +0200
 
-    fix(ui5-tabcontainer): adding selected tab programatically deselects previously selected tab (#6036)
-    
-    * fix(ui5-tabcontainer): only one tab can be selected
-    
-    Fixes: #5932
-    
-    * fix(ui5-tabcontainer): only one tab can be selected
-    
-    Addressed review comments
-    
-    * fix(ui5-tabcontainer): improve sample
-    
-    Fixes: #5932
-    
-    * fix(ui5-tabcontainer): added tests
+    chore: extend input min width test page (#6002)
