@@ -384,11 +384,9 @@ class DynamicSideContent extends UI5Element {
 			},
 			main: {
 				"height": mcSpan === this.span12 ? contentHeight : "100%",
-				"order": this.sideContentPosition === SideContentPosition.Start ? 2 : 1,
 			},
 			side: {
 				"height": scSpan === this.span12 ? contentHeight : "100%",
-				"order": this.sideContentPosition === SideContentPosition.Start ? 1 : 2,
 			},
 		};
 	}
@@ -465,6 +463,10 @@ class DynamicSideContent extends UI5Element {
 		}
 
 		return size;
+	}
+
+	get _isSideContentFirst() {
+		return this.sideContentPosition === SideContentPosition.Start;
 	}
 
 	handleResize() {

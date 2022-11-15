@@ -32,6 +32,7 @@ import List from "./List.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
+import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -191,7 +192,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the overflow mode of the tab strip. If you have a large number of tabs, only the tabs that can fit on screen will be visible.
+		 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
 		 * All other tabs that can 't fit on the screen are available in an overflow tab "More".
 		 *
 		 * <br><br>
@@ -224,6 +225,32 @@ const metadata = {
 		 */
 		mediaRange: {
 			type: String,
+		},
+
+		/**
+		 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+		 *
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
+		 * @defaultvalue "Solid"
+		 * @since 1.10.0
+		 * @public
+		 */
+		headerBackgroundDesign: {
+			type: TabContainerBackgroundDesign,
+			defaultValue: TabContainerBackgroundDesign.Solid,
+		},
+
+		/**
+		 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+		 *
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
+		 * @defaultvalue "Solid"
+		 * @since 1.10.0
+		 * @public
+		 */
+		contentBackgroundDesign: {
+			type: TabContainerBackgroundDesign,
+			defaultValue: TabContainerBackgroundDesign.Solid,
 		},
 
 		_selectedTab: {
@@ -386,6 +413,7 @@ class TabContainer extends UI5Element {
 		// update selected tab
 		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
 		if (selectedTabs.length) {
+			this._selectedTab._selected = false;
 			this._selectedTab = selectedTabs[0];
 		} else {
 			this._selectedTab = this._allItemsAndSubItems[0];

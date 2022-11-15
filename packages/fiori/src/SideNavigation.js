@@ -5,8 +5,16 @@ import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
+import {
+	SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
+	SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
+	SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC,
+	SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC,
+	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
@@ -217,6 +225,26 @@ class SideNavigation extends UI5Element {
 		};
 	}
 
+	get accSideNavigationPopoverHiddenText() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT);
+	}
+
+	get ariaRoleDescPopoverNavigationList() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC);
+	}
+
+	get ariaRoleDescPopoverNavigationListItem() {
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC);
+	}
+
+	get ariaRoleDescNavigationList() {
+		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC);
+	}
+
+	get ariaRoleDescNavigationListItem() {
+		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC);
+	}
+
 	handleTreeItemClick(event) {
 		const treeItem = event.detail.item;
 		const item = treeItem.associatedItem;
@@ -299,6 +327,13 @@ class SideNavigation extends UI5Element {
 				callback(currentSubitem);
 			});
 		});
+	}
+
+	static async onDefine() {
+		[SideNavigation.i18nBundle] = await Promise.all([
+			getI18nBundle("@ui5/webcomponents"),
+			super.onDefine(),
+		]);
 	}
 }
 

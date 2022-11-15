@@ -20,14 +20,22 @@
 	padding: 0 1rem;
 	display: flex;
 	align-items: center;
+	background-color: var(--_ui5_tc_header_background);
 	height: var(--_ui5_tc_header_height);
-	background-color: var(--sapObjectHeader_Background);
 	box-shadow: var(--_ui5_tc_header_box_shadow);
 	box-sizing: border-box;
 }
 
 :host([tabs-placement="Bottom"]) .ui5-tc__header {
 	border-top: var(--_ui5_tc_header_border_bottom);
+}
+
+:host([header-background-design="Transparent"]) .ui5-tc__header {
+	background-color: transparent;
+}
+
+:host([header-background-design="Translucent"]) .ui5-tc__header {
+	background-color: var(--_ui5_tc_header_background_translucent);
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__header {
@@ -82,13 +90,21 @@
 	display: flex;
 	height: calc(100% - var(--_ui5_tc_header_height)); /* the header height (tabs with icons and text) */
 	padding: 1rem 2rem;
-	background-color: var(--sapGroup_ContentBackground);
+	background-color: var(--_ui5_tc_content_background);
 	border-bottom: var(--_ui5_tc_content_border_bottom);
 	box-sizing: border-box;
 }
 
 :host([tabs-placement="Bottom"]) .ui5-tc__content {
 	border-top: var(--_ui5_tc_content_border_bottom);
+}
+
+:host([content-background-design="Transparent"]) .ui5-tc__content {
+	background-color: transparent;
+}
+
+:host([content-background-design="Translucent"]) .ui5-tc__content {
+	background-color: var(--_ui5_tc_content_background_translucent);
 }
 
 .ui5-tc__content--collapsed {

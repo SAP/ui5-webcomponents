@@ -15,7 +15,7 @@
 		{{/if}}
 
 		{{#if hasData}}
-			<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
+			<div id="{{_id}}-before" tabindex="0" role="none" class="ui5-list-focusarea"></div>
 		{{/if}}
 
 		<span id="{{_id}}-modeLabel" class="ui5-hidden-text">{{ariaLabelModeText}}</span>
@@ -25,6 +25,7 @@
 			role="{{accessibleRole}}"
 			aria-label="{{ariaLabelTxt}}"
 			aria-labelledby="{{ariaLabelledBy}}"
+			aria-roledescription="{{accessibleRoleDescription}}"
 		>
 			<slot></slot>
 
@@ -48,7 +49,7 @@
 		{{/if}}
 
 		{{#if hasData}}
-			<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
+			<div id="{{_id}}-after" tabindex="0" role="none" class="ui5-list-focusarea"></div>
 		{{/if}}
 
 		<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span>
