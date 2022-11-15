@@ -796,6 +796,14 @@
 			<ui5-tabcontainer id="tabContainerEmpty">
 			</ui5-tabcontainer>
 		</section>
+		<section>
+			<h3>Add new selected tab programmatically</h3>
+			<ui5-tabcontainer id="tabContainerAddTabsProgrammatically">
+				<ui5-tab text="Tab 0" selected></ui5-tab>
+				<ui5-tab text="Tab 1"></ui5-tab>
+			</ui5-tabcontainer>
+			<ui5-button id="buttonAddTabs">add tabs</ui5-button>
+		</section>
 
 	</section>
 
@@ -866,6 +874,26 @@
 
 		radioGroupContentDesign.addEventListener("change", function (e) {
 			tabContainerBackgroundDesign.contentBackgroundDesign = e.target.text;
+		});
+
+		let tabIndex = 1;
+		document.getElementById("buttonAddTabs").addEventListener("click", function () {
+			const tabcontainer = document.getElementById("tabContainerAddTabsProgrammatically");
+
+			tabcontainer.items.forEach(item => (item.selected = false));
+
+			function addTab(selected = false) {
+				tabcontainer.appendChild(
+					Object.assign(document.createElement("ui5-tab"), {
+						text: `Tab ${++tabIndex}`,
+						selected
+					})
+				);
+			}
+
+			addTab(true);
+			addTab();
+			addTab();
 		});
 
 	</script>
