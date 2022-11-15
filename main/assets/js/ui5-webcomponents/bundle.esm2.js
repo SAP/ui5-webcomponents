@@ -376,7 +376,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1668496941
+  buildTime: 1668504480
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -30435,6 +30435,7 @@ class TabContainer extends UI5Element {
     }
     const selectedTabs = this._allItemsAndSubItems.filter((tab) => tab.selected);
     if (selectedTabs.length) {
+      this._selectedTab._selected = false;
       this._selectedTab = selectedTabs[0];
     } else {
       this._selectedTab = this._allItemsAndSubItems[0];

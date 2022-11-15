@@ -14,7 +14,7 @@
 	</script>
 	
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.173ab08f.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.50f8a3f8.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/TabContainer.html.7f2ade15.css'>
 </head>
 
@@ -798,6 +798,14 @@
 			<ui5-tabcontainer id="tabContainerEmpty">
 			</ui5-tabcontainer>
 		</section>
+		<section>
+			<h3>Add new selected tab programmatically</h3>
+			<ui5-tabcontainer id="tabContainerAddTabsProgrammatically">
+				<ui5-tab text="Tab 0" selected></ui5-tab>
+				<ui5-tab text="Tab 1"></ui5-tab>
+			</ui5-tabcontainer>
+			<ui5-button id="buttonAddTabs">add tabs</ui5-button>
+		</section>
 
 	</section>
 
@@ -868,6 +876,26 @@
 
 		radioGroupContentDesign.addEventListener("change", function (e) {
 			tabContainerBackgroundDesign.contentBackgroundDesign = e.target.text;
+		});
+
+		let tabIndex = 1;
+		document.getElementById("buttonAddTabs").addEventListener("click", function () {
+			const tabcontainer = document.getElementById("tabContainerAddTabsProgrammatically");
+
+			tabcontainer.items.forEach(item => (item.selected = false));
+
+			function addTab(selected = false) {
+				tabcontainer.appendChild(
+					Object.assign(document.createElement("ui5-tab"), {
+						text: `Tab ${++tabIndex}`,
+						selected
+					})
+				);
+			}
+
+			addTab(true);
+			addTab();
+			addTab();
 		});
 
 	</script>

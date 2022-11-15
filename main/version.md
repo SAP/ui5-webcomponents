@@ -1,19 +1,19 @@
-commit 951f09a1a5e3db9bdc3052537c2774e816f0ae12
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Tue Nov 15 09:20:54 2022 +0200
+commit e73ec210df94ffc10cec8ac6a17d22354962ac46
+Author: kskondov <konstantin.kondov@sap.com>
+Date:   Tue Nov 15 11:26:28 2022 +0200
 
-    feat(ui5-menu): add open/opener functionality and open/close events (#5984)
+    fix(ui5-tabcontainer): adding selected tab programatically deselects previously selected tab (#6036)
     
-    * feat(ui5-menu): add open/opener functionality and open/close-related events
+    * fix(ui5-tabcontainer): only one tab can be selected
     
-    * feat(ui5-menu): fix failing test
+    Fixes: #5932
     
-    * feat(ui5-menu): fix failing test again
+    * fix(ui5-tabcontainer): only one tab can be selected
     
-    * feat(ui5-menu): fix last test
+    Addressed review comments
     
-    * feat(ui5-menu): fix last test again
+    * fix(ui5-tabcontainer): improve sample
     
-    * feat(ui5-menu): fix last test (another)
+    Fixes: #5932
     
-    * feat(ui5-menu): fix all tests finally
+    * fix(ui5-tabcontainer): added tests
