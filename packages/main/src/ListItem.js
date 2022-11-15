@@ -21,6 +21,9 @@ import {
 import styles from "./generated/themes/ListItem.css.js";
 import HasPopup from "./types/HasPopup.js";
 
+// Icons
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
+
 /**
  * @public
  */
@@ -30,9 +33,9 @@ const metadata = {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.
-		 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
+		 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
 		 * <br><br>
-		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
+		 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *
 		 * @type {sap.ui.webcomponents.main.types.ListItemType}
@@ -131,6 +134,18 @@ const metadata = {
 			noAttribute: true,
 		},
 
+		/**
+		 * The navigated state of the list item.
+		 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+		 *
+		 * @public
+		 * @type {boolean}
+		 * @since 1.10.0
+		 */
+		navigated: {
+			type: Boolean,
+		},
+
 		_level: {
 			type: Integer,
 		},
@@ -220,7 +235,7 @@ class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering(...params) {
-		this.actionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
+		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._mode !== ListMode.Delete);
 	}
 
 	onEnterDOM() {
@@ -238,13 +253,14 @@ class ListItem extends ListItemBase {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
-		const itemActive = this.type === ListItemType.Active;
+		const itemActive = this.type === ListItemType.Active,
+			  itemNavigated = this.typeNavigation;
 
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if ((isSpace(event) || isEnter(event)) && itemActive) {
+		if ((isSpace(event) || isEnter(event)) && (itemActive || itemNavigated)) {
 			this.activate();
 		}
 
@@ -318,7 +334,7 @@ class ListItem extends ListItemBase {
 	}
 
 	activate() {
-		if (this.type === ListItemType.Active) {
+		if (this.type === ListItemType.Active || this.type === ListItemType.Navigation) {
 			this.active = true;
 		}
 	}
@@ -386,6 +402,10 @@ class ListItem extends ListItemBase {
 
 	get typeDetail() {
 		return this.type === ListItemType.Detail;
+	}
+
+	get typeNavigation() {
+		return this.type === ListItemType.Navigation;
 	}
 
 	get typeActive() {
