@@ -230,11 +230,11 @@ class SideNavigation extends UI5Element {
 	}
 
 	get ariaRoleDescPopoverNavigationList() {
-		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC);
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC);
 	}
 
 	get ariaRoleDescPopoverNavigationListItem() {
-		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC);
+		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC);
 	}
 
 	get ariaRoleDescNavigationList() {

@@ -6,32 +6,34 @@
 >
 	<span id="{{_id}}-sideNavigationPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
 
-	<ui5-list
+	<ui5-tree
 		mode="None"
-		.ariaRoleDescription="{{ariaRoleDescPopoverNavigationList}}"
+		.accessibleRoleDescription="{{ariaRoleDescPopoverNavigationList}}"
 		accessible-role="tree"
 		@ui5-item-click="{{handleListItemClick}}"
 	>
-		<ui5-li
+		<ui5-tree-item
 			title="{{_popoverContent.mainItem._tooltip}}"
+			text="{{_popoverContent.mainItem.text}}"
 			accessible-role="treeitem"
 			_level="1"
 			aria-selected="{{this.selected}}"
-			.ariaRoleDescription="{{ariaRoleDescPopoverNavigationListItem}}"
+			.accessibleRoleDescription="{{ariaRoleDescPopoverNavigationListItem}}"
 			?selected="{{_popoverContent.mainItemSelected}}"
 			.associatedItem="{{_popoverContent.mainItem}}"
-		>{{_popoverContent.mainItem.text}}</ui5-li>
+		></ui5-tree-item>
 
 		{{#each _popoverContent.subItems}}
-			<ui5-li
+			<ui5-tree-item
 				title="{{this._tooltip}}"
+				text="{{this.text}}"
 				accessible-role="treeitem"
 				_level="2"
 				aria-selected="{{this.selected}}"
-				.ariaRoleDescription="{{ariaRoleDescPopoverNavigationListItem}}"
+				.accessibleRoleDescription="{{ariaRoleDescPopoverNavigationListItem}}"
 				?selected="{{this.selected}}"
 				.associatedItem="{{this}}"
-			>{{this.text}}</ui5-li>
+			></ui5-tree-item>
 		{{/each}}
-	</ui5-list>
+	</ui5-tree>
 </ui5-responsive-popover>

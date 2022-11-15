@@ -2,6 +2,7 @@
 
 .ui5-side-navigation-popover::part(content) {
 	padding: 0;
+	--_ui5-tree-toggle-box-width: 1rem;
 }
 
 .ui5-hidden-text {
