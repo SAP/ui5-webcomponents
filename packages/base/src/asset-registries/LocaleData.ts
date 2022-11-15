@@ -6,7 +6,7 @@ import { getFeature } from "../FeaturesRegistry.js";
 import type OpenUI5Support from "../features/OpenUI5Support";
 
 const defaultLocale = DEFAULT_LOCALE as string;
-const supportedtLocale = SUPPORTED_LOCALES as string;
+const supportedLocales = SUPPORTED_LOCALES as string;
 
 type LocaleDataLoader = (locale: string) => Promise<CLDRData>;
 type CLDRData = Record<string, object | boolean | string>;
@@ -57,7 +57,7 @@ const calcLocale = (language: string, region: string, script: string) => {
 
 	// try language + region
 	let localeId = `${language}_${region}`;
-	if (supportedtLocale.includes(localeId)) {
+	if (supportedLocales.includes(localeId)) {
 		if (loaders.has(localeId)) {
 			// supported and has loader
 			return localeId;
