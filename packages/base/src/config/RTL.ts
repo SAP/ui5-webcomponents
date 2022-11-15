@@ -28,7 +28,7 @@ const impliesRTL = (language: string) => {
  * and if not set using the currently set language or the navigator language if the language is not explicitly set.
  * @returns {boolean} whether RTL should be used
  */
-const getRTL = () => {
+const getRTL = (): boolean => {
 	const configurationRTL = getConfiguredRTL();
 
 	if (configurationRTL !== undefined) {

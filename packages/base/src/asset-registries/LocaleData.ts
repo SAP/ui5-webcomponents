@@ -130,7 +130,7 @@ const fetchCldr = async (language: string, region: string, script: string) => {
 		const cldrContent = openUI5Support.getLocaleDataObject();
 		if (cldrContent) {
 			// only if openui5 actually returned valid content
-			setLocaleData(localeId, cldrContent as CLDRData);
+			setLocaleData(localeId, cldrContent);
 			return;
 		}
 	}
@@ -169,4 +169,8 @@ export {
 	registerLocaleDataLoader,
 	fetchCldr,
 	getLocaleData,
+};
+
+export type {
+	CLDRData,
 };

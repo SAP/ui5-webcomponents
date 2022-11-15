@@ -25,7 +25,7 @@ class DataType {
 		return attributeValue;
 	}
 
-	static propertyToAttribute(propertyValue: any): string | null {
+	static propertyToAttribute(propertyValue: PropertyValue): string | null {
 		return propertyValue === null ? null : String(propertyValue);
 	}
 

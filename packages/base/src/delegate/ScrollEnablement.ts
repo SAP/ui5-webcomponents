@@ -1,7 +1,7 @@
 import { supportsTouch } from "../Device.js";
 import EventProvider from "../EventProvider.js";
 import scroll from "../animations/scroll.js";
-import UI5Element from "../UI5Element.js";
+import type UI5Element from "../UI5Element.js";
 
 const scrollEventName = "scroll";
 const touchEndEventName = supportsTouch() ? "touchend" : "mouseup";

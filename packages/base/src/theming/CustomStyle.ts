@@ -2,7 +2,7 @@ import { reRenderAllUI5Elements } from "../Render.js";
 import getSharedResource from "../getSharedResource.js";
 import EventProvider from "../EventProvider.js";
 
-type CustomCSSChangeCallback = (tag: string) => any;
+type CustomCSSChangeCallback = (tag: string) => void;
 
 const eventProvider = getSharedResource("CustomStyle.eventProvider", new EventProvider<string, void>());
 const CUSTOM_CSS_CHANGE = "CustomCSSChange";

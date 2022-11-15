@@ -63,13 +63,9 @@ const parseThemeMetadata = (metadataString: string) => {
 	}
 };
 
-const processThemeMetadata = (metadata: ThemeMetadata | undefined): ThemeDescriptor | undefined => {
+const processThemeMetadata = (metadata: ThemeMetadata): ThemeDescriptor | undefined => {
 	let themeName;
 	let baseThemeName;
-
-	if (!metadata) {
-		return;
-	}
 
 	try {
 		themeName = metadata.Path.match(/\.([^.]+)\.css_variables$/)![1];
@@ -95,7 +91,10 @@ const getThemeDesignerTheme = (): ThemeDescriptor | undefined => {
 	}
 
 	const metadata = parseThemeMetadata(metadataString);
-	return processThemeMetadata(metadata);
+
+	if (metadata) {
+		return processThemeMetadata(metadata);
+	}
 };
 
 export default getThemeDesignerTheme;

@@ -1,6 +1,6 @@
 import EventProvider from "../EventProvider.js";
 
-type DirectionChangeCallback = () => any;
+type DirectionChangeCallback = () => void;
 
 const eventProvider = new EventProvider<undefined, void>();
 const DIR_CHANGE = "directionChange";

@@ -7,8 +7,8 @@ import {
 	isTabPrevious,
 } from "../Keys.js";
 
-import UI5Element from "../UI5Element.js";
-import OpenUI5Element from "./OpenUI5Element.js";
+import type UI5Element from "../UI5Element.js";
+import type OpenUI5Element from "./OpenUI5Element.js";
 import { StyleData } from "../ManagedStyles.js";
 
 const busyIndicatorMetadata = {
@@ -47,13 +47,13 @@ class OpenUI5Enablement {
 		return templateResult;
 	}
 
-	static enrichBusyIndicatorSettings(element: typeof UI5Element) {
-		OpenUI5Enablement.enrichBusyIndicatorMetadata(element);
-		OpenUI5Enablement.enrichBusyIndicatorMethods(element.prototype);
+	static enrichBusyIndicatorSettings(klass: typeof UI5Element) {
+		OpenUI5Enablement.enrichBusyIndicatorMetadata(klass);
+		OpenUI5Enablement.enrichBusyIndicatorMethods(klass.prototype);
 	}
 
-	static enrichBusyIndicatorMetadata(element: typeof UI5Element) {
-		element.metadata = merge(element.metadata, busyIndicatorMetadata);
+	static enrichBusyIndicatorMetadata(klass: typeof UI5Element) {
+		klass.metadata = merge(klass.metadata, busyIndicatorMetadata);
 	}
 
 	static enrichBusyIndicatorMethods(UI5ElementPrototype: typeof OpenUI5Element.prototype) {

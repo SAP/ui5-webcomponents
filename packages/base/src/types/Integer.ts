@@ -1,3 +1,4 @@
+import { PropertyValue } from "../UI5ElementMetadata.js";
 import DataType from "./DataType.js";
 
 /**
@@ -16,7 +17,7 @@ class Integer extends DataType {
 		return Number.isInteger(value);
 	}
 
-	static override attributeToProperty(attributeValue: string) {
+	static override attributeToProperty(attributeValue: string): PropertyValue {
 		return parseInt(attributeValue);
 	}
 }

@@ -4,7 +4,7 @@ import { getThemeRoot as getConfiguredThemeRoot } from "../InitialConfiguration.
 
 let themeRoot: string | undefined;
 
-const getThemeRoot = () => {
+const getThemeRoot = (): string | undefined => {
 	if (themeRoot === undefined) {
 		themeRoot = getConfiguredThemeRoot();
 	}

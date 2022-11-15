@@ -1,3 +1,4 @@
+import { PropertyValue } from "../UI5ElementMetadata.js";
 import DataType from "./DataType.js";
 
 /**
@@ -16,7 +17,7 @@ class Float extends DataType {
 		return Number(value) === value;
 	}
 
-	static override attributeToProperty(attributeValue: string) {
+	static override attributeToProperty(attributeValue: string): PropertyValue {
 		return parseFloat(attributeValue);
 	}
 }

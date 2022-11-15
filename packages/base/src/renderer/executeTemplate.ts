@@ -1,5 +1,5 @@
 import { getCustomElementsScopingSuffix, shouldScopeCustomElement } from "../CustomElementsScopeUtils.js";
-import UI5Element from "../UI5Element.js";
+import type UI5Element from "../UI5Element.js";
 
 type TemplateFunction = (component: UI5Element, tagsToScope: Array<string>, scope: string | undefined) => object;
 

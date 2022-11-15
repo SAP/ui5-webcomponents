@@ -1,8 +1,9 @@
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 import { getCurrentZIndex } from "../util/PopupUtils.js";
+import { CLDRData } from "../asset-registries/LocaleData.js";
 
-type OpenUI5PopupType = {
+type OpenUI5Popup = {
 	setInitialZIndex: (zIndex: number) => void,
 	getNextZIndex: () => number,
 };
@@ -29,7 +30,7 @@ type LocaleData = {
 
 type Locale = {
 	getFirstDayOfWeek: () => number,
-	_get: () => object,
+	_get: () => CLDRData,
 };
 
 const getCore = () => {
@@ -49,7 +50,7 @@ class OpenUI5Support {
 
 		return new Promise<void>(resolve => {
 			core.attachInit(() => {
-				window.sap.ui.require(["sap/ui/core/LocaleData", "sap/ui/core/Popup"], (LocaleData: LocaleData, Popup: OpenUI5PopupType) => {
+				window.sap.ui.require(["sap/ui/core/LocaleData", "sap/ui/core/Popup"], (LocaleData: LocaleData, Popup: OpenUI5Popup) => {
 					Popup.setInitialZIndex(getCurrentZIndex());
 					resolve();
 				});
@@ -127,7 +128,7 @@ class OpenUI5Support {
 			return;
 		}
 
-		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5PopupType;
+		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5Popup;
 		return Popup.getNextZIndex();
 	}
 
@@ -137,7 +138,7 @@ class OpenUI5Support {
 			return;
 		}
 
-		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5PopupType;
+		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5Popup;
 		Popup.setInitialZIndex(getCurrentZIndex());
 	}
 }

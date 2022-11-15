@@ -24,7 +24,7 @@ const shouldNotFireOriginalEvent = (eventName: string) => {
  * @public
  * @returns { NoConflictData }
  */
-const getNoConflict = () => {
+const getNoConflict = (): NoConflictData => {
 	if (noConflict === undefined) {
 		noConflict = getConfiguredNoConflict();
 	}

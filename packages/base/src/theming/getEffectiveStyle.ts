@@ -1,7 +1,7 @@
 import { getCustomCSS, attachCustomCSSChange } from "./CustomStyle.js";
 import getStylesString from "./getStylesString.js";
 import { getFeature } from "../FeaturesRegistry.js";
-import UI5Element from "../UI5Element.js";
+import type UI5Element from "../UI5Element.js";
 import OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 
 const effectiveStyleMap = new Map<string, string>();
