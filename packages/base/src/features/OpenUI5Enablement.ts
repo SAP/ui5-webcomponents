@@ -20,7 +20,7 @@ const busyIndicatorMetadata = {
 };
 
 class OpenUI5Enablement {
-	static wrapTemplateResultInBusyMarkup(html: (strings: TemplateStringsArray, ...values: unknown[]) => TemplateResult, host: OpenUI5Element, templateResult: TemplateResult) {
+	static wrapTemplateResultInBusyMarkup(html: (strings: TemplateStringsArray, ...values: Array<unknown>) => TemplateResult, host: OpenUI5Element, templateResult: TemplateResult) {
 		if (host.isOpenUI5Component && host.__isBusy) {
 			templateResult = html`
 			<div class="busy-indicator-wrapper">

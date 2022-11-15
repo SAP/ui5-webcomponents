@@ -105,7 +105,7 @@ abstract class UI5Element extends HTMLElement {
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
-	static render: (...args: any[]) => any;
+	static render: (...args: Array<any>) => any;
 
 	constructor() {
 		super();

@@ -17,7 +17,7 @@ const getResizeObserver = () => {
 	return resizeObserver;
 };
 
-let observe = (element: HTMLElement, callback: ResizeObserverCallback) => {
+const observe = (element: HTMLElement, callback: ResizeObserverCallback) => {
 	const callbacks = observedElements.get(element) || [];
 
 	// if no callbacks have been added for this element - start observing it
@@ -29,7 +29,7 @@ let observe = (element: HTMLElement, callback: ResizeObserverCallback) => {
 	observedElements.set(element, [...callbacks, callback]);
 };
 
-let unobserve = (element: HTMLElement, callback: ResizeObserverCallback) => {
+const unobserve = (element: HTMLElement, callback: ResizeObserverCallback) => {
 	const callbacks = observedElements.get(element) || [];
 	if (callbacks.length === 0) {
 		return;
@@ -90,26 +90,6 @@ class ResizeHandler {
 			console.warn("Cannot deregister ResizeHandler for element", element); // eslint-disable-line
 		}
 	}
-
-	/**
-	 * Set a function to be executed whenever a DOM node needs to be observed for size change.
-	 * @public
-	 * @param fn
-	 */
-	// @ts-ignore
-	const setResizeHandlerObserveFn = fn => {
-		observe = fn;
-	};
-
-	/**
-	 * Set a function to be executed whenever a DOM node needs to no longer be observed for size changes
-	 * @public
-	 * @param fn
-	 */
-	// @ts-ignore
-	const setResizeHandlerUnobserveFn = fn => {
-		unobserve = fn;
-	};
 }
 
 export default ResizeHandler;

@@ -11,13 +11,13 @@ import type { LitStatic } from "../CustomElementsScope.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 import UI5Element, { StylesDescriptor } from "../UI5Element.js";
 
-const effectiveHtml = (strings: TemplateStringsArray, ...values: unknown[]) => {
+const effectiveHtml = (strings: TemplateStringsArray, ...values: Array<unknown>) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
 	const fn = litStatic ? litStatic.html : html;
 	return fn(strings, ...values);
 };
 
-const effectiveSvg = (strings: TemplateStringsArray, ...values: unknown[]) => {
+const effectiveSvg = (strings: TemplateStringsArray, ...values: Array<unknown>) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
 	const fn = litStatic ? litStatic.svg : svg;
 	return fn(strings, ...values);
