@@ -1076,11 +1076,8 @@ class Input extends UI5Element {
 			event.stopImmediatePropagation();
 		}
 
-		// If you type a float value like 1.5 with a dot as a separator the values during typing are
-		// "1 => 1"
-		// "1. => ''"  <-- this causes troubles
-		// "1.5 => 1.5"
-		if (this.type === "Number" && Number.isNaN(event.target.valueAsNumber) && !(event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")) {
+		// Keep inner value during typing of numbers with dots as decimal separator
+		if (this.isTypeNumber && Number.isNaN(event.target.valueAsNumber) && !(event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")) {
 			this._keepInnerValue = true;
 		}
 
