@@ -21,7 +21,7 @@
 
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.fb9cd19a.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.232e8ece.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Tree.html.74fe2a1d.css'>
 </head>
 
@@ -125,6 +125,20 @@
 	</ui5-tree>
 	<ui5-input id="selectionChangeTargetItemResult" placeholder="selectionChange targetItem result"></ui5-input>
 
+	<br><br>
+
+	<ui5-label id="tree-navigated items">Tree with navigated items</ui5-label>
+	<ui5-tree>
+		<ui5-tree-item navigated text="Tree 1 - this item is already navigated" >
+			<ui5-tree-item navigated text="Tree 1.1" ></ui5-tree-item>
+		</ui5-tree-item>
+		<ui5-tree-item navigated text="Tree 2 - this item is already navigated" >
+			<ui5-tree-item navigated text="Tree 2.1" ></ui5-tree-item>
+		</ui5-tree-item>
+		<ui5-tree-item  text="Tree 3" >
+			<ui5-tree-item text="Tree 3.1" ></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree>
 	<script>
 		const mouseOverInput = document.getElementById("mouseover-counter");
 		const mouseOutInput = document.getElementById("mouseout-counter");

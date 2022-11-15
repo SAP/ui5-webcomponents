@@ -11,7 +11,7 @@
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.fb9cd19a.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.232e8ece.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/List.html.65a3c4b3.css'>
 </head>
 
@@ -97,6 +97,22 @@
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list id="navigationListItems" header-text="API: ListItem type='Navigation'">
+		<ui5-li type="Navigation">Navigation item</ui5-li>
+		<ui5-li type="Navigation" icon="navigation-right-arrow">Navigation item</ui5-li>
+	</ui5-list>
+	<br />
+
+	<br/><br/>
+
+	<ui5-list id="navigatedItems" header-text="API: navigated" >
+		<ui5-li type="Navigation" navigated>Navigated item</ui5-li>
+		<ui5-li type="Navigation" navigated>Navigated item</ui5-li>
+	</ui5-list>
+	<br />
 
 	<br/><br/>
 

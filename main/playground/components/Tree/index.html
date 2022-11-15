@@ -6427,6 +6427,18 @@ The user can use the following keyboard shortcuts to perform selection, when the
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          navigated
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            The navigated state of the list item. If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.10.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           selected
                             <br>
                         </div>
@@ -6436,7 +6448,7 @@ The user can use the following keyboard shortcuts to perform selection, when the
                             Defines whether the tree node is selected by the user. Only has effect if the <code>ui5-tree</code> is in one of the following modes: in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code>.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           text
                             <br>
@@ -6445,6 +6457,17 @@ The user can use the following keyboard shortcuts to perform selection, when the
                         <div class="cell api-table-content-cell">&quot;&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the text of the tree item.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          type
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.ListItemType</div>
+                        <div class="cell api-table-content-cell">&quot;Active&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the visual indication and behavior of the list items. Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>. <br><br> <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover, while with type <code>Inactive</code> and <code>Detail</code> - will not.
                         </div>
                       </div>
             
