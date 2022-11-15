@@ -376,7 +376,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1668178772
+  buildTime: 1668496941
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -26153,7 +26153,7 @@ class MultiInput extends Input {
   }
 }
 MultiInput.define();
-const block0$T = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-responsive-popover", tags, suffix)} id="${l(context._id)}-menu-rp" class="ui5-menu-rp" horizontal-align="Left" placement-type=${l(context.placementType)} vertical-align=${l(context.verticalAlign)} hide-arrow allow-target-overlap ?sub-menu=${context._isSubMenu} @before-close=${context._beforePopoverClose}>${context.isPhone ? block1$I(context, tags, suffix) : void 0}<div id="${l(context._id)}-menu-main">${context._currentItems.length ? block3$v(context, tags, suffix) : void 0}</div></${scopeTag("ui5-responsive-popover", tags, suffix)}><div class="ui5-menu-submenus"></div>` : effectiveHtml`<ui5-responsive-popover id="${l(context._id)}-menu-rp" class="ui5-menu-rp" horizontal-align="Left" placement-type=${l(context.placementType)} vertical-align=${l(context.verticalAlign)} hide-arrow allow-target-overlap ?sub-menu=${context._isSubMenu} @before-close=${context._beforePopoverClose}>${context.isPhone ? block1$I(context, tags, suffix) : void 0}<div id="${l(context._id)}-menu-main">${context._currentItems.length ? block3$v(context, tags, suffix) : void 0}</div></ui5-responsive-popover><div class="ui5-menu-submenus"></div>`;
+const block0$T = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-responsive-popover", tags, suffix)} id="${l(context._id)}-menu-rp" class="ui5-menu-rp" horizontal-align="Left" placement-type=${l(context.placementType)} vertical-align=${l(context.verticalAlign)} hide-arrow allow-target-overlap ?sub-menu=${context._isSubMenu} @ui5-before-open=${l(context._beforePopoverOpen)} @ui5-after-open=${l(context._afterPopoverOpen)} @ui5-before-close=${l(context._beforePopoverClose)} @ui5-after-close=${l(context._afterPopoverClose)}>${context.isPhone ? block1$I(context, tags, suffix) : void 0}<div id="${l(context._id)}-menu-main">${context._currentItems.length ? block3$v(context, tags, suffix) : void 0}</div></${scopeTag("ui5-responsive-popover", tags, suffix)}><div class="ui5-menu-submenus"></div>` : effectiveHtml`<ui5-responsive-popover id="${l(context._id)}-menu-rp" class="ui5-menu-rp" horizontal-align="Left" placement-type=${l(context.placementType)} vertical-align=${l(context.verticalAlign)} hide-arrow allow-target-overlap ?sub-menu=${context._isSubMenu} @ui5-before-open=${l(context._beforePopoverOpen)} @ui5-after-open=${l(context._afterPopoverOpen)} @ui5-before-close=${l(context._beforePopoverClose)} @ui5-after-close=${l(context._afterPopoverClose)}>${context.isPhone ? block1$I(context, tags, suffix) : void 0}<div id="${l(context._id)}-menu-main">${context._currentItems.length ? block3$v(context, tags, suffix) : void 0}</div></ui5-responsive-popover><div class="ui5-menu-submenus"></div>`;
 const block1$I = (context, tags, suffix) => suffix ? effectiveHtml`<div slot="header" class="ui5-menu-dialog-header">${context.isSubMenuOpened ? block2$A(context, tags, suffix) : void 0}<div class="ui5-menu-dialog-title"><div>${l(context.menuHeaderTextPhone)}</div></div><${scopeTag("ui5-button", tags, suffix)} icon="decline" design="Transparent" aria-label="${l(context.labelClose)}" @click=${context.close}></${scopeTag("ui5-button", tags, suffix)}></div>` : effectiveHtml`<div slot="header" class="ui5-menu-dialog-header">${context.isSubMenuOpened ? block2$A(context, tags, suffix) : void 0}<div class="ui5-menu-dialog-title"><div>${l(context.menuHeaderTextPhone)}</div></div><ui5-button icon="decline" design="Transparent" aria-label="${l(context.labelClose)}" @click=${context.close}></ui5-button></div>`;
 const block2$A = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-button", tags, suffix)} icon="nav-back" class="ui5-menu-back-button" design="Transparent" aria-label="${l(context.labelBack)}" @click=${context._navigateBack}></${scopeTag("ui5-button", tags, suffix)}>` : effectiveHtml`<ui5-button icon="nav-back" class="ui5-menu-back-button" design="Transparent" aria-label="${l(context.labelBack)}" @click=${context._navigateBack}></ui5-button>`;
 const block3$v = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-list", tags, suffix)} id="${l(context._id)}-menu-list" mode="None" separators="None" accessible-role="menu" @ui5-item-click=${l(context._itemClick)}>${c(context._currentItems, (item, index) => item._id || index, (item, index) => block4$t(item, index, context, tags, suffix))}</${scopeTag("ui5-list", tags, suffix)}>` : effectiveHtml`<ui5-list id="${l(context._id)}-menu-list" mode="None" separators="None" accessible-role="menu" @ui5-item-click=${l(context._itemClick)}>${c(context._currentItems, (item, index) => item._id || index, (item, index) => block4$t(item, index, context, tags, suffix))}</ui5-list>`;
@@ -26170,6 +26170,13 @@ const metadata$X = {
   properties: {
     headerText: {
       type: String
+    },
+    open: {
+      type: Boolean
+    },
+    opener: {
+      type: DOMReference,
+      defaultValue: ""
     },
     _isSubMenu: {
       type: Boolean,
@@ -26214,7 +26221,15 @@ const metadata$X = {
           type: String
         }
       }
-    }
+    },
+    "before-open": {},
+    "after-open": {},
+    "before-close": {
+      detail: {
+        escPressed: { type: Boolean }
+      }
+    },
+    "after-close": {}
   }
 };
 class Menu extends UI5Element {
@@ -26282,6 +26297,20 @@ class Menu extends UI5Element {
       item.item._siblingsWithIcon = itemsWithIcon;
     });
   }
+  onAfterRendering() {
+    if (!this.opener) {
+      return;
+    }
+    if (this.open) {
+      const rootNode = this.getRootNode();
+      const opener = this.opener instanceof HTMLElement ? this.opener : rootNode && rootNode.getElementById(this.opener);
+      if (opener) {
+        this.showAt(opener);
+      }
+    } else {
+      this.close();
+    }
+  }
   async showAt(opener) {
     if (isPhone()) {
       this._prepareCurrentItems(this.items);
@@ -26312,12 +26341,6 @@ class Menu extends UI5Element {
   async _getPopover() {
     this._popover = (await this.getStaticAreaItemDomRef()).querySelector("[ui5-responsive-popover]");
     return this._popover;
-  }
-  _beforePopoverClose() {
-    if (Object.keys(this._openedSubMenuItem).length) {
-      this._openedSubMenuItem._preventSubMenuClose = false;
-      this._closeItemSubMenu(this._openedSubMenuItem);
-    }
   }
   _navigateBack() {
     const parentMenuItem = this._parentItemsStack.pop();
@@ -26458,6 +26481,33 @@ class Menu extends UI5Element {
     } else if (isTablet()) {
       this._prepareSubMenuDesktopTablet(item, opener, actionId);
     }
+  }
+  _beforePopoverOpen(event) {
+    const prevented = !this.fireEvent("before-open", {}, true, false);
+    if (prevented) {
+      this.open = false;
+      event.preventDefault();
+    }
+  }
+  _afterPopoverOpen() {
+    this.open = true;
+    this.fireEvent("after-open");
+  }
+  _beforePopoverClose(event) {
+    const prevented = !this.fireEvent("before-close", { escPressed: event.detail.escPressed }, true, false);
+    if (prevented) {
+      this.open = true;
+      event.preventDefault();
+      return;
+    }
+    if (Object.keys(this._openedSubMenuItem).length) {
+      this._openedSubMenuItem._preventSubMenuClose = false;
+      this._closeItemSubMenu(this._openedSubMenuItem);
+    }
+  }
+  _afterPopoverClose() {
+    this.open = false;
+    this.fireEvent("after-close");
   }
 }
 Menu.define();
