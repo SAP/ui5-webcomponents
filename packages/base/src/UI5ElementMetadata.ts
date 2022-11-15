@@ -30,8 +30,8 @@ type PropertyValue = boolean | number | string | object | undefined | null | Dat
 type Metadata = {
 	tag: string,
 	managedSlots?: boolean,
-	properties?: {[key: string]: Property},
-	slots?: {[key: string]: Slot},
+	properties?: Record<string, Property>,
+	slots?: Record<string, Slot>,
 	events?: Array<object>,
 	fastNavigation?: boolean,
 	themeAware?: boolean,

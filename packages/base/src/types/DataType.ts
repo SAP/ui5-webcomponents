@@ -33,7 +33,7 @@ class DataType {
 		return value1 === value2;
 	}
 
-	static generateTypeAccessors(types: {[key: string]: string}) {
+	static generateTypeAccessors(types: Record<string, string>) {
 		Object.keys(types).forEach(type => {
 			Object.defineProperty(this, type, {
 				get() {
