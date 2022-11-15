@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
-import popinDisplay from "./types/TableCellPopinDisplayType.js";
+import TableCellPopinDisplayType from "./types/TableCellPopinDisplayType.js";
 
 // Styles
 import styles from "./generated/themes/TableColumn.css.js";
@@ -77,13 +77,13 @@ const metadata = {
 		 * <li><code>Inline</code></li>
 		 * </ul>
 		 *
-		 * @type {popinDisplay}
+		 * @type {TableCellPopinDisplayType}
 		 * @defaultvalue "Block"
 		 * @public
 		 */
 		popinDisplay: {
-			type: popinDisplay,
-			defaultValue: popinDisplay.Block,
+			type: TableCellPopinDisplayType,
+			defaultValue: TableCellPopinDisplayType.Block,
 		},
 
 		/**

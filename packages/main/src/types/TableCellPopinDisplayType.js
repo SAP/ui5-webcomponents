@@ -29,12 +29,12 @@ const DisplayType = {
  * @public
  * @enum {string}
  */
-class popinDisplay extends DataType {
+class TableCellPopinDisplayType extends DataType {
 	static isValid(value) {
 		return !!DisplayType[value];
 	}
 }
 
-popinDisplay.generateTypeAccessors(DisplayType);
+TableCellPopinDisplayType.generateTypeAccessors(DisplayType);
 
-export default popinDisplay;
+export default TableCellPopinDisplayType;
