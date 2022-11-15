@@ -59,16 +59,18 @@ describe("Attributes propagation", () => {
 
 	it("Tests aria-label is set to match the label text when label is for that text area", async () => {
 		const textArea = await browser.$("#taWithLabelID").shadow$("textarea");
+		const labelForTextArea = await browser.$("#lblForTextAreaID").shadow$("label");
 
-		const EXPECTED_ARIA_LABEL = "This should be in aria-label property of the text area";
+		const EXPECTED_ARIA_LABEL = await labelForTextArea.getText();
 		assert.strictEqual(await textArea.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correctly set internally.");
 	});
 
 	it("Tests aria-label is set directly from the property accessible-name of the text-area", async () => {
+		const textAreaComponent = await browser.$("#taWithLabelID2");
 		const textArea = await browser.$("#taWithLabelID2").shadow$("textarea");
 
-		const EXPECTED_ARIA_LABEL = "Here aria label should be this one";
+		const EXPECTED_ARIA_LABEL = await textAreaComponent.getProperty("accessibleName");
 		assert.strictEqual(await textArea.getAttribute("aria-label"), EXPECTED_ARIA_LABEL,
 			"The aria-label is correctly set internally.");
 	});
