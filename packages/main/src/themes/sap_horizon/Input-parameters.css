@@ -1,6 +1,8 @@
 @import "../base/Input-parameters.css";
 
 :root {
+	--_ui5_input_min_width: 2.75rem;
+	--_ui5_input_margin_top_bottom: 0.25rem;
 	--_ui5-input-border: none;
 	--_ui5_input_hover_border: none;
 	--_ui5_input_hover_box_shadow: var(--sapContent_Interaction_Shadow);
@@ -28,6 +30,8 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
+	--_ui5_input_min_width: 2rem;
+	--_ui5_input_margin_top_bottom: 0.1875rem;
 	--_ui5_input_information_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_input_error_warning_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_input_custom_icon_padding: .3125rem .5rem .25rem .5rem;
