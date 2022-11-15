@@ -29,7 +29,7 @@ const DisplayType = {
  * @public
  * @enum {string}
  */
-class TableCellPopinDisplayType extends DataType {
+class popinDisplay extends DataType {
 	static isValid(value) {
 		return !!DisplayType[value];
 	}
