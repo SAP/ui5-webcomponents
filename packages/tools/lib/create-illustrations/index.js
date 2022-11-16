@@ -49,10 +49,7 @@ const generate = async () => {
 		SimpleTask: ORIGINAL_TEXTS.NoTasks,
 		SuccessBalloon: ORIGINAL_TEXTS.BalloonSky,
 		SuccessCheckMark: ORIGINAL_TEXTS.SuccessScreen,
-		SuccessHighFive: ORIGINAL_TEXTS.BalloonSky,
-		UploadToCloud: ORIGINAL_TEXTS.UnableToUpload,
-		AddDimensions: ORIGINAL_TEXTS.NoData,
-		NoDimensionsSet: ORIGINAL_TEXTS.NoData,
+		SuccessHighFive: ORIGINAL_TEXTS.BalloonSky
 	};
 
 	const srcPath = process.argv[2];
