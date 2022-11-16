@@ -383,7 +383,7 @@ class TableRow extends UI5Element {
 					popinDisplayInline: popinDisplay,
 				});
 				cell.popined = true;
-				if(info.popinDisplay == "Inline") {
+				if (info.popinDisplay === "Inline") {
 					cell.popinedInl = true;
 				}
 			} else {
