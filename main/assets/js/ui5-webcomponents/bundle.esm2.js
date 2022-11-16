@@ -376,7 +376,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1668599349
+  buildTime: 1668606708
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -32925,7 +32925,7 @@ class TextArea extends UI5Element {
     return this.disabled ? void 0 : "0";
   }
   get ariaLabelText() {
-    const effectiveAriaLabelText = getEffectiveAriaLabelText(this);
+    const effectiveAriaLabelText = getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
     if (this.showExceededText) {
       if (effectiveAriaLabelText) {
         return `${effectiveAriaLabelText} ${this._exceededTextProps.exceededText}`;

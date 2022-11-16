@@ -1,5 +1,7 @@
-commit 0f9d9b93435fd646c4276bbe211a6e7f252d2cdc
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Wed Nov 16 13:47:38 2022 +0200
+commit e1b02714a79c30001af99b7ed689f723610d43a3
+Author: Dimitar Dimitrov <dimitar.nenov.dimitrov@abv.bg>
+Date:   Wed Nov 16 15:50:22 2022 +0200
 
-    fix(playground): remove role application from body (#6053)
+    feat(ui5-textarea): integrate label enablement support (#6027)
+    
+    FIXES: #5710
