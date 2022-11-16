@@ -1,11 +1,11 @@
 let groups: Array<HTMLElement> = [];
 
-const isFastNavGroupElemenet = ($el: HTMLElement) => {
-	return $el.getAttribute("data-sap-ui-fastnavgroup") === "true";
+const isFastNavGroupElemenet = (el: HTMLElement) => {
+	return el.getAttribute("data-sap-ui-fastnavgroup") === "true";
 };
 
-const isElementVisible = ($el: HTMLElement) => {
-	const style = window.getComputedStyle($el);
+const isElementVisible = (el: HTMLElement) => {
+	const style = window.getComputedStyle(el);
 
 	return style.width !== "0px"
 		&& style.height !== "0px"

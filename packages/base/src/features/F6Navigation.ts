@@ -8,7 +8,7 @@ class F6Navigation {
 	static _instance: F6Navigation;
 	keydownHandler: (event: KeyboardEvent) => void;
 	selectedGroup: HTMLElement | null = null;
-	groups: Array<HTMLElement | null> = [];
+	groups: Array<HTMLElement> = [];
 
 	constructor() {
 		this.keydownHandler = this._keydownHandler.bind(this) as (event: KeyboardEvent) => void;
@@ -29,8 +29,11 @@ class F6Navigation {
 
 			event.preventDefault();
 
-			const nextIndex = this.groups.indexOf(this.selectedGroup);
-			let nextElement = null;
+			let nextIndex = -1;
+			let nextElement;
+			if (this.selectedGroup) {
+				nextIndex = this.groups.indexOf(this.selectedGroup);
+			}
 
 			if (nextIndex > -1) {
 				if (nextIndex + 1 >= this.groups.length) {
@@ -42,8 +45,12 @@ class F6Navigation {
 				nextElement = this.groups[0];
 			}
 
-			const elementToFocus = await getFirstFocusableElement(instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement, true);
-			elementToFocus?.focus();
+			const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
+
+			if (nextElementDomRef) {
+				const elementToFocus = await getFirstFocusableElement(nextElementDomRef, true);
+				elementToFocus?.focus();
+			}
 		}
 
 		if (isF6Previous(event)) {
@@ -55,8 +62,11 @@ class F6Navigation {
 
 			event.preventDefault();
 
-			const nextIndex = this.groups.indexOf(this.selectedGroup);
-			let nextElement = null;
+			let nextIndex = -1;
+			let nextElement;
+			if (this.selectedGroup) {
+				nextIndex = this.groups.indexOf(this.selectedGroup);
+			}
 
 			if (nextIndex > 0) {
 				// Handle the situation where the first focusable element of two neighbor groups is the same
@@ -76,8 +86,12 @@ class F6Navigation {
 				nextElement = this.groups[this.groups.length - 1];
 			}
 
-			const elementToFocus = await getFirstFocusableElement(instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement, true);
-			elementToFocus?.focus();
+			const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
+
+			if (nextElementDomRef) {
+				const elementToFocus = await getFirstFocusableElement(nextElementDomRef, true);
+				elementToFocus?.focus();
+			}
 		}
 	}
 

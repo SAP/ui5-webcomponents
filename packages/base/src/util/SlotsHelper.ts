@@ -20,20 +20,20 @@ const getSlotName = (node: Node) => {
 	return "default";
 };
 
-const getSlottedElements = (el: Node) => {
-	if (el instanceof HTMLSlotElement) {
-		return el.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
+const getSlottedNodes = (node: Node) => {
+	if (node instanceof HTMLSlotElement) {
+		return node.assignedNodes({ flatten: true }).filter(item => item instanceof HTMLElement);
 	}
 
-	return [el];
+	return [node];
 };
 
-const getSlottedElementsList = (elList: Array<Node>) => {
-	return elList.reduce((acc, curr) => acc.concat(getSlottedElements(curr)), [] as Array<Node>);
+const getSlottedNodesList = (nodeList: Array<Node>) => {
+	return nodeList.reduce((acc, curr) => acc.concat(getSlottedNodes(curr)), [] as Array<Node>);
 };
 
 export {
 	getSlotName,
-	getSlottedElements,
-	getSlottedElementsList,
+	getSlottedNodes,
+	getSlottedNodesList,
 };

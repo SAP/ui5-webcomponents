@@ -1,6 +1,6 @@
 import DataType from "./types/DataType.js";
 import { camelToKebabCase } from "./util/StringHelper.js";
-import { getSlottedElements } from "./util/SlotsHelper.js";
+import { getSlottedNodes } from "./util/SlotsHelper.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 
 type SlotInvalidation = {
@@ -339,7 +339,7 @@ const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 };
 
 const validateSingleSlot = (value: Node, slotData: Slot) => {
-	value && getSlottedElements(value).forEach(el => {
+	value && getSlottedNodes(value).forEach(el => {
 		if (!(el instanceof slotData.type)) {
 			throw new Error(`The element is not of type ${slotData.type.toString()}`);
 		}

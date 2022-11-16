@@ -2,12 +2,12 @@ const getSingletonElementInstance = (tag: string, parentElement: HTMLElement = d
 	let el = document.querySelector(tag);
 
 	if (el) {
-		return el as Record<string, any>;
+		return el;
 	}
 
 	el = document.createElement(tag);
 
-	return parentElement.insertBefore(el, parentElement.firstChild) as Record<string, any>;
+	return parentElement.insertBefore(el, parentElement.firstChild);
 };
 
 export default getSingletonElementInstance;

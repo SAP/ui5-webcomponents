@@ -8,9 +8,15 @@ type StyleDataCSP = {
 };
 type StyleData = StyleDataCSP | string;
 
+type I18nDefaultText = {
+	key: string,
+	defaultText: string
+}
+
 export type {
 	PromiseResolve,
 	Timeout,
 	StyleData,
 	StyleDataCSP,
+	I18nDefaultText,
 };

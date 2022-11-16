@@ -1,13 +1,13 @@
-import isNodeHidden from "./isNodeHidden.js";
-import isNodeClickable from "./isNodeClickable.js";
+import isElementHidden from "./isElementHidden.js";
+import isElementClickable from "./isElementClickable.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
 
 const isFocusTrap = (el: HTMLElement) => {
 	return el.hasAttribute("data-ui5-focus-trap");
 };
 
-const getFirstFocusableElement = async (container: HTMLElement | null | undefined, startFromContainer: boolean): Promise<HTMLElement | null> => {
-	if (!container || isNodeHidden(container)) {
+const getFirstFocusableElement = async (container: HTMLElement, startFromContainer: boolean): Promise<HTMLElement | null> => {
+	if (!container || isElementHidden(container)) {
 		return null;
 	}
 
@@ -15,7 +15,7 @@ const getFirstFocusableElement = async (container: HTMLElement | null | undefine
 };
 
 const getLastFocusableElement = async (container: HTMLElement, startFromContainer: boolean) => {
-	if (!container || isNodeHidden(container)) {
+	if (!container || isElementHidden(container)) {
 		return null;
 	}
 
@@ -23,7 +23,7 @@ const getLastFocusableElement = async (container: HTMLElement, startFromContaine
 };
 
 const isElemFocusable = (el: HTMLElement) => {
-	return el.hasAttribute("data-ui5-focus-redirect") || !isNodeHidden(el);
+	return el.hasAttribute("data-ui5-focus-redirect") || !isElementHidden(el);
 };
 
 const findFocusableElement = async (container: HTMLElement, forward: boolean, startFromContainer?: boolean): Promise<HTMLElement | null> => {
@@ -56,7 +56,7 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 		}
 
 		if (child.nodeType === 1 && isElemFocusable(child) && !isFocusTrap(child)) {
-			if (isNodeClickable(child)) {
+			if (isElementClickable(child)) {
 				return (child && typeof child.focus === "function") ? child : null;
 			}
 

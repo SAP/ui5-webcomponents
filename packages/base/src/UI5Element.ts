@@ -19,7 +19,7 @@ import getEffectiveDir from "./locale/getEffectiveDir.js";
 import DataType from "./types/DataType.js";
 import { kebabToCamelCase, camelToKebabCase } from "./util/StringHelper.js";
 import isValidPropertyName from "./util/isValidPropertyName.js";
-import { getSlotName, getSlottedElementsList } from "./util/SlotsHelper.js";
+import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
@@ -805,7 +805,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	getSlottedNodes(this: Record<string, Array<SlotValue>>, slotName: string) {
-		return getSlottedElementsList(this[slotName]);
+		return getSlottedNodesList(this[slotName]);
 	}
 
 	/**

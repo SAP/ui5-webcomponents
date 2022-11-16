@@ -6,7 +6,7 @@ module.exports = {
 	"root": true,
 	"extends": "airbnb-base",
 	overrides: [{
-		files: ["*.ts", "*.tsx"],
+		files: ["*.ts"],
 		parser: "@typescript-eslint/parser",
 		plugins: ["@typescript-eslint"],
 		extends: [

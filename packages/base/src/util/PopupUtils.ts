@@ -4,11 +4,11 @@ import getActiveElement from "./getActiveElement.js";
 import type OpenUI5Support from "../features/OpenUI5Support.js";
 import type DOMReference from "../types/DOMReference.js";
 
-type PopupUtilsDataType = {
+type PopupUtilsData = {
 	currentZIndex: number
 };
 
-const PopupUtilsData = getSharedResource<PopupUtilsDataType>("PopupUtilsData", { currentZIndex: 100 });
+const popupUtilsData = getSharedResource<PopupUtilsData>("PopupUtilsData", { currentZIndex: 100 });
 
 const getFocusedElement = () => {
 	const element = getActiveElement() as HTMLElement;
@@ -26,11 +26,15 @@ const isFocusedElementWithinNode = (node: HTMLElement) => {
 };
 
 const isNodeContainedWithin = (parent: HTMLElement, child: HTMLElement): boolean => {
-	let currentNode = parent;
+	let currentNode: HTMLElement | undefined = parent;
 
 	if (currentNode.shadowRoot) {
 		const children = Array.from(currentNode.shadowRoot.children) as Array<HTMLElement>;
-		currentNode = children.find(n => n.localName !== "style")!;
+		currentNode = children.find(n => n.localName !== "style");
+
+		if (!currentNode) {
+			return false;
+		}
 	}
 
 	if (currentNode === child) {
@@ -67,7 +71,7 @@ const isClickInRect = (event: MouseEvent | TouchEvent, rect: DOMRect) => {
 	return isPointInRect(x, y, rect);
 };
 
-interface PopupInterface { // Replace with Popup.js
+interface PopupInterface { // Refactor: replace with Popup.js
 	showAt: (opener: DOMReference, preventInitialFocus: boolean) => Promise<void>,
 	open: boolean,
 }
@@ -92,12 +96,12 @@ const getNextZIndex = () => {
 		return openUI5Support.getNextZIndex();
 	}
 
-	PopupUtilsData.currentZIndex += 2;
-	return PopupUtilsData.currentZIndex;
+	popupUtilsData.currentZIndex += 2;
+	return popupUtilsData.currentZIndex;
 };
 
 const getCurrentZIndex = () => {
-	return PopupUtilsData.currentZIndex;
+	return popupUtilsData.currentZIndex;
 };
 
 export {

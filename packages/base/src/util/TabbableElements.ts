@@ -1,19 +1,19 @@
-import isNodeTabbable from "./isNodeTabbable.js";
+import isElementTabbable from "./isElementTabbable.js";
 
-const getTabbableElements = (node: HTMLElement) => {
-	return getTabbables([...node.children]);
+const getTabbableElements = (el: HTMLElement) => {
+	return getTabbables([...el.children]);
 };
 
-const getLastTabbableElement = (node: HTMLElement) => {
-	const tabbables = getTabbables([...node.children]);
+const getLastTabbableElement = (el: HTMLElement) => {
+	const tabbables = getTabbables([...el.children]);
 	return tabbables.length ? tabbables[tabbables.length - 1] : null;
 };
 
 const getTabbables = (nodes: Array<Node>, tabbables?: Array<HTMLElement>) => {
-	const tabbablesNodes = tabbables || [];
+	const tabbableElements = tabbables || [];
 
 	if (!nodes) {
-		return tabbablesNodes;
+		return tabbableElements;
 	}
 
 	nodes.forEach(currentNode => {
@@ -36,18 +36,18 @@ const getTabbables = (nodes: Array<Node>, tabbables?: Array<HTMLElement>) => {
 			return;
 		}
 
-		if (isNodeTabbable(currentElement)) {
-			tabbablesNodes.push(currentElement);
+		if (isElementTabbable(currentElement)) {
+			tabbableElements.push(currentElement);
 		}
 
 		if (currentElement.tagName === "SLOT") {
-			getTabbables((currentElement as HTMLSlotElement).assignedNodes() as Array<HTMLElement>, tabbablesNodes);
+			getTabbables((currentElement as HTMLSlotElement).assignedNodes() as Array<HTMLElement>, tabbableElements);
 		} else {
-			getTabbables([...currentElement.children], tabbablesNodes);
+			getTabbables([...currentElement.children], tabbableElements);
 		}
 	});
 
-	return tabbablesNodes;
+	return tabbableElements;
 };
 
 export {

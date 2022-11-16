@@ -14,14 +14,14 @@ const getEffectiveAriaLabelText = (el: HTMLElement) => {
 		return undefined;
 	}
 
-	return getAriaLabelledByTexts(el);
+	return _getAriaLabelledByTexts(el);
 };
 
 /**
  *
  * @param {HTMLElement} el Defines the HTMLElement, for which you need to get all related texts
  */
-const getAriaLabelledByTexts = (el: HTMLElement) => {
+const _getAriaLabelledByTexts = (el: HTMLElement) => {
 	const ids = (el as AccessibleElement).accessibleNameRef.split(" ");
 	const owner = el.getRootNode() as HTMLElement;
 	let result = "";
@@ -59,6 +59,5 @@ const getAssociatedLabelForTexts = (el: HTMLElement) => {
 
 export {
 	getEffectiveAriaLabelText,
-	getAriaLabelledByTexts,
 	getAssociatedLabelForTexts,
 };

@@ -13,7 +13,7 @@ const getSharedResourcesInstance = () => getSingletonElementInstance("ui5-shared
  */
 const getSharedResource = <T>(namespace: string, initialValue: T): T => {
 	const parts = namespace.split(".");
-	let current = getSharedResourcesInstance();
+	let current = getSharedResourcesInstance() as Record<string, any>;
 
 	for (let i = 0; i < parts.length; i++) {
 		const part = parts[i];
