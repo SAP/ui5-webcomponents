@@ -82,6 +82,7 @@ const metadata = {
 		 * <ul>
 		 * <li><code>AddColumn</code></li>
 		 * <li><code>AddPeople</code></li>
+		 * <li><code>AddDimensions</code></li>
 		 * <li><code>BalloonSky</code></li>
 		 * <li><code>BeforeSearch</code></li>
 		 * <li><code>Connection</code></li>
@@ -103,6 +104,7 @@ const metadata = {
 		 * <li><code>NoSearchResults</code></li>
 		 * <li><code>NoTasks_v1</code></li>
 		 * <li><code>NoTasks</code></li>
+		 * <li><code>NoDimensionsSet</code></li>
 		 * <li><code>PageNotFound</code></li>
 		 * <li><code>ReloadScreen</code></li>
 		 * <li><code>ResizeColumn</code></li>
@@ -132,6 +134,7 @@ const metadata = {
 		 * <li><code>UnableToLoad</code></li>
 		 * <li><code>UnableToLoadImage</code></li>
 		 * <li><code>UnableToUpload</code></li>
+		 * <li><code>UploadToCloud</code></li>
 		 * <li><code>UploadCollection</code></li>
 		 * <li><code>TntChartArea</code></li>
 		 * <li><code>TntChartArea2</code></li>
