@@ -39,7 +39,7 @@ var fnIsPlainObject$1 = function(obj) {
   return typeof Ctor === "function" && fnToString$1.call(Ctor) === ObjectFunctionString$1;
 };
 var oToken$1 = /* @__PURE__ */ Object.create(null);
-var fnMerge$2 = function() {
+var fnMerge$2 = function(arg1, arg2, arg3, arg4) {
   var src, copyIsArray, copy, name2, options, clone, target = arguments[2] || {}, i2 = 3, length = arguments.length, deep = arguments[0] || false, skipToken = arguments[1] ? void 0 : oToken$1;
   if (typeof target !== "object" && typeof target !== "function") {
     target = {};
@@ -68,13 +68,8 @@ var fnMerge$2 = function() {
   }
   return target;
 };
-var fnMerge$1 = function() {
-  var args = [
-    true,
-    false
-  ];
-  args.push.apply(args, arguments);
-  return fnMerge$2.apply(null, args);
+const fnMerge$1 = function(arg1, arg2) {
+  return fnMerge$2(true, false, ...arguments);
 };
 const assetParameters = { "themes": { "default": "sap_fiori_3", "all": ["sap_fiori_3", "sap_fiori_3_dark", "sap_belize", "sap_belize_hcb", "sap_belize_hcw", "sap_fiori_3_hcb", "sap_fiori_3_hcw", "sap_horizon", "sap_horizon_dark", "sap_horizon_hcb", "sap_horizon_hcw", "sap_horizon_exp"] }, "languages": { "default": "en", "all": ["ar", "bg", "ca", "cs", "cy", "da", "de", "el", "en", "en_GB", "en_US_sappsd", "en_US_saprigi", "en_US_saptrc", "es", "es_MX", "et", "fi", "fr", "fr_CA", "hi", "hr", "hu", "in", "it", "iw", "ja", "kk", "ko", "lt", "lv", "ms", "nl", "no", "pl", "pt_PT", "pt", "ro", "ru", "sh", "sk", "sl", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_TW"] }, "locales": { "default": "en", "all": ["ar", "ar_EG", "ar_SA", "bg", "ca", "cs", "da", "de", "de_AT", "de_CH", "el", "el_CY", "en", "en_AU", "en_GB", "en_HK", "en_IE", "en_IN", "en_NZ", "en_PG", "en_SG", "en_ZA", "es", "es_AR", "es_BO", "es_CL", "es_CO", "es_MX", "es_PE", "es_UY", "es_VE", "et", "fa", "fi", "fr", "fr_BE", "fr_CA", "fr_CH", "fr_LU", "he", "hi", "hr", "hu", "id", "it", "it_CH", "ja", "kk", "ko", "lt", "lv", "ms", "nb", "nl", "nl_BE", "pl", "pt", "pt_PT", "ro", "ru", "ru_UA", "sk", "sl", "sr", "sr_Latn", "sv", "th", "tr", "uk", "vi", "zh_CN", "zh_HK", "zh_SG", "zh_TW"] } };
 const DEFAULT_THEME = assetParameters.themes.default;
@@ -115,14 +110,22 @@ const validateThemeRoot = (themeRoot2) => {
   } catch (e2) {
   }
 };
+var AnimationMode;
+(function(AnimationMode2) {
+  AnimationMode2["Full"] = "full";
+  AnimationMode2["Basic"] = "basic";
+  AnimationMode2["Minimal"] = "minimal";
+  AnimationMode2["None"] = "none";
+})(AnimationMode || (AnimationMode = {}));
+var AnimationMode$1 = AnimationMode;
 let initialized = false;
 let initialConfig = {
-  animationMode: "full",
+  animationMode: AnimationMode$1.Full,
   theme: DEFAULT_THEME,
-  themeRoot: null,
-  rtl: null,
-  language: null,
-  calendarType: null,
+  themeRoot: void 0,
+  rtl: void 0,
+  language: void 0,
+  calendarType: void 0,
   noConflict: false,
   formatSettings: {},
   fetchDefaultLanguage: false
@@ -222,11 +225,11 @@ const applyURLParam = (key, value, paramType) => {
   }
 };
 const applyOpenUI5Configuration = () => {
-  const OpenUI5Support2 = getFeature("OpenUI5Support");
-  if (!OpenUI5Support2 || !OpenUI5Support2.isLoaded()) {
+  const openUI5Support = getFeature("OpenUI5Support");
+  if (!openUI5Support || !openUI5Support.isLoaded()) {
     return;
   }
-  const OpenUI5Config = OpenUI5Support2.getConfigurationSettingsObject();
+  const OpenUI5Config = openUI5Support.getConfigurationSettingsObject();
   initialConfig = fnMerge$1(initialConfig, OpenUI5Config);
 };
 const initConfiguration = () => {
@@ -340,13 +343,6 @@ class RenderQueue {
     }
   }
 }
-const setToArray = (s2) => {
-  const arr = [];
-  s2.forEach((item) => {
-    arr.push(item);
-  });
-  return arr;
-};
 const getSingletonElementInstance = (tag, parentElement = document.body) => {
   let el = document.querySelector(tag);
   if (el) {
@@ -376,7 +372,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1668606708
+  buildTime: 1668607777
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -385,10 +381,11 @@ const Runtimes = getSharedResource("Runtimes", []);
 const registerCurrentRuntime = () => {
   if (currentRuntimeIndex === void 0) {
     currentRuntimeIndex = Runtimes.length;
+    const versionInfo = VersionInfo;
     Runtimes.push({
-      ...VersionInfo,
+      ...versionInfo,
       alias: currentRuntimeAlias,
-      description: `Runtime ${currentRuntimeIndex} - ver ${VersionInfo.version}${currentRuntimeAlias ? ` (${currentRuntimeAlias})` : ""}`
+      description: `Runtime ${currentRuntimeIndex} - ver ${versionInfo.version}${currentRuntimeAlias ? ` (${currentRuntimeAlias})` : ""}`
     });
   }
 };
@@ -433,9 +430,9 @@ const getAllRuntimes = () => {
 };
 const Tags = getSharedResource("Tags", /* @__PURE__ */ new Map());
 const Definitions = /* @__PURE__ */ new Set();
-let Failures = {};
+let Failures = /* @__PURE__ */ new Map();
 let failureTimeout;
-const UNKNOWN_RUNTIME = "unknown";
+const UNKNOWN_RUNTIME = -1;
 const registerTag = (tag) => {
   Definitions.add(tag);
   Tags.set(tag, getCurrentRuntimeIndex());
@@ -444,19 +441,21 @@ const isTagRegistered = (tag) => {
   return Definitions.has(tag);
 };
 const getAllRegisteredTags = () => {
-  return setToArray(Definitions);
+  return [...Definitions.values()];
 };
 const recordTagRegistrationFailure = (tag) => {
   let tagRegRuntimeIndex = Tags.get(tag);
   if (tagRegRuntimeIndex === void 0) {
     tagRegRuntimeIndex = UNKNOWN_RUNTIME;
   }
-  Failures[tagRegRuntimeIndex] = Failures[tagRegRuntimeIndex] || /* @__PURE__ */ new Set();
-  Failures[tagRegRuntimeIndex].add(tag);
+  if (!Failures.has(tagRegRuntimeIndex)) {
+    Failures.set(tagRegRuntimeIndex, /* @__PURE__ */ new Set());
+  }
+  Failures.get(tagRegRuntimeIndex).add(tag);
   if (!failureTimeout) {
     failureTimeout = setTimeout(() => {
       displayFailedRegistrations();
-      Failures = {};
+      Failures = /* @__PURE__ */ new Map();
       failureTimeout = void 0;
     }, 1e3);
   }
@@ -471,7 +470,7 @@ const displayFailedRegistrations = () => {
 Loading order (versions before 1.1.0 not listed): ${allRuntimes.map((runtime) => `
 ${runtime.description}`).join("")}`;
   }
-  Object.keys(Failures).forEach((otherRuntimeIndex) => {
+  [...Failures.keys()].forEach((otherRuntimeIndex) => {
     let comparison;
     let otherRuntime;
     if (otherRuntimeIndex === UNKNOWN_RUNTIME) {
@@ -493,7 +492,7 @@ ${runtime.description}`).join("")}`;
     }
     message = `${message}
 
-"${currentRuntime.description}" failed to define ${Failures[otherRuntimeIndex].size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntime.description}": ${setToArray(Failures[otherRuntimeIndex]).sort().join(", ")}.`;
+"${currentRuntime.description}" failed to define ${Failures.get(otherRuntimeIndex).size} tag(s) as they were defined by a runtime of ${compareWord} version "${otherRuntime.description}": ${[...Failures.get(otherRuntimeIndex)].sort().join(", ")}.`;
     if (comparison > 0) {
       message = `${message}
 WARNING! If your code uses features of the above web components, unavailable in ${otherRuntime.description}, it might not work as expected!`;
@@ -588,10 +587,11 @@ const _resolveTaskPromise = () => {
 };
 const reRenderAllUI5Elements = async (filters) => {
   registeredElements.forEach((element) => {
-    const tag = element.constructor.getMetadata().getTag();
-    const rtlAware = isRtlAware(element.constructor);
-    const languageAware = element.constructor.getMetadata().isLanguageAware();
-    const themeAware = element.constructor.getMetadata().isThemeAware();
+    const ctor = element.constructor;
+    const tag = ctor.getMetadata().getTag();
+    const rtlAware = isRtlAware(ctor);
+    const languageAware = ctor.getMetadata().isLanguageAware();
+    const themeAware = ctor.getMetadata().isThemeAware();
     if (!filters || filters.tag === tag || filters.rtlAware && rtlAware || filters.languageAware && languageAware || filters.themeAware && themeAware) {
       renderDeferred(element);
     }
@@ -628,7 +628,8 @@ const _getThemeProperties = async (packageName2, themeName) => {
   let data;
   try {
     data = await loader(themeName);
-  } catch (e2) {
+  } catch (error) {
+    const e2 = error;
     console.error(packageName2, e2.message);
     return;
   }
@@ -639,22 +640,26 @@ const _getThemeProperties = async (packageName2, themeName) => {
 const getRegisteredPackages = () => {
   return registeredPackages;
 };
-const isThemeRegistered = (theme2) => {
-  return registeredThemes.has(theme2);
+const isThemeRegistered = (theme) => {
+  return registeredThemes.has(theme);
 };
-const createStyleInHead = (cssText, attributes = {}) => {
+const createStyleInHead = (cssText, attributes) => {
   const style = document.createElement("style");
   style.type = "text/css";
-  Object.entries(attributes).forEach((pair) => style.setAttribute(...pair));
+  if (attributes) {
+    Object.entries(attributes).forEach((pair) => style.setAttribute(...pair));
+  }
   style.textContent = cssText;
   document.head.appendChild(style);
   return style;
 };
-const createLinkInHead = (href, attributes = {}) => {
+const createLinkInHead = (href, attributes) => {
   const link = document.createElement("link");
   link.type = "text/css";
   link.rel = "stylesheet";
-  Object.entries(attributes).forEach((pair) => link.setAttribute(...pair));
+  if (attributes) {
+    Object.entries(attributes).forEach((pair) => link.setAttribute(...pair));
+  }
   link.href = href;
   document.head.appendChild(link);
   return new Promise((resolve) => {
@@ -669,7 +674,12 @@ const setPackageCSSRoot = (packageName2, root) => {
   roots.set(packageName2, root);
 };
 const getUrl = (packageName2, path) => {
-  return `${roots.get(packageName2)}${path}`;
+  const packageCSSRoot = roots.get(packageName2);
+  if (!packageCSSRoot) {
+    console.warn(`Root path to the CSS resources ${packageName2} not provided - use "setPackageCSSRoot" to provide the root.`);
+    return "";
+  }
+  return `${packageCSSRoot}${path}`;
 };
 const setUseLinks = (use) => {
   useLinks = use;
@@ -704,11 +714,18 @@ const createStyle = (data, name2, value = "") => {
 const updateStyle = (data, name2, value = "") => {
   const content = typeof data === "string" ? data : data.content;
   if (shouldUseLinks()) {
-    document.querySelector(`head>link[${name2}="${value}"]`).href = getUrl(data.packageName, data.fileName);
+    const link = document.querySelector(`head>link[${name2}="${value}"]`);
+    link.href = getUrl(data.packageName, data.fileName);
   } else if (document.adoptedStyleSheets) {
-    document.adoptedStyleSheets.find((sh) => sh._ui5StyleId === getStyleId(name2, value)).replaceSync(content || "");
+    const stylesheet = document.adoptedStyleSheets.find((sh) => sh._ui5StyleId === getStyleId(name2, value));
+    if (stylesheet) {
+      stylesheet.replaceSync(content || "");
+    }
   } else {
-    document.querySelector(`head>style[${name2}="${value}"]`).textContent = content || "";
+    const style = document.querySelector(`head>style[${name2}="${value}"]`);
+    if (style) {
+      style.textContent = content || "";
+    }
   }
 };
 const hasStyle = (name2, value = "") => {
@@ -721,18 +738,15 @@ const hasStyle = (name2, value = "") => {
   return !!document.querySelector(`head>style[${name2}="${value}"]`);
 };
 const removeStyle = (name2, value = "") => {
+  var _a, _b;
   if (shouldUseLinks()) {
     const linkElement = document.querySelector(`head>link[${name2}="${value}"]`);
-    if (linkElement) {
-      linkElement.parentElement.removeChild(linkElement);
-    }
+    (_a = linkElement == null ? void 0 : linkElement.parentElement) == null ? void 0 : _a.removeChild(linkElement);
   } else if (document.adoptedStyleSheets) {
     document.adoptedStyleSheets = document.adoptedStyleSheets.filter((sh) => sh._ui5StyleId !== getStyleId(name2, value));
   } else {
     const styleElement = document.querySelector(`head > style[${name2}="${value}"]`);
-    if (styleElement) {
-      styleElement.parentElement.removeChild(styleElement);
-    }
+    (_b = styleElement == null ? void 0 : styleElement.parentElement) == null ? void 0 : _b.removeChild(styleElement);
   }
 };
 const createOrUpdateStyle = (data, name2, value = "") => {
@@ -810,7 +824,9 @@ const getThemeDesignerTheme = () => {
     return;
   }
   const metadata2 = parseThemeMetadata(metadataString);
-  return processThemeMetadata(metadata2);
+  if (metadata2) {
+    return processThemeMetadata(metadata2);
+  }
 };
 const eventProvider$4 = new EventProvider();
 const THEME_LOADED = "themeLoaded";
@@ -820,8 +836,8 @@ const attachThemeLoaded = (listener) => {
 const detachThemeLoaded = (listener) => {
   eventProvider$4.detachEvent(THEME_LOADED, listener);
 };
-const fireThemeLoaded = (theme2) => {
-  return eventProvider$4.fireEvent(THEME_LOADED, theme2);
+const fireThemeLoaded = (theme) => {
+  return eventProvider$4.fireEvent(THEME_LOADED, theme);
 };
 let themeRoot;
 const getThemeRoot = () => {
@@ -830,26 +846,26 @@ const getThemeRoot = () => {
   }
   return themeRoot;
 };
-const formatThemeLink = (theme2) => {
-  return `${getThemeRoot()}Base/baseLib/${theme2}/css_variables.css`;
+const formatThemeLink = (theme) => {
+  return `${getThemeRoot()}Base/baseLib/${theme}/css_variables.css`;
 };
-const attachCustomThemeStylesToHead = async (theme2) => {
-  const link = document.querySelector(`[sap-ui-webcomponents-theme="${theme2}"]`);
+const attachCustomThemeStylesToHead = async (theme) => {
+  const link = document.querySelector(`[sap-ui-webcomponents-theme="${theme}"]`);
   if (link) {
     document.head.removeChild(link);
   }
-  await createLinkInHead(formatThemeLink(theme2), { "sap-ui-webcomponents-theme": theme2 });
+  await createLinkInHead(formatThemeLink(theme), { "sap-ui-webcomponents-theme": theme });
 };
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
 const isThemeBaseRegistered = () => {
   const registeredPackages2 = getRegisteredPackages();
   return registeredPackages2.has(BASE_THEME_PACKAGE);
 };
-const loadThemeBase = async (theme2) => {
+const loadThemeBase = async (theme) => {
   if (!isThemeBaseRegistered()) {
     return;
   }
-  const cssData = await getThemeProperties(BASE_THEME_PACKAGE, theme2);
+  const cssData = await getThemeProperties(BASE_THEME_PACKAGE, theme);
   if (cssData) {
     createOrUpdateStyle(cssData, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
   }
@@ -857,64 +873,67 @@ const loadThemeBase = async (theme2) => {
 const deleteThemeBase = () => {
   removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
 };
-const loadComponentPackages = async (theme2) => {
+const loadComponentPackages = async (theme) => {
   const registeredPackages2 = getRegisteredPackages();
-  registeredPackages2.forEach(async (packageName2) => {
+  const packagesStylesPromises = [...registeredPackages2].map(async (packageName2) => {
     if (packageName2 === BASE_THEME_PACKAGE) {
       return;
     }
-    const cssData = await getThemeProperties(packageName2, theme2);
+    const cssData = await getThemeProperties(packageName2, theme);
     if (cssData) {
       createOrUpdateStyle(cssData, "data-ui5-theme-properties", packageName2);
     }
   });
+  return Promise.all(packagesStylesPromises);
 };
-const detectExternalTheme = async (theme2) => {
+const detectExternalTheme = async (theme) => {
+  var _a;
   const extTheme = getThemeDesignerTheme();
   if (extTheme) {
     return extTheme;
   }
-  const OpenUI5Support2 = getFeature("OpenUI5Support");
-  if (OpenUI5Support2) {
-    const varsLoaded = OpenUI5Support2.cssVariablesLoaded();
+  const openUI5Support = getFeature("OpenUI5Support");
+  if (openUI5Support) {
+    const varsLoaded = openUI5Support.cssVariablesLoaded();
     if (varsLoaded) {
       return {
-        themeName: OpenUI5Support2.getConfigurationSettingsObject().theme
+        themeName: (_a = openUI5Support.getConfigurationSettingsObject()) == null ? void 0 : _a.theme,
+        baseThemeName: ""
       };
     }
   } else if (getThemeRoot()) {
-    await attachCustomThemeStylesToHead(theme2);
+    await attachCustomThemeStylesToHead(theme);
     return getThemeDesignerTheme();
   }
 };
-const applyTheme = async (theme2) => {
-  const extTheme = await detectExternalTheme(theme2);
-  if (!extTheme || theme2 !== extTheme.themeName) {
-    await loadThemeBase(theme2);
+const applyTheme = async (theme) => {
+  const extTheme = await detectExternalTheme(theme);
+  if (!extTheme || theme !== extTheme.themeName) {
+    await loadThemeBase(theme);
   } else {
     deleteThemeBase();
   }
-  const packagesTheme = isThemeRegistered(theme2) ? theme2 : extTheme && extTheme.baseThemeName;
-  await loadComponentPackages(packagesTheme);
-  fireThemeLoaded(theme2);
+  const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
+  await loadComponentPackages(packagesTheme || DEFAULT_THEME);
+  fireThemeLoaded(theme);
 };
-let theme;
+let curTheme;
 const getTheme = () => {
-  if (theme === void 0) {
-    theme = getTheme$1();
+  if (curTheme === void 0) {
+    curTheme = getTheme$1();
   }
-  return theme;
+  return curTheme;
 };
-const setTheme = async (newTheme) => {
-  if (theme === newTheme) {
+const setTheme = async (theme) => {
+  if (curTheme === theme) {
     return;
   }
-  theme = newTheme;
-  await applyTheme(theme);
+  curTheme = theme;
+  await applyTheme(curTheme);
   await reRenderAllUI5Elements({ themeAware: true });
 };
-const isThemeFamily = (_theme) => {
-  return getTheme().startsWith(_theme);
+const isThemeFamily = (theme) => {
+  return getTheme().startsWith(theme);
 };
 const getActiveElement = () => {
   let element = document.activeElement;
@@ -923,8 +942,7 @@ const getActiveElement = () => {
   }
   return element;
 };
-const PopupUtilsData = getSharedResource("PopupUtilsData", {});
-PopupUtilsData.currentZIndex = PopupUtilsData.currentZIndex || 100;
+const popupUtilsData = getSharedResource("PopupUtilsData", { currentZIndex: 100 });
 const getFocusedElement = () => {
   const element = getActiveElement();
   return element && typeof element.focus === "function" ? element : null;
@@ -939,7 +957,11 @@ const isFocusedElementWithinNode = (node) => {
 const isNodeContainedWithin = (parent, child) => {
   let currentNode = parent;
   if (currentNode.shadowRoot) {
-    currentNode = Array.from(currentNode.shadowRoot.children).find((n2) => n2.localName !== "style");
+    const children = Array.from(currentNode.shadowRoot.children);
+    currentNode = children.find((n2) => n2.localName !== "style");
+    if (!currentNode) {
+      return false;
+    }
   }
   if (currentNode === child) {
     return true;
@@ -948,6 +970,7 @@ const isNodeContainedWithin = (parent, child) => {
   if (childNodes) {
     return Array.from(childNodes).some((n2) => isNodeContainedWithin(n2, child));
   }
+  return false;
 };
 const isPointInRect = (x2, y2, rect) => {
   return x2 >= rect.left && x2 <= rect.right && y2 >= rect.top && y2 <= rect.bottom;
@@ -955,7 +978,7 @@ const isPointInRect = (x2, y2, rect) => {
 const isClickInRect = (event, rect) => {
   let x2;
   let y2;
-  if (event.touches) {
+  if (event instanceof TouchEvent) {
     const touch2 = event.touches[0];
     x2 = touch2.clientX;
     y2 = touch2.clientY;
@@ -965,125 +988,119 @@ const isClickInRect = (event, rect) => {
   }
   return isPointInRect(x2, y2, rect);
 };
+function instanceOfPopup(object) {
+  return "isUI5Element" in object && "showAt" in object;
+}
 const getClosedPopupParent = (el) => {
   const parent = el.parentElement || el.getRootNode && el.getRootNode().host;
-  if (parent && (parent.showAt && parent.isUI5Element || parent.open && parent.isUI5Element || parent === document.documentElement)) {
+  if (parent && (instanceOfPopup(parent) || parent === document.documentElement)) {
     return parent;
   }
   return getClosedPopupParent(parent);
 };
-const getNextZIndex$1 = () => {
-  const OpenUI5Support2 = getFeature("OpenUI5Support");
-  if (OpenUI5Support2 && OpenUI5Support2.isLoaded()) {
-    return OpenUI5Support2.getNextZIndex();
+const getNextZIndex = () => {
+  const openUI5Support = getFeature("OpenUI5Support");
+  if (openUI5Support && openUI5Support.isLoaded()) {
+    return openUI5Support.getNextZIndex();
   }
-  PopupUtilsData.currentZIndex += 2;
-  return PopupUtilsData.currentZIndex;
+  popupUtilsData.currentZIndex += 2;
+  return popupUtilsData.currentZIndex;
 };
 const getCurrentZIndex = () => {
-  return PopupUtilsData.currentZIndex;
+  return popupUtilsData.currentZIndex;
 };
 const getCore = () => {
-  const sap = window.sap;
-  const core = sap && sap.ui && typeof sap.ui.getCore === "function" && sap.ui.getCore();
-  return core;
+  var _a, _b, _c;
+  return (_c = (_b = (_a = window.sap) == null ? void 0 : _a.ui) == null ? void 0 : _b.getCore) == null ? void 0 : _c.call(_b);
 };
-const isLoaded = () => {
-  return !!getCore();
-};
-const init = () => {
-  const core = getCore();
-  if (!core) {
-    return Promise.resolve();
+class OpenUI5Support {
+  static isLoaded() {
+    return !!getCore();
   }
-  return new Promise((resolve) => {
-    core.attachInit(() => {
-      window.sap.ui.require(["sap/ui/core/LocaleData", "sap/ui/core/Popup"], (LocaleData2, Popup2) => {
-        Popup2.setInitialZIndex(getCurrentZIndex());
-        resolve();
+  static init() {
+    const core = getCore();
+    if (!core) {
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      core.attachInit(() => {
+        window.sap.ui.require(["sap/ui/core/LocaleData", "sap/ui/core/Popup"], (LocaleData2, Popup2) => {
+          Popup2.setInitialZIndex(getCurrentZIndex());
+          resolve();
+        });
       });
     });
-  });
-};
-const getConfigurationSettingsObject = () => {
-  const core = getCore();
-  if (!core) {
-    return;
   }
-  const config = core.getConfiguration();
-  const LocaleData2 = window.sap.ui.require("sap/ui/core/LocaleData");
-  return {
-    animationMode: config.getAnimationMode(),
-    language: config.getLanguage(),
-    theme: config.getTheme(),
-    themeRoot: config.getThemeRoot(),
-    rtl: config.getRTL(),
-    calendarType: config.getCalendarType(),
-    formatSettings: {
-      firstDayOfWeek: LocaleData2 ? LocaleData2.getInstance(config.getLocale()).getFirstDayOfWeek() : void 0
+  static getConfigurationSettingsObject() {
+    const core = getCore();
+    if (!core) {
+      return;
     }
-  };
-};
-const getLocaleDataObject = () => {
-  const core = getCore();
-  if (!core) {
-    return;
+    const config = core.getConfiguration();
+    const LocaleData2 = window.sap.ui.require("sap/ui/core/LocaleData");
+    return {
+      animationMode: config.getAnimationMode(),
+      language: config.getLanguage(),
+      theme: config.getTheme(),
+      themeRoot: config.getThemeRoot(),
+      rtl: config.getRTL(),
+      calendarType: config.getCalendarType(),
+      formatSettings: {
+        firstDayOfWeek: LocaleData2 ? LocaleData2.getInstance(config.getLocale()).getFirstDayOfWeek() : void 0
+      }
+    };
   }
-  const config = core.getConfiguration();
-  const LocaleData2 = window.sap.ui.require("sap/ui/core/LocaleData");
-  return LocaleData2.getInstance(config.getLocale())._get();
-};
-const listenForThemeChange = () => {
-  const core = getCore();
-  const config = core.getConfiguration();
-  core.attachThemeChanged(async () => {
-    await setTheme(config.getTheme());
-  });
-};
-const attachListeners = () => {
-  const core = getCore();
-  if (!core) {
-    return;
+  static getLocaleDataObject() {
+    const core = getCore();
+    if (!core) {
+      return;
+    }
+    const config = core.getConfiguration();
+    const LocaleData2 = window.sap.ui.require("sap/ui/core/LocaleData");
+    return LocaleData2.getInstance(config.getLocale())._get();
   }
-  listenForThemeChange();
-};
-const cssVariablesLoaded = () => {
-  const core = getCore();
-  if (!core) {
-    return;
+  static _listenForThemeChange() {
+    const core = getCore();
+    const config = core.getConfiguration();
+    core.attachThemeChanged(async () => {
+      await setTheme(config.getTheme());
+    });
   }
-  const link = [...document.head.children].find((el) => el.id === "sap-ui-theme-sap.ui.core");
-  if (!link) {
-    return;
+  static attachListeners() {
+    const core = getCore();
+    if (!core) {
+      return;
+    }
+    OpenUI5Support._listenForThemeChange();
   }
-  return !!link.href.match(/\/css(-|_)variables\.css/);
-};
-const getNextZIndex = () => {
-  const core = getCore();
-  if (!core) {
-    return;
+  static cssVariablesLoaded() {
+    const core = getCore();
+    if (!core) {
+      return;
+    }
+    const link = [...document.head.children].find((el) => el.id === "sap-ui-theme-sap.ui.core");
+    if (!link) {
+      return;
+    }
+    return !!link.href.match(/\/css(-|_)variables\.css/);
   }
-  const Popup2 = window.sap.ui.require("sap/ui/core/Popup");
-  return Popup2.getNextZIndex();
-};
-const setInitialZIndex = () => {
-  const core = getCore();
-  if (!core) {
-    return;
+  static getNextZIndex() {
+    const core = getCore();
+    if (!core) {
+      return;
+    }
+    const Popup2 = window.sap.ui.require("sap/ui/core/Popup");
+    return Popup2.getNextZIndex();
   }
-  const Popup2 = window.sap.ui.require("sap/ui/core/Popup");
-  Popup2.setInitialZIndex(getCurrentZIndex());
-};
-const OpenUI5Support = {
-  isLoaded,
-  init,
-  getConfigurationSettingsObject,
-  getLocaleDataObject,
-  attachListeners,
-  cssVariablesLoaded,
-  getNextZIndex,
-  setInitialZIndex
-};
+  static setInitialZIndex() {
+    const core = getCore();
+    if (!core) {
+      return;
+    }
+    const Popup2 = window.sap.ui.require("sap/ui/core/Popup");
+    Popup2.setInitialZIndex(getCurrentZIndex());
+  }
+}
 registerFeature("OpenUI5Support", OpenUI5Support);
 const eventProvider$3 = new EventProvider();
 const LANG_CHANGE = "languageChange";
@@ -1098,23 +1115,23 @@ var detectNavigatorLanguage = () => {
   const navigatorLanguage = () => {
     return navigator.language;
   };
-  const rawLocale = browserLanguages && browserLanguages[0] || navigatorLanguage() || navigator.userLanguage || navigator.browserLanguage;
+  const rawLocale = browserLanguages && browserLanguages[0] || navigatorLanguage();
   return rawLocale || DEFAULT_LANGUAGE;
 };
-let language;
+let curLanguage;
 let fetchDefaultLanguage;
 const getLanguage = () => {
-  if (language === void 0) {
-    language = getLanguage$1();
+  if (curLanguage === void 0) {
+    curLanguage = getLanguage$1();
   }
-  return language;
+  return curLanguage;
 };
-const setLanguage = async (newLanguage) => {
-  if (language === newLanguage) {
+const setLanguage = async (language) => {
+  if (curLanguage === language) {
     return;
   }
-  language = newLanguage;
-  await fireLanguageChange(newLanguage);
+  curLanguage = language;
+  await fireLanguageChange(language);
   await reRenderAllUI5Elements({ languageAware: true });
 };
 const setFetchDefaultLanguage = (fetchDefaultLang) => {
@@ -1134,9 +1151,9 @@ class Locale$1 {
       throw new Error(`The given language ${sLocaleId} does not adhere to BCP-47.`);
     }
     this.sLocaleId = sLocaleId;
-    this.sLanguage = aResult[1] || null;
-    this.sScript = aResult[2] || null;
-    this.sRegion = aResult[3] || null;
+    this.sLanguage = aResult[1] || DEFAULT_LANGUAGE;
+    this.sScript = aResult[2] || "";
+    this.sRegion = aResult[3] || "";
     this.sVariant = aResult[4] && aResult[4].slice(1) || null;
     this.sExtension = aResult[5] && aResult[5].slice(1) || null;
     this.sPrivateUse = aResult[6] || null;
@@ -1216,13 +1233,15 @@ const convertToLocaleOrNull = (lang) => {
     }
   } catch (e2) {
   }
+  return new Locale$1(DEFAULT_LOCALE);
 };
 const getLocale = (lang) => {
   if (lang) {
     return convertToLocaleOrNull(lang);
   }
-  if (getLanguage()) {
-    return getLocaleInstance(getLanguage());
+  const configLanguage = getLanguage();
+  if (configLanguage) {
+    return getLocaleInstance(configLanguage);
   }
   return convertToLocaleOrNull(detectNavigatorLanguage());
 };
@@ -1243,23 +1262,23 @@ const _showAssetsWarningOnce$1 = (localeId) => {
   console.warn(`[LocaleData] Supported locale "${localeId}" not configured, import the "Assets.js" module from the webcomponents package you are using.`);
   warningShown$1 = true;
 };
-const calcLocale = (language2, region, script) => {
-  language2 = language2 && M_ISO639_OLD_TO_NEW$3[language2] || language2;
-  if (language2 === "no") {
-    language2 = "nb";
+const calcLocale = (language, region, script) => {
+  language = language && M_ISO639_OLD_TO_NEW$3[language] || language;
+  if (language === "no") {
+    language = "nb";
   }
-  if (language2 === "zh" && !region) {
+  if (language === "zh" && !region) {
     if (script === "Hans") {
       region = "CN";
     } else if (script === "Hant") {
       region = "TW";
     }
   }
-  if (language2 === "sh" || language2 === "sr" && script === "Latn") {
-    language2 = "sr";
+  if (language === "sh" || language === "sr" && script === "Latn") {
+    language = "sr";
     region = "Latn";
   }
-  let localeId = `${language2}_${region}`;
+  let localeId = `${language}_${region}`;
   if (SUPPORTED_LOCALES.includes(localeId)) {
     if (loaders$3.has(localeId)) {
       return localeId;
@@ -1267,7 +1286,7 @@ const calcLocale = (language2, region, script) => {
     _showAssetsWarningOnce$1(localeId);
     return DEFAULT_LOCALE;
   }
-  localeId = language2;
+  localeId = language;
   if (SUPPORTED_LOCALES.includes(localeId)) {
     if (loaders$3.has(localeId)) {
       return localeId;
@@ -1291,17 +1310,20 @@ const getLocaleData$1 = (localeId) => {
   return content;
 };
 const _loadCldrOnce = (localeId) => {
-  const loadCldr = loaders$3.get(localeId);
   if (!cldrPromises.get(localeId)) {
+    const loadCldr = loaders$3.get(localeId);
+    if (!loadCldr) {
+      throw new Error(`CLDR data for locale ${localeId} is not loaded!`);
+    }
     cldrPromises.set(localeId, loadCldr(localeId));
   }
   return cldrPromises.get(localeId);
 };
-const fetchCldr = async (language2, region, script) => {
-  const localeId = calcLocale(language2, region, script);
-  const OpenUI5Support2 = getFeature("OpenUI5Support");
-  if (OpenUI5Support2) {
-    const cldrContent = OpenUI5Support2.getLocaleDataObject();
+const fetchCldr = async (language, region, script) => {
+  const localeId = calcLocale(language, region, script);
+  const openUI5Support = getFeature("OpenUI5Support");
+  if (openUI5Support) {
+    const cldrContent = openUI5Support.getLocaleDataObject();
     if (cldrContent) {
       setLocaleData(localeId, cldrContent);
       return;
@@ -1310,7 +1332,8 @@ const fetchCldr = async (language2, region, script) => {
   try {
     const cldrContent = await _loadCldrOnce(localeId);
     setLocaleData(localeId, cldrContent);
-  } catch (e2) {
+  } catch (error) {
+    const e2 = error;
     if (!reportedErrors$1.has(e2.message)) {
       reportedErrors$1.add(e2.message);
       console.error(e2.message);
@@ -1320,8 +1343,9 @@ const fetchCldr = async (language2, region, script) => {
 const registerLocaleDataLoader = (localeId, loader) => {
   loaders$3.set(localeId, loader);
 };
-registerLocaleDataLoader("en", async (runtimeLocaleId) => {
-  return (await fetch(`https://sdk.openui5.org/1.103.0/resources/sap/ui/core/cldr/en.json`)).json();
+registerLocaleDataLoader("en", async () => {
+  const cldrContent = await fetch(`https://sdk.openui5.org/1.103.0/resources/sap/ui/core/cldr/en.json`);
+  return cldrContent.json();
 });
 attachLanguageChange(() => {
   const locale = getLocale();
@@ -1542,24 +1566,25 @@ const normalizeLocale = (locale) => {
     return DEFAULT_LOCALE;
   }
   if (typeof locale === "string" && (m2 = localeRegEX.exec(locale.replace(/_/g, "-")))) {
-    let language2 = m2[1].toLowerCase();
+    let language = m2[1].toLowerCase();
     let region = m2[3] ? m2[3].toUpperCase() : void 0;
     const script = m2[2] ? m2[2].toLowerCase() : void 0;
     const variants = m2[4] ? m2[4].slice(1) : void 0;
     const isPrivate = m2[6];
-    language2 = M_ISO639_NEW_TO_OLD[language2] || language2;
+    language = M_ISO639_NEW_TO_OLD[language] || language;
     if (isPrivate && (m2 = SAPSupportabilityLocales.exec(isPrivate)) || variants && (m2 = SAPSupportabilityLocales.exec(variants))) {
       return `en_US_${m2[1].toLowerCase()}`;
     }
-    if (language2 === "zh" && !region) {
+    if (language === "zh" && !region) {
       if (script === "hans") {
         region = "CN";
       } else if (script === "hant") {
         region = "TW";
       }
     }
-    return language2 + (region ? "_" + region + (variants ? "_" + variants.replace("-", "_") : "") : "");
+    return language + (region ? "_" + region + (variants ? "_" + variants.replace("-", "_") : "") : "");
   }
+  return DEFAULT_LOCALE;
 };
 const nextFallbackLocale = (locale) => {
   if (!locale) {
@@ -1596,7 +1621,7 @@ const _hasLoader = (packageName2, localeId) => {
 const _loadMessageBundleOnce = (packageName2, localeId) => {
   const bundleKey = `${packageName2}/${localeId}`;
   const loadMessageBundle = loaders$2.get(bundleKey);
-  if (!bundlePromises.get(bundleKey)) {
+  if (loadMessageBundle && !bundlePromises.get(bundleKey)) {
     bundlePromises.set(bundleKey, loadMessageBundle(localeId));
   }
   return bundlePromises.get(bundleKey);
@@ -1608,9 +1633,9 @@ const _showAssetsWarningOnce = (packageName2) => {
   }
 };
 const fetchI18nBundle = async (packageName2) => {
-  const language2 = getLocale().getLanguage();
+  const language = getLocale().getLanguage();
   const region = getLocale().getRegion();
-  let localeId = normalizeLocale(language2 + (region ? `-${region}` : ``));
+  let localeId = normalizeLocale(language + (region ? `-${region}` : ``));
   while (localeId !== DEFAULT_LANGUAGE && !_hasLoader(packageName2, localeId)) {
     localeId = nextFallbackLocale(localeId);
   }
@@ -1626,14 +1651,15 @@ const fetchI18nBundle = async (packageName2) => {
   try {
     const data = await _loadMessageBundleOnce(packageName2, localeId);
     _setI18nBundleData(packageName2, data);
-  } catch (e2) {
+  } catch (error) {
+    const e2 = error;
     if (!reportedErrors.has(e2.message)) {
       reportedErrors.add(e2.message);
       console.error(e2.message);
     }
   }
 };
-attachLanguageChange(() => {
+attachLanguageChange((lang) => {
   const allPackages = [...bundleData.keys()];
   return Promise.all(allPackages.map(fetchI18nBundle));
 });
@@ -2005,19 +2031,24 @@ const IconCollectionsAlias = {
   "horizon": "SAP-icons-v5"
 };
 const IconCollectionConfiguration = /* @__PURE__ */ new Map();
+var IconCollection;
+(function(IconCollection2) {
+  IconCollection2["v4"] = "SAP-icons";
+  IconCollection2["v5"] = "SAP-icons-v5";
+})(IconCollection || (IconCollection = {}));
 const getEffectiveDefaultIconCollection = () => {
   const currentTheme = getTheme();
   const currentThemeConfiguration = IconCollectionConfiguration.get(currentTheme);
   if (currentThemeConfiguration) {
     return currentThemeConfiguration;
   }
-  return isThemeFamily("sap_horizon") ? "SAP-icons-v5" : "SAP-icons";
+  return isThemeFamily("sap_horizon") ? IconCollection.v5 : IconCollection.v4;
 };
 const loaders$1 = /* @__PURE__ */ new Map();
 const registry$1 = getSharedResource("SVGIcons.registry", /* @__PURE__ */ new Map());
 const iconCollectionPromises = getSharedResource("SVGIcons.promises", /* @__PURE__ */ new Map());
 const ICON_NOT_FOUND$1 = "ICON_NOT_FOUND";
-const registerIconLoader = async (collectionName, loader) => {
+const registerIconLoader = (collectionName, loader) => {
   loaders$1.set(collectionName, loader);
 };
 const _loadIconCollectionOnce = async (collectionName) => {
@@ -2042,18 +2073,18 @@ const _fillRegistry = (bundleData2) => {
     });
   });
 };
-const registerIcon = (name2, { pathData: pathData2, ltr: ltr2, accData: accData2, collection: collection2, packageName: packageName2, customTemplate, viewBox } = {}) => {
-  if (!collection2) {
-    collection2 = getEffectiveDefaultIconCollection();
+const registerIcon = (name2, iconData) => {
+  if (!iconData.collection) {
+    iconData.collection = getEffectiveDefaultIconCollection();
   }
-  const key = `${collection2}/${name2}`;
+  const key = `${iconData.collection}/${name2}`;
   registry$1.set(key, {
-    pathData: pathData2,
-    ltr: ltr2,
-    accData: accData2,
-    packageName: packageName2,
-    customTemplate,
-    viewBox
+    pathData: iconData.pathData,
+    ltr: iconData.ltr,
+    accData: iconData.accData,
+    packageName: iconData.packageName,
+    customTemplate: iconData.customTemplate,
+    viewBox: iconData.viewBox
   });
 };
 const _parseName = (name2) => {
@@ -2068,16 +2099,17 @@ const _parseName = (name2) => {
   const registryKey = `${collection2}/${name2}`;
   return { name: name2, collection: collection2, registryKey };
 };
-const getIconDataSync = (nameProp) => {
-  const { registryKey } = _parseName(nameProp);
+const getIconDataSync = (name2) => {
+  const { registryKey } = _parseName(name2);
   return registry$1.get(registryKey);
 };
-const getIconData = async (nameProp) => {
-  const { collection: collection2, registryKey } = _parseName(nameProp);
+const getIconData = async (name2) => {
+  const { collection: collection2, registryKey } = _parseName(name2);
   let iconData = ICON_NOT_FOUND$1;
   try {
     iconData = await _loadIconCollectionOnce(collection2);
-  } catch (e2) {
+  } catch (error) {
+    const e2 = error;
     console.error(e2.message);
   }
   if (iconData === ICON_NOT_FOUND$1) {
@@ -2133,110 +2165,111 @@ const loadIconsBundle = async () => {
   return iconData;
 };
 registerIconLoader("business-suite", loadIconsBundle);
-const KeyCodes = {
-  BACKSPACE: 8,
-  TAB: 9,
-  ENTER: 13,
-  SHIFT: 16,
-  CONTROL: 17,
-  ALT: 18,
-  BREAK: 19,
-  CAPS_LOCK: 20,
-  ESCAPE: 27,
-  SPACE: 32,
-  PAGE_UP: 33,
-  PAGE_DOWN: 34,
-  END: 35,
-  HOME: 36,
-  ARROW_LEFT: 37,
-  ARROW_UP: 38,
-  ARROW_RIGHT: 39,
-  ARROW_DOWN: 40,
-  PRINT: 44,
-  INSERT: 45,
-  DELETE: 46,
-  DIGIT_0: 48,
-  DIGIT_1: 49,
-  DIGIT_2: 50,
-  DIGIT_3: 51,
-  DIGIT_4: 52,
-  DIGIT_5: 53,
-  DIGIT_6: 54,
-  DIGIT_7: 55,
-  DIGIT_8: 56,
-  DIGIT_9: 57,
-  A: 65,
-  B: 66,
-  C: 67,
-  D: 68,
-  E: 69,
-  F: 70,
-  G: 71,
-  H: 72,
-  I: 73,
-  J: 74,
-  K: 75,
-  L: 76,
-  M: 77,
-  N: 78,
-  O: 79,
-  P: 80,
-  Q: 81,
-  R: 82,
-  S: 83,
-  T: 84,
-  U: 85,
-  V: 86,
-  W: 87,
-  X: 88,
-  Y: 89,
-  Z: 90,
-  WINDOWS: 91,
-  CONTEXT_MENU: 93,
-  TURN_OFF: 94,
-  SLEEP: 95,
-  NUMPAD_0: 96,
-  NUMPAD_1: 97,
-  NUMPAD_2: 98,
-  NUMPAD_3: 99,
-  NUMPAD_4: 100,
-  NUMPAD_5: 101,
-  NUMPAD_6: 102,
-  NUMPAD_7: 103,
-  NUMPAD_8: 104,
-  NUMPAD_9: 105,
-  NUMPAD_ASTERISK: 106,
-  NUMPAD_PLUS: 107,
-  NUMPAD_MINUS: 109,
-  NUMPAD_COMMA: 110,
-  NUMPAD_SLASH: 111,
-  F1: 112,
-  F2: 113,
-  F3: 114,
-  F4: 115,
-  F5: 116,
-  F6: 117,
-  F7: 118,
-  F8: 119,
-  F9: 120,
-  F10: 121,
-  F11: 122,
-  F12: 123,
-  NUM_LOCK: 144,
-  SCROLL_LOCK: 145,
-  OPEN_BRACKET: 186,
-  PLUS: 187,
-  COMMA: 188,
-  SLASH: 189,
-  DOT: 190,
-  PIPE: 191,
-  SEMICOLON: 192,
-  MINUS: 219,
-  GREAT_ACCENT: 220,
-  EQUALS: 221,
-  SINGLE_QUOTE: 222,
-  BACKSLASH: 226
-};
+var KeyCodes;
+(function(KeyCodes2) {
+  KeyCodes2[KeyCodes2["BACKSPACE"] = 8] = "BACKSPACE";
+  KeyCodes2[KeyCodes2["TAB"] = 9] = "TAB";
+  KeyCodes2[KeyCodes2["ENTER"] = 13] = "ENTER";
+  KeyCodes2[KeyCodes2["SHIFT"] = 16] = "SHIFT";
+  KeyCodes2[KeyCodes2["CONTROL"] = 17] = "CONTROL";
+  KeyCodes2[KeyCodes2["ALT"] = 18] = "ALT";
+  KeyCodes2[KeyCodes2["BREAK"] = 19] = "BREAK";
+  KeyCodes2[KeyCodes2["CAPS_LOCK"] = 20] = "CAPS_LOCK";
+  KeyCodes2[KeyCodes2["ESCAPE"] = 27] = "ESCAPE";
+  KeyCodes2[KeyCodes2["SPACE"] = 32] = "SPACE";
+  KeyCodes2[KeyCodes2["PAGE_UP"] = 33] = "PAGE_UP";
+  KeyCodes2[KeyCodes2["PAGE_DOWN"] = 34] = "PAGE_DOWN";
+  KeyCodes2[KeyCodes2["END"] = 35] = "END";
+  KeyCodes2[KeyCodes2["HOME"] = 36] = "HOME";
+  KeyCodes2[KeyCodes2["ARROW_LEFT"] = 37] = "ARROW_LEFT";
+  KeyCodes2[KeyCodes2["ARROW_UP"] = 38] = "ARROW_UP";
+  KeyCodes2[KeyCodes2["ARROW_RIGHT"] = 39] = "ARROW_RIGHT";
+  KeyCodes2[KeyCodes2["ARROW_DOWN"] = 40] = "ARROW_DOWN";
+  KeyCodes2[KeyCodes2["PRINT"] = 44] = "PRINT";
+  KeyCodes2[KeyCodes2["INSERT"] = 45] = "INSERT";
+  KeyCodes2[KeyCodes2["DELETE"] = 46] = "DELETE";
+  KeyCodes2[KeyCodes2["DIGIT_0"] = 48] = "DIGIT_0";
+  KeyCodes2[KeyCodes2["DIGIT_1"] = 49] = "DIGIT_1";
+  KeyCodes2[KeyCodes2["DIGIT_2"] = 50] = "DIGIT_2";
+  KeyCodes2[KeyCodes2["DIGIT_3"] = 51] = "DIGIT_3";
+  KeyCodes2[KeyCodes2["DIGIT_4"] = 52] = "DIGIT_4";
+  KeyCodes2[KeyCodes2["DIGIT_5"] = 53] = "DIGIT_5";
+  KeyCodes2[KeyCodes2["DIGIT_6"] = 54] = "DIGIT_6";
+  KeyCodes2[KeyCodes2["DIGIT_7"] = 55] = "DIGIT_7";
+  KeyCodes2[KeyCodes2["DIGIT_8"] = 56] = "DIGIT_8";
+  KeyCodes2[KeyCodes2["DIGIT_9"] = 57] = "DIGIT_9";
+  KeyCodes2[KeyCodes2["A"] = 65] = "A";
+  KeyCodes2[KeyCodes2["B"] = 66] = "B";
+  KeyCodes2[KeyCodes2["C"] = 67] = "C";
+  KeyCodes2[KeyCodes2["D"] = 68] = "D";
+  KeyCodes2[KeyCodes2["E"] = 69] = "E";
+  KeyCodes2[KeyCodes2["F"] = 70] = "F";
+  KeyCodes2[KeyCodes2["G"] = 71] = "G";
+  KeyCodes2[KeyCodes2["H"] = 72] = "H";
+  KeyCodes2[KeyCodes2["I"] = 73] = "I";
+  KeyCodes2[KeyCodes2["J"] = 74] = "J";
+  KeyCodes2[KeyCodes2["K"] = 75] = "K";
+  KeyCodes2[KeyCodes2["L"] = 76] = "L";
+  KeyCodes2[KeyCodes2["M"] = 77] = "M";
+  KeyCodes2[KeyCodes2["N"] = 78] = "N";
+  KeyCodes2[KeyCodes2["O"] = 79] = "O";
+  KeyCodes2[KeyCodes2["P"] = 80] = "P";
+  KeyCodes2[KeyCodes2["Q"] = 81] = "Q";
+  KeyCodes2[KeyCodes2["R"] = 82] = "R";
+  KeyCodes2[KeyCodes2["S"] = 83] = "S";
+  KeyCodes2[KeyCodes2["T"] = 84] = "T";
+  KeyCodes2[KeyCodes2["U"] = 85] = "U";
+  KeyCodes2[KeyCodes2["V"] = 86] = "V";
+  KeyCodes2[KeyCodes2["W"] = 87] = "W";
+  KeyCodes2[KeyCodes2["X"] = 88] = "X";
+  KeyCodes2[KeyCodes2["Y"] = 89] = "Y";
+  KeyCodes2[KeyCodes2["Z"] = 90] = "Z";
+  KeyCodes2[KeyCodes2["WINDOWS"] = 91] = "WINDOWS";
+  KeyCodes2[KeyCodes2["CONTEXT_MENU"] = 93] = "CONTEXT_MENU";
+  KeyCodes2[KeyCodes2["TURN_OFF"] = 94] = "TURN_OFF";
+  KeyCodes2[KeyCodes2["SLEEP"] = 95] = "SLEEP";
+  KeyCodes2[KeyCodes2["NUMPAD_0"] = 96] = "NUMPAD_0";
+  KeyCodes2[KeyCodes2["NUMPAD_1"] = 97] = "NUMPAD_1";
+  KeyCodes2[KeyCodes2["NUMPAD_2"] = 98] = "NUMPAD_2";
+  KeyCodes2[KeyCodes2["NUMPAD_3"] = 99] = "NUMPAD_3";
+  KeyCodes2[KeyCodes2["NUMPAD_4"] = 100] = "NUMPAD_4";
+  KeyCodes2[KeyCodes2["NUMPAD_5"] = 101] = "NUMPAD_5";
+  KeyCodes2[KeyCodes2["NUMPAD_6"] = 102] = "NUMPAD_6";
+  KeyCodes2[KeyCodes2["NUMPAD_7"] = 103] = "NUMPAD_7";
+  KeyCodes2[KeyCodes2["NUMPAD_8"] = 104] = "NUMPAD_8";
+  KeyCodes2[KeyCodes2["NUMPAD_9"] = 105] = "NUMPAD_9";
+  KeyCodes2[KeyCodes2["NUMPAD_ASTERISK"] = 106] = "NUMPAD_ASTERISK";
+  KeyCodes2[KeyCodes2["NUMPAD_PLUS"] = 107] = "NUMPAD_PLUS";
+  KeyCodes2[KeyCodes2["NUMPAD_MINUS"] = 109] = "NUMPAD_MINUS";
+  KeyCodes2[KeyCodes2["NUMPAD_COMMA"] = 110] = "NUMPAD_COMMA";
+  KeyCodes2[KeyCodes2["NUMPAD_SLASH"] = 111] = "NUMPAD_SLASH";
+  KeyCodes2[KeyCodes2["F1"] = 112] = "F1";
+  KeyCodes2[KeyCodes2["F2"] = 113] = "F2";
+  KeyCodes2[KeyCodes2["F3"] = 114] = "F3";
+  KeyCodes2[KeyCodes2["F4"] = 115] = "F4";
+  KeyCodes2[KeyCodes2["F5"] = 116] = "F5";
+  KeyCodes2[KeyCodes2["F6"] = 117] = "F6";
+  KeyCodes2[KeyCodes2["F7"] = 118] = "F7";
+  KeyCodes2[KeyCodes2["F8"] = 119] = "F8";
+  KeyCodes2[KeyCodes2["F9"] = 120] = "F9";
+  KeyCodes2[KeyCodes2["F10"] = 121] = "F10";
+  KeyCodes2[KeyCodes2["F11"] = 122] = "F11";
+  KeyCodes2[KeyCodes2["F12"] = 123] = "F12";
+  KeyCodes2[KeyCodes2["NUM_LOCK"] = 144] = "NUM_LOCK";
+  KeyCodes2[KeyCodes2["SCROLL_LOCK"] = 145] = "SCROLL_LOCK";
+  KeyCodes2[KeyCodes2["OPEN_BRACKET"] = 186] = "OPEN_BRACKET";
+  KeyCodes2[KeyCodes2["PLUS"] = 187] = "PLUS";
+  KeyCodes2[KeyCodes2["COMMA"] = 188] = "COMMA";
+  KeyCodes2[KeyCodes2["SLASH"] = 189] = "SLASH";
+  KeyCodes2[KeyCodes2["DOT"] = 190] = "DOT";
+  KeyCodes2[KeyCodes2["PIPE"] = 191] = "PIPE";
+  KeyCodes2[KeyCodes2["SEMICOLON"] = 192] = "SEMICOLON";
+  KeyCodes2[KeyCodes2["MINUS"] = 219] = "MINUS";
+  KeyCodes2[KeyCodes2["GREAT_ACCENT"] = 220] = "GREAT_ACCENT";
+  KeyCodes2[KeyCodes2["EQUALS"] = 221] = "EQUALS";
+  KeyCodes2[KeyCodes2["SINGLE_QUOTE"] = 222] = "SINGLE_QUOTE";
+  KeyCodes2[KeyCodes2["BACKSLASH"] = 226] = "BACKSLASH";
+})(KeyCodes || (KeyCodes = {}));
 const isEnter = (event) => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !hasModifierKeys(event);
 const isEnterShift = (event) => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, false, true);
 const isSpace = (event) => (event.key ? event.key === "Spacebar" || event.key === " " : event.keyCode === KeyCodes.SPACE) && !hasModifierKeys(event);
@@ -2306,195 +2339,325 @@ const isCtrlV = (event) => (event.key === "V" || event.key === "v" || event.whic
 const hasModifierKeys = (event) => event.shiftKey || event.altKey || getCtrlKey(event);
 const getCtrlKey = (event) => !!(event.metaKey || event.ctrlKey);
 const checkModifierKeys = (event, bCtrlKey, bAltKey, bShiftKey) => event.shiftKey === bShiftKey && event.altKey === bAltKey && getCtrlKey(event) === bCtrlKey;
-const isNodeHidden = (node) => {
-  if (node.nodeName === "SLOT") {
-    return false;
-  }
-  return node.offsetWidth <= 0 && node.offsetHeight <= 0 || node.style && node.style.visibility === "hidden";
-};
-const rClickable = /^(?:a|area)$/i;
-const rFocusable = /^(?:input|select|textarea|button)$/i;
-const isNodeClickable = (node) => {
-  if (node.disabled) {
-    return false;
-  }
-  const tabIndex = node.getAttribute("tabindex");
-  if (tabIndex !== null && tabIndex !== void 0) {
-    return parseInt(tabIndex) >= 0;
-  }
-  return rFocusable.test(node.nodeName) || rClickable.test(node.nodeName) && node.href;
-};
-const isFocusTrap = (el) => {
-  return el.hasAttribute("data-ui5-focus-trap");
-};
-const getFirstFocusableElement = async (container, startFromContainer) => {
-  if (!container || isNodeHidden(container)) {
-    return null;
-  }
-  return findFocusableElement(container, true, startFromContainer);
-};
-const getLastFocusableElement = async (container, startFromContainer) => {
-  if (!container || isNodeHidden(container)) {
-    return null;
-  }
-  return findFocusableElement(container, false, startFromContainer);
-};
-const isElemFocusable = (el) => {
-  return el.hasAttribute("data-ui5-focus-redirect") || !isNodeHidden(el);
-};
-const findFocusableElement = async (container, forward, startFromContainer) => {
-  let child;
-  if (container.shadowRoot) {
-    child = forward ? container.shadowRoot.firstChild : container.shadowRoot.lastChild;
-  } else if (container.assignedNodes && container.assignedNodes()) {
-    const assignedElements = container.assignedNodes();
-    child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
-  } else if (startFromContainer) {
-    child = container;
-  } else {
-    child = forward ? container.firstElementChild : container.lastElementChild;
-  }
-  let focusableDescendant;
-  while (child) {
-    const originalChild = child;
-    if (child.isUI5Element) {
-      child = await child.getFocusDomRefAsync();
+const whenDOMReady = () => {
+  return new Promise((resolve) => {
+    if (document.body) {
+      resolve();
+    } else {
+      document.addEventListener("DOMContentLoaded", () => {
+        resolve();
+      });
     }
-    if (!child) {
-      return null;
+  });
+};
+var fontFaceCSS = {
+  packageName: "@ui5/webcomponents-base",
+  fileName: "FontFace.css",
+  content: `@font-face{font-family:"72";font-style:normal;font-weight:400;src:local("72"),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:"72full";font-style:normal;font-weight:400;src:local('72-full'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular-full.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:"72";font-style:normal;font-weight:700;src:local('72-Bold'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:"72full";font-style:normal;font-weight:700;src:local('72-Bold-full'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold-full.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:'72-Bold';font-style:normal;src:local('72-Bold'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:'72-Boldfull';font-style:normal;src:url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold-full.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:'72-Light';font-style:normal;src:local('72-Light'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:'72-Lightfull';font-style:normal;src:url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light-full.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:"72Black";font-style:bold;font-weight:900;src:local('72Black'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_horizon/fonts/72-Black.woff2?ui5-webcomponents) format("woff2")}`
+};
+var overrideFontFaceCSS = {
+  packageName: "@ui5/webcomponents-base",
+  fileName: "OverrideFontFace.css",
+  content: `@font-face{font-family:'72override';unicode-range:U+0102-0103,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EB7,U+1EB8-1EC7,U+1EC8-1ECB,U+1ECC-1EE3,U+1EE4-1EF1,U+1EF4-1EF7;src:local('Arial'),local('Helvetica'),local('sans-serif')}`
+};
+const insertFontFace = () => {
+  const openUI5Support = getFeature("OpenUI5Support");
+  if (!openUI5Support || !openUI5Support.isLoaded()) {
+    insertMainFontFace();
+  }
+  insertOverrideFontFace();
+};
+const insertMainFontFace = () => {
+  if (!hasStyle("data-ui5-font-face")) {
+    createStyle(fontFaceCSS, "data-ui5-font-face");
+  }
+};
+const insertOverrideFontFace = () => {
+  if (!hasStyle("data-ui5-font-face-override")) {
+    createStyle(overrideFontFaceCSS, "data-ui5-font-face-override");
+  }
+};
+var systemCSSVars = {
+  packageName: "@ui5/webcomponents-base",
+  fileName: "SystemCSSVars.css",
+  content: `:root{--_ui5_content_density:cozy}.sapUiSizeCompact,.ui5-content-density-compact,[data-ui5-compact-size]{--_ui5_content_density:compact}[dir=rtl]{--_ui5_dir:rtl}[dir=ltr]{--_ui5_dir:ltr}`
+};
+const insertSystemCSSVars = () => {
+  if (!hasStyle("data-ui5-system-css-vars")) {
+    createStyle(systemCSSVars, "data-ui5-system-css-vars");
+  }
+};
+let bootPromise;
+const attachBoot = async (listener) => {
+  await boot();
+  listener();
+};
+const boot = async () => {
+  if (bootPromise !== void 0) {
+    return bootPromise;
+  }
+  const bootExecutor = async (resolve) => {
+    registerCurrentRuntime();
+    const openUI5Support = getFeature("OpenUI5Support");
+    const isOpenUI5Loaded = openUI5Support ? openUI5Support.isLoaded() : false;
+    const f6Navigation = getFeature("F6Navigation");
+    if (openUI5Support) {
+      await openUI5Support.init();
     }
-    if (child.nodeType === 1 && isElemFocusable(child) && !isFocusTrap(child)) {
-      if (isNodeClickable(child)) {
-        return child && typeof child.focus === "function" ? child : null;
-      }
-      focusableDescendant = await findFocusableElement(child, forward);
-      if (focusableDescendant) {
-        return focusableDescendant && typeof focusableDescendant.focus === "function" ? focusableDescendant : null;
-      }
+    if (f6Navigation && !isOpenUI5Loaded) {
+      f6Navigation.init();
     }
-    child = forward ? originalChild.nextSibling : originalChild.previousSibling;
-  }
-  return null;
+    await whenDOMReady();
+    await applyTheme(getTheme());
+    openUI5Support && openUI5Support.attachListeners();
+    insertFontFace();
+    insertSystemCSSVars();
+    resolve();
+  };
+  bootPromise = new Promise(bootExecutor);
+  return bootPromise;
 };
-let groups = [];
-const isFastNavGroupElemenet = ($el) => {
-  return $el.getAttribute("data-sap-ui-fastnavgroup") === "true";
+const kebabToCamelMap = /* @__PURE__ */ new Map();
+const camelToKebabMap = /* @__PURE__ */ new Map();
+const kebabToCamelCase = (string) => {
+  if (!kebabToCamelMap.has(string)) {
+    const result = toCamelCase(string.split("-"));
+    kebabToCamelMap.set(string, result);
+  }
+  return kebabToCamelMap.get(string);
 };
-const isElementVisible = ($el) => {
-  const style = window.getComputedStyle($el);
-  return style.width !== "0px" && style.height !== "0px" && style.opacity !== "0" && style.display !== "none" && style.visibility !== "hidden";
+const camelToKebabCase = (string) => {
+  if (!camelToKebabMap.has(string)) {
+    const result = string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+    camelToKebabMap.set(string, result);
+  }
+  return camelToKebabMap.get(string);
 };
-const findFastNavigationGroups = (container, startFromContainer) => {
-  let child, assignedElements, index = 0;
-  if (!isElementVisible(container)) {
-    return;
+const toCamelCase = (parts) => {
+  return parts.map((string, index) => {
+    return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  }).join("");
+};
+const getSlotName = (node) => {
+  if (!(node instanceof HTMLElement)) {
+    return "default";
   }
-  if (isFastNavGroupElemenet(container)) {
-    groups.push(container);
+  const slot = node.getAttribute("slot");
+  if (slot) {
+    const match = slot.match(/^(.+?)-\d+$/);
+    return match ? match[1] : slot;
   }
-  if (container.shadowRoot) {
-    child = container.shadowRoot.firstChild;
-  } else if (container.assignedNodes && container.assignedNodes()) {
-    assignedElements = container.assignedNodes();
-    child = assignedElements[0];
-  } else if (startFromContainer) {
-    child = container;
-  } else {
-    child = container.firstElementChild;
+  return "default";
+};
+const getSlottedNodes = (node) => {
+  if (node instanceof HTMLSlotElement) {
+    return node.assignedNodes({ flatten: true }).filter((item) => item instanceof HTMLElement);
   }
-  while (child) {
-    const originalChild = child;
-    if (!child) {
-      return;
+  return [node];
+};
+const getSlottedNodesList = (nodeList) => {
+  return nodeList.reduce((acc, curr) => acc.concat(getSlottedNodes(curr)), []);
+};
+let suf;
+let rulesObj = {
+  include: [/^ui5-/],
+  exclude: []
+};
+const tagsCache = /* @__PURE__ */ new Map();
+const getCustomElementsScopingSuffix = () => {
+  return suf;
+};
+const shouldScopeCustomElement = (tag) => {
+  if (!tagsCache.has(tag)) {
+    const result = rulesObj.include.some((rule) => tag.match(rule)) && !rulesObj.exclude.some((rule) => tag.match(rule));
+    tagsCache.set(tag, result);
+  }
+  return tagsCache.get(tag);
+};
+const getEffectiveScopingSuffixForTag = (tag) => {
+  if (shouldScopeCustomElement(tag)) {
+    return getCustomElementsScopingSuffix();
+  }
+};
+class UI5ElementMetadata {
+  constructor(metadata2) {
+    this.metadata = metadata2;
+  }
+  getInitialState() {
+    if (Object.prototype.hasOwnProperty.call(this, "_initialState")) {
+      return this._initialState;
     }
-    if (child.nodeType === 1) {
-      findFastNavigationGroups(child, false);
-    }
-    child = assignedElements && assignedElements.length ? assignedElements[++index] : originalChild.nextElementSibling;
-  }
-};
-const getFastNavigationGroups = (container) => {
-  groups = [];
-  findFastNavigationGroups(container, true);
-  return groups;
-};
-class F6Navigation {
-  init() {
-    this.keydownHandler = this._keydownHandler.bind(this);
-    this.attachEventListeners();
-    this.selectedGroup = null;
-    this.groups = [];
-  }
-  attachEventListeners() {
-    document.addEventListener("keydown", this.keydownHandler);
-  }
-  async _keydownHandler(event) {
-    if (isF6Next(event)) {
-      this.updateGroups();
-      if (this.groups.length < 1) {
-        return;
-      }
-      event.preventDefault();
-      const nextIndex = this.groups.indexOf(this.selectedGroup);
-      let nextElement = null;
-      if (nextIndex > -1) {
-        if (nextIndex + 1 >= this.groups.length) {
-          nextElement = this.groups[0];
-        } else {
-          nextElement = this.groups[nextIndex + 1];
+    const initialState = {};
+    const slotsAreManaged = this.slotsAreManaged();
+    const props = this.getProperties();
+    for (const propName in props) {
+      const propType = props[propName].type;
+      const propDefaultValue = props[propName].defaultValue;
+      if (propType === Boolean) {
+        initialState[propName] = false;
+        if (propDefaultValue !== void 0) {
+          console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default");
         }
+      } else if (props[propName].multiple) {
+        initialState[propName] = [];
+      } else if (propType === Object) {
+        initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
+      } else if (propType === String) {
+        initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
       } else {
-        nextElement = this.groups[0];
+        initialState[propName] = propDefaultValue;
       }
-      const elementToFocus = await getFirstFocusableElement(nextElement.isUI5Element ? nextElement.getDomRef() : nextElement, true);
-      elementToFocus.focus();
     }
-    if (isF6Previous(event)) {
-      this.updateGroups();
-      if (this.groups.length < 1) {
-        return;
+    if (slotsAreManaged) {
+      const slots = this.getSlots();
+      for (const [slotName, slotData] of Object.entries(slots)) {
+        const propertyName = slotData.propertyName || slotName;
+        initialState[propertyName] = [];
       }
-      event.preventDefault();
-      const nextIndex = this.groups.indexOf(this.selectedGroup);
-      let nextElement = null;
-      if (nextIndex > 0) {
-        const firstFocusable = await getFirstFocusableElement(this.groups[nextIndex - 1], true);
-        const shouldSkipParent = firstFocusable === await getFirstFocusableElement(this.groups[nextIndex], true);
-        nextElement = this.groups[shouldSkipParent ? nextIndex - 2 : nextIndex - 1];
-      } else {
-        nextElement = this.groups[this.groups.length - 1];
+    }
+    this._initialState = initialState;
+    return initialState;
+  }
+  static validatePropertyValue(value, propData) {
+    const isMultiple = propData.multiple;
+    if (isMultiple && Array.isArray(value)) {
+      return value.map((propValue) => validateSingleProperty(propValue, propData));
+    }
+    return validateSingleProperty(value, propData);
+  }
+  static validateSlotValue(value, slotData) {
+    return validateSingleSlot(value, slotData);
+  }
+  getPureTag() {
+    return this.metadata.tag;
+  }
+  getTag() {
+    const pureTag = this.metadata.tag;
+    const suffix = getEffectiveScopingSuffixForTag(pureTag);
+    if (!suffix) {
+      return pureTag;
+    }
+    return `${pureTag}-${suffix}`;
+  }
+  hasAttribute(propName) {
+    const propData = this.getProperties()[propName];
+    return propData.type !== Object && !propData.noAttribute && !propData.multiple;
+  }
+  getPropertiesList() {
+    return Object.keys(this.getProperties());
+  }
+  getAttributesList() {
+    return this.getPropertiesList().filter(this.hasAttribute.bind(this)).map(camelToKebabCase);
+  }
+  getSlots() {
+    return this.metadata.slots || {};
+  }
+  canSlotText() {
+    const defaultSlot = this.getSlots().default;
+    return defaultSlot && defaultSlot.type === Node;
+  }
+  hasSlots() {
+    return !!Object.entries(this.getSlots()).length;
+  }
+  hasIndividualSlots() {
+    return this.slotsAreManaged() && Object.values(this.getSlots()).some((slotData) => slotData.individualSlots);
+  }
+  slotsAreManaged() {
+    return !!this.metadata.managedSlots;
+  }
+  supportsF6FastNavigation() {
+    return !!this.metadata.fastNavigation;
+  }
+  getProperties() {
+    return this.metadata.properties || {};
+  }
+  getEvents() {
+    return this.metadata.events || {};
+  }
+  isLanguageAware() {
+    return !!this.metadata.languageAware;
+  }
+  isThemeAware() {
+    return !!this.metadata.themeAware;
+  }
+  shouldInvalidateOnChildChange(slotName, type, name2) {
+    const config = this.getSlots()[slotName].invalidateOnChildChange;
+    if (config === void 0) {
+      return false;
+    }
+    if (typeof config === "boolean") {
+      return config;
+    }
+    if (typeof config === "object") {
+      if (type === "property") {
+        if (config.properties === void 0) {
+          return false;
+        }
+        if (typeof config.properties === "boolean") {
+          return config.properties;
+        }
+        if (Array.isArray(config.properties)) {
+          return config.properties.includes(name2);
+        }
+        throw new Error("Wrong format for invalidateOnChildChange.properties: boolean or array is expected");
       }
-      const elementToFocus = await getFirstFocusableElement(nextElement.isUI5Element ? nextElement.getDomRef() : nextElement, true);
-      elementToFocus.focus();
+      if (type === "slot") {
+        if (config.slots === void 0) {
+          return false;
+        }
+        if (typeof config.slots === "boolean") {
+          return config.slots;
+        }
+        if (Array.isArray(config.slots)) {
+          return config.slots.includes(name2);
+        }
+        throw new Error("Wrong format for invalidateOnChildChange.slots: boolean or array is expected");
+      }
     }
-  }
-  removeEventListeners() {
-    document.removeEventListener("keydown", this.keydownHandler);
-  }
-  updateGroups() {
-    this.setSelectedGroup();
-    this.groups = getFastNavigationGroups(document.body);
-  }
-  setSelectedGroup(element = document) {
-    const htmlElement = document.querySelector("html");
-    element = this.deepActive(element);
-    while (element && element.getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== htmlElement) {
-      element = element.parentElement ? element.parentNode : element.parentNode.host;
-    }
-    this.selectedGroup = element;
-  }
-  deepActive(root) {
-    if (root.activeElement && root.activeElement.shadowRoot) {
-      return this.deepActive(root.activeElement.shadowRoot);
-    }
-    return root.activeElement;
-  }
-  destroy() {
-    this.removeEventListeners();
+    throw new Error("Wrong format for invalidateOnChildChange: boolean or object is expected");
   }
 }
-const F6HelperInstance = new F6Navigation();
-registerFeature("F6Navigation", F6HelperInstance);
+const validateSingleProperty = (value, propData) => {
+  const propertyType = propData.type;
+  if (propertyType === Boolean) {
+    return typeof value === "boolean" ? value : false;
+  }
+  if (propertyType === String) {
+    return typeof value === "string" || typeof value === "undefined" || value === null ? value : value.toString();
+  }
+  if (propertyType === Object) {
+    return typeof value === "object" ? value : propData.defaultValue;
+  }
+  if (propertyType.isDataTypeClass) {
+    return propertyType.isValid(value) ? value : propData.defaultValue;
+  }
+};
+const validateSingleSlot = (value, slotData) => {
+  value && getSlottedNodes(value).forEach((el) => {
+    if (!(el instanceof slotData.type)) {
+      throw new Error(`The element is not of type ${slotData.type.toString()}`);
+    }
+  });
+  return value;
+};
+if (!customElements.get("ui5-static-area")) {
+  customElements.define("ui5-static-area", class extends HTMLElement {
+  });
+}
+const executeTemplate = (template, component) => {
+  const tagsToScope = getTagsToScope(component);
+  const scope = getCustomElementsScopingSuffix();
+  return template(component, tagsToScope, scope);
+};
+const getTagsToScope = (component) => {
+  const ctor = component.constructor;
+  const componentTag = ctor.getMetadata().getPureTag();
+  const tagsToScope = ctor.getUniqueDependencies().map((dep) => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
+  if (shouldScopeCustomElement(componentTag)) {
+    tagsToScope.push(componentTag);
+  }
+  return tagsToScope;
+};
 const eventProvider$2 = getSharedResource("CustomStyle.eventProvider", new EventProvider());
 const CUSTOM_CSS_CHANGE = "CustomCSSChange";
 const attachCustomCSSChange = (listener) => {
@@ -2526,6 +2689,1078 @@ const addCustomCSS = (tag, css2) => {
 const getCustomCSS = (tag) => {
   return customCSSFor[tag] ? customCSSFor[tag].join("") : "";
 };
+const getStylesString = (styles2) => {
+  if (Array.isArray(styles2)) {
+    return styles2.filter((style) => !!style).flat().map((style) => {
+      return typeof style === "string" ? style : style.content;
+    }).join(" ");
+  }
+  return typeof styles2 === "string" ? styles2 : styles2.content;
+};
+const effectiveStyleMap = /* @__PURE__ */ new Map();
+attachCustomCSSChange((tag) => {
+  effectiveStyleMap.delete(`${tag}_normal`);
+});
+const getEffectiveStyle = (ElementClass, forStaticArea = false) => {
+  const tag = ElementClass.getMetadata().getTag();
+  const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
+  const openUI5Enablement = getFeature("OpenUI5Enablement");
+  if (!effectiveStyleMap.has(key)) {
+    let effectiveStyle;
+    let busyIndicatorStyles = "";
+    if (openUI5Enablement) {
+      busyIndicatorStyles = getStylesString(openUI5Enablement.getBusyIndicatorStyles());
+    }
+    if (forStaticArea) {
+      effectiveStyle = getStylesString(ElementClass.staticAreaStyles);
+    } else {
+      const customStyle = getCustomCSS(tag) || "";
+      const builtInStyles = getStylesString(ElementClass.styles);
+      effectiveStyle = `${builtInStyles} ${customStyle}`;
+    }
+    effectiveStyle = `${effectiveStyle} ${busyIndicatorStyles}`;
+    effectiveStyleMap.set(key, effectiveStyle);
+  }
+  return effectiveStyleMap.get(key);
+};
+const constructableStyleMap = /* @__PURE__ */ new Map();
+attachCustomCSSChange((tag) => {
+  constructableStyleMap.delete(`${tag}_normal`);
+});
+const getConstructableStyle = (ElementClass, forStaticArea = false) => {
+  const tag = ElementClass.getMetadata().getTag();
+  const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
+  if (!constructableStyleMap.has(key)) {
+    const styleContent = getEffectiveStyle(ElementClass, forStaticArea);
+    const style = new CSSStyleSheet();
+    style.replaceSync(styleContent);
+    constructableStyleMap.set(key, [style]);
+  }
+  return constructableStyleMap.get(key);
+};
+const getEffectiveLinksHrefs = (ElementClass, forStaticArea = false) => {
+  const stylesData = ElementClass[forStaticArea ? "staticAreaStyles" : "styles"];
+  if (!stylesData) {
+    return;
+  }
+  const stylesDataArray = Array.isArray(stylesData) ? stylesData : [stylesData];
+  const openUI5Enablement = getFeature("OpenUI5Enablement");
+  if (openUI5Enablement) {
+    stylesDataArray.push(openUI5Enablement.getBusyIndicatorStyles());
+  }
+  return stylesDataArray.flat().filter((data) => !!data).map((data) => getUrl(data.packageName, data.fileName));
+};
+const updateShadowRoot = (element, forStaticArea = false) => {
+  let styleStrOrHrefsArr;
+  const ctor = element.constructor;
+  const propertyName = forStaticArea ? "staticAreaTemplate" : "template";
+  const template = ctor[propertyName];
+  const shadowRoot = forStaticArea ? element.staticAreaItem.shadowRoot : element.shadowRoot;
+  const renderResult = executeTemplate(template, element);
+  if (shouldUseLinks()) {
+    styleStrOrHrefsArr = getEffectiveLinksHrefs(ctor, forStaticArea);
+  } else if (document.adoptedStyleSheets) {
+    shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor, forStaticArea);
+  } else {
+    styleStrOrHrefsArr = getEffectiveStyle(ctor, forStaticArea);
+  }
+  ctor.render(renderResult, shadowRoot, styleStrOrHrefsArr, forStaticArea, { host: element });
+};
+const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
+const getEffectiveContentDensity = (el) => getComputedStyle(el).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR);
+var getDesigntimePropertyAsArray$1 = (value) => {
+  const m2 = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(value);
+  return m2 && m2[2] ? m2[2].split(/,/) : null;
+};
+const M_ISO639_OLD_TO_NEW$2 = {
+  "iw": "he",
+  "ji": "yi",
+  "in": "id",
+  "sh": "sr"
+};
+const A_RTL_LOCALES$1 = getDesigntimePropertyAsArray$1("$cldr-rtl-locales:ar,fa,he$") || [];
+const impliesRTL = (language) => {
+  language = language && M_ISO639_OLD_TO_NEW$2[language] || language;
+  return A_RTL_LOCALES$1.indexOf(language) >= 0;
+};
+const getRTL = () => {
+  const configurationRTL = getRTL$1();
+  if (configurationRTL !== void 0) {
+    return !!configurationRTL;
+  }
+  return impliesRTL(getLanguage() || detectNavigatorLanguage());
+};
+const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
+const getEffectiveDir = (element) => {
+  const doc = window.document;
+  const dirValues = ["ltr", "rtl"];
+  const locallyAppliedDir = getComputedStyle(element).getPropertyValue(GLOBAL_DIR_CSS_VAR);
+  if (dirValues.includes(locallyAppliedDir)) {
+    return locallyAppliedDir;
+  }
+  if (dirValues.includes(element.dir)) {
+    return element.dir;
+  }
+  if (dirValues.includes(doc.documentElement.dir)) {
+    return doc.documentElement.dir;
+  }
+  if (dirValues.includes(doc.body.dir)) {
+    return doc.body.dir;
+  }
+  return getRTL() ? "rtl" : void 0;
+};
+const pureTagName = "ui5-static-area-item";
+const popupIntegrationAttr = "data-sap-ui-integration-popup-content";
+class StaticAreaItem extends HTMLElement {
+  constructor() {
+    super();
+    this._rendered = false;
+    this.attachShadow({ mode: "open" });
+  }
+  setOwnerElement(ownerElement) {
+    this.ownerElement = ownerElement;
+    this.classList.add(this.ownerElement._id);
+    if (this.ownerElement.hasAttribute("data-ui5-static-stable")) {
+      this.setAttribute("data-ui5-stable", this.ownerElement.getAttribute("data-ui5-static-stable"));
+    }
+  }
+  update() {
+    if (this._rendered) {
+      this._updateAdditionalAttrs();
+      this._updateContentDensity();
+      this._updateDirection();
+      updateShadowRoot(this.ownerElement, true);
+    }
+  }
+  _updateContentDensity() {
+    if (getEffectiveContentDensity(this.ownerElement) === "compact") {
+      this.classList.add("sapUiSizeCompact");
+      this.classList.add("ui5-content-density-compact");
+    } else {
+      this.classList.remove("sapUiSizeCompact");
+      this.classList.remove("ui5-content-density-compact");
+    }
+  }
+  _updateDirection() {
+    if (this.ownerElement) {
+      const dir = getEffectiveDir(this.ownerElement);
+      if (dir) {
+        this.setAttribute("dir", dir);
+      } else {
+        this.removeAttribute("dir");
+      }
+    }
+  }
+  _updateAdditionalAttrs() {
+    this.setAttribute(pureTagName, "");
+    this.setAttribute(popupIntegrationAttr, "");
+  }
+  async getDomRef() {
+    this._updateContentDensity();
+    if (!this._rendered) {
+      this._rendered = true;
+      updateShadowRoot(this.ownerElement, true);
+    }
+    await renderFinished();
+    return this.shadowRoot;
+  }
+  static getTag() {
+    const suffix = getEffectiveScopingSuffixForTag(pureTagName);
+    if (!suffix) {
+      return pureTagName;
+    }
+    return `${pureTagName}-${suffix}`;
+  }
+  static createInstance() {
+    if (!customElements.get(StaticAreaItem.getTag())) {
+      customElements.define(StaticAreaItem.getTag(), StaticAreaItem);
+    }
+    return document.createElement(this.getTag());
+  }
+}
+const observers = /* @__PURE__ */ new WeakMap();
+const observeDOMNode = (node, callback, options) => {
+  const observer = new MutationObserver(callback);
+  observers.set(node, observer);
+  observer.observe(node, options);
+};
+const unobserveDOMNode = (node) => {
+  const observer = observers.get(node);
+  if (observer) {
+    observer.disconnect();
+    observers.delete(node);
+  }
+};
+const excludeList = [
+  "value-changed"
+];
+let noConflict;
+const shouldFireOriginalEvent = (eventName) => {
+  return excludeList.includes(eventName);
+};
+const shouldNotFireOriginalEvent = (eventName) => {
+  const nc = getNoConflict();
+  return !(typeof nc !== "boolean" && nc.events && nc.events.includes && nc.events.includes(eventName));
+};
+const getNoConflict = () => {
+  if (noConflict === void 0) {
+    noConflict = getNoConflict$1();
+  }
+  return noConflict;
+};
+const setNoConflict = (noConflictData) => {
+  noConflict = noConflictData;
+};
+const skipOriginalEvent = (eventName) => {
+  const nc = getNoConflict();
+  if (shouldFireOriginalEvent(eventName)) {
+    return false;
+  }
+  if (nc === true) {
+    return true;
+  }
+  return !shouldNotFireOriginalEvent(eventName);
+};
+const allowList = [
+  "disabled",
+  "title",
+  "hidden",
+  "role",
+  "draggable"
+];
+const isValidPropertyName = (name2) => {
+  if (allowList.includes(name2) || name2.startsWith("aria")) {
+    return true;
+  }
+  const classes = [
+    HTMLElement,
+    Element,
+    Node
+  ];
+  return !classes.some((klass) => klass.prototype.hasOwnProperty(name2));
+};
+const arraysAreEqual = (arr1, arr2) => {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  for (let i2 = 0; i2 < arr1.length; i2++) {
+    if (arr1[i2] !== arr2[i2]) {
+      return false;
+    }
+  }
+  return true;
+};
+const preloaded = /* @__PURE__ */ new Set();
+const preloadLinks = (ElementClass) => {
+  if (!shouldUseLinks() || !shouldPreloadLinks()) {
+    return;
+  }
+  const linksHrefs = getEffectiveLinksHrefs(ElementClass, false) || [];
+  const staticAreaLinksHrefs = getEffectiveLinksHrefs(ElementClass, true) || [];
+  [...linksHrefs, ...staticAreaLinksHrefs].forEach((href) => {
+    if (!preloaded.has(href)) {
+      createLinkInHead(href, { rel: "preload", as: "style" });
+      preloaded.add(href);
+    }
+  });
+};
+let autoId = 0;
+const elementTimeouts = /* @__PURE__ */ new Map();
+const uniqueDependenciesCache = /* @__PURE__ */ new Map();
+function _invalidate(changeInfo) {
+  if (this._suppressInvalidation) {
+    return;
+  }
+  this.onInvalidation(changeInfo);
+  this._changedState.push(changeInfo);
+  renderDeferred(this);
+  this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
+}
+let metadata$1U = {};
+class UI5Element extends HTMLElement {
+  constructor() {
+    super();
+    const ctor = this.constructor;
+    this._changedState = [];
+    this._suppressInvalidation = true;
+    this._inDOM = false;
+    this._fullyConnected = false;
+    this._childChangeListeners = /* @__PURE__ */ new Map();
+    this._slotChangeListeners = /* @__PURE__ */ new Map();
+    this._eventProvider = new EventProvider();
+    let deferredResolve;
+    this._domRefReadyPromise = new Promise((resolve) => {
+      deferredResolve = resolve;
+    });
+    this._domRefReadyPromise._deferredResolve = deferredResolve;
+    this._doNotSyncAttributes = /* @__PURE__ */ new Set();
+    this._state = { ...ctor.getMetadata().getInitialState() };
+    this._upgradeAllProperties();
+    if (ctor._needsShadowDOM()) {
+      this.attachShadow({ mode: "open" });
+    }
+  }
+  get _id() {
+    if (!this.__id) {
+      this.__id = `ui5wc_${++autoId}`;
+    }
+    return this.__id;
+  }
+  async connectedCallback() {
+    const ctor = this.constructor;
+    this.setAttribute(ctor.getMetadata().getPureTag(), "");
+    if (ctor.getMetadata().supportsF6FastNavigation()) {
+      this.setAttribute("data-sap-ui-fastnavgroup", "true");
+    }
+    const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
+    this._inDOM = true;
+    if (slotsAreManaged) {
+      this._startObservingDOMChildren();
+      await this._processChildren();
+    }
+    if (!this._inDOM) {
+      return;
+    }
+    renderImmediately(this);
+    this._domRefReadyPromise._deferredResolve();
+    this._fullyConnected = true;
+    if (typeof this.onEnterDOM === "function") {
+      this.onEnterDOM();
+    }
+  }
+  disconnectedCallback() {
+    const ctor = this.constructor;
+    const slotsAreManaged = ctor.getMetadata().slotsAreManaged();
+    this._inDOM = false;
+    if (slotsAreManaged) {
+      this._stopObservingDOMChildren();
+    }
+    if (this._fullyConnected) {
+      if (typeof this.onExitDOM === "function") {
+        this.onExitDOM();
+      }
+      this._fullyConnected = false;
+    }
+    if (this.staticAreaItem && this.staticAreaItem.parentElement) {
+      this.staticAreaItem.parentElement.removeChild(this.staticAreaItem);
+    }
+    cancelRender(this);
+  }
+  _startObservingDOMChildren() {
+    const ctor = this.constructor;
+    const shouldObserveChildren = ctor.getMetadata().hasSlots();
+    if (!shouldObserveChildren) {
+      return;
+    }
+    const canSlotText = ctor.getMetadata().canSlotText();
+    const mutationObserverOptions = {
+      childList: true,
+      subtree: canSlotText,
+      characterData: canSlotText
+    };
+    observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
+  }
+  _stopObservingDOMChildren() {
+    unobserveDOMNode(this);
+  }
+  async _processChildren() {
+    const hasSlots = this.constructor.getMetadata().hasSlots();
+    if (hasSlots) {
+      await this._updateSlots();
+    }
+  }
+  async _updateSlots() {
+    const ctor = this.constructor;
+    const slotsMap = ctor.getMetadata().getSlots();
+    const canSlotText = ctor.getMetadata().canSlotText();
+    const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
+    const slotsCachedContentMap = /* @__PURE__ */ new Map();
+    const propertyNameToSlotMap = /* @__PURE__ */ new Map();
+    for (const [slotName, slotData] of Object.entries(slotsMap)) {
+      const propertyName = slotData.propertyName || slotName;
+      propertyNameToSlotMap.set(propertyName, slotName);
+      slotsCachedContentMap.set(propertyName, [...this._state[propertyName]]);
+      this._clearSlot(slotName, slotData);
+    }
+    const autoIncrementMap = /* @__PURE__ */ new Map();
+    const slottedChildrenMap = /* @__PURE__ */ new Map();
+    const allChildrenUpgraded = domChildren.map(async (child, idx) => {
+      const slotName = getSlotName(child);
+      const slotData = slotsMap[slotName];
+      if (slotData === void 0) {
+        const validValues = Object.keys(slotsMap).join(", ");
+        console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`);
+        return;
+      }
+      if (slotData.individualSlots) {
+        const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
+        autoIncrementMap.set(slotName, nextIndex);
+        child._individualSlot = `${slotName}-${nextIndex}`;
+      }
+      if (child instanceof HTMLElement) {
+        const localName = child.localName;
+        const isCustomElement = localName.includes("-");
+        if (isCustomElement) {
+          const isDefined = window.customElements.get(localName);
+          if (!isDefined) {
+            const whenDefinedPromise = window.customElements.whenDefined(localName);
+            let timeoutPromise = elementTimeouts.get(localName);
+            if (!timeoutPromise) {
+              timeoutPromise = new Promise((resolve) => setTimeout(resolve, 1e3));
+              elementTimeouts.set(localName, timeoutPromise);
+            }
+            await Promise.race([whenDefinedPromise, timeoutPromise]);
+          }
+          window.customElements.upgrade(child);
+        }
+      }
+      child = ctor.getMetadata().constructor.validateSlotValue(child, slotData);
+      if (instanceOfUI5Element(child) && slotData.invalidateOnChildChange) {
+        const childChangeListener = this._getChildChangeListener(slotName);
+        if (childChangeListener) {
+          child.attachInvalidate.call(child, childChangeListener);
+        }
+      }
+      if (child instanceof HTMLSlotElement) {
+        this._attachSlotChange(child, slotName);
+      }
+      const propertyName = slotData.propertyName || slotName;
+      if (slottedChildrenMap.has(propertyName)) {
+        slottedChildrenMap.get(propertyName).push({ child, idx });
+      } else {
+        slottedChildrenMap.set(propertyName, [{ child, idx }]);
+      }
+    });
+    await Promise.all(allChildrenUpgraded);
+    slottedChildrenMap.forEach((children, propertyName) => {
+      this._state[propertyName] = children.sort((a2, b2) => a2.idx - b2.idx).map((_2) => _2.child);
+    });
+    let invalidated = false;
+    for (const [slotName, slotData] of Object.entries(slotsMap)) {
+      const propertyName = slotData.propertyName || slotName;
+      if (!arraysAreEqual(slotsCachedContentMap.get(propertyName), this._state[propertyName])) {
+        _invalidate.call(this, {
+          type: "slot",
+          name: propertyNameToSlotMap.get(propertyName),
+          reason: "children"
+        });
+        invalidated = true;
+      }
+    }
+    if (!invalidated) {
+      _invalidate.call(this, {
+        type: "slot",
+        name: "default",
+        reason: "textcontent"
+      });
+    }
+  }
+  _clearSlot(slotName, slotData) {
+    const propertyName = slotData.propertyName || slotName;
+    const children = this._state[propertyName];
+    children.forEach((child) => {
+      if (instanceOfUI5Element(child)) {
+        const childChangeListener = this._getChildChangeListener(slotName);
+        if (childChangeListener) {
+          child.detachInvalidate.call(child, childChangeListener);
+        }
+      }
+      if (child instanceof HTMLSlotElement) {
+        this._detachSlotChange(child, slotName);
+      }
+    });
+    this._state[propertyName] = [];
+  }
+  attachInvalidate(callback) {
+    this._eventProvider.attachEvent("invalidate", callback);
+  }
+  detachInvalidate(callback) {
+    this._eventProvider.detachEvent("invalidate", callback);
+  }
+  _onChildChange(slotName, childChangeInfo) {
+    if (!this.constructor.getMetadata().shouldInvalidateOnChildChange(slotName, childChangeInfo.type, childChangeInfo.name)) {
+      return;
+    }
+    _invalidate.call(this, {
+      type: "slot",
+      name: slotName,
+      reason: "childchange",
+      child: childChangeInfo.target
+    });
+  }
+  attributeChangedCallback(name2, oldValue, newValue) {
+    let newPropertyValue;
+    if (this._doNotSyncAttributes.has(name2)) {
+      return;
+    }
+    const properties = this.constructor.getMetadata().getProperties();
+    const realName = name2.replace(/^ui5-/, "");
+    const nameInCamelCase = kebabToCamelCase(realName);
+    if (properties.hasOwnProperty(nameInCamelCase)) {
+      const propertyTypeClass = properties[nameInCamelCase].type;
+      if (propertyTypeClass === Boolean) {
+        newPropertyValue = newValue !== null;
+      } else if (propertyTypeClass.isDataTypeClass) {
+        newPropertyValue = propertyTypeClass.attributeToProperty(newValue);
+      } else {
+        newPropertyValue = newValue;
+      }
+      this[nameInCamelCase] = newPropertyValue;
+    }
+  }
+  _updateAttribute(name2, newValue) {
+    const ctor = this.constructor;
+    if (!ctor.getMetadata().hasAttribute(name2)) {
+      return;
+    }
+    const properties = ctor.getMetadata().getProperties();
+    const propertyTypeClass = properties[name2].type;
+    const attrName = camelToKebabCase(name2);
+    const attrValue = this.getAttribute(attrName);
+    if (propertyTypeClass === Boolean) {
+      if (newValue === true && attrValue === null) {
+        this.setAttribute(attrName, "");
+      } else if (newValue === false && attrValue !== null) {
+        this.removeAttribute(attrName);
+      }
+    } else if (propertyTypeClass.isDataTypeClass) {
+      const newAttrValue = propertyTypeClass.propertyToAttribute(newValue);
+      if (newAttrValue === null) {
+        this._doNotSyncAttributes.add(attrName);
+        this.removeAttribute(attrName);
+        this._doNotSyncAttributes.delete(attrName);
+      } else {
+        this.setAttribute(attrName, newAttrValue);
+      }
+    } else if (typeof newValue !== "object") {
+      if (attrValue !== newValue) {
+        this.setAttribute(attrName, newValue);
+      }
+    }
+  }
+  _upgradeProperty(propertyName) {
+    if (this.hasOwnProperty(propertyName)) {
+      const value = this[propertyName];
+      delete this[propertyName];
+      this[propertyName] = value;
+    }
+  }
+  _upgradeAllProperties() {
+    const allProps = this.constructor.getMetadata().getPropertiesList();
+    allProps.forEach(this._upgradeProperty.bind(this));
+  }
+  _getChildChangeListener(slotName) {
+    if (!this._childChangeListeners.has(slotName)) {
+      this._childChangeListeners.set(slotName, this._onChildChange.bind(this, slotName));
+    }
+    return this._childChangeListeners.get(slotName);
+  }
+  _getSlotChangeListener(slotName) {
+    if (!this._slotChangeListeners.has(slotName)) {
+      this._slotChangeListeners.set(slotName, this._onSlotChange.bind(this, slotName));
+    }
+    return this._slotChangeListeners.get(slotName);
+  }
+  _attachSlotChange(child, slotName) {
+    const slotChangeListener = this._getSlotChangeListener(slotName);
+    if (slotChangeListener) {
+      child.addEventListener("slotchange", slotChangeListener);
+    }
+  }
+  _detachSlotChange(child, slotName) {
+    child.removeEventListener("slotchange", this._getSlotChangeListener(slotName));
+  }
+  _onSlotChange(slotName) {
+    _invalidate.call(this, {
+      type: "slot",
+      name: slotName,
+      reason: "slotchange"
+    });
+  }
+  onInvalidation(changeInfo) {
+  }
+  _render() {
+    const ctor = this.constructor;
+    const hasIndividualSlots = ctor.getMetadata().hasIndividualSlots();
+    this._suppressInvalidation = true;
+    if (typeof this.onBeforeRendering === "function") {
+      this.onBeforeRendering();
+    }
+    if (this._onComponentStateFinalized) {
+      this._onComponentStateFinalized();
+    }
+    this._suppressInvalidation = false;
+    this._changedState = [];
+    if (ctor._needsShadowDOM()) {
+      updateShadowRoot(this);
+    }
+    if (this.staticAreaItem) {
+      this.staticAreaItem.update();
+    }
+    if (hasIndividualSlots) {
+      this._assignIndividualSlotsToChildren();
+    }
+    if (typeof this.onAfterRendering === "function") {
+      this.onAfterRendering();
+    }
+  }
+  _assignIndividualSlotsToChildren() {
+    const domChildren = Array.from(this.children);
+    domChildren.forEach((child) => {
+      if (child._individualSlot) {
+        child.setAttribute("slot", child._individualSlot);
+      }
+    });
+  }
+  _waitForDomRef() {
+    return this._domRefReadyPromise;
+  }
+  getDomRef() {
+    if (typeof this._getRealDomRef === "function") {
+      return this._getRealDomRef();
+    }
+    if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
+      return;
+    }
+    const children = [...this.shadowRoot.children].filter((child) => !["link", "style"].includes(child.localName));
+    if (children.length !== 1) {
+      console.warn(`The shadow DOM for ${this.constructor.getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`);
+    }
+    return children[0];
+  }
+  getFocusDomRef() {
+    const domRef = this.getDomRef();
+    if (domRef) {
+      const focusRef = domRef.querySelector("[data-sap-focus-ref]");
+      return focusRef || domRef;
+    }
+  }
+  async getFocusDomRefAsync() {
+    await this._waitForDomRef();
+    return this.getFocusDomRef();
+  }
+  async focus() {
+    await this._waitForDomRef();
+    const focusDomRef = this.getFocusDomRef();
+    if (focusDomRef && typeof focusDomRef.focus === "function") {
+      focusDomRef.focus();
+    }
+  }
+  fireEvent(name2, data, cancelable = false, bubbles = true) {
+    const eventResult = this._fireEvent(name2, data, cancelable, bubbles);
+    const camelCaseEventName = kebabToCamelCase(name2);
+    if (camelCaseEventName !== name2) {
+      return eventResult && this._fireEvent(camelCaseEventName, data, cancelable);
+    }
+    return eventResult;
+  }
+  _fireEvent(name2, data, cancelable = false, bubbles = true) {
+    const noConflictEvent = new CustomEvent(`ui5-${name2}`, {
+      detail: data,
+      composed: false,
+      bubbles,
+      cancelable
+    });
+    const noConflictEventResult = this.dispatchEvent(noConflictEvent);
+    if (skipOriginalEvent(name2)) {
+      return noConflictEventResult;
+    }
+    const normalEvent = new CustomEvent(name2, {
+      detail: data,
+      composed: false,
+      bubbles,
+      cancelable
+    });
+    const normalEventResult = this.dispatchEvent(normalEvent);
+    return normalEventResult && noConflictEventResult;
+  }
+  getSlottedNodes(slotName) {
+    return getSlottedNodesList(this[slotName]);
+  }
+  get effectiveDir() {
+    markAsRtlAware(this.constructor);
+    return getEffectiveDir(this);
+  }
+  get isUI5Element() {
+    return true;
+  }
+  static get observedAttributes() {
+    return this.getMetadata().getAttributesList();
+  }
+  static _needsShadowDOM() {
+    return !!this.template;
+  }
+  static _needsStaticArea() {
+    return !!this.staticAreaTemplate;
+  }
+  getStaticAreaItemDomRef() {
+    if (!this.constructor._needsStaticArea()) {
+      throw new Error("This component does not use the static area");
+    }
+    if (!this.staticAreaItem) {
+      this.staticAreaItem = StaticAreaItem.createInstance();
+      this.staticAreaItem.setOwnerElement(this);
+    }
+    if (!this.staticAreaItem.parentElement) {
+      getSingletonElementInstance("ui5-static-area").appendChild(this.staticAreaItem);
+    }
+    return this.staticAreaItem.getDomRef();
+  }
+  static _generateAccessors() {
+    const proto = this.prototype;
+    const slotsAreManaged = this.getMetadata().slotsAreManaged();
+    const properties = this.getMetadata().getProperties();
+    for (const [prop, propData] of Object.entries(properties)) {
+      if (!isValidPropertyName(prop)) {
+        console.warn(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+      }
+      if (propData.type === Boolean && propData.defaultValue) {
+        throw new Error(`Cannot set a default value for property "${prop}". All booleans are false by default.`);
+      }
+      if (propData.type === Array) {
+        throw new Error(`Wrong type for property "${prop}". Properties cannot be of type Array - use "multiple: true" and set "type" to the single value type, such as "String", "Object", etc...`);
+      }
+      if (propData.type === Object && propData.defaultValue) {
+        throw new Error(`Cannot set a default value for property "${prop}". All properties of type "Object" are empty objects by default.`);
+      }
+      if (propData.multiple && propData.defaultValue) {
+        throw new Error(`Cannot set a default value for property "${prop}". All multiple properties are empty arrays by default.`);
+      }
+      Object.defineProperty(proto, prop, {
+        get() {
+          if (this._state[prop] !== void 0) {
+            return this._state[prop];
+          }
+          const propDefaultValue = propData.defaultValue;
+          if (propData.type === Boolean) {
+            return false;
+          } else if (propData.type === String) {
+            return propDefaultValue;
+          } else if (propData.multiple) {
+            return [];
+          } else {
+            return propDefaultValue;
+          }
+        },
+        set(value) {
+          let isDifferent;
+          const ctor = this.constructor;
+          const metadataCtor = ctor.getMetadata().constructor;
+          value = metadataCtor.validatePropertyValue(value, propData);
+          const propertyTypeClass = propData.type;
+          const oldState = this._state[prop];
+          if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) {
+            isDifferent = !arraysAreEqual(oldState, value);
+          } else if (propertyTypeClass.isDataTypeClass) {
+            isDifferent = !propertyTypeClass.valuesAreEqual(oldState, value);
+          } else {
+            isDifferent = oldState !== value;
+          }
+          if (isDifferent) {
+            this._state[prop] = value;
+            _invalidate.call(this, {
+              type: "property",
+              name: prop,
+              newValue: value,
+              oldValue: oldState
+            });
+            this._updateAttribute(prop, value);
+          }
+        }
+      });
+    }
+    if (slotsAreManaged) {
+      const slots = this.getMetadata().getSlots();
+      for (const [slotName, slotData] of Object.entries(slots)) {
+        if (!isValidPropertyName(slotName)) {
+          console.warn(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
+        }
+        const propertyName = slotData.propertyName || slotName;
+        Object.defineProperty(proto, propertyName, {
+          get() {
+            if (this._state[propertyName] !== void 0) {
+              return this._state[propertyName];
+            }
+            return [];
+          },
+          set() {
+            throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
+          }
+        });
+      }
+    }
+  }
+  static get metadata() {
+    return metadata$1U;
+  }
+  static set metadata(newMetadata) {
+    metadata$1U = newMetadata;
+  }
+  static get styles() {
+    return "";
+  }
+  static get staticAreaStyles() {
+    return "";
+  }
+  static get dependencies() {
+    return [];
+  }
+  static getUniqueDependencies() {
+    if (!uniqueDependenciesCache.has(this)) {
+      const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
+      uniqueDependenciesCache.set(this, filtered);
+    }
+    return uniqueDependenciesCache.get(this) || [];
+  }
+  static whenDependenciesDefined() {
+    return Promise.all(this.getUniqueDependencies().map((dep) => dep.define()));
+  }
+  static async onDefine() {
+    return Promise.resolve();
+  }
+  static async define() {
+    await boot();
+    await Promise.all([
+      this.whenDependenciesDefined(),
+      this.onDefine()
+    ]);
+    const tag = this.getMetadata().getTag();
+    const definedLocally = isTagRegistered(tag);
+    const definedGlobally = customElements.get(tag);
+    if (definedGlobally && !definedLocally) {
+      recordTagRegistrationFailure(tag);
+    } else if (!definedGlobally) {
+      this._generateAccessors();
+      registerTag(tag);
+      window.customElements.define(tag, this);
+      preloadLinks(this);
+    }
+    return this;
+  }
+  static getMetadata() {
+    if (this.hasOwnProperty("_metadata")) {
+      return this._metadata;
+    }
+    const metadataObjects = [this.metadata];
+    let klass = this;
+    while (klass !== UI5Element) {
+      klass = Object.getPrototypeOf(klass);
+      metadataObjects.unshift(klass.metadata);
+    }
+    const mergedMetadata = fnMerge$1({}, ...metadataObjects);
+    this._metadata = new UI5ElementMetadata(mergedMetadata);
+    return this._metadata;
+  }
+}
+const instanceOfUI5Element = (object) => {
+  return "isUI5Element" in object;
+};
+const isElementHidden = (el) => {
+  if (el.nodeName === "SLOT") {
+    return false;
+  }
+  return el.offsetWidth <= 0 && el.offsetHeight <= 0 || el.style && el.style.visibility === "hidden";
+};
+const rClickable = /^(?:a|area)$/i;
+const rFocusable = /^(?:input|select|textarea|button)$/i;
+const isElementClickable = (el) => {
+  if (el.disabled) {
+    return false;
+  }
+  const tabIndex = el.getAttribute("tabindex");
+  if (tabIndex !== null && tabIndex !== void 0) {
+    return parseInt(tabIndex) >= 0;
+  }
+  return rFocusable.test(el.nodeName) || rClickable.test(el.nodeName) && !!el.href;
+};
+const isFocusTrap = (el) => {
+  return el.hasAttribute("data-ui5-focus-trap");
+};
+const getFirstFocusableElement = async (container, startFromContainer) => {
+  if (!container || isElementHidden(container)) {
+    return null;
+  }
+  return findFocusableElement(container, true, startFromContainer);
+};
+const getLastFocusableElement = async (container, startFromContainer) => {
+  if (!container || isElementHidden(container)) {
+    return null;
+  }
+  return findFocusableElement(container, false, startFromContainer);
+};
+const isElemFocusable = (el) => {
+  return el.hasAttribute("data-ui5-focus-redirect") || !isElementHidden(el);
+};
+const findFocusableElement = async (container, forward, startFromContainer) => {
+  let child;
+  if (container.shadowRoot) {
+    child = forward ? container.shadowRoot.firstChild : container.shadowRoot.lastChild;
+  } else if (container instanceof HTMLSlotElement && container.assignedNodes()) {
+    const assignedElements = container.assignedNodes();
+    child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
+  } else if (startFromContainer) {
+    child = container;
+  } else {
+    child = forward ? container.firstElementChild : container.lastElementChild;
+  }
+  let focusableDescendant;
+  while (child) {
+    const originalChild = child;
+    if (instanceOfUI5Element(child)) {
+      child = await child.getFocusDomRefAsync();
+    }
+    if (!child) {
+      return null;
+    }
+    if (child.nodeType === 1 && isElemFocusable(child) && !isFocusTrap(child)) {
+      if (isElementClickable(child)) {
+        return child && typeof child.focus === "function" ? child : null;
+      }
+      focusableDescendant = await findFocusableElement(child, forward);
+      if (focusableDescendant) {
+        return focusableDescendant && typeof focusableDescendant.focus === "function" ? focusableDescendant : null;
+      }
+    }
+    child = forward ? originalChild.nextSibling : originalChild.previousSibling;
+  }
+  return null;
+};
+let groups = [];
+const isFastNavGroupElemenet = (el) => {
+  return el.getAttribute("data-sap-ui-fastnavgroup") === "true";
+};
+const isElementVisible = (el) => {
+  const style = window.getComputedStyle(el);
+  return style.width !== "0px" && style.height !== "0px" && style.opacity !== "0" && style.display !== "none" && style.visibility !== "hidden";
+};
+const findFastNavigationGroups = (container, startFromContainer) => {
+  let child, assignedElements, index = 0;
+  if (!isElementVisible(container)) {
+    return;
+  }
+  if (isFastNavGroupElemenet(container)) {
+    groups.push(container);
+  }
+  if (container.shadowRoot) {
+    child = container.shadowRoot.firstChild;
+  } else if (container instanceof HTMLSlotElement && container.assignedNodes()) {
+    assignedElements = container.assignedNodes();
+    child = assignedElements[0];
+  } else if (startFromContainer) {
+    child = container;
+  } else {
+    child = container.firstElementChild;
+  }
+  while (child) {
+    const originalChild = child;
+    if (!child) {
+      return;
+    }
+    if (child.nodeType === 1) {
+      findFastNavigationGroups(child, false);
+    }
+    child = assignedElements && assignedElements.length ? assignedElements[++index] : originalChild.nextElementSibling;
+  }
+};
+const getFastNavigationGroups = (container) => {
+  groups = [];
+  findFastNavigationGroups(container, true);
+  return groups;
+};
+class F6Navigation {
+  constructor() {
+    this.selectedGroup = null;
+    this.groups = [];
+    this.keydownHandler = this._keydownHandler.bind(this);
+    this.attachEventListeners();
+  }
+  attachEventListeners() {
+    document.addEventListener("keydown", this.keydownHandler);
+  }
+  async _keydownHandler(event) {
+    if (isF6Next(event)) {
+      this.updateGroups();
+      if (this.groups.length < 1) {
+        return;
+      }
+      event.preventDefault();
+      let nextIndex = -1;
+      let nextElement;
+      if (this.selectedGroup) {
+        nextIndex = this.groups.indexOf(this.selectedGroup);
+      }
+      if (nextIndex > -1) {
+        if (nextIndex + 1 >= this.groups.length) {
+          nextElement = this.groups[0];
+        } else {
+          nextElement = this.groups[nextIndex + 1];
+        }
+      } else {
+        nextElement = this.groups[0];
+      }
+      const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
+      if (nextElementDomRef) {
+        const elementToFocus = await getFirstFocusableElement(nextElementDomRef, true);
+        elementToFocus == null ? void 0 : elementToFocus.focus();
+      }
+    }
+    if (isF6Previous(event)) {
+      this.updateGroups();
+      if (this.groups.length < 1) {
+        return;
+      }
+      event.preventDefault();
+      let nextIndex = -1;
+      let nextElement;
+      if (this.selectedGroup) {
+        nextIndex = this.groups.indexOf(this.selectedGroup);
+      }
+      if (nextIndex > 0) {
+        const firstFocusable = await getFirstFocusableElement(this.groups[nextIndex - 1], true);
+        const shouldSkipParent = firstFocusable === await getFirstFocusableElement(this.groups[nextIndex], true);
+        nextElement = this.groups[shouldSkipParent ? nextIndex - 2 : nextIndex - 1];
+      } else {
+        nextElement = this.groups[this.groups.length - 1];
+      }
+      const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
+      if (nextElementDomRef) {
+        const elementToFocus = await getFirstFocusableElement(nextElementDomRef, true);
+        elementToFocus == null ? void 0 : elementToFocus.focus();
+      }
+    }
+  }
+  removeEventListeners() {
+    document.removeEventListener("keydown", this.keydownHandler);
+  }
+  updateGroups() {
+    this.setSelectedGroup();
+    this.groups = getFastNavigationGroups(document.body);
+  }
+  setSelectedGroup(root = window.document) {
+    const htmlElement = window.document.querySelector("html");
+    let element = this.deepActive(root);
+    while (element && element.getAttribute("data-sap-ui-fastnavgroup") !== "true" && element !== htmlElement) {
+      element = element.parentElement ? element.parentNode : element.parentNode.host;
+    }
+    this.selectedGroup = element;
+  }
+  deepActive(root) {
+    if (root.activeElement && root.activeElement.shadowRoot) {
+      return this.deepActive(root.activeElement.shadowRoot);
+    }
+    return root.activeElement;
+  }
+  destroy() {
+    this.removeEventListeners();
+  }
+  static init() {
+    if (!this._instance) {
+      this._instance = new F6Navigation();
+    }
+    return this._instance;
+  }
+}
+registerFeature("F6Navigation", F6Navigation);
 setRuntimeAlias("UI5 Web Components Playground");
 setUseLinks(false);
 setPackageCSSRoot("@ui5/webcomponents-base", "/resources/css/base/");
@@ -2534,12 +3769,13 @@ setPackageCSSRoot("@ui5/webcomponents", "/resources/css/main/");
 setPackageCSSRoot("@ui5/webcomponents-fiori", "/css/");
 class DataType {
   static isValid(value) {
+    return false;
   }
   static attributeToProperty(attributeValue) {
     return attributeValue;
   }
   static propertyToAttribute(propertyValue) {
-    return `${propertyValue}`;
+    return propertyValue === null ? null : String(propertyValue);
   }
   static valuesAreEqual(value1, value2) {
     return value1 === value2;
@@ -2553,14 +3789,18 @@ class DataType {
       });
     });
   }
+  static get isDataTypeClass() {
+    return true;
+  }
 }
-const CalendarTypes = {
-  Gregorian: "Gregorian",
-  Islamic: "Islamic",
-  Japanese: "Japanese",
-  Buddhist: "Buddhist",
-  Persian: "Persian"
-};
+var CalendarTypes;
+(function(CalendarTypes2) {
+  CalendarTypes2["Gregorian"] = "Gregorian";
+  CalendarTypes2["Islamic"] = "Islamic";
+  CalendarTypes2["Japanese"] = "Japanese";
+  CalendarTypes2["Buddhist"] = "Buddhist";
+  CalendarTypes2["Persian"] = "Persian";
+})(CalendarTypes || (CalendarTypes = {}));
 class CalendarType$1 extends DataType {
   static isValid(value) {
     return !!CalendarTypes[value];
@@ -2575,11 +3815,7 @@ const getCalendarType = () => {
   if (CalendarType$1.isValid(calendarType)) {
     return calendarType;
   }
-  return CalendarType$1.Gregorian;
-};
-var getDesigntimePropertyAsArray$1 = (value) => {
-  const m2 = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(value);
-  return m2 && m2[2] ? m2[2].split(/,/) : null;
+  return CalendarTypes.Gregorian;
 };
 var TimezoneUtil = {};
 var sLocalTimezone = "";
@@ -3394,14 +4630,14 @@ var Locale = BaseObject.extend("sap.ui.core.Locale", {
     return join(sLanguage, sScript, this.sRegion, this.sVariant, this.sExtension, this.sPrivateUse);
   },
   getModernLanguage: function() {
-    return M_ISO639_OLD_TO_NEW$2[this.sLanguage] || this.sLanguage;
+    return M_ISO639_OLD_TO_NEW$1[this.sLanguage] || this.sLanguage;
   },
   getSAPLogonLanguage: function() {
     var sLanguage = this.sLanguage || "";
     if (sLanguage.indexOf("-") >= 0) {
       sLanguage = sLanguage.slice(0, sLanguage.indexOf("-"));
     }
-    sLanguage = M_ISO639_OLD_TO_NEW$2[sLanguage] || sLanguage;
+    sLanguage = M_ISO639_OLD_TO_NEW$1[sLanguage] || sLanguage;
     if (sLanguage === "zh" && !this.sScript && this.sRegion === "TW") {
       return "ZF";
     }
@@ -3417,7 +4653,7 @@ function getPseudoLanguageTag(sPrivateUse) {
     return m2 && "en-US-x-" + m2[1].toLowerCase();
   }
 }
-var M_ISO639_OLD_TO_NEW$2 = {
+var M_ISO639_OLD_TO_NEW$1 = {
   "iw": "he",
   "ji": "yi"
 };
@@ -3438,7 +4674,7 @@ function getDesigntimePropertyAsArray(sValue) {
   var m2 = /\$([-a-z0-9A-Z._]+)(?::([^$]*))?\$/.exec(sValue);
   return m2 && m2[2] ? m2[2].split(/,/) : null;
 }
-var A_RTL_LOCALES$1 = getDesigntimePropertyAsArray("$cldr-rtl-locales:ar,fa,he$") || [];
+var A_RTL_LOCALES = getDesigntimePropertyAsArray("$cldr-rtl-locales:ar,fa,he$") || [];
 Locale._cldrLocales = getDesigntimePropertyAsArray("$cldr-locales:ar,ar_EG,ar_SA,bg,ca,cy,cs,da,de,de_AT,de_CH,el,el_CY,en,en_AU,en_GB,en_HK,en_IE,en_IN,en_NZ,en_PG,en_SG,en_ZA,es,es_AR,es_BO,es_CL,es_CO,es_MX,es_PE,es_UY,es_VE,et,fa,fi,fr,fr_BE,fr_CA,fr_CH,fr_LU,he,hi,hr,hu,id,it,it_CH,ja,kk,ko,lt,lv,ms,nb,nl,nl_BE,pl,pt,pt_PT,ro,ru,ru_UA,sk,sl,sr,sr_Latn,sv,th,tr,uk,vi,zh_CN,zh_HK,zh_SG,zh_TW$");
 Locale._mPreferredCalendar = {
   "ar-SA": CalendarType.Islamic,
@@ -3450,12 +4686,12 @@ Locale._coreI18nLocales = getDesigntimePropertyAsArray("$core-i18n-locales:,ar,b
 Locale._impliesRTL = function(vLanguage) {
   var oLocale = vLanguage instanceof Locale ? vLanguage : new Locale(vLanguage);
   var sLanguage = oLocale.getLanguage() || "";
-  sLanguage = sLanguage && M_ISO639_OLD_TO_NEW$2[sLanguage] || sLanguage;
+  sLanguage = sLanguage && M_ISO639_OLD_TO_NEW$1[sLanguage] || sLanguage;
   var sRegion = oLocale.getRegion() || "";
-  if (sRegion && A_RTL_LOCALES$1.indexOf(sLanguage + "_" + sRegion) >= 0) {
+  if (sRegion && A_RTL_LOCALES.indexOf(sLanguage + "_" + sRegion) >= 0) {
     return true;
   }
-  return A_RTL_LOCALES$1.indexOf(sLanguage) >= 0;
+  return A_RTL_LOCALES.indexOf(sLanguage) >= 0;
 };
 Locale.fromSAPLogonLanguage = function(sSAPLogonLanguage) {
   if (sSAPLogonLanguage && typeof sSAPLogonLanguage === "string") {
@@ -4638,7 +5874,7 @@ var mCLDRSymbols = {
     numericCeiling: 100
   }
 };
-var M_ISO639_OLD_TO_NEW$1 = {
+var M_ISO639_OLD_TO_NEW = {
   "iw": "he",
   "ji": "yi"
 };
@@ -4692,7 +5928,7 @@ function getData(oLocale) {
     }
     return mLocaleDatas[sId2];
   }
-  sLanguage = sLanguage && M_ISO639_OLD_TO_NEW$1[sLanguage] || sLanguage;
+  sLanguage = sLanguage && M_ISO639_OLD_TO_NEW[sLanguage] || sLanguage;
   if (sLanguage === "no") {
     sLanguage = "nb";
   }
@@ -5947,7 +7183,8 @@ const formatMessage = (text, values) => {
       return $2.replace(/''/g, "'");
     }
     if ($3) {
-      return String(values[parseInt($3)]);
+      const ind = typeof $3 === "string" ? parseInt($3) : $3;
+      return String(values[ind]);
     }
     throw new Error(`[i18n]: pattern syntax error at pos ${offset}`);
   });
@@ -6012,11 +7249,11 @@ var fnHtml = function(sChar) {
 var fnEncodeXML = function(sString) {
   return sString.replace(rHtml, fnHtml);
 };
-function escapeRegex(text) {
+const escapeRegex = (text) => {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-}
+};
 function replaceAll(text, find, replace, caseInsensitive) {
-  return text.replace(new RegExp(escapeRegex(find), `${caseInsensitive ? "i" : ""}g`), replace);
+  return text.replaceAll(new RegExp(escapeRegex(find), `${caseInsensitive ? "i" : ""}g`), replace);
 }
 function generateHighlightedMarkup(text, textToHighlight) {
   if (!text || !textToHighlight) {
@@ -6033,1221 +7270,9 @@ function generateHighlightedMarkup(text, textToHighlight) {
   const closeToken = makeToken("34");
   let result = fnEncodeXML(replaceAll(text, textToHighlight, (match) => `${openToken}${match}${closeToken}`, true));
   [[openToken, "<b>"], [closeToken, "</b>"]].forEach(([find, replace]) => {
-    result = replaceAll(result, find, replace);
+    result = replaceAll(result, find, replace, false);
   });
   return result;
-}
-const whenDOMReady = () => {
-  return new Promise((resolve) => {
-    if (document.body) {
-      resolve();
-    } else {
-      document.addEventListener("DOMContentLoaded", () => {
-        resolve();
-      });
-    }
-  });
-};
-var fontFaceCSS = {
-  packageName: "@ui5/webcomponents-base",
-  fileName: "FontFace.css",
-  content: `@font-face{font-family:"72";font-style:normal;font-weight:400;src:local("72"),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:"72full";font-style:normal;font-weight:400;src:local('72-full'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Regular-full.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:"72";font-style:normal;font-weight:700;src:local('72-Bold'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:"72full";font-style:normal;font-weight:700;src:local('72-Bold-full'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold-full.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:'72-Bold';font-style:normal;src:local('72-Bold'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:'72-Boldfull';font-style:normal;src:url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Bold-full.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:'72-Light';font-style:normal;src:local('72-Light'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:'72-Lightfull';font-style:normal;src:url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_fiori_3/fonts/72-Light-full.woff2?ui5-webcomponents) format("woff2")}@font-face{font-family:"72Black";font-style:bold;font-weight:900;src:local('72Black'),url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_horizon/fonts/72-Black.woff2?ui5-webcomponents) format("woff2")}`
-};
-var overrideFontFaceCSS = {
-  packageName: "@ui5/webcomponents-base",
-  fileName: "OverrideFontFace.css",
-  content: `@font-face{font-family:'72override';unicode-range:U+0102-0103,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EB7,U+1EB8-1EC7,U+1EC8-1ECB,U+1ECC-1EE3,U+1EE4-1EF1,U+1EF4-1EF7;src:local('Arial'),local('Helvetica'),local('sans-serif')}`
-};
-const insertFontFace = () => {
-  const OpenUI5Support2 = getFeature("OpenUI5Support");
-  if (!OpenUI5Support2 || !OpenUI5Support2.isLoaded()) {
-    insertMainFontFace();
-  }
-  insertOverrideFontFace();
-};
-const insertMainFontFace = () => {
-  if (!hasStyle("data-ui5-font-face")) {
-    createStyle(fontFaceCSS, "data-ui5-font-face");
-  }
-};
-const insertOverrideFontFace = () => {
-  if (!hasStyle("data-ui5-font-face-override")) {
-    createStyle(overrideFontFaceCSS, "data-ui5-font-face-override");
-  }
-};
-var systemCSSVars = {
-  packageName: "@ui5/webcomponents-base",
-  fileName: "SystemCSSVars.css",
-  content: `:root{--_ui5_content_density:cozy}.sapUiSizeCompact,.ui5-content-density-compact,[data-ui5-compact-size]{--_ui5_content_density:compact}[dir=rtl]{--_ui5_dir:rtl}[dir=ltr]{--_ui5_dir:ltr}`
-};
-const insertSystemCSSVars = () => {
-  if (!hasStyle("data-ui5-system-css-vars")) {
-    createStyle(systemCSSVars, "data-ui5-system-css-vars");
-  }
-};
-let bootPromise;
-const attachBoot = async (listener) => {
-  await boot();
-  listener();
-};
-const boot = async () => {
-  if (bootPromise) {
-    return bootPromise;
-  }
-  bootPromise = new Promise(async (resolve) => {
-    registerCurrentRuntime();
-    const OpenUI5Support2 = getFeature("OpenUI5Support");
-    const isOpenUI5Loaded = OpenUI5Support2 ? OpenUI5Support2.isLoaded() : false;
-    const F6Navigation2 = getFeature("F6Navigation");
-    if (OpenUI5Support2) {
-      await OpenUI5Support2.init();
-    }
-    if (F6Navigation2 && !isOpenUI5Loaded) {
-      F6Navigation2.init();
-    }
-    await whenDOMReady();
-    await applyTheme(getTheme());
-    OpenUI5Support2 && OpenUI5Support2.attachListeners();
-    insertFontFace();
-    insertSystemCSSVars();
-    resolve();
-  });
-  return bootPromise;
-};
-const isDescendantOf = (klass, baseKlass, inclusive = false) => {
-  if (typeof klass !== "function" || typeof baseKlass !== "function") {
-    return false;
-  }
-  if (inclusive && klass === baseKlass) {
-    return true;
-  }
-  let parent = klass;
-  do {
-    parent = Object.getPrototypeOf(parent);
-  } while (parent !== null && parent !== baseKlass);
-  return parent === baseKlass;
-};
-const kebabToCamelMap = /* @__PURE__ */ new Map();
-const camelToKebabMap = /* @__PURE__ */ new Map();
-const kebabToCamelCase = (string) => {
-  if (!kebabToCamelMap.has(string)) {
-    const result = toCamelCase(string.split("-"));
-    kebabToCamelMap.set(string, result);
-  }
-  return kebabToCamelMap.get(string);
-};
-const camelToKebabCase = (string) => {
-  if (!camelToKebabMap.has(string)) {
-    const result = string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-    camelToKebabMap.set(string, result);
-  }
-  return camelToKebabMap.get(string);
-};
-const toCamelCase = (parts) => {
-  return parts.map((string, index) => {
-    return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-  }).join("");
-};
-const getSlotName = (node) => {
-  if (!(node instanceof HTMLElement)) {
-    return "default";
-  }
-  const slot = node.getAttribute("slot");
-  if (slot) {
-    const match = slot.match(/^(.+?)-\d+$/);
-    return match ? match[1] : slot;
-  }
-  return "default";
-};
-const isSlot = (el) => el && el instanceof HTMLElement && el.localName === "slot";
-const getSlottedElements = (el) => {
-  if (isSlot(el)) {
-    return el.assignedNodes({ flatten: true }).filter((item) => item instanceof HTMLElement);
-  }
-  return [el];
-};
-const getSlottedElementsList = (elList) => {
-  const reducer = (acc, curr) => acc.concat(getSlottedElements(curr));
-  return elList.reduce(reducer, []);
-};
-let suf;
-let rulesObj = {
-  include: [/^ui5-/],
-  exclude: []
-};
-const tagsCache = /* @__PURE__ */ new Map();
-const getCustomElementsScopingSuffix = () => {
-  return suf;
-};
-const shouldScopeCustomElement = (tag) => {
-  if (!tagsCache.has(tag)) {
-    const result = rulesObj.include.some((rule) => tag.match(rule)) && !rulesObj.exclude.some((rule) => tag.match(rule));
-    tagsCache.set(tag, result);
-  }
-  return tagsCache.get(tag);
-};
-const getEffectiveScopingSuffixForTag = (tag) => {
-  if (shouldScopeCustomElement(tag)) {
-    return getCustomElementsScopingSuffix();
-  }
-};
-class UI5ElementMetadata {
-  constructor(metadata2) {
-    this.metadata = metadata2;
-  }
-  getInitialState() {
-    if (Object.prototype.hasOwnProperty.call(this, "_initialState")) {
-      return this._initialState;
-    }
-    const initialState = {};
-    const slotsAreManaged = this.slotsAreManaged();
-    const props = this.getProperties();
-    for (const propName in props) {
-      const propType = props[propName].type;
-      const propDefaultValue = props[propName].defaultValue;
-      if (propType === Boolean) {
-        initialState[propName] = false;
-        if (propDefaultValue !== void 0) {
-          console.warn("The 'defaultValue' metadata key is ignored for all booleans properties, they would be initialized with 'false' by default");
-        }
-      } else if (props[propName].multiple) {
-        initialState[propName] = [];
-      } else if (propType === Object) {
-        initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : {};
-      } else if (propType === String) {
-        initialState[propName] = "defaultValue" in props[propName] ? props[propName].defaultValue : "";
-      } else {
-        initialState[propName] = propDefaultValue;
-      }
-    }
-    if (slotsAreManaged) {
-      const slots = this.getSlots();
-      for (const [slotName, slotData] of Object.entries(slots)) {
-        const propertyName = slotData.propertyName || slotName;
-        initialState[propertyName] = [];
-      }
-    }
-    this._initialState = initialState;
-    return initialState;
-  }
-  static validatePropertyValue(value, propData) {
-    const isMultiple = propData.multiple;
-    if (isMultiple) {
-      return value.map((propValue) => validateSingleProperty(propValue, propData));
-    }
-    return validateSingleProperty(value, propData);
-  }
-  static validateSlotValue(value, slotData) {
-    return validateSingleSlot(value, slotData);
-  }
-  getPureTag() {
-    return this.metadata.tag;
-  }
-  getTag() {
-    const pureTag = this.metadata.tag;
-    const suffix = getEffectiveScopingSuffixForTag(pureTag);
-    if (!suffix) {
-      return pureTag;
-    }
-    return `${pureTag}-${suffix}`;
-  }
-  getAltTag() {
-    const pureAltTag = this.metadata.altTag;
-    if (!pureAltTag) {
-      return;
-    }
-    const suffix = getEffectiveScopingSuffixForTag(pureAltTag);
-    if (!suffix) {
-      return pureAltTag;
-    }
-    return `${pureAltTag}-${suffix}`;
-  }
-  hasAttribute(propName) {
-    const propData = this.getProperties()[propName];
-    return propData.type !== Object && !propData.noAttribute && !propData.multiple;
-  }
-  getPropertiesList() {
-    return Object.keys(this.getProperties());
-  }
-  getAttributesList() {
-    return this.getPropertiesList().filter(this.hasAttribute, this).map(camelToKebabCase);
-  }
-  getSlots() {
-    return this.metadata.slots || {};
-  }
-  canSlotText() {
-    const defaultSlot = this.getSlots().default;
-    return defaultSlot && defaultSlot.type === Node;
-  }
-  hasSlots() {
-    return !!Object.entries(this.getSlots()).length;
-  }
-  hasIndividualSlots() {
-    return this.slotsAreManaged() && Object.entries(this.getSlots()).some(([_slotName, slotData]) => slotData.individualSlots);
-  }
-  slotsAreManaged() {
-    return !!this.metadata.managedSlots;
-  }
-  supportsF6FastNavigation() {
-    return !!this.metadata.fastNavigation;
-  }
-  getProperties() {
-    return this.metadata.properties || {};
-  }
-  getEvents() {
-    return this.metadata.events || {};
-  }
-  isLanguageAware() {
-    return !!this.metadata.languageAware;
-  }
-  isThemeAware() {
-    return !!this.metadata.themeAware;
-  }
-  shouldInvalidateOnChildChange(slotName, type, name2) {
-    const config = this.getSlots()[slotName].invalidateOnChildChange;
-    if (config === void 0) {
-      return false;
-    }
-    if (typeof config === "boolean") {
-      return config;
-    }
-    if (typeof config === "object") {
-      if (type === "property") {
-        if (config.properties === void 0) {
-          return false;
-        }
-        if (typeof config.properties === "boolean") {
-          return config.properties;
-        }
-        if (Array.isArray(config.properties)) {
-          return config.properties.includes(name2);
-        }
-        throw new Error("Wrong format for invalidateOnChildChange.properties: boolean or array is expected");
-      }
-      if (type === "slot") {
-        if (config.slots === void 0) {
-          return false;
-        }
-        if (typeof config.slots === "boolean") {
-          return config.slots;
-        }
-        if (Array.isArray(config.slots)) {
-          return config.slots.includes(name2);
-        }
-        throw new Error("Wrong format for invalidateOnChildChange.slots: boolean or array is expected");
-      }
-    }
-    throw new Error("Wrong format for invalidateOnChildChange: boolean or object is expected");
-  }
-}
-const validateSingleProperty = (value, propData) => {
-  const propertyType = propData.type;
-  if (propertyType === Boolean) {
-    return typeof value === "boolean" ? value : false;
-  }
-  if (propertyType === String) {
-    return typeof value === "string" || typeof value === "undefined" || value === null ? value : value.toString();
-  }
-  if (propertyType === Object) {
-    return typeof value === "object" ? value : propData.defaultValue;
-  }
-  if (isDescendantOf(propertyType, DataType)) {
-    return propertyType.isValid(value) ? value : propData.defaultValue;
-  }
-};
-const validateSingleSlot = (value, slotData) => {
-  value && getSlottedElements(value).forEach((el) => {
-    if (!(el instanceof slotData.type)) {
-      throw new Error(`${el} is not of type ${slotData.type}`);
-    }
-  });
-  return value;
-};
-if (!customElements.get("ui5-static-area")) {
-  customElements.define("ui5-static-area", class extends HTMLElement {
-  });
-}
-const executeTemplate = (template, component) => {
-  const tagsToScope = getTagsToScope(component);
-  const scope = getCustomElementsScopingSuffix();
-  return template(component, tagsToScope, scope);
-};
-const getTagsToScope = (component) => {
-  const componentTag = component.constructor.getMetadata().getPureTag();
-  const tagsToScope = component.constructor.getUniqueDependencies().map((dep) => dep.getMetadata().getPureTag()).filter(shouldScopeCustomElement);
-  if (shouldScopeCustomElement(componentTag)) {
-    tagsToScope.push(componentTag);
-  }
-  return tagsToScope;
-};
-const getStylesString = (styles2) => {
-  if (Array.isArray(styles2)) {
-    return flatten$1(styles2.filter((style) => !!style)).map((style) => {
-      return typeof style === "string" ? style : style.content;
-    }).join(" ");
-  }
-  return typeof styles2 === "string" ? styles2 : styles2.content;
-};
-const flatten$1 = (arr) => {
-  return arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatten$1(val) : val), []);
-};
-const effectiveStyleMap = /* @__PURE__ */ new Map();
-attachCustomCSSChange((tag) => {
-  effectiveStyleMap.delete(`${tag}_normal`);
-});
-const getEffectiveStyle = (ElementClass, forStaticArea = false) => {
-  const tag = ElementClass.getMetadata().getTag();
-  const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
-  const OpenUI5Enablement = getFeature("OpenUI5Enablement");
-  if (!effectiveStyleMap.has(key)) {
-    let effectiveStyle;
-    let busyIndicatorStyles = "";
-    if (OpenUI5Enablement) {
-      busyIndicatorStyles = getStylesString(OpenUI5Enablement.getBusyIndicatorStyles());
-    }
-    if (forStaticArea) {
-      effectiveStyle = getStylesString(ElementClass.staticAreaStyles);
-    } else {
-      const customStyle = getCustomCSS(tag) || "";
-      const builtInStyles = getStylesString(ElementClass.styles);
-      effectiveStyle = `${builtInStyles} ${customStyle}`;
-    }
-    effectiveStyle = `${effectiveStyle} ${busyIndicatorStyles}`;
-    effectiveStyleMap.set(key, effectiveStyle);
-  }
-  return effectiveStyleMap.get(key);
-};
-const constructableStyleMap = /* @__PURE__ */ new Map();
-attachCustomCSSChange((tag) => {
-  constructableStyleMap.delete(`${tag}_normal`);
-});
-const getConstructableStyle = (ElementClass, forStaticArea = false) => {
-  const tag = ElementClass.getMetadata().getTag();
-  const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
-  if (!constructableStyleMap.has(key)) {
-    const styleContent = getEffectiveStyle(ElementClass, forStaticArea);
-    const style = new CSSStyleSheet();
-    style.replaceSync(styleContent);
-    constructableStyleMap.set(key, [style]);
-  }
-  return constructableStyleMap.get(key);
-};
-const flatten = (arr) => {
-  return arr.reduce((acc, val) => acc.concat(Array.isArray(val) ? flatten(val) : val), []);
-};
-const getEffectiveLinksHrefs = (ElementClass, forStaticArea = false) => {
-  let stylesData = ElementClass[forStaticArea ? "staticAreaStyles" : "styles"];
-  const OpenUI5Enablement = getFeature("OpenUI5Enablement");
-  if (!stylesData) {
-    return;
-  }
-  if (!Array.isArray(stylesData)) {
-    stylesData = [stylesData];
-  }
-  if (OpenUI5Enablement) {
-    stylesData.push(OpenUI5Enablement.getBusyIndicatorStyles());
-  }
-  return flatten(stylesData).filter((data) => !!data).map((data) => getUrl(data.packageName, data.fileName));
-};
-const updateShadowRoot = (element, forStaticArea = false) => {
-  let styleStrOrHrefsArr;
-  const template = forStaticArea ? "staticAreaTemplate" : "template";
-  const shadowRoot = forStaticArea ? element.staticAreaItem.shadowRoot : element.shadowRoot;
-  const renderResult = executeTemplate(element.constructor[template], element);
-  if (shouldUseLinks()) {
-    styleStrOrHrefsArr = getEffectiveLinksHrefs(element.constructor, forStaticArea);
-  } else if (document.adoptedStyleSheets) {
-    shadowRoot.adoptedStyleSheets = getConstructableStyle(element.constructor, forStaticArea);
-  } else {
-    styleStrOrHrefsArr = getEffectiveStyle(element.constructor, forStaticArea);
-  }
-  element.constructor.render(renderResult, shadowRoot, styleStrOrHrefsArr, forStaticArea, { host: element });
-};
-const GLOBAL_CONTENT_DENSITY_CSS_VAR = "--_ui5_content_density";
-const getEffectiveContentDensity = (el) => getComputedStyle(el).getPropertyValue(GLOBAL_CONTENT_DENSITY_CSS_VAR);
-const M_ISO639_OLD_TO_NEW = {
-  "iw": "he",
-  "ji": "yi",
-  "in": "id",
-  "sh": "sr"
-};
-const A_RTL_LOCALES = getDesigntimePropertyAsArray$1("$cldr-rtl-locales:ar,fa,he$") || [];
-const impliesRTL = (language2) => {
-  language2 = language2 && M_ISO639_OLD_TO_NEW[language2] || language2;
-  return A_RTL_LOCALES.indexOf(language2) >= 0;
-};
-const getRTL = () => {
-  const configurationRTL = getRTL$1();
-  if (configurationRTL !== null) {
-    return !!configurationRTL;
-  }
-  return impliesRTL(getLanguage() || detectNavigatorLanguage());
-};
-const GLOBAL_DIR_CSS_VAR = "--_ui5_dir";
-const getEffectiveDir = (element) => {
-  const doc = window.document;
-  const dirValues = ["ltr", "rtl"];
-  const locallyAppliedDir = getComputedStyle(element).getPropertyValue(GLOBAL_DIR_CSS_VAR);
-  if (dirValues.includes(locallyAppliedDir)) {
-    return locallyAppliedDir;
-  }
-  if (dirValues.includes(element.dir)) {
-    return element.dir;
-  }
-  if (dirValues.includes(doc.documentElement.dir)) {
-    return doc.documentElement.dir;
-  }
-  if (dirValues.includes(doc.body.dir)) {
-    return doc.body.dir;
-  }
-  return getRTL() ? "rtl" : void 0;
-};
-class StaticAreaItem extends HTMLElement {
-  constructor() {
-    super();
-    this._rendered = false;
-    this.attachShadow({ mode: "open" });
-    this.pureTagName = "ui5-static-area-item";
-    this.popupIntegrationAttr = "data-sap-ui-integration-popup-content";
-  }
-  setOwnerElement(ownerElement) {
-    this.ownerElement = ownerElement;
-    this.classList.add(this.ownerElement._id);
-    if (this.ownerElement.hasAttribute("data-ui5-static-stable")) {
-      this.setAttribute("data-ui5-stable", this.ownerElement.getAttribute("data-ui5-static-stable"));
-    }
-  }
-  update() {
-    if (this._rendered) {
-      this._updateAdditionalAttrs();
-      this._updateContentDensity();
-      this._updateDirection();
-      updateShadowRoot(this.ownerElement, true);
-    }
-  }
-  _updateContentDensity() {
-    if (getEffectiveContentDensity(this.ownerElement) === "compact") {
-      this.classList.add("sapUiSizeCompact");
-      this.classList.add("ui5-content-density-compact");
-    } else {
-      this.classList.remove("sapUiSizeCompact");
-      this.classList.remove("ui5-content-density-compact");
-    }
-  }
-  _updateDirection() {
-    const dir = getEffectiveDir(this.ownerElement);
-    if (dir) {
-      this.setAttribute("dir", dir);
-    } else {
-      this.removeAttribute("dir");
-    }
-  }
-  _updateAdditionalAttrs() {
-    this.setAttribute(this.pureTagName, "");
-    this.setAttribute(this.popupIntegrationAttr, "");
-  }
-  async getDomRef() {
-    this._updateContentDensity();
-    if (!this._rendered) {
-      this._rendered = true;
-      updateShadowRoot(this.ownerElement, true);
-    }
-    await renderFinished();
-    return this.shadowRoot;
-  }
-  static getTag() {
-    const pureTag = "ui5-static-area-item";
-    const suffix = getEffectiveScopingSuffixForTag(pureTag);
-    if (!suffix) {
-      return pureTag;
-    }
-    return `${pureTag}-${suffix}`;
-  }
-  static createInstance() {
-    if (!customElements.get(StaticAreaItem.getTag())) {
-      customElements.define(StaticAreaItem.getTag(), StaticAreaItem);
-    }
-    return document.createElement(this.getTag());
-  }
-}
-const observers = /* @__PURE__ */ new WeakMap();
-let _createObserver = (node, callback, options) => {
-  const observer = new MutationObserver(callback);
-  observer.observe(node, options);
-  return observer;
-};
-let _destroyObserver = (observer) => {
-  observer.disconnect();
-};
-const observeDOMNode = (node, callback, options) => {
-  const observer = _createObserver(node, callback, options);
-  observers.set(node, observer);
-};
-const unobserveDOMNode = (node) => {
-  const observer = observers.get(node);
-  if (observer) {
-    _destroyObserver(observer);
-    observers.delete(node);
-  }
-};
-const excludeList = [
-  "value-changed"
-];
-const shouldFireOriginalEvent = (eventName) => {
-  return excludeList.includes(eventName);
-};
-let noConflict;
-const shouldNotFireOriginalEvent = (eventName) => {
-  const nc = getNoConflict();
-  return !(nc.events && nc.events.includes && nc.events.includes(eventName));
-};
-const getNoConflict = () => {
-  if (noConflict === void 0) {
-    noConflict = getNoConflict$1();
-  }
-  return noConflict;
-};
-const skipOriginalEvent = (eventName) => {
-  const nc = getNoConflict();
-  if (shouldFireOriginalEvent(eventName)) {
-    return false;
-  }
-  if (nc === true) {
-    return true;
-  }
-  return !shouldNotFireOriginalEvent(eventName);
-};
-const setNoConflict = (noConflictData) => {
-  noConflict = noConflictData;
-};
-const allowList = [
-  "disabled",
-  "title",
-  "hidden",
-  "role",
-  "draggable"
-];
-const isValidPropertyName = (name2) => {
-  if (allowList.includes(name2) || name2.startsWith("aria")) {
-    return true;
-  }
-  const classes = [
-    HTMLElement,
-    Element,
-    Node
-  ];
-  return !classes.some((klass) => klass.prototype.hasOwnProperty(name2));
-};
-const arraysAreEqual = (arr1, arr2) => {
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-  for (let i2 = 0; i2 < arr1.length; i2++) {
-    if (arr1[i2] !== arr2[i2]) {
-      return false;
-    }
-  }
-  return true;
-};
-const getClassCopy = (klass, constructorCallback) => {
-  return class classCopy extends klass {
-    constructor() {
-      super();
-      constructorCallback && constructorCallback();
-    }
-  };
-};
-const preloaded = /* @__PURE__ */ new Set();
-const preloadLinks = (ElementClass) => {
-  if (!shouldUseLinks() || !shouldPreloadLinks()) {
-    return;
-  }
-  const linksHrefs = getEffectiveLinksHrefs(ElementClass, false) || [];
-  const staticAreaLinksHrefs = getEffectiveLinksHrefs(ElementClass, true) || [];
-  [...linksHrefs, ...staticAreaLinksHrefs].forEach((href) => {
-    if (!preloaded.has(href)) {
-      createLinkInHead(href, { rel: "preload", as: "style" });
-      preloaded.add(href);
-    }
-  });
-};
-let autoId = 0;
-const elementTimeouts = /* @__PURE__ */ new Map();
-const uniqueDependenciesCache = /* @__PURE__ */ new Map();
-function _invalidate(changeInfo) {
-  if (this._suppressInvalidation) {
-    return;
-  }
-  this.onInvalidation(changeInfo);
-  this._changedState.push(changeInfo);
-  renderDeferred(this);
-  this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
-}
-let metadata$1U = {};
-class UI5Element extends HTMLElement {
-  constructor() {
-    super();
-    this._changedState = [];
-    this._suppressInvalidation = true;
-    this._inDOM = false;
-    this._fullyConnected = false;
-    this._childChangeListeners = /* @__PURE__ */ new Map();
-    this._slotChangeListeners = /* @__PURE__ */ new Map();
-    this._eventProvider = new EventProvider();
-    let deferredResolve;
-    this._domRefReadyPromise = new Promise((resolve) => {
-      deferredResolve = resolve;
-    });
-    this._domRefReadyPromise._deferredResolve = deferredResolve;
-    this._doNotSyncAttributes = /* @__PURE__ */ new Set();
-    this._initializeState();
-    this._upgradeAllProperties();
-    if (this.constructor._needsShadowDOM()) {
-      this.attachShadow({ mode: "open" });
-    }
-  }
-  get _id() {
-    if (!this.__id) {
-      this.__id = `ui5wc_${++autoId}`;
-    }
-    return this.__id;
-  }
-  async connectedCallback() {
-    this.setAttribute(this.constructor.getMetadata().getPureTag(), "");
-    if (this.constructor.getMetadata().supportsF6FastNavigation()) {
-      this.setAttribute("data-sap-ui-fastnavgroup", "true");
-    }
-    const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
-    this._inDOM = true;
-    if (slotsAreManaged) {
-      this._startObservingDOMChildren();
-      await this._processChildren();
-    }
-    if (!this._inDOM) {
-      return;
-    }
-    renderImmediately(this);
-    this._domRefReadyPromise._deferredResolve();
-    this._fullyConnected = true;
-    if (typeof this.onEnterDOM === "function") {
-      this.onEnterDOM();
-    }
-  }
-  disconnectedCallback() {
-    const slotsAreManaged = this.constructor.getMetadata().slotsAreManaged();
-    this._inDOM = false;
-    if (slotsAreManaged) {
-      this._stopObservingDOMChildren();
-    }
-    if (this._fullyConnected) {
-      if (typeof this.onExitDOM === "function") {
-        this.onExitDOM();
-      }
-      this._fullyConnected = false;
-    }
-    if (this.staticAreaItem && this.staticAreaItem.parentElement) {
-      this.staticAreaItem.parentElement.removeChild(this.staticAreaItem);
-    }
-    cancelRender(this);
-  }
-  _startObservingDOMChildren() {
-    const shouldObserveChildren = this.constructor.getMetadata().hasSlots();
-    if (!shouldObserveChildren) {
-      return;
-    }
-    const canSlotText = this.constructor.getMetadata().canSlotText();
-    const mutationObserverOptions = {
-      childList: true,
-      subtree: canSlotText,
-      characterData: canSlotText
-    };
-    observeDOMNode(this, this._processChildren.bind(this), mutationObserverOptions);
-  }
-  _stopObservingDOMChildren() {
-    unobserveDOMNode(this);
-  }
-  async _processChildren() {
-    const hasSlots = this.constructor.getMetadata().hasSlots();
-    if (hasSlots) {
-      await this._updateSlots();
-    }
-  }
-  async _updateSlots() {
-    const slotsMap = this.constructor.getMetadata().getSlots();
-    const canSlotText = this.constructor.getMetadata().canSlotText();
-    const domChildren = Array.from(canSlotText ? this.childNodes : this.children);
-    const slotsCachedContentMap = /* @__PURE__ */ new Map();
-    const propertyNameToSlotMap = /* @__PURE__ */ new Map();
-    for (const [slotName, slotData] of Object.entries(slotsMap)) {
-      const propertyName = slotData.propertyName || slotName;
-      propertyNameToSlotMap.set(propertyName, slotName);
-      slotsCachedContentMap.set(propertyName, [...this._state[propertyName]]);
-      this._clearSlot(slotName, slotData);
-    }
-    const autoIncrementMap = /* @__PURE__ */ new Map();
-    const slottedChildrenMap = /* @__PURE__ */ new Map();
-    const allChildrenUpgraded = domChildren.map(async (child, idx) => {
-      const slotName = getSlotName(child);
-      const slotData = slotsMap[slotName];
-      if (slotData === void 0) {
-        const validValues = Object.keys(slotsMap).join(", ");
-        console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`);
-        return;
-      }
-      if (slotData.individualSlots) {
-        const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
-        autoIncrementMap.set(slotName, nextIndex);
-        child._individualSlot = `${slotName}-${nextIndex}`;
-      }
-      if (child instanceof HTMLElement) {
-        const localName = child.localName;
-        const isCustomElement = localName.includes("-");
-        if (isCustomElement) {
-          const isDefined = window.customElements.get(localName);
-          if (!isDefined) {
-            const whenDefinedPromise = window.customElements.whenDefined(localName);
-            let timeoutPromise = elementTimeouts.get(localName);
-            if (!timeoutPromise) {
-              timeoutPromise = new Promise((resolve) => setTimeout(resolve, 1e3));
-              elementTimeouts.set(localName, timeoutPromise);
-            }
-            await Promise.race([whenDefinedPromise, timeoutPromise]);
-          }
-          window.customElements.upgrade(child);
-        }
-      }
-      child = this.constructor.getMetadata().constructor.validateSlotValue(child, slotData);
-      if (child.isUI5Element && slotData.invalidateOnChildChange) {
-        const method = (child.attachInvalidate || child._attachChange).bind(child);
-        method(this._getChildChangeListener(slotName));
-      }
-      if (isSlot(child)) {
-        this._attachSlotChange(child, slotName);
-      }
-      const propertyName = slotData.propertyName || slotName;
-      if (slottedChildrenMap.has(propertyName)) {
-        slottedChildrenMap.get(propertyName).push({ child, idx });
-      } else {
-        slottedChildrenMap.set(propertyName, [{ child, idx }]);
-      }
-    });
-    await Promise.all(allChildrenUpgraded);
-    slottedChildrenMap.forEach((children, propertyName) => {
-      this._state[propertyName] = children.sort((a2, b2) => a2.idx - b2.idx).map((_2) => _2.child);
-    });
-    let invalidated = false;
-    for (const [slotName, slotData] of Object.entries(slotsMap)) {
-      const propertyName = slotData.propertyName || slotName;
-      if (!arraysAreEqual(slotsCachedContentMap.get(propertyName), this._state[propertyName])) {
-        _invalidate.call(this, {
-          type: "slot",
-          name: propertyNameToSlotMap.get(propertyName),
-          reason: "children"
-        });
-        invalidated = true;
-      }
-    }
-    if (!invalidated) {
-      _invalidate.call(this, {
-        type: "slot",
-        name: "default",
-        reason: "textcontent"
-      });
-    }
-  }
-  _clearSlot(slotName, slotData) {
-    const propertyName = slotData.propertyName || slotName;
-    const children = this._state[propertyName];
-    children.forEach((child) => {
-      if (child && child.isUI5Element) {
-        const method = (child.detachInvalidate || child._detachChange).bind(child);
-        method(this._getChildChangeListener(slotName));
-      }
-      if (isSlot(child)) {
-        this._detachSlotChange(child, slotName);
-      }
-    });
-    this._state[propertyName] = [];
-  }
-  attachInvalidate(callback) {
-    this._eventProvider.attachEvent("invalidate", callback);
-  }
-  detachInvalidate(callback) {
-    this._eventProvider.detachEvent("invalidate", callback);
-  }
-  _onChildChange(slotName, childChangeInfo) {
-    if (!this.constructor.getMetadata().shouldInvalidateOnChildChange(slotName, childChangeInfo.type, childChangeInfo.name)) {
-      return;
-    }
-    _invalidate.call(this, {
-      type: "slot",
-      name: slotName,
-      reason: "childchange",
-      child: childChangeInfo.target
-    });
-  }
-  attributeChangedCallback(name2, oldValue, newValue) {
-    if (this._doNotSyncAttributes.has(name2)) {
-      return;
-    }
-    const properties = this.constructor.getMetadata().getProperties();
-    const realName = name2.replace(/^ui5-/, "");
-    const nameInCamelCase = kebabToCamelCase(realName);
-    if (properties.hasOwnProperty(nameInCamelCase)) {
-      const propertyTypeClass = properties[nameInCamelCase].type;
-      if (propertyTypeClass === Boolean) {
-        newValue = newValue !== null;
-      } else if (isDescendantOf(propertyTypeClass, DataType)) {
-        newValue = propertyTypeClass.attributeToProperty(newValue);
-      }
-      this[nameInCamelCase] = newValue;
-    }
-  }
-  _updateAttribute(name2, newValue) {
-    if (!this.constructor.getMetadata().hasAttribute(name2)) {
-      return;
-    }
-    const properties = this.constructor.getMetadata().getProperties();
-    const propertyTypeClass = properties[name2].type;
-    const attrName = camelToKebabCase(name2);
-    const attrValue = this.getAttribute(attrName);
-    if (propertyTypeClass === Boolean) {
-      if (newValue === true && attrValue === null) {
-        this.setAttribute(attrName, "");
-      } else if (newValue === false && attrValue !== null) {
-        this.removeAttribute(attrName);
-      }
-    } else if (isDescendantOf(propertyTypeClass, DataType)) {
-      const newAttrValue = propertyTypeClass.propertyToAttribute(newValue);
-      if (newAttrValue === null) {
-        this._doNotSyncAttributes.add(attrName);
-        this.removeAttribute(attrName);
-        this._doNotSyncAttributes.delete(attrName);
-      } else {
-        this.setAttribute(attrName, newAttrValue);
-      }
-    } else if (typeof newValue !== "object") {
-      if (attrValue !== newValue) {
-        this.setAttribute(attrName, newValue);
-      }
-    }
-  }
-  _upgradeProperty(prop) {
-    if (this.hasOwnProperty(prop)) {
-      const value = this[prop];
-      delete this[prop];
-      this[prop] = value;
-    }
-  }
-  _upgradeAllProperties() {
-    const allProps = this.constructor.getMetadata().getPropertiesList();
-    allProps.forEach(this._upgradeProperty, this);
-  }
-  _initializeState() {
-    this._state = { ...this.constructor.getMetadata().getInitialState() };
-  }
-  _getChildChangeListener(slotName) {
-    if (!this._childChangeListeners.has(slotName)) {
-      this._childChangeListeners.set(slotName, this._onChildChange.bind(this, slotName));
-    }
-    return this._childChangeListeners.get(slotName);
-  }
-  _getSlotChangeListener(slotName) {
-    if (!this._slotChangeListeners.has(slotName)) {
-      this._slotChangeListeners.set(slotName, this._onSlotChange.bind(this, slotName));
-    }
-    return this._slotChangeListeners.get(slotName);
-  }
-  _attachSlotChange(child, slotName) {
-    child.addEventListener("slotchange", this._getSlotChangeListener(slotName));
-  }
-  _detachSlotChange(child, slotName) {
-    child.removeEventListener("slotchange", this._getSlotChangeListener(slotName));
-  }
-  _onSlotChange(slotName) {
-    _invalidate.call(this, {
-      type: "slot",
-      name: slotName,
-      reason: "slotchange"
-    });
-  }
-  onInvalidation(changeInfo) {
-  }
-  _render() {
-    const hasIndividualSlots = this.constructor.getMetadata().hasIndividualSlots();
-    this._suppressInvalidation = true;
-    if (typeof this.onBeforeRendering === "function") {
-      this.onBeforeRendering();
-    }
-    if (this._onComponentStateFinalized) {
-      this._onComponentStateFinalized();
-    }
-    this._suppressInvalidation = false;
-    this._changedState = [];
-    if (this.constructor._needsShadowDOM()) {
-      updateShadowRoot(this);
-    }
-    if (this.staticAreaItem) {
-      this.staticAreaItem.update();
-    }
-    if (hasIndividualSlots) {
-      this._assignIndividualSlotsToChildren();
-    }
-    if (typeof this.onAfterRendering === "function") {
-      this.onAfterRendering();
-    }
-  }
-  _assignIndividualSlotsToChildren() {
-    const domChildren = Array.from(this.children);
-    domChildren.forEach((child) => {
-      if (child._individualSlot) {
-        child.setAttribute("slot", child._individualSlot);
-      }
-    });
-  }
-  _waitForDomRef() {
-    return this._domRefReadyPromise;
-  }
-  getDomRef() {
-    if (typeof this._getRealDomRef === "function") {
-      return this._getRealDomRef();
-    }
-    if (!this.shadowRoot || this.shadowRoot.children.length === 0) {
-      return;
-    }
-    const children = [...this.shadowRoot.children].filter((child) => !["link", "style"].includes(child.localName));
-    if (children.length !== 1) {
-      console.warn(`The shadow DOM for ${this.constructor.getMetadata().getTag()} does not have a top level element, the getDomRef() method might not work as expected`);
-    }
-    return children[0];
-  }
-  getFocusDomRef() {
-    const domRef = this.getDomRef();
-    if (domRef) {
-      const focusRef = domRef.querySelector("[data-sap-focus-ref]");
-      return focusRef || domRef;
-    }
-  }
-  async getFocusDomRefAsync() {
-    await this._waitForDomRef();
-    return this.getFocusDomRef();
-  }
-  async focus() {
-    await this._waitForDomRef();
-    const focusDomRef = this.getFocusDomRef();
-    if (focusDomRef && typeof focusDomRef.focus === "function") {
-      focusDomRef.focus();
-    }
-  }
-  fireEvent(name2, data, cancelable = false, bubbles = true) {
-    const eventResult = this._fireEvent(name2, data, cancelable, bubbles);
-    const camelCaseEventName = kebabToCamelCase(name2);
-    if (camelCaseEventName !== name2) {
-      return eventResult && this._fireEvent(camelCaseEventName, data, cancelable);
-    }
-    return eventResult;
-  }
-  _fireEvent(name2, data, cancelable = false, bubbles = true) {
-    const noConflictEvent = new CustomEvent(`ui5-${name2}`, {
-      detail: data,
-      composed: false,
-      bubbles,
-      cancelable
-    });
-    const noConflictEventResult = this.dispatchEvent(noConflictEvent);
-    if (skipOriginalEvent(name2)) {
-      return noConflictEventResult;
-    }
-    const normalEvent = new CustomEvent(name2, {
-      detail: data,
-      composed: false,
-      bubbles,
-      cancelable
-    });
-    const normalEventResult = this.dispatchEvent(normalEvent);
-    return normalEventResult && noConflictEventResult;
-  }
-  getSlottedNodes(slotName) {
-    return getSlottedElementsList(this[slotName]);
-  }
-  get effectiveDir() {
-    markAsRtlAware(this.constructor);
-    return getEffectiveDir(this);
-  }
-  get isUI5Element() {
-    return true;
-  }
-  static get observedAttributes() {
-    return this.getMetadata().getAttributesList();
-  }
-  static _needsShadowDOM() {
-    return !!this.template;
-  }
-  static _needsStaticArea() {
-    return !!this.staticAreaTemplate;
-  }
-  getStaticAreaItemDomRef() {
-    if (!this.constructor._needsStaticArea()) {
-      throw new Error("This component does not use the static area");
-    }
-    if (!this.staticAreaItem) {
-      this.staticAreaItem = StaticAreaItem.createInstance();
-      this.staticAreaItem.setOwnerElement(this);
-    }
-    if (!this.staticAreaItem.parentElement) {
-      getSingletonElementInstance("ui5-static-area").appendChild(this.staticAreaItem);
-    }
-    return this.staticAreaItem.getDomRef();
-  }
-  static _generateAccessors() {
-    const proto = this.prototype;
-    const slotsAreManaged = this.getMetadata().slotsAreManaged();
-    const properties = this.getMetadata().getProperties();
-    for (const [prop, propData] of Object.entries(properties)) {
-      if (!isValidPropertyName(prop)) {
-        console.warn(`"${prop}" is not a valid property name. Use a name that does not collide with DOM APIs`);
-      }
-      if (propData.type === Boolean && propData.defaultValue) {
-        throw new Error(`Cannot set a default value for property "${prop}". All booleans are false by default.`);
-      }
-      if (propData.type === Array) {
-        throw new Error(`Wrong type for property "${prop}". Properties cannot be of type Array - use "multiple: true" and set "type" to the single value type, such as "String", "Object", etc...`);
-      }
-      if (propData.type === Object && propData.defaultValue) {
-        throw new Error(`Cannot set a default value for property "${prop}". All properties of type "Object" are empty objects by default.`);
-      }
-      if (propData.multiple && propData.defaultValue) {
-        throw new Error(`Cannot set a default value for property "${prop}". All multiple properties are empty arrays by default.`);
-      }
-      Object.defineProperty(proto, prop, {
-        get() {
-          if (this._state[prop] !== void 0) {
-            return this._state[prop];
-          }
-          const propDefaultValue = propData.defaultValue;
-          if (propData.type === Boolean) {
-            return false;
-          } else if (propData.type === String) {
-            return propDefaultValue;
-          } else if (propData.multiple) {
-            return [];
-          } else {
-            return propDefaultValue;
-          }
-        },
-        set(value) {
-          let isDifferent;
-          value = this.constructor.getMetadata().constructor.validatePropertyValue(value, propData);
-          const oldState = this._state[prop];
-          if (propData.multiple && propData.compareValues) {
-            isDifferent = !arraysAreEqual(oldState, value);
-          } else if (isDescendantOf(propData.type, DataType)) {
-            isDifferent = !propData.type.valuesAreEqual(oldState, value);
-          } else {
-            isDifferent = oldState !== value;
-          }
-          if (isDifferent) {
-            this._state[prop] = value;
-            _invalidate.call(this, {
-              type: "property",
-              name: prop,
-              newValue: value,
-              oldValue: oldState
-            });
-            this._updateAttribute(prop, value);
-          }
-        }
-      });
-    }
-    if (slotsAreManaged) {
-      const slots = this.getMetadata().getSlots();
-      for (const [slotName, slotData] of Object.entries(slots)) {
-        if (!isValidPropertyName(slotName)) {
-          console.warn(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`);
-        }
-        const propertyName = slotData.propertyName || slotName;
-        Object.defineProperty(proto, propertyName, {
-          get() {
-            if (this._state[propertyName] !== void 0) {
-              return this._state[propertyName];
-            }
-            return [];
-          },
-          set() {
-            throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
-          }
-        });
-      }
-    }
-  }
-  static get metadata() {
-    return metadata$1U;
-  }
-  static set metadata(newMetadata) {
-    metadata$1U = newMetadata;
-  }
-  static get styles() {
-    return "";
-  }
-  static get staticAreaStyles() {
-    return "";
-  }
-  static get dependencies() {
-    return [];
-  }
-  static getUniqueDependencies() {
-    if (!uniqueDependenciesCache.has(this)) {
-      const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
-      uniqueDependenciesCache.set(this, filtered);
-    }
-    return uniqueDependenciesCache.get(this);
-  }
-  static whenDependenciesDefined() {
-    return Promise.all(this.getUniqueDependencies().map((dep) => dep.define()));
-  }
-  static async onDefine() {
-    return Promise.resolve();
-  }
-  static async define() {
-    await boot();
-    await Promise.all([
-      this.whenDependenciesDefined(),
-      this.onDefine()
-    ]);
-    const tag = this.getMetadata().getTag();
-    const altTag = this.getMetadata().getAltTag();
-    const definedLocally = isTagRegistered(tag);
-    const definedGlobally = customElements.get(tag);
-    if (definedGlobally && !definedLocally) {
-      recordTagRegistrationFailure(tag);
-    } else if (!definedGlobally) {
-      this._generateAccessors();
-      registerTag(tag);
-      window.customElements.define(tag, this);
-      preloadLinks(this);
-      if (altTag && !customElements.get(altTag)) {
-        registerTag(altTag);
-        window.customElements.define(altTag, getClassCopy(this, () => {
-          console.log(`The ${altTag} tag is deprecated and will be removed in the next release, please use ${tag} instead.`);
-        }));
-      }
-    }
-    return this;
-  }
-  static getMetadata() {
-    if (this.hasOwnProperty("_metadata")) {
-      return this._metadata;
-    }
-    const metadataObjects = [this.metadata];
-    let klass = this;
-    while (klass !== UI5Element) {
-      klass = Object.getPrototypeOf(klass);
-      metadataObjects.unshift(klass.metadata);
-    }
-    const mergedMetadata = fnMerge$1({}, ...metadataObjects);
-    this._metadata = new UI5ElementMetadata(mergedMetadata);
-    return this._metadata;
-  }
 }
 /**
  * @license
@@ -7754,32 +7779,32 @@ class e extends i$1 {
 }
 e.directiveName = "unsafeHTML", e.resultType = 1;
 const o = e$2(e);
-const effectiveHtml = (...args) => {
-  const LitStatic = getFeature("LitStatic");
-  const fn = LitStatic ? LitStatic.html : $;
-  return fn(...args);
+const effectiveHtml = (strings, ...values) => {
+  const litStatic = getFeature("LitStatic");
+  const fn = litStatic ? litStatic.html : $;
+  return fn(strings, ...values);
 };
-const effectiveSvg = (...args) => {
-  const LitStatic = getFeature("LitStatic");
-  const fn = LitStatic ? LitStatic.svg : y;
-  return fn(...args);
+const effectiveSvg = (strings, ...values) => {
+  const litStatic = getFeature("LitStatic");
+  const fn = litStatic ? litStatic.svg : y;
+  return fn(strings, ...values);
 };
-const litRender = (templateResult, domNode, styleStrOrHrefsArr, forStaticArea, { host } = {}) => {
-  const OpenUI5Enablement = getFeature("OpenUI5Enablement");
-  if (OpenUI5Enablement && !forStaticArea) {
-    templateResult = OpenUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, host, templateResult);
+const litRender = (templateResult, container, styleStrOrHrefsArr, forStaticArea, options) => {
+  const openUI5Enablement = getFeature("OpenUI5Enablement");
+  if (openUI5Enablement && !forStaticArea) {
+    templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host, templateResult);
   }
   if (typeof styleStrOrHrefsArr === "string") {
     templateResult = effectiveHtml`<style>${styleStrOrHrefsArr}</style>${templateResult}`;
   } else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
     templateResult = effectiveHtml`${styleStrOrHrefsArr.map((href) => effectiveHtml`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
   }
-  x(templateResult, domNode, { host });
+  x(templateResult, container, options);
 };
 const scopeTag = (tag, tags, suffix) => {
-  const LitStatic = getFeature("LitStatic");
-  if (LitStatic) {
-    return LitStatic.unsafeStatic((tags || []).includes(tag) ? `${tag}-${suffix}` : tag);
+  const litStatic = getFeature("LitStatic");
+  if (litStatic) {
+    return litStatic.unsafeStatic((tags || []).includes(tag) ? `${tag}-${suffix}` : tag);
   }
 };
 let resizeObserver;
@@ -7789,20 +7814,20 @@ const getResizeObserver = () => {
     resizeObserver = new window.ResizeObserver((entries) => {
       entries.forEach((entry) => {
         const callbacks = observedElements.get(entry.target);
-        callbacks.forEach((callback) => callback());
+        callbacks == null ? void 0 : callbacks.forEach((callback) => callback());
       });
     });
   }
   return resizeObserver;
 };
-let observe = (element, callback) => {
+const observe = (element, callback) => {
   const callbacks = observedElements.get(element) || [];
   if (!callbacks.length) {
     getResizeObserver().observe(element);
   }
   observedElements.set(element, [...callbacks, callback]);
 };
-let unobserve = (element, callback) => {
+const unobserve = (element, callback) => {
   const callbacks = observedElements.get(element) || [];
   if (callbacks.length === 0) {
     return;
@@ -7817,42 +7842,44 @@ let unobserve = (element, callback) => {
 };
 class ResizeHandler {
   static register(element, callback) {
-    if (element.isUI5Element) {
-      element = element.getDomRef();
+    let effectiveElement = element;
+    if (instanceOfUI5Element(effectiveElement)) {
+      effectiveElement = effectiveElement.getDomRef();
     }
-    if (element instanceof HTMLElement) {
-      observe(element, callback);
+    if (effectiveElement instanceof HTMLElement) {
+      observe(effectiveElement, callback);
     } else {
       console.warn("Cannot register ResizeHandler for element", element);
     }
   }
   static deregister(element, callback) {
-    if (element.isUI5Element) {
-      element = element.getDomRef();
+    let effectiveElement = element;
+    if (instanceOfUI5Element(effectiveElement)) {
+      effectiveElement = effectiveElement.getDomRef();
     }
-    if (element instanceof HTMLElement) {
-      unobserve(element, callback);
+    if (effectiveElement instanceof HTMLElement) {
+      unobserve(effectiveElement, callback);
     } else {
       console.warn("Cannot deregister ResizeHandler for element", element);
     }
   }
 }
-const NavigationMode = {
-  Auto: "Auto",
-  Vertical: "Vertical",
-  Horizontal: "Horizontal",
-  Paging: "Paging"
-};
-const ItemNavigationBehavior = {
-  Static: "Static",
-  Cyclic: "Cyclic"
-};
+var NavigationMode;
+(function(NavigationMode2) {
+  NavigationMode2["Auto"] = "Auto";
+  NavigationMode2["Vertical"] = "Vertical";
+  NavigationMode2["Horizontal"] = "Horizontal";
+  NavigationMode2["Paging"] = "Paging";
+})(NavigationMode || (NavigationMode = {}));
+var NavigationMode$1 = NavigationMode;
+var ItemNavigationBehavior;
+(function(ItemNavigationBehavior2) {
+  ItemNavigationBehavior2["Static"] = "Static";
+  ItemNavigationBehavior2["Cyclic"] = "Cyclic";
+})(ItemNavigationBehavior || (ItemNavigationBehavior = {}));
+var ItemNavigationBehavior$1 = ItemNavigationBehavior;
 class ItemNavigation {
-  constructor(rootWebComponent, options = {}) {
-    this._setRootComponent(rootWebComponent);
-    this._initOptions(options);
-  }
-  _setRootComponent(rootWebComponent) {
+  constructor(rootWebComponent, options) {
     if (!rootWebComponent.isUI5Element) {
       throw new Error("The root web component must be a UI5 Element instance");
     }
@@ -7861,16 +7888,14 @@ class ItemNavigation {
     this.rootWebComponent._onComponentStateFinalized = () => {
       this._init();
     };
-  }
-  _initOptions(options) {
     if (typeof options.getItemsCallback !== "function") {
       throw new Error("getItemsCallback is required");
     }
     this._getItems = options.getItemsCallback;
     this._currentIndex = options.currentIndex || 0;
     this._rowSize = options.rowSize || 1;
-    this._behavior = options.behavior || ItemNavigationBehavior.Static;
-    this._navigationMode = options.navigationMode || NavigationMode.Auto;
+    this._behavior = options.behavior || ItemNavigationBehavior$1.Static;
+    this._navigationMode = options.navigationMode || NavigationMode$1.Auto;
     this._affectedPropertiesNames = options.affectedPropertiesNames || [];
     this._skipItemsSize = options.skipItemsSize || null;
   }
@@ -7895,8 +7920,8 @@ class ItemNavigation {
     if (!this._canNavigate()) {
       return;
     }
-    const horizontalNavigationOn = this._navigationMode === NavigationMode.Horizontal || this._navigationMode === NavigationMode.Auto;
-    const verticalNavigationOn = this._navigationMode === NavigationMode.Vertical || this._navigationMode === NavigationMode.Auto;
+    const horizontalNavigationOn = this._navigationMode === NavigationMode$1.Horizontal || this._navigationMode === NavigationMode$1.Auto;
+    const verticalNavigationOn = this._navigationMode === NavigationMode$1.Vertical || this._navigationMode === NavigationMode$1.Auto;
     const isRTL = this.rootWebComponent.effectiveDir === "rtl";
     if (isRTL && isLeft(event) && horizontalNavigationOn) {
       this._handleRight();
@@ -7931,7 +7956,7 @@ class ItemNavigation {
       this._currentIndex -= this._rowSize;
       return;
     }
-    if (this._behavior === ItemNavigationBehavior.Cyclic) {
+    if (this._behavior === ItemNavigationBehavior$1.Cyclic) {
       const firstItemInThisColumnIndex = this._currentIndex % this._rowSize;
       const firstItemInPreviousColumnIndex = firstItemInThisColumnIndex === 0 ? this._rowSize - 1 : firstItemInThisColumnIndex - 1;
       const rows = Math.ceil(itemsLength / this._rowSize);
@@ -7950,7 +7975,7 @@ class ItemNavigation {
       this._currentIndex += this._rowSize;
       return;
     }
-    if (this._behavior === ItemNavigationBehavior.Cyclic) {
+    if (this._behavior === ItemNavigationBehavior$1.Cyclic) {
       const firstItemInThisColumnIndex = this._currentIndex % this._rowSize;
       const firstItemInNextColumnIndex = (firstItemInThisColumnIndex + 1) % this._rowSize;
       this._currentIndex = firstItemInNextColumnIndex;
@@ -7964,7 +7989,7 @@ class ItemNavigation {
       this._currentIndex -= 1;
       return;
     }
-    if (this._behavior === ItemNavigationBehavior.Cyclic) {
+    if (this._behavior === ItemNavigationBehavior$1.Cyclic) {
       this._currentIndex = itemsLength - 1;
     }
   }
@@ -7974,7 +7999,7 @@ class ItemNavigation {
       this._currentIndex += 1;
       return;
     }
-    if (this._behavior === ItemNavigationBehavior.Cyclic) {
+    if (this._behavior === ItemNavigationBehavior$1.Cyclic) {
       this._currentIndex = 0;
     }
   }
@@ -8001,6 +8026,7 @@ class ItemNavigation {
   _handlePageUpFlat() {
     if (this._skipItemsSize === null) {
       this._currentIndex -= this._currentIndex;
+      return;
     }
     if (this._currentIndex + 1 > this._skipItemsSize) {
       this._currentIndex -= this._skipItemsSize;
@@ -8011,6 +8037,7 @@ class ItemNavigation {
   _handlePageDownFlat() {
     if (this._skipItemsSize === null) {
       this._currentIndex = this._getItems().length - 1;
+      return;
     }
     const currentToEndRange = this._getItems().length - this._currentIndex - 1;
     if (currentToEndRange > this._skipItemsSize) {
@@ -8055,67 +8082,74 @@ class ItemNavigation {
     if (!currentItem) {
       return;
     }
-    if (currentItem.isUI5Element) {
+    if (instanceOfUI5Element(currentItem)) {
       return currentItem.getFocusDomRef();
     }
-    if (!this.rootWebComponent.getDomRef()) {
+    const currentItemDOMRef = this.rootWebComponent.getDomRef();
+    if (!currentItemDOMRef) {
       return;
     }
-    return this.rootWebComponent.getDomRef().querySelector(`#${currentItem.id}`);
+    if (currentItem.id) {
+      return currentItemDOMRef.querySelector(`#${currentItem.id}`);
+    }
   }
 }
-const isNodeTabbable = (node) => {
-  if (!node) {
+const isElementTabbable = (el) => {
+  if (!el) {
     return false;
   }
-  const nodeName = node.nodeName.toLowerCase();
-  if (node.hasAttribute("data-sap-no-tab-ref")) {
+  const nodeName = el.nodeName.toLowerCase();
+  if (el.hasAttribute("data-sap-no-tab-ref")) {
     return false;
   }
-  if (isNodeHidden(node)) {
+  if (isElementHidden(el)) {
     return false;
   }
-  const tabIndex = node.getAttribute("tabindex");
+  const tabIndex = el.getAttribute("tabindex");
   if (tabIndex !== null && tabIndex !== void 0) {
     return parseInt(tabIndex) >= 0;
   }
   if (nodeName === "a" || /input|select|textarea|button|object/.test(nodeName)) {
-    return !node.disabled;
+    return !el.disabled;
   }
 };
-const getTabbableElements = (node) => {
-  return getTabbables(node.children);
+const getTabbableElements = (el) => {
+  return getTabbables([...el.children]);
 };
-const getLastTabbableElement = (node) => {
-  const tabbables = getTabbables(node.children);
+const getLastTabbableElement = (el) => {
+  const tabbables = getTabbables([...el.children]);
   return tabbables.length ? tabbables[tabbables.length - 1] : null;
 };
 const getTabbables = (nodes, tabbables) => {
-  const tabbablesNodes = tabbables || [];
+  const tabbableElements = tabbables || [];
   if (!nodes) {
-    return tabbablesNodes;
+    return tabbableElements;
   }
-  Array.from(nodes).forEach((currentNode) => {
-    if (currentNode.nodeType === Node.TEXT_NODE || currentNode.nodeType === Node.COMMENT_NODE || currentNode.hasAttribute("data-sap-no-tab-ref")) {
+  nodes.forEach((currentNode) => {
+    if (currentNode.nodeType === Node.TEXT_NODE || currentNode.nodeType === Node.COMMENT_NODE) {
       return;
     }
-    if (currentNode.shadowRoot) {
-      const children = currentNode.shadowRoot.children;
-      currentNode = Array.from(children).find((node) => node.tagName !== "STYLE");
-    }
-    if (!currentNode) {
+    let currentElement = currentNode;
+    if (currentElement.hasAttribute("data-sap-no-tab-ref")) {
       return;
     }
-    if (isNodeTabbable(currentNode)) {
-      tabbablesNodes.push(currentNode);
+    if (currentElement.shadowRoot) {
+      const children = currentElement.shadowRoot.children;
+      currentElement = Array.from(children).find((node) => node.tagName !== "STYLE");
     }
-    if (currentNode.tagName === "SLOT") {
-      getTabbables(currentNode.assignedNodes(), tabbablesNodes);
+    if (!currentElement) {
+      return;
+    }
+    if (isElementTabbable(currentElement)) {
+      tabbableElements.push(currentElement);
+    }
+    if (currentElement.tagName === "SLOT") {
+      getTabbables(currentElement.assignedNodes(), tabbableElements);
     } else {
-      getTabbables(currentNode.children, tabbablesNodes);
+      getTabbables([...currentElement.children], tabbableElements);
     }
   });
-  return tabbablesNodes;
+  return tabbableElements;
 };
 class Integer extends DataType {
   static isValid(value) {
@@ -8126,21 +8160,22 @@ class Integer extends DataType {
   }
 }
 const getEffectiveAriaLabelText = (el) => {
-  if (!el.accessibleNameRef) {
-    if (el.accessibleName) {
-      return el.accessibleName;
+  const accessibleEl = el;
+  if (!accessibleEl.accessibleNameRef) {
+    if (accessibleEl.accessibleName) {
+      return accessibleEl.accessibleName;
     }
     return void 0;
   }
-  return getAriaLabelledByTexts(el);
+  return _getAriaLabelledByTexts(el);
 };
-const getAriaLabelledByTexts = (el, ownerDocument, readyIds = "") => {
-  const ids = readyIds && readyIds.split(" ") || el.accessibleNameRef.split(" ");
-  const owner = ownerDocument || el.getRootNode();
+const _getAriaLabelledByTexts = (el) => {
+  const ids = el.accessibleNameRef.split(" ");
+  const owner = el.getRootNode();
   let result = "";
   ids.forEach((elementId, index) => {
     const element = owner.querySelector(`[id='${elementId}']`);
-    result += `${element ? element.textContent : ""}`;
+    result += `${element && element.textContent ? element.textContent : ""}`;
     if (index < ids.length - 1) {
       result += " ";
     }
@@ -8150,7 +8185,10 @@ const getAriaLabelledByTexts = (el, ownerDocument, readyIds = "") => {
 const getAssociatedLabelForTexts = (el) => {
   const results = [];
   const labels = el.getRootNode().querySelectorAll(`[ui5-label][for="${el.id}"],label[for="${el.id}"]`);
-  labels.forEach((label) => results.push(label.textContent));
+  labels.forEach((label) => {
+    const labelText = label.textContent;
+    labelText && results.push(labelText);
+  });
   if (results.length) {
     return results.join(" ");
   }
@@ -8160,7 +8198,7 @@ const NO_SCROLLBAR_STYLE_CLASS = "ui5-content-native-scrollbars";
 const getEffectiveScrollbarStyle = () => document.body.classList.contains(NO_SCROLLBAR_STYLE_CLASS);
 let debounceInterval = null;
 const debounce = (fn, delay) => {
-  clearTimeout(debounceInterval);
+  debounceInterval && clearTimeout(debounceInterval);
   debounceInterval = setTimeout(() => {
     debounceInterval = null;
     fn();
@@ -8660,7 +8698,6 @@ registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => default
 var busyIndicatorCss = { packageName: "@ui5/webcomponents", fileName: "themes/BusyIndicator.css", content: ':host(:not([hidden])){display:inline-block}:host([_is-busy]){color:var(--_ui5_busy_indicator_color)}:host([size=Small]) .ui5-busy-indicator-root{min-width:1.5rem;min-height:.5rem}:host([size=Small][text]:not([text=""])) .ui5-busy-indicator-root{min-height:1.75rem}:host([size=Small]) .ui5-busy-indicator-circle{width:.5rem;height:.5rem}:host(:not([size])) .ui5-busy-indicator-root,:host([size=Medium]) .ui5-busy-indicator-root{min-width:3rem;min-height:1rem}:host(:not([size])[text]:not([text=""])) .ui5-busy-indicator-root,:host([size=Medium][text]:not([text=""])) .ui5-busy-indicator-root{min-height:2.25rem}:host(:not([size])) .ui5-busy-indicator-circle,:host([size=Medium]) .ui5-busy-indicator-circle{width:1rem;height:1rem}:host([size=Large]) .ui5-busy-indicator-root{min-width:6rem;min-height:2rem}:host([size=Large][text]:not([text=""])) .ui5-busy-indicator-root{min-height:3.25rem}:host([size=Large]) .ui5-busy-indicator-circle{width:2rem;height:2rem}.ui5-busy-indicator-root{display:flex;justify-content:center;align-items:center;position:relative;background-color:inherit}.ui5-busy-indicator-busy-area{position:absolute;z-index:99;left:0;right:0;top:0;bottom:0;display:flex;justify-content:center;align-items:center;background-color:inherit;flex-direction:column}.ui5-busy-indicator-busy-area:focus{outline:var(--_ui5_busy_indicator_focus_outline);outline-offset:-2px;border-radius:var(--_ui5_busy_indicator_focus_border_radius)}.ui5-busy-indicator-circles-wrapper{line-height:0}.ui5-busy-indicator-circle{display:inline-block;background-color:currentColor;border-radius:50%}.ui5-busy-indicator-circle:before{content:"";width:100%;height:100%;border-radius:100%}.circle-animation-0{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite}.circle-animation-1{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite;animation-delay:.2s}.circle-animation-2{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite;animation-delay:.4s}.ui5-busy-indicator-text{width:100%;margin-top:.25rem;text-align:center}@keyframes grow{0%,50%,to{-webkit-transform:scale(.5);-moz-transform:scale(.5);transform:scale(.5)}25%{-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}}' };
 const metadata$1S = {
   tag: "ui5-busy-indicator",
-  altTag: "ui5-busyindicator",
   languageAware: true,
   slots: {
     "default": {
@@ -9057,7 +9094,7 @@ class List extends UI5Element {
   initItemNavigation() {
     this._itemNavigation = new ItemNavigation(this, {
       skipItemsSize: PAGE_UP_DOWN_SIZE$2,
-      navigationMode: NavigationMode.Vertical,
+      navigationMode: NavigationMode$1.Vertical,
       getItemsCallback: () => this.getEnabledItems()
     });
   }
@@ -9442,15 +9479,15 @@ class DOMReference extends DataType {
 const clamp = (val, min, max) => {
   return Math.min(Math.max(val, min), max);
 };
-const querySets = {};
+const querySets = /* @__PURE__ */ new Map();
 const _initRangeSet = (name2, borders, names) => {
-  querySets[name2] = {
+  querySets.set(name2, {
     borders,
     names
-  };
+  });
 };
 const _getCurrentRange = (name2, width = window.innerWidth) => {
-  const querySet = querySets[name2];
+  const querySet = querySets.get(name2);
   let i2 = 0;
   if (!querySet) {
     return null;
@@ -9462,9 +9499,10 @@ const _getCurrentRange = (name2, width = window.innerWidth) => {
   }
   return querySet.names[i2];
 };
-const RANGESETS = {
-  RANGE_4STEPS: "4Step"
-};
+var RANGESETS;
+(function(RANGESETS2) {
+  RANGESETS2["RANGE_4STEPS"] = "4Step";
+})(RANGESETS || (RANGESETS = {}));
 const MediaRange = {
   RANGESETS,
   initRangeSet: _initRangeSet,
@@ -9717,7 +9755,7 @@ class Popup extends UI5Element {
       this._blockLayerHidden = false;
       Popup.blockPageScrolling(this);
     }
-    this._zIndex = getNextZIndex$1();
+    this._zIndex = getNextZIndex();
     this.style.zIndex = this._zIndex;
     this._focusedElementBeforeOpen = getFocusedElement();
     this._show();
@@ -10400,18 +10438,19 @@ class Popover extends Popup {
   }
 }
 Popover.define();
-const ValueStates = {
-  None: "None",
-  Success: "Success",
-  Warning: "Warning",
-  Error: "Error",
-  Information: "Information"
-};
 class ValueState extends DataType {
   static isValid(value) {
     return !!ValueStates[value];
   }
 }
+var ValueStates;
+(function(ValueStates2) {
+  ValueStates2["None"] = "None";
+  ValueStates2["Success"] = "Success";
+  ValueStates2["Warning"] = "Warning";
+  ValueStates2["Error"] = "Error";
+  ValueStates2["Information"] = "Information";
+})(ValueStates || (ValueStates = {}));
 ValueState.generateTypeAccessors(ValueStates);
 const block0$1E = (context, tags, suffix) => effectiveHtml`<svg class="ui5-icon-root" tabindex="${l(context.tabIndex)}" dir="${l(context._dir)}" viewBox="${l(context.viewBox)}" role="${l(context.effectiveAccessibleRole)}" focusable="false" preserveAspectRatio="xMidYMid meet" aria-label="${l(context.effectiveAccessibleName)}" aria-hidden=${l(context.effectiveAriaHidden)} xmlns="http://www.w3.org/2000/svg" @focusin=${context._onfocusin} @focusout=${context._onfocusout} @keydown=${context._onkeydown} @keyup=${context._onkeyup} @click=${context._onclick}>${blockSVG1$3(context)}</svg>`;
 const block1$1m = (context, tags, suffix) => effectiveSvg`<title id="${l(context._id)}-tooltip">${l(context.effectiveAccessibleName)}</title>`;
@@ -11046,7 +11085,7 @@ class Dialog extends Popup {
 Dialog.define();
 const isDefaultSlotProvided = (element) => {
   return Array.from(element.childNodes).filter((node) => {
-    return node.nodeType !== Node.COMMENT_NODE && getSlotName(node) === "default" && (node.nodeType !== Node.TEXT_NODE || node.nodeValue.trim().length !== 0);
+    return node.nodeType !== Node.COMMENT_NODE && getSlotName(node) === "default" && (node.nodeType !== Node.TEXT_NODE || (node.nodeValue || "").trim().length !== 0);
   }).length > 0;
 };
 const ButtonTypes = {
@@ -11435,7 +11474,7 @@ class ResponsivePopover extends Popover {
       await super.showAt(opener, preventInitialFocus);
     } else {
       this.style.display = "contents";
-      this.style.zIndex = getNextZIndex$1();
+      this.style.zIndex = getNextZIndex();
       await this._dialog.show(preventInitialFocus);
     }
   }
@@ -11792,7 +11831,6 @@ let isGlobalHandlerAttached$1 = false;
 let activeRadio = null;
 const metadata$1I = {
   tag: "ui5-radio-button",
-  altTag: "ui5-radiobutton",
   languageAware: true,
   properties: {
     disabled: {
@@ -13488,156 +13526,157 @@ class Float extends DataType {
     return parseFloat(attributeValue);
   }
 }
-const CSSColors = {
-  aliceblue: "f0f8ff",
-  antiquewhite: "faebd7",
-  aqua: "00ffff",
-  aquamarine: "7fffd4",
-  azure: "f0ffff",
-  beige: "f5f5dc",
-  bisque: "ffe4c4",
-  black: "000000",
-  blanchedalmond: "ffebcd",
-  blue: "0000ff",
-  blueviolet: "8a2be2",
-  brown: "a52a2a",
-  burlywood: "deb887",
-  cadetblue: "5f9ea0",
-  chartreuse: "7fff00",
-  chocolate: "d2691e",
-  coral: "ff7f50",
-  cornflowerblue: "6495ed",
-  cornsilk: "fff8dc",
-  crimson: "dc143c",
-  cyan: "00ffff",
-  darkblue: "00008b",
-  darkcyan: "008b8b",
-  darkgoldenrod: "b8860b",
-  darkgray: "a9a9a9",
-  darkgrey: "a9a9a9",
-  darkgreen: "006400",
-  darkkhaki: "bdb76b",
-  darkmagenta: "8b008b",
-  darkolivegreen: "556b2f",
-  darkorange: "ff8c00",
-  darkorchid: "9932cc",
-  darkred: "8b0000",
-  darksalmon: "e9967a",
-  darkseagreen: "8fbc8f",
-  darkslateblue: "483d8b",
-  darkslategray: "2f4f4f",
-  darkslategrey: "2f4f4f",
-  darkturquoise: "00ced1",
-  darkviolet: "9400d3",
-  deeppink: "ff1493",
-  deepskyblue: "00bfff",
-  dimgray: "696969",
-  dimgrey: "696969",
-  dodgerblue: "1e90ff",
-  firebrick: "b22222",
-  floralwhite: "fffaf0",
-  forestgreen: "228b22",
-  fuchsia: "ff00ff",
-  gainsboro: "dcdcdc",
-  ghostwhite: "f8f8ff",
-  gold: "ffd700",
-  goldenrod: "daa520",
-  gray: "808080",
-  grey: "808080",
-  green: "008000",
-  greenyellow: "adff2f",
-  honeydew: "f0fff0",
-  hotpink: "ff69b4",
-  indianred: "cd5c5c",
-  indigo: "4b0082",
-  ivory: "fffff0",
-  khaki: "f0e68c",
-  lavender: "e6e6fa",
-  lavenderblush: "fff0f5",
-  lawngreen: "7cfc00",
-  lemonchiffon: "fffacd",
-  lightblue: "add8e6",
-  lightcoral: "f08080",
-  lightcyan: "e0ffff",
-  lightgoldenrodyellow: "fafad2",
-  lightgray: "d3d3d3",
-  lightgrey: "d3d3d3",
-  lightgreen: "90ee90",
-  lightpink: "ffb6c1",
-  lightsalmon: "ffa07a",
-  lightseagreen: "20b2aa",
-  lightskyblue: "87cefa",
-  lightslategray: "778899",
-  lightslategrey: "778899",
-  lightsteelblue: "b0c4de",
-  lightyellow: "ffffe0",
-  lime: "00ff00",
-  limegreen: "32cd32",
-  linen: "faf0e6",
-  magenta: "ff00ff",
-  maroon: "800000",
-  mediumaquamarine: "66cdaa",
-  mediumblue: "0000cd",
-  mediumorchid: "ba55d3",
-  mediumpurple: "9370db",
-  mediumseagreen: "3cb371",
-  mediumslateblue: "7b68ee",
-  mediumspringgreen: "00fa9a",
-  mediumturquoise: "48d1cc",
-  mediumvioletred: "c71585",
-  midnightblue: "191970",
-  mintcream: "f5fffa",
-  mistyrose: "ffe4e1",
-  moccasin: "ffe4b5",
-  navajowhite: "ffdead",
-  navy: "000080",
-  oldlace: "fdf5e6",
-  olive: "808000",
-  olivedrab: "6b8e23",
-  orange: "ffa500",
-  orangered: "ff4500",
-  orchid: "da70d6",
-  palegoldenrod: "eee8aa",
-  palegreen: "98fb98",
-  paleturquoise: "afeeee",
-  palevioletred: "db7093",
-  papayawhip: "ffefd5",
-  peachpuff: "ffdab9",
-  peru: "cd853f",
-  pink: "ffc0cb",
-  plum: "dda0dd",
-  powderblue: "b0e0e6",
-  purple: "800080",
-  red: "ff0000",
-  rosybrown: "bc8f8f",
-  royalblue: "4169e1",
-  saddlebrown: "8b4513",
-  salmon: "fa8072",
-  sandybrown: "f4a460",
-  seagreen: "2e8b57",
-  seashell: "fff5ee",
-  sienna: "a0522d",
-  silver: "c0c0c0",
-  skyblue: "87ceeb",
-  slateblue: "6a5acd",
-  slategray: "708090",
-  slategrey: "708090",
-  snow: "fffafa",
-  springgreen: "00ff7f",
-  steelblue: "4682b4",
-  tan: "d2b48c",
-  teal: "008080",
-  thistle: "d8bfd8",
-  tomato: "ff6347",
-  turquoise: "40e0d0",
-  violet: "ee82ee",
-  wheat: "f5deb3",
-  white: "ffffff",
-  whitesmoke: "f5f5f5",
-  yellow: "ffff00",
-  yellowgreen: "9acd32",
-  transparent: "00000000"
-};
+var CSSColors;
+(function(CSSColors2) {
+  CSSColors2["aliceblue"] = "f0f8ff";
+  CSSColors2["antiquewhite"] = "faebd7";
+  CSSColors2["aqua"] = "00ffff";
+  CSSColors2["aquamarine"] = "7fffd4";
+  CSSColors2["azure"] = "f0ffff";
+  CSSColors2["beige"] = "f5f5dc";
+  CSSColors2["bisque"] = "ffe4c4";
+  CSSColors2["black"] = "000000";
+  CSSColors2["blanchedalmond"] = "ffebcd";
+  CSSColors2["blue"] = "0000ff";
+  CSSColors2["blueviolet"] = "8a2be2";
+  CSSColors2["brown"] = "a52a2a";
+  CSSColors2["burlywood"] = "deb887";
+  CSSColors2["cadetblue"] = "5f9ea0";
+  CSSColors2["chartreuse"] = "7fff00";
+  CSSColors2["chocolate"] = "d2691e";
+  CSSColors2["coral"] = "ff7f50";
+  CSSColors2["cornflowerblue"] = "6495ed";
+  CSSColors2["cornsilk"] = "fff8dc";
+  CSSColors2["crimson"] = "dc143c";
+  CSSColors2["cyan"] = "00ffff";
+  CSSColors2["darkblue"] = "00008b";
+  CSSColors2["darkcyan"] = "008b8b";
+  CSSColors2["darkgoldenrod"] = "b8860b";
+  CSSColors2["darkgray"] = "a9a9a9";
+  CSSColors2["darkgrey"] = "a9a9a9";
+  CSSColors2["darkgreen"] = "006400";
+  CSSColors2["darkkhaki"] = "bdb76b";
+  CSSColors2["darkmagenta"] = "8b008b";
+  CSSColors2["darkolivegreen"] = "556b2f";
+  CSSColors2["darkorange"] = "ff8c00";
+  CSSColors2["darkorchid"] = "9932cc";
+  CSSColors2["darkred"] = "8b0000";
+  CSSColors2["darksalmon"] = "e9967a";
+  CSSColors2["darkseagreen"] = "8fbc8f";
+  CSSColors2["darkslateblue"] = "483d8b";
+  CSSColors2["darkslategray"] = "2f4f4f";
+  CSSColors2["darkslategrey"] = "2f4f4f";
+  CSSColors2["darkturquoise"] = "00ced1";
+  CSSColors2["darkviolet"] = "9400d3";
+  CSSColors2["deeppink"] = "ff1493";
+  CSSColors2["deepskyblue"] = "00bfff";
+  CSSColors2["dimgray"] = "696969";
+  CSSColors2["dimgrey"] = "696969";
+  CSSColors2["dodgerblue"] = "1e90ff";
+  CSSColors2["firebrick"] = "b22222";
+  CSSColors2["floralwhite"] = "fffaf0";
+  CSSColors2["forestgreen"] = "228b22";
+  CSSColors2["fuchsia"] = "ff00ff";
+  CSSColors2["gainsboro"] = "dcdcdc";
+  CSSColors2["ghostwhite"] = "f8f8ff";
+  CSSColors2["gold"] = "ffd700";
+  CSSColors2["goldenrod"] = "daa520";
+  CSSColors2["gray"] = "808080";
+  CSSColors2["grey"] = "808080";
+  CSSColors2["green"] = "008000";
+  CSSColors2["greenyellow"] = "adff2f";
+  CSSColors2["honeydew"] = "f0fff0";
+  CSSColors2["hotpink"] = "ff69b4";
+  CSSColors2["indianred"] = "cd5c5c";
+  CSSColors2["indigo"] = "4b0082";
+  CSSColors2["ivory"] = "fffff0";
+  CSSColors2["khaki"] = "f0e68c";
+  CSSColors2["lavender"] = "e6e6fa";
+  CSSColors2["lavenderblush"] = "fff0f5";
+  CSSColors2["lawngreen"] = "7cfc00";
+  CSSColors2["lemonchiffon"] = "fffacd";
+  CSSColors2["lightblue"] = "add8e6";
+  CSSColors2["lightcoral"] = "f08080";
+  CSSColors2["lightcyan"] = "e0ffff";
+  CSSColors2["lightgoldenrodyellow"] = "fafad2";
+  CSSColors2["lightgray"] = "d3d3d3";
+  CSSColors2["lightgrey"] = "d3d3d3";
+  CSSColors2["lightgreen"] = "90ee90";
+  CSSColors2["lightpink"] = "ffb6c1";
+  CSSColors2["lightsalmon"] = "ffa07a";
+  CSSColors2["lightseagreen"] = "20b2aa";
+  CSSColors2["lightskyblue"] = "87cefa";
+  CSSColors2["lightslategray"] = "778899";
+  CSSColors2["lightslategrey"] = "778899";
+  CSSColors2["lightsteelblue"] = "b0c4de";
+  CSSColors2["lightyellow"] = "ffffe0";
+  CSSColors2["lime"] = "00ff00";
+  CSSColors2["limegreen"] = "32cd32";
+  CSSColors2["linen"] = "faf0e6";
+  CSSColors2["magenta"] = "ff00ff";
+  CSSColors2["maroon"] = "800000";
+  CSSColors2["mediumaquamarine"] = "66cdaa";
+  CSSColors2["mediumblue"] = "0000cd";
+  CSSColors2["mediumorchid"] = "ba55d3";
+  CSSColors2["mediumpurple"] = "9370db";
+  CSSColors2["mediumseagreen"] = "3cb371";
+  CSSColors2["mediumslateblue"] = "7b68ee";
+  CSSColors2["mediumspringgreen"] = "00fa9a";
+  CSSColors2["mediumturquoise"] = "48d1cc";
+  CSSColors2["mediumvioletred"] = "c71585";
+  CSSColors2["midnightblue"] = "191970";
+  CSSColors2["mintcream"] = "f5fffa";
+  CSSColors2["mistyrose"] = "ffe4e1";
+  CSSColors2["moccasin"] = "ffe4b5";
+  CSSColors2["navajowhite"] = "ffdead";
+  CSSColors2["navy"] = "000080";
+  CSSColors2["oldlace"] = "fdf5e6";
+  CSSColors2["olive"] = "808000";
+  CSSColors2["olivedrab"] = "6b8e23";
+  CSSColors2["orange"] = "ffa500";
+  CSSColors2["orangered"] = "ff4500";
+  CSSColors2["orchid"] = "da70d6";
+  CSSColors2["palegoldenrod"] = "eee8aa";
+  CSSColors2["palegreen"] = "98fb98";
+  CSSColors2["paleturquoise"] = "afeeee";
+  CSSColors2["palevioletred"] = "db7093";
+  CSSColors2["papayawhip"] = "ffefd5";
+  CSSColors2["peachpuff"] = "ffdab9";
+  CSSColors2["peru"] = "cd853f";
+  CSSColors2["pink"] = "ffc0cb";
+  CSSColors2["plum"] = "dda0dd";
+  CSSColors2["powderblue"] = "b0e0e6";
+  CSSColors2["purple"] = "800080";
+  CSSColors2["red"] = "ff0000";
+  CSSColors2["rosybrown"] = "bc8f8f";
+  CSSColors2["royalblue"] = "4169e1";
+  CSSColors2["saddlebrown"] = "8b4513";
+  CSSColors2["salmon"] = "fa8072";
+  CSSColors2["sandybrown"] = "f4a460";
+  CSSColors2["seagreen"] = "2e8b57";
+  CSSColors2["seashell"] = "fff5ee";
+  CSSColors2["sienna"] = "a0522d";
+  CSSColors2["silver"] = "c0c0c0";
+  CSSColors2["skyblue"] = "87ceeb";
+  CSSColors2["slateblue"] = "6a5acd";
+  CSSColors2["slategray"] = "708090";
+  CSSColors2["slategrey"] = "708090";
+  CSSColors2["snow"] = "fffafa";
+  CSSColors2["springgreen"] = "00ff7f";
+  CSSColors2["steelblue"] = "4682b4";
+  CSSColors2["tan"] = "d2b48c";
+  CSSColors2["teal"] = "008080";
+  CSSColors2["thistle"] = "d8bfd8";
+  CSSColors2["tomato"] = "ff6347";
+  CSSColors2["turquoise"] = "40e0d0";
+  CSSColors2["violet"] = "ee82ee";
+  CSSColors2["wheat"] = "f5deb3";
+  CSSColors2["white"] = "ffffff";
+  CSSColors2["whitesmoke"] = "f5f5f5";
+  CSSColors2["yellow"] = "ffff00";
+  CSSColors2["yellowgreen"] = "9acd32";
+  CSSColors2["transparent"] = "00000000";
+})(CSSColors || (CSSColors = {}));
 const getRGBColor = (color) => {
   if (color.startsWith("rgba")) {
     return RGBAToRGB(color);
@@ -13683,13 +13722,9 @@ const RGBStringToRGBObject = (color) => {
     b: parseInt(color.slice(commasIndexes[1] + 1, closingBraketIndex).trim())
   };
 };
-const HSLToRGB = (color = {
-  h: void 0,
-  s: void 0,
-  l: void 0
-}) => {
+const HSLToRGB = (color) => {
   const C2 = (1 - Math.abs(2 * color.l - 1)) * color.s, X = C2 * (1 - Math.abs(color.h / 60 % 2 - 1)), m2 = color.l - C2 / 2;
-  let tempColor = {};
+  let tempColor;
   switch (Math.round(color.h / 60)) {
     case 0:
       tempColor = {
@@ -13740,22 +13775,13 @@ const HSLToRGB = (color = {
   };
 };
 const HEXToRGB = (hex) => {
-  const rgbValues = {
-    r: hex.substr(0, 2),
-    g: hex.substr(2, 2),
-    b: hex.substr(4, 2)
+  return {
+    r: parseInt(hex.substr(0, 2), 16),
+    g: parseInt(hex.substr(2, 2), 16),
+    b: parseInt(hex.substr(4, 2), 16)
   };
-  const rgbKeys = Object.keys(rgbValues);
-  rgbKeys.forEach((key) => {
-    rgbValues[key] = parseInt(rgbValues[key], 16);
-  });
-  return rgbValues;
 };
-const RGBToHSL = (color = {
-  r: void 0,
-  g: void 0,
-  b: void 0
-}) => {
+const RGBToHSL = (color) => {
   const R2 = color.r / 255, G = color.g / 255, B = color.b / 255, max = Math.max(R2, G, B), min = Math.min(R2, G, B), delta = max - min;
   let h2, s2;
   if (delta === 0) {
@@ -13782,17 +13808,13 @@ const RGBToHSL = (color = {
 const block0$1u = (context, tags, suffix) => suffix ? effectiveHtml`<section dir="${l(context.effectiveDir)}" class="ui5-color-picker-root"><div class="ui5-color-picker-main-color" style="${styleMap(context.styles.mainColor)}" @mousedown="${context._handleMouseDown}" @mouseup="${context._handleMouseUp}" @mousemove="${context._handleMouseMove}" @mouseout="${context._handleMouseOut}"><div class="ui5-color-picker-circle" style="${styleMap(context.styles.circle)}"></div></div><div class="ui5-color-picker-sliders-wrapper"><${scopeTag("ui5-slider", tags, suffix)} disabled="${l(context.inputsDisabled)}" class="ui5-color-picker-hue-slider" min="0" max="1530" value="${l(context._hue)}" accessible-name="${l(context.hueSliderLabel)}" @ui5-input="${l(context._handleHueInput)}"></${scopeTag("ui5-slider", tags, suffix)}><${scopeTag("ui5-slider", tags, suffix)} disabled="${l(context.inputsDisabled)}" class="ui5-color-picker-alpha-slider" min="0" max="1" step="0.01" value="${l(context._alpha)}" accessible-name="${l(context.alphaSliderLabel)}" @ui5-input="${l(context._handleAlphaInput)}"></${scopeTag("ui5-slider", tags, suffix)}></div><div class="ui5-color-picker-current-color"><div class="ui5-color-picker-colors-wrapper"><span class="ui5-color-picker-white"></span><span class="ui5-color-picker-color"><div class="ui5-color-picker-color-inner" style="${styleMap(context.styles.colorSpan)}"></div></span></div><div class="ui5-color-picker-hex-input-wrapper"><${scopeTag("ui5-label", tags, suffix)}>Hex</${scopeTag("ui5-label", tags, suffix)}><${scopeTag("ui5-input", tags, suffix)} class="ui5-color-picker-hex-input" value="${l(context.hex)}" @keydown="${context._onkeydown}" accessible-name="${l(context.hexInputLabel)}" @ui5-change="${l(context._handleHEXChange)}" value-state="${l(context.hexInputErrorState)}"></${scopeTag("ui5-input", tags, suffix)}></div></div><div class="ui5-color-picker-rgb-wrapper" @ui5-change="${l(context._handleRGBInputsChange)}"><div class="ui5-color-picker-rgb"><${scopeTag("ui5-input", tags, suffix)} id="red" class="ui5-color-picker-rgb-input" disabled="${l(context.inputsDisabled)}" accessible-name="${l(context.redInputLabel)}" value="${l(context._color.r)}"></${scopeTag("ui5-input", tags, suffix)}><${scopeTag("ui5-label", tags, suffix)}>R</${scopeTag("ui5-label", tags, suffix)}></div><div class="ui5-color-picker-rgb"><${scopeTag("ui5-input", tags, suffix)} id="green" class="ui5-color-picker-rgb-input" disabled="${l(context.inputsDisabled)}" accessible-name="${l(context.greenInputLabel)}" value="${l(context._color.g)}"></${scopeTag("ui5-input", tags, suffix)}><${scopeTag("ui5-label", tags, suffix)}>G</${scopeTag("ui5-label", tags, suffix)}></div><div class="ui5-color-picker-rgb"><${scopeTag("ui5-input", tags, suffix)} id="blue" class="ui5-color-picker-rgb-input" disabled="${l(context.inputsDisabled)}" accessible-name="${l(context.blueInputLabel)}" value="${l(context._color.b)}"></${scopeTag("ui5-input", tags, suffix)}><${scopeTag("ui5-label", tags, suffix)}>B</${scopeTag("ui5-label", tags, suffix)}></div><div class="ui5-color-picker-rgb"><${scopeTag("ui5-input", tags, suffix)} id="alpha" disabled="${l(context.inputsDisabled)}" class="ui5-color-picker-rgb-input" value="${l(context._alpha)}" accessible-name="${l(context.alphaInputLabel)}" @ui5-input="${l(context._handleAlphaInput)}" @ui5-change="${l(context._handleAlphaChange)}"></${scopeTag("ui5-input", tags, suffix)}><${scopeTag("ui5-label", tags, suffix)}>A</${scopeTag("ui5-label", tags, suffix)}></div></div></section>` : effectiveHtml`<section dir="${l(context.effectiveDir)}" class="ui5-color-picker-root"><div class="ui5-color-picker-main-color" style="${styleMap(context.styles.mainColor)}" @mousedown="${context._handleMouseDown}" @mouseup="${context._handleMouseUp}" @mousemove="${context._handleMouseMove}" @mouseout="${context._handleMouseOut}"><div class="ui5-color-picker-circle" style="${styleMap(context.styles.circle)}"></div></div><div class="ui5-color-picker-sliders-wrapper"><ui5-slider disabled="${l(context.inputsDisabled)}" class="ui5-color-picker-hue-slider" min="0" max="1530" value="${l(context._hue)}" accessible-name="${l(context.hueSliderLabel)}" @ui5-input="${l(context._handleHueInput)}"></ui5-slider><ui5-slider disabled="${l(context.inputsDisabled)}" class="ui5-color-picker-alpha-slider" min="0" max="1" step="0.01" value="${l(context._alpha)}" accessible-name="${l(context.alphaSliderLabel)}" @ui5-input="${l(context._handleAlphaInput)}"></ui5-slider></div><div class="ui5-color-picker-current-color"><div class="ui5-color-picker-colors-wrapper"><span class="ui5-color-picker-white"></span><span class="ui5-color-picker-color"><div class="ui5-color-picker-color-inner" style="${styleMap(context.styles.colorSpan)}"></div></span></div><div class="ui5-color-picker-hex-input-wrapper"><ui5-label>Hex</ui5-label><ui5-input class="ui5-color-picker-hex-input" value="${l(context.hex)}" @keydown="${context._onkeydown}" accessible-name="${l(context.hexInputLabel)}" @ui5-change="${l(context._handleHEXChange)}" value-state="${l(context.hexInputErrorState)}"></ui5-input></div></div><div class="ui5-color-picker-rgb-wrapper" @ui5-change="${l(context._handleRGBInputsChange)}"><div class="ui5-color-picker-rgb"><ui5-input id="red" class="ui5-color-picker-rgb-input" disabled="${l(context.inputsDisabled)}" accessible-name="${l(context.redInputLabel)}" value="${l(context._color.r)}"></ui5-input><ui5-label>R</ui5-label></div><div class="ui5-color-picker-rgb"><ui5-input id="green" class="ui5-color-picker-rgb-input" disabled="${l(context.inputsDisabled)}" accessible-name="${l(context.greenInputLabel)}" value="${l(context._color.g)}"></ui5-input><ui5-label>G</ui5-label></div><div class="ui5-color-picker-rgb"><ui5-input id="blue" class="ui5-color-picker-rgb-input" disabled="${l(context.inputsDisabled)}" accessible-name="${l(context.blueInputLabel)}" value="${l(context._color.b)}"></ui5-input><ui5-label>B</ui5-label></div><div class="ui5-color-picker-rgb"><ui5-input id="alpha" disabled="${l(context.inputsDisabled)}" class="ui5-color-picker-rgb-input" value="${l(context._alpha)}" accessible-name="${l(context.alphaInputLabel)}" @ui5-input="${l(context._handleAlphaInput)}" @ui5-change="${l(context._handleAlphaChange)}"></ui5-input><ui5-label>A</ui5-label></div></div></section>`;
 const getCaretPosition = (field) => {
   let caretPos = 0;
-  if (field.selectionStart || field.selectionStart === "0") {
+  if (field.selectionStart || field.selectionStart === 0) {
     caretPos = field.selectionDirection === "backward" ? field.selectionStart : field.selectionEnd;
   }
   return caretPos;
 };
 const setCaretPosition = (field, caretPos) => {
-  if (field.createTextRange) {
-    const range = field.createTextRange();
-    range.move("character", caretPos);
-    range.select();
-  } else if (field.selectionStart) {
+  if (field.selectionStart) {
     field.focus();
     field.setSelectionRange(caretPos, caretPos);
   } else {
@@ -16520,7 +16542,7 @@ class Breadcrumbs extends UI5Element {
   _initItemNavigation() {
     if (!this._itemNavigation) {
       this._itemNavigation = new ItemNavigation(this, {
-        navigationMode: NavigationMode.Horizontal,
+        navigationMode: NavigationMode$1.Horizontal,
         getItemsCallback: () => this._getFocusableItems()
       });
     }
@@ -17009,34 +17031,25 @@ class AnimationQueue {
     }
   }
 }
-var animationConfig = {
-  defaultDuration: 400,
-  element: document.createElement("DIV"),
-  identity: () => {
-  }
-};
-var animate = ({
-  beforeStart = animationConfig.identity,
-  duration = animationConfig.defaultDuration,
-  element = animationConfig.element,
-  progress: progressCallback = animationConfig.identity
-}) => {
+const animate = (options) => {
   let start = null;
   let stopped = false;
   let animationFrame;
   let stop;
-  let animate2;
+  let advanceAnimation;
   const promise = new Promise((resolve, reject) => {
-    animate2 = (timestamp) => {
+    advanceAnimation = (timestamp) => {
       start = start || timestamp;
       const timeElapsed = timestamp - start;
-      const remaining = duration - timeElapsed;
-      if (timeElapsed <= duration) {
-        const progress = 1 - remaining / duration;
-        progressCallback(progress);
-        animationFrame = !stopped && requestAnimationFrame(animate2);
+      const remaining = options.duration - timeElapsed;
+      if (timeElapsed <= options.duration) {
+        const currentAdvance = 1 - remaining / options.duration;
+        options.advance(currentAdvance);
+        if (!stopped) {
+          animationFrame = requestAnimationFrame(advanceAnimation);
+        }
       } else {
-        progressCallback(1);
+        options.advance(1);
         resolve();
       }
     };
@@ -17045,10 +17058,12 @@ var animate = ({
       cancelAnimationFrame(animationFrame);
       reject(new Error("animation stopped"));
     };
-  }).catch((oReason) => oReason);
-  AnimationQueue.push(element, () => {
-    beforeStart();
-    requestAnimationFrame(animate2);
+  }).catch((reason) => reason);
+  AnimationQueue.push(options.element, () => {
+    if (typeof options.beforeStart === "function") {
+      options.beforeStart();
+    }
+    requestAnimationFrame(advanceAnimation);
     return new Promise((resolve) => {
       promise.then(() => resolve());
     });
@@ -17058,13 +17073,8 @@ var animate = ({
     stop: () => stop
   };
 };
-var scroll = ({
-  element = animationConfig.element,
-  duration = animationConfig.duration,
-  progress: progressCallback = animationConfig.identity,
-  dx = 0,
-  dy = 0
-}) => {
+const duration = 400;
+const scroll = (element, dx, dy) => {
   let scrollLeft;
   let scrollTop;
   return animate({
@@ -17074,8 +17084,7 @@ var scroll = ({
     },
     duration,
     element,
-    progress: (progress) => {
-      progressCallback(progress);
+    advance: (progress) => {
       element.scrollLeft = scrollLeft + progress * dx;
       element.scrollTop = scrollTop + progress * dy;
     }
@@ -17086,12 +17095,13 @@ const touchEndEventName = supportsTouch() ? "touchend" : "mouseup";
 class ScrollEnablement extends EventProvider {
   constructor(containerComponent) {
     super();
+    this.supportsTouch = supportsTouch();
     this.containerComponent = containerComponent;
     this.mouseMove = this.ontouchmove.bind(this);
     this.mouseUp = this.ontouchend.bind(this);
     this.touchStart = this.ontouchstart.bind(this);
     this.supportsTouch = supportsTouch();
-    this.cachedValue = {};
+    this.cachedValue = { dragX: 0, dragY: 0 };
     this.startX = 0;
     this.startY = 0;
     if (this.supportsTouch) {
@@ -17128,11 +17138,9 @@ class ScrollEnablement extends EventProvider {
       this._container.scrollTop += dy;
       return;
     }
-    return scroll({
-      element: this._container,
-      dx,
-      dy
-    });
+    if (this._container) {
+      return scroll(this._container, dx, dy);
+    }
   }
   getScrollLeft() {
     return this._container.scrollLeft;
@@ -17140,14 +17148,21 @@ class ScrollEnablement extends EventProvider {
   getScrollTop() {
     return this._container.scrollTop;
   }
-  _isTouchInside(touch2) {
+  _isTouchInside(event) {
+    let touch2 = null;
+    if (this.supportsTouch && event instanceof TouchEvent) {
+      touch2 = event.touches[0];
+    }
     const rect = this._container.getBoundingClientRect();
-    const x2 = this.supportsTouch ? touch2.clientX : touch2.x;
-    const y2 = this.supportsTouch ? touch2.clientY : touch2.y;
+    const x2 = this.supportsTouch ? touch2.clientX : event.x;
+    const y2 = this.supportsTouch ? touch2.clientY : event.y;
     return x2 >= rect.left && x2 <= rect.right && y2 >= rect.top && y2 <= rect.bottom;
   }
   ontouchstart(event) {
-    const touch2 = this.supportsTouch ? event.touches[0] : null;
+    let touch2 = null;
+    if (this.supportsTouch && event instanceof TouchEvent) {
+      touch2 = event.touches[0];
+    }
     if (!this.supportsTouch) {
       document.addEventListener("mouseup", this.mouseUp, { passive: true });
       document.addEventListener("mousemove", this.mouseMove, { passive: true });
@@ -17155,9 +17170,15 @@ class ScrollEnablement extends EventProvider {
       this.startX = touch2.pageX;
       this.startY = touch2.pageY;
     }
-    this._prevDragX = this.supportsTouch ? touch2.pageX : event.x;
-    this._prevDragY = this.supportsTouch ? touch2.pageY : event.y;
-    this._canScroll = this._isTouchInside(this.supportsTouch ? touch2 : event);
+    if (this.supportsTouch && event instanceof TouchEvent) {
+      this._prevDragX = touch2.pageX;
+      this._prevDragY = touch2.pageY;
+    }
+    if (event instanceof MouseEvent) {
+      this._prevDragX = event.x;
+      this._prevDragY = event.y;
+    }
+    this._canScroll = this._isTouchInside(event);
   }
   ontouchmove(event) {
     if (!this._canScroll) {
@@ -17203,27 +17224,21 @@ class ScrollEnablement extends EventProvider {
     this._prevDragX = dragX;
     this._prevDragY = dragY;
     if (!this.supportsTouch) {
-      document.removeEventListener("mousemove", this.mouseMove, { passive: true });
+      document.removeEventListener("mousemove", this.mouseMove);
       document.removeEventListener("mouseup", this.mouseUp);
     }
   }
 }
-const AnimationMode = {
-  Full: "full",
-  Basic: "basic",
-  Minimal: "minimal",
-  None: "none"
-};
-let animationMode;
+let curAnimationMode;
 const getAnimationMode = () => {
-  if (animationMode === void 0) {
-    animationMode = getAnimationMode$1();
+  if (curAnimationMode === void 0) {
+    curAnimationMode = getAnimationMode$1();
   }
-  return animationMode;
+  return curAnimationMode;
 };
-const setAnimationMode = (newAnimationMode) => {
-  if (Object.values(AnimationMode).includes(newAnimationMode)) {
-    animationMode = newAnimationMode;
+const setAnimationMode = (animationMode) => {
+  if (Object.values(AnimationMode$1).includes(animationMode)) {
+    curAnimationMode = animationMode;
   }
 };
 const CarouselArrowsPlacementTypes = {
@@ -17612,7 +17627,7 @@ class Carousel extends UI5Element {
     return this.cyclic || this._selectedIndex + 1 <= this.pagesCount - 1;
   }
   get suppressAnimation() {
-    return this._resizing || getAnimationMode() === AnimationMode.None;
+    return this._resizing || getAnimationMode() === AnimationMode$1.None;
   }
   get _isRTL() {
     return this.effectiveDir === "rtl";
@@ -17805,12 +17820,12 @@ class ColorPalette extends UI5Element {
     this._itemNavigation = new ItemNavigation(this, {
       getItemsCallback: () => this.displayedColors,
       rowSize: this.rowSize,
-      behavior: ItemNavigationBehavior.Cyclic
+      behavior: ItemNavigationBehavior$1.Cyclic
     });
     this._itemNavigationRecentColors = new ItemNavigation(this, {
       getItemsCallback: () => this.recentColorsElements,
       rowSize: this.rowSize,
-      behavior: ItemNavigationBehavior.Static
+      behavior: ItemNavigationBehavior$1.Static
     });
     this._recentColors = [];
   }
@@ -18153,16 +18168,18 @@ class ColorPalettePopover extends UI5Element {
   }
 }
 ColorPalettePopover.define();
-const InvisibleMessageModes = {
-  Polite: "Polite",
-  Assertive: "Assertive"
-};
+var InvisibleMessageModes;
+(function(InvisibleMessageModes2) {
+  InvisibleMessageModes2["Polite"] = "Polite";
+  InvisibleMessageModes2["Assertive"] = "Assertive";
+})(InvisibleMessageModes || (InvisibleMessageModes = {}));
 class InvisibleMessageMode extends DataType {
   static isValid(value) {
     return !!InvisibleMessageModes[value];
   }
 }
 InvisibleMessageMode.generateTypeAccessors(InvisibleMessageModes);
+var InvisibleMessageMode$1 = InvisibleMessageModes;
 let politeSpan;
 let assertiveSpan;
 const setOutOfViewportStyles = (el) => {
@@ -18191,10 +18208,10 @@ attachBoot(() => {
   getSingletonElementInstance("ui5-static-area").appendChild(assertiveSpan);
 });
 const announce = (message, mode) => {
-  const span = mode === InvisibleMessageModes.Assertive ? assertiveSpan : politeSpan;
+  const span = mode === InvisibleMessageMode$1.Assertive ? assertiveSpan : politeSpan;
   span.textContent = "";
   span.textContent = message;
-  if (mode !== InvisibleMessageModes.Assertive && mode !== InvisibleMessageModes.Polite) {
+  if (mode !== InvisibleMessageMode$1.Assertive && mode !== InvisibleMessageMode$1.Polite) {
     console.warn(`You have entered an invalid mode. Valid values are: "Polite" and "Assertive". The framework will automatically set the mode to "Polite".`);
   }
   setTimeout(() => {
@@ -22863,7 +22880,6 @@ registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => default
 var datePickerPopoverCss = { packageName: "@ui5/webcomponents", fileName: "themes/DatePickerPopover.css", content: "[ui5-calendar]{width:100%;display:flex;justify-content:center}[ui5-responsive-popover]::part(content){padding:0}" };
 const metadata$19 = {
   tag: "ui5-date-picker",
-  altTag: "ui5-datepicker",
   managedSlots: true,
   properties: {
     value: {
@@ -23439,7 +23455,6 @@ registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => default
 var toggleBtnCss = { packageName: "@ui5/webcomponents", fileName: "themes/ToggleButton.css", content: ":host(:not([hidden])){display:inline-block}:host([design=Default][pressed]),:host([design=Emphasized][pressed]),:host([design=Transparent][pressed]),:host([pressed]){background:var(--sapButton_Selected_Background);border-color:var(--sapButton_Selected_BorderColor);color:var(--sapButton_Selected_TextColor)}:host([design=Default][pressed]:hover),:host([design=Default][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover),:host([design=Emphasized][pressed]:hover),:host([design=Emphasized][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover),:host([design=Transparent][pressed]:hover),:host([design=Transparent][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover),:host([pressed]:hover),:host([pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover){background:var(--sapButton_Selected_Hover_Background);border-color:var(--sapButton_Selected_Hover_BorderColor);color:var(--sapButton_Selected_TextColor);box-shadow:var(--sapContent_Interaction_Shadow)}:host([active][focused]),:host([design=Default][active][focused]),:host([design=Emphasized][active][focused]),:host([design=Transparent][active][focused]){background:var(--sapButton_Active_Background);border-color:var(--sapButton_Active_BorderColor);color:var(--sapButton_Selected_TextColor);box-shadow:var(--sapContent_Interaction_Shadow)}:host([design=Default][pressed]:not([active]):not([non-interactive]):not([_is-touch])),:host([design=Emphasized][pressed]:not([active]):not([non-interactive]):not([_is-touch])),:host([design=Transparent][pressed]:not([active]):not([non-interactive]):not([_is-touch])),:host([pressed]:not([active]):not([non-interactive]):not([_is-touch])){background:var(--sapButton_Selected_Background);border-color:var(--sapButton_Selected_BorderColor);color:var(--sapButton_Selected_TextColor)}:host([design=Negative][pressed]){background:var(--sapButton_Reject_Selected_Background);border-color:var(--sapButton_Reject_Selected_BorderColor);color:var(--sapButton_Reject_Selected_TextColor)}:host([design=Negative][active][focused]){background:var(--sapButton_Reject_Active_Background);border-color:var(--sapButton_Reject_Active_BorderColor);color:var(--sapButton_Reject_Active_TextColor)}:host([design=Negative][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover),:host([design=Negative][pressed][active]:hover){background:var(--sapButton_Reject_Selected_Hover_Background);border-color:var(--sapButton_Reject_Selected_Hover_BorderColor);color:var(--sapButton_Reject_Selected_TextColor);box-shadow:var(--sapContent_Negative_Shadow)}:host([design=Negative][pressed]:not([active]):not([non-interactive]):not([_is-touch])){background:var(--sapButton_Reject_Selected_Background);border-color:var(--sapButton_Reject_Selected_BorderColor);color:var(--sapButton_Reject_Selected_TextColor)}:host([design=Positive][pressed]){background:var(--sapButton_Accept_Selected_Background);border-color:var(--sapButton_Accept_Selected_BorderColor);color:var(--sapButton_Accept_Selected_TextColor)}:host([design=Positive][active][focused]){background:var(--sapButton_Accept_Active_Background);border-color:var(--sapButton_Accept_Active_BorderColor);color:var(--sapButton_Accept_Selected_TextColor)}:host([design=Positive][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover),:host([design=Positive][pressed][active]:hover){background:var(--sapButton_Accept_Selected_Hover_Background);border-color:var(--sapButton_Accept_Selected_Hover_BorderColor);color:var(--sapButton_Accept_Selected_TextColor);box-shadow:var(--sapContent_Positive_Shadow)}:host([design=Positive][pressed]:not([active]):not([non-interactive]):not([_is-touch])){background:var(--sapButton_Accept_Selected_Background);border-color:var(--sapButton_Accept_Selected_BorderColor);color:var(--sapButton_Accept_Selected_TextColor)}:host([design=Attention][pressed]){background:var(--sapButton_Attention_Selected_Background);border-color:var(--sapButton_Attention_Selected_BorderColor);color:var(--sapButton_Attention_Selected_TextColor)}:host([design=Attention][active][focused]){background:var(--sapButton_Attention_Active_Background);border-color:var(--sapButton_Attention_Active_BorderColor);color:var(--sapButton_Attention_Active_TextColor)}:host([design=Attention][pressed]:not([active]):not([non-interactive]):not([_is-touch]):hover),:host([design=Attention][pressed][active]:hover){background:var(--sapButton_Attention_Selected_Hover_Background);border-color:var(--sapButton_Attention_Selected_Hover_BorderColor);color:var(--sapButton_Attention_Selected_TextColor);box-shadow:var(--sapContent_Critical_Shadow)}:host([design=Attention][pressed]:not([active]):not([non-interactive]):not([_is-touch])){background:var(--sapButton_Attention_Selected_Background);border-color:var(--sapButton_Attention_Selected_BorderColor);color:var(--sapButton_Attention_Selected_TextColor)}" };
 const metadata$17 = {
   tag: "ui5-toggle-button",
-  altTag: "ui5-togglebutton",
   properties: {
     pressed: {
       type: Boolean
@@ -23515,7 +23530,6 @@ registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => default
 var SegmentedButtonCss = { packageName: "@ui5/webcomponents", fileName: "themes/SegmentedButton.css", content: ".ui5-hidden-text{position:absolute;clip:rect(1px,1px,1px,1px);user-select:none;left:-1000px;top:-1000px;pointer-events:none;font-size:0}:host(:not([hidden])){display:inline-block}.ui5-segmented-button-root{display:flex;margin:0;padding:0;background-color:var(--sapButton_Background);border-radius:var(--_ui5_segmented_btn_outer_border_radius)}::slotted([ui5-segmented-button-item]){border-radius:var(--_ui5_segmented_btn_inner_border_radius);height:var(--_ui5_button_base_height);min-width:2.5rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;z-index:auto}::slotted([ui5-segmented-button-item]:hover){z-index:2}::slotted([ui5-segmented-button-item][active]),::slotted([ui5-segmented-button-item][pressed]){border:.0625rem solid var(--sapButton_Selected_BorderColor);background-color:var(--sapButton_Selected_Background);color:var(--sapButton_Selected_TextColor)}::slotted([ui5-segmented-button-item][pressed]:hover){border:.0625rem solid var(--sapButton_Selected_Hover_BorderColor);background-color:var(--sapButton_Selected_Hover_Background);color:var(--sapButton_Selected_TextColor)}::slotted([ui5-segmented-button-item]:nth-child(odd)){border-inline-end:var(--_ui5_segmented_btn_inner_border_odd_child);border-inline-start:var(--_ui5_segmented_btn_inner_border_odd_child)}::slotted([ui5-segmented-button-item][active]:nth-child(odd)),::slotted([ui5-segmented-button-item][pressed]:nth-child(odd)){border-inline-end:var(--_ui5_segmented_btn_inner_pressed_border_odd_child);border-inline-start:var(--_ui5_segmented_btn_inner_pressed_border_odd_child)}::slotted([ui5-segmented-button-item]:last-child){border-start-end-radius:var(--_ui5_segmented_btn_border_radius);border-end-end-radius:var(--_ui5_segmented_btn_border_radius);border-inline-end:var(--_ui5_segmented_btn_inner_border)}::slotted([ui5-segmented-button-item][active]:last-child),::slotted([ui5-segmented-button-item][pressed]:last-child){border-inline-end:.0625rem solid var(--sapButton_Selected_BorderColor)}::slotted([ui5-segmented-button-item]:first-child){border-start-start-radius:var(--_ui5_segmented_btn_border_radius);border-end-start-radius:var(--_ui5_segmented_btn_border_radius);border-inline-start:var(--_ui5_segmented_btn_inner_border)}::slotted([ui5-segmented-button-item][active]:first-child),::slotted([ui5-segmented-button-item][pressed]:first-child){border-inline-start:.0625rem solid var(--sapButton_Selected_BorderColor)}::slotted([ui5-segmented-button-item][active]:not([active]):hover){border-color:var(--sapButton_BorderColor)}::slotted([ui5-segmented-button-item][active]:hover){border-color:var(--sapButton_Selected_BorderColor)}" };
 const metadata$15 = {
   tag: "ui5-segmented-button",
-  altTag: "ui5-segmentedbutton",
   languageAware: true,
   properties: {
     accessibleName: {
@@ -26589,11 +26603,7 @@ class MenuItem extends UI5Element {
   }
 }
 MenuItem.define();
-var slideDown = ({
-  element = animationConfig.element,
-  duration = animationConfig.defaultDuration,
-  progress: progressCallback = animationConfig.identity
-}) => {
+const slideDown = (element) => {
   let computedStyles, paddingTop, paddingBottom, marginTop, marginBottom, height;
   let storedOverflow, storedPaddingTop, storedPaddingBottom, storedMarginTop, storedMarginBottom, storedHeight;
   const animation = animate({
@@ -26612,22 +26622,21 @@ var slideDown = ({
       storedMarginBottom = element.style.marginBottom;
       storedHeight = element.style.height;
       element.style.overflow = "hidden";
-      element.style.paddingTop = 0;
-      element.style.paddingBottom = 0;
-      element.style.marginTop = 0;
-      element.style.marginBottom = 0;
-      element.style.height = 0;
+      element.style.paddingTop = "0";
+      element.style.paddingBottom = "0";
+      element.style.marginTop = "0";
+      element.style.marginBottom = "0";
+      element.style.height = "0";
     },
     duration,
     element,
-    progress(progress) {
-      progressCallback(progress);
+    advance: (progress) => {
       element.style.display = "block";
-      element.style.paddingTop = 0 + paddingTop * progress + "px";
-      element.style.paddingBottom = 0 + paddingBottom * progress + "px";
-      element.style.marginTop = 0 + marginTop * progress + "px";
-      element.style.marginBottom = 0 + marginBottom * progress + "px";
-      element.style.height = 0 + height * progress + "px";
+      element.style.paddingTop = `${paddingTop * progress}px`;
+      element.style.paddingBottom = `${paddingBottom * progress}px`;
+      element.style.marginTop = `${marginTop * progress}px`;
+      element.style.marginBottom = `${marginBottom * progress}px`;
+      element.style.height = `${height * progress}px`;
     }
   });
   animation.promise().then(() => {
@@ -26640,33 +26649,29 @@ var slideDown = ({
   });
   return animation;
 };
-var slideUp = ({
-  element = animationConfig.element,
-  duration = animationConfig.defaultDuration,
-  progress: progressCallback = animationConfig.identity
-}) => {
+const slideUp = (element) => {
   let computedStyles, paddingTop, paddingBottom, marginTop, marginBottom, height;
   let storedOverflow, storedPaddingTop, storedPaddingBottom, storedMarginTop, storedMarginBottom, storedHeight;
   const animation = animate({
     beforeStart: () => {
-      computedStyles = getComputedStyle(element);
+      const el = element;
+      computedStyles = getComputedStyle(el);
       paddingTop = parseFloat(computedStyles.paddingTop);
       paddingBottom = parseFloat(computedStyles.paddingBottom);
       marginTop = parseFloat(computedStyles.marginTop);
       marginBottom = parseFloat(computedStyles.marginBottom);
       height = parseFloat(computedStyles.height);
-      storedOverflow = element.style.overflow;
-      storedPaddingTop = element.style.paddingTop;
-      storedPaddingBottom = element.style.paddingBottom;
-      storedMarginTop = element.style.marginTop;
-      storedMarginBottom = element.style.marginBottom;
-      storedHeight = element.style.height;
-      element.style.overflow = "hidden";
+      storedOverflow = el.style.overflow;
+      storedPaddingTop = el.style.paddingTop;
+      storedPaddingBottom = el.style.paddingBottom;
+      storedMarginTop = el.style.marginTop;
+      storedMarginBottom = el.style.marginBottom;
+      storedHeight = el.style.height;
+      el.style.overflow = "hidden";
     },
     duration,
     element,
-    progress(progress) {
-      progressCallback(progress);
+    advance: (progress) => {
       element.style.paddingTop = `${paddingTop - paddingTop * progress}px`;
       element.style.paddingBottom = `${paddingBottom - paddingBottom * progress}px`;
       element.style.marginTop = `${marginTop - marginTop * progress}px`;
@@ -26674,8 +26679,8 @@ var slideUp = ({
       element.style.height = `${height - height * progress}px`;
     }
   });
-  animation.promise().then((oReason) => {
-    if (!(oReason instanceof Error)) {
+  animation.promise().then((reason) => {
+    if (!(reason instanceof Error)) {
       element.style.overflow = storedOverflow;
       element.style.paddingTop = storedPaddingTop;
       element.style.paddingBottom = storedPaddingBottom;
@@ -26798,7 +26803,7 @@ class Panel extends UI5Element {
     return true;
   }
   shouldNotAnimate() {
-    return this.noAnimation || getAnimationMode() === AnimationMode.None;
+    return this.noAnimation || getAnimationMode() === AnimationMode$1.None;
   }
   _headerClick(event) {
     if (!this.shouldToggle(event.target)) {
@@ -26847,13 +26852,9 @@ class Panel extends UI5Element {
     const animations = [];
     [].forEach.call(elements, (oElement) => {
       if (this.collapsed) {
-        animations.push(slideUp({
-          element: oElement
-        }).promise());
+        animations.push(slideUp(oElement).promise());
       } else {
-        animations.push(slideDown({
-          element: oElement
-        }).promise());
+        animations.push(slideDown(oElement).promise());
       }
     });
     Promise.all(animations).then((_2) => {
@@ -28684,7 +28685,6 @@ registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => default
 var messageStripCss = { packageName: "@ui5/webcomponents", fileName: "themes/MessageStrip.css", content: '.ui5-hidden-text{position:absolute;clip:rect(1px,1px,1px,1px);user-select:none;left:-1000px;top:-1000px;pointer-events:none;font-size:0}:host(:not([hidden])){display:inline-block;width:100%}.ui5-message-strip-root{width:100%;height:100%;display:flex;border-radius:var(--sapPopover_BorderCornerRadius);padding:var(--_ui5_message_strip_padding);border-width:var(--_ui5_message_strip_border_width);border-style:solid;box-sizing:border-box;position:relative}.ui5-message-strip-root-hide-icon{padding-inline:var(--_ui5_message_strip_padding_inline_no_icon);padding-block:var(--_ui5_message_strip_padding_block_no_icon)}.ui5-message-strip-root-hide-close-button{padding-inline-end:1rem}.ui5-message-strip-root--info{background-color:var(--sapInformationBackground);border-color:var(--sapMessage_InformationBorderColor);color:var(--sapTextColor)}.ui5-message-strip-root--info .ui5-message-strip-icon{color:var(--sapInformativeElementColor)}.ui5-message-strip-root--positive{background-color:var(--sapSuccessBackground);border-color:var(--sapMessage_SuccessBorderColor)}.ui5-message-strip-root--positive .ui5-message-strip-icon{color:var(--sapPositiveElementColor)}.ui5-message-strip-root--negative{background-color:var(--sapErrorBackground);border-color:var(--sapMessage_ErrorBorderColor)}.ui5-message-strip-root--negative .ui5-message-strip-icon{color:var(--sapNegativeElementColor)}.ui5-message-strip-root--warning{background-color:var(--sapWarningBackground);border-color:var(--sapMessage_WarningBorderColor)}.ui5-message-strip-root--warning .ui5-message-strip-icon{color:var(--sapCriticalElementColor)}.ui5-message-strip-icon-wrapper{position:absolute;top:var(--_ui5_message_strip_icon_top);inset-inline-start:.75rem;box-sizing:border-box}.ui5-message-strip-text{width:100%;color:var(--sapTextColor);line-height:1.2;font-family:"72override",var(--sapFontFamily);font-size:var(--sapFontSize)}.ui5-message-strip-close-button{width:2rem;min-width:2rem;height:1.65rem;min-height:1.65rem;position:absolute;top:var(--_ui5_message_strip_close_button_top);inset-inline-end:var(--_ui5_message_strip_close_button_right)}' };
 const metadata$O = {
   tag: "ui5-message-strip",
-  altTag: "ui5-messagestrip",
   languageAware: true,
   fastNavigation: true,
   properties: {
@@ -30018,7 +30018,7 @@ class ProgressIndicator extends UI5Element {
     return this.value <= 50;
   }
   get shouldAnimate() {
-    return getAnimationMode() !== AnimationMode.None;
+    return getAnimationMode() !== AnimationMode$1.None;
   }
   get valueStateText() {
     const percentValue = `${this.validatedValue}%`;
@@ -30694,10 +30694,10 @@ class TabContainer extends UI5Element {
     return true;
   }
   slideContentDown(element) {
-    return slideDown({ element }).promise();
+    return slideDown(element).promise();
   }
   slideContentUp(element) {
-    return slideUp({ element }).promise();
+    return slideUp(element).promise();
   }
   async _onOverflowClick(event) {
     if (event.target.classList.contains("ui5-tc__overflow")) {
@@ -31056,7 +31056,7 @@ class TabContainer extends UI5Element {
     return TabContainer.i18nBundle.getText(TABCONTAINER_POPOVER_CANCEL_BUTTON);
   }
   get animate() {
-    return getAnimationMode() !== AnimationMode.None;
+    return getAnimationMode() !== AnimationMode$1.None;
   }
   static get dependencies() {
     return [
@@ -31655,7 +31655,7 @@ class Table extends UI5Element {
       _tabIndex: "0"
     };
     this._itemNavigation = new ItemNavigation(this, {
-      navigationMode: NavigationMode.Vertical,
+      navigationMode: NavigationMode$1.Vertical,
       affectedPropertiesNames: ["_columnHeader"],
       getItemsCallback: () => [this._columnHeader, ...this.rows],
       skipItemsSize: PAGE_UP_DOWN_SIZE
@@ -33005,7 +33005,6 @@ class TextArea extends UI5Element {
 TextArea.define();
 const metadata$y = {
   tag: "ui5-time-picker",
-  altTag: "ui5-timepicker",
   properties: {
     placeholder: {
       type: String,
@@ -33136,7 +33135,7 @@ class Toast extends UI5Element {
         "transition-duration": this.open ? `${transitionDuration}ms` : "",
         "transition-delay": this.open ? `${this.effectiveDuration - transitionDuration}ms` : "",
         "opacity": this.open && !this.hover ? "0" : "",
-        "z-index": getNextZIndex$1()
+        "z-index": getNextZIndex()
       }
     };
   }
@@ -36872,7 +36871,7 @@ const attachDirectionChange = (listener) => {
   eventProvider$1.attachEvent(DIR_CHANGE, listener);
 };
 const fireDirectionChange = () => {
-  return eventProvider$1.fireEvent(DIR_CHANGE);
+  return eventProvider$1.fireEvent(DIR_CHANGE, void 0);
 };
 const applyDirection = async () => {
   const listenersResults = fireDirectionChange();
@@ -37422,16 +37421,16 @@ const loaders = /* @__PURE__ */ new Map();
 const registry = getSharedResource("SVGIllustration.registry", /* @__PURE__ */ new Map());
 const illustrationPromises = getSharedResource("SVGIllustration.promises", /* @__PURE__ */ new Map());
 const ILLUSTRATION_NOT_FOUND$1 = "ILLUSTRATION_NOT_FOUND";
-const registerIllustration = (name2, { dialogSvg: dialogSvg2, sceneSvg: sceneSvg2, spotSvg: spotSvg2, set: set2, title: title2, subtitle: subtitle2 } = {}) => {
-  registry.set(`${set2}/${name2}`, {
-    dialogSvg: dialogSvg2,
-    sceneSvg: sceneSvg2,
-    spotSvg: spotSvg2,
-    title: title2,
-    subtitle: subtitle2
+const registerIllustration = (name2, data) => {
+  registry.set(`${data.set}/${name2}`, {
+    dialogSvg: data.dialogSvg,
+    sceneSvg: data.sceneSvg,
+    spotSvg: data.spotSvg,
+    title: data.title,
+    subtitle: data.subtitle
   });
 };
-const registerIllustrationLoader = async (illustrationName, loader) => {
+const registerIllustrationLoader = (illustrationName, loader) => {
   loaders.set(illustrationName, loader);
 };
 const _loadIllustrationOnce = async (illustrationName) => {
@@ -37444,13 +37443,13 @@ const _loadIllustrationOnce = async (illustrationName) => {
   }
   return illustrationPromises.get(illustrationName);
 };
-const getIllustrationDataSync = (nameProp) => {
+const getIllustrationDataSync = (illustrationName) => {
   let set2 = "fiori";
-  if (nameProp.startsWith("Tnt")) {
+  if (illustrationName.startsWith("Tnt")) {
     set2 = "tnt";
-    nameProp = nameProp.replace(/^Tnt/, "");
+    illustrationName = illustrationName.replace(/^Tnt/, "");
   }
-  return registry.get(`${set2}/${nameProp}`);
+  return registry.get(`${set2}/${illustrationName}`);
 };
 const getIllustrationData = async (illustrationName) => {
   let set2 = "fiori";
@@ -38459,7 +38458,7 @@ class FlexibleColumnLayout extends UI5Element {
     };
   }
   static get ANIMATION_DURATION() {
-    return getAnimationMode() !== AnimationMode.None ? 560 : 0;
+    return getAnimationMode() !== AnimationMode$1.None ? 560 : 0;
   }
   onEnterDOM() {
     ResizeHandler.register(this, this._handleResize);
@@ -38597,7 +38596,7 @@ class FlexibleColumnLayout extends UI5Element {
     return this._visibleColumns;
   }
   get classes() {
-    const hasAnimation = getAnimationMode() !== AnimationMode.None;
+    const hasAnimation = getAnimationMode() !== AnimationMode$1.None;
     return {
       root: {
         "ui5-fcl-root": true
@@ -39509,7 +39508,7 @@ class MediaGallery extends UI5Element {
   _initItemNavigation() {
     if (!this._itemNavigation) {
       this._itemNavigation = new ItemNavigation(this, {
-        navigationMode: NavigationMode.Auto,
+        navigationMode: NavigationMode$1.Auto,
         getItemsCallback: () => this._getFocusableItems()
       });
     }
@@ -40684,7 +40683,7 @@ class ShellBar extends UI5Element {
     this.coPilotActive = false;
   }
   onBeforeRendering() {
-    const animationsOn = getAnimationMode() === AnimationMode.Full;
+    const animationsOn = getAnimationMode() === AnimationMode$1.Full;
     const coPilotAnimation = getFeature("CoPilotAnimation");
     this.coPilot = coPilotAnimation && animationsOn ? coPilotAnimation : { animated: false };
     this.withLogo = this.hasLogo;
@@ -41371,7 +41370,7 @@ class Timeline extends UI5Element {
     this._itemNavigation.setCurrentItem(target);
   }
   onBeforeRendering() {
-    this._itemNavigation.navigationMode = this.layout === TimeLineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
+    this._itemNavigation.navigationMode = this.layout === TimeLineLayout.Horizontal ? NavigationMode$1.Horizontal : NavigationMode$1.Vertical;
     for (let i2 = 0; i2 < this.items.length; i2++) {
       this.items[i2].layout = this.layout;
       if (this.items[i2 + 1] && !!this.items[i2 + 1].icon) {
@@ -42760,7 +42759,7 @@ class Wizard extends UI5Element {
     this._prevContentHeight = 0;
     this.selectionRequestedByScroll = false;
     this._itemNavigation = new ItemNavigation(this, {
-      navigationMode: NavigationMode.Auto,
+      navigationMode: NavigationMode$1.Auto,
       getItemsCallback: () => this.enabledStepsInHeaderDOM
     });
     this._onStepResize = this.onStepResize.bind(this);
