@@ -36,6 +36,14 @@ const metadata = {
 		popined: {
 			type: Boolean,
 		},
+
+		/**
+		 * @private
+		 */
+		 popinedInl: {
+			type: Boolean,
+		},
+
 	},
 	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
 	},

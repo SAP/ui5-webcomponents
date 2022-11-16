@@ -19,6 +19,10 @@ td {
 	padding-top: .25rem;
 }
 
+:host([popined-inl]) {
+	padding-top: 0;
+}
+
 ::slotted([ui5-label]) {
 	color: inherit;
 }
