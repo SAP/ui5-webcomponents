@@ -19,7 +19,7 @@ td {
 	padding-top: .25rem;
 }
 
-:host([popined-inl]) {
+:host([_popined-inline]) {
 	padding-top: 0;
 }
 

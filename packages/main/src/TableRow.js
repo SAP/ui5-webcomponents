@@ -373,7 +373,7 @@ class TableRow extends UI5Element {
 			if (info.visible) {
 				this.visibleCells.push(cell);
 				cell.popined = false;
-				cell.popinedInl = false;
+				cell._popinedInline = false;
 			} else if (info.demandPopin) {
 				const popinHeaderClass = this.popinCells.length === 0 ? "popin-header" : "";
 				this.popinCells.push({
@@ -384,11 +384,11 @@ class TableRow extends UI5Element {
 				});
 				cell.popined = true;
 				if (info.popinDisplay === "Inline") {
-					cell.popinedInl = true;
+					cell._popinedInline = true;
 				}
 			} else {
 				cell.popined = false;
-				cell.popinedInl = false;
+				cell._popinedInline = false;
 			}
 		}, this);
 

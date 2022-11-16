@@ -40,7 +40,7 @@ const metadata = {
 		/**
 		 * @private
 		 */
-		 popinedInl: {
+		 _popinedInline: {
 			type: Boolean,
 		},
 
