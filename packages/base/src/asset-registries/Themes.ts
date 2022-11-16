@@ -1,6 +1,5 @@
-// @ts-ignore
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
-import { StyleData, StyleDataCSP } from "../ManagedStyles.js";
+import { StyleData, StyleDataCSP } from "../types.js";
 
 type ThemeData = {_: StyleDataCSP } | StyleDataCSP | string;
 type ThemeLoader = (themeName: string) => Promise<ThemeData>;
@@ -25,7 +24,7 @@ const getThemeProperties = async (packageName: string, themeName: string) => {
 	if (!registeredThemes.has(themeName)) {
 		const regThemesStr = [...registeredThemes.values()].join(", ");
 		console.warn(`You have requested a non-registered theme ${themeName} - falling back to ${DEFAULT_THEME}. Registered themes are: ${regThemesStr}`); /* eslint-disable-line */
-		return _getThemeProperties(packageName, DEFAULT_THEME as string);
+		return _getThemeProperties(packageName, DEFAULT_THEME);
 	}
 
 	return _getThemeProperties(packageName, themeName);

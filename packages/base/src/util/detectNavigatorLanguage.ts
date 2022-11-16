@@ -1,4 +1,3 @@
-// @ts-ignore
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 export default () => {
@@ -10,5 +9,5 @@ export default () => {
 
 	const rawLocale = (browserLanguages && browserLanguages[0]) || navigatorLanguage();
 
-	return rawLocale || DEFAULT_LANGUAGE as string;
+	return rawLocale || DEFAULT_LANGUAGE;
 };

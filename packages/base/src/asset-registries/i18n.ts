@@ -2,7 +2,6 @@ import getLocale from "../locale/getLocale.js";
 import { attachLanguageChange } from "../locale/languageChange.js";
 import normalizeLocale from "../locale/normalizeLocale.js";
 import nextFallbackLocale from "../locale/nextFallbackLocale.js";
-// @ts-ignore
 import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 import { getFetchDefaultLanguage } from "../config/Language.js";
 

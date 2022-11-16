@@ -1,6 +1,5 @@
 import merge from "./thirdparty/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
-// @ts-ignore
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 import validateThemeRoot from "./validateThemeRoot.js";
 import type OpenUI5Support from "./features/OpenUI5Support";

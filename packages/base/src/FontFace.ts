@@ -1,8 +1,6 @@
-import { hasStyle, createStyle, StyleData } from "./ManagedStyles.js";
+import { hasStyle, createStyle } from "./ManagedStyles.js";
 import { getFeature } from "./FeaturesRegistry.js";
-// @ts-ignore
 import fontFaceCSS from "./generated/css/FontFace.css.js";
-// @ts-ignore
 import overrideFontFaceCSS from "./generated/css/OverrideFontFace.css.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 
@@ -20,13 +18,13 @@ const insertFontFace = () => {
 
 const insertMainFontFace = () => {
 	if (!hasStyle("data-ui5-font-face")) {
-		createStyle(fontFaceCSS as StyleData, "data-ui5-font-face");
+		createStyle(fontFaceCSS, "data-ui5-font-face");
 	}
 };
 
 const insertOverrideFontFace = () => {
 	if (!hasStyle("data-ui5-font-face-override")) {
-		createStyle(overrideFontFaceCSS as StyleData, "data-ui5-font-face-override");
+		createStyle(overrideFontFaceCSS, "data-ui5-font-face-override");
 	}
 };
 

@@ -5,7 +5,6 @@ import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoots.js";
 import type OpenUI5Support from "../features/OpenUI5Support.js";
-// @ts-ignore
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
@@ -83,7 +82,7 @@ const applyTheme = async (theme: string) => {
 
 	// Always load component packages properties. For non-registered themes, try with the base theme, if any
 	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
-	await loadComponentPackages(packagesTheme || DEFAULT_THEME as string);
+	await loadComponentPackages(packagesTheme || DEFAULT_THEME);
 
 	fireThemeLoaded(theme);
 };

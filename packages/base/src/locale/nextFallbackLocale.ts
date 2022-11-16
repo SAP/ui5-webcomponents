@@ -1,4 +1,3 @@
-// @ts-ignore
 import { DEFAULT_LOCALE } from "../generated/AssetParameters.js";
 
 /**
@@ -9,7 +8,7 @@ import { DEFAULT_LOCALE } from "../generated/AssetParameters.js";
  */
 const nextFallbackLocale = (locale: string) => {
 	if (!locale) {
-		return DEFAULT_LOCALE as string;
+		return DEFAULT_LOCALE;
 	}
 
 	if (locale === "zh_HK") {
@@ -23,7 +22,7 @@ const nextFallbackLocale = (locale: string) => {
 	}
 
 	// for any language but the default, fallback to the default first before falling back to the 'raw' language (empty string)
-	return locale !== DEFAULT_LOCALE ? DEFAULT_LOCALE as string : "";
+	return locale !== DEFAULT_LOCALE ? DEFAULT_LOCALE : "";
 };
 
 export default nextFallbackLocale;

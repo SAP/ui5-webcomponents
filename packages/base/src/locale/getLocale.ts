@@ -1,7 +1,6 @@
 import detectNavigatorLanguage from "../util/detectNavigatorLanguage.js";
 import { getLanguage as getConfigLanguage } from "../config/Language.js";
 import Locale from "./Locale.js";
-// @ts-ignore
 import { DEFAULT_LOCALE } from "../generated/AssetParameters.js";
 
 const cache = new Map<string, Locale>();
@@ -23,7 +22,7 @@ const convertToLocaleOrNull = (lang: string) => {
 		// ignore
 	}
 
-	return new Locale(DEFAULT_LOCALE as string);
+	return new Locale(DEFAULT_LOCALE);
 };
 
 /**

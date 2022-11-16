@@ -1,4 +1,4 @@
-import { StyleData } from "../ManagedStyles.js";
+import { StyleData } from "../types.js";
 
 const getStylesString = (styles: Array<StyleData> | StyleData) => {
 	if (Array.isArray(styles)) {

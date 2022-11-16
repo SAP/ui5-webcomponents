@@ -2,7 +2,7 @@ import { getUrl } from "../CSP.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import type UI5Element from "../UI5Element.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
-import { StyleData, StyleDataCSP } from "../ManagedStyles.js";
+import { StyleData, StyleDataCSP } from "../types.js";
 
 const getEffectiveLinksHrefs = (ElementClass: typeof UI5Element, forStaticArea = false) => {
 	const stylesData: StyleData | Array<StyleData> = ElementClass[forStaticArea ? "staticAreaStyles" : "styles"];

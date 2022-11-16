@@ -1,12 +1,8 @@
 import { attachLanguageChange } from "../locale/languageChange.js";
 import getLocale from "../locale/getLocale.js";
-// @ts-ignore
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import type OpenUI5Support from "../features/OpenUI5Support";
-
-const defaultLocale = DEFAULT_LOCALE as string;
-const supportedLocales = SUPPORTED_LOCALES as string;
 
 type LocaleDataLoader = (locale: string) => Promise<CLDRData>;
 type CLDRData = Record<string, object | boolean | string>;
@@ -57,7 +53,7 @@ const calcLocale = (language: string, region: string, script: string) => {
 
 	// try language + region
 	let localeId = `${language}_${region}`;
-	if (supportedLocales.includes(localeId)) {
+	if (SUPPORTED_LOCALES.includes(localeId)) {
 		if (loaders.has(localeId)) {
 			// supported and has loader
 			return localeId;
@@ -65,7 +61,7 @@ const calcLocale = (language: string, region: string, script: string) => {
 
 		// supported, no loader - fallback to default and warn
 		_showAssetsWarningOnce(localeId);
-		return defaultLocale;
+		return DEFAULT_LOCALE;
 	}
 
 	// not supported, try language only
@@ -78,11 +74,11 @@ const calcLocale = (language: string, region: string, script: string) => {
 
 		// supported, no loader - fallback to default and warn
 		_showAssetsWarningOnce(localeId);
-		return defaultLocale;
+		return DEFAULT_LOCALE;
 	}
 
 	// not supported - fallback to default locale
-	return defaultLocale;
+	return DEFAULT_LOCALE;
 };
 
 // internal set data
@@ -94,7 +90,7 @@ const setLocaleData = (localeId: string, content: CLDRData) => {
 const getLocaleData = (localeId: string) => {
 	// if there is no loader, the default fallback was fetched and a warning was given - use default locale instead
 	if (!loaders.has(localeId)) {
-		localeId = defaultLocale;
+		localeId = DEFAULT_LOCALE;
 	}
 
 	const content = localeDataMap.get(localeId);

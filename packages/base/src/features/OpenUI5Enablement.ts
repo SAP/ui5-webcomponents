@@ -1,6 +1,5 @@
 import { TemplateResult } from "lit-html";
 import { registerFeature } from "../FeaturesRegistry.js";
-// @ts-ignore
 import BusyIndicatorStyles from "../generated/css/BusyIndicator.css.js";
 import merge from "../thirdparty/merge.js";
 import {
@@ -9,7 +8,6 @@ import {
 
 import type UI5Element from "../UI5Element.js";
 import type OpenUI5Element from "./OpenUI5Element.js";
-import { StyleData } from "../ManagedStyles.js";
 
 const busyIndicatorMetadata = {
 	properties: {
@@ -110,7 +108,7 @@ class OpenUI5Enablement {
 	}
 
 	static getBusyIndicatorStyles() {
-		return BusyIndicatorStyles as StyleData;
+		return BusyIndicatorStyles;
 	}
 }
 

@@ -1,18 +1,7 @@
-// @ts-ignore
 import VersionInfo from "./generated/VersionInfo.js";
 import getSharedResource from "./getSharedResource.js";
 
-type VersionInfoData = {
-	version: string,
-	major: number,
-	minor: number,
-	patch: number,
-	suffix: string,
-	isNext: boolean,
-	buildTime: number,
-}
-
-type RuntimeData = VersionInfoData & {
+type RuntimeData = VersionInfo & {
 	alias: string,
 	description: string,
 };
@@ -35,7 +24,7 @@ const Runtimes = getSharedResource<Array<RuntimeData>>("Runtimes", []);
 const registerCurrentRuntime = () => {
 	if (currentRuntimeIndex === undefined) {
 		currentRuntimeIndex = Runtimes.length;
-		const versionInfo = VersionInfo as VersionInfoData;
+		const versionInfo = VersionInfo;
 
 		Runtimes.push({
 			...versionInfo,
