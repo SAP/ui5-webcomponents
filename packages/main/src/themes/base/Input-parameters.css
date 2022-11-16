@@ -2,7 +2,6 @@
 	--_ui5_input_width: 13.125rem;
 	--_ui5_input_min_width: 2.75rem;
 	--_ui5_input_margin_top_bottom: 0.25rem;
-	--_ui5_input_margin_left_right: 0;
 	--_ui5_input_height: 2.25rem;
 	--_ui5_input_compact_height: 1.625rem;
 	--_ui5_input_hover_border: var(--sapField_BorderWidth) var(--sapField_BorderStyle) var(--sapField_Hover_BorderColor);
