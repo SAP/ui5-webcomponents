@@ -1,4 +1,4 @@
-import { r as registerIllustration, f as IM_TITLE_UNABLETOLOAD, g as IM_SUBTITLE_UNABLETOLOAD } from "./bundle.esm2.js";
+import { r as registerIllustration, h as IM_TITLE_UNABLETOLOAD, i as IM_SUBTITLE_UNABLETOLOAD } from "./bundle.esm2.js";
 var dialogSvg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="160" viewBox="0 0 160 160" id="sapIllus-Dialog-UnableToLoad">
     <ellipse class="sapIllus_BackgroundColor" cx="80" cy="147" rx="37" ry="6"/>
     <path class="sapIllus_ObjectFillColor" d="M80.5,34.1171A45.3829,45.3829,0,1,0,125.8828,79.5,45.4338,45.4338,0,0,0,80.5,34.1171ZM80.5,114A34.5,34.5,0,1,1,115,79.5,34.5,34.5,0,0,1,80.5,114Z"/>

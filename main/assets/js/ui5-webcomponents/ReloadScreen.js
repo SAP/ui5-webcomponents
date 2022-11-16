@@ -1,4 +1,4 @@
-import { r as registerIllustration, f as IM_TITLE_UNABLETOLOAD, g as IM_SUBTITLE_UNABLETOLOAD } from "./bundle.esm2.js";
+import { r as registerIllustration, h as IM_TITLE_UNABLETOLOAD, i as IM_SUBTITLE_UNABLETOLOAD } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="161" height="156" viewBox="0 0 161 156" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-ReloadScreen">
 <rect x="77" y="66" width="46" height="41" fill="var(--sapContent_Illustrative_Color2)"/>
 <rect x="40.3611" y="69.0861" width="80.7775" height="46.7659" fill="var(--sapContent_Illustrative_Color8)"/>

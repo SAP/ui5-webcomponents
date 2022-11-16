@@ -1,4 +1,4 @@
-import { r as registerIllustration, l as IM_TITLE_EMPTYPLANNINGCALENDAR, m as IM_SUBTITLE_EMPTYPLANNINGCALENDAR } from "./bundle.esm2.js";
+import { r as registerIllustration, n as IM_TITLE_EMPTYPLANNINGCALENDAR, o as IM_SUBTITLE_EMPTYPLANNINGCALENDAR } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="142" viewBox="0 0 160 142" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-EmptyPlanningCalendar">
 <circle cx="70.7182" cy="70.7182" r="70.7182" fill="var(--sapContent_Illustrative_Color7)"/>
 <mask id="mask0_1663_6728" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="0" y="0" width="142" height="142">

@@ -376,7 +376,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1668528606
+  buildTime: 1668598439
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -37047,6 +37047,8 @@ const IM_TITLE_UNABLETOLOADIMAGE = { key: "IM_TITLE_UNABLETOLOADIMAGE", defaultT
 const IM_SUBTITLE_UNABLETOLOADIMAGE = { key: "IM_SUBTITLE_UNABLETOLOADIMAGE", defaultText: "We couldn't find the image at the specified location, or the server isn't responding." };
 const IM_TITLE_UNABLETOUPLOAD = { key: "IM_TITLE_UNABLETOUPLOAD", defaultText: "Unable to upload data" };
 const IM_SUBTITLE_UNABLETOUPLOAD = { key: "IM_SUBTITLE_UNABLETOUPLOAD", defaultText: "Check your internet connection. If that's not it, check the file format and file size. Otherwise, contact your administrator." };
+const IM_TITLE_UPLOADTOCLOUD = { key: "IM_TITLE_UPLOADTOCLOUD", defaultText: "" };
+const IM_SUBTITLE_UPLOADTOCLOUD = { key: "IM_SUBTITLE_UPLOADTOCLOUD", defaultText: "" };
 const IM_TITLE_ADDCOLUMN = { key: "IM_TITLE_ADDCOLUMN", defaultText: "Looks like there's free space" };
 const IM_SUBTITLE_ADDCOLUMN = { key: "IM_SUBTITLE_ADDCOLUMN", defaultText: "You can add more columns in the table settings." };
 const IM_TITLE_ADDPEOPLE = { key: "IM_TITLE_ADDPEOPLE", defaultText: "You've not added anyone to the calendar yet" };
@@ -37071,6 +37073,10 @@ const IM_TITLE_SUCCESSSCREEN = { key: "IM_TITLE_SUCCESSSCREEN", defaultText: "Ni
 const IM_SUBTITLE_SUCCESSSCREEN = { key: "IM_SUBTITLE_SUCCESSSCREEN", defaultText: "You completed all your learning assignments." };
 const IM_TITLE_UPLOADCOLLECTION = { key: "IM_TITLE_UPLOADCOLLECTION", defaultText: "Drop files here" };
 const IM_SUBTITLE_UPLOADCOLLECTION = { key: "IM_SUBTITLE_UPLOADCOLLECTION", defaultText: "You can also upload several files at once." };
+const IM_TITLE_ADDDIMENSIONS = { key: "IM_TITLE_ADDDIMENSIONS", defaultText: "" };
+const IM_SUBTITLE_ADDDIMENSIONS = { key: "IM_SUBTITLE_ADDDIMENSIONS", defaultText: "" };
+const IM_TITLE_NODIMENSIONSSET = { key: "IM_TITLE_NODIMENSIONSSET", defaultText: "" };
+const IM_SUBTITLE_NODIMENSIONSSET = { key: "IM_SUBTITLE_NODIMENSIONSSET", defaultText: "" };
 const DSC_SIDE_ARIA_LABEL = { key: "DSC_SIDE_ARIA_LABEL", defaultText: "Side Content" };
 const SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT = { key: "SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT", defaultText: "Navigation" };
 const SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC = { key: "SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC", defaultText: "Navigation List Menu Bar" };
@@ -37170,6 +37176,8 @@ var defaultFioriTexts = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.def
   IM_SUBTITLE_UNABLETOLOADIMAGE,
   IM_TITLE_UNABLETOUPLOAD,
   IM_SUBTITLE_UNABLETOUPLOAD,
+  IM_TITLE_UPLOADTOCLOUD,
+  IM_SUBTITLE_UPLOADTOCLOUD,
   IM_TITLE_ADDCOLUMN,
   IM_SUBTITLE_ADDCOLUMN,
   IM_TITLE_ADDPEOPLE,
@@ -37194,6 +37202,10 @@ var defaultFioriTexts = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.def
   IM_SUBTITLE_SUCCESSSCREEN,
   IM_TITLE_UPLOADCOLLECTION,
   IM_SUBTITLE_UPLOADCOLLECTION,
+  IM_TITLE_ADDDIMENSIONS,
+  IM_SUBTITLE_ADDDIMENSIONS,
+  IM_TITLE_NODIMENSIONSSET,
+  IM_SUBTITLE_NODIMENSIONSSET,
   DSC_SIDE_ARIA_LABEL,
   SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT,
   SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC,
@@ -37453,6 +37465,8 @@ const loadIllustration = async (illustrationName) => {
   switch (illustrationName) {
     case "AddColumn":
       return (await import("./AddColumn.js")).default;
+    case "AddDimensions":
+      return (await import("./AddDimensions.js")).default;
     case "AddPeople":
       return (await import("./AddPeople.js")).default;
     case "BalloonSky":
@@ -37479,6 +37493,8 @@ const loadIllustration = async (illustrationName) => {
       return (await import("./NoActivities.js")).default;
     case "NoData":
       return (await import("./NoData.js")).default;
+    case "NoDimensionsSet":
+      return (await import("./NoDimensionsSet.js")).default;
     case "NoEntries":
       return (await import("./NoEntries.js")).default;
     case "NoFilterResults":
@@ -37559,6 +37575,8 @@ const loadIllustration = async (illustrationName) => {
       return (await import("./UnableToUpload.js")).default;
     case "UploadCollection":
       return (await import("./UploadCollection.js")).default;
+    case "UploadToCloud":
+      return (await import("./UploadToCloud.js")).default;
     case "TntChartArea":
       return (await import("./ChartArea.js")).default;
     case "TntChartArea2":
@@ -37637,7 +37655,7 @@ const loadAndCheck = async (illustrationName) => {
   const data = await loadIllustration(illustrationName);
   return data;
 };
-["AddColumn", "AddPeople", "BalloonSky", "BeforeSearch", "Connection", "EmptyCalendar", "EmptyList", "EmptyPlanningCalendar", "ErrorScreen", "FilterTable", "GroupTable", "NoActivities", "NoData", "NoEntries", "NoFilterResults", "NoMail", "NoMail_v1", "NoNotifications", "NoSavedItems", "NoSavedItems_v1", "NoSearchResults", "NoTasks", "NoTasks_v1", "PageNotFound", "ReloadScreen", "ResizeColumn", "SearchEarth", "SearchFolder", "SimpleBalloon", "SimpleBell", "SimpleCalendar", "SimpleCheckMark", "SimpleConnection", "SimpleEmptyDoc", "SimpleEmptyList", "SimpleError", "SimpleMagnifier", "SimpleMail", "SimpleNoSavedItems", "SimpleNotFoundMagnifier", "SimpleReload", "SimpleTask", "SleepingBell", "SortColumn", "SuccessBalloon", "SuccessCheckMark", "SuccessHighFive", "SuccessScreen", "Tent", "UnableToLoad", "UnableToLoadImage", "UnableToUpload", "UploadCollection"].forEach((illustrationName) => registerIllustrationLoader(illustrationName, loadAndCheck));
+["AddColumn", "AddDimensions", "AddPeople", "BalloonSky", "BeforeSearch", "Connection", "EmptyCalendar", "EmptyList", "EmptyPlanningCalendar", "ErrorScreen", "FilterTable", "GroupTable", "NoActivities", "NoData", "NoDimensionsSet", "NoEntries", "NoFilterResults", "NoMail", "NoMail_v1", "NoNotifications", "NoSavedItems", "NoSavedItems_v1", "NoSearchResults", "NoTasks", "NoTasks_v1", "PageNotFound", "ReloadScreen", "ResizeColumn", "SearchEarth", "SearchFolder", "SimpleBalloon", "SimpleBell", "SimpleCalendar", "SimpleCheckMark", "SimpleConnection", "SimpleEmptyDoc", "SimpleEmptyList", "SimpleError", "SimpleMagnifier", "SimpleMail", "SimpleNoSavedItems", "SimpleNotFoundMagnifier", "SimpleReload", "SimpleTask", "SleepingBell", "SortColumn", "SuccessBalloon", "SuccessCheckMark", "SuccessHighFive", "SuccessScreen", "Tent", "UnableToLoad", "UnableToLoadImage", "UnableToUpload", "UploadCollection", "UploadToCloud"].forEach((illustrationName) => registerIllustrationLoader(illustrationName, loadAndCheck));
 ["TntChartArea", "TntChartArea2", "TntChartBPMNFlow", "TntChartBar", "TntChartBullet", "TntChartDoughnut", "TntChartFlow", "TntChartGantt", "TntChartOrg", "TntChartPie", "TntCodePlaceholder", "TntCompany", "TntComponents", "TntExternalLink", "TntFaceID", "TntFingerprint", "TntLock", "TntMission", "TntNoApplications", "TntNoFlows", "TntNoUsers", "TntRadar", "TntSecrets", "TntServices", "TntSessionExpired", "TntSessionExpiring", "TntSuccess", "TntSuccessfulAuth", "TntSystems", "TntTeams", "TntTools", "TntUnableToLoad", "TntUnlock", "TntUnsuccessfulAuth", "TntUser2"].forEach((illustrationName) => registerIllustrationLoader(illustrationName, loadAndCheck));
 const block0$o = (context, tags, suffix) => effectiveHtml`<div class="${o$1(context.classes.root)}" aria-label="${l(context.accInfo.label)}" role="toolbar" part="bar"><div class="ui5-bar-content-container ui5-bar-startcontent-container"><slot name="startContent"></slot></div><div class="ui5-bar-content-container ui5-bar-midcontent-container"><slot></slot></div><div class="ui5-bar-content-container ui5-bar-endcontent-container"><slot name="endContent"></slot></div></div>`;
 const BarTypes = {
@@ -38793,11 +38811,14 @@ const IllustrationMessageTypes = {
   NoSearchResults: "NoSearchResults",
   NoTasks: "NoTasks",
   NoTasks_v1: "NoTasks_v1",
+  NoDimensionsSet: "NoDimensionsSet",
   UnableToLoad: "UnableToLoad",
   UnableToLoadImage: "UnableToLoadImage",
   UnableToUpload: "UnableToUpload",
+  UploadToCloud: "UploadToCloud",
   AddColumn: "AddColumn",
   AddPeople: "AddPeople",
+  AddDimensions: "AddDimensions",
   BalloonSky: "BalloonSky",
   Connection: "Connection",
   EmptyCalendar: "EmptyCalendar",
@@ -54286,4 +54307,4 @@ class BarcodeScannerDialog extends UI5Element {
 }
 BarcodeScannerDialog.define();
 testAssets.defaultTexts = { ...testAssets.defaultTexts, ...defaultFioriTexts };
-export { IM_TITLE_NONOTIFICATIONS as A, IM_SUBTITLE_NONOTIFICATIONS as B, IM_TITLE_NOSAVEDITEMS as C, IM_SUBTITLE_NOSAVEDITEMS as D, IM_TITLE_NOSEARCHRESULTS as E, IM_SUBTITLE_NOSEARCHRESULTS as F, IM_TITLE_NOTASKS as G, IM_SUBTITLE_NOTASKS as H, IM_TITLE_ADDCOLUMN as I, IM_TITLE_PAGENOTFOUND as J, IM_SUBTITLE_PAGENOTFOUND as K, IM_TITLE_RESIZECOLUMN as L, IM_SUBTITLE_RESIZECOLUMN as M, IM_TITLE_BEFORESEARCH as N, IM_SUBTITLE_BEFORESEARCH as O, IM_TITLE_SUCCESSSCREEN as P, IM_SUBTITLE_SUCCESSSCREEN as Q, IM_TITLE_SORTCOLUMN as R, IM_SUBTITLE_SORTCOLUMN as S, IM_TITLE_UNABLETOLOADIMAGE as T, IM_SUBTITLE_UNABLETOLOADIMAGE as U, IM_TITLE_UPLOADCOLLECTION as V, IM_SUBTITLE_UPLOADCOLLECTION as W, IM_SUBTITLE_ADDCOLUMN as a, IM_TITLE_ADDPEOPLE as b, IM_SUBTITLE_ADDPEOPLE as c, IM_TITLE_BALLOONSKY as d, IM_SUBTITLE_BALLOONSKY as e, IM_TITLE_UNABLETOLOAD as f, IM_SUBTITLE_UNABLETOLOAD as g, IM_TITLE_NOACTIVITIES as h, IM_SUBTITLE_NOACTIVITIES as i, IM_TITLE_NOENTRIES as j, IM_SUBTITLE_NOENTRIES as k, IM_TITLE_EMPTYPLANNINGCALENDAR as l, IM_SUBTITLE_EMPTYPLANNINGCALENDAR as m, IM_TITLE_UNABLETOUPLOAD as n, IM_SUBTITLE_UNABLETOUPLOAD as o, IM_TITLE_FILTERTABLE as p, IM_SUBTITLE_FILTERTABLE as q, registerIllustration as r, IM_TITLE_GROUPTABLE as s, IM_SUBTITLE_GROUPTABLE as t, IM_TITLE_NODATA as u, IM_SUBTITLE_NODATA as v, IM_TITLE_NOFILTERRESULTS as w, IM_SUBTITLE_NOFILTERRESULTS as x, IM_TITLE_NOMAIL as y, IM_SUBTITLE_NOMAIL as z };
+export { IM_TITLE_UPLOADTOCLOUD as $, IM_TITLE_NOFILTERRESULTS as A, IM_SUBTITLE_NOFILTERRESULTS as B, IM_TITLE_NOMAIL as C, IM_SUBTITLE_NOMAIL as D, IM_TITLE_NONOTIFICATIONS as E, IM_SUBTITLE_NONOTIFICATIONS as F, IM_TITLE_NOSAVEDITEMS as G, IM_SUBTITLE_NOSAVEDITEMS as H, IM_TITLE_ADDCOLUMN as I, IM_TITLE_NOSEARCHRESULTS as J, IM_SUBTITLE_NOSEARCHRESULTS as K, IM_TITLE_NOTASKS as L, IM_SUBTITLE_NOTASKS as M, IM_TITLE_PAGENOTFOUND as N, IM_SUBTITLE_PAGENOTFOUND as O, IM_TITLE_RESIZECOLUMN as P, IM_SUBTITLE_RESIZECOLUMN as Q, IM_TITLE_BEFORESEARCH as R, IM_SUBTITLE_BEFORESEARCH as S, IM_TITLE_SUCCESSSCREEN as T, IM_SUBTITLE_SUCCESSSCREEN as U, IM_TITLE_SORTCOLUMN as V, IM_SUBTITLE_SORTCOLUMN as W, IM_TITLE_UNABLETOLOADIMAGE as X, IM_SUBTITLE_UNABLETOLOADIMAGE as Y, IM_TITLE_UPLOADCOLLECTION as Z, IM_SUBTITLE_UPLOADCOLLECTION as _, IM_SUBTITLE_ADDCOLUMN as a, IM_SUBTITLE_UPLOADTOCLOUD as a0, IM_TITLE_ADDDIMENSIONS as b, IM_SUBTITLE_ADDDIMENSIONS as c, IM_TITLE_ADDPEOPLE as d, IM_SUBTITLE_ADDPEOPLE as e, IM_TITLE_BALLOONSKY as f, IM_SUBTITLE_BALLOONSKY as g, IM_TITLE_UNABLETOLOAD as h, IM_SUBTITLE_UNABLETOLOAD as i, IM_TITLE_NOACTIVITIES as j, IM_SUBTITLE_NOACTIVITIES as k, IM_TITLE_NOENTRIES as l, IM_SUBTITLE_NOENTRIES as m, IM_TITLE_EMPTYPLANNINGCALENDAR as n, IM_SUBTITLE_EMPTYPLANNINGCALENDAR as o, IM_TITLE_UNABLETOUPLOAD as p, IM_SUBTITLE_UNABLETOUPLOAD as q, registerIllustration as r, IM_TITLE_FILTERTABLE as s, IM_SUBTITLE_FILTERTABLE as t, IM_TITLE_GROUPTABLE as u, IM_SUBTITLE_GROUPTABLE as v, IM_TITLE_NODATA as w, IM_SUBTITLE_NODATA as x, IM_TITLE_NODIMENSIONSSET as y, IM_SUBTITLE_NODIMENSIONSSET as z };

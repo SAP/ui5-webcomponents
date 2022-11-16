@@ -1,4 +1,4 @@
-import { r as registerIllustration, T as IM_TITLE_UNABLETOLOADIMAGE, U as IM_SUBTITLE_UNABLETOLOADIMAGE } from "./bundle.esm2.js";
+import { r as registerIllustration, X as IM_TITLE_UNABLETOLOADIMAGE, Y as IM_SUBTITLE_UNABLETOLOADIMAGE } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="121" viewBox="0 0 160 121" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-UnableToLoadImage">
 <mask id="mask0_650_7911" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="21" y="0" width="122" height="121">
 <circle cx="82.1373" cy="60.1526" r="60.1526" fill="var(--sapContent_Illustrative_Color7)"/>

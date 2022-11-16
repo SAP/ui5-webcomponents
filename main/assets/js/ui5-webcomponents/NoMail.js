@@ -1,4 +1,4 @@
-import { r as registerIllustration, y as IM_TITLE_NOMAIL, z as IM_SUBTITLE_NOMAIL } from "./bundle.esm2.js";
+import { r as registerIllustration, C as IM_TITLE_NOMAIL, D as IM_SUBTITLE_NOMAIL } from "./bundle.esm2.js";
 var dialogSvg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="160" viewBox="0 0 160 160" id="sapIllus-Dialog-NoMail">
     <ellipse class="sapIllus_BackgroundColor" cx="80" cy="149" rx="45" ry="7"/>
     <path class="sapIllus_Layering1" d="M80.0026,24.2712a1.2576,1.2576,0,0,1-1.2373-1.2775V6.9839a1.2379,1.2379,0,1,1,2.4746,0v16.01A1.2576,1.2576,0,0,1,80.0026,24.2712Z"/>
