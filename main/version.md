@@ -1,5 +1,5 @@
-commit 7ac7b79510192c3c300421565cdcfa146f75065b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Nov 17 13:45:35 2022 +0200
+commit 5fad3ca31158348d0a2ee22f72feeeeec1cb0dce
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Nov 17 14:01:53 2022 +0200
 
-    chore: remove StyleDescriptor type, fix Slot type (#6058)
+    feat: create better types for rendering-related functionality (#6059)

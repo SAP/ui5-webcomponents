@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1668685657
+  buildTime: 1668686619
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -2757,6 +2757,10 @@ const updateShadowRoot = (element, forStaticArea = false) => {
   const template = ctor[propertyName];
   const shadowRoot = forStaticArea ? element.staticAreaItem.shadowRoot : element.shadowRoot;
   const renderResult = executeTemplate(template, element);
+  if (!shadowRoot) {
+    console.warn(`There is no shadow root to update`);
+    return;
+  }
   if (shouldUseLinks()) {
     styleStrOrHrefsArr = getEffectiveLinksHrefs(ctor, forStaticArea);
   } else if (document.adoptedStyleSheets) {
