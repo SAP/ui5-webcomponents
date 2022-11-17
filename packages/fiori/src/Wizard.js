@@ -50,6 +50,13 @@ const STEP_SWITCH_THRESHOLDS = {
 	MAX: 1,
 };
 
+const RESPONSIVE_BREAKPOINTS = {
+	"0": "S",
+	"600": "M",
+	"1024": "L",
+	"1440": "XL",
+};
+
 /**
  * @public
  */
@@ -99,6 +106,10 @@ const metadata = {
 		_groupedTabs: {
 			type: String,
 			multiple: true,
+		},
+
+		_breakpoint: {
+			type: String,
 		},
 	},
 	slots: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
@@ -160,6 +171,16 @@ const metadata = {
  * <b>Note:</b> If no selected step is defined, the first step will be auto selected.
  * <br>
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-wizard</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>navigator - Used to style the progress navigator of the <code>ui5-wizard</code>.</li>
+ * <li>step-content - Used to style a <code>ui5-wizard-step</code> container.</li>
+ * </ul>
  *
  * <h3>Keyboard Handling</h3>
  * The user can navigate using the following keyboard shortcuts:
@@ -310,10 +331,6 @@ class Wizard extends UI5Element {
 
 	static async onDefine() {
 		Wizard.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
-	static get PHONE_BREAKPOINT() {
-		return 599;
 	}
 
 	static get SCROLL_DEBOUNCE_RATE() {
@@ -476,6 +493,7 @@ class Wizard extends UI5Element {
 
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
+		this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast(size => Number(size) < this.width)];
 	}
 
 	attachStepsResizeObserver() {
@@ -763,14 +781,6 @@ class Wizard extends UI5Element {
 
 	get enabledStepsInHeaderDOM() {
 		return this.stepsInHeaderDOM;
-	}
-
-	get phoneMode() {
-		if (isPhone()) {
-			return true;
-		}
-
-		return this.width <= Wizard.PHONE_BREAKPOINT;
 	}
 
 	get navAriaRoleDescription() {

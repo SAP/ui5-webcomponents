@@ -1,5 +1,5 @@
 <div class="ui5-wiz-root" aria-label="{{ariaLabelText}}" role="region">
-	<nav class="ui5-wiz-nav" aria-label="{{navAriaLabelText}}" tabindex="-1">
+	<nav class="ui5-wiz-nav" part="navigator" aria-label="{{navAriaLabelText}}" tabindex="-1">
 		<div class="ui5-wiz-nav-list" role="list" aria-label="{{listAriaLabelText}}" aria-describedby="wiz-nav-descr" aria-controls="{{_id}}-wiz-content">
 			{{#each _stepsInHeader}}
 				<ui5-wizard-tab
@@ -33,6 +33,7 @@
 				?hidden="{{disabled}}"
 				?selected="{{selected}}"
 				?stretch="{{stretch}}"
+				part="step-content"
 				aria-label="{{stepContentAriaLabel}}"
 				role="region"
 				data-ui5-content-item-ref-id="{{_id}}">
