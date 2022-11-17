@@ -49,6 +49,6 @@ enum TitleLevel {
 	 * @type {H6}
 	 */
 	H6 = "H6",
-};
+}
 
 export default TitleLevel;
