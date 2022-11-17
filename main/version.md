@@ -1,5 +1,7 @@
-commit 476a4281d5a2c00a22a9709170de3a0ea7c7b923
+commit c629115f244adc3abbcbe6ed1b12b50266745d17
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Nov 16 17:51:37 2022 +0200
+Date:   Thu Nov 17 09:52:00 2022 +0200
 
-    chore: bump @sap-theming/theming-base-content to 11.1.44 (#6055)
+    chore: bump TS version to 4.9.3 (#6056)
+    
+    chore: bump TS version to 4.9.3
