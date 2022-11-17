@@ -24,7 +24,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve } from "./types.js";
+import { PromiseResolve, StyleData } from "./types.js";
 
 let autoId = 0;
 
@@ -40,8 +40,6 @@ type ChangeInfo = {
 	newValue?: PropertyValue,
 	oldValue?: PropertyValue,
 }
-
-type StylesDescriptor = string | Array<string>;
 
 type InvalidationInfo = ChangeInfo & { target: UI5Element };
 
@@ -993,7 +991,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get styles(): StylesDescriptor {
+	static get styles(): Array<StyleData> | StyleData {
 		return "";
 	}
 
@@ -1001,7 +999,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the Static Area CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get staticAreaStyles(): StylesDescriptor {
+	static get staticAreaStyles(): Array<StyleData> | StyleData {
 		return "";
 	}
 
@@ -1112,4 +1110,4 @@ const instanceOfUI5Element = (object: any): object is UI5Element => {
 
 export default UI5Element;
 export { instanceOfUI5Element };
-export type { ChangeInfo, StylesDescriptor };
+export type { ChangeInfo };
