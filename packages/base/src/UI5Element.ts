@@ -23,7 +23,7 @@ import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
-import { TemplateFunction } from "./renderer/executeTemplate.js";
+import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import { PromiseResolve } from "./types.js";
 
 let autoId = 0;
@@ -105,7 +105,7 @@ abstract class UI5Element extends HTMLElement {
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
-	static render: (...args: Array<any>) => any;
+	static render: (templateFunctionResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: { host: HTMLElement }) => void;
 
 	constructor() {
 		super();
