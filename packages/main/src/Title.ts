@@ -82,6 +82,8 @@ const metadata = {
  * @public
  */
 class Title extends UI5Element {
+	level?: string;
+
 	static get metadata() {
 		return metadata;
 	}
@@ -99,7 +101,7 @@ class Title extends UI5Element {
 	}
 
 	get normalizedLevel() {
-		return this.level.toLowerCase();
+		return this.level!.toLowerCase();
 	}
 
 	get h1() {
