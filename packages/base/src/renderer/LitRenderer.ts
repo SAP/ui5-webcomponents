@@ -10,6 +10,7 @@ import { getFeature } from "../FeaturesRegistry.js";
 import type { LitStatic } from "../CustomElementsScope.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 import type UI5Element from "../UI5Element.js";
+import { TemplateFunctionResult } from "./executeTemplate.js";
 
 const effectiveHtml = (strings: TemplateStringsArray, ...values: Array<unknown>) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
@@ -23,10 +24,10 @@ const effectiveSvg = (strings: TemplateStringsArray, ...values: Array<unknown>) 
 	return fn(strings, ...values);
 };
 
-const litRender = (templateResult: TemplateResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string>, forStaticArea: boolean, options: RenderOptions) => {
+const litRender = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RenderOptions) => {
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
 	if (openUI5Enablement && !forStaticArea) {
-		templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host as UI5Element, templateResult);
+		templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host as UI5Element, templateResult as TemplateResult);
 	}
 
 	if (typeof styleStrOrHrefsArr === "string") {
@@ -34,7 +35,7 @@ const litRender = (templateResult: TemplateResult, container: HTMLElement | Docu
 	} else if (Array.isArray(styleStrOrHrefsArr) && styleStrOrHrefsArr.length) {
 		templateResult = effectiveHtml`${styleStrOrHrefsArr.map(href => effectiveHtml`<link type="text/css" rel="stylesheet" href="${href}">`)}${templateResult}`;
 	}
-	render(templateResult, container, options);
+	render(templateResult as TemplateResult, container, options);
 };
 
 const scopeTag = (tag: string, tags: Array<string>, suffix: string) => {

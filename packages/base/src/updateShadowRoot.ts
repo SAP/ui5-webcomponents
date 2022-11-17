@@ -18,10 +18,15 @@ const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 	const shadowRoot = forStaticArea ? element.staticAreaItem!.shadowRoot : element.shadowRoot;
 	const renderResult = executeTemplate(template!, element); // this is checked before calling updateShadowRoot
 
+	if (!shadowRoot) {
+		console.warn(`There is no shadow root to update`); // eslint-disable-line
+		return;
+	}
+
 	if (shouldUseLinks()) {
 		styleStrOrHrefsArr = getEffectiveLinksHrefs(ctor, forStaticArea);
 	} else if (document.adoptedStyleSheets) { // Chrome
-		shadowRoot!.adoptedStyleSheets = getConstructableStyle(ctor, forStaticArea);
+		shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor, forStaticArea);
 	} else { // FF, Safari
 		styleStrOrHrefsArr = getEffectiveStyle(ctor, forStaticArea);
 	}
