@@ -16,6 +16,8 @@ import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
+// Icon
+import "@ui5/webcomponents-icons/dist/employee.js";
 /**
  * @public
  */
@@ -373,6 +375,13 @@ class Avatar extends UI5Element {
 	}
 
 	onEnterDOM() {
+		// if there is icon set in the avatar,
+		// the following functions related to the initials, should be omitted,
+		// because the icon itself should be shown instead of them or the fallback one
+		if (this.icon) {
+			return;
+		}
+
 		this._checkInitialsWidth();
 
 		if (!this.validInitials) {
