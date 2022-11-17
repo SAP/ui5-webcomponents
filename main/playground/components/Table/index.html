@@ -6051,6 +6051,67 @@
 	</code></pre></figure></pre>
 </section>
 
+<section class="table-example">
+	<h3>Table Display Inline</h3>
+	<div class="snippet flex-column">
+		<!-- Header -->
+		<div class="header">
+			<span>Products table - resize your browser to make the columns display inline</span>
+			<button id="toggleSticky" style="height: 32px">Toggle Sticky Column Header</button>
+		</div>
+		<ui5-table class="demo-table" id="tblDisplayInline">
+			<!-- Columns -->
+			<ui5-table-column slot="columns" popin-display="Inline">
+				<span>Product</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="600" popin-text="Supplier" demand-popin popin-display="Inline">
+				<span>Supplier</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin class="table-header-text-alignment" popin-display="Inline">
+				<span>Dimensions</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin class="table-header-text-alignment" popin-display="Inline">
+				<span>Weight</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" class="table-header-text-alignment" popin-display="Inline">
+				<span>Price</span>
+			</ui5-table-column>
+		</ui5-table>
+	</div>
+
+	<pre class="highlight"><figure class="highlight"><pre><code class="language-html" data-lang="html">		<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"header"</span><span class="nt">&gt;</span>
+			<span class="nt">&lt;span&gt;</span>Products table - resize your browser to make the columns display inline<span class="nt">&lt;/span&gt;</span>
+			<span class="nt">&lt;button</span> <span class="na">id=</span><span class="s">"toggleSticky"</span> <span class="na">style=</span><span class="s">"height: 32px"</span><span class="nt">&gt;</span>Toggle Sticky Column Header<span class="nt">&lt;/button&gt;</span>
+		<span class="nt">&lt;/div&gt;</span>
+		<span class="nt">&lt;ui5-table</span> <span class="na">class=</span><span class="s">"demo-table"</span> <span class="na">id=</span><span class="s">"tblDisplayInline"</span><span class="nt">&gt;</span>
+			<span class="c">&lt;!-- Columns --&gt;</span>
+			<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">popin-display=</span><span class="s">"Inline"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span&gt;</span>Product<span class="nt">&lt;/span&gt;</span>
+			<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+			<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"600"</span> <span class="na">popin-text=</span><span class="s">"Supplier"</span> <span class="na">demand-popin</span> <span class="na">popin-display=</span><span class="s">"Inline"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span&gt;</span>Supplier<span class="nt">&lt;/span&gt;</span>
+			<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+			<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"800"</span> <span class="na">popin-text=</span><span class="s">"Dimensions"</span> <span class="na">demand-popin</span> <span class="na">class=</span><span class="s">"table-header-text-alignment"</span> <span class="na">popin-display=</span><span class="s">"Inline"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span&gt;</span>Dimensions<span class="nt">&lt;/span&gt;</span>
+			<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+			<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">min-width=</span><span class="s">"800"</span> <span class="na">popin-text=</span><span class="s">"Weight"</span> <span class="na">demand-popin</span> <span class="na">class=</span><span class="s">"table-header-text-alignment"</span> <span class="na">popin-display=</span><span class="s">"Inline"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span&gt;</span>Weight<span class="nt">&lt;/span&gt;</span>
+			<span class="nt">&lt;/ui5-table-column&gt;</span>
+
+			<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">class=</span><span class="s">"table-header-text-alignment"</span> <span class="na">popin-display=</span><span class="s">"Inline"</span><span class="nt">&gt;</span>
+				<span class="nt">&lt;span&gt;</span>Price<span class="nt">&lt;/span&gt;</span>
+			<span class="nt">&lt;/ui5-table-column&gt;</span>
+		<span class="nt">&lt;/ui5-table&gt;&lt;/ui5-table&gt;</span>
+	</code></pre></figure></pre>
+</section>
+
 	<section>
 		<h3>Table with No Data</h3>
 		<div class="snippet flex-column">
@@ -6385,6 +6446,7 @@
 	document.getElementById("tbl").insertAdjacentHTML('beforeend', html);
 	document.getElementById("singleSelectTbl").insertAdjacentHTML('beforeend', html);
 	document.getElementById("multiSelectTbl").insertAdjacentHTML('beforeend', html);
+	document.getElementById("tblDisplayInline").insertAdjacentHTML('beforeend', html);
 
 	document.getElementById("singleSelectTbl").addEventListener("ui5-selection-change", function(event) {
 		if (event.detail.previouslySelectedRows.length) {
@@ -7847,6 +7909,22 @@ The <code>ui5-table-column</code> component allows to define column specific pro
                         </div>
                       </div>
                       <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          popinDisplay
+                            <br>
+                                 <code>popin-display</code>
+                        </div>
+                        <div class="cell api-table-content-cell">TableCellPopinDisplayType</div>
+                        <div class="cell api-table-content-cell">&quot;Block&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines how the popin row is displayed.
+            
+            <br><br> <b>The available values are:</b>
+            
+            <ul> <li><code>Block</code></li> <li><code>Inline</code></li> </ul>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           popinText
                             <br>
