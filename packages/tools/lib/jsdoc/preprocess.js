@@ -15,7 +15,7 @@ const processFile = async (fileName) => {
 	let fileContent = `${await fs.readFile(fileName)}`;
 
 	const re = new RegExp(`(\\/\\*\\*[^\\/]+\\s+\\*\\/)?\\s+\\s+.*?\\["([\\w\\d]+)"\\].*?"([\\w\\d]+)";`, "gm")
-	const matches = [...fileContent.matchAll(re)];
+	let matches = [...fileContent.matchAll(re)];
 
 	// Get all type values
 	const typeData = matches.map(match => {
@@ -29,40 +29,24 @@ const processFile = async (fileName) => {
 		return;
 	}
 
+	const typeName = path.parse(fileName).name;
 
+	matches = fileContent.match(/^\/\*\*[^\/]+\//gm);
+	const comment = matches[0];
 
+	const propsCode = typeData.map(item => {
+		return `${item.comment}\n get ${item.key}() { return "${item.value}"; }`;
+	}).join("\n");
 
-	// Find the position to insert the new code
-	const CLASS_START_DETECT_STRING = "extends DataType {";
-	let index = fileContent.indexOf(CLASS_START_DETECT_STRING);
+	const newClassCode = `
+	${comment}
+	class ${typeName} {
+		${propsCode}
+	};
 
-	if (index !== -1) { // Metadata enum (extends DataType)
-		const gettersCode = typeData.map(item => {
-			return `${item.comment}\n get ${item.key}() { return "${item.value}" }`;
-		}).join("\n");
+	export default ${typeName};`;
 
-		index = index + CLASS_START_DETECT_STRING.length;
-		fileContent = [fileContent.slice(0, index), "\n", gettersCode, "\n", fileContent.slice(index)].join("");
-	} else { // Normal enum
-		const typeName = path.parse(fileName).name;
-
-		const matches = fileContent.match(/^\/\*\*[^\/]+\//gm);
-		const comment = matches[0];
-
-		const propsCode = typeData.map(item => {
-			return `${item.comment}\n get ${item.key}() { return "${item.value}"; }`;
-		}).join("\n");
-
-		const newClassCode = `
-		${comment}
-		class ${typeName} {
-			${propsCode}
-		};
-
-		export default ${typeName};`;
-
-		fileContent = newClassCode;
-	}
+	fileContent = newClassCode;
 
 	return fs.writeFile(fileName, fileContent);
 };

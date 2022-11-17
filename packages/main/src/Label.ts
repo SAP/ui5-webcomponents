@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+
 import WrappingType from "./types/WrappingType.js";
 
 // Template
@@ -116,6 +117,8 @@ const metadata = {
  * @public
  */
 class Label extends UI5Element {
+	for?: string;
+
 	static get metadata() {
 		return metadata;
 	}
@@ -146,7 +149,7 @@ class Label extends UI5Element {
 			return;
 		}
 
-		const elementToFocus = this.getRootNode().querySelector(`#${this.for}`);
+		const elementToFocus = (this.getRootNode() as HTMLElement).querySelector(`#${this.for}`) as HTMLElement;
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}

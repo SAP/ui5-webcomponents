@@ -327,15 +327,20 @@ const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 	if (propertyType === Boolean) {
 		return typeof value === "boolean" ? value : false;
 	}
+
 	if (propertyType === String) {
 		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
 	}
+
 	if (propertyType === Object) {
 		return typeof value === "object" ? value : propData.defaultValue;
 	}
+
 	if ((propertyType as typeof DataType).isDataTypeClass) {
 		return (propertyType as typeof DataType).isValid(value) ? value : propData.defaultValue;
 	}
+
+	return value as string in propertyType ? value : propData.defaultValue;
 };
 
 const validateSingleSlot = (value: Node, slotData: Slot) => {

@@ -1,6 +1,8 @@
 const path = require("path");
 const fs = require("fs");
+const resolve = require("resolve");
 const LIB = path.join(__dirname, `../lib/`);
+const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
 
 const getScripts = (options) => {
 
@@ -43,9 +45,10 @@ const getScripts = (options) => {
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
 			default: "nps clean prepare.all",
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.api" "nps build.illustrations"',
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps typescript" "nps generateAPI" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
+		typescript: "tsc",
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
@@ -69,7 +72,6 @@ const getScripts = (options) => {
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
 			bundle: `vite build ${viteConfig}`,
-			api: `jsdoc -c "${LIB}/jsdoc/config.json"`,
 			illustrations: createIllustrationsJSImportsScript,
 		},
 		copy: {
@@ -78,9 +80,10 @@ const getScripts = (options) => {
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
+			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
+			typescript: 'tsc --watch',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {
@@ -93,7 +96,7 @@ const getScripts = (options) => {
 				},
 			},
 			templates: 'chokidar "src/**/*.hbs" -c "nps build.templates"',
-			api: 'chokidar "test/**/*.sample.html" -c "nps build.api"',
+			api: 'chokidar "test/**/*.sample.html" -c "nps generateAPI"',
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		start: "nps prepare watch.devServer",
@@ -113,7 +116,14 @@ const getScripts = (options) => {
 			watchWithBundle: 'concurrently "nps scope.watch" "nps scope.bundle" ',
 			watch: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.props" "nps watch.styles"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
-		}
+		},
+		generateAPI: {
+			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
+			prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,
+			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/`,
+			jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
+			cleanup: "rimraf jsdoc-dist/"
+		},
 	};
 
 	return scripts;

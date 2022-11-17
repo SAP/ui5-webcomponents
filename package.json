@@ -11,8 +11,8 @@
   "scripts": {
     "build": "npm-run-all --sequential build:prerequisitesWithLint build:bundles build:customElementsManifest",
     "build:bundles": "npm-run-all --parallel bundle:main bundle:fiori",
-    "build:prerequisitesWithLint": "npm-run-all --parallel build:prerequisites lint:main lint:fiori",
-    "build:prerequisites": "npm-run-all --parallel build:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori",
+    "build:prerequisitesWithLint": "npm-run-all build:prerequisites lint:main lint:fiori",
+    "build:prerequisites": "npm-run-all build:base build:localization build:theming build:icons build:icons-business-suite build:icons-tnt prepare:main prepare:fiori",
     "build:localization": "yarn workspace @ui5/webcomponents-localization build",
     "build:base": "yarn workspace @ui5/webcomponents-base build",
     "build:theming": "yarn workspace @ui5/webcomponents-theming build",
