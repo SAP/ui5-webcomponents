@@ -1,7 +1,5 @@
-commit c629115f244adc3abbcbe6ed1b12b50266745d17
+commit 7ac7b79510192c3c300421565cdcfa146f75065b
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Nov 17 09:52:00 2022 +0200
+Date:   Thu Nov 17 13:45:35 2022 +0200
 
-    chore: bump TS version to 4.9.3 (#6056)
-    
-    chore: bump TS version to 4.9.3
+    chore: remove StyleDescriptor type, fix Slot type (#6058)
