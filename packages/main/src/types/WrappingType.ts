@@ -1,25 +1,25 @@
-import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
+import DataType from "@ui5/webcomponents-base/src/types/DataType.js";
 
 /**
  * Different types of wrapping.
  * @lends sap.ui.webcomponents.main.types.WrappingType.prototype
  * @public
  */
-const WrappingTypes = {
+enum WrappingTypes {
 	/**
 	 * The text will be truncated with an ellipsis.
 	 * @public
 	 * @type {None}
 	 */
-	None: "None",
+	None = "None",
 
 	/**
 	 * The text will wrap. The words will not be broken based on hyphenation.
 	 * @public
 	 * @type {Normal}
 	 */
-	Normal: "Normal",
-};
+	Normal = "Normal",
+}
 
 /**
  * @class
@@ -31,11 +31,19 @@ const WrappingTypes = {
  * @enum {string}
  */
 class WrappingType extends DataType {
-	static isValid(value) {
-		return !!WrappingTypes[value];
+	static override isValid(value: WrappingTypes) {
+		return Object.values(WrappingTypes).includes(value);
+	}
+
+	static get None() {
+		return "None";
+	}
+
+	static get Normal() {
+		return "Normal";
 	}
 }
 
-WrappingType.generateTypeAccessors(WrappingTypes);
+// WrappingType.generateTypeAccessors(WrappingTypes);
 
 export default WrappingType;

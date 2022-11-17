@@ -42,10 +42,11 @@ const getScripts = (options) => {
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
-			default: "nps clean prepare.all",
+			default: "nps clean prepare.all typescript",
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.api" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
+		typescript: "tsc",
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
@@ -78,8 +79,9 @@ const getScripts = (options) => {
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
+			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
+			typescript: 'tsc --watch',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,

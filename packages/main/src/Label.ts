@@ -43,7 +43,7 @@ const metadata = {
 		 * @defaultvalue "None"
 		 * @public
 		 */
-		 wrappingType: {
+		wrappingType: {
 			type: WrappingType,
 			defaultValue: WrappingType.None,
 		},
@@ -116,19 +116,24 @@ const metadata = {
  * @public
  */
 class Label extends UI5Element {
-	static get metadata() {
+	for?: string;
+	showColon?: boolean;
+	required?: boolean;
+	wrappingType?: WrappingType;
+
+	static override get metadata() {
 		return metadata;
 	}
 
-	static get render() {
+	static override get render() {
 		return litRender;
 	}
 
-	static get template() {
+	static override get template() {
 		return LabelTemplate;
 	}
 
-	static get styles() {
+	static override get styles() {
 		return labelCss;
 	}
 
@@ -146,7 +151,7 @@ class Label extends UI5Element {
 			return;
 		}
 
-		const elementToFocus = this.getRootNode().querySelector(`#${this.for}`);
+		const elementToFocus = (this.getRootNode() as HTMLElement).querySelector(`#${this.for}`) as HTMLElement;
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
