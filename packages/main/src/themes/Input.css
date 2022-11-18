@@ -24,7 +24,7 @@
 	background-color: var(--_ui5_input_background_color);
 }
 
-:host:not([disabled]) {
+:host(:not([disabled])) {
 	background: var(--sapField_BackgroundStyle);
 }
 
