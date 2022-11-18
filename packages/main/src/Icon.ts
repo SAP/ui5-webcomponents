@@ -292,13 +292,13 @@ class Icon extends UI5Element {
 		return iconCss;
 	}
 
-	_onFocusInHandler(_event: Event) {
+	_onFocusInHandler(event: Event) { // eslint-disble-line
 		if (this.interactive) {
 			this.focused = true;
 		}
 	}
 
-	_onFocusOutHandler(_event: Event) {
+	_onFocusOutHandler(event: Event) { // eslint-disble-line
 		this.focused = false;
 	}
 

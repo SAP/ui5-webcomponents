@@ -5,10 +5,14 @@ const fs = require("fs/promises");
 const inputDir = process.argv[2];
 
 const preprocess = async () => {
-	const { globby } = await import("globby");
-	const fileNames = await globby(inputDir + "**/types/*.js");
+	try {
+		const { globby } = await import("globby");
+		const fileNames = await globby(inputDir + "**/types/*.js");
 
-	return Promise.all(fileNames.map(processFile));
+		return Promise.all(fileNames.map(processFile));
+	} catch(e) {
+		console.log("JSDoc preprocess failed: ", e);
+	}
 };
 
 const processFile = async (fileName) => {

@@ -14,6 +14,8 @@ const getScripts = (options) => {
 	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
 	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
 	const createIllustrationsLoadersScript = options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "";
+	const tsCommand = options.typescript ? "tsc" : "";
+	const tsWatchCommand = options.typescript ? "tsc --watch" : "";
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -48,7 +50,7 @@ const getScripts = (options) => {
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps typescript" "nps generateAPI" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
-		typescript: "tsc",
+		typescript: tsCommand,
 		build: {
 			default: "nps lint prepare build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
@@ -83,7 +85,7 @@ const getScripts = (options) => {
 			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
-			typescript: 'tsc --watch',
+			typescript: tsWatchCommand,
 			props: 'nps "copy.props --watch --safe --skip-initial-copy"',
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 			styles: {

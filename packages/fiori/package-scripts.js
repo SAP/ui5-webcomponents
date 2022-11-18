@@ -4,6 +4,7 @@ const options = {
 	port: 8081,
 	portStep: 2,
 	fioriPackage: true,
+	typescript: true,
 	illustrationsData: [
 		{
 			path: "src/illustrations",
