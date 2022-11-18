@@ -32,7 +32,7 @@ type Metadata = {
 	managedSlots?: boolean,
 	properties?: Record<string, Property>,
 	slots?: Record<string, Slot>,
-	events?: Array<object>,
+	events?: Record<string, object>,
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,

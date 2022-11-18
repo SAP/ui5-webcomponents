@@ -93,3 +93,7 @@ export {
 	getI18nBundle,
 	registerCustomI18nBundleGetter,
 };
+
+export type {
+	I18nText,
+};

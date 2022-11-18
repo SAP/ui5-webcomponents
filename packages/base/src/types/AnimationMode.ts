@@ -12,22 +12,22 @@ enum AnimationMode {
 	 * @public
 	 * @type {Full}
 	 */
-    Full = "full",
+	Full = "full",
 	/**
 	 * @public
 	 * @type {Basic}
 	 */
-    Basic = "basic",
+	Basic = "basic",
 	/**
 	 * @public
 	 * @type {Minimal}
 	 */
-    Minimal = "minimal",
+	Minimal = "minimal",
 	/**
 	 * @public
 	 * @type {None}
 	 */
-    None = "none",
+	None = "none",
 }
 
 export default AnimationMode;
