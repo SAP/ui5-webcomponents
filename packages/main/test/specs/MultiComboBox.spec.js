@@ -456,6 +456,26 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await listItem.getProperty("focused"), false, "The first item is not focused");
 			assert.equal(await mcb.getProperty("value"), "Cosy", "The input value is autocompleted");
 		});
+
+		it("tests if clicking delete icon of a token removes it from the selection", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
+
+			const mcb = await $("#mcb-long-token");
+			const inner = mcb.shadow$("input");
+
+			await mcb.scrollIntoView();
+			await inner.click();
+
+			const token = await mcb.shadow$("ui5-tokenizer ui5-token");
+			const deleteIcon = await token.shadow$("ui5-token--icon");
+
+			await deleteIcon.click();
+
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 0, "Long token should be deleted" );
+		});
 	});
 
 	describe("keyboard handling", () => {
