@@ -12,6 +12,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import SplitButtonTemplate from "./generated/templates/SplitButtonTemplate.lit.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import Button from "./Button.js";
