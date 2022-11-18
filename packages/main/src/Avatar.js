@@ -374,37 +374,31 @@ class Avatar extends UI5Element {
 		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
 	}
 
+	onAfterRendering() {
+		this._checkInitials();
+	}
+
 	onEnterDOM() {
-		// if there is icon set in the avatar,
-		// the following functions related to the initials, should be omitted,
-		// because the icon itself should be shown instead of them or the fallback one
-		if (this.icon) {
-			return;
-		}
-
-		this._checkInitialsWidth();
-
-		if (!this.validInitials) {
-			// if initials are not valid,an icon should be shown inside the avatar
-			this._setFallbackIcon();
-		}
+		this._checkInitials();
 	}
 
 	_setFallbackIcon() {
-		// the default icon shown inside the avatar,
-		// when the initials are not valid
-		this.icon = "employee";
+		// if there isn`t icon set in the avatar the default one is shown, when the initials are not valid or are missing
+		this.icon = this.icon || "employee";
 		return this.icon;
 	}
 
-	_checkInitialsWidth() {
-		// if initials` width is bigger than the avatar,
-		// an icon should be shown inside the avatar
+	_checkInitials() {
 		const avatar = this.getDomRef(),
 			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
+		// if there aren`t initalts set - the fallBack icon should be shown
+		if (!this.validInitials) {
+			this._setFallbackIcon();
+		}
+		// if initials` width is bigger than the avatar, an icon should be shown inside the avatar
 		if (this.initials && this.initials.length === 3) {
-			if (avatarInitials.scrollWidth >= avatar.scrollWidth) {
-				this.icon = "employee";
+			if (avatarInitials && avatarInitials.scrollWidth >= avatar.scrollWidth) {
+				this._setFallbackIcon();
 			}
 		}
 		return this.icon;
