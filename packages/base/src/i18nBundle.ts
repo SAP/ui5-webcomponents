@@ -29,9 +29,9 @@ class I18nBundle {
 	 * @public
 	 * @param {Object|String} textObj key/defaultText pair or just the key
 	 * @param params Values for the placeholders
-	 * @returns {*}
+	 * @returns {string}
 	 */
-	getText(textObj: I18nText, ...params: Array<number | string>) {
+	getText(textObj: I18nText, ...params: Array<number | string>): string {
 		if (typeof textObj === "string") {
 			textObj = { key: textObj, defaultText: textObj };
 		}
@@ -46,7 +46,7 @@ class I18nBundle {
 		}
 		const messageText = bundle && bundle[textObj.key] ? bundle[textObj.key] : (textObj.defaultText || textObj.key);
 
-		return params.length ? formatMessage(messageText, params) : messageText;
+		return formatMessage(messageText, params);
 	}
 }
 
