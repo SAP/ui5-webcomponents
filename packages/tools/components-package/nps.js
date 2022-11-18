@@ -46,8 +46,8 @@ const getScripts = (options) => {
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
-			default: "nps clean prepare.all",
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps typescript" "nps generateAPI" "nps build.illustrations"',
+			default: "nps clean prepare.all generateAPI",
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps typescript" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		typescript: tsCommand,
