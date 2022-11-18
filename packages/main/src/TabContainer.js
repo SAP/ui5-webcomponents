@@ -413,6 +413,7 @@ class TabContainer extends UI5Element {
 		// update selected tab
 		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
 		if (selectedTabs.length) {
+			this._selectedTab._selected = false;
 			this._selectedTab = selectedTabs[0];
 		} else {
 			this._selectedTab = this._allItemsAndSubItems[0];
@@ -754,11 +755,11 @@ class TabContainer extends UI5Element {
 	}
 
 	slideContentDown(element) {
-		return slideDown({ element }).promise();
+		return slideDown(element).promise();
 	}
 
 	slideContentUp(element) {
-		return slideUp({ element }).promise();
+		return slideUp(element).promise();
 	}
 
 	async _onOverflowClick(event) {

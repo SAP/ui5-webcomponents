@@ -99,3 +99,13 @@
 	justify-content: space-between;
 	width: 100%;
 }
+
+/* navigated */
+:host([navigated]) .ui5-li-root .ui5-li-navigated {
+	width: 0.1875rem;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: var(--sapList_SelectionBorderColor);
+}

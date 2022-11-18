@@ -1,5 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+
+import ListItemType from "./types/ListItemType.js";
+
 import HasPopup from "./types/HasPopup.js";
 
 /**
@@ -138,6 +141,35 @@ const metadata = {
 		},
 
 		/**
+
+		 * Defines the visual indication and behavior of the list items.
+		 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
+		 * <br><br>
+		 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
+		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
+		 *
+		 * @type {sap.ui.webcomponents.main.types.ListItemType}
+		 * @defaultvalue "Active"
+		 * @public
+		*/
+		type: {
+			type: ListItemType,
+			defaultValue: ListItemType.Active,
+		},
+
+		/**
+		 * The navigated state of the list item.
+		 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+		 *
+		 * @public
+		 * @type {boolean}
+		 * @since 1.10.0
+		 */
+		 navigated: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the description for the accessible role of the component.
 		 * @protected
 		 * @type {string}
@@ -210,6 +242,10 @@ class TreeItem extends UI5Element {
 
 	get requiresToggleButton() {
 		return this.hasChildren || this.items.length > 0;
+	}
+
+	get typeNavigation() {
+		return this.type === ListItemType.Navigation;
 	}
 
 	/**

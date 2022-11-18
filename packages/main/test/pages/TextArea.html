@@ -191,6 +191,16 @@
 	<br>
 	<ui5-textarea id="readonly-value-state-textarea" readonly value-state="Error"></ui5-textarea>
 
+	<section class="group">
+		<ui5-label id="lblForTextAreaID" for="taWithLabelID">This should be in aria-label property of the text area</ui5-label>
+		<ui5-textarea id="taWithLabelID" class="textarea-width" placeholder="Enter some text here"></ui5-textarea>
+	</section>
+
+	<section class="group">
+		<ui5-label id="lblForTextAreaID2" for="taWithLabelID2">This should not be in aria-label property of the text area</ui5-label>
+		<ui5-textarea id="taWithLabelID2" class="textarea-width" placeholder="Enter some text here" accessible-name="Here aria label should be this one"></ui5-textarea>
+	</section>
+
 	<script>
 		var changeCounter = 0;
 		var inputCounter = 0;
