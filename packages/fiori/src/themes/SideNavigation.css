@@ -1,4 +1,4 @@
-:host(:not([hidden])) {
+:host(:not([hidden]):not(.ui5-side-navigation-in-popover)) {
     display: inline-block;
     width: 15rem;
     height: 100%;
@@ -11,8 +11,17 @@
     --_ui5-tree-indent-step: var(--_ui5_side_navigation_indent_step);
 }
 
-:host([collapsed]) {
+:host(.ui5-side-navigation-in-popover) {
+    --_ui5-tree-toggle-box-width: 1rem;
+    --_ui5-tree-indent-step: 0;
+}
+
+:host([collapsed]:not(.ui5-side-navigation-in-popover)) {
     width: var(--_ui5_side_navigation_collapsed_state_width);
+}
+
+:host(.ui5-side-navigation-in-popover) .ui5-sn-root {
+    border-right: none;
 }
 
 .ui5-sn-root {

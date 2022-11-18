@@ -229,14 +229,6 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_POPOVER_HIDDEN_TEXT);
 	}
 
-	get ariaRoleDescPopoverNavigationList() {
-		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC);
-	}
-
-	get ariaRoleDescPopoverNavigationListItem() {
-		return SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC);
-	}
-
 	get ariaRoleDescNavigationList() {
 		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC);
 	}
@@ -268,7 +260,7 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	handleListItemClick(event) {
+	handlePopoverItemClick(event) {
 		const listItem = event.detail.item;
 		const item = listItem.associatedItem;
 
@@ -290,7 +282,7 @@ class SideNavigation extends UI5Element {
 		responsivePopover.showAt(opener);
 	}
 
-	async closePicker(opener) {
+	async closePicker() {
 		const responsivePopover = await this.getPicker();
 		responsivePopover.close();
 	}

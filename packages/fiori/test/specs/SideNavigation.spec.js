@@ -35,7 +35,7 @@ describe("Component Behavior", () => {
 
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
 			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			items = await popover.$("ui5-list").$$("ui5-li");
+			items = await popover.$("ui5-side-navigation").shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
 
 			await items[1].click();
 
@@ -66,7 +66,7 @@ describe("Component Behavior", () => {
 
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
 			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			items = await popover.$("ui5-list").$$("ui5-li");
+			items = await popover.$("ui5-side-navigation").shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
 
 			await items[1].click();
 
@@ -132,7 +132,7 @@ describe("Component Behavior", () => {
 
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
 			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			const popoverItems = await popover.$("ui5-list").$$("ui5-li");
+			const popoverItems = await popover.$("ui5-side-navigation").shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
 
 			assert.strictEqual(await popoverItems[0].getAttribute("title"), await items[1].getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
 			assert.strictEqual(await popoverItems[1].getAttribute("title"), await secondItemSubItems[0].getAttribute("title"), "Title is set as tooltip to sub item");
@@ -226,6 +226,22 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await sideNavigationFixedItemsTreeItem1.getAttribute("aria-roledescription"), roleDescriptionItem, "Role description of the SideNavigation fixed tree item is correctly set");
 			assert.strictEqual(await sideNavigationFixedItemsTreeItem1.getAttribute("aria-haspopup"), "Tree", "There is 'aria-haspopup' with correct value");
 			assert.notExists(await sideNavigationFixedItemsTreeItem2.getAttribute("aria-haspopup"), "There is no 'aria-haspopup'");
+
+			// popup
+			await sideNavigationTreeItem2.click();
+
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+			const popoverItems = await popover.$("ui5-side-navigation").shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+
+			// items
+			roleDescriptionItem = await browser.executeAsync(done => {
+				const sn = document.getElementById("sn1");
+				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC));
+			});
+
+			assert.strictEqual(await popoverItems[0].shadow$("li").getAttribute("aria-roledescription"), roleDescriptionItem, "Role description is correctly set");
+			assert.strictEqual(await popoverItems[1].shadow$("li").getAttribute("aria-roledescription"), roleDescriptionItem, "Role description is correctly set");
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);

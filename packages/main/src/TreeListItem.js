@@ -171,6 +171,18 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the item should be collapsable or not.
+		 * It is true, for example, for the items inside the Popup of the Side Navigation
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.10.0
+		 */
+		_notCollapsable: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
 		 * @type {sap.ui.webcomponents.main.types.HasPopup}
 		 * @since 1.10.0
