@@ -223,6 +223,8 @@ class TreeItem extends UI5Element {
 	get requiresToggleButton() {
 		if (!this._notCollapsable) {
 			return this.hasChildren || this.items.length > 0;
+		} else {
+			return false;
 		}
 	}
 
