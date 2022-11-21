@@ -16,7 +16,7 @@ enum ListSeparators {
 	All = "All",
 	/**
 	 * Separators between the items.
-	 * <b>Note:</b> This enumeration depends on the theme.
+	 * Note: This enumeration depends on the theme.
 	 * @public
 	 * @type {Inner}
 	 */

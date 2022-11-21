@@ -1,5 +1,5 @@
 /**
- * Different types of Title levels.
+ * Different types of Title level.
  *
  * @class
  * @enum {string}

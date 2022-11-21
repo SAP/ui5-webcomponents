@@ -10,7 +10,7 @@
 enum BreadcrumbsSeparatorStyle {
 
 	/**
-	 * The separator appears as "/".
+	 * The separator appears as a slash.
 	 * @public
 	 * @type {Slash}
 	 */
@@ -38,7 +38,7 @@ enum BreadcrumbsSeparatorStyle {
 	DoubleGreaterThan = "DoubleGreaterThan",
 
 	/**
-	 * The separator appears as "//".
+	 * The separator appears as double slash.
 	 * @public
 	 * @type {DoubleSlash}
 	 */

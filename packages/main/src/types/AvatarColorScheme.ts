@@ -1,11 +1,11 @@
 /**
- * Different types of AvatarColorSchemes.
+ * Different types of AvatarColorScheme.
  *
  * @class
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.AvatarColorSchemes
+ * @alias sap.ui.webcomponents.main.types.AvatarColorScheme
  */
 enum AvatarColorScheme {
 	/**
