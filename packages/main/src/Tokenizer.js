@@ -186,7 +186,6 @@ class Tokenizer extends UI5Element {
 		}
 
 		this._nMoreCount = this.overflownTokens.length;
-
 	}
 
 	onEnterDOM() {

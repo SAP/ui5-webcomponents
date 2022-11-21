@@ -1,5 +1,13 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isShow, isBackSpace, isLeft, isRight, isRightCtrl, isHome, isEnd } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isShow,
+	isBackSpace,
+	isLeft,
+	isRight,
+	isRightCtrl,
+	isHome,
+	isEnd,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
@@ -164,9 +172,7 @@ class MultiInput extends Input {
 
 	_tokenizerFocusOut(event) {
 		if (!this.contains(event.relatedTarget)) {
-			this.tokenizer._tokens.forEach(token => {
-				token.selected = false;
-			});
+			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
 	}
@@ -214,10 +220,7 @@ class MultiInput extends Input {
 			event.preventDefault();
 			const lastTokenIndex = this.tokens.length - 1;
 
-			if (
-				event.target === this.tokens[lastTokenIndex] &&
-				this.tokens[lastTokenIndex] === document.activeElement
-			) {
+			if (event.target === this.tokens[lastTokenIndex] && this.tokens[lastTokenIndex] === document.activeElement) {
 				setTimeout(() => {
 					this.focus();
 				}, 0);
@@ -355,10 +358,10 @@ class MultiInput extends Input {
 	get accInfo() {
 		const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 		return {
-			input: {
+			"input": {
 				...super.accInfo.input,
-				ariaRoledescription: this.ariaRoleDescription,
-				ariaDescribedBy: ariaDescribedBy,
+				"ariaRoledescription": this.ariaRoleDescription,
+				"ariaDescribedBy": ariaDescribedBy,
 			},
 		};
 	}
@@ -368,7 +371,12 @@ class MultiInput extends Input {
 	}
 
 	static get dependencies() {
-		return [...Input.dependencies, Tokenizer, Token, Icon];
+		return [
+			...Input.dependencies,
+			Tokenizer,
+			Token,
+			Icon,
+		];
 	}
 
 	get isTokenizerAvailable() {
