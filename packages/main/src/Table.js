@@ -1095,6 +1095,7 @@ class Table extends UI5Element {
 				demandPopin: column.demandPopin,
 				text: column.textContent,
 				popinText: column.popinText,
+				popinDisplay: column.popinDisplay,
 				visible: !this._hiddenColumns[index],
 			};
 		}, this);

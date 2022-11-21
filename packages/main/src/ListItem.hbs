@@ -48,6 +48,15 @@
 			</div>
 		{{/if}}
 
+		{{#if typeNavigation}}
+			<ui5-icon name ="slim-arrow-right"></ui5-icon>
+		{{/if}}
+
+		{{#if navigated}}
+			<div class="ui5-li-navigated"></div>
+		{{/if}}
+
+
 		{{#if placeSelectionElementAfter}}
 			{{> selectionElement}}
 		{{/if}}

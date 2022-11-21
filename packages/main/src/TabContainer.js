@@ -755,11 +755,11 @@ class TabContainer extends UI5Element {
 	}
 
 	slideContentDown(element) {
-		return slideDown({ element }).promise();
+		return slideDown(element).promise();
 	}
 
 	slideContentUp(element) {
-		return slideUp({ element }).promise();
+		return slideUp(element).promise();
 	}
 
 	async _onOverflowClick(event) {

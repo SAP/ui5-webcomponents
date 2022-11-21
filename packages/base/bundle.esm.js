@@ -24,10 +24,11 @@ window.registerThemePropertiesLoader = registerThemePropertiesLoader;
 
 // i18n
 import { registerI18nLoader, getI18nBundle } from "./dist/i18nBundle.js";
+import parseProperties from "./dist/PropertiesFileFormat.js";
 
 // Note: keep in sync with rollup.config value for IIFE
 import { getAnimationMode } from "./dist/config/AnimationMode.js";
-import { getLanguage } from "./dist/config/Language.js";
+import { getLanguage, setLanguage } from "./dist/config/Language.js";
 import { getCalendarType } from "./dist/config/CalendarType.js";
 import { getTheme, setTheme } from "./dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
@@ -40,6 +41,7 @@ window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
 		getAnimationMode,
 		getLanguage,
+		setLanguage,
 		getTheme,
 		setTheme,
 		getNoConflict,
@@ -49,6 +51,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		getFirstDayOfWeek,
 	},
 	getIconNames,
+	parseProperties,
 	registerI18nLoader,
 	getI18nBundle,
 	renderFinished,
