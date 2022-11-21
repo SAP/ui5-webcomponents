@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>i18n</title>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+</head>
+
+<body>
+	<h1>i18n texts</h1>
+	<p>
+		Single quote ' escape some symbols after it. For example: "Text '{0}" will result in "Text {0}". To use single
+		quote you have to use: ''
+	</p>
+	<div>
+		<span id="test_1_text"></span>
+		|
+		<span id="test_1_result">
+			Text {0}
+		</span>
+	</div>
+	<div>
+		<span id="test_2_text"></span>
+		|
+		<span id="test_2_result">
+			Text 'test
+		</span>
+	</div>
+	<div>
+		<span id="test_3_text"></span>
+		|
+		<span id="test_3_result">
+			Text 'test'
+		</span>
+	</div>
+	<div>
+		<span id="test_4_text"></span>
+		|
+		<span id="test_4_result">
+			Text
+		</span>
+	</div>
+	<div>
+		<span id="test_5_text"></span>
+		|
+		<span id="test_5_result">
+			Text '
+		</span>
+	</div>
+	<div>
+		<span id="test_6_text"></span>
+		|
+		<span id="test_6_result">
+			Text '
+		</span>
+	</div>
+	<div>
+		<span id="test_7_text"></span>
+		|
+		<span id="test_7_result">
+			Text test
+		</span>
+	</div>
+	<div>
+		<span id="test_8_text"></span>
+		|
+		<span id="test_8_result">
+			Text {0}
+		</span>
+	</div>
+	<div>
+		<span id="test_9_text"></span>
+		|
+		<span id="test_9_result">
+			Text {0}'
+		</span>
+	</div>
+
+	<script type="module">
+		const demo = async () => {
+			window["sap-ui-webcomponents-bundle"].configuration.setLanguage("fr");
+
+			const texts = ["test_1", "test_2", "test_3", "test_4", "test_5", "test_6", "test_7", "test_8", "test_9"];
+
+			window["sap-ui-webcomponents-bundle"].registerI18nLoader("myApp", "fr", async (localeId) => {
+				const props = await (await fetch(`./assets/messagebundle_${localeId}.properties`)).text();
+				return window["sap-ui-webcomponents-bundle"].parseProperties(props);
+			});
+
+			const bundle = await window["sap-ui-webcomponents-bundle"].getI18nBundle("myApp");
+
+			texts.forEach(text => {
+				const formattedText = bundle.getText(text.toUpperCase(), "test");
+				const span = document.getElementById(`${text}_text`);
+
+				span.innerText = formattedText;
+			})
+
+			texts.forEach(text => {
+				const textSpan = document.getElementById(`${text}_text`);
+				const resultpan = document.getElementById(`${text}_result`);
+
+				if (textSpan.innerText !== resultpan.innerText) {
+					const parent = resultpan.parentElement
+
+					parent.style.textDecoration = "underline";
+					parent.style.color = "red";
+				}
+			})
+		};
+		demo();
+	</script>
+</body>
+
+</html>

@@ -459,10 +459,6 @@ class RangeSlider extends SliderBase {
 	}
 
 	_handleUp() {
-		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
-		}
-
 		this._swapValues();
 		this._setAffectedValueByFocusedElement();
 		this._setAffectedValue(null);
@@ -474,6 +470,10 @@ class RangeSlider extends SliderBase {
 		this.handleUpBase();
 
 		this.rangePressed = false;
+
+		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
+			this.fireEvent("change");
+		}
 	}
 
 	/**

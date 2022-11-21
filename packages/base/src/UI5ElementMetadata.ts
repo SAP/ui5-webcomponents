@@ -10,7 +10,7 @@ type SlotInvalidation = {
 
 type Slot = {
 	type: typeof Node | typeof HTMLElement,
-	propertyName: string,
+	propertyName?: string,
 	individualSlots?: boolean,
 	invalidateOnChildChange?: boolean | SlotInvalidation,
 };

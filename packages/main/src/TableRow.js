@@ -365,7 +365,7 @@ class TableRow extends UI5Element {
 		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
 		this._columnsInfo.forEach((info, index) => {
 			const cell = this.cells[index];
-
+			const popinDisplay = info.popinDisplay === "Inline";
 			if (!cell) {
 				return;
 			}
@@ -373,17 +373,22 @@ class TableRow extends UI5Element {
 			if (info.visible) {
 				this.visibleCells.push(cell);
 				cell.popined = false;
+				cell._popinedInline = false;
 			} else if (info.demandPopin) {
 				const popinHeaderClass = this.popinCells.length === 0 ? "popin-header" : "";
 				this.popinCells.push({
 					cell,
 					popinText: info.popinText,
 					classes: `ui5-table-popin-row ${allColumnsPoppedInClass} ${popinHeaderClass}`,
+					popinDisplayInline: popinDisplay,
 				});
-
 				cell.popined = true;
+				if (info.popinDisplay === "Inline") {
+					cell._popinedInline = true;
+				}
 			} else {
 				cell.popined = false;
+				cell._popinedInline = false;
 			}
 		}, this);
 

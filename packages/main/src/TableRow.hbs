@@ -56,12 +56,23 @@
 			@keydown="{{../_onkeydown}}"
 			@keyup="{{../_onkeyup}}">
 			<td colspan="{{../visibleCellsCount}}" role="cell">
-				{{#if this.popinText}}
-					<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
+				{{#if popinDisplayInline}}
+					<div class="ui5-table-display-inline-container">
+						{{#if this.popinText}}
+							<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
+						{{/if}}
+						<span class="ui5-table-cell-display-inline">
+							<slot name="{{this.cell._individualSlot}}"></slot>
+						</span>
+					</div>
+				{{else}}
+					{{#if this.popinText}}
+						<span class="ui5-table-row-popin-title">{{this.popinText}}:</span>
+					{{/if}}
+					<div>
+						<slot name="{{this.cell._individualSlot}}"></slot>
+					</div>
 				{{/if}}
-				<div>
-					<slot name="{{this.cell._individualSlot}}"></slot>
-				</div>
 			</td>
 
 			<td class="ui5-table-row-navigated" aria-hidden="true">
@@ -70,5 +81,6 @@
 		</tr>
 	{{/each}}
 {{/if}}
+
 
 
