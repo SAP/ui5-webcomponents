@@ -1,6 +1,8 @@
 {{>include "./Input.hbs"}}
 
-{{#*inline "preContent"}}
+
+{{#*inline "preContent"}}	
+	{{#if isTokenizerAvailable}}
 	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
 	<ui5-tokenizer
 		class="ui5-multi-input-tokenizer"
@@ -24,8 +26,10 @@
 				{{/each}}
 			{{/if}}
 		</div>
-	</ui5-tokenizer>
+	</ui5-tokenizer>	
+	{{/if}}
 {{/inline}}
+
 
 
 {{#*inline "postContent"}}

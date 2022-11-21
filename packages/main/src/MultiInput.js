@@ -370,6 +370,10 @@ class MultiInput extends Input {
 	static get dependencies() {
 		return [...Input.dependencies, Tokenizer, Token, Icon];
 	}
+
+	get isTokenizerAvailable() {
+		return this.tokens && this.tokens.length > 0;
+	}
 }
 
 MultiInput.define();

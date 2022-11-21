@@ -66,7 +66,7 @@
 	--_ui5-input-icons-count: 0;
 	--_ui5_input_icon_width: 2.25rem;
 	--_ui5_input_has_tokens: 0;
-	--_ui5_input_token_min_width: 3.625rem;
+	--_ui5_input_token_min_width: 4.125rem;
 	--_ui5_input_tokenizer-width: 0;
 }
 
@@ -74,6 +74,6 @@
 .ui5-content-density-compact,
 .sapUiSizeCompact {
 	--_ui5_input_min_width: 2rem;
-	--_ui5_input_icon_width: 2rem;	
-	--_ui5_input_token_min_width: 3rem;
+	--_ui5_input_icon_width: 2rem;
+	--_ui5_input_token_min_width: 3.5625rem;
 }
