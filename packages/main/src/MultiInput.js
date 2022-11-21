@@ -1,13 +1,5 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import {
-	isShow,
-	isBackSpace,
-	isLeft,
-	isRight,
-	isRightCtrl,
-	isHome,
-	isEnd
-} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isShow, isBackSpace, isLeft, isRight, isRightCtrl, isHome, isEnd } from "@ui5/webcomponents-base/dist/Keys.js";
 import { MULTIINPUT_ROLEDESCRIPTION_TEXT } from "./generated/i18n/i18n-defaults.js";
 import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
@@ -32,7 +24,7 @@ const metadata = {
 		 * @public
 		 */
 		showValueHelpIcon: {
-			type: Boolean
+			type: Boolean,
 		},
 
 		/**
@@ -40,8 +32,8 @@ const metadata = {
 		 * @private
 		 */
 		expandedTokenizer: {
-			type: Boolean
-		}
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
@@ -52,8 +44,8 @@ const metadata = {
 		 * @public
 		 */
 		tokens: {
-			type: HTMLElement
-		}
+			type: HTMLElement,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
 		/**
@@ -74,10 +66,10 @@ const metadata = {
 		 */
 		"token-delete": {
 			detail: {
-				token: { type: HTMLElement }
-			}
-		}
-	}
+				token: { type: HTMLElement },
+			},
+		},
+	},
 };
 
 /**
@@ -326,14 +318,11 @@ class MultiInput extends Input {
 		if (this.showValueHelpIcon) {
 			this.style.setProperty(
 				"--_ui5-input-icons-count",
-				(1 * this.style.getPropertyValue("--_ui5-input-icons-count") || 0) + 1
+				(1 * this.style.getPropertyValue("--_ui5-input-icons-count") || 0) + 1,
 			);
 		}
 
-		this.style.setProperty(
-			"--_ui5_input_has_tokens",
-			(this.tokens && this.tokens.length) > 0 ? 1 : 0
-		);
+		this.style.setProperty("--_ui5_input_has_tokens", this.tokens && this.tokens.length > 0 ? 1 : 0);
 	}
 
 	get tokenizer() {
@@ -364,14 +353,13 @@ class MultiInput extends Input {
 	}
 
 	get accInfo() {
-		const ariaDescribedBy =
-			`${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
+		const ariaDescribedBy = `${this._tokensCountTextId} ${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 		return {
 			input: {
 				...super.accInfo.input,
 				ariaRoledescription: this.ariaRoleDescription,
-				ariaDescribedBy: ariaDescribedBy
-			}
+				ariaDescribedBy: ariaDescribedBy,
+			},
 		};
 	}
 

@@ -1,10 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import {
-	isPhone,
-	isAndroid,
-} from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, isAndroid } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
@@ -23,7 +20,10 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -70,7 +70,6 @@ const metadata = {
 	languageAware: true,
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
-
 		/**
 		 * Defines the icon to be displayed in the component.
 		 *
@@ -116,7 +115,7 @@ const metadata = {
 		 * @slot suggestionItems
 		 * @public
 		 */
-		"default": {
+		default: {
 			propertyName: "suggestionItems",
 			type: HTMLElement,
 		},
@@ -151,8 +150,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Input.prototype */  {
-
+	properties: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
 		/**
 		 * Defines whether the component is in disabled state.
 		 * <br><br>
@@ -669,11 +667,10 @@ class Input extends UI5Element {
 			this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
 		}
 
-		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
+		this.effectiveShowClearIcon = this.showClearIcon && !!this.value && !this.readonly && !this.disabled;
 
 		const numIcons = this.effectiveShowClearIcon + (this.icon ? this.icon.length : 0);
 		this.style.setProperty("--_ui5-input-icons-count", numIcons || 0);
-
 
 		this.FormSupport = getFeature("FormSupport");
 		const hasItems = this.suggestionItems.length;
@@ -691,7 +688,9 @@ class Input extends UI5Element {
 		if (this.FormSupport) {
 			this.FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
-			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+			console.warn(
+				`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`,
+			); // eslint-disable-line
 		}
 
 		const value = this.value;
@@ -816,7 +815,7 @@ class Input extends UI5Element {
 	}
 
 	_handleTab(event) {
-		if (this.Suggestions && (this.previousValue !== this.value)) {
+		if (this.Suggestions && this.previousValue !== this.value) {
 			this.Suggestions.onTab(event);
 		}
 	}
@@ -826,7 +825,7 @@ class Input extends UI5Element {
 		const innerInput = this.getInputDOMRefSync();
 		// Check for autocompleted item
 		const matchingItem = this.suggestionItems.find(item => {
-			return (item.text && item.text === this.value) || (item.textContent === this.value);
+			return (item.text && item.text === this.value) || item.textContent === this.value;
 		});
 
 		if (matchingItem) {
@@ -931,8 +930,15 @@ class Input extends UI5Element {
 	}
 
 	_onfocusout(event) {
-		const focusedOutToSuggestions = this.Suggestions && event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
-		const focusedOutToValueStateMessage = event.relatedTarget && event.relatedTarget.shadowRoot && event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToSuggestions =
+			this.Suggestions &&
+			event.relatedTarget &&
+			event.relatedTarget.shadowRoot &&
+			event.relatedTarget.shadowRoot.contains(this.Suggestions.responsivePopover);
+		const focusedOutToValueStateMessage =
+			event.relatedTarget &&
+			event.relatedTarget.shadowRoot &&
+			event.relatedTarget.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
 		this._keepInnerValue = false;
 
@@ -1052,20 +1058,22 @@ class Input extends UI5Element {
 		// Pressing BACKSPACE again will remove the delimiter and the native input will fire event with the whole part as value again (123).
 		// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with the whole part as value (123).
 		// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value.
-		const delimiterCase = this.isTypeNumber
-			&& (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward")
-			&& !event.target.value.includes(".")
-			&& this.value.includes(".");
+		const delimiterCase =
+			this.isTypeNumber &&
+			(event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward") &&
+			!event.target.value.includes(".") &&
+			this.value.includes(".");
 
 		// Handle special numeric notation with "e", example "12.5e12"
 		const eNotationCase = emptyValueFiredOnNumberInput && event.data === "e";
 
 		// Handle special numeric notation with "-", example "-3"
 		// When pressing BACKSPACE, the native input fires event with empty value
-		const minusRemovalCase = emptyValueFiredOnNumberInput
-			&& this.value.startsWith("-")
-			&& this.value.length === 2
-			&& (event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward");
+		const minusRemovalCase =
+			emptyValueFiredOnNumberInput &&
+			this.value.startsWith("-") &&
+			this.value.length === 2 &&
+			(event.inputType === "deleteContentForward" || event.inputType === "deleteContentBackward");
 
 		if (delimiterCase || eNotationCase || minusRemovalCase) {
 			this.value = event.target.value;
@@ -1209,7 +1217,9 @@ class Input extends UI5Element {
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems", true);
 		} else {
-			throw new Error(`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`);
+			throw new Error(
+				`You have to import "@ui5/webcomponents/dist/features/InputSuggestions.js" module to use ui5-input suggestions`,
+			);
 		}
 	}
 
@@ -1221,8 +1231,7 @@ class Input extends UI5Element {
 		const innerInput = this.getInputDOMRefSync();
 		const value = this.valueBeforeAutoComplete || this.value;
 		const itemText = item.text || item.textContent; // keep textContent for compatibility
-		const fireInput = keyboardUsed
-			? this.valueBeforeItemSelection !== itemText : value !== itemText;
+		const fireInput = keyboardUsed ? this.valueBeforeItemSelection !== itemText : value !== itemText;
 
 		this.hasSuggestionItemSelected = true;
 
@@ -1260,7 +1269,7 @@ class Input extends UI5Element {
 	updateValueOnPreview(item) {
 		const noPreview = item.type === "Inactive" || item.group;
 		const innerInput = this.getInputDOMRefSync();
-		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent);
+		const itemValue = noPreview ? this.valueBeforeItemPreview : item.effectiveTitle || item.textContent;
 
 		this.value = itemValue;
 		innerInput.value = itemValue;
@@ -1293,7 +1302,8 @@ class Input extends UI5Element {
 		this.highlightValue = inputValue;
 		this.valueBeforeItemPreview = inputValue;
 
-		if (isUserInput) { // input
+		if (isUserInput) {
+			// input
 			this.fireEvent(this.EVENT_INPUT, { inputType: event.inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
@@ -1320,7 +1330,9 @@ class Input extends UI5Element {
 
 	getInputDOMRefSync() {
 		if (isPhone() && this.Suggestions && this.Suggestions.responsivePopover) {
-			return this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone").shadowRoot.querySelector("input");
+			return this.Suggestions.responsivePopover
+				.querySelector(".ui5-input-inner-phone")
+				.shadowRoot.querySelector("input");
 		}
 
 		return this.nativeInput;
@@ -1371,19 +1383,21 @@ class Input extends UI5Element {
 	onItemMouseOver(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion && suggestion.fireEvent("mouseover", {
-			item: suggestion,
-			targetRef: item,
-		});
+		suggestion &&
+			suggestion.fireEvent("mouseover", {
+				item: suggestion,
+				targetRef: item,
+			});
 	}
 
 	onItemMouseOut(event) {
 		const item = event.target;
 		const suggestion = this.getSuggestionByListItem(item);
-		suggestion && suggestion.fireEvent("mouseout", {
-			item: suggestion,
-			targetRef: item,
-		});
+		suggestion &&
+			suggestion.fireEvent("mouseout", {
+				item: suggestion,
+				targetRef: item,
+			});
 	}
 
 	onItemMouseDown(event) {
@@ -1408,19 +1422,19 @@ class Input extends UI5Element {
 
 	get valueStateTypeMappings() {
 		return {
-			"Success": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
-			"Information": Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			"Error": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			"Warning": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			Success: Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			Information: Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			Error: Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			Warning: Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
 	valueStateTextMappings() {
 		return {
-			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING),
+			Success: Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			Information: Input.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			Error: Input.i18nBundle.getText(VALUE_STATE_ERROR),
+			Warning: Input.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -1461,29 +1475,36 @@ class Input extends UI5Element {
 	get accInfo() {
 		const ariaHasPopupDefault = this.showSuggestions ? "true" : undefined;
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
-		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
+		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy
+			? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim()
+			: `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
 		return {
-			"input": {
-				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
-				"ariaDescribedBy": ariaDescribedBy || undefined,
-				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
-				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
-				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
-				"role": this._inputAccInfo && this._inputAccInfo.role,
-				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
-				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
-				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this),
+			input: {
+				ariaRoledescription: this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
+				ariaDescribedBy: ariaDescribedBy || undefined,
+				ariaInvalid: this.valueState === ValueState.Error ? "true" : undefined,
+				ariaHasPopup: this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				ariaAutoComplete: this._inputAccInfo.ariaAutoComplete
+					? this._inputAccInfo.ariaAutoComplete
+					: ariaAutoCompleteDefault,
+				role: this._inputAccInfo && this._inputAccInfo.role,
+				ariaControls: this._inputAccInfo && this._inputAccInfo.ariaControls,
+				ariaExpanded: this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+				ariaDescription: this._inputAccInfo && this._inputAccInfo.ariaDescription,
+				ariaLabel:
+					(this._inputAccInfo && this._inputAccInfo.ariaLabel) ||
+					getEffectiveAriaLabelText(this) ||
+					getAssociatedLabelForTexts(this),
 			},
 		};
 	}
 
 	get nativeInputAttributes() {
 		return {
-			"min": this.isTypeNumber ? this._nativeInputAttributes.min : undefined,
-			"max": this.isTypeNumber ? this._nativeInputAttributes.max : undefined,
-			"step": this.isTypeNumber ? (this._nativeInputAttributes.step || "any") : undefined,
+			min: this.isTypeNumber ? this._nativeInputAttributes.min : undefined,
+			max: this.isTypeNumber ? this._nativeInputAttributes.max : undefined,
+			step: this.isTypeNumber ? this._nativeInputAttributes.step || "any" : undefined,
 		};
 	}
 
@@ -1496,7 +1517,10 @@ class Input extends UI5Element {
 			return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateText}`;
 		}
 
-		return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+		return `${this.valueStateTypeMappings[this.valueState]}`.concat(
+			" ",
+			this.valueStateMessageText.map(el => el.textContent).join(" "),
+		);
 	}
 
 	get itemSelectionAnnounce() {
@@ -1507,7 +1531,8 @@ class Input extends UI5Element {
 		return {
 			popover: {
 				"ui5-suggestions-popover": !this.isPhone && this.showSuggestions,
-				"ui5-suggestions-popover-with-value-state-header": !this.isPhone && this.showSuggestions && this.hasValueStateMessage,
+				"ui5-suggestions-popover-with-value-state-header":
+					!this.isPhone && this.showSuggestions && this.hasValueStateMessage,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
@@ -1528,12 +1553,12 @@ class Input extends UI5Element {
 				"max-width": `${this._inputWidth}px`,
 			},
 			suggestionPopoverHeader: {
-				"display": this._listWidth === 0 ? "none" : "inline-block",
-				"width": `${this._listWidth}px`,
+				display: this._listWidth === 0 ? "none" : "inline-block",
+				width: `${this._listWidth}px`,
 			},
 			suggestionsPopover: {
 				"min-width": `${this._inputWidth}px`,
-				"max-width": (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
+				"max-width": this._inputWidth / remSizeIxPx > 40 ? `${this._inputWidth}px` : "40rem",
 			},
 			innerInput: {},
 		};
@@ -1566,9 +1591,12 @@ class Input extends UI5Element {
 	}
 
 	get hasValueStateMessage() {
-		return this.hasValueState && this.valueState !== ValueState.Success
-			&& (!this._inputIconFocused // Handles the cases when valueStateMessage is forwarded (from datepicker e.g.)
-			|| (this._isPhone && this.Suggestions)); // Handles Input with suggestions on mobile
+		return (
+			this.hasValueState &&
+			this.valueState !== ValueState.Success &&
+			(!this._inputIconFocused || // Handles the cases when valueStateMessage is forwarded (from datepicker e.g.)
+				(this._isPhone && this.Suggestions))
+		); // Handles Input with suggestions on mobile
 	}
 
 	get valueStateText() {
@@ -1582,14 +1610,14 @@ class Input extends UI5Element {
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions.isOpened())) {
 			switch (this.suggestionsTexts.length) {
-			case 0:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
+				case 0:
+					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
 
-			case 1:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
+				case 1:
+					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
 
-			default:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
+				default:
+					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
 			}
 		}
 
