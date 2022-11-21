@@ -39,7 +39,6 @@ let activeRadio = null;
  */
 const metadata = {
 	tag: "ui5-radio-button",
-	altTag: "ui5-radiobutton",
 	languageAware: true,
 	properties: /** @lends sap.ui.webcomponents.main.RadioButton.prototype */ {
 

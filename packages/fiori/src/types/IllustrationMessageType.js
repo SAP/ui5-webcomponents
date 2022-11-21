@@ -78,6 +78,12 @@ const IllustrationMessageTypes = {
 	 */
 	NoTasks_v1: "NoTasks_v1",
 	/**
+	 * "No Dimensions Set" illustration type.
+	 * @public
+	 * @type {NoDimensionsSet}
+	 */
+	NoDimensionsSet: "NoDimensionsSet",
+	/**
 	 * "Unable To Load" illustration type.
 	 * @public
 	 * @type {UnableToLoad}
@@ -96,6 +102,12 @@ const IllustrationMessageTypes = {
 	 */
 	UnableToUpload: "UnableToUpload",
 	/**
+	 * "Upload To Cloud" illustration type.
+	 * @public
+	 * @type {UploadToCloud}
+	 */
+	UploadToCloud: "UploadToCloud",
+	/**
 	 * "Add Column" illustration type.
 	 * @public
 	 * @type {AddColumn}
@@ -107,6 +119,12 @@ const IllustrationMessageTypes = {
 	 * @type {AddPeople}
 	 */
 	AddPeople: "AddPeople",
+	/**
+	 * "Add Dimensions" illustration type.
+	 * @public
+	 * @type {AddDimensions}
+	 */
+	AddDimensions: "AddDimensions",
 	/**
 	 * "Balloon Sky" illustration type.
 	 * @public

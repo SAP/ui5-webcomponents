@@ -8,18 +8,11 @@ const getTag = file => {
 	return matches ? matches[1] : undefined;
 };
 
-const getAltTag = file => {
-	const fileContent = String(fs.readFileSync(file)).replace(/\n/g, "");
-	const matches = fileContent.match(/\baltTag\b:\s*\"(.*?)\"/);
-	return matches ? matches[1] : undefined;
-};
-
 const getPackageTags = (packageDir) => {
 	const srcDir = path.join(packageDir, "src/");
 	return glob.sync(path.join(srcDir, "/**/*.js")).flatMap(file => {
 		const tag = getTag(file);
-		const altTag = getAltTag(file);
-		return [tag, altTag];
+		return [tag];
 	}).filter(item => !!item);
 };
 
