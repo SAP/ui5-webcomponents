@@ -18,6 +18,7 @@
 	overflow-x: scroll;
 	box-sizing: border-box;
 	font-family: "72override", var(--sapFontFamily);
+	min-width: 3.625rem;
 }
 
 .ui5-tokenizer-no-padding {

@@ -7,7 +7,7 @@
 
 :host {
 	width: var(--_ui5_input_width);
-	min-width: var(--_ui5_input_min_width);
+	min-width: calc(var(--_ui5_input_min_width) + (var(--_ui5-input-icons-count)*var(--_ui5_input_icon_width)) + (var(--_ui5_input_has_tokens)*var(--_ui5_input_token_min_width)));
 	margin: var(--_ui5_input_margin_top_bottom) 0;
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
