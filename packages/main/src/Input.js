@@ -671,7 +671,7 @@ class Input extends UI5Element {
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
 
-		const numIcons = this.effectiveShowClearIcon + this.icon?.length;
+		const numIcons = this.effectiveShowClearIcon + (this.icon ? this.icon.length : 0);
 		this.style.setProperty("--_ui5-input-icons-count", numIcons || 0);
 
 

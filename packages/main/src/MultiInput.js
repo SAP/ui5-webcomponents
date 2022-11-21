@@ -329,10 +329,10 @@ class MultiInput extends Input {
 				(1 * this.style.getPropertyValue("--_ui5-input-icons-count") || 0) + 1
 			);
 		}
-		
+
 		this.style.setProperty(
 			"--_ui5_input_has_tokens",
-			this.tokens?.length > 0 ? 1 : 0
+			(this.tokens && this.tokens.length) > 0 ? 1 : 0
 		);
 	}
 
