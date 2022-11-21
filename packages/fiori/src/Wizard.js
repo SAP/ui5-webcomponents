@@ -52,9 +52,9 @@ const STEP_SWITCH_THRESHOLDS = {
 
 const RESPONSIVE_BREAKPOINTS = {
 	"0": "S",
-	"600": "M",
-	"1024": "L",
-	"1440": "XL",
+	"599": "M",
+	"1023": "L",
+	"1439": "XL",
 };
 
 /**
