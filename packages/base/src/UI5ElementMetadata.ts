@@ -172,14 +172,6 @@ class UI5ElementMetadata {
 	}
 
 	/**
-	 * Returns an object with key-value pairs of slots and their metadata definitions
-	 * @public
-	 */
-	getSlots() {
-		return this.metadata.slots || {};
-	}
-
-	/**
 	 * Determines whether this UI5 Element has a default slot of type Node, therefore can slot text
 	 * @returns {boolean}
 	 */
@@ -225,15 +217,32 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getProperties() {
-		return this.metadata.properties || {};
+		if (!this.metadata.properties) {
+			this.metadata.properties = {};
+		}
+		return this.metadata.properties;
 	}
 
 	/**
-	 * Returns an object with key-value pairs of events and their metadata definitions
+	 * Returns an object with key-value pairs o events and their metadata definitions
 	 * @public
 	 */
 	getEvents() {
-		return this.metadata.events || {};
+		if (!this.metadata.events) {
+			this.metadata.events = {};
+		}
+		return this.metadata.events;
+	}
+
+	/**
+	 * Returns an object with key-value pairs of slots and their metadata definitions
+	 * @public
+	 */
+	 getSlots() {
+		if (!this.metadata.slots) {
+			this.metadata.slots = {};
+		}
+		return this.metadata.slots;
 	}
 
 	/**
@@ -340,6 +349,7 @@ const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 		return (propertyType as typeof DataType).isValid(value) ? value : propData.defaultValue;
 	}
 
+	// Check if "value" is part of the enum (propertyType) values and return the defaultValue if not found.
 	return value as string in propertyType ? value : propData.defaultValue;
 };
 
