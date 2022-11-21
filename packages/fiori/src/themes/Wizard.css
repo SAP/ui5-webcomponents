@@ -8,7 +8,7 @@
 }
 
 :host([_breakpoint="S"])::part(navigator),
-:host([_breakpoint="S"]) ::part(step-content) {
+:host([_breakpoint="S"])::part(step-content) {
 	padding-left: 1rem;
 	padding-right: 1rem;
 }
