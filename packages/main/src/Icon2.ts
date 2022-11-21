@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getIconData, getIconDataSync } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
@@ -257,6 +257,25 @@ const metadata = {
  * @public
  */
 class Icon extends UI5Element {
+	interactive?: boolean;
+	focused?: boolean;
+	invalid?: boolean;
+	showTooltip?: boolean;
+	accessibleName?: string;
+	accessibleRole?: string;
+	effectiveAccessibleName?: string;
+	name?: string;
+	ltr?: boolean;
+	packageName?: string;
+	viewBox?: string;
+	accData?: I18nText;
+	pathData?: Array<string>;
+	customSvg?: object;
+
+	_onclick?: ((event: MouseEvent) => void) | undefined;
+	_onfocusout?: ((event: Event) => void) | undefined;
+	_onfocusin?: ((event: Event) => void) | undefined;
+
 	static get metadata() {
 		return metadata;
 	}
@@ -273,17 +292,17 @@ class Icon extends UI5Element {
 		return iconCss;
 	}
 
-	_onFocusInHandler(event) {
+	_onFocusInHandler(event: Event) { // eslint-disable-line
 		if (this.interactive) {
 			this.focused = true;
 		}
 	}
 
-	_onFocusOutHandler(event) {
+	_onFocusOutHandler(event: Event) { // eslint-disable-line
 		this.focused = false;
 	}
 
-	_onkeydown(event) {
+	_onkeydown(event: KeyboardEvent) {
 		if (!this.interactive) {
 			return;
 		}
@@ -297,13 +316,13 @@ class Icon extends UI5Element {
 		}
 	}
 
-	_onkeyup(event) {
+	_onkeyup(event: KeyboardEvent) {
 		if (this.interactive && isSpace(event)) {
 			this.fireEvent("click");
 		}
 	}
 
-	_onClickHandler(event) {
+	_onClickHandler(event: MouseEvent) {
 		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
 		event.stopPropagation();
 		this.fireEvent("click");
@@ -355,15 +374,15 @@ class Icon extends UI5Element {
 			return console.warn("Icon name property is required", this);
 		}
 
-		let iconData = getIconDataSync(name);
+		let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
 		if (!iconData) {
 			iconData = await getIconData(name);
 		}
 
-		this.viewBox = iconData.viewBox || "0 0 512 512";
-		if (iconData.customTemplate) {
-			iconData.pathData = [];
-			this.customSvg = executeTemplate(iconData.customTemplate, this);
+		if (!iconData) {
+			this.invalid = true;
+			/* eslint-disable-next-line */
+			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
 		}
 
 		if (iconData === ICON_NOT_FOUND) {
@@ -372,10 +391,11 @@ class Icon extends UI5Element {
 			return console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/AllIcons.js".`);
 		}
 
-		if (!iconData) {
-			this.invalid = true;
-			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
+		this.viewBox = iconData.viewBox || "0 0 512 512";
+
+		if (iconData.customTemplate) {
+			iconData.pathData = [];
+			this.customSvg = executeTemplate(iconData.customTemplate, this);
 		}
 
 		// in case a new valid name is set, show the icon

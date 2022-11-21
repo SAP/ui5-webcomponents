@@ -91,10 +91,6 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	onEnterDOM?: () => void;
-	onExitDOM?: () => void;
-	onBeforeRendering?: () => void;
-	onAfterRendering?: () => void;
 	_onComponentStateFinalized?: () => void;
 	_getRealDomRef?: () => HTMLElement;
 
@@ -175,9 +171,7 @@ abstract class UI5Element extends HTMLElement {
 		renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve!();
 		this._fullyConnected = true;
-		if (typeof this.onEnterDOM === "function") {
-			this.onEnterDOM();
-		}
+		this.onEnterDOM();
 	}
 
 	/**
@@ -195,9 +189,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		if (this._fullyConnected) {
-			if (typeof this.onExitDOM === "function") {
-				this.onExitDOM();
-			}
+			this.onExitDOM();
 			this._fullyConnected = false;
 		}
 
@@ -207,6 +199,30 @@ abstract class UI5Element extends HTMLElement {
 
 		cancelRender(this);
 	}
+
+	/**
+	 * Called every time before the component renders.
+	 * @public
+	 */
+	onBeforeRendering() {}
+
+	/**
+	 * Called every time after the component renders.
+	 * @public
+	 */
+	onAfterRendering() {}
+
+	/**
+	 * Called on connectedCallback - added to the DOM.
+	 * @public
+	 */
+	onEnterDOM() {}
+
+	/**
+	 * Called on disconnectedCallback - removed from the DOM.
+	 * @public
+	 */
+	onExitDOM() {}
 
 	/**
 	 * @private
@@ -612,9 +628,7 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		if (typeof this.onBeforeRendering === "function") {
-			this.onBeforeRendering();
-		}
+		this.onBeforeRendering();
 
 		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
 		if (this._onComponentStateFinalized) {
@@ -661,9 +675,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		// Call the onAfterRendering hook
-		if (typeof this.onAfterRendering === "function") {
-			this.onAfterRendering();
-		}
+		this.onAfterRendering();
 	}
 
 	/**
@@ -757,7 +769,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @param bubbles - true, if the event bubbles
 	 * @returns {boolean} false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireEvent<T>(name: string, data: T, cancelable = false, bubbles = true) {
+	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true) {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
 		const camelCaseEventName = kebabToCamelCase(name);
 
@@ -768,7 +780,7 @@ abstract class UI5Element extends HTMLElement {
 		return eventResult;
 	}
 
-	_fireEvent<T>(name: string, data: T, cancelable = false, bubbles = true) {
+	_fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true) {
 		const noConflictEvent = new CustomEvent<T>(`ui5-${name}`, {
 			detail: data,
 			composed: false,
