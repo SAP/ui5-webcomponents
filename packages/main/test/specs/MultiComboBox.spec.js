@@ -468,7 +468,7 @@ describe("MultiComboBox general interaction", () => {
 			await inner.click();
 
 			const token = await mcb.shadow$("ui5-tokenizer ui5-token");
-			const deleteIcon = await token.shadow$("ui5-token--icon");
+			const deleteIcon = await token.shadow$(".ui5-token--icon");
 
 			await deleteIcon.click();
 
