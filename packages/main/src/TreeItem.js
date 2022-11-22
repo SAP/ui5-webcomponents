@@ -190,7 +190,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @since 1.10.0
 		 */
-		_notCollapsable: {
+		_fixed: {
 			type: Boolean,
 		},
 
@@ -253,7 +253,7 @@ class TreeItem extends UI5Element {
 	}
 
 	get requiresToggleButton() {
-		return !this._notCollapsable ? (this.hasChildren || this.items.length > 0) : false;
+		return !this._fixed ? (this.hasChildren || this.items.length > 0) : false;
 	}
 
 	get typeNavigation() {

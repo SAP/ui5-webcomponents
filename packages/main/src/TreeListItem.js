@@ -178,7 +178,7 @@ const metadata = {
 		 * @defaultvalue false
 		 * @since 1.10.0
 		 */
-		_notCollapsable: {
+		_fixed: {
 			type: Boolean,
 		},
 

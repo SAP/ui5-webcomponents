@@ -1,4 +1,4 @@
-:host(:not([hidden]):not(.ui5-side-navigation-in-popover)) {
+:host(:not([hidden])) {
     display: inline-block;
     width: 15rem;
     height: 100%;
@@ -11,12 +11,7 @@
     --_ui5-tree-indent-step: var(--_ui5_side_navigation_indent_step);
 }
 
-:host(.ui5-side-navigation-in-popover) {
-    --_ui5-tree-toggle-box-width: 1rem;
-    --_ui5-tree-indent-step: 0;
-}
-
-:host([collapsed]:not(.ui5-side-navigation-in-popover)) {
+:host([collapsed]) {
     width: var(--_ui5_side_navigation_collapsed_state_width);
 }
 
