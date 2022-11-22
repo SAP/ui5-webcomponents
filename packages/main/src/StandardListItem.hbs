@@ -24,6 +24,12 @@
 {{/inline}}
 
 {{#*inline "imageBegin"}}
+	{{#if hasImageSlot}}
+		<div class="ui5-li-imgSlot" >
+			<slot name="imageSlot"></slot>
+		</div>
+	{{/if}}
+
 	{{#if displayImage}}
 		<ui5-avatar shape="Square" class="ui5-li-img">
 			<img src="{{image}}" class="ui5-li-img-inner" />
