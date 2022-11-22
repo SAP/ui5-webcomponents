@@ -1,7 +1,11 @@
 /**
  * Available Page Background Design.
- * @lends sap.ui.webcomponents.fiori.types.PageBackgroundDesign.prototype
+ * 
+ * @class
+ * @enum {string}
  * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.fiori.types.PageBackgroundDesign.prototype
  */
 enum PageBackgroundDesign {
 

@@ -1,6 +1,9 @@
 /**
- * @lends sap.ui.webcomponents.fiori.types.SideContentVisibility.prototype
+ * @class
+ * @enum {string}
  * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.fiori.types.SideContentVisibility.prototype
  */
 enum SideContentVisibility {
 	/**

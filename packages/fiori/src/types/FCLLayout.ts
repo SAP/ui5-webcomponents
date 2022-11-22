@@ -1,7 +1,11 @@
 /**
  * Different types of FCLLayout.
- * @lends sap.ui.webcomponents.fiori.types.FCLLayout.prototype
+ * 
+ * @class
+ * @enum {string}
  * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.fiori.types.FCLLayout.prototype
  */
 enum FCLLayout {
 	/**

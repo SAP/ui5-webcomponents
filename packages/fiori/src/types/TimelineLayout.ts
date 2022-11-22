@@ -1,7 +1,11 @@
 /**
  * Available Timeline layout orientation
- * @lends sap.ui.webcomponents.fiori.types.TimelineLayout.prototype
+ * 
+ * @class
+ * @enum {string}
  * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.fiori.types.TimelineLayout.prototype
  */
 enum TimelineLayout {
 	/**

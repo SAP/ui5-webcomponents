@@ -1,6 +1,9 @@
 /**
- * @lends sap.ui.webcomponents.fiori.types.ViewSettingsDialogMode.prototype
+ * @class
+ * @enum {string}
  * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.fiori.types.ViewSettingsDialogMode.prototype
  */
 enum ViewSettingsDialogMode {
 	/**

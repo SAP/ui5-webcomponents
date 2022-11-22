@@ -1,7 +1,11 @@
 /**
  * Different types of IllustrationMessageSize.
- * @lends sap.ui.webcomponents.fiori.types.IllustrationMessageSize.prototype
+ * 
+ * @class
+ * @enum {string}
  * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.fiori.types.IllustrationMessageSize.prototype
  * @since 1.5.0
  */
 enum IllustrationMessageSize {

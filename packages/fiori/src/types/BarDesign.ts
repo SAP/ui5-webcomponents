@@ -1,5 +1,8 @@
 /**
- * @lends sap.ui.webcomponents.fiori.types.BarDesign.prototype
+ * @class
+ * @enum {string}
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.fiori.types.BarDesign.prototype
  * @public
  */
 enum BarDesign {

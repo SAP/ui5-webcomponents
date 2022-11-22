@@ -1,6 +1,9 @@
 /**
- * @lends sap.ui.webcomponents.fiori.types.MediaGalleryMenuHorizontalAlign.prototype
+ * @class
+ * @enum {string}
  * @public
+ * @author SAP SE
+ * @aliassap.ui.webcomponents.fiori.types.MediaGalleryMenuHorizontalAlign.prototype
  */
 enum MediaGalleryMenuHorizontalAlign {
 

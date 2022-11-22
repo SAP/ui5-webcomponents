@@ -1,6 +1,9 @@
 /**
- * @lends sap.ui.webcomponents.fiori.types.MediaGalleryItemLayout.prototype
+ * @class
+ * @enum {string}
  * @public
+ * @author SAP SE
+ * @alias sap.ui.webcomponents.fiori.types.MediaGalleryItemLayout.prototype
  */
 enum MediaGalleryItemLayout {
 
