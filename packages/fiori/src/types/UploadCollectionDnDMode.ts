@@ -1,5 +1,3 @@
-import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
-
 /**
  * Different drag and drop overlay modes of UploadCollection.
  *

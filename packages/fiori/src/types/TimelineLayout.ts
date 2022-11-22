@@ -1,5 +1,3 @@
-import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
-
 /**
  * Available Timeline layout orientation
  * @lends sap.ui.webcomponents.fiori.types.TimelineLayout.prototype

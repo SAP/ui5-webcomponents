@@ -1,5 +1,3 @@
-import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
-
 /**
  * Different types of FCLLayout.
  * @lends sap.ui.webcomponents.fiori.types.FCLLayout.prototype

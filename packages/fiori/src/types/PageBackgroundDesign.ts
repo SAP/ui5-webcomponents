@@ -1,5 +1,3 @@
-import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
-
 /**
  * Available Page Background Design.
  * @lends sap.ui.webcomponents.fiori.types.PageBackgroundDesign.prototype
