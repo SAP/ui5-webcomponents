@@ -45,7 +45,8 @@
     "@ui5/webcomponents-base": "1.9.1",
     "@ui5/webcomponents-icons": "1.9.1",
     "@ui5/webcomponents-localization": "1.9.1",
-    "@ui5/webcomponents-theming": "1.9.1"
+    "@ui5/webcomponents-theming": "1.9.1",
+    "typescript": "^4.9.3"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.9.1",

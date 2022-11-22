@@ -1,23 +1,23 @@
-import CalendarType, { CalendarTypes } from "../types/CalendarType.js";
+import CalendarType from "../types/CalendarType.js";
 import { getCalendarType as getConfiguredCalendarType } from "../InitialConfiguration.js";
 
-let calendarType: CalendarTypes;
+let calendarType: CalendarType | undefined;
 
 /**
  * Returns the configured or default calendar type.
- * @returns { String } the effective calendar type
  * @public
+ * @returns { CalendarType } the effective calendar type
  */
-const getCalendarType = (): CalendarTypes => {
+const getCalendarType = (): CalendarType => {
 	if (calendarType === undefined) {
-		calendarType = getConfiguredCalendarType() as CalendarTypes;
+		calendarType = getConfiguredCalendarType();
 	}
 
-	if (CalendarType.isValid(calendarType)) {
+	if (calendarType && calendarType in CalendarType) {
 		return calendarType;
 	}
 
-	return CalendarTypes.Gregorian;
+	return CalendarType.Gregorian;
 };
 
 export { getCalendarType }; // eslint-disable-line

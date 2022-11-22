@@ -25,7 +25,7 @@ class FormSupport {
 			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.setAttribute("aria-hidden", "true");
 
-			nativeInput.addEventListener("focusin", event => element.focus());
+			nativeInput.addEventListener("focusin", event => element.getFocusDomRef().focus());
 
 			nativeInput.slot = "formSupport"; // Needed for IE - otherwise input elements are not part of the real DOM tree and are not detected by forms
 			element.appendChild(nativeInput);
@@ -82,6 +82,11 @@ class FormSupport {
 		}
 
 		if (currentElement) {
+			if (!currentElement.checkValidity()) {
+				currentElement.reportValidity();
+				return;
+			}
+
 			// eslint-disable-next-line no-undef
 			const submitPrevented = !currentElement.dispatchEvent(new SubmitEvent("submit", {
 				bubbles: true,

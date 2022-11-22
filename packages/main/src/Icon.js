@@ -328,7 +328,7 @@ class Icon extends UI5Element {
 		return this.ariaHidden;
 	}
 
-	get tabIndex() {
+	get _tabIndex() {
 		return this.interactive ? "0" : undefined;
 	}
 

@@ -297,7 +297,25 @@ describe("Testing events", () => {
 		assert.strictEqual(await eventResultRangeSlider.getProperty("endValue") , 4, "Both input event and change event are fired after user interaction");
 	});
 
+	it("Should fire change event after swapping the values", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
+		const rangeSlider = await browser.$("#test-slider");
+		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		await rangeSlider.setProperty("endValue", 3);
+		await firstHandle.dragAndDrop({ x: 300, y: 1 });
+
+		const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
+		const changeEventEndValue = await browser.execute(() => document.querySelector("#change-event-endValue").innerText);
+
+		assert.strictEqual(changeEventStartValue, "3", "Values are swapped prior to the firing of change event");
+		assert.strictEqual(changeEventEndValue, "4", "Values are swapped prior to the firing of change event");
+	});
+
 	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
 		const rangeSlider = await browser.$("#test-slider");
 		const eventResultRangeSlider = await browser.$("#test-result-slider");
 
@@ -306,7 +324,6 @@ describe("Testing events", () => {
 		assert.strictEqual(await eventResultRangeSlider.getProperty("endValue") , 4, "Change event is not fired if the value is the same as before the start of the action");
 	});
 });
-
 
 describe("Accessibility", async () => {
 	it("Aria attributes of the progress bar are set correctly", async () => {
