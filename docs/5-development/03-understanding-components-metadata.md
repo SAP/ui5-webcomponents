@@ -46,10 +46,6 @@ Properties of type `Object`, properties with `multiple` set to`true` and propert
 		"animationDuration": {
 			"type": Integer,
 		},
-		"width": {
-			"type": CSSSize,
-			"defaultValue": "",
-		},
 	},
 }
 ```
@@ -80,7 +76,6 @@ The `type` setting is required.
 | Type       | Class to Use                                       | Description                                                    |
 |------------|----------------------------------------------------|----------------------------------------------------------------|
 | Integer    | `@ui5/webcomponents-base/dist/types/Integer.js`    | Integer value                                                  |
-| CSSSize    | `@ui5/webcomponents-base/dist/types/CSSSize.js`    | Any valid CSS size definition (`px`, `rem`, etc.)              |
 | ValueState | `@ui5/webcomponents-base/dist/types/ValueState.js` | Enumeration with: `None`, `Error`, `Warning`, `Success` values |
 
 ## Slots

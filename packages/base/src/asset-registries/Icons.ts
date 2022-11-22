@@ -1,6 +1,8 @@
 import getSharedResource from "../getSharedResource.js";
 import IconCollectionsAlias from "../assets-meta/IconCollectionsAlias.js";
 import { getEffectiveDefaultIconCollection } from "../config/Icons.js";
+import { I18nText } from "../i18nBundle.js";
+import { TemplateFunction } from "../renderer/executeTemplate.js";
 
 type IconLoader = (collectionName: string) => Promise<CollectionData>;
 
@@ -12,7 +14,7 @@ type CollectionData = {
 		path: string,
 		paths: Array<string>,
 		ltr: boolean,
-		acc: object
+		acc: I18nText,
 	}>,
 };
 
@@ -21,8 +23,8 @@ type IconData = {
 	packageName: string,
 	pathData: string | Array<string>,
 	ltr: boolean,
-	accData: object,
-	customTemplate?: string,
+	accData: I18nText,
+	customTemplate?: TemplateFunction,
 	viewBox?: string,
 };
 
@@ -152,4 +154,8 @@ export {
 	getIconDataSync,
 	registerIcon,
 	_getRegisteredNames,
+};
+
+export type {
+	IconData,
 };

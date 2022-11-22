@@ -7,6 +7,30 @@
 	overflow: auto;
 }
 
+:host([_breakpoint="S"])::part(navigator),
+:host([_breakpoint="S"])::part(step-content) {
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+:host([_breakpoint="M"])::part(navigator),
+:host([_breakpoint="M"])::part(step-content) {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+:host([_breakpoint="L"])::part(navigator),
+:host([_breakpoint="L"])::part(step-content) {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
+:host([_breakpoint="XL"])::part(navigator),
+:host([_breakpoint="XL"])::part(step-content) {
+	padding-left: 3rem;
+	padding-right: 3rem;
+}
+
 .ui5-wiz-root {
 	height: 100%;
 	width: 100%;
@@ -24,7 +48,8 @@
 .ui5-wiz-content-item {
 	display: block;
 	box-sizing: border-box;
-	padding: 1rem 2rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
 .ui5-wiz-content-item-wrapper {
@@ -72,7 +97,8 @@
 .ui5-wiz-nav {
 	box-sizing: border-box;
 	height: 4rem;
-	padding: 1rem 2rem;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	user-select: none;
