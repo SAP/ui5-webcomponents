@@ -4,7 +4,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
  * @lends sap.ui.webcomponents.fiori.types.MediaGalleryItemLayout.prototype
  * @public
  */
-const MediaGalleryItemLayouts = {
+enum MediaGalleryItemLayouts {
 
 	/**
 	 * Recommended to use when the item contains an image.<br>
@@ -12,7 +12,7 @@ const MediaGalleryItemLayouts = {
 	 * @public
 	 * @type {Square}
 	 */
-	 Square: "Square",
+	 Square = "Square",
 
 	/**
 	 * Recommended to use when the item contains video content.<br>
@@ -21,24 +21,7 @@ const MediaGalleryItemLayouts = {
 	 * @public
 	 * @type {Wide}
 	 */
-	Wide: "Wide",
+	Wide = "Wide",
 };
 
-/**
- * @class
- * Defines the layout of the content displayed in the <code>ui5-media-gallery-item</code>.
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.MediaGalleryItemLayout
- * @public
- * @enum {string}
- */
-class MediaGalleryItemLayout extends DataType {
-	static isValid(value) {
-		return !!MediaGalleryItemLayouts[value];
-	}
-}
-
-MediaGalleryItemLayout.generateTypeAccessors(MediaGalleryItemLayouts);
-
-export default MediaGalleryItemLayout;
+export default MediaGalleryItemLayouts;

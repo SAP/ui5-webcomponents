@@ -5,13 +5,13 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
  * @lends sap.ui.webcomponents.fiori.types.FCLLayout.prototype
  * @public
  */
-const FCLLayouts = {
+enum FCLLayouts {
 	/**
 	 * The layout will display 1 column.
 	 * @public
 	 * @type {OneColumn}
 	 */
-	OneColumn: "OneColumn",
+	OneColumn = "OneColumn",
 
 	/**
 	 *
@@ -24,7 +24,7 @@ const FCLLayouts = {
 	 * @type {TwoColumnsStartExpanded}
 	 * @public
 	 */
-	TwoColumnsStartExpanded: "TwoColumnsStartExpanded",
+	TwoColumnsStartExpanded = "TwoColumnsStartExpanded",
 
 	/**
 	 * Desktop: 33/67/-  Start and Mid (expanded) columns are displayed
@@ -36,7 +36,7 @@ const FCLLayouts = {
 	 * @type {TwoColumnsMidExpanded}
 	 * @public
 	 */
-	TwoColumnsMidExpanded: "TwoColumnsMidExpanded",
+	TwoColumnsMidExpanded = "TwoColumnsMidExpanded",
 
 	/**
 	 * Desktop: 25/50/25 Start, Mid (expanded) and End columns are displayed
@@ -48,7 +48,7 @@ const FCLLayouts = {
 	 * @type {ThreeColumnsMidExpanded}
 	 * @public
 	 */
-	ThreeColumnsMidExpanded: "ThreeColumnsMidExpanded",
+	ThreeColumnsMidExpanded = "ThreeColumnsMidExpanded",
 
 	/**
 	 * Desktop: 25/25/50 Start, Mid and End (expanded) columns are displayed
@@ -60,7 +60,7 @@ const FCLLayouts = {
 	 * @public
 	 * @type ThreeColumnsEndExpanded
 	 */
-	ThreeColumnsEndExpanded: "ThreeColumnsEndExpanded",
+	ThreeColumnsEndExpanded = "ThreeColumnsEndExpanded",
 
 	/**
 	 * Desktop: 67/33/0  Start (expanded) and Mid columns are displayed, End is accessible by layout arrows
@@ -73,7 +73,7 @@ const FCLLayouts = {
 	 * @public
 	 * @type ThreeColumnsStartExpandedEndHidden
 	 */
-	ThreeColumnsStartExpandedEndHidden: "ThreeColumnsStartExpandedEndHidden",
+	ThreeColumnsStartExpandedEndHidden = "ThreeColumnsStartExpandedEndHidden",
 
 	/**
 	 * Desktop: 33/67/0  Start and Mid (expanded) columns are displayed, End is accessible by a layout arrow
@@ -86,7 +86,7 @@ const FCLLayouts = {
 	 * @public
 	 * @type ThreeColumnsMidExpandedEndHidden
 	 */
-	ThreeColumnsMidExpandedEndHidden: "ThreeColumnsMidExpandedEndHidden",
+	ThreeColumnsMidExpandedEndHidden = "ThreeColumnsMidExpandedEndHidden",
 
 	/**
 	 * Desktop: -/100/-  only the Mid column is displayed
@@ -98,7 +98,7 @@ const FCLLayouts = {
 	 * @public
 	 * @type MidColumnFullScreen
 	 */
-	MidColumnFullScreen: "MidColumnFullScreen",
+	MidColumnFullScreen = "MidColumnFullScreen",
 
 	/**
 	 * Desktop: -/-/100  only the End column is displayed
@@ -110,25 +110,7 @@ const FCLLayouts = {
 	 * @public
 	 * @type EndColumnFullScreen
 	 */
-	EndColumnFullScreen: "EndColumnFullScreen",
+	EndColumnFullScreen = "EndColumnFullScreen",
 };
 
-/**
- * The number of columns of <code>ui5-flexible-collcolumn-layout</code>.
- *
- * @class
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.FCLLayout
- * @public
- * @enum {string}
- */
-class FCLLayout extends DataType {
-	static isValid(value) {
-		return !!FCLLayouts[value];
-	}
-}
-
-FCLLayout.generateTypeAccessors(FCLLayouts);
-
-export default FCLLayout;
+export default FCLLayouts;

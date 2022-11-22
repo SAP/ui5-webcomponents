@@ -5,7 +5,7 @@ import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
  * @lends sap.ui.webcomponents.fiori.types.PageBackgroundDesign.prototype
  * @public
  */
-const PageBackgroundDesigns = {
+enum PageBackgroundDesigns {
 
 	/**
 	 * Page background color when a List is set as the Page content.
@@ -13,7 +13,7 @@ const PageBackgroundDesigns = {
 	 * @type {List}
 	 * @public
 	 */
-	List: "List",
+	List = "List",
 
 	/**
 	 * A solid background color dependent on the theme.
@@ -21,7 +21,7 @@ const PageBackgroundDesigns = {
 	 * @type {Solid}
 	 * @public
  	 */
-	Solid: "Solid",
+	Solid = "Solid",
 
 	/**
 	 * Transparent background for the page.
@@ -29,25 +29,7 @@ const PageBackgroundDesigns = {
 	 * @type {Transparent}
 	 * @public
 	 */
-	Transparent: "Transparent",
+	Transparent = "Transparent",
 };
 
-/**
- * Available Page Background Design.
- *
- * @class
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.PageBackgroundDesign
- * @public
- * @enum {string}
- */
-class PageBackgroundDesign extends DataType {
-	static isValid(value) {
-		return !!PageBackgroundDesigns[value];
-	}
-}
-
-PageBackgroundDesign.generateTypeAccessors(PageBackgroundDesigns);
-
-export default PageBackgroundDesign;
+export default PageBackgroundDesigns;
