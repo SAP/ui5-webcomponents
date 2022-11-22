@@ -3,7 +3,7 @@
  * @lends sap.ui.webcomponents.fiori.types.UploadState.prototype
  * @public
  */
-enum UploadStates {
+enum UploadState {
 	/**
 	 * The file has been uploaded successfully.
 	 * @public
@@ -31,6 +31,6 @@ enum UploadStates {
 	 * @type {Uploading}
 	 */
 	Uploading = "Uploading",
-};
+}
 
-export default UploadStates;
+export default UploadState;

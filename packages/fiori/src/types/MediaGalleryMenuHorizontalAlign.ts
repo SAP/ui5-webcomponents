@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.MediaGalleryMenuHorizontalAlign.prototype
  * @public
  */
-enum MediaGalleryMenuHorizontalAligns {
+enum MediaGalleryMenuHorizontalAlign {
 
 	/**
 	 * Displays the menu on the left side of the target.
@@ -17,6 +17,6 @@ enum MediaGalleryMenuHorizontalAligns {
 	 * @type {Right}
 	 */
 	Right = "Right",
-};
+}
 
-export default MediaGalleryMenuHorizontalAligns;
+export default MediaGalleryMenuHorizontalAlign;

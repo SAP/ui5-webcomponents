@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.MediaGalleryLayout.prototype
  * @public
  */
-enum MediaGalleryLayouts {
+enum MediaGalleryLayout {
 
 	/**
 	 * The layout is determined automatically.
@@ -24,6 +24,6 @@ enum MediaGalleryLayouts {
 	 * @type {Horizontal}
 	 */
 	Horizontal = "Horizontal",
-};
+}
 
-export default MediaGalleryLayouts;
+export default MediaGalleryLayout;

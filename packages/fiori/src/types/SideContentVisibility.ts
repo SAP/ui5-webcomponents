@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.SideContentVisibility.prototype
  * @public
  */
-enum SideContentVisibilityTypes {
+enum SideContentVisibility {
 	/**
 	 * Show the side content on any breakpoint
 	 * @public
@@ -37,6 +37,6 @@ enum SideContentVisibilityTypes {
 	 * @type {NeverShow}
 	 */
 	NeverShow = "NeverShow",
-};
+}
 
-export default SideContentVisibilityTypes;
+export default SideContentVisibility;

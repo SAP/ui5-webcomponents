@@ -3,7 +3,7 @@
  * @lends sap.ui.webcomponents.fiori.types.TimelineLayout.prototype
  * @public
  */
-enum Layouts {
+enum TimelineLayout {
 	/**
 	 * Vertical layout
 	 * Default type
@@ -18,6 +18,6 @@ enum Layouts {
 	 * @type {Horizontal}
 	 */
 	Horizontal= "Horizontal",
-};
+}
 
-export default Layouts;
+export default TimelineLayout;

@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.MediaGalleryMenuVerticalAlign.prototype
  * @public
  */
-enum MediaGalleryMenuVerticalAligns {
+enum MediaGalleryMenuVerticalAlign {
 	/**
 	 * Displays the menu at the top of the reference control.
 	 * @public
@@ -16,6 +16,6 @@ enum MediaGalleryMenuVerticalAligns {
 	 * @type {Bottom}
 	 */
 	Bottom = "Bottom",
-};
+}
 
-export default MediaGalleryMenuVerticalAligns;
+export default MediaGalleryMenuVerticalAlign;

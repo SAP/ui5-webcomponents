@@ -4,7 +4,7 @@
  * @public
  * @since 1.5.0
  */
-enum IllustrationMessageSizes {
+enum IllustrationMessageSize {
 	/**
 	 * Automatically decides the <code>Illustration</code> size (<code>Base</code>, <code>Spot</code>,
 	 * <code>Dialog</code>, or <code>Scene</code>) depending on the <code>IllustratedMessage</code> container width.
@@ -47,6 +47,6 @@ enum IllustrationMessageSizes {
 	 * @type {Scene}
 	 */
 	Scene = "Scene",
-};
+}
 
-export default IllustrationMessageSizes;
+export default IllustrationMessageSize;

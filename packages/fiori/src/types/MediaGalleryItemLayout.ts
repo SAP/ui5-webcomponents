@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.MediaGalleryItemLayout.prototype
  * @public
  */
-enum MediaGalleryItemLayouts {
+enum MediaGalleryItemLayout {
 
 	/**
 	 * Recommended to use when the item contains an image.<br>
@@ -20,6 +20,6 @@ enum MediaGalleryItemLayouts {
 	 * @type {Wide}
 	 */
 	Wide = "Wide",
-};
+}
 
-export default MediaGalleryItemLayouts;
+export default MediaGalleryItemLayout;

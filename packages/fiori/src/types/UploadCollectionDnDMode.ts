@@ -4,7 +4,7 @@
  * @lends sap.ui.webcomponents.fiori.types.UploadCollectionDnDOverlayMode.prototype
  * @private
  */
-enum DndOverlayModes {
+enum UploadCollectionDnDOverlayMode {
 	/**
 	 * No drag or drop indication.
 	 * @private
@@ -25,6 +25,6 @@ enum DndOverlayModes {
 	 * @type {Drop}
 	 */
 	Drop = "Drop",
-};
+}
 
-export default DndOverlayModes;
+export default UploadCollectionDnDOverlayMode;

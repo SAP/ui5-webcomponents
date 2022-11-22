@@ -3,7 +3,7 @@
  * @lends sap.ui.webcomponents.fiori.types.FCLLayout.prototype
  * @public
  */
-enum FCLLayouts {
+enum FCLLayout {
 	/**
 	 * The layout will display 1 column.
 	 * @public
@@ -109,6 +109,6 @@ enum FCLLayouts {
 	 * @type EndColumnFullScreen
 	 */
 	EndColumnFullScreen = "EndColumnFullScreen",
-};
+}
 
-export default FCLLayouts;
+export default FCLLayout;

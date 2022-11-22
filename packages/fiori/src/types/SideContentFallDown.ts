@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.SideContentFallDown.prototype
  * @public
  */
-enum SideContentFallDownTypes {
+enum SideContentFallDown {
 	/**
 	 * Side content falls down on breakpoints below XL
 	 * @public
@@ -30,6 +30,6 @@ enum SideContentFallDownTypes {
 	 * @type {OnMinimumWidth}
 	 */
 	OnMinimumWidth = "OnMinimumWidth",
-};
+}
 
-export default SideContentFallDownTypes;
+export default SideContentFallDown;

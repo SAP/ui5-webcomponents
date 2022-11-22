@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.ViewSettingsDialogMode.prototype
  * @public
  */
-enum ModeTypes {
+enum ViewSettingsDialogMode {
 	/**
 	 * Default type
 	 * @since 1.0.0-rc.16
@@ -18,6 +18,6 @@ enum ModeTypes {
 	 * @type {Filter}
 	 */
 	Filter = "Filter",
-};
+}
 
-export default ModeTypes;
+export default ViewSettingsDialogMode;

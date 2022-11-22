@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.BarDesign.prototype
  * @public
  */
-enum BarTypes {
+enum BarDesign {
 	/**
 	 * Default type
 	 * @public
@@ -30,6 +30,6 @@ enum BarTypes {
 	 * @type {FloatingFooter}
 	 */
 	FloatingFooter = "FloatingFooter",
-};
+}
 
-export default BarTypes;
+export default BarDesign;

@@ -2,7 +2,7 @@
  * @lends sap.ui.webcomponents.fiori.types.IllustrationMessageType.prototype
  * @public
  */
-enum IllustrationMessageTypes {
+enum IllustrationMessageType {
 	/**
 	 * "Before Search" illustration type.
 	 * @public
@@ -32,7 +32,7 @@ enum IllustrationMessageTypes {
 	 * @public
 	 * @type {NoMail_v1}
 	 */
-	NoMail_v1 = "NoMail_v1",
+	NoMail_v1 = "NoMail_v1", // eslint-disable-line
 	/**
 	 * "No Entries" illustration type.
 	 * @public
@@ -56,7 +56,7 @@ enum IllustrationMessageTypes {
 	 * @public
 	 * @type {NoSavedItems_v1}
 	 */
-	NoSavedItems_v1 = "NoSavedItems_v1",
+	NoSavedItems_v1 = "NoSavedItems_v1", // eslint-disable-line
 	/**
 	 * "No Search Results" illustration type.
 	 * @public
@@ -74,7 +74,7 @@ enum IllustrationMessageTypes {
 	 * @public
 	 * @type {NoTasks_v1}
 	 */
-	NoTasks_v1 = "NoTasks_v1",
+	NoTasks_v1 = "NoTasks_v1", // eslint-disable-line
 	/**
 	 * "No Dimensions Set" illustration type.
 	 * @public
@@ -550,6 +550,6 @@ enum IllustrationMessageTypes {
 	*/
 	TntUser2 = "TntUser2",
 
-};
+}
 
-export default IllustrationMessageTypes;
+export default IllustrationMessageType;

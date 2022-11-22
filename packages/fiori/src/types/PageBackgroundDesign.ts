@@ -3,7 +3,7 @@
  * @lends sap.ui.webcomponents.fiori.types.PageBackgroundDesign.prototype
  * @public
  */
-enum PageBackgroundDesigns {
+enum PageBackgroundDesign {
 
 	/**
 	 * Page background color when a List is set as the Page content.
@@ -28,6 +28,6 @@ enum PageBackgroundDesigns {
 	 * @public
 	 */
 	Transparent = "Transparent",
-};
+}
 
-export default PageBackgroundDesigns;
+export default PageBackgroundDesign;
