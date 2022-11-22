@@ -1,6 +1,6 @@
 /**
  * Available Timeline layout orientation
- * 
+ *
  * @class
  * @enum {string}
  * @public

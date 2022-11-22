@@ -1,6 +1,6 @@
 /**
  * Different types of UploadState.
- * 
+ *
  * @class
  * @enum {string}
  * @public
