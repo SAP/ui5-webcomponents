@@ -1,6 +1,6 @@
 /**
  * Different types of IllustrationMessageSize.
- * 
+ *
  * @class
  * @enum {string}
  * @public

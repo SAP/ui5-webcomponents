@@ -1,6 +1,6 @@
 /**
  * Available Page Background Design.
- * 
+ *
  * @class
  * @enum {string}
  * @public

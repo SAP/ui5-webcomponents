@@ -1,6 +1,6 @@
 /**
  * Different types of FCLLayout.
- * 
+ *
  * @class
  * @enum {string}
  * @public
