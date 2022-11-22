@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.UploadState.prototype
+ * @alias sap.ui.webcomponents.fiori.types.UploadState
  */
 enum UploadState {
 	/**

@@ -3,7 +3,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.MediaGalleryMenuVerticalAlign.prototype
+ * @alias sap.ui.webcomponents.fiori.types.MediaGalleryMenuVerticalAlign
  */
 enum MediaGalleryMenuVerticalAlign {
 	/**

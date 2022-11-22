@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.IllustrationMessageSize.prototype
+ * @alias sap.ui.webcomponents.fiori.types.IllustrationMessageSize
  * @since 1.5.0
  */
 enum IllustrationMessageSize {
