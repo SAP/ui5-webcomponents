@@ -28,7 +28,7 @@
 	border-bottom-right-radius: var(--_ui5_card_header_focus_bottom_radius);
 }
 
-.ui5-card-header-focusable-element:focus {
+.ui5-card-header-focusable-element {
 	outline: none;
 }
 
