@@ -379,22 +379,11 @@ class Tree extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	/*
-	 * Finds the given item in the internal <code>ui5-list</code>.
-	 * Useful before calling <code>ui5-list</code> methods.
-	 *
-	 * @param {HTMLElement} item The item to be found
-	 * @protected
-	 */
-	findItemInList(treeItem) {
-		return this.list.getItems().find(li => li === treeItem);
-	}
-
 	_onListItemStepIn(event) {
 		const treeItem = event.detail.item;
 		if (treeItem.items.length > 0) {
 			const firstChild = treeItem.items[0];
-			const firstChildListItem = this.findItemInList(firstChild);
+			const firstChildListItem = this._getListItemForTreeItem(firstChild);
 			firstChildListItem && this.list.focusItem(firstChildListItem);
 		}
 	}
@@ -403,7 +392,7 @@ class Tree extends UI5Element {
 		const treeItem = event.detail.item;
 		if (treeItem.parentElement !== this) {
 			const parent = treeItem.parentElement;
-			const parentListItem = this.findItemInList(parent);
+			const parentListItem = this._getListItemForTreeItem(parent);
 			parentListItem && this.list.focusItem(parentListItem);
 		}
 	}
@@ -430,15 +419,19 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemMouseOver(event) {
-		const treeItem = event.target.treeItem;
+		const treeItem = event.target;
 
-		this.fireEvent("item-mouseover", { item: treeItem });
+		if (treeItem instanceof TreeItem || treeItem instanceof TreeItemCustom) {
+			this.fireEvent("item-mouseover", { item: treeItem });
+		}
 	}
 
 	_onListItemMouseOut(event) {
-		const treeItem = event.target.treeItem;
+		const treeItem = event.target;
 
-		this.fireEvent("item-mouseout", { item: treeItem });
+		if (treeItem instanceof TreeItem || treeItem instanceof TreeItemCustom) {
+			this.fireEvent("item-mouseout", { item: treeItem });
+		}
 	}
 
 	_onListSelectionChange(event) {
@@ -467,7 +460,7 @@ class Tree extends UI5Element {
 	 * @protected
 	 */
 	_getListItemForTreeItem(item) {
-		return this.list.items.find(listItem => listItem.treeItem === item);
+		return this.list.getItems().find(listItem => listItem === item);
 	}
 
 	/**

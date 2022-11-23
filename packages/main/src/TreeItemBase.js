@@ -38,7 +38,6 @@ const metadata = {
 		 * @type {sap.ui.webc.base.types.Integer}
 		 * @protected
 		 * @defaultValue 1
-		 * TODO - may be removed
 		 */
 		level: {
 			type: Integer,
@@ -54,6 +53,17 @@ const metadata = {
 		 */
 		icon: {
 			type: String,
+		},
+
+		/**
+		 * Defines whether the tree list item should display an expand/collapse button.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @protected
+		 */
+		showToggleButton: {
+			type: Boolean,
 		},
 
 		/**
@@ -297,6 +307,7 @@ class TreeItemBase extends ListItem {
 
 	onBeforeRendering() {
 		this.actionable = false;
+		this.showToggleButton = this.requiresToggleButton;
 	}
 
 	get classes() {
@@ -331,10 +342,6 @@ class TreeItemBase extends ListItem {
 
 	get _toggleIconName() {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
-	}
-
-	get showToggleButton() {
-		return this.hasChildren || this.items.length > 0;
 	}
 
 	get _showToggleButtonBeginning() {
