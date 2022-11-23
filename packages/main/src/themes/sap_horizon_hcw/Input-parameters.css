@@ -21,6 +21,7 @@
 	--_ui5_input_value_state_error_hover_background: var(--sapField_InvalidBackground);
 	--_ui5_input_value_state_error_warning_placeholder_font_weight: bold;
 	--_ui5_input_focus_outline_color: var(--sapField_Active_BorderColor);
+	--_ui5_input_icon_wrapper_height: 100%;
 }
 
 [data-ui5-compact-size],
