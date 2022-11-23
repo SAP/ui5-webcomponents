@@ -122,6 +122,10 @@ const metadata = {
 		hasTitle: {
 			type: Boolean,
 		},
+
+		_hasImageContent: {
+			type: Boolean,
+		},
 	},
 	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
 		/**
@@ -135,6 +139,20 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
+		},
+
+		/**
+		 * <b>Note:</b> While the slot allows option for setting custom avatar, to match the
+		 * design guidelines, please use the <code>ui5-avatar</code> with it`s default size - S.
+		 * <b>Note:</b> If bigger <code>ui5-avatar</code> needs to be used, then the size of the
+		 * <code>ui5-li</code> should be customized in order to fit.
+		 * @type {HTMLElement[]}
+		 * @since 1.10.0
+		 * @slot
+		 * @public
+		 */
+		imageContent: {
+			type: HTMLElement,
 		},
 	},
 };
@@ -179,6 +197,7 @@ class StandardListItem extends ListItem {
 	onBeforeRendering(...params) {
 		super.onBeforeRendering(...params);
 		this.hasTitle = !!this.textContent;
+		this._hasImageContent = this.hasImageContent;
 	}
 
 	get displayImage() {
@@ -191,6 +210,10 @@ class StandardListItem extends ListItem {
 
 	get displayIconEnd() {
 		return (this.icon && this.iconEnd);
+	}
+
+	get hasImageContent() {
+		return !!this.imageContent.length;
 	}
 
 	static get dependencies() {

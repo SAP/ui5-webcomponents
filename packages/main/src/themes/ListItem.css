@@ -75,7 +75,7 @@
 	height: 5rem;
 }
 
-:host([_has-image-slot]) {
+:host([_has-image-content]) {
 	height: 5rem;
 }
 :host([image]) .ui5-li-content {
@@ -159,7 +159,7 @@
 }
 
 .ui5-li-img,
-.ui5-li-imgSlot {
+.ui5-li-imgContent {
 	min-width: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
 	margin-top: var(--_ui5_list_item_img_top_margin);

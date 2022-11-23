@@ -149,10 +149,6 @@ const metadata = {
 		_level: {
 			type: Integer,
 		},
-
-		_hasImageSlot: {
-			type: Boolean,
-		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -180,20 +176,6 @@ const metadata = {
 		 * @public
 		 */
 		deleteButton: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * <b>Note:</b> While the slot allows option for setting custom avatar, to match the
-		 * design guidelines, please use the <code>ui5-avatar</code> with it`s default size - S.
-		 * <b>Note:</b> If bigger <code>ui5-avatar</code> needs to be used, then the size of the
-		 * <code>ui5-li</code> should be customized in order to fit.
-		 * @type {HTMLElement[]}
-		 * @since 1.10.0
-		 * @slot
-		 * @public
-		 */
-		imageSlot: {
 			type: HTMLElement,
 		},
 	},
@@ -458,11 +440,6 @@ class ListItem extends ListItemBase {
 
 	get hasDeleteButtonSlot() {
 		return !!this.deleteButton.length;
-	}
-
-	get hasImageSlot() {
-		this._hasImageSlot = !!this.imageSlot.length;
-		return this._hasImageSlot;
 	}
 
 	get _accessibleNameRef() {
