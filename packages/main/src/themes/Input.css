@@ -21,11 +21,11 @@
 	word-spacing: normal;
 	text-align: start;
 	transition: var(--_ui5_input_transition);
-	background-color: var(--_ui5_input_background_color);
 }
 
 :host(:not([disabled])) {
 	background: var(--sapField_BackgroundStyle);
+	background-color: var(--_ui5_input_background_color);
 }
 
 :host([focused]:not([opened])) {
