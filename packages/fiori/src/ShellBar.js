@@ -166,13 +166,6 @@ const metadata = {
 		/**
 		 * @private
 		 */
-		showSearchField: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
 		coPilotActive: {
 			type: Boolean,
 		},
