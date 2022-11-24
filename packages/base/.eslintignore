@@ -2,6 +2,7 @@
 test
 lib
 dist
+jsdoc-dist
 src/thirdparty
 bundle.esm.js
 bundle.es5.js
