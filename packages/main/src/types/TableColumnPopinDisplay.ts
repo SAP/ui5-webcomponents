@@ -5,9 +5,9 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TableCellPopinDisplay
+ * @alias sap.ui.webcomponents.main.types.TableColumnPopinDisplay
  */
-enum TableCellPopinDisplay {
+enum TableColumnPopinDisplay {
 	/**
 	 * default type
 	 * @public
@@ -23,4 +23,4 @@ enum TableCellPopinDisplay {
 	Inline = "Inline",
 }
 
-export default TableCellPopinDisplay;
+export default TableColumnPopinDisplay;
