@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "1.9.0",
+  "version": "1.9.1",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -21,6 +21,8 @@
     "directory": "packages/tools"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
     "@wdio/cli": "^7.19.7",
     "@wdio/devtools-service": "^7.19.7",
     "@wdio/dot-reporter": "^7.19.7",

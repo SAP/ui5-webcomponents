@@ -1,6 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
+import ListItemType from "./types/ListItemType.js";
+
+import HasPopup from "./types/HasPopup.js";
+
 /**
  * @public
  */
@@ -135,6 +139,59 @@ const metadata = {
 		title: {
 			type: String,
 		},
+
+		/**
+
+		 * Defines the visual indication and behavior of the list items.
+		 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
+		 * <br><br>
+		 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
+		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
+		 *
+		 * @type {sap.ui.webcomponents.main.types.ListItemType}
+		 * @defaultvalue "Active"
+		 * @public
+		*/
+		type: {
+			type: ListItemType,
+			defaultValue: ListItemType.Active,
+		},
+
+		/**
+		 * The navigated state of the list item.
+		 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+		 *
+		 * @public
+		 * @type {boolean}
+		 * @since 1.10.0
+		 */
+		 navigated: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
+		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @since 1.10.0
+		 * @private
+		 */
+		ariaHaspopup: {
+			type: HasPopup,
+			noAttribute: true,
+		},
 	},
 	managedSlots: true,
 	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
@@ -185,6 +242,10 @@ class TreeItem extends UI5Element {
 
 	get requiresToggleButton() {
 		return this.hasChildren || this.items.length > 0;
+	}
+
+	get typeNavigation() {
+		return this.type === ListItemType.Navigation;
 	}
 
 	/**

@@ -1,13 +1,23 @@
 <ui5-responsive-popover
 	vertical-align="Top"
 	class="ui5-side-navigation-popover"
+	aria-labelledby="{{_id}}-sideNavigationPopoverText"
+	aria-modal="true"
 >
+	<span id="{{_id}}-sideNavigationPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
+
 	<ui5-list
 		mode="None"
+		.ariaRoleDescription="{{ariaRoleDescPopoverNavigationList}}"
+		accessible-role="tree"
 		@ui5-item-click="{{handleListItemClick}}"
 	>
 		<ui5-li
 			title="{{_popoverContent.mainItem._tooltip}}"
+			accessible-role="treeitem"
+			_level="1"
+			aria-selected="{{this.selected}}"
+			.ariaRoleDescription="{{ariaRoleDescPopoverNavigationListItem}}"
 			?selected="{{_popoverContent.mainItemSelected}}"
 			.associatedItem="{{_popoverContent.mainItem}}"
 		>{{_popoverContent.mainItem.text}}</ui5-li>
@@ -15,6 +25,10 @@
 		{{#each _popoverContent.subItems}}
 			<ui5-li
 				title="{{this._tooltip}}"
+				accessible-role="treeitem"
+				_level="2"
+				aria-selected="{{this.selected}}"
+				.ariaRoleDescription="{{ariaRoleDescPopoverNavigationListItem}}"
 				?selected="{{this.selected}}"
 				.associatedItem="{{this}}"
 			>{{this.text}}</ui5-li>

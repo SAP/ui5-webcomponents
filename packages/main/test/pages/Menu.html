@@ -54,17 +54,83 @@
 		<ui5-switch id="direction" text-on="RTL" text-off="LTR"></ui5-switch>
 	</div>
 
+	<header class="header">
+		<h3 class="header-title">Prevent "before-open" event</h3>
+	</header>
+	<div class="samples-margin">
+		<ui5-switch id="preventBeforeOpen" text-on="Yes" text-off="No"></ui5-switch>
+	</div>
+
+	<header class="header">
+		<h3 class="header-title">Prevent "before-close" event</h3>
+	</header>
+	<div class="samples-margin">
+		<ui5-switch id="preventBeforeClose" text-on="Yes" text-off="No"></ui5-switch>
+	</div>
+
+	<header class="header">
+		<h3 class="header-title">open/opener</h3>
+	</header>
+	<div class="samples-margin">
+		<ui5-button id="btnAddOpener">Add opener</ui5-button>
+		<ui5-button id="btnRemoveOpener">Remove opener</ui5-button>
+		<ui5-toggle-button id="btnToggleOpen">Toggle open</ui5-toggle-button> <br/>
+		<ui5-input id="openerInput"></ui5-input>
+	</div>
+
+	<header class="header">
+		<h3 class="header-title">Event logger</h3>
+	</header>
+	<div class="samples-margin">
+		<ui5-input id="eventLogger" style="width: 100%;"></ui5-input>
+	</div>
+
 	<script>
 		btnOpen.accessibilityAttributes = {
 			hasPopup: "Menu",
 		};
 
-		btnOpen.addEventListener("click", function(event) {
+		btnOpen.addEventListener("click", function() {
 			menu.showAt(btnOpen);
 		});
 
-		menu.addEventListener("ui5-item-click", function(event){
+		btnAddOpener.addEventListener("click", function() {
+			menu.opener="btnToggleOpen";
+		});
+
+		btnRemoveOpener.addEventListener("click", function() {
+			menu.opener = "";
+		});
+
+		btnToggleOpen.addEventListener("click", function() {
+			menu.open = btnToggleOpen.pressed;
+		});
+
+		menu.addEventListener("ui5-item-click", function(event) {
 			selectionInput.value = event.detail.text;
+		});
+
+		menu.addEventListener("ui5-before-open", function(event) {
+			eventLogger.value = "";
+			preventBeforeOpen.checked && event.preventDefault();
+			eventLogger.value = "* [before-open]" + (preventBeforeOpen.checked ? "[prevented]" : "") + " ";
+		});
+
+		menu.addEventListener("ui5-after-open", function() {
+			var opener = menu.opener.id ? menu.opener.id : menu.opener;
+			openerInput.value = opener;
+			eventLogger.value += "* [after-open] ";
+		});
+
+		menu.addEventListener("ui5-before-close", function(event) {
+			preventBeforeClose.checked && event.preventDefault();
+			eventLogger.value += "* [before-close]" + (event.detail.escPressed ? "[Esc]" : "") + (preventBeforeClose.checked ? "[prevented]" : "") + " ";
+		});
+
+		menu.addEventListener("ui5-after-close", function() {
+			openerInput.value = "";
+			btnToggleOpen.pressed = false;
+			eventLogger.value += "* [after-close]";
 		});
 
 		direction.addEventListener("change", function() {

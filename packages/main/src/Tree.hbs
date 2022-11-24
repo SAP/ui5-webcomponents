@@ -5,6 +5,7 @@
     .noDataText="{{noDataText}}"
     .accessibleRole="{{_role}}"
     .accessibleName="{{_label}}"
+	.accessibleRoleDescription="{{accessibleRoleDescription}}"
     @ui5-item-click="{{_onListItemClick}}"
     @ui5-item-delete="{{_onListItemDelete}}"
     @ui5-selection-change="{{_onListSelectionChange}}"
@@ -13,7 +14,7 @@
     <slot name="header" slot="header"></slot>
     {{#each _listItems}}
         <ui5-li-tree
-            type="Active"
+            .type="{{this.treeItem.type}}"
             level="{{this.level}}"
             icon="{{this.treeItem.icon}}"
             ?indeterminate="{{this.treeItem.indeterminate}}"
@@ -34,8 +35,19 @@
             @ui5-step-out="{{../_onListItemStepOut}}"
             @mouseover="{{../_onListItemMouseOver}}"
             @mouseout="{{../_onListItemMouseOut}}"
+            .accessibleRoleDescription="{{this.treeItem.accessibleRoleDescription}}"
+            .ariaHaspopup="{{this.treeItem.ariaHaspopup}}"
             exportparts="icon, toggle-icon"
+            .navigated='{{this.treeItem.navigated}}'
         >
+        {{#if typeNavigation}}
+			<ui5-icon name ="slim-arrow-right"></ui5-icon>
+		{{/if}}
+
+        {{#if navigated}}
+			<div class="ui5-li-navigated"></div>
+		{{/if}}
+
             {{> treeListItemContent}}
         </ui5-li-tree>
     {{/each}}

@@ -1,3 +1,4 @@
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
@@ -18,6 +19,10 @@ import {
 
 // Styles
 import styles from "./generated/themes/ListItem.css.js";
+import HasPopup from "./types/HasPopup.js";
+
+// Icons
+import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 
 /**
  * @public
@@ -28,9 +33,9 @@ const metadata = {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.
-		 * Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>.
+		 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
 		 * <br><br>
-		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover,
+		 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *
 		 * @type {sap.ui.webcomponents.main.types.ListItemType}
@@ -88,6 +93,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
 		 * Used to define the role of the list item.
 		 *
 		 * @private
@@ -105,11 +123,32 @@ const metadata = {
 			defaultValue: ListMode.None,
 		},
 
-		_ariaHasPopup: {
-			type: String,
+		/**
+		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @since 1.10.0
+		 * @private
+		 */
+		ariaHaspopup: {
+			type: HasPopup,
 			noAttribute: true,
 		},
 
+		/**
+		 * The navigated state of the list item.
+		 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+		 *
+		 * @public
+		 * @type {boolean}
+		 * @since 1.10.0
+		 */
+		navigated: {
+			type: Boolean,
+		},
+
+		_level: {
+			type: Integer,
+		},
 	},
 	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
 		/**
@@ -196,7 +235,7 @@ class ListItem extends ListItemBase {
 	}
 
 	onBeforeRendering(...params) {
-		this.actionable = (this.type === ListItemType.Active) && (this._mode !== ListMode.Delete);
+		this.actionable = (this.type === ListItemType.Active || this.type === ListItemType.Navigation) && (this._mode !== ListMode.Delete);
 	}
 
 	onEnterDOM() {
@@ -214,13 +253,14 @@ class ListItem extends ListItemBase {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
-		const itemActive = this.type === ListItemType.Active;
+		const itemActive = this.type === ListItemType.Active,
+			  itemNavigated = this.typeNavigation;
 
 		if (isSpace(event)) {
 			event.preventDefault();
 		}
 
-		if ((isSpace(event) || isEnter(event)) && itemActive) {
+		if ((isSpace(event) || isEnter(event)) && (itemActive || itemNavigated)) {
 			this.activate();
 		}
 
@@ -294,7 +334,7 @@ class ListItem extends ListItemBase {
 	}
 
 	activate() {
-		if (this.type === ListItemType.Active) {
+		if (this.type === ListItemType.Active || this.type === ListItemType.Navigation) {
 			this.active = true;
 		}
 	}
@@ -364,6 +404,10 @@ class ListItem extends ListItemBase {
 		return this.type === ListItemType.Detail;
 	}
 
+	get typeNavigation() {
+		return this.type === ListItemType.Navigation;
+	}
+
 	get typeActive() {
 		return this.type === ListItemType.Active;
 	}
@@ -412,11 +456,11 @@ class ListItem extends ListItemBase {
 		return {
 			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
-			ariaLevel: undefined,
+			ariaLevel: this._level || undefined,
 			ariaLabel: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_CHECKBOX),
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
-			ariaHaspopup: this._ariaHasPopup || undefined,
+			ariaHaspopup: this.ariaHaspopup || undefined,
 		};
 	}
 

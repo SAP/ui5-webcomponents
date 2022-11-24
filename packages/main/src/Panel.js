@@ -363,13 +363,9 @@ class Panel extends UI5Element {
 
 		[].forEach.call(elements, oElement => {
 			if (this.collapsed) {
-				animations.push(slideUp({
-					element: oElement,
-				}).promise());
+				animations.push(slideUp(oElement).promise());
 			} else {
-				animations.push(slideDown({
-					element: oElement,
-				}).promise());
+				animations.push(slideDown(oElement).promise());
 			}
 		});
 

@@ -18,6 +18,8 @@ import TreeListItemTemplate from "./generated/templates/TreeListItemTemplate.lit
 // Styles
 import treeListItemCss from "./generated/themes/TreeListItem.css.js";
 
+import HasPopup from "./types/HasPopup.js";
+
 /**
  * @public
  */
@@ -152,6 +154,30 @@ const metadata = {
 		_posinset: {
 			type: Integer,
 			defaultValue: 1,
+			noAttribute: true,
+		},
+
+		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
+		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @since 1.10.0
+		 * @private
+		 */
+		ariaHaspopup: {
+			type: HasPopup,
 			noAttribute: true,
 		},
 
@@ -301,19 +327,28 @@ class TreeListItem extends ListItem {
 	}
 
 	get _ariaLabel() {
-		return TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return this.accessibleRoleDescription ? undefined : TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
-		return {
-			role: "treeitem",
-			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
-			ariaLevel: this.level,
+		const accInfoSettings = {
+			role: this._minimal ? "menuitemradio" : "treeitem",
+			ariaExpanded: this.showToggleButton && !this._minimal ? this.expanded : undefined,
+			ariaLevel: this._minimal ? undefined : this.level,
 			posinset: this._posinset,
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
+			ariaHaspopup: this.ariaHaspopup || undefined,
 		};
+
+		if (this._minimal) {
+			accInfoSettings.ariaChecked = this.selected;
+		} else {
+			accInfoSettings.ariaSelected = this.selected;
+		}
+
+		return accInfoSettings;
 	}
 
 	_toggleClick(event) {

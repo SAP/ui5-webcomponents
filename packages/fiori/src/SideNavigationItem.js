@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 
 /**
  * @public
@@ -128,6 +129,10 @@ class SideNavigationItem extends UI5Element {
 
 	get _tooltip() {
 		return this.title || this.text;
+	}
+
+	get _ariaHasPopup() {
+		return (this.parentNode.collapsed && this.items.length) ? HasPopup.Tree : undefined;
 	}
 }
 
