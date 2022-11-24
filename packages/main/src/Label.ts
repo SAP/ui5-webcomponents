@@ -111,9 +111,8 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	// @event("item-click", { item: { type: HTMLElement } })
-	@event({ item: { type: HTMLElement } }) 
+	@event({ item: { type: HTMLElement } })
 	"item-click": Event;
-	
 
 	static get render() {
 		return litRender;
