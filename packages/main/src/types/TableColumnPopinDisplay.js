@@ -1,7 +1,7 @@
 import DataType from "@ui5/webcomponents-base/dist/types/DataType.js";
 
 /**
- * @lends sap.ui.webcomponents.main.types.TableCellPopinDisplayType.prototype
+ * @lends sap.ui.webcomponents.main.types.TableColumnPopinDisplay.prototype
  * @public
  */
 const DisplayType = {
@@ -25,16 +25,16 @@ const DisplayType = {
  * Different types of Cell display.
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TableCellPopinDisplayType
+ * @alias sap.ui.webcomponents.main.types.TableColumnPopinDisplay
  * @public
  * @enum {string}
  */
-class TableCellPopinDisplayType extends DataType {
+class TableColumnPopinDisplay extends DataType {
 	static isValid(value) {
 		return !!DisplayType[value];
 	}
 }
 
-TableCellPopinDisplayType.generateTypeAccessors(DisplayType);
+TableColumnPopinDisplay.generateTypeAccessors(DisplayType);
 
-export default TableCellPopinDisplayType;
+export default TableColumnPopinDisplay;
