@@ -1,4 +1,4 @@
-import type { Event } from "@ui5/webcomponents-base/dist/UI5ElementMetadata.js";
+import { Event } from "../UI5ElementMetadata.js";
 
 type EventDescriptor = PropertyDecorator;
 
