@@ -27,12 +27,14 @@ type Property = {
 
 type PropertyValue = boolean | number | string | object | undefined | null | DataType;
 
+type Event = Record<string, object>;
+
 type Metadata = {
 	tag: string,
 	managedSlots?: boolean,
 	properties?: Record<string, Property>,
 	slots?: Record<string, Slot>,
-	events?: Record<string, object>,
+	events?: Event,
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
@@ -224,7 +226,7 @@ class UI5ElementMetadata {
 	}
 
 	/**
-	 * Returns an object with key-value pairs o events and their metadata definitions
+	 * Returns an object with key-value pairs of events and their metadata definitions
 	 * @public
 	 */
 	getEvents() {
@@ -369,6 +371,7 @@ export type {
 	PropertyValue,
 	Slot,
 	SlotValue,
+	Event,
 	State,
 	Metadata,
 };

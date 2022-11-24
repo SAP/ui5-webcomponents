@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event, { Event } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -101,6 +102,19 @@ class Label extends UI5Element {
 	 * @name sap.ui.webcomponents.Label.prototype.default
 	 */
 
+	/**
+	 * Fired when an item is activated.
+	 *
+	 * @event sap.ui.webcomponents.main.Label#item-click
+	 * @allowPreventDefault
+	 * @param {HTMLElement} item The clicked item.
+	 * @public
+	 */
+	// @event("item-click", { item: { type: HTMLElement } })
+	@event({ item: { type: HTMLElement } }) 
+	"item-click": Event;
+	
+
 	static get render() {
 		return litRender;
 	}
@@ -123,6 +137,8 @@ class Label extends UI5Element {
 	}
 
 	_onclick() {
+		this.fireEvent("item-click", { item: this }); // Refactor: just for testing - remove afterwards
+
 		if (!this.for) {
 			return;
 		}

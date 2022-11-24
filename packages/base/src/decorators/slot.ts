@@ -10,10 +10,10 @@ import { Slot } from "../UI5ElementMetadata.js";
 const slot = (slotData: Slot): PropertyDecorator => {
 	return (target: any, slotKey: string | symbol) => {
 		const ctor = target.constructor as typeof UI5Element;
-		const slotMeta = ctor.getMetadata().getSlots();
+		const slotMetadata = ctor.getMetadata().getSlots();
 
-		if (!slotMeta[slotKey as string]) {
-			slotMeta[slotKey as string] = slotData;
+		if (!slotMetadata[slotKey as string]) {
+			slotMetadata[slotKey as string] = slotData;
 		}
 
 		ctor.getMetadata().metadata.managedSlots = true;
