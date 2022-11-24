@@ -116,7 +116,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines, if the Search Field would be displayed if there is a valid <code>searchField</code> slot.
+		 * Defines, if the Search Field would be displayed when there is a valid <code>searchField</code> slot.
 		 * <br><b>Note:</b> By default the Search Field is not displayed.
 		 * @type {boolean}
 		 * @defaultvalue false
