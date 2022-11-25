@@ -7,6 +7,7 @@ import {
 	TAB_ARIA_DESIGN_NEGATIVE,
 	TAB_ARIA_DESIGN_CRITICAL,
 	TAB_ARIA_DESIGN_NEUTRAL,
+	TABCONTAINER_END_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
 
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -399,6 +400,10 @@ class Tab extends UI5Element {
 		}
 
 		return classes.join(" ");
+	}
+
+	get expandButtonTitle() {
+		return Tab.i18nBundle.getText(TABCONTAINER_END_OVERFLOW);
 	}
 
 	get semanticIconName() {
