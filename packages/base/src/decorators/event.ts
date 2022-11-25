@@ -1,25 +1,22 @@
-import { Event } from "../UI5ElementMetadata.js";
+import { EventData } from "../UI5ElementMetadata.js";
 
 type EventDescriptor = PropertyDecorator;
 
 /**
  * Returns an event decorator.
  *
- * @param { object } detail the event detail
+ * @param { string } name the event name
+ * @param { EventData } data the event data
  * @returns { EventDescriptor }
  */
-const event = (detail: object): EventDescriptor => {
-	return (target: any, eventKey: string | symbol) => {
-		const eventsMetadata = target.constructor.getMetadata().getEvents();
+const event = (name: string, data: EventData): EventDescriptor => {
+	return (target: any) => {
+		const eventsMetadata = target.getMetadata().getEvents();
 
-		if (!eventsMetadata[eventKey as string]) {
-			eventsMetadata[eventKey as string] = detail;
+		if (!eventsMetadata[name]) {
+			eventsMetadata[name] = data;
 		}
 	};
 };
 
 export default event;
-
-export {
-	Event,
-};

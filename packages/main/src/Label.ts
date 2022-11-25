@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event, { Event } from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -75,7 +75,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required?: boolean;
+	required = false;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -91,7 +91,7 @@ class Label extends UI5Element {
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType = WrappingType.None;
-
+	
 	/**
 	 * Defines the text of the component.
 	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -105,14 +105,27 @@ class Label extends UI5Element {
 	/**
 	 * Fired when an item is activated.
 	 *
-	 * @event sap.ui.webcomponents.main.Label#item-click
+	 * @event sap.ui.webcomponents.main.Label#item-change
 	 * @allowPreventDefault
-	 * @param {HTMLElement} item The clicked item.
 	 * @public
 	 */
-	// @event("item-click", { item: { type: HTMLElement } })
-	@event({ item: { type: HTMLElement } })
-	"item-click": Event;
+
+	/**
+	 * Fired when an item is activated.
+	 *
+	 * @event sap.ui.webcomponents.main.Label#item-click
+	 * @allowPreventDefault
+	 * @param { HTMLElement } item The clicked item.
+	 * @param { boolean } esc esc pressed.
+	 * @public
+	 */
+
+	@event("item-change")
+	
+	@event("item-click", {
+		item: { type: HTMLElement },
+		esc: { type: Boolean },
+	})
 
 	static get render() {
 		return litRender;
@@ -136,7 +149,8 @@ class Label extends UI5Element {
 	}
 
 	_onclick() {
-		this.fireEvent("item-click", { item: this }); // Refactor: just for testing - remove afterwards
+		this.fireEvent("item-click", { item: this, esc: true }); // Refactor: just for testing - remove afterwards
+		this.fireEvent("item-change"); // Refactor: just for testing - remove afterwards
 
 		if (!this.for) {
 			return;

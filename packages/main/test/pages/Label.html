@@ -154,6 +154,16 @@
 		<label-page-custom-element id="custom-element-with-label"></label-page-custom-element>
 	</section>
 
+
+	<script>
+		document.getElementById("basic-label").addEventListener("item-change", (e) => {
+			console.log(e.detail);
+		});
+		document.getElementById("basic-label").addEventListener("item-click", (e) => {
+			console.log(e.detail);
+		});
+	</script>
+
 	<!-- <script>
 		document.getElementById("basic-label").required = true;
 	</script>
