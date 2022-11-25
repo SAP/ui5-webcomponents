@@ -9,7 +9,7 @@ type EventDescriptor = PropertyDecorator;
  * @param { EventData } data the event data
  * @returns { EventDescriptor }
  */
-const event = (name: string, data: EventData): EventDescriptor => {
+const event = (name: string, data: EventData = {}): EventDescriptor => {
 	return (target: any) => {
 		const eventsMetadata = target.getMetadata().getEvents();
 

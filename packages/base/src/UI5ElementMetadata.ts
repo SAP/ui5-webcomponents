@@ -27,14 +27,14 @@ type Property = {
 
 type PropertyValue = boolean | number | string | object | undefined | null | DataType;
 
-type EventData = { detail?: Record<string, object> };
+type EventData = Record<string, object>;
 
 type Metadata = {
 	tag: string,
 	managedSlots?: boolean,
 	properties?: Record<string, Property>,
 	slots?: Record<string, Slot>,
-	events?: Record<string, EventData>,
+	events?: EventData,
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
