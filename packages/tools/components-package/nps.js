@@ -42,7 +42,7 @@ const getScripts = (options) => {
 	}
 
 	const scripts = {
-		clean: 'rimraf dist && rimraf .port && nps "scope.testPages.clean"',
+		clean: 'rimraf jsdoc-dist && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
