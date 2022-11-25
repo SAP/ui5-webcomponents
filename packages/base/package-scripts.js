@@ -14,7 +14,7 @@ const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-p
 const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}`;
 
 const scripts = {
-	clean: "rimraf dist && rimraf .port",
+	clean: "rimraf jsdoc-dist && rimraf dist && rimraf .port",
 	lint: `eslint . ${eslintConfig}`,
 	prepare: "nps clean integrate copy typescript generateAssetParameters generateVersionInfo generateStyles generateTemplates generateAPI",
 	typescript: "tsc",

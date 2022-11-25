@@ -353,7 +353,7 @@ class ItemNavigation {
 		const items = this._getItems();
 
 		if (!items.length) {
-			return null;
+			return;
 		}
 
 		// normalize the index

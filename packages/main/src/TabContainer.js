@@ -230,7 +230,7 @@ const metadata = {
 		/**
 		 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign}
 		 * @defaultvalue "Solid"
 		 * @since 1.10.0
 		 * @public
@@ -243,7 +243,7 @@ const metadata = {
 		/**
 		 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign}
 		 * @defaultvalue "Solid"
 		 * @since 1.10.0
 		 * @public

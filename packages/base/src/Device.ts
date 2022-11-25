@@ -2,11 +2,11 @@ const ua = navigator.userAgent;
 const touch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 const ie = /(msie|trident)/i.test(ua);
 const chrome = !ie && /(Chrome|CriOS)/.test(ua);
+const firefox = /Firefox/.test(ua);
 const safari = !ie && !chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(ua);
 const webkit = !ie && /webkit/.test(ua);
 const windows = navigator.platform.indexOf("Win") !== -1;
-const firefox = /Firefox/.test(ua);
-const iOS = navigator.platform.match(/iPhone|iPad|iPod/) || (navigator.userAgent.match(/Mac/) && "ontouchend" in document);
+const iOS = !!(navigator.platform.match(/iPhone|iPad|iPod/)) || !!(navigator.userAgent.match(/Mac/) && "ontouchend" in document);
 const android = !windows && /Android/.test(ua);
 const androidPhone = android && /(?=android)(?=.*mobile)/i.test(ua);
 const ipad = /ipad/i.test(ua) || (/Macintosh/i.test(ua) && "ontouchend" in document);
@@ -77,35 +77,35 @@ const detectTablet = () => {
 	tablet = (ie && ua.indexOf("Touch") !== -1) || (android && !androidPhone);
 };
 
-const supportsTouch = () => touch;
-const isIE = () => ie;
-const isSafari = () => safari;
-const isChrome = () => chrome;
-const isFirefox = () => firefox;
+const supportsTouch = (): boolean => touch;
+const isIE = (): boolean => ie;
+const isSafari = (): boolean => safari;
+const isChrome = (): boolean => chrome;
+const isFirefox = (): boolean => firefox;
 
-const isTablet = () => {
+const isTablet = (): boolean => {
 	detectTablet();
 	return (touch || isWindows8OrAbove()) && tablet;
 };
 
-const isPhone = () => {
+const isPhone = (): boolean => {
 	detectTablet();
 	return touch && !tablet;
 };
 
-const isDesktop = () => {
+const isDesktop = (): boolean => {
 	return (!isTablet() && !isPhone()) || isWindows8OrAbove();
 };
 
-const isCombi = () => {
+const isCombi = (): boolean => {
 	return isTablet() && isDesktop();
 };
 
-const isIOS = () => {
+const isIOS = (): boolean => {
 	return iOS;
 };
 
-const isAndroid = () => {
+const isAndroid = (): boolean => {
 	return android || androidPhone;
 };
 
