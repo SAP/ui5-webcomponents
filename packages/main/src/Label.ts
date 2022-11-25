@@ -91,7 +91,7 @@ class Label extends UI5Element {
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType = WrappingType.None;
-	
+
 	/**
 	 * Defines the text of the component.
 	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -121,7 +121,7 @@ class Label extends UI5Element {
 	 */
 
 	@event("item-change")
-	
+
 	@event("item-click", {
 		item: { type: HTMLElement },
 		esc: { type: Boolean },
