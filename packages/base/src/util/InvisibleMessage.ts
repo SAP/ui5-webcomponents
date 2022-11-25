@@ -41,8 +41,8 @@ attachBoot(() => {
 /**
  * Inserts the string into the respective span, depending on the mode provided.
  *
- * @param {string} message String to be announced by the screen reader.
- * @param {sap.ui.core.InvisibleMessageMode} mode The mode to be inserted in the aria-live attribute.
+ * @param { string } message String to be announced by the screen reader.
+ * @param { InvisibleMessageMode } mode The mode to be inserted in the aria-live attribute.
  * @public
  */
 const announce = (message: string, mode: InvisibleMessageMode) => {

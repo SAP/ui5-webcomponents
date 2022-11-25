@@ -848,7 +848,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
 		assert.strictEqual(await inputCounter.getText(), "1", "Input event called when typing");
 
-		const clearIcon = await input.shadow$(".ui5-input-clear-icon");
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
 
 		// press clear icon
 		await clearIcon.click();
@@ -872,7 +872,7 @@ describe("Input general interaction", () => {
 		await innerInput.keys("a");
 		await changeCounter.click();
 
-		const clearIcon = await input.shadow$(".ui5-input-clear-icon");
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
 
 		// press clear icon
 		await clearIcon.click();
