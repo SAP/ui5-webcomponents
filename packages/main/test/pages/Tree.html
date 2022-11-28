@@ -274,6 +274,18 @@
 			}
 		});
 
+		var preventableClickTree = document.getElementById("preventable-click-event");
+		var preventedCounter = document.getElementById("prevented-counter");
+		preventableClickTree.addEventListener("ui5-itemClick", function (event) {
+			event.preventDefault();
+			preventedCounter.value++;
+		});
+
+		var indetereminateTree = document.getElementById("treeIndeterminate");
+		indetereminateTree.addEventListener("ui5-selectionChange", function(event) {
+			selectionChangeTargetItemResult.value = event.detail.targetItem.id;
+		});
+
 	</script>
 </body>
 

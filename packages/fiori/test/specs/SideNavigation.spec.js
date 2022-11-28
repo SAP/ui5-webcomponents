@@ -1,6 +1,13 @@
 
 const assert = require("chai").assert;
 
+async function getTreeItemsInPopover() {
+	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
+	const items = await browser.$$(`>>>.${staticAreaItemClassName} ui5-responsive-popover ui5-side-navigation ui5-tree-item`);
+
+	return items;
+}
+
 describe("Component Behavior", () => {
 	before(async () => {
 		await browser.url(`test/pages/SideNavigation.html`);
@@ -33,9 +40,7 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await input.getProperty("value"), "4", "Event is not fired");
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			items = await popover.$("ui5-side-navigation").shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+			items = await getTreeItemsInPopover();
 
 			await items[1].click();
 
@@ -44,7 +49,6 @@ describe("Component Behavior", () => {
 
 		it("Tests click event & whole-item-toggleable property", async () => {
 			const input = await browser.$("#click-counter");
-			const sideNavigation = await browser.$("ui5-side-navigation");
 			let items = await browser.$$(">>>.ui5-sn-items-tree [ui5-tree-item]");
 
 			await items[0].click();
@@ -64,9 +68,7 @@ describe("Component Behavior", () => {
 			await items[1].click();
 			assert.strictEqual(await input.getProperty("value"), "8", "Event is fired");
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			items = await popover.$("ui5-side-navigation").shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+			items = await getTreeItemsInPopover();
 
 			await items[1].click();
 
@@ -130,9 +132,7 @@ describe("Component Behavior", () => {
 
 			await renderedItems[1].click();
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			const popoverItems = await popover.$("ui5-side-navigation").shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+			const popoverItems = await getTreeItemsInPopover();
 
 			assert.strictEqual(await popoverItems[0].getAttribute("title"), await items[1].getAttribute("text"), "Text is set as tooltip to sub item when title is not specified");
 			assert.strictEqual(await popoverItems[1].getAttribute("title"), await secondItemSubItems[0].getAttribute("title"), "Title is set as tooltip to sub item");
@@ -230,9 +230,7 @@ describe("Component Behavior", () => {
 			// popup
 			await sideNavigationTreeItem2.click();
 
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			const popoverItems = await popover.$("ui5-side-navigation").shadow$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree");
+			const popoverItems = await getTreeItemsInPopover();
 
 			// items
 			roleDescriptionItem = await browser.executeAsync(done => {

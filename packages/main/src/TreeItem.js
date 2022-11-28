@@ -52,6 +52,7 @@ const metadata = {
 
 /**
  * @class
+ * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-tree-item</code> represents a node in a tree structure, shown as a <code>ui5-list</code>.
  * <br>
  * This is the item to use inside a <code>ui5-tree</code>.
