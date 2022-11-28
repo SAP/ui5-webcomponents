@@ -208,7 +208,7 @@ class Token extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// this.toBeDeleted = false;
+		this.toBeDeleted = false;
 	}
 
 	get tokenDeletableText() {
