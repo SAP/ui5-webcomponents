@@ -80,6 +80,18 @@ const metadata = {
 		 title: {
 			type: String,
 		},
+
+		/**
+		 * Defines if the item should be collapsible or not.
+		 * It is true, for example, for the items inside the Popover of the Side Navigation
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.10.0
+		 */
+		 _fixed: {
+			type: Boolean,
+		},
 	},
 
 	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {

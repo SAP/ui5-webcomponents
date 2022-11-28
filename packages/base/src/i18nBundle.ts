@@ -9,8 +9,8 @@ type I18nText = {
 	key: string,
 	defaultText: string,
 };
-type GetText = (textObj: I18nText, ...params: Array<number | string>) => string;
-type I18nBundleGetter = (packageName: string) => Promise<{ getText: GetText }>;
+
+type I18nBundleGetter = (packageName: string) => Promise<I18nBundle>;
 
 /**
  * @class
@@ -50,7 +50,14 @@ class I18nBundle {
 	}
 }
 
-const getI18nBundleSync = (packageName: string) => {
+/**
+ * Returns the I18nBundle instance for the given package synchronously.
+ *
+ * @public
+ * @param packageName
+ * @returns { I18nBundle }
+ */
+const getI18nBundleSync = (packageName: string): I18nBundle => {
 	if (I18nBundleInstances.has(packageName)) {
 		return I18nBundleInstances.get(packageName)!;
 	}
@@ -58,6 +65,22 @@ const getI18nBundleSync = (packageName: string) => {
 	const i18nBundle = new I18nBundle(packageName);
 	I18nBundleInstances.set(packageName, i18nBundle);
 	return i18nBundle;
+};
+
+/**
+ * Fetches and returns the I18nBundle instance for the given package.
+ *
+ * @public
+ * @param packageName
+ * @returns { Promise<I18nBundle> }
+ */
+const getI18nBundle = async (packageName: string): Promise<I18nBundle> => {
+	if (customGetI18nBundle) {
+		return customGetI18nBundle(packageName);
+	}
+
+	await fetchI18nBundle(packageName);
+	return getI18nBundleSync(packageName);
 };
 
 /**
@@ -72,21 +95,7 @@ const registerCustomI18nBundleGetter = (customGet: I18nBundleGetter) => {
 	customGetI18nBundle = customGet;
 };
 
-/**
- * Fetches and returns the I18nBundle instance for the given package
- *
- * @public
- * @param packageName
- * @returns {Promise<I18nBundle>}
- */
-const getI18nBundle = async (packageName: string) => {
-	if (customGetI18nBundle) {
-		return customGetI18nBundle(packageName);
-	}
-
-	await fetchI18nBundle(packageName);
-	return getI18nBundleSync(packageName);
-};
+export default I18nBundle;
 
 export {
 	registerI18nLoader,
