@@ -23,6 +23,9 @@
 	--_ui5_input_custom_icon_padding: .625rem .625rem .5625rem .625rem;
 	--_ui5_input_error_warning_custom_icon_padding: .625rem .625rem .5rem .625rem;
 	--_ui5_input_focus_outline_color: var(--sapField_Active_BorderColor);
+	--_ui5_input_icon_wrapper_height: calc(100% - 1px);
+	--_ui5_input_icon_wrapper_state_height: calc(100% - 2px);
+	--_ui5_input_icon_wrapper_success_state_height: calc(100% - var(--_ui5_input_value_state_success_border_width));
 }
 
 [data-ui5-compact-size],

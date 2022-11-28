@@ -116,6 +116,17 @@ const metadata = {
 		},
 
 		/**
+		 * Defines, if the Search Field would be displayed when there is a valid <code>searchField</code> slot.
+		 * <br><b>Note:</b> By default the Search Field is not displayed.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		showSearchField: {
+			type: Boolean,
+		},
+
+		/**
 		 * An object of strings that defines additional accessibility roles for further customization.
 		 *
 		 * It supports the following fields:
@@ -150,13 +161,6 @@ const metadata = {
 		 */
 		breakpointSize: {
 			type: String,
-		},
-
-		/**
-		 * @private
-		 */
-		showSearchField: {
-			type: Boolean,
 		},
 
 		/**
