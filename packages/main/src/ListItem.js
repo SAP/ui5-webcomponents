@@ -1,4 +1,5 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
@@ -284,14 +285,14 @@ class ListItem extends ListItemBase {
 	}
 
 	_onmousedown(event) {
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			return;
 		}
 		this.activate();
 	}
 
 	_onmouseup(event) {
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			return;
 		}
 		this.deactivate();
@@ -307,7 +308,7 @@ class ListItem extends ListItemBase {
 	}
 
 	_onclick(event) {
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			return;
 		}
 		this.fireItemPress(event);

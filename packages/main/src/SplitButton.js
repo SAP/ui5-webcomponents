@@ -11,6 +11,7 @@ import {
 	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import SplitButtonTemplate from "./generated/templates/SplitButtonTemplate.lit.js";
@@ -326,7 +327,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_onFocusOut(event) {
-		if (this.disabled || event.isMarked) {
+		if (this.disabled || getEventMark(event)) {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
@@ -335,7 +336,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_onFocusIn(event) {
-		if (this.disabled || event.isMarked) {
+		if (this.disabled || getEventMark(event)) {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
