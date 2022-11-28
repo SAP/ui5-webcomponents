@@ -525,7 +525,6 @@ class Carousel extends UI5Element {
 				styles: {
 					width: `${this._itemWidth}px`,
 				},
-				classes: visible ? "" : "ui5-carousel-item--hidden",
 			};
 		});
 	}
