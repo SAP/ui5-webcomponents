@@ -16,7 +16,7 @@ const getFirstFocusableElement = async (container: HTMLElement, startFromContain
 	return findFocusableElement(container, true, startFromContainer);
 };
 
-const getLastFocusableElement = async (container: HTMLElement, startFromContainer: boolean) => {
+const getLastFocusableElement = async (container: HTMLElement, startFromContainer: boolean): FocusableElement => {
 	if (!container || isElementHidden(container)) {
 		return null;
 	}
