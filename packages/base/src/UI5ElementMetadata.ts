@@ -19,10 +19,11 @@ type SlotValue = Node;
 
 type Property = {
 	multiple?: boolean,
-	type: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
+	type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
 	defaultValue?: PropertyValue,
 	noAttribute?: boolean,
 	compareValues?: boolean,
+	validator?: DataType,
 }
 
 type PropertyValue = boolean | number | string | object | undefined | null | DataType;
@@ -339,21 +340,26 @@ class UI5ElementMetadata {
 
 const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 	const propertyType = propData.type;
+	let propertyValidator = propData.validator;
+
+	if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+		propertyValidator = propertyType as typeof DataType;
+	}
+
+	if (propertyValidator) {
+		return (propertyValidator as typeof DataType).isValid(value) ? value : propData.defaultValue;
+	}
+
+	if (!propertyType || propertyType === String) {
+		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
+	}
 
 	if (propertyType === Boolean) {
 		return typeof value === "boolean" ? value : false;
 	}
 
-	if (propertyType === String) {
-		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
-	}
-
 	if (propertyType === Object) {
 		return typeof value === "object" ? value : propData.defaultValue;
-	}
-
-	if ((propertyType as typeof DataType).isDataTypeClass) {
-		return (propertyType as typeof DataType).isValid(value) ? value : propData.defaultValue;
 	}
 
 	// Check if "value" is part of the enum (propertyType) values and return the defaultValue if not found.

@@ -49,11 +49,6 @@ import labelCss from "./generated/themes/Label.css.js";
  * @public
  */
 
-@event("item-click", {
-	item: { type: HTMLElement },
-	esc: { type: Boolean },
-})
-
 /**
  * Fired when an item is activated.
  *
@@ -62,8 +57,11 @@ import labelCss from "./generated/themes/Label.css.js";
  * @public
  */
 
+@event("item-click", {
+	item: { type: HTMLElement },
+	esc: { type: Boolean },
+})
 @event("item-change")
-
 @customElement("ui5-label")
 class Label extends UI5Element {
 	/**
@@ -72,22 +70,22 @@ class Label extends UI5Element {
 	 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 	 *
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @default ""
 	 * @public
 	 */
-	@property({ type: String })
-	for = "";
+	@property({ defaultValue: "" })
+	for!: string;
 
 	/**
 	 * Defines whether colon is added to the component text.
 	 * <br><br>
 	 * <b>Note:</b> Usually used in forms.
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	showColon = false;
+	showColon!: boolean;
 
 	/**
 	 * Defines whether an asterisk character is added to the component text.
@@ -97,11 +95,11 @@ class Label extends UI5Element {
 	 * the corresponding input should also be set.
 	 *
 	 * @type {boolean}
-	 * @defaultvalue false
+	 * @default false
 	 * @public
 	 */
 	@property({ type: Boolean })
-	required = false;
+	required!: boolean;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -112,11 +110,11 @@ class Label extends UI5Element {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webcomponents.main.types.WrappingType}
-	 * @defaultvalue "None"
+	 * @default "None"
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType = WrappingType.None;
+	wrappingType!: WrappingType;
 
 	/**
 	 * Defines the text of the component.
@@ -127,6 +125,7 @@ class Label extends UI5Element {
 	 * @public
 	 * @name sap.ui.webcomponents.Label.prototype.default
 	 */
+
 	static get render() {
 		return litRender;
 	}
