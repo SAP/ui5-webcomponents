@@ -128,7 +128,7 @@ class RadioButtonGroup {
 
 	static _selectRadio(radioBtn) {
 		if (radioBtn) {
-			radioBtn.focus();
+			radioBtn.focus({ focusVisible: true });
 			radioBtn.checked = true;
 			radioBtn._checked = true;
 			radioBtn.fireEvent("change");

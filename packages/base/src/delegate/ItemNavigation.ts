@@ -338,7 +338,7 @@ class ItemNavigation {
 	_focusCurrentItem() {
 		const currentItem = this._getCurrentItem();
 		if (currentItem) {
-			currentItem.focus();
+			currentItem.focus({ focusVisible: true } as FocusOptions);
 		}
 	}
 

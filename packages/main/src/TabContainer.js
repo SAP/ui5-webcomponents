@@ -534,7 +534,7 @@ class TabContainer extends UI5Element {
 		let tabInstance = button.tab;
 
 		if (tabInstance) {
-			tabInstance.focus();
+			tabInstance.focus({ focusVisible: true });
 		}
 
 		if ((event.type === "keydown") && !event.target._realTab.isSingleClickArea) {
@@ -634,7 +634,7 @@ class TabContainer extends UI5Element {
 		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
-		selectedTopLevel.getTabInStripDomRef().focus();
+		selectedTopLevel.getTabInStripDomRef().focus({ focusVisible: true });
 	}
 
 	/**
