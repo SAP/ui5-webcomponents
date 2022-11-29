@@ -6,7 +6,13 @@ import type UI5Element from "../UI5Element.js";
 const scrollEventName = "scroll";
 const touchEndEventName = supportsTouch() ? "touchend" : "mouseup";
 
-class ScrollEnablement<EventListenerParam, EventListenerReturn> extends EventProvider<EventListenerParam, EventListenerReturn> {
+type EventListenerParam = {
+	isLeft: boolean;
+	isRight: boolean
+}
+type EventListenerReturn = () => void;
+
+class ScrollEnablement extends EventProvider<EventListenerParam, EventListenerReturn> {
 	containerComponent: UI5Element;
 	mouseMove: (event: MouseEvent | TouchEvent) => void;
 	mouseUp: (event: MouseEvent | TouchEvent) => void;
@@ -163,7 +169,7 @@ class ScrollEnablement<EventListenerParam, EventListenerReturn> extends EventPro
 		this.fireEvent(scrollEventName, {
 			isLeft: dragX! > this._prevDragX!,
 			isRight: dragX! < this._prevDragX!,
-		} as unknown as EventListenerParam);
+		});
 
 		this.cachedValue.dragX = this._prevDragX!;
 		this.cachedValue.dragY = this._prevDragY!;
@@ -200,7 +206,7 @@ class ScrollEnablement<EventListenerParam, EventListenerReturn> extends EventPro
 		this.fireEvent(touchEndEventName, {
 			isLeft: _dragX < this._prevDragX!,
 			isRight: _dragX > this._prevDragX!,
-		} as unknown as EventListenerParam);
+		});
 
 		this._prevDragX = dragX;
 		this._prevDragY = dragY;
