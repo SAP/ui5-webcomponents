@@ -115,7 +115,6 @@ const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
 
 		entry.properties.forEach(propData => {
 			if (propData.type.includes(".")) {
-				console.log(propData.type);
 				propData.type = propData.type.split(".").pop();
 			}
 		});
