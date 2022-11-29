@@ -1,13 +1,21 @@
 const assert = require("chai").assert;
 
-async function getItemCount(selector) {
+async function getItemsCount(selector) {
+	const items = await getItems(selector);
+    return items.length;
+}
+
+async function getItems(selector) {
     const listItems = await browser.$$(`${selector} [ui5-tree-item]`);
 
-	const promises = listItems.map((item) => item.isDisplayedInViewport());
+	const promises = listItems.map(async (item) => {
+		const isDisplayed = await item.isDisplayedInViewport();
+		return isDisplayed ? item : null;
+	},);
 
-	const results = await Promise.all(promises);
+	const items = await Promise.all(promises);
 
-    return results.filter((result) => result).length;
+	return items.filter((item) => item);
 }
 
 describe("Tree general interaction", () => {
@@ -21,21 +29,20 @@ describe("Tree general interaction", () => {
 	});
 
 	it("Tree items can be collapsed", async () => {
-		const tree = await browser.$("#tree");
-		const listItemsBefore = await getItemCount("#tree");
+		const listItemsBefore = await getItemsCount("#tree");
 		const toggleButton = await browser.$(">>>#tree ui5-tree-item[expanded] ui5-icon.ui5-li-tree-toggle-icon");
 
 		await toggleButton.click();
-		const listItemsAfter = await getItemCount("#tree");
+		const listItemsAfter = await getItemsCount("#tree");
 		assert.isBelow(listItemsAfter, listItemsBefore, "After collapsing a node, there are less items in the list");
 	});
 
 	it("Tree items can be expanded", async () => {
-		const listItemsBefore = await getItemCount("#tree");
+		const listItemsBefore = await getItemsCount("#tree");
 		const toggleButton = await browser.$(">>>#tree ui5-tree-item ui5-icon.ui5-li-tree-toggle-icon");
 
 		await toggleButton.click();
-		const listItemsAfter = await getItemCount("#tree");
+		const listItemsAfter = await getItemsCount("#tree");
 		assert.isAbove(listItemsAfter, listItemsBefore, "After expanding a node, there are more items in the list");
 	})
 
@@ -71,7 +78,7 @@ describe("Tree proxies properties to list", () => {
 	})
 
 	it("Mouseover/mouseout events", async () => {
-		const treeItems = await browser.$$("#tree ui5-tree-item");
+		const treeItems = await getItems("#tree");
 		const inputMouseover = await browser.$("#mouseover-counter");
 		const inputMouseout = await browser.$("#mouseout-counter");
 
