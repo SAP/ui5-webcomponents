@@ -13,3 +13,9 @@
 	pointer-events: none;
 	font-size: 0;
 }
+
+.ui5-side-navigation-in-popover {
+    --_ui5-tree-toggle-box-width: 1rem;
+    --_ui5-tree-indent-step: 0;
+	width: auto;
+}
