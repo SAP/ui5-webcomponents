@@ -460,8 +460,28 @@ class Tree extends UI5Element {
 	 * @protected
 	 */
 	_getListItemForTreeItem(item) {
-		return this.list.getItems().find(listItem => listItem === item);
+		return this.getItems().find(listItem => listItem === item);
 	}
+
+	/**
+	 * Returns the a flat array of all tree items
+	 * @protected
+	 * @returns {Array}
+	 */
+	getItems() {
+		return this.list.getItems();
+	}
+
+	/**
+	 * Focus a tree item by its index in the flat array of all tree items
+	 * @protected
+	 * @param index
+	 */
+	focusItemByIndex(index) {
+		const item = this.getItems()[index];
+		item && this.list.focusItem(item);
+	}
+	
 
 	/**
 	 * Perform Depth-First-Search walk on the tree and run a callback on each node

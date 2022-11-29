@@ -411,20 +411,6 @@ class TreeItemBase extends ListItem {
 		}
 	}
 
-	_onSubItemClick(event) {
-		// Prevent this from bubbling up to the Tree as it is already handled by the TreeCustom
-		// component with the ui5-step-in, ui5-step-out, ui5-toggle events.
-		event.stopImmediatePropagation();
-	}
-
-	_onSubtreeKey(event) {
-		// Prevent this from bubbling up to the Tree as it is already handled by the TreeCustom
-		// component with the ui5-step-in, ui5-step-out, ui5-toggle events.
-		if (!isUp(event) && !isDown(event)) {
-			event.stopImmediatePropagation();
-		}
-	}
-
 	_getRealDomRef() {
 		return this.shadowRoot.querySelector(".ui5-li-root-tree");
 	}
@@ -442,3 +428,5 @@ class TreeItemBase extends ListItem {
 }
 
 export default TreeItemBase;
+
+
