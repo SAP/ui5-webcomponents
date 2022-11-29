@@ -8,6 +8,19 @@ async function getTreeItemsInPopover() {
 	return items;
 }
 
+async function getItems(selector) {
+    const listItems = await browser.$$(`>>>${selector}`);
+
+	const promises = listItems.map(async (item) => {
+		const isDisplayed = await item.isDisplayedInViewport();
+		return isDisplayed ? item : null;
+	},);
+
+	const items = await Promise.all(promises);
+
+	return items.filter((item) => item);
+}
+
 describe("Component Behavior", () => {
 	before(async () => {
 		await browser.url(`test/pages/SideNavigation.html`);
@@ -49,7 +62,7 @@ describe("Component Behavior", () => {
 
 		it("Tests click event & whole-item-toggleable property", async () => {
 			const input = await browser.$("#click-counter");
-			let items = await browser.$$(">>>.ui5-sn-items-tree [ui5-tree-item]");
+			let items = await getItems(".ui5-sn-items-tree [ui5-tree-item]");
 
 			await items[0].click();
 
@@ -96,7 +109,7 @@ describe("Component Behavior", () => {
 		it("Tests tooltips when expanded", async () => {
 			const sideNavigation = await browser.$("#sn1");
 			const items = await sideNavigation.$$("ui5-side-navigation-item");
-			const renderedItems = await browser.$$(">>>.ui5-sn-items-tree [ui5-tree-item]");
+			const renderedItems = await getItems(".ui5-sn-items-tree [ui5-tree-item]");
 			const secondItemSubItems = await items[1].$$("ui5-side-navigation-sub-item");
 
 			assert.strictEqual(await renderedItems[0].getAttribute("title"), await items[0].getAttribute("title"), "Title is set as tooltip to root item");
@@ -108,9 +121,9 @@ describe("Component Behavior", () => {
 
 			// fixed items
 			const fixedItems = await sideNavigation.$$("ui5-side-navigation-item[slot=fixedItems]");
-			let renderedFixedItems = await browser.$$(">>>#ui5-sn-fixed-items-tree [ui5-tree-item]");
+			let renderedFixedItems = await getItems("#ui5-sn-fixed-items-tree [ui5-tree-item]");
 			await renderedFixedItems[0].shadow$("ui5-icon.ui5-li-tree-toggle-icon").click(); // expand the item
-			renderedFixedItems = await browser.$$(">>>#ui5-sn-fixed-items-tree [ui5-tree-item]");
+			renderedFixedItems = await getItems("#ui5-sn-fixed-items-tree [ui5-tree-item]");
 			const firstFixedItemSubItems = await fixedItems[0].$$("ui5-side-navigation-sub-item");
 
 			assert.strictEqual(await renderedFixedItems[0].getAttribute("title"), await fixedItems[0].getAttribute("title"), "Title is set as tooltip to root fixed item");
@@ -125,7 +138,7 @@ describe("Component Behavior", () => {
 			const sideNavigation = await browser.$("#sn1");
 			const items = await sideNavigation.$$("ui5-side-navigation-item");
 			const secondItemSubItems = await items[1].$$("ui5-side-navigation-sub-item");
-			const renderedItems = await browser.$$(">>>.ui5-sn-items-tree [ui5-tree-item]");
+			const renderedItems = await getItems(".ui5-sn-items-tree [ui5-tree-item]");
 
 			assert.strictEqual(await renderedItems[0].getAttribute("title"), await items[0].getAttribute("title"), "Title is set as tooltip to root item");
 			assert.strictEqual(await renderedItems[1].getAttribute("title"), await items[1].getAttribute("text"), "Text is set as tooltip to root item when title is not specified");
@@ -139,11 +152,20 @@ describe("Component Behavior", () => {
 
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);
+			await browser.executeAsync(async (done) => {
+				// close popover
+				const staticArea = await document.querySelector("ui5-side-navigation").getStaticAreaItemDomRef();
+				const popover = staticArea.querySelector(".ui5-side-navigation-popover");
+				popover.addEventListener("ui5-after-close", () => {
+					done();
+				});
+
+				popover.close();
+			});
 		});
 	
 		it("tests the prevention of the ui5-selection-change event", async () => {
-			const sideNavigation = await browser.$("#sn1");
-			const items = await browser.$$(">>>.ui5-sn-items-tree [ui5-tree-item]");
+			const items = await getItems(".ui5-sn-items-tree [ui5-tree-item]");
 
 			await items[3].click();
 
@@ -163,7 +185,7 @@ describe("Component Behavior", () => {
 			const sideNavigation = await browser.$("#sn1");
 			const sideNavigationRoot = await sideNavigation.shadow$(".ui5-sn-root");
 			const sideNavigationTree = await sideNavigation.shadow$("ui5-tree").shadow$("ui5-tree-list").shadow$("ul");
-			const sideNavigationTreeItem = await browser.$(">>>.ui5-sn-items-tree [ui5-tree-item] li")
+			const sideNavigationTreeItem = await  browser.$(">>>.ui5-sn-items-tree [ui5-tree-item] li")
 			const sideNavigationFixedItemsTree = await sideNavigation.shadow$$("ui5-tree")[1];
 			const sideNavigationFixedItemsTreeElement = sideNavigationFixedItemsTree.shadow$("ui5-tree-list").shadow$("ul");
 			const sideNavigationFixedItemsTreeItem = await browser.$(">>>#ui5-sn-fixed-items-tree [ui5-tree-item] li") 
@@ -191,6 +213,9 @@ describe("Component Behavior", () => {
 		});
 
 		it("Tests ACC roles and more when collapsed", async () => {
+			// prepare
+			await browser.url(`test/pages/SideNavigation.html`);
+
 			// act
 			await browser.$("#sn1").setProperty("collapsed", true);
 
