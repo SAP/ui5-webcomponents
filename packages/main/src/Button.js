@@ -4,6 +4,8 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+
 import {
 	isPhone,
 	isTablet,
@@ -357,7 +359,8 @@ class Button extends UI5Element {
 		}
 
 		const handleTouchStartEvent = event => {
-			event.isMarked = "button";
+			markEvent(event, "button");
+
 			if (this.nonInteractive) {
 				return;
 			}
@@ -389,7 +392,7 @@ class Button extends UI5Element {
 		if (this.nonInteractive) {
 			return;
 		}
-		event.isMarked = "button";
+		markEvent(event, "button");
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport && this.submits) {
 			FormSupport.triggerFormSubmit(this);
@@ -405,7 +408,7 @@ class Button extends UI5Element {
 			return;
 		}
 
-		event.isMarked = "button";
+		markEvent(event, "button");
 		this.active = true;
 		activeButton = this; // eslint-disable-line
 	}
@@ -419,11 +422,11 @@ class Button extends UI5Element {
 	}
 
 	_onmouseup(event) {
-		event.isMarked = "button";
+		markEvent(event, "button");
 	}
 
 	_onkeydown(event) {
-		event.isMarked = "button";
+		markEvent(event, "button");
 
 		if (isSpace(event) || isEnter(event)) {
 			this.active = true;
@@ -451,7 +454,7 @@ class Button extends UI5Element {
 			return;
 		}
 
-		event.isMarked = "button";
+		markEvent(event, "button");
 		if (isDesktop()) {
 			this.focused = true;
 		}

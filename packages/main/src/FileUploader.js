@@ -3,6 +3,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
@@ -282,7 +283,7 @@ class FileUploader extends UI5Element {
 	}
 
 	_onclick(event) {
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			this._input.click(event);
 		}
 	}
