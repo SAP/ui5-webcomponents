@@ -392,7 +392,7 @@ class TreeItemBase extends ListItem {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
-		if (this.showToggleButton && isRight(event)) {
+		if (!this._fixed && this.showToggleButton && isRight(event)) {
 			if (!this.expanded) {
 				this.fireEvent("toggle", { item: this });
 			} else {
@@ -400,7 +400,7 @@ class TreeItemBase extends ListItem {
 			}
 		}
 
-		if (isLeft(event)) {
+		if (!this._fixed && isLeft(event)) {
 			if (this.expanded) {
 				this.fireEvent("toggle", { item: this });
 			} else if (this.hasParent) {
