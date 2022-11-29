@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -355,7 +356,7 @@ class Link extends UI5Element {
 		} = event;
 
 		event.stopImmediatePropagation();
-		event.isMarked = "link";
+		markEvent(event, "link");
 
 		const executeEvent = this.fireEvent("click", {
 			altKey,
@@ -370,7 +371,7 @@ class Link extends UI5Element {
 	}
 
 	_onfocusin(event) {
-		event.isMarked = "link";
+		markEvent(event, "link");
 		this.focused = true;
 	}
 
@@ -385,12 +386,12 @@ class Link extends UI5Element {
 			event.preventDefault();
 		}
 
-		event.isMarked = "link";
+		markEvent(event, "link");
 	}
 
 	_onkeyup(event) {
 		if (!isSpace(event)) {
-			event.isMarked = "link";
+			markEvent(event, "link");
 			return;
 		}
 

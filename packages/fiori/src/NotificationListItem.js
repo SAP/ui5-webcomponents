@@ -1,6 +1,6 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
@@ -365,7 +365,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 		const space = isSpace(event);
 
-		if (space && event.isMarked === "link") {
+		if (space && getEventMark(event) === "link") {
 			this._onShowMoreClick(event);
 			return;
 		}
@@ -379,7 +379,7 @@ class NotificationListItem extends NotificationListItemBase {
 	 * Private
 	 */
 	fireItemPress(event) {
-		if (event.isMarked === "button" || event.isMarked === "link") {
+		if (getEventMark(event) === "button" || getEventMark(event) === "link") {
 			return;
 		}
 
