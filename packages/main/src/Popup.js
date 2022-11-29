@@ -368,7 +368,7 @@ class Popup extends UI5Element {
 		const firstFocusable = await getFirstFocusableElement(this);
 
 		if (firstFocusable) {
-			firstFocusable.focus();
+			firstFocusable.focus({ focusVisible: true });
 		} else {
 			this._root.focus();
 		}
@@ -382,7 +382,7 @@ class Popup extends UI5Element {
 		const lastFocusable = await getLastFocusableElement(this);
 
 		if (lastFocusable) {
-			lastFocusable.focus();
+			lastFocusable.focus({ focusVisible: true });
 		} else {
 			this._root.focus();
 		}
@@ -415,7 +415,7 @@ class Popup extends UI5Element {
 			if (element === this._root) {
 				element.tabIndex = -1;
 			}
-			element.focus();
+			element.focus({ focusVisible: true });
 		}
 	}
 
@@ -528,7 +528,7 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		this._focusedElementBeforeOpen.focus();
+		this._focusedElementBeforeOpen.focus({ focusVisible: true });
 		this._focusedElementBeforeOpen = null;
 	}
 

@@ -2,6 +2,7 @@ const ua = navigator.userAgent;
 const touch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
 const ie = /(msie|trident)/i.test(ua);
 const chrome = !ie && /(Chrome|CriOS)/.test(ua);
+const firefox = /Firefox/.test(ua);
 const safari = !ie && !chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(ua);
 const webkit = !ie && /webkit/.test(ua);
 const windows = navigator.platform.indexOf("Win") !== -1;
@@ -80,6 +81,7 @@ const supportsTouch = (): boolean => touch;
 const isIE = (): boolean => ie;
 const isSafari = (): boolean => safari;
 const isChrome = (): boolean => chrome;
+const isFirefox = (): boolean => firefox;
 
 const isTablet = (): boolean => {
 	detectTablet();
@@ -112,6 +114,7 @@ export {
 	isIE,
 	isSafari,
 	isChrome,
+	isFirefox,
 	isPhone,
 	isTablet,
 	isDesktop,

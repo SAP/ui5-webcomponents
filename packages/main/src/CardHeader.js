@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CardHeaderTemplate from "./generated/templates/CardHeaderTemplate.lit.js";
 
@@ -173,6 +174,7 @@ class CardHeader extends UI5Element {
 			"ui5-card-header": true,
 			"ui5-card-header--interactive": this.interactive,
 			"ui5-card-header--active": this.interactive && this._headerActive,
+			"ui5-card-header-ff": isFirefox(),
 		};
 	}
 
