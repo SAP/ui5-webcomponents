@@ -2,8 +2,6 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
 	isLeft,
 	isRight,
-	isUp,
-	isDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -411,10 +409,6 @@ class TreeItemBase extends ListItem {
 		}
 	}
 
-	_getRealDomRef() {
-		return this.shadowRoot.querySelector(".ui5-li-root-tree");
-	}
-
 	get iconAccessibleName() {
 		return this.expanded ? TreeItemBase.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeItemBase.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
 	}
@@ -428,5 +422,3 @@ class TreeItemBase extends ListItem {
 }
 
 export default TreeItemBase;
-
-

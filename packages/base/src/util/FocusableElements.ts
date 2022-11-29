@@ -50,7 +50,8 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 		const originalChild: HTMLElement | undefined = child;
 
 		if (instanceOfUI5Element(child)) {
-			child = await child.getFocusDomRefAsync();
+			await child._waitForDomRef();
+			child = child.getDomRef();
 		}
 
 		if (!child) {

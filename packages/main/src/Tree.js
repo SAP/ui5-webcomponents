@@ -481,7 +481,6 @@ class Tree extends UI5Element {
 		const item = this.getItems()[index];
 		item && this.list.focusItem(item);
 	}
-	
 
 	/**
 	 * Perform Depth-First-Search walk on the tree and run a callback on each node
