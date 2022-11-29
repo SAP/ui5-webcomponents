@@ -11,10 +11,10 @@ const fs = require('fs').promises;
 
 const compiledHandlebars = Handlebars.compile(template);
 const compiledSinceTemplate = Handlebars.compile(sinceTemplate);
+const jsdocMarker = "<!-- JSDoc marker -->";
 const sinceMarker = "<!--since_tag_marker-->";
 
 const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
-
 	const entries = api['symbols'];
 
 	const getComponentByName = name => {
@@ -107,16 +107,22 @@ const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
 
 	const generateSamplePage = async (entry, rawSampleContent) => {
 		let result = rawSampleContent;
-
 		entry.slots.forEach(slotData => {
 			if (!slotData.type.startsWith("Node") && !slotData.type.startsWith("HTMLElement")) { // interface -> don't show in documentation
 				slotData.type = "HTMLElement" + (slotData.type.endsWith("[]") ? "[]" : "");
 			}
 		});
+
+		entry.properties.forEach(propData => {
+			if (propData.type.includes(".")) {
+				propData.type = propData.type.split(".").pop();
+			}
+		});
+
 		const APIReference = compiledHandlebars(entry).replace(/\[\]/g, " [0..n]");
 		const EntitySince = compiledSinceTemplate(entry).replace(/\[\]/g, " [0..n]");
 
-		result = result.replace("<!-- JSDoc marker -->", APIReference);
+		result = result.replace(jsdocMarker, APIReference);
 		result = result.replace(sinceMarker, EntitySince);
 
 		return result;
