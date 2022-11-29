@@ -529,6 +529,9 @@ class ShellBar extends UI5Element {
 
 	_menuPopoverBeforeOpen() {
 		this._menuPopoverExpanded = true;
+		if (this.menuPopover.content && this.menuPopover.content.length) {
+			this.menuPopover.content[0].focusFirstItem();
+		}
 	}
 
 	_menuPopoverAfterClose() {
@@ -537,6 +540,9 @@ class ShellBar extends UI5Element {
 
 	_overflowPopoverBeforeOpen() {
 		this._overflowPopoverExpanded = true;
+		if (this.overflowPopover.content && this.overflowPopover.content.length) {
+			this.menuPopover.content[0].focusFirstItem();
+		}
 	}
 
 	_overflowPopoverAfterClose() {
