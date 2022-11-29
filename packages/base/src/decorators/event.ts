@@ -1,15 +1,13 @@
 import { EventData } from "../UI5ElementMetadata.js";
 
-type EventDescriptor = PropertyDecorator;
-
 /**
- * Returns an event decorator.
+ * Returns an event class decorator.
  *
  * @param { string } name the event name
- * @param { EventData } data the event data
- * @returns { EventDescriptor }
+ * @param { object } data the event detail
+ * @returns { ClassDecorator }
  */
-const event = (name: string, data: EventData = {}): EventDescriptor => {
+const event = (name: string, data: EventData = {}): ClassDecorator => {
 	return (target: any) => {
 		const eventsMetadata = target.getMetadata().getEvents();
 

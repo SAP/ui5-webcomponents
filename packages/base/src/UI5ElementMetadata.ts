@@ -30,7 +30,7 @@ type PropertyValue = boolean | number | string | object | undefined | null | Dat
 type EventData = Record<string, object>;
 
 type Metadata = {
-	tag: string,
+	tag?: string,
 	managedSlots?: boolean,
 	properties?: Record<string, Property>,
 	slots?: Record<string, Slot>,
@@ -127,7 +127,7 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getPureTag() {
-		return this.metadata.tag;
+		return this.metadata.tag || "";
 	}
 
 	/**
@@ -136,6 +136,11 @@ class UI5ElementMetadata {
 	 */
 	getTag() {
 		const pureTag = this.metadata.tag;
+
+		if (!pureTag) {
+			return "";
+		}
+
 		const suffix = getEffectiveScopingSuffixForTag(pureTag);
 		if (!suffix) {
 			return pureTag;

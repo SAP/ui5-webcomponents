@@ -38,6 +38,32 @@ import labelCss from "./generated/themes/Label.css.js";
  * @tagname ui5-label
  * @public
  */
+
+/**
+ * Fired when an item is activated.
+ *
+ * @event sap.ui.webcomponents.main.Label#item-click
+ * @allowPreventDefault
+ * @param { HTMLElement } item The clicked item.
+ * @param { boolean } esc esc pressed.
+ * @public
+ */
+
+@event("item-click", {
+	item: { type: HTMLElement },
+	esc: { type: Boolean },
+})
+
+/**
+ * Fired when an item is activated.
+ *
+ * @event sap.ui.webcomponents.main.Label#item-change
+ * @allowPreventDefault
+ * @public
+ */
+
+@event("item-change")
+
 @customElement("ui5-label")
 class Label extends UI5Element {
 	/**
@@ -101,32 +127,6 @@ class Label extends UI5Element {
 	 * @public
 	 * @name sap.ui.webcomponents.Label.prototype.default
 	 */
-
-	/**
-	 * Fired when an item is activated.
-	 *
-	 * @event sap.ui.webcomponents.main.Label#item-change
-	 * @allowPreventDefault
-	 * @public
-	 */
-
-	/**
-	 * Fired when an item is activated.
-	 *
-	 * @event sap.ui.webcomponents.main.Label#item-click
-	 * @allowPreventDefault
-	 * @param { HTMLElement } item The clicked item.
-	 * @param { boolean } esc esc pressed.
-	 * @public
-	 */
-
-	@event("item-change")
-
-	@event("item-click", {
-		item: { type: HTMLElement },
-		esc: { type: Boolean },
-	})
-
 	static get render() {
 		return litRender;
 	}
