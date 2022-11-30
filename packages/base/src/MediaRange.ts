@@ -3,9 +3,9 @@ type Range = Map<string, Array<number>>;
 const mediaRanges = new Map<string, Range>();
 
 const DEAFULT_RANGE_SET: Range = new Map<string, Array<number>>();
-DEAFULT_RANGE_SET.set("S", [0, 600]);
-DEAFULT_RANGE_SET.set("M", [600, 1024]);
-DEAFULT_RANGE_SET.set("L", [1024, 1440]);
+DEAFULT_RANGE_SET.set("S", [0, 599]);
+DEAFULT_RANGE_SET.set("M", [600, 1023]);
+DEAFULT_RANGE_SET.set("L", [1024, 1439]);
 DEAFULT_RANGE_SET.set("XL", [1440, 2560]);
 
 /**
