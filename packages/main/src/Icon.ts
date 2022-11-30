@@ -1,10 +1,16 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import themeAware from "@ui5/webcomponents-base/dist/decorators/themeAware.js";
 import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
+
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
 
@@ -12,158 +18,10 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const PRESENTATION_ROLE = "presentation";
 
 /**
- * @public
+ * Fired on mouseup, space and enter if icon is interactive
+ * @private
+ * @since 1.0.0-rc.8
  */
-const metadata = {
-	tag: "ui5-icon",
-	languageAware: true,
-	themeAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
-		/**
-		 * Defines if the icon is interactive (focusable and pressable)
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		interactive: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the unique identifier (icon name) of the component.
-		 * <br>
-		 *
-		 * To browse all available icons, see the
-		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Icons</ui5-link>,
-		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">SAP Fiori Tools</ui5-link> and
-		 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Business Suite</ui5-link> collections.
-		 * <br>
-		 *
-		 * Example:
-		 * <br>
-		 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
-		 * <br><br>
-		 *
-		 * <b>Note:</b> To use the SAP Fiori Tools icons,
-		 * you need to set the <code>tnt</code> prefix in front of the icon's name.
-		 * <br>
-		 *
-		 * Example:
-		 * <br>
-		 * <code>name='tnt/antenna'</code>, <code>name='tnt/actor'</code>, <code>name='tnt/api'</code>.
-		 * <br><br>
-		 *
-		 * <b>Note:</b> To use the SAP Business Suite icons,
-		 * you need to set the <code>business-suite</code> prefix in front of the icon's name.
-		 * <br>
-		 *
-		 * Example:
-		 * <br>
-		 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		*/
-		name: {
-			type: String,
-		},
-
-		/**
-		 * Defines the text alternative of the component.
-		 * If not provided a default text alternative will be set, if present.
-		 * <br><br>
-		 * <b>Note:</b> Every icon should have a text alternative in order to
-		 * calculate its accessible name.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Defines whether the component should have a tooltip.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showTooltip: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the accessibility role of the component.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.1.0
-		 */
-		accessibleRole: {
-			type: String,
-		},
-
-		/**
-		 * Defines the ARIA hidden state of the component.
-		 * Note: If the role is presentation the default value of aria-hidden will be true.
-		 * @private
-		 * @since 1.0.0-rc.15
-		 */
-		ariaHidden: {
-			type: String,
-		},
-
-		/**
-		 * @private
-		 */
-		pathData: {
-			type: String,
-			multiple: true,
-		},
-
-		/**
-		 * @private
-		 */
-		accData: {
-			type: Object,
-			noAttribute: true,
-		},
-
-		/**
-		 * @private
-		 */
-		focused: {
-			type: Boolean,
-		},
-
-		/**
-		* @private
-		*/
-		invalid: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		effectiveAccessibleName: {
-			type: String,
-			defaultValue: undefined,
-			noAttribute: true,
-		},
-	},
-	events: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
-		/**
-		 * Fired on mouseup, space and enter if icon is interactive
-		 * @private
-		 * @since 1.0.0-rc.8
-		 */
-		click: {},
-	},
-};
 
 /**
  * @class
@@ -256,29 +114,140 @@ const metadata = {
  * @implements sap.ui.webcomponents.main.IIcon
  * @public
  */
+@event("click")
+@languageAware
+@themeAware
+@customElement("ui5-icon")
 class Icon extends UI5Element {
-	interactive?: boolean;
-	focused?: boolean;
-	invalid?: boolean;
-	showTooltip?: boolean;
-	accessibleName?: string;
-	accessibleRole?: string;
+	/**
+	 * Defines if the icon is interactive (focusable and pressable)
+	 * @type {boolean}
+	 * @default false
+	 * @public
+	 * @since 1.0.0-rc.8
+	 */
+	@property({ type: Boolean })
+	interactive!: boolean;
+
+	/**
+	 * Defines the unique identifier (icon name) of the component.
+	 * <br>
+	 *
+	 * To browse all available icons, see the
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Icons</ui5-link>,
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">SAP Fiori Tools</ui5-link> and
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Business Suite</ui5-link> collections.
+	 * <br>
+	 *
+	 * Example:
+	 * <br>
+	 * <code>name='add'</code>, <code>name='delete'</code>, <code>name='employee'</code>.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> To use the SAP Fiori Tools icons,
+	 * you need to set the <code>tnt</code> prefix in front of the icon's name.
+	 * <br>
+	 *
+	 * Example:
+	 * <br>
+	 * <code>name='tnt/antenna'</code>, <code>name='tnt/actor'</code>, <code>name='tnt/api'</code>.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> To use the SAP Business Suite icons,
+	 * you need to set the <code>business-suite</code> prefix in front of the icon's name.
+	 * <br>
+	 *
+	 * Example:
+	 * <br>
+	 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
+	 * @type {string}
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	name!: string;
+
+	/**
+	 * Defines the text alternative of the component.
+	 * If not provided a default text alternative will be set, if present.
+	 * <br><br>
+	 * <b>Note:</b> Every icon should have a text alternative in order to
+	 * calculate its accessible name.
+	 *
+	 * @type {string}
+	 * @default ""
+	 * @public
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Defines whether the component should have a tooltip.
+	 *
+	 * @type {boolean}
+	 * @default false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showTooltip!: boolean;
+
+	/**
+	 * Defines the accessibility role of the component.
+	 * @type {string}
+	 * @default ""
+	 * @public
+	 * @since 1.1.0
+	 */
+	@property()
+	accessibleRole!: string;
+
+	/**
+	 * Defines the ARIA hidden state of the component.
+	 * Note: If the role is presentation the default value of aria-hidden will be true.
+	 * @private
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	ariaHidden!: string;
+
+	/**
+	 * @private
+	 */
+	@property({ multiple: true })
+	pathData!: Array<string>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Object, noAttribute: true })
+	accData!: I18nText;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
+
+	/**
+	* @private
+	*/
+	@property({ type: Boolean })
+	invalid!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ noAttribute: true, defaultValue: undefined })
 	effectiveAccessibleName?: string;
-	name?: string;
+
 	ltr?: boolean;
 	packageName?: string;
 	viewBox?: string;
-	accData?: I18nText;
-	pathData?: Array<string>;
 	customSvg?: object;
 
 	_onclick?: ((event: MouseEvent) => void) | undefined;
 	_onfocusout?: ((event: Event) => void) | undefined;
 	_onfocusin?: ((event: Event) => void) | undefined;
-
-	static get metadata() {
-		return metadata;
-	}
 
 	static get render() {
 		return litRender;
@@ -292,39 +261,39 @@ class Icon extends UI5Element {
 		return iconCss;
 	}
 
-	_onFocusInHandler(event: Event) { // eslint-disable-line
+	_onFocusInHandler() {
 		if (this.interactive) {
 			this.focused = true;
 		}
 	}
 
-	_onFocusOutHandler(event: Event) { // eslint-disable-line
+	_onFocusOutHandler() {
 		this.focused = false;
 	}
 
-	_onkeydown(event: KeyboardEvent) {
+	_onkeydown(e: KeyboardEvent) {
 		if (!this.interactive) {
 			return;
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			this.fireEvent("click");
 		}
 
-		if (isSpace(event)) {
-			event.preventDefault(); // prevent scrolling
+		if (isSpace(e)) {
+			e.preventDefault(); // prevent scrolling
 		}
 	}
 
-	_onkeyup(event: KeyboardEvent) {
-		if (this.interactive && isSpace(event)) {
+	_onkeyup(e: KeyboardEvent) {
+		if (this.interactive && isSpace(e)) {
 			this.fireEvent("click");
 		}
 	}
 
-	_onClickHandler(event: MouseEvent) {
+	_onClickHandler(e: MouseEvent) {
 		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-		event.stopPropagation();
+		e.stopPropagation();
 		this.fireEvent("click");
 	}
 

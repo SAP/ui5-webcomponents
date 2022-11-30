@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import WrappingType from "./types/WrappingType.js";
@@ -48,7 +49,10 @@ import labelCss from "./generated/themes/Label.css.js";
  * @param { boolean } esc esc pressed.
  * @public
  */
-
+@event("item-click", {
+	item: { type: HTMLElement },
+	esc: { type: Boolean },
+})
 /**
  * Fired when an item is activated.
  *
@@ -56,11 +60,6 @@ import labelCss from "./generated/themes/Label.css.js";
  * @allowPreventDefault
  * @public
  */
-
-@event("item-click", {
-	item: { type: HTMLElement },
-	esc: { type: Boolean },
-})
 @event("item-change")
 @customElement("ui5-label")
 class Label extends UI5Element {
@@ -70,6 +69,7 @@ class Label extends UI5Element {
 	 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webcomponents.main.Label.prototype.for
 	 * @default ""
 	 * @public
 	 */
@@ -80,6 +80,7 @@ class Label extends UI5Element {
 	 * Defines whether colon is added to the component text.
 	 * <br><br>
 	 * <b>Note:</b> Usually used in forms.
+	 * @name sap.ui.webcomponents.main.Label.prototype.showColon
 	 * @type {boolean}
 	 * @default false
 	 * @public
@@ -126,6 +127,17 @@ class Label extends UI5Element {
 	 * @name sap.ui.webcomponents.Label.prototype.default
 	 */
 
+	/**
+	 * Defines the header of the component.
+	 *
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @public
+	 * @name sap.ui.webcomponents.Label.prototype.header
+	 */
+	@slot({ type: HTMLElement })
+	header!: Array<HTMLElement>
+
 	static get render() {
 		return litRender;
 	}
@@ -159,6 +171,10 @@ class Label extends UI5Element {
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
+	}
+
+	hasHeader() {
+		return !!this.header.length;
 	}
 }
 
