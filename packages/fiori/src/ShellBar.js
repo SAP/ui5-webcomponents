@@ -141,7 +141,39 @@ const metadata = {
 		 * @public
 		 * @since 1.1.0
 		 */
-		 accessibilityTexts: {
+		accessibilityTexts: {
+			type: Object,
+		},
+
+		/**
+		 * An object of strings that defines several additional accessibility attribute values
+		 * for customization depending on the use case.
+		 *
+		 * It supports the following fields:
+		 *
+		 * <ul>
+		 * 		<li><code>expanded</code>: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+		 *			<ul>
+		 *				<li><code>true</code></li>
+		 *				<li><code>false</code></li>
+		 *			</ul>
+		 * 		</li>
+		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
+		 * 			<ul>
+		 *				<li><code>Dialog</code></li>
+		 *				<li><code>Grid</code></li>
+		 *				<li><code>ListBox</code></li>
+		 *				<li><code>Menu</code></li>
+		 *				<li><code>Tree</code></li>
+		 * 			</ul>
+		 * 		</li>
+		 * </ul>
+		 * @type {object}
+		 * @public
+		 * @since 1.10.0
+		 */
+
+		accessibilityAttributes: {
 			type: Object,
 		},
 
@@ -1172,27 +1204,62 @@ class ShellBar extends UI5Element {
 		return {
 			notifications: {
 				"title": this._notificationsText,
+				"accessibilityAttributes": {
+					hasPopup: this._notificationsHasPopup,
+				},
 			},
 			profile: {
 				"title": this._profileText,
+				"accessibilityAttributes": {
+					hasPopup: this._profileHasPopup,
+				},
 			},
 			products: {
 				"title": this._productsText,
+				"accessibilityAttributes": {
+					hasPopup: this._productsHasPopup,
+				},
 			},
 			search: {
 				"title": this._searchText,
 				"accessibilityAttributes": {
+					hasPopup: this._searchHasPopup,
 					expanded: this.showSearchField,
 				},
 			},
 			overflow: {
 				"title": this._overflowText,
 				"accessibilityAttributes": {
-					hasPopup: HasPopup.Menu,
+					hasPopup: this._overflowHasPopup,
 					expanded: this._overflowPopoverExpanded,
 				},
 			},
 		};
+	}
+
+	get _notificationsHasPopup() {
+		const notificationsAccAttributes = this.accessibilityAttributes.notifications;
+		return notificationsAccAttributes ? notificationsAccAttributes.ariaHasPopup : null;
+	}
+
+	get _profileHasPopup() {
+		const profileAccAttributes = this.accessibilityAttributes.profile;
+		return profileAccAttributes ? profileAccAttributes.ariaHasPopup : null;
+	}
+
+	get _productsHasPopup() {
+		const productsAccAttributes = this.accessibilityAttributes.product;
+		return productsAccAttributes ? productsAccAttributes.ariaHasPopup : null;
+	}
+
+	get _searchHasPopup() {
+		const searcAccAttributes = this.accessibilityAttributes.search;
+		return searcAccAttributes ? searcAccAttributes.ariaHasPopup : null;
+	}
+
+	get _overflowHasPopup() {
+		const overflowAccAttributes = this.accessibilityAttributes.overflow;
+		return overflowAccAttributes ? overflowAccAttributes.ariaHasPopup : HasPopup.Menu;
 	}
 
 	get accLogoRole() {

@@ -58,6 +58,14 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await logoDOM.getAttribute("role"), "link",
 				"Logo has the correct custom role.");
 		});
+
+		it("tests accessibilityAttributes property", async () => {
+			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "Dialog";
+			const sb = await browser.$("#sbAccAttr");
+
+			assert.strictEqual(await sb.getProperty("_notificationsHasPopup"), NOTIFICATIONS_BTN_ARIA_HASPOPUP,
+				"Notifications aria-haspopup could be customized.");
+		});
 	});
 
 	describe("ui5-shellbar menu", () => {
