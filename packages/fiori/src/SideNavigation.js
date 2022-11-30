@@ -226,8 +226,13 @@ class SideNavigation extends UI5Element {
 		};
 	}
 
-	_onAfterOpen() {
-		this.setCurrentItem();
+	async _onAfterOpen() {
+		// as the tree/list inside the popover is never destroyed,
+		// item navigation index should be managed, because items are
+		// dynamically recreated and tabIndexes are not updated
+		const tree = await this.getPickerTree();
+		const index = this._popoverContent.selectedSubItemIndex || 0;
+		tree.focusItemByIndex(index);
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -296,12 +301,6 @@ class SideNavigation extends UI5Element {
 		const picker = await this.getPicker();
 		const sideNav = picker.querySelector("[ui5-side-navigation]");
 		return sideNav._itemsTree;
-	}
-
-	async setCurrentItem() {
-		const tree = await this.getPickerTree();
-		const index = this._popoverContent.selectedSubItemIndex || 0;
-		tree.focusItemByIndex(index);
 	}
 
 	get hasHeader() {

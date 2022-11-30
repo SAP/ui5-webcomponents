@@ -1,11 +1,7 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import {
-	isLeft,
-	isRight,
-} from "@ui5/webcomponents-base/dist/Keys.js";
+import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import HasPopup from "./types/HasPopup.js";
 import ListItem from "./ListItem.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -21,6 +17,8 @@ import TreeItemBaseTemplate from "./generated/templates/TreeItemBaseTemplate.lit
 
 // Styles
 import treeItemCss from "./generated/themes/TreeItem.css.js";
+
+import HasPopup from "./types/HasPopup.js";
 
 /**
  * @public

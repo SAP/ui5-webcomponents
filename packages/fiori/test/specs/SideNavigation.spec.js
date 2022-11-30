@@ -153,7 +153,7 @@ describe("Component Behavior", () => {
 			// clean up
 			await browser.$("#sn1").setProperty("collapsed", false);
 			await browser.executeAsync(async (done) => {
-				// close popover
+				// close popover after the test because next call of getItems will return the items from the popover as well
 				const staticArea = await document.querySelector("ui5-side-navigation").getStaticAreaItemDomRef();
 				const popover = staticArea.querySelector(".ui5-side-navigation-popover");
 				popover.addEventListener("ui5-after-close", () => {

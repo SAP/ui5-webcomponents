@@ -353,18 +353,7 @@ class Tree extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		// set level to tree items
-		this.walk((item, level, index) => {
-			const parent = item.parentNode;
-			const ariaSetSize = (parent && parent.children.length) || this.items.length;
-
-			item.setAttribute("level", level);
-
-			item._toggleButtonEnd = this._toggleButtonEnd;
-			item._minimal = this._minimal;
-			item._setsize = ariaSetSize;
-			item._posinset = index + 1;
-		});
+		this._prepareTreeItems();
 	}
 
 	get list() {
@@ -450,6 +439,21 @@ class Tree extends UI5Element {
 			previouslySelectedItems,
 			selectedItems,
 			targetItem,
+		});
+	}
+
+	_prepareTreeItems() {
+		// set level to tree items
+		this.walk((item, level, index) => {
+			const parent = item.parentNode;
+			const ariaSetSize = (parent && parent.children.length) || this.items.length;
+
+			item.setAttribute("level", level);
+
+			item._toggleButtonEnd = this._toggleButtonEnd;
+			item._minimal = this._minimal;
+			item._setsize = ariaSetSize;
+			item._posinset = index + 1;
 		});
 	}
 
