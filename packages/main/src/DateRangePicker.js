@@ -13,7 +13,7 @@ import DatePicker from "./DatePicker.js";
  */
 const metadata = {
 	tag: "ui5-daterange-picker",
-	properties: /** @lends sap.ui.webcomponents.main.DateRangePicker.prototype */ {
+	properties: /** @lends sap.ui.webc.main.DateRangePicker.prototype */ {
 		/**
 		 * Determines the symbol which separates the dates.
 		 * If not supplied, the default time interval delimiter for the current locale will be used.
@@ -69,8 +69,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.DateRangePicker
- * @extends sap.ui.webcomponents.main.DatePicker
+ * @alias sap.ui.webc.main.DateRangePicker
+ * @extends sap.ui.webc.main.DatePicker
  * @tagname ui5-daterange-picker
  * @since 1.0.0-rc.8
  * @public

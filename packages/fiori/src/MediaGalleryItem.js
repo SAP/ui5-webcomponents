@@ -16,7 +16,7 @@ import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
 const metadata = {
 	tag: "ui5-media-gallery-item",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.MediaGalleryItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.MediaGalleryItem.prototype */ {
 
 		/**
 		 * Defines the selected state of the component.
@@ -49,7 +49,7 @@ const metadata = {
 		 * <li><code>Wide</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.MediaGalleryItemLayout}
+		 * @type {sap.ui.webc.fiori.types.MediaGalleryItemLayout}
 		 * @defaultvalue "Square"
 		 * @public
 		 */
@@ -119,7 +119,7 @@ const metadata = {
 			defaultValue: "",
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.MediaGalleryItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.MediaGalleryItem.prototype */ {
 		/**
 		 * Defines the content of the component.
 		 *
@@ -168,11 +168,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.MediaGalleryItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.MediaGalleryItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-media-gallery-item
  * @public
- * @implements sap.ui.webcomponents.fiori.IMediaGalleryItem
+ * @implements sap.ui.webc.fiori.IMediaGalleryItem
  * @since 1.1.0
  */
 class MediaGalleryItem extends UI5Element {

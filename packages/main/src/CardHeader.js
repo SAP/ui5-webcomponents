@@ -22,7 +22,7 @@ const metadata = {
 	tag: "ui5-card-header",
 	languageAware: true,
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.CardHeader.prototype */ {
+	slots: /** @lends sap.ui.webc.main.CardHeader.prototype */ {
 
 		/**
 		 * Defines an avatar image, displayed in the left most part of the header.
@@ -44,7 +44,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.CardHeader.prototype */ {
+	properties: /** @lends sap.ui.webc.main.CardHeader.prototype */ {
 
 		/**
 		 * Defines the title text.
@@ -91,7 +91,7 @@ const metadata = {
 		 * Define the <code>aria-level</code> attribute of the component
 		 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
 		 * @private
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultValue 3
 		 */
 		ariaLevel: {
@@ -104,13 +104,13 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.CardHeader.prototype */ {
+	events: /** @lends sap.ui.webc.main.CardHeader.prototype */ {
 
 		/**
 		 * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
 		 * <br><br>
 		 * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
-		 * @event sap.ui.webcomponents.main.CardHeader#click
+		 * @event sap.ui.webc.main.CardHeader#click
 		 * @public
 		 */
 		"click": {},
@@ -146,8 +146,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.CardHeader
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.CardHeader
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-card-header
  * @public
  * @since 1.0.0-rc.15

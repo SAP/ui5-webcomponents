@@ -6,7 +6,7 @@ import GroupHeaderListItem from "./GroupHeaderListItem.js";
  */
 const metadata = {
 	tag: "ui5-cb-group-item",
-	properties: /** @lends sap.ui.webcomponents.main.ComboBoxGroupItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ComboBoxGroupItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *
@@ -25,9 +25,9 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.ComboBoxGroupItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.ComboBoxGroupItem.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.main.ComboBoxGroupItem.prototype */ {
+	events: /** @lends sap.ui.webc.main.ComboBoxGroupItem.prototype */ {
 	},
 };
 
@@ -38,11 +38,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ComboBoxGroupItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ComboBoxGroupItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-cb-group-item
  * @public
- * @implements sap.ui.webcomponents.main.IComboBoxItem
+ * @implements sap.ui.webc.main.IComboBoxItem
  * @since 1.0.0-rc.15
  */
 class ComboBoxGroupItem extends UI5Element {

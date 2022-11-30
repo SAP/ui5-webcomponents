@@ -23,7 +23,7 @@ const ARROW_SIZE = 8;
  */
 const metadata = {
 	tag: "ui5-popover",
-	properties: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Popover.prototype */ {
 		/**
 		 * Defines the header text.
 		 * <br><br>
@@ -48,7 +48,7 @@ const metadata = {
 		 * <li><code>Bottom</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.PopoverPlacementType}
+		 * @type {sap.ui.webc.main.types.PopoverPlacementType}
 		 * @defaultvalue "Right"
 		 * @public
 		 */
@@ -68,7 +68,7 @@ const metadata = {
 		 * <li><code>Stretch</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.PopoverHorizontalAlign}
+		 * @type {sap.ui.webc.main.types.PopoverHorizontalAlign}
 		 * @defaultvalue "Center"
 		 * @public
 		 */
@@ -88,7 +88,7 @@ const metadata = {
 		 * <li><code>Stretch</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.PopoverVerticalAlign}
+		 * @type {sap.ui.webc.main.types.PopoverVerticalAlign}
 		 * @defaultvalue "Center"
 		 * @public
 		 */
@@ -148,7 +148,7 @@ const metadata = {
 		/**
 		 * Defines the ID or DOM Reference of the element that the popover is shown at
 		 * @public
-		 * @type {sap.ui.webcomponents.base.types.DOMReference}
+		 * @type {sap.ui.webc.base.types.DOMReference}
 		 * @defaultvalue ""
 		 * @since 1.2.0
 		 */
@@ -209,7 +209,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Popover.prototype */ {
 		/**
 		 * Defines the header HTML Element.
 		 *
@@ -232,7 +232,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Popover.prototype */ {
+	events: /** @lends sap.ui.webc.main.Popover.prototype */ {
 	},
 };
 
@@ -277,8 +277,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Popover
- * @extends sap.ui.webcomponents.main.Popup
+ * @alias sap.ui.webc.main.Popover
+ * @extends sap.ui.webc.main.Popup
  * @tagname ui5-popover
  * @since 1.0.0-rc.6
  * @public

@@ -15,7 +15,7 @@ import labelCss from "./generated/themes/Label.css.js";
  */
 const metadata = {
 	tag: "ui5-label",
-	properties: /** @lends sap.ui.webcomponents.main.Label.prototype */  {
+	properties: /** @lends sap.ui.webc.main.Label.prototype */  {
 
 		/**
 		 * Defines whether an asterisk character is added to the component text.
@@ -40,7 +40,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.WrappingType}
+		 * @type {sap.ui.webc.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -75,7 +75,7 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.Label.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Label.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -111,8 +111,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Label
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Label
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-label
  * @public
  */

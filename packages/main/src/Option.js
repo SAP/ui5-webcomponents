@@ -6,7 +6,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-option",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.Option.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Option.prototype */ {
 
 		/**
 		 * Defines the selected state of the component.
@@ -89,7 +89,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.Option.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Option.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><br>
@@ -103,7 +103,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Option.prototype */ {},
+	events: /** @lends sap.ui.webc.main.Option.prototype */ {},
 };
 
 /**
@@ -115,10 +115,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Option
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Option
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-option
- * @implements sap.ui.webcomponents.main.ISelectOption
+ * @implements sap.ui.webc.main.ISelectOption
  * @public
  */
 class Option extends UI5Element {

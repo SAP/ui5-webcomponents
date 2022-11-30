@@ -6,9 +6,9 @@ import DataType from "./DataType.js";
  * <b>Note:</b> If an ID is passed, it is expected to be part of the same <code>document</code> element as the consuming component.
  *
  * @constructor
- * @extends sap.ui.webcomponents.base.types.DataType
+ * @extends sap.ui.webc.base.types.DataType
  * @author SAP SE
- * @alias sap.ui.webcomponents.base.types.DOMReference
+ * @alias sap.ui.webc.base.types.DOMReference
  * @public
  */
 class DOMReference extends DataType {

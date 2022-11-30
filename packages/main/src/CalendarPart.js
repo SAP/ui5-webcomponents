@@ -8,11 +8,11 @@ import DateComponentBase from "./DateComponentBase.js";
  * @public
  */
 const metadata = {
-	properties: /** @lends sap.ui.webcomponents.main.CalendarPart.prototype */ {
+	properties: /** @lends sap.ui.webc.main.CalendarPart.prototype */ {
 		/**
 		 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
 		 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @protected
 		 */
 		timestamp: {
@@ -30,8 +30,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.CalendarPart
- * @extends sap.ui.webcomponents.main.DateComponentBase
+ * @alias sap.ui.webc.main.CalendarPart
+ * @extends sap.ui.webc.main.DateComponentBase
  * @public
  */
 class CalendarPart extends DateComponentBase {

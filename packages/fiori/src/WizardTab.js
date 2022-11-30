@@ -8,7 +8,7 @@ import WizardTabCss from "./generated/themes/WizardTab.css.js";
 
 const metadata = {
 	tag: "ui5-wizard-tab",
-	properties: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.WizardTab.prototype */ {
 		/**
 		 * Defines the <code>icon</code> of the step.
 		 * @type {string}
@@ -118,13 +118,13 @@ const metadata = {
 			type: Object,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.WizardTab.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.WizardTab.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.WizardTab.prototype */ {
 		/**
 		 * Fired when clicking on none disabled step.
 		 *
-		 * @event sap.ui.webcomponents.fiori.WizardTab#selection-change-requested
+		 * @event sap.ui.webc.fiori.WizardTab#selection-change-requested
 		 * @private
 		 */
 		"selection-change-requested": {},
@@ -146,8 +146,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.WizardTab
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.WizardTab
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-wizard-tab
  * @private
  */

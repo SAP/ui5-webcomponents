@@ -15,7 +15,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  */
 const metadata = {
 	tag: "ui5-timeline-item",
-	slots: /** @lends sap.ui.webcomponents.fiori.TimelineItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.TimelineItem.prototype */ {
 		/**
 		 * Determines the description of the <code>ui5-timeline-item</code>.
 		 *
@@ -27,7 +27,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.fiori.TimelineItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.TimelineItem.prototype */ {
 		/**
 		 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
 		 * SAP-icons font provides numerous options.
@@ -95,7 +95,7 @@ const metadata = {
 		/**
 		 * Defines the items orientation.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.TimelineLayout}
+		 * @type {sap.ui.webc.fiori.types.TimelineLayout}
 		 * @defaultvalue "Vertical"
 		 * @private
 		 */
@@ -114,7 +114,7 @@ const metadata = {
 			type: String,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.TimelineItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.TimelineItem.prototype */ {
 		/**
 		 * Fired when the item name is pressed either with a
 		 * click/tap or by using the Enter or Space key.
@@ -122,7 +122,7 @@ const metadata = {
 		 * <b>Note:</b> The event will not be fired if the <code>name-clickable</code>
 		 * attribute is not set.
 		 *
-		 * @event sap.ui.webcomponents.fiori.TimelineItem#name-click
+		 * @event sap.ui.webc.fiori.TimelineItem#name-click
 		 * @public
 		 */
 		"name-click": {},
@@ -138,10 +138,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.TimelineItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.TimelineItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-timeline-item
- * @implements sap.ui.webcomponents.fiori.ITimelineItem
+ * @implements sap.ui.webc.fiori.ITimelineItem
  * @public
  */
 class TimelineItem extends UI5Element {

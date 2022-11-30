@@ -22,7 +22,7 @@ const metadata = {
 	properties: {
 		/**
 		 * Already normalized by Calendar
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @public
 		 */
 		timestamp: {
@@ -31,7 +31,7 @@ const metadata = {
 
 		/**
 		 * Already normalized by Calendar
-		 * @type {sap.ui.webcomponents.base.types.CalendarType}
+		 * @type {sap.ui.webc.base.types.CalendarType}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -42,7 +42,7 @@ const metadata = {
 		 * Already normalized by Calendar
 		 * @sience 1.0.0-rc.16
 		 * @defaultvalue undefined
-		 * @type {sap.ui.webcomponents.base.types.CalendarType}
+		 * @type {sap.ui.webc.base.types.CalendarType}
 		 * @public
 		 */
 		secondaryCalendarType: {

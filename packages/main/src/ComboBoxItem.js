@@ -5,7 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  */
 const metadata = {
 	tag: "ui5-cb-item",
-	properties: /** @lends sap.ui.webcomponents.main.ComboBoxItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ComboBoxItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *
@@ -32,10 +32,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ComboBoxItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ComboBoxItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-cb-item
- * @implements sap.ui.webcomponents.main.IComboBoxItem
+ * @implements sap.ui.webc.main.IComboBoxItem
  * @public
  */
 class ComboBoxItem extends UI5Element {

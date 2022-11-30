@@ -25,7 +25,7 @@ import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
  */
 const metadata = {
 	tag: "ui5-product-switch",
-	properties: /** @lends sap.ui.webcomponents.fiori.ProductSwitch.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.ProductSwitch.prototype */ {
 		/**
 		 * Indicates how many columns are displayed.
 		 * @private
@@ -35,11 +35,11 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.fiori.ProductSwitch.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.ProductSwitch.prototype */ {
 		/**
 		 * Defines the items of the <code>ui5-product-switch</code>.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.IProductSwitchItem[]}
+		 * @type {sap.ui.webc.fiori.IProductSwitchItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -77,8 +77,8 @@ const metadata = {
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code> (for <code>ui5-product-switch-item</code>)
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.ProductSwitch
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.ProductSwitch
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-product-switch
  * @appenddocs ProductSwitchItem
  * @public

@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TabLayout
+ * @alias sap.ui.webc.main.types.TabLayout
  */
 enum TabLayout {
 	/**

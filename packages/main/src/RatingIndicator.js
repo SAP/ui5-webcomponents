@@ -31,7 +31,7 @@ import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
 const metadata = {
 	tag: "ui5-rating-indicator",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.RatingIndicator.prototype */ {
+	properties: /** @lends sap.ui.webc.main.RatingIndicator.prototype */ {
 
 		/**
 		 * The indicated value of the rating.
@@ -42,7 +42,7 @@ const metadata = {
 		 * <li>1.3 - 1.7 -> 1.5</li>
 		 * <li>1.8 - 1.9 -> 2</li>
 		 * <ul>
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -53,7 +53,7 @@ const metadata = {
 
 		/**
 		 * The number of displayed rating symbols.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 5
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -118,10 +118,10 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.RatingIndicator.prototype */ {
+	slots: /** @lends sap.ui.webc.main.RatingIndicator.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.main.RatingIndicator.prototype */ {
+	events: /** @lends sap.ui.webc.main.RatingIndicator.prototype */ {
 
 		/**
 		 * The event is fired when the value changes.
@@ -168,8 +168,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.RatingIndicator
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.RatingIndicator
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-rating-indicator
  * @public
  * @since 1.0.0-rc.8

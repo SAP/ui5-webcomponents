@@ -18,7 +18,7 @@ const metadata = {
 	tag: "ui5-icon",
 	languageAware: true,
 	themeAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Icon.prototype */ {
 		/**
 		 * Defines if the icon is interactive (focusable and pressable)
 		 * @type {boolean}
@@ -155,7 +155,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Icon.prototype */ {
+	events: /** @lends sap.ui.webc.main.Icon.prototype */ {
 		/**
 		 * Fired on mouseup, space and enter if icon is interactive
 		 * @private
@@ -250,10 +250,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Icon
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Icon
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-icon
- * @implements sap.ui.webcomponents.main.IIcon
+ * @implements sap.ui.webc.main.IIcon
  * @public
  */
 class Icon extends UI5Element {

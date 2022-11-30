@@ -69,12 +69,12 @@ const metadata = {
 	tag: "ui5-input",
 	languageAware: true,
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Input.prototype */ {
 
 		/**
 		 * Defines the icon to be displayed in the component.
 		 *
-		 * @type {sap.ui.webcomponents.main.IIcon[]}
+		 * @type {sap.ui.webc.main.IIcon[]}
 		 * @slot
 		 * @public
 		 */
@@ -112,7 +112,7 @@ const metadata = {
 		 * <br>
 		 * automatically imports the <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item></code> for your convenience.
 		 *
-		 * @type {sap.ui.webcomponents.main.IInputSuggestionItem[]}
+		 * @type {sap.ui.webc.main.IInputSuggestionItem[]}
 		 * @slot suggestionItems
 		 * @public
 		 */
@@ -151,7 +151,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Input.prototype */  {
+	properties: /** @lends sap.ui.webc.main.Input.prototype */  {
 
 		/**
 		 * Defines whether the component is in disabled state.
@@ -243,7 +243,7 @@ const metadata = {
 		 * that use different soft keyboard layouts depending on the given input type.</li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.InputType}
+		 * @type {sap.ui.webc.main.types.InputType}
 		 * @defaultvalue "Text"
 		 * @public
 		 */
@@ -293,7 +293,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -339,7 +339,7 @@ const metadata = {
 		 * Sets the maximum number of characters available in the input field.
 		 * <br><br>
 		 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
@@ -456,7 +456,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Input.prototype */ {
+	events: /** @lends sap.ui.webc.main.Input.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
@@ -477,7 +477,7 @@ const metadata = {
 		/**
 		 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
 		 *
-		 * @event sap.ui.webcomponents.main.Input#suggestion-item-select
+		 * @event sap.ui.webc.main.Input#suggestion-item-select
 		 * @param {HTMLElement} item The selected item.
 		 * @public
 		 */
@@ -491,7 +491,7 @@ const metadata = {
 		 * Fired when the user navigates to a suggestion item via the ARROW keys,
 		 * as a preview, before the final selection.
 		 *
-		 * @event sap.ui.webcomponents.main.Input#suggestion-item-preview
+		 * @event sap.ui.webc.main.Input#suggestion-item-preview
 		 * @param {HTMLElement} item The previewed suggestion item.
 		 * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
 		 * @public
@@ -507,7 +507,7 @@ const metadata = {
 		/**
 		 * Fired when the user scrolls the suggestion popover.
 		 *
-		 * @event sap.ui.webcomponents.main.Input#suggestion-scroll
+		 * @event sap.ui.webc.main.Input#suggestion-scroll
 		 * @param {Integer} scrollTop The current scroll position.
 		 * @param {HTMLElement} scrollContainer The scroll container.
 		 * @protected
@@ -565,11 +565,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Input
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Input
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-input
  * @appenddocs SuggestionItem SuggestionGroupItem
- * @implements sap.ui.webcomponents.main.IInput
+ * @implements sap.ui.webc.main.IInput
  * @public
  */
 class Input extends UI5Element {
@@ -1265,7 +1265,7 @@ class Input extends UI5Element {
 
 	/**
 	 * The suggestion item on preview.
-	 * @type {sap.ui.webcomponents.main.IInputSuggestionItem}
+	 * @type {sap.ui.webc.main.IInputSuggestionItem}
 	 * @readonly
 	 * @public
 	 */

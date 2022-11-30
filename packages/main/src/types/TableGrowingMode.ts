@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TableGrowingMode
+ * @alias sap.ui.webc.main.types.TableGrowingMode
  */
 enum TableGrowingMode {
 	/**
