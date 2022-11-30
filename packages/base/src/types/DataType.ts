@@ -6,7 +6,7 @@ import { PropertyValue } from "../UI5ElementMetadata.js";
  * @class
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.base.types.DataType
+ * @alias sap.ui.webc.base.types.DataType
  * @public
  */
 class DataType {

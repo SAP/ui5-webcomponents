@@ -64,7 +64,7 @@ const metadata = {
 	tag: "ui5-select",
 	languageAware: true,
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Select.prototype */ {
 
 		/**
 		 * Defines the component options.
@@ -75,7 +75,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
-		 * @type {sap.ui.webcomponents.main.ISelectOption[]}
+		 * @type {sap.ui.webc.main.ISelectOption[]}
 		 * @slot options
 		 * @public
 		 */
@@ -113,7 +113,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Select.prototype */  {
+	properties: /** @lends sap.ui.webc.main.Select.prototype */  {
 
 		/**
 		 * Defines whether the component is in disabled state.
@@ -161,7 +161,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -237,7 +237,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Select.prototype */ {
+	events: /** @lends sap.ui.webc.main.Select.prototype */ {
 		/**
 		 * Fired when the selected option changes.
 		 *
@@ -279,8 +279,8 @@ const metadata = {
  * <code>import "@ui5/webcomponents/dist/Option";</code> (comes with <code>ui5-select</code>)
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Select
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Select
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-select
  * @appenddocs Option
  * @public
@@ -360,7 +360,7 @@ class Select extends UI5Element {
 	/**
 	 * Currently selected <code>ui5-option</code> element.
 	 * @readonly
-	 * @type {sap.ui.webcomponents.main.ISelectOption}
+	 * @type {sap.ui.webc.main.ISelectOption}
 	 * @public
 	 */
 	get selectedOption() {

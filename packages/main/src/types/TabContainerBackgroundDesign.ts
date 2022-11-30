@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TabContainerBackgroundDesign
+ * @alias sap.ui.webc.main.types.TabContainerBackgroundDesign
  */
 enum TabContainerBackgroundDesign {
 	/**

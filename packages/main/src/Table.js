@@ -56,14 +56,14 @@ const metadata = {
 	tag: "ui5-table",
 	managedSlots: true,
 	fastNavigation: true,
-	slots: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Table.prototype */ {
 
 		/**
 		 * Defines the component rows.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-row</code> for the intended design.
 		 *
-		 * @type {sap.ui.webcomponents.main.ITableRow[]}
+		 * @type {sap.ui.webc.main.ITableRow[]}
 		 * @slot rows
 		 * @public
 		 */
@@ -79,7 +79,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-column</code> for the intended design.
 		 *
-		 * @type {sap.ui.webcomponents.main.ITableColumn[]}
+		 * @type {sap.ui.webc.main.ITableColumn[]}
 		 * @slot
 		 * @public
 		 */
@@ -92,7 +92,7 @@ const metadata = {
 			},
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Table.prototype */ {
 
 		/**
 		 * Defines the text that will be displayed when there is no data and <code>hideNoData</code> is not present.
@@ -166,7 +166,7 @@ const metadata = {
 		 *
 		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * and the component will fallback to <code>growing="Button"</code>.
-		 * @type {sap.ui.webcomponents.main.types.TableGrowingMode}
+		 * @type {sap.ui.webc.main.types.TableGrowingMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.12
 		 * @public
@@ -194,7 +194,7 @@ const metadata = {
 		/**
 		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultValue 1000
 		 * @public
 		 */
@@ -242,7 +242,7 @@ const metadata = {
 		 * <li><code>SingleSelect</code></li>
 		 * <li><code>None</code></li>
 		 * <ul>
-		 * @type {sap.ui.webcomponents.main.types.TableMode}
+		 * @type {sap.ui.webc.main.types.TableMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15
 		 * @public
@@ -322,11 +322,11 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Table.prototype */ {
+	events: /** @lends sap.ui.webc.main.Table.prototype */ {
 		/**
 		 * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 		 *
-		 * @event sap.ui.webcomponents.main.Table#row-click
+		 * @event sap.ui.webc.main.Table#row-click
 		 * @param {HTMLElement} row the activated row.
 		 * @public
 		 */
@@ -339,7 +339,7 @@ const metadata = {
 		/**
 		 * Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
 		 *
-		 * @event sap.ui.webcomponents.main.Table#popin-change
+		 * @event sap.ui.webc.main.Table#popin-change
 		 * @param {Array} poppedColumns popped-in columns.
 		 * @since 1.0.0-rc.6
 		 * @public
@@ -355,7 +355,7 @@ const metadata = {
 		 * <br><br>
 		 *
 		 * <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
-		 * @event sap.ui.webcomponents.main.Table#load-more
+		 * @event sap.ui.webc.main.Table#load-more
 		 * @public
 		 * @since 1.0.0-rc.11
 		 */
@@ -365,7 +365,7 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event sap.ui.webcomponents.main.Table#selection-change
+		 * @event sap.ui.webc.main.Table#selection-change
 		 * @param {Array} selectedRows An array of the selected rows.
 		 * @param {Array} previouslySelectedRows An array of the previously selected rows.
 		 * @public
@@ -444,8 +444,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Table
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Table
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-table
  * @appenddocs TableColumn TableRow TableGroupRow TableCell
  * @public

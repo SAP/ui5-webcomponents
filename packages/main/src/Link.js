@@ -20,7 +20,7 @@ import linkCss from "./generated/themes/Link.css.js";
 const metadata = {
 	tag: "ui5-link",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.Link.prototype */  {
+	properties: /** @lends sap.ui.webc.main.Link.prototype */  {
 
 		/**
 		 * Defines whether the component is disabled.
@@ -76,7 +76,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Avaialble options are <code>Default</code>, <code>Subtle</code>, and <code>Emphasized</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.LinkDesign}
+		 * @type {sap.ui.webc.main.types.LinkDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -93,7 +93,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.WrappingType}
+		 * @type {sap.ui.webc.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -190,7 +190,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Link.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -203,7 +203,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Link.prototype */ {
+	events: /** @lends sap.ui.webc.main.Link.prototype */ {
 
 		/**
 		 * Fired when the component is triggered either with a mouse/tap
@@ -263,8 +263,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Link
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Link
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-link
  * @public
  */

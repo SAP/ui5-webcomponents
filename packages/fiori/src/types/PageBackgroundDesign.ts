@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.PageBackgroundDesign
+ * @alias sap.ui.webc.fiori.types.PageBackgroundDesign
  */
 enum PageBackgroundDesign {
 

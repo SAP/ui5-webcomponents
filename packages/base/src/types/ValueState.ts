@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.base.types.ValueState
+ * @alias sap.ui.webc.base.types.ValueState
  */
 enum ValueState {
 	/**

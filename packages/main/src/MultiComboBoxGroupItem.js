@@ -6,7 +6,7 @@ import GroupHeaderListItem from "./GroupHeaderListItem.js";
  */
 const metadata = {
 	tag: "ui5-mcb-group-item",
-	properties: /** @lends sap.ui.webcomponents.main.MultiComboBoxGroupItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.MultiComboBoxGroupItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *
@@ -18,9 +18,9 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.MultiComboBoxGroupItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.MultiComboBoxGroupItem.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.main.MultiComboBoxGroupItem.prototype */ {
+	events: /** @lends sap.ui.webc.main.MultiComboBoxGroupItem.prototype */ {
 	},
 };
 
@@ -31,11 +31,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.MultiComboBoxGroupItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.MultiComboBoxGroupItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-mcb-group-item
  * @public
- * @implements sap.ui.webcomponents.main.IMultiComboBoxItem
+ * @implements sap.ui.webc.main.IMultiComboBoxItem
  * @since 1.4.0
  */
 class MultiComboBoxGroupItem extends UI5Element {

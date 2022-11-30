@@ -22,7 +22,7 @@ import WheelSliderCss from "./generated/themes/WheelSlider.css.js";
  */
 const metadata = {
 	tag: "ui5-wheelslider",
-	properties: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
+	properties: /** @lends sap.ui.webc.main.WheelSlider.prototype */ {
 		/**
 		 * Defines whether the component is disabled
 		 * (default is set to <code>false</code>).
@@ -90,10 +90,10 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
+	slots: /** @lends sap.ui.webc.main.WheelSlider.prototype */ {
 
 	},
-	events: /** @lends sap.ui.webcomponents.main.WheelSlider.prototype */ {
+	events: /** @lends sap.ui.webc.main.WheelSlider.prototype */ {
 		/**
 		 * Fires when the wheel slider is expanded.
 		 */
@@ -133,8 +133,8 @@ const CELL_SIZE_COZY = 46;
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.WheelSlider
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.WheelSlider
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-wheelslider
  * @public
  * @since 1.0.0-rc.6

@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.CalendarSelectionMode
+ * @alias sap.ui.webc.main.types.CalendarSelectionMode
  */
 enum CalendarSelectionMode {
 	/**

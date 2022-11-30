@@ -22,7 +22,7 @@ import switchCss from "./generated/themes/Switch.css.js";
 const metadata = {
 	tag: "ui5-switch",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Switch.prototype */ {
 
 		/**
 		 * Defines the component design.
@@ -31,7 +31,7 @@ const metadata = {
 		 * positive and negative icons will replace the <code>textOn</code> and <code>textOff</code>.
 		 *
 		 * @public
-		 * @type {sap.ui.webcomponents.main.types.SwitchDesign}
+		 * @type {sap.ui.webc.main.types.SwitchDesign}
 		 * @defaultValue "Textual"
 		 */
 		design: {
@@ -136,7 +136,7 @@ const metadata = {
 			type: String,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Switch.prototype */ {
+	events: /** @lends sap.ui.webc.main.Switch.prototype */ {
 
 		/**
 		 * Fired when the component checked state changes.
@@ -182,8 +182,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Switch
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Switch
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-switch
  * @public
  * @since 0.8.0

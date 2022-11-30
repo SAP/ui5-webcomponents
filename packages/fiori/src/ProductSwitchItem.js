@@ -12,7 +12,7 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  */
 const metadata = {
 	tag: "ui5-product-switch-item",
-	properties: /** @lends sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.ProductSwitchItem.prototype */ {
 		/**
 		  * Defines the title of the component.
 		  * @type {string}
@@ -113,9 +113,9 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.ProductSwitchItem.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.ProductSwitchItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.ProductSwitchItem.prototype */ {
 		/**
 		 * Fired when the <code>ui5-product-switch-item</code> is activated either with a
 		 * click/tap or by using the Enter or Space key.
@@ -151,11 +151,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.ProductSwitchItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.ProductSwitchItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-product-switch-item
  * @public
- * @implements sap.ui.webcomponents.fiori.IProductSwitchItem
+ * @implements sap.ui.webc.fiori.IProductSwitchItem
  * @since 1.0.0-rc.5
  */
 class ProductSwitchItem extends UI5Element {

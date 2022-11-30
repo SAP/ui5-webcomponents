@@ -34,7 +34,7 @@ const PHONE_MODE_BREAKPOINT = 640; // px
  */
 const metadata = {
 	tag: "ui5-datetime-picker",
-	properties: /** @lends sap.ui.webcomponents.main.DateTimePicker.prototype */ {
+	properties: /** @lends sap.ui.webc.main.DateTimePicker.prototype */ {
 
 		/**
 		 * Defines the visibility of the time view in <code>phoneMode</code>.
@@ -147,8 +147,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.DateTimePicker
- * @extends sap.ui.webcomponents.main.DatePicker
+ * @alias sap.ui.webc.main.DateTimePicker
+ * @extends sap.ui.webc.main.DatePicker
  * @tagname ui5-datetime-picker
  * @since 1.0.0-rc.7
  * @public

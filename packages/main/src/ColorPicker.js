@@ -34,13 +34,13 @@ import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-color-picker",
-	properties: /** @lends sap.ui.webcomponents.main.ColorPicker.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ColorPicker.prototype */ {
 
 		/**
 		 * Defines the currently selected color of the component.
 		 * <br><br>
 		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-		 * @type {sap.ui.webcomponents.base.types.CSSColor}
+		 * @type {sap.ui.webc.base.types.CSSColor}
 		 * @public
 		 */
 		color: {
@@ -118,10 +118,10 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.ColorPicker.prototype */ {
+	slots: /** @lends sap.ui.webc.main.ColorPicker.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.main.ColorPicker.prototype */ {
+	events: /** @lends sap.ui.webc.main.ColorPicker.prototype */ {
 		/**
 		 * Fired when the the selected color is changed
 		 *
@@ -158,8 +158,8 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @since 1.0.0-rc.12
- * @alias sap.ui.webcomponents.main.ColorPicker
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ColorPicker
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-color-picker
  * @public
  */

@@ -31,7 +31,7 @@ const ICON_PER_PRIORITY = {
  */
 const metadata = {
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.NotificationListItemBase.prototype */ {
 
 		/**
 		 * Defines the <code>titleText</code> of the item.
@@ -52,7 +52,7 @@ const metadata = {
 		 * <li><code>Medium</code></li>
 		 * <li><code>High</code></li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.Priority}
+		 * @type {sap.ui.webc.main.types.Priority}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -98,7 +98,7 @@ const metadata = {
 		/**
 		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultValue 1000
 		 * @public
 		 */
@@ -107,14 +107,14 @@ const metadata = {
 			defaultValue: 1000,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.NotificationListItemBase.prototype */ {
 
 		/**
 		 * Defines the actions, displayed in the top-right area.
 		 * <br><br>
 		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.INotificationAction[]}
+		 * @type {sap.ui.webc.fiori.INotificationAction[]}
 		 * @slot
 		 * @public
 		 */
@@ -122,7 +122,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.NotificationListItemBase.prototype */ {
 		/**
 		 * Fired when the <code>Close</code> button is pressed.
 		 *
@@ -141,8 +141,8 @@ const metadata = {
  * @abstract
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.NotificationListItemBase
- * @extends sap.ui.webcomponents.main.ListItemBase
+ * @alias sap.ui.webc.fiori.NotificationListItemBase
+ * @extends sap.ui.webc.main.ListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
  * @appenddocs NotificationAction

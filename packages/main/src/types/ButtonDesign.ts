@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.ButtonDesign
+ * @alias sap.ui.webc.main.types.ButtonDesign
  */
 enum ButtonDesign {
 	/**

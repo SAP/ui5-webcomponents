@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TableColumnPopinDisplay
+ * @alias sap.ui.webc.main.types.TableColumnPopinDisplay
  */
 enum TableColumnPopinDisplay {
 	/**

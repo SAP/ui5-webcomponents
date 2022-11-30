@@ -75,7 +75,7 @@ let metadata = {} as Metadata;
  * @class
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.base.UI5Element
  * @extends HTMLElement
  * @public
  */

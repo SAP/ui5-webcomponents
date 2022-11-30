@@ -23,7 +23,7 @@ import ColorPalette from "./ColorPalette.js";
 const metadata = {
 	tag: "ui5-color-palette-popover",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ColorPalettePopover.prototype */ {
 		/**
 		 * Defines whether the user can see the last used colors in the bottom of the component
 		 * @type {boolean}
@@ -58,17 +58,17 @@ const metadata = {
 		/**
 		 * Defines the default color of the component.
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-		 * @type {sap.ui.webcomponents.base.types.CSSColor}
+		 * @type {sap.ui.webc.base.types.CSSColor}
 		 * @public
 		 */
 		defaultColor: {
 			type: CSSColor,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
+	slots: /** @lends sap.ui.webc.main.ColorPalettePopover.prototype */ {
 		/**
 		 * Defines the content of the component.
-		 * @type {sap.ui.webcomponents.main.IColorPaletteItem[]}
+		 * @type {sap.ui.webc.main.IColorPaletteItem[]}
 		 * @slot colors
 		 * @public
 		 */
@@ -78,11 +78,11 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.ColorPalettePopover.prototype */ {
+	events: /** @lends sap.ui.webc.main.ColorPalettePopover.prototype */ {
 		/**
 		 * Fired when the user selects a color.
 		 *
-		 * @event sap.ui.webcomponents.main.ColorPalettePopover#item-click
+		 * @event sap.ui.webc.main.ColorPalettePopover#item-click
 		 * @public
 		 * @param {string} color the selected color
 		 */
@@ -119,8 +119,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ColorPalettePopover
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ColorPalettePopover
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-color-palette-popover
  * @public
  * @since 1.0.0-rc.16

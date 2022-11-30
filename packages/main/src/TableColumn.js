@@ -9,7 +9,7 @@ import styles from "./generated/themes/TableColumn.css.js";
 
 const metadata = {
 	tag: "ui5-table-column",
-	slots: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TableColumn.prototype */ {
 
 		/**
 		 * Defines the content of the column header.
@@ -22,7 +22,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.TableColumn.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TableColumn.prototype */ {
 
 		/**
 		 * Defines the minimum table width required to display this column. By default it is always displayed.
@@ -32,7 +32,7 @@ const metadata = {
 		 * <br>
 		 * For further responsive design options, see <code>demandPopin</code> property.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue Infinity
 		 * @public
 		 */
@@ -121,10 +121,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TableColumn
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TableColumn
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-table-column
- * @implements sap.ui.webcomponents.main.ITableColumn
+ * @implements sap.ui.webc.main.ITableColumn
  * @public
  */
 class TableColumn extends UI5Element {
