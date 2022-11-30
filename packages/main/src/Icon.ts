@@ -18,12 +18,6 @@ const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 const PRESENTATION_ROLE = "presentation";
 
 /**
- * Fired on mouseup, space and enter if icon is interactive
- * @private
- * @since 1.0.0-rc.8
- */
-
-/**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
  *
@@ -114,13 +108,21 @@ const PRESENTATION_ROLE = "presentation";
  * @implements sap.ui.webcomponents.main.IIcon
  * @public
  */
+
+/**
+ * Fired on mouseup, space and enter if icon is interactive
+ * @private
+ * @since 1.0.0-rc.8
+ */
 @event("click")
+
 @languageAware
 @themeAware
 @customElement("ui5-icon")
 class Icon extends UI5Element {
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)
+	 * @name sap.ui.webcomponents.main.Icon.prototype.interactive
 	 * @type {boolean}
 	 * @default false
 	 * @public
@@ -160,6 +162,7 @@ class Icon extends UI5Element {
 	 * Example:
 	 * <br>
 	 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
+	 * @name sap.ui.webcomponents.main.Icon.prototype.name
 	 * @type {string}
 	 * @default ""
 	 * @public
@@ -174,6 +177,7 @@ class Icon extends UI5Element {
 	 * <b>Note:</b> Every icon should have a text alternative in order to
 	 * calculate its accessible name.
 	 *
+	 * @name sap.ui.webcomponents.main.Icon.prototype.accessibleName
 	 * @type {string}
 	 * @default ""
 	 * @public
@@ -184,6 +188,7 @@ class Icon extends UI5Element {
 	/**
 	 * Defines whether the component should have a tooltip.
 	 *
+	 * @name sap.ui.webcomponents.main.Icon.prototype.showTooltip
 	 * @type {boolean}
 	 * @default false
 	 * @public
@@ -193,6 +198,7 @@ class Icon extends UI5Element {
 
 	/**
 	 * Defines the accessibility role of the component.
+	 * @name sap.ui.webcomponents.main.Icon.prototype.accessibleRole
 	 * @type {string}
 	 * @default ""
 	 * @public

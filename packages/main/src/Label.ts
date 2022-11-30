@@ -95,6 +95,7 @@ class Label extends UI5Element {
 	 * In that case the <code>required</> property of
 	 * the corresponding input should also be set.
 	 *
+	 * @name sap.ui.webcomponents.main.Label.prototype.required
 	 * @type {boolean}
 	 * @default false
 	 * @public
@@ -110,6 +111,7 @@ class Label extends UI5Element {
 	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 	 * </ul>
 	 *
+	 * @name sap.ui.webcomponents.main.Label.prototype.wrappingType
 	 * @type {sap.ui.webcomponents.main.types.WrappingType}
 	 * @default "None"
 	 * @public
@@ -124,7 +126,7 @@ class Label extends UI5Element {
 	 * @type {Node[]}
 	 * @slot
 	 * @public
-	 * @name sap.ui.webcomponents.Label.prototype.default
+	 * @name sap.ui.webcomponents.main.Label.prototype.default
 	 */
 
 	/**
@@ -133,7 +135,7 @@ class Label extends UI5Element {
 	 * @type {HTMLElement[]}
 	 * @slot
 	 * @public
-	 * @name sap.ui.webcomponents.Label.prototype.header
+	 * @name sap.ui.webcomponents.main.Label.prototype.header
 	 */
 	@slot({ type: HTMLElement })
 	header!: Array<HTMLElement>
@@ -175,6 +177,28 @@ class Label extends UI5Element {
 
 	hasHeader() {
 		return !!this.header.length;
+	}
+
+	/**
+	 * FileList of all selected files.
+	 * @readonly
+	 * @type {FileList}
+	 * @public
+	 */
+	get files() {
+		return "public getter";
+	}
+
+	/**
+	 * Shows the popover.
+	 * @param {HTMLElement} opener the element that the popover is shown at
+	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
+	 * @public
+	 * @async
+	 * @returns {Promise} Resolved when the popover is open
+	 */
+	async showAt(opener: HTMLElement, preventInitialFocus = false) {
+		return Promise.resolve({ opener, preventInitialFocus });
 	}
 }
 
