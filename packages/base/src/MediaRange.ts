@@ -80,15 +80,15 @@ const getCurrentRange = (name: string, width = window.innerWidth): string => {
 		rangeSet = mediaRanges.get(RANGESETS.RANGE_4STEPS)!;
 	}
 
-	let currentRangeName = [...rangeSet.keys()][0];
+	let currentRangeName;
 
 	rangeSet.forEach((value, key) => {
-		if (width > value[0] && width < value[1]) {
+		if (width >= value[0] && width <= value[1]) {
 			currentRangeName = key;
 		}
 	});
 
-	return currentRangeName;
+	return currentRangeName || [...rangeSet.keys()][0];
 };
 
 /**
