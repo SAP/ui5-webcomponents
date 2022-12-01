@@ -10,7 +10,7 @@ type EventListenerParam = {
 	isLeft: boolean;
 	isRight: boolean
 }
-type EventListenerReturn = () => void;
+type EventListenerReturn = void;
 
 class ScrollEnablement extends EventProvider<EventListenerParam, EventListenerReturn> {
 	containerComponent: UI5Element;
