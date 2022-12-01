@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.base.types.NavigationMode
+ * @alias sap.ui.webc.base.types.NavigationMode
  */
 enum NavigationMode {
 	/**

@@ -29,7 +29,7 @@ const metadata = {
 	tag: "ui5-message-strip",
 	languageAware: true,
 	fastNavigation: true,
-	properties: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
+	properties: /** @lends sap.ui.webc.main.MessageStrip.prototype */ {
 
 		/**
 		 * Defines the component type.
@@ -37,7 +37,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
 		 * and <code>"Warning"</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.MessageStripDesign}
+		 * @type {sap.ui.webc.main.types.MessageStripDesign}
 		 * @defaultvalue "Information"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -72,7 +72,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
+	slots: /** @lends sap.ui.webc.main.MessageStrip.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><br>
@@ -95,7 +95,7 @@ const metadata = {
 		 *
 		 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 		 *
-		 * @type {sap.ui.webcomponents.main.IIcon}
+		 * @type {sap.ui.webc.main.IIcon}
 		 * @slot
 		 * @public
 		 */
@@ -103,7 +103,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.MessageStrip.prototype */ {
+	events: /** @lends sap.ui.webc.main.MessageStrip.prototype */ {
 
 		/**
 		 * Fired when the close button is pressed either with a
@@ -145,8 +145,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.MessageStrip
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.MessageStrip
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-message-strip
  * @public
  * @since 0.9.0

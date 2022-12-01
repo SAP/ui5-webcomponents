@@ -5,7 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  */
 const metadata = {
 	tag: "ui5-filter-item-option",
-	properties: /** @lends sap.ui.webcomponents.fiori.FilterItemOption.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.FilterItemOption.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *
@@ -28,10 +28,10 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.FilterItemOption.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.FilterItemOption.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.FilterItemOption.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.FilterItemOption.prototype */ {
 		//
 	},
 };
@@ -51,11 +51,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.FilterItemOption
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.FilterItemOption
+ * @extends sap.ui.webc.base.UI5Element
  * @since 1.0.0-rc.16
  * @tagname ui5-filter-item-option
- * @implements sap.ui.webcomponents.fiori.IFilterItemOption
+ * @implements sap.ui.webc.fiori.IFilterItemOption
  * @public
  */
 class FilterItemOption extends UI5Element {

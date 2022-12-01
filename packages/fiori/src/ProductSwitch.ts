@@ -53,8 +53,8 @@ import ProductSwitchItem from "./ProductSwitchItem.js";
  * <code>import "@ui5/webcomponents-fiori/dist/ProductSwitchItem.js";</code> (for <code>ui5-product-switch-item</code>)
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.ProductSwitch
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.ProductSwitch
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-product-switch
  * @appenddocs ProductSwitchItem
  * @public

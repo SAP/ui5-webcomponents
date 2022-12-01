@@ -15,11 +15,11 @@ import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-local
  */
 const metadata = {
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.DateComponentBase.prototype */ {
+	properties: /** @lends sap.ui.webc.main.DateComponentBase.prototype */ {
 		/**
 		 * Sets a calendar type used for display.
 		 * If not set, the calendar type of the global configuration is used.
-		 * @type {sap.ui.webcomponents.base.types.CalendarType}
+		 * @type {sap.ui.webc.base.types.CalendarType}
 		 * @public
 		 */
 		primaryCalendarType: {
@@ -29,7 +29,7 @@ const metadata = {
 		/**
 		 * Defines the secondary calendar type.
 		 * If not set, the calendar will only show the primary calendar type.
-		 * @type {sap.ui.webcomponents.base.types.CalendarType}
+		 * @type {sap.ui.webc.base.types.CalendarType}
 		 * @since 1.0.0-rc.16
 		 * @defaultvalue undefined
 		 * @public
@@ -86,8 +86,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.DateComponentBase
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.DateComponentBase
+ * @extends sap.ui.webc.base.UI5Element
  * @public
  */
 class DateComponentBase extends UI5Element {

@@ -25,8 +25,8 @@ import titleCss from "./generated/themes/Title.css.js";
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Title
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Title
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-title
  * @public
  */

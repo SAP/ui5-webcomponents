@@ -44,7 +44,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 const metadata = {
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.TimePickerBase.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TimePickerBase.prototype */ {
 		/**
 		 * Defines a formatted time value.
 		 *
@@ -71,7 +71,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -110,7 +110,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.TimePickerBase.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TimePickerBase.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the <code>ui5-time-picker</code>.
 		 * <br><br>
@@ -128,7 +128,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TimePickerBase.prototype */ {
+	events: /** @lends sap.ui.webc.main.TimePickerBase.prototype */ {
 		/**
 		 * Fired when the input operation has finished by clicking the "OK" button or
 		 * when the text in the input field has changed and the focus leaves the input field.
@@ -152,8 +152,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TimePickerBase
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TimePickerBase
+ * @extends sap.ui.webc.base.UI5Element
  * @public
  * @since 1.0.0-rc.6
  */

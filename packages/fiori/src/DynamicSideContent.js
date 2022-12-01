@@ -27,7 +27,7 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
 const metadata = {
 	tag: "ui5-dynamic-side-content",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.DynamicSideContent.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.DynamicSideContent.prototype */ {
 
 		/**
 		 * Defines the visibility of the main content.
@@ -65,7 +65,7 @@ const metadata = {
 		 * <li><code>End</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.SideContentPosition}
+		 * @type {sap.ui.webc.fiori.types.SideContentPosition}
 		 * @defaultvalue "End"
 		 * @public
 		 *
@@ -89,7 +89,7 @@ const metadata = {
 		 * <li><code>NeverShow</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.SideContentVisibility}
+		 * @type {sap.ui.webc.fiori.types.SideContentVisibility}
 		 * @defaultvalue "ShowAboveS"
 		 * @public
 		 *
@@ -112,7 +112,7 @@ const metadata = {
 		 * <li><code>OnMinimumWidth</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.SideContentFallDown}
+		 * @type {sap.ui.webc.fiori.types.SideContentFallDown}
 		 * @defaultvalue "OnMinimumWidth"
 		 * @public
 		 *
@@ -172,7 +172,7 @@ const metadata = {
 		},
 
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.DynamicSideContent.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.DynamicSideContent.prototype */ {
 
 		/**
 		 * Defines the main content.
@@ -197,11 +197,11 @@ const metadata = {
 		},
 
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.DynamicSideContent.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.DynamicSideContent.prototype */ {
 
 		/**
 		 * Fires when the current breakpoint has been changed.
-		 * @event sap.ui.webcomponents.fiori.DynamicSideContent#layout-change
+		 * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
 		 * @param {string} currentBreakpoint the current breakpoint.
 		 * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
 		 * @param {boolean} mainContentVisible visibility of the main content.
@@ -299,8 +299,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.DynamicSideContent
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.DynamicSideContent
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-dynamic-side-content
  * @public
  * @since 1.1.0

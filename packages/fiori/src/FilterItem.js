@@ -6,7 +6,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-filter-item",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.FilterItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.FilterItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *
@@ -29,10 +29,10 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.FilterItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.FilterItem.prototype */ {
 		/**
 		 * Defines the <code>values</code> list.
-		 * @type {sap.ui.webcomponents.fiori.IFilterItemOption[]}
+		 * @type {sap.ui.webc.fiori.IFilterItemOption[]}
 		 * @slot values
 		 * @public
 		 */
@@ -40,7 +40,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.FilterItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.FilterItem.prototype */ {
 		//
 	},
 };
@@ -60,11 +60,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.FilterItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.FilterItem
+ * @extends sap.ui.webc.base.UI5Element
  * @since 1.0.0-rc.16
  * @tagname ui5-filter-item
- * @implements sap.ui.webcomponents.fiori.IFilterItem
+ * @implements sap.ui.webc.fiori.IFilterItem
  * @public
  */
 class FilterItem extends UI5Element {

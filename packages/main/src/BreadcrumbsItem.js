@@ -6,7 +6,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-breadcrumbs-item",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.BreadcrumbsItem.prototype */ {
 
 		/**
 		 * Defines the link href.
@@ -55,7 +55,7 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.BreadcrumbsItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><br>
@@ -69,7 +69,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.BreadcrumbsItem.prototype */ {},
+	events: /** @lends sap.ui.webc.main.BreadcrumbsItem.prototype */ {},
 };
 
 /**
@@ -81,10 +81,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.BreadcrumbsItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.BreadcrumbsItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-breadcrumbs-item
- * @implements sap.ui.webcomponents.main.IBreadcrumbsItem
+ * @implements sap.ui.webc.main.IBreadcrumbsItem
  * @public
  * @since 1.0.0-rc.15
  */

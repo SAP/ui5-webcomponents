@@ -102,10 +102,10 @@ const PRESENTATION_ROLE = "presentation";
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Icon
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Icon
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-icon
- * @implements sap.ui.webcomponents.main.IIcon
+ * @implements sap.ui.webc.main.IIcon
  * @public
  */
 

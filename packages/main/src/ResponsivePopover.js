@@ -17,7 +17,7 @@ import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
  */
 const metadata = {
 	tag: "ui5-responsive-popover",
-	properties: /** @lends sap.ui.webcomponents.main.ResponsivePopover.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ResponsivePopover.prototype */ {
 		/**
 		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
 		 * By default both the header and footer would be displayed.
@@ -73,8 +73,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ResponsivePopover
- * @extends sap.ui.webcomponents.main.Popover
+ * @alias sap.ui.webc.main.ResponsivePopover
+ * @extends sap.ui.webc.main.Popover
  * @tagname ui5-responsive-popover
  * @since 1.0.0-rc.6
  * @public

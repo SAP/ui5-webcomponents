@@ -26,7 +26,7 @@ const metadata = {
 	languageAware: true,
 	managedSlots: true,
 	fastNavigation: true,
-	slots: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Panel.prototype */ {
 
 		/**
 		 * Defines the component header area.
@@ -53,7 +53,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Panel.prototype */ {
 
 		/**
 		 * This property is used to set the header text of the component.
@@ -109,7 +109,7 @@ const metadata = {
 		 * Depending on the usage, you can change the role from the default <code>Form</code>
 		 * to <code>Region</code> or <code>Complementary</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.PanelAccessibleRole}
+		 * @type {sap.ui.webc.main.types.PanelAccessibleRole}
 		 * @defaultvalue "Form"
 		 * @public
 		 */
@@ -123,7 +123,7 @@ const metadata = {
 		 * set by the <code>headerText</code>.
 		 * <br><br>
 		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
-		 * @type {sap.ui.webcomponents.main.types.TitleLevel}
+		 * @type {sap.ui.webc.main.types.TitleLevel}
 		 * @defaultvalue "H2"
 		 * @public
 		*/
@@ -177,7 +177,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Panel.prototype */ {
+	events: /** @lends sap.ui.webc.main.Panel.prototype */ {
 
 		/**
 		 * Fired when the component is expanded/collapsed by user interaction.
@@ -253,8 +253,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Panel
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Panel
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-panel
  * @public
  */

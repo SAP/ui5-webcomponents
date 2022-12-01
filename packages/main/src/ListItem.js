@@ -1,4 +1,5 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
@@ -29,7 +30,7 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
  */
 const metadata = {
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ListItem.prototype */ {
 
 		/**
 		 * Defines the visual indication and behavior of the list items.
@@ -38,7 +39,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ListItemType}
+		 * @type {sap.ui.webc.main.types.ListItemType}
 		 * @defaultvalue "Active"
 		 * @public
 		*/
@@ -125,7 +126,7 @@ const metadata = {
 
 		/**
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @type {sap.ui.webc.main.types.HasPopup}
 		 * @since 1.10.0
 		 * @private
 		 */
@@ -150,11 +151,11 @@ const metadata = {
 			type: Integer,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
+	events: /** @lends sap.ui.webc.main.ListItem.prototype */ {
 		/**
 		 * Fired when the user clicks on the detail button when type is <code>Detail</code>.
 		 *
-		 * @event sap.ui.webcomponents.main.ListItem#detail-click
+		 * @event sap.ui.webc.main.ListItem#detail-click
 		 * @public
 		 */
 		"detail-click": {},
@@ -163,14 +164,14 @@ const metadata = {
 		"_selection-requested": {},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.ListItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.ListItem.prototype */ {
 
 		/**
 		 * Defines the delete button, displayed in "Delete" mode.
 		 * <b>Note:</b> While the slot allows custom buttons, to match
 		 * design guidelines, please use the <code>ui5-button</code> component.
 		 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
-		 * @type {sap.ui.webcomponents.main.IButton}
+		 * @type {sap.ui.webc.main.IButton}
 		 * @since 1.9.0
 		 * @slot
 		 * @public
@@ -188,8 +189,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ListItem
- * @extends sap.ui.webcomponents.main.ListItemBase
+ * @alias sap.ui.webc.main.ListItem
+ * @extends sap.ui.webc.main.ListItemBase
  * @public
  */
 class ListItem extends ListItemBase {
@@ -284,14 +285,14 @@ class ListItem extends ListItemBase {
 	}
 
 	_onmousedown(event) {
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			return;
 		}
 		this.activate();
 	}
 
 	_onmouseup(event) {
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			return;
 		}
 		this.deactivate();
@@ -307,7 +308,7 @@ class ListItem extends ListItemBase {
 	}
 
 	_onclick(event) {
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			return;
 		}
 		this.fireItemPress(event);

@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.ListItemType
+ * @alias sap.ui.webc.main.types.ListItemType
  */
 enum ListItemType {
 	/**

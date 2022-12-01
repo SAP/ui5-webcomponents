@@ -50,7 +50,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 const metadata = {
 	tag: "ui5-date-picker",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
+	properties: /** @lends sap.ui.webc.main.DatePicker.prototype */ {
 		/**
 		 * Defines a formatted date value.
 		 *
@@ -76,7 +76,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -211,7 +211,7 @@ const metadata = {
 		},
 	},
 
-	slots: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
+	slots: /** @lends sap.ui.webc.main.DatePicker.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
@@ -241,7 +241,7 @@ const metadata = {
 		},
 	},
 
-	events: /** @lends sap.ui.webcomponents.main.DatePicker.prototype */ {
+	events: /** @lends sap.ui.webc.main.DatePicker.prototype */ {
 
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
@@ -368,8 +368,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.DatePicker
- * @extends sap.ui.webcomponents.main.DateComponentBase
+ * @alias sap.ui.webc.main.DatePicker
+ * @extends sap.ui.webc.main.DateComponentBase
  * @tagname ui5-date-picker
  * @public
  */

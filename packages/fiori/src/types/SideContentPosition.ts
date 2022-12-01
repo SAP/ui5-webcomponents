@@ -3,7 +3,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.SideContentPosition
+ * @alias sap.ui.webc.fiori.types.SideContentPosition
  */
 enum SideContentPosition {
 	/**

@@ -3,7 +3,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.ViewSettingsDialogMode
+ * @alias sap.ui.webc.fiori.types.ViewSettingsDialogMode
  */
 enum ViewSettingsDialogMode {
 	/**
