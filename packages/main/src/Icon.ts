@@ -122,7 +122,7 @@ const PRESENTATION_ROLE = "presentation";
 class Icon extends UI5Element {
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)
-	 * @name sap.ui.webcomponents.main.Icon.prototype.interactive
+	 * @name sap.ui.webc.main.Icon.prototype.interactive
 	 * @type {boolean}
 	 * @default false
 	 * @public
@@ -162,7 +162,7 @@ class Icon extends UI5Element {
 	 * Example:
 	 * <br>
 	 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
-	 * @name sap.ui.webcomponents.main.Icon.prototype.name
+	 * @name sap.ui.webc.main.Icon.prototype.name
 	 * @type {string}
 	 * @default ""
 	 * @public
@@ -177,7 +177,7 @@ class Icon extends UI5Element {
 	 * <b>Note:</b> Every icon should have a text alternative in order to
 	 * calculate its accessible name.
 	 *
-	 * @name sap.ui.webcomponents.main.Icon.prototype.accessibleName
+	 * @name sap.ui.webc.main.Icon.prototype.accessibleName
 	 * @type {string}
 	 * @default ""
 	 * @public
@@ -188,7 +188,7 @@ class Icon extends UI5Element {
 	/**
 	 * Defines whether the component should have a tooltip.
 	 *
-	 * @name sap.ui.webcomponents.main.Icon.prototype.showTooltip
+	 * @name sap.ui.webc.main.Icon.prototype.showTooltip
 	 * @type {boolean}
 	 * @default false
 	 * @public
@@ -198,7 +198,7 @@ class Icon extends UI5Element {
 
 	/**
 	 * Defines the accessibility role of the component.
-	 * @name sap.ui.webcomponents.main.Icon.prototype.accessibleRole
+	 * @name sap.ui.webc.main.Icon.prototype.accessibleRole
 	 * @type {string}
 	 * @default ""
 	 * @public

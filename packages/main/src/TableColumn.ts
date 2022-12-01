@@ -28,10 +28,10 @@ import styles from "./generated/themes/TableColumn.css.js";
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TableColumn
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TableColumn
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-table-column
- * @implements sap.ui.webcomponents.main.ITableColumn
+ * @implements sap.ui.webc.main.ITableColumn
  * @public
  */
 @customElement("ui5-table-column")
@@ -44,7 +44,7 @@ class TableColumn extends UI5Element {
 	 * <br>
 	 * For further responsive design options, see <code>demandPopin</code> property.
 	 *
-	 * @type {sap.ui.webcomponents.base.types.Integer}
+	 * @type {sap.ui.webc.base.types.Integer}
 	 * @default Infinity
 	 * @public
 	 */
@@ -109,7 +109,7 @@ class TableColumn extends UI5Element {
 	 *
 	 * @type {Node[]}
 	 * @slot
-	 * @name sap.ui.webcomponents.main.TableColumn.prototype.default
+	 * @name sap.ui.webc.main.TableColumn.prototype.default
 	 * @public
 	 */
 

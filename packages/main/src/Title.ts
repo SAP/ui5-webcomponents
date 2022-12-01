@@ -40,8 +40,8 @@ class Title extends UI5Element {
 	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 	 * </ul>
 	 *
-	 * @name sap.ui.webcomponents.main.Title.prototype.wrappingType
-	 * @type {sap.ui.webcomponents.main.types.WrappingType}
+	 * @name sap.ui.webc.main.Title.prototype.wrappingType
+	 * @type {sap.ui.webc.main.types.WrappingType}
 	 * @defaultvalue "None"
 	 * @public
 	 */
@@ -52,8 +52,8 @@ class Title extends UI5Element {
 	 * Defines the component level.
 	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
 	 *
-	 * @name sap.ui.webcomponents.main.Title.prototype.level
-	 * @type {sap.ui.webcomponents.main.types.TitleLevel}
+	 * @name sap.ui.webc.main.Title.prototype.level
+	 * @type {sap.ui.webc.main.types.TitleLevel}
 	 * @defaultvalue "H2"
 	 * @public
 	 */
@@ -67,7 +67,7 @@ class Title extends UI5Element {
 	 *
 	 * @type {Node[]}
 	 * @slot
-	 * @name sap.ui.webcomponents.main.Title.prototype.default
+	 * @name sap.ui.webc.main.Title.prototype.default
 	 * @public
 	 */
 

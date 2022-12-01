@@ -35,8 +35,8 @@ import labelCss from "./generated/themes/Label.css.js";
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Label
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Label
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-label
  * @public
  */
@@ -44,7 +44,7 @@ import labelCss from "./generated/themes/Label.css.js";
 /**
  * Fired when an item is activated.
  *
- * @event sap.ui.webcomponents.main.Label#item-click
+ * @event sap.ui.webc.main.Label#item-click
  * @allowPreventDefault
  * @param { HTMLElement } item The clicked item.
  * @param { boolean } esc esc pressed.
@@ -57,7 +57,7 @@ import labelCss from "./generated/themes/Label.css.js";
 /**
  * Fired when an item is activated.
  *
- * @event sap.ui.webcomponents.main.Label#item-change
+ * @event sap.ui.webc.main.Label#item-change
  * @allowPreventDefault
  * @public
  */
@@ -71,7 +71,7 @@ class Label extends UI5Element {
 	 * <b>Note:</b> Can be used with both <code>ui5-input</code> and native input.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webcomponents.main.Label.prototype.for
+	 * @name sap.ui.webc.main.Label.prototype.for
 	 * @default ""
 	 * @public
 	 */
@@ -82,7 +82,7 @@ class Label extends UI5Element {
 	 * Defines whether colon is added to the component text.
 	 * <br><br>
 	 * <b>Note:</b> Usually used in forms.
-	 * @name sap.ui.webcomponents.main.Label.prototype.showColon
+	 * @name sap.ui.webc.main.Label.prototype.showColon
 	 * @type {boolean}
 	 * @default false
 	 * @public
@@ -97,7 +97,7 @@ class Label extends UI5Element {
 	 * In that case the <code>required</> property of
 	 * the corresponding input should also be set.
 	 *
-	 * @name sap.ui.webcomponents.main.Label.prototype.required
+	 * @name sap.ui.webc.main.Label.prototype.required
 	 * @type {boolean}
 	 * @default false
 	 * @public
@@ -113,8 +113,8 @@ class Label extends UI5Element {
 	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 	 * </ul>
 	 *
-	 * @name sap.ui.webcomponents.main.Label.prototype.wrappingType
-	 * @type {sap.ui.webcomponents.main.types.WrappingType}
+	 * @name sap.ui.webc.main.Label.prototype.wrappingType
+	 * @type {sap.ui.webc.main.types.WrappingType}
 	 * @default "None"
 	 * @public
 	 */
@@ -128,7 +128,7 @@ class Label extends UI5Element {
 	 * @type {Node[]}
 	 * @slot
 	 * @public
-	 * @name sap.ui.webcomponents.main.Label.prototype.default
+	 * @name sap.ui.webc.main.Label.prototype.default
 	 */
 	@slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
 	text!: Array<HTMLElement>
@@ -139,7 +139,7 @@ class Label extends UI5Element {
 	 * @type {HTMLElement[]}
 	 * @slot
 	 * @public
-	 * @name sap.ui.webcomponents.main.Label.prototype.header
+	 * @name sap.ui.webc.main.Label.prototype.header
 	 */
 	@slot({ type: HTMLElement })
 	header!: Array<HTMLElement>

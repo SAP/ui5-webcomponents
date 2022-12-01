@@ -34,11 +34,11 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.ProductSwitchItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.ProductSwitchItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-product-switch-item
  * @public
- * @implements sap.ui.webcomponents.fiori.IProductSwitchItem
+ * @implements sap.ui.webc.fiori.IProductSwitchItem
  * @since 1.0.0-rc.5
  */
 
@@ -46,7 +46,7 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  * Fired when the <code>ui5-product-switch-item</code> is activated either with a
  * click/tap or by using the Enter or Space key.
  *
- * @event sap.ui.webcomponents.fiori.ProductSwitchItem#click
+ * @event sap.ui.webc.fiori.ProductSwitchItem#click
  * @public
  */
 @event("click")
@@ -66,7 +66,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the title of the component.
 	 * @type {string}
-	 * @name sap.ui.webcomponents.fiori.ProductSwitchItem.prototype.titleText
+	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.titleText
 	 * @defaultvalue ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -77,7 +77,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the subtitle of the component.
 	 * @type {string}
-	 * @name sap.ui.webcomponents.fiori.ProductSwitchItem.prototype.subtitleText
+	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.subtitleText
 	 * @defaultvalue ""
 	 * @since 1.0.0-rc.15
 	 * @public
@@ -95,7 +95,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webcomponents.fiori.ProductSwitchItem.prototype.icon
+	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.icon
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -115,7 +115,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 * </ul>
 	 *
 	 * @type {string}
-	 * @defaultvalue "_self"
+	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.target
 	 * @public
 	 */
 	@property({ defaultValue: "_self" })
@@ -124,6 +124,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the component target URI. Supports standard hyperlink behavior.
 	 * @type {string}
+	 * @name sap.ui.webc.fiori.ProductSwitchItem.prototype.targetSrc
 	 * @defaultvalue ""
 	 * @public
 	 */
