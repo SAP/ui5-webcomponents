@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import defaultSlot from "@ui5/webcomponents-base/dist/decorators/defaultSlot.js";
 import WrappingType from "./types/WrappingType.js";
 
 // Template
@@ -62,6 +63,7 @@ import labelCss from "./generated/themes/Label.css.js";
  */
 @event("item-change")
 @customElement("ui5-label")
+@defaultSlot("text")
 class Label extends UI5Element {
 	/**
 	 * Defines the labeled input by providing its ID.
@@ -128,6 +130,8 @@ class Label extends UI5Element {
 	 * @public
 	 * @name sap.ui.webcomponents.main.Label.prototype.default
 	 */
+	@slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
+	text!: Array<HTMLElement>
 
 	/**
 	 * Defines the header of the component.
