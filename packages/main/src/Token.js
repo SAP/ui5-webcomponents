@@ -71,6 +71,15 @@ const metadata = {
 		focused: { type: Boolean },
 
 		/**
+		 * Defines whether the token is being deleted
+		 * This flag is used in the ui5-multi-combobox
+		 *
+		 * @type {boolean}
+		 * @private
+		 */
+		 toBeDeleted: { type: Boolean },
+
+		/**
 		 * Defines the tabIndex of the component.
 		 * @type {string}
 		 * @private
@@ -170,6 +179,10 @@ class Token extends UI5Element {
 		this.focused = !this.focused;
 	}
 
+	_mousedown(event) {
+		this.toBeDeleted = true;
+	}
+
 	 _delete() {
 		this.fireEvent("delete");
 	 }
@@ -192,6 +205,10 @@ class Token extends UI5Element {
 
 			this._handleSelect();
 		}
+	}
+
+	onBeforeRendering() {
+		this.toBeDeleted = false;
 	}
 
 	get tokenDeletableText() {

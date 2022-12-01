@@ -448,8 +448,12 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onmousedown(event) {
-		this._itemNav.setCurrentItem(event.target);
-		this._scrollToToken(event.target);
+		if (event.target.hasAttribute("ui5-token")) {
+			if (!event.target.toBeDeleted) {
+				this._itemNav.setCurrentItem(event.target);
+				this._scrollToToken(event.target);
+			}
+		}
 	}
 
 	_toggleTokenSelection(tokens) {
