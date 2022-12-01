@@ -57,6 +57,10 @@
 	align-self: center;
 }
 
+:host([wrapping-type="Normal"]) .ui5-checkbox-root:focus::before {
+	bottom: var(--_ui5_checkbox_wrapped_focus_left_top_bottom_position);
+}
+
 /* value states */
 :host([value-state="Error"]) .ui5-checkbox-inner,
 :host([value-state="Error"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
