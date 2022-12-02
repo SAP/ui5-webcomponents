@@ -136,24 +136,24 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	active!: boolean;
+	private active!: boolean;
 
 	/**
 	 * Indicates whether the element is focused.
 	 * @private
 	 */
 	@property({ type: Boolean })
-	focused!: boolean;
+	private focused!: boolean;
 
 	/**
 	 * Used to set the selected state of the component. Only one selected in a sequence.
-	 * @private
+	 * <b>Note:</b> Set by the <code>ProductSwitch</code>
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
 
 	/**
-	 * @private
+	 * Defines the component tabindex.
 	 */
 	@property({ defaultValue: "-1", noAttribute: true })
 	_tabIndex!: string;

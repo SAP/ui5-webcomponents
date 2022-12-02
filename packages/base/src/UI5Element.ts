@@ -24,7 +24,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve, StyleData } from "./types.js";
+import { PromiseResolve, ComponentStylesData } from "./types.js";
 
 let autoId = 0;
 
@@ -1022,7 +1022,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get styles(): Array<StyleData> | StyleData {
+	static get styles(): ComponentStylesData {
 		return "";
 	}
 
@@ -1030,7 +1030,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the Static Area CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get staticAreaStyles(): Array<StyleData> | StyleData {
+	static get staticAreaStyles(): ComponentStylesData {
 		return "";
 	}
 

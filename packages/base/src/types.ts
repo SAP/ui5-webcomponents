@@ -6,17 +6,15 @@ type StyleDataCSP = {
 	packageName: string,
 	fileName: string,
 };
+
 type StyleData = StyleDataCSP | string;
 
-type I18nDefaultText = {
-	key: string,
-	defaultText: string
-}
+type ComponentStylesData = Array<StyleData> | StyleData;
 
 export type {
 	PromiseResolve,
 	Timeout,
 	StyleData,
 	StyleDataCSP,
-	I18nDefaultText,
+	ComponentStylesData,
 };

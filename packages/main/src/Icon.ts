@@ -115,7 +115,6 @@ const PRESENTATION_ROLE = "presentation";
  * @since 1.0.0-rc.8
  */
 @event("click")
-
 @languageAware
 @themeAware
 @customElement("ui5-icon")
