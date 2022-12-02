@@ -48,7 +48,7 @@ type ChildChangeListener = (param: InvalidationInfo) => void;
 type SlotChangeListener = (this: HTMLSlotElement, ev: Event) => void;
 
 /**
- * Triggers re-rendering of a UI5Element instance due to state change.
+ * Triggers re rendering of a UI5Element instance due to state change.
  * @param {ChangeInfo} changeInfo An object with information about the change that caused invalidation.
  * @private
  */
