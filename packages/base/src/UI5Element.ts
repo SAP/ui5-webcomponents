@@ -24,7 +24,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve, StyleData } from "./types.js";
+import { PromiseResolve, ComponentStylesData } from "./types.js";
 
 let autoId = 0;
 
@@ -461,11 +461,18 @@ abstract class UI5Element extends HTMLElement {
 		const realName = name.replace(/^ui5-/, "");
 		const nameInCamelCase = kebabToCamelCase(realName);
 		if (properties.hasOwnProperty(nameInCamelCase)) { // eslint-disable-line
-			const propertyTypeClass = properties[nameInCamelCase].type;
-			if (propertyTypeClass === Boolean) {
+			const propData = properties[nameInCamelCase];
+			const propertyType = propData.type;
+			let propertyValidator = propData.validator as typeof DataType;
+
+			if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+				propertyValidator = propertyType as typeof DataType;
+			}
+
+			if (propertyValidator) {
+				newPropertyValue = propertyValidator.attributeToProperty(newValue);
+			} else if (propertyType === Boolean) {
 				newPropertyValue = newValue !== null;
-			} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
-				newPropertyValue = (propertyTypeClass as typeof DataType).attributeToProperty(newValue);
 			} else {
 				newPropertyValue = newValue as string;
 			}
@@ -484,24 +491,30 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 		const properties = ctor.getMetadata().getProperties();
-		const propertyTypeClass = properties[name].type;
+		const propData = properties[name];
+		const propertyType = propData.type;
+		let propertyValidator = propData.validator as typeof DataType;
 		const attrName = camelToKebabCase(name);
 		const attrValue = this.getAttribute(attrName);
 
-		if (propertyTypeClass === Boolean) {
-			if (newValue === true && attrValue === null) {
-				this.setAttribute(attrName, "");
-			} else if (newValue === false && attrValue !== null) {
-				this.removeAttribute(attrName);
-			}
-		} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
-			const newAttrValue = (propertyTypeClass as typeof DataType).propertyToAttribute(newValue);
+		if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+			propertyValidator = propertyType as typeof DataType;
+		}
+
+		if (propertyValidator) {
+			const newAttrValue = propertyValidator.propertyToAttribute(newValue);
 			if (newAttrValue === null) { // null means there must be no attribute for the current value of the property
 				this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 				this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
 				this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 			} else {
 				this.setAttribute(attrName, newAttrValue);
+			}
+		} else if (propertyType === Boolean) {
+			if (newValue === true && attrValue === null) {
+				this.setAttribute(attrName, "");
+			} else if (newValue === false && attrValue !== null) {
+				this.removeAttribute(attrName);
 			}
 		} else if (typeof newValue !== "object") {
 			if (attrValue !== newValue) {
@@ -935,12 +948,18 @@ abstract class UI5Element extends HTMLElement {
 					const metadataCtor = ctor.getMetadata().constructor as typeof UI5ElementMetadata;
 
 					value = metadataCtor.validatePropertyValue(value, propData);
-					const propertyTypeClass = propData.type;
+					const propertyType = propData.type;
+					let propertyValidator = propData.validator as typeof DataType;
 					const oldState = this._state[prop];
-					if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
+
+					if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+						propertyValidator = propertyType as typeof DataType;
+					}
+
+					if (propertyValidator) {
+						isDifferent = !propertyValidator.valuesAreEqual(oldState, value);
+					} else if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
 						isDifferent = !arraysAreEqual(oldState, value);
-					} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
-						isDifferent = !(propertyTypeClass as typeof DataType).valuesAreEqual(oldState, value);
 					} else {
 						isDifferent = oldState !== value;
 					}
@@ -1003,7 +1022,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get styles(): Array<StyleData> | StyleData {
+	static get styles(): ComponentStylesData {
 		return "";
 	}
 
@@ -1011,7 +1030,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the Static Area CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get staticAreaStyles(): Array<StyleData> | StyleData {
+	static get staticAreaStyles(): ComponentStylesData {
 		return "";
 	}
 

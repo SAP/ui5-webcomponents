@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TitleLevel from "./types/TitleLevel.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -8,59 +10,6 @@ import TitleTemplate from "./generated/templates/TitleTemplate.lit.js";
 
 // Styles
 import titleCss from "./generated/themes/Title.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-title",
-	properties: /** @lends sap.ui.webc.main.Title.prototype */ {
-
-		/**
-		 * Defines how the text of a component will be displayed when there is not enough space.
-		 * Available options are:
-		 * <ul>
-		 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
-		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.WrappingType}
-		 * @defaultvalue "None"
-		 * @public
-		 */
-		wrappingType: {
-			type: WrappingType,
-			defaultValue: WrappingType.None,
-		},
-
-		/**
-		 * Defines the component level.
-		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
-		 *
-		 * @type {sap.ui.webc.main.types.TitleLevel}
-		 * @defaultvalue "H2"
-		 * @public
-		*/
-		level: {
-			type: TitleLevel,
-			defaultValue: TitleLevel.H2,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.Title.prototype */ {
-		/**
-		 * Defines the text of the component.
-		 * <br><br>
-		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
-};
 
 /**
  * @class
@@ -81,12 +30,46 @@ const metadata = {
  * @tagname ui5-title
  * @public
  */
+@customElement("ui5-title")
 class Title extends UI5Element {
-	level: TitleLevel = TitleLevel.H2;
+	/**
+	 * Defines how the text of a component will be displayed when there is not enough space.
+	 * Available options are:
+	 * <ul>
+	 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
+	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
+	 * </ul>
+	 *
+	 * @name sap.ui.webc.main.Title.prototype.wrappingType
+	 * @type {sap.ui.webc.main.types.WrappingType}
+	 * @defaultvalue "None"
+	 * @public
+	 */
+	@property({ type: WrappingType, defaultValue: WrappingType.None })
+	wrappingType!: WrappingType
 
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the component level.
+	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
+	 *
+	 * @name sap.ui.webc.main.Title.prototype.level
+	 * @type {sap.ui.webc.main.types.TitleLevel}
+	 * @defaultvalue "H2"
+	 * @public
+	 */
+	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
+	level!: TitleLevel;
+
+	/**
+	 * Defines the text of the component.
+	 * <br><br>
+	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 *
+	 * @type {Node[]}
+	 * @slot
+	 * @name sap.ui.webc.main.Title.prototype.default
+	 * @public
+	 */
 
 	static get render() {
 		return litRender;

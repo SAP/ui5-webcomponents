@@ -9,5 +9,6 @@
       "sourceMap": true,
       "strict": true,
       "moduleResolution": "node",
+      "experimentalDecorators": true,
     },
 }
