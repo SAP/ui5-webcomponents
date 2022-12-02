@@ -103,101 +103,101 @@ enum KeyCodes {
 	BACKSLASH = 226,
 }
 
-const isEnter = (event: KeyboardEvent) => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !hasModifierKeys(event);
+const isEnter = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && !hasModifierKeys(event);
 
-const isEnterShift = (event: KeyboardEvent) => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, false, true);
+const isEnterShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "Enter" : event.keyCode === KeyCodes.ENTER) && checkModifierKeys(event, false, false, true);
 
-const isSpace = (event: KeyboardEvent) => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && !hasModifierKeys(event);
+const isSpace = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && !hasModifierKeys(event);
 
-const isSpaceShift = (event: KeyboardEvent) => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, false, true);
+const isSpaceShift = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, false, false, true);
 
-const isSpaceCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, true, false, false);
+const isSpaceCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "Spacebar" || event.key === " ") : event.keyCode === KeyCodes.SPACE) && checkModifierKeys(event, true, false, false);
 
-const isLeft = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && !hasModifierKeys(event);
+const isLeft = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && !hasModifierKeys(event);
 
-const isRight = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && !hasModifierKeys(event);
+const isRight = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && !hasModifierKeys(event);
 
-const isUp = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && !hasModifierKeys(event);
+const isUp = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && !hasModifierKeys(event);
 
-const isDown = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && !hasModifierKeys(event);
+const isDown = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && !hasModifierKeys(event);
 
-const isLeftCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && checkModifierKeys(event, true, false, false);
+const isLeftCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && checkModifierKeys(event, true, false, false);
 
-const isRightCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, true, false, false);
+const isRightCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, true, false, false);
 
-const isUpCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, false, false);
+const isUpCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, false, false);
 
-const isDownCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, false);
+const isDownCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, false);
 
-const isUpShift = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, false, false, true);
+const isUpShift = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, false, false, true);
 
-const isDownShift = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, false, false, true);
+const isDownShift = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, false, false, true);
 
-const isUpAlt = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, false, true, false);
+const isUpAlt = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, false, true, false);
 
-const isDownAlt = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, false, true, false);
+const isDownAlt = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, false, true, false);
 
-const isLeftShift = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && checkModifierKeys(event, false, false, true);
+const isLeftShift = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && checkModifierKeys(event, false, false, true);
 
-const isRightShift = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, false, false, true);
+const isRightShift = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, false, false, true);
 
-const isLeftShiftCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && checkModifierKeys(event, true, false, true);
+const isLeftShiftCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowLeft" || event.key === "Left") : event.keyCode === KeyCodes.ARROW_LEFT) && checkModifierKeys(event, true, false, true);
 
-const isRightShiftCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, true, false, true);
+const isRightShiftCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowRight" || event.key === "Right") : event.keyCode === KeyCodes.ARROW_RIGHT) && checkModifierKeys(event, true, false, true);
 
-const isUpShiftCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, false, true);
+const isUpShiftCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, false, true);
 
-const isDownShiftCtrl = (event: KeyboardEvent) => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, true);
+const isDownShiftCtrl = (event: KeyboardEvent): boolean => (event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, false, true);
 
-const isHome = (event: KeyboardEvent) => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && !hasModifierKeys(event);
+const isHome = (event: KeyboardEvent): boolean => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && !hasModifierKeys(event);
 
-const isEnd = (event: KeyboardEvent) => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && !hasModifierKeys(event);
+const isEnd = (event: KeyboardEvent): boolean => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && !hasModifierKeys(event);
 
-const isHomeCtrl = (event: KeyboardEvent) => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, true, false, false);
+const isHomeCtrl = (event: KeyboardEvent): boolean => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, true, false, false);
 
-const isHomeShift = (event: KeyboardEvent) => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, false, false, true);
+const isHomeShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "Home" : event.keyCode === KeyCodes.HOME) && checkModifierKeys(event, false, false, true);
 
-const isEndCtrl = (event: KeyboardEvent) => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, true, false, false);
+const isEndCtrl = (event: KeyboardEvent): boolean => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, true, false, false);
 
-const isEndShift = (event: KeyboardEvent) => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, false, false, true);
+const isEndShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "End" : event.keyCode === KeyCodes.END) && checkModifierKeys(event, false, false, true);
 
-const isEscape = (event: KeyboardEvent) => (event.key ? event.key === "Escape" || event.key === "Esc" : event.keyCode === KeyCodes.ESCAPE) && !hasModifierKeys(event);
+const isEscape = (event: KeyboardEvent): boolean => (event.key ? event.key === "Escape" || event.key === "Esc" : event.keyCode === KeyCodes.ESCAPE) && !hasModifierKeys(event);
 
-const isTabNext = (event: KeyboardEvent) => (event.key ? event.key === "Tab" : event.keyCode === KeyCodes.TAB) && !hasModifierKeys(event);
+const isTabNext = (event: KeyboardEvent): boolean => (event.key ? event.key === "Tab" : event.keyCode === KeyCodes.TAB) && !hasModifierKeys(event);
 
-const isTabPrevious = (event: KeyboardEvent) => (event.key ? event.key === "Tab" : event.keyCode === KeyCodes.TAB) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ false, /* Shift */ true);
+const isTabPrevious = (event: KeyboardEvent): boolean => (event.key ? event.key === "Tab" : event.keyCode === KeyCodes.TAB) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ false, /* Shift */ true);
 
-const isBackSpace = (event: KeyboardEvent) => (event.key ? event.key === "Backspace" : event.keyCode === KeyCodes.BACKSPACE) && !hasModifierKeys(event);
+const isBackSpace = (event: KeyboardEvent): boolean => (event.key ? event.key === "Backspace" : event.keyCode === KeyCodes.BACKSPACE) && !hasModifierKeys(event);
 
-const isDelete = (event: KeyboardEvent) => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
+const isDelete = (event: KeyboardEvent): boolean => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && !hasModifierKeys(event);
 
-const isDeleteShift = (event: KeyboardEvent) => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, false, false, true);
+const isDeleteShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "Delete" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, false, false, true);
 
-const isInsertShift = (event: KeyboardEvent) => (event.key ? event.key === "Insert" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, false, false, true);
+const isInsertShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "Insert" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, false, false, true);
 
-const isInsertCtrl = (event: KeyboardEvent) => (event.key ? event.key === "Insert" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, true, false, false);
+const isInsertCtrl = (event: KeyboardEvent): boolean => (event.key ? event.key === "Insert" : event.keyCode === KeyCodes.DELETE) && checkModifierKeys(event, true, false, false);
 
-const isPageUp = (event: KeyboardEvent) => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && !hasModifierKeys(event);
+const isPageUp = (event: KeyboardEvent): boolean => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && !hasModifierKeys(event);
 
-const isPageDown = (event: KeyboardEvent) => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && !hasModifierKeys(event);
+const isPageDown = (event: KeyboardEvent): boolean => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && !hasModifierKeys(event);
 
-const isPageUpShift = (event: KeyboardEvent) => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, false, false, true);
+const isPageUpShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, false, false, true);
 
-const isPageUpAlt = (event: KeyboardEvent) => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, false, true, false);
+const isPageUpAlt = (event: KeyboardEvent): boolean => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, false, true, false);
 
-const isPageDownShift = (event: KeyboardEvent) => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, false, false, true);
+const isPageDownShift = (event: KeyboardEvent): boolean => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, false, false, true);
 
-const isPageDownAlt = (event: KeyboardEvent) => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, false, true, false);
+const isPageDownAlt = (event: KeyboardEvent): boolean => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, false, true, false);
 
-const isPageUpShiftCtrl = (event: KeyboardEvent) => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, true, false, true);
+const isPageUpShiftCtrl = (event: KeyboardEvent): boolean => (event.key ? event.key === "PageUp" : event.keyCode === KeyCodes.PAGE_UP) && checkModifierKeys(event, true, false, true);
 
-const isPageDownShiftCtrl = (event: KeyboardEvent) => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, true, false, true);
+const isPageDownShiftCtrl = (event: KeyboardEvent): boolean => (event.key ? event.key === "PageDown" : event.keyCode === KeyCodes.PAGE_DOWN) && checkModifierKeys(event, true, false, true);
 
-const isPlus = (event: KeyboardEvent) => (event.key ? event.key === "+" : event.keyCode === KeyCodes.PLUS) || (event.keyCode === KeyCodes.NUMPAD_PLUS && !hasModifierKeys(event));
+const isPlus = (event: KeyboardEvent): boolean => (event.key ? event.key === "+" : event.keyCode === KeyCodes.PLUS) || (event.keyCode === KeyCodes.NUMPAD_PLUS && !hasModifierKeys(event));
 
-const isMinus = (event: KeyboardEvent) => (event.key ? event.key === "-" : event.keyCode === KeyCodes.MINUS) || (event.keyCode === KeyCodes.NUMPAD_MINUS && !hasModifierKeys(event));
+const isMinus = (event: KeyboardEvent): boolean => (event.key ? event.key === "-" : event.keyCode === KeyCodes.MINUS) || (event.keyCode === KeyCodes.NUMPAD_MINUS && !hasModifierKeys(event));
 
-const isShow = (event: KeyboardEvent) => {
+const isShow = (event: KeyboardEvent): boolean => {
 	if (event.key) {
 		return isF4(event) || isShowByArrows(event);
 	}
@@ -205,35 +205,35 @@ const isShow = (event: KeyboardEvent) => {
 	return (event.keyCode === KeyCodes.F4 && !hasModifierKeys(event)) || (event.keyCode === KeyCodes.ARROW_DOWN && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false));
 };
 
-const isF4 = (event: KeyboardEvent) => {
+const isF4 = (event: KeyboardEvent): boolean => {
 	return event.key === "F4" && !hasModifierKeys(event);
 };
 
-const isF4Shift = (event: KeyboardEvent) => (event.key ? event.key === "F4" : event.keyCode === KeyCodes.F4) && checkModifierKeys(event, false, false, true);
+const isF4Shift = (event: KeyboardEvent): boolean => (event.key ? event.key === "F4" : event.keyCode === KeyCodes.F4) && checkModifierKeys(event, false, false, true);
 
-const isF6Next = (event: KeyboardEvent) => ((event.key ? event.key === "F6" : event.keyCode === KeyCodes.F6) && checkModifierKeys(event, false, false, false))
+const isF6Next = (event: KeyboardEvent): boolean => ((event.key ? event.key === "F6" : event.keyCode === KeyCodes.F6) && checkModifierKeys(event, false, false, false))
 	|| ((event.key ? (event.key === "ArrowDown" || event.key === "Down") : event.keyCode === KeyCodes.ARROW_DOWN) && checkModifierKeys(event, true, true, false));
 
-const isF6Previous = (event: KeyboardEvent) => ((event.key ? event.key === "F6" : event.keyCode === KeyCodes.F6) && checkModifierKeys(event, false, false, true))
+const isF6Previous = (event: KeyboardEvent): boolean => ((event.key ? event.key === "F6" : event.keyCode === KeyCodes.F6) && checkModifierKeys(event, false, false, true))
 	|| ((event.key ? (event.key === "ArrowUp" || event.key === "Up") : event.keyCode === KeyCodes.ARROW_UP) && checkModifierKeys(event, true, true, false));
 
-const isF7 = (event: KeyboardEvent) => (event.key ? event.key === "F7" : event.keyCode === KeyCodes.F7) && !hasModifierKeys(event);
+const isF7 = (event: KeyboardEvent): boolean => (event.key ? event.key === "F7" : event.keyCode === KeyCodes.F7) && !hasModifierKeys(event);
 
-const isShowByArrows = (event: KeyboardEvent) => {
+const isShowByArrows = (event: KeyboardEvent): boolean => {
 	return ((event.key === "ArrowDown" || event.key === "Down") || (event.key === "ArrowUp" || event.key === "Up")) && checkModifierKeys(event, /* Ctrl */ false, /* Alt */ true, /* Shift */ false);
 };
 
-const isShift = (event: KeyboardEvent) => event.key === "Shift" || event.keyCode === KeyCodes.SHIFT;
+const isShift = (event: KeyboardEvent): boolean => event.key === "Shift" || event.keyCode === KeyCodes.SHIFT;
 
-const isCtrlA = (event: KeyboardEvent) => ((event.key === "A" || event.key === "a") || event.which === KeyCodes.A) && checkModifierKeys(event, true, false, false);
+const isCtrlA = (event: KeyboardEvent): boolean => ((event.key === "A" || event.key === "a") || event.which === KeyCodes.A) && checkModifierKeys(event, true, false, false);
 
-const isCtrlV = (event: KeyboardEvent) => ((event.key === "V" || event.key === "v") || event.which === KeyCodes.V) && checkModifierKeys(event, true, false, false);
+const isCtrlV = (event: KeyboardEvent): boolean => ((event.key === "V" || event.key === "v") || event.which === KeyCodes.V) && checkModifierKeys(event, true, false, false);
 
-const hasModifierKeys = (event: KeyboardEvent) => event.shiftKey || event.altKey || getCtrlKey(event);
+const hasModifierKeys = (event: KeyboardEvent): boolean => event.shiftKey || event.altKey || getCtrlKey(event);
 
-const getCtrlKey = (event: KeyboardEvent) => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
+const getCtrlKey = (event: KeyboardEvent): boolean => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
 
-const checkModifierKeys = (event: KeyboardEvent, bCtrlKey: boolean, bAltKey: boolean, bShiftKey: boolean) => event.shiftKey === bShiftKey && event.altKey === bAltKey && getCtrlKey(event) === bCtrlKey;
+const checkModifierKeys = (event: KeyboardEvent, bCtrlKey: boolean, bAltKey: boolean, bShiftKey: boolean):boolean => event.shiftKey === bShiftKey && event.altKey === bAltKey && getCtrlKey(event) === bCtrlKey;
 
 export {
 	isEnter,
