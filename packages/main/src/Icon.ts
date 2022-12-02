@@ -108,22 +108,21 @@ const PRESENTATION_ROLE = "presentation";
  * @implements sap.ui.webc.main.IIcon
  * @public
  */
-
+@customElement("ui5-icon")
+@languageAware
+@themeAware
 /**
  * Fired on mouseup, space and enter if icon is interactive
  * @private
  * @since 1.0.0-rc.8
  */
 @event("click")
-@languageAware
-@themeAware
-@customElement("ui5-icon")
 class Icon extends UI5Element {
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)
 	 * @name sap.ui.webc.main.Icon.prototype.interactive
 	 * @type {boolean}
-	 * @default false
+	 * @defaultvalue false
 	 * @public
 	 * @since 1.0.0-rc.8
 	 */
@@ -163,7 +162,7 @@ class Icon extends UI5Element {
 	 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
 	 * @name sap.ui.webc.main.Icon.prototype.name
 	 * @type {string}
-	 * @default ""
+	 * @defaultvalue ""
 	 * @public
 	 */
 	@property()
@@ -178,7 +177,7 @@ class Icon extends UI5Element {
 	 *
 	 * @name sap.ui.webc.main.Icon.prototype.accessibleName
 	 * @type {string}
-	 * @default ""
+	 * @defaultvalue ""
 	 * @public
 	 */
 	@property()
@@ -189,7 +188,7 @@ class Icon extends UI5Element {
 	 *
 	 * @name sap.ui.webc.main.Icon.prototype.showTooltip
 	 * @type {boolean}
-	 * @default false
+	 * @defaultvalue false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -199,7 +198,7 @@ class Icon extends UI5Element {
 	 * Defines the accessibility role of the component.
 	 * @name sap.ui.webc.main.Icon.prototype.accessibleRole
 	 * @type {string}
-	 * @default ""
+	 * @defaultvalue ""
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -251,8 +250,8 @@ class Icon extends UI5Element {
 	customSvg?: object;
 
 	_onclick?: ((event: MouseEvent) => void) | undefined;
-	_onfocusout?: ((event: Event) => void) | undefined;
-	_onfocusin?: ((event: Event) => void) | undefined;
+	_onfocusout?: ((event: FocusEvent) => void) | undefined;
+	_onfocusin?: ((event: FocusEvent) => void) | undefined;
 
 	static get render() {
 		return litRender;

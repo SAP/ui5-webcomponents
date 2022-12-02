@@ -1,7 +1,7 @@
 /**
- * Returns a class decorator.
+ * Returns a custom element class decorator.
  *
- * @param { tag } tag
+ * @param { string } tag
  * @returns { ClassDecorator }
  */
 const customElement = (tag: string): ClassDecorator => {

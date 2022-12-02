@@ -45,17 +45,19 @@ class TableColumn extends UI5Element {
 	 * For further responsive design options, see <code>demandPopin</code> property.
 	 *
 	 * @type {sap.ui.webc.base.types.Integer}
-	 * @default Infinity
+	 * @name sap.ui.webc.main.TableColumn.prototype.minWidth
+	 * @defaultvalue Infinity
 	 * @public
 	 */
-	@property({ validator: Integer })
+	@property({ validator: Integer, defaultValue: Infinity })
 	minWidth!: number;
 
 	/**
 	 * The text for the column when it pops in.
 	 *
 	 * @type {string}
-	 * @default ""
+	 * @name sap.ui.webc.main.TableColumn.prototype.popinText
+	 * @defaultvalue ""
 	 * @public
 	 */
 	@property()
@@ -68,7 +70,8 @@ class TableColumn extends UI5Element {
 	 * Setting this property to <code>true</code>, shows this column as pop-in instead of hiding it.
 	 *
 	 * @type {boolean}
-	 * @default false
+	 * @name sap.ui.webc.main.TableColumn.prototype.demandPopin
+	 * @defaultvalue false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -86,7 +89,8 @@ class TableColumn extends UI5Element {
 	 * </ul>
 	 *
 	 * @type {TableColumnPopinDisplay}
-	 * @default "Block"
+	 * @name sap.ui.webc.main.TableColumn.prototype.popinDisplay
+	 * @defaultvalue "Block"
 	 * @public
 	 */
 	@property({ type: TableColumnPopinDisplay, defaultValue: TableColumnPopinDisplay.Block })

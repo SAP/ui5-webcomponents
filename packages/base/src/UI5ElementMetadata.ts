@@ -18,12 +18,12 @@ type Slot = {
 type SlotValue = Node;
 
 type Property = {
-	multiple?: boolean,
 	type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
+	validator?: DataType,
 	defaultValue?: PropertyValue,
 	noAttribute?: boolean,
+	multiple?: boolean,
 	compareValues?: boolean,
-	validator?: DataType,
 }
 
 type PropertyValue = boolean | number | string | object | undefined | null | DataType;

@@ -41,7 +41,7 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  * @implements sap.ui.webc.fiori.IProductSwitchItem
  * @since 1.0.0-rc.5
  */
-
+@customElement("ui5-product-switch-item")
 /**
  * Fired when the <code>ui5-product-switch-item</code> is activated either with a
  * click/tap or by using the Enter or Space key.
@@ -51,7 +51,6 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  */
 @event("click")
 @event("_focused")
-@customElement("ui5-product-switch-item")
 class ProductSwitchItem extends UI5Element implements ITabbable {
 	constructor() {
 		super();

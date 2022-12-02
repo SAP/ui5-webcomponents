@@ -1,5 +1,5 @@
-import I18nBundle, { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -24,7 +24,7 @@ import {
 
 // Styles
 import ProductSwitchCss from "./generated/themes/ProductSwitch.css.js";
-import ProductSwitchItem from "./ProductSwitchItem.js";
+import type ProductSwitchItem from "./ProductSwitchItem.js";
 
 /**
  * @class
@@ -60,8 +60,8 @@ import ProductSwitchItem from "./ProductSwitchItem.js";
  * @public
  * @since 1.0.0-rc.5
  */
-@defaultSlot("items")
 @customElement("ui5-product-switch")
+@defaultSlot("items")
 class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
@@ -98,7 +98,7 @@ class ProductSwitch extends UI5Element {
 	_rowSize!: number;
 	_handleResizeBound?: () => void;
 
-	static i18nBundle?: I18nBundle;
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -124,7 +124,7 @@ class ProductSwitch extends UI5Element {
 	}
 
 	get _ariaLabelText() {
-		return ProductSwitch.i18nBundle?.getText(PRODUCT_SWITCH_CONTAINER_LABEL as I18nText);
+		return ProductSwitch.i18nBundle.getText(PRODUCT_SWITCH_CONTAINER_LABEL as I18nText);
 	}
 
 	onEnterDOM() {

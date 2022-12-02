@@ -2,8 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import defaultSlot from "@ui5/webcomponents-base/dist/decorators/defaultSlot.js";
 import WrappingType from "./types/WrappingType.js";
@@ -40,28 +38,6 @@ import labelCss from "./generated/themes/Label.css.js";
  * @tagname ui5-label
  * @public
  */
-
-/**
- * Fired when an item is activated.
- *
- * @event sap.ui.webc.main.Label#item-click
- * @allowPreventDefault
- * @param { HTMLElement } item The clicked item.
- * @param { boolean } esc esc pressed.
- * @public
- */
-@event("item-click", {
-	item: { type: HTMLElement },
-	esc: { type: Boolean },
-})
-/**
- * Fired when an item is activated.
- *
- * @event sap.ui.webc.main.Label#item-change
- * @allowPreventDefault
- * @public
- */
-@event("item-change")
 @customElement("ui5-label")
 @defaultSlot("text")
 class Label extends UI5Element {
@@ -72,10 +48,10 @@ class Label extends UI5Element {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.Label.prototype.for
-	 * @default ""
+	 * @defaultvalue ""
 	 * @public
 	 */
-	@property({ defaultValue: "" })
+	@property()
 	for!: string;
 
 	/**
@@ -84,7 +60,7 @@ class Label extends UI5Element {
 	 * <b>Note:</b> Usually used in forms.
 	 * @name sap.ui.webc.main.Label.prototype.showColon
 	 * @type {boolean}
-	 * @default false
+	 * @defaultvalue false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -99,7 +75,7 @@ class Label extends UI5Element {
 	 *
 	 * @name sap.ui.webc.main.Label.prototype.required
 	 * @type {boolean}
-	 * @default false
+	 * @defaultvalue false
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -115,7 +91,7 @@ class Label extends UI5Element {
 	 *
 	 * @name sap.ui.webc.main.Label.prototype.wrappingType
 	 * @type {sap.ui.webc.main.types.WrappingType}
-	 * @default "None"
+	 * @defaultvalue "None"
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
@@ -130,19 +106,6 @@ class Label extends UI5Element {
 	 * @public
 	 * @name sap.ui.webc.main.Label.prototype.default
 	 */
-	@slot({ type: HTMLElement, individualSlots: true, invalidateOnChildChange: true })
-	text!: Array<HTMLElement>
-
-	/**
-	 * Defines the header of the component.
-	 *
-	 * @type {HTMLElement[]}
-	 * @slot
-	 * @public
-	 * @name sap.ui.webc.main.Label.prototype.header
-	 */
-	@slot({ type: HTMLElement })
-	header!: Array<HTMLElement>
 
 	static get render() {
 		return litRender;
@@ -166,9 +129,6 @@ class Label extends UI5Element {
 	}
 
 	_onclick() {
-		this.fireEvent("item-click", { item: this, esc: true }); // Refactor: just for testing - remove afterwards
-		this.fireEvent("item-change"); // Refactor: just for testing - remove afterwards
-
 		if (!this.for) {
 			return;
 		}
@@ -177,32 +137,6 @@ class Label extends UI5Element {
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
-	}
-
-	hasHeader() {
-		return !!this.header.length;
-	}
-
-	/**
-	 * FileList of all selected files.
-	 * @readonly
-	 * @type {FileList}
-	 * @public
-	 */
-	get files() {
-		return "public getter";
-	}
-
-	/**
-	 * Shows the popover.
-	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
-	 * @public
-	 * @async
-	 * @returns {Promise} Resolved when the popover is open
-	 */
-	async showAt(opener: HTMLElement, preventInitialFocus = false) {
-		return Promise.resolve({ opener, preventInitialFocus });
 	}
 }
 

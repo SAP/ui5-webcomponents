@@ -995,7 +995,7 @@ abstract class UI5Element extends HTMLElement {
 						return [];
 					},
 					set() {
-						// throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
+						throw new Error("Cannot set slot content directly, use the DOM APIs (appendChild, removeChild, etc...)");
 					},
 				});
 			}
@@ -1141,4 +1141,4 @@ const instanceOfUI5Element = (object: any): object is UI5Element => {
 
 export default UI5Element;
 export { instanceOfUI5Element };
-export type { ChangeInfo, PropertyValue };
+export type { ChangeInfo };
