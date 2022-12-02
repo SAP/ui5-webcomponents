@@ -3,7 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import defaultSlot from "@ui5/webcomponents-base/dist/decorators/defaultSlot.js";
 import WrappingType from "./types/WrappingType.js";
 
 // Template
