@@ -6,7 +6,7 @@ const DEAFULT_RANGE_SET: Range = new Map<string, Array<number>>();
 DEAFULT_RANGE_SET.set("S", [0, 599]);
 DEAFULT_RANGE_SET.set("M", [600, 1023]);
 DEAFULT_RANGE_SET.set("L", [1024, 1439]);
-DEAFULT_RANGE_SET.set("XL", [1440, 2560]);
+DEAFULT_RANGE_SET.set("XL", [1440, Infinity]);
 
 /**
  * Enumeration containing the names and settings of predefined screen width media query range sets.
@@ -83,7 +83,7 @@ const getCurrentRange = (name: string, width = window.innerWidth): string => {
 	let currentRangeName;
 
 	rangeSet.forEach((value, key) => {
-		if (width >= value[0] && width <= value[1]) {
+		if (Math.floor(width) >= value[0] && Math.floor(width) <= value[1]) {
 			currentRangeName = key;
 		}
 	});
