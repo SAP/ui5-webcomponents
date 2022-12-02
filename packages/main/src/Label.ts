@@ -39,7 +39,6 @@ import labelCss from "./generated/themes/Label.css.js";
  * @public
  */
 @customElement("ui5-label")
-@defaultSlot("text")
 class Label extends UI5Element {
 	/**
 	 * Defines the labeled input by providing its ID.
