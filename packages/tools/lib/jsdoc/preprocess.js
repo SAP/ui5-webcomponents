@@ -19,15 +19,15 @@ const preprocessTypes = async () => {
 const processTypeFile = async (fileName) => {
 	let fileContent = `${await fs.readFile(fileName)}`;
 
-	const re = new RegExp(`(\\/\\*\\*[^\\/]+\\s+\\*\\/)?\\s+\\s+.*?\\["([\\w\\d]+)"\\].*?"([\\w\\d]+)";`, "gm")
+	const re = new RegExp(`(\\/\\*\\*\\s*\\n([^\\*]|(\\*(?!\\/)))*\\*\\/)\\s+[\\w\\d]+\\[\\"([\\w\\d]+)\\"\\]\\s*=\\s*\\"([\\w\\d]+)\\";`, "gm")
 	let matches = [...fileContent.matchAll(re)];
 
 	// Get all type values
 	const typeData = matches.map(match => {
 		return {
 			comment: match[1],
-			key: match[2],
-			value: match[3],
+			key: match[4],
+			value: match[5],
 		};
 	});
 	if (typeData.length === 0) {
@@ -36,7 +36,7 @@ const processTypeFile = async (fileName) => {
 
 	const typeName = path.parse(fileName).name;
 
-	matches = fileContent.match(/^\/\*\*[^\/]+\//gm);
+	matches = fileContent.match(/\/\*\*\s*\n([^\*]|(\*(?!\/)))*\*\//gm);
 	const comment = matches[0];
 
 	const propsCode = typeData.map(item => {
