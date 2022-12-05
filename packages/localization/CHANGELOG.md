@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.4](https://github.com/SAP/ui5-webcomponents/compare/v1.7.3...v1.7.4) (2022-12-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-localization
+
+
+
+
+
 ## [1.7.2](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.7.2) (2022-11-07)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

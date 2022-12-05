@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.4](https://github.com/SAP/ui5-webcomponents/compare/v1.7.3...v1.7.4) (2022-12-05)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** fix icon rendering inside ui5-avatar ([#6060](https://github.com/SAP/ui5-webcomponents/issues/6060)) ([0fabac4](https://github.com/SAP/ui5-webcomponents/commit/0fabac43b9d7bc18f478f30177d99c3f63bafa88)), closes [#6043](https://github.com/SAP/ui5-webcomponents/issues/6043)
+
+
+
+
+
 ## [1.7.2](https://github.com/SAP/ui5-webcomponents/compare/v1.7.1...v1.7.2) (2022-11-07)
 
 
