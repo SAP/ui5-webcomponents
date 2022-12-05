@@ -1,6 +1,13 @@
 import isElementHidden from "./isElementHidden.js";
 
-const isElementTabbable = (el: HTMLElement) => {
+/**
+ * Returns if the HTMLElement is tabbable.
+ *
+ * @public
+ * @param { HTMLElement } el the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
+ * @returns { boolean } true if the element is tabbable or false - if not
+ */
+const isElementTabbable = (el: HTMLElement): boolean => {
 	if (!el) {
 		return false;
 	}
@@ -23,6 +30,8 @@ const isElementTabbable = (el: HTMLElement) => {
 	if (nodeName === "a" || /input|select|textarea|button|object/.test(nodeName)) {
 		return !(el as HTMLLinkElement).disabled;
 	}
+
+	return false;
 };
 
 export default isElementTabbable;

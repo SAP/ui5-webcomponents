@@ -120,9 +120,12 @@
 }
 
 /* Shapes */
-:host([shape="Square"]),
-:host([shape="Square"]) ::slotted(*) {
+:host([shape="Square"]) {
 	border-radius: var(--ui5-avatar-border-radius);
+}
+
+:host([shape="Square"]) ::slotted(*) {
+	border-radius: calc(var(--ui5-avatar-border-radius) - var(--ui5-avatar-border-radius-img-deduction));
 }
 
 :host(:not([color-scheme])),
