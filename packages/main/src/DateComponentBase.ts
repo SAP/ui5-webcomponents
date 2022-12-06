@@ -33,6 +33,7 @@ class DateComponentBase extends UI5Element {
 	 * Sets a calendar type used for display.
 	 * If not set, the calendar type of the global configuration is used.
 	 * @type {sap.ui.webc.base.types.CalendarType}
+	 * @name sap.ui.webc.main.DateComponentBase.prototype.primaryCalendarType
 	 * @public
 	 */
 	@property({ type: CalendarType })
@@ -42,6 +43,7 @@ class DateComponentBase extends UI5Element {
 	 * Defines the secondary calendar type.
 	 * If not set, the calendar will only show the primary calendar type.
 	 * @type {sap.ui.webc.base.types.CalendarType}
+	 * @name sap.ui.webc.main.DateComponentBase.prototype.secondaryCalendarType
 	 * @since 1.0.0-rc.16
 	 * @defaultvalue undefined
 	 * @public
@@ -53,6 +55,7 @@ class DateComponentBase extends UI5Element {
 	 * Determines the format, displayed in the input field.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.DateComponentBase.prototype.formatPattern
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -63,6 +66,7 @@ class DateComponentBase extends UI5Element {
 	 * Determines the minimum date available for selection.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.DateComponentBase.prototype.minDate
 	 * @defaultvalue ""
 	 * @since 1.0.0-rc.6
 	 * @public
@@ -74,6 +78,7 @@ class DateComponentBase extends UI5Element {
 	 * Determines the maximum date available for selection.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.DateComponentBase.prototype.maxDate
 	 * @defaultvalue ""
 	 * @since 1.0.0-rc.6
 	 * @public
