@@ -4,6 +4,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
@@ -22,7 +23,7 @@ const metadata = {
 	tag: "ui5-timeline",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.Timeline.prototype */ {
 		/**
 		 * Defines the items orientation.
 		 *
@@ -34,7 +35,7 @@ const metadata = {
 	 	* <li><code>Horizontal</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.TimelineLayout}
+		 * @type {sap.ui.webc.fiori.types.TimelineLayout}
 		 * @defaultvalue "Vertical"
 		 * @since 1.0.0-rc.15
 		 * @public
@@ -56,11 +57,11 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.Timeline.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.Timeline.prototype */ {
 		/**
 		 * Determines the content of the <code>ui5-timeline</code>.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.ITimelineItem[]}
+		 * @type {sap.ui.webc.fiori.ITimelineItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -86,8 +87,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.Timeline
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.Timeline
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-timeline
  * @appenddocs TimelineItem
  * @public
@@ -153,7 +154,7 @@ class Timeline extends UI5Element {
 
 	_onkeydown(event) {
 		if (isTabNext(event)) {
-			if (!event.target.nameClickable || event.isMarked === "link") {
+			if (!event.target.nameClickable || getEventMark(event) === "link") {
 				this._handleTabNextOrPrevious(event, isTabNext(event));
 			}
 		} else if (isTabPrevious(event)) {

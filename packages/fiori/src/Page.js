@@ -17,7 +17,7 @@ const metadata = {
 	tag: "ui5-page",
 	managedSlots: true,
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.Page.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.Page.prototype */ {
 
 		/**
 		 * Defines the background color of the <code>ui5-page</code>.
@@ -30,7 +30,7 @@ const metadata = {
 		 * <li><code>Transparent</code></li>
 		 * <li><code>List</code></li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.fiori.types.PageBackgroundDesign}
+		 * @type {sap.ui.webc.fiori.types.PageBackgroundDesign}
 		 * @defaultvalue "Solid"
 		 * @public
 		 */
@@ -86,12 +86,12 @@ const metadata = {
 		},
 	},
 
-	slots: /** @lends sap.ui.webcomponents.fiori.Page.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.Page.prototype */ {
 
 		/**
 		 * Defines the header HTML Element.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.IBar}
+		 * @type {sap.ui.webc.fiori.IBar}
 		 * @slot
 		 * @public
 		 */
@@ -114,7 +114,7 @@ const metadata = {
 		/**
 		 * Defines the footer HTML Element.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.IBar}
+		 * @type {sap.ui.webc.fiori.IBar}
 		 * @slot
 		 * @public
 		 */
@@ -122,7 +122,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.Page.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.Page.prototype */ {
 	},
 };
 
@@ -153,8 +153,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.Page
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.Page
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-page
  * @since 1.0.0-rc.12
  * @public

@@ -24,7 +24,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve, StyleData } from "./types.js";
+import { PromiseResolve, ComponentStylesData } from "./types.js";
 
 let autoId = 0;
 
@@ -75,7 +75,7 @@ let metadata = {} as Metadata;
  * @class
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.base.UI5Element
  * @extends HTMLElement
  * @public
  */
@@ -91,10 +91,6 @@ abstract class UI5Element extends HTMLElement {
 	_domRefReadyPromise: Promise<void> & { _deferredResolve?: PromiseResolve };
 	_doNotSyncAttributes: Set<string>;
 	_state: State;
-	onEnterDOM?: () => void;
-	onExitDOM?: () => void;
-	onBeforeRendering?: () => void;
-	onAfterRendering?: () => void;
 	_onComponentStateFinalized?: () => void;
 	_getRealDomRef?: () => HTMLElement;
 
@@ -175,9 +171,7 @@ abstract class UI5Element extends HTMLElement {
 		renderImmediately(this);
 		this._domRefReadyPromise._deferredResolve!();
 		this._fullyConnected = true;
-		if (typeof this.onEnterDOM === "function") {
-			this.onEnterDOM();
-		}
+		this.onEnterDOM();
 	}
 
 	/**
@@ -195,9 +189,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		if (this._fullyConnected) {
-			if (typeof this.onExitDOM === "function") {
-				this.onExitDOM();
-			}
+			this.onExitDOM();
 			this._fullyConnected = false;
 		}
 
@@ -207,6 +199,30 @@ abstract class UI5Element extends HTMLElement {
 
 		cancelRender(this);
 	}
+
+	/**
+	 * Called every time before the component renders.
+	 * @public
+	 */
+	onBeforeRendering() {}
+
+	/**
+	 * Called every time after the component renders.
+	 * @public
+	 */
+	onAfterRendering() {}
+
+	/**
+	 * Called on connectedCallback - added to the DOM.
+	 * @public
+	 */
+	onEnterDOM() {}
+
+	/**
+	 * Called on disconnectedCallback - removed from the DOM.
+	 * @public
+	 */
+	onExitDOM() {}
 
 	/**
 	 * @private
@@ -445,11 +461,18 @@ abstract class UI5Element extends HTMLElement {
 		const realName = name.replace(/^ui5-/, "");
 		const nameInCamelCase = kebabToCamelCase(realName);
 		if (properties.hasOwnProperty(nameInCamelCase)) { // eslint-disable-line
-			const propertyTypeClass = properties[nameInCamelCase].type;
-			if (propertyTypeClass === Boolean) {
+			const propData = properties[nameInCamelCase];
+			const propertyType = propData.type;
+			let propertyValidator = propData.validator as typeof DataType;
+
+			if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+				propertyValidator = propertyType as typeof DataType;
+			}
+
+			if (propertyValidator) {
+				newPropertyValue = propertyValidator.attributeToProperty(newValue);
+			} else if (propertyType === Boolean) {
 				newPropertyValue = newValue !== null;
-			} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
-				newPropertyValue = (propertyTypeClass as typeof DataType).attributeToProperty(newValue);
 			} else {
 				newPropertyValue = newValue as string;
 			}
@@ -468,24 +491,30 @@ abstract class UI5Element extends HTMLElement {
 			return;
 		}
 		const properties = ctor.getMetadata().getProperties();
-		const propertyTypeClass = properties[name].type;
+		const propData = properties[name];
+		const propertyType = propData.type;
+		let propertyValidator = propData.validator as typeof DataType;
 		const attrName = camelToKebabCase(name);
 		const attrValue = this.getAttribute(attrName);
 
-		if (propertyTypeClass === Boolean) {
-			if (newValue === true && attrValue === null) {
-				this.setAttribute(attrName, "");
-			} else if (newValue === false && attrValue !== null) {
-				this.removeAttribute(attrName);
-			}
-		} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
-			const newAttrValue = (propertyTypeClass as typeof DataType).propertyToAttribute(newValue);
+		if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+			propertyValidator = propertyType as typeof DataType;
+		}
+
+		if (propertyValidator) {
+			const newAttrValue = propertyValidator.propertyToAttribute(newValue);
 			if (newAttrValue === null) { // null means there must be no attribute for the current value of the property
 				this._doNotSyncAttributes.add(attrName); // skip the attributeChangedCallback call for this attribute
 				this.removeAttribute(attrName); // remove the attribute safely (will not trigger synchronization to the property value due to the above line)
 				this._doNotSyncAttributes.delete(attrName); // enable synchronization again for this attribute
 			} else {
 				this.setAttribute(attrName, newAttrValue);
+			}
+		} else if (propertyType === Boolean) {
+			if (newValue === true && attrValue === null) {
+				this.setAttribute(attrName, "");
+			} else if (newValue === false && attrValue !== null) {
+				this.removeAttribute(attrName);
 			}
 		} else if (typeof newValue !== "object") {
 			if (attrValue !== newValue) {
@@ -612,9 +641,7 @@ abstract class UI5Element extends HTMLElement {
 		// suppress invalidation to prevent state changes scheduling another rendering
 		this._suppressInvalidation = true;
 
-		if (typeof this.onBeforeRendering === "function") {
-			this.onBeforeRendering();
-		}
+		this.onBeforeRendering();
 
 		// Intended for framework usage only. Currently ItemNavigation updates tab indexes after the component has updated its state but before the template is rendered
 		if (this._onComponentStateFinalized) {
@@ -661,9 +688,7 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		// Call the onAfterRendering hook
-		if (typeof this.onAfterRendering === "function") {
-			this.onAfterRendering();
-		}
+		this.onAfterRendering();
 	}
 
 	/**
@@ -757,7 +782,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @param bubbles - true, if the event bubbles
 	 * @returns {boolean} false, if the event was cancelled (preventDefault called), true otherwise
 	 */
-	fireEvent<T>(name: string, data: T, cancelable = false, bubbles = true) {
+	fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true) {
 		const eventResult = this._fireEvent(name, data, cancelable, bubbles);
 		const camelCaseEventName = kebabToCamelCase(name);
 
@@ -768,7 +793,7 @@ abstract class UI5Element extends HTMLElement {
 		return eventResult;
 	}
 
-	_fireEvent<T>(name: string, data: T, cancelable = false, bubbles = true) {
+	_fireEvent<T>(name: string, data?: T, cancelable = false, bubbles = true) {
 		const noConflictEvent = new CustomEvent<T>(`ui5-${name}`, {
 			detail: data,
 			composed: false,
@@ -802,8 +827,8 @@ abstract class UI5Element extends HTMLElement {
 	 * Useful when there are transitive slots in nested component scenarios and you don't want to get a list of the slots, but rather of their content.
 	 * @public
 	 */
-	getSlottedNodes(this: Record<string, Array<SlotValue>>, slotName: string) {
-		return getSlottedNodesList(this[slotName]);
+	getSlottedNodes(slotName: string) {
+		return getSlottedNodesList((this as unknown as Record<string, Array<SlotValue>>)[slotName]);
 	}
 
 	/**
@@ -923,12 +948,18 @@ abstract class UI5Element extends HTMLElement {
 					const metadataCtor = ctor.getMetadata().constructor as typeof UI5ElementMetadata;
 
 					value = metadataCtor.validatePropertyValue(value, propData);
-					const propertyTypeClass = propData.type;
+					const propertyType = propData.type;
+					let propertyValidator = propData.validator as typeof DataType;
 					const oldState = this._state[prop];
-					if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
+
+					if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+						propertyValidator = propertyType as typeof DataType;
+					}
+
+					if (propertyValidator) {
+						isDifferent = !propertyValidator.valuesAreEqual(oldState, value);
+					} else if (Array.isArray(oldState) && Array.isArray(value) && propData.multiple && propData.compareValues) { // compareValues is added for IE, test if needed now
 						isDifferent = !arraysAreEqual(oldState, value);
-					} else if ((propertyTypeClass as typeof DataType).isDataTypeClass) {
-						isDifferent = !(propertyTypeClass as typeof DataType).valuesAreEqual(oldState, value);
 					} else {
 						isDifferent = oldState !== value;
 					}
@@ -991,7 +1022,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get styles(): Array<StyleData> | StyleData {
+	static get styles(): ComponentStylesData {
 		return "";
 	}
 
@@ -999,7 +1030,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the Static Area CSS for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get staticAreaStyles(): Array<StyleData> | StyleData {
+	static get staticAreaStyles(): ComponentStylesData {
 		return "";
 	}
 

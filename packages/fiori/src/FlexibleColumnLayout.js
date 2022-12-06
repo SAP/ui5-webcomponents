@@ -39,7 +39,7 @@ import FlexibleColumnLayoutCss from "./generated/themes/FlexibleColumnLayout.css
 const metadata = {
 	tag: "ui5-flexible-column-layout",
 	fastNavigation: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Defines the columns layout and their proportion.
 		 * <br><br>
@@ -61,7 +61,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>For example:</b> layout=<code>TwoColumnsStartExpanded</code> means the layout will display up to two columns
 		 * in 67%/33% proportion.
-		 * @type {sap.ui.webcomponents.fiori.types.FCLLayout}
+		 * @type {sap.ui.webc.fiori.types.FCLLayout}
 		 * @defaultvalue "OneColumn"
 		 * @public
 		 */
@@ -126,7 +126,7 @@ const metadata = {
 		/**
 		* Defines the component width in px.
 		*
-		* @type {sap.ui.webcomponents.base.types.Float}
+		* @type {sap.ui.webc.base.types.Float}
 		* @defaultvalue 0
 		* @private
 		*/
@@ -152,7 +152,7 @@ const metadata = {
 		/**
 		* Defines the visible columns count - 1, 2 or 3.
 		*
-		* @type {sap.ui.webcomponents.base.types.Integer}
+		* @type {sap.ui.webc.base.types.Integer}
 		* @defaultvalue 1
 		* @private
 		*/
@@ -173,7 +173,7 @@ const metadata = {
 			defaultValue: undefined,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Defines the content in the start column.
 		 * @type {HTMLElement}
@@ -204,19 +204,19 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.FlexibleColumnLayout.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.FlexibleColumnLayout.prototype */ {
 		/**
 		 * Fired when the layout changes via user interaction by clicking the arrows
 		 * or by changing the component size due to resizing.
 		 *
-		 * @param {sap.ui.webcomponents.fiori.types.FCLLayout} layout The current layout
+		 * @param {sap.ui.webc.fiori.types.FCLLayout} layout The current layout
 		 * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
 		 * @param {boolean} startColumnVisible Indicates if the start column is currently visible
 		 * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
 		 * @param {boolean} endColumnVisible Indicates if the end column is currently visible
 		 * @param {boolean} arrowsUsed Indicates if the layout is changed via the arrows
 		 * @param {boolean} resize Indicates if the layout is changed via resizing
-		 * @event sap.ui.webcomponents.fiori.FlexibleColumnLayout#layout-change
+		 * @event sap.ui.webc.fiori.FlexibleColumnLayout#layout-change
 		 * @public
 		 */
 		"layout-change": {
@@ -275,8 +275,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.FlexibleColumnLayout
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.FlexibleColumnLayout
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-flexible-column-layout
  * @public
  * @since 1.0.0-rc.8
@@ -549,7 +549,7 @@ class FlexibleColumnLayout extends UI5Element {
 	/**
 	 * Returns the number of currently visible columns.
 	 * @readonly
-	 * @type {sap.ui.webcomponents.base.types.Integer}
+	 * @type {sap.ui.webc.base.types.Integer}
 	 * @defaultvalue 1
 	 * @public
 	 */

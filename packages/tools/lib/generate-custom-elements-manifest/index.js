@@ -274,11 +274,15 @@ const generateCustomElementDeclaration = entity => {
 const generateRefenrece = (entity) => {
 	let packageName;
 
-	if (entity.name.includes("sap.ui.webcomponents.main")) {
+	if (!entity.name) {
+		throw new Error("JSDoc error: entity not found in api.json.");
+	}
+
+	if (entity.name.includes("sap.ui.webc.main")) {
 		packageName = "@ui5/webcomponents";
-	} else if (entity.name.includes("sap.ui.webcomponents.fiori")) {
+	} else if (entity.name.includes("sap.ui.webc.fiori")) {
 		packageName = "@ui5/webcomponents-fiori";
-	} else if (entity.name.includes("sap.ui.webcomponents.base")) {
+	} else if (entity.name.includes("sap.ui.webc.base")) {
 		packageName = "@ui5/webcomponents-base";
 	}
 

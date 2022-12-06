@@ -39,7 +39,7 @@ const ICON_PER_STATE = {
  */
 const metadata = {
 	tag: "ui5-dialog",
-	slots: /** @lends sap.ui.webcomponents.main.Dialog.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Dialog.prototype */ {
 		/**
 		 * Defines the header HTML Element.
 		 * <br><br>
@@ -65,7 +65,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Dialog.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Dialog.prototype */ {
 		/**
 		 * Defines the header text.
 		 * <br><br>
@@ -146,7 +146,7 @@ const metadata = {
 		 * Defines the state of the <code>Dialog</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -205,8 +205,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Dialog
- * @extends sap.ui.webcomponents.main.Popup
+ * @alias sap.ui.webc.main.Dialog
+ * @extends sap.ui.webc.main.Popup
  * @tagname ui5-dialog
  * @public
  */

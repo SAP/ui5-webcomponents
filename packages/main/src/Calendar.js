@@ -32,7 +32,7 @@ import calendarCSS from "./generated/themes/Calendar.css.js";
 const metadata = {
 	tag: "ui5-calendar",
 	fastNavigation: true,
-	properties: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Calendar.prototype */ {
 		/**
 		 * Defines the type of selection used in the calendar component.
 		 * Accepted property values are:<br>
@@ -41,7 +41,7 @@ const metadata = {
 		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
 		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.CalendarSelectionMode}
+		 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
 		 * @defaultvalue "Single"
 		 * @public
 		 */
@@ -94,11 +94,11 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Calendar.prototype */ {
 		/**
 		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
 		 *
-		 * @type {sap.ui.webcomponents.main.ICalendarDate[]}
+		 * @type {sap.ui.webc.main.ICalendarDate[]}
 		 * @slot dates
 		 * @public
 		 */
@@ -108,13 +108,13 @@ const metadata = {
 			invalidateOnChildChange: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Calendar.prototype */ {
+	events: /** @lends sap.ui.webc.main.Calendar.prototype */ {
 		/**
 		 * Fired when the selected dates change.
 		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
 		 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
 		 *
-		 * @event sap.ui.webcomponents.main.Calendar#selected-dates-change
+		 * @event sap.ui.webc.main.Calendar#selected-dates-change
 		 * @allowPreventDefault
 		 * @param {Array} values The selected dates
 		 * @param {Array} dates The selected dates as UTC timestamps
@@ -239,8 +239,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Calendar
- * @extends sap.ui.webcomponents.main.CalendarPart
+ * @alias sap.ui.webc.main.Calendar
+ * @extends sap.ui.webc.main.CalendarPart
  * @tagname ui5-calendar
  * @appenddocs CalendarDate
  * @public

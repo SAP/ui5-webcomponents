@@ -10,7 +10,7 @@ import HasPopup from "./types/HasPopup.js";
  */
 const metadata = {
 	tag: "ui5-tree-item",
-	properties: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TreeItem.prototype */ {
 
 		/**
 		 * Defines the text of the tree item.
@@ -107,7 +107,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -148,7 +148,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
 		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ListItemType}
+		 * @type {sap.ui.webc.main.types.ListItemType}
 		 * @defaultvalue "Active"
 		 * @public
 		*/
@@ -183,8 +183,20 @@ const metadata = {
 		},
 
 		/**
+		 * Defines if the item should be collapsible or not.
+		 * It is true, for example, for the items inside the Popover of the Side Navigation
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.10.0
+		 */
+		_fixed: {
+			type: Boolean,
+		},
+
+		/**
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @type {sap.ui.webc.main.types.HasPopup}
 		 * @since 1.10.0
 		 * @private
 		 */
@@ -194,12 +206,12 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TreeItem.prototype */ {
 
 		/**
 		 * Defines the items of this component.
 		 *
-		 * @type {sap.ui.webcomponents.main.ITreeItem[]}
+		 * @type {sap.ui.webc.main.ITreeItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -228,11 +240,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TreeItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TreeItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-tree-item
  * @public
- * @implements sap.ui.webcomponents.main.ITreeItem
+ * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
 class TreeItem extends UI5Element {
@@ -241,7 +253,7 @@ class TreeItem extends UI5Element {
 	}
 
 	get requiresToggleButton() {
-		return this.hasChildren || this.items.length > 0;
+		return !this._fixed ? (this.hasChildren || this.items.length > 0) : false;
 	}
 
 	get typeNavigation() {

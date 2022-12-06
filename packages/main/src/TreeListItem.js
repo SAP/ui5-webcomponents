@@ -26,12 +26,12 @@ import HasPopup from "./types/HasPopup.js";
 const metadata = {
 	tag: "ui5-li-tree",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TreeListItem.prototype */ {
 
 		/**
 		 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @public
 		 * @defaultValue 1
 		 */
@@ -95,7 +95,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -172,7 +172,7 @@ const metadata = {
 
 		/**
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @type {sap.ui.webc.main.types.HasPopup}
 		 * @since 1.10.0
 		 * @private
 		 */
@@ -182,7 +182,7 @@ const metadata = {
 		},
 
 	},
-	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TreeListItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><br>
@@ -196,7 +196,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
+	events: /** @lends sap.ui.webc.main.TreeListItem.prototype */ {
 
 		/**
 		 * Fired when the user interacts with the expand/collapse button of the tree list item.
@@ -213,7 +213,7 @@ const metadata = {
 		/**
 		 * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
 		 *
-		 * @event sap.ui.webcomponents.main.TreeListItem#step-in
+		 * @event sap.ui.webc.main.TreeListItem#step-in
 		 * @param {HTMLElement} item the item on which right arrow was pressed.
 		 * @public
 		 */
@@ -226,7 +226,7 @@ const metadata = {
 		/**
 		 * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
 		 *
-		 * @event sap.ui.webcomponents.main.TreeListItem#step-out
+		 * @event sap.ui.webc.main.TreeListItem#step-out
 		 * @param {HTMLElement} item the item on which left arrow was pressed.
 		 * @public
 		 */
@@ -258,8 +258,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TreeListItem
- * @extends sap.ui.webcomponents.main.ListItem
+ * @alias sap.ui.webc.main.TreeListItem
+ * @extends sap.ui.webc.main.ListItem
  * @tagname ui5-li-tree
  * @public
  * @since 1.0.0-rc.8

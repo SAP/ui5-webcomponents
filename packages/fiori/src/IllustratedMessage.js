@@ -23,7 +23,7 @@ const metadata = {
 	tag: "ui5-illustrated-message",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.IllustratedMessage.prototype */ {
 
 		/**
 		 * Receives id(or many ids) of the elements that label the component.
@@ -183,7 +183,7 @@ const metadata = {
 		 * You can import them removing the <code>Tnt</code> prefix like this:
 		 * <br>
 		 * <code>import "@ui5/webcomponents-fiori/dist/illustrations/tnt/SessionExpired.js";</code>
-		 * @type {sap.ui.webcomponents.fiori.types.IllustrationMessageType}
+		 * @type {sap.ui.webc.fiori.types.IllustrationMessageType}
 		 * @defaultvalue "BeforeSearch"
 		 * @public
 		 */
@@ -206,7 +206,7 @@ const metadata = {
 		 * As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
 		 * elements of the component are displayed differently on the different breakpoints/illustration sizes.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.IllustrationMessageSize}
+		 * @type {sap.ui.webc.fiori.types.IllustrationMessageSize}
 		 * @defaultvalue "Auto"
 		 * @public
 		 * @since 1.5.0
@@ -246,10 +246,10 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.IllustratedMessage.prototype */ {
 		/**
 		 * Defines the component actions.
-		 * @type {sap.ui.webcomponents.main.IButton[]}
+		 * @type {sap.ui.webc.main.IButton[]}
 		 * @slot actions
 		 * @public
 		 */
@@ -282,7 +282,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.IllustratedMessage.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.IllustratedMessage.prototype */ {
 		//
 	},
 };
@@ -328,8 +328,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.IllustratedMessage
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.IllustratedMessage
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-illustrated-message
  * @public
  * @since 1.0.0-rc.15

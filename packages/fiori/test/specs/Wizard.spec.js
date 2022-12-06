@@ -319,4 +319,25 @@ describe("Wizard general interaction", () => {
 		// assert - the popup is open
 		assert.ok(await disabledPopover.isDisplayedInViewport(), "Popover is opened.");
 	});
+
+	it("tests responsive paddings", async () => {
+		await browser.url(`test/pages/Wizard.html`);
+		const wizard = $("#wiz");
+
+		// resize window S
+		await browser.setWindowSize(500, 1000);
+		assert.strictEqual(await wizard.getProperty("_breakpoint"), "S", "Small breakpoint is enabled");
+
+		// resize window M
+		await browser.setWindowSize(1000, 1000);
+		assert.strictEqual(await wizard.getProperty("_breakpoint"), "M", "Medium breakpoint is enabled");
+
+		// resize window L
+		await browser.setWindowSize(1200, 1000);
+		assert.strictEqual(await wizard.getProperty("_breakpoint"), "L", "Large breakpoint is enabled");
+
+		// resize window XL
+		await browser.setWindowSize(1600, 1000);
+		assert.strictEqual(await wizard.getProperty("_breakpoint"), "XL", "Extra Large breakpoint is enabled");
+	});
 });

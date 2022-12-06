@@ -7,6 +7,7 @@ import {
 	TAB_ARIA_DESIGN_NEGATIVE,
 	TAB_ARIA_DESIGN_CRITICAL,
 	TAB_ARIA_DESIGN_NEUTRAL,
+	TABCONTAINER_END_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
 
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -43,7 +44,7 @@ const metadata = {
 	tag: "ui5-tab",
 	managedSlots: true,
 	languageAware: true,
-	slots: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Tab.prototype */ {
 
 		/**
 		 * Holds the content associated with this tab.
@@ -66,7 +67,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {sap.ui.webcomponents.main.ITab[]}
+		 * @type {sap.ui.webc.main.ITab[]}
 		 * @public
 		 * @slot subTabs
 		 */
@@ -79,7 +80,7 @@ const metadata = {
 			},
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Tab.prototype */ {
 
 		/**
 		 * The text to be displayed for the item.
@@ -139,7 +140,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> The design depends on the current theme.
-		 * @type {sap.ui.webcomponents.main.types.SemanticColor}
+		 * @type {sap.ui.webc.main.types.SemanticColor}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -171,7 +172,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Tab.prototype */ {
+	events: /** @lends sap.ui.webc.main.Tab.prototype */ {
 	},
 };
 
@@ -183,10 +184,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Tab
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Tab
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-tab
- * @implements sap.ui.webcomponents.main.ITab
+ * @implements sap.ui.webc.main.ITab
  * @public
  */
 class Tab extends UI5Element {
@@ -399,6 +400,10 @@ class Tab extends UI5Element {
 		}
 
 		return classes.join(" ");
+	}
+
+	get expandButtonTitle() {
+		return Tab.i18nBundle.getText(TABCONTAINER_END_OVERFLOW);
 	}
 
 	get semanticIconName() {

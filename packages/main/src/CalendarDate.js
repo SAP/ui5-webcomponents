@@ -5,7 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 */
 const metadata = {
 	tag: "ui5-date",
-	properties: /** @lends sap.ui.webcomponents.main.CalendarDate.prototype */ {
+	properties: /** @lends sap.ui.webc.main.CalendarDate.prototype */ {
 
 		/**
 		 * The date formatted according to the <code>formatPattern</code> property of the <code>ui5-calendar</code> that hosts the component
@@ -28,10 +28,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.CalendarDate
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.CalendarDate
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-date
- * @implements sap.ui.webcomponents.main.ICalendarDate
+ * @implements sap.ui.webc.main.ICalendarDate
  * @public
  */
 class CalendarDate extends UI5Element {

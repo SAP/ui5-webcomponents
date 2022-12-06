@@ -18,7 +18,7 @@ import styles from "./generated/themes/TableGroupRow.css.js";
  */
 const metadata = {
 	tag: "ui5-table-group-row",
-	slots: /** @lends sap.ui.webcomponents.main.TableGroupRow.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TableGroupRow.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br>
@@ -32,7 +32,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.TableGroupRow.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TableGroupRow.prototype */ {
 		/**
 		 * Defines the mode of the row
 		 *
@@ -44,7 +44,7 @@ const metadata = {
 		 * <li><code>SingleSelect</code></li>
 		 * <li><code>MultiSelect</code></li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.TableMode}
+		 * @type {sap.ui.webc.main.types.TableMode}
 		 * @defaultvalue "None"
 		 * @private
 		 */
@@ -69,7 +69,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TableGroupRow.prototype */ {
+	events: /** @lends sap.ui.webc.main.TableGroupRow.prototype */ {
 		_focused: {},
 	},
 };
@@ -92,11 +92,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TableGroupRow
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TableGroupRow
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-table-group-row
  * @since 1.0.0-rc.15
- * @implements sap.ui.webcomponents.main.ITableRow
+ * @implements sap.ui.webc.main.ITableRow
  * @public
  */
 class TableGroupRow extends UI5Element {

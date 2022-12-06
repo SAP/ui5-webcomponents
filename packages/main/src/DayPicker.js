@@ -44,7 +44,7 @@ import dayPickerCSS from "./generated/themes/DayPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-daypicker",
-	properties: /** @lends sap.ui.webcomponents.main.DayPicker.prototype */ {
+	properties: /** @lends sap.ui.webc.main.DayPicker.prototype */ {
 		/**
 		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 		 * @type {array}
@@ -64,7 +64,7 @@ const metadata = {
 		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
 		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.CalendarSelectionMode}
+		 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
 		 * @defaultvalue "Single"
 		 * @public
 		 */
@@ -121,7 +121,7 @@ const metadata = {
 			type: String,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.DayPicker.prototype */ {
+	events: /** @lends sap.ui.webc.main.DayPicker.prototype */ {
 		/**
 		 * Fired when the selected date(s) change
 		 * @public
@@ -148,8 +148,8 @@ const DAYS_IN_WEEK = 7;
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.DayPicker
- * @extends sap.ui.webcomponents.main.CalendarPart
+ * @alias sap.ui.webc.main.DayPicker
+ * @extends sap.ui.webc.main.CalendarPart
  * @tagname ui5-daypicker
  * @public
  */

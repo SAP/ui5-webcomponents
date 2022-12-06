@@ -10,7 +10,7 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  */
 const metadata = {
 	tag: "ui5-li",
-	properties: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.StandardListItem.prototype */ {
 
 		/**
 		 * Defines the description displayed right under the item text, if such is present.
@@ -76,7 +76,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -104,7 +104,7 @@ const metadata = {
 		 *
 		 * <br><br>
 		 * <b>Note:</b> this property takes affect only if text node is provided to default slot of the component
-		 * @type {sap.ui.webcomponents.main.types.WrappingType}
+		 * @type {sap.ui.webc.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @private
 		 * @since 1.5.0
@@ -123,7 +123,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.StandardListItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.StandardListItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><br>
@@ -161,10 +161,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.StandardListItem
- * @extends sap.ui.webcomponents.main.ListItem
+ * @alias sap.ui.webc.main.StandardListItem
+ * @extends sap.ui.webc.main.ListItem
  * @tagname ui5-li
- * @implements sap.ui.webcomponents.main.IListItem
+ * @implements sap.ui.webc.main.IListItem
  * @public
  */
 class StandardListItem extends ListItem {

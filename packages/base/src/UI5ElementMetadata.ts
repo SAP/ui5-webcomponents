@@ -18,21 +18,24 @@ type Slot = {
 type SlotValue = Node;
 
 type Property = {
-	multiple?: boolean,
-	type: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
+	type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
+	validator?: DataType,
 	defaultValue?: PropertyValue,
 	noAttribute?: boolean,
+	multiple?: boolean,
 	compareValues?: boolean,
 }
 
 type PropertyValue = boolean | number | string | object | undefined | null | DataType;
 
+type EventData = Record<string, object>;
+
 type Metadata = {
-	tag: string,
+	tag?: string,
 	managedSlots?: boolean,
 	properties?: Record<string, Property>,
 	slots?: Record<string, Slot>,
-	events?: Array<object>,
+	events?: EventData,
 	fastNavigation?: boolean,
 	themeAware?: boolean,
 	languageAware?: boolean,
@@ -125,7 +128,7 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getPureTag() {
-		return this.metadata.tag;
+		return this.metadata.tag || "";
 	}
 
 	/**
@@ -134,6 +137,11 @@ class UI5ElementMetadata {
 	 */
 	getTag() {
 		const pureTag = this.metadata.tag;
+
+		if (!pureTag) {
+			return "";
+		}
+
 		const suffix = getEffectiveScopingSuffixForTag(pureTag);
 		if (!suffix) {
 			return pureTag;
@@ -169,14 +177,6 @@ class UI5ElementMetadata {
 	 */
 	getAttributesList() {
 		return this.getPropertiesList().filter(this.hasAttribute.bind(this)).map(camelToKebabCase);
-	}
-
-	/**
-	 * Returns an object with key-value pairs of slots and their metadata definitions
-	 * @public
-	 */
-	getSlots() {
-		return this.metadata.slots || {};
 	}
 
 	/**
@@ -225,7 +225,10 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getProperties() {
-		return this.metadata.properties || {};
+		if (!this.metadata.properties) {
+			this.metadata.properties = {};
+		}
+		return this.metadata.properties;
 	}
 
 	/**
@@ -233,7 +236,21 @@ class UI5ElementMetadata {
 	 * @public
 	 */
 	getEvents() {
-		return this.metadata.events || {};
+		if (!this.metadata.events) {
+			this.metadata.events = {};
+		}
+		return this.metadata.events;
+	}
+
+	/**
+	 * Returns an object with key-value pairs of slots and their metadata definitions
+	 * @public
+	 */
+	 getSlots() {
+		if (!this.metadata.slots) {
+			this.metadata.slots = {};
+		}
+		return this.metadata.slots;
 	}
 
 	/**
@@ -323,19 +340,30 @@ class UI5ElementMetadata {
 
 const validateSingleProperty = (value: PropertyValue, propData: Property) => {
 	const propertyType = propData.type;
+	let propertyValidator = propData.validator;
+
+	if (propertyType && (propertyType as typeof DataType).isDataTypeClass) {
+		propertyValidator = propertyType as typeof DataType;
+	}
+
+	if (propertyValidator) {
+		return (propertyValidator as typeof DataType).isValid(value) ? value : propData.defaultValue;
+	}
+
+	if (!propertyType || propertyType === String) {
+		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
+	}
 
 	if (propertyType === Boolean) {
 		return typeof value === "boolean" ? value : false;
 	}
-	if (propertyType === String) {
-		return (typeof value === "string" || typeof value === "undefined" || value === null) ? value : value.toString();
-	}
+
 	if (propertyType === Object) {
 		return typeof value === "object" ? value : propData.defaultValue;
 	}
-	if ((propertyType as typeof DataType).isDataTypeClass) {
-		return (propertyType as typeof DataType).isValid(value) ? value : propData.defaultValue;
-	}
+
+	// Check if "value" is part of the enum (propertyType) values and return the defaultValue if not found.
+	return value as string in propertyType ? value : propData.defaultValue;
 };
 
 const validateSingleSlot = (value: Node, slotData: Slot) => {
@@ -354,6 +382,7 @@ export type {
 	PropertyValue,
 	Slot,
 	SlotValue,
+	EventData,
 	State,
 	Metadata,
 };

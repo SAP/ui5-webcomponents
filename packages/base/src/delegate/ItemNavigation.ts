@@ -16,16 +16,19 @@ import ItemNavigationBehavior from "../types/ItemNavigationBehavior.js";
 import type UI5Element from "../UI5Element.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
 
-type TabbableObject = {id?: string, _tabIndex: string};
+interface ITabbable {
+	id?: string,
+	_tabIndex?: string,
+}
 
 type ItemNavigationOptions = {
-	currentIndex: number,
-	navigationMode: NavigationMode,
-	rowSize: number
-	skipItemsSize: number,
-	behavior: ItemNavigationBehavior,
-	getItemsCallback: () => Array<TabbableObject>,
-	affectedPropertiesNames: Array<string>,
+	currentIndex?: number,
+	navigationMode?: NavigationMode,
+	rowSize?: number
+	skipItemsSize?: number,
+	behavior?: ItemNavigationBehavior,
+	getItemsCallback: () => Array<ITabbable>,
+	affectedPropertiesNames?: Array<string>,
 };
 
 /**
@@ -64,7 +67,7 @@ type ItemNavigationOptions = {
 class ItemNavigation {
 	rootWebComponent: UI5Element;
 
-	_getItems: () => Array<TabbableObject>;
+	_getItems: () => Array<ITabbable>;
 
 	_currentIndex: number;
 
@@ -123,7 +126,7 @@ class ItemNavigation {
 	 * @public
 	 * @param current the new selected item
 	 */
-	setCurrentItem(current: TabbableObject) {
+	setCurrentItem(current: ITabbable) {
 		const currentItemIndex = this._getItems().indexOf(current);
 
 		if (currentItemIndex === -1) {
@@ -335,7 +338,7 @@ class ItemNavigation {
 	_focusCurrentItem() {
 		const currentItem = this._getCurrentItem();
 		if (currentItem) {
-			currentItem.focus();
+			currentItem.focus({ focusVisible: true } as FocusOptions);
 		}
 	}
 
@@ -350,7 +353,7 @@ class ItemNavigation {
 		const items = this._getItems();
 
 		if (!items.length) {
-			return null;
+			return;
 		}
 
 		// normalize the index
@@ -384,3 +387,7 @@ class ItemNavigation {
 }
 
 export default ItemNavigation;
+
+export {
+	ITabbable,
+};

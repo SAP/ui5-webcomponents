@@ -19,11 +19,11 @@ const metadata = {
 	tag: "ui5-slider",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.Slider.prototype */  {
+	properties: /** @lends sap.ui.webc.main.Slider.prototype */  {
 		/**
 		 * Current value of the slider
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 0
 		 * @formEvents change input
 		 * @formProperty
@@ -100,8 +100,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Slider
- * @extends sap.ui.webcomponents.main.SliderBase
+ * @alias sap.ui.webc.main.Slider
+ * @extends sap.ui.webc.main.SliderBase
  * @tagname ui5-slider
  * @since 1.0.0-rc.11
  * @public

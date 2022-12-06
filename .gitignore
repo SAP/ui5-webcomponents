@@ -5,9 +5,15 @@ tmp
 temp
 target
 dist
+jsdoc-dist
 .dev-server-port
 # TODO remove this as the tools no longer generate it, kept for clean up (in the clean task as well)
 .port
+
+# jsdoc temporary folders
+packages/base/jsdoc-dist
+packages/main/jsdoc-dist
+packages/fiori/jsdoc-dist
 
 # scoping feature generated entry points for vite consumption
 packages/main/test/pages/scoped

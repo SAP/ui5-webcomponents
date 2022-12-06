@@ -133,11 +133,11 @@
 }
 
 /* the outline offset when focused */
-.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemContent::after,
-.ui5-tab-strip-item--mixedMode:focus .ui5-tab-strip-itemContent::after,
-.ui5-tab-strip-item-icon-outer:focus .ui5-tab-strip-itemContent::after,
-.ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemContent::after,
-.ui5-tab-strip-item--selected.ui5-tab-strip-item--mixedMode:focus .ui5-tab-strip-itemContent::after {
+.ui5-tab-strip-item--textOnly:focus-visible .ui5-tab-strip-itemContent::after,
+.ui5-tab-strip-item--mixedMode:focus-visible .ui5-tab-strip-itemContent::after,
+.ui5-tab-strip-item-icon-outer:focus-visible .ui5-tab-strip-itemContent::after,
+.ui5-tab-strip-item--selected.ui5-tab-strip-item--textOnly:focus-visible .ui5-tab-strip-itemContent::after,
+.ui5-tab-strip-item--selected.ui5-tab-strip-item--mixedMode:focus-visible .ui5-tab-strip-itemContent::after {
 	left: var(--_ui5_tc_headerItemContent_focus_offset);
 	right: var(--_ui5_tc_headerItemContent_focus_offset);
 }
@@ -151,12 +151,12 @@
 	opacity: var(--sapContent_DisabledOpacity);
 }
 
-.ui5-tab-strip-item:focus {
+.ui5-tab-strip-item {
 	outline: none;
 }
 
-.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemText::before,
-.ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus .ui5-tab-strip-itemText::before {
+.ui5-tab-strip-item--textOnly:focus-visible .ui5-tab-strip-itemText::before,
+.ui5-tab-strip-item--inline.ui5-tab-strip-item--textOnly:focus-visible .ui5-tab-strip-itemText::before {
 	border-radius: var(--_ui5_tc_headerItem_focus_border_radius);
 	content: "";
 	pointer-events: none;
@@ -168,7 +168,7 @@
 	bottom: var(--_ui5_tc_headerItem_text_focus_border_offset_bottom);
 }
 
-.ui5-tab-strip-item--mixedMode:focus .ui5-tab-strip-itemContent::before {
+.ui5-tab-strip-item--mixedMode:focus-visible .ui5-tab-strip-itemContent::before {
 	border-radius: var(--_ui5_tc_headerItem_focus_border_radius);
 	content: "";
 	pointer-events: none;
@@ -180,7 +180,7 @@
 	bottom: var(--_ui5_tc_headerItem_mixed_mode_focus_border_offset_bottom);
 }
 
-.ui5-tab-strip-item--withIcon:focus .ui5-tab-strip-item-icon-outer::before {
+.ui5-tab-strip-item--withIcon:focus-visible .ui5-tab-strip-item-icon-outer::before {
 	content: "";
 	pointer-events: none;
 	position: absolute;

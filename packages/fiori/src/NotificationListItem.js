@@ -1,6 +1,6 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
@@ -41,7 +41,7 @@ const metadata = {
 	tag: "ui5-li-notification",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.NotificationListItem.prototype */ {
 
 		/**
 		 * Defines if the <code>titleText</code> and <code>description</code> should wrap,
@@ -50,7 +50,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
 		 * and a <code>ShowMore/Less</code> button would be displayed.
-		 * @type {sap.ui.webcomponents.main.types.WrappingType}
+		 * @type {sap.ui.webc.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -77,7 +77,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.NotificationListItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.NotificationListItem.prototype */ {
 
 		/**
 		 * Defines the avatar, displayed in the <code>ui5-li-notification</code>.
@@ -89,7 +89,7 @@ const metadata = {
 		 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
 		 * you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.IAvatar}
+		 * @type {sap.ui.webc.main.IAvatar}
 		 * @slot
 		 * @public
 		 */
@@ -124,7 +124,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.NotificationListItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.NotificationListItem.prototype */ {
 		_press: {},
 	},
 };
@@ -167,12 +167,12 @@ const metadata = {
  * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.NotificationListItem
- * @extends sap.ui.webcomponents.fiori.NotificationListItemBase
+ * @alias sap.ui.webc.fiori.NotificationListItem
+ * @extends sap.ui.webc.fiori.NotificationListItemBase
  * @tagname ui5-li-notification
  * @appenddocs NotificationAction
  * @since 1.0.0-rc.8
- * @implements sap.ui.webcomponents.fiori.INotificationListItem, sap.ui.webcomponents.main.IListItem
+ * @implements sap.ui.webc.fiori.INotificationListItem, sap.ui.webc.main.IListItem
  * @public
  */
 class NotificationListItem extends NotificationListItemBase {
@@ -365,7 +365,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 		const space = isSpace(event);
 
-		if (space && event.isMarked === "link") {
+		if (space && getEventMark(event) === "link") {
 			this._onShowMoreClick(event);
 			return;
 		}
@@ -379,7 +379,7 @@ class NotificationListItem extends NotificationListItemBase {
 	 * Private
 	 */
 	fireItemPress(event) {
-		if (event.isMarked === "button" || event.isMarked === "link") {
+		if (getEventMark(event) === "button" || getEventMark(event) === "link") {
 			return;
 		}
 

@@ -16,6 +16,8 @@ import AvatarSize from "./types/AvatarSize.js";
 import AvatarShape from "./types/AvatarShape.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
+// Icon
+import "@ui5/webcomponents-icons/dist/employee.js";
 /**
  * @public
  */
@@ -23,7 +25,7 @@ const metadata = {
 	tag: "ui5-avatar",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Avatar.prototype */ {
 
 		/**
 		 * Defines if the avatar is interactive (focusable and pressable).
@@ -66,7 +68,7 @@ const metadata = {
 		/**
 		 * Defines the displayed initials.
 		 * <br>
-		 * Up to two Latin letters can be displayed as initials.
+		 * Up to three Latin letters can be displayed as initials.
 		 *
 		 * @type {string}
 		 * @defaultvalue ""
@@ -84,7 +86,7 @@ const metadata = {
 		 * <li><code>Circle</code></li>
 		 * <li><code>Square</code></li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.AvatarShape}
+		 * @type {sap.ui.webc.main.types.AvatarShape}
 		 * @defaultvalue "Circle"
 		 * @public
 		 */
@@ -104,7 +106,7 @@ const metadata = {
 		 * <li><code>L</code></li>
 		 * <li><code>XL</code></li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.AvatarSize}
+		 * @type {sap.ui.webc.main.types.AvatarSize}
 		 * @defaultvalue "S"
 		 * @public
 		 */
@@ -138,7 +140,7 @@ const metadata = {
 		 * <li><code>Accent10</code></li>
 		 * <li><code>Placeholder</code></li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.AvatarColorScheme}
+		 * @type {sap.ui.webc.main.types.AvatarColorScheme}
 		 * @defaultvalue "Accent6"
 		 * @public
 		 */
@@ -188,7 +190,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Avatar.prototype */ {
 		/**
 		 * Receives the desired <code>&lt;img&gt;</code> tag
 		 *
@@ -237,7 +239,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Avatar.prototype */ {
+	events: /** @lends sap.ui.webc.main.Avatar.prototype */ {
 		/**
 		* Fired on mouseup, space and enter if avatar is interactive
 		*
@@ -275,11 +277,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Avatar
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Avatar
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-avatar
  * @since 1.0.0-rc.6
- * @implements sap.ui.webcomponents.main.IAvatar
+ * @implements sap.ui.webc.main.IAvatar
  * @public
  */
 class Avatar extends UI5Element {
@@ -372,30 +374,31 @@ class Avatar extends UI5Element {
 		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
 	}
 
-	onEnterDOM() {
-		this._checkInitialsWidth();
+	onAfterRendering() {
+		this._checkInitials();
+	}
 
-		if (!this.validInitials) {
-			// if initials are not valid,an icon should be shown inside the avatar
-			this._setFallbackIcon();
-		}
+	onEnterDOM() {
+		this._checkInitials();
 	}
 
 	_setFallbackIcon() {
-		// the default icon shown inside the avatar,
-		// when the initials are not valid
-		this.icon = "employee";
+		// if there isn`t icon set in the avatar the default one is shown, when the initials are not valid or are missing
+		this.icon = this.icon || "employee";
 		return this.icon;
 	}
 
-	_checkInitialsWidth() {
-		// if initials` width is bigger than the avatar,
-		// an icon should be shown inside the avatar
+	_checkInitials() {
 		const avatar = this.getDomRef(),
 			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
+		// if there aren`t initalts set - the fallBack icon should be shown
+		if (!this.validInitials) {
+			this._setFallbackIcon();
+		}
+		// if initials` width is bigger than the avatar, an icon should be shown inside the avatar
 		if (this.initials && this.initials.length === 3) {
-			if (avatarInitials.scrollWidth >= avatar.scrollWidth) {
-				this.icon = "employee";
+			if (avatarInitials && avatarInitials.scrollWidth >= avatar.scrollWidth) {
+				this._setFallbackIcon();
 			}
 		}
 		return this.icon;

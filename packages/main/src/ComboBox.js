@@ -74,7 +74,7 @@ import GroupHeaderListItem from "./GroupHeaderListItem.js";
 const metadata = {
 	tag: "ui5-combobox",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ComboBox.prototype */ {
 		/**
 		 * Defines the value of the component.
 		 *
@@ -143,7 +143,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -258,11 +258,11 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
+	slots: /** @lends sap.ui.webc.main.ComboBox.prototype */ {
 		/**
 		 * Defines the component items.
 		 *
-		 * @type {sap.ui.webcomponents.main.IComboBoxItem[]}
+		 * @type {sap.ui.webc.main.IComboBoxItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -292,7 +292,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the input field.
 		 *
-		 * @type {sap.ui.webcomponents.main.IIcon}
+		 * @type {sap.ui.webc.main.IIcon}
 		 * @slot
 		 * @public
 		 * @since 1.0.0-rc.9
@@ -301,7 +301,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.ComboBox.prototype */ {
+	events: /** @lends sap.ui.webc.main.ComboBox.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
 		 *
@@ -322,7 +322,7 @@ const metadata = {
 		/**
 		 * Fired when selection is changed by user interaction
 		 *
-		 * @event sap.ui.webcomponents.main.ComboBox#selection-change
+		 * @event sap.ui.webc.main.ComboBox#selection-change
 		 * @param {HTMLElement} item item to be selected.
 		 * @public
 		 */
@@ -376,8 +376,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ComboBox
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ComboBox
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-combobox
  * @appenddocs ComboBoxItem ComboBoxGroupItem
  * @public

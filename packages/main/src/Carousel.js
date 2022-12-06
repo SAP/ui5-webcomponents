@@ -39,7 +39,7 @@ const metadata = {
 	tag: "ui5-carousel",
 	languageAware: true,
 	fastNavigation: true,
-	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Carousel.prototype */ {
 		/**
 		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
 		 * @type {boolean}
@@ -52,7 +52,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -63,7 +63,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -74,7 +74,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -112,7 +112,7 @@ const metadata = {
 
 		/**
 		 * Defines the index of the initially selected item.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 0
 		 * @private
 		 */
@@ -133,7 +133,7 @@ const metadata = {
 		 * When set to "Content", the arrows are placed on the sides of the current page.
 		 * <br>
 		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
-		 * @type {sap.ui.webcomponents.main.types.CarouselArrowsPlacement}
+		 * @type {sap.ui.webc.main.types.CarouselArrowsPlacement}
 		 * @defaultvalue "Content"
 		 * @public
 		 */
@@ -169,7 +169,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Carousel.prototype */ {
 		/**
 		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
@@ -182,7 +182,7 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
+	events: /** @lends sap.ui.webc.main.Carousel.prototype */ {
 
 		/**
 		 * Fired whenever the page changes due to user interaction,
@@ -264,8 +264,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Carousel
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Carousel
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-carousel
  * @since 1.0.0-rc.6
  * @public

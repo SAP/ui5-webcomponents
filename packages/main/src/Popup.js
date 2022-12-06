@@ -24,7 +24,7 @@ import globalStyles from "./generated/themes/PopupGlobal.css.js";
  */
 const metadata = {
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Popup.prototype */ {
 
 		/**
 		 * Defines the content of the Popup.
@@ -37,7 +37,7 @@ const metadata = {
 			propertyName: "content",
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Popup.prototype */ {
 		/**
 		 * Defines the ID of the HTML Element, which will get the initial focus.
 		 *
@@ -130,13 +130,13 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Popup.prototype */ {
+	events: /** @lends sap.ui.webc.main.Popup.prototype */ {
 
 		/**
 		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Popup#before-open
+		 * @event sap.ui.webc.main.Popup#before-open
 		 * @allowPreventDefault
 		 */
 		"before-open": {},
@@ -145,7 +145,7 @@ const metadata = {
 		 * Fired after the component is opened. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Popup#after-open
+		 * @event sap.ui.webc.main.Popup#after-open
 		 */
 		"after-open": {},
 
@@ -153,7 +153,7 @@ const metadata = {
 		 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Popup#before-close
+		 * @event sap.ui.webc.main.Popup#before-close
 		 * @allowPreventDefault
 		 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 */
@@ -167,7 +167,7 @@ const metadata = {
 		 * Fired after the component is closed. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Popup#after-close
+		 * @event sap.ui.webc.main.Popup#after-close
 		 */
 		"after-close": {},
 
@@ -175,7 +175,7 @@ const metadata = {
 		 * Fired whenever the popup content area is scrolled
 		 *
 		 * @private
-		 * @event sap.ui.webcomponents.main.Popup#scroll
+		 * @event sap.ui.webc.main.Popup#scroll
 		 */
 		"scroll": {},
 	},
@@ -220,8 +220,8 @@ const pageScrollingBlockers = new Set();
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Popup
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Popup
+ * @extends sap.ui.webc.base.UI5Element
  * @public
  */
 class Popup extends UI5Element {
@@ -368,7 +368,7 @@ class Popup extends UI5Element {
 		const firstFocusable = await getFirstFocusableElement(this);
 
 		if (firstFocusable) {
-			firstFocusable.focus();
+			firstFocusable.focus({ focusVisible: true });
 		} else {
 			this._root.focus();
 		}
@@ -382,7 +382,7 @@ class Popup extends UI5Element {
 		const lastFocusable = await getLastFocusableElement(this);
 
 		if (lastFocusable) {
-			lastFocusable.focus();
+			lastFocusable.focus({ focusVisible: true });
 		} else {
 			this._root.focus();
 		}
@@ -415,7 +415,7 @@ class Popup extends UI5Element {
 			if (element === this._root) {
 				element.tabIndex = -1;
 			}
-			element.focus();
+			element.focus({ focusVisible: true });
 		}
 	}
 
@@ -528,7 +528,7 @@ class Popup extends UI5Element {
 			return;
 		}
 
-		this._focusedElementBeforeOpen.focus();
+		this._focusedElementBeforeOpen.focus({ focusVisible: true });
 		this._focusedElementBeforeOpen = null;
 	}
 
