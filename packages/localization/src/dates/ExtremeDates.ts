@@ -1,8 +1,9 @@
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "./CalendarDate.js";
 
-const cache = new Map();
+const cache = new Map<string, CalendarDate>();
 
-const getMinCalendarDate = primaryCalendarType => {
+const getMinCalendarDate = (primaryCalendarType: CalendarType) => {
 	const key = `min ${primaryCalendarType}`;
 
 	if (!cache.has(key)) {
@@ -13,10 +14,10 @@ const getMinCalendarDate = primaryCalendarType => {
 		cache.set(key, minDate);
 	}
 
-	return cache.get(key);
+	return cache.get(key)!;
 };
 
-const getMaxCalendarDate = primaryCalendarType => {
+const getMaxCalendarDate = (primaryCalendarType: CalendarType) => {
 	const key = `max ${primaryCalendarType}`;
 
 	if (!cache.has(key)) {
@@ -30,7 +31,7 @@ const getMaxCalendarDate = primaryCalendarType => {
 		cache.set(key, maxDate);
 	}
 
-	return cache.get(key);
+	return cache.get(key)!;
 };
 
 export {

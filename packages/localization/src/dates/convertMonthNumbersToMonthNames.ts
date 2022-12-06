@@ -1,4 +1,5 @@
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getCachedLocaleDataInstance from "../getCachedLocaleDataInstance.js";
 
 /**
@@ -11,11 +12,11 @@ import getCachedLocaleDataInstance from "../getCachedLocaleDataInstance.js";
  * @param calendarType calendar type
  * @returns {String}
  */
-const convertMonthNumbersToMonthNames = (firstMonth, lastMonth, calendarType) => {
+const convertMonthNumbersToMonthNames = (firstMonth: number, lastMonth: number, calendarType: CalendarType) => {
 	const localeData = getCachedLocaleDataInstance(getLocale());
-	const pattern = localeData.getIntervalPattern();
-	const secondaryMonthsNames = localeData.getMonthsStandAlone("abbreviated", calendarType);
-	const secondaryMonthsNamesWide = localeData.getMonthsStandAlone("wide", calendarType);
+	const pattern = localeData.getIntervalPattern("");
+	const secondaryMonthsNames = localeData.getMonthsStandAlone("abbreviated", calendarType) as Array<string>;
+	const secondaryMonthsNamesWide = localeData.getMonthsStandAlone("wide", calendarType) as Array<string>;
 
 	if (firstMonth === lastMonth) {
 		return {

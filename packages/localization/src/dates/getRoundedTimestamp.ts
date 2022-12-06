@@ -1,9 +1,9 @@
 /**
  * Returns a timestamp with only the year, month and day (with zero hours, minutes and seconds) and without 000 for milliseconds
- * @param millisecondsUTC
- * @returns {number}
+ * @param { number } millisecondsUTC
+ * @returns { number }
  */
-const getRoundedTimestamp = millisecondsUTC => {
+const getRoundedTimestamp = (millisecondsUTC: number) => {
 	if (!millisecondsUTC) {
 		millisecondsUTC = new Date().getTime();
 	}

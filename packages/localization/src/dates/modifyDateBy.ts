@@ -10,7 +10,7 @@ import CalendarDate from "./CalendarDate.js";
  * @param minDate minimum date to enforce
  * @param maxDate maximum date to enforce
  */
-const modifyDateBy = (date, amount, unit, minDate = null, maxDate = null) => {
+const modifyDateBy = (date: CalendarDate, amount: number, unit: string, minDate?: CalendarDate, maxDate?: CalendarDate) => {
 	const newDate = new CalendarDate(date);
 	if (unit === "day") {
 		newDate.setDate(date.getDate() + amount);
