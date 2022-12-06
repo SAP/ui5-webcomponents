@@ -375,6 +375,15 @@ class TreeItemBase extends ListItem {
 	}
 
 	/**
+	 * Used to duck-type TreeItem elements without using instanceof
+	 * @returns {boolean}
+	 * @public
+	 */
+	get isTreeItem() {
+		return true;
+	}
+
+	/**
 	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
 	 * @public
 	 */

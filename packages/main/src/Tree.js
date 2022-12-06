@@ -408,18 +408,18 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemMouseOver(event) {
-		const treeItem = event.target;
+		const target = event.target;
 
-		if (treeItem instanceof TreeItem || treeItem instanceof TreeItemCustom) {
-			this.fireEvent("item-mouseover", { item: treeItem });
+		if (target.isTreeItem) {
+			this.fireEvent("item-mouseover", { item: target });
 		}
 	}
 
 	_onListItemMouseOut(event) {
-		const treeItem = event.target;
+		const target = event.target;
 
-		if (treeItem instanceof TreeItem || treeItem instanceof TreeItemCustom) {
-			this.fireEvent("item-mouseout", { item: treeItem });
+		if (target.isTreeItem) {
+			this.fireEvent("item-mouseout", { item: target });
 		}
 	}
 
