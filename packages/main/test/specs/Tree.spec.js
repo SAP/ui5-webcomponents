@@ -54,7 +54,7 @@ describe("Tree proxies properties to list", () => {
 	});
 
 	it("Mouseover/mouseout events", async () => {
-		const treeItems = await getItems("#tree");
+		const treeItems = await browser.$$("#tree ui5-tree-item");
 		const inputMouseover = await browser.$("#mouseover-counter");
 		const inputMouseout = await browser.$("#mouseout-counter");
 
