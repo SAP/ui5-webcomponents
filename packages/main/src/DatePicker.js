@@ -592,6 +592,14 @@ class DatePicker extends DateComponentBase {
 	}
 
 	/**
+	 * The ui5-input "focusout" event handler
+	 * @protected
+	 */
+	 _onInputFocusOut(event) {
+		this._updateValueAndFireEvents(event.target.value, true, ["focusout"]);
+	}
+
+	/**
 	 * The ui5-input "input" event handler - fire input even when the user types
 	 * @protected
 	 */
