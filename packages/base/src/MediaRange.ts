@@ -81,9 +81,10 @@ const getCurrentRange = (name: string, width = window.innerWidth): string => {
 	}
 
 	let currentRangeName;
+	const effectiveWidth = Math.floor(width);
 
 	rangeSet.forEach((value, key) => {
-		if (Math.floor(width) >= value[0] && Math.floor(width) <= value[1]) {
+		if (effectiveWidth >= value[0] && effectiveWidth <= value[1]) {
 			currentRangeName = key;
 		}
 	});
