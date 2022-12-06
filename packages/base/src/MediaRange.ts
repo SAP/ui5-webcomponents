@@ -1,8 +1,36 @@
-const querySets = new Map<string, RangeSet>();
+type Range = Map<string, Array<number>>;
 
-type RangeSet = {
-	borders: Array<number>,
-	names: Array<string>,
+const mediaRanges = new Map<string, Range>();
+
+const DEAFULT_RANGE_SET: Range = new Map<string, Array<number>>();
+DEAFULT_RANGE_SET.set("S", [0, 599]);
+DEAFULT_RANGE_SET.set("M", [600, 1023]);
+DEAFULT_RANGE_SET.set("L", [1024, 1439]);
+DEAFULT_RANGE_SET.set("XL", [1440, Infinity]);
+
+/**
+ * Enumeration containing the names and settings of predefined screen width media query range sets.
+ *
+ * @namespace
+ * @name MediaRange.RANGESETS
+ * @public
+ */
+ enum RANGESETS {
+	/**
+	 * A 4-step range set (S-M-L-XL).
+	 *
+	 * The ranges of this set are:
+	 * <ul>
+	 * <li><code>"S"</code>: For screens smaller than 600 pixels.</li>
+	 * <li><code>"M"</code>: For screens greater than or equal to 600 pixels and smaller than 1024 pixels.</li>
+	 * <li><code>"L"</code>: For screens greater than or equal to 1024 pixels and smaller than 1440 pixels.</li>
+	 * <li><code>"XL"</code>: For screens greater than or equal to 1440 pixels.</li>
+	 * </ul>
+	 *
+	 * @name MediaRange.RANGESETS.RANGE_4STEPS
+	 * @public
+	 */
+	RANGE_4STEPS = "4Step",
 }
 
 /**
@@ -23,15 +51,11 @@ type RangeSet = {
  *
  * @param {string} name The name of the range set to be initialized.
  * The name must be a valid id and consist only of letters and numeric digits.
- * @param {int[]} [borders] The range borders
- * @param {string[]} [names] The names of the ranges. The names must be a valid id and consist only of letters and digits.
+ * @param {Range} [range] The given range set.
  * @name MediaRange.initRangeSet
  */
-const _initRangeSet = (name: string, borders: Array<number>, names: Array<string>) => {
-	querySets.set(name, {
-		borders,
-		names,
-	});
+const initRangeSet = (name: string, range: Range) => {
+	mediaRanges.set(name, range);
 };
 
 /**
@@ -41,55 +65,32 @@ const _initRangeSet = (name: string, borders: Array<number>, names: Array<string
  * otherwise it is determined for the current window size.
  *
  * @param {string} name The name of the range set. The range set must be initialized beforehand ({@link MediaRange.initRangeSet})
- * @param {int} [width] An optional width, based on which the range should be determined;
- *             If <code>width</code> is not provided, the window size will be used.
+ * @param {number} [width] An optional width, based on which the range should be determined;
+ * If <code>width</code> is not provided, the window size will be used.
  * @returns {string} The name of the current active interval of the range set.
  *
  * @name MediaRange.getCurrentRange
  * @function
  * @public
  */
-const _getCurrentRange = (name: string, width = window.innerWidth) => {
-	const querySet = querySets.get(name);
-	let i = 0;
+const getCurrentRange = (name: string, width = window.innerWidth): string => {
+	let rangeSet = mediaRanges.get(name);
 
-	if (!querySet) {
-		return null;
+	if (!rangeSet) {
+		rangeSet = mediaRanges.get(RANGESETS.RANGE_4STEPS)!;
 	}
 
-	for (; i < querySet.borders.length; i++) {
-		if (width < querySet.borders[i]) {
-			return querySet.names[i];
+	let currentRangeName;
+	const effectiveWidth = Math.floor(width);
+
+	rangeSet.forEach((value, key) => {
+		if (effectiveWidth >= value[0] && effectiveWidth <= value[1]) {
+			currentRangeName = key;
 		}
-	}
+	});
 
-	return querySet.names[i];
+	return currentRangeName || [...rangeSet.keys()][0];
 };
-
-/**
- * Enumeration containing the names and settings of predefined screen width media query range sets.
- *
- * @namespace
- * @name MediaRange.RANGESETS
- * @public
- */
-enum RANGESETS {
-	/**
-	 * A 4-step range set (S-M-L-XL).
-	 *
-	 * The ranges of this set are:
-	 * <ul>
-	 * <li><code>"S"</code>: For screens smaller than 600 pixels.</li>
-	 * <li><code>"M"</code>: For screens greater than or equal to 600 pixels and smaller than 1024 pixels.</li>
-	 * <li><code>"L"</code>: For screens greater than or equal to 1024 pixels and smaller than 1440 pixels.</li>
-	 * <li><code>"XL"</code>: For screens greater than or equal to 1440 pixels.</li>
-	 * </ul>
-	 *
-	 * @name MediaRange.RANGESETS.RANGE_4STEPS
-	 * @public
-	 */
-	RANGE_4STEPS = "4Step",
-}
 
 /**
  * API for screen width changes.
@@ -100,10 +101,10 @@ enum RANGESETS {
 
 const MediaRange = {
 	RANGESETS,
-	initRangeSet: _initRangeSet,
-	getCurrentRange: _getCurrentRange,
+	initRangeSet,
+	getCurrentRange,
 };
 
-MediaRange.initRangeSet(MediaRange.RANGESETS.RANGE_4STEPS, [600, 1024, 1440], ["S", "M", "L", "XL"]);
+MediaRange.initRangeSet(MediaRange.RANGESETS.RANGE_4STEPS, DEAFULT_RANGE_SET);
 
 export default MediaRange;
