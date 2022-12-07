@@ -17,7 +17,7 @@ class CalendarDate {
 		case 1: // CalendarDate
 		case 2: // CalendarDate, sCalendarType
 			if (!(aArgs[0] instanceof CalendarDate)) {
-				throw new Error("Invalid arguments: the first argument must be of type sap.ui.unified.calendar.CalendarDate.");
+				throw new Error("Invalid arguments: the first argument must be of type CalendarDate.");
 			}
 			sCalendarType = aArgs[1] ? aArgs[1] : (aArgs[0]._oUDate as UniversalDate).sCalendarType;
 			// Use source.valueOf() (returns the same point of time regardless calendar type) instead of
@@ -34,8 +34,8 @@ class CalendarDate {
 		case 3: // year, month, date
 		case 4: // year, month, date, sCalendarType
 			checkNumericLike(aArgs[0] as number, `Invalid year: ${aArgs[0] as number}`);
-			checkNumericLike(aArgs[1]as number, `Invalid month: ${aArgs[1] as number}`);
-			checkNumericLike(aArgs[2]as number, `Invalid date: ${aArgs[2] as number}`);
+			checkNumericLike(aArgs[1] as number, `Invalid month: ${aArgs[1] as number}`);
+			checkNumericLike(aArgs[2] as number, `Invalid date: ${aArgs[2] as number}`);
 
 			oJSDate = new Date(0, 0, 1);
 			oJSDate.setFullYear(aArgs[0] as number, aArgs[1] as number, aArgs[2] as number); // 2 digits year is not supported. If so, it is considered as full year as well.
@@ -212,7 +212,7 @@ function createUTCDate(oDate: Date) {
 
 function checkCalendarDate(oCalendarDate: CalendarDate) {
 	if (!(oCalendarDate instanceof CalendarDate)) {
-		throw new Error(`Invalid calendar date: [${oCalendarDate as unknown as string}]. Expected: sap.ui.unified.calendar.CalendarDate`);
+		throw new Error(`Invalid calendar date: [${oCalendarDate as unknown as string}]. Expected: CalendarDate`);
 	}
 }
 
