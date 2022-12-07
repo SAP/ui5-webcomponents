@@ -1122,7 +1122,8 @@ abstract class UI5Element extends HTMLElement {
 		let klass = this; // eslint-disable-line
 		while (klass !== UI5Element) {
 			klass = Object.getPrototypeOf(klass);
-			metadataObjects.unshift(klass.metadata);
+			const klassMetadata = (klass._metadata && klass._metadata.metadata) || klass.metadata;
+			metadataObjects.unshift(klassMetadata);
 		}
 		const mergedMetadata = merge({}, ...metadataObjects) as Metadata;
 
