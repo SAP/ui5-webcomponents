@@ -25,7 +25,7 @@ const slot = (slotData: Slot): PropertyDecorator => {
 			slotMetadata[slotKey as string] = slotData;
 		}
 
-		ctor.getMetadata().metadata.managedSlots = true;
+		ctor.decoratorMetadata.managedSlots = true;
 	};
 };
 
