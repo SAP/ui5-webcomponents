@@ -1,0 +1,7 @@
+{{>include "./TreeItemBase.hbs"}}
+
+{{#*inline "listItemContent"}}
+	<div class="ui5-li-tree-text-wrapper">
+		<slot name="content" slot="content"></slot>
+	</div>
+{{/inline}}
