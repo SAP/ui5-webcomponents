@@ -61,7 +61,7 @@ const offsets = {
 const metadata = {
 	tag: "ui5-avatar-group",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */  {
+	properties: /** @lends sap.ui.webc.main.AvatarGroup.prototype */  {
 
 		/**
 	 	 * Defines the mode of the <code>AvatarGroup</code>.
@@ -71,7 +71,7 @@ const metadata = {
 		 * <li><code>Group</code></li>
 		 * <li><code>Individual</code></li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.AvatarGroupType}
+		 * @type {sap.ui.webc.main.types.AvatarGroupType}
 		 * @defaultValue "Group"
 		 * @public
 		 */
@@ -104,14 +104,14 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
+	slots: /** @lends sap.ui.webc.main.AvatarGroup.prototype */ {
 		/**
 		 * Defines the items of the component. Use the <code>ui5-avatar</code> component as an item.
 		 * <br><br>
 		 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
 		 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
 		 * as the built-in overflow action has "Circle" shape.
-		 * @type {sap.ui.webcomponents.main.IAvatar[]}
+		 * @type {sap.ui.webc.main.IAvatar[]}
 		 * @slot items
 		 * @public
 		 */
@@ -134,7 +134,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.AvatarGroup.prototype */ {
+	events: /** @lends sap.ui.webc.main.AvatarGroup.prototype */ {
 		/**
 		* Fired when the component is activated either with a
 		* click/tap or by using the Enter or Space key.
@@ -228,8 +228,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.AvatarGroup
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.AvatarGroup
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-avatar-group
  * @since 1.0.0-rc.11
  * @public
@@ -289,7 +289,7 @@ class AvatarGroup extends UI5Element {
 	/**
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
-	 * @type {sap.ui.webcomponents.main.types.AvatarColorScheme[]}
+	 * @type {sap.ui.webc.main.types.AvatarColorScheme[]}
 	 * @defaultValue []
 	 * @public
 	 */

@@ -5,46 +5,46 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TitleLevel
+ * @alias sap.ui.webc.main.types.TitleLevel
  */
 enum TitleLevel {
 	/**
-	 * Renders h1 tag.
+	 * Renders <code>h1</code> tag.
 	 * @public
 	 * @type {H1}
 	 */
 	H1 = "H1",
 
 	/**
-	 * Renders h2 tag.
+	 * Renders <code>h2</code> tag.
 	 * @public
 	 * @type {H2}
 	 */
 	H2 = "H2",
 
 	/**
-	 * Renders h3 tag.
+	 * Renders <code>h3</code> tag.
 	 * @public
 	 * @type {H3}
 	 */
 	H3 = "H3",
 
 	/**
-	 * Renders h4 tag.
+	 * Renders <code>h4</code> tag.
 	 * @public
 	 * @type {H4}
 	 */
 	H4 = "H4",
 
 	/**
-	 * Renders h5 tag.
+	 * Renders <code>h5</code> tag.
 	 * @public
 	 * @type {H5}
 	 */
 	H5 = "H5",
 
 	/**
-	 * Renders h6 tag.
+	 * Renders <code>h6</code> tag.
 	 * @public
 	 * @type {H6}
 	 */

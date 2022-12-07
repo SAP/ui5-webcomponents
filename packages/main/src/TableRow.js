@@ -10,6 +10,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
@@ -29,13 +30,13 @@ import styles from "./generated/themes/TableRow.css.js";
 const metadata = {
 	tag: "ui5-table-row",
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TableRow.prototype */ {
 		/**
 		 * Defines the cells of the component.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
 		 *
-		 * @type {sap.ui.webcomponents.main.ITableCell[]}
+		 * @type {sap.ui.webc.main.ITableCell[]}
 		 * @slot cells
 		 * @public
 		 */
@@ -45,10 +46,10 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TableRow.prototype */ {
 		/**
 		 * Defines the mode of the row (None, SingleSelect, MultiSelect).
-		 * @type {sap.ui.webcomponents.main.types.TableMode}
+		 * @type {sap.ui.webc.main.types.TableMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.15
 		 * @private
@@ -69,7 +70,7 @@ const metadata = {
 		 * <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press,
 		 * while with type <code>Inactive</code> - will not.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TableRowType}
+		 * @type {sap.ui.webc.main.types.TableRowType}
 		 * @defaultvalue "Inactive"
 		 * @since 1.0.0-rc.15
 		 * @public
@@ -130,11 +131,11 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TableRow.prototype */ {
+	events: /** @lends sap.ui.webc.main.TableRow.prototype */ {
 		/**
 		 * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 		 *
-		 * @event sap.ui.webcomponents.main.TableRow#row-click
+		 * @event sap.ui.webc.main.TableRow#row-click
 		 * @since 1.0.0-rc.15
 		 * @private
 		 */
@@ -143,7 +144,7 @@ const metadata = {
 		/**
 		 * Fired on selection change of an active row.
 		 *
-		 * @event sap.ui.webcomponents.main.TableRow#selection-requested
+		 * @event sap.ui.webc.main.TableRow#selection-requested
 		 * @since 1.0.0-rc.15
 		 * @private
 		 */
@@ -151,7 +152,7 @@ const metadata = {
 		/**
 		 * Fired when F7 is pressed.
 		 *
-		 * @event sap.ui.webcomponents.main.TableRow#f7-pressed
+		 * @event sap.ui.webc.main.TableRow#f7-pressed
 		 * @since 1.2.0
 		 * @private
 		 */
@@ -178,10 +179,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TableRow
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TableRow
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-table-row
- * @implements sap.ui.webcomponents.main.ITableRow
+ * @implements sap.ui.webc.main.ITableRow
  * @public
  */
 class TableRow extends UI5Element {
@@ -292,7 +293,7 @@ class TableRow extends UI5Element {
 		// If the user tab over a button on IOS device, the document.activeElement
 		// is the ui5-table-row. The check below ensure that, if a button within the row is pressed,
 		// the row will not be selected.
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			return;
 		}
 

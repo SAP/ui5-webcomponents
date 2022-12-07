@@ -34,7 +34,7 @@ import staticAreaMenuCss from "./generated/themes/Menu.css.js";
  */
 const metadata = {
 	tag: "ui5-menu",
-	properties: /** @lends sap.ui.webcomponents.main.Menu.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Menu.prototype */ {
 		/**
 		 * Defines the header text of the menu (displayed on mobile).
 		 * @type {string}
@@ -139,13 +139,13 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Menu.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Menu.prototype */ {
 		/**
 		 * Defines the items of this component.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-menu-item</code> for the intended design.
 		 *
-		 * @type {sap.ui.webcomponents.main.IMenuItem[]}
+		 * @type {sap.ui.webc.main.IMenuItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -155,11 +155,11 @@ const metadata = {
 			invalidateOnChildChange: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Menu.prototype */ {
+	events: /** @lends sap.ui.webc.main.Menu.prototype */ {
 		/**
 		 * Fired when an item is being clicked.
 		 *
-		 * @event sap.ui.webcomponents.main.Menu#item-click
+		 * @event sap.ui.webc.main.Menu#item-click
 		 * @param {object} item The currently clicked menu item.
 		 * @param {string} text The text of the currently clicked menu item.
 		 * @public
@@ -179,7 +179,7 @@ const metadata = {
 		 * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Menu#before-open
+		 * @event sap.ui.webc.main.Menu#before-open
 		 * @allowPreventDefault
 		 * @since 1.10.0
 		 */
@@ -189,7 +189,7 @@ const metadata = {
 		 * Fired after the menu is opened. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Menu#after-open
+		 * @event sap.ui.webc.main.Menu#after-open
 		 * @since 1.10.0
 		 */
 		"after-open": {},
@@ -198,7 +198,7 @@ const metadata = {
 		 * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Menu#before-close
+		 * @event sap.ui.webc.main.Menu#before-close
 		 * @allowPreventDefault
 		 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
 		 * @since 1.10.0
@@ -213,7 +213,7 @@ const metadata = {
 		 * Fired after the menu is closed. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.main.Menu#after-close
+		 * @event sap.ui.webc.main.Menu#after-close
 		 * @since 1.10.0
 		 */
 		"after-close": {},
@@ -251,8 +251,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Menu
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Menu
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-menu
  * @appenddocs MenuItem
  * @since 1.3.0

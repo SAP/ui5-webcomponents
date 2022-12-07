@@ -64,7 +64,7 @@ const metadata = {
 	tag: "ui5-tokenizer",
 	languageAware: true,
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Tokenizer.prototype */ {
 		"default": {
 			propertyName: "tokens",
 			type: HTMLElement,
@@ -75,7 +75,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Tokenizer.prototype */ {
 		showMore: { type: Boolean },
 
 		disabled: { type: Boolean },
@@ -96,7 +96,7 @@ const metadata = {
 		/**
 		 * Indicates the value state of the related input component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @private
 		 */
@@ -107,7 +107,7 @@ const metadata = {
 
 		_nMoreCount: { type: Integer },
 	},
-	events: /** @lends sap.ui.webcomponents.main.Tokenizer.prototype */ {
+	events: /** @lends sap.ui.webc.main.Tokenizer.prototype */ {
 		"token-delete": {
 			detail: {
 				ref: { type: HTMLElement },
@@ -131,8 +131,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Tokenizer
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Tokenizer
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-tokenizer
  * @usestextcontent
  * @private
@@ -448,8 +448,12 @@ class Tokenizer extends UI5Element {
 	}
 
 	_onmousedown(event) {
-		this._itemNav.setCurrentItem(event.target);
-		this._scrollToToken(event.target);
+		if (event.target.hasAttribute("ui5-token")) {
+			if (!event.target.toBeDeleted) {
+				this._itemNav.setCurrentItem(event.target);
+				this._scrollToToken(event.target);
+			}
+		}
 	}
 
 	_toggleTokenSelection(tokens) {

@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.FCLLayout
+ * @alias sap.ui.webc.fiori.types.FCLLayout
  */
 enum FCLLayout {
 	/**

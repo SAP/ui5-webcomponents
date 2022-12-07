@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.TimelineLayout
+ * @alias sap.ui.webc.fiori.types.TimelineLayout
  */
 enum TimelineLayout {
 	/**

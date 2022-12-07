@@ -10,11 +10,11 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  */
 const metadata = {
 	tag: "ui5-segmented-button-item",
-	properties: /** @lends sap.ui.webcomponents.main.SegmentedButtonItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.SegmentedButtonItem.prototype */ {
 		/**
 		 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ButtonDesign}
+		 * @type {sap.ui.webc.main.types.ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -85,10 +85,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SegmentedButtonItem
- * @extends sap.ui.webcomponents.main.ToggleButton
+ * @alias sap.ui.webc.main.SegmentedButtonItem
+ * @extends sap.ui.webc.main.ToggleButton
  * @tagname ui5-segmented-button-item
- * @implements sap.ui.webcomponents.main.ISegmentedButtonItem
+ * @implements sap.ui.webc.main.ISegmentedButtonItem
  * @public
  */
 class SegmentedButtonItem extends ToggleButton {

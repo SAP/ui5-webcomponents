@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TableRowType
+ * @alias sap.ui.webc.main.types.TableRowType
  */
 enum TableRowType {
 	/**

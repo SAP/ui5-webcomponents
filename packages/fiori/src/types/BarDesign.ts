@@ -1,9 +1,11 @@
 /**
+ * Different types of Bar design
+ *
  * @class
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.BarDesign
+ * @alias sap.ui.webc.fiori.types.BarDesign
  */
 enum BarDesign {
 	/**

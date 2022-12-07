@@ -13,6 +13,7 @@
 	{{#unless readonly}}
 		<div
 			class="ui5-token--icon"
+			@mousedown="{{_mousedown}}"
 			@click="{{_delete}}"
 		>
 			{{#if closeIcon.length}}

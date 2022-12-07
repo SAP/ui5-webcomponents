@@ -17,7 +17,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
 const metadata = {
 	tag: "ui5-badge",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.Badge.prototype */  {
+	properties: /** @lends sap.ui.webc.main.Badge.prototype */  {
 
 		/**
 		 * Defines the color scheme of the component.
@@ -51,7 +51,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Badge.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Badge.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -67,7 +67,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the component.
 		 *
-		 * @type {sap.ui.webcomponents.main.IIcon}
+		 * @type {sap.ui.webc.main.IIcon}
 		 * @slot
 		 * @public
 		 */
@@ -97,8 +97,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Badge
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Badge
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-badge
  * @since 0.12.0
  * @public

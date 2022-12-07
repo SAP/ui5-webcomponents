@@ -5,7 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  */
 const metadata = {
 	tag: "ui5-menu-item",
-	properties: /** @lends sap.ui.webcomponents.main.MenuItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.MenuItem.prototype */ {
 		/**
 		 * Defines the text of the tree item.
 		 *
@@ -119,11 +119,11 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.MenuItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.MenuItem.prototype */ {
 		/**
 		 * Defines the items of this component.
 		 *
-		 * @type {sap.ui.webcomponents.main.IMenuItem[]}
+		 * @type {sap.ui.webc.main.IMenuItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -155,10 +155,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.MenuItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.MenuItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-menu-item
- * @implements sap.ui.webcomponents.main.IMenuItem
+ * @implements sap.ui.webc.main.IMenuItem
  * @since 1.3.0
  * @public
  */

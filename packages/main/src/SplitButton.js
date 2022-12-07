@@ -11,6 +11,7 @@ import {
 	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import SplitButtonTemplate from "./generated/templates/SplitButtonTemplate.lit.js";
@@ -31,7 +32,7 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 const metadata = {
 	tag: "ui5-split-button",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
+	properties: /** @lends sap.ui.webc.main.SplitButton.prototype */ {
 		/**
 		 * Defines the icon to be displayed as graphical element within the component.
 		 * The SAP-icons font provides numerous options.
@@ -74,7 +75,7 @@ const metadata = {
 		 * <li><code>Attention</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ButtonDesign}
+		 * @type {sap.ui.webc.main.types.ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -195,7 +196,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
+	slots: /** @lends sap.ui.webc.main.SplitButton.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><br>
@@ -210,7 +211,7 @@ const metadata = {
 			propertyName: "text",
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.SplitButton.prototype */ {
+	events: /** @lends sap.ui.webc.main.SplitButton.prototype */ {
 		/**
 		 * Fired when the user clicks on the default action.
 		 * @event
@@ -220,7 +221,7 @@ const metadata = {
 
 		/**
 		 * Fired when the user clicks on the arrow action.
-		 * @event sap.ui.webcomponents.main.SplitButton#arrow-click
+		 * @event sap.ui.webc.main.SplitButton#arrow-click
 		 * @public
 		 */
 		"arrow-click": {},
@@ -272,8 +273,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SplitButton
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.SplitButton
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-split-button
  * @public
  * @since 1.1.0
@@ -326,7 +327,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_onFocusOut(event) {
-		if (this.disabled || event.isMarked) {
+		if (this.disabled || getEventMark(event)) {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
@@ -335,7 +336,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_onFocusIn(event) {
-		if (this.disabled || event.isMarked) {
+		if (this.disabled || getEventMark(event)) {
 			return;
 		}
 		this._shiftOrEscapePressed = false;

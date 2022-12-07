@@ -169,7 +169,7 @@ enum CSSColors {
 	transparent = "00000000",
 }
 
-const getRGBColor = (color: string) => {
+const getRGBColor = (color: string): ColorRGB => {
 	if (color.startsWith("rgba")) {
 		return RGBAToRGB(color);
 	}
@@ -200,7 +200,7 @@ const getRGBColor = (color: string) => {
  * Return an object with the properties for each of the main colors(red, green, blue)
  * @param {String} color Receives a color in the following format: "rgba(0, 0, 0, 1)
  */
-const RGBAToRGB = (color: string) => {
+const RGBAToRGB = (color: string): ColorRGB => {
 	const openingBracketIndex = color.indexOf("("),
 		commasIndexes = [];
 
@@ -221,7 +221,7 @@ const RGBAToRGB = (color: string) => {
  * Return an object with the properties for each of the main colors(red, green, blue)
  * @param {String} color Receives a color in the following format: "rgb(0, 0, 0)
  */
-const RGBStringToRGBObject = (color: string) => {
+const RGBStringToRGBObject = (color: string): ColorRGB => {
 	const openingBracketIndex = color.indexOf("("),
 		closingBraketIndex = color.indexOf(")"),
 		commasIndexes = [];
@@ -239,7 +239,7 @@ const RGBStringToRGBObject = (color: string) => {
 	};
 };
 
-const HSLToRGB = (color: ColorHSL) => {
+const HSLToRGB = (color: ColorHSL): ColorRGB => {
 	// Formula taken from https://www.rapidtables.com/convert/color/hsl-to-rgb.html
 	const C = (1 - Math.abs((2 * color.l) - 1)) * color.s,
 		X = C * (1 - Math.abs(((color.h / 60) % 2) - 1)),
@@ -305,10 +305,10 @@ const HSLToRGB = (color: ColorHSL) => {
 		r: Math.floor((tempColor.r + m) * 255),
 		g: Math.floor((tempColor.g + m) * 255),
 		b: Math.floor((tempColor.b + m) * 255),
-	} as ColorRGB;
+	};
 };
 
-const HEXToRGB = (hex: string) => {
+const HEXToRGB = (hex: string): ColorRGB => {
 	// Please make sure you pass a valid 6 digit hex color
 	// In the implementation of this method we assume that the hex argument is a 6 digit valid hex color
 
@@ -316,14 +316,14 @@ const HEXToRGB = (hex: string) => {
 		r: parseInt(hex.substr(0, 2), 16),
 		g: parseInt(hex.substr(2, 2), 16),
 		b: parseInt(hex.substr(4, 2), 16),
-	} as ColorRGB;
+	};
 };
 
 /**
  * Returns the hex value of the color as string
  * @param {Object} color Receives an object with the properties for each of the main colors(r, g, b)
  */
-const RGBtoHEX = (color: ColorRGB) => {
+const RGBtoHEX = (color: ColorRGB): string => {
 	const hexMap = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E"];
 	let hexValue = "#";
 
@@ -345,7 +345,7 @@ const RGBtoHEX = (color: ColorRGB) => {
 	return hexValue;
 };
 
-const RGBToHSL = (color: ColorRGB) => {
+const RGBToHSL = (color: ColorRGB): ColorHSL => {
 	const R = color.r / 255,
 		G = color.g / 255,
 		B = color.b / 255,
@@ -353,7 +353,7 @@ const RGBToHSL = (color: ColorRGB) => {
 		min = Math.min(R, G, B),
 		delta = max - min;
 
-	let h,
+	let h = 0,
 		s;
 
 	// Hue calculation
@@ -381,7 +381,7 @@ const RGBToHSL = (color: ColorRGB) => {
 		h,
 		s,
 		l,
-	} as ColorHSL;
+	};
 };
 
 export {
@@ -391,4 +391,9 @@ export {
 	RGBToHSL,
 	RGBStringToRGBObject,
 	RGBtoHEX,
+};
+
+export type {
+	ColorHSL,
+	ColorRGB,
 };

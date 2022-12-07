@@ -31,7 +31,7 @@ let activeCb = null;
 const metadata = {
 	tag: "ui5-checkbox",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
+	properties: /** @lends sap.ui.webc.main.CheckBox.prototype */ {
 
 		/**
 		 * Receives id(or many ids) of the elements that label the component
@@ -159,7 +159,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -177,7 +177,7 @@ const metadata = {
 		 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.WrappingType}
+		 * @type {sap.ui.webc.main.types.WrappingType}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -214,7 +214,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
+	events: /** @lends sap.ui.webc.main.CheckBox.prototype */ {
 
 		/**
 		 * Fired when the component checked state changes.
@@ -224,7 +224,7 @@ const metadata = {
 		 */
 		change: {},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.CheckBox.prototype */ {
+	slots: /** @lends sap.ui.webc.main.CheckBox.prototype */ {
 		/**
 		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
 		 * when <code>name</code> property is set.
@@ -279,8 +279,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.CheckBox
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.CheckBox
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-checkbox
  * @public
  */

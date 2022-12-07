@@ -16,11 +16,11 @@ import styles from "./generated/themes/SliderBase.css.js";
  * @public
  */
 const metadata = {
-	properties: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */  {
+	properties: /** @lends sap.ui.webc.main.SliderBase.prototype */  {
 		/**
 		 * Defines the minimum value of the slider.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -31,7 +31,7 @@ const metadata = {
 		/**
 		 * Defines the maximum value of the slider.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 100
 		 * @public
 		 */
@@ -44,7 +44,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -59,7 +59,7 @@ const metadata = {
 		 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
 		 * tickmark will be labelled, which means every 4th value number.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -126,7 +126,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.SliderBase.prototype */ {
+	events: /** @lends sap.ui.webc.main.SliderBase.prototype */ {
 		/**
 		 * Fired when the value changes and the user has finished interacting with the slider.
 		 *
@@ -152,8 +152,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SliderBase
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.SliderBase
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-slider
  * @public
  */

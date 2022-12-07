@@ -32,7 +32,7 @@ import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea
 const metadata = {
 	tag: "ui5-color-palette",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ColorPalette.prototype */ {
 
 		/**
 		 * Defines whether the user can see the last used colors in the bottom of the component
@@ -69,7 +69,7 @@ const metadata = {
 		/**
 		 * Defines the default color of the color palette
 		 * <b>Note:</b> The default color should be a part of the ColorPalette colors</code>
-		 * @type {sap.ui.webcomponents.base.types.CSSColor}
+		 * @type {sap.ui.webc.base.types.CSSColor}
 		 * @private
 		 * @since 1.0.0-rc.16
 		 */
@@ -79,7 +79,7 @@ const metadata = {
 
 		/**
 		 * Defines the selected color.
-		 * @type {sap.ui.webcomponents.base.types.CSSColor}
+		 * @type {sap.ui.webc.base.types.CSSColor}
 		 * @private
 		 */
 		_selectedColor: {
@@ -88,17 +88,17 @@ const metadata = {
 
 		/**
 		 * Defines if the palette is in Popup or Embeded mode.
-		 * @type {sap.ui.webcomponents.base.types.CSSColor}
+		 * @type {sap.ui.webc.base.types.CSSColor}
 		 * @private
 		 */
 		popupMode: {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
+	slots: /** @lends sap.ui.webc.main.ColorPalette.prototype */ {
 		/**
 		 * Defines the <code>ui5-color-palette-item</code> elements.
-		 * @type {sap.ui.webcomponents.main.IColorPaletteItem[]}
+		 * @type {sap.ui.webc.main.IColorPaletteItem[]}
 		 * @slot colors
 		 * @public
 		 */
@@ -109,11 +109,11 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.ColorPalette.prototype */ {
+	events: /** @lends sap.ui.webc.main.ColorPalette.prototype */ {
 		/**
 		 * Fired when the user selects a color.
 		 *
-		 * @event sap.ui.webcomponents.main.ColorPalette#item-click
+		 * @event sap.ui.webc.main.ColorPalette#item-click
 		 * @public
 		 * @since 1.0.0-rc.15
 		 * @param {string} color the selected color
@@ -145,8 +145,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ColorPalette
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ColorPalette
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-color-palette
  * @since 1.0.0-rc.12
  * @appenddocs ColorPaletteItem

@@ -10,7 +10,7 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  */
 const metadata = {
 	tag: "ui5-li-custom",
-	slots: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.CustomListItem.prototype */ {
 
 		/**
 		 * Defines the content of the component.
@@ -22,7 +22,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.CustomListItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.CustomListItem.prototype */ {
 		/**
 		 * Defines the text alternative of the component.
 		 * Note: If not provided a default text alternative will be set, if present.
@@ -48,10 +48,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.CustomListItem
- * @extends sap.ui.webcomponents.main.ListItem
+ * @alias sap.ui.webc.main.CustomListItem
+ * @extends sap.ui.webc.main.ListItem
  * @tagname ui5-li-custom
- * @implements sap.ui.webcomponents.main.IListItem
+ * @implements sap.ui.webc.main.IListItem
  * @public
  */
 class CustomListItem extends ListItem {

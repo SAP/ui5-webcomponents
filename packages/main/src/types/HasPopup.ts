@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.HasPopup
+ * @alias sap.ui.webc.main.types.HasPopup
  */
 enum HasPopup {
 	/**

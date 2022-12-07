@@ -25,7 +25,7 @@ const metadata = {
 	tag: "ui5-token",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Token.prototype */ {
 
 		/**
 		 * Defines the text of the token.
@@ -71,6 +71,15 @@ const metadata = {
 		focused: { type: Boolean },
 
 		/**
+		 * Defines whether the token is being deleted
+		 * This flag is used in the ui5-multi-combobox
+		 *
+		 * @type {boolean}
+		 * @private
+		 */
+		 toBeDeleted: { type: Boolean },
+
+		/**
 		 * Defines the tabIndex of the component.
 		 * @type {string}
 		 * @private
@@ -78,13 +87,13 @@ const metadata = {
 		_tabIndex: { type: String, defaultValue: "-1", noAttribute: true },
 	},
 
-	slots: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Token.prototype */ {
 
 		/**
 		 * Defines the close icon for the token. If nothing is provided to this slot, the default close icon will be used.
 		 * Accepts <code>ui5-icon</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.IIcon}
+		 * @type {sap.ui.webc.main.IIcon}
 		 * @slot
 		 * @public
 		 * @since 1.0.0-rc.9
@@ -94,7 +103,7 @@ const metadata = {
 		},
 	},
 
-	events: /** @lends sap.ui.webcomponents.main.Token.prototype */ {
+	events: /** @lends sap.ui.webc.main.Token.prototype */ {
 
 		/**
 		 * Fired when the backspace, delete or close icon of the token is pressed
@@ -133,11 +142,11 @@ const metadata = {
  * <code>import "@ui5/webcomponents/dist/Token.js";</code>
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Token
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Token
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-token
  * @since 1.0.0-rc.9
- * @implements sap.ui.webcomponents.main.IToken
+ * @implements sap.ui.webc.main.IToken
  * @public
  */
 class Token extends UI5Element {
@@ -170,6 +179,10 @@ class Token extends UI5Element {
 		this.focused = !this.focused;
 	}
 
+	_mousedown(event) {
+		this.toBeDeleted = true;
+	}
+
 	 _delete() {
 		this.fireEvent("delete");
 	 }
@@ -192,6 +205,10 @@ class Token extends UI5Element {
 
 			this._handleSelect();
 		}
+	}
+
+	onBeforeRendering() {
+		this.toBeDeleted = false;
 	}
 
 	get tokenDeletableText() {

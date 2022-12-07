@@ -32,7 +32,7 @@ const metadata = {
  *
  * @constructor
  * @alias demo.components.INIT_PACKAGE_VAR_CLASS_NAME
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname INIT_PACKAGE_VAR_TAG
  * @public
  */

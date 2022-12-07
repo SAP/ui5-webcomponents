@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.PopoverVerticalAlign
+ * @alias sap.ui.webc.main.types.PopoverVerticalAlign
  */
 enum PopoverVerticalAlign {
 	/**

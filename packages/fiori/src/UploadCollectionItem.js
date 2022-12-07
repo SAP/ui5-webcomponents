@@ -37,7 +37,7 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 const metadata = {
 	tag: "ui5-upload-collection-item",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.UploadCollectionItem.prototype */ {
 		/**
 		 * Holds an instance of <code>File</code> associated with this item.
 		 *
@@ -121,7 +121,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Expected values are in the interval [0, 100].
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -135,7 +135,7 @@ const metadata = {
 		 * Also if set to <code>Error</code>, a refresh button is shown. When this icon is pressed <code>retry</code> event is fired.
 		 * If set to <code>Uploading</code>, a terminate button is shown. When this icon is pressed <code>terminate</code> event is fired.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.UploadState}
+		 * @type {sap.ui.webc.fiori.types.UploadState}
 		 * @defaultvalue "Ready"
 		 * @public
 		 */
@@ -155,7 +155,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.UploadCollectionItem.prototype */ {
 		/**
 		 * Hold the description of the <code>ui5-upload-collection-item</code>. Will be shown below the file name.
 		 *
@@ -180,13 +180,13 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.UploadCollectionItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.UploadCollectionItem.prototype */ {
 		/**
 		 * Fired when the file name is clicked.
 		 * <br><br>
 		 * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
 		 *
-		 * @event sap.ui.webcomponents.fiori.UploadCollectionItem#file-name-click
+		 * @event sap.ui.webc.fiori.UploadCollectionItem#file-name-click
 		 * @public
 		 */
 		"file-name-click": { },
@@ -242,11 +242,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.UploadCollectionItem
- * @extends sap.ui.webcomponents.main.ListItem
+ * @alias sap.ui.webc.fiori.UploadCollectionItem
+ * @extends sap.ui.webc.main.ListItem
  * @tagname ui5-upload-collection-item
  * @public
- * @implements sap.ui.webcomponents.fiori.IUploadCollectionItem
+ * @implements sap.ui.webc.fiori.IUploadCollectionItem
  * @since 1.0.0-rc.7
  */
 class UploadCollectionItem extends ListItem {

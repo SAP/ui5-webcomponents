@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.types.UploadCollectionDnDOverlayMode
+ * @alias sap.ui.webc.fiori.types.UploadCollectionDnDOverlayMode
  */
 enum UploadCollectionDnDOverlayMode {
 	/**

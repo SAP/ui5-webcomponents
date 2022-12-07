@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.InputType
+ * @alias sap.ui.webc.main.types.InputType
  */
 enum InputType {
 	/**

@@ -38,11 +38,11 @@ import StepInputCss from "./generated/themes/StepInput.css.js";
 const metadata = {
 	tag: "ui5-step-input",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
+	properties: /** @lends sap.ui.webc.main.StepInput.prototype */ {
 		/**
 		 * Defines a value of the component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -54,7 +54,7 @@ const metadata = {
 		/**
 		 * Defines a minimum value of the component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @public
 		 */
 		min: {
@@ -64,7 +64,7 @@ const metadata = {
 		/**
 		 * Defines a maximum value of the component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @public
 		 */
 		max: {
@@ -74,7 +74,7 @@ const metadata = {
 		/**
 		 * Defines a step of increasing/decreasing the value of the component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -95,7 +95,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -177,7 +177,7 @@ const metadata = {
 		/**
 		 * Determines the number of digits after the decimal point of the component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -269,7 +269,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
+	slots: /** @lends sap.ui.webc.main.StepInput.prototype */ {
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
 		 * <br><br>
@@ -297,7 +297,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.StepInput.prototype */ {
+	events: /** @lends sap.ui.webc.main.StepInput.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
@@ -355,8 +355,8 @@ const INITIAL_SPEED = 120; // milliseconds
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.StepInput
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.StepInput
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-step-input
  * @since 1.0.0-rc.13
  * @public

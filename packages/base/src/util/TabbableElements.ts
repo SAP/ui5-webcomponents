@@ -1,15 +1,29 @@
 import isElementTabbable from "./isElementTabbable.js";
 
-const getTabbableElements = (el: HTMLElement) => {
+/**
+ * Returns the tabbable elements within the provided HTMLElement.
+ *
+ * @public
+ * @param { HTMLElement } el the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
+ * @returns { Array<HTMLElement> } the tabbable elements
+ */
+const getTabbableElements = (el: HTMLElement): Array<HTMLElement> => {
 	return getTabbables([...el.children]);
 };
 
-const getLastTabbableElement = (el: HTMLElement) => {
+/**
+ * Returns the last tabbable element within the provided HTMLElement.
+ *
+ * @public
+ * @param { HTMLElement } el the component to operate on (component that slots or contains within its shadow root the items the user navigates among)
+ * @returns { HTMLElement | null } the last tabbable element or "null" if not found
+ */
+const getLastTabbableElement = (el: HTMLElement): HTMLElement | null => {
 	const tabbables = getTabbables([...el.children]);
 	return tabbables.length ? tabbables[tabbables.length - 1] : null;
 };
 
-const getTabbables = (nodes: Array<Node>, tabbables?: Array<HTMLElement>) => {
+const getTabbables = (nodes: Array<Node>, tabbables?: Array<HTMLElement>): Array<HTMLElement> => {
 	const tabbableElements = tabbables || [];
 
 	if (!nodes) {

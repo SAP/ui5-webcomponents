@@ -13,13 +13,13 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  */
 const metadata = {
 	tag: "${tagName}",
-	properties: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
+	properties: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
 		//
 	},
-	slots: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
+	slots: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.${library}.${componentName}.prototype */ {
+	events: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
 		//
 	},
 };
@@ -39,8 +39,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.${library}.${componentName}
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.${library}.${componentName}
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ${tagName}
  * @public
  */

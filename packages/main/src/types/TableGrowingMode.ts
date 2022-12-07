@@ -5,11 +5,11 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.types.TableGrowingMode
+ * @alias sap.ui.webc.main.types.TableGrowingMode
  */
 enum TableGrowingMode {
 	/**
-	 * Component "load-more" is fired
+	 * Component <code>load-more</code> is fired
 	 * upon pressing a "More" button at the bottom.
 	 * @public
 	 * @type {Button}
@@ -17,7 +17,7 @@ enum TableGrowingMode {
 	Button = "Button",
 
 	/**
-	 * Component "load-more" is fired upon scroll.
+	 * Component <code>load-more</code> is fired upon scroll.
 	 * @public
 	 * @type {Scroll}
 	 */

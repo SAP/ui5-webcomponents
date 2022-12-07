@@ -10,7 +10,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * @public
  */
 const metadata = {
-	properties: /** @lends sap.ui.webcomponents.main.ListItemBase.prototype */  {
+	properties: /** @lends sap.ui.webc.main.ListItemBase.prototype */  {
 
 		/**
 		 * Defines the selected state of the <code>ListItem</code>.
@@ -57,7 +57,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.ListItemBase.prototype */  {
+	events: /** @lends sap.ui.webc.main.ListItemBase.prototype */  {
 		_focused: {},
 		"_forward-after": {},
 		"_forward-before": {},
@@ -71,8 +71,8 @@ const metadata = {
  * @abstract
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ListItemBase
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ListItemBase
+ * @extends sap.ui.webc.base.UI5Element
  * @public
  */
 class ListItemBase extends UI5Element {
@@ -138,7 +138,7 @@ class ListItemBase extends UI5Element {
 	* [TAB] is performed onto the last tabbale content item.
 	*/
 	shouldForwardTabAfter(target) {
-		const aContent = getTabbableElements(this.getDomRef());
+		const aContent = getTabbableElements(this.getFocusDomRef());
 
 		if (target.getFocusDomRef) {
 			target = target.getFocusDomRef();
@@ -151,7 +151,7 @@ class ListItemBase extends UI5Element {
 	* Determines if the current list item is target of [SHIFT+TAB].
 	*/
 	shouldForwardTabBefore(target) {
-		return this.getDomRef() === target;
+		return this.getFocusDomRef() === target;
 	}
 
 	get classes() {
