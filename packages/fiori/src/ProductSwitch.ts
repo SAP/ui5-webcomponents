@@ -5,7 +5,6 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import defaultSlot from "@ui5/webcomponents-base/dist/decorators/defaultSlot.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -61,7 +60,6 @@ import type ProductSwitchItem from "./ProductSwitchItem.js";
  * @since 1.0.0-rc.5
  */
 @customElement("ui5-product-switch")
-@defaultSlot("items")
 class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
@@ -90,7 +88,7 @@ class ProductSwitch extends UI5Element {
 	 * @slot items
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot({ type: HTMLElement, default: true })
 	items!: Array<ProductSwitchItem>
 
 	_itemNavigation!: ItemNavigation;
