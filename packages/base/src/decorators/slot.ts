@@ -12,7 +12,7 @@ const slot = (slotData: Slot): PropertyDecorator => {
 		const ctor = target.constructor as typeof UI5Element;
 		const slotMetadata = ctor.getMetadata().getSlots();
 
-		if (slotData.default && slotMetadata["default"]) {
+		if (slotData.default && slotMetadata.default) {
 			throw new Error("Only one slot can be the default slot.");
 		}
 
@@ -23,8 +23,8 @@ const slot = (slotData: Slot): PropertyDecorator => {
 		}
 
 		if (slotData.default) {
-			delete slotMetadata["default"].default;
-			slotMetadata["default"].propertyName = slotKey as string;
+			delete slotMetadata.default.default;
+			slotMetadata.default.propertyName = slotKey as string;
 		}
 
 		ctor.getMetadata().metadata.managedSlots = true;

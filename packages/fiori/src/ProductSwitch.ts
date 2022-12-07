@@ -88,7 +88,7 @@ class ProductSwitch extends UI5Element {
 	 * @slot items
 	 * @public
 	 */
-	@slot({ type: HTMLElement, default: true })
+	@slot({ type: HTMLElement, "default": true })
 	items!: Array<ProductSwitchItem>
 
 	_itemNavigation!: ItemNavigation;
