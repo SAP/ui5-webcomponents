@@ -47,14 +47,7 @@ const findFocusableElement = async (container, forward, startFromContainer) => {
 		const originalChild = child;
 
 		if (child.isUI5Element) {
-			// getDomRef is used because some components mark their focusable ref in an inner
-			// html but there might also be focusable targets outside of it
-			// as an example - TreeItemBase
-			// div - root of the component returned by getDomRef()
-			// 	li.ui5-li-tree - returned by getFocusDomRef() and may not be focusable (ItemNavigation manages tabindex)
-			// 	ul.subtree - may still contain focusable targets (sub nodes of the tree item)
-			await child._waitForDomRef();
-			child = child.getDomRef();
+			child = await child.getFocusDomRefAsync();
 		}
 
 		if (!child) {
