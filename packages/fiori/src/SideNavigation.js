@@ -221,7 +221,8 @@ class SideNavigation extends UI5Element {
 		this._popoverContent = {
 			mainItem: item,
 			mainItemSelected: item.selected && !item.items.some(subItem => subItem.selected),
-			selectedSubItemIndex: item.items.find(subItem => subItem.selected),
+			// add one as the first item is the main item
+			selectedSubItemIndex: item.items.findIndex(subItem => subItem.selected) + 1,
 			subItems: item.items,
 		};
 	}
@@ -231,7 +232,7 @@ class SideNavigation extends UI5Element {
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
 		const tree = await this.getPickerTree();
-		const index = this._popoverContent.selectedSubItemIndex || 0;
+		const index = this._popoverContent.selectedSubItemIndex;
 		tree.focusItemByIndex(index);
 	}
 
