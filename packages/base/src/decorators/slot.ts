@@ -21,8 +21,20 @@ const slot = (slotData: Slot): PropertyDecorator => {
 		}
 
 		const slotMetadata = decoratorMetadata.slots;
-		if (!slotMetadata[slotKey as string]) {
-			slotMetadata[slotKey as string] = slotData;
+
+		if (slotData.default && slotMetadata.default) {
+			throw new Error("Only one slot can be the default slot.");
+		}
+
+		const key = slotData.default ? "default" : slotKey as string;
+
+		if (!slotMetadata[key]) {
+			slotMetadata[key] = slotData;
+		}
+
+		if (slotData.default) {
+			delete slotMetadata.default.default;
+			slotMetadata.default.propertyName = slotKey as string;
 		}
 
 		ctor.decoratorMetadata.managedSlots = true;
