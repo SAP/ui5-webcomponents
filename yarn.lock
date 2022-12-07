@@ -485,6 +485,11 @@
   resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.101.0.tgz#02a834f1f395df60fdbd64ab78e8d2fa82222dfd"
   integrity sha512-cwOBvs4ZuOM6h5yo64vqdHSi1DcNDVDqyb9PserwnQILh6c/CfOWxeihv5HyW/c1de9/9GdRKJu3dv/lR9B5BQ==
 
+"@openui5/sap.ui.core@1.109.0":
+  version "1.109.0"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.109.0.tgz#bd4e70eecb1e1a7fbe79942fa42b5958d344f8c2"
+  integrity sha512-s0chMgOy3RRLElil2vDNcAhEy1UVmbGUNXq35O492R1BHQ+4zwf6SYWfAETsnlljEmXuYrCjb2rpwAHz68KTqQ==
+
 "@sap-theming/theming-base-content@11.1.44":
   version "11.1.44"
   resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.1.44.tgz#6c54172d061d2339c3d299fb316e29168d25589e"
@@ -655,6 +660,13 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
+"@types/jquery@*":
+  version "3.5.14"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.14.tgz#ac8e11ee591e94d4d58da602cb3a5a8320dee577"
+  integrity sha512-X1gtMRMbziVQkErhTQmSe2jFwwENA/Zr+PprCkF63vFq+Yt5PZ4AlKqgmeNlwgn7dhsXEK888eIW2520EpC+xg==
+  dependencies:
+    "@types/sizzle" "*"
+
 "@types/json-schema@^7.0.9":
   version "7.0.11"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.11.tgz#d421b6c527a3037f7c84433fd2c4229e016863d3"
@@ -776,6 +788,14 @@
   resolved "https://registry.yarnpkg.com/@types/object-inspect/-/object-inspect-1.8.1.tgz#7c08197ad05cc0e513f529b1f3919cc99f720e1f"
   integrity sha512-0JTdf3CGV0oWzE6Wa40Ayv2e2GhpP3pEJMcrlM74vBSJPuuNkVwfDnl0SZxyFCXETcB4oKA/MpTVfuYSMOelBg==
 
+"@types/openui5@^1.108.0":
+  version "1.108.0"
+  resolved "https://registry.yarnpkg.com/@types/openui5/-/openui5-1.108.0.tgz#d67dc4269bba5b60b661705d06383728df44edfd"
+  integrity sha512-sGAVYe/GBDyCQnAVk+wIsgtllpc+Suc+0/weCn5aC+0SiHDa8NzFb6lAXUrnp4MpyDnwop0i5v+k296+6myzuA==
+  dependencies:
+    "@types/jquery" "*"
+    "@types/qunit" "*"
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.npmjs.org/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -790,6 +810,11 @@
   version "6.9.7"
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
+
+"@types/qunit@*":
+  version "2.19.3"
+  resolved "https://registry.yarnpkg.com/@types/qunit/-/qunit-2.19.3.tgz#16e975469a36092929627f997c3dafca198a1aea"
+  integrity sha512-Vi47qmJ0viJoxW1kRDbhuYXGd2F0RREDfh69Hd4v/nlDV0YIjXPCAy6OebWKCZIZr680bQVQTJTL1OfhQoTvVw==
 
 "@types/range-parser@*":
   version "1.2.4"
@@ -822,6 +847,11 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
+
+"@types/sizzle@*":
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.3.tgz#ff5e2f1902969d305225a047c8a0fd5c915cebef"
+  integrity sha512-JYM8x9EGF163bEyhdJBpR2QX1R5naCJHC8ucJylJ3w9/CVBaskdQ8WqBf8MmQrd1kRvp/a4TS8HJ+bxzR7ZJYQ==
 
 "@types/stack-utils@^2.0.0":
   version "2.0.1"

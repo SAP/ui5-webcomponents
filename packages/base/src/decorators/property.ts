@@ -10,8 +10,17 @@ import { Property } from "../UI5ElementMetadata.js";
 const property = (propData?: Property): PropertyDecorator => {
 	return (target: any, propertyKey: string | symbol) => {
 		const ctor = target.constructor as typeof UI5Element;
-		const propsMetadata = ctor.getMetadata().getProperties();
 
+		if (!Object.prototype.hasOwnProperty.call(ctor, "decoratorMetadata")) {
+			ctor.decoratorMetadata = {};
+		}
+
+		const decoratorMetadata = ctor.decoratorMetadata;
+		if (!decoratorMetadata.properties) {
+			decoratorMetadata.properties = {};
+		}
+
+		const propsMetadata = decoratorMetadata.properties;
 		if (!propsMetadata[propertyKey as string]) {
 			propsMetadata[propertyKey as string] = propData || { type: String };
 		}

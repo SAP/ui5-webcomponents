@@ -1,6 +1,6 @@
 import CalendarDate from "./CalendarDate.js";
 
-const getDaysInMonth = date => {
+const getDaysInMonth = (date: CalendarDate) => {
 	const tempCalendarDate = new CalendarDate(date);
 	tempCalendarDate.setDate(1);
 	tempCalendarDate.setMonth(tempCalendarDate.getMonth() + 1);

@@ -1,7 +1,8 @@
+import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarDate from "./CalendarDate.js";
 import getDaysInMonth from "./getDaysInMonth.js";
 
-const transformDateToSecondaryType = (primaryCalendarType, secondaryCalendarType, timeStamp, hasYearPicker) => {
+const transformDateToSecondaryType = (primaryCalendarType: CalendarType, secondaryCalendarType: CalendarType, timeStamp: number, hasYearPicker: boolean) => {
 	let firstDate = CalendarDate.fromLocalJSDate(new Date(timeStamp * 1000), primaryCalendarType);
 	let lastDate = CalendarDate.fromLocalJSDate(new Date(timeStamp * 1000), primaryCalendarType);
 	firstDate.setDate(1);

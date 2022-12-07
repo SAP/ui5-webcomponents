@@ -6,7 +6,11 @@
  */
 const customElement = (tag: string): ClassDecorator => {
 	return (target: any) => {
-		target.getMetadata().metadata.tag = tag;
+		if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
+			target.decoratorMetadata = {};
+		}
+
+		target.decoratorMetadata.tag = tag;
 	};
 };
 
