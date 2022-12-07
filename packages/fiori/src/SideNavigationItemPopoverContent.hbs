@@ -1,6 +1,9 @@
 <ui5-responsive-popover
 	vertical-align="Top"
 	class="ui5-side-navigation-popover"
+	aria-labelledby="{{_id}}-sideNavigationPopoverText"
+	aria-modal="true"
+	@ui5-after-open="{{_onAfterOpen}}"
 >
 	<ui5-list
 		mode="None"

@@ -89,6 +89,9 @@ import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
 import Tree from "./dist/Tree.js";
+import TreeList from "./dist/TreeList.js";
+import TreeItem from "./dist/TreeItem.js";
+import TreeItemCustom from "./dist/TreeItemCustom.js";
 
 import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";

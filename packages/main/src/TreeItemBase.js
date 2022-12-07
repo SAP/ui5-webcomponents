@@ -13,24 +13,26 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
-import TreeListItemTemplate from "./generated/templates/TreeListItemTemplate.lit.js";
+import TreeItemBaseTemplate from "./generated/templates/TreeItemBaseTemplate.lit.js";
 
 // Styles
-import treeListItemCss from "./generated/themes/TreeListItem.css.js";
+import treeItemCss from "./generated/themes/TreeItem.css.js";
+
+import HasPopup from "./types/HasPopup.js";
 
 /**
  * @public
  */
 const metadata = {
-	tag: "ui5-li-tree",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
+	managedSlots: true,
+	properties: /** @lends sap.ui.webc.main.TreeItemBase.prototype */ {
 
 		/**
 		 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
-		 * @public
+		 * @type {sap.ui.webc.base.types.Integer}
+		 * @protected
 		 * @defaultValue 1
 		 */
 		level: {
@@ -54,7 +56,7 @@ const metadata = {
 		 *
 		 * @type {boolean}
 		 * @defaultvalue false
-		 * @public
+		 * @protected
 		 */
 		showToggleButton: {
 			type: Boolean,
@@ -72,28 +74,47 @@ const metadata = {
 		},
 
 		/**
-		 * @private
-		 * @since 1.1.0
-		 */
+		* Defines whether the selection of a tree node is displayed as partially selected.
+		* <br><br>
+		* <b>Note:</b> The indeterminate state can be set only programmatically and can’t be achieved by user
+		* interaction, meaning that the resulting visual state depends on the values of the <code>indeterminate</code>
+		* and <code>selected</code> properties:
+		* <ul>
+		* <li> If a tree node has both <code>selected</code> and <code>indeterminate</code> set to <code>true</code>, it is displayed as partially selected.
+		* <li> If a tree node has <code>selected</code> set to <code>true</code> and <code>indeterminate</code> set to <code>false</code>, it is displayed as selected.
+		* <li> If a tree node has <code>selected</code> set to <code>false</code>, it is displayed as not selected regardless of the value of the <code>indeterminate</code> property.
+		* </ul>
+		* <br>
+		* <b>Note:</b> This property takes effect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
+		* @type {boolean}
+		* @defaultvalue false
+		* @public
+		* @since 1.1.0
+		*/
 		indeterminate: {
 			type: Boolean,
 		},
 
 		/**
-		 * Defines the <code>additionalText</code>, displayed in the end of the tree item.
-		 * @type {string}
+		 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
+		 * <br>
+		 * <i>Note:</i> This property is useful for showing big tree structures where not all nodes are initially loaded due to performance reasons.
+		 * Set this to <code>true</code> for nodes you intend to load lazily, when the user clicks the expand button.
+		 * It is not necessary to set this property otherwise. If a tree item has children, the expand button will be displayed anyway.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
 		 * @public
-		 * @since 1.0.0-rc.15
 		 */
-		additionalText: {
-			type: String,
+		hasChildren: {
+			type: Boolean,
 		},
 
 		/**
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -111,7 +132,7 @@ const metadata = {
 		 * @public
 		 * @since 1.8.0
 		 */
-		 accessibleName: {
+		accessibleName: {
 			type: String,
 		},
 
@@ -155,28 +176,65 @@ const metadata = {
 			noAttribute: true,
 		},
 
-	},
-	slots: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
 		/**
-		 * Defines the text of the component.
-		 * <br><br>
-		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
+		 * Defines if the item should be collapsible or not.
+		 * It is true, for example, for the items inside the Popover of the Side Navigation
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.10.0
+		 */
+		_fixed: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+		 * @type {sap.ui.webc.main.types.HasPopup}
+		 * @since 1.10.0
+		 * @private
+		 */
+		ariaHaspopup: {
+			type: HasPopup,
+			noAttribute: true,
+		},
+	},
+	slots: /** @lends sap.ui.webc.main.TreeItemBase.prototype */ {
+		/**
+		 * Defines the items of the component.
+		 * <br />
+		 * <br />
+		 * <b>Note:</b> Use <code>ui5-tree-item</code> or <code>ui5-tree-item-custom</code>
 		 *
-		 * @type {Node[]}
-		 * @slot
+		 * @type {sap.ui.webc.main.ITreeItem[]}
+		 * @slot items
 		 * @public
 		 */
 		"default": {
-			type: Node,
+			type: HTMLElement,
+			propertyName: "items",
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TreeListItem.prototype */ {
+	events: /** @lends sap.ui.webc.main.TreeItemBase.prototype */ {
 
 		/**
 		 * Fired when the user interacts with the expand/collapse button of the tree list item.
 		 * @event
 		 * @param {HTMLElement} item the toggled item.
-		 * @public
+		 * @protected
 		 */
 		toggle: {
 			detail: {
@@ -187,9 +245,9 @@ const metadata = {
 		/**
 		 * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
 		 *
-		 * @event sap.ui.webcomponents.main.TreeListItem#step-in
+		 * @event sap.ui.webc.main.TreeItemBase#step-in
 		 * @param {HTMLElement} item the item on which right arrow was pressed.
-		 * @public
+		 * @protected
 		 */
 		"step-in": {
 			detail: {
@@ -200,9 +258,9 @@ const metadata = {
 		/**
 		 * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
 		 *
-		 * @event sap.ui.webcomponents.main.TreeListItem#step-out
+		 * @event sap.ui.webc.main.TreeItemBase#step-out
 		 * @param {HTMLElement} item the item on which left arrow was pressed.
-		 * @public
+		 * @protected
 		 */
 		"step-out": {
 			detail: {
@@ -213,38 +271,23 @@ const metadata = {
 };
 
 /**
- * @class
- * The <code>ui5-li-tree</code> represents a node in a tree structure, shown as a <code>ui5-list</code>.
- * <br>
- * <i>Note:</i> Do not use <code>ui5-li-tree</code> directly in your apps. Use <code>ui5-tree-item</code> instead, as it can be nested inside a <code>ui5-tree</code>.
- * On the other hand, <code>ui5-li-tree</code> can only be slotted inside a <code>ui5-list</code>, being a list item. It may be useful if you want to build a custom tree component, for example.
+ * A class to serve as a foundation
+ * for the <code>TreeItem</code> and <code>TreeItemCustom</code> classes.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-li-tree</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>title - Used to style the title of the tree list item</li>
- * <li>additionalText - Used to style the additionalText of the tree list item</li>
- * <li>icon - Used to style the icon of the tree list item</li>
- * </ul>
- *
+ * @abstract
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TreeListItem
- * @extends sap.ui.webcomponents.main.ListItem
- * @tagname ui5-li-tree
+ * @alias sap.ui.webc.main.TreeItemBase
+ * @extends sap.ui.webc.main.ListItem
  * @public
- * @since 1.0.0-rc.8
  */
-class TreeListItem extends ListItem {
+class TreeItemBase extends ListItem {
 	static get template() {
-		return TreeListItemTemplate;
+		return TreeItemBaseTemplate;
 	}
 
 	static get styles() {
-		return [ListItem.styles, treeListItemCss];
+		return [...super.styles, treeItemCss];
 	}
 
 	static get metadata() {
@@ -253,13 +296,14 @@ class TreeListItem extends ListItem {
 
 	static get dependencies() {
 		return [
-			...ListItem.dependencies,
+			...super.dependencies,
 			Icon,
 		];
 	}
 
 	onBeforeRendering() {
 		this.actionable = false;
+		this.showToggleButton = this.requiresToggleButton;
 	}
 
 	get classes() {
@@ -276,12 +320,20 @@ class TreeListItem extends ListItem {
 		};
 	}
 
+	get requiresToggleButton() {
+		return !this._fixed ? (this.hasChildren || this.items.length > 0) : false;
+	}
+
 	get effectiveLevel() {
 		return this.level - 1;
 	}
 
 	get hasParent() {
 		return this.level > 1;
+	}
+
+	get hasContent() {
+		return this.content.length > 0;
 	}
 
 	get _toggleIconName() {
@@ -296,24 +348,47 @@ class TreeListItem extends ListItem {
 		return this.showToggleButton && !this._minimal && this._toggleButtonEnd;
 	}
 
-	get _showTitle() {
-		return this.textContent.length && !this._minimal;
-	}
-
 	get _ariaLabel() {
-		return TreeListItem.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
+		return this.accessibleRoleDescription ? undefined : TreeItemBase.i18nBundle.getText(TREE_ITEM_ARIA_LABEL);
 	}
 
 	get _accInfo() {
-		return {
-			role: "treeitem",
-			ariaExpanded: this.showToggleButton ? this.expanded : undefined,
-			ariaLevel: this.level,
+		const accInfoSettings = {
+			role: this._minimal ? "menuitemradio" : "treeitem",
+			ariaExpanded: this.showToggleButton && !this._minimal ? this.expanded : undefined,
+			ariaLevel: this._minimal ? undefined : this.level,
 			posinset: this._posinset,
 			setsize: this._setsize,
 			ariaSelectedText: this.ariaSelectedText,
 			listItemAriaLabel: !this.accessibleName ? this._ariaLabel : undefined,
+			ariaOwns: this.expanded ? `${this._id}-subtree` : undefined,
+			ariaHaspopup: this.ariaHaspopup || undefined,
 		};
+
+		if (this._minimal) {
+			accInfoSettings.ariaChecked = this.selected;
+		} else {
+			accInfoSettings.ariaSelected = this.selected;
+		}
+
+		return accInfoSettings;
+	}
+
+	/**
+	 * Used to duck-type TreeItem elements without using instanceof
+	 * @returns {boolean}
+	 * @public
+	 */
+	get isTreeItem() {
+		return true;
+	}
+
+	/**
+	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
+	 * @public
+	 */
+	toggle() {
+		this.expanded = !this.expanded;
 	}
 
 	_toggleClick(event) {
@@ -324,7 +399,7 @@ class TreeListItem extends ListItem {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
-		if (this.showToggleButton && isRight(event)) {
+		if (!this._fixed && this.showToggleButton && isRight(event)) {
 			if (!this.expanded) {
 				this.fireEvent("toggle", { item: this });
 			} else {
@@ -332,7 +407,7 @@ class TreeListItem extends ListItem {
 			}
 		}
 
-		if (isLeft(event)) {
+		if (!this._fixed && isLeft(event)) {
 			if (this.expanded) {
 				this.fireEvent("toggle", { item: this });
 			} else if (this.hasParent) {
@@ -342,17 +417,15 @@ class TreeListItem extends ListItem {
 	}
 
 	get iconAccessibleName() {
-		return this.expanded ? TreeListItem.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeListItem.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
+		return this.expanded ? TreeItemBase.i18nBundle.getText(TREE_ITEM_COLLAPSE_NODE) : TreeItemBase.i18nBundle.getText(TREE_ITEM_EXPAND_NODE);
 	}
 
 	static async onDefine() {
-		[TreeListItem.i18nBundle] = await Promise.all([
+		[TreeItemBase.i18nBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents"),
 			super.onDefine(),
 		]);
 	}
 }
 
-TreeListItem.define();
-
-export default TreeListItem;
+export default TreeItemBase;

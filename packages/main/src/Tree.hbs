@@ -1,4 +1,4 @@
-<ui5-list
+<ui5-tree-list
     .mode="{{mode}}"
     .headerText="{{headerText}}"
     .footerText="{{footerText}}"
@@ -8,39 +8,14 @@
     @ui5-item-click="{{_onListItemClick}}"
     @ui5-item-delete="{{_onListItemDelete}}"
     @ui5-selection-change="{{_onListSelectionChange}}"
+    @ui5-toggle="{{_onListItemToggle}}"
+    @ui5-step-in="{{_onListItemStepIn}}"
+    @ui5-step-out="{{_onListItemStepOut}}"
+    @mouseover="{{_onListItemMouseOver}}"
+    @mouseout="{{_onListItemMouseOut}}"
     class="ui5-tree-root"
 >
     <slot name="header" slot="header"></slot>
-    {{#each _listItems}}
-        <ui5-li-tree
-            type="Active"
-            level="{{this.level}}"
-            icon="{{this.treeItem.icon}}"
-            ?indeterminate="{{this.treeItem.indeterminate}}"
-            additional-text="{{this.treeItem.additionalText}}"
-            additional-text-state="{{this.treeItem.additionalTextState}}"
-            title="{{this.treeItem.title}}"
-            accessible-name="{{this.treeItem.accessibleName}}"
-            ?_toggle-button-end="{{ ../_toggleButtonEnd}}"
-            ?_minimal="{{../_minimal}}"
-            .treeItem="{{this.treeItem}}"
-            .expanded="{{this.treeItem.expanded}}"
-            .selected="{{this.treeItem.selected}}"
-            .showToggleButton="{{this.treeItem.requiresToggleButton}}"
-            ._posinset="{{this.posinset}}"
-            ._setsize="{{this.size}}"
-            @ui5-toggle="{{../_onListItemToggle}}"
-            @ui5-step-in="{{../_onListItemStepIn}}"
-            @ui5-step-out="{{../_onListItemStepOut}}"
-            @mouseover="{{../_onListItemMouseOver}}"
-            @mouseout="{{../_onListItemMouseOut}}"
-            exportparts="icon, toggle-icon"
-        >
-            {{> treeListItemContent}}
-        </ui5-li-tree>
-    {{/each}}
-</ui5-list>
 
-{{#*inline "treeListItemContent"}}
-	{{this.treeItem.text}}
-{{/inline}}
+    <slot></slot>
+</ui5-tree-list>

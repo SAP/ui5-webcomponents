@@ -51,6 +51,11 @@
 		</div>
 
 		<ui5-tree-item expanded text="Tree 1" icon="paste" additional-text="Available" indeterminate selected additional-text-state="Information" accessible-name="Tree item with accessibleName">
+			<ui5-title slot="content"> 
+				<ui5-label>Tree 1</ui5-label>
+				<ui5-label>Tree 1</ui5-label>
+			</ui5-title>
+
 			<ui5-tree-item expanded text="Tree 1.1" additional-text="Re-stock" additional-text-state="Error" indeterminate selected>
 				<ui5-tree-item text="Tree 1.1.1" additional-text="Required" additional-text-state="Warning" selected></ui5-tree-item>
 				<ui5-tree-item text="Tree 1.1.2" additional-text="Available" additional-text-state="Success"></ui5-tree-item>
@@ -123,6 +128,57 @@
 	</ui5-tree>
 	<ui5-input id="selectionChangeTargetItemResult" placeholder="selectionChange targetItem result"></ui5-input>
 
+	<br><br>
+
+	<ui5-label id="tree-navigated items">Tree with navigated items</ui5-label>
+	<ui5-tree>
+		<ui5-tree-item type="Navigation" navigated text="Tree 1 - this item is already navigated" >
+			<ui5-tree-item navigated text="Tree 1.1" ></ui5-tree-item>
+		</ui5-tree-item>
+		<ui5-tree-item navigated text="Tree 2 - this item is already navigated" >
+			<ui5-tree-item navigated text="Tree 2.1" ></ui5-tree-item>
+		</ui5-tree-item>
+		<ui5-tree-item  text="Tree 3" >
+			<ui5-tree-item text="Tree 3.1" ></ui5-tree-item>
+		</ui5-tree-item>
+	</ui5-tree>
+
+	<ui5-tree mode="MultiSelect">
+		<div slot="header" class="hdr">
+			<ui5-title>Tree with custom items</ui5-title>
+		</div>
+		<ui5-tree-item-custom
+			expanded="true"
+			show-toggle-button
+			hide-selection-element
+			type="Active"
+			level="1"
+		>
+			<ui5-button slot="content">Level 1</ui5-button>
+	
+			<ui5-tree-item-custom
+				type="Active"
+				show-toggle-button
+				level="2"
+				expanded="true"
+			>
+				<ui5-select slot="content">
+					<ui5-option>Level 2</ui5-option>
+					<ui5-option>Option 2.1</ui5-option>
+					<ui5-option>Option 2.3</ui5-option>
+				</ui5-select>
+	
+				<ui5-tree-item-custom
+					hide-selection-element
+					type="Active"
+					level="3"
+				>
+					<ui5-button slot="content">Level 3</ui5-button>
+				</ui5-tree-item-custom>
+			</ui5-tree-item-custom>
+		</ui5-tree-item-custom>
+	</ui5-tree>
+	
 	<script>
 		const mouseOverInput = document.getElementById("mouseover-counter");
 		const mouseOutInput = document.getElementById("mouseout-counter");
@@ -229,8 +285,8 @@
 		indetereminateTree.addEventListener("ui5-selectionChange", function(event) {
 			selectionChangeTargetItemResult.value = event.detail.targetItem.id;
 		});
-	</script>
 
+	</script>
 </body>
 
 </html>
