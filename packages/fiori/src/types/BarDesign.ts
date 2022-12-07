@@ -1,4 +1,6 @@
 /**
+ * Different types of Bar design
+ *
  * @class
  * @enum {string}
  * @public
