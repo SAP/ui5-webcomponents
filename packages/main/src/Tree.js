@@ -2,8 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import TreeItem from "./TreeItem.js";
-import TreeItemCustom from "./TreeItemCustom.js";
-import TreeList from "./TreeList.js";
+import List from "./List.js";
+import TreeListItem from "./TreeListItem.js";
 import ListMode from "./types/ListMode.js";
 
 // Template
@@ -346,14 +346,15 @@ class Tree extends UI5Element {
 
 	static get dependencies() {
 		return [
-			TreeList,
+			List,
+			TreeListItem,
 			TreeItem,
-			TreeItemCustom,
 		];
 	}
 
 	onBeforeRendering() {
-		this._prepareTreeItems();
+		this._listItems = [];
+		buildTree(this, 1, this._listItems);
 	}
 
 	get list() {
@@ -369,25 +370,28 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemStepIn(event) {
-		const treeItem = event.detail.item;
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
 		if (treeItem.items.length > 0) {
 			const firstChild = treeItem.items[0];
-			const firstChildListItem = this._getListItemForTreeItem(firstChild);
+			const firstChildListItem = this.list.getSlottedNodes("items").find(li => li.treeItem === firstChild);
 			firstChildListItem && this.list.focusItem(firstChildListItem);
 		}
 	}
 
 	_onListItemStepOut(event) {
-		const treeItem = event.detail.item;
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
 		if (treeItem.parentElement !== this) {
 			const parent = treeItem.parentElement;
-			const parentListItem = this._getListItemForTreeItem(parent);
+			const parentListItem = this.list.getSlottedNodes("items").find(li => li.treeItem === parent);
 			parentListItem && this.list.focusItem(parentListItem);
 		}
 	}
 
 	_onListItemToggle(event) {
-		const treeItem = event.detail.item;
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
 		const defaultPrevented = !this.fireEvent("item-toggle", { item: treeItem }, true);
 		if (!defaultPrevented) {
 			treeItem.toggle();
@@ -395,7 +399,8 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemClick(event) {
-		const treeItem = event.detail.item;
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
 
 		if (!this.fireEvent("item-click", { item: treeItem }, true)) {
 			event.preventDefault();
@@ -403,30 +408,27 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemDelete(event) {
-		const treeItem = event.detail.item;
+		const listItem = event.detail.item;
+		const treeItem = listItem.treeItem;
 		this.fireEvent("item-delete", { item: treeItem });
 	}
 
 	_onListItemMouseOver(event) {
-		const target = event.target;
+		const treeItem = event.target.treeItem;
 
-		if (target.isTreeItem) {
-			this.fireEvent("item-mouseover", { item: target });
-		}
+		this.fireEvent("item-mouseover", { item: treeItem });
 	}
 
 	_onListItemMouseOut(event) {
-		const target = event.target;
+		const treeItem = event.target.treeItem;
 
-		if (target.isTreeItem) {
-			this.fireEvent("item-mouseout", { item: target });
-		}
+		this.fireEvent("item-mouseout", { item: treeItem });
 	}
 
 	_onListSelectionChange(event) {
-		const previouslySelectedItems = event.detail.previouslySelectedItems;
-		const selectedItems = event.detail.selectedItems;
-		const targetItem = event.detail.targetItem;
+		const previouslySelectedItems = event.detail.previouslySelectedItems.map(item => item.treeItem);
+		const selectedItems = event.detail.selectedItems.map(item => item.treeItem);
+		const targetItem = event.detail.targetItem.treeItem;
 
 		previouslySelectedItems.forEach(item => {
 			item.selected = false;
@@ -442,21 +444,6 @@ class Tree extends UI5Element {
 		});
 	}
 
-	_prepareTreeItems() {
-		// set level to tree items
-		this.walk((item, level, index) => {
-			const parent = item.parentNode;
-			const ariaSetSize = (parent && parent.children.length) || this.items.length;
-
-			item.setAttribute("level", level);
-
-			item._toggleButtonEnd = this._toggleButtonEnd;
-			item._minimal = this._minimal;
-			item._setsize = ariaSetSize;
-			item._posinset = index + 1;
-		});
-	}
-
 	/**
 	 * Returns the corresponding list item for a given tree item
 	 *
@@ -464,33 +451,14 @@ class Tree extends UI5Element {
 	 * @protected
 	 */
 	_getListItemForTreeItem(item) {
-		return this.getItems().find(listItem => listItem === item);
-	}
-
-	/**
-	 * Returns the a flat array of all tree items
-	 * @protected
-	 * @returns {Array}
-	 */
-	getItems() {
-		return this.list.getItems();
-	}
-
-	/**
-	 * Focus a tree item by its index in the flat array of all tree items
-	 * @protected
-	 * @param index
-	 */
-	focusItemByIndex(index) {
-		const item = this.getItems()[index];
-		item && this.list.focusItem(item);
+		return this.list.items.find(listItem => listItem.treeItem === item);
 	}
 
 	/**
 	 * Perform Depth-First-Search walk on the tree and run a callback on each node
 	 *
 	 * @public
-	 * @param {function} callback function to execute on each node of the tree with 3 arguments: the node, the level and the index
+	 * @param {function} callback function to execute on each node of the tree with 2 arguments: the node and the level
 	 */
 	walk(callback) {
 		walkTree(this, 1, callback);
@@ -498,10 +466,26 @@ class Tree extends UI5Element {
 }
 
 const walkTree = (el, level, callback) => {
-	el.items.forEach((item, index) => {
-		callback(item, level, index);
+	el.items.forEach(item => {
+		callback(item, level);
 		if (item.items.length > 0) {
 			walkTree(item, level + 1, callback);
+		}
+	});
+};
+
+const buildTree = (el, level, result) => {
+	el.items.forEach((item, index) => {
+		const listItem = {
+			treeItem: item,
+			size: el.items.length,
+			posinset: index + 1,
+			level,
+		};
+
+		result.push(listItem);
+		if (item.expanded && item.items.length > 0) {
+			buildTree(item, level + 1, result);
 		}
 	});
 };

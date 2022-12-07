@@ -6,8 +6,9 @@ describe("BusyIndicator general interaction", () => {
 		await browser.url(`test/pages/BusyIndicator.html`);
 	});
 
-	it.only("tests event propagation", async () => {
-		const dynamicItem = await browser.$(">>>#busy-tree [ui5-tree-item] ui5-icon.ui5-li-tree-toggle-icon");
+	it("tests event propagation", async () => {
+		const busyIndicator = await browser.$("#busy-tree");
+		const dynamicItem = await (await busyIndicator.$("ui5-tree").shadow$("ui5-list").$$("ui5-li-tree")[2]).shadow$(".ui5-li-tree-toggle-box");
 		const input = await browser.$("#tree-input");
 
 		await dynamicItem.click();

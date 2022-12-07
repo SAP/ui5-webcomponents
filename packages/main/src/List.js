@@ -548,7 +548,7 @@ class List extends UI5Element {
 	}
 
 	get hasData() {
-		return this.getItems().length !== 0;
+		return this.getSlottedNodes("items").length !== 0;
 	}
 
 	get showNoDataText() {
@@ -657,7 +657,7 @@ class List extends UI5Element {
 	}
 
 	prepareListItems() {
-		const slottedItems = this.getItems();
+		const slottedItems = this.getSlottedNodes("items");
 
 		slottedItems.forEach((item, key) => {
 			const isLastChild = key === slottedItems.length - 1;
@@ -759,15 +759,11 @@ class List extends UI5Element {
 	}
 
 	getSelectedItems() {
-		return this.getItems().filter(item => item.selected);
+		return this.getSlottedNodes("items").filter(item => item.selected);
 	}
 
 	getEnabledItems() {
-		return this.getItems().filter(item => !item.disabled);
-	}
-
-	getItems() {
-		return this.getSlottedNodes("items");
+		return this.getSlottedNodes("items").filter(item => !item.disabled);
 	}
 
 	_onkeydown(event) {
@@ -1070,7 +1066,7 @@ class List extends UI5Element {
 	}
 
 	getFirstItem(filter) {
-		const slottedItems = this.getItems();
+		const slottedItems = this.getSlottedNodes("items");
 		let firstItem = null;
 
 		if (!filter) {

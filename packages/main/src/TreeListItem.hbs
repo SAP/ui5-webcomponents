@@ -1,8 +1,4 @@
-<div>
-	{{>include "./ListItem.hbs"}}
-
-	{{> listItemPostContent}}
-</div>
+{{>include "./ListItem.hbs"}}
 
 {{#*inline "listItemPreContent"}}
 	<div
@@ -23,6 +19,15 @@
 {{/inline}}
 
 {{#*inline "listItemContent"}}
+	<div class="ui5-li-tree-text-wrapper">
+		{{#if _showTitle}}
+			<div part="title" class="ui5-li-title"><slot></slot></div>
+		{{/if}}
+
+		{{#if additionalText}}
+			<span part="additional-text" class="ui5-li-additional-text">{{additionalText}}</span>
+		{{/if}}
+	</div>
 {{/inline}}
 
 {{#*inline "imageBegin"}}{{/inline}}
@@ -41,17 +46,5 @@
 			name="{{_toggleIconName}}"
 			@click="{{_toggleClick}}"
 		></ui5-icon>
-	{{/if}}
-{{/inline}}
-
-{{#*inline "listItemPostContent"}}
-	{{#if expanded}}
-		<ul
-			role="group"
-			id="{{_id}}-subtree"
-			class="ui5-tree-li-subtree"
-		>
-			<slot></slot>
-		</ul>
 	{{/if}}
 {{/inline}}

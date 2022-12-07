@@ -221,18 +221,8 @@ class SideNavigation extends UI5Element {
 		this._popoverContent = {
 			mainItem: item,
 			mainItemSelected: item.selected && !item.items.some(subItem => subItem.selected),
-			selectedSubItemIndex: item.items.find(subItem => subItem.selected),
 			subItems: item.items,
 		};
-	}
-
-	async _onAfterOpen() {
-		// as the tree/list inside the popover is never destroyed,
-		// item navigation index should be managed, because items are
-		// dynamically recreated and tabIndexes are not updated
-		const tree = await this.getPickerTree();
-		const index = this._popoverContent.selectedSubItemIndex || 0;
-		tree.focusItemByIndex(index);
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -295,12 +285,6 @@ class SideNavigation extends UI5Element {
 	async closePicker() {
 		const responsivePopover = await this.getPicker();
 		responsivePopover.close();
-	}
-
-	async getPickerTree() {
-		const picker = await this.getPicker();
-		const sideNav = picker.querySelector("[ui5-side-navigation]");
-		return sideNav._itemsTree;
 	}
 
 	get hasHeader() {

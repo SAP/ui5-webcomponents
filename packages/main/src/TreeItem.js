@@ -1,10 +1,9 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import TreeItemBase from "./TreeItemBase.js";
-// Template
-import TreeItemTemplate from "./generated/templates/TreeItemTemplate.lit.js";
 
-// Styles
-import treeItemCss from "./generated/themes/TreeItem.css.js";
+import ListItemType from "./types/ListItemType.js";
+
+import HasPopup from "./types/HasPopup.js";
 
 /**
  * @public
@@ -21,6 +20,76 @@ const metadata = {
 		 * @defaultValue ""
 		 */
 		text: {
+			type: String,
+		},
+
+		/**
+		 * Defines whether the tree node is expanded or collapsed. Only has visual effect for tree nodes with children.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		expanded: {
+			type: Boolean,
+		},
+		/**
+		* Defines whether the selection of a tree node is displayed as partially selected.
+		* <br><br>
+		* <b>Note:</b> The indeterminate state can be set only programmatically and can’t be achieved by user
+		* interaction, meaning that the resulting visual state depends on the values of the <code>indeterminate</code>
+		* and <code>selected</code> properties:
+		* <ul>
+		* <li> If a tree node has both <code>selected</code> and <code>indeterminate</code> set to <code>true</code>, it is displayed as partially selected.
+		* <li> If a tree node has <code>selected</code> set to <code>true</code> and <code>indeterminate</code> set to <code>false</code>, it is displayed as selected.
+		* <li> If a tree node has <code>selected</code> set to <code>false</code>, it is displayed as not selected regardless of the value of the <code>indeterminate</code> property.
+		* </ul>
+		* <br>
+		* <b>Note:</b> This property takes effect only when the <code>ui5-tree</code> is in <code>MultiSelect</code> mode.
+		* @type {boolean}
+		* @defaultvalue false
+		* @public
+		* @since 1.1.0
+		*/
+		indeterminate: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the tree node has children, even if currently no other tree nodes are slotted inside.
+		 * <br>
+		 * <i>Note:</i> This property is useful for showing big tree structures where not all nodes are initially loaded due to performance reasons.
+		 * Set this to <code>true</code> for nodes you intend to load lazily, when the user clicks the expand button.
+		 * It is not necessary to set this property otherwise. If a tree item has children, the expand button will be displayed anyway.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		hasChildren: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines whether the tree node is selected by the user. Only has effect if the <code>ui5-tree</code> is in one of the
+		 * following modes: in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code>.
+		 *
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 */
+		selected: {
+			type: Boolean,
+		},
+
+		/**
+		 * If set, an icon will be displayed before the text, representing the tree item.
+		 *
+		 * @public
+		 * @type {string}
+		 * @defaultValue ""
+		 */
+		icon: {
 			type: String,
 		},
 
@@ -47,27 +116,124 @@ const metadata = {
 			type: ValueState,
 			defaultValue: ValueState.None,
 		},
+
+		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue: ""
+		 * @public
+		 * @since 1.8.0
+		 */
+		accessibleName: {
+			type: String,
+		},
+
+		/**
+		 * Defines the tooltip of the component.
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @private
+		 * @since 1.0.0-rc.15
+		 */
+		title: {
+			type: String,
+		},
+
+		/**
+
+		 * Defines the visual indication and behavior of the list items.
+		 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
+		 * <br><br>
+		 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
+		 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
+		 *
+		 * @type {sap.ui.webc.main.types.ListItemType}
+		 * @defaultvalue "Active"
+		 * @public
+		*/
+		type: {
+			type: ListItemType,
+			defaultValue: ListItemType.Active,
+		},
+
+		/**
+		 * The navigated state of the list item.
+		 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+		 *
+		 * @public
+		 * @type {boolean}
+		 * @since 1.10.0
+		 */
+		 navigated: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
+		 * Defines if the item should be collapsible or not.
+		 * It is true, for example, for the items inside the Popover of the Side Navigation
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.10.0
+		 */
+		_fixed: {
+			type: Boolean,
+		},
+
+		/**
+		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+		 * @type {sap.ui.webc.main.types.HasPopup}
+		 * @since 1.10.0
+		 * @private
+		 */
+		ariaHaspopup: {
+			type: HasPopup,
+			noAttribute: true,
+		},
+	},
+	managedSlots: true,
+	slots: /** @lends sap.ui.webc.main.TreeItem.prototype */ {
+
+		/**
+		 * Defines the items of this component.
+		 *
+		 * @type {sap.ui.webc.main.ITreeItem[]}
+		 * @slot items
+		 * @public
+		 */
+		"default": {
+			propertyName: "items",
+			type: HTMLElement,
+			invalidateOnChildChange: true,
+		},
 	},
 };
 
 /**
  * @class
+ *
  * <h3 class="comment-api-title">Overview</h3>
- * The <code>ui5-tree-item</code> represents a node in a tree structure, shown as a <code>ui5-list</code>.
- * <br>
  * This is the item to use inside a <code>ui5-tree</code>.
  * You can represent an arbitrary tree structure by recursively nesting tree items.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- * <br>
- * The <code>ui5-tree-item</code> exposes the following CSS Shadow Parts:
- * <ul>
- * <li>title - Used to style the title of the tree list item</li>
- * <li>additionalText - Used to style the additionalText of the tree list item</li>
- * <li>icon - Used to style the icon of the tree list item</li>
- * </ul>
+ * <h3>Usage</h3>
+ * <code>ui5-tree-item</code> is an abstract element, representing a node in a <code>ui5-tree</code>. The tree itself is rendered as a list,
+ * and each <code>ui5-tree-item</code> is represented by a list item(<code>ui5-li-tree</code>) in that list. Therefore, you should only use
+ * <code>ui5-tree-item</code> directly in your apps. The <code>ui5-li-tree</code> list item is internal for the list, and not intended for public use.
  *
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents/dist/TreeItem.js";</code>
@@ -75,27 +241,31 @@ const metadata = {
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.TreeItem
- * @extends sap.ui.webc.main.TreeItemBase
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-tree-item
  * @public
  * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
-class TreeItem extends TreeItemBase {
-	static get template() {
-		return TreeItemTemplate;
-	}
-
-	static get styles() {
-		return [...super.styles, treeItemCss];
-	}
-
+class TreeItem extends UI5Element {
 	static get metadata() {
 		return metadata;
 	}
 
-	get _showTitle() {
-		return this.text.length && !this._minimal;
+	get requiresToggleButton() {
+		return !this._fixed ? (this.hasChildren || this.items.length > 0) : false;
+	}
+
+	get typeNavigation() {
+		return this.type === ListItemType.Navigation;
+	}
+
+	/**
+	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
+	 * @public
+	 */
+	toggle() {
+		this.expanded = !this.expanded;
 	}
 }
 
