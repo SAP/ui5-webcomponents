@@ -4,7 +4,11 @@
  * @returns { void }
  */
 const languageAware = (target: any): void => {
-	target.getMetadata().metadata.languageAware = true;
+	if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
+		target.decoratorMetadata = {};
+	}
+
+	target.decoratorMetadata.languageAware = true;
 };
 
 export default languageAware;

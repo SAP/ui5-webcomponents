@@ -6,7 +6,11 @@
  */
 const defaultSlot = (name: string): ClassDecorator => {
 	return (target: any) => {
-		const slotMetadata = target.getMetadata().getSlots();
+		if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
+			target.decoratorMetadata = {};
+		}
+
+		const slotMetadata = target.decoratorMetadata.slots;
 		const oldSlotData = slotMetadata[name];
 
 		if (oldSlotData) {

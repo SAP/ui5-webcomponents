@@ -4,7 +4,11 @@
  * @returns { void }
  */
 const themeAware = (target: any): void => {
-	target.getMetadata().metadata.themeAware = true;
+	if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
+		target.decoratorMetadata = {};
+	}
+
+	target.decoratorMetadata.themeAware = true;
 };
 
 export default themeAware;
