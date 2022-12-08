@@ -2,6 +2,10 @@
 @import "./InputIcon.css";
 @import "./InvisibleTextStyles.css";
 
+:host {
+	min-width: calc(var(--_ui5_input_min_width) + (var(--_ui5-input-icons-count)*var(--_ui5_input_icon_width)) + (var(--_ui5_input_has_tokens)*var(--_ui5_input_tokenizer_min_width)));
+}
+
 :host(:not([hidden])) {
 	display: inline-block;
 }
@@ -15,10 +19,10 @@
 }
 
 .ui5-multi-combobox-tokenizer {
+	min-width: var(--_ui5_input_tokenizer_min_width);
 	max-width: calc(100% - 3rem - var(--_ui5_input_icon_min_width));
 	border: none;
 	width: auto;
-	min-width: 0px;
 	height: 100%;
 }
 

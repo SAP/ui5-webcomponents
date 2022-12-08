@@ -1536,10 +1536,6 @@ class Input extends UI5Element {
 			innerInput: {},
 		};
 
-		if (this.nativeInputWidth < 48) {
-			stylesObject.innerInput.padding = "0";
-		}
-
 		return stylesObject;
 	}
 

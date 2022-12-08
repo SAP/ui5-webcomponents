@@ -66,9 +66,7 @@
 	--_ui5-input-icons-count: 0;
 	--_ui5_input_icon_width: 2.25rem;
 	--_ui5_input_has_tokens: 0;
-	--_ui5_input_token_min_width: 4.125rem;
-	--_ui5_input_tokenizer-width: 0;
-	--_ui5_input_icon_width: 2.25rem;
+	--_ui5_input_tokenizer_min_width: 4.125rem;
 	--_ui5_input_icon_wrapper_height: 100%;
 	--_ui5_input_icon_wrapper_state_height: 100%;
 	--_ui5_input_icon_wrapper_success_state_height: 100%;
@@ -77,7 +75,9 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
+	--_ui5_input_width: 2rem;
 	--_ui5_input_min_width: 2rem;
-	--_ui5_input_icon_width: 2rem;
-	--_ui5_input_token_min_width: 3.5625rem;
+	--_ui5_input_icon_min_width: 2rem;
+	--_ui5_input_has_tokens: 0;
+	--_ui5_input_tokenizer_min_width: 3.5625rem;
 }
