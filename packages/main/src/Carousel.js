@@ -523,7 +523,7 @@ class Carousel extends UI5Element {
 				posinset: idx + 1,
 				setsize: this.content.length,
 				styles: {
-					width: `${this._itemWidth}px`
+					width: `${this._itemWidth}px`,
 				},
 				classes: visible ? "" : "ui5-carousel-item--hidden",
 			};
