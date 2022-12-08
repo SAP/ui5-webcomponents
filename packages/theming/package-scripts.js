@@ -19,8 +19,9 @@ module.exports = {
 	scripts: {
 		clean: "rimraf dist",
 		build: {
-			default: `nps clean build.src build.themes build.postcss build.jsonImports generateReport`,
+			default: `nps clean build.src build.typescript build.themes build.postcss build.jsonImports generateReport`,
 			src: `copy-and-watch "src/**/*.js" dist/`,
+			typescript: "tsc",
 			themes: {
 				default: `nps build.themes.prepare ${buildThemesCommandsNames}`,
 				...buildThemesCommands
