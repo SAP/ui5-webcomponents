@@ -40,8 +40,7 @@
     "nps": "^5.10.0",
     "postcss": "^8.4.5",
     "postcss-import": "^14.0.2",
-    "resolve": "^1.20.0",
-    "typescript": "^4.9.3"
+    "resolve": "^1.20.0"
   },
   "resolutions": {}
 }
