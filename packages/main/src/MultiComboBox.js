@@ -1301,7 +1301,7 @@ class MultiComboBox extends UI5Element {
 
 		const numIcons = (this.icon ? this.icon.length : 0) + (this.readonly ? 0 : 1);
 		this.style.setProperty("--_ui5-input-icons-count", numIcons || 0);
-		this.style.setProperty("--_ui5_input_has_tokens", this.items.length ? 1 : 0);
+		this.style.setProperty("--_ui5_input_has_tokens", this.isTokenizerAvailable ? 1 : 0);
 
 		if (!input || !value) {
 			return;
@@ -1591,6 +1591,10 @@ class MultiComboBox extends UI5Element {
 		const shouldBeExpanded = this.focused || this.open || isCurrentlyExpanded;
 
 		return shouldBeExpanded;
+	}
+
+	get isTokenizerAvailable() {
+		return this.items && this.items.length > 0;
 	}
 
 	get _valueStatePopoverHorizontalAlign() {
