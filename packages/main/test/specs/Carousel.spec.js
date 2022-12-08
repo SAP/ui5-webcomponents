@@ -6,10 +6,16 @@ describe("Carousel general interaction", () => {
 		await browser.url(`test/pages/Carousel.html`);
 	});
 
-	it("Carousel is rendered", async () => {
+	it("rendering", async () => {
 		const carouselRoot = await browser.$("#carousel1").shadow$(".ui5-carousel-root");
+		const carousel = await browser.$("#carousel1");
+		const carouselItem1 = await carousel.shadow$(".ui5-carousel-item:nth-child(1)");
+		const carouselItem2 = await carousel.shadow$(".ui5-carousel-item:nth-child(2)");
 
 		assert.ok(await carouselRoot.isExisting(), "Carousel is rendered.");
+
+		assert.notOk(await carouselItem1.hasClass("ui5-carousel-item--hidden"), "ui5-carousel-item--hidden class is not set");
+		assert.ok(await carouselItem2.hasClass("ui5-carousel-item--hidden"), "ui5-carousel-item--hidden class is set");
 	});
 
 	it("Carousel navigates left", async () => {
