@@ -60,8 +60,12 @@
     justify-content: center;
     padding: 0 0.75rem;
     box-sizing: border-box;
-    transition: visibility 0.5s linear;
-    will-change: visibility;
+    transition: opacity 0.5s linear;
+    will-change: opacity;
+}
+
+.ui5-carousel-item--hidden {
+    opacity: 0;
 }
 
 .ui5-carousel-navigation-arrows {
