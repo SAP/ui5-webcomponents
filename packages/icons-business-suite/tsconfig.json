@@ -1,8 +1,8 @@
 {
 	"include": ["src/**/*", "global.d.ts"],
 	"compilerOptions": {
-		"target": "ES2021",
-		"module": "ESNext",
+		"target": "es2022",
+		"module": "es2022",
 		// Generate d.ts files
 		"declaration": true,
 		"outDir": "dist",
