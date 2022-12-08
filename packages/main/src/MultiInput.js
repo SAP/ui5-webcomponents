@@ -325,7 +325,7 @@ class MultiInput extends Input {
 			);
 		}
 
-		this.style.setProperty("--_ui5_input_has_tokens", this.tokens && this.tokens.length > 0 ? 1 : 0);
+		this.style.setProperty("--_ui5_input_has_tokens", this.isTokenizerAvailable ? 1 : 0);
 	}
 
 	get tokenizer() {

@@ -670,8 +670,8 @@ class Input extends UI5Element {
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
-		const numIcons = this.effectiveShowClearIcon + (this.icon ? this.icon.length : 0);
-		this.style.setProperty("--_ui5-input-icons-count", numIcons || 0);
+		const numIcons = (this.effectiveShowClearIcon ? 0 : 1) + (this.icon ? this.icon.length : 0);
+		this.style.setProperty("--_ui5-input-icons-count", numIcons);
 
 		this.FormSupport = getFeature("FormSupport");
 		const hasItems = this.suggestionItems.length;
