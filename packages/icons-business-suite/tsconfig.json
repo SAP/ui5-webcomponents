@@ -1,0 +1,15 @@
+{
+	"include": ["src/**/*", "global.d.ts"],
+	"compilerOptions": {
+		"target": "ES2021",
+		"module": "ESNext",
+		// Generate d.ts files
+		"declaration": true,
+		"outDir": "dist",
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+	},
+}
