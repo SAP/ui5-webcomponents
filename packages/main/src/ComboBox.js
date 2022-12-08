@@ -434,7 +434,6 @@ class ComboBox extends UI5Element {
 
 		const numIcons = (this.icon ? this.icon.length : 0) + (this.readonly ? 0 : 1);
 		this.style.setProperty("--_ui5-input-icons-count", numIcons || 0);
-
 	}
 
 	async onAfterRendering() {
