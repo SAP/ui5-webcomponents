@@ -2,8 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import {
 	isTabNext,
 	isSpace,
@@ -13,13 +17,18 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListMode from "./types/ListMode.js";
 import ListGrowingMode from "./types/ListGrowingMode.js";
+import ListItemBase from "./ListItemBase.js";
+import ListItem from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
+// @ts-ignore
 import BusyIndicator from "./BusyIndicator.js";
 
 // Template
@@ -34,346 +43,19 @@ import {
 	LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE,
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 const PAGE_UP_DOWN_SIZE = 10;
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-list",
-	managedSlots: true,
-	fastNavigation: true,
-	slots: /** @lends sap.ui.webc.main.List.prototype */ {
-
-		/**
-		 * Defines the component header.
-		 * <br><br>
-		 * <b>Note:</b> When <code>header</code> is set, the
-		 * <code>headerText</code> property is ignored.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		header: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the items of the component.
-		 * <br><br>
-		 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
-		 *
-		 * @type {sap.ui.webc.main.IListItem[]}
-		 * @slot items
-		 * @public
-		 */
-		"default": {
-			propertyName: "items",
-			type: HTMLElement,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.List.prototype */ {
-
-		/**
-		 * Defines the component header text.
-		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> is set this property is ignored.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		headerText: {
-			type: String,
-		},
-
-		/**
-		 * Defines the footer text.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		footerText: {
-			type: String,
-		},
-
-		/**
-		 * Determines whether the component is indented.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		indent: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the mode of the component.
-		 * <br><br>
-		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
-		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
-		 *
-		 * @type {sap.ui.webc.main.types.ListMode}
-		 * @defaultvalue "None"
-		 * @public
-		 */
-		mode: {
-			type: ListMode,
-			defaultValue: ListMode.None,
-		},
-
-		/**
-		 * Defines the text that is displayed when the component contains no items.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		noDataText: {
-			type: String,
-		},
-
-		/**
-		 * Defines the item separator style that is used.
-		 * <br><br>
-		 * <b>Notes:</b>
-		 * <ul>
-		 * <li>Avalaible options are <code>All</code>, <code>Inner</code>, and <code>None</code>.</li>
-		 * <li>When set to <code>None</code>, none of the items are separated by horizontal lines.</li>
-		 * <li>When set to <code>Inner</code>, the first item doesn't have a top separator and the last
-		 * item doesn't have a bottom separator.</li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.ListSeparators}
-		 * @defaultvalue "All"
-		 * @public
-		 */
-		separators: {
-			type: ListSeparators,
-			defaultValue: ListSeparators.All,
-		},
-
-		/**
-		 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
-		 * or via user scroll. In both cases <code>load-more</code> event is fired.
-		 * <br><br>
-		 *
-		 * Available options:
-		 * <br><br>
-		 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the list,
-		 * pressing of which triggers the <code>load-more</code> event.
-		 * <br>
-		 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the list;
-		 * <br>
-		 * <code>None</code> (default) - The growing is off.
-		 * <br><br>
-		 *
-		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
-		 * on IE the component will fallback to <code>growing="Button"</code>.
-		 * @type {sap.ui.webc.main.types.ListGrowingMode}
-		 * @defaultvalue "None"
-		 * @since 1.0.0-rc.13
-		 * @public
-		 */
-		growing: {
-			type: ListGrowingMode,
-			defaultValue: ListGrowingMode.None,
-		},
-
-		/**
-		 * Defines if the component would display a loading indicator over the list.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @since 1.0.0-rc.6
-		 */
-		busy: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
-		 *
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultValue 1000
-		 * @public
-		 */
-		busyDelay: {
-			type: Integer,
-			defaultValue: 1000,
-		},
-
-		/**
-		 * Defines the accessible name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Defines the IDs of the elements that label the input.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
-			defaultValue: "",
-		},
-
-		/**
-		 * Defines the accessible role of the component.
-		 * <br><br>
-		 * @public
-		 * @type {string}
-		 * @defaultvalue "list"
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleRole: {
-			type: String,
-			defaultValue: "list",
-		},
-
-		/**
-		 * Defines the description for the accessible role of the component.
-		 * @protected
-		 * @type {string}
-		 * @defaultvalue undefined
-		 * @since 1.10.0
-		 */
-		 accessibleRoleDescription: {
-			type: String,
-			defaultValue: undefined,
-			noAttribute: true,
-		},
-
-		/**
-		 * Defines if the entire list is in view port.
-		 * @private
-		 */
-		_inViewport: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the active state of the <code>More</code> button.
-		 * @private
-		 */
-		_loadMoreActive: {
-			type: Boolean,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.List.prototype */ {
-
-		/**
-		 * Fired when an item is activated, unless the item's <code>type</code> property
-		 * is set to <code>Inactive</code>.
-		 *
-		 * @event sap.ui.webc.main.List#item-click
-		 * @allowPreventDefault
-		 * @param {HTMLElement} item The clicked item.
-		 * @public
-		 */
-		"item-click": {
-			detail: {
-				item: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired when the <code>Close</code> button of any item is clicked
-		 * <br><br>
-		 * <b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),
-		 * not to be confused with <code>item-delete</code>.
-		 *
-		 * @event sap.ui.webc.main.List#item-close
-		 * @param {HTMLElement} item the item about to be closed.
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		"item-close": {
-			detail: {
-				item: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired when the <code>Toggle</code> button of any item is clicked.
-		 * <br><br>
-		 * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
-		 *
-		 * @event sap.ui.webc.main.List#item-toggle
-		 * @param {HTMLElement} item the toggled item.
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		"item-toggle": {
-			detail: {
-				item: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired when the Delete button of any item is pressed.
-		 * <br><br>
-		 * <b>Note:</b> A Delete button is displayed on each item,
-		 * when the component <code>mode</code> property is set to <code>Delete</code>.
-		 *
-		 * @event sap.ui.webc.main.List#item-delete
-		 * @param {HTMLElement} item the deleted item.
-		 * @public
-		 */
-		"item-delete": {
-			detail: {
-				item: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired when selection is changed by user interaction
-		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
-		 *
-		 * @event sap.ui.webc.main.List#selection-change
-		 * @param {Array} selectedItems An array of the selected items.
-		 * @param {Array} previouslySelectedItems An array of the previously selected items.
-		 * @public
-		 */
-		"selection-change": {
-			detail: {
-				selectedItems: { type: Array },
-				previouslySelectedItems: { type: Array },
-				targetItem: { type: HTMLElement }, // protected, holds the event target item
-				selectionComponentPressed: { type: Boolean }, // protected, indicates if the user used the selection components to change the selection
-			},
-		},
-
-		/**
-		 * Fired when the user scrolls to the bottom of the list.
-		 * <br><br>
-		 * <b>Note:</b> The event is fired when the <code>growing='Scroll'</code> property is enabled.
-		 *
-		 * @event sap.ui.webc.main.List#load-more
-		 * @public
-		 * @since 1.0.0-rc.6
-		 */
-		"load-more": {},
-	},
-};
+type SelectionChangeEventDetail = {
+	item: ListItemBase,
+	selectionComponentPressed: boolean,
+	selected: boolean,
+	key: string,
+}
 
 /**
  * @class
@@ -442,10 +124,89 @@ const metadata = {
  * @appenddocs StandardListItem CustomListItem GroupHeaderListItem
  * @public
  */
+@customElement("ui5-list")
+@fastNavigation
+@event("item-click", {
+	item: { type: HTMLElement },
+})
+@event("item-toggle", {
+	item: { type: HTMLElement },
+})
+@event("item-delete", {
+	item: { type: HTMLElement },
+})
+@event("selection-change", {
+	selectedItems: { type: Array },
+	previouslySelectedItems: { type: Array<HTMLElement> },
+	targetItem: { type: HTMLElement },
+	selectionComponentPressed: { type: Boolean },
+})
+@event("load-more")
 class List extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	@property()
+	headerText!: string;
+
+	@property()
+	footerText!: string;
+
+	@property({ type: Boolean })
+	indent!: boolean;
+
+	@property({ type: ListMode, defaultValue: ListMode.None })
+	mode!: ListMode;
+
+	@property()
+	noDataText!: string;
+
+	@property({ type: ListSeparators, defaultValue: ListSeparators.All })
+	separators!: ListSeparators;
+
+	@property({ type: ListGrowingMode, defaultValue: ListGrowingMode.None })
+	growing!: ListGrowingMode;
+
+	@property({ type: Boolean })
+	busy!: boolean;
+
+	@property({ validator: Integer, defaultValue: 1000 })
+	busyDelay!: number;
+
+	@property()
+	accessibleName!: string;
+
+	@property()
+	accessibleNameRef!: string;
+
+	@property({ type: String, defaultValue: "list" })
+	accessibleRole!: string;
+
+	@property({ type: String, defaultValue: undefined, noAttribute: true })
+	accessibleRoleDescription?: string;
+
+	@property({ type: Boolean })
+	_inViewport!: boolean;
+
+	@property({ type: Boolean })
+	_loadMoreActive!: boolean;
+
+	@slot({ type: HTMLElement, "default": true })
+	items!: Array<ListItemBase>;
+
+	@slot({ type: HTMLElement })
+	header!: Array<HTMLElement>;
+
+	static i18nBundle: I18nBundle;
+	_previouslyFocusedItem?: HTMLElement | null;
+	_forwardingFocus = false;
+	_previouslySelectedItem = null;
+	resizeListenerAttached = false;
+	listEndObserved = false;
+	_handleResize: () => void;
+	initialIntersection = true;
+	_selectionRequested?: boolean;
+	growingIntersectionObserver?: IntersectionObserver | null;
+	_itemNavigation!: ItemNavigation;
+	_beforeElement?: HTMLElement | null;
+	_afterElement?: HTMLElement | null;
 
 	static get render() {
 		return litRender;
@@ -469,9 +230,7 @@ class List extends UI5Element {
 
 	constructor() {
 		super();
-		this.initItemNavigation();
 
-		// Stores the last focused item within the internal ul element.
 		this._previouslyFocusedItem = null;
 
 		// Indicates that the List is forwarding the focus before or after the internal ul.
@@ -485,14 +244,17 @@ class List extends UI5Element {
 		// Indicates if the IntersectionObserver started observing the List
 		this.listEndObserved = false;
 
-		this.addEventListener("ui5-_press", this.onItemPress.bind(this));
-		this.addEventListener("ui5-close", this.onItemClose.bind(this));
-		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this));
-		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this));
-		this.addEventListener("ui5-_forward-after", this.onForwardAfter.bind(this));
-		this.addEventListener("ui5-_forward-before", this.onForwardBefore.bind(this));
-		this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this));
-		this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this));
+		this.initItemNavigation();
+		this.addEventListener("ui5-_press", this.onItemPress.bind(this) as EventListener);
+		this.addEventListener("ui5-close", this.onItemClose.bind(this) as EventListener);
+		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this) as EventListener);
+		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this) as EventListener);
+		this.addEventListener("ui5-_forward-after", this.onForwardAfter.bind(this) as EventListener);
+		this.addEventListener("ui5-_forward-before", this.onForwardBefore.bind(this) as EventListener);
+		this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this) as EventListener);
+		this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this) as EventListener);
+
+		this._handleResize = this.checkListInViewport.bind(this);
 
 		this._handleResize = this.checkListInViewport.bind(this);
 
@@ -504,7 +266,7 @@ class List extends UI5Element {
 	onExitDOM() {
 		this.unobserveListEnd();
 		this.resizeListenerAttached = false;
-		ResizeHandler.deregister(this.getDomRef(), this._handleResize);
+		ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
 	}
 
 	onBeforeRendering() {
@@ -527,7 +289,7 @@ class List extends UI5Element {
 	attachForResize() {
 		if (!this.resizeListenerAttached) {
 			this.resizeListenerAttached = true;
-			ResizeHandler.register(this.getDomRef(), this._handleResize);
+			ResizeHandler.register(this.getDomRef()!, this._handleResize);
 		}
 	}
 
@@ -544,7 +306,7 @@ class List extends UI5Element {
 	}
 
 	get listEndDOM() {
-		return this.shadowRoot.querySelector(".ui5-list-end-marker");
+		return this.shadowRoot!.querySelector(".ui5-list-end-marker");
 	}
 
 	get hasData() {
@@ -593,15 +355,15 @@ class List extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get ariaLabelModeText() {
+	get ariaLabelModeText(): string | undefined {
 		if (this.isMultiSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
+			return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE as I18nText);
 		}
 		if (this.isSingleSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
+			return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE as I18nText);
 		}
 		if (this.isDelete) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
+			return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE as I18nText);
 		}
 
 		return undefined;
@@ -619,8 +381,8 @@ class List extends UI5Element {
 		return this.growing === ListGrowingMode.Button;
 	}
 
-	get _growingButtonText() {
-		return List.i18nBundle.getText(LOAD_MORE_TEXT);
+	get _growingButtonText(): string {
+		return List.i18nBundle.getText(LOAD_MORE_TEXT as I18nText);
 	}
 
 	get busyIndPosition() {
@@ -664,7 +426,9 @@ class List extends UI5Element {
 			const showBottomBorder = this.separators === ListSeparators.All
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
-			item._mode = this.mode;
+			if (item.hasConfigurableMode) {
+				(item as ListItem)._mode = this.mode;
+			}
 			item.hasBorder = showBottomBorder;
 		});
 
@@ -674,7 +438,7 @@ class List extends UI5Element {
 	async observeListEnd() {
 		if (!this.listEndObserved) {
 			await renderFinished();
-			this.getIntersectionObserver().observe(this.listEndDOM);
+			this.getIntersectionObserver().observe(this.listEndDOM!);
 			this.listEndObserved = true;
 		}
 	}
@@ -687,7 +451,7 @@ class List extends UI5Element {
 		}
 	}
 
-	onInteresection(entries) {
+	onInteresection(entries: Array<IntersectionObserverEntry>) {
 		if (this.initialIntersection) {
 			this.initialIntersection = false;
 			return;
@@ -702,27 +466,27 @@ class List extends UI5Element {
 	/*
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
-	onSelectionRequested(event) {
+	onSelectionRequested(e: CustomEvent<SelectionChangeEventDetail>) {
 		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
 		this._selectionRequested = true;
 
-		if (this[`handle${this.mode}`]) {
-			selectionChange = this[`handle${this.mode}`](event.detail.item, event.detail.selected);
+		if (this.mode !== ListMode.None && this[`handle${this.mode}`]) {
+			selectionChange = this[`handle${this.mode}`](e.detail.item, e.detail.selected);
 		}
 
 		if (selectionChange) {
 			this.fireEvent("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
-				selectionComponentPressed: event.detail.selectionComponentPressed,
-				targetItem: event.detail.item,
-				key: event.detail.key,
+				selectionComponentPressed: e.detail.selectionComponentPressed,
+				targetItem: e.detail.item,
+				key: e.detail.key,
 			});
 		}
 	}
 
-	handleSingleSelect(item) {
+	handleSingleSelect(item: ListItemBase): boolean {
 		if (item.selected) {
 			return false;
 		}
@@ -733,76 +497,78 @@ class List extends UI5Element {
 		return true;
 	}
 
-	handleSingleSelectBegin(item) {
+	handleSingleSelectBegin(item: ListItemBase): boolean {
 		return this.handleSingleSelect(item);
 	}
 
-	handleSingleSelectEnd(item) {
+	handleSingleSelectEnd(item: ListItemBase): boolean {
 		return this.handleSingleSelect(item);
 	}
 
-	handleSingleSelectAuto(item) {
+	handleSingleSelectAuto(item: ListItemBase): boolean {
 		return this.handleSingleSelect(item);
 	}
 
-	handleMultiSelect(item, selected) {
+	handleMultiSelect(item: ListItemBase, selected: boolean): boolean {
 		item.selected = selected;
 		return true;
 	}
 
-	handleDelete(item) {
+	handleDelete(item: ListItemBase): boolean {
 		this.fireEvent("item-delete", { item });
+
+		return true;
 	}
 
 	deselectSelectedItems() {
 		this.getSelectedItems().forEach(item => { item.selected = false; });
 	}
 
-	getSelectedItems() {
+	getSelectedItems(): Array<ListItemBase> {
 		return this.getItems().filter(item => item.selected);
 	}
 
-	getEnabledItems() {
+	getEnabledItems(): Array<ListItemBase> {
 		return this.getItems().filter(item => !item.disabled);
 	}
 
-	getItems() {
-		return this.getSlottedNodes("items");
+	getItems(): Array<ListItemBase> {
+		return this.getSlottedNodes("items") as Array<ListItemBase>;
 	}
 
-	_onkeydown(event) {
-		if (isTabNext(event)) {
-			this._handleTabNext(event);
+	_onkeydown(e: KeyboardEvent) {
+		if (isTabNext(e)) {
+			this._handleTabNext(e);
 		}
 	}
 
-	_onLoadMoreKeydown(event) {
-		if (isSpace(event)) {
-			event.preventDefault();
+	_onLoadMoreKeydown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
 			this._loadMoreActive = true;
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			this._onLoadMoreClick();
 			this._loadMoreActive = true;
 		}
 
-		if (isTabNext(event)) {
+		if (isTabNext(e)) {
 			this.focusAfterElement();
 		}
 
-		if (isTabPrevious(event)) {
+		if (isTabPrevious(e)) {
 			if (this.getPreviouslyFocusedItem()) {
 				this.focusPreviouslyFocusedItem();
 			} else {
 				this.focusFirstItem();
 			}
-			event.preventDefault();
+			e.preventDefault();
 		}
 	}
 
-	_onLoadMoreKeyup(event) {
-		if (isSpace(event)) {
+	_onLoadMoreKeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
 			this._onLoadMoreClick();
 		}
 		this._loadMoreActive = false;
@@ -821,7 +587,7 @@ class List extends UI5Element {
 	}
 
 	checkListInViewport() {
-		this._inViewport = isElementInView(this.getDomRef());
+		this._inViewport = isElementInView(this.getDomRef()!);
 	}
 
 	loadMore() {
@@ -831,16 +597,9 @@ class List extends UI5Element {
 	/*
 	* KEYBOARD SUPPORT
 	*/
-	_handleTabNext(event) {
-		// If forward navigation is performed, we check if the List has headerToolbar.
-		// If yes - we check if the target is at the last tabbable element of the headerToolbar
-		// to forward correctly the focus to the selected, previously focused or to the first list item.
+	_handleTabNext(e: KeyboardEvent) {
 		let lastTabbableEl;
-		const target = this.getNormalizedTarget(event.target);
-
-		if (this.headerToolbar) {
-			lastTabbableEl = this.getHeaderToolbarLastTabbableElement();
-		}
+		const target = getNormalizedTarget(e.target as HTMLElement);
 
 		if (!lastTabbableEl) {
 			return;
@@ -855,16 +614,16 @@ class List extends UI5Element {
 				this.focusFirstItem();
 			}
 
-			event.stopImmediatePropagation();
-			event.preventDefault();
+			e.stopImmediatePropagation();
+			e.preventDefault();
 		}
 	}
 
-	_onfocusin(event) {
-		const target = this.getNormalizedTarget(event.target);
-		// If the focusin event does not origin from one of the 'triggers' - ignore it.
+	_onfocusin(e: FocusEvent) {
+		const target = getNormalizedTarget(e.target as HTMLElement);
+		// If the focusin e does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(target)) {
-			event.stopImmediatePropagation();
+			e.stopImmediatePropagation();
 			return;
 		}
 
@@ -876,7 +635,7 @@ class List extends UI5Element {
 			} else {
 				this.focusFirstItem();
 			}
-			event.stopImmediatePropagation();
+			e.stopImmediatePropagation();
 			return;
 		}
 
@@ -885,18 +644,18 @@ class List extends UI5Element {
 		if (!this.getForwardingFocus()) {
 			if (this.growsWithButton && this.isForwardAfterElement(target)) {
 				this.focusGrowingButton();
-				event.stopImmediatePropagation();
+				e.stopImmediatePropagation();
 				return;
 			}
 
 			this.focusPreviouslyFocusedItem();
-			event.stopImmediatePropagation();
+			e.stopImmediatePropagation();
 		}
 
 		this.setForwardingFocus(false);
 	}
 
-	isForwardElement(node) {
+	isForwardElement(node: HTMLElement) {
 		const nodeId = node.id;
 		const beforeElement = this.getBeforeElement();
 
@@ -907,17 +666,17 @@ class List extends UI5Element {
 		return this.isForwardAfterElement(node);
 	}
 
-	isForwardAfterElement(node) {
+	isForwardAfterElement(node: HTMLElement) {
 		const nodeId = node.id;
 		const afterElement = this.getAfterElement();
 
 		return afterElement && afterElement.id === nodeId;
 	}
 
-	onItemFocused(event) {
-		const target = event.target;
+	onItemFocused(e: CustomEvent) {
+		const target = e.target as HTMLElement;
 
-		event.stopPropagation();
+		e.stopPropagation();
 
 		this._itemNavigation.setCurrentItem(target);
 		this.fireEvent("item-focused", { item: target });
@@ -928,14 +687,14 @@ class List extends UI5Element {
 					item: target,
 					selectionComponentPressed: false,
 					selected: true,
-					key: event.detail.key,
+					key: e.detail.key,
 				},
-			});
+			} as CustomEvent<SelectionChangeEventDetail>);
 		}
 	}
 
-	onItemPress(event) {
-		const pressedItem = event.detail.item;
+	onItemPress(e: CustomEvent) {
+		const pressedItem = e.detail.item;
 
 		if (!this.fireEvent("item-click", { item: pressedItem }, true)) {
 			return;
@@ -948,40 +707,40 @@ class List extends UI5Element {
 					item: pressedItem,
 					selectionComponentPressed: false,
 					selected: !pressedItem.selected,
-					key: event.detail.key,
+					key: e.detail.key,
 				},
-			});
+			} as CustomEvent<SelectionChangeEventDetail>);
 		}
 
 		this._selectionRequested = false;
 	}
 
 	// This is applicable to NoficationListItem
-	onItemClose(event) {
-		this.fireEvent("item-close", { item: event.detail.item });
+	onItemClose(e: CustomEvent) {
+		this.fireEvent("item-close", { item: e.detail.item });
 	}
 
-	onItemToggle(event) {
-		this.fireEvent("item-toggle", { item: event.detail.item });
+	onItemToggle(e: CustomEvent) {
+		this.fireEvent("item-toggle", { item: e.detail.item });
 	}
 
-	onForwardBefore(event) {
-		this.setPreviouslyFocusedItem(event.target);
+	onForwardBefore(e: CustomEvent) {
+		this.setPreviouslyFocusedItem(e.target as HTMLElement);
 		this.focusBeforeElement();
-		event.stopPropagation();
+		e.stopPropagation();
 	}
 
-	onForwardAfter(event) {
-		this.setPreviouslyFocusedItem(event.target);
+	onForwardAfter(e: CustomEvent) {
+		this.setPreviouslyFocusedItem(e.target as HTMLElement);
 
 		if (!this.growsWithButton) {
 			this.focusAfterElement();
 		} else {
 			this.focusGrowingButton();
-			event.preventDefault();
+			e.preventDefault();
 		}
 
-		event.stopPropagation();
+		e.stopPropagation();
 	}
 
 	focusBeforeElement() {
@@ -1003,7 +762,7 @@ class List extends UI5Element {
 	}
 
 	getGrowingButton() {
-		return this.shadowRoot.querySelector(`#${this._id}-growing-btn`);
+		return this.shadowRoot!.querySelector(`#${this._id}-growing-btn`) as HTMLElement;
 	}
 
 	/**
@@ -1041,19 +800,19 @@ class List extends UI5Element {
 	 * @protected
 	 * @param item
 	 */
-	focusItem(item) {
+	focusItem(item: HTMLElement) {
 		this._itemNavigation.setCurrentItem(item);
 		item.focus();
 	}
 
-	focusUploadCollectionItem(event) {
+	focusUploadCollectionItem(e: Event) {
 		setTimeout(() => {
-			this.setPreviouslyFocusedItem(event.target);
+			this.setPreviouslyFocusedItem(e.target as HTMLElement);
 			this.focusPreviouslyFocusedItem();
 		}, 0);
 	}
 
-	setForwardingFocus(forwardingFocus) {
+	setForwardingFocus(forwardingFocus: boolean) {
 		this._forwardingFocus = forwardingFocus;
 	}
 
@@ -1061,7 +820,7 @@ class List extends UI5Element {
 		return this._forwardingFocus;
 	}
 
-	setPreviouslyFocusedItem(item) {
+	setPreviouslyFocusedItem(item: HTMLElement) {
 		this._previouslyFocusedItem = item;
 	}
 
@@ -1069,7 +828,7 @@ class List extends UI5Element {
 		return this._previouslyFocusedItem;
 	}
 
-	getFirstItem(filter) {
+	getFirstItem(filter: (item: ListItemBase) => boolean) {
 		const slottedItems = this.getItems();
 		let firstItem = null;
 
@@ -1089,30 +848,16 @@ class List extends UI5Element {
 
 	getAfterElement() {
 		if (!this._afterElement) {
-			this._afterElement = this.shadowRoot.querySelector(`#${this._id}-after`);
+			this._afterElement = this.shadowRoot!.querySelector(`#${this._id}-after`) as HTMLElement;
 		}
 		return this._afterElement;
 	}
 
 	getBeforeElement() {
 		if (!this._beforeElement) {
-			this._beforeElement = this.shadowRoot.querySelector(`#${this._id}-before`);
+			this._beforeElement = this.shadowRoot!.querySelector(`#${this._id}-before`) as HTMLElement;
 		}
 		return this._beforeElement;
-	}
-
-	getHeaderToolbarLastTabbableElement() {
-		return getLastTabbableElement(this.headerToolbar.getDomRef()) || this.headerToolbar.getDomRef();
-	}
-
-	getNormalizedTarget(target) {
-		let focused = target;
-
-		if (target.shadowRoot && target.shadowRoot.activeElement) {
-			focused = target.shadowRoot.activeElement;
-		}
-
-		return focused;
 	}
 
 	getIntersectionObserver() {
