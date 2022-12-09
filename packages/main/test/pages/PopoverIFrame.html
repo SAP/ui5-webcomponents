@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html class="popover1auto">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>Popover</title>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN",
+			"libs": "sap.ui.webcomponents.main"
+		}
+	</script>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+</head>
+
+<body class="sapUiSizeCompact">
+	<div>
+		<ui5-popover id="popup" tabindex="-1">
+			<input>
+			<button>button</button>
+			<h1>Hello world</h1>
+		</ui5-popover>
+	</div>
+
+	<!-- Application code -->
+	<div>
+		<button id="btn">Open Popover</button>
+
+		<iframe src="http://localhost:8080/packages/main/test/pages/Popover.html"></iframe>
+	</div>
+	<script>
+		document.getElementById("btn").addEventListener("click", (event) => {
+			const popup = document.getElementById("popup");
+
+			popup.showAt(event.target);
+		});
+
+	</script>
+</body>
+
+</html>

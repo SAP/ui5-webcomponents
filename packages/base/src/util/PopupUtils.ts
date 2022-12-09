@@ -28,6 +28,10 @@ const isFocusedElementWithinNode = (node: HTMLElement) => {
 const isNodeContainedWithin = (parent: HTMLElement, child: HTMLElement): boolean => {
 	let currentNode: HTMLElement | undefined = parent;
 
+	if (currentNode === child) {
+		return true;
+	}
+
 	if (currentNode.shadowRoot) {
 		const children = Array.from(currentNode.shadowRoot.children) as Array<HTMLElement>;
 		currentNode = children.find(n => n.localName !== "style");
@@ -35,10 +39,6 @@ const isNodeContainedWithin = (parent: HTMLElement, child: HTMLElement): boolean
 		if (!currentNode) {
 			return false;
 		}
-	}
-
-	if (currentNode === child) {
-		return true;
 	}
 
 	const childNodes = currentNode.localName === "slot" ? (currentNode as HTMLSlotElement).assignedNodes() : currentNode.children;
@@ -59,13 +59,13 @@ const isClickInRect = (event: MouseEvent | TouchEvent, rect: DOMRect) => {
 	let x;
 	let y;
 
-	if (event instanceof TouchEvent) {
+	if (event instanceof MouseEvent) {
+		x = event.clientX;
+		y = event.clientY;
+	} else {
 		const touch = event.touches[0];
 		x = touch.clientX;
 		y = touch.clientY;
-	} else {
-		x = event.clientX;
-		y = event.clientY;
 	}
 
 	return isPointInRect(x, y, rect);
