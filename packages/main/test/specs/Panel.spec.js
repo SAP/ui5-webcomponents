@@ -195,7 +195,6 @@ describe("Panel general interaction", () => {
 			assert.notOk(await heading.getAttribute("role"), "heading role should not be set when a header slot is used");
 
 			assert.ok(await button.getAttribute("aria-expanded"), "aria-expanded should be set on the button");
-			assert.ok(await button.getAttribute("aria-controls"), "aria-controls should be set on the button");
 			assert.ok(await button.getAttribute("title"), "title should be set on the button");
 
 			await browser.$("#panel2").setAttribute("accessible-name", "New accessible name");
