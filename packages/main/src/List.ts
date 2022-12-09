@@ -4,6 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
+import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -45,7 +46,6 @@ import {
 	ARIA_LABEL_LIST_DELETABLE,
 	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
-import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
