@@ -1,4 +1,5 @@
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ListItem from "./ListItem.js";
@@ -74,9 +75,9 @@ class CustomListItem extends ListItem {
 		super._onkeyup(e);
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		const result = super.classes;
-		// @ts-ignore
+
 		result.main["ui5-custom-li-root"] = true;
 
 		return result;

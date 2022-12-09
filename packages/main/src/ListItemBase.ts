@@ -1,6 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -137,7 +137,7 @@ abstract class ListItemBase extends UI5Element implements ITabbable {
 		return this.getFocusDomRef() === target;
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		return {
 			main: {
 				"ui5-li-root": true,

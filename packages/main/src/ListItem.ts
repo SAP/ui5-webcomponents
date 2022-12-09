@@ -205,7 +205,7 @@ abstract class ListItem extends ListItemBase {
 	constructor() {
 		super();
 
-		this.deactivateByKey = e => {
+		this.deactivateByKey = (e: KeyboardEvent) => {
 			if (isEnter(e)) {
 				this.deactivate();
 			}

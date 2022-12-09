@@ -45,6 +45,7 @@ import {
 	ARIA_LABEL_LIST_DELETABLE,
 	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
+import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -474,14 +475,6 @@ class List extends UI5Element {
 		this.listEndObserved = false;
 
 		this.initItemNavigation();
-		this.addEventListener("ui5-_press", this.onItemPress.bind(this) as EventListener);
-		this.addEventListener("ui5-close", this.onItemClose.bind(this) as EventListener);
-		this.addEventListener("ui5-toggle", this.onItemToggle.bind(this) as EventListener);
-		this.addEventListener("ui5-_focused", this.onItemFocused.bind(this) as EventListener);
-		this.addEventListener("ui5-_forward-after", this.onForwardAfter.bind(this) as EventListener);
-		this.addEventListener("ui5-_forward-before", this.onForwardBefore.bind(this) as EventListener);
-		this.addEventListener("ui5-_selection-requested", this.onSelectionRequested.bind(this) as EventListener);
-		this.addEventListener("ui5-_focus-requested", this.focusUploadCollectionItem.bind(this) as EventListener);
 
 		this._handleResize = this.checkListInViewport.bind(this);
 
@@ -630,7 +623,7 @@ class List extends UI5Element {
 		};
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		return {
 			root: {
 				"ui5-list-root": true,

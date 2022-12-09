@@ -9,7 +9,11 @@ type StyleDataCSP = {
 
 type StyleData = StyleDataCSP | string;
 
-type ComponentStylesData = Array<StyleData> | StyleData;
+type ComponentStylesData = Array<ComponentStylesData> | Array<StyleData> | StyleData;
+
+type ClassMapValue = Record<string, boolean>
+
+type ClassMap = { [x: string] : ClassMapValue | ClassMap };
 
 export type {
 	PromiseResolve,
@@ -17,4 +21,5 @@ export type {
 	StyleData,
 	StyleDataCSP,
 	ComponentStylesData,
+	ClassMap,
 };
