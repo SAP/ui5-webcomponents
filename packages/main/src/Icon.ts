@@ -185,6 +185,8 @@ class Icon extends UI5Element {
 
 	/**
 	 * Defines whether the component should have a tooltip.
+	 * <br><br>
+	 * <b>Note:</b> The tooltip text should be provided via the <code>accessible-name</code> property.
 	 *
 	 * @name sap.ui.webc.main.Icon.prototype.showTooltip
 	 * @type {boolean}
