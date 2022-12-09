@@ -17,6 +17,8 @@ sap/ui/core/CalendarType.js
 sap/ui/core/Locale.js
 sap/ui/core/LocaleData.js
 sap/ui/core/date/Buddhist.js
+sap/ui/core/date/CalendarUtils.js
+sap/ui/core/date/CalendarWeekNumbering.js
 sap/ui/core/date/Gregorian.js
 sap/ui/core/date/Islamic.js
 sap/ui/core/date/Japanese.js
