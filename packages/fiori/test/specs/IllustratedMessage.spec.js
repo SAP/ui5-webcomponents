@@ -28,6 +28,26 @@ describe("IllustratedMessage 'size' property", () => {
 		assert.strictEqual(illustratedMsgSize, "Auto", "'size' should be equal to 'Auto' when invalid value is passed");
 	});
 
+	it("should show up properly, when in panel and it expand/collapse", async () => {
+		// Arrange
+		const illustratedMsg = await browser.$("#illustratedMsg4");
+		const panel = await browser.$("#panel1");
+		let illustratedMsgMedia = await illustratedMsg.getProperty("media");
+		// Act
+
+		await panel.setProperty("collapsed", true);
+		illustratedMsgMedia = await illustratedMsg.getProperty("media");
+
+		// Assert
+		assert.strictEqual(illustratedMsgMedia, "base", "'media' should be equal to 'base', when the panel is collapsed");
+
+		await panel.setProperty("collapsed", false);
+		illustratedMsgMedia = await illustratedMsg.getProperty("media");
+
+		// Assert
+		assert.strictEqual(illustratedMsgMedia !== "base", true, "'media' shouldn`t anymore be equal to 'base', when panel is expanded");
+
+	});
 
 });
 

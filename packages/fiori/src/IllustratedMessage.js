@@ -340,6 +340,7 @@ class IllustratedMessage extends UI5Element {
 
 		this._handleResize = this.handleResize.bind(this);
 		this._lastKnownOffsetWidthForMedia = {}; // this will store the last known offsetWidth of the IllustratedMessage DOM node for a given media (e.g. "Spot")
+		this._lastKnownMedia = "base";// last media hit breakpoint will be cached here
 	}
 
 	static get metadata() {
@@ -441,9 +442,10 @@ class IllustratedMessage extends UI5Element {
 			newMedia = IllustratedMessage.MEDIA.SCENE;
 		}
 		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia];
-		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth)) { // prevents infinite resize
+		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth) || this._lastKnownOffsetWidthForMedia[this._lastKnownMedia] === 0) { // prevents infinite resize
 			this.media = newMedia;
 			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
+			this._lastKnownMedia = newMedia;
 		}
 	}
 
