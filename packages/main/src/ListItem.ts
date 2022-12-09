@@ -56,39 +56,128 @@ interface IAccessibleListItem {
 @event("_press")
 @event("_selection-requested")
 abstract class ListItem extends ListItemBase {
+	/**
+	 * Defines the visual indication and behavior of the list items.
+	 * Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>.
+	 * <br><br>
+	 * <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover,
+	 * while with type <code>Inactive</code> and <code>Detail</code> - will not.
+	 *
+	 * @type {sap.ui.webc.main.types.ListItemType}
+	 * @name sap.ui.webc.main.ListItem.prototype.type
+	 * @defaultvalue "Active"
+	 * @public
+	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
 	type!: ListItemType;
 
+	/**
+	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ListItem.prototype.active
+	 * @private
+	*/
 	@property({ type: Boolean })
 	active!: boolean;
 
+	/**
+	 * Defines the tooltip of the component.
+	 * @type {string}
+	 * @name sap.ui.webc.main.ListItem.prototype.title
+	 * @defaultvalue ""
+	 * @private
+	 * @since 1.0.0-rc.15
+	 */
 	@property()
 	title!: string;
 
+	/**
+	 * Indicates if the list item is actionable, e.g has hover and pressed effects.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ListItem.prototype.actionable
+	 * @private
+	*/
 	@property({ type: Boolean })
 	actionable!: boolean;
 
+	/**
+	 * Used to define the role of the list item.
+	 *
+	 * @private
+	 * @type {string}
+	 * @name sap.ui.webc.main.ListItem.prototype.role
+	 * @defaultvalue "listitem"
+	 * @since 1.0.0-rc.9
+	 *
+	 */
 	@property({ defaultValue: "listitem" })
 	role!: string;
 
+	/**
+	 * Defines the description for the accessible role of the component.
+	 * @protected
+	 * @type {string}
+	 * @name sap.ui.webc.main.ListItem.prototype.accessibleRoleDescription
+	 * @defaultvalue undefined
+	 * @since 1.10.0
+	 */
 	@property({ defaultValue: undefined, noAttribute: true })
 	accessibleRoleDescription?: string;
 
+	/**
+	 * Used to define the role of the list item.
+	 *
+	 * @private
+	 * @type {string}
+	 * @name sap.ui.webc.main.ListItem.prototype.accessibleRole
+	 * @defaultvalue ""
+	 * @since 1.3.0
+	 *
+	 */
 	@property()
 	accessibleRole!: string;
 
 	@property({ type: ListMode, defaultValue: ListMode.None })
 	_mode!: ListMode;
 
+	/**
+	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
+	 * @type {sap.ui.webc.main.types.HasPopup}
+	 * @name sap.ui.webc.main.ListItem.prototype.ariaHaspopup
+	 * @since 1.10.0
+	 * @private
+	 */
 	@property({ type: HasPopup, noAttribute: true })
 	ariaHaspopup?: HasPopup;
 
+	/**
+	 * The navigated state of the list item.
+	 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+	 *
+	 * @public
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ListItem.prototype.navigated
+	 * @since 1.10.0
+	 */
 	@property({ type: Boolean })
 	navigated!: boolean;
 
 	@property({ type: Integer })
 	_level?: number;
 
+	/**
+	 * Defines the delete button, displayed in "Delete" mode.
+	 * <b>Note:</b> While the slot allows custom buttons, to match
+	 * design guidelines, please use the <code>ui5-button</code> component.
+	 * <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.
+	 * @type {sap.ui.webc.main.IButton}
+	 * @name sap.ui.webc.main.ListItem.prototype.deleteButton
+	 * @since 1.9.0
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	deleteButton!: Array<HTMLElement>;
 
@@ -102,7 +191,7 @@ abstract class ListItem extends ListItemBase {
 	static i18nBundle: I18nBundle;
 
 	static get styles(): ComponentStylesData {
-		return [ListItemBase.styles, styles] as ComponentStylesData;
+		return [ListItemBase.styles, styles];
 	}
 
 	static get dependencies() {
@@ -346,18 +435,14 @@ abstract class ListItem extends ListItemBase {
 		return !!this.deleteButton.length;
 	}
 
-	get _accessibleNameRef() {
-		if (this.hasAccesibleName && (this as IAccessibleListItem).accessibleName) {
+	get _accessibleNameRef(): string {
+		if ((this as IAccessibleListItem).accessibleName) {
 			// accessibleName is set - return labels excluding content
 			return `${this._id}-invisibleText`;
 		}
 
 		// accessibleName is not set - return _accInfo.listItemAriaLabel including content
 		return `${this._id}-content ${this._id}-invisibleText`;
-	}
-
-	get hasAccesibleName() {
-		return false;
 	}
 
 	get _accInfo() {

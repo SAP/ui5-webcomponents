@@ -25,20 +25,45 @@ import styles from "./generated/themes/ListItemBase.css.js";
 @event("_forward-after")
 @event("_forward-before")
 abstract class ListItemBase extends UI5Element implements ITabbable {
-	@property({ type: Boolean })
-	disabled!: boolean;
-
-	@property({ type: Boolean })
-	focused!: boolean;
-
-	@property({ type: Boolean })
-	hasBorder!: boolean;
-
+	/**
+	 * Defines the selected state of the <code>ListItem</code>.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ListItemBase.prototype.selected
+	 * @defaultvalue false
+	 * @public
+	 */
 	@property({ type: Boolean })
 	selected!: boolean;
 
+	/**
+	* Defines if the list item should display its bottom border.
+	* @private
+	*/
+	@property({ type: Boolean })
+	hasBorder!: boolean;
+
 	@property({ defaultValue: "-1", noAttribute: true })
 	_tabIndex!: string;
+
+	/**
+	* Defines whether <code>ui5-li</code> is in disabled state.
+	* <br><br>
+	* <b>Note:</b> A disabled <code>ui5-li</code> is noninteractive.
+	* @type {boolean}
+	* @name sap.ui.webc.main.ListItemBase.prototype.disabled
+	* @defaultvalue false
+	* @protected
+	* @since 1.0.0-rc.12
+	*/
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Indicates if the element is on focus
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	static get render() {
 		return litRender;
@@ -131,10 +156,10 @@ abstract class ListItemBase extends UI5Element implements ITabbable {
 
 	get _effectiveTabIndex() {
 		if (this.disabled) {
-			return -1;
+			return "-1";
 		}
 		if (this.selected) {
-			return 0;
+			return "0";
 		}
 		return this._tabIndex;
 	}

@@ -50,7 +50,7 @@ const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 const PAGE_UP_DOWN_SIZE = 10;
 
-type SelectionChangeEventDetail = {
+type SelectionRequestEventDetail = {
 	item: ListItemBase,
 	selectionComponentPressed: boolean,
 	selected: boolean,
@@ -126,82 +126,313 @@ type SelectionChangeEventDetail = {
  */
 @customElement("ui5-list")
 @fastNavigation
+
+/**
+ * Fired when an item is activated, unless the item's <code>type</code> property
+ * is set to <code>Inactive</code>.
+ *
+ * @event sap.ui.webc.main.List#item-click
+ * @allowPreventDefault
+ * @param {HTMLElement} item The clicked item.
+ * @public
+ */
 @event("item-click", {
 	item: { type: HTMLElement },
 })
+
+/**
+ * Fired when the <code>Close</code> button of any item is clicked
+ * <br><br>
+ * <b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),
+ * not to be confused with <code>item-delete</code>.
+ *
+ * @event sap.ui.webc.main.List#item-close
+ * @param {HTMLElement} item the item about to be closed.
+ * @public
+ * @since 1.0.0-rc.8
+ */
+@event("item-close", {
+	item: { type: HTMLElement },
+})
+
+/**
+ * Fired when the <code>Toggle</code> button of any item is clicked.
+ * <br><br>
+ * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
+ *
+ * @event sap.ui.webc.main.List#item-toggle
+ * @param {HTMLElement} item the toggled item.
+ * @public
+ * @since 1.0.0-rc.8
+ */
 @event("item-toggle", {
 	item: { type: HTMLElement },
 })
+
+/**
+ * Fired when the Delete button of any item is pressed.
+ * <br><br>
+ * <b>Note:</b> A Delete button is displayed on each item,
+ * when the component <code>mode</code> property is set to <code>Delete</code>.
+ *
+ * @event sap.ui.webc.main.List#item-delete
+ * @param {HTMLElement} item the deleted item.
+ * @public
+ */
 @event("item-delete", {
 	item: { type: HTMLElement },
 })
+
+/**
+ * Fired when selection is changed by user interaction
+ * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
+ *
+ * @event sap.ui.webc.main.List#selection-change
+ * @param {Array} selectedItems An array of the selected items.
+ * @param {Array} previouslySelectedItems An array of the previously selected items.
+ * @public
+ */
 @event("selection-change", {
 	selectedItems: { type: Array },
 	previouslySelectedItems: { type: Array<HTMLElement> },
 	targetItem: { type: HTMLElement },
 	selectionComponentPressed: { type: Boolean },
 })
+
+/**
+ * Fired when the user scrolls to the bottom of the list.
+ * <br><br>
+ * <b>Note:</b> The event is fired when the <code>growing='Scroll'</code> property is enabled.
+ *
+ * @event sap.ui.webc.main.List#load-more
+ * @public
+ * @since 1.0.0-rc.6
+ */
 @event("load-more")
 class List extends UI5Element {
+	/**
+	 * Defines the component header text.
+	 * <br><br>
+	 * <b>Note:</b> If <code>header</code> is set this property is ignored.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.List.prototype.headerText
+	 * @defaultvalue ""
+	 * @public
+	 */
 	@property()
 	headerText!: string;
 
+	/**
+	 * Defines the footer text.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.List.prototype.footerText
+	 * @defaultvalue ""
+	 * @public
+	 */
 	@property()
 	footerText!: string;
 
+	/**
+	 * Determines whether the component is indented.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.List.prototype.indent
+	 * @defaultvalue false
+	 * @public
+	 */
 	@property({ type: Boolean })
 	indent!: boolean;
 
+	/**
+	 * Defines the mode of the component.
+	 * <br><br>
+	 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
+	 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
+	 *
+	 * @type {sap.ui.webc.main.types.ListMode}
+	 * @name sap.ui.webc.main.List.prototype.mode
+	 * @defaultvalue "None"
+	 * @public
+	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
 	mode!: ListMode;
 
+	/**
+	 * Defines the text that is displayed when the component contains no items.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.List.prototype.noDataText
+	 * @defaultvalue ""
+	 * @public
+	 */
 	@property()
 	noDataText!: string;
 
+	/**
+	 * Defines the item separator style that is used.
+	 * <br><br>
+	 * <b>Notes:</b>
+	 * <ul>
+	 * <li>Avalaible options are <code>All</code>, <code>Inner</code>, and <code>None</code>.</li>
+	 * <li>When set to <code>None</code>, none of the items are separated by horizontal lines.</li>
+	 * <li>When set to <code>Inner</code>, the first item doesn't have a top separator and the last
+	 * item doesn't have a bottom separator.</li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.ListSeparators}
+	 * @name sap.ui.webc.main.List.prototype.separators
+	 * @defaultvalue "All"
+	 * @public
+	 */
 	@property({ type: ListSeparators, defaultValue: ListSeparators.All })
 	separators!: ListSeparators;
 
+	/**
+	 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
+	 * or via user scroll. In both cases <code>load-more</code> event is fired.
+	 * <br><br>
+	 *
+	 * Available options:
+	 * <br><br>
+	 * <code>Button</code> - Shows a <code>More</code> button at the bottom of the list,
+	 * pressing of which triggers the <code>load-more</code> event.
+	 * <br>
+	 * <code>Scroll</code> - The <code>load-more</code> event is triggered when the user scrolls to the bottom of the list;
+	 * <br>
+	 * <code>None</code> (default) - The growing is off.
+	 * <br><br>
+	 *
+	 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
+	 * on IE the component will fallback to <code>growing="Button"</code>.
+	 * @type {sap.ui.webc.main.types.ListGrowingMode}
+	 * @name sap.ui.webc.main.List.prototype.growing
+	 * @defaultvalue "None"
+	 * @since 1.0.0-rc.13
+	 * @public
+	 */
 	@property({ type: ListGrowingMode, defaultValue: ListGrowingMode.None })
 	growing!: ListGrowingMode;
 
+	/**
+	 * Defines if the component would display a loading indicator over the list.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.List.prototype.busy
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.0.0-rc.6
+	 */
 	@property({ type: Boolean })
 	busy!: boolean;
 
+	/**
+	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+	 *
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.List.prototype.busyDelay
+	 * @defaultValue 1000
+	 * @public
+	 */
 	@property({ validator: Integer, defaultValue: 1000 })
 	busyDelay!: number;
 
+	/**
+	 * Defines the accessible name of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.List.prototype.accessibleName
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
 	@property()
 	accessibleName!: string;
 
+	/**
+	 * Defines the IDs of the elements that label the input.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.List.prototype.accessibleNameRef
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
 	@property()
 	accessibleNameRef!: string;
 
+	/**
+	 * Defines the accessible role of the component.
+	 * <br><br>
+	 * @public
+	 * @type {string}
+	 * @name sap.ui.webc.main.List.prototype.accessibleRole
+	 * @defaultvalue "list"
+	 * @since 1.0.0-rc.15
+	 */
 	@property({ type: String, defaultValue: "list" })
 	accessibleRole!: string;
 
+	/**
+	 * Defines the description for the accessible role of the component.
+	 * @protected
+	 * @type {string}
+	 * @name sap.ui.webc.main.List.prototype.accessibleRoleDescription
+	 * @defaultvalue undefined
+	 * @since 1.10.0
+	 */
 	@property({ type: String, defaultValue: undefined, noAttribute: true })
 	accessibleRoleDescription?: string;
 
+	/**
+	 * Defines if the entire list is in view port.
+	 * @private
+	 */
 	@property({ type: Boolean })
 	_inViewport!: boolean;
 
+	/**
+	 * Defines the active state of the <code>More</code> button.
+	 * @private
+	 */
 	@property({ type: Boolean })
 	_loadMoreActive!: boolean;
 
+	/**
+	 * Defines the items of the component.
+	 * <br><br>
+	 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
+	 *
+	 * @type {sap.ui.webc.main.IListItem[]}
+	 * @name sap.ui.webc.main.List.prototype.default
+	 * @slot items
+	 * @public
+	 */
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<ListItemBase>;
 
+	/**
+	 * Defines the component header.
+	 * <br><br>
+	 * <b>Note:</b> When <code>header</code> is set, the
+	 * <code>headerText</code> property is ignored.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.List.prototype.header
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	header!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
-	_previouslyFocusedItem?: HTMLElement | null;
-	_forwardingFocus = false;
-	_previouslySelectedItem = null;
-	resizeListenerAttached = false;
-	listEndObserved = false;
+	_previouslyFocusedItem: ListItemBase | null;
+	_forwardingFocus: boolean;
+	resizeListenerAttached: boolean;
+	listEndObserved: boolean;
 	_handleResize: () => void;
-	initialIntersection = true;
+	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	growingIntersectionObserver?: IntersectionObserver | null;
 	_itemNavigation!: ItemNavigation;
@@ -235,8 +466,6 @@ class List extends UI5Element {
 
 		// Indicates that the List is forwarding the focus before or after the internal ul.
 		this._forwardingFocus = false;
-
-		this._previouslySelectedItem = null;
 
 		// Indicates that the List has already subscribed for resize.
 		this.resizeListenerAttached = false;
@@ -431,8 +660,6 @@ class List extends UI5Element {
 			}
 			item.hasBorder = showBottomBorder;
 		});
-
-		this._previouslySelectedItem = null;
 	}
 
 	async observeListEnd() {
@@ -466,7 +693,7 @@ class List extends UI5Element {
 	/*
 	* ITEM SELECTION BASED ON THE CURRENT MODE
 	*/
-	onSelectionRequested(e: CustomEvent<SelectionChangeEventDetail>) {
+	onSelectionRequested(e: CustomEvent<SelectionRequestEventDetail>) {
 		const previouslySelectedItems = this.getSelectedItems();
 		let selectionChange = false;
 		this._selectionRequested = true;
@@ -689,7 +916,7 @@ class List extends UI5Element {
 					selected: true,
 					key: e.detail.key,
 				},
-			} as CustomEvent<SelectionChangeEventDetail>);
+			} as CustomEvent<SelectionRequestEventDetail>);
 		}
 	}
 
@@ -709,7 +936,7 @@ class List extends UI5Element {
 					selected: !pressedItem.selected,
 					key: e.detail.key,
 				},
-			} as CustomEvent<SelectionChangeEventDetail>);
+			} as CustomEvent<SelectionRequestEventDetail>);
 		}
 
 		this._selectionRequested = false;
@@ -725,13 +952,13 @@ class List extends UI5Element {
 	}
 
 	onForwardBefore(e: CustomEvent) {
-		this.setPreviouslyFocusedItem(e.target as HTMLElement);
+		this.setPreviouslyFocusedItem(e.target as ListItemBase);
 		this.focusBeforeElement();
 		e.stopPropagation();
 	}
 
 	onForwardAfter(e: CustomEvent) {
-		this.setPreviouslyFocusedItem(e.target as HTMLElement);
+		this.setPreviouslyFocusedItem(e.target as ListItemBase);
 
 		if (!this.growsWithButton) {
 			this.focusAfterElement();
@@ -800,14 +1027,14 @@ class List extends UI5Element {
 	 * @protected
 	 * @param item
 	 */
-	focusItem(item: HTMLElement) {
+	focusItem(item: ListItemBase) {
 		this._itemNavigation.setCurrentItem(item);
 		item.focus();
 	}
 
 	focusUploadCollectionItem(e: Event) {
 		setTimeout(() => {
-			this.setPreviouslyFocusedItem(e.target as HTMLElement);
+			this.setPreviouslyFocusedItem(e.target as ListItemBase);
 			this.focusPreviouslyFocusedItem();
 		}, 0);
 	}
@@ -820,7 +1047,7 @@ class List extends UI5Element {
 		return this._forwardingFocus;
 	}
 
-	setPreviouslyFocusedItem(item: HTMLElement) {
+	setPreviouslyFocusedItem(item: ListItemBase) {
 		this._previouslyFocusedItem = item;
 	}
 

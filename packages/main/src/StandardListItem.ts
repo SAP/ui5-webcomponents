@@ -38,30 +38,112 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  */
 @customElement("ui5-li")
 class StandardListItem extends ListItem implements IAccessibleListItem {
+	/**
+	 * Defines the description displayed right under the item text, if such is present.
+	 * @type {string}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.description
+	 * @defaultvalue: ""
+	 * @public
+	 * @since 0.8.0
+	 */
 	@property()
 	description!: string;
 
+	/**
+	 * Defines the <code>icon</code> source URI.
+	 * <br><br>
+	 * <b>Note:</b>
+	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.icon
+	 * @public
+	 */
 	@property()
 	icon!: string;
 
+	/**
+	 * Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end.
+	 * <br><br>
+	 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.iconEnd
+	 * @defaultvalue false
+	 * @public
+	 */
 	@property({ type: Boolean })
 	iconEnd!: boolean;
 
+	/**
+	 * Defines the <code>image</code> source URI.
+	 * <br><br>
+	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.image
+	 * @public
+	 */
 	@property()
 	image!: string;
 
+	/**
+	 * Defines the <code>additionalText</code>, displayed in the end of the list item.
+	 * @type {string}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.additionalText
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
 	@property()
 	additionalText!: string;
 
+	/**
+	 * Defines the state of the <code>additionalText</code>.
+	 * <br>
+	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.additionalTextState
+	 * @defaultvalue "None"
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	additionalTextState!: ValueState;
 
+	/**
+	 * Defines the text alternative of the component.
+	 * Note: If not provided a default text alternative will be set, if present.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.accessibleName
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
 	@property()
 	accessibleName!: string;
 
+	/**
+	 * Defines if the text of the component should wrap, they truncate by default.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> this property takes affect only if text node is provided to default slot of the component
+	 * @type {sap.ui.webc.main.types.WrappingType}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.wrappingType
+	 * @defaultvalue "None"
+	 * @private
+	 * @since 1.5.0
+	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType!: WrappingType;
 
+	/**
+	 * Indicates if the list item has text content.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.hasTitle
+	 * @private
+	 */
 	@property({ type: Boolean })
 	hasTitle!: boolean;
 
