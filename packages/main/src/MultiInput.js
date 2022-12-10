@@ -149,6 +149,7 @@ class MultiInput extends Input {
 
 		if (focusedToken) {
 			this.fireEvent("token-delete", { token: focusedToken });
+			this.focus();
 			return;
 		}
 
@@ -159,8 +160,6 @@ class MultiInput extends Input {
 		selectedTokens.forEach(token => {
 			this.fireEvent("token-delete", { token });
 		});
-
-		this.focus();
 	}
 
 	valueHelpMouseDown(event) {
