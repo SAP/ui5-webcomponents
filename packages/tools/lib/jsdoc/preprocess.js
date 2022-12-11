@@ -76,7 +76,7 @@ const processComponentFile = async (fileName) => {
 	let fileContent = `${await fs.readFile(fileName)}`;
 
 	// Skip all non-comopnent files
-	if (!fileContent.includes("@class") && !fileContent.includes("@abstract")) {
+	if (!fileContent.includes("@class")) {
 		return;
 	}
 

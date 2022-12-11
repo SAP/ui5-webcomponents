@@ -11,6 +11,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import styles from "./generated/themes/ListItemBase.css.js";
 
 /**
+ * @class
  * A class to serve as a foundation
  * for the <code>ListItem</code> and <code>GroupHeaderListItem</code> classes.
  *
