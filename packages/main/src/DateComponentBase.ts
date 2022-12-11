@@ -102,11 +102,15 @@ class DateComponentBase extends UI5Element {
 	}
 
 	get _minDate() {
-		return this.minDate && this.getFormat().parse(this.minDate, false, false) ? this._getCalendarDateFromString(this.minDate)! : getMinCalendarDate(this._primaryCalendarType);
+		const utc = undefined as unknown as boolean;
+		const strict = undefined as unknown as boolean;
+		return this.minDate && this.getFormat().parse(this.minDate, utc, strict) ? this._getCalendarDateFromString(this.minDate)! : getMinCalendarDate(this._primaryCalendarType);
 	}
 
 	get _maxDate() {
-		return this.maxDate && this.getFormat().parse(this.maxDate, false, false) ? this._getCalendarDateFromString(this.maxDate)! : getMaxCalendarDate(this._primaryCalendarType);
+		const utc = undefined as unknown as boolean;
+		const strict = undefined as unknown as boolean;
+		return this.maxDate && this.getFormat().parse(this.maxDate, utc, strict) ? this._getCalendarDateFromString(this.maxDate)! : getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	get _formatPattern() {
@@ -118,7 +122,9 @@ class DateComponentBase extends UI5Element {
 	}
 
 	_getCalendarDateFromString(value: string) {
-		const jsDate = this.getFormat().parse(value, false, false) as Date;
+		const utc = undefined as unknown as boolean;
+		const strict = undefined as unknown as boolean;
+		const jsDate = this.getFormat().parse(value, utc, strict) as Date;
 		if (jsDate) {
 			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
 		}

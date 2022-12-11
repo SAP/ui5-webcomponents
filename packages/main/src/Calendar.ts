@@ -262,7 +262,7 @@ class Calendar extends CalendarPart {
 	get _selectedDatesTimestamps() {
 		return this.dates.map(date => {
 			const value = date.value;
-			const validValue = value && !!this.getFormat().parse(value, false, false);
+			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean); // parse accepts boolean as 2nd and 3rd params, but has logic related to "udnefined" value
 			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
 		}).filter(date => !!date);
 	}
