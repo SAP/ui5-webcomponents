@@ -102,11 +102,11 @@ class DateComponentBase extends UI5Element {
 	}
 
 	get _minDate() {
-		return this.minDate && this.getFormat().parse(this.minDate, false, false) ? this._getCalendarDateFromString(this.minDate) : getMinCalendarDate(this._primaryCalendarType);
+		return this.minDate && this.getFormat().parse(this.minDate, false, false) ? this._getCalendarDateFromString(this.minDate)! : getMinCalendarDate(this._primaryCalendarType);
 	}
 
 	get _maxDate() {
-		return this.maxDate && this.getFormat().parse(this.maxDate, false, false) ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
+		return this.maxDate && this.getFormat().parse(this.maxDate, false, false) ? this._getCalendarDateFromString(this.maxDate)! : getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	get _formatPattern() {

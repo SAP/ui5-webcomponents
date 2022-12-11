@@ -5,7 +5,7 @@ type UniversalDate = {
     new (time: number): UniversalDate;
     oDate: Date,
     sCalendarType: string,
-    getInstance: (oDate: Date, sCalendarType: string) => UniversalDate,
+    getInstance: (oDate: Date, sCalendarType?: string) => UniversalDate,
     getDate: () => number,
     getMonth: () => number,
     getFullYear: () => number,

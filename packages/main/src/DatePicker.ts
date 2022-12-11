@@ -1,3 +1,8 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import I18nBundle, { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -21,16 +26,21 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import type FormSupportT from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
+// @ts-ignore
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
+// @ts-ignore - when the ResponsivePopover is migrated to TS, the comment can't be removed
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
+// @ts-ignore - when the Input is migrated to TS, the comment can't be removed
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
@@ -44,246 +54,9 @@ import datePickerCss from "./generated/themes/DatePicker.css.js";
 import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-date-picker",
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.main.DatePicker.prototype */ {
-		/**
-		 * Defines a formatted date value.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @formEvents change input
-		 * @formProperty
-		 * @public
-		 */
-		value: {
-			type: String,
-		},
-
-		/**
-		 * Defines the value state of the component.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>None</code></li>
-		 * <li><code>Error</code></li>
-		 * <li><code>Warning</code></li>
-		 * <li><code>Success</code></li>
-		 * <li><code>Information</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.base.types.ValueState}
-		 * @defaultvalue "None"
-		 * @public
-		 */
-		valueState: {
-			type: ValueState,
-			defaultValue: ValueState.None,
-		},
-
-		/**
-		 * Defines whether the component is required.
-		 *
-		 * @since 1.0.0-rc.9
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		required: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether the component is displayed as disabled.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether the component is displayed as read-only.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		readonly: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines a short hint, intended to aid the user with data entry when the
-		 * component has no value.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
-		 *
-		 * @type {string}
-		 * @defaultvalue undefined
-		 * @public
-		 */
-		placeholder: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Determines the name with which the component will be submitted in an HTML form.
-		 *
-		 * <br><br>
-		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-		 *
-		 * <br><br>
-		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the component so that it can be submitted as
-		 * part of an HTML form. Do not use this property unless you need to submit a form.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		name: {
-			type: String,
-		},
-
-		/**
-		 * Defines the visibility of the week numbers column.
-		 * <br><br>
-		 *
-		 * <b>Note:</b> For calendars other than Gregorian,
-		 * the week numbers are not displayed regardless of what is set.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		hideWeekNumbers: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the aria-label attribute for the component.
-		 *
-		 * @type {string}
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Receives id(or many ids) of the elements that label the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
-			defaultValue: "",
-		},
-
-		_isPickerOpen: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_respPopoverConfig: {
-			type: Object,
-		},
-
-		_calendarCurrentPicker: {
-			type: String,
-			defaultValue: "day",
-		},
-	},
-
-	slots: /** @lends sap.ui.webc.main.DatePicker.prototype */ {
-		/**
-		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br><br>
-		 *
-		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
-		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-		 * @type {HTMLElement}
-		 * @since 1.0.0-rc.7
-		 * @slot
-		 * @public
-		 */
-		valueStateMessage: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-		 * when <code>name</code> property is set.
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @private
-		 */
-		formSupport: {
-			type: HTMLElement,
-		},
-	},
-
-	events: /** @lends sap.ui.webc.main.DatePicker.prototype */ {
-
-		/**
-		 * Fired when the input operation has finished by pressing Enter or on focusout.
-		 *
-		 * @event
-		 * @allowPreventDefault
-		 * @public
-		 * @param {string} value The submitted value.
-		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-		*/
-		change: {
-			detail: {
-				value: {
-					type: String,
-				},
-				valid: {
-					type: Boolean,
-				},
-			},
-		},
-
-		/**
-		 * Fired when the value of the component is changed at each key stroke.
-		 *
-		 * @event
-		 * @allowPreventDefault
-		 * @public
-		 * @param {string} value The submitted value.
-		 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-		*/
-		input: {
-			detail: {
-				value: {
-					type: String,
-				},
-				valid: {
-					type: Boolean,
-				},
-			},
-		},
-	},
-};
+type SelectedDateChangeDetail = {
+	values: Array<string>,
+}
 
 /**
  * @class
@@ -373,10 +146,231 @@ const metadata = {
  * @tagname ui5-date-picker
  * @public
  */
-class DatePicker extends DateComponentBase {
-	static get metadata() {
-		return metadata;
-	}
+@customElement("ui5-date-picker")
+/**
+ * Fired when the input operation has finished by pressing Enter or on focusout.
+ *
+ * @event sap.ui.webc.main.DatePicker#change
+ * @allowPreventDefault
+ * @public
+ * @param {string} value The submitted value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+*/
+@event("change", {
+	detail: {
+		value: {
+			type: String,
+		},
+		valid: {
+			type: Boolean,
+		},
+	},
+})
+/**
+ * Fired when the value of the component is changed at each key stroke.
+ *
+ * @event sap.ui.webc.main.DatePicker#input
+ * @allowPreventDefault
+ * @public
+ * @param {string} value The submitted value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+*/
+@event("input", {
+	detail: {
+		value: {
+			type: String,
+		},
+		valid: {
+			type: Boolean,
+		},
+	},
+})
+class DatePicker extends DateComponentBase implements IFormElement {
+	/**
+	 * Defines a formatted date value.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.DatePicker.prototype.value
+	 * @defaultvalue ""
+	 * @formEvents change input
+	 * @formProperty
+	 * @public
+	 */
+	@property()
+	value!:string
+
+	/**
+	 * Defines the value state of the component.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>None</code></li>
+	 * <li><code>Error</code></li>
+	 * <li><code>Warning</code></li>
+	 * <li><code>Success</code></li>
+	 * <li><code>Information</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @name sap.ui.webc.main.DatePicker.prototype.valueState
+	 * @defaultvalue "None"
+	 * @public
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	valueState!: ValueState;
+
+	/**
+	 * Defines whether the component is required.
+	 *
+	 * @since 1.0.0-rc.9
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.DatePicker.prototype.required
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	required!: boolean;
+
+	/**
+	 * Determines whether the component is displayed as disabled.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.DatePicker.prototype.disabled
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Determines whether the component is displayed as read-only.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.DatePicker.prototype.readonly
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
+
+	/**
+	 * Defines a short hint, intended to aid the user with data entry when the
+	 * component has no value.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.DatePicker.prototype.placeholder
+	 * @defaultvalue undefined
+	 * @public
+	 */
+	@property({ defaultValue: undefined })
+	placeholder?: string;
+
+	/**
+	 * Determines the name with which the component will be submitted in an HTML form.
+	 *
+	 * <br><br>
+	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 *
+	 * <br><br>
+	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * will be created inside the component so that it can be submitted as
+	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.DatePicker.prototype.name
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	name!: string;
+
+	/**
+	 * Defines the visibility of the week numbers column.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> For calendars other than Gregorian,
+	 * the week numbers are not displayed regardless of what is set.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.DatePicker.prototype.hideWeekNumbers
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.0.0-rc.8
+	 */
+	@property({ type: Boolean })
+	hideWeekNumbers!: boolean;
+
+	/**
+	 * Defines the aria-label attribute for the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.DatePicker.prototype.accessibleName
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.DatePicker.prototype.accessibleNameRef
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleNameRef!: string;
+
+	@property({ type: Boolean })
+	_isPickerOpen!: boolean;
+
+	@property({ type: Object })
+	_respPopoverConfig!: object;
+
+	@property({ defaultValue: "day" })
+	_calendarCurrentPicker!: string;
+
+	liveValue?: string;
+
+	/**
+	 * Defines the value state message that will be displayed as pop up under the component.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+	 * <br>
+	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * @type {HTMLElement}
+	 * @name sap.ui.webc.main.DatePicker.prototype.valueStateMessage
+	 * @since 1.0.0-rc.7
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	valueStateMessage!: Array<HTMLElement>;
+
+	/**
+	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+	 * when <code>name</code> property is set.
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @private
+	 */
+	@slot({ type: HTMLElement })
+	formSupport!: Array<HTMLElement>;
+
+	responsivePopover?: ResponsivePopover;
+
+	FormSupport?: typeof FormSupportT;
+
+	static i18nBundle: I18nBundle;
 
 	static get template() {
 		return DatePickerTemplate;
@@ -394,12 +388,6 @@ class DatePicker extends DateComponentBase {
 		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
-	constructor() {
-		super();
-
-		this.FormSupport = undefined;
-	}
-
 	/**
 	 * @protected
 	 */
@@ -408,20 +396,22 @@ class DatePicker extends DateComponentBase {
 		if (isPhone()) {
 			this.blur(); // close device's keyboard and prevent further typing
 		} else {
-			this._getInput().focus();
+			this._getInput()?.focus();
 		}
 	}
 
 	onBeforeRendering() {
-		this.FormSupport = getFeature("FormSupport");
+		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 
-		["minDate", "maxDate"].forEach(prop => {
-			if (this[prop] && !this.isValid(this[prop])) {
-				console.warn(`Invalid value for property "${prop}": ${this[prop]} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
+		["minDate", "maxDate"].forEach((prop: string) => {
+			const propValue = this[prop as keyof typeof this] as string;
+
+			if (propValue && !this.isValid(propValue)) {
+				console.warn(`Invalid value for property "${prop}": ${propValue} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
 			}
 		});
 
-		const FormSupport = getFeature("FormSupport");
+		const FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
@@ -469,11 +459,11 @@ class DatePicker extends DateComponentBase {
 		return [];
 	}
 
-	_onkeydown(event) {
-		if (isShow(event)) {
-			event.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
+	_onkeydown(e: KeyboardEvent) {
+		if (isShow(e)) {
+			e.preventDefault(); // Prevent scroll on Alt/Option + Arrow Up/Down
 			if (this.isOpen()) {
-				if (!isF4(event)) {
+				if (!isF4(e)) {
 					this._toggleAndFocusInput();
 				}
 			} else {
@@ -481,7 +471,7 @@ class DatePicker extends DateComponentBase {
 			}
 		}
 
-		if ((this._getInput().isEqualNode(event.target) && this.isOpen()) && (isTabNext(event) || isTabPrevious(event) || isF6Next(event) || isF6Previous(event))) {
+		if ((this._getInput().isEqualNode(e.target as DatePicker) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this.closePicker();
 		}
 
@@ -489,27 +479,27 @@ class DatePicker extends DateComponentBase {
 			return;
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			if (this.FormSupport) {
 				this.FormSupport.triggerFormSubmit(this);
 			}
-		} else if (isPageUpShiftCtrl(event)) {
-			event.preventDefault();
+		} else if (isPageUpShiftCtrl(e)) {
+			e.preventDefault();
 			this._modifyDateValue(1, "year");
-		} else if (isPageUpShift(event)) {
-			event.preventDefault();
+		} else if (isPageUpShift(e)) {
+			e.preventDefault();
 			this._modifyDateValue(1, "month");
-		} else if (isPageUp(event)) {
-			event.preventDefault();
+		} else if (isPageUp(e)) {
+			e.preventDefault();
 			this._modifyDateValue(1, "day");
-		} else if (isPageDownShiftCtrl(event)) {
-			event.preventDefault();
+		} else if (isPageDownShiftCtrl(e)) {
+			e.preventDefault();
 			this._modifyDateValue(-1, "year");
-		} else if (isPageDownShift(event)) {
-			event.preventDefault();
+		} else if (isPageDownShift(e)) {
+			e.preventDefault();
 			this._modifyDateValue(-1, "month");
-		} else if (isPageDown(event)) {
-			event.preventDefault();
+		} else if (isPageDown(e)) {
+			e.preventDefault();
 			this._modifyDateValue(-1, "day");
 		}
 	}
@@ -520,7 +510,7 @@ class DatePicker extends DateComponentBase {
 	 * @param unit
 	 * @protected
 	 */
-	_modifyDateValue(amount, unit) {
+	_modifyDateValue(amount: number, unit: string) {
 		if (!this.dateValue) {
 			return;
 		}
@@ -530,7 +520,7 @@ class DatePicker extends DateComponentBase {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	_updateValueAndFireEvents(value, normalizeValue, events, updateValue = true) {
+	_updateValueAndFireEvents(value: string, normalizeValue: boolean, events: Array<string>, updateValue = true) {
 		const valid = this._checkValueValidity(value);
 
 		if (valid && normalizeValue) {
@@ -540,8 +530,8 @@ class DatePicker extends DateComponentBase {
 		let executeEvent = true;
 		this.liveValue = value;
 
-		events.forEach(event => {
-			if (!this.fireEvent(event, { value, valid }, true)) {
+		events.forEach((e: string) => {
+			if (!this.fireEvent(e, { value, valid }, true)) {
 				executeEvent = false;
 			}
 		});
@@ -551,7 +541,7 @@ class DatePicker extends DateComponentBase {
 		}
 
 		if (updateValue) {
-			this._getInput().getInputDOMRef().then(innnerInput => {
+			this._getInput().getInputDOMRef().then((innnerInput: HTMLInputElement) => {
 				innnerInput.value = value;
 			});
 			this.value = value;
@@ -573,46 +563,46 @@ class DatePicker extends DateComponentBase {
 		this._getInput().focus();
 	}
 
-	_getInput() {
-		return this.shadowRoot.querySelector("[ui5-input]");
+	_getInput(): Input {
+		return this.shadowRoot!.querySelector("[ui5-input]") as Input;
 	}
 
 	/**
 	 * The ui5-input "submit" event handler - fire change event when the user presses enter
 	 * @protected
 	 */
-	_onInputSubmit(event) {}
+	_onInputSubmit() {}
 
 	/**
 	 * The ui5-input "change" event handler - fire change event when the user focuses out of the input
 	 * @protected
 	 */
-	_onInputChange(event) {
-		this._updateValueAndFireEvents(event.target.value, true, ["change", "value-changed"]);
+	_onInputChange(e: Event) {
+		this._updateValueAndFireEvents((e.target as DatePicker).value, true, ["change", "value-changed"]);
 	}
 
 	/**
 	 * The ui5-input "input" event handler - fire input even when the user types
 	 * @protected
 	 */
-	async _onInputInput(event) {
-		this._updateValueAndFireEvents(event.target.value, false, ["input"], false);
+	_onInputInput(e: KeyboardEvent) {
+		this._updateValueAndFireEvents((e.target as DatePicker).value, false, ["input"], false);
 	}
 
 	/**
 	 * @protected
 	 */
-	_checkValueValidity(value) {
+	_checkValueValidity(value: string) {
 		if (value === "") {
 			return true;
 		}
 		return this.isValid(value) && this.isInValidRange(value);
 	}
 
-	_click(event) {
+	_click(e: MouseEvent) {
 		if (isPhone()) {
 			this.responsivePopover.showAt(this);
-			event.preventDefault(); // prevent immediate selection of any item
+			e.preventDefault(); // prevent immediate selection of any item
 		}
 	}
 
@@ -627,7 +617,7 @@ class DatePicker extends DateComponentBase {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value);
+		return !!this.getFormat().parse(value, false, false);
 	}
 
 	/**
@@ -642,6 +632,11 @@ class DatePicker extends DateComponentBase {
 		}
 
 		const calendarDate = this._getCalendarDateFromString(value);
+
+		if (!calendarDate || !this._minDate || !this._maxDate) {
+			return false;
+		}
+
 		return calendarDate.valueOf() >= this._minDate.valueOf() && calendarDate.valueOf() <= this._maxDate.valueOf();
 	}
 
@@ -649,16 +644,17 @@ class DatePicker extends DateComponentBase {
 	 * The parser understands many formats, but we need one format
 	 * @protected
 	 */
-	normalizeValue(value) {
+	normalizeValue(value: string) {
 		if (value === "") {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
+		return this.getFormat().format(this.getFormat().parse(value, true, false), true); // it is important to both parse and format the date as UTC
 	}
 
-	get _displayFormat() {
-		return this.getFormat().oFormatOptions.pattern;
+	get _displayFormat(): string {
+		// @ts-ignore oFormatOptions is a private API of DateFormat
+		return this.getFormat().oFormatOptions.pattern as string;
 	}
 
 	/**
@@ -669,7 +665,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get _headerTitleText() {
-		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE as I18nText);
 	}
 
 	get phone() {
@@ -695,7 +691,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get openIconTitle() {
-		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
+		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE as I18nText);
 	}
 
 	get openIconName() {
@@ -703,7 +699,7 @@ class DatePicker extends DateComponentBase {
 	}
 
 	get dateAriaDescription() {
-		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
+		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION as I18nText);
 	}
 
 	/**
@@ -724,7 +720,7 @@ class DatePicker extends DateComponentBase {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("[ui5-responsive-popover]");
+		return staticAreaItem?.querySelector("[ui5-responsive-popover]");
 	}
 
 	_canOpenPicker() {
@@ -736,9 +732,9 @@ class DatePicker extends DateComponentBase {
 	 * @param event
 	 * @protected
 	 */
-	onSelectedDatesChange(event) {
-		event.preventDefault();
-		const newValue = event.detail.values && event.detail.values[0];
+	onSelectedDatesChange(e: CustomEvent<SelectedDateChangeDetail>) {
+		e.preventDefault();
+		const newValue = e.detail.values && e.detail.values[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 
 		this.closePicker();
@@ -765,7 +761,7 @@ class DatePicker extends DateComponentBase {
 	 * @returns {string} The date as string
 	 * @public
 	 */
-	formatValue(date) {
+	formatValue(date: Date) {
 		return this.getFormat().format(date);
 	}
 
@@ -816,11 +812,11 @@ class DatePicker extends DateComponentBase {
 	 * @public
 	 */
 	get dateValue() {
-		return this.liveValue ? this.getFormat().parse(this.liveValue) : this.getFormat().parse(this.value);
+		return this.liveValue ? this.getFormat().parse(this.liveValue, false, false) as Date : this.getFormat().parse(this.value, false, false) as Date;
 	}
 
 	get dateValueUTC() {
-		return this.liveValue ? this.getFormat().parse(this.liveValue, true) : this.getFormat().parse(this.value);
+		return this.liveValue ? this.getFormat().parse(this.liveValue, true, false) as Date : this.getFormat().parse(this.value, false, false) as Date;
 	}
 
 	get styles() {

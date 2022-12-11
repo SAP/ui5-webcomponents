@@ -1,14 +1,31 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
+
+interface IFormElement extends UI5Element {
+	value: string,
+	name: string,
+	disabled: boolean,
+	required: boolean,
+}
+
+interface IFormFileElement extends IFormElement {
+	multiple: boolean,
+	_type: string,
+}
+
+type NativeInputUpdateCallback = (element: IFormElement, nativeInput: HTMLInputElement) => void;
+type NativeInputChangeCallback = (e: Event) => void;
 
 class FormSupport {
 	/**
-	 *
-	 * @param element - the WebComponent that needs form support
-	 * @param nativeInputUpdateCallback - determines how the native input's disabled and value properties are calculated
+	 * Syncs the native input element, rendered into the component's light DOM
+	 * with the component's state.
+	 * @param { IFormElement} element - the component with form support
+	 * @param { NativeInputUpdateCallback } nativeInputUpdateCallback - callback to calculate the native input's "disabled" and "value" properties
 	 */
-	static syncNativeHiddenInput(element, nativeInputUpdateCallback) {
+	static syncNativeHiddenInput(element: IFormElement, nativeInputUpdateCallback?: NativeInputUpdateCallback) {
 		const needsNativeInput = !!element.name || element.required;
-		let nativeInput = element.querySelector("input[data-ui5-form-support]");
+		let nativeInput = element.querySelector("input[data-ui5-form-support]") as HTMLInputElement;
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
 
@@ -25,7 +42,7 @@ class FormSupport {
 			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.setAttribute("aria-hidden", "true");
 
-			nativeInput.addEventListener("focusin", event => element.getFocusDomRef().focus());
+			nativeInput.addEventListener("focusin", () => element?.getFocusDomRef()?.focus());
 
 			nativeInput.slot = "formSupport"; // Needed for IE - otherwise input elements are not part of the real DOM tree and are not detected by forms
 			element.appendChild(nativeInput);
@@ -40,9 +57,16 @@ class FormSupport {
 		}
 	}
 
-	static syncNativeFileInput(element, nativeInputUpdateCallback, nativeInputChangeCallback) {
+	/**
+	 * Syncs the native file input element, rendered into the <code>ui5-file-uploader</code> component's light DOM
+	 * with the <code>ui5-file-uploader</code> component's state.
+	 * @param { IFormFileElement} element - the component with form support
+	 * @param { NativeInputUpdateCallback } nativeInputUpdateCallback - callback to calculate the native input's "disabled" and "value" properties
+	 * @param { NativeInputChangeCallback } nativeInputChangeCallback - callback, added to native input's "change" event
+	 */
+	static syncNativeFileInput(element: IFormFileElement, nativeInputUpdateCallback: NativeInputUpdateCallback, nativeInputChangeCallback: NativeInputChangeCallback) {
 		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector(`input[type=${element._type || "hidden"}][data-ui5-form-support]`);
+		let nativeInput = element.querySelector(`input[type=${element._type || "hidden"}][data-ui5-form-support]`) as HTMLInputElement;
 
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
@@ -75,13 +99,13 @@ class FormSupport {
 		}
 	}
 
-	static triggerFormSubmit(element) {
+	static triggerFormSubmit(element: UI5Element) {
 		let currentElement = element.parentElement;
 		while (currentElement && currentElement.tagName.toLowerCase() !== "form") {
 			currentElement = currentElement.parentElement;
 		}
 
-		if (currentElement) {
+		if (currentElement instanceof HTMLFormElement) {
 			if (!currentElement.checkValidity()) {
 				currentElement.reportValidity();
 				return;
@@ -103,7 +127,7 @@ class FormSupport {
 	}
 }
 
-const copyDefaultProperties = (element, nativeInput) => {
+const copyDefaultProperties = (element: IFormElement, nativeInput: HTMLInputElement) => {
 	nativeInput.disabled = element.disabled;
 	nativeInput.value = element.value;
 };
@@ -112,3 +136,8 @@ const copyDefaultProperties = (element, nativeInput) => {
 registerFeature("FormSupport", FormSupport);
 
 export default FormSupport;
+
+export {
+	IFormElement,
+	IFormFileElement,
+};

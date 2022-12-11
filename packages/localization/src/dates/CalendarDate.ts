@@ -164,7 +164,7 @@ class CalendarDate {
 		return this._oUDate.getTime();
 	}
 
-	static fromLocalJSDate(oJSDate: Date, sCalendarType: string) {
+	static fromLocalJSDate(oJSDate: Date, sCalendarType?: string) {
 		// Cross frame check for a date should be performed here otherwise setDateValue would fail in OPA tests
 		// because Date object in the test is different than the Date object in the application (due to the iframe).
 		// We can use jQuery.type or this method:
@@ -177,7 +177,7 @@ class CalendarDate {
 		return new CalendarDate(oJSDate.getFullYear(), oJSDate.getMonth(), oJSDate.getDate(), sCalendarType);
 	}
 
-	static fromTimestamp(iTimestamp: number, sCalendarType: string) {
+	static fromTimestamp(iTimestamp: number, sCalendarType?: string) {
 		const oCalDate = new CalendarDate(0, 0, 1);
 		let oUDate;
 		try {
