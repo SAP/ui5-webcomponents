@@ -108,6 +108,7 @@ class DateComponentBase extends UI5Element {
 	}
 
 	get _maxDate() {
+		 // parse accepts boolean as 2nd and 3rd params, but has logic related to "undefined" value
 		const utc = undefined as unknown as boolean;
 		const strict = undefined as unknown as boolean;
 		return this.maxDate && this.getFormat().parse(this.maxDate, utc, strict) ? this._getCalendarDateFromString(this.maxDate)! : getMaxCalendarDate(this._primaryCalendarType);

@@ -617,7 +617,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean); // parse accepts boolean as 2nd and 3rd params, but has logic related to "udnefined" value
+		return !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean); // parse accepts boolean as 2nd and 3rd params, but has logic related to "undefined" value
 	}
 
 	/**
