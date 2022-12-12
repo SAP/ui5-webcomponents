@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
@@ -34,7 +34,7 @@ import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calc
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
-import type { CalendarPicker } from "./Calendar.js";
+import type { ICalendarPicker } from "./Calendar.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
@@ -72,7 +72,7 @@ type Day = {
 	disabled: boolean,
 	secondDay?: number,
 	weekNum?: number,
-	isHidden?: boolean
+	isHidden?: boolean,
 }
 
 type WeekNumber = {
@@ -83,14 +83,14 @@ type WeekNumber = {
 type Week = Array<Day | WeekNumber>;
 
 type SelectedDatesChangeEventDetail = {
-	timestamp?: number,
 	dates: Array<number>,
+	timestamp?: number,
 }
 
 /**
  * @class
  *
- * Represents one month view inside a calendar.
+ * Represents the days inside a single month view of the <code>ui5-calendar</code> component.
  *
  * @constructor
  * @author SAP SE
@@ -112,7 +112,7 @@ type SelectedDatesChangeEventDetail = {
  * @event sap.ui.webc.main.DayPicker#navigate
  */
 @event("navigate")
-class DayPicker extends CalendarPart implements CalendarPicker {
+class DayPicker extends CalendarPart implements ICalendarPicker {
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @type {array}
@@ -208,8 +208,8 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Builds the _weeks object that represents the month
-	 * @param localeData
+	 * Builds the "_weeks" object that represents the month.
+	 * @param { LocaleData }localeData
 	 * @private
 	 */
 	_buildWeeks(localeData: LocaleData) {
@@ -330,8 +330,8 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Builds the dayNames object (header of the month)
-	 * @param localeData
+	 * Builds the dayNames object (header of the month).
+	 * @param { LocaleData } localeData
 	 * @private
 	 */
 	_buildDayNames(localeData: LocaleData) {
@@ -462,6 +462,7 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	 * @private
 	 */
 	_selectWeek() {
+		// <b>Note:</b> this._weeks is built "onBeforeRendering" - the "!" is safe to be used.
 		this._weeks!.forEach((week: Week) => {
 			const _week = week as Array<Day>;
 			const dayInThisWeek = _week.findIndex((item: Day) => {
@@ -507,8 +508,8 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * When at least one day is selected and the user pressed shift
-	 * @param { numebr } timestamp
+	 * Called when at least one day is selected and the user presses "Shift".
+	 * @param { number } timestamp
 	 * @private
 	 */
 	_multipleSelection(timestamp: number) {
@@ -548,7 +549,7 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Set the hovered day as the _secondTimestamp
+	 * Set the hovered day as the "_secondTimestamp".
 	 * @param { MouseEvent } e
 	 * @private
 	 */
@@ -617,7 +618,8 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Click is the same as Enter: Click+Shift has the same effect as Enter+Shift
+	 * Click is the same as "Enter".
+	 * <b>Note:</b> "Click+Shift" has the same effect as "Enter+Shift".
 	 * @param { MouseEvent } e
 	 * @private
 	 */
@@ -626,11 +628,12 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * One Home or End, move the focus to the first or last item in the row
-	 * @param homePressed
+	 * Called upon "Home" or "End" - moves the focus to the first or last item in the row.
+	 * @param { boolean } homePressed
 	 * @private
 	 */
 	_onHomeOrEnd(homePressed: boolean) {
+		// <b>Note:</b> this._weeks is built "onBeforeRendering" - the "!" is safe to be used.
 		this._weeks!.forEach(week => {
 			const _week = week as Array<Day>;
 			const dayInThisWeek = _week.findIndex(item => {
@@ -645,24 +648,26 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Called from Calendar.js
+	 * Called by the Calendar component.
 	 * @protected
+	 * @returns { boolean }
 	 */
-	_hasPreviousPage() {
+	_hasPreviousPage(): boolean {
 		return !(this._calendarDate.getMonth() === this._minDate.getMonth() && this._calendarDate.getYear() === this._minDate.getYear());
 	}
 
 	/**
-	 * Called from Calendar.js
+	 * Called by the Calendar component.
 	 * @protected
+	 * @returns { boolean }
 	 */
-	_hasNextPage() {
+	_hasNextPage(): boolean {
 		return !(this._calendarDate.getMonth() === this._maxDate.getMonth() && this._calendarDate.getYear() === this._maxDate.getYear());
 	}
 
 	/**
-	 * Called from Calendar.js
-	 * Same as PageUp
+	 * Called by the Calendar component.
+	 * <b>Note:</b> same as for "PageUp"
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -670,8 +675,8 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Called from Calendar.js
-	 * Same as PageDown
+	 * Called by the Calendar component.
+	 * <b>Note:</b> same as for "PageDown"
 	 * @protected
 	 */
 	_showNextPage() {
@@ -679,9 +684,9 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Modifies the timestamp by a certain amount of days/months/years
-	 * @param amount
-	 * @param unit
+	 * Modifies the timestamp by a certain amount of days/months/years.
+	 * @param { number } amount
+	 * @param { string } unit
 	 * @private
 	 */
 	_modifyTimestampBy(amount: number, unit: string) {
@@ -694,8 +699,8 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Sets the timestamp to an absolute value
-	 * @param value
+	 * Sets the timestamp to an absolute value.
+	 * @param { number } value
 	 * @private
 	 */
 	_setTimestamp(value: number) {
@@ -705,7 +710,8 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * During range selection, when the user is navigating with the keyboard, the currently focused day is considered the "second day"
+	 * During range selection, when the user is navigating with the keyboard,
+	 * the currently focused day is considered the "second day".
 	 * @private
 	 */
 	_updateSecondTimestamp() {
@@ -726,7 +732,7 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 		return !!this.secondaryCalendarType;
 	}
 
-	_isWeekend(oDate: CalendarDate) {
+	_isWeekend(oDate: CalendarDate): boolean {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
 		const iWeekDay = oDate.getDay(),
@@ -737,16 +743,16 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 			|| (iWeekendEnd < iWeekendStart && (iWeekDay >= iWeekendStart || iWeekDay <= iWeekendEnd));
 	}
 
-	_isDayPressed(target: HTMLElement) {
+	_isDayPressed(target: HTMLElement): boolean {
 		const targetParent = target.parentNode as HTMLElement;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
 	}
 
-	_getSecondaryDay(tempDate: CalendarDate) {
+	_getSecondaryDay(tempDate: CalendarDate): CalendarDate {
 		return new CalendarDate(tempDate, this.secondaryCalendarType);
 	}
 
-	_getFirstDay() {
+	_getFirstDay(): CalendarDate {
 		let daysFromPreviousMonth;
 
 		const firstDayOfWeek = this._getFirstDayOfWeek();
@@ -768,7 +774,7 @@ class DayPicker extends CalendarPart implements CalendarPicker {
 		return firstDay;
 	}
 
-	_getFirstDayOfWeek() {
+	_getFirstDayOfWeek(): number {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const confFirstDayOfWeek = getFirstDayOfWeek();
 		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek! : localeData.getFirstDayOfWeek();

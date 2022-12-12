@@ -15,7 +15,7 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
-import type CalendarDateT from "./CalendarDate.js";
+import type CalendarDateComponentT from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
@@ -35,7 +35,7 @@ import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
 
-interface CalendarPicker {
+interface ICalendarPicker {
 	_showPreviousPage: () => void,
 	_showNextPage: () => void,
 	_hasPreviousPage: () => boolean,
@@ -191,6 +191,7 @@ class Calendar extends CalendarPart {
 	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
 	 * </ul>
 	 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
+	 * @name sap.ui.webc.main.Calendar.prototype.selectionMode
 	 * @defaultvalue "Single"
 	 * @public
 	 */
@@ -218,7 +219,7 @@ class Calendar extends CalendarPart {
 	/**
 	 * Which picker is currently visible to the user: day/month/year
 	 */
-	 @property({ defaultValue: "day" })
+	@property({ defaultValue: "day" })
 	_currentPicker!: string;
 
 	@property({ type: Boolean })
@@ -241,12 +242,12 @@ class Calendar extends CalendarPart {
 	 * for this calendar as instances of <code>ui5-date</code>.
 	 *
 	 * @type {sap.ui.webc.main.ICalendarDate[]}
-	 * @name sap.ui.webc.main.Calendar.prototype.dates
+	 * @name sap.ui.webc.main.Calendar.prototype.default
 	 * @slot dates
 	 * @public
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	dates!: Array<CalendarDateT>;
+	dates!: Array<CalendarDateComponentT>;
 
 	static get template() {
 		return CalendarTemplate;
@@ -262,7 +263,9 @@ class Calendar extends CalendarPart {
 	get _selectedDatesTimestamps() {
 		return this.dates.map(date => {
 			const value = date.value;
-			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean); // parse accepts boolean as 2nd and 3rd params, but has logic related to "undefined" value
+			// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
+			// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
+			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
 			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
 		}).filter(date => !!date);
 	}
@@ -283,7 +286,7 @@ class Calendar extends CalendarPart {
 
 		// Create tags for the selected dates that don't already exist in DOM
 		selectedValues.filter(value => !valuesInDOM.includes(value as string)).forEach(value => {
-			const dateElement = document.createElement(CalendarDateComponent.default.getMetadata().getTag()) as CalendarDateT;
+			const dateElement = document.createElement(CalendarDateComponent.default.getMetadata().getTag()) as CalendarDateComponentT;
 			dateElement.value = value as string;
 			this.appendChild(dateElement);
 		});
@@ -331,7 +334,8 @@ class Calendar extends CalendarPart {
 	}
 
 	get _currentPickerDOM() {
-		return this.shadowRoot!.querySelector(`[ui5-${this._currentPicker}picker]`)! as unknown as CalendarPicker;
+		// Calendar's shadowRoot and all the pickers are always present - the "!" is safe to be used.
+		return this.shadowRoot!.querySelector(`[ui5-${this._currentPicker}picker]`)! as unknown as ICalendarPicker;
 	}
 
 	/**
@@ -481,5 +485,5 @@ Calendar.define();
 
 export default Calendar;
 export type {
-	CalendarPicker,
+	ICalendarPicker,
 };

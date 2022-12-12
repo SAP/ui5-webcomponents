@@ -23,14 +23,14 @@ import styles from "./generated/themes/CalendarHeader.css.js";
 
 @customElement("ui5-calendar-header")
 @languageAware
-@event("previous-press")
 @event("next-press")
+@event("previous-press")
 @event("show-month-press")
 @event("show-year-press")
 class CalendarHeader extends UI5Element {
 	/**
-	 * Defeines component's timestamp.
-	 * <b>Note:</b> already normalized by Calendar component
+	 * Defines component's timestamp.
+	 * <b>Note:</b> set by the Calendar component
 	 * @type {sap.ui.webc.base.types.Integer}
 	 * @name sap.ui.webc.main.CalendarHeader.prototype.timestamp
 	 * @public
@@ -39,17 +39,18 @@ class CalendarHeader extends UI5Element {
 	timestamp?: number;
 
 	/**
-	 * Defeines component's primary calendar type.
-	 * <b>Note:</b> already normalized by Calendar
+	 * Defines component's primary calendar type.
+	 * <b>Note:</b> set by the Calendar component
 	 * @type {sap.ui.webc.base.types.CalendarType}
 	 * @name sap.ui.webc.main.CalendarHeader.prototype.primaryCalendarType
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	primaryCalendarType!: CalendarType;
+	primaryCalendarType?: CalendarType;
 
 	/**
-	 * Already normalized by Calendar
+	 * Defines component's secondary calendar type.
+	 * <b>Note:</b> set by the Calendar component
 	 * @sience 1.0.0-rc.16
 	 * @defaultvalue undefined
 	 * @type {sap.ui.webc.base.types.CalendarType}
@@ -57,7 +58,7 @@ class CalendarHeader extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	secondaryCalendarType!: CalendarType;
+	secondaryCalendarType?: CalendarType;
 
 	/**
 	 * Stores information for month button for secondary calendar type
@@ -67,8 +68,8 @@ class CalendarHeader extends UI5Element {
 	@property({ type: Object })
 	buttonTextForSecondaryCalendarType?: {
 		monthButtonText: string,
-		yearButtonText: string,
 		monthButtonInfo: string,
+		yearButtonText: string,
 	};
 
 	@property({ type: Boolean })

@@ -28,7 +28,7 @@ import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPH
 
 // Styles
 import buttonCss from "./generated/themes/Button.css.js";
-import FormSupport from "./features/InputElementsFormSupport.js";
+import type FormSupport from "./features/InputElementsFormSupport.js";
 
 let isGlobalHandlerAttached = false;
 let activeButton: Button | null = null;
@@ -142,7 +142,7 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether the icon should be displayed after the component text.
@@ -181,7 +181,7 @@ class Button extends UI5Element {
 	 * @since 1.2.0
 	 */
 	@property()
-	tooltip!: string;
+	tooltip?: string;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -382,7 +382,7 @@ class Button extends UI5Element {
 		}
 
 		if (isSafari()) {
-			(this as Button).getDomRef()?.focus();
+			this.getDomRef()?.focus();
 		}
 	}
 

@@ -28,7 +28,7 @@ class CalendarDate extends UI5Element {
 	 * @public
 	 */
 	@property()
-	value!: string;
+	value?: string;
 }
 
 CalendarDate.define();

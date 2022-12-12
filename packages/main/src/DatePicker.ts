@@ -197,7 +197,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 */
 	@property()
-	value!:string
+	value!: string
 
 	/**
 	 * Defines the value state of the component.
@@ -436,8 +436,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Override in derivatives to provide the calendar a timestamp based on their properties
 	 * By default focus the calendar on the selected date if set, or the current day otherwise
 	 * @protected
+	 * @returns { number } the calendar timestamp
 	 */
-	get _calendarTimestamp() {
+	get _calendarTimestamp(): number {
 		if (this.value && this._checkValueValidity(this.value)) {
 			const millisecondsUTC = this.dateValueUTC.getTime();
 			return getRoundedTimestamp(millisecondsUTC);
@@ -450,8 +451,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Used to provide selectedDates to the calendar based on the component's state
 	 * Override in derivatives to provide different rules for setting the calendar's selected dates
 	 * @protected
+	 * @returns { array } the selected dates
 	 */
-	get _calendarSelectedDates() {
+	get _calendarSelectedDates(): Array<string> {
 		if (this.value && this._checkValueValidity(this.value)) {
 			return [this.value];
 		}
@@ -506,8 +508,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 *
-	 * @param amount
-	 * @param unit
+	 * @param { number } amount
+	 * @param { string } unit
 	 * @protected
 	 */
 	_modifyDateValue(amount: number, unit: string) {
@@ -590,9 +592,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	/**
+	 * Checks if the provided value is valid and within valid range.
 	 * @protected
+	 * @param { string } value
+	 * @returns { boolean }
 	 */
-	_checkValueValidity(value: string) {
+	_checkValueValidity(value: string): boolean {
 		if (value === "") {
 			return true;
 		}
@@ -608,25 +613,27 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker.
-	 * @param {string} value A value to be tested against the current date format
-	 * @returns {boolean}
+	 * @param { string } value A value to be tested against the current date format
+	 * @returns { boolean }
 	 * @public
 	 */
-	isValid(value = "") {
+	isValid(value = ""): boolean {
 		if (value === "") {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean); // parse accepts boolean as 2nd and 3rd params, but has logic related to "undefined" value
+		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
+		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
+		return !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
 	}
 
 	/**
 	 * Checks if a date is between the minimum and maximum date.
-	 * @param {string} value A value to be checked
-	 * @returns {boolean}
+	 * @param { string } value A value to be checked
+	 * @returns { boolean }
 	 * @public
 	 */
-	isInValidRange(value = "") {
+	isInValidRange(value = ""): boolean {
 		if (value === "") {
 			return true;
 		}
@@ -807,11 +814,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Currently selected date represented as a Local JavaScript Date instance.
 	 *
-	 * @readonly
-	 * @type {Date}
 	 * @public
+	 * @readonly
+	 * @returns { Date }
 	 */
-	get dateValue() {
+	get dateValue(): Date {
 		const utc = undefined as unknown as boolean;
 		const strict = undefined as unknown as boolean;
 		return this.liveValue ? this.getFormat().parse(this.liveValue, utc, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;

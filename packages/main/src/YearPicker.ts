@@ -1,7 +1,8 @@
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type LocaleT from "sap/ui/core/Locale";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import {
 	isEnter,
 	isSpace,
@@ -16,14 +17,13 @@ import {
 	isPageUp,
 	isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import CalendarPart from "./CalendarPart.js";
-import type { CalendarPicker } from "./Calendar.js";
+import type { ICalendarPicker } from "./Calendar.js";
 
 // Template
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
@@ -63,7 +63,7 @@ type SelectedYearChangeEventDetail = {
  */
 @customElement("ui5-yearpicker")
 /**
- * Fired when the user selects a year (space/enter/click).
+ * Fired when the user selects a year via "Space", "Enter" or click.
  * @public
  * @event sap.ui.webc.main.YearPicker#change
  */
@@ -75,9 +75,10 @@ type SelectedYearChangeEventDetail = {
  * @event sap.ui.webc.main.YearPicker#navigate
  */
 @event("navigate")
-class YearPicker extends CalendarPart implements CalendarPicker {
+class YearPicker extends CalendarPart implements ICalendarPicker {
 	/**
-	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
+	 * An array of UTC timestamps representing the selected date
+	 * or dates depending on the capabilities of the picker component.
 	 * @type {array}
 	 * @name sap.ui.webc.main.YearPicker.prototype.selectedDates
 	 * @public
@@ -283,8 +284,8 @@ class YearPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Sets the timestamp to an absolute value
-	 * @param value
+	 * Sets the timestamp to an absolute value.
+	 * @param { number } value
 	 * @private
 	 */
 	_setTimestamp(value: number) {
@@ -293,8 +294,8 @@ class YearPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page
-	 * @param amount
+	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page.
+	 * @param { number } amount
 	 * @private
 	 */
 	_modifyTimestampBy(amount: number) {
@@ -313,7 +314,7 @@ class YearPicker extends CalendarPart implements CalendarPicker {
 
 	/**
 	 * User clicked with the mouser or pressed Enter/Space
-	 * @param e
+	 * @param { Event } e
 	 * @private
 	 */
 	_selectYear(e: Event) {
@@ -327,24 +328,26 @@ class YearPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Called from Calendar.js
+	 * Called by the Calendar component.
 	 * @protected
+	 * @returns { boolean }
 	 */
-	_hasPreviousPage() {
+	_hasPreviousPage(): boolean {
 		return this._firstYear! > this._minDate.getYear();
 	}
 
 	/**
-	 * Called from Calendar.js
+	 * Called by the Calendar component.
 	 * @protected
+	 * @returns { boolean }
 	 */
-	_hasNextPage() {
+	_hasNextPage(): boolean {
 		return this._firstYear! + this._getPageSize() - 1 < this._maxDate.getYear();
 	}
 
 	/**
-	 * Called by Calendar.js
-	 * User pressed the "<" button in the calendar header (same as PageUp)
+	 * Called by the Calendar component.
+	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -353,8 +356,8 @@ class YearPicker extends CalendarPart implements CalendarPicker {
 	}
 
 	/**
-	 * Called by Calendar.js
-	 * User pressed the ">" button in the calendar header (same as PageDown)
+	 * Called by the Calendar component.
+	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
 	_showNextPage() {

@@ -18,7 +18,7 @@ type NativeInputChangeCallback = (e: Event) => void;
 
 class FormSupport {
 	/**
-	 * Syncs the native input element, rendered into the component's light DOM
+	 * Syncs the native input element, rendered into the component's light DOM,
 	 * with the component's state.
 	 * @param { IFormElement} element - the component with form support
 	 * @param { NativeInputUpdateCallback } nativeInputUpdateCallback - callback to calculate the native input's "disabled" and "value" properties
@@ -42,7 +42,7 @@ class FormSupport {
 			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.setAttribute("aria-hidden", "true");
 
-			nativeInput.addEventListener("focusin", () => element?.getFocusDomRef()?.focus());
+			nativeInput.addEventListener("focusin", () => element.getFocusDomRef()?.focus());
 
 			nativeInput.slot = "formSupport"; // Needed for IE - otherwise input elements are not part of the real DOM tree and are not detected by forms
 			element.appendChild(nativeInput);
@@ -58,7 +58,7 @@ class FormSupport {
 	}
 
 	/**
-	 * Syncs the native file input element, rendered into the <code>ui5-file-uploader</code> component's light DOM
+	 * Syncs the native file input element, rendered into the <code>ui5-file-uploader</code> component's light DOM,
 	 * with the <code>ui5-file-uploader</code> component's state.
 	 * @param { IFormFileElement} element - the component with form support
 	 * @param { NativeInputUpdateCallback } nativeInputUpdateCallback - callback to calculate the native input's "disabled" and "value" properties
