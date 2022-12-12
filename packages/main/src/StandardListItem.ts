@@ -1,13 +1,13 @@
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ListItem, { IAccessibleListItem } from "./ListItem.js";
 import Icon from "./Icon.js";
 // @ts-ignore
 import Avatar from "./Avatar.js";
 import WrappingType from "./types/WrappingType.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 /**
  * @class
@@ -152,6 +152,17 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	_hasImageContent!: boolean;
 
 	/**
+	 * Defines the text of the component.
+	 * <br><br>
+	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 *
+	 * @type {Node[]}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.default
+	 * @slot
+	 * @public
+	 */
+
+	/**
 	 * <b>Note:</b> While the slot allows option for setting custom avatar, to match the
 	 * design guidelines, please use the <code>ui5-avatar</code> with it`s default size - S.
 	 * <b>Note:</b> If bigger <code>ui5-avatar</code> needs to be used, then the size of the
@@ -164,7 +175,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 */
 	@slot({ type: HTMLElement })
 	imageContent!: Array<HTMLElement>;
-
 
 	static get template() {
 		return StandardListItemTemplate;
