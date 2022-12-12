@@ -157,10 +157,10 @@ abstract class ListItemBase extends UI5Element implements ITabbable {
 
 	get _effectiveTabIndex() {
 		if (this.disabled) {
-			return "-1";
+			return -1;
 		}
 		if (this.selected) {
-			return "0";
+			return 0;
 		}
 		return this._tabIndex;
 	}
