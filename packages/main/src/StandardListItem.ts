@@ -7,6 +7,7 @@ import Icon from "./Icon.js";
 import Avatar from "./Avatar.js";
 import WrappingType from "./types/WrappingType.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
 /**
  * @class
@@ -147,6 +148,24 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	@property({ type: Boolean })
 	hasTitle!: boolean;
 
+	@property({ type: Boolean })
+	_hasImageContent!: boolean;
+
+	/**
+	 * <b>Note:</b> While the slot allows option for setting custom avatar, to match the
+	 * design guidelines, please use the <code>ui5-avatar</code> with it`s default size - S.
+	 * <b>Note:</b> If bigger <code>ui5-avatar</code> needs to be used, then the size of the
+	 * <code>ui5-li</code> should be customized in order to fit.
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.StandardListItem.prototype.imageContent
+	 * @since 1.10.0
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	imageContent!: Array<HTMLElement>;
+
+
 	static get template() {
 		return StandardListItemTemplate;
 	}
@@ -154,6 +173,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.textContent;
+		this._hasImageContent = this.hasImageContent;
 	}
 
 	get displayImage() {
@@ -166,6 +186,10 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 
 	get displayIconEnd() {
 		return (this.icon && this.iconEnd);
+	}
+
+	get hasImageContent() {
+		return !!this.imageContent.length;
 	}
 
 	static get dependencies() {
