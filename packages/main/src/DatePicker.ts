@@ -613,9 +613,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if a value is valid against the current date format of the DatePicker.
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.DatePicker#isValid
 	 * @param { string } value A value to be tested against the current date format
 	 * @returns { boolean }
-	 * @public
 	 */
 	isValid(value = ""): boolean {
 		if (value === "") {
@@ -629,9 +631,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if a date is between the minimum and maximum date.
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.DatePicker#isInValidRange
 	 * @param { string } value A value to be checked
 	 * @returns { boolean }
-	 * @public
 	 */
 	isInValidRange(value = ""): boolean {
 		if (value === "") {
@@ -764,9 +768,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date
 	 * according to the <code>formatPattern</code> property of the DatePicker instance
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.DatePicker#formatValue
 	 * @param {object} date A Java Script date object to be formatted as string
 	 * @returns {string} The date as string
-	 * @public
 	 */
 	formatValue(date: Date) {
 		return this.getFormat().format(date);
@@ -775,6 +781,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Closes the picker.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.DatePicker#closePicker
 	 */
 	closePicker() {
 		this.responsivePopover.close();
@@ -784,6 +792,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * Opens the picker.
 	 * @public
 	 * @async
+	 * @method
+	 * @name sap.ui.webc.main.DatePicker#openPicker
 	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
@@ -804,8 +814,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Checks if the picker is open.
-	 * @returns {boolean} true if the picker is open, false otherwise
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.DatePicker#isOpen
+	 * @returns {boolean} true if the picker is open, false otherwise
 	 */
 	isOpen() {
 		return !!this._isPickerOpen;
@@ -816,7 +828,8 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * @public
 	 * @readonly
-	 * @returns { Date }
+	 * @name sap.ui.webc.main.DatePicker.prototype.dateValue
+	 * @type { Date }
 	 */
 	get dateValue(): Date {
 		const utc = undefined as unknown as boolean;
