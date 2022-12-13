@@ -222,7 +222,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerText!: string;
+	headerText?: string;
 
 	/**
 	 * Defines the footer text.
@@ -233,7 +233,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	footerText!: string;
+	footerText?: string;
 
 	/**
 	 * Determines whether the component is indented.
@@ -269,7 +269,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	noDataText!: string;
+	noDataText?: string;
 
 	/**
 	 * Defines the item separator style that is used.
@@ -349,7 +349,7 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines the IDs of the elements that label the input.
@@ -361,7 +361,7 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	/**
 	 * Defines the accessible role of the component.
@@ -436,7 +436,7 @@ class List extends UI5Element {
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	growingIntersectionObserver?: IntersectionObserver | null;
-	_itemNavigation!: ItemNavigation;
+	_itemNavigation: ItemNavigation;
 	_beforeElement?: HTMLElement | null;
 	_afterElement?: HTMLElement | null;
 
@@ -474,7 +474,11 @@ class List extends UI5Element {
 		// Indicates if the IntersectionObserver started observing the List
 		this.listEndObserved = false;
 
-		this.initItemNavigation();
+		this._itemNavigation = new ItemNavigation(this, {
+			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
+			navigationMode: NavigationMode.Vertical,
+			getItemsCallback: () => this.getEnabledItems(),
+		});
 
 		this._handleResize = this.checkListInViewport.bind(this);
 
@@ -630,14 +634,6 @@ class List extends UI5Element {
 				"ui5-content-native-scrollbars": getEffectiveScrollbarStyle(),
 			},
 		};
-	}
-
-	initItemNavigation() {
-		this._itemNavigation = new ItemNavigation(this, {
-			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
-			navigationMode: NavigationMode.Vertical,
-			getItemsCallback: () => this.getEnabledItems(),
-		});
 	}
 
 	prepareListItems() {

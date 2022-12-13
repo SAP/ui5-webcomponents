@@ -48,7 +48,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @since 0.8.0
 	 */
 	@property()
-	description!: string;
+	description?: string;
 
 	/**
 	 * Defines the <code>icon</code> source URI.
@@ -62,7 +62,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines whether the <code>icon</code> should be displayed in the beginning of the list item or in the end.
@@ -87,7 +87,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @public
 	 */
 	@property()
-	image!: string;
+	image?: string;
 
 	/**
 	 * Defines the <code>additionalText</code>, displayed in the end of the list item.
@@ -97,7 +97,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalText!: string;
+	additionalText?: string;
 
 	/**
 	 * Defines the state of the <code>additionalText</code>.
@@ -123,7 +123,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines if the text of the component should wrap, they truncate by default.
