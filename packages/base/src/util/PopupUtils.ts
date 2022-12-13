@@ -28,10 +28,6 @@ const isFocusedElementWithinNode = (node: HTMLElement) => {
 const isNodeContainedWithin = (parent: HTMLElement, child: HTMLElement): boolean => {
 	let currentNode: HTMLElement | undefined = parent;
 
-	if (currentNode === child) {
-		return true;
-	}
-
 	if (currentNode.shadowRoot) {
 		const children = Array.from(currentNode.shadowRoot.children) as Array<HTMLElement>;
 		currentNode = children.find(n => n.localName !== "style");
@@ -39,6 +35,10 @@ const isNodeContainedWithin = (parent: HTMLElement, child: HTMLElement): boolean
 		if (!currentNode) {
 			return false;
 		}
+	}
+
+	if (currentNode === child) {
+		return true;
 	}
 
 	const childNodes = currentNode.localName === "slot" ? (currentNode as HTMLSlotElement).assignedNodes() : currentNode.children;

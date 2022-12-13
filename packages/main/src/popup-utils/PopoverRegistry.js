@@ -5,28 +5,6 @@ let updateInterval = null;
 const intervalTimeout = 300;
 const openedRegistry = [];
 
-const repositionPopovers = event => {
-	openedRegistry.forEach(popover => {
-		popover.instance.reposition();
-	});
-};
-
-const attachGlobalScrollHandler = () => {
-	document.body.addEventListener("scroll", repositionPopovers, true);
-};
-
-const detachGlobalScrollHandler = () => {
-	document.body.removeEventListener("scroll", repositionPopovers, true);
-};
-
-const attachScrollHandler = popover => {
-	popover && popover.shadowRoot.addEventListener("scroll", repositionPopovers, true);
-};
-
-const detachScrollHandler = popover => {
-	popover && popover.shadowRoot.removeEventListener("scroll", repositionPopovers);
-};
-
 const runUpdateInterval = () => {
 	updateInterval = setInterval(() => {
 		repositionPopovers();
@@ -37,14 +15,36 @@ const stopUpdateInterval = () => {
 	clearInterval(updateInterval);
 };
 
+const repositionPopovers = event => {
+	openedRegistry.forEach(popover => {
+		popover.instance.reposition();
+	});
+};
+
+const attachGlobalScrollHandler = () => {
+	document.body.addEventListener("scroll", repositionPopovers, { capture: true });
+};
+
+const detachGlobalScrollHandler = () => {
+	document.body.removeEventListener("scroll", repositionPopovers, { capture: true });
+};
+
+const attachScrollHandler = popover => {
+	popover && popover.shadowRoot.addEventListener("scroll", repositionPopovers, { capture: true });
+};
+
+const detachScrollHandler = popover => {
+	popover && popover.shadowRoot.removeEventListener("scroll", repositionPopovers, { capture: true });
+};
+
 const attachPopupClosers = () => {
-	document.addEventListener("mousedown", clickHandler);
-	document.body.addEventListener("focusout", focusoutHandler);
+	document.addEventListener("mousedown", clickHandler, { capture: true });
+	document.body.addEventListener("focusout", focusoutHandler, { capture: true });
 };
 
 const detachPopupClosers = () => {
-	document.removeEventListener("mousedown", clickHandler);
-	document.body.removeEventListener("focusout", focusoutHandler);
+	document.removeEventListener("mousedown", clickHandler, { capture: true });
+	document.body.removeEventListener("focusout", focusoutHandler, { capture: true });
 };
 
 const skipClosing = new Map();
@@ -59,14 +59,10 @@ const clickHandler = event => {
 	// loop all open popovers
 	for (let i = (openedPopups.length - 1); i !== -1; i--) {
 		const popup = openedPopups[i].instance;
+		const parentPopovers = openedPopups[i].parentPopovers;
 
-		// if popup is modal, opener is clicked, popup is dialog skip closing
-		if (popup.isModal || popup.isOpenerClicked(event)) {
-			return;
-		}
-
-		if (isClickInRect(event, popup.getBoundingClientRect())) {
-			skipClosing.set(popup, true);
+		if (popup.isModal || popup.isOpenerClicked(event) || isClickInRect(event, popup.getBoundingClientRect())) {
+			[popup, ...parentPopovers].forEach(p => skipClosing.set(p, true));
 			break;
 		}
 

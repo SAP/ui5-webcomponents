@@ -1,6 +1,7 @@
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -321,6 +322,35 @@ class Popup extends UI5Element {
 		});
 	}
 
+	_onfocusout(e) {
+		// relatedTarget is the element, which will get focus. If no such element exists, focus the root.
+		// This happens after the mouse is released in order to not interrupt text selection.
+		if (!e.relatedTarget) {
+			this._shouldFocusRoot = true;
+		}
+	}
+
+	_onmousedown(e) {
+		this._root.removeAttribute("tabindex");
+
+		if (this.shadowRoot.contains(e.target)) {
+			this._shouldFocusRoot = true;
+		} else {
+			this._shouldFocusRoot = false;
+		}
+	}
+
+	_onmouseup() {
+		this._root.tabIndex = -1;
+
+		if (this._shouldFocusRoot) {
+			if (isChrome()) {
+				this._root.focus();
+			}
+			this._shouldFocusRoot = false;
+		}
+	}
+
 	_onkeydown(e) {
 		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
 		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
@@ -400,7 +430,7 @@ class Popup extends UI5Element {
 	}
 
 	isFocusWithin() {
-		return isFocusedElementWithinNode(this.shadowRoot.querySelector(".ui5-popup-root"));
+		return isFocusedElementWithinNode(this._root);
 	}
 
 	/**
