@@ -1118,17 +1118,21 @@ abstract class UI5Element extends HTMLElement {
 			return this._metadata;
 		}
 
-		const metadataObjects = [this.metadata];
+		const effectiveMetadata = Object.keys(this.metadata).length ? this.metadata : this.decoratorMetadata;
+		const metadataObjects = [effectiveMetadata];
 		let klass = this; // eslint-disable-line
 		while (klass !== UI5Element) {
 			klass = Object.getPrototypeOf(klass);
-			metadataObjects.unshift(klass.metadata);
+			const effectiveKlassMetadata = Object.keys(klass.metadata).length ? klass.metadata : klass.decoratorMetadata;
+			metadataObjects.unshift(effectiveKlassMetadata);
 		}
 		const mergedMetadata = merge({}, ...metadataObjects) as Metadata;
 
 		this._metadata = new UI5ElementMetadata(mergedMetadata);
 		return this._metadata;
 	}
+
+	static decoratorMetadata: Metadata = {};
 }
 
 /**

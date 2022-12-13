@@ -138,7 +138,7 @@ class ListItemBase extends UI5Element {
 	* [TAB] is performed onto the last tabbale content item.
 	*/
 	shouldForwardTabAfter(target) {
-		const aContent = getTabbableElements(this.getDomRef());
+		const aContent = getTabbableElements(this.getFocusDomRef());
 
 		if (target.getFocusDomRef) {
 			target = target.getFocusDomRef();
@@ -151,7 +151,7 @@ class ListItemBase extends UI5Element {
 	* Determines if the current list item is target of [SHIFT+TAB].
 	*/
 	shouldForwardTabBefore(target) {
-		return this.getDomRef() === target;
+		return this.getFocusDomRef() === target;
 	}
 
 	get classes() {

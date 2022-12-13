@@ -212,6 +212,43 @@
 	</xmp></pre>
 </section>
 
+<!--List items using imageContent slot-->
+<section>
+	<h3>List items using imageContent slot</h3>
+	<div class="snippet">
+		<ui5-list class="full-width">
+			<ui5-li> Avatar inside imageContent slot
+				<div slot="imageContent">
+					<ui5-avatar shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
+				</div>
+			</ui5-li>
+			<ui5-li> Avatar inside imageContent slot
+				<div slot="imageContent">
+					<ui5-avatar >
+						<img src="./img/woman_avatar_5.png" alt="Woman image">
+					</ui5-avatar>
+				</div>
+			</ui5-li>
+		</ui5-list>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-list class="full-width">
+	<ui5-li> Avatar inside imageContent slot
+		<div slot="imageContent">
+			<ui5-avatar shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
+		</div>
+	</ui5-li>
+	<ui5-li> Avatar inside imageContent slot
+		<div slot="imageContent">
+			<ui5-avatar >
+				<img src="./img/woman_avatar_5.png" alt="Woman image">
+			</ui5-avatar>
+		</div>
+	</ui5-li>
+</ui5-list>
+	</xmp></pre>
+</section>
+
 <!-- Delete List Example -->
 <section>
 	<h3>List in Delete Mode</h3>

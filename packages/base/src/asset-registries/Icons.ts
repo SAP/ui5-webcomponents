@@ -158,4 +158,5 @@ export {
 
 export type {
 	IconData,
+	CollectionData,
 };

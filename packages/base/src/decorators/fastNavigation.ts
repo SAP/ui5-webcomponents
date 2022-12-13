@@ -4,7 +4,11 @@
  * @returns { void }
  */
 const fastNavigation = (target: any): void => {
-	target.getMetadata().metadata.fastNavigation = true;
+	if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
+		target.decoratorMetadata = {};
+	}
+
+	target.decoratorMetadata.fastNavigation = true;
 };
 
 export default fastNavigation;

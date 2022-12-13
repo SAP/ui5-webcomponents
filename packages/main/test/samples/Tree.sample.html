@@ -194,4 +194,84 @@
 	</script>
 </section>
 
+<!--Custom -->
+<section>
+	<h3>Tree with custom items</h3>
+	<div class="snippet">
+		<ui5-tree mode="MultiSelect">
+			<div slot="header" class="hdr">
+				<ui5-title>Tree with custom items</ui5-title>
+			</div>
+			<ui5-tree-item-custom
+				expanded="true"
+				show-toggle-button
+				hide-selection-element
+				type="Active"
+				level="1"
+			>
+				<ui5-button slot="content">Level 1</ui5-button>
+		
+				<ui5-tree-item-custom
+					type="Active"
+					show-toggle-button
+					level="2"
+					expanded="true"
+				>
+					<ui5-select slot="content">
+						<ui5-option>Level 2</ui5-option>
+						<ui5-option>Option 2.1</ui5-option>
+						<ui5-option>Option 2.3</ui5-option>
+					</ui5-select>
+		
+					<ui5-tree-item-custom
+						hide-selection-element
+						type="Active"
+						level="3"
+					>
+						<ui5-button slot="content">Level 3</ui5-button>
+					</ui5-tree-item-custom>
+				</ui5-tree-item-custom>
+			</ui5-tree-item-custom>
+		</ui5-tree>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tree mode="MultiSelect">
+	<div slot="header" class="hdr">
+		<ui5-title>Tree with custom items</ui5-title>
+	</div>
+	<ui5-tree-item-custom
+		expanded="true"
+		show-toggle-button
+		hide-selection-element
+		type="Active"
+		level="1"
+	>
+		<ui5-button slot="content">Level 1</ui5-button>
+
+		<ui5-tree-item-custom
+			type="Active"
+			show-toggle-button
+			level="2"
+			expanded="true"
+		>
+			<ui5-select slot="content">
+				<ui5-option>Level 2</ui5-option>
+				<ui5-option>Option 2.1</ui5-option>
+				<ui5-option>Option 2.3</ui5-option>
+			</ui5-select>
+
+			<ui5-tree-item-custom
+				hide-selection-element
+				type="Active"
+				level="3"
+			>
+				<ui5-button slot="content">Level 3</ui5-button>
+			</ui5-tree-item-custom>
+		</ui5-tree-item-custom>
+	</ui5-tree-item-custom>
+</ui5-tree>
+	</xmp></pre>
+</section>
+
+
 <!-- JSDoc marker -->

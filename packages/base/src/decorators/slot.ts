@@ -10,13 +10,34 @@ import { Slot } from "../UI5ElementMetadata.js";
 const slot = (slotData: Slot): PropertyDecorator => {
 	return (target: any, slotKey: string | symbol) => {
 		const ctor = target.constructor as typeof UI5Element;
-		const slotMetadata = ctor.getMetadata().getSlots();
 
-		if (!slotMetadata[slotKey as string]) {
-			slotMetadata[slotKey as string] = slotData;
+		if (!Object.prototype.hasOwnProperty.call(ctor, "decoratorMetadata")) {
+			ctor.decoratorMetadata = {};
 		}
 
-		ctor.getMetadata().metadata.managedSlots = true;
+		const decoratorMetadata = ctor.decoratorMetadata;
+		if (!decoratorMetadata.slots) {
+			decoratorMetadata.slots = {};
+		}
+
+		const slotMetadata = decoratorMetadata.slots;
+
+		if (slotData.default && slotMetadata.default) {
+			throw new Error("Only one slot can be the default slot.");
+		}
+
+		const key = slotData.default ? "default" : slotKey as string;
+
+		if (!slotMetadata[key]) {
+			slotMetadata[key] = slotData;
+		}
+
+		if (slotData.default) {
+			delete slotMetadata.default.default;
+			slotMetadata.default.propertyName = slotKey as string;
+		}
+
+		ctor.decoratorMetadata.managedSlots = true;
 	};
 };
 
