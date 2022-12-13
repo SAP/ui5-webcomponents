@@ -120,7 +120,7 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		},
 		generateAPI: {
-			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc",
+			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
 			prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,
 			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
 			jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
