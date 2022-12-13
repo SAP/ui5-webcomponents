@@ -79,11 +79,11 @@
 	color: var(--_ui5_dialog_header_warning_state_icon_color);
 }
 
-.ui5-popup-header-root:focus {
+.ui5-popup-header-root {
 	outline: none;
 }
 
-.ui5-popup-header-root:focus:after {
+.ui5-popup-header-root:focus-visible:after {
 	content: '';
 	position: absolute;
 	left: var(--_ui5_dialog_header_focus_left_offset);

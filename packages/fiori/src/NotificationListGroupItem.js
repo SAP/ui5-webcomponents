@@ -39,7 +39,7 @@ const metadata = {
 	tag: "ui5-li-notification-group",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListGroupItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.NotificationListGroupItem.prototype */ {
 
 		/**
 		 * Defines if the group is collapsed or expanded.
@@ -61,13 +61,13 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.NotificationListGroupItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.NotificationListGroupItem.prototype */ {
 
 		/**
 		 * Defines the items of the <code>ui5-li-notification-group</code>,
 		 * usually <code>ui5-li-notification</code> items.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.INotificationListItem[]}
+		 * @type {sap.ui.webc.fiori.INotificationListItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -76,7 +76,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.NotificationListGroupItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.NotificationListGroupItem.prototype */ {
 
 		/**
 		 * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
@@ -124,12 +124,12 @@ const metadata = {
  * <code>import "@ui5/webcomponents/dist/NotificationAction.js";</code> (optional)
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.NotificationListGroupItem
- * @extends sap.ui.webcomponents.fiori.NotificationListItemBase
+ * @alias sap.ui.webc.fiori.NotificationListGroupItem
+ * @extends sap.ui.webc.fiori.NotificationListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
  * @appenddocs NotificationAction
- * @implements sap.ui.webcomponents.main.IListItem
+ * @implements sap.ui.webc.main.IListItem
  * @public
  */
 class NotificationListGroupItem extends NotificationListItemBase {

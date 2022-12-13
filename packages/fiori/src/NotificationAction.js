@@ -6,7 +6,7 @@ import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
  */
 const metadata = {
 	tag: "ui5-notification-action",
-	properties: /** @lends sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.NotificationAction.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-notification-action</code>.
 		 *
@@ -44,7 +44,7 @@ const metadata = {
 		 * <li><code>Transparent</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ButtonDesign}
+		 * @type {sap.ui.webc.main.types.ButtonDesign}
 		 * @defaultvalue "Transparent"
 		 * @public
 		 */
@@ -68,9 +68,9 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.NotificationAction.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.NotificationAction.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.NotificationAction.prototype */ {
 		click: {},
 	},
 };
@@ -82,10 +82,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.NotificationAction
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.NotificationAction
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-notification-action
- * @implements sap.ui.webcomponents.fiori.INotificationAction
+ * @implements sap.ui.webc.fiori.INotificationAction
  * @public
  */
 class NotificationAction extends UI5Element {

@@ -33,7 +33,7 @@
 	--_ui5_input_information_custom_icon_padding: .5rem .625rem;
 	--_ui5_input_error_warning_icon_padding: .5rem .5rem .5rem .5625rem;
 	--_ui5_input_information_icon_padding: .5rem .5rem .5rem .5625rem;
-	--_ui5_input_disabled_opacity: 0.4;
+	--_ui5_input_disabled_opacity: var(--sapContent_DisabledOpacity);
 	--_ui5_input_icon_min_width: 2.25rem;
 	--_ui5_input_compact_min_width: 2rem;
 	--_ui5_input_transition: none;
@@ -61,4 +61,14 @@
 	--_ui5_input_value_state_error_warning_placeholder_font_weight: normal;
 	--_ui5_input_focus_outline_color: var(--sapContent_FocusColor);
 	--_ui5-input_error_placeholder_color: var(--sapField_PlaceholderTextColor);
+	--_ui5_input_icon_width: 2.25rem;
+	--_ui5_input_icon_wrapper_height: 100%;
+	--_ui5_input_icon_wrapper_state_height: 100%;
+	--_ui5_input_icon_wrapper_success_state_height: 100%;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_input_icon_width: 2rem;
 }

@@ -1,11 +1,23 @@
 const assert = require("chai").assert;
 
 describe("Menu interaction", () => {
-
 	it("Menu opens after button click", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
 
+		openButton.click();
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.strictEqual(await popover.getAttribute("id"), `${staticAreaItemClassName}-menu-rp`, "There is popover for the menu created in the static area");
+	});
+
+	it("Menu opens after setting of opener and open", async () => {
+		await browser.url(`test/pages/Menu.html`);
+		const openerButton = await browser.$("#btnAddOpener");
+		const openButton = await browser.$("#btnToggleOpen");
+
+		openerButton.click();
 		openButton.click();
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
@@ -101,6 +113,23 @@ describe("Menu interaction", () => {
 		await browser.keys("Enter");
 
 		assert.strictEqual(await selectionInput.getAttribute("value"), "New File", "Pressing [Enter] on first item fires an event");
+	});
+
+	it("Events firing on open/close of the menu", async () => {
+		await browser.url(`test/pages/Menu.html`);
+		const openButton = await browser.$("#btnOpen");
+		const eventLogger = await browser.$("#eventLogger");
+
+		openButton.click();
+		await browser.pause(100);
+		await browser.keys("Escape");
+
+		const eventLoggerValue = await eventLogger.getValue();
+
+		assert.notEqual(eventLoggerValue.indexOf("before-open"), -1, "'before-open' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("after-open"), -1, "'after-open' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("before-close"), -1, "'before-close' event is fired");
+		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
 	});
 });
 

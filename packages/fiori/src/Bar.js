@@ -14,7 +14,7 @@ const metadata = {
 	tag: "ui5-bar",
 	managedSlots: true,
 	fastNavigation: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.Bar.prototype */ {
 		/**
 		 * Defines the component's design.
 		 *
@@ -28,7 +28,7 @@ const metadata = {
 		 * <li><code>FloatingFooter</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.types.BarDesign}
+		 * @type {sap.ui.webc.fiori.types.BarDesign}
 		 * @defaultvalue "Header"
 		 * @public
 		 */
@@ -37,7 +37,7 @@ const metadata = {
 			defaultValue: BarDesign.Header,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.Bar.prototype */ {
 		/**
 		 * Defines the content at the start of the bar
 		 * @type {HTMLElement[]}
@@ -69,7 +69,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.Bar.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.Bar.prototype */ {
 		//
 	},
 };
@@ -115,9 +115,9 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.Bar
- * @implements sap.ui.webcomponents.fiori.IBar
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.Bar
+ * @implements sap.ui.webc.fiori.IBar
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-bar
  * @public
  * @since 1.0.0-rc.11

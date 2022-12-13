@@ -7,7 +7,7 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
 const metadata = {
 	tag: "ui5-li-suggestion-item",
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.SuggestionListItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.SuggestionListItem.prototype */ {
 		/**
 		 * Defines a description that can contain HTML.
 		 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
@@ -44,8 +44,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SuggestionListItem
- * @extends sap.ui.webcomponents.main.StandardListItem
+ * @alias sap.ui.webc.main.SuggestionListItem
+ * @extends sap.ui.webc.main.StandardListItem
  * @tagname ui5-li-suggestion-item
  */
 class SuggestionListItem extends StandardListItem {

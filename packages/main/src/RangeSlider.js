@@ -26,12 +26,12 @@ const metadata = {
 	tag: "ui5-range-slider",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.RangeSlider.prototype */  {
+	properties: /** @lends sap.ui.webc.main.RangeSlider.prototype */  {
 		/**
 		 * Defines start point of a selection - position of a first handle on the slider.
 		 * <br><br>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 0
 		 * @formEvents change input
 		 * @formProperty
@@ -45,7 +45,7 @@ const metadata = {
 		 * Defines end point of a selection - position of a second handle on the slider.
 		 * <br><br>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 100
 		 * @formEvents change input
 		 * @formProperty
@@ -114,8 +114,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.RangeSlider
- * @extends sap.ui.webcomponents.main.SliderBase
+ * @alias sap.ui.webc.main.RangeSlider
+ * @extends sap.ui.webc.main.SliderBase
  * @tagname ui5-range-slider
  * @since 1.0.0-rc.11
  * @public
@@ -459,10 +459,6 @@ class RangeSlider extends SliderBase {
 	}
 
 	_handleUp() {
-		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
-		}
-
 		this._swapValues();
 		this._setAffectedValueByFocusedElement();
 		this._setAffectedValue(null);
@@ -474,6 +470,10 @@ class RangeSlider extends SliderBase {
 		this.handleUpBase();
 
 		this.rangePressed = false;
+
+		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
+			this.fireEvent("change");
+		}
 	}
 
 	/**

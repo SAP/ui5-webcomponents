@@ -24,10 +24,16 @@
 {{/inline}}
 
 {{#*inline "imageBegin"}}
-	{{#if displayImage}}
-		<ui5-avatar shape="Square" class="ui5-li-img">
-			<img src="{{image}}" class="ui5-li-img-inner" />
-		</ui5-avatar>
+	{{#if hasImageContent}}
+		<div class="ui5-li-imgContent" >
+			<slot name="imageContent"></slot>
+		</div>
+	{{else}}
+		{{#if displayImage}}
+			<ui5-avatar shape="Square" class="ui5-li-img">
+				<img src="{{image}}" class="ui5-li-img-inner" />
+			</ui5-avatar>
+		{{/if}}
 	{{/if}}
 {{/inline}}
 

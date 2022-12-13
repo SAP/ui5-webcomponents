@@ -13,6 +13,9 @@ jobs:
       with:
         node-version: 16
         cache: 'yarn'
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '2.7.6'
 
     - name: Install and Build
       run: |

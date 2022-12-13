@@ -22,7 +22,7 @@ import "@ui5/webcomponents-icons/dist/value-help.js";
  */
 const metadata = {
 	tag: "ui5-multi-input",
-	properties: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
+	properties: /** @lends sap.ui.webc.main.MultiInput.prototype */ {
 		/**
 		 * Determines whether a value help icon will be visualized in the end of the input.
 		 * Pressing the icon will fire <code>value-help-trigger</code> event.
@@ -43,11 +43,11 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
+	slots: /** @lends sap.ui.webc.main.MultiInput.prototype */ {
 		/**
 		 * Defines the component tokens.
 		 *
-		 * @type {sap.ui.webcomponents.main.IToken[]}
+		 * @type {sap.ui.webc.main.IToken[]}
 		 * @slot
 		 * @public
 		 */
@@ -55,12 +55,12 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.MultiInput.prototype */ {
+	events: /** @lends sap.ui.webc.main.MultiInput.prototype */ {
 		/**
 		 * Fired when the value help icon is pressed
 		 * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
 		 *
-		 * @event sap.ui.webcomponents.main.MultiInput#value-help-trigger
+		 * @event sap.ui.webc.main.MultiInput#value-help-trigger
 		 * @public
 		 */
 		"value-help-trigger": {},
@@ -68,7 +68,7 @@ const metadata = {
 		/**
 		 * Fired when a token is about to be deleted.
 		 *
-		 * @event sap.ui.webcomponents.main.MultiInput#token-delete
+		 * @event sap.ui.webc.main.MultiInput#token-delete
 		 * @param {HTMLElement} token deleted token.
 		 * @public
 		 */
@@ -98,8 +98,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.MultiInput
- * @extends sap.ui.webcomponents.main.Input
+ * @alias sap.ui.webc.main.MultiInput
+ * @extends sap.ui.webc.main.Input
  * @tagname ui5-multi-input
  * @appenddocs Token
  * @since 1.0.0-rc.9

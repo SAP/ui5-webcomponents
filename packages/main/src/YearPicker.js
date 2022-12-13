@@ -27,7 +27,7 @@ import styles from "./generated/themes/YearPicker.css.js";
  */
 const metadata = {
 	tag: "ui5-yearpicker",
-	properties: /** @lends sap.ui.webcomponents.main.YearPicker.prototype */ {
+	properties: /** @lends sap.ui.webc.main.YearPicker.prototype */ {
 		/**
 		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 		 * @type {array}
@@ -49,7 +49,7 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.YearPicker.prototype */ {
+	events: /** @lends sap.ui.webc.main.YearPicker.prototype */ {
 		/**
 		 * Fired when the user selects a year (space/enter/click).
 		 * @public
@@ -73,8 +73,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.YearPicker
- * @extends sap.ui.webcomponents.main.CalendarPart
+ * @alias sap.ui.webc.main.YearPicker
+ * @extends sap.ui.webc.main.CalendarPart
  * @tagname ui5-yearpicker
  * @public
  */

@@ -20,7 +20,7 @@ const metadata = {
 	tag: "ui5-card",
 	languageAware: true,
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Card.prototype */ {
 
 		/**
 		 * Defines the content of the component.
@@ -46,7 +46,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Card.prototype */ {
 
 		/**
 		 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
@@ -74,7 +74,7 @@ const metadata = {
 			type: String,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Card.prototype */ {
+	events: /** @lends sap.ui.webc.main.Card.prototype */ {
 
 	},
 };
@@ -102,8 +102,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Card
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Card
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-card
  * @public
  * @appenddocs CardHeader

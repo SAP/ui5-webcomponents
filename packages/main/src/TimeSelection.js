@@ -42,7 +42,7 @@ const metadata = {
 	tag: "ui5-time-selection",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.TimeSelection.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TimeSelection.prototype */ {
 		/**
 		 * Defines a formatted time value.
 		 *
@@ -141,7 +141,7 @@ const metadata = {
 			type: CalendarType,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TimeSelection.prototype */ {
+	events: /** @lends sap.ui.webc.main.TimeSelection.prototype */ {
 		/**
 		 * Fired when the value changes due to user interaction with the sliders
 		 */
@@ -159,8 +159,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TimeSelection
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TimeSelection
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-time-selection
  * @private
  * @since 1.0.0-rc.12
@@ -236,7 +236,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	get periodsArray() {
-		return this.getFormat().aDayPeriods.map(x => x.toUpperCase());
+		return this.getFormat().aDayPeriodsAbbrev.map(x => x.toUpperCase());
 	}
 
 	get _hoursSliderFocused() {

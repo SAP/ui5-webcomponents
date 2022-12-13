@@ -555,6 +555,26 @@ describe("Table general interaction", () => {
 			assert.notOk(await row.shadow$("tr").getAttribute("aria-current"), "Table row aria-current attribute is not present.");
 		});
 	});
+
+	describe("Display cell inline or block according to property popin-display", () => {
+		before(async () => {
+			await browser.url(`test/pages/Table.html`);
+		});
+
+		it("Popin-display property should have value Inline", async () => {
+			const table = await browser.$("#tbl");
+			const column = await table.$$("ui5-table-column")[2];
+
+			assert.strictEqual(await column.getAttribute("popin-display"), "Inline", "Table row popin-display property is set to Inline.");
+		});
+
+		it("Popin-display should have value Block by default", async () => {
+			const table = await browser.$("#tbl");
+			const column = await table.$$("ui5-table-column")[0];
+
+			assert.notOk(await column.getAttribute("popin-display"), "Block", "Table row popin-display property is set by default.");
+		});
+	});
 });
 
 describe("Table keyboard interaction", async () => {

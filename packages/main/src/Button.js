@@ -4,6 +4,8 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+
 import {
 	isPhone,
 	isTablet,
@@ -30,7 +32,7 @@ let activeButton = null;
 const metadata = {
 	tag: "ui5-button",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Button.prototype */ {
 
 		/**
 		 * Defines the component design.
@@ -47,7 +49,7 @@ const metadata = {
 		 * <li><code>Attention</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ButtonDesign}
+		 * @type {sap.ui.webc.main.types.ButtonDesign}
 		 * @defaultvalue "Default"
 		 * @public
 		 */
@@ -245,7 +247,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Button.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><br>
@@ -259,7 +261,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Button.prototype */ {
+	events: /** @lends sap.ui.webc.main.Button.prototype */ {
 
 		/**
 		 * Fired when the component is activated either with a
@@ -314,10 +316,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Button
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Button
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-button
- * @implements sap.ui.webcomponents.main.IButton
+ * @implements sap.ui.webc.main.IButton
  * @public
  */
 class Button extends UI5Element {
@@ -357,7 +359,8 @@ class Button extends UI5Element {
 		}
 
 		const handleTouchStartEvent = event => {
-			event.isMarked = "button";
+			markEvent(event, "button");
+
 			if (this.nonInteractive) {
 				return;
 			}
@@ -389,7 +392,7 @@ class Button extends UI5Element {
 		if (this.nonInteractive) {
 			return;
 		}
-		event.isMarked = "button";
+		markEvent(event, "button");
 		const FormSupport = getFeature("FormSupport");
 		if (FormSupport && this.submits) {
 			FormSupport.triggerFormSubmit(this);
@@ -405,7 +408,7 @@ class Button extends UI5Element {
 			return;
 		}
 
-		event.isMarked = "button";
+		markEvent(event, "button");
 		this.active = true;
 		activeButton = this; // eslint-disable-line
 	}
@@ -419,11 +422,11 @@ class Button extends UI5Element {
 	}
 
 	_onmouseup(event) {
-		event.isMarked = "button";
+		markEvent(event, "button");
 	}
 
 	_onkeydown(event) {
-		event.isMarked = "button";
+		markEvent(event, "button");
 
 		if (isSpace(event) || isEnter(event)) {
 			this.active = true;
@@ -451,7 +454,7 @@ class Button extends UI5Element {
 			return;
 		}
 
-		event.isMarked = "button";
+		markEvent(event, "button");
 		if (isDesktop()) {
 			this.focused = true;
 		}

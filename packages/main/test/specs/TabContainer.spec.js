@@ -167,31 +167,34 @@ describe("TabContainer general interaction", () => {
 
 	it("tests nested tabs", async () => {
 		const tabContainer = await browser.$("#tabContainerNestedTabs");
-		const expandButton = await tabContainer.shadow$(".ui5-tab-expand-button");
+		const expandButton = await tabContainer.shadow$(".ui5-tab-expand-button [ui5-button]");
+
+		assert.ok(await expandButton.getAttribute("tooltip"), "Expand button tooltip is set");
+
 		await expandButton.click();
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#tabContainerNestedTabs");
 
 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed")
+		assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed");
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[0].click();
 		let newlySelectedItem = await tabContainer.$("[selected]");
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1", "Sub tabs are selectable and the selected tab is 2.1");
-		assert.ok(await browser.$("#button21").isDisplayed(), "Proper content for tab 2.1 is displayed")
+		assert.ok(await browser.$("#button21").isDisplayed(), "Proper content for tab 2.1 is displayed");
 
-		assert.notOk(await browser.$("#button211").isDisplayed(), "Content for tab 2.1.1 is not displayed")
+		assert.notOk(await browser.$("#button211").isDisplayed(), "Content for tab 2.1.1 is not displayed");
 		await expandButton.click();
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[1].click();
 		newlySelectedItem = await tabContainer.$("[selected]");
-			assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed")
+			assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed");
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1.1", "Sub tabs are selectable and the selected tab is 2.1.1");
-		assert.ok(await browser.$("#button211").isDisplayed(), "Proper content for tab 2.1.1 is displayed")
+		assert.ok(await browser.$("#button211").isDisplayed(), "Proper content for tab 2.1.1 is displayed");
 
-		assert.notOk(await browser.$("#button2121").isDisplayed(), "Content for tab 2.1.2.1 is not displayed")
+		assert.notOk(await browser.$("#button2121").isDisplayed(), "Content for tab 2.1.2.1 is not displayed");
 		await expandButton.click();
 		await (await popover.$("ui5-list").$$("ui5-li-custom"))[4].click();
 		newlySelectedItem = await tabContainer.$("[selected]");
-		assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed")
-		assert.notOk(await browser.$("#button211").isDisplayed(), "Content for tab 2.1.1 is not displayed")
+		assert.notOk(await browser.$("#button21").isDisplayed(), "Content for tab 2.1 is not displayed");
+		assert.notOk(await browser.$("#button211").isDisplayed(), "Content for tab 2.1.1 is not displayed");
 		assert.strictEqual(await newlySelectedItem.getProperty("text"), "2.1.2.1", "Sub tabs are selectable and the selected tab is 2.1.2.1");
 		assert.ok(await browser.$("#button2121").isDisplayed(), "Proper content for tab 2.1.2.1 is displayed")
 	});
@@ -273,5 +276,25 @@ describe("TabContainer general interaction", () => {
 		assert.notOk(await firstTabInStrip.hasClass("ui5-tab-strip-item--selected"), "last tab is selected");
 		assert.ok(await nestedTabParentInTabStrip.isDisplayed(), "last tab in strip is visible");
 		assert.ok(await nestedTabParentInTabStrip.hasClass("ui5-tab-strip-item--selected"), "last tab is selected");
+	});
+
+	it("tests effective selected tab", async () => {
+		const tabContainer = await browser.$("#tabContainerAddTabsProgrammatically");
+		const allInitialTabs = await tabContainer.$$("ui5-tab");
+
+		// Assert
+		assert.ok(await allInitialTabs[0].getProperty("selected"), "The first tab should be selected");
+		assert.notOk(await allInitialTabs[1].getProperty("selected"), "The second tab should not be selected");
+
+		// Act
+		await browser.$("#buttonAddTabs").click();
+		const allTabs = await tabContainer.$$("ui5-tab");
+
+		// Assert
+		assert.notOk(await allTabs[0].getProperty("selected"), "The first tab should not be selected");
+		assert.notOk(await allTabs[1].getProperty("selected"), "The second tab should not be selected");
+		assert.ok(await allTabs[2].getProperty("selected"), "Only the third tab should be selected");
+		assert.notOk(await allTabs[3].getProperty("selected"), "The fourth tab should not be selected");
+		assert.notOk(await allTabs[4].getProperty("selected"), "The fifth tab should not be selected");
 	});
 });

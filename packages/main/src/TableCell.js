@@ -10,7 +10,7 @@ import styles from "./generated/themes/TableCell.css.js";
  */
 const metadata = {
 	tag: "ui5-table-cell",
-	slots: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TableCell.prototype */ {
 		/**
 		 * Specifies the content of the component.
 		 *
@@ -22,7 +22,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TableCell.prototype */ {
 		/**
 		 * @private
 		 */
@@ -36,8 +36,16 @@ const metadata = {
 		popined: {
 			type: Boolean,
 		},
+
+		/**
+		 * @private
+		 */
+		 _popinedInline: {
+			type: Boolean,
+		},
+
 	},
-	events: /** @lends sap.ui.webcomponents.main.TableCell.prototype */ {
+	events: /** @lends sap.ui.webc.main.TableCell.prototype */ {
 	},
 };
 
@@ -59,10 +67,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TableCell
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TableCell
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-table-cell
- * @implements sap.ui.webcomponents.main.ITableCell
+ * @implements sap.ui.webc.main.ITableCell
  * @public
  */
 class TableCell extends UI5Element {

@@ -6,7 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
  */
 const metadata = {
 	tag: "ui5-shellbar-item",
-	properties: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.ShellBarItem.prototype */ {
 		/**
 		 * Defines the name of the item's icon.
 		 * @type {string}
@@ -39,11 +39,11 @@ const metadata = {
 		},
 	},
 
-	events: /** @lends sap.ui.webcomponents.fiori.ShellBarItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.ShellBarItem.prototype */ {
 		/**
 		 * Fired, when the item is pressed.
 		 *
-		 * @event sap.ui.webcomponents.fiori.ShellBarItem#click
+		 * @event sap.ui.webc.fiori.ShellBarItem#click
 		 * @allowPreventDefault
 		 * @param {HTMLElement} targetRef DOM ref of the clicked element
 		 * @public
@@ -66,10 +66,10 @@ const metadata = {
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem";</code>
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.ShellBarItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.ShellBarItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-shellbar-item
- * @implements sap.ui.webcomponents.fiori.IShellBarItem
+ * @implements sap.ui.webc.fiori.IShellBarItem
  * @public
  */
 class ShellBarItem extends UI5Element {

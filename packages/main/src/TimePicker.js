@@ -11,8 +11,7 @@ import {
  */
 const metadata = {
 	tag: "ui5-time-picker",
-	altTag: "ui5-timepicker",
-	properties: /** @lends sap.ui.webcomponents.main.TimePickerBase.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TimePickerBase.prototype */ {
 		/**
 		 * Defines a short hint, intended to aid the user with data entry when the
 		 * component has no value.
@@ -107,8 +106,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TimePicker
- * @extends sap.ui.webcomponents.main.TimePickerBase
+ * @alias sap.ui.webc.main.TimePicker
+ * @extends sap.ui.webc.main.TimePickerBase
  * @tagname ui5-time-picker
  * @public
  * @since 1.0.0-rc.6

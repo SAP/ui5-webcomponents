@@ -41,7 +41,7 @@ import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js"
 const metadata = {
 	tag: "ui5-view-settings-dialog",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the initial sort order.
 		 *
@@ -115,12 +115,12 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.ViewSettingsDialog.prototype */ {
 		/**
 		 * Defines the list of items against which the user could sort data.
 		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.ISortItem[]}
+		 * @type {sap.ui.webc.fiori.ISortItem[]}
 		 * @slot sortItems
 		 * @public
 		 */
@@ -132,7 +132,7 @@ const metadata = {
 		 * Defines the <code>filterItems</code> list.
 		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
 		 *
-		 * @type {sap.ui.webcomponents.fiori.IFilterItem[]}
+		 * @type {sap.ui.webc.fiori.IFilterItem[]}
 		 * @slot filterItems
 		 * @public
 		 */
@@ -140,12 +140,12 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.ViewSettingsDialog.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.ViewSettingsDialog.prototype */ {
 
 		/**
 		 * Fired when confirmation button is activated.
 		 *
-		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#confirm
+		 * @event sap.ui.webc.fiori.ViewSettingsDialog#confirm
 		 * @param {String} sortOrder The current sort order selected.
 		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
 		 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
@@ -166,7 +166,7 @@ const metadata = {
 		/**
 		 * Fired when cancel button is activated.
 		 *
-		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#cancel
+		 * @event sap.ui.webc.fiori.ViewSettingsDialog#cancel
 		 * @param {String} sortOrder The current sort order selected.
 		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
 		 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
@@ -188,7 +188,7 @@ const metadata = {
 		 * Fired before the component is opened. <b>This event does not bubble.</b>
 		 *
 		 * @public
-		 * @event sap.ui.webcomponents.fiori.ViewSettingsDialog#before-open
+		 * @event sap.ui.webc.fiori.ViewSettingsDialog#before-open
 		 */
 		"before-open": {},
 	},
@@ -219,8 +219,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.ViewSettingsDialog
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.ViewSettingsDialog
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-view-settings-dialog
  * @appenddocs SortItem FilterItem FilterItemOption
  * @since 1.0.0-rc.16

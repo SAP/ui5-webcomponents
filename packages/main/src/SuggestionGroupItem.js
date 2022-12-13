@@ -6,7 +6,7 @@ import GroupHeaderListItem from "./GroupHeaderListItem.js";
  */
 const metadata = {
 	tag: "ui5-suggestion-group-item",
-	properties: /** @lends sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.SuggestionGroupItem.prototype */ {
 		/**
 		 * Defines the text of the <code>ui5-suggestion-group-item</code>.
 		 *
@@ -18,9 +18,9 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.SuggestionGroupItem.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.main.SuggestionGroupItem.prototype */ {
+	events: /** @lends sap.ui.webc.main.SuggestionGroupItem.prototype */ {
 	},
 };
 
@@ -31,10 +31,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SuggestionGroupItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.SuggestionGroupItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-suggestion-group-item
- * @implements sap.ui.webcomponents.main.IInputSuggestionItem
+ * @implements sap.ui.webc.main.IInputSuggestionItem
  * @public
  * @since 1.0.0-rc.15
  */

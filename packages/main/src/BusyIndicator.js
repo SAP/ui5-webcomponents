@@ -19,9 +19,8 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  */
 const metadata = {
 	tag: "ui5-busy-indicator",
-	altTag: "ui5-busyindicator",
 	languageAware: true,
-	slots: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
+	slots: /** @lends sap.ui.webc.main.BusyIndicator.prototype */ {
 
 		/**
 		 * Determines the content over which the component will appear.
@@ -34,7 +33,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.BusyIndicator.prototype */ {
+	properties: /** @lends sap.ui.webc.main.BusyIndicator.prototype */ {
 
 		/**
 		 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
@@ -59,7 +58,7 @@ const metadata = {
 		 * <li><code>Large</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.BusyIndicatorSize}
+		 * @type {sap.ui.webc.main.types.BusyIndicatorSize}
 		 * @defaultvalue "Medium"
 		 * @public
 		 */
@@ -82,7 +81,7 @@ const metadata = {
 		/**
 		 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultValue 1000
 		 * @public
 		 */
@@ -138,8 +137,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.BusyIndicator
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.BusyIndicator
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-busy-indicator
  * @public
  * @since 0.12.0

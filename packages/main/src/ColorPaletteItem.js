@@ -17,13 +17,13 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
 const metadata = {
 	tag: "ui5-color-palette-item",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ColorPaletteItem.prototype */ {
 		/**
 		 * Defines the colour of the component.
 		 * <br><br>
 		 * <b>Note:</b> The value should be a valid CSS color.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.CSSColor}
+		 * @type {sap.ui.webc.base.types.CSSColor}
 		 * @public
 		 */
 		value: {
@@ -67,9 +67,9 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.ColorPaletteItem.prototype */ {
 	},
-	events: /** @lends sap.ui.webcomponents.main.ColorPaletteItem.prototype */ {
+	events: /** @lends sap.ui.webc.main.ColorPaletteItem.prototype */ {
 	},
 };
 
@@ -82,11 +82,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ColorPaletteItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ColorPaletteItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-color-palette-item
  * @since 1.0.0-rc.12
- * @implements sap.ui.webcomponents.main.IColorPaletteItem
+ * @implements sap.ui.webc.main.IColorPaletteItem
  * @public
  */
 class ColorPaletteItem extends UI5Element {

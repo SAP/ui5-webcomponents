@@ -74,6 +74,23 @@
 
 	<br/><br/>
 
+	<ui5-list header-text="API: imageContent">
+		<ui5-li> Avatar inside imageContent slot
+			<div slot="imageContent">
+				<ui5-avatar shape="Square" initials="ABC" color-scheme="Accent2"></ui5-avatar>
+			</div>
+		</ui5-li>
+		<ui5-li> Avatar inside imageContent slot
+			<div slot="imageContent">
+				<ui5-avatar >
+					<img src="./img/woman_avatar_5.png" alt="Woman image">
+				</ui5-avatar>
+			</div>
+		</ui5-li>
+	</ui5-list>
+
+	<br/><br/>
+
 	<ui5-list header-text="API: ListItem type='Active/Inactive/Detail'" mode="SingleSelect">
 		<ui5-li >Active item - press</ui5-li>
 		<ui5-li >Active item - press</ui5-li>
@@ -95,6 +112,22 @@
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 	</ui5-list>
+
+	<br/><br/>
+
+	<ui5-list id="navigationListItems" header-text="API: ListItem type='Navigation'">
+		<ui5-li type="Navigation">Navigation item</ui5-li>
+		<ui5-li type="Navigation" icon="navigation-right-arrow">Navigation item</ui5-li>
+	</ui5-list>
+	<br />
+
+	<br/><br/>
+
+	<ui5-list id="navigatedItems" header-text="API: navigated" >
+		<ui5-li type="Navigation" navigated>Navigated item</ui5-li>
+		<ui5-li type="Navigation" navigated>Navigated item</ui5-li>
+	</ui5-list>
+	<br />
 
 	<br/><br/>
 

@@ -35,6 +35,11 @@
 	vertical-align: top;
 }
 
+
+:host([interactive]) {
+	cursor: pointer;
+}
+
 /*
  * The Icon is currently the only component that enforces "LTR" direction inside its ShadowDOM
  * as some icons should not be mirrored in RTL (f.e. checkmark, search, etc.).

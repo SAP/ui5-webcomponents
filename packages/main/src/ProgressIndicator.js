@@ -22,7 +22,7 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
  */
 const metadata = {
 	tag: "ui5-progress-indicator",
-	properties: /** @lends sap.ui.webcomponents.main.ProgressIndicator.prototype */ {
+	properties: /** @lends sap.ui.webc.main.ProgressIndicator.prototype */ {
 		/**
 		 * Defines whether component is in disabled state.
 		 *
@@ -48,7 +48,7 @@ const metadata = {
 		 *
 		 * <b>Note:</b>
 		 * If a value greater than 100 is provided, the percentValue is set to 100. In other cases of invalid value, percentValue is set to its default of 0.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -83,7 +83,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -92,10 +92,10 @@ const metadata = {
 			defaultValue: ValueState.None,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.ProgressIndicator.prototype */ {
+	slots: /** @lends sap.ui.webc.main.ProgressIndicator.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.main.ProgressIndicator.prototype */ {
+	events: /** @lends sap.ui.webc.main.ProgressIndicator.prototype */ {
 		//
 	},
 };
@@ -116,8 +116,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.ProgressIndicator
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.ProgressIndicator
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-progress-indicator
  * @public
  * @since 1.0.0-rc.8

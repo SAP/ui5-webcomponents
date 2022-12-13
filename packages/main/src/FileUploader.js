@@ -3,6 +3,7 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
 	FILEUPLOAD_BROWSE,
@@ -32,7 +33,7 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 const metadata = {
 	tag: "ui5-file-uploader",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
+	properties: /** @lends sap.ui.webc.main.FileUploader.prototype */ {
 		/**
 		 * Comma-separated list of file types that the component should accept.
 		 * <br><br>
@@ -132,7 +133,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -149,7 +150,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
+	slots: /** @lends sap.ui.webc.main.FileUploader.prototype */ {
 		/**
 		 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
 		 *
@@ -190,7 +191,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.FileUploader.prototype */ {
+	events: /** @lends sap.ui.webc.main.FileUploader.prototype */ {
 		/**
 		 * Event is fired when the value of the file path has been changed.
 		 * <b>Note:</b> Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
@@ -230,8 +231,8 @@ const metadata = {
  * @constructor
  * @since 1.0.0-rc.6
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.FileUploader
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.FileUploader
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-file-uploader
  * @public
  */
@@ -282,7 +283,7 @@ class FileUploader extends UI5Element {
 	}
 
 	_onclick(event) {
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			this._input.click(event);
 		}
 	}

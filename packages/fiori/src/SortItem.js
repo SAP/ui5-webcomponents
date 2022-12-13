@@ -5,7 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  */
 const metadata = {
 	tag: "ui5-sort-item",
-	properties: /** @lends sap.ui.webcomponents.fiori.SortItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.SortItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 *
@@ -27,10 +27,10 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.SortItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.SortItem.prototype */ {
 		//
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.SortItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.SortItem.prototype */ {
 		//
 	},
 };
@@ -50,11 +50,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.SortItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.SortItem
+ * @extends sap.ui.webc.base.UI5Element
  * @since 1.0.0-rc.16
  * @tagname ui5-sort-item
- * @implements sap.ui.webcomponents.fiori.ISortItem
+ * @implements sap.ui.webc.fiori.ISortItem
  * @public
  */
 class SortItem extends UI5Element {

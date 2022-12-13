@@ -33,6 +33,7 @@ const virtualIndexPlugin = async () => {
 					const folders = Object.keys(pagesPerFolder);
 
 					res.statusCode = 200;
+					res.setHeader("Content-Type", "text/html; charset=utf-8");
 					res.end(`${folders.map(folder => {
 						const pages = pagesPerFolder[folder];
 						return `<h1>${folder}</h1>

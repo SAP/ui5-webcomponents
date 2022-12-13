@@ -47,7 +47,7 @@ const metadata = {
 	tag: "ui5-list",
 	managedSlots: true,
 	fastNavigation: true,
-	slots: /** @lends sap.ui.webcomponents.main.List.prototype */ {
+	slots: /** @lends sap.ui.webc.main.List.prototype */ {
 
 		/**
 		 * Defines the component header.
@@ -68,7 +68,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-li</code>, <code>ui5-li-custom</code>, and <code>ui5-li-groupheader</code> for the intended design.
 		 *
-		 * @type {sap.ui.webcomponents.main.IListItem[]}
+		 * @type {sap.ui.webc.main.IListItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -77,7 +77,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.List.prototype */ {
+	properties: /** @lends sap.ui.webc.main.List.prototype */ {
 
 		/**
 		 * Defines the component header text.
@@ -120,7 +120,7 @@ const metadata = {
 		 * <b>Note:</b> Available options are <code>None</code>, <code>SingleSelect</code>, <code>SingleSelectBegin</code>,
 		 * <code>SingleSelectEnd</code>, <code>MultiSelect</code>, and <code>Delete</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ListMode}
+		 * @type {sap.ui.webc.main.types.ListMode}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -151,7 +151,7 @@ const metadata = {
 		 * item doesn't have a bottom separator.</li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ListSeparators}
+		 * @type {sap.ui.webc.main.types.ListSeparators}
 		 * @defaultvalue "All"
 		 * @public
 		 */
@@ -177,7 +177,7 @@ const metadata = {
 		 *
 		 * <b>Restrictions:</b> <code>growing="Scroll"</code> is not supported for Internet Explorer,
 		 * on IE the component will fallback to <code>growing="Button"</code>.
-		 * @type {sap.ui.webcomponents.main.types.ListGrowingMode}
+		 * @type {sap.ui.webc.main.types.ListGrowingMode}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.13
 		 * @public
@@ -202,7 +202,7 @@ const metadata = {
 		/**
 		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultValue 1000
 		 * @public
 		 */
@@ -250,6 +250,19 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
 		 * Defines if the entire list is in view port.
 		 * @private
 		 */
@@ -265,13 +278,13 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.List.prototype */ {
+	events: /** @lends sap.ui.webc.main.List.prototype */ {
 
 		/**
 		 * Fired when an item is activated, unless the item's <code>type</code> property
 		 * is set to <code>Inactive</code>.
 		 *
-		 * @event sap.ui.webcomponents.main.List#item-click
+		 * @event sap.ui.webc.main.List#item-click
 		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
@@ -288,7 +301,7 @@ const metadata = {
 		 * <b>Note:</b> This event is only applicable to list items that can be closed (such as notification list items),
 		 * not to be confused with <code>item-delete</code>.
 		 *
-		 * @event sap.ui.webcomponents.main.List#item-close
+		 * @event sap.ui.webc.main.List#item-close
 		 * @param {HTMLElement} item the item about to be closed.
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -304,7 +317,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
 		 *
-		 * @event sap.ui.webcomponents.main.List#item-toggle
+		 * @event sap.ui.webc.main.List#item-toggle
 		 * @param {HTMLElement} item the toggled item.
 		 * @public
 		 * @since 1.0.0-rc.8
@@ -321,7 +334,7 @@ const metadata = {
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the component <code>mode</code> property is set to <code>Delete</code>.
 		 *
-		 * @event sap.ui.webcomponents.main.List#item-delete
+		 * @event sap.ui.webc.main.List#item-delete
 		 * @param {HTMLElement} item the deleted item.
 		 * @public
 		 */
@@ -335,7 +348,7 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event sap.ui.webcomponents.main.List#selection-change
+		 * @event sap.ui.webc.main.List#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @public
@@ -354,7 +367,7 @@ const metadata = {
 		 * <br><br>
 		 * <b>Note:</b> The event is fired when the <code>growing='Scroll'</code> property is enabled.
 		 *
-		 * @event sap.ui.webcomponents.main.List#load-more
+		 * @event sap.ui.webc.main.List#load-more
 		 * @public
 		 * @since 1.0.0-rc.6
 		 */
@@ -423,8 +436,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.List
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.List
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-list
  * @appenddocs StandardListItem CustomListItem GroupHeaderListItem
  * @public
@@ -535,7 +548,7 @@ class List extends UI5Element {
 	}
 
 	get hasData() {
-		return this.getSlottedNodes("items").length !== 0;
+		return this.getItems().length !== 0;
 	}
 
 	get showNoDataText() {
@@ -644,7 +657,7 @@ class List extends UI5Element {
 	}
 
 	prepareListItems() {
-		const slottedItems = this.getSlottedNodes("items");
+		const slottedItems = this.getItems();
 
 		slottedItems.forEach((item, key) => {
 			const isLastChild = key === slottedItems.length - 1;
@@ -746,11 +759,15 @@ class List extends UI5Element {
 	}
 
 	getSelectedItems() {
-		return this.getSlottedNodes("items").filter(item => item.selected);
+		return this.getItems().filter(item => item.selected);
 	}
 
 	getEnabledItems() {
-		return this.getSlottedNodes("items").filter(item => !item.disabled);
+		return this.getItems().filter(item => !item.disabled);
+	}
+
+	getItems() {
+		return this.getSlottedNodes("items");
 	}
 
 	_onkeydown(event) {
@@ -1053,7 +1070,7 @@ class List extends UI5Element {
 	}
 
 	getFirstItem(filter) {
-		const slottedItems = this.getSlottedNodes("items");
+		const slottedItems = this.getItems();
 		let firstItem = null;
 
 		if (!filter) {

@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 
 /**
  * @public
@@ -6,7 +7,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 const metadata = {
 	tag: "ui5-side-navigation-item",
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.SideNavigationItem.prototype */ {
 		/**
 		 * Defines the text of the item.
 		 *
@@ -79,16 +80,28 @@ const metadata = {
 		 title: {
 			type: String,
 		},
+
+		/**
+		 * Defines if the item should be collapsible or not.
+		 * It is true, for example, for the items inside the Popover of the Side Navigation
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.10.0
+		 */
+		 _fixed: {
+			type: Boolean,
+		},
 	},
 
-	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.SideNavigationItem.prototype */ {
 	},
 
-	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigationItem.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.SideNavigationItem.prototype */ {
 		/**
 		 * If you wish to nest menus, you can pass inner menu items to the default slot.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.ISideNavigationSubItem[]}
+		 * @type {sap.ui.webc.fiori.ISideNavigationSubItem[]}
 		 * @public
 		 * @slot items
 		 */
@@ -114,12 +127,12 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.SideNavigationItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.SideNavigationItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-side-navigation-item
  * @public
  * @since 1.0.0-rc.8
- * @implements sap.ui.webcomponents.fiori.ISideNavigationItem
+ * @implements sap.ui.webc.fiori.ISideNavigationItem
  */
 class SideNavigationItem extends UI5Element {
 	static get metadata() {
@@ -128,6 +141,10 @@ class SideNavigationItem extends UI5Element {
 
 	get _tooltip() {
 		return this.title || this.text;
+	}
+
+	get _ariaHasPopup() {
+		return (this.parentNode.collapsed && this.items.length) ? HasPopup.Tree : undefined;
 	}
 }
 

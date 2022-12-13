@@ -15,7 +15,7 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
 const metadata = {
 	tag: "ui5-li-groupheader",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.GroupHeaderListItem.prototype */ {
 		/**
 		 * Defines the text alternative of the component.
 		 * Note: If not provided a default text alternative will be set, if present.
@@ -29,7 +29,7 @@ const metadata = {
 			type: String,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
+	slots: /** @lends sap.ui.webc.main.GroupHeaderListItem.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br>
@@ -43,7 +43,7 @@ const metadata = {
 			type: Node,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.GroupHeaderListItem.prototype */ {
+	events: /** @lends sap.ui.webc.main.GroupHeaderListItem.prototype */ {
 	},
 };
 
@@ -53,10 +53,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.GroupHeaderListItem
- * @extends sap.ui.webcomponents.main.ListItemBase
+ * @alias sap.ui.webc.main.GroupHeaderListItem
+ * @extends sap.ui.webc.main.ListItemBase
  * @tagname ui5-li-groupheader
- * @implements sap.ui.webcomponents.main.IListItem
+ * @implements sap.ui.webc.main.IListItem
  * @public
  */
 class GroupHeaderListItem extends ListItemBase {
