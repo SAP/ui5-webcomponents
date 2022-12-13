@@ -160,7 +160,7 @@ class ResponsivePopover extends Popover {
 	 * @returns {boolean}
 	 */
 	isOpen() {
-		return isPhone() ? this._dialog.isOpen() : super.isOpen();
+		return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();
 	}
 
 	get _dialog() {
@@ -207,10 +207,10 @@ class ResponsivePopover extends Popover {
 
 	get isModal() {
 		if (!isPhone()) {
-			return super.isModal();
+			return super.isModal;
 		}
 
-		return this._dialog.isModal();
+		return this._dialog.isModal;
 	}
 
 	static async onDefine() {
