@@ -166,13 +166,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		type: Object,
 		multiple: true,
 	})
-	_weeks?: Array<Week>;
+	_weeks!: Array<Week>;
 
 	@property({
 		type: Object,
 		multiple: true,
 	})
-	_dayNames?: Array<DayName>;
+	_dayNames!: Array<DayName>;
 
 	/**
 	 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
@@ -462,8 +462,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	_selectWeek() {
-		// <b>Note:</b> this._weeks is built "onBeforeRendering" - the "!" is safe to be used.
-		this._weeks!.forEach((week: Week) => {
+		this._weeks.forEach((week: Week) => {
 			const _week = week as Array<Day>;
 			const dayInThisWeek = _week.findIndex((item: Day) => {
 				const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
@@ -633,8 +632,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	_onHomeOrEnd(homePressed: boolean) {
-		// <b>Note:</b> this._weeks is built "onBeforeRendering" - the "!" is safe to be used.
-		this._weeks!.forEach(week => {
+		this._weeks.forEach(week => {
 			const _week = week as Array<Day>;
 			const dayInThisWeek = _week.findIndex(item => {
 				const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
@@ -794,7 +792,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	get ariaRoledescription() {
 		return this.hasSecondaryCalendarType
-			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType} calendar`
+			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType as CalendarType} calendar`
 			: `${this._primaryCalendarType} calendar`;
 	}
 }

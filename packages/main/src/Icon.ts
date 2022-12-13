@@ -162,11 +162,11 @@ class Icon extends UI5Element {
 	 * <code>name='business-suite/3d'</code>, <code>name='business-suite/1x2-grid-layout'</code>, <code>name='business-suite/4x4-grid-layout'</code>.
 	 * @name sap.ui.webc.main.Icon.prototype.name
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @defaultvalue undefined
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -177,11 +177,11 @@ class Icon extends UI5Element {
 	 *
 	 * @name sap.ui.webc.main.Icon.prototype.accessibleName
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @defaultvalue undefined
 	 * @public
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Defines whether the component should have a tooltip.
@@ -200,12 +200,12 @@ class Icon extends UI5Element {
 	 * Defines the accessibility role of the component.
 	 * @name sap.ui.webc.main.Icon.prototype.accessibleRole
 	 * @type {string}
-	 * @defaultvalue ""
+	 * @defaultvalue undefined
 	 * @public
 	 * @since 1.1.0
 	 */
 	@property()
-	accessibleRole!: string;
+	accessibleRole?: string;
 
 	/**
 	 * Defines the ARIA hidden state of the component.
@@ -214,7 +214,7 @@ class Icon extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	ariaHidden!: string;
+	ariaHidden!: string; // Note: we use "?" for string props without defaultValue, but "ariaHidden" collides with HTMLAria interface, where it's defined as string | null, and TS compalins when using "?" in this case. We can just rename the property (it's private), but it should be checked deeper before renaming it. For now, use "!" as exception case.
 
 	/**
 	 * @private

@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -112,6 +113,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._buildMonths();
 	}
 
+	onAfterRendering() {
+		if (!this._hidden) {
+			this.focus();
+		}
+	}
+
 	_buildMonths() {
 		if (this._hidden) {
 			return;
@@ -172,14 +179,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_getDisplayedSecondaryMonthText(timestamp: number) {
-		const monthsName = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp);
-		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this.secondaryCalendarType);
+		const monthsName = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, timestamp);
+		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this._secondaryCalendarType);
 	}
 
-	onAfterRendering() {
-		if (!this._hidden) {
-			this.focus();
-		}
+	get _secondaryCalendarType(): CalendarType {
+		return (this.secondaryCalendarType || "") as CalendarType;
 	}
 
 	_onkeydown(e: KeyboardEvent) {

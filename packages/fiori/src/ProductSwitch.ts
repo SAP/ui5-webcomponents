@@ -71,6 +71,8 @@ class ProductSwitch extends UI5Element {
 			rowSize: this._rowSize,
 			getItemsCallback: () => this.items,
 		});
+
+		this._handleResizeBound = this._handleResize.bind(this);
 	}
 
 	/**
@@ -91,10 +93,10 @@ class ProductSwitch extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<ProductSwitchItem>
 
-	_itemNavigation!: ItemNavigation;
-	_currentIndex!: number;
-	_rowSize!: number;
-	_handleResizeBound?: () => void;
+	_itemNavigation: ItemNavigation;
+	_currentIndex: number;
+	_rowSize: number;
+	_handleResizeBound: () => void;
 
 	static i18nBundle: I18nBundle;
 
@@ -126,13 +128,11 @@ class ProductSwitch extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this._handleResizeBound = this._handleResize.bind(this);
-
 		ResizeHandler.register(document.body, this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(document.body, this._handleResizeBound!);
+		ResizeHandler.deregister(document.body, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {

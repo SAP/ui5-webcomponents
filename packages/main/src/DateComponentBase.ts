@@ -37,7 +37,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	primaryCalendarType!: CalendarType;
+	primaryCalendarType?: CalendarType;
 
 	/**
 	 * Defines the secondary calendar type.
@@ -49,7 +49,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	secondaryCalendarType!: CalendarType;
+	secondaryCalendarType?: CalendarType;
 
 	/**
 	 * Determines the format, displayed in the input field.
@@ -60,7 +60,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	formatPattern!: string;
+	formatPattern?: string;
 
 	/**
 	 * Determines the minimum date available for selection.
@@ -72,7 +72,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	minDate!: string;
+	minDate?: string;
 
 	/**
 	 * Determines the maximum date available for selection.
@@ -84,7 +84,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	maxDate!: string;
+	maxDate?: string;
 
 	static i18nBundle?: I18nBundle;
 

@@ -176,7 +176,7 @@ class Button extends UI5Element {
 	 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
 	 * @type {string}
 	 * @name sap.ui.webc.main.Button.prototype.tooltip
-	 * @defaultvalue: ""
+	 * @defaultvalue undefined
 	 * @public
 	 * @since 1.2.0
 	 */
@@ -188,7 +188,7 @@ class Button extends UI5Element {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.Button.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @defaultvalue undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -205,7 +205,7 @@ class Button extends UI5Element {
 	 * @since 1.1.0
 	 */
 	@property({ defaultValue: "" })
-	accessibleNameRef?: string;
+	accessibleNameRef!: string;
 
 	/**
 	 * An object of strings that defines several additional accessibility attribute values

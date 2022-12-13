@@ -3,6 +3,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -361,9 +362,9 @@ class Calendar extends CalendarPart {
 			rangeStart.setYear(this._currentPickerDOM._firstYear!);
 			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
 
-			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeStart.valueOf() / 1000, true)
+			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType as CalendarType, this.secondaryCalendarType as CalendarType, rangeStart.valueOf() / 1000, true)
 				.firstDate;
-			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
+			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType as CalendarType, this.secondaryCalendarType as CalendarType, rangeEnd.valueOf() / 1000, true)
 				.lastDate;
 			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
 		} else {

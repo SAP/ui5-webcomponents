@@ -71,7 +71,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	titleText!: string;
+	titleText?: string;
 
 	/**
 	 * Defines the subtitle of the component.
@@ -82,7 +82,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	subtitleText!: string;
+	subtitleText?: string;
 
 	/**
 	 * Defines the icon to be displayed as a graphical element within the component.
@@ -99,7 +99,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	icon!: string;
+	icon?: string;
 
 	/**
 	 * Defines a target where the <code>targetSrc</code> content must be open.
@@ -128,7 +128,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property()
-	targetSrc!: string;
+	targetSrc?: string;
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
@@ -157,7 +157,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	@property({ defaultValue: "-1", noAttribute: true })
 	_tabIndex!: string;
 
-	_deactivate!: () => void;
+	_deactivate: () => void;
 
 	static get render() {
 		return litRender;

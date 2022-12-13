@@ -197,7 +197,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 */
 	@property()
-	value!: string
+	value?: string
 
 	/**
 	 * Defines the value state of the component.
@@ -287,7 +287,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 */
 	@property()
-	name!: string;
+	name?: string;
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -310,29 +310,30 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.DatePicker.prototype.accessibleName
+	 * @defaultvalue undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName!: string;
+	accessibleName?: string;
 
 	/**
 	 * Receives id(or many ids) of the elements that label the component.
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.DatePicker.prototype.accessibleNameRef
-	 * @defaultvalue ""
+	 * @defaultvalue undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef!: string;
+	accessibleNameRef?: string;
 
 	@property({ type: Boolean })
 	_isPickerOpen!: boolean;
 
 	@property({ type: Object })
-	_respPopoverConfig!: object;
+	_respPopoverConfig?: object;
 
 	@property({ defaultValue: "day" })
 	_calendarCurrentPicker!: string;
@@ -522,7 +523,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
-	_updateValueAndFireEvents(value: string, normalizeValue: boolean, events: Array<string>, updateValue = true) {
+	_updateValueAndFireEvents(value: string | undefined, normalizeValue: boolean, events: Array<string>, updateValue = true) {
 		const valid = this._checkValueValidity(value);
 
 		if (valid && normalizeValue) {
@@ -544,7 +545,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 		if (updateValue) {
 			this._getInput().getInputDOMRef().then((innnerInput: HTMLInputElement) => {
-				innnerInput.value = value;
+				innnerInput.value = value || "";
 			});
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
@@ -597,7 +598,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @param { string } value
 	 * @returns { boolean }
 	 */
-	_checkValueValidity(value: string): boolean {
+	_checkValueValidity(value: string | undefined): boolean {
 		if (value === "") {
 			return true;
 		}
@@ -655,12 +656,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * The parser understands many formats, but we need one format
 	 * @protected
 	 */
-	normalizeValue(value: string) {
+	normalizeValue(value: string | undefined) {
 		if (value === "") {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, true, undefined as unknown as boolean), true); // it is important to both parse and format the date as UTC
+		return this.getFormat().format(this.getFormat().parse(value as string, true, undefined as unknown as boolean), true); // it is important to both parse and format the date as UTC
 	}
 
 	get _displayFormat(): string {
@@ -834,13 +835,18 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	get dateValue(): Date {
 		const utc = undefined as unknown as boolean;
 		const strict = undefined as unknown as boolean;
-		return this.liveValue ? this.getFormat().parse(this.liveValue, utc, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;
+
+		if (this.liveValue) {
+			return this.getFormat().parse(this.liveValue, utc, strict) as Date;
+		}
+
+		return this.getFormat().parse(this.value as string, utc, strict) as Date;
 	}
 
 	get dateValueUTC() {
 		const utc = undefined as unknown as boolean;
 		const strict = undefined as unknown as boolean;
-		return this.liveValue ? this.getFormat().parse(this.liveValue, true, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;
+		return this.liveValue ? this.getFormat().parse(this.liveValue, true, strict) as Date : this.getFormat().parse(this.value as string, utc, strict) as Date;
 	}
 
 	get styles() {
