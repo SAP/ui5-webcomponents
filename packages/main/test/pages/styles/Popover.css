@@ -64,7 +64,7 @@ ui5-date-picker,
     justify-content: flex-end;
 }
 
-.clickThisIframe {
+#clickThisIframe {
     border: 1px solid red;
     float: right;
     height: 150px;
