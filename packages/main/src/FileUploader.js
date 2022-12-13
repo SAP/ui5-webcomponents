@@ -441,14 +441,6 @@ class FileUploader extends UI5Element {
 		return this.shadowRoot.querySelector("input[type=file]") || this.querySelector("input[type=file][data-ui5-form-support]");
 	}
 
-	/**
-	 * Determines input helper type in forms.
-	 * @private
-	 */
-	get _type() {
-		return "file";
-	}
-
 	get valueStateTextMappings() {
 		return {
 			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),

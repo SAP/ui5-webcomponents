@@ -302,7 +302,7 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<Node>;
+	text!: Array<Node>; // text is used to describe the "default" slot and although not used in the Button class, it is required by the decorator.
 
 	_deactivate!: () => void;
 

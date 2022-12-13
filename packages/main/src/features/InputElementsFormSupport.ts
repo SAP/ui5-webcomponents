@@ -6,11 +6,7 @@ interface IFormElement extends UI5Element {
 	name: string,
 	disabled: boolean,
 	required: boolean,
-}
-
-interface IFormFileElement extends IFormElement {
-	multiple: boolean,
-	_type: string,
+	multiple?: boolean,
 }
 
 type NativeInputUpdateCallback = (element: IFormElement, nativeInput: HTMLInputElement) => void;
@@ -64,13 +60,13 @@ class FormSupport {
 	 * @param { NativeInputUpdateCallback } nativeInputUpdateCallback - callback to calculate the native input's "disabled" and "value" properties
 	 * @param { NativeInputChangeCallback } nativeInputChangeCallback - callback, added to native input's "change" event
 	 */
-	static syncNativeFileInput(element: IFormFileElement, nativeInputUpdateCallback: NativeInputUpdateCallback, nativeInputChangeCallback: NativeInputChangeCallback) {
+	static syncNativeFileInput(element: IFormElement, nativeInputUpdateCallback: NativeInputUpdateCallback, nativeInputChangeCallback: NativeInputChangeCallback) {
 		const needsNativeInput = !!element.name;
-		let nativeInput = element.querySelector(`input[type=${element._type || "hidden"}][data-ui5-form-support]`) as HTMLInputElement;
+		let nativeInput = element.querySelector(`input[type="file"][data-ui5-form-support]`) as HTMLInputElement;
 
 		if (needsNativeInput && !nativeInput) {
 			nativeInput = document.createElement("input");
-			nativeInput.type = element._type;
+			nativeInput.type = "file";
 			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.slot = "formSupport"; // Needed to visualize the input in the light dom
 			nativeInput.style.position = "absolute";
@@ -139,5 +135,4 @@ export default FormSupport;
 
 export {
 	IFormElement,
-	IFormFileElement,
 };

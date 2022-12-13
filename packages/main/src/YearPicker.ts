@@ -156,8 +156,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 			if (this.secondaryCalendarType) {
 				tempDateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp, true);
-				// @ts-ignore check this condition
-				textInSecType = tempDateInSecType.firstDate.getYear() === tempDateInSecType.lastDate.getYear
+				textInSecType = tempDateInSecType.firstDate.getYear() === tempDateInSecType.lastDate.getYear()
 					? `${oYearFormatInSecType.format(tempDateInSecType.firstDate.toLocalJSDate(), true)}`
 					: `${oYearFormatInSecType.format(tempDateInSecType.firstDate.toLocalJSDate(), true)} - ${oYearFormatInSecType.format(tempDateInSecType.lastDate.toLocalJSDate(), true)}`;
 			}
