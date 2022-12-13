@@ -20,7 +20,7 @@
 
 .ui5-multi-combobox-tokenizer {
 	min-width: var(--_ui5_input_tokenizer_min_width);
-	max-width: calc(100% - 3rem - var(--_ui5_input_icon_min_width));
+	max-width: calc(100% - 3rem - var(--_ui5_input_icon_width));
 	border: none;
 	width: auto;
 	height: 100%;

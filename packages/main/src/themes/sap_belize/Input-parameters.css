@@ -2,7 +2,6 @@
 
 :root {
 	--_ui5_input_min_width: 3rem;
-	--_ui5_input_margin_top_bottom: 0.25rem;
 	--_ui5_input_height: 2.5rem;
 	--_ui5_input_custom_icon_padding: .6875rem .625rem;
 	--_ui5_input_error_warning_icon_padding: .625rem .5rem .625rem .5625rem;
@@ -19,7 +18,6 @@
 .ui5-content-density-compact,
 .sapUiSizeCompact {
 	--_ui5_input_min_width: 2rem;
-	--_ui5_input_margin_top_bottom: 0.1875rem;
 	--_ui5_input_error_warning_custom_icon_padding: .1875rem .5rem;
 	--_ui5_input_information_custom_icon_padding: .1875rem .5rem;
 }

@@ -359,7 +359,7 @@
 /* Input Icon */
 
 .ui5-input-icon-root {
-	min-width: calc(var(--_ui5-input-icons-count)*var(----_ui5_input_icon_min_width));
+	min-width: calc(var(--_ui5_input_icon_width));
 	height: 100%;
 	display: flex;
 	justify-content: center;
@@ -438,6 +438,7 @@
 	height: var(--_ui5_input_icon_wrapper_height);
 	padding: 0;
 	width: var(--_ui5_input_icon_width);
+	min-width: var(--_ui5_input_icon_width);
 	display: flex;
 	justify-content: center;
 	align-items: center;

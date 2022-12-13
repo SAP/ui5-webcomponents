@@ -321,7 +321,7 @@ class MultiInput extends Input {
 		if (this.showValueHelpIcon) {
 			this.style.setProperty(
 				"--_ui5-input-icons-count",
-				(1 * this.style.getPropertyValue("--_ui5-input-icons-count") || 0) + 1,
+				(Number(this.style.getPropertyValue("--_ui5-input-icons-count")) || 0) + 1,
 			);
 		}
 

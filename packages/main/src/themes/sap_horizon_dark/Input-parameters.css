@@ -1,8 +1,6 @@
 @import "../base/Input-parameters.css";
 
 :root {
-	--_ui5_input_min_width: 2.75rem;
-	--_ui5_input_margin_top_bottom: 0.25rem;
 	--_ui5-input-border: none;
 	--_ui5_input_hover_border: none;
 	--_ui5_input_hover_box_shadow: var(--sapContent_Interaction_Shadow);
@@ -19,7 +17,7 @@
 	--_ui5_input_focused_value_state_error_focus_outline_color: var(--sapField_InvalidColor);
 	--_ui5_input_focused_value_state_warning_focus_outline_color: var(--sapField_WarningColor);
 	--_ui5_input_focused_value_state_success_focus_outline_color: var(--sapField_SuccessColor);
-	--_ui5_input_icon_min_width: 2.125rem;
+	--_ui5_input_icon_width: 2.125rem;
 	--_ui5_input_focus_offset: 0;
 	--_ui5_input_information_icon_padding: .625rem .625rem .5rem .625rem;
 	--_ui5_input_error_warning_icon_padding: .625rem .625rem .5rem .625rem;
@@ -33,8 +31,6 @@
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
-	--_ui5_input_min_width: 2rem;
-	--_ui5_input_margin_top_bottom: 0.1875rem;
 	--_ui5_input_information_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_input_error_warning_icon_padding: .3125rem .5rem .1875rem .5rem;
 	--_ui5_input_custom_icon_padding: .3125rem .5rem .25rem .5rem;
