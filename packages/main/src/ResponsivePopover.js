@@ -205,6 +205,14 @@ class ResponsivePopover extends Popover {
 		this.fireEvent(type, event.detail);
 	}
 
+	get isModal() {
+		if (!isPhone()) {
+			return super.isModal();
+		}
+
+		return this._dialog.isModal();
+	}
+
 	static async onDefine() {
 		ResponsivePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
