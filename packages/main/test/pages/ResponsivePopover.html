@@ -220,19 +220,21 @@
 
 
 		rPOverDialogBtn.addEventListener("click", function () {
-			rPOverDialog1.show();
+			rPOverDialog1.open = true;
 		});
 
 		rPOverRp1Btn.addEventListener("click", function () {
-			rPOverRp2.showAt(rPOverRp1Btn);
+			rPOverRp2.opener = "rPOverRp1Btn";
+			rPOverRp2.open = true;
 		});
 
 		rPOverRp2Btn.addEventListener("click", function () {
-			rPOverRp3.showAt(rPOverRp2Btn);
+			rPOverRp3.opener = "rPOverRp2Btn";
+			rPOverRp3.open = true;
 		});
 
 		rPOverRp3Btn.addEventListener("click", function () {
-			rPOverRp3.close();
+			rPOverRp3.open = false;
 		});
 
 	</script>
