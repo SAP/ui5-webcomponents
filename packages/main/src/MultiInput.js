@@ -326,10 +326,15 @@ class MultiInput extends Input {
 		}
 
 		this.style.setProperty("--_ui5_input_has_tokens", this.isTokenizerAvailable ? 1 : 0);
+		this.style.tokenizerStyles = this.isTokenizerAvailable ? { } : { display: "none" };
 	}
 
 	get tokenizer() {
 		return this.shadowRoot.querySelector("[ui5-tokenizer]");
+	}
+
+	get isTokenizerAvailable() {
+		return this.tokens && this.tokens.length > 0;
 	}
 
 	get _tokensCountText() {
@@ -377,10 +382,6 @@ class MultiInput extends Input {
 			Token,
 			Icon,
 		];
-	}
-
-	get isTokenizerAvailable() {
-		return this.tokens && this.tokens.length > 0;
 	}
 }
 

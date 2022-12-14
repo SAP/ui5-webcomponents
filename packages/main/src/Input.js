@@ -670,7 +670,6 @@ class Input extends UI5Element {
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
-
 		const numIcons = this.icon ? this.icon.length : 0;
 		const numEffectiveIcon = Number(this.effectiveShowClearIcon);
 
