@@ -260,14 +260,14 @@ class Calendar extends CalendarPart {
 	/**
 	 * @private
 	 */
-	get _selectedDatesTimestamps(): Array<number | undefined> {
+	get _selectedDatesTimestamps(): Array<number> {
 		return this.dates.map(date => {
 			const value = date.value;
 			// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
 			// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
 			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
 			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
-		}).filter(date => !!date);
+		}).filter(date => !!date) as Array<number>;
 	}
 
 	/**
@@ -456,7 +456,7 @@ class Calendar extends CalendarPart {
 	 * @protected
 	 * @deprecated
 	 */
-	get selectedDates(): Array<number | undefined> {
+	get selectedDates(): Array<number> {
 		return this._selectedDatesTimestamps;
 	}
 
@@ -466,7 +466,7 @@ class Calendar extends CalendarPart {
 	 * @deprecated
 	 * @param { Array<number> } selectedDates Array of UTC timestamps
 	 */
-	set selectedDates(selectedDates: Array<number | undefined>) {
+	set selectedDates(selectedDates: Array<number>) {
 		this._setSelectedDates(selectedDates);
 	}
 
