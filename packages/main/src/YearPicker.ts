@@ -91,7 +91,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	selectedDates!: Array<number>;
 
 	@property({ type: Object, multiple: true })
-	_years?: YearInterval;
+	_years!: YearInterval;
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden!: boolean;
@@ -260,9 +260,9 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
-			this._setTimestamp(parseInt(this._years![0][0].timestamp)); // first year of first row
+			this._setTimestamp(parseInt(this._years[0][0].timestamp)); // first year of first row
 		} else if (isEndCtrl(e)) {
-			this._setTimestamp(parseInt(this._years![pageSize / rowSize - 1][rowSize - 1].timestamp)); // last year of last row
+			this._setTimestamp(parseInt(this._years[pageSize / rowSize - 1][rowSize - 1].timestamp)); // last year of last row
 		} else {
 			preventDefault = false;
 		}
@@ -273,7 +273,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_onHomeOrEnd(homePressed: boolean) {
-		this._years!.forEach(row => {
+		this._years.forEach(row => {
 			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear() === this._calendarDate.getYear());
 			if (indexInRow !== -1) { // The current year is on this row
 				const index = homePressed ? 0 : this._getRowSize() - 1; // select the first (if Home) or last (if End) year on the row

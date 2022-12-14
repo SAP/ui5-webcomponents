@@ -142,7 +142,7 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@property()
-	icon?: string;
+	icon!: string;
 
 	/**
 	 * Defines whether the icon should be displayed after the component text.
@@ -176,12 +176,12 @@ class Button extends UI5Element {
 	 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
 	 * @type {string}
 	 * @name sap.ui.webc.main.Button.prototype.tooltip
-	 * @defaultvalue undefined
+	 * @defaultvalue ""
 	 * @public
 	 * @since 1.2.0
 	 */
 	@property()
-	tooltip?: string;
+	tooltip!: string;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -237,7 +237,7 @@ class Button extends UI5Element {
 	 * @since 1.2.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes?: object;
+	accessibilityAttributes!: object;
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
@@ -275,7 +275,7 @@ class Button extends UI5Element {
 	nonInteractive!: boolean;
 
 	@property({ type: Object })
-	_iconSettings?: object;
+	_iconSettings!: object;
 
 	/**
 	 * Defines the tabIndex of the component.

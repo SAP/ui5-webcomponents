@@ -60,7 +60,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	formatPattern?: string;
+	formatPattern!: string;
 
 	/**
 	 * Determines the minimum date available for selection.
@@ -72,7 +72,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	minDate?: string;
+	minDate!: string;
 
 	/**
 	 * Determines the maximum date available for selection.
@@ -84,7 +84,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property()
-	maxDate?: string;
+	maxDate!: string;
 
 	static i18nBundle?: I18nBundle;
 

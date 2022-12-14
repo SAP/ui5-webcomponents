@@ -792,7 +792,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	get ariaRoledescription() {
 		return this.hasSecondaryCalendarType
-			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType as CalendarType} calendar`
+			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType as string} calendar`
 			: `${this._primaryCalendarType} calendar`;
 	}
 }

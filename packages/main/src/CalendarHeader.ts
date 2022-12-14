@@ -66,7 +66,7 @@ class CalendarHeader extends UI5Element {
 	 * @private
 	*/
 	@property({ type: Object })
-	buttonTextForSecondaryCalendarType?: {
+	buttonTextForSecondaryCalendarType!: {
 		monthButtonText: string,
 		monthButtonInfo: string,
 		yearButtonText: string,
@@ -82,13 +82,13 @@ class CalendarHeader extends UI5Element {
 	isMonthButtonHidden!: boolean;
 
 	@property()
-	_monthButtonText?: string;
+	_monthButtonText!: string;
 
 	@property()
-	_yearButtonText?: string;
+	_yearButtonText!: string;
 
 	@property()
-	_yearButtonTextSecType?: string;
+	_yearButtonTextSecType!: string;
 
 	@property({ type: Boolean })
 	isYearButtonHidden!: boolean;

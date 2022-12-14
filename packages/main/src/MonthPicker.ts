@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -96,7 +95,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	selectedDates!: Array<number>;
 
 	@property({ type: Object, multiple: true })
-	_months?: MothInterval;
+	_months!: MothInterval;
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden!: boolean;
@@ -183,8 +182,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this._secondaryCalendarType);
 	}
 
-	get _secondaryCalendarType(): CalendarType {
-		return (this.secondaryCalendarType || "") as CalendarType;
+	get _secondaryCalendarType() {
+		return this.secondaryCalendarType;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -209,9 +208,9 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
-			this._setTimestamp(parseInt(this._months![0][0].timestamp)); // first month of first row
+			this._setTimestamp(parseInt(this._months[0][0].timestamp)); // first month of first row
 		} else if (isEndCtrl(e)) {
-			this._setTimestamp(parseInt(this._months![PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
+			this._setTimestamp(parseInt(this._months[PAGE_SIZE / ROW_SIZE - 1][ROW_SIZE - 1].timestamp)); // last month of last row
 		} else {
 			preventDefault = false;
 		}
@@ -222,7 +221,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_onHomeOrEnd(homePressed: boolean) {
-		this._months!.forEach(row => {
+		this._months.forEach(row => {
 			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getMonth() === this._calendarDate.getMonth());
 			if (indexInRow !== -1) { // The current month is on this row
 				const index = homePressed ? 0 : ROW_SIZE - 1; // select the first (if Home) or last (if End) month on the row
