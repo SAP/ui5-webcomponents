@@ -204,7 +204,7 @@ class CalendarHeader extends UI5Element {
 	get accInfo() {
 		return {
 			ariaLabelMonthButton: this.hasSecondaryCalendarType
-				? `${this._monthButtonText || ""}, ${this.buttonTextForSecondaryCalendarType?.monthButtonInfo || ""}` : `${this._monthButtonText || ""}`,
+				? `${this._monthButtonText}, ${this.buttonTextForSecondaryCalendarType?.monthButtonInfo || ""}` : `${this._monthButtonText || ""}`,
 		};
 	}
 }

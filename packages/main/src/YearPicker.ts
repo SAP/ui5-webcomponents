@@ -46,7 +46,7 @@ type Year = {
 type YearInterval = Array<Array<Year>>;
 
 type SelectedYearChangeEventDetail = {
-	timestamp: number
+	timestamp: number,
 }
 
 /**

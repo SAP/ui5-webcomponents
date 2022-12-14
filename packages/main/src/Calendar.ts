@@ -260,7 +260,7 @@ class Calendar extends CalendarPart {
 	/**
 	 * @private
 	 */
-	get _selectedDatesTimestamps() {
+	get _selectedDatesTimestamps(): Array<number | undefined> {
 		return this.dates.map(date => {
 			const value = date.value;
 			// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
@@ -276,7 +276,7 @@ class Calendar extends CalendarPart {
 	_setSelectedDates(selectedDates: Array<number | undefined>) {
 		const selectedValues = selectedDates.map(timestamp => {
 			return timestamp && this.getFormat().format(new Date(timestamp * 1000), true);
-		}); // Format as UTC
+		}) as Array<string>; // Format as UTC
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
@@ -285,9 +285,9 @@ class Calendar extends CalendarPart {
 		});
 
 		// Create tags for the selected dates that don't already exist in DOM
-		selectedValues.filter(value => !valuesInDOM.includes(value as string)).forEach(value => {
+		selectedValues.filter(value => !valuesInDOM.includes(value)).forEach(value => {
 			const dateElement = document.createElement(CalendarDateComponent.default.getMetadata().getTag()) as CalendarDateComponentT;
-			dateElement.value = value as string;
+			dateElement.value = value;
 			this.appendChild(dateElement);
 		});
 	}
@@ -456,7 +456,7 @@ class Calendar extends CalendarPart {
 	 * @protected
 	 * @deprecated
 	 */
-	get selectedDates() {
+	get selectedDates(): Array<number | undefined> {
 		return this._selectedDatesTimestamps;
 	}
 
