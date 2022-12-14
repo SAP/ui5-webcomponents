@@ -37,7 +37,7 @@ class CustomListItem extends ListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessibleName!: string;
 
 	/**
 	 * Defines the content of the component.

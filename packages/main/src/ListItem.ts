@@ -137,7 +137,7 @@ abstract class ListItem extends ListItemBase {
 	 *
 	 */
 	@property()
-	accessibleRole?: string;
+	accessibleRole!: string;
 
 	@property({ type: ListMode, defaultValue: ListMode.None })
 	_mode!: ListMode;

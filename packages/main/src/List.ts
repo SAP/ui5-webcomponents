@@ -222,7 +222,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	headerText?: string;
+	headerText!: string;
 
 	/**
 	 * Defines the footer text.
@@ -233,7 +233,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	footerText?: string;
+	footerText!: string;
 
 	/**
 	 * Determines whether the component is indented.
@@ -269,7 +269,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property()
-	noDataText?: string;
+	noDataText!: string;
 
 	/**
 	 * Defines the item separator style that is used.
@@ -349,7 +349,7 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleName?: string;
+	accessibleName!: string;
 
 	/**
 	 * Defines the IDs of the elements that label the input.
@@ -361,7 +361,7 @@ class List extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	accessibleNameRef?: string;
+	accessibleNameRef!: string;
 
 	/**
 	 * Defines the accessible role of the component.
