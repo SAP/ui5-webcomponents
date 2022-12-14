@@ -9,6 +9,9 @@ if (customElements?.modules) {
 }
 
 export const parameters = {
+    html: {
+        removeComments: true
+    },
     actions: { argTypesRegex: "^ui5-[a-z].*" }, // automatically match ui5-* events for actions
     controls: {
         matchers: {
@@ -18,7 +21,9 @@ export const parameters = {
     },
     docs: {
         iframeHeight: "300px", // stories including script tags are loaded in an iframe, this is the height of the iframe
-        transformSource: (source) => // this is called before rendering of the "code" inside the preview of the stories
+        transformSource: (
+            source // this is called before rendering of the "code" inside the preview of the stories
+        ) =>
             source
                 // Clean empty boolean attribute values
                 .replace(/=\"\"/g, "")

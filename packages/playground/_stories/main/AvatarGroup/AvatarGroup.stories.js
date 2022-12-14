@@ -61,9 +61,6 @@ TypeIndividual.args = {
 export const TypeIndividualWithPopover = TemplateIndividualWithPopover.bind({});
 TypeIndividualWithPopover.storyName = "Type Individual with Popover";
 TypeIndividualWithPopover.parameters = {
-    controls: {
-        include: ["type"],
-    },
     docs: {
         // Opt-out of inline rendering
         inlineStories: false,

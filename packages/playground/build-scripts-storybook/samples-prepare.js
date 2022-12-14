@@ -60,8 +60,20 @@ const main = async () => {
 			}
 		});
 
+		// methods parsing because Storybook does not include them in the args by default from the custom-elements.json
+		// only changing the category to Methods so they are not displayed in the Properties tab
+		moduleAPI?.methods?.forEach((prop) => {
+            if (prop.visibility === "public") {
+                args[prop.name] = {
+                    table: {
+                        category: "Methods",
+                    },
+                };
+            }
+        });
+
 		// recursively merging the args from the parent/parents
-		const moduleAPIBeingExtended = api.symbols.find(s => s.module === moduleAPI.extends) || baseAPI.symbols.find(s => s.module === moduleAPI.extends);
+		const moduleAPIBeingExtended = api.symbols.find(s => s.name === moduleAPI.extends) || baseAPI.symbols.find(s => s.module === moduleAPI.extends);
 		if (moduleAPIBeingExtended) {
 			args = {...args, ...getArgsTypes(api, moduleAPIBeingExtended)};
 		}

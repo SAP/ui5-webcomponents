@@ -21,10 +21,13 @@
     "@storybook/addon-links": "^6.5.9",
     "@storybook/builder-vite": "^0.2.2",
     "@storybook/web-components": "^6.5.9",
+    "@whitespace/storybook-addon-html": "^5.1.0",
     "babel-loader": "^8.2.5",
     "copy-and-watch": "^0.1.5",
     "lit-html": "^2.2.7",
     "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.1",
+    "react-syntax-highlighter": "^15.5.0",
     "rimraf": "^3.0.2"
   },
   "scripts": {
@@ -56,5 +59,8 @@
     "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js \"../../docs/\" \"./docs/\"",
     "storybook": "npm-run-all --parallel prepare:next:* && start-storybook -p 6006",
     "build-storybook": "npm-run-all --parallel prepare:next:* && build-storybook -o ./dist/_playground"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.12"
   }
 }
