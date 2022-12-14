@@ -1,7 +1,7 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
-import { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";

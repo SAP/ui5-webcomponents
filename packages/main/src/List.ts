@@ -4,7 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
-import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -448,7 +448,7 @@ class List extends UI5Element {
 		return ListTemplate;
 	}
 
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return [browserScrollbarCSS, listCss];
 	}
 

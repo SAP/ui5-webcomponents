@@ -1,6 +1,6 @@
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
