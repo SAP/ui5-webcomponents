@@ -1,10 +1,10 @@
 {{>include "./Input.hbs"}}
 
-{{#*inline "preContent"}}	
-	{{#if isTokenizerAvailable}}
+{{#*inline "preContent"}}
 	<span id="{{_id}}-hiddenText-nMore" class="ui5-hidden-text">{{_tokensCountText}}</span>
 	<ui5-tokenizer
 		class="ui5-multi-input-tokenizer"
+		style="{{style.tokenizerStyles}}"
 		.morePopoverOpener={{this}}
 		.popoverMinWidth={{_inputWidth}}
 		.valueState={{valueState}}
@@ -25,10 +25,8 @@
 				{{/each}}
 			{{/if}}
 		</div>
-	</ui5-tokenizer>	
-	{{/if}}
+	</ui5-tokenizer>
 {{/inline}}
-
 
 
 {{#*inline "postContent"}}

@@ -239,7 +239,7 @@
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);
 	--_ui5_input_inner_padding: 0 0.5rem;
-	--_ui5_input_icon_width: var(--_ui5_input_compact_min_width);
+	--_ui5_input_icon_min_width: var(--_ui5_input_compact_min_width);
 	--_ui5_input_icon_padding: .25rem .4375rem;
 	--_ui5_input_error_warning_icon_padding: .1875rem .375rem .1875rem .4375rem;
 	--_ui5_input_information_icon_padding: .1875rem .375rem .1875rem .4375rem;

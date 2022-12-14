@@ -6,33 +6,31 @@
 		<span id="{{_id}}-valueStateDesc" class="ui5-hidden-text">{{ariaValueStateHiddenText}}</span>
 	{{/if}}
 
-	{{#if isTokenizerAvailable}}
-		<ui5-tokenizer slot="_beginContent"
-			show-more
-			class="ui5-multi-combobox-tokenizer"
-			?disabled="{{disabled}}"
-			@ui5-show-more-items-press="{{_showFilteredItems}}"
-			@ui5-token-delete="{{_tokenDelete}}"
-			@focusout="{{_tokenizerFocusOut}}"
-			@focusin="{{_tokenizerFocusIn}}"
-			@click={{_click}}
-			@keydown="{{_onTokenizerKeydown}}"
-			?expanded="{{_tokenizerExpanded}}"
-		>
-			{{#each items}}
-				{{#if this.selected}}
-					<ui5-token
-						?readonly="{{../readonly}}"
-						class="ui5-multi-combobox-token"
-						data-ui5-id="{{this._id}}"
-						part="token-{{@index}}"
-						text="{{this.text}}"
-					>
-					</ui5-token>
-				{{/if}}
-			{{/each}}
-		</ui5-tokenizer>
-	{{/if}}
+	<ui5-tokenizer slot="_beginContent"
+		show-more
+		class="ui5-multi-combobox-tokenizer"
+		?disabled="{{disabled}}"
+		@ui5-show-more-items-press="{{_showFilteredItems}}"
+		@ui5-token-delete="{{_tokenDelete}}"
+		@focusout="{{_tokenizerFocusOut}}"
+		@focusin="{{_tokenizerFocusIn}}"
+		@click={{_click}}
+		@keydown="{{_onTokenizerKeydown}}"
+		?expanded="{{_tokenizerExpanded}}"
+	>
+		{{#each items}}
+			{{#if this.selected}}
+				<ui5-token
+					?readonly="{{../readonly}}"
+					class="ui5-multi-combobox-token"
+					data-ui5-id="{{this._id}}"
+					part="token-{{@index}}"
+					text="{{this.text}}"
+				>
+				</ui5-token>
+			{{/if}}
+		{{/each}}
+	</ui5-tokenizer>
 
 	<input id="ui5-multi-combobox-input"
 		.value="{{value}}"
