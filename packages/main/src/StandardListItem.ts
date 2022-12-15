@@ -173,7 +173,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	imageContent!: Array<HTMLElement>;
 
 	static get template() {
