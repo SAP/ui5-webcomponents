@@ -322,6 +322,16 @@ class Popup extends UI5Element {
 		});
 	}
 
+	_onkeydown(e) {
+		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
+		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
+		const isEnterOnClosedPopupChild = isEnter(e) && !this.isOpen();
+
+		if (isTabOutAttempt || isEnterOnClosedPopupChild) {
+			e.preventDefault();
+		}
+	}
+
 	_onfocusout(e) {
 		// relatedTarget is the element, which will get focus. If no such element exists, focus the root.
 		// This happens after the mouse is released in order to not interrupt text selection.
@@ -348,16 +358,6 @@ class Popup extends UI5Element {
 				this._root.focus();
 			}
 			this._shouldFocusRoot = false;
-		}
-	}
-
-	_onkeydown(e) {
-		const isTabOutAttempt = e.target === this._root && isTabPrevious(e);
-		// if the popup is closed, focus is already moved, so Enter keydown may result in click on the newly focused element
-		const isEnterOnClosedPopupChild = isEnter(e) && !this.isOpen();
-
-		if (isTabOutAttempt || isEnterOnClosedPopupChild) {
-			e.preventDefault();
 		}
 	}
 

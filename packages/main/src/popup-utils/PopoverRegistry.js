@@ -5,20 +5,28 @@ let updateInterval = null;
 const intervalTimeout = 300;
 const openedRegistry = [];
 
+const repositionPopovers = () => {
+	openedRegistry.forEach(popover => {
+		popover.instance.reposition();
+	});
+};
+
+const closePopoversIfLostFocus = () => {
+	if (document.activeElement.tagName === "IFRAME") {
+		getRegistry().reverse().forEach(popup => popup.instance.close(false, false, true));
+	}
+};
+
 const runUpdateInterval = () => {
 	updateInterval = setInterval(() => {
 		repositionPopovers();
+
+		closePopoversIfLostFocus();
 	}, intervalTimeout);
 };
 
 const stopUpdateInterval = () => {
 	clearInterval(updateInterval);
-};
-
-const repositionPopovers = event => {
-	openedRegistry.forEach(popover => {
-		popover.instance.reposition();
-	});
 };
 
 const attachGlobalScrollHandler = () => {
@@ -37,17 +45,14 @@ const detachScrollHandler = popover => {
 	popover && popover.shadowRoot.removeEventListener("scroll", repositionPopovers, { capture: true });
 };
 
-const attachPopupClosers = () => {
-	document.addEventListener("mousedown", clickHandler, { capture: true });
-	document.body.addEventListener("focusout", focusoutHandler, { capture: true });
+const attachGlobalClickHandler = () => {
+	document.addEventListener("mousedown", clickHandler);
 };
 
-const detachPopupClosers = () => {
-	document.removeEventListener("mousedown", clickHandler, { capture: true });
-	document.body.removeEventListener("focusout", focusoutHandler, { capture: true });
+const detachGlobalClickHandler = () => {
+	document.removeEventListener("mousedown", clickHandler);
 };
 
-const skipClosing = new Map();
 const clickHandler = event => {
 	const openedPopups = getOpenedPopups();
 	const isTopPopupPopover = openedPopups[openedPopups.length - 1].instance.showAt;
@@ -59,36 +64,18 @@ const clickHandler = event => {
 	// loop all open popovers
 	for (let i = (openedPopups.length - 1); i !== -1; i--) {
 		const popup = openedPopups[i].instance;
-		const parentPopovers = openedPopups[i].parentPopovers;
 
-		if (popup.isModal || popup.isOpenerClicked(event) || isClickInRect(event, popup.getBoundingClientRect())) {
-			[popup, ...parentPopovers].forEach(p => skipClosing.set(p, true));
+		// if popup is modal, opener is clicked, popup is dialog skip closing
+		if (popup.isModal || popup.isOpenerClicked(event)) {
+			return;
+		}
+
+		if (isClickInRect(event, popup.getBoundingClientRect())) {
 			break;
 		}
 
 		popup.close();
 	}
-};
-
-const focusoutHandler = event => {
-	// browser window lost focus, don't close popover
-	if (event.target === document.activeElement) {
-		return;
-	}
-
-	const popoverThatLosesFocus = getOpenedPopups().findLast(p => p.instance.contains(event.target));
-	if (!popoverThatLosesFocus || event.relatedTarget) {
-		skipClosing.clear();
-		return;
-	}
-
-	const popup = popoverThatLosesFocus.instance;
-	if (skipClosing.has(popup)) {
-		skipClosing.delete(popup);
-		return;
-	}
-
-	[popup, ...popoverThatLosesFocus.parentPopovers].forEach(p => p.close());
 };
 
 const addOpenedPopover = instance => {
@@ -104,7 +91,7 @@ const addOpenedPopover = instance => {
 
 	if (openedRegistry.length === 1) {
 		attachGlobalScrollHandler();
-		attachPopupClosers();
+		attachGlobalClickHandler();
 		runUpdateInterval();
 	}
 };
@@ -137,7 +124,7 @@ const removeOpenedPopover = instance => {
 
 	if (!openedRegistry.length) {
 		detachGlobalScrollHandler();
-		detachPopupClosers();
+		detachGlobalClickHandler();
 		stopUpdateInterval();
 	}
 };
