@@ -197,7 +197,7 @@ class UploadCollection extends UI5Element {
 	 * @slot items
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot({ type: HTMLElement, "default": true })
 	items!: Array<HTMLElement>;
 
 	/**
