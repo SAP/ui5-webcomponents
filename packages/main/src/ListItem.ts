@@ -178,7 +178,7 @@ abstract class ListItem extends ListItemBase {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	deleteButton!: Array<HTMLElement>;
 
 	deactivateByKey: (e: KeyboardEvent) => void;
@@ -344,9 +344,10 @@ abstract class ListItem extends ListItemBase {
 		if (this.isInactive) {
 			return;
 		}
-
-		e.preventDefault();
-		this.fireEvent("_press", { item: this, selected: this.selected, key: (e as unknown as KeyboardEvent).key });
+		if (isEnter(e as KeyboardEvent)) {
+			e.preventDefault();
+		}
+		this.fireEvent("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
 	}
 
 	get isInactive() {

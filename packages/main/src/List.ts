@@ -424,7 +424,7 @@ class List extends UI5Element {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	header!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
