@@ -246,7 +246,7 @@ class UploadCollection extends UI5Element {
 
 	constructor() {
 		super();
-		this._bodyDnDHandler = (e: DnDEventListenerParam ) => {
+		this._bodyDnDHandler = (e: DnDEventListenerParam) => {
 			if (this._dndOverlayMode !== UploadCollectionDnDOverlayMode.Drop) {
 				this._dndOverlayMode = e.mode;
 			}
