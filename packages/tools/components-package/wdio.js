@@ -219,7 +219,7 @@ exports.config = {
 
 		await browser.addCommand("hasAttribute", async function(attrName) {
 			return browser.executeAsync((elem, attrName, done) => {
-				done(elem.hasAttrbite(attrName));
+				done(elem.hasAttribute(attrName));
 			}, this, attrName);
 		}, true);
 
