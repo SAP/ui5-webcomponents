@@ -217,6 +217,12 @@ exports.config = {
 			}, this, className);
 		}, true);
 
+		await browser.addCommand("hasAttribute", async function(attrName) {
+			return browser.executeAsync((elem, attrName, done) => {
+				done(elem.hasAttribute(attrName));
+			}, this, attrName);
+		}, true);
+
 		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
 			return browser.executeAsync(async (selector, done) => {
 				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
@@ -238,6 +244,7 @@ exports.config = {
 			"$",
 			"$$",
 			"getAttribute",
+			"hasAttribute", // custom
 			"getCSSProperty",
 			"getHTML",
 			"getProperty",
