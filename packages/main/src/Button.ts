@@ -8,7 +8,9 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import I18nBundle, { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 
 import {
@@ -304,9 +306,9 @@ class Button extends UI5Element {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>; // text is used to describe the "default" slot and although not used in the Button class, it is required by the decorator.
 
-	_deactivate!: () => void;
+	_deactivate: () => void;
 
-	_ontouchstart!: { handleEvent: (e: TouchEvent) => void, passive: boolean };
+	_ontouchstart: { handleEvent: (e: TouchEvent) => void, passive: boolean };
 
 	static get styles() {
 		return buttonCss;
@@ -459,12 +461,12 @@ class Button extends UI5Element {
 		return !isDefaultSlotProvided(this);
 	}
 
-	static typeTextMappings() {
+	static typeTextMappings(): Record<string, I18nText> {
 		return {
 			"Positive": BUTTON_ARIA_TYPE_ACCEPT as I18nText,
 			"Negative": BUTTON_ARIA_TYPE_REJECT as I18nText,
 			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED as I18nText,
-		} as { [key: string]: I18nText };
+		};
 	}
 
 	get buttonTypeText() {
