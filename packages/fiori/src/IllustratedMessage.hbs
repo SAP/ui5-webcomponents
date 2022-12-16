@@ -4,7 +4,7 @@
 	</div>
 	{{#if hasTitle}}
 			{{#if hasFormattedTitle}}
-				<slot name="title"></slot>
+				<slot name="titleContent"></slot><slot name="title"></slot>
 			{{else}}
 				<ui5-title level="H2" class="ui5-illustrated-message-title" wrapping-type="Normal">{{effectiveTitleText}}</ui5-title>
 			{{/if}}
@@ -13,7 +13,7 @@
 	{{#if hasSubtitle}}
 		<div class="ui5-illustrated-message-subtitle">
 			{{#if hasFormattedSubtitle}}
-				<slot name="subtitle"></slot>
+				<slot name="subtitleContent"></slot><slot name="subtitle"></slot>
 			{{else}}
 				{{effectiveSubitleText}}
 			{{/if}}

@@ -982,8 +982,8 @@ abstract class UI5Element extends HTMLElement {
 		if (slotsAreManaged) {
 			const slots = this.getMetadata().getSlots();
 			for (const [slotName, slotData] of Object.entries(slots)) { // eslint-disable-line
-				if (!isValidPropertyName(slotName)) {
-					console.warn(`"${slotName}" is not a valid property name. Use a name that does not collide with DOM APIs`); /* eslint-disable-line */
+				if (!isValidPropertyName(slotName, true)) {
+					console.warn(`"${slotName}" is not a valid property name for a slot. Use a name that does not collide with DOM APIs`); /* eslint-disable-line */
 				}
 
 				const propertyName = slotData.propertyName || slotName;

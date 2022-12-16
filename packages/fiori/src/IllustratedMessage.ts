@@ -286,7 +286,7 @@ class IllustratedMessage extends UI5Element {
 	media!: string;
 
 	/**
-	* Defines the title of the component.
+	* Defines the title of the component. <b>Note:</b> Deprecated in favor of <code>titleContent</code>
 	* <br><br>
 	* <b>Note:</b> Using this slot, the default title text of illustration and the value of <code>title</code> property will be overwritten.
 	* @type {HTMLElement}
@@ -294,22 +294,50 @@ class IllustratedMessage extends UI5Element {
 	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.title
 	* @public
 	* @since 1.7.0
+	* @deprecated
 	*/
 	@slot({ type: HTMLElement })
 	title!: Array<HTMLElement> & string; // Note: since title collides with HTMLElement's title attribute and it's a String, we're adding the "& string" to the type Array<HTMLElement> to avoid ts complains. In the future we will rename/deprecate this slot name, so that it doesn't collide with HTMLElement's title attribute.
 
 	/**
-	* Defines the subtitle of the component.
+	 * Defines the title of the component.
+	 * <br><br>
+	 * <b>Note:</b> Using this slot, the default title text of illustration and the value of <code>title</code> property will be overwritten.
+	 * @type {HTMLElement}
+	 * @slot title
+	 * @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleContent
+	 * @public
+	 * @since 1.10
+	 */
+	@slot({ type: HTMLElement })
+	titleContent!: Array<HTMLElement>;
+
+	/**
+	* Defines the subtitle of the component. <b>Note:</b> Deprecated in favor of <code>subtitleContent</code>
 	* <br><br>
 	* <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
 	* @type {HTMLElement}
 	* @slot subtitle
 	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.subtitle
 	* @public
+	* @deprecated
 	* @since 1.0.0-rc.16
 	*/
 	@slot({ type: HTMLElement })
 	subtitle!: Array<HTMLElement>;
+
+	/**
+	 * Defines the subtitle of the component.
+	 * <br><br>
+	 * <b>Note:</b> Using this slot, the default subtitle text of illustration and the value of <code>subtitleText</code> property will be overwritten.
+	 * @type {HTMLElement}
+	 * @slot subtitle
+	 * @name sap.ui.webc.fiori.IllustratedMessage.prototype.subtitleContent
+	 * @public
+	 * @since 1.10
+	 */
+	@slot({ type: HTMLElement })
+	subtitleContent!: Array<HTMLElement>;
 
 	/**
 	* Defines the component actions.
@@ -489,12 +517,20 @@ class IllustratedMessage extends UI5Element {
 		}
 	}
 
+	get _effectiveTitle() {
+		return this.titleContent || this.title;
+	}
+
+	get _effectiveSubtitle() {
+		return this.subtitleContent || this.subtitle;
+	}
+
 	get hasFormattedSubtitle(): boolean {
-		return !!this.subtitle.length;
+		return !!this._effectiveSubtitle.length;
 	}
 
 	get hasFormattedTitle(): boolean {
-		return !!this.title.length;
+		return !!this._effectiveTitle.length;
 	}
 
 	get effectiveTitleText(): string | undefined {
