@@ -6,7 +6,8 @@ import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "./Icon.js";
 import {
