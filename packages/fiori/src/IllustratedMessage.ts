@@ -71,68 +71,6 @@ import IllustratedMessageTemplate from "./generated/templates/IllustratedMessage
 @languageAware
 class IllustratedMessage extends UI5Element {
 	/**
-	* Determines which illustration breakpoint variant is used.
-	* <br><br>
-	* Available options are:
-	* <ul>
-	* <li><code>Auto</code></li>
-	* <li><code>Base</code></li>
-	* <li><code>Spot</code></li>
-	* <li><code>Dialog</code></li>
-	* <li><code>Scene</code></li>
-	* </ul>
-	*
-	* As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
-	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
-	*
-	* @type {sap.ui.webc.fiori.types.IllustrationMessageSize}
-	* @defaultvalue "Auto"
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.size
-	* @public
-	* @since 1.5.0
-	*/
-	@property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
-	size!: IllustrationMessageSize;
-
-	/**
-	* Defines the subtitle of the component.
-	* <br><br>
-	* <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
-	* <br><br>
-	* <b>Note:</b> Using <code>subtitle</code> slot, the default of this property will be overwritten.
-	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.subtitleText
-	* @public
-	*/
-	@property()
-	subtitleText!: string;
-
-	/**
-	* Defines the title of the component.
-	* <br><br>
-	* <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
-	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleText
-	* @public
-	*/
-	@property()
-	titleText!: string;
-
-	/**
-	* Receives id(or many ids) of the elements that label the component.
-	*
-	* @type {string}
-	* @defaultvalue ""
-	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.accessibleNameRef
-	* @public
-	* @since 1.7.0
-	*/
-	@property({ defaultValue: "" })
-	accessibleNameRef!: string;
-
-	/**
 	* Defines the illustration name that will be displayed in the component.
 	* <br><br>
 	* Available illustrations are:
@@ -249,13 +187,75 @@ class IllustratedMessage extends UI5Element {
 	name!: IllustrationMessageType;
 
 	/**
+	* Determines which illustration breakpoint variant is used.
+	* <br><br>
+	* Available options are:
+	* <ul>
+	* <li><code>Auto</code></li>
+	* <li><code>Base</code></li>
+	* <li><code>Spot</code></li>
+	* <li><code>Dialog</code></li>
+	* <li><code>Scene</code></li>
+	* </ul>
+	*
+	* As <code>IllustratedMessage</code> adapts itself around the <code>Illustration</code>, the other
+	* elements of the component are displayed differently on the different breakpoints/illustration sizes.
+	*
+	* @type {sap.ui.webc.fiori.types.IllustrationMessageSize}
+	* @defaultvalue "Auto"
+	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.size
+	* @public
+	* @since 1.5.0
+	*/
+	@property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
+	size!: IllustrationMessageSize;
+
+	/**
+	* Defines the subtitle of the component.
+	* <br><br>
+	* <b>Note:</b> Using this property, the default subtitle text of illustration will be overwritten.
+	* <br><br>
+	* <b>Note:</b> Using <code>subtitle</code> slot, the default of this property will be overwritten.
+	* @type {string}
+	* @defaultvalue ""
+	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.subtitleText
+	* @public
+	*/
+	@property()
+	subtitleText!: string;
+
+	/**
+	* Defines the title of the component.
+	* <br><br>
+	* <b>Note:</b> Using this property, the default title text of illustration will be overwritten.
+	* @type {string}
+	* @defaultvalue ""
+	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.titleText
+	* @public
+	*/
+	@property()
+	titleText!: string;
+
+	/**
+	* Receives id(or many ids) of the elements that label the component.
+	*
+	* @type {string}
+	* @defaultvalue ""
+	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.accessibleNameRef
+	* @public
+	* @since 1.7.0
+	*/
+	@property({ defaultValue: "" })
+	accessibleNameRef!: string;
+
+	/**
 	* Illustration breakpoint variant for the <code>Spot</code> size.
 	*
 	* @private
 	* @type {String}
 	* @since 1.9.0
 	*/
-	@property({ type: String })
+	@property({ noAttribute: true })
 	spotSvg!: string;
 
 	/**
@@ -265,7 +265,7 @@ class IllustratedMessage extends UI5Element {
 	* @type {String}
 	* @since 1.9.0
 	*/
-	@property({ type: String })
+	@property({ noAttribute: true })
 	sceneSvg!: string;
 
 	/**
@@ -275,7 +275,7 @@ class IllustratedMessage extends UI5Element {
 	* @type {String}
 	* @since 1.9.0
 	*/
-	@property({ type: String })
+	@property({ noAttribute: true })
 	dialogSvg!: string;
 
 	/**
@@ -317,7 +317,6 @@ class IllustratedMessage extends UI5Element {
 	* @slot actions
 	* @name sap.ui.webc.fiori.IllustratedMessage.prototype.default
 	* @public
-	* @lends sap.ui.webc.fiori.IllustratedMessage.prototype
 	*/
 	@slot({ type: HTMLElement, "default": true })
 	actions!: Array<HTMLElement>;
@@ -374,8 +373,7 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	async onBeforeRendering() {
-		const name = this.name;
-		let illustrationData = getIllustrationDataSync(name);
+		let illustrationData = getIllustrationDataSync(this.name);
 
 		// Gets the current illustration name given in the "name" attribute
 		const currentIllustration = this.getAttribute("name") as IllustrationMessageType;
@@ -386,7 +384,7 @@ class IllustratedMessage extends UI5Element {
 		}
 
 		if (illustrationData === undefined) {
-			illustrationData = await getIllustrationData(name);
+			illustrationData = await getIllustrationData(this.name);
 		}
 
 		this.spotSvg = illustrationData!.spotSvg;
@@ -439,8 +437,8 @@ class IllustratedMessage extends UI5Element {
 
 	_setSVGAccAttrs() {
 		const svg = this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration svg");
-		if (svg && this.ariaLabelText !== "") {
-			svg.setAttribute("aria-label", this.ariaLabelText!);
+		if (svg && this.ariaLabelText) {
+			svg.setAttribute("aria-label", this.ariaLabelText);
 		}
 	}
 

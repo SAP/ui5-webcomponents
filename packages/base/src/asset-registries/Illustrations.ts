@@ -36,12 +36,10 @@ const registerIllustrationLoader = (illustrationName: string, loader: Illustrati
 const _loadIllustrationOnce = async (illustrationName: string) => {
 	if (!illustrationPromises.has(illustrationName)) {
 		if (!loaders.has(illustrationName)) {
-			if (illustrationName.startsWith("Tnt")) {
-				throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/tnt/${illustrationName.replace(/^Tnt/, "")}.js" module. Or you can import all illustrations by importing the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module.`);
-			} else {
-				throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/${illustrationName}.js" module. Or you can import all illustrations by importing the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module.`);
-			}
+			const illustrationPath = illustrationName.startsWith("Tnt") ? `tnt/${illustrationName.replace(/^Tnt/, "")}` : illustrationName;
+			throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js" module. Or you can import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module that will make all illustrations available, but fetch only the ones used.`);
 		}
+
 		const loadIllustrations = loaders.get(illustrationName)!;
 		illustrationPromises.set(illustrationName, loadIllustrations(illustrationName));
 	}
