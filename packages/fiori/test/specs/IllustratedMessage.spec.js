@@ -50,7 +50,7 @@ describe("Accessibility", () => {
 		await illustratedMsg.removeAttribute("accessible-name-ref");
 
 		// Assert
-		assert.strictEqual(await illustratedMsgSVG.hasAttribute("aria-label"), "aria-label is removed");
+		assert.strictEqual(await illustratedMsgSVG.hasAttribute("aria-label"), false);
 
 		// Act
 		await illustratedMsg.setAttribute("accessible-name-ref", "lbl");
