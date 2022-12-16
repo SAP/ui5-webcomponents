@@ -5,7 +5,9 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import I18nBundle, { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 // @ts-ignore: ignore will no longer be required, when List is migrated to TS
@@ -246,11 +248,13 @@ class UploadCollection extends UI5Element {
 
 	constructor() {
 		super();
-		this._bodyDnDHandler = (e: DnDEventListenerParam) => {
-			if (this._dndOverlayMode !== UploadCollectionDnDOverlayMode.Drop) {
-				this._dndOverlayMode = e.mode;
-			}
-		};
+		this._bodyDnDHandler = this.bodyDnDHandler.bind(this);
+	}
+
+	bodyDnDHandler(e: DnDEventListenerParam) {
+		if (this._dndOverlayMode !== UploadCollectionDnDOverlayMode.Drop) {
+			this._dndOverlayMode = e.mode;
+		}
 	}
 
 	onEnterDOM() {
@@ -310,11 +314,11 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(e: CustomEvent<ItemDeleteEventDetail>) {
-		this.fireEvent<ItemDeleteEventDetail>("item-delete", { item: e.detail.item });
+		this.fireEvent("item-delete", { item: e.detail.item });
 	}
 
 	_onSelectionChange(e: CustomEvent<SelectionChangeEventDetail>) {
-		this.fireEvent<SelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems });
+		this.fireEvent("selection-change", { selectedItems: e.detail.selectedItems });
 	}
 
 	get classes() {
