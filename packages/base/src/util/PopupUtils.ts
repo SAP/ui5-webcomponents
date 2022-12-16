@@ -59,13 +59,13 @@ const isClickInRect = (event: MouseEvent | TouchEvent, rect: DOMRect) => {
 	let x;
 	let y;
 
-	if (event instanceof TouchEvent) {
+	if (event instanceof MouseEvent) {
+		x = event.clientX;
+		y = event.clientY;
+	} else {
 		const touch = event.touches[0];
 		x = touch.clientX;
 		y = touch.clientY;
-	} else {
-		x = event.clientX;
-		y = event.clientY;
 	}
 
 	return isPointInRect(x, y, rect);
