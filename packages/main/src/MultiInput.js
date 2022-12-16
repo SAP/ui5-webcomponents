@@ -142,6 +142,7 @@ class MultiInput extends Input {
 	tokenDelete(event) {
 		const focusedToken = event.detail.ref;
 		const selectedTokens = this.tokens.filter(token => token.selected);
+		const shouldFocusInput = this.tokens.length - 1 === 0 || this.tokens.length === selectedTokens.length;
 
 		if (this._readonly) {
 			return;
@@ -149,7 +150,10 @@ class MultiInput extends Input {
 
 		if (focusedToken) {
 			this.fireEvent("token-delete", { token: focusedToken });
-			this.focus();
+			if (shouldFocusInput) {
+				this.focus();
+			}
+
 			return;
 		}
 
