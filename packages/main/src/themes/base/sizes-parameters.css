@@ -1,7 +1,7 @@
 :root {
 	/* Calendar */
 	--_ui5_calendar_height: 24.5rem;
-	--_ui5_calendar_width: 20.5rem;
+	--_ui5_calendar_width: 20rem;
 	--_ui5_calendar_padding: 1rem;
 	--_ui5_calendar_left_right_padding:  0.5rem;
 	--_ui5_calendar_top_bottom_padding: 1rem;
