@@ -21,6 +21,10 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {
+	MONTH_PICKER_DESCRIPTION,
+} from "./generated/i18n/i18n-defaults.js";
 import CalendarPart from "./CalendarPart.js";
 import type { ICalendarPicker } from "./Calendar.js";
 
@@ -106,6 +110,14 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 
 	static get styles() {
 		return styles;
+	}
+
+	static async onDefine() {
+		MonthPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	get roleDescription() {
+		return MonthPicker.i18nBundle.getText(MONTH_PICKER_DESCRIPTION);
 	}
 
 	onBeforeRendering() {

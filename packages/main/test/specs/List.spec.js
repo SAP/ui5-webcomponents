@@ -488,4 +488,14 @@ describe("List Tests", () => {
 
 		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
 	});
+
+	it('anchor tabs should be accessible within list items', async () => {
+		const listItem = await browser.$("#linkInListItem");
+
+		await listItem.click();
+		const url = await browser.getUrl();
+		assert.strictEqual(url, "https://sap.github.io/ui5-webcomponents/playground/components", "Link target is accessible");
+
+		await browser.url(`test/pages/List_test_page.html`);
+	});
 });

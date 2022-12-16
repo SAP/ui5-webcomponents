@@ -352,6 +352,7 @@ class Popup extends UI5Element {
 
 	_onmouseup() {
 		this._root.tabIndex = -1;
+
 		if (this._shouldFocusRoot) {
 			if (isChrome()) {
 				this._root.focus();
@@ -429,7 +430,7 @@ class Popup extends UI5Element {
 	}
 
 	isFocusWithin() {
-		return isFocusedElementWithinNode(this.shadowRoot.querySelector(".ui5-popup-root"));
+		return isFocusedElementWithinNode(this._root);
 	}
 
 	/**

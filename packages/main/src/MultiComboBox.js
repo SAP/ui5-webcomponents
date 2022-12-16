@@ -1328,6 +1328,8 @@ class MultiComboBox extends UI5Element {
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
+		// force resize of the tokenizer on invalidation
+		this._tokenizer._handleResize();
 	}
 
 	get _isPhone() {

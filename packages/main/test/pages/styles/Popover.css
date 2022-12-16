@@ -63,3 +63,10 @@ ui5-date-picker,
     display: flex;
     justify-content: flex-end;
 }
+
+#clickThisIframe {
+    border: 1px solid red;
+    float: right;
+    height: 150px;
+    width: 300px;
+}
