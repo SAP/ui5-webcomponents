@@ -1,78 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import BarTemplate from "./generated/templates/BarTemplate.lit.js";
 import BarDesign from "./types/BarDesign.js";
+
+// Template
+import BarTemplate from "./generated/templates/BarTemplate.lit.js";
 
 // Styles
 import BarCss from "./generated/themes/Bar.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-bar",
-	managedSlots: true,
-	fastNavigation: true,
-	properties: /** @lends sap.ui.webc.fiori.Bar.prototype */ {
-		/**
-		 * Defines the component's design.
-		 *
-		 * <br><br>
-		 * <b>Note:</b>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Header</code></li>
-		 * <li><code>Subheader</code></li>
-		 * <li><code>Footer</code></li>
-		 * <li><code>FloatingFooter</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.BarDesign}
-		 * @defaultvalue "Header"
-		 * @public
-		 */
-		design: {
-			type: BarDesign,
-			defaultValue: BarDesign.Header,
-		},
-	},
-	slots: /** @lends sap.ui.webc.fiori.Bar.prototype */ {
-		/**
-		 * Defines the content at the start of the bar
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		startContent: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the content in the middle of the bar
-		 * @type {HTMLElement[]}
-		 * @slot middleContent
-		 * @public
-		 */
-		"default": {
-			type: HTMLElement,
-			propertyName: "middleContent",
-		},
-
-		/**
-		 * Defines the content at the end of the bar
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		endContent: {
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.Bar.prototype */ {
-		//
-	},
-};
 
 /**
  * @class
@@ -122,10 +61,61 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.11
  */
+@customElement("ui5-bar")
+@fastNavigation
 class Bar extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the component's design.
+	 *
+	 * <br><br>
+	 * <b>Note:</b>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Header</code></li>
+	 * <li><code>Subheader</code></li>
+	 * <li><code>Footer</code></li>
+	 * <li><code>FloatingFooter</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.BarDesign}
+	 * @name sap.ui.webc.fiori.Bar.prototype.design
+	 * @defaultvalue "Header"
+	 * @public
+	 */
+	@property({ type: BarDesign, defaultValue: BarDesign.Header })
+	design!: BarDesign
+
+	/**
+	* Defines the content at the start of the bar
+	* @type {HTMLElement[]}
+	* @name sap.ui.webc.fiori.Bar.prototype.startContent
+	* @slot
+	* @public
+	*/
+	@slot({ type: HTMLElement })
+	startContent!: Array<HTMLElement>;
+
+	/**
+	* Defines the content in the middle of the bar
+	* @type {HTMLElement[]}
+	* @name sap.ui.webc.fiori.Bar.prototype.default
+	* @slot middleContent
+	* @public
+	*/
+	@slot({ type: HTMLElement, "default": true })
+	middleContent!: Array<HTMLElement>
+
+	/**
+	* Defines the content at the end of the bar
+	* @type {HTMLElement[]}
+	* @name sap.ui.webc.fiori.Bar.prototype.endContent
+	* @slot
+	* @public
+	*/
+	@slot({ type: HTMLElement })
+	endContent!: Array<HTMLElement>
+
+	_handleResizeBound: () => void;
 
 	static get render() {
 		return litRender;
@@ -152,10 +142,10 @@ class Bar extends UI5Element {
 	}
 
 	handleResize() {
-		const bar = this.getDomRef();
+		const bar = this.getDomRef()!;
 		const barWidth = bar.offsetWidth;
-		const needShrinked = Array.from(bar.children).some(slot => {
-			return slot.offsetWidth > barWidth / 3;
+		const needShrinked = Array.from(bar.children).some(child => {
+			return (child as HTMLElement).offsetWidth > barWidth / 3;
 		});
 
 		bar.classList.toggle("ui5-bar-root-shrinked", needShrinked);
@@ -177,16 +167,16 @@ class Bar extends UI5Element {
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
 
-		this.getDomRef().querySelectorAll(".ui5-bar-content-container").forEach(slot => {
-			ResizeHandler.register(slot, this._handleResizeBound);
+		this.getDomRef()!.querySelectorAll(".ui5-bar-content-container").forEach(child => {
+			ResizeHandler.register(child as HTMLElement, this._handleResizeBound);
 		}, this);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
 
-		this.getDomRef().querySelectorAll(".ui5-bar-content-container").forEach(slot => {
-			ResizeHandler.deregister(slot, this._handleResizeBound);
+		this.getDomRef()!.querySelectorAll(".ui5-bar-content-container").forEach(child => {
+			ResizeHandler.deregister(child as HTMLElement, this._handleResizeBound);
 		}, this);
 	 }
 }
