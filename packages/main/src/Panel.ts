@@ -353,7 +353,7 @@ class Panel extends UI5Element {
 			}
 		});
 
-		Promise.all(animations).then(_ => {
+		Promise.all(animations).then(() => {
 			this._animationRunning = false;
 			this._contentExpanded = !this.collapsed;
 			this.fireEvent("toggle");
