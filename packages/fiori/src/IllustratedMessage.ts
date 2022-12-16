@@ -437,8 +437,12 @@ class IllustratedMessage extends UI5Element {
 
 	_setSVGAccAttrs() {
 		const svg = this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration svg");
-		if (svg && this.ariaLabelText) {
-			svg.setAttribute("aria-label", this.ariaLabelText);
+		if (svg) {
+			if (this.ariaLabelText) {
+				svg.setAttribute("aria-label", this.ariaLabelText);
+			} else {
+				svg.removeAttribute("aria-label");
+			}
 		}
 	}
 
