@@ -115,6 +115,7 @@ class Panel extends UI5Element {
 	 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Panel.prototype.headerText
 	 * @defaultvalue ""
 	 * @public
 	 */
