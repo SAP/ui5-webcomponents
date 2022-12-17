@@ -413,13 +413,6 @@ class Panel extends UI5Element {
 		return this.fixed && !this.effectiveAccessibleName ? `${this._id}-header-title` : undefined;
 	}
 
-	// Note: this getter collides with the "header" slot and the framework generated accessors
-	// and will be checked and removed/ or renamed.
-	// https://github.com/SAP/ui5-webcomponents/commit/67c4d698126ad4bb164e0f973abd768a6b7e536e#
-	// get header() {
-	// 	return this.getDomRef()!.querySelector(`#${this._id}-header-title`);
-	// }
-
 	get headerAriaLevel() {
 		return this.headerLevel.slice(1);
 	}
