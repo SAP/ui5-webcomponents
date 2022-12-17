@@ -156,7 +156,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 		return [
 			Icon,
 			Link,
-		];
+		] as Array<typeof UI5Element>;
 	}
 
 	get classes() {
