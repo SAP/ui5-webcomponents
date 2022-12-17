@@ -1,18 +1,29 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	getRGBColor,
 	HSLToRGB,
 	HEXToRGB,
 	RGBToHSL,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
+import type {
+	ColorHSL,
+	ColorRGB,
+} from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
+// @ts-ignore
 import Input from "./Input.js";
+// @ts-ignore
 import Slider from "./Slider.js";
 import Label from "./Label.js";
 
@@ -24,113 +35,11 @@ import {
 	COLORPICKER_GREEN,
 	COLORPICKER_BLUE,
 	COLORPICKER_ALPHA,
+// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-color-picker",
-	properties: /** @lends sap.ui.webc.main.ColorPicker.prototype */ {
-
-		/**
-		 * Defines the currently selected color of the component.
-		 * <br><br>
-		 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
-		 * @type {sap.ui.webc.base.types.CSSColor}
-		 * @public
-		 */
-		color: {
-			type: CSSColor,
-			defaultValue: "rgba(255, 255, 255, 1)",
-		},
-
-		/**
-		 * Defines the HEX code of the currently selected color
-		 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
-		 * @type {string}
-		 * @private
-		 */
-		hex: {
-			type: String,
-			defaultValue: "ffffff",
-			noAttribute: true,
-		},
-
-		/**
-		 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
-		 * @type {string}
-		 * @private
-		 */
-		_mainColor: {
-			type: Object,
-		},
-
-		// Defines the currenty selected color from the main color section.
-		_color: {
-			type: Object,
-		},
-
-		/**
-		 * @private
-		 */
-		_selectedCoordinates: {
-			type: Object,
-		},
-
-		/**
-		 * @private
-		 */
-		_alpha: {
-			type: Float,
-			defaultValue: 1,
-		},
-
-		/**
-		 * @private
-		 */
-		_hue: {
-			type: Integer,
-			defaultValue: 0,
-		},
-
-		/**
-		 * @private
-		 */
-		_isSelectedColorChanged: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		 _isHueValueChanged: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		_wrongHEX: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.ColorPicker.prototype */ {
-		//
-	},
-	events: /** @lends sap.ui.webc.main.ColorPicker.prototype */ {
-		/**
-		 * Fired when the the selected color is changed
-		 *
-		 * @event
-		 * @public
-		 */
-		change: {},
-	},
-};
 
 /**
  * @class
@@ -163,10 +72,94 @@ const metadata = {
  * @tagname ui5-color-picker
  * @public
  */
+
+@customElement("ui5-color-picker")
+/**
+ * Fired when the the selected color is changed
+ *
+ * @event sap.ui.webc.main.ColorPicker#change
+ * @public
+ */
+@event("change")
 class ColorPicker extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the currently selected color of the component.
+	 * <br><br>
+	 * <b>Note</b>: use HEX, RGB, RGBA, HSV formats or a CSS color name when modifying this property.
+	 * @type {sap.ui.webc.base.types.CSSColor}
+	 * @name sap.ui.webc.main.ColorPicker.prototype.color
+	 * @public
+	 */
+	@property({ validator: CSSColor, defaultValue: "rgba(255, 255, 255, 1)" })
+	color!: string;
+
+	/**
+	 * Defines the HEX code of the currently selected color
+	 * *Note*: If Alpha(transperancy) is set it is not included in this property. Use <code>color</code> property.
+	 * @type {string}
+	 * @private
+	 */
+	@property({ defaultValue: "ffffff", noAttribute: true })
+	hex!: string;
+
+	/**
+	 * Defines the current main color which is selected via the hue slider and is shown in the main color square.
+	 * @type {string}
+	 * @private
+	 */
+	@property({ type: Object })
+	_mainColor!: ColorRGB;
+
+	/**
+	 * Defines the currenty selected color from the main color section.
+	 * @private
+	 */ 
+	@property({ type: Object })
+	_color!: ColorRGB;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Object })
+	_selectedCoordinates!: Record<string, number>;
+
+	/**
+	 * @private
+	 */
+	@property({ validator: Float, defaultValue: 1 })
+	_alpha!: number;
+
+	/**
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: 0 })
+	_hue!: number;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_isSelectedColorChanged!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_isHueValueChanged!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_wrongHEX!: boolean;
+
+	selectedHue: number;
+
+	mouseDown: boolean;
+
+	mouseIn: boolean;
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -211,6 +204,7 @@ class ColorPicker extends UI5Element {
 		this.selectedHue = 0;
 
 		this.mouseDown = false;
+		this.mouseIn = false;
 	}
 
 	onBeforeRendering() {
@@ -223,17 +217,17 @@ class ColorPicker extends UI5Element {
 	}
 
 	_applySliderStyles() {
-		const hueSlider = this.getDomRef().querySelector(".ui5-color-picker-hue-slider").shadowRoot,
-			alphaSlider = this.getDomRef().querySelector(".ui5-color-picker-alpha-slider").shadowRoot;
+		const hueSlider = this.getDomRef()!.querySelector(".ui5-color-picker-hue-slider")!.shadowRoot!,
+			alphaSlider = this.getDomRef()!.querySelector(".ui5-color-picker-alpha-slider")!.shadowRoot!;
 
 		if (hueSlider.children.length === 0 || alphaSlider.children.length === 0) {
 			return;
 		}
 
-		const hueProgressSlider = hueSlider.querySelector(".ui5-slider-progress-container"),
-			hueHandle = hueSlider.querySelector(".ui5-slider-handle"),
-			alphaProgressSlider = alphaSlider.querySelector(".ui5-slider-progress-container"),
-			alphaHandle = alphaSlider.querySelector(".ui5-slider-handle"),
+		const hueProgressSlider = hueSlider.querySelector(".ui5-slider-progress-container") as HTMLElement,
+			hueHandle = hueSlider.querySelector(".ui5-slider-handle") as HTMLElement,
+			alphaProgressSlider = alphaSlider.querySelector(".ui5-slider-progress-container") as HTMLElement,
+			alphaHandle = alphaSlider.querySelector(".ui5-slider-handle") as HTMLElement,
 			linearGradientDirection = this.effectiveDir === "rtl" ? "right" : "left",
 			hueProgressSliderBackgroundImage = `${linearGradientDirection}, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00`,
 			alphaProgressSliderBackgroundImage = `${linearGradientDirection}, #fff, #979797`;
@@ -285,29 +279,29 @@ class ColorPicker extends UI5Element {
 		alphaProgressSlider.style.backgroundColor = "none";
 
 		// ui5-slider::part(slider-progress)
-		hueSlider.querySelector(".ui5-slider-progress").style.background = "Transparent";
-		alphaSlider.querySelector(".ui5-slider-progress").style.background = "Transparent";
+		(hueSlider.querySelector(".ui5-slider-progress") as HTMLElement).style.background = "Transparent";
+		(alphaSlider.querySelector(".ui5-slider-progress")as HTMLElement).style.background = "Transparent";
 	}
 
-	_handleMouseDown(event) {
+	_handleMouseDown(e: MouseEvent) {
 		this.mouseDown = true;
 		this.mouseIn = true;
-		this._changeSelectedColor(event.offsetX, event.offsetY);
+		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
 	_handleMouseUp() {
 		this.mouseDown = false;
 	}
 
-	_handleMouseOut(event) {
+	_handleMouseOut(e: MouseEvent) {
 		if (!this.mouseIn || !this.mouseDown) {
 			return;
 		}
 
-		const isLeft = event.offsetX <= 0;
-		const isUp = event.offsetY <= 0;
-		const isDown = event.offsetY >= event.target.offsetHeight;
-		const isRight = event.offsetX >= event.target.offsetWidth;
+		const isLeft = e.offsetX <= 0;
+		const isUp = e.offsetY <= 0;
+		const isDown = e.offsetY >= (e.target as HTMLElement).offsetHeight;
+		const isRight = e.offsetX >= (e.target as HTMLElement).offsetWidth;
 
 		let x,
 			y;
@@ -315,17 +309,19 @@ class ColorPicker extends UI5Element {
 		if (isLeft) {
 			x = 0;
 		} else if (isRight) {
-			x = event.offsetWidth;
+			// @ts-ignore - offsetWidth seems not part of the mouseout event object - to be cheked
+			x = e.offsetWidth;
 		} else {
-			x = event.offsetX;
+			x = e.offsetX;
 		}
 
 		if (isUp) {
 			y = 0;
 		} else if (isDown) {
-			y = event.offsetHeight;
+			// @ts-ignore - offsetWidth seems not part of the mouseout event object - to be checked
+			y = e.offsetHeight;
 		} else {
-			y = event.offsetY;
+			y = e.offsetY;
 		}
 
 		this._changeSelectedColor(x, y);
@@ -333,21 +329,21 @@ class ColorPicker extends UI5Element {
 		this.mouseDown = false;
 	}
 
-	_handleMouseMove(event) {
+	_handleMouseMove(e: MouseEvent) {
 		if (!this.mouseDown || !this.mouseIn) {
 			return;
 		}
 
-		this._changeSelectedColor(event.offsetX, event.offsetY);
+		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	_handleAlphaInput(event) {
-		this._alpha = parseFloat(event.target.value);
+	_handleAlphaInput(e: InputEvent) {
+		this._alpha = parseFloat((e.target as Input).value);
 		this._setColor(this._color);
 	}
 
-	_handleHueInput(event) {
-		this.selectedHue = event.target.value;
+	_handleHueInput(e: CustomEvent) {
+		this.selectedHue = (e.target as Input).value;
 		this._hue = this.selectedHue;
 		this._setMainColor(this._hue);
 		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
@@ -360,8 +356,8 @@ class ColorPicker extends UI5Element {
 		}
 	}
 
-	_handleHEXChange(event) {
-		let newValue = event.target.value.toLowerCase();
+	_handleHEXChange(e: CustomEvent | KeyboardEvent) {
+		let newValue = (e.target as Input).value.toLowerCase();
 		const hexRegex = new RegExp("^[<0-9 abcdef]+$");
 
 		// Shorthand Syntax
@@ -382,10 +378,11 @@ class ColorPicker extends UI5Element {
 		}
 	}
 
-	_handleRGBInputsChange(event) {
-		const targetValue = parseInt(event.target.value) || 0;
+	_handleRGBInputsChange(e: CustomEvent) {
+		const target = e.target as Input;
+		const targetValue = parseInt(target.value) || 0;
 		let tempColor;
-		switch (event.target.id) {
+		switch (target.id) {
 		case "red":
 			tempColor = { ...this._color, r: targetValue };
 			break;
@@ -404,7 +401,7 @@ class ColorPicker extends UI5Element {
 		this._setColor(tempColor);
 	}
 
-	_setMainColor(hueValue) {
+	_setMainColor(hueValue: number) {
 		if (hueValue <= 255) {
 			this._mainColor = {
 				r: 255,
@@ -444,12 +441,12 @@ class ColorPicker extends UI5Element {
 		}
 	}
 
-	_handleAlphaChange(event) {
+	_handleAlphaChange() {
 		this._alpha = this._alpha < 0 ? 0 : this._alpha;
 		this._alpha = this._alpha > 1 ? 1 : this._alpha;
 	}
 
-	_changeSelectedColor(x, y) {
+	_changeSelectedColor(x: number, y: number) {
 		this._selectedCoordinates = {
 			x: x - 6.5, // Center the coordinates, because of the width of the circle
 			y: y - 6.5, // Center the coordinates, because of the height of the circle
@@ -464,20 +461,22 @@ class ColorPicker extends UI5Element {
 		}
 	}
 
-	_onkeydown(event) {
-		if (isEnter(event)) {
-			this._handleHEXChange(event);
+	_onkeydown(e: KeyboardEvent) {
+		if (isEnter(e)) {
+			this._handleHEXChange(e);
 		}
 	}
 
-	_calculateColorFromCoordinates(x, y) {
+	_calculateColorFromCoordinates(x: number, y: number) {
 		// By using the selected coordinates(x = Lightness, y = Saturation) and hue(selected from the hue slider)
 		// and HSL format, the color will be parsed to RGB
 
 		const h = this._hue / 4.25, // 0 ≤ H < 360
 			// 0 ≤ S ≤ 1
+			// @ts-ignore
 			s = 1 - +(Math.round((y / 256) + "e+2") + "e-2"), // eslint-disable-line
 			// 0 ≤ V ≤ 1
+			// @ts-ignore
 			l = +(Math.round((x / 256) + "e+2") + "e-2"); // eslint-disable-line
 
 		if (!s || !l) {
@@ -492,11 +491,8 @@ class ColorPicker extends UI5Element {
 		};
 	}
 
-	_setColor(color = {
-		r: undefined,
-		g: undefined,
-		b: undefined,
-	}) {
+	// @ts-ignore
+	_setColor(color: ColorRGB = { r: undefined, g: undefined, b: undefined }) {
 		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
 
 		this.fireEvent("change");
@@ -540,31 +536,31 @@ class ColorPicker extends UI5Element {
 	}
 
 	get hueSliderLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_HUE_SLIDER);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_HUE_SLIDER as I18nText);
 	}
 
 	get alphaSliderLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA_SLIDER);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA_SLIDER as I18nText);
 	}
 
 	get hexInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_HEX);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_HEX as I18nText);
 	}
 
 	get redInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_RED);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_RED as I18nText);
 	}
 
 	get greenInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_GREEN);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_GREEN as I18nText);
 	}
 
 	get blueInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_BLUE);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_BLUE as I18nText);
 	}
 
 	get alphaInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA as I18nText);
 	}
 
 	get inputsDisabled() {
