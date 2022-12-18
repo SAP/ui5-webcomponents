@@ -283,23 +283,20 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	_onclick(e: MouseEvent) {
 		if (getEventMark(e) === "button") {
-			// @ts-ignore: "click" does not expect a parameter
-			this._input.click(e);
+			this._input.click();
 		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		if (isEnter(e)) {
-			// @ts-ignore: "click" does not expect a parameter
-			this._input.click(e);
+			this._input.click();
 			e.preventDefault();
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
-			// @ts-ignore: "click" does not expect a parameter
-			this._input.click(e);
+			this._input.click();
 			e.preventDefault();
 		}
 	}
