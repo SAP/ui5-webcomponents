@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -330,18 +331,18 @@ class DynamicSideContent extends UI5Element {
 		}
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		const gridPrefix = "ui5-dsc-span",
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
 			scSpan = this._toggled ? this._mcSpan : this._scSpan,
 			classes = {
 				main: {
 					"ui5-dsc-main": true,
-				} as Record<string, boolean>,
+				},
 				side: {
 					"ui5-dsc-side": true,
-				} as Record<string, boolean>,
-			};
+				},
+			} as ClassMap;
 
 		classes.main[`${gridPrefix}-${mcSpan}`] = true;
 		classes.side[`${gridPrefix}-${scSpan}`] = true;
