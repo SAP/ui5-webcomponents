@@ -11,10 +11,15 @@ type StyleData = StyleDataCSP | string;
 
 type ComponentStylesData = Array<StyleData> | StyleData;
 
+type ClassMapValue = Record<string, boolean>
+
+type ClassMap = { [x: string] : ClassMapValue | ClassMap };
+
 export type {
 	PromiseResolve,
 	Timeout,
 	StyleData,
 	StyleDataCSP,
 	ComponentStylesData,
+	ClassMap,
 };

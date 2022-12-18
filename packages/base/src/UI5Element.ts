@@ -24,7 +24,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve, ComponentStylesData } from "./types.js";
+import { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
 let autoId = 0;
 
@@ -850,6 +850,10 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	get isUI5Element() {
 		return true;
+	}
+
+	get classes(): ClassMap {
+		return {};
 	}
 
 	/**
