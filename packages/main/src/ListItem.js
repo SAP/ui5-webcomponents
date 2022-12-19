@@ -353,7 +353,9 @@ class ListItem extends ListItemBase {
 			return;
 		}
 
-		event.preventDefault();
+		if (isEnter(event)) {
+			event.preventDefault();
+		}
 		this.fireEvent("_press", { item: this, selected: this.selected, key: event.key });
 	}
 

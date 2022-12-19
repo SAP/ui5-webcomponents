@@ -409,7 +409,6 @@ class Panel extends UI5Element {
 			"button": {
 				"accessibilityAttributes": {
 					"expanded": this.expanded,
-					"controls": `${this._id}-content`,
 				},
 				"title": this.toggleButtonTitle,
 				"ariaLabelButton": !this.nonFocusableButton && this.useAccessibleNameForToggleButton ? this.effectiveAccessibleName : undefined,

@@ -5,28 +5,44 @@ let updateInterval = null;
 const intervalTimeout = 300;
 const openedRegistry = [];
 
-const repositionPopovers = event => {
+const repositionPopovers = () => {
 	openedRegistry.forEach(popover => {
 		popover.instance.reposition();
 	});
 };
 
-const attachGlobalScrollHandler = () => {
-	document.body.addEventListener("scroll", repositionPopovers, true);
-};
-
-const detachGlobalScrollHandler = () => {
-	document.body.removeEventListener("scroll", repositionPopovers, true);
+const closePopoversIfLostFocus = () => {
+	if (document.activeElement.tagName === "IFRAME") {
+		getRegistry().reverse().forEach(popup => popup.instance.close(false, false, true));
+	}
 };
 
 const runUpdateInterval = () => {
 	updateInterval = setInterval(() => {
 		repositionPopovers();
+
+		closePopoversIfLostFocus();
 	}, intervalTimeout);
 };
 
 const stopUpdateInterval = () => {
 	clearInterval(updateInterval);
+};
+
+const attachGlobalScrollHandler = () => {
+	document.body.addEventListener("scroll", repositionPopovers, { capture: true });
+};
+
+const detachGlobalScrollHandler = () => {
+	document.body.removeEventListener("scroll", repositionPopovers, { capture: true });
+};
+
+const attachScrollHandler = popover => {
+	popover && popover.shadowRoot.addEventListener("scroll", repositionPopovers, { capture: true });
+};
+
+const detachScrollHandler = popover => {
+	popover && popover.shadowRoot.removeEventListener("scroll", repositionPopovers, { capture: true });
 };
 
 const attachGlobalClickHandler = () => {
@@ -60,14 +76,6 @@ const clickHandler = event => {
 
 		popup.close();
 	}
-};
-
-const attachScrollHandler = popover => {
-	popover && popover.shadowRoot.addEventListener("scroll", repositionPopovers, true);
-};
-
-const detachScrollHandler = popover => {
-	popover && popover.shadowRoot.removeEventListener("scroll", repositionPopovers);
 };
 
 const addOpenedPopover = instance => {
