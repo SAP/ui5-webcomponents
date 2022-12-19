@@ -20,7 +20,7 @@ import {
 	isDesktop,
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import isDefaultSlotProvided from "@ui5/webcomponents-base/dist/util/isDefaultSlotProvided.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -304,7 +304,7 @@ class Button extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<Node>; // text is used to describe the "default" slot and although not used in the Button class, it is required by the decorator.
+	text!: Array<Node>;
 
 	_deactivate: () => void;
 
@@ -458,7 +458,7 @@ class Button extends UI5Element {
 	}
 
 	get isIconOnly() {
-		return !isDefaultSlotProvided(this);
+		return !willShowContent(this.text);
 	}
 
 	static typeTextMappings(): Record<string, I18nText> {
