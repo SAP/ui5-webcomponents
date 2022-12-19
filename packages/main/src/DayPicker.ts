@@ -1,6 +1,11 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import I18nBundle, { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
 	isSpaceShift,
@@ -29,122 +34,63 @@ import calculateWeekNumber from "@ui5/webcomponents-localization/dist/dates/calc
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 import CalendarPart from "./CalendarPart.js";
-import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+import type { ICalendarPicker } from "./Calendar.js";
 
 import {
 	DAY_PICKER_WEEK_NUMBER_TEXT,
 	DAY_PICKER_NON_WORKING_DAY,
 	DAY_PICKER_TODAY,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
+// Template
+import DayPickerTemplate from "./generated/templates/DayPickerTemplate.lit.js";
+
+// Styles
 import dayPickerCSS from "./generated/themes/DayPicker.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-daypicker",
-	properties: /** @lends sap.ui.webc.main.DayPicker.prototype */ {
-		/**
-		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
-		 * @type {array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-			compareValues: true,
-		},
-
-		/**
-		 * Defines the type of selection used in the day picker component.
-		 * Accepted property values are:<br>
-		 * <ul>
-		 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
-		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
-		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
-		 * </ul>
-		 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
-		 * @defaultvalue "Single"
-		 * @public
-		 */
-		selectionMode: {
-			type: CalendarSelectionMode,
-			defaultValue: CalendarSelectionMode.Single,
-		},
-
-		/**
-		 * Defines the visibility of the week numbers column.
-		 * <br><br>
-		 *
-		 * <b>Note:<b> For calendars other than Gregorian,
-		 * the week numbers are not displayed regardless of what is set.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @since 1.0.0-rc.8
-		 */
-		hideWeekNumbers: {
-			type: Boolean,
-		},
-
-		/**
-		 * @type {object}
-		 * @private
-		 */
-		_weeks: {
-			type: Object,
-			multiple: true,
-		},
-
-		_dayNames: {
-			type: Object,
-			multiple: true,
-		},
-
-		/**
-		 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
-		 * @type {boolean}
-		 * @private
-		 */
-		_hidden: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		/**
-		 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
-		 * @private
-		 */
-		_secondTimestamp: {
-			type: String,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.DayPicker.prototype */ {
-		/**
-		 * Fired when the selected date(s) change
-		 * @public
-		 * @event
-		 */
-		change: {},
-		/**
-		 * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
-		 * @public
-		 * @event
-		 */
-		navigate: {},
-	},
-};
-
-const isBetween = (x, num1, num2) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
-
+const isBetween = (x: number, num1: number, num2: number) => x > Math.min(num1, num2) && x < Math.max(num1, num2);
 const DAYS_IN_WEEK = 7;
+
+type DayName = {
+	name: string,
+	classes: string,
+	ultraShortName?: string,
+}
+
+type Day = {
+	timestamp: string,
+	day: number,
+	focusRef: boolean,
+	_tabIndex: string,
+	selected: boolean,
+	_isSecondaryCalendarType: boolean,
+	classes: string,
+	ariaLabel: string,
+	ariaSelected: string,
+	ariaDisabled: string | undefined,
+	disabled: boolean,
+	secondDay?: number,
+	weekNum?: number,
+	isHidden?: boolean,
+}
+
+type WeekNumber = {
+	weekNum: number,
+	isHidden: boolean,
+}
+
+type Week = Array<Day | WeekNumber>;
+
+type SelectedDatesChangeEventDetail = {
+	dates: Array<number>,
+	timestamp?: number,
+}
 
 /**
  * @class
  *
- * Represents one month view inside a calendar.
+ * Represents the days inside a single month view of the <code>ui5-calendar</code> component.
  *
  * @constructor
  * @author SAP SE
@@ -153,10 +99,97 @@ const DAYS_IN_WEEK = 7;
  * @tagname ui5-daypicker
  * @public
  */
-class DayPicker extends CalendarPart {
-	static get metadata() {
-		return metadata;
-	}
+@customElement("ui5-daypicker")
+/**
+ * Fired when the selected date(s) change
+ * @public
+ * @event sap.ui.webc.main.DayPicker#change
+ */
+@event("change")
+/**
+ * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
+ * @public
+ * @event sap.ui.webc.main.DayPicker#navigate
+ */
+@event("navigate")
+class DayPicker extends CalendarPart implements ICalendarPicker {
+	/**
+	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
+	 * @type {array}
+	 * @name sap.ui.webc.main.DayPicker.prototype.selectedDates
+	 * @public
+	 */
+	@property({
+		validator: Integer,
+		multiple: true,
+		compareValues: true,
+	})
+	selectedDates!: Array<number>;
+
+	/**
+	 * Defines the type of selection used in the day picker component.
+	 * Accepted property values are:<br>
+	 * <ul>
+	 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
+	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
+	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
+	 * </ul>
+	 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
+	 * @name sap.ui.webc.main.DayPicker.prototype.selectionMode
+	 * @defaultvalue "Single"
+	 * @public
+	 */
+	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
+	selectionMode!: CalendarSelectionMode;
+
+	/**
+	 * Defines the visibility of the week numbers column.
+	 * <br><br>
+	 *
+	 * <b>Note:<b> For calendars other than Gregorian,
+	 * the week numbers are not displayed regardless of what is set.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.DayPicker.prototype.hideWeekNumbers
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.0.0-rc.8
+	 */
+	@property({ type: Boolean })
+	hideWeekNumbers!: boolean;
+
+	/**
+	 * @type {object}
+	 * @private
+	 */
+	@property({
+		type: Object,
+		multiple: true,
+	})
+	_weeks!: Array<Week>;
+
+	@property({
+		type: Object,
+		multiple: true,
+	})
+	_dayNames!: Array<DayName>;
+
+	/**
+	 * When set, the component will skip all work in onBeforeRendering and will not automatically set the focus on itself
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_hidden!: boolean;
+
+	/**
+	 * When selectionMode="Range" and the first day in the range is selected, this is the currently hovered (when using mouse) or focused (when using keyboard) day by the user
+	 * @private
+	 */
+	 @property()
+	_secondTimestamp?: number;
+
+	_autoFocus?: boolean;
 
 	static get template() {
 		return DayPickerTemplate;
@@ -166,6 +199,8 @@ class DayPicker extends CalendarPart {
 		return dayPickerCSS;
 	}
 
+	static i18nBundle: I18nBundle;
+
 	onBeforeRendering() {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		this._buildWeeks(localeData);
@@ -173,11 +208,11 @@ class DayPicker extends CalendarPart {
 	}
 
 	/**
-	 * Builds the _weeks object that represents the month
-	 * @param localeData
+	 * Builds the "_weeks" object that represents the month.
+	 * @param { LocaleData }localeData
 	 * @private
 	 */
-	_buildWeeks(localeData) {
+	_buildWeeks(localeData: LocaleData) {
 		if (this._hidden) {
 			return; // Optimization to not do any work unless the current picker
 		}
@@ -185,19 +220,19 @@ class DayPicker extends CalendarPart {
 		this._weeks = [];
 
 		const firstDayOfWeek = this._getFirstDayOfWeek();
-		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType);
-		const secondaryMonthsNames = this.hasSecondaryCalendarType && localeData.getMonths("wide", this.secondaryCalendarType);
-		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY);
-		const todayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_TODAY);
+		const monthsNames = localeData.getMonths("wide", this._primaryCalendarType) as Array<string>;
+		const secondaryMonthsNames = this.hasSecondaryCalendarType ? localeData.getMonths("wide", this.secondaryCalendarType) as Array<string> : [];
+		const nonWorkingDayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_NON_WORKING_DAY as I18nText);
+		const todayLabel = DayPicker.i18nBundle.getText(DAY_PICKER_TODAY as I18nText);
 		const tempDate = this._getFirstDay(); // date that will be changed by 1 day 42 times
 		const todayDate = CalendarDate.fromLocalJSDate(new Date(), this._primaryCalendarType); // current day date - calculate once
 		const calendarDate = this._calendarDate; // store the _calendarDate value as this getter is expensive and degrades IE11 perf
 		const minDate = this._minDate; // store the _minDate (expensive getter)
 		const maxDate = this._maxDate; // store the _maxDate (expensive getter)
 
-		const tempSecondDate = this.hasSecondaryCalendarType && this._getSecondaryDay(tempDate);
+		const tempSecondDate = this.hasSecondaryCalendarType ? this._getSecondaryDay(tempDate) : undefined;
 
-		let week = [];
+		let week: Week = [];
 		for (let i = 0; i < DAYS_IN_WEEK * 6; i++) { // always show 6 weeks total, 42 days to avoid jumping
 			const timestamp = tempDate.valueOf() / 1000; // no need to round because CalendarDate does it
 
@@ -217,17 +252,22 @@ class DayPicker extends CalendarPart {
 
 			const nonWorkingAriaLabel = isWeekend ? `${nonWorkingDayLabel} ` : "";
 			const todayAriaLabel = isToday ? `${todayLabel} ` : "";
+
+			const tempSecondDateNumber = tempSecondDate ? tempSecondDate.getDate() : "";
+			const tempSecondYearNumber = tempSecondDate ? tempSecondDate.getYear() : "";
+			const secondaryMonthsNamesString = secondaryMonthsNames.length > 0 ? secondaryMonthsNames[tempSecondDate!.getMonth()] : "";
+
 			const ariaLabel = this.hasSecondaryCalendarType
-				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNames[tempSecondDate.getMonth()]} ${tempSecondDate.getDate()}, ${tempSecondDate.getYear()}`
+				? `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}; ${secondaryMonthsNamesString} ${tempSecondDateNumber}, ${tempSecondYearNumber}`
 				: `${todayAriaLabel}${nonWorkingAriaLabel}${monthsNames[tempDate.getMonth()]} ${tempDate.getDate()}, ${tempDate.getYear()}`;
 
-			const day = {
+			const day: Day = {
 				timestamp: timestamp.toString(),
 				focusRef: isFocused,
 				_tabIndex: isFocused ? "0" : "-1",
 				selected: isSelected,
 				day: tempDate.getDate(),
-				secondDay: this.hasSecondaryCalendarType && tempSecondDate.getDate(),
+				secondDay: this.hasSecondaryCalendarType ? (tempSecondDate as CalendarDate).getDate() : undefined,
 				_isSecondaryCalendarType: this.hasSecondaryCalendarType,
 				classes: `ui5-dp-item ui5-dp-wday${dayOfTheWeek}`,
 				ariaLabel,
@@ -283,18 +323,18 @@ class DayPicker extends CalendarPart {
 			}
 
 			tempDate.setDate(tempDate.getDate() + 1);
-			if (this.hasSecondaryCalendarType) {
+			if (this.hasSecondaryCalendarType && tempSecondDate) {
 				tempSecondDate.setDate(tempSecondDate.getDate() + 1);
 			}
 		}
 	}
 
 	/**
-	 * Builds the dayNames object (header of the month)
-	 * @param localeData
+	 * Builds the dayNames object (header of the month).
+	 * @param { LocaleData } localeData
 	 * @private
 	 */
-	_buildDayNames(localeData) {
+	_buildDayNames(localeData: LocaleData) {
 		if (this._hidden) {
 			return; // Optimization to not do any work unless the current picker
 		}
@@ -308,7 +348,7 @@ class DayPicker extends CalendarPart {
 		this._dayNames = [];
 		this._dayNames.push({
 			classes: "ui5-dp-dayname",
-			name: DayPicker.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT),
+			name: DayPicker.i18nBundle.getText(DAY_PICKER_WEEK_NUMBER_TEXT as I18nText),
 		});
 		for (let i = 0; i < DAYS_IN_WEEK; i++) {
 			dayOfTheWeek = i + this._getFirstDayOfWeek();
@@ -346,12 +386,12 @@ class DayPicker extends CalendarPart {
 	}
 
 	/**
-	 * Tells if the day is selected (dark blue)
-	 * @param timestamp
-	 * @returns {boolean}
+	 * Tells if the day is selected (dark blue).
+	 * @param { number } timestamp
+	 * @returns { boolean }
 	 * @private
 	 */
-	_isDaySelected(timestamp) {
+	_isDaySelected(timestamp: number): boolean {
 		if (this.selectionMode === CalendarSelectionMode.Single) {
 			return timestamp === this.selectedDates[0];
 		}
@@ -361,12 +401,12 @@ class DayPicker extends CalendarPart {
 	}
 
 	/**
-	 * Tells if the day is inside a selection range (light blue)
-	 * @param timestamp
-	 * @returns {*}
+	 * Tells if the day is inside a selection range (light blue).
+	 * @param { number } timestamp
+	 * @returns { boolean }
 	 * @private
 	 */
-	_isDayInsideSelectionRange(timestamp) {
+	_isDayInsideSelectionRange(timestamp: number): boolean {
 		// No selection at all (or not in range selection mode)
 		if (this.selectionMode !== CalendarSelectionMode.Range || !this.selectedDates.length) {
 			return false;
@@ -382,13 +422,13 @@ class DayPicker extends CalendarPart {
 	}
 
 	/**
-	 * Selects/deselects a day
-	 * @param event
-	 * @param isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
+	 * Selects/deselects a day.
+	 * @param { Event} e
+	 * @param { boolean} isShift true if the user did Click+Shift or Enter+Shift (but not Space+Shift)
 	 * @private
 	 */
-	_selectDate(event, isShift) {
-		const target = event.target;
+	_selectDate(e: Event, isShift: boolean) {
+		const target = e.target as HTMLElement;
 
 		if (!this._isDayPressed(target)) {
 			return;
@@ -408,47 +448,47 @@ class DayPicker extends CalendarPart {
 				this._toggleTimestampInSelection(timestamp);
 			}
 		} else {
-			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	: [timestamp];
+			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	as Array<number> : [timestamp] as Array<number>;
 		}
 
-		this.fireEvent("change", {
+		this.fireEvent<SelectedDatesChangeEventDetail>("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
 	}
 
 	/**
-	 * Selects/deselects the whole row (week)
-	 * @param event
+	 * Selects/deselects the whole row (week).
 	 * @private
 	 */
-	_selectWeek(event) {
-		this._weeks.forEach(week => {
-			const dayInThisWeek = week.findIndex(item => {
+	_selectWeek() {
+		this._weeks.forEach((week: Week) => {
+			const _week = week as Array<Day>;
+			const dayInThisWeek = _week.findIndex((item: Day) => {
 				const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
 				return date.getMonth() === this._calendarDate.getMonth() && date.getDate() === this._calendarDate.getDate();
 			}) !== -1;
 			if (dayInThisWeek) { // The current day is in this week
-				const notAllDaysOfThisWeekSelected = week.some(item => item.timestamp && !this.selectedDates.includes(parseInt(item.timestamp)));
+				const notAllDaysOfThisWeekSelected = _week.some(item => item.timestamp && !this.selectedDates.includes(parseInt(item.timestamp)));
 				if (notAllDaysOfThisWeekSelected) { // even if one day is not selected, select the whole week
-					week.filter(item => item.timestamp).forEach(item => {
+					_week.filter(item => item.timestamp).forEach(item => {
 						this._addTimestampToSelection(parseInt(item.timestamp));
 					});
 				} else { // only if all days of this week are selected, deselect them
-					week.filter(item => item.timestamp).forEach(item => {
+					_week.filter(item => item.timestamp).forEach(item => {
 						this._removeTimestampFromSelection(parseInt(item.timestamp));
 					});
 				}
 			}
 		});
 
-		this.fireEvent("change", {
+		this.fireEvent<SelectedDatesChangeEventDetail>("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
 	}
 
-	_toggleTimestampInSelection(timestamp) {
+	_toggleTimestampInSelection(timestamp: number) {
 		if (this.selectedDates.includes(timestamp)) {
 			this._removeTimestampFromSelection(timestamp);
 		} else {
@@ -456,22 +496,22 @@ class DayPicker extends CalendarPart {
 		}
 	}
 
-	_addTimestampToSelection(timestamp) {
+	_addTimestampToSelection(timestamp: number) {
 		if (!this.selectedDates.includes(timestamp)) {
 			this.selectedDates = [...this.selectedDates, timestamp];
 		}
 	}
 
-	_removeTimestampFromSelection(timestamp) {
+	_removeTimestampFromSelection(timestamp: number) {
 		this.selectedDates = this.selectedDates.filter(value => value !== timestamp);
 	}
 
 	/**
-	 * When at least one day is selected and the user pressed shift
-	 * @param timestamp
+	 * Called when at least one day is selected and the user presses "Shift".
+	 * @param { number } timestamp
 	 * @private
 	 */
-	_multipleSelection(timestamp) {
+	_multipleSelection(timestamp: number) {
 		const min = Math.min(...this.selectedDates);
 		const max = Math.max(...this.selectedDates);
 		let start;
@@ -508,51 +548,52 @@ class DayPicker extends CalendarPart {
 	}
 
 	/**
-	 * Set the hovered day as the _secondTimestamp
-	 * @param event
+	 * Set the hovered day as the "_secondTimestamp".
+	 * @param { MouseEvent } e
 	 * @private
 	 */
-	_onmouseover(event) {
-		const hoveredItem = event.target.closest(".ui5-dp-item");
+	_onmouseover(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const hoveredItem = target.closest(".ui5-dp-item") as HTMLElement;
 		if (hoveredItem && this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
 			this._secondTimestamp = this._getTimestampFromDom(hoveredItem);
 		}
 	}
 
-	_onkeydown(event) {
+	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 
-		if (isEnter(event) || isEnterShift(event)) {
-			this._selectDate(event, isEnterShift(event));
-		} else if (isSpace(event) || isSpaceShift(event)) {
-			event.preventDefault();
-		} else if (isLeft(event)) {
+		if (isEnter(e) || isEnterShift(e)) {
+			this._selectDate(e, isEnterShift(e));
+		} else if (isSpace(e) || isSpaceShift(e)) {
+			e.preventDefault();
+		} else if (isLeft(e)) {
 			this._modifyTimestampBy(-1, "day");
-		} else if (isRight(event)) {
+		} else if (isRight(e)) {
 			this._modifyTimestampBy(1, "day");
-		} else if (isUp(event)) {
+		} else if (isUp(e)) {
 			this._modifyTimestampBy(-7, "day");
-		} else if (isDown(event)) {
+		} else if (isDown(e)) {
 			this._modifyTimestampBy(7, "day");
-		} else if (isPageUp(event)) {
+		} else if (isPageUp(e)) {
 			this._modifyTimestampBy(-1, "month");
-		} else if (isPageDown(event)) {
+		} else if (isPageDown(e)) {
 			this._modifyTimestampBy(1, "month");
-		} else if (isPageUpShift(event) || isPageUpAlt(event)) {
+		} else if (isPageUpShift(e) || isPageUpAlt(e)) {
 			this._modifyTimestampBy(-1, "year");
-		} else if (isPageDownShift(event) || isPageDownAlt(event)) {
+		} else if (isPageDownShift(e) || isPageDownAlt(e)) {
 			this._modifyTimestampBy(1, "year");
-		} else if (isPageUpShiftCtrl(event)) {
+		} else if (isPageUpShiftCtrl(e)) {
 			this._modifyTimestampBy(-10, "year");
-		} else if (isPageDownShiftCtrl(event)) {
+		} else if (isPageDownShiftCtrl(e)) {
 			this._modifyTimestampBy(10, "year");
-		} else if (isHome(event) || isEnd(event)) {
-			this._onHomeOrEnd(isHome(event));
-		} else if (isHomeCtrl(event)) {
+		} else if (isHome(e) || isEnd(e)) {
+			this._onHomeOrEnd(isHome(e));
+		} else if (isHomeCtrl(e)) {
 			const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 			tempDate.setDate(1); // Set the first day of the month
 			this._setTimestamp(tempDate.valueOf() / 1000);
-		} else if (isEndCtrl(event)) {
+		} else if (isEndCtrl(e)) {
 			const tempDate = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 			tempDate.setMonth(tempDate.getMonth() + 1);
 			tempDate.setDate(0); // Set the last day of the month (0th day of next month)
@@ -562,65 +603,69 @@ class DayPicker extends CalendarPart {
 		}
 
 		if (preventDefault) {
-			event.preventDefault();
+			e.preventDefault();
 		}
 	}
 
-	_onkeyup(event) {
+	_onkeyup(e: KeyboardEvent) {
 		// Even if Space+Shift was pressed, ignore the shift unless in Multiple selection
-		if (isSpace(event) || (isSpaceShift(event) && this.selectionMode !== CalendarSelectionMode.Multiple)) {
-			this._selectDate(event, false);
-		} else if (isSpaceShift(event)) {
-			this._selectWeek(event);
+		if (isSpace(e) || (isSpaceShift(e) && this.selectionMode !== CalendarSelectionMode.Multiple)) {
+			this._selectDate(e, false);
+		} else if (isSpaceShift(e)) {
+			this._selectWeek();
 		}
 	}
 
 	/**
-	 * Click is the same as Enter: Click+Shift has the same effect as Enter+Shift
-	 * @param event
+	 * Click is the same as "Enter".
+	 * <b>Note:</b> "Click+Shift" has the same effect as "Enter+Shift".
+	 * @param { MouseEvent } e
 	 * @private
 	 */
-	_onclick(event) {
-		this._selectDate(event, event.shiftKey);
+	_onclick(e: MouseEvent) {
+		this._selectDate(e, e.shiftKey);
 	}
 
 	/**
-	 * One Home or End, move the focus to the first or last item in the row
-	 * @param homePressed
+	 * Called upon "Home" or "End" - moves the focus to the first or last item in the row.
+	 * @param { boolean } homePressed
 	 * @private
 	 */
-	_onHomeOrEnd(homePressed) {
+	_onHomeOrEnd(homePressed: boolean) {
 		this._weeks.forEach(week => {
-			const dayInThisWeek = week.findIndex(item => {
+			const _week = week as Array<Day>;
+			const dayInThisWeek = _week.findIndex(item => {
 				const date = CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000);
 				return date.getMonth() === this._calendarDate.getMonth() && date.getDate() === this._calendarDate.getDate();
 			}) !== -1;
 			if (dayInThisWeek) { // The current day is in this week
 				const index = homePressed ? 1 : 7; // select the first (if Home) or last (if End) day of the week
-				this._setTimestamp(parseInt(week[index].timestamp));
+				this._setTimestamp(parseInt(_week[index].timestamp));
 			}
 		});
 	}
 
 	/**
-	 * Called from Calendar.js
+	 * Called by the Calendar component.
 	 * @protected
+	 * @returns { boolean }
 	 */
-	_hasPreviousPage() {
+	_hasPreviousPage(): boolean {
 		return !(this._calendarDate.getMonth() === this._minDate.getMonth() && this._calendarDate.getYear() === this._minDate.getYear());
 	}
 
 	/**
-	 * Called from Calendar.js
+	 * Called by the Calendar component.
 	 * @protected
+	 * @returns { boolean }
 	 */
-	_hasNextPage() {
+	_hasNextPage(): boolean {
 		return !(this._calendarDate.getMonth() === this._maxDate.getMonth() && this._calendarDate.getYear() === this._maxDate.getYear());
 	}
 
 	/**
-	 * Called from Calendar.js
-	 * Same as PageUp
+	 * Called by the Calendar component.
+	 * <b>Note:</b> same as for "PageUp"
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -628,8 +673,8 @@ class DayPicker extends CalendarPart {
 	}
 
 	/**
-	 * Called from Calendar.js
-	 * Same as PageDown
+	 * Called by the Calendar component.
+	 * <b>Note:</b> same as for "PageDown"
 	 * @protected
 	 */
 	_showNextPage() {
@@ -637,12 +682,12 @@ class DayPicker extends CalendarPart {
 	}
 
 	/**
-	 * Modifies the timestamp by a certain amount of days/months/years
-	 * @param amount
-	 * @param unit
+	 * Modifies the timestamp by a certain amount of days/months/years.
+	 * @param { number } amount
+	 * @param { string } unit
 	 * @private
 	 */
-	_modifyTimestampBy(amount, unit) {
+	_modifyTimestampBy(amount: number, unit: string) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, unit);
 		this._updateSecondTimestamp();
@@ -652,18 +697,19 @@ class DayPicker extends CalendarPart {
 	}
 
 	/**
-	 * Sets the timestamp to an absolute value
-	 * @param value
+	 * Sets the timestamp to an absolute value.
+	 * @param { number } value
 	 * @private
 	 */
-	_setTimestamp(value) {
+	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
 		this.fireEvent("navigate", { timestamp: this.timestamp });
 	}
 
 	/**
-	 * During range selection, when the user is navigating with the keyboard, the currently focused day is considered the "second day"
+	 * During range selection, when the user is navigating with the keyboard,
+	 * the currently focused day is considered the "second day".
 	 * @private
 	 */
 	_updateSecondTimestamp() {
@@ -684,7 +730,7 @@ class DayPicker extends CalendarPart {
 		return !!this.secondaryCalendarType;
 	}
 
-	_isWeekend(oDate) {
+	_isWeekend(oDate: CalendarDate): boolean {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 
 		const iWeekDay = oDate.getDay(),
@@ -695,16 +741,16 @@ class DayPicker extends CalendarPart {
 			|| (iWeekendEnd < iWeekendStart && (iWeekDay >= iWeekendStart || iWeekDay <= iWeekendEnd));
 	}
 
-	_isDayPressed(target) {
-		const targetParent = target.parentNode;
+	_isDayPressed(target: HTMLElement): boolean {
+		const targetParent = target.parentNode as HTMLElement;
 		return (target.className.indexOf("ui5-dp-item") > -1) || (targetParent && targetParent.classList && targetParent.classList.contains("ui5-dp-item"));
 	}
 
-	_getSecondaryDay(tempDate) {
+	_getSecondaryDay(tempDate: CalendarDate): CalendarDate {
 		return new CalendarDate(tempDate, this.secondaryCalendarType);
 	}
 
-	_getFirstDay() {
+	_getFirstDay(): CalendarDate {
 		let daysFromPreviousMonth;
 
 		const firstDayOfWeek = this._getFirstDayOfWeek();
@@ -712,7 +758,9 @@ class DayPicker extends CalendarPart {
 		// determine weekday of first day in month
 		const firstDay = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 		firstDay.setDate(1);
+
 		daysFromPreviousMonth = firstDay.getDay() - firstDayOfWeek;
+
 		if (daysFromPreviousMonth < 0) {
 			daysFromPreviousMonth = 7 + daysFromPreviousMonth;
 		}
@@ -724,10 +772,10 @@ class DayPicker extends CalendarPart {
 		return firstDay;
 	}
 
-	_getFirstDayOfWeek() {
+	_getFirstDayOfWeek(): number {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const confFirstDayOfWeek = getFirstDayOfWeek();
-		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : localeData.getFirstDayOfWeek();
+		return Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek! : localeData.getFirstDayOfWeek();
 	}
 
 	get styles() {
@@ -744,7 +792,7 @@ class DayPicker extends CalendarPart {
 
 	get ariaRoledescription() {
 		return this.hasSecondaryCalendarType
-			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType} calendar`
+			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType as string} calendar`
 			: `${this._primaryCalendarType} calendar`;
 	}
 }
@@ -752,3 +800,6 @@ class DayPicker extends CalendarPart {
 DayPicker.define();
 
 export default DayPicker;
+export type {
+	SelectedDatesChangeEventDetail,
+};

@@ -1,25 +1,9 @@
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import DateComponentBase from "./DateComponentBase.js";
-
-/**
- * @public
- */
-const metadata = {
-	properties: /** @lends sap.ui.webc.main.CalendarPart.prototype */ {
-		/**
-		 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
-		 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @protected
-		 */
-		timestamp: {
-			type: Integer,
-		},
-	},
-};
 
 /**
  * @class
@@ -35,9 +19,14 @@ const metadata = {
  * @public
  */
 class CalendarPart extends DateComponentBase {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * The timestamp of the currently focused date. Set this property to move the component's focus to a certain date.
+	 * <b>Node:</b> Timestamp is 10-digit Integer representing the seconds (not milliseconds) since the Unix Epoch.
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @protected
+	 */
+	@property({ validator: Integer })
+	timestamp?: number;
 
 	get _minTimestamp() {
 		return this._minDate.valueOf() / 1000;
@@ -77,7 +66,7 @@ class CalendarPart extends DateComponentBase {
 	 * @param timestamp
 	 * @protected
 	 */
-	_safelySetTimestamp(timestamp) {
+	_safelySetTimestamp(timestamp: number) {
 		const min = this._minDate.valueOf() / 1000;
 		const max = this._maxDate.valueOf() / 1000;
 
@@ -97,13 +86,13 @@ class CalendarPart extends DateComponentBase {
 	 * @param unit
 	 * @protected
 	 */
-	_safelyModifyTimestampBy(amount, unit) {
+	_safelyModifyTimestampBy(amount: number, unit: string) {
 		const newDate = modifyDateBy(this._calendarDate, amount, unit);
 		this._safelySetTimestamp(newDate.valueOf() / 1000);
 	}
 
-	_getTimestampFromDom(domNode) {
-		const oMonthDomRef = domNode.getAttribute("data-sap-timestamp");
+	_getTimestampFromDom(domNode: HTMLElement) {
+		const oMonthDomRef = domNode.getAttribute("data-sap-timestamp")!;
 		return parseInt(oMonthDomRef);
 	}
 }
