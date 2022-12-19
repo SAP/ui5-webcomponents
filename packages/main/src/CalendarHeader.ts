@@ -23,6 +23,12 @@ import {
 // Styles
 import styles from "./generated/themes/CalendarHeader.css.js";
 
+type SecondaryCalendarButtonTexts = {
+	monthButtonText: string,
+	monthButtonInfo: string,
+	yearButtonText: string,
+}
+
 @customElement("ui5-calendar-header")
 @languageAware
 @event("next-press")
@@ -68,11 +74,7 @@ class CalendarHeader extends UI5Element {
 	 * @private
 	*/
 	@property({ type: Object })
-	buttonTextForSecondaryCalendarType!: {
-		monthButtonText: string,
-		monthButtonInfo: string,
-		yearButtonText: string,
-	};
+	buttonTextForSecondaryCalendarType!: SecondaryCalendarButtonTexts;
 
 	@property({ type: Boolean })
 	isNextButtonDisabled!: boolean;
@@ -131,8 +133,8 @@ class CalendarHeader extends UI5Element {
 		this._nextButtonText = CalendarHeader.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON as I18nText);
 
 		if (this.hasSecondaryCalendarType) {
-			this._secondMonthButtonText = this.buttonTextForSecondaryCalendarType?.monthButtonText;
-			this._secondYearButtonText = this.buttonTextForSecondaryCalendarType?.yearButtonText;
+			this._secondMonthButtonText = this.buttonTextForSecondaryCalendarType.monthButtonText;
+			this._secondYearButtonText = this.buttonTextForSecondaryCalendarType.yearButtonText;
 		}
 	}
 
@@ -206,7 +208,7 @@ class CalendarHeader extends UI5Element {
 	get accInfo() {
 		return {
 			ariaLabelMonthButton: this.hasSecondaryCalendarType
-				? `${this._monthButtonText}, ${this.buttonTextForSecondaryCalendarType?.monthButtonInfo || ""}` : `${this._monthButtonText || ""}`,
+				? `${this._monthButtonText}, ${this.buttonTextForSecondaryCalendarType.monthButtonInfo}` : `${this._monthButtonText}`,
 		};
 	}
 }

@@ -41,12 +41,9 @@ class CalendarPart extends DateComponentBase {
 	 * @protected
 	 */
 	get _timestamp() {
-		const minTimestamp = this._minTimestamp;
-		const maxTimestamp = this._maxTimestamp;
 		let timestamp = this.timestamp !== undefined ? this.timestamp : getTodayUTCTimestamp(this._primaryCalendarType);
-
-		if ((minTimestamp && timestamp < minTimestamp) || (maxTimestamp && timestamp > maxTimestamp)) {
-			timestamp = minTimestamp!;
+		if (timestamp < this._minTimestamp || timestamp > this._maxTimestamp) {
+			timestamp = this._minTimestamp;
 		}
 		return timestamp;
 	}

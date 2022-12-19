@@ -2,7 +2,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import I18nBundle, { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -326,14 +327,14 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property()
+	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
 
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_isPickerOpen!: boolean;
 
 	@property({ type: Object })
-	_respPopoverConfig?: object;
+	_respPopoverConfig!: object;
 
 	@property({ defaultValue: "day" })
 	_calendarCurrentPicker!: string;
@@ -407,14 +408,13 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		["minDate", "maxDate"].forEach((prop: string) => {
 			const propValue = this[prop as keyof typeof this] as string;
 
-			if (propValue && !this.isValid(propValue)) {
+			if (!this.isValid(propValue)) {
 				console.warn(`Invalid value for property "${prop}": ${propValue} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
 			}
 		});
 
-		const FormSupport = getFeature<typeof FormSupportT>("FormSupport");
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this);
+		if (this.FormSupport) {
+			this.FormSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
@@ -474,7 +474,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			}
 		}
 
-		if ((this._getInput().isEqualNode(e.target as DatePicker) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if ((this._getInput().isEqualNode(e.target) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this.closePicker();
 		}
 

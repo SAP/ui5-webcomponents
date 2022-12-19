@@ -21,6 +21,7 @@ import {
 	isSafari,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -93,7 +94,7 @@ let activeButton: Button | null = null;
  * @native
  */
 @event("click")
-class Button extends UI5Element {
+class Button extends UI5Element implements IFormElement {
 	/**
 	 * Defines the component design.
 	 *

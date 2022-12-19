@@ -267,16 +267,14 @@ class Calendar extends CalendarPart {
 			// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
 			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
 			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
-		}).filter(date => !!date) as Array<number>;
+		}).filter((date): date is number => !!date);
 	}
 
 	/**
 	 * @private
 	 */
-	_setSelectedDates(selectedDates: Array<number | undefined>) {
-		const selectedValues = selectedDates.map(timestamp => {
-			return timestamp && this.getFormat().format(new Date(timestamp * 1000), true);
-		}) as Array<string>; // Format as UTC
+	_setSelectedDates(selectedDates: Array<number>) {
+		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
@@ -413,7 +411,7 @@ class Calendar extends CalendarPart {
 	onSelectedDatesChange(e: CustomEvent<SelectedDatesChangeEventDetail>) {
 		const timestamp = e.detail.timestamp;
 		const selectedDates = e.detail.dates;
-		const datesValues: Array<string> = selectedDates.map(ts => {
+		const datesValues = selectedDates.map(ts => {
 			const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});

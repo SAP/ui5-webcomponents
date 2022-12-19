@@ -195,12 +195,8 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	_getDisplayedSecondaryMonthText(timestamp: number) {
-		const monthsName = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, timestamp);
-		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this._secondaryCalendarType);
-	}
-
-	get _secondaryCalendarType() {
-		return this.secondaryCalendarType;
+		const monthsName = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp);
+		return convertMonthNumbersToMonthNames(monthsName.firstDate.getMonth(), monthsName.lastDate.getMonth(), this.secondaryCalendarType);
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -254,7 +250,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent<SelectedMonthChangeEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -268,7 +264,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._safelyModifyTimestampBy(amount, "month");
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<SelectedMonthChangeEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.fireEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -290,7 +286,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		if (target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this._getTimestampFromDom(target);
 			this._safelySetTimestamp(timestamp);
-			this.fireEvent<SelectedMonthChangeEventDetail>("change", { timestamp: this.timestamp! });
+			this.fireEvent("change", { timestamp: this.timestamp! });
 		}
 	}
 
