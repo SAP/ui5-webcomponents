@@ -383,6 +383,11 @@
 		</ui5-multi-combobox>
 	</div>
 
+	<div class="sample-container">
+		<ui5-button id="add">Add Tokens</ui5-button>
+		<ui5-multi-combobox id="mcb-dynamic-selection"></ui5-multi-combobox>
+	</div>
+
 	<script>
 		var eventNameInput = document.getElementById("events-input");
 		var eventParamsInput = document.getElementById("events-parameters");
@@ -442,6 +447,18 @@
 
 		btnfocusMCB.addEventListener("click", () => {
 			mcbFocus.focus();
+		});
+
+		document.getElementById("add").addEventListener("click", event => {
+			const mcb = document.getElementById("mcb-dynamic-selection");
+
+			["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"].forEach(text => {
+				const item = document.createElement("ui5-mcb-item");
+				item.text = text;
+				item.selected = true;
+
+				mcb.appendChild(item);
+			});
 		});
 	</script>
 

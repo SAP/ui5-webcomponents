@@ -102,6 +102,14 @@ describe("List Tests", () => {
 		assert.strictEqual(listItemsLength, 3, "List items are rendered");
 	});
 
+	it("Tests rendering of imageContent slot", async () => {
+		const imageContentSlot = await browser.executeAsync(done => {
+			done(document.getElementById("imageContent-slot-li").shadowRoot.querySelector("slot[name='imageContent']").assignedNodes()[0].querySelector("#imageContent-slot-avatar"));
+		});
+
+		assert.ok(imageContentSlot, "the content of imageContent slot is rendered");
+	});
+
 	it("Clicking on inactive items does not change single selection", async () => {
 		list.id = "#inactiveSingleSelect";
 		const firstItem = await list.getItem(0);
@@ -479,5 +487,15 @@ describe("List Tests", () => {
 		const groupHeader = await browser.$("#listSelectedItem #group-header").shadow$(".ui5-ghli-root");
 
 		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
+	});
+
+	it('anchor tabs should be accessible within list items', async () => {
+		const listItem = await browser.$("#linkInListItem");
+
+		await listItem.click();
+		const url = await browser.getUrl();
+		assert.strictEqual(url, "https://sap.github.io/ui5-webcomponents/playground/components", "Link target is accessible");
+
+		await browser.url(`test/pages/List_test_page.html`);
 	});
 });

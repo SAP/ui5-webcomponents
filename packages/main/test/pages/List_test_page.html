@@ -155,6 +155,21 @@
 
 	</ui5-list>
 
+	<br/><br/>
+
+	<ui5-list>
+		<ui5-li id="imageContent-slot-li"> Avatar inside imageContent slot
+			<div slot="imageContent">
+				<ui5-avatar id="imageContent-slot-avatar">
+					<img src="./img/woman_avatar_5.png" alt="Woman image">
+				</ui5-avatar>
+			</div>
+		</ui5-li>
+
+	</ui5-list>
+
+	<br/><br/>
+
 	<ui5-list id="inactiveMultiSelect" header-text="API: ListItem type='Inactive'" mode="MultiSelect">
 		<ui5-li type="Inactive">Inactive item</ui5-li>
 		<ui5-li type="Inactive">Inactive item</ui5-li>
@@ -235,6 +250,13 @@
 		<ui5-li>Laptop HP</ui5-li>
 		<ui5-li>Audio cabel</ui5-li>
 		<ui5-li>DVD set</ui5-li>
+	</ui5-list>
+
+	<ui5-list id="listWithAnchorTag">
+		<ui5-li>
+			<a id="linkInListItem" tabindex="-1" href="https://sap.github.io/ui5-webcomponents/playground/components" rel="noopener" target="_self">
+				Link1</a>
+		</ui5-li>
 	</ui5-list>
 
 	<script>

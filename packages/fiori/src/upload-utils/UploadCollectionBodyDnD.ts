@@ -7,35 +7,41 @@
 import EventProvider from "@ui5/webcomponents-base/dist/EventProvider.js";
 import UploadCollectionDnDOverlayMode from "../types/UploadCollectionDnDMode.js";
 
-const draggingFiles = event => {
-	return Array.from(event.dataTransfer.types).includes("Files");
+type DnDEventListener = (param: DnDEventListenerParam) => void;
+
+type DnDEventListenerParam = {
+	mode: UploadCollectionDnDOverlayMode,
 };
 
-const eventProvider = new EventProvider();
+const draggingFiles = (event: DragEvent) => {
+	return event.dataTransfer && Array.from(event.dataTransfer.types).includes("Files");
+};
+
+const eventProvider = new EventProvider<DnDEventListenerParam, void>();
 const EVENT = "UploadCollectionBodyDndEvent";
-let lastDragEnter = null;
+let lastDragEnter: HTMLElement | null = null;
 let globalHandlersAttached = false;
 
-const ondragenter = event => {
+const ondragenter = (event: DragEvent) => {
 	if (!draggingFiles(event)) {
 		return;
 	}
 
-	lastDragEnter = event.target;
+	lastDragEnter = event.target as HTMLElement;
 	eventProvider.fireEvent(EVENT, { mode: UploadCollectionDnDOverlayMode.Drag });
 };
 
-const ondragleave = event => {
+const ondragleave = (event: DragEvent) => {
 	if (lastDragEnter === event.target) {
 		eventProvider.fireEvent(EVENT, { mode: UploadCollectionDnDOverlayMode.None });
 	}
 };
 
-const ondrop = event => {
+const ondrop = () => {
 	eventProvider.fireEvent(EVENT, { mode: UploadCollectionDnDOverlayMode.None });
 };
 
-const ondragover = event => {
+const ondragover = (event: DragEvent) => {
 	event.preventDefault();
 };
 
@@ -54,7 +60,7 @@ const detachGlobalHandlers = () => {
 	globalHandlersAttached = false;
 };
 
-const attachBodyDnDHandler = handler => {
+const attachBodyDnDHandler = (handler: DnDEventListener) => {
 	eventProvider.attachEvent(EVENT, handler);
 
 	if (!globalHandlersAttached) {
@@ -63,7 +69,7 @@ const attachBodyDnDHandler = handler => {
 	}
 };
 
-const detachBodyDnDHandler = handler => {
+const detachBodyDnDHandler = (handler: DnDEventListener) => {
 	eventProvider.detachEvent(EVENT, handler);
 
 	if (!eventProvider.hasListeners(EVENT)) {
@@ -75,4 +81,9 @@ export {
 	attachBodyDnDHandler,
 	detachBodyDnDHandler,
 	draggingFiles,
+};
+
+export type {
+	DnDEventListener,
+	DnDEventListenerParam,
 };
