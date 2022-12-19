@@ -21,7 +21,6 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import ButtonDesign from "./types/ButtonDesign.js";
-// @ts-ignore: remove comment when Button ts is available
 import Button from "./Button.js";
 
 import {
@@ -394,14 +393,14 @@ class SplitButton extends UI5Element {
 		return this.textContent;
 	}
 
-	get textButton(): Button {
+	get textButton(): Button | undefined {
 		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector(".ui5-split-text-button") as Button;
+		return domRef && domRef.querySelector<Button>(".ui5-split-text-button")!;
 	}
 
-	get arrowButton(): Button {
+	get arrowButton(): Button | undefined {
 		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector(".ui5-split-arrow-button") as Button;
+		return domRef && domRef.querySelector<Button>(".ui5-split-arrow-button")!;
 	}
 
 	get accessibilityInfo() {
