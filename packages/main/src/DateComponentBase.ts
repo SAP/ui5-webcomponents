@@ -3,7 +3,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getCalendarType } from "@ui5/webcomponents-base/dist/config/CalendarType.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -37,7 +38,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	primaryCalendarType!: CalendarType;
+	primaryCalendarType?: CalendarType;
 
 	/**
 	 * Defines the secondary calendar type.
@@ -49,7 +50,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	secondaryCalendarType!: CalendarType;
+	secondaryCalendarType?: CalendarType;
 
 	/**
 	 * Determines the format, displayed in the input field.
@@ -102,11 +103,19 @@ class DateComponentBase extends UI5Element {
 	}
 
 	get _minDate() {
-		return this.minDate && this.getFormat().parse(this.minDate, false, false) ? this._getCalendarDateFromString(this.minDate) : getMinCalendarDate(this._primaryCalendarType);
+		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
+		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
+		const utc = undefined as unknown as boolean;
+		const strict = undefined as unknown as boolean;
+		return this.minDate && this.getFormat().parse(this.minDate, utc, strict) ? this._getCalendarDateFromString(this.minDate)! : getMinCalendarDate(this._primaryCalendarType);
 	}
 
 	get _maxDate() {
-		return this.maxDate && this.getFormat().parse(this.maxDate, false, false) ? this._getCalendarDateFromString(this.maxDate) : getMaxCalendarDate(this._primaryCalendarType);
+		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
+		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
+		const utc = undefined as unknown as boolean;
+		const strict = undefined as unknown as boolean;
+		return this.maxDate && this.getFormat().parse(this.maxDate, utc, strict) ? this._getCalendarDateFromString(this.maxDate)! : getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	get _formatPattern() {
@@ -118,7 +127,11 @@ class DateComponentBase extends UI5Element {
 	}
 
 	_getCalendarDateFromString(value: string) {
-		const jsDate = this.getFormat().parse(value, false, false) as Date;
+		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
+		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
+		const utc = undefined as unknown as boolean;
+		const strict = undefined as unknown as boolean;
+		const jsDate = this.getFormat().parse(value, utc, strict) as Date;
 		if (jsDate) {
 			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
 		}

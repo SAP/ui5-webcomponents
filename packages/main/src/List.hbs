@@ -2,6 +2,14 @@
 	class="{{classes.root}}"
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
+	@ui5-_press={{onItemPress}}
+	@ui5-close={{onItemClose}}
+	@ui5-toggle={{onItemToggle}}
+	@ui5-_focused={{onItemFocused}}
+	@ui5-_forward-after={{onForwardAfter}}
+	@ui5-_forward-before={{onForwardBefore}}
+	@ui5-_selection-requested={{onSelectionRequested}}
+	@ui5-_focus-requested={{onFocusRequested}}
 >
 	<div class="ui5-list-scroll-container">
 		{{! header}}

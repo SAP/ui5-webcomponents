@@ -378,7 +378,7 @@ describe("List Tests", () => {
 		];
 		const texts = await getResourceBundleTexts({ keys, id: "justList" });
 
-		assert.strictEqual(await justList.getProperty("ariaLabelModeText"), null, "aria-label mode message is correct");
+		assert.strictEqual(await justList.getProperty("ariaLabelModeText"), "", "aria-label mode message is correct");
 		assert.strictEqual(await listDelete.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_DELETABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listMultiSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");
