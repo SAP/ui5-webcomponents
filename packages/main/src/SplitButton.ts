@@ -253,7 +253,7 @@ class SplitButton extends UI5Element {
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
 	 * @type {Node[]}
-	 * @name sap.ui.webc.main.SplitButton.prototype.text
+	 * @name sap.ui.webc.main.SplitButton.prototype.default
 	 * @slot
 	 * @public
 	 */
@@ -362,7 +362,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_fireClick(e?: Event) {
-		e && e.stopPropagation();
+		e?.stopPropagation();
 		if (!this._shiftOrEscapePressed) {
 			this.fireEvent("click");
 		}
@@ -370,7 +370,7 @@ class SplitButton extends UI5Element {
 	}
 
 	_fireArrowClick(e?: Event) {
-		e && e.stopPropagation();
+		e?.stopPropagation();
 		this.fireEvent("arrow-click");
 	}
 
@@ -393,14 +393,12 @@ class SplitButton extends UI5Element {
 		return this.textContent;
 	}
 
-	get textButton(): Button | undefined {
-		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector<Button>(".ui5-split-text-button")!;
+	get textButton() {
+		return this.getDomRef()?.querySelector<Button>(".ui5-split-text-button");
 	}
 
-	get arrowButton(): Button | undefined {
-		const domRef = this.getDomRef();
-		return domRef && domRef.querySelector<Button>(".ui5-split-arrow-button")!;
+	get arrowButton() {
+		return this.getDomRef()?.querySelector<Button>(".ui5-split-arrow-button");
 	}
 
 	get accessibilityInfo() {
