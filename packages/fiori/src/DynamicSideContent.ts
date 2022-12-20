@@ -1,4 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -13,6 +20,7 @@ import DynamicSideContentCss from "./generated/themes/DynamicSideContent.css.js"
 // Texts
 import {
 	DSC_SIDE_ARIA_LABEL,
+// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Breakpoint-related constants
@@ -20,213 +28,6 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
 	M_L_BREAKPOINT = 1024, // Breakpoint between M and L screen sizes
 	L_XL_BREAKPOINT = 1440, // Breakpoint between L and XL screen sizes
 	MINIMUM_WIDTH_BREAKPOINT = 960; // Minimum width of the control where main and side contents are side by side
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-dynamic-side-content",
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.fiori.DynamicSideContent.prototype */ {
-
-		/**
-		 * Defines the visibility of the main content.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 *
-		 */
-		 hideMainContent: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the visibility of the side content.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 *
-		 */
-		hideSideContent: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines whether the side content is positioned before the main content (left side
-		 * in LTR mode), or after the the main content (right side in LTR mode).
-		 *
-		 * <br><br>
-		 * <b>The available values are:</b>
-		 *
-		 * <ul>
-		 * <li><code>Start</code></li>
-		 * <li><code>End</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.SideContentPosition}
-		 * @defaultvalue "End"
-		 * @public
-		 *
-		 */
-		 sideContentPosition: {
-			type: SideContentPosition,
-			defaultValue: SideContentPosition.End,
-		},
-
-		/**
-		 * Defines on which breakpoints the side content is visible.
-		 *
-		 * <br><br>
-		 * <b>The available values are:</b>
-		 *
-		 * <ul>
-		 * <li><code>AlwaysShow</code></li>
-		 * <li><code>ShowAboveL</code></li>
-		 * <li><code>ShowAboveM</code></li>
-		 * <li><code>ShowAboveS</code></li>
-		 * <li><code>NeverShow</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.SideContentVisibility}
-		 * @defaultvalue "ShowAboveS"
-		 * @public
-		 *
-		 */
-		sideContentVisibility: {
-			type: SideContentVisibility,
-			defaultValue: SideContentVisibility.ShowAboveS,
-		},
-
-		/**
-		 * Defines on which breakpoints the side content falls down below the main content.
-		 *
-		 * <br><br>
-		 * <b>The available values are:</b>
-		 *
-		 * <ul>
-		 * <li><code>BelowXL</code></li>
-		 * <li><code>BelowL</code></li>
-		 * <li><code>BelowM</code></li>
-		 * <li><code>OnMinimumWidth</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.SideContentFallDown}
-		 * @defaultvalue "OnMinimumWidth"
-		 * @public
-		 *
-		 */
-		sideContentFallDown: {
-			type: SideContentFallDown,
-			defaultValue: SideContentFallDown.OnMinimumWidth,
-		},
-
-		/**
-		 * Defines whether the component is in equal split mode. In this mode, the side and
-		 * the main content take 50:50 percent of the container on all screen sizes
-		 * except for phone, where the main and side contents are switching visibility
-		 * using the toggle method.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 *
-		 */
-		equalSplit: {
-			type: Boolean,
-		},
-
-		/**
- 		 * @private
-		 */
-		_mcSpan: {
-			type: String,
-			defaultValue: "0",
-			noAttribute: true,
-		},
-
-		/**
- 		 * @private
-		 */
-		 _scSpan: {
-			type: String,
-			defaultValue: "0",
-			noAttribute: true,
-		},
-
-		/**
- 		 * @private
-		 */
-		 _toggled: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		/**
- 		 * @private
-		 */
-		 _currentBreakpoint: {
-			type: String,
-			noAttribute: true,
-		},
-
-	},
-	slots: /** @lends sap.ui.webc.fiori.DynamicSideContent.prototype */ {
-
-		/**
-		 * Defines the main content.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the side content.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		 "sideContent": {
-			type: HTMLElement,
-		},
-
-	},
-	events: /** @lends sap.ui.webc.fiori.DynamicSideContent.prototype */ {
-
-		/**
-		 * Fires when the current breakpoint has been changed.
-		 * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
-		 * @param {string} currentBreakpoint the current breakpoint.
-		 * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
-		 * @param {boolean} mainContentVisible visibility of the main content.
-		 * @param {boolean} sideContentVisible visibility of the side content.
-		 * @public
-		 */
-		"layout-change": {
-			detail: {
-				currentBreakpoint: {
-					type: String,
-				},
-				previousBreakpoint: {
-					type: String,
-				},
-				mainContentVisible: {
-					type: Boolean,
-				},
-				sideContentVisible: {
-					type: Boolean,
-				},
-			},
-		},
-
-	},
-};
 
 /**
  * @class
@@ -305,15 +106,190 @@ const metadata = {
  * @public
  * @since 1.1.0
  */
+@customElement("ui5-dynamic-side-content")
+/**
+ * Fires when the current breakpoint has been changed.
+ * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
+ * @param {string} currentBreakpoint the current breakpoint.
+ * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
+ * @param {boolean} mainContentVisible visibility of the main content.
+ * @param {boolean} sideContentVisible visibility of the side content.
+ * @public
+ */
+@event("layout-change", {
+	detail: {
+		currentBreakpoint: {
+			type: String,
+		},
+		previousBreakpoint: {
+			type: String,
+		},
+		mainContentVisible: {
+			type: Boolean,
+		},
+		sideContentVisible: {
+			type: Boolean,
+		},
+	},
+})
 class DynamicSideContent extends UI5Element {
+	/**
+	 * Defines the visibility of the main content.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.hideMainContent
+	 * @defaultvalue false
+	 * @public
+	 *
+	 */
+	@property({ type: Boolean })
+	hideMainContent!: boolean;
+
+	/**
+	 * Defines the visibility of the side content.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.hideSideContent
+	 * @defaultvalue false
+	 * @public
+	 *
+	 */
+	@property({ type: Boolean })
+	hideSideContent!: boolean;
+
+	/**
+	 * Defines whether the side content is positioned before the main content (left side
+	 * in LTR mode), or after the the main content (right side in LTR mode).
+	 *
+	 * <br><br>
+	 * <b>The available values are:</b>
+	 *
+	 * <ul>
+	 * <li><code>Start</code></li>
+	 * <li><code>End</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.SideContentPosition}
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentPosition
+	 * @defaultvalue "End"
+	 * @public
+	 *
+	 */
+	@property({ type: SideContentPosition, defaultValue: SideContentPosition.End })
+	sideContentPosition!: SideContentPosition;
+
+	/**
+	 * Defines on which breakpoints the side content is visible.
+	 *
+	 * <br><br>
+	 * <b>The available values are:</b>
+	 *
+	 * <ul>
+	 * <li><code>AlwaysShow</code></li>
+	 * <li><code>ShowAboveL</code></li>
+	 * <li><code>ShowAboveM</code></li>
+	 * <li><code>ShowAboveS</code></li>
+	 * <li><code>NeverShow</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.SideContentVisibility}
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentVisibility
+	 * @defaultvalue "ShowAboveS"
+	 * @public
+	 *
+	 */
+	@property({ type: SideContentVisibility, defaultValue: SideContentVisibility.ShowAboveS })
+	sideContentVisibility!: SideContentVisibility;
+
+	/**
+	 * Defines on which breakpoints the side content falls down below the main content.
+	 *
+	 * <br><br>
+	 * <b>The available values are:</b>
+	 *
+	 * <ul>
+	 * <li><code>BelowXL</code></li>
+	 * <li><code>BelowL</code></li>
+	 * <li><code>BelowM</code></li>
+	 * <li><code>OnMinimumWidth</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.SideContentFallDown}
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContentFallDown
+	 * @defaultvalue "OnMinimumWidth"
+	 * @public
+	 *
+	 */
+	@property({ type: SideContentFallDown, defaultValue: SideContentFallDown.OnMinimumWidth })
+	sideContentFallDown!: SideContentFallDown;
+
+	/**
+	 * Defines whether the component is in equal split mode. In this mode, the side and
+	 * the main content take 50:50 percent of the container on all screen sizes
+	 * except for phone, where the main and side contents are switching visibility
+	 * using the toggle method.
+	 *
+	 * @type {boolean}]
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.equalSplit
+	 * @defaultvalue false
+	 * @public
+	 *
+	 */
+	@property({ type: Boolean })
+	equalSplit!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ defaultValue: "0", noAttribute: true })
+	_mcSpan!: string;
+
+	/**
+	 * @private
+	 */
+	@property({ defaultValue: "0", noAttribute: true })
+	_scSpan!: string;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_toggled!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_currentBreakpoint!: string;
+
+	/**
+	 * Defines the main content.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.default
+	 * @slot
+	 * @public
+	 */
+
+	/**
+	 * Defines the side content.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.sideContent
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	sideContent!: Array<HTMLElement>;
+
 	constructor() {
 		super();
 		this._handleResizeBound = this.handleResize.bind(this);
 	}
 
-	static get metadata() {
-		return metadata;
-	}
+	_handleResizeBound: () => void;
+
+	static i18nBundle: I18nBundle;
 
 	static get styles() {
 		return DynamicSideContentCss;
@@ -347,17 +323,17 @@ class DynamicSideContent extends UI5Element {
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
 	 * @public
 	 */
-	 toggleContents() {
+	toggleContents() {
 		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
 			this._toggled = !this._toggled;
 		}
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		const gridPrefix = "ui5-dsc-span",
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
 			scSpan = this._toggled ? this._mcSpan : this._scSpan,
-			classes = {
+			classes: ClassMap = {
 				main: {
 					"ui5-dsc-main": true,
 				},
@@ -393,7 +369,7 @@ class DynamicSideContent extends UI5Element {
 
 	get accInfo() {
 		return {
-			"label": DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
+			"label": DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL as I18nText),
 		};
 	}
 
@@ -446,7 +422,7 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	get containerWidth() {
-		return this.parentElement.clientWidth;
+		return (this.parentElement as HTMLElement).clientWidth;
 	}
 
 	get breakpoint() {
@@ -474,9 +450,9 @@ class DynamicSideContent extends UI5Element {
 	}
 
 	_resizeContents() {
-		let mainSize,
-			sideSize,
-			sideVisible;
+		let mainSize!: string,
+			sideSize!: string,
+			sideVisible!: boolean;
 
 		// initial set contents sizes
 		switch (this.breakpoint) {
@@ -554,7 +530,7 @@ class DynamicSideContent extends UI5Element {
 		this._setSpanSizes(mainSize, sideSize);
 	}
 
-	_setSpanSizes(mainSize, sideSize) {
+	_setSpanSizes(mainSize: string, sideSize: string) {
 		this._mcSpan = mainSize;
 		this._scSpan = sideSize;
 		if (this.breakpoint !== this.sizeS) {

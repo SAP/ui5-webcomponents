@@ -10,6 +10,8 @@ const addOpenedPopup = (instance, parentPopovers = []) => {
 		});
 	}
 
+	_updateTopModalPopup();
+
 	if (openedRegistry.length === 1) {
 		attachGlobalListener();
 	}
@@ -19,6 +21,8 @@ const removeOpenedPopup = instance => {
 	openedRegistry = openedRegistry.filter(el => {
 		return el.instance !== instance;
 	});
+
+	_updateTopModalPopup();
 
 	if (!openedRegistry.length) {
 		detachGlobalListener();
@@ -45,6 +49,22 @@ const attachGlobalListener = () => {
 
 const detachGlobalListener = () => {
 	document.removeEventListener("keydown", _keydownListener);
+};
+
+const _updateTopModalPopup = event => {
+	let popup;
+	let hasModal = false;
+
+	for (let i = openedRegistry.length - 1; i >= 0; i--) {
+		popup = openedRegistry[i].instance;
+
+		if (!hasModal && popup.isModal) {
+			popup.isTopModalPopup = true;
+			hasModal = true;
+		} else {
+			popup.isTopModalPopup = false;
+		}
+	}
 };
 
 export { addOpenedPopup, removeOpenedPopup, getOpenedPopups };

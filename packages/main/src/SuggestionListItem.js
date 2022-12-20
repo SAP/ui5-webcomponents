@@ -21,6 +21,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 		"default": {
+			type: Node,
 			propertyName: "titleText",
 		},
 	},
