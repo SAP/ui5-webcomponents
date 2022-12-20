@@ -266,12 +266,10 @@ class DynamicSideContent extends UI5Element {
 	 * Defines the main content.
 	 *
 	 * @type {HTMLElement[]}
-	 * sap.ui.webc.fiori.DynamicSideContent.prototype.default
+	 * @name sap.ui.webc.fiori.DynamicSideContent.prototype.default
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
 
 	/**
 	 * Defines the side content.
@@ -281,7 +279,7 @@ class DynamicSideContent extends UI5Element {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	sideContent!: Array<HTMLElement>;
 
 	constructor() {
@@ -325,7 +323,7 @@ class DynamicSideContent extends UI5Element {
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
 	 * @public
 	 */
-	 toggleContents() {
+	toggleContents() {
 		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
 			this._toggled = !this._toggled;
 		}
@@ -335,14 +333,14 @@ class DynamicSideContent extends UI5Element {
 		const gridPrefix = "ui5-dsc-span",
 			mcSpan = this._toggled ? this._scSpan : this._mcSpan,
 			scSpan = this._toggled ? this._mcSpan : this._scSpan,
-			classes = {
+			classes: ClassMap = {
 				main: {
 					"ui5-dsc-main": true,
 				},
 				side: {
 					"ui5-dsc-side": true,
 				},
-			} as ClassMap;
+			};
 
 		classes.main[`${gridPrefix}-${mcSpan}`] = true;
 		classes.side[`${gridPrefix}-${scSpan}`] = true;
