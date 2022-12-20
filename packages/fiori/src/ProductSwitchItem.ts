@@ -157,7 +157,7 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	@property({ defaultValue: "-1", noAttribute: true })
 	_tabIndex!: string;
 
-	_deactivate!: () => void;
+	_deactivate: () => void;
 
 	static get render() {
 		return litRender;

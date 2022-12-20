@@ -160,7 +160,7 @@ class ResponsivePopover extends Popover {
 	 * @returns {boolean}
 	 */
 	isOpen() {
-		return isPhone() ? this._dialog.isOpen() : super.isOpen();
+		return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();
 	}
 
 	get _dialog() {
@@ -203,6 +203,14 @@ class ResponsivePopover extends Popover {
 		const type = event.type.replace("ui5-", "");
 
 		this.fireEvent(type, event.detail);
+	}
+
+	get isModal() {
+		if (!isPhone()) {
+			return super.isModal;
+		}
+
+		return this._dialog.isModal;
 	}
 
 	static async onDefine() {

@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import isDefaultSlotProvided from "@ui5/webcomponents-base/dist/util/isDefaultSlotProvided.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
@@ -62,6 +62,7 @@ const metadata = {
 		 */
 		"default": {
 			type: Node,
+			propertyName: "text",
 		},
 
 		/**
@@ -130,7 +131,7 @@ class Badge extends UI5Element {
 	}
 
 	get hasText() {
-		return isDefaultSlotProvided(this);
+		return willShowContent(this.text);
 	}
 
 	get hasIcon() {

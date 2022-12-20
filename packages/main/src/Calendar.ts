@@ -1,3 +1,8 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
@@ -10,11 +15,15 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
+import type CalendarDateComponentT from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
+import type { SelectedDatesChangeEventDetail } from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
+import type { SelectedMonthChangeEventDetail } from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
+import type { SelectedYearChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 // Default calendar for bundling
@@ -26,111 +35,15 @@ import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 // Styles
 import calendarCSS from "./generated/themes/Calendar.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-calendar",
-	fastNavigation: true,
-	properties: /** @lends sap.ui.webc.main.Calendar.prototype */ {
-		/**
-		 * Defines the type of selection used in the calendar component.
-		 * Accepted property values are:<br>
-		 * <ul>
-		 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
-		 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
-		 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
-		 * </ul>
-		 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
-		 * @defaultvalue "Single"
-		 * @public
-		 */
-		selectionMode: {
-			type: CalendarSelectionMode,
-			defaultValue: CalendarSelectionMode.Single,
-		},
-
-		/**
-		 * Defines the visibility of the week numbers column.
-		 * <br><br>
-		 *
-		 * <b>Note:</b> For calendars other than Gregorian,
-		 * the week numbers are not displayed regardless of what is set.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		hideWeekNumbers: {
-			type: Boolean,
-		},
-
-		/**
-		 * Which picker is currently visible to the user: day/month/year
-		 */
-		_currentPicker: {
-			type: String,
-			defaultValue: "day",
-		},
-
-		_previousButtonDisabled: {
-			type: Boolean,
-		},
-
-		_nextButtonDisabled: {
-			type: Boolean,
-		},
-
-		_headerMonthButtonText: {
-			type: String,
-		},
-
-		_headerYearButtonText: {
-			type: String,
-		},
-
-		_headerYearButtonTextSecType: {
-			type: String,
-		},
-	},
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.main.Calendar.prototype */ {
-		/**
-		 * Defines the selected date or dates (depending on the <code>selectionMode</code> property) for this calendar as instances of <code>ui5-date</code>
-		 *
-		 * @type {sap.ui.webc.main.ICalendarDate[]}
-		 * @slot dates
-		 * @public
-		 */
-		"default": {
-			propertyName: "dates",
-			type: HTMLElement,
-			invalidateOnChildChange: true,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.Calendar.prototype */ {
-		/**
-		 * Fired when the selected dates change.
-		 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
-		 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
-		 *
-		 * @event sap.ui.webc.main.Calendar#selected-dates-change
-		 * @allowPreventDefault
-		 * @param {Array} values The selected dates
-		 * @param {Array} dates The selected dates as UTC timestamps
-		 * @public
-		 */
-		"selected-dates-change": {
-			detail: {
-				dates: { type: Array },
-				values: { type: Array },
-			},
-		},
-
-		"show-month-press": {},
-		"show-year-press": {},
-	},
-};
+interface ICalendarPicker {
+	_showPreviousPage: () => void,
+	_showNextPage: () => void,
+	_hasPreviousPage: () => boolean,
+	_hasNextPage: () => boolean,
+	_autoFocus?: boolean,
+	_firstYear?: number,
+	_lastYear?: number,
+}
 
 /**
  * @class
@@ -246,10 +159,95 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.11
  */
+@customElement("ui5-calendar")
+@fastNavigation
+/**
+ * Fired when the selected dates change.
+ * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
+ * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
+ *
+ * @event sap.ui.webc.main.Calendar#selected-dates-change
+ * @allowPreventDefault
+ * @param {Array} values The selected dates
+ * @param {Array} dates The selected dates as UTC timestamps
+ * @public
+ */
+@event("selected-dates-change", {
+	detail: {
+		dates: { type: Array },
+		values: { type: Array },
+	},
+})
+
+@event("show-month-press")
+@event("show-year-press")
 class Calendar extends CalendarPart {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the type of selection used in the calendar component.
+	 * Accepted property values are:<br>
+	 * <ul>
+	 * <li><code>CalendarSelectionMode.Single</code> - enables a single date selection.(default value)</li>
+	 * <li><code>CalendarSelectionMode.Range</code> - enables selection of a date range.</li>
+	 * <li><code>CalendarSelectionMode.Multiple</code> - enables selection of multiple dates.</li>
+	 * </ul>
+	 * @type {sap.ui.webc.main.types.CalendarSelectionMode}
+	 * @name sap.ui.webc.main.Calendar.prototype.selectionMode
+	 * @defaultvalue "Single"
+	 * @public
+	 */
+	@property({
+		type: CalendarSelectionMode,
+		defaultValue: CalendarSelectionMode.Single,
+	})
+	selectionMode!: CalendarSelectionMode;
+
+	/**
+	 * Defines the visibility of the week numbers column.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> For calendars other than Gregorian,
+	 * the week numbers are not displayed regardless of what is set.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Calendar.prototype.hideWeekNumbers
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideWeekNumbers!: boolean;
+
+	/**
+	 * Which picker is currently visible to the user: day/month/year
+	 */
+	@property({ defaultValue: "day" })
+	_currentPicker!: string;
+
+	@property({ type: Boolean })
+	_previousButtonDisabled!: boolean;
+
+	@property({ type: Boolean })
+	_nextButtonDisabled!: boolean;
+
+	@property()
+	_headerMonthButtonText!: string;
+
+	@property()
+	_headerYearButtonText!: string;
+
+	@property()
+	_headerYearButtonTextSecType!: string;
+
+	/**
+	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
+	 * for this calendar as instances of <code>ui5-date</code>.
+	 *
+	 * @type {sap.ui.webc.main.ICalendarDate[]}
+	 * @name sap.ui.webc.main.Calendar.prototype.default
+	 * @slot dates
+	 * @public
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
+	dates!: Array<CalendarDateComponentT>;
 
 	static get template() {
 		return CalendarTemplate;
@@ -262,17 +260,20 @@ class Calendar extends CalendarPart {
 	/**
 	 * @private
 	 */
-	get _selectedDatesTimestamps() {
+	get _selectedDatesTimestamps(): Array<number> {
 		return this.dates.map(date => {
 			const value = date.value;
-			return value && !!this.getFormat().parse(value) ? this._getTimeStampFromString(value) / 1000 : undefined;
-		}).filter(date => !!date);
+			// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
+			// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
+			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
+			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
+		}).filter((date): date is number => !!date);
 	}
 
 	/**
 	 * @private
 	 */
-	_setSelectedDates(selectedDates) {
+	_setSelectedDates(selectedDates: Array<number>) {
 		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
@@ -283,7 +284,7 @@ class Calendar extends CalendarPart {
 
 		// Create tags for the selected dates that don't already exist in DOM
 		selectedValues.filter(value => !valuesInDOM.includes(value)).forEach(value => {
-			const dateElement = document.createElement(CalendarDateComponent.default.getMetadata().getTag());
+			const dateElement = document.createElement(CalendarDateComponent.default.getMetadata().getTag()) as CalendarDateComponentT;
 			dateElement.value = value;
 			this.appendChild(dateElement);
 		});
@@ -301,8 +302,8 @@ class Calendar extends CalendarPart {
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 			const rangeEnd = new CalendarDate(this._calendarDate, this._primaryCalendarType);
-			rangeStart.setYear(this._currentPickerDOM._firstYear);
-			rangeEnd.setYear(this._currentPickerDOM._lastYear);
+			rangeStart.setYear(this._currentPickerDOM._firstYear!);
+			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
 
 			this._headerYearButtonText = `${yearFormat.format(rangeStart.toLocalJSDate(), true)} - ${yearFormat.format(rangeEnd.toLocalJSDate(), true)}`;
 		} else {
@@ -315,23 +316,24 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	onHeaderShowMonthPress(event) {
+	onHeaderShowMonthPress(e: CustomEvent) {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "month";
-		this.fireEvent("show-month-press", event);
+		this.fireEvent("show-month-press", e);
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	onHeaderShowYearPress(event) {
+	onHeaderShowYearPress(e: CustomEvent) {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
-		this.fireEvent("show-year-press", event);
+		this.fireEvent("show-year-press", e);
 	}
 
 	get _currentPickerDOM() {
-		return this.shadowRoot.querySelector(`[ui5-${this._currentPicker}picker]`);
+		// Calendar's shadowRoot and all the pickers are always present - the "!" is safe to be used.
+		return this.shadowRoot!.querySelector(`[ui5-${this._currentPicker}picker]`)! as unknown as ICalendarPicker;
 	}
 
 	/**
@@ -349,15 +351,13 @@ class Calendar extends CalendarPart {
 	}
 
 	_setSecondaryCalendarTypeButtonText() {
-		const localeData = getCachedLocaleDataInstance(getLocale());
 		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-		this._headerMonthButtonTextInSexType = localeData.getMonthsStandAlone("wide", this.secondaryCalendarType)[this._calendarDate.getMonth()];
 
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
 			const rangeEnd = new CalendarDate(this._calendarDate, this._primaryCalendarType);
-			rangeStart.setYear(this._currentPickerDOM._firstYear);
-			rangeEnd.setYear(this._currentPickerDOM._lastYear);
+			rangeStart.setYear(this._currentPickerDOM._firstYear!);
+			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
 
 			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeStart.valueOf() / 1000, true)
 				.firstDate;
@@ -408,9 +408,9 @@ class Calendar extends CalendarPart {
 		return this._currentPicker !== "year";
 	}
 
-	onSelectedDatesChange(event) {
-		const timestamp = event.detail.timestamp;
-		const selectedDates = event.detail.dates;
+	onSelectedDatesChange(e: CustomEvent<SelectedDatesChangeEventDetail>) {
+		const timestamp = e.detail.timestamp;
+		const selectedDates = e.detail.dates;
 		const datesValues = selectedDates.map(ts => {
 			const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
@@ -423,28 +423,28 @@ class Calendar extends CalendarPart {
 		}
 	}
 
-	onSelectedMonthChange(event) {
-		this.timestamp = event.detail.timestamp;
+	onSelectedMonthChange(e: CustomEvent<SelectedMonthChangeEventDetail>) {
+		this.timestamp = e.detail.timestamp;
 		this._currentPicker = "day";
 		this._currentPickerDOM._autoFocus = true;
 	}
 
-	onSelectedYearChange(event) {
-		this.timestamp = event.detail.timestamp;
+	onSelectedYearChange(e: CustomEvent<SelectedYearChangeEventDetail>) {
+		this.timestamp = e.detail.timestamp;
 		this._currentPicker = "day";
 		this._currentPickerDOM._autoFocus = true;
 	}
 
-	onNavigate(event) {
-		this.timestamp = event.detail.timestamp;
+	onNavigate(e: CustomEvent) {
+		this.timestamp = e.detail.timestamp;
 	}
 
-	_onkeydown(event) {
-		if (isF4(event) && this._currentPicker !== "month") {
+	_onkeydown(e: KeyboardEvent) {
+		if (isF4(e) && this._currentPicker !== "month") {
 			this._currentPicker = "month";
 		}
 
-		if (isF4Shift(event) && this._currentPicker !== "year") {
+		if (isF4Shift(e) && this._currentPicker !== "year") {
 			this._currentPicker = "year";
 		}
 	}
@@ -454,7 +454,7 @@ class Calendar extends CalendarPart {
 	 * @protected
 	 * @deprecated
 	 */
-	get selectedDates() {
+	get selectedDates(): Array<number> {
 		return this._selectedDatesTimestamps;
 	}
 
@@ -462,9 +462,9 @@ class Calendar extends CalendarPart {
 	 * Creates instances of <code>ui5-date</code> inside this <code>ui5-calendar</code> with values, equal to the provided UTC timestamps
 	 * @protected
 	 * @deprecated
-	 * @param selectedDates Array of UTC timestamps
+	 * @param { Array<number> } selectedDates Array of UTC timestamps
 	 */
-	set selectedDates(selectedDates) {
+	set selectedDates(selectedDates: Array<number>) {
 		this._setSelectedDates(selectedDates);
 	}
 
@@ -482,3 +482,6 @@ class Calendar extends CalendarPart {
 Calendar.define();
 
 export default Calendar;
+export type {
+	ICalendarPicker,
+};

@@ -50,8 +50,8 @@
 	user-select: none;
 }
 
-:host(:not([active]):not([non-interactive]):not([_is-touch]):hover),
-:host(:not([hidden]).ui5_hovered) {
+:host(:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host(:not([hidden]):not([disabled]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
 	box-shadow: var(--sapContent_Interaction_Shadow);
 	border: 1px solid var(--sapButton_Hover_BorderColor);
@@ -98,7 +98,8 @@
 
 :host([disabled]) {
 	opacity: var(--sapContent_DisabledOpacity);
-	pointer-events: none;
+	pointer-events: unset;
+	cursor: default;
 }
 
 :host([has-icon]:not([icon-only])) .ui5-button-text{
@@ -161,8 +162,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):hover),
-:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
+:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Accept_Hover_Background);
 	border-color: var(--sapButton_Accept_Hover_BorderColor);
 	box-shadow: var(--sapContent_Positive_Shadow);
@@ -182,8 +183,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):hover),
-:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
+:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Reject_Hover_Background);
 	border-color: var(--sapButton_Reject_Hover_BorderColor);
 	box-shadow: var(--sapContent_Negative_Shadow);
@@ -203,8 +204,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):hover),
-:host([design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
+:host([design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Attention"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Attention_Hover_Background);
 	border-color: var(--sapButton_Attention_Hover_BorderColor);
 	color: var(--sapButton_Attention_Hover_TextColor);
@@ -226,8 +227,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):hover),
-:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
+:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Emphasized"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Emphasized_Hover_Background);
 	border-color: var(--sapButton_Emphasized_Hover_BorderColor);
 	border-width: var(--_ui5_button_emphasized_border_width);
@@ -253,8 +254,8 @@ bdi {
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
-:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):hover),
-:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]).ui5_hovered) {
+:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
+:host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Lite_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
 	box-shadow: var(--sapContent_Interaction_Shadow);

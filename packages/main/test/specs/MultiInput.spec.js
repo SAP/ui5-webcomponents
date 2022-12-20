@@ -372,6 +372,22 @@ describe("Keyboard handling", () => {
 		assert.equal(await secondToken.getProperty("text"), "bb", "The selected token should not be deleted.");
 	});
 
+	it ("Should focus the input when all tokens are deleted", async () => {
+		const input = await browser.$("#two-tokens");
+		const innerInput = await input.shadow$("input");
+
+		await input.setProperty("value", "");
+		await innerInput.click();
+		await browser.keys("ArrowLeft");
+		await browser.keys(["Shift", "ArrowLeft"]);
+		await browser.keys("Backspace");
+
+		let tokens = await input.$$("ui5-token");
+
+		assert.equal(tokens.length, 0, "should have no tokens");
+		assert.equal(await input.getProperty("focused"), true, "The input is focused");
+	});
+
 	it("should delete token on backspace", async () => {
 		const input = await browser.$("#two-tokens");
 		const innerInput = await input.shadow$("input");

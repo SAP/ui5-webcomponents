@@ -2,9 +2,9 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
 
 interface IFormElement extends UI5Element {
-	value: string,
-	name: string,
-	disabled: boolean,
+	value?: string,
+	name?: string,
+	disabled?: boolean,
 	required?: boolean,
 	multiple?: boolean,
 }
@@ -34,7 +34,7 @@ class FormSupport {
 			nativeInput.style.width = "1px";
 			nativeInput.style.bottom = "0";
 			nativeInput.setAttribute("tabindex", "-1");
-			nativeInput.required = element.required || false;
+			nativeInput.required = element.required!;
 			nativeInput.setAttribute("data-ui5-form-support", "");
 			nativeInput.setAttribute("aria-hidden", "true");
 
@@ -48,7 +48,7 @@ class FormSupport {
 		}
 
 		if (needsNativeInput) {
-			nativeInput.name = element.name;
+			nativeInput.name = element.name!;
 			(nativeInputUpdateCallback || copyDefaultProperties)(element, nativeInput);
 		}
 	}
@@ -90,12 +90,12 @@ class FormSupport {
 		}
 
 		if (needsNativeInput) {
-			nativeInput.name = element.name;
+			nativeInput.name = element.name!;
 			(nativeInputUpdateCallback || copyDefaultProperties)(element, nativeInput);
 		}
 	}
 
-	static triggerFormSubmit(element: UI5Element) {
+	static triggerFormSubmit(element: IFormElement) {
 		let currentElement = element.parentElement;
 		while (currentElement && currentElement.tagName.toLowerCase() !== "form") {
 			currentElement = currentElement.parentElement;
@@ -124,8 +124,8 @@ class FormSupport {
 }
 
 const copyDefaultProperties = (element: IFormElement, nativeInput: HTMLInputElement) => {
-	nativeInput.disabled = element.disabled;
-	nativeInput.value = element.value;
+	nativeInput.disabled = element.disabled!;
+	nativeInput.value = element.value!;
 };
 
 // Add form support to the global features registry so that Web Components can find and use it
