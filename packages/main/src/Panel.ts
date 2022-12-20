@@ -15,7 +15,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
-// @ts-ignore
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import TitleLevel from "./types/TitleLevel.js";
@@ -212,9 +211,6 @@ class Panel extends UI5Element {
 	@property({ type: Boolean })
 	_hasHeader!: boolean;
 
-	@property({ type: Object })
-	_header!: object;
-
 	@property({ type: Boolean, noAttribute: true })
 	_contentExpanded!: boolean;
 
@@ -231,7 +227,7 @@ class Panel extends UI5Element {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	header!: Array<HTMLElement>;
 
 	/**
@@ -243,8 +239,6 @@ class Panel extends UI5Element {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
-	content!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
 
@@ -260,12 +254,6 @@ class Panel extends UI5Element {
 		return panelCss;
 	}
 
-	constructor() {
-		super();
-
-		this._header = {};
-	}
-
 	onBeforeRendering() {
 		// If the animation is running, it will set the content expanded state at the end
 		if (!this._animationRunning) {
@@ -275,10 +263,10 @@ class Panel extends UI5Element {
 		this._hasHeader = !!this.header.length;
 	}
 
-	shouldToggle(node: HTMLElement): boolean {
+	shouldToggle(element: HTMLElement): boolean {
 		const customContent = this.header.length;
 		if (customContent) {
-			return node.classList.contains("ui5-panel-header-button");
+			return element.classList.contains("ui5-panel-header-button");
 		}
 		return true;
 	}
@@ -439,10 +427,6 @@ class Panel extends UI5Element {
 
 	get nonFocusableButton() {
 		return !this.header.length;
-	}
-
-	get shouldRenderH1() {
-		return !this.header.length && (this.headerText || !this.fixed);
 	}
 
 	get styles() {
