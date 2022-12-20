@@ -1,8 +1,10 @@
-import { StyleData } from "../types.js";
+import { ComponentStylesData, StyleData } from "../types.js";
 
-const getStylesString = (styles: Array<StyleData> | StyleData) => {
+const MAX_DEPTH_INHERITED_CLASSES = 10; // TypeScript complains about Infinity and big numbers
+
+const getStylesString = (styles: ComponentStylesData) => {
 	if (Array.isArray(styles)) {
-		return styles.filter(style => !!style).flat().map((style: StyleData) => {
+		return (styles.filter(style => !!style).flat(MAX_DEPTH_INHERITED_CLASSES) as Array<StyleData>).map((style: StyleData) => {
 			return typeof style === "string" ? style : style.content;
 		}).join(" ");
 	}

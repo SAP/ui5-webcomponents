@@ -9,6 +9,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -309,7 +310,7 @@ class Button extends UI5Element implements IFormElement {
 
 	_deactivate: () => void;
 
-	_ontouchstart: { handleEvent: (e: TouchEvent) => void, passive: boolean };
+	_ontouchstart: PassiveEventListenerObject;
 
 	static get styles() {
 		return buttonCss;

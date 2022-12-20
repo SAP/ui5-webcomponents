@@ -7,7 +7,7 @@ import { Slot } from "../UI5ElementMetadata.js";
  * @param { Slot } slotData
  * @returns { PropertyDecorator }
  */
-const slot = (slotData: Slot): PropertyDecorator => {
+const slot = (slotData?: Slot): PropertyDecorator => {
 	return (target: any, slotKey: string | symbol) => {
 		const ctor = target.constructor as typeof UI5Element;
 
@@ -22,11 +22,16 @@ const slot = (slotData: Slot): PropertyDecorator => {
 
 		const slotMetadata = decoratorMetadata.slots;
 
-		if (slotData.default && slotMetadata.default) {
+		if (slotData?.default && slotMetadata.default) {
 			throw new Error("Only one slot can be the default slot.");
 		}
 
-		const key = slotData.default ? "default" : slotKey as string;
+		const key = slotData?.default ? "default" : slotKey as string;
+		slotData = slotData || { type: HTMLElement };
+
+		if (!slotData.type) {
+			slotData.type = HTMLElement;
+		}
 
 		if (!slotMetadata[key]) {
 			slotMetadata[key] = slotData;
