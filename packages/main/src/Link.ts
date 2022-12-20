@@ -233,7 +233,7 @@ class Link extends UI5Element {
 	accessibilityAttributes!: object;
 
 	@property({ noAttribute: true })
-	_rel?: string;
+	_rel: string | undefined;
 
 	@property({ noAttribute: true })
 	_tabIndex!: string;
