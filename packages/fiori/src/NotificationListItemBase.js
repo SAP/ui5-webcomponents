@@ -127,10 +127,15 @@ const metadata = {
 		/**
 		 * Fired when the <code>Close</code> button is pressed.
 		 *
-		 * @event
+		 * @event sap.ui.webc.fiori.NotificationListItemBase#close
+		 * @param {HTMLElement} item the closed item.
 		 * @public
 		 */
-		close: {},
+		close: {
+			detail: {
+				item: HTMLElement,
+			},
+		},
 	},
 };
 

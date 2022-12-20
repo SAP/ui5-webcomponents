@@ -1,3 +1,7 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type LocaleT from "sap/ui/core/Locale";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import {
 	isEnter,
@@ -19,56 +23,38 @@ import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/d
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CalendarPart from "./CalendarPart.js";
+import type { ICalendarPicker } from "./Calendar.js";
 import {
 	YEAR_PICKER_DESCRIPTION,
+// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
+
+// Template
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
+
+// Styles
 import styles from "./generated/themes/YearPicker.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-yearpicker",
-	properties: /** @lends sap.ui.webc.main.YearPicker.prototype */ {
-		/**
-		 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
-		 * @type {array}
-		 * @public
-		 */
-		selectedDates: {
-			type: Integer,
-			multiple: true,
-			compareValues: true,
-		},
+type Year = {
+	timestamp: string;
+	_tabIndex: string;
+	focusRef: boolean;
+	selected: boolean;
+	ariaSelected: string;
+	year: string;
+	yearInSecType: string | undefined;
+	disabled: boolean;
+	classes: string;
+}
 
-		_years: {
-			type: Object,
-			multiple: true,
-		},
+type YearInterval = Array<Array<Year>>;
 
-		_hidden: {
-			type: Boolean,
-			noAttribute: true,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.YearPicker.prototype */ {
-		/**
-		 * Fired when the user selects a year (space/enter/click).
-		 * @public
-		 * @event
-		 */
-		change: {},
-		/**
-		 * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
-		 * @since 1.0.0-rc.9
-		 * @public
-		 * @event
-		 */
-		navigate: {},
-	},
-};
+type SelectedYearChangeEventDetail = {
+	timestamp: number,
+}
 
 /**
  * @class
@@ -82,10 +68,45 @@ const metadata = {
  * @tagname ui5-yearpicker
  * @public
  */
-class YearPicker extends CalendarPart {
-	static get metadata() {
-		return metadata;
-	}
+@customElement("ui5-yearpicker")
+/**
+ * Fired when the user selects a year via "Space", "Enter" or click.
+ * @public
+ * @event sap.ui.webc.main.YearPicker#change
+ */
+@event("change")
+/**
+ * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
+ * @since 1.0.0-rc.9
+ * @public
+ * @event sap.ui.webc.main.YearPicker#navigate
+ */
+@event("navigate")
+class YearPicker extends CalendarPart implements ICalendarPicker {
+	/**
+	 * An array of UTC timestamps representing the selected date
+	 * or dates depending on the capabilities of the picker component.
+	 * @type {array}
+	 * @name sap.ui.webc.main.YearPicker.prototype.selectedDates
+	 * @public
+	 */
+	@property({
+		validator: Integer,
+		multiple: true,
+		compareValues: true,
+	})
+	selectedDates!: Array<number>;
+
+	@property({ type: Object, multiple: true })
+	_years!: YearInterval;
+
+	@property({ type: Boolean, noAttribute: true })
+	_hidden!: boolean;
+
+	_firstYear?: number;
+	_lastYear?: number;
+
+	static i18nBundle: I18nBundle;
 
 	static get styles() {
 		return styles;
@@ -100,7 +121,7 @@ class YearPicker extends CalendarPart {
 	}
 
 	get roleDescription() {
-		return YearPicker.i18nBundle.getText(YEAR_PICKER_DESCRIPTION);
+		return YearPicker.i18nBundle.getText(YEAR_PICKER_DESCRIPTION as I18nText);
 	}
 
 	onBeforeRendering() {
@@ -122,10 +143,11 @@ class YearPicker extends CalendarPart {
 			return;
 		}
 		const pageSize = this._getPageSize();
-		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, getLocale());
-		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, getLocale());
+		const locale = getLocale() as unknown as LocaleT;
+		const oYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._primaryCalendarType }, locale);
+		const oYearFormatInSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType }, locale);
 		this._calculateFirstYear();
-		this._lastYear = this._firstYear + pageSize - 1;
+		this._lastYear = this._firstYear! + pageSize - 1;
 
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
@@ -133,9 +155,9 @@ class YearPicker extends CalendarPart {
 		const tempDate = new CalendarDate(calendarDate, this._primaryCalendarType);
 		let tempDateInSecType;
 		let textInSecType;
-		tempDate.setYear(this._firstYear);
+		tempDate.setYear(this._firstYear!);
 
-		const intervals = [];
+		const intervals: YearInterval = [];
 		let timestamp;
 
 		/* eslint-disable no-loop-func */
@@ -151,12 +173,12 @@ class YearPicker extends CalendarPart {
 
 			if (this.secondaryCalendarType) {
 				tempDateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp, true);
-				textInSecType = tempDateInSecType.firstDate.getYear() === tempDateInSecType.lastDate.getYear
+				textInSecType = tempDateInSecType.firstDate.getYear() === tempDateInSecType.lastDate.getYear()
 					? `${oYearFormatInSecType.format(tempDateInSecType.firstDate.toLocalJSDate(), true)}`
 					: `${oYearFormatInSecType.format(tempDateInSecType.firstDate.toLocalJSDate(), true)} - ${oYearFormatInSecType.format(tempDateInSecType.lastDate.toLocalJSDate(), true)}`;
 			}
 
-			const year = {
+			const year: Year = {
 				timestamp: timestamp.toString(),
 				_tabIndex: isFocused ? "0" : "-1",
 				focusRef: isFocused,
@@ -179,7 +201,7 @@ class YearPicker extends CalendarPart {
 			if (this.secondaryCalendarType) {
 				year.classes += " ui5-yp-item-secondary-type";
 			}
-			const intervalIndex = parseInt(i / this._getRowSize());
+			const intervalIndex = Math.floor(i / this._getRowSize());
 
 			if (intervals[intervalIndex]) {
 				intervals[intervalIndex].push(year);
@@ -231,43 +253,43 @@ class YearPicker extends CalendarPart {
 		}
 	}
 
-	_onkeydown(event) {
+	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 		const pageSize = this._getPageSize();
 		const rowSize = this._getRowSize();
 
-		if (isEnter(event)) {
-			this._selectYear(event);
-		} else if (isSpace(event)) {
-			event.preventDefault();
-		} else if (isLeft(event)) {
+		if (isEnter(e)) {
+			this._selectYear(e);
+		} else if (isSpace(e)) {
+			e.preventDefault();
+		} else if (isLeft(e)) {
 			this._modifyTimestampBy(-1);
-		} else if (isRight(event)) {
+		} else if (isRight(e)) {
 			this._modifyTimestampBy(1);
-		} else if (isUp(event)) {
+		} else if (isUp(e)) {
 			this._modifyTimestampBy(-rowSize);
-		} else if (isDown(event)) {
+		} else if (isDown(e)) {
 			this._modifyTimestampBy(rowSize);
-		} else if (isPageUp(event)) {
+		} else if (isPageUp(e)) {
 			this._modifyTimestampBy(-pageSize);
-		} else if (isPageDown(event)) {
+		} else if (isPageDown(e)) {
 			this._modifyTimestampBy(pageSize);
-		} else if (isHome(event) || isEnd(event)) {
-			this._onHomeOrEnd(isHome(event));
-		} else if (isHomeCtrl(event)) {
+		} else if (isHome(e) || isEnd(e)) {
+			this._onHomeOrEnd(isHome(e));
+		} else if (isHomeCtrl(e)) {
 			this._setTimestamp(parseInt(this._years[0][0].timestamp)); // first year of first row
-		} else if (isEndCtrl(event)) {
+		} else if (isEndCtrl(e)) {
 			this._setTimestamp(parseInt(this._years[pageSize / rowSize - 1][rowSize - 1].timestamp)); // last year of last row
 		} else {
 			preventDefault = false;
 		}
 
 		if (preventDefault) {
-			event.preventDefault();
+			e.preventDefault();
 		}
 	}
 
-	_onHomeOrEnd(homePressed) {
+	_onHomeOrEnd(homePressed: boolean) {
 		this._years.forEach(row => {
 			const indexInRow = row.findIndex(item => CalendarDate.fromTimestamp(parseInt(item.timestamp) * 1000).getYear() === this._calendarDate.getYear());
 			if (indexInRow !== -1) { // The current year is on this row
@@ -278,67 +300,70 @@ class YearPicker extends CalendarPart {
 	}
 
 	/**
-	 * Sets the timestamp to an absolute value
-	 * @param value
+	 * Sets the timestamp to an absolute value.
+	 * @param { number } value
 	 * @private
 	 */
-	_setTimestamp(value) {
+	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent("navigate", { timestamp: this.timestamp });
+		this.fireEvent("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
-	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page
-	 * @param amount
+	 * Modifies timestamp by a given amount of years and, if necessary, loads the prev/next page.
+	 * @param { number } amount
 	 * @private
 	 */
-	_modifyTimestampBy(amount) {
+	_modifyTimestampBy(amount: number) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, "year");
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent("navigate", { timestamp: this.timestamp });
+		this.fireEvent("navigate", { timestamp: this.timestamp! });
 	}
 
-	_onkeyup(event) {
-		if (isSpace(event)) {
-			this._selectYear(event);
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._selectYear(e);
 		}
 	}
 
 	/**
 	 * User clicked with the mouser or pressed Enter/Space
-	 * @param event
+	 * @param { Event } e
 	 * @private
 	 */
-	_selectYear(event) {
-		event.preventDefault();
-		if (event.target.className.indexOf("ui5-yp-item") > -1) {
-			const timestamp = this._getTimestampFromDom(event.target);
+	_selectYear(e: Event) {
+		e.preventDefault();
+		const target = e.target as HTMLElement;
+		if (target.className.indexOf("ui5-yp-item") > -1) {
+			const timestamp = this._getTimestampFromDom(target);
 			this._safelySetTimestamp(timestamp);
-			this.fireEvent("change", { timestamp: this.timestamp });
+			this.fireEvent("change", { timestamp: this.timestamp! });
 		}
 	}
 
 	/**
-	 * Called from Calendar.js
+	 * Called by the Calendar component.
 	 * @protected
+	 * @returns { boolean }
 	 */
-	_hasPreviousPage() {
-		return this._firstYear > this._minDate.getYear();
+	_hasPreviousPage(): boolean {
+		return this._firstYear! > this._minDate.getYear();
 	}
 
 	/**
-	 * Called from Calendar.js
+	 * Called by the Calendar component.
 	 * @protected
+	 * @returns { boolean }
 	 */
-	_hasNextPage() {
-		return this._firstYear + this._getPageSize() - 1 < this._maxDate.getYear();
+	_hasNextPage(): boolean {
+		return this._firstYear! + this._getPageSize() - 1 < this._maxDate.getYear();
 	}
 
 	/**
-	 * Called by Calendar.js
-	 * User pressed the "<" button in the calendar header (same as PageUp)
+	 * Called by the Calendar component.
+	 * <b>Note:</b> when the user presses the "<" button in the calendar header (same as "PageUp")
 	 * @protected
 	 */
 	_showPreviousPage() {
@@ -347,8 +372,8 @@ class YearPicker extends CalendarPart {
 	}
 
 	/**
-	 * Called by Calendar.js
-	 * User pressed the ">" button in the calendar header (same as PageDown)
+	 * Called by the Calendar component.
+	 * <b>Note:</b> when the user presses the ">" button in the calendar header (same as "PageDown")
 	 * @protected
 	 */
 	_showNextPage() {
@@ -359,3 +384,6 @@ class YearPicker extends CalendarPart {
 YearPicker.define();
 
 export default YearPicker;
+export type {
+	SelectedYearChangeEventDetail,
+};

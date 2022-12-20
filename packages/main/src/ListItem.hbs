@@ -1,7 +1,7 @@
 <li
 	part="native-li"
 	data-sap-focus-ref
-	tabindex="{{tabIndex}}"
+	tabindex="{{_effectiveTabIndex}}"
 	class="{{classes.main}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
@@ -22,7 +22,7 @@
 	aria-setsize="{{_accInfo.setsize}}"
 	aria-describedby="{{_id}}-invisibleText-describedby"
 	aria-labelledby="{{_accessibleNameRef}}"
-	aria-disabled="{{ariaDisabled}}"
+	aria-disabled="{{_ariaDisabled}}"
 	aria-selected="{{_accInfo.ariaSelected}}"
 	aria-checked="{{_accInfo.ariaChecked}}"
 	aria-owns="{{_accInfo.ariaOwns}}"

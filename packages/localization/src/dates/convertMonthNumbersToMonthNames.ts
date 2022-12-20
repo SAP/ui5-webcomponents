@@ -12,7 +12,7 @@ import getCachedLocaleDataInstance from "../getCachedLocaleDataInstance.js";
  * @param calendarType calendar type
  * @returns {String}
  */
-const convertMonthNumbersToMonthNames = (firstMonth: number, lastMonth: number, calendarType: CalendarType) => {
+const convertMonthNumbersToMonthNames = (firstMonth: number, lastMonth: number, calendarType?: CalendarType) => {
 	const localeData = getCachedLocaleDataInstance(getLocale());
 	const pattern = localeData.getIntervalPattern("");
 	const secondaryMonthsNames = localeData.getMonthsStandAlone("abbreviated", calendarType) as Array<string>;
