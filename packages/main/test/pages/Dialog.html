@@ -448,42 +448,66 @@
 		</div>
 		<span>Hello World!</span>
 	</ui5-dialog>
-<div>
+	<br>
+	<br>
 	<div>
-		<ui5-label>Dialog states</ui5-label>
+		<div>
+			<ui5-label>Dialog states</ui5-label>
+		</div>
+		<ui5-button id="btn-error-state">Dialog with Error State</ui5-button>
+		<ui5-dialog id="dialog-error-state" state="Error">
+			<div slot="header">
+				<ui5-title level="H2">Error</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-info-state">Dialog with Information State</ui5-button>
+		<ui5-dialog id="dialog-info-state" state="Information">
+			<div slot="header">
+				<ui5-title level="H2">Information</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-success-state">Dialog with Success State</ui5-button>
+		<ui5-dialog id="dialog-success-state" state="Success">
+			<div slot="header">
+				<ui5-title level="H2">Success</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-warn-state">Dialog with Warning State</ui5-button>
+		<ui5-dialog id="dialog-warn-state" state="Warning">
+			<div slot="header">
+				<ui5-title level="H2">Warning</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
 	</div>
-	<ui5-button id="btn-error-state">Dialog with Error State</ui5-button>
-	<ui5-dialog id="dialog-error-state" state="Error">
+	<br>
+	<ui5-button id="dialogOverDialogBtn">Dialog over a Dialog</ui5-button>
+	<ui5-dialog id="dialogOverDialog1">
 		<div slot="header">
-			<ui5-title level="H2">Error</ui5-title>
+			<ui5-title level="H2">Header 1</ui5-title>
 		</div>
-		<span>Hello World!</span>
+		<ui5-button id="dialogOverDialog1Btn">Open a new Dialog</ui5-button>
 	</ui5-dialog>
-
-	<ui5-button id="btn-info-state">Dialog with Information State</ui5-button>
-	<ui5-dialog id="dialog-info-state" state="Information">
+	<ui5-dialog id="dialogOverDialog2">
 		<div slot="header">
-			<ui5-title level="H2">Information</ui5-title>
+			<ui5-title level="H2">Header 2</ui5-title>
 		</div>
-		<span>Hello World!</span>
+		<ui5-button id="dialogOverDialog2Btn">Open a new Dialog</ui5-button>
 	</ui5-dialog>
-
-	<ui5-button id="btn-success-state">Dialog with Success State</ui5-button>
-	<ui5-dialog id="dialog-success-state" state="Success">
+	<ui5-dialog id="dialogOverDialog3">
 		<div slot="header">
-			<ui5-title level="H2">Success</ui5-title>
+			<ui5-title level="H2">Header 3</ui5-title>
 		</div>
-		<span>Hello World!</span>
+		<ui5-button id="dialogOverDialog3Btn">Close</ui5-button>
 	</ui5-dialog>
-
-	<ui5-button id="btn-warn-state">Dialog with Warning State</ui5-button>
-	<ui5-dialog id="dialog-warn-state" state="Warning">
-		<div slot="header">
-			<ui5-title level="H2">Warning</ui5-title>
-		</div>
-		<span>Hello World!</span>
-	</ui5-dialog>
-</div>
+	<br>
+	<br>
 	<div>
 		<ui5-title level="H3">Open Dialog from list</ui5-title>
 		<ui5-list id="listContainerId" mode="SingleSelect">
@@ -655,7 +679,23 @@
 		});
 
 		window["btn-warn-state"].addEventListener("click", function () {
-				window["dialog-warn-state"].show();
+			window["dialog-warn-state"].show();
+		});
+
+		window["dialogOverDialogBtn"].addEventListener("click", function () {
+			window["dialogOverDialog1"].open = true;
+		});
+
+		window["dialogOverDialog1Btn"].addEventListener("click", function () {
+			window["dialogOverDialog2"].open = true;
+		});
+
+		window["dialogOverDialog2Btn"].addEventListener("click", function () {
+			window["dialogOverDialog3"].open = true;
+		});
+
+		window["dialogOverDialog3Btn"].addEventListener("click", function () {
+			window["dialogOverDialog3"].open = false;
 		});
 
 	</script>
