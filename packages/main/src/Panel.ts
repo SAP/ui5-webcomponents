@@ -1,4 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
@@ -6,6 +12,8 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -13,181 +21,11 @@ import TitleLevel from "./types/TitleLevel.js";
 import PanelAccessibleRole from "./types/PanelAccessibleRole.js";
 import PanelTemplate from "./generated/templates/PanelTemplate.lit.js";
 
+// @ts-ignore
 import { PANEL_ICON } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import panelCss from "./generated/themes/Panel.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-panel",
-	languageAware: true,
-	managedSlots: true,
-	fastNavigation: true,
-	slots: /** @lends sap.ui.webc.main.Panel.prototype */ {
-
-		/**
-		 * Defines the component header area.
-		 * <br><br>
-		 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		header: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the content of the component.
-		 * The content is visible only when the component is expanded.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: HTMLElement,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.Panel.prototype */ {
-
-		/**
-		 * This property is used to set the header text of the component.
-		 * The text is visible in both expanded and collapsed states.
-		 * <br><br>
-		 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		headerText: {
-			type: String,
-		},
-
-		/**
-		 * Determines whether the component is in a fixed state that is not
-		 * expandable/collapsible by user interaction.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		fixed: {
-			type: Boolean,
-		},
-
-		/**
-		 * Indicates whether the component is collapsed and only the header is displayed.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		collapsed: {
-			type: Boolean,
-		},
-
-		/**
-		 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @since 1.0.0-rc.16
-		 */
-		 noAnimation: {
-			type: Boolean,
-		},
-
-		/**
-		 * Sets the accessible ARIA role of the component.
-		 * Depending on the usage, you can change the role from the default <code>Form</code>
-		 * to <code>Region</code> or <code>Complementary</code>.
-		 *
-		 * @type {sap.ui.webc.main.types.PanelAccessibleRole}
-		 * @defaultvalue "Form"
-		 * @public
-		 */
-		accessibleRole: {
-			type: PanelAccessibleRole,
-			defaultValue: PanelAccessibleRole.Form,
-		},
-
-		/**
-		 * Defines the "aria-level" of component heading,
-		 * set by the <code>headerText</code>.
-		 * <br><br>
-		 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
-		 * @type {sap.ui.webc.main.types.TitleLevel}
-		 * @defaultvalue "H2"
-		 * @public
-		*/
-		headerLevel: {
-			type: TitleLevel,
-			defaultValue: TitleLevel.H2,
-		},
-
-		/**
-		 * Defines the accessible ARIA name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * When set to <code>true</code>, the <code>accessibleName</code> property will be
-		 * applied not only on the panel root itself, but on its toggle button too.
-		 * <b>Note:</b> This property only has effect if <code>accessibleName</code> is set and a header slot is provided.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
- 		 */
-		useAccessibleNameForToggleButton: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		_hasHeader: {
-			type: Boolean,
-		},
-
-		_header: {
-			type: Object,
-		},
-
-		_contentExpanded: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_animationRunning: {
-			type: Boolean,
-			noAttribute: true,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.Panel.prototype */ {
-
-		/**
-		 * Fired when the component is expanded/collapsed by user interaction.
-		 *
-		 * @event
-		 * @public
-		 */
-		toggle: {},
-	},
-};
 
 /**
  * @class
@@ -258,10 +96,151 @@ const metadata = {
  * @tagname ui5-panel
  * @public
  */
+@customElement("ui5-panel")
+@fastNavigation
+@languageAware
+/**
+ * Fired when the component is expanded/collapsed by user interaction.
+ *
+ * @event sap.ui.webc.main.Panel#toggle
+ * @public
+ */
+@event("toggle")
 class Panel extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * This property is used to set the header text of the component.
+	 * The text is visible in both expanded and collapsed states.
+	 * <br><br>
+	 * <b>Note:</b> This property is overridden by the <code>header</code> slot.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.Panel.prototype.headerText
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	headerText!: string;
+
+	/**
+	 * Determines whether the component is in a fixed state that is not
+	 * expandable/collapsible by user interaction.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Panel.prototype.fixed
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	fixed!: boolean;
+
+	/**
+	 * Indicates whether the component is collapsed and only the header is displayed.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Panel.prototype.collapsed
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	collapsed!: boolean;
+
+	/**
+	 * Indicates whether the transition between the expanded and the collapsed state of the component is animated. By default the animation is enabled.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Panel.prototype.noAnimation
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.0.0-rc.16
+	 */
+	@property({ type: Boolean })
+	noAnimation!: boolean;
+
+	/**
+	 * Sets the accessible ARIA role of the component.
+	 * Depending on the usage, you can change the role from the default <code>Form</code>
+	 * to <code>Region</code> or <code>Complementary</code>.
+	 *
+	 * @type {sap.ui.webc.main.types.PanelAccessibleRole}
+	 * @name sap.ui.webc.main.Panel.prototype.accessibleRole
+	 * @defaultvalue "Form"
+	 * @public
+	 */
+	@property({ type: PanelAccessibleRole, defaultValue: PanelAccessibleRole.Form })
+	accessibleRole!: PanelAccessibleRole;
+
+	/**
+	 * Defines the "aria-level" of component heading,
+	 * set by the <code>headerText</code>.
+	 * <br><br>
+	 * Available options are: <code>"H6"</code> to <code>"H1"</code>.
+	 * @type {sap.ui.webc.main.types.TitleLevel}
+	 * @name sap.ui.webc.main.Panel.prototype.headerLevel
+	 * @defaultvalue "H2"
+	 * @public
+	*/
+	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
+	headerLevel!: TitleLevel;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.Panel.prototype.accessibleName
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * When set to <code>true</code>, the <code>accessibleName</code> property will be
+	 * applied not only on the panel root itself, but on its toggle button too.
+	 * <b>Note:</b> This property only has effect if <code>accessibleName</code> is set and a header slot is provided.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	  */
+	@property({ type: Boolean })
+	useAccessibleNameForToggleButton!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_hasHeader!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_contentExpanded!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_animationRunning!: boolean;
+
+	/**
+	 * Defines the component header area.
+	 * <br><br>
+	 * <b>Note:</b> When a header is provided, the <code>headerText</code> property is ignored.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Panel.prototype.header
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	header!: Array<HTMLElement>;
+
+	/**
+	 * Defines the content of the component.
+	 * The content is visible only when the component is expanded.
+	 *
+	 * @type {Node[]}
+	 * @name sap.ui.webc.main.Panel.prototype.default
+	 * @slot
+	 * @public
+	 */
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -275,12 +254,6 @@ class Panel extends UI5Element {
 		return panelCss;
 	}
 
-	constructor() {
-		super();
-
-		this._header = {};
-	}
-
 	onBeforeRendering() {
 		// If the animation is running, it will set the content expanded state at the end
 		if (!this._animationRunning) {
@@ -290,10 +263,10 @@ class Panel extends UI5Element {
 		this._hasHeader = !!this.header.length;
 	}
 
-	shouldToggle(node) {
+	shouldToggle(element: HTMLElement): boolean {
 		const customContent = this.header.length;
 		if (customContent) {
-			return node.classList.contains("ui5-panel-header-button");
+			return element.classList.contains("ui5-panel-header-button");
 		}
 		return true;
 	}
@@ -302,44 +275,44 @@ class Panel extends UI5Element {
 		return this.noAnimation || getAnimationMode() === AnimationMode.None;
 	}
 
-	_headerClick(event) {
-		if (!this.shouldToggle(event.target)) {
+	_headerClick(e: MouseEvent) {
+		if (!this.shouldToggle(e.target as HTMLElement)) {
 			return;
 		}
 
 		this._toggleOpen();
 	}
 
-	_toggleButtonClick(event) {
-		if (event.x === 0 && event.y === 0) {
-			event.stopImmediatePropagation();
+	_toggleButtonClick(e: MouseEvent) {
+		if (e.x === 0 && e.y === 0) {
+			e.stopImmediatePropagation();
 		}
 	}
 
-	_headerKeyDown(event) {
-		if (!this.shouldToggle(event.target)) {
+	_headerKeyDown(e: KeyboardEvent) {
+		if (!this.shouldToggle(e.target as HTMLElement)) {
 			return;
 		}
 
-		if (isEnter(event)) {
-			event.preventDefault();
+		if (isEnter(e)) {
+			e.preventDefault();
 		}
 
-		if (isSpace(event)) {
-			event.preventDefault();
+		if (isSpace(e)) {
+			e.preventDefault();
 		}
 	}
 
-	_headerKeyUp(event) {
-		if (!this.shouldToggle(event.target)) {
+	_headerKeyUp(e: KeyboardEvent) {
+		if (!this.shouldToggle(e.target as HTMLElement)) {
 			return;
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			this._toggleOpen();
 		}
 
-		if (isSpace(event)) {
+		if (isSpace(e)) {
 			this._toggleOpen();
 		}
 	}
@@ -358,8 +331,8 @@ class Panel extends UI5Element {
 
 		this._animationRunning = true;
 
-		const elements = this.getDomRef().querySelectorAll(".ui5-panel-content");
-		const animations = [];
+		const elements = this.getDomRef()!.querySelectorAll(".ui5-panel-content");
+		const animations: Array<Promise<void | Error>> = [];
 
 		[].forEach.call(elements, oElement => {
 			if (this.collapsed) {
@@ -369,14 +342,14 @@ class Panel extends UI5Element {
 			}
 		});
 
-		Promise.all(animations).then(_ => {
+		Promise.all(animations).then(() => {
 			this._animationRunning = false;
 			this._contentExpanded = !this.collapsed;
 			this.fireEvent("toggle");
 		});
 	}
 
-	_headerOnTarget(target) {
+	_headerOnTarget(target: HTMLElement) {
 		return target.classList.contains("sapMPanelWrappingDiv");
 	}
 
@@ -389,7 +362,7 @@ class Panel extends UI5Element {
 	}
 
 	get toggleButtonTitle() {
-		return Panel.i18nBundle.getText(PANEL_ICON);
+		return Panel.i18nBundle.getText(PANEL_ICON as I18nText);
 	}
 
 	get expanded() {
@@ -428,10 +401,6 @@ class Panel extends UI5Element {
 		return this.fixed && !this.effectiveAccessibleName ? `${this._id}-header-title` : undefined;
 	}
 
-	get header() {
-		return this.getDomRef().querySelector(`#${this._id}-header-title`);
-	}
-
 	get headerAriaLevel() {
 		return this.headerLevel.slice(1);
 	}
@@ -458,10 +427,6 @@ class Panel extends UI5Element {
 
 	get nonFocusableButton() {
 		return !this.header.length;
-	}
-
-	get shouldRenderH1() {
-		return !this.header.length && (this.headerText || !this.fixed);
 	}
 
 	get styles() {
