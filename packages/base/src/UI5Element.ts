@@ -24,7 +24,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve, ComponentStylesData } from "./types.js";
+import { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
 let autoId = 0;
 
@@ -291,8 +291,11 @@ abstract class UI5Element extends HTMLElement {
 
 			// Check if the slotName is supported
 			if (slotData === undefined) {
-				const validValues = Object.keys(slotsMap).join(", ");
-				console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
+				if (slotName !== "default") {
+					const validValues = Object.keys(slotsMap).join(", ");
+					console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
+				}
+
 				return;
 			}
 
@@ -850,6 +853,10 @@ abstract class UI5Element extends HTMLElement {
 	 */
 	get isUI5Element() {
 		return true;
+	}
+
+	get classes(): ClassMap {
+		return {};
 	}
 
 	/**

@@ -2,10 +2,10 @@ import type Locale from "@ui5/webcomponents-base/dist/locale/Locale.js";
 import UniversalDate from "./UniversalDate.js";
 import type LocaleData from "../LocaleData.js";
 
-const calculateWeekNumber = (confFirstDayOfWeek: number, oDate: Date, iYear: number, oLocale: Locale, oLocaleData: LocaleData) => {
+const calculateWeekNumber = (confFirstDayOfWeek: number | undefined, oDate: Date, iYear: number, oLocale: Locale, oLocaleData: LocaleData) => {
 	let iWeekNum = 0;
 	let iWeekDay = 0;
-	const iFirstDayOfWeek = Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek : oLocaleData.getFirstDayOfWeek();
+	const iFirstDayOfWeek = Number.isInteger(confFirstDayOfWeek) ? confFirstDayOfWeek! : oLocaleData.getFirstDayOfWeek();
 
 	// search Locale for containing "en-US", since sometimes
 	// when any user settings have been defined, subtag "sapufmt" is added to the locale name
