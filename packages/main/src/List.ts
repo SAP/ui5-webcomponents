@@ -20,7 +20,8 @@ import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalizedTarget.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
@@ -837,7 +838,7 @@ class List extends UI5Element {
 
 	_onfocusin(e: FocusEvent) {
 		const target = getNormalizedTarget(e.target as HTMLElement);
-		// If the focusin e does not origin from one of the 'triggers' - ignore it.
+		// If the focusin event does not origin from one of the 'triggers' - ignore it.
 		if (!this.isForwardElement(target)) {
 			e.stopImmediatePropagation();
 			return;
@@ -890,7 +891,7 @@ class List extends UI5Element {
 	}
 
 	onItemFocused(e: CustomEvent) {
-		const target = e.target as HTMLElement;
+		const target = e.target as ListItemBase;
 
 		e.stopPropagation();
 
@@ -898,14 +899,14 @@ class List extends UI5Element {
 		this.fireEvent("item-focused", { item: target });
 
 		if (this.mode === ListMode.SingleSelectAuto) {
-			this.onSelectionRequested({
-				detail: {
+			const detail: SelectionRequestEventDetail = {
 					item: target,
 					selectionComponentPressed: false,
 					selected: true,
 					key: e.detail.key,
-				},
-			} as CustomEvent<SelectionRequestEventDetail>);
+				};
+
+			this.onSelectionRequested({ detail } as CustomEvent<SelectionRequestEventDetail>);
 		}
 	}
 
@@ -918,14 +919,14 @@ class List extends UI5Element {
 
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
-			this.onSelectionRequested({
-				detail: {
+			const detail: SelectionRequestEventDetail = {
 					item: pressedItem,
 					selectionComponentPressed: false,
 					selected: !pressedItem.selected,
 					key: e.detail.key,
-				},
-			} as CustomEvent<SelectionRequestEventDetail>);
+			};
+
+			this.onSelectionRequested({ detail } as CustomEvent<SelectionRequestEventDetail>);
 		}
 
 		this._selectionRequested = false;

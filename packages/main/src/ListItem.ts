@@ -4,7 +4,8 @@ import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js
 import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -315,7 +316,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent("_selection-requested", { item: this, selected: (e.target as HTMLInputElement).checked, selectionComponentPressed: true }); // Switch as HTMLInputElement to as CheckBox when ui5-check is migrated to TypeScript
+		this.fireEvent("_selection-requested", { item: this, selected: (e.target as HTMLInputElement).checked, selectionComponentPressed: true }); // Switch HTMLInputElement to CheckBox when ui5-check is migrated to TypeScript
 	}
 
 	onSingleSelectionComponentPress(e: MouseEvent) {

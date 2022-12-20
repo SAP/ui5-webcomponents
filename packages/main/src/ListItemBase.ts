@@ -125,7 +125,7 @@ abstract class ListItemBase extends UI5Element implements ITabbable {
 		const aContent = getTabbableElements(this.getFocusDomRef()!);
 
 		if ((target as UI5Element).getFocusDomRef) {
-			target = (target as UI5Element).getFocusDomRef() as HTMLElement;
+			target = (target as UI5Element).getFocusDomRef() as UI5Element;
 		}
 
 		return !aContent.length || (aContent[aContent.length - 1] === target);
