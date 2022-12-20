@@ -41,6 +41,13 @@ import {
 // Styles
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
 
+const PICKER_POINTER_WIDTH = 6.5;
+
+type ColorCoordinates = {
+	x: number,
+	y: number,
+}
+
 /**
  * @class
  *
@@ -113,7 +120,7 @@ class ColorPicker extends UI5Element {
 	/**
 	 * Defines the currenty selected color from the main color section.
 	 * @private
-	 */ 
+	 */
 	@property({ type: Object })
 	_color!: ColorRGB;
 
@@ -121,7 +128,7 @@ class ColorPicker extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_selectedCoordinates!: Record<string, number>;
+	_selectedCoordinates!: ColorCoordinates;
 
 	/**
 	 * @private
@@ -190,8 +197,8 @@ class ColorPicker extends UI5Element {
 
 		// Bottom Right corner
 		this._selectedCoordinates = {
-			x: 256 - 6.5,
-			y: 256 - 6.5,
+			x: 256 - PICKER_POINTER_WIDTH,
+			y: 256 - PICKER_POINTER_WIDTH,
 		};
 
 		// Default main color is red
@@ -298,19 +305,22 @@ class ColorPicker extends UI5Element {
 			return;
 		}
 
-		const isLeft = e.offsetX <= 0;
-		const isUp = e.offsetY <= 0;
-		const isDown = e.offsetY >= (e.target as HTMLElement).offsetHeight;
-		const isRight = e.offsetX >= (e.target as HTMLElement).offsetWidth;
+		const target = e.target as HTMLElement;
+		const offsetHeight: number = target.offsetHeight;
+		const offsetWidth: number = target.offsetWidth;
+		const isLeft: boolean = e.offsetX <= 0;
+		const isUp: boolean = e.offsetY <= 0;
+		const isDown: boolean = e.offsetY >= target.offsetHeight;
+		const isRight: boolean = e.offsetX >= target.offsetWidth;
 
-		let x,
-			y;
+		let x: number,
+			y: number;
 
 		if (isLeft) {
 			x = 0;
 		} else if (isRight) {
-			// @ts-ignore - offsetWidth seems not part of the mouseout event object - to be cheked
-			x = e.offsetWidth;
+			// Note: - e.offsetWidth has been changed to e.target.offsetWidth as offsetWidth does not exist on the event object
+			x = offsetWidth;
 		} else {
 			x = e.offsetX;
 		}
@@ -318,8 +328,8 @@ class ColorPicker extends UI5Element {
 		if (isUp) {
 			y = 0;
 		} else if (isDown) {
-			// @ts-ignore - offsetWidth seems not part of the mouseout event object - to be checked
-			y = e.offsetHeight;
+			// Note: - e.offsetWidth has been changed to e.target.offsetWidth as offsetWidth does not exist on the event object
+			y = offsetHeight;
 		} else {
 			y = e.offsetY;
 		}
@@ -337,8 +347,9 @@ class ColorPicker extends UI5Element {
 		this._changeSelectedColor(e.offsetX, e.offsetY);
 	}
 
-	_handleAlphaInput(e: InputEvent) {
-		this._alpha = parseFloat((e.target as Input).value);
+	_handleAlphaInput(e: CustomEvent) {
+		const aphaInputValue: string = (e.target as Input).value;
+		this._alpha = parseFloat(aphaInputValue);
 		this._setColor(this._color);
 	}
 
@@ -349,7 +360,9 @@ class ColorPicker extends UI5Element {
 		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
 		this._isHueValueChanged = true;
 
-		const tempColor = this._calculateColorFromCoordinates(this._selectedCoordinates.x + 6.5, this._selectedCoordinates.y + 6.5);
+		const x: number = this._selectedCoordinates.x + PICKER_POINTER_WIDTH;
+		const y: number = this._selectedCoordinates.y + PICKER_POINTER_WIDTH;
+		const tempColor = this._calculateColorFromCoordinates(x, y);
 
 		if (tempColor) {
 			this._setColor(HSLToRGB(tempColor));
@@ -357,7 +370,7 @@ class ColorPicker extends UI5Element {
 	}
 
 	_handleHEXChange(e: CustomEvent | KeyboardEvent) {
-		let newValue = (e.target as Input).value.toLowerCase();
+		let newValue: string = (e.target as Input).value.toLowerCase();
 		const hexRegex = new RegExp("^[<0-9 abcdef]+$");
 
 		// Shorthand Syntax
@@ -380,7 +393,7 @@ class ColorPicker extends UI5Element {
 
 	_handleRGBInputsChange(e: CustomEvent) {
 		const target = e.target as Input;
-		const targetValue = parseInt(target.value) || 0;
+		const targetValue: number = parseInt(target.value as string) || 0;
 		let tempColor;
 		switch (target.id) {
 		case "red":
@@ -448,8 +461,8 @@ class ColorPicker extends UI5Element {
 
 	_changeSelectedColor(x: number, y: number) {
 		this._selectedCoordinates = {
-			x: x - 6.5, // Center the coordinates, because of the width of the circle
-			y: y - 6.5, // Center the coordinates, because of the height of the circle
+			x: x - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
+			y: y - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
 		};
 
 		// Idication that changes to the color settings are triggered as a result of user pressing over the main color section.
@@ -471,13 +484,14 @@ class ColorPicker extends UI5Element {
 		// By using the selected coordinates(x = Lightness, y = Saturation) and hue(selected from the hue slider)
 		// and HSL format, the color will be parsed to RGB
 
-		const h = this._hue / 4.25, // 0 ≤ H < 360
-			// 0 ≤ S ≤ 1
-			// @ts-ignore
-			s = 1 - +(Math.round((y / 256) + "e+2") + "e-2"), // eslint-disable-line
-			// 0 ≤ V ≤ 1
-			// @ts-ignore
-			l = +(Math.round((x / 256) + "e+2") + "e-2"); // eslint-disable-line
+		// 0 ≤ H < 360
+		const h = this._hue / 4.25;
+
+		// 0 ≤ S ≤ 1
+		const s = 1 - +(Math.round(parseFloat((y / 256) + "e+2")) + "e-2"); // eslint-disable-line
+
+		// 0 ≤ V ≤ 1
+		const l = +(Math.round(parseFloat((x / 256) + "e+2")) + "e-2"); // eslint-disable-line
 
 		if (!s || !l) {
 			// The event is finished out of the main color section
@@ -491,8 +505,7 @@ class ColorPicker extends UI5Element {
 		};
 	}
 
-	// @ts-ignore
-	_setColor(color: ColorRGB = { r: undefined, g: undefined, b: undefined }) {
+	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
 		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
 
 		this.fireEvent("change");
@@ -517,10 +530,10 @@ class ColorPicker extends UI5Element {
 	}
 
 	_setValues() {
-		const hslColours = RGBToHSL(this._color);
+		const hslColours: ColorHSL = RGBToHSL(this._color);
 		this._selectedCoordinates = {
-			x: ((Math.round(hslColours.l * 100) * 2.56)) - 6.5, // Center the coordinates, because of the width of the circle
-			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - 6.5, // Center the coordinates, because of the height of the circle
+			x: ((Math.round(hslColours.l * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the width of the circle
+			y: (256 - (Math.round(hslColours.s * 100) * 2.56)) - PICKER_POINTER_WIDTH, // Center the coordinates, because of the height of the circle
 		};
 
 		if (this._isSelectedColorChanged) { // We shouldn't update the hue value when user presses over the main color section.
@@ -572,7 +585,6 @@ class ColorPicker extends UI5Element {
 	}
 
 	get styles() {
-		const linearGradientDirection = this.effectiveDir === "rtl" ? "right" : "left";
 		return {
 			mainColor: {
 				"background-color": `rgb(${this._mainColor.r}, ${this._mainColor.g}, ${this._mainColor.b})`,
@@ -580,9 +592,6 @@ class ColorPicker extends UI5Element {
 			circle: {
 				left: `${this._selectedCoordinates.x}px`,
 				top: `${this._selectedCoordinates.y}px`,
-			},
-			progressContainer: {
-				"background-image": `-webkit-linear-gradient(${linearGradientDirection}, rgba(65, 120, 13, 0), ${this._mainColor}, url('data:image/png;base64,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')`,
 			},
 			colorSpan: {
 				"background-color": `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, ${this._alpha})`,
