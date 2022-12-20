@@ -1,5 +1,6 @@
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -71,6 +72,8 @@ class ProductSwitch extends UI5Element {
 			rowSize: this._rowSize,
 			getItemsCallback: () => this.items,
 		});
+
+		this._handleResizeBound = this._handleResize.bind(this);
 	}
 
 	/**
@@ -91,10 +94,10 @@ class ProductSwitch extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<ProductSwitchItem>
 
-	_itemNavigation!: ItemNavigation;
-	_currentIndex!: number;
-	_rowSize!: number;
-	_handleResizeBound?: () => void;
+	_itemNavigation: ItemNavigation;
+	_currentIndex: number;
+	_rowSize: number;
+	_handleResizeBound: () => void;
 
 	static i18nBundle: I18nBundle;
 
@@ -126,13 +129,11 @@ class ProductSwitch extends UI5Element {
 	}
 
 	onEnterDOM() {
-		this._handleResizeBound = this._handleResize.bind(this);
-
 		ResizeHandler.register(document.body, this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(document.body, this._handleResizeBound!);
+		ResizeHandler.deregister(document.body, this._handleResizeBound);
 	}
 
 	onBeforeRendering() {

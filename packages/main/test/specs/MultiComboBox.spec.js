@@ -91,6 +91,20 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(await allPopover.getProperty("opened"), "All popover should not be displayed");
 		});
+
+		it("Checks if tokenizer is expanded when adding items dynamically", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
+	
+			const btn = await $("#add");
+			const mcb = await $("#mcb-dynamic-selection");
+	
+			await btn.click();
+	
+			const inlinedTokens = await mcb.shadow$$("ui5-token:not([overflows])");
+
+			assert.ok(inlinedTokens.length > 0, "Token is displayed");
+		});
 	});
 
 	describe("selection and filtering", () => {

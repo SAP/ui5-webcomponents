@@ -106,12 +106,6 @@
     left: -9999px;
 }
 
-:host([invalid]) .ui5-illustrated-message-illustration,
-:host([invalid]:not([title-text])) .ui5-illustrated-message-title,
-:host([invalid]:not([subtitle-text])) .ui5-illustrated-message-subtitle {
-    display: none;
-}
-
 .sapIllus_MaskTypeAlpha {
 	mask-type:alpha;
 }
