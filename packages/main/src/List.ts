@@ -900,11 +900,11 @@ class List extends UI5Element {
 
 		if (this.mode === ListMode.SingleSelectAuto) {
 			const detail: SelectionRequestEventDetail = {
-					item: target,
-					selectionComponentPressed: false,
-					selected: true,
-					key: e.detail.key,
-				};
+				item: target,
+				selectionComponentPressed: false,
+				selected: true,
+				key: e.detail.key,
+			};
 
 			this.onSelectionRequested({ detail } as CustomEvent<SelectionRequestEventDetail>);
 		}
@@ -920,10 +920,10 @@ class List extends UI5Element {
 		if (!this._selectionRequested && this.mode !== ListMode.Delete) {
 			this._selectionRequested = true;
 			const detail: SelectionRequestEventDetail = {
-					item: pressedItem,
-					selectionComponentPressed: false,
-					selected: !pressedItem.selected,
-					key: e.detail.key,
+				item: pressedItem,
+				selectionComponentPressed: false,
+				selected: !pressedItem.selected,
+				key: e.detail.key,
 			};
 
 			this.onSelectionRequested({ detail } as CustomEvent<SelectionRequestEventDetail>);
