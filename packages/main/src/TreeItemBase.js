@@ -377,7 +377,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Used to duck-type TreeItem elements without using instanceof
 	 * @returns {boolean}
-	 * @public
+	 * @protected
 	 */
 	get isTreeItem() {
 		return true;
