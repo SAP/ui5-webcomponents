@@ -504,7 +504,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	get styles() {
 		return {
 			popoverHeader: {
-				"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`, 
+				"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`,
 			},
 		};
 	}
