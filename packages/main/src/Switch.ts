@@ -1,14 +1,15 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -69,8 +70,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  * Fired when the component checked state changes.
  *
  * @public
- * @name sap.ui.webc.main.Switch#change
- * @event
+ * @event sap.ui.webc.main.Switch#change
  */
 @event("change")
 class Switch extends UI5Element {
@@ -82,7 +82,7 @@ class Switch extends UI5Element {
 	 *
 	 * @public
 	 * @type {sap.ui.webc.main.types.SwitchDesign}
-	 * @name sap.ui.webc.main.Switch.design
+	 * @name sap.ui.webc.main.Switch.prototype.design
 	 * @defaultValue "Textual"
 	 */
 	@property({ type: SwitchDesign, defaultValue: SwitchDesign.Textual })
@@ -94,7 +94,7 @@ class Switch extends UI5Element {
 	 * <b>Note:</b> The property can be changed with user interaction,
 	 * either by cliking the component, or by pressing the <code>Enter</code> or <code>Space</code> key.
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Switch.checked
+	 * @name sap.ui.webc.main.Switch.prototype.checked
 	 * @defaultvalue false
 	 * @formEvents change
 	 * @formProperty
@@ -109,7 +109,7 @@ class Switch extends UI5Element {
 	 * <b>Note:</b> A disabled component is noninteractive.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Switch.disabled
+	 * @name sap.ui.webc.main.Switch.prototype.disabled
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -123,7 +123,7 @@ class Switch extends UI5Element {
 	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 * <b>Note:</b> This property will have no effect if the theme is set to <code>sap_horizon</code>.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.textOn
+	 * @name sap.ui.webc.main.Switch.prototype.textOn
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -136,7 +136,7 @@ class Switch extends UI5Element {
 	 * <b>Note:</b> We recommend using short texts, up to 3 letters (larger texts would be cut off).
 	 * <b>Note:</b> This property will have no effect if the theme is set to <code>sap_horizon</code>.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.textOff
+	 * @name sap.ui.webc.main.Switch.prototype.textOff
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -149,7 +149,7 @@ class Switch extends UI5Element {
 	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.accessibleName
+	 * @name sap.ui.webc.main.Switch.prototype.accessibleName
 	 * @defaultvalue: ""
 	 * @public
 	 * @since 1.2.0
@@ -163,12 +163,12 @@ class Switch extends UI5Element {
 	 * <b>Note</b>: We recommend that you set an accessibleNameRef pointing to an external label or at least an <code>accessibleName</code>.
 	 * Providing an <code>accessibleNameRef</code> or an <code>accessibleName</code> is mandatory in the cases when <code>textOn</code> and <code>textOff</code> properties aren't set.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.accessibleNameRef
+	 * @name sap.ui.webc.main.Switch.prototype.accessibleNameRef
 	 * @defaultvalue ""
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property()
+	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
 
 	/**
@@ -176,7 +176,7 @@ class Switch extends UI5Element {
 	 * <br>
 	 * <b>Note:</b> If applicable an external label reference should always be the preferred option to provide context to the <code>ui5-switch</code> component over a tooltip.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Switch.tooltip
+	 * @name sap.ui.webc.main.Switch.prototype.tooltip
 	 * @defaultvalue: ""
 	 * @public
 	 * @since 1.9.0
