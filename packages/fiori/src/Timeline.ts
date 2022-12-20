@@ -167,8 +167,7 @@ class Timeline extends UI5Element {
 		}
 		if (nextTarget.nameClickable && !isNext) {
 			e.preventDefault();
-			const link = nextTarget.shadowRoot!.querySelector("[ui5-link]") as HTMLAnchorElement;
-			link.focus();
+			nextTarget.focusLink();
 			return;
 		}
 		e.preventDefault();

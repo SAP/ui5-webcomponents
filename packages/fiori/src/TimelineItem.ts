@@ -5,7 +5,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
-// @ts-ignore - remove comment, when Link is available as TS class
 import Link from "@ui5/webcomponents/dist/Link.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 import TimelineLayout from "./types/TimelineLayout.js";
@@ -156,7 +155,15 @@ class TimelineItem extends UI5Element implements ITabbable {
 		return [
 			Icon,
 			Link,
-		] as Array<typeof UI5Element>;
+		];
+	}
+
+	/**
+	 * Focus the internal link.
+	 * @protected
+	 */
+	focusLink() {
+		this.shadowRoot!.querySelector<Link>("[ui5-link]")?.focus();
 	}
 
 	get classes() {
