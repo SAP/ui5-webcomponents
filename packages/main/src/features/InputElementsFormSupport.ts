@@ -135,4 +135,6 @@ export default FormSupport;
 
 export {
 	IFormElement,
+	NativeInputChangeCallback,
+	NativeInputUpdateCallback,
 };
