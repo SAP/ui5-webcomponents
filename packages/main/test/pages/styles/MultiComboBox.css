@@ -17,6 +17,8 @@ ui5-multi-combobox:not(:defined) {
 
 .multicombobox1auto {
 	background-color: var(--sapBackgroundColor);
+	padding: 3rem;
+	box-sizing: border-box;
 }
 
 .multicombobox2auto {
@@ -33,4 +35,15 @@ ui5-multi-combobox:not(:defined) {
 
 #mcb-long-token {
 	width: 240px;
+}
+
+.sample-container {
+	padding: 2rem 0;
+	box-sizing: border-box;
+	display: flex;
+}
+
+#mcb-dynamic-selection {
+	flex: 1;
+	margin-left: 2rem;
 }

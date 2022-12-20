@@ -1,4 +1,5 @@
 import getSharedResource from "../getSharedResource.js";
+import { I18nText } from "../i18nBundle.js";
 
 type IllustrationLoader = (illustrationName: string) => Promise<IllustrationData>;
 
@@ -6,8 +7,8 @@ type IllustrationProperties = {
 	dialogSvg: string,
 	sceneSvg: string,
 	spotSvg: string,
-	title: string,
-	subtitle: string,
+	title: I18nText,
+	subtitle: I18nText,
 };
 
 type IllustrationData = IllustrationProperties & {
@@ -17,7 +18,6 @@ type IllustrationData = IllustrationProperties & {
 const loaders = new Map<string, IllustrationLoader>();
 const registry = getSharedResource<Map<string, IllustrationProperties>>("SVGIllustration.registry", new Map());
 const illustrationPromises = getSharedResource<Map<string, Promise<IllustrationData>>>("SVGIllustration.promises", new Map());
-const ILLUSTRATION_NOT_FOUND = "ILLUSTRATION_NOT_FOUND";
 
 const registerIllustration = (name: string, data: IllustrationData) => {
 	registry.set(`${data.set}/${name}`, {
@@ -36,8 +36,10 @@ const registerIllustrationLoader = (illustrationName: string, loader: Illustrati
 const _loadIllustrationOnce = async (illustrationName: string) => {
 	if (!illustrationPromises.has(illustrationName)) {
 		if (!loaders.has(illustrationName)) {
-			throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module.`);
+			const illustrationPath = illustrationName.startsWith("Tnt") ? `tnt/${illustrationName.replace(/^Tnt/, "")}` : illustrationName;
+			throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js" module. Or you can import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module that will make all illustrations available, but fetch only the ones used.`);
 		}
+
 		const loadIllustrations = loaders.get(illustrationName)!;
 		illustrationPromises.set(illustrationName, loadIllustrations(illustrationName));
 	}
@@ -62,7 +64,7 @@ const getIllustrationData = async (illustrationName: string) => {
 		set = "tnt";
 		illustrationName = illustrationName.replace(/^Tnt/, "");
 	}
-	return registry.get(`${set}/${illustrationName}`) || ILLUSTRATION_NOT_FOUND;
+	return registry.get(`${set}/${illustrationName}`);
 };
 
 export {

@@ -516,15 +516,15 @@ class Wizard extends UI5Element {
 	_adjustHeaderOverflow() {
 		let counter = 0;
 		let isForward = true;
-		const iWidth = this.width;
-		const iCurrStep = this.getSelectedStepIndex();
-		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
-
 		const tabs = this.shadowRoot.querySelectorAll("[ui5-wizard-tab]");
 
 		if (!tabs.length) {
 			return;
 		}
+
+		const iWidth = this.progressNavigatorListDOM.getBoundingClientRect().width;
+		const iCurrStep = this.getSelectedStepIndex();
+		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
 
 		[].forEach.call(tabs, (step, index) => {
 			step.setAttribute(EXPANDED_STEP, false);
@@ -718,6 +718,10 @@ class Wizard extends UI5Element {
 
 	get stepsDOM() {
 		return Array.from(this.shadowRoot.querySelectorAll(".ui5-wiz-content-item"));
+	}
+
+	get progressNavigatorListDOM() {
+		return this.shadowRoot.querySelector(".ui5-wiz-nav-list");
 	}
 
 	get _stepsInHeader() {

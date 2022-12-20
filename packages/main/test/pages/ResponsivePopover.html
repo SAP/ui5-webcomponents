@@ -129,6 +129,26 @@
 	</ui5-responsive-popover>
 	<ui5-popover id="btnRpWithPopoverInnerPopover">Test popover</ui5-popover>
 
+	<ui5-button id="rPOverDialogBtn">RP over a Dialog</ui5-button>
+	<ui5-dialog id="rPOverDialog1">
+		<div slot="header">
+			<ui5-title level="H2">Header 1</ui5-title>
+		</div>
+		<ui5-button id="rPOverRp1Btn">Open a new RP</ui5-button>
+	</ui5-dialog>
+	<ui5-responsive-popover id="rPOverRp2">
+		<div slot="header">
+			<ui5-title level="H2">Header 2</ui5-title>
+		</div>
+		<ui5-button id="rPOverRp2Btn">Open a new RP</ui5-button>
+	</ui5-responsive-popover>
+	<ui5-responsive-popover id="rPOverRp3">
+		<div slot="header">
+			<ui5-title level="H2">Header 3</ui5-title>
+		</div>
+		<ui5-button id="rPOverRp3Btn">Close</ui5-button>
+	</ui5-responsive-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.showAt(btnOpen);
@@ -197,6 +217,26 @@
 		btnCloseWithAttr.addEventListener("click", function () {
 			popoverAttr.removeAttribute("open");
 		});
+
+
+		rPOverDialogBtn.addEventListener("click", function () {
+			rPOverDialog1.open = true;
+		});
+
+		rPOverRp1Btn.addEventListener("click", function () {
+			rPOverRp2.opener = "rPOverRp1Btn";
+			rPOverRp2.open = true;
+		});
+
+		rPOverRp2Btn.addEventListener("click", function () {
+			rPOverRp3.opener = "rPOverRp2Btn";
+			rPOverRp3.open = true;
+		});
+
+		rPOverRp3Btn.addEventListener("click", function () {
+			rPOverRp3.open = false;
+		});
+
 	</script>
 </body>
 </html>

@@ -291,8 +291,11 @@ abstract class UI5Element extends HTMLElement {
 
 			// Check if the slotName is supported
 			if (slotData === undefined) {
-				const validValues = Object.keys(slotsMap).join(", ");
-				console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
+				if (slotName !== "default") {
+					const validValues = Object.keys(slotsMap).join(", ");
+					console.warn(`Unknown slotName: ${slotName}, ignoring`, child, `Valid values are: ${validValues}`); // eslint-disable-line
+				}
+
 				return;
 			}
 

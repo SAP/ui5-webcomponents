@@ -1,10 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+// @ts-ignore
 import { TIMELINE_ARIA_LABEL } from "./generated/i18n/i18n-defaults.js";
 import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
@@ -15,64 +22,6 @@ import TimelineLayout from "./types/TimelineLayout.js";
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
 const LARGE_LINE_WIDTH = "LargeLineWidth";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-timeline",
-	languageAware: true,
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.fiori.Timeline.prototype */ {
-		/**
-		 * Defines the items orientation.
-		 *
-		 * <br><br>
-		 * <b>Note:</b>
-		 * Available options are:
-		 * <ul>
-	 	* <li><code>Vertical</code></li>
-	 	* <li><code>Horizontal</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.TimelineLayout}
-		 * @defaultvalue "Vertical"
-		 * @since 1.0.0-rc.15
-		 * @public
-		 */
-		layout: {
-			type: TimelineLayout,
-			defaultValue: TimelineLayout.Vertical,
-		},
-
-		/**
-		 * Defines the accessible ARIA name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue: ""
-		 * @public
-		 * @since 1.2.0
-		 */
-		accessibleName: {
-			type: String,
-		},
-	},
-	slots: /** @lends sap.ui.webc.fiori.Timeline.prototype */ {
-		/**
-		 * Determines the content of the <code>ui5-timeline</code>.
-		 *
-		 * @type {sap.ui.webc.fiori.ITimelineItem[]}
-		 * @slot items
-		 * @public
-		 */
-		"default": {
-			propertyName: "items",
-			type: HTMLElement,
-			individualSlots: true,
-		},
-	},
-
-};
 
 /**
  * @class
@@ -94,10 +43,51 @@ const metadata = {
  * @public
  * @since 0.8.0
  */
+@customElement("ui5-timeline")
+@languageAware
 class Timeline extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the items orientation.
+	 *
+	 * <br><br>
+	 * <b>Note:</b>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Vertical</code></li>
+	 * <li><code>Horizontal</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.TimelineLayout}
+	 * @name sap.ui.webc.fiori.Timeline.prototype.layout
+	 * @defaultvalue "Vertical"
+	 * @since 1.0.0-rc.15
+	 * @public
+	 */
+	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
+	layout!: TimelineLayout;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.fiori.Timeline.prototype.accessibleName
+	 * @defaultvalue: ""
+	 * @public
+	 * @since 1.2.0
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Determines the content of the <code>ui5-timeline</code>.
+	 *
+	 * @type {sap.ui.webc.fiori.ITimelineItem[]}
+	 * @name sap.ui.webc.fiori.Timeline.prototype.default
+	 * @slot items
+	 * @public
+	 */
+	@slot({ type: HTMLElement, individualSlots: true, "default": true })
+	items!: Array<TimelineItem>;
 
 	static get styles() {
 		return styles;
@@ -110,6 +100,10 @@ class Timeline extends UI5Element {
 	static get template() {
 		return TimelineTemplate;
 	}
+
+	static i18nBundle: I18nBundle;
+
+	_itemNavigation: ItemNavigation;
 
 	constructor() {
 		super();
@@ -129,18 +123,18 @@ class Timeline extends UI5Element {
 
 	get ariaLabel() {
 		return this.accessibleName
-			? `${Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL)} ${this.accessibleName}`
-			: Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL);
+			? `${Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL as I18nText)} ${this.accessibleName}`
+			: Timeline.i18nBundle.getText(TIMELINE_ARIA_LABEL as I18nText);
 	}
 
-	_onfocusin(event) {
-		const target = event.target;
+	_onfocusin(e: FocusEvent) {
+		const target = e.target as TimelineItem;
 
 		this._itemNavigation.setCurrentItem(target);
 	}
 
 	onBeforeRendering() {
-		this._itemNavigation.navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
+		this._itemNavigation._navigationMode = this.layout === TimelineLayout.Horizontal ? NavigationMode.Horizontal : NavigationMode.Vertical;
 
 		for (let i = 0; i < this.items.length; i++) {
 			this.items[i].layout = this.layout;
@@ -152,28 +146,31 @@ class Timeline extends UI5Element {
 		}
 	}
 
-	_onkeydown(event) {
-		if (isTabNext(event)) {
-			if (!event.target.nameClickable || getEventMark(event) === "link") {
-				this._handleTabNextOrPrevious(event, isTabNext(event));
+	_onkeydown(e: KeyboardEvent) {
+		const target = e.target as TimelineItem;
+
+		if (isTabNext(e)) {
+			if (!target.nameClickable || getEventMark(e) === "link") {
+				this._handleTabNextOrPrevious(e, isTabNext(e));
 			}
-		} else if (isTabPrevious(event)) {
-			this._handleTabNextOrPrevious(event);
+		} else if (isTabPrevious(e)) {
+			this._handleTabNextOrPrevious(e);
 		}
 	}
 
-	_handleTabNextOrPrevious(event, isNext) {
-		const nextTargetIndex = isNext ? this.items.indexOf(event.target) + 1 : this.items.indexOf(event.target) - 1;
+	_handleTabNextOrPrevious(e: KeyboardEvent, isNext?: boolean) {
+		const target = e.target as TimelineItem;
+		const nextTargetIndex = isNext ? this.items.indexOf(target) + 1 : this.items.indexOf(target) - 1;
 		const nextTarget = this.items[nextTargetIndex];
 		if (!nextTarget) {
 			return;
 		}
 		if (nextTarget.nameClickable && !isNext) {
-			event.preventDefault();
-			nextTarget.shadowRoot.querySelector("[ui5-link]").focus();
+			e.preventDefault();
+			nextTarget.focusLink();
 			return;
 		}
-		event.preventDefault();
+		e.preventDefault();
 		nextTarget.focus();
 		this._itemNavigation.setCurrentItem(nextTarget);
 	}

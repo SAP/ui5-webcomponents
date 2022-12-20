@@ -378,7 +378,7 @@ describe("List Tests", () => {
 		];
 		const texts = await getResourceBundleTexts({ keys, id: "justList" });
 
-		assert.strictEqual(await justList.getProperty("ariaLabelModeText"), null, "aria-label mode message is correct");
+		assert.strictEqual(await justList.getProperty("ariaLabelModeText"), "", "aria-label mode message is correct");
 		assert.strictEqual(await listDelete.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_DELETABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listMultiSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");
@@ -487,5 +487,15 @@ describe("List Tests", () => {
 		const groupHeader = await browser.$("#listSelectedItem #group-header").shadow$(".ui5-ghli-root");
 
 		assert.strictEqual(await groupHeader.getAttribute("role"), "group", "Item label is empty");
+	});
+
+	it('anchor tabs should be accessible within list items', async () => {
+		const listItem = await browser.$("#linkInListItem");
+
+		await listItem.click();
+		const url = await browser.getUrl();
+		assert.strictEqual(url, "https://sap.github.io/ui5-webcomponents/playground/components", "Link target is accessible");
+
+		await browser.url(`test/pages/List_test_page.html`);
 	});
 });
