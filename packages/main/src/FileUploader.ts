@@ -37,7 +37,7 @@ import FileUploaderCss from "./generated/themes/FileUploader.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
-import type { IFormElement, NativeInputChangeCallback } from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 /**
  * @class
@@ -221,7 +221,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
 	/**
@@ -231,12 +231,12 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @slot
 	 * @private
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	formSupport!: Array<HTMLElement>;
 
 	_internals: ElementInternals;
 
-	static emptyInput?: HTMLInputElement;
+	static emptyInput: HTMLInputElement;
 
 	static i18nBundle: I18nBundle;
 
@@ -344,18 +344,17 @@ class FileUploader extends UI5Element implements IFormElement {
 			} else {
 				formSupport.syncNativeFileInput(this,
 					(element: IFormElement, nativeInput: HTMLInputElement) => {
-						nativeInput.disabled = element.disabled;
+						nativeInput.disabled = !!element.disabled;
 					},
-					this._onChange.bind(this) as NativeInputChangeCallback);
+					this._onChange.bind(this));
 			}
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
-	_onChange(e: InputEvent) {
-		const target = e.target as HTMLInputElement;
-		const changedFiles = target.files;
+	_onChange(e: Event) {
+		const changedFiles = (e.target as HTMLInputElement).files;
 
 		this._updateValue(changedFiles);
 		this.fireEvent("change", {
@@ -364,9 +363,9 @@ class FileUploader extends UI5Element implements IFormElement {
 	}
 
 	_updateValue(files: FileList | null) {
-		this.value = files ? Array.from(files).reduce((acc, currFile) => {
+		this.value = Array.from(files || []).reduce((acc, currFile) => {
 			return `${acc}"${currFile.name}" `;
-		}, "") : "";
+		}, "");
 	}
 
 	_setFormValue() {
@@ -407,7 +406,7 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	async _getPopover(): Promise<Popover> {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem?.querySelector(".ui5-valuestatemessage-popover") as Popover;
+		return staticAreaItem?.querySelector<Popover>(".ui5-valuestatemessage-popover");
 	}
 
 	/**
@@ -440,15 +439,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	}
 
 	get _input(): HTMLInputElement {
-		return (this.shadowRoot!.querySelector("input[type=file]") || this.querySelector("input[type=file][data-ui5-form-support]")) as HTMLInputElement;
-	}
-
-	/**
-	 * Determines input helper type in forms.
-	 * @private
-	 */
-	get _type() {
-		return "file";
+		return (this.shadowRoot!.querySelector<HTMLInputElement>("input[type=file]") || this.querySelector<HTMLInputElement>("input[type=file][data-ui5-form-support]"))!;
 	}
 
 	get valueStateTextMappings(): Record<string, string> {
@@ -513,17 +504,17 @@ class FileUploader extends UI5Element implements IFormElement {
 	get styles() {
 		return {
 			popoverHeader: {
-				"width": `${this.ui5Input ? this.ui5Input.offsetWidth as number : 0}px`,
+				"width": `${this.ui5Input ? this.ui5Input.offsetWidth : 0}px`, 
 			},
 		};
 	}
 
-	get ui5Input(): Input {
-		return this.shadowRoot!.querySelector(".ui5-file-uploader-input") as Input;
+	get ui5Input() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-file-uploader-input");
 	}
 
 	static get dependencies() {
-		return [Input, Popover, Icon] as Array<typeof UI5Element>; // Note: cast can be removed when all classes are in TS.
+		return [Input, Popover, Icon];
 	}
 
 	static async onDefine() {
