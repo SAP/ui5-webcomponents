@@ -1,4 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
@@ -9,122 +13,6 @@ import PageTemplate from "./generated/templates/PageTemplate.lit.js";
 
 // Styles
 import PageCss from "./generated/themes/Page.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-page",
-	managedSlots: true,
-	languageAware: true,
-	properties: /** @lends sap.ui.webc.fiori.Page.prototype */ {
-
-		/**
-		 * Defines the background color of the <code>ui5-page</code>.
-		 * <br><br>
-		 * <b>Note:</b> When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Solid</code></li> (default)
-		 * <li><code>Transparent</code></li>
-		 * <li><code>List</code></li>
-		 * </ul>
-		 * @type {sap.ui.webc.fiori.types.PageBackgroundDesign}
-		 * @defaultvalue "Solid"
-		 * @public
-		 */
-		backgroundDesign: {
-			type: PageBackgroundDesign,
-			defaultValue: PageBackgroundDesign.Solid,
-		},
-
-		/**
-		 * Disables vertical scrolling of page content.
-		 * If set to true, there will be no vertical scrolling at all.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disableScrolling: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines if the footer should float over the content.
-		 * <br><br>
-		 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
-		 * @type {boolean}
-		 * @defaultvalue true
-		 * @public
-		 */
-		floatingFooter: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the footer visibility.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		hideFooter: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the current media query size.
-		 *
-		 * @type {string}
-		 * @private
-		 * @since 1.0.0-rc.15
-		 */
-		mediaRange: {
-			type: String,
-		},
-	},
-
-	slots: /** @lends sap.ui.webc.fiori.Page.prototype */ {
-
-		/**
-		 * Defines the header HTML Element.
-		 *
-		 * @type {sap.ui.webc.fiori.IBar}
-		 * @slot
-		 * @public
-		 */
-		header: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the content HTML Element.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot content
-		 * @public
-		 */
-		"default": {
-			propertyName: "content",
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the footer HTML Element.
-		 *
-		 * @type {sap.ui.webc.fiori.IBar}
-		 * @slot
-		 * @public
-		 */
-		footer: {
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.Page.prototype */ {
-	},
-};
 
 /**
  * @class
@@ -159,10 +47,107 @@ const metadata = {
  * @since 1.0.0-rc.12
  * @public
  */
+@customElement("ui5-page")
+@languageAware
 class Page extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the background color of the <code>ui5-page</code>.
+	 * <br><br>
+	 * <b>Note:</b> When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Solid</code></li> (default)
+	 * <li><code>Transparent</code></li>
+	 * <li><code>List</code></li>
+	 * </ul>
+	 * @type {sap.ui.webc.fiori.types.PageBackgroundDesign}
+	 * @name sap.ui.webc.fiori.Page.prototype.backgroundDesign
+	 * @defaultvalue "Solid"
+	 * @public
+	 */
+	@property({ type: PageBackgroundDesign, defaultValue: PageBackgroundDesign.Solid })
+	backgroundDesign!: PageBackgroundDesign;
+
+	/**
+	 * Disables vertical scrolling of page content.
+	 * If set to true, there will be no vertical scrolling at all.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.fiori.Page.prototype.disableScrolling
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disableScrolling!: boolean;
+
+	/**
+	 * Defines if the footer should float over the content.
+	 * <br><br>
+	 * <b>Note:</b> When set to true the footer floats over the content with a slight offset from the bottom, otherwise it is fixed at the very bottom of the page.
+	 * @type {boolean}
+	 * @name sap.ui.webc.fiori.Page.prototype.floatingFooter
+	 * @defaultvalue true
+	 * @public
+	 */
+	@property({ type: Boolean })
+	floatingFooter!: boolean;
+
+	/**
+	 * Defines the footer visibility.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.fiori.Page.prototype.hideFooter
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideFooter!: boolean;
+
+	/**
+	 * Defines the current media query size.
+	 *
+	 * @type {string}
+	 * @private
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	mediaRange!: string;
+
+	/**
+	 * Defines the header HTML Element.
+	 *
+	 * @type {sap.ui.webc.fiori.IBar}
+	 * @name sap.ui.webc.fiori.Page.prototype.header
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	header!: Array<HTMLElement>;
+
+	/**
+	 * Defines the content HTML Element.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.fiori.Page.prototype.default
+	 * @slot content
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
+
+	/**
+	 * Defines the footer HTML Element.
+	 *
+	 * @type {sap.ui.webc.fiori.IBar}
+	 * @name sap.ui.webc.fiori.Page.prototype.footer
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	footer!: Array<HTMLElement>;
+
+	_updateMediaRange: () => void;
 
 	static get render() {
 		return litRender;
@@ -191,7 +176,7 @@ class Page extends UI5Element {
 	}
 
 	updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
 	}
 
 	get _contentBottom() {
