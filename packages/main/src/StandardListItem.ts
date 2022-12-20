@@ -1,8 +1,9 @@
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import ListItem, { IAccessibleListItem } from "./ListItem.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import ListItem from "./ListItem.js";
+import type { IAccessibleListItem } from "./ListItem.js";
 import Icon from "./Icon.js";
 // @ts-ignore
 import Avatar from "./Avatar.js";
@@ -186,19 +187,19 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 		this._hasImageContent = this.hasImageContent;
 	}
 
-	get displayImage() {
+	get displayImage(): boolean {
 		return !!this.image;
 	}
 
-	get displayIconBegin() {
-		return (this.icon && !this.iconEnd);
+	get displayIconBegin(): boolean {
+		return !!(this.icon && !this.iconEnd);
 	}
 
-	get displayIconEnd() {
-		return (this.icon && this.iconEnd);
+	get displayIconEnd(): boolean {
+		return !!(this.icon && this.iconEnd);
 	}
 
-	get hasImageContent() {
+	get hasImageContent(): boolean {
 		return !!this.imageContent.length;
 	}
 

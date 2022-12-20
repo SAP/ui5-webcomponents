@@ -15,6 +15,8 @@ type ClassMapValue = Record<string, boolean>
 
 type ClassMap = { [x: string] : ClassMapValue | ClassMap };
 
+type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
+
 export type {
 	PromiseResolve,
 	Timeout,
@@ -22,4 +24,5 @@ export type {
 	StyleDataCSP,
 	ComponentStylesData,
 	ClassMap,
+	PassiveEventListenerObject,
 };

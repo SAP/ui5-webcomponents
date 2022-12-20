@@ -1,16 +1,16 @@
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
-import "@ui5/webcomponents-icons/dist/decline.js";
-import "@ui5/webcomponents-icons/dist/edit.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import "@ui5/webcomponents-icons/dist/decline.js";
+import "@ui5/webcomponents-icons/dist/edit.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
@@ -18,7 +18,6 @@ import ListItemBase from "./ListItemBase.js";
 import RadioButton from "./RadioButton.js";
 // @ts-ignore
 import CheckBox from "./CheckBox.js";
-// @ts-ignore
 import Button from "./Button.js";
 import {
 	DELETE,
@@ -41,6 +40,25 @@ interface IAccessibleListItem {
 	accessibleNameRef?: string;
 }
 
+type SelectionRequestEventDetail = {
+	item: ListItemBase,
+	selectionComponentPressed: boolean,
+	selected?: boolean,
+	key?: string,
+}
+
+type PressEventDetail = {
+	item: ListItem,
+	selected: boolean,
+	key: string,
+}
+
+type CloseEventDetail = {
+	item: ListItem,
+}
+
+type ToggleEventDetail = CloseEventDetail;
+
 /**
  * @class
  * A class to serve as a base
@@ -53,8 +71,15 @@ interface IAccessibleListItem {
  * @public
  */
 @languageAware
+/**
+ * Fired when the user clicks on the detail button when type is <code>Detail</code>.
+ *
+ * @event sap.ui.webc.main.ListItem#detail-click
+ * @public
+ */
 @event("detail-click")
 @event("_press")
+@event("_focused")
 @event("_selection-requested")
 abstract class ListItem extends ListItemBase {
 	/**
@@ -71,6 +96,18 @@ abstract class ListItem extends ListItemBase {
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
 	type!: ListItemType;
+
+	/**
+	 * The navigated state of the list item.
+	 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+	 *
+	 * @public
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ListItem.prototype.navigated
+	 * @since 1.10.0
+	 */
+	@property({ type: Boolean })
+	navigated!: boolean;
 
 	/**
 	 * Indicates if the list item is active, e.g pressed down with the mouse or the keyboard keys.
@@ -153,18 +190,6 @@ abstract class ListItem extends ListItemBase {
 	@property({ type: HasPopup, noAttribute: true })
 	ariaHaspopup?: HasPopup;
 
-	/**
-	 * The navigated state of the list item.
-	 * If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
-	 *
-	 * @public
-	 * @type {boolean}
-	 * @name sap.ui.webc.main.ListItem.prototype.navigated
-	 * @since 1.10.0
-	 */
-	@property({ type: Boolean })
-	navigated!: boolean;
-
 	@property({ type: Integer })
 	_level?: number;
 
@@ -184,10 +209,7 @@ abstract class ListItem extends ListItemBase {
 
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
-	_ontouchstart: {
-		handleEvent: (e: TouchEvent) => void,
-		passive: boolean;
-	};
+	_ontouchstart: PassiveEventListenerObject;
 
 	static i18nBundle: I18nBundle;
 
@@ -316,7 +338,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent("_selection-requested", { item: this, selected: (e.target as HTMLInputElement).checked, selectionComponentPressed: true }); // Switch HTMLInputElement to CheckBox when ui5-check is migrated to TypeScript
+		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as HTMLInputElement).checked, selectionComponentPressed: true }); // Switch HTMLInputElement to CheckBox when ui5-check is migrated to TypeScript
 	}
 
 	onSingleSelectionComponentPress(e: MouseEvent) {
@@ -324,7 +346,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent("_selection-requested", { item: this, selected: !(e.target as ListItemBase).selected, selectionComponentPressed: true });
+		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as ListItemBase).selected, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -334,7 +356,7 @@ abstract class ListItem extends ListItemBase {
 	}
 
 	onDelete() {
-		this.fireEvent("_selection-requested", { item: this, selectionComponentPressed: false });
+		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selectionComponentPressed: false });
 	}
 
 	onDetailClick() {
@@ -348,7 +370,7 @@ abstract class ListItem extends ListItemBase {
 		if (isEnter(e as KeyboardEvent)) {
 			e.preventDefault();
 		}
-		this.fireEvent("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
+		this.fireEvent<PressEventDetail>("_press", { item: this, selected: this.selected, key: (e as KeyboardEvent).key });
 	}
 
 	get isInactive() {
@@ -469,6 +491,10 @@ abstract class ListItem extends ListItemBase {
 }
 
 export default ListItem;
-export {
+export type {
 	IAccessibleListItem,
+	SelectionRequestEventDetail,
+	PressEventDetail,
+	ToggleEventDetail,
+	CloseEventDetail,
 };
