@@ -3,11 +3,11 @@
 	role="switch"
 	aria-label="{{ariaLabelText}}"
 	aria-checked="{{checked}}"
-	aria-disabled="{{ariaDisabled}}"
+	aria-disabled="{{effectiveAriaDisabled}}"
 	@click="{{_onclick}}"
 	@keyup="{{_onkeyup}}"
 	@keydown="{{_onkeydown}}"
-	tabindex="{{tabIndex}}"
+	tabindex="{{effectiveTabIndex}}"
 	dir="{{effectiveDir}}"
 	title="{{tooltip}}"
 >
