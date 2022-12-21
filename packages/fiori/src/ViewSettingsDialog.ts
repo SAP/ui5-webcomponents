@@ -1,21 +1,31 @@
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+// @ts-ignore
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
+// @ts-ignore
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
+// @ts-ignore
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
+// @ts-ignore
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
 import Bar from "./Bar.js";
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
 import "@ui5/webcomponents-icons/dist/filter.js";
 import "@ui5/webcomponents-icons/dist/nav-back.js";
+import type SortItem from "./SortItem.js";
+import type FilterItem from "./FilterItem.js";
 
 import {
 	VSD_DIALOG_TITLE_SORT,
@@ -27,6 +37,7 @@ import {
 	VSD_ORDER_ASCENDING,
 	VSD_ORDER_DESCENDING,
 	VSD_FILTER_BY,
+// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -35,164 +46,13 @@ import ViewSettingsDialogTemplate from "./generated/templates/ViewSettingsDialog
 // Styles
 import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-view-settings-dialog",
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.fiori.ViewSettingsDialog.prototype */ {
-		/**
-		 * Defines the initial sort order.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		 sortDescending: {
-			type: Boolean,
-		},
-
-		/**
-		 * Keeps recently focused list in order to focus it on next dialog open.
-		 *
-		 * @type {object}
-		 * @private
-		 */
-		 _recentlyFocused: {
-			type: Object,
-		},
-
-		/**
-		 * Stores settings of the dialog before the initial open.
-		 *
-		 * @type {object}
-		 * @private
-		 */
-		 _initialSettings: {
-			type: Object,
-		},
-
-		/**
-		 * Stores settings of the dialog after confirmation.
-		 *
-		 * @type {object}
-		 * @private
-		 */
-		 _confirmedSettings: {
-			type: Object,
-		},
-
-		/**
-		 * Stores current settings of the dialog.
-		 *
-		 * @type {object}
-		 * @private
-		 */
-		 _currentSettings: {
-			type: Object,
-		},
-
-		/**
-		 * Defnies the current mode of the component.
-		 *
-		 * @since 1.0.0-rc.16
-		 * @private
-		 */
-		_currentMode: {
-			type: ViewSettingsDialogMode,
-			defaultValue: ViewSettingsDialogMode.Sort,
-		},
-
-		/**
-		 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values.
-		 *
-		 * @since 1.0.0-rc.16
-		 * @private
-		 */
-		_filterStepTwo: {
-			type: Boolean,
-			noAttribute: true,
-		},
-	},
-	slots: /** @lends sap.ui.webc.fiori.ViewSettingsDialog.prototype */ {
-		/**
-		 * Defines the list of items against which the user could sort data.
-		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
-		 *
-		 * @type {sap.ui.webc.fiori.ISortItem[]}
-		 * @slot sortItems
-		 * @public
-		 */
-		 sortItems: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the <code>filterItems</code> list.
-		 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
-		 *
-		 * @type {sap.ui.webc.fiori.IFilterItem[]}
-		 * @slot filterItems
-		 * @public
-		 */
-		filterItems: {
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.ViewSettingsDialog.prototype */ {
-
-		/**
-		 * Fired when confirmation button is activated.
-		 *
-		 * @event sap.ui.webc.fiori.ViewSettingsDialog#confirm
-		 * @param {String} sortOrder The current sort order selected.
-		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
-		 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
-		 * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
-		 * @param {Array} filterItems The selected filters items.
-		 * @public
-		 */
-		confirm: {
-			detail: {
-				sortOrder: { type: String },
-				sortBy: { type: String },
-				sortByItem: { type: HTMLElement },
-				sortDescending: { type: Boolean },
-				filters: { type: Array },
-			},
-		},
-
-		/**
-		 * Fired when cancel button is activated.
-		 *
-		 * @event sap.ui.webc.fiori.ViewSettingsDialog#cancel
-		 * @param {String} sortOrder The current sort order selected.
-		 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
-		 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
-		 * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
-		 * @param {Array} filterItems The selected filters items.
-		 * @public
-		 */
-		cancel: {
-			detail: {
-				sortOrder: { type: String },
-				sortBy: { type: String },
-				sortByItem: { type: HTMLElement },
-				sortDescending: { type: Boolean },
-				filters: { type: Array },
-			},
-		},
-
-		/**
-		 * Fired before the component is opened. <b>This event does not bubble.</b>
-		 *
-		 * @public
-		 * @event sap.ui.webc.fiori.ViewSettingsDialog#before-open
-		 */
-		"before-open": {},
-	},
-};
+type ViewSettingsDialogEventDetail = {
+	sortOrder: string,
+	sortBy: string,
+	sortByItem: SortItem,
+	sortDescending: boolean,
+	filters: Array<FilterItem>,
+}
 
 /**
  * @class
@@ -226,7 +86,144 @@ const metadata = {
  * @since 1.0.0-rc.16
  * @public
  */
+@customElement("ui5-view-settings-dialog")
+
+/**
+ * Fired when confirmation button is activated.
+ *
+ * @event sap.ui.webc.fiori.ViewSettingsDialog#confirm
+ * @param {String} sortOrder The current sort order selected.
+ * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+ * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+ * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
+ * @param {Array} filterItems The selected filters items.
+ * @public
+ */
+@event("confirm", {
+	detail: {
+		sortOrder: { type: String },
+		sortBy: { type: String },
+		sortByItem: { type: HTMLElement },
+		sortDescending: { type: Boolean },
+		filters: { type: Array },
+	},
+})
+
+/**
+ * Fired when cancel button is activated.
+ *
+ * @event sap.ui.webc.fiori.ViewSettingsDialog#cancel
+ * @param {String} sortOrder The current sort order selected.
+ * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+ * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+ * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
+ * @param {Array} filterItems The selected filters items.
+ * @public
+ */
+@event("cancel", {
+	detail: {
+		sortOrder: { type: String },
+		sortBy: { type: String },
+		sortByItem: { type: HTMLElement },
+		sortDescending: { type: Boolean },
+		filters: { type: Array },
+	},
+})
+
+/**
+ * Fired before the component is opened. <b>This event does not bubble.</b>
+ *
+ * @public
+ * @event sap.ui.webc.fiori.ViewSettingsDialog#before-open
+ */
+@event("before-open")
 class ViewSettingsDialog extends UI5Element {
+	/**
+	 * Defines the initial sort order.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	sortDescending!: boolean;
+
+	/**
+	 * Keeps recently focused list in order to focus it on next dialog open.
+	 *
+	 * @type {object}
+	 * @private
+	 */
+	@property({ type: Object })
+	_recentlyFocused!: object;
+
+	/**
+	 * Stores settings of the dialog before the initial open.
+	 *
+	 * @type {object}
+	 * @private
+	 */
+	@property({ type: Object })
+	_initialSettings!: object;
+
+	/**
+	 * Stores settings of the dialog after confirmation.
+	 *
+	 * @type {object}
+	 * @private
+	 */
+	@property({ type: Object })
+	_confirmedSettings!: object;
+
+	/**
+	 * Stores current settings of the dialog.
+	 *
+	 * @type {object}
+	 * @private
+	 */
+	@property({ type: Object })
+	_currentSettings!: object;
+
+	/**
+	 * Defnies the current mode of the component.
+	 *
+	 * @since 1.0.0-rc.16
+	 * @private
+	 */
+	@property({ type: ViewSettingsDialogMode, defaultValue: ViewSettingsDialogMode.Sort })
+	_currentMode!: ViewSettingsDialogMode;
+
+	/**
+	 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values.
+	 *
+	 * @since 1.0.0-rc.16
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_filterStepTwo!: boolean;
+
+	/**
+	 * Defines the list of items against which the user could sort data.
+	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
+	 *
+	 * @type {sap.ui.webc.fiori.ISortItem[]}
+	 * @slot sortItems
+	 * @public
+	 */
+	@slot()
+	sortItems!: Array<SortItem>
+
+	/**
+	 * Defines the <code>filterItems</code> list.
+	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
+	 *
+	 * @type {sap.ui.webc.fiori.IFilterItem[]}
+	 * @slot filterItems
+	 * @public
+	 */
+	@slot()
+	filterItems!: Array<FilterItem>;
+
 	constructor() {
 		super();
 		this._currentSettings = {
@@ -740,3 +737,6 @@ class ViewSettingsDialog extends UI5Element {
 ViewSettingsDialog.define();
 
 export default ViewSettingsDialog;
+export type {
+	ViewSettingsDialogEventDetail,
+};

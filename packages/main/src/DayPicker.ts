@@ -82,11 +82,6 @@ type WeekNumber = {
 
 type Week = Array<Day | WeekNumber>;
 
-type SelectedDatesChangeEventDetail = {
-	dates: Array<number>,
-	timestamp?: number,
-}
-
 /**
  * @class
  *
@@ -795,6 +790,11 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			? `${this._primaryCalendarType} calendar with secondary ${this.secondaryCalendarType as string} calendar`
 			: `${this._primaryCalendarType} calendar`;
 	}
+}
+
+type SelectedDatesChangeEventDetail = {
+	dates: Array<number>,
+	timestamp?: number,
 }
 
 DayPicker.define();
