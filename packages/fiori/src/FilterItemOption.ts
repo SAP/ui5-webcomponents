@@ -1,40 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-filter-item-option",
-	properties: /** @lends sap.ui.webc.fiori.FilterItemOption.prototype */ {
-		/**
-		 * Defines the text of the component.
-		 *
-		 * @public
-		 * @type {string}
-		 * @defaultvalue ""
-		 */
-		text: {
-			type: String,
-		},
-
-		/**
-		 * Defines whether the option is selected
-		 *
-		 * @public
-		 * @type {boolean}
-		 * @defaultvalue false
-		 */
-		selected: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.fiori.FilterItemOption.prototype */ {
-		//
-	},
-	events: /** @lends sap.ui.webc.fiori.FilterItemOption.prototype */ {
-		//
-	},
-};
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
 /**
  * @class
@@ -58,10 +24,26 @@ const metadata = {
  * @implements sap.ui.webc.fiori.IFilterItemOption
  * @public
  */
+@customElement("filter-item-option")
 class FilterItemOption extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the text of the component.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property({ type: String })
+	text!: string;
+
+	/**
+	 * Defines if the component is selected.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	selected!: boolean;
 }
 
 FilterItemOption.define();
