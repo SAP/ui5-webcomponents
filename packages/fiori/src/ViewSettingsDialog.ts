@@ -3,6 +3,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -52,6 +54,25 @@ type ViewSettingsDialogEventDetail = {
 	sortByItem: SortItem,
 	sortDescending: boolean,
 	filters: Array<FilterItem>,
+}
+
+type SortOrder = {
+	text: string,
+	selected: boolean,
+}
+
+type SortBy = SortOrder & {
+	index:number,
+}
+
+type Filters = SortOrder & {
+	filterOptions: Array<SortOrder>,
+}
+
+type Settings = {
+	sortOrder: Array<SortOrder>,
+	sortBy: Array<SortBy>,
+	filters: Array<Filters>,
 }
 
 /**
@@ -164,7 +185,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_initialSettings!: object;
+	_initialSettings!: Settings;
 
 	/**
 	 * Stores settings of the dialog after confirmation.
@@ -173,7 +194,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_confirmedSettings!: object;
+	_confirmedSettings!: Settings;
 
 	/**
 	 * Stores current settings of the dialog.
@@ -182,7 +203,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_currentSettings!: object;
+	_currentSettings!: Settings;
 
 	/**
 	 * Defnies the current mode of the component.
@@ -224,6 +245,8 @@ class ViewSettingsDialog extends UI5Element {
 	@slot()
 	filterItems!: Array<FilterItem>;
 
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 		this._currentSettings = {
@@ -253,7 +276,7 @@ class ViewSettingsDialog extends UI5Element {
 				}
 			}
 
-			filter.additionalText = !selectedCount ? "" : selectedCount;
+			filter.additionalText = !selectedCount ? "" : selectedCount.toString();
 		});
 	}
 
@@ -261,22 +284,18 @@ class ViewSettingsDialog extends UI5Element {
 		return litRender;
 	}
 
-	static get metadata() {
-		return metadata;
-	}
-
-	static get dependencies() {
+	static get dependencies() { // remove type casting after refactoring these
 		return [
 			Bar,
 			Button,
 			Title,
-			Dialog,
+			Dialog as typeof UI5Element,
 			Label,
 			List,
 			StandardListItem,
-			GroupHeaderListItem,
-			SegmentedButton,
-			SegmentedButtonItem,
+			GroupHeaderListItem as typeof UI5Element,
+			SegmentedButton as typeof UI5Element,
+			SegmentedButtonItem as typeof UI5Element,
 		];
 	}
 
@@ -298,8 +317,6 @@ class ViewSettingsDialog extends UI5Element {
 				return this._currentSettings.filters[i];
 			}
 		}
-
-		return "";
 	}
 
 	get shouldBuildSort() {
@@ -315,43 +332,44 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _filterByTitle() {
-		return `${ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY)}: ${this._selectedFilter.text}`;
+		const selectedFilterText = this._selectedFilter ? this._selectedFilter.text : "";
+		return `${ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY as I18nText)}: ${selectedFilterText}`;
 	}
 
 	get _dialogTitle() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT as I18nText);
 	}
 
 	get _okButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SUBMIT_BUTTON);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SUBMIT_BUTTON as I18nText);
 	}
 
 	get _cancelButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_CANCEL_BUTTON);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_CANCEL_BUTTON as I18nText);
 	}
 
 	get _resetButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_RESET_BUTTON);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_RESET_BUTTON as I18nText);
 	}
 
 	get _ascendingLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_ASCENDING);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_ASCENDING as I18nText);
 	}
 
 	get _descendingLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_DESCENDING);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_DESCENDING as I18nText);
 	}
 
 	get _sortOrderLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_ORDER);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_ORDER as I18nText);
 	}
 
 	get _filterByLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY as I18nText);
 	}
 
 	get _sortByLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_BY);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_BY as I18nText);
 	}
 
 	get _isPhone() {
@@ -404,7 +422,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Returns the current settings (current state of all lists).
 	 */
-	get _settings() {
+	get _settings(): Settings {
 		return {
 			sortOrder: JSON.parse(JSON.stringify(this.initSortOrderItems)),
 			sortBy: JSON.parse(JSON.stringify(this.initSortByItems)),
