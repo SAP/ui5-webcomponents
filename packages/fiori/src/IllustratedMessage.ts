@@ -326,13 +326,17 @@ class IllustratedMessage extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	_lastKnownOffsetWidthForMedia: Record<string, number>;
+	_lastKnownMedia: string;
 	_handleResize: () => void;
 
 	constructor() {
 		super();
 
 		this._handleResize = this.handleResize.bind(this);
-		this._lastKnownOffsetWidthForMedia = {}; // this will store the last known offsetWidth of the IllustratedMessage DOM node for a given media (e.g. "Spot")
+		// this will store the last known offsetWidth of the IllustratedMessage DOM node for a given media (e.g. "Spot")
+		this._lastKnownOffsetWidthForMedia = {};
+		// this will store the last known media, in order to detect if IllustratedMessage has been hidden by expand/collapse container
+		this._lastKnownMedia = "base";
 	}
 
 	static get render() {
@@ -429,9 +433,12 @@ class IllustratedMessage extends UI5Element {
 			newMedia = IllustratedMessage.MEDIA.SCENE;
 		}
 		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia];
-		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth)) { // prevents infinite resize
+		 // prevents infinite resizing, when same width is detected for the same media,
+		 // excluding the case in which, the control is placed inside expand/collapse container
+		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth) || this._lastKnownOffsetWidthForMedia[this._lastKnownMedia] === 0) {
 			this.media = newMedia;
 			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
+			this._lastKnownMedia = newMedia;
 		}
 	}
 

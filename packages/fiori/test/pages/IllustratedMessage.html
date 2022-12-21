@@ -138,6 +138,20 @@
 		<ui5-title slot="title" level="H1">This is a slotted title</ui5-title>
 	</ui5-illustrated-message>
 
+	<ui5-panel id="panel1" accessible-role="Complementary" no-animation>
+
+		<!-- Panel header -->
+		<div slot="header" class="header">
+			<ui5-title id="p1-title">Expandable panel title</ui5-title>
+		</div>
+
+        <ui5-illustrated-message
+          name="AddColumn"
+          titleText="No milestones yet."
+		  id="illustratedMsg4"
+        ></ui5-illustrated-message>
+    </ui5-panel>
+
 	<script>
 		const illustrationSelect = document.getElementById("illustrationSelect");
 		const sizeSelect = document.getElementById("sizeSelect");
