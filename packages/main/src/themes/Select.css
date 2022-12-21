@@ -22,7 +22,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	color: var(--_ui5_select_label_olor);
+	color: var(--_ui5_select_label_color);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	font-weight: normal;
