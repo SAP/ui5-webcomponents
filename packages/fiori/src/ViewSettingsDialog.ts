@@ -77,6 +77,12 @@ type Settings = {
 	filters: Array<Filters>,
 }
 
+type PublicMethodType = {
+	sortOrder: string,
+	sortBy: string,
+	filters: EventDetailFilters,
+}
+
 type DialogTemp = UI5Element & {
 	isOpen: () => boolean,
 	show: (preventInitialFocus: boolean) => void,
@@ -722,9 +728,9 @@ class ViewSettingsDialog extends UI5Element {
    * @param {Array.<Object>} settings.filters - filters
 	 * @public
 	 */
-	setConfirmedSettings(settings: Settings) {
+	setConfirmedSettings(settings: PublicMethodType) {
 		if (settings && this._dialog && !this._dialog.isOpen()) {
-			const tempSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
+			const tempSettings = JSON.parse(JSON.stringify(this._confirmedSettings)) as Settings;
 			if (settings.sortOrder) {
 				for (let i = 0; i < tempSettings.sortOrder.length; i++) {
 					if (tempSettings.sortOrder[i].text === settings.sortOrder) {
@@ -749,14 +755,12 @@ class ViewSettingsDialog extends UI5Element {
 				const inputFilters: Record<string, Array<string>> = {};
 				for (let i = 0; i < settings.filters.length; i++) {
 					const key = Object.keys(settings.filters[i])[0];
-					// @ts-ignore
 					inputFilters[key] = settings.filters[i][key];
 				}
 
 				for (let i = 0; i < tempSettings.filters.length; i++) {
 					for (let j = 0; j < tempSettings.filters[i].filterOptions.length; j++) {
-						const txt = tempSettings.filters[i].filterOptions[j].text as string;
-						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(txt) > -1) {
+						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1) {
 							tempSettings.filters[i].filterOptions[j].selected = true;
 						} else {
 							tempSettings.filters[i].filterOptions[j].selected = false;
