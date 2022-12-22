@@ -16,12 +16,14 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
+import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
 import styles from "./generated/themes/Popup.css.js";
 import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
+
 
 const createBlockingStyle = (): void => {
 	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
@@ -187,6 +189,17 @@ abstract class Popup extends UI5Element {
 	 */
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
+
+	/**
+	 * Allows setting a custom role
+	 * @type {sap.ui.webc.main.types.PopupAccessibleRole}
+	 * @name sap.ui.webc.main.Popup.prototype.accessibleRole
+	 * @defaultvalue "Dialog"
+	 * @public
+	 * @since 1.10.0
+	 */
+	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
+	accessibleRole!: PopupAccessibleRole;
 
 	/**
 	 * Defines the current media query size.
@@ -610,7 +623,11 @@ abstract class Popup extends UI5Element {
 	}
 
 	get _role() {
-		return "dialog";
+		if (this.accessibleRole === PopupAccessibleRole.None) {
+			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("role");
+			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("aria-modal");
+		}
+		return this.accessibleRole;
 	}
 
 	get contentDOM(): HTMLElement {

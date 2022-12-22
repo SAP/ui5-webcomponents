@@ -128,6 +128,14 @@
 		<ui5-list id="bigList"></ui5-list>
 	</ui5-popover>
 
+	<ui5-button id="acc-role-popover-button">
+		Open ACC role Popover
+	</ui5-button>
+
+	<ui5-popover placement-type="Bottom" id="acc-role-popover" header-text="Test ACC world" accessible-role="menu">
+		<ui5-list id="bigList2"></ui5-list>
+	</ui5-popover>
+
 	<ui5-button id="btnPopModal">Opens modal popover!</ui5-button>
 
 	<ui5-popover id="modalPopover" modal header-text="Modal popover">
@@ -467,8 +475,16 @@
 			return "<ui5-li>" + item + "</ui5-li>";
 		}).join("");
 
+		document.getElementById("bigList2").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
+			return "<ui5-li>" + item + "</ui5-li>";
+		}).join("");
+
 		document.getElementById("big-popover-button").addEventListener("click", function (event) {
 			document.getElementById("big-popover").showAt(event.target);
+		});
+
+		document.getElementById("acc-role-popover-button").addEventListener("click", function (event) {
+			document.getElementById("acc-role-popover").showAt(event.target);
 		});
 
 		btnFullWidth.addEventListener("click", function (event) {

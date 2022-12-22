@@ -388,4 +388,15 @@ describe("Acc", () => {
 
 		assert.isNull(await popoverWithoutHeader.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover should NOT have aria-labelledby set.");
 	});
+
+	it("tests role setting from property", async () => {
+		const popover = await browser.$("#acc-role-popover");
+		await popover.removeAttribute("accessible-role");
+		//assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("accessible-role"), "Popover has role attribute set.");
+		assert.ok(await popover.shadow$("[role=dialog]"), "The default role is dialog.");
+
+		await popover.setAttribute("accessible-role", "menu");
+		assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("role"), "Popover has role attribute set.");
+		assert.ok(await popover.shadow$("[role=menu]"), "The new role is correctly set to menu.");
+	});
 });
