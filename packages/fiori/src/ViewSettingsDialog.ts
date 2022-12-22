@@ -755,8 +755,8 @@ class ViewSettingsDialog extends UI5Element {
 
 				for (let i = 0; i < tempSettings.filters.length; i++) {
 					for (let j = 0; j < tempSettings.filters[i].filterOptions.length; j++) {
-						// @ts-ignore
-						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1) {
+						const txt = tempSettings.filters[i].filterOptions[j].text as string;
+						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(txt) > -1) {
 							tempSettings.filters[i].filterOptions[j].selected = true;
 						} else {
 							tempSettings.filters[i].filterOptions[j].selected = false;
