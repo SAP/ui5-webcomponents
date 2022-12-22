@@ -755,8 +755,7 @@ class ViewSettingsDialog extends UI5Element {
 			if (settings.filters) {
 				const inputFilters: EventDetailFilter = {};
 				for (let i = 0; i < settings.filters.length; i++) {
-					const key = Object.keys(settings.filters[i])[0];
-					inputFilters[key] = settings.filters[i][key];
+					inputFilters[Object.keys(settings.filters[i])[0]] = settings.filters[i][Object.keys(settings.filters[i])[0]];
 				}
 
 				for (let i = 0; i < tempSettings.filters.length; i++) {
