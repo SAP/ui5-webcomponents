@@ -48,40 +48,30 @@ import ViewSettingsDialogTemplate from "./generated/templates/ViewSettingsDialog
 // Styles
 import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js";
 
-type EventDetailFilter = Record<string, Array<string>>
-type EventDetailFilters = Array<EventDetailFilter>
+type VSDFilter = Record<string, Array<string>> // {"Filter 1": ["Filter 5", "Filter 6"]}
+type VSDFilters = Array<VSDFilter> // [{"Filter 1": ["Filter 5", "Filter 6"]}, {"Filter 3": ["Filter 8"]}]
 
-type ViewSettingsDialogEventDetail = {
+// The data, passed to the public method + part of the events' detail
+type VSDSettings = {
 	sortOrder: string,
 	sortBy: string,
+	filters: VSDFilters,
+}
+
+// Events' detail
+type VSDEventDetail = VSDSettings & {
 	sortByItem: SortItem,
 	sortDescending: boolean,
-	filters: EventDetailFilters,
 }
 
-type SortOrder = {
-	text: string,
-	selected: boolean,
-}
+// Common properties for several VSDInternalSettings fields
+type VSDItem = {text: string, selected: boolean}
 
-type SortBy = SortOrder & {
-	index:number,
-}
-
-type Filters = SortOrder & {
-	filterOptions: Array<SortOrder>,
-}
-
-type Settings = {
-	sortOrder: Array<SortOrder>,
-	sortBy: Array<SortBy>,
-	filters: Array<Filters>,
-}
-
-type PublicMethodType = {
-	sortOrder: string,
-	sortBy: string,
-	filters: EventDetailFilters,
+// Used for the private properties _initialSettings, _confirmedSettings and _currentSettings
+type VSDInternalSettings = {
+	sortOrder: Array<VSDItem>,
+	sortBy: Array<VSDItem & {index: number}>,
+	filters: Array<VSDItem & {filterOptions: Array<VSDItem>}>,
 }
 
 type DialogTemp = UI5Element & {
@@ -200,7 +190,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_initialSettings!: Settings;
+	_initialSettings!: VSDInternalSettings;
 
 	/**
 	 * Stores settings of the dialog after confirmation.
@@ -209,7 +199,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_confirmedSettings!: Settings;
+	_confirmedSettings!: VSDInternalSettings;
 
 	/**
 	 * Stores current settings of the dialog.
@@ -218,7 +208,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_currentSettings!: Settings;
+	_currentSettings!: VSDInternalSettings;
 
 	/**
 	 * Defnies the current mode of the component.
@@ -415,8 +405,8 @@ class ViewSettingsDialog extends UI5Element {
 	get _sortSetttingsAreInitial() {
 		let settingsAreInitial = true;
 		["sortBy", "sortOrder"].forEach(sortList => {
-			this._currentSettings[sortList as keyof Settings].forEach((item, index) => {
-				if (item.selected !== this._initialSettings[sortList as keyof Settings][index].selected) {
+			this._currentSettings[sortList as keyof VSDInternalSettings].forEach((item, index) => {
+				if (item.selected !== this._initialSettings[sortList as keyof VSDInternalSettings][index].selected) {
 					settingsAreInitial = false;
 				}
 			});
@@ -441,7 +431,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Returns the current settings (current state of all lists).
 	 */
-	get _settings(): Settings {
+	get _settings(): VSDInternalSettings {
 		return {
 			sortOrder: JSON.parse(JSON.stringify(this.initSortOrderItems)),
 			sortBy: JSON.parse(JSON.stringify(this.initSortByItems)),
@@ -603,7 +593,7 @@ class ViewSettingsDialog extends UI5Element {
 		this.close();
 		this._confirmedSettings = this._currentSettings;
 
-		this.fireEvent<ViewSettingsDialogEventDetail>("confirm", this.eventsParams);
+		this.fireEvent<VSDEventDetail>("confirm", this.eventsParams);
 	}
 
 	/**
@@ -612,7 +602,7 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
 
-		this.fireEvent<ViewSettingsDialogEventDetail>("cancel", this.eventsParams);
+		this.fireEvent<VSDEventDetail>("cancel", this.eventsParams);
 		this.close();
 	}
 
@@ -634,7 +624,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get selectedFilters() {
-		const result: EventDetailFilters = [];
+		const result: VSDFilters = [];
 
 		this._currentSettings.filters.forEach(filter => {
 			const selectedOptions: Array<string> = [];
@@ -681,7 +671,7 @@ class ViewSettingsDialog extends UI5Element {
 	 *
 	 * @param {Object} settings
 	 */
-	_restoreSettings(settings: Settings) {
+	_restoreSettings(settings: VSDInternalSettings) {
 		this._currentSettings = JSON.parse(JSON.stringify(settings));
 		this._currentMode = ViewSettingsDialogMode.Sort;
 		this._filterStepTwo = false;
@@ -729,9 +719,9 @@ class ViewSettingsDialog extends UI5Element {
    * @param {Array.<Object>} settings.filters - filters
 	 * @public
 	 */
-	setConfirmedSettings(settings: PublicMethodType) {
+	setConfirmedSettings(settings: VSDSettings) {
 		if (settings && this._dialog && !this._dialog.isOpen()) {
-			const tempSettings = JSON.parse(JSON.stringify(this._confirmedSettings)) as Settings;
+			const tempSettings: VSDInternalSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {
 				for (let i = 0; i < tempSettings.sortOrder.length; i++) {
 					if (tempSettings.sortOrder[i].text === settings.sortOrder) {
@@ -753,7 +743,7 @@ class ViewSettingsDialog extends UI5Element {
 			}
 
 			if (settings.filters) {
-				const inputFilters: EventDetailFilter = {};
+				const inputFilters: VSDFilter = {};
 				for (let i = 0; i < settings.filters.length; i++) {
 					inputFilters[Object.keys(settings.filters[i])[0]] = settings.filters[i][Object.keys(settings.filters[i])[0]];
 				}
@@ -778,5 +768,5 @@ ViewSettingsDialog.define();
 
 export default ViewSettingsDialog;
 export type {
-	ViewSettingsDialogEventDetail,
+	VSDEventDetail,
 };
