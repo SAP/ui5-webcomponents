@@ -48,7 +48,8 @@ import ViewSettingsDialogTemplate from "./generated/templates/ViewSettingsDialog
 // Styles
 import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js";
 
-type EventDetailFilters = Array<Record<string, Array<string>>>
+type EventDetailFilter = Record<string, Array<string>>
+type EventDetailFilters = Array<EventDetailFilter>
 
 type ViewSettingsDialogEventDetail = {
 	sortOrder: string,
@@ -752,7 +753,7 @@ class ViewSettingsDialog extends UI5Element {
 			}
 
 			if (settings.filters) {
-				const inputFilters: Record<string, Array<string>> = {};
+				const inputFilters: EventDetailFilter = {};
 				for (let i = 0; i < settings.filters.length; i++) {
 					const key = Object.keys(settings.filters[i])[0];
 					inputFilters[key] = settings.filters[i][key];
