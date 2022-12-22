@@ -29,6 +29,7 @@ class FilterItemOption extends UI5Element {
 	/**
 	 * Defines the text of the component.
 	 *
+	 * @name sap.ui.webc.fiori.FilterItemOption.prototype.text
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @public
@@ -38,6 +39,8 @@ class FilterItemOption extends UI5Element {
 
 	/**
 	 * Defines if the component is selected.
+	 *
+	 * @name sap.ui.webc.fiori.FilterItemOption.prototype.selected
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public

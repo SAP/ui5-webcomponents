@@ -29,6 +29,7 @@ class SortItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
 	 *
+	 * @name sap.ui.webc.fiori.SortItem.prototype.text
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @public
@@ -38,6 +39,8 @@ class SortItem extends UI5Element {
 
 	/**
 	 * Defines if the component is selected.
+	 *
+	 * @name sap.ui.webc.fiori.SortItem.prototype.selected
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public

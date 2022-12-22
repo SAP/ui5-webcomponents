@@ -31,6 +31,7 @@ class FilterItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
 	 *
+	 * @name sap.ui.webc.fiori.FilterItem.prototype.text
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @public
@@ -41,6 +42,7 @@ class FilterItem extends UI5Element {
 	/**
 	 * Defines the additional text of the component.
 	 *
+	 * @name sap.ui.webc.fiori.FilterItem.prototype.additionalText
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @public
@@ -50,6 +52,7 @@ class FilterItem extends UI5Element {
 
 	/**
 	 * Defines the <code>values</code> list.
+	 * @name sap.ui.webc.fiori.FilterItem.prototype.value
 	 * @type {sap.ui.webc.fiori.IFilterItemOption[]}
 	 * @slot values
 	 * @public

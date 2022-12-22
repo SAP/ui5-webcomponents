@@ -169,6 +169,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Defines the initial sort order.
 	 *
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog.prototype.sortDescending
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
@@ -234,6 +235,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Defines the list of items against which the user could sort data.
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/SortItem";</code>
 	 *
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog.prototype.sortItems
 	 * @type {sap.ui.webc.fiori.ISortItem[]}
 	 * @slot sortItems
 	 * @public
@@ -287,7 +289,7 @@ class ViewSettingsDialog extends UI5Element {
 				}
 			}
 
-			filter.additionalText = !selectedCount ? "" : selectedCount.toString();
+			filter.additionalText = !selectedCount ? "" : `${selectedCount}`;
 		});
 	}
 
@@ -529,7 +531,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
-		const mode = e.detail.selectedItem.getAttribute("mode") as ViewSettingsDialogMode;
+		const mode: ViewSettingsDialogMode = e.detail.selectedItem.getAttribute("mode");
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
