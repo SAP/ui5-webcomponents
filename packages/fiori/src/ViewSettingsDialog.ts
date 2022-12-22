@@ -48,12 +48,14 @@ import ViewSettingsDialogTemplate from "./generated/templates/ViewSettingsDialog
 // Styles
 import viewSettingsDialogCSS from "./generated/themes/ViewSettingsDialog.css.js";
 
+type EventDetailFilters = Array<Record<string, Array<string>>>
+
 type ViewSettingsDialogEventDetail = {
 	sortOrder: string,
 	sortBy: string,
 	sortByItem: SortItem,
 	sortDescending: boolean,
-	filters: Array<FilterItem>,
+	filters: EventDetailFilters,
 }
 
 type SortOrder = {
@@ -73,6 +75,12 @@ type Settings = {
 	sortOrder: Array<SortOrder>,
 	sortBy: Array<SortBy>,
 	filters: Array<Filters>,
+}
+
+type DialogTemp = UI5Element & {
+	isOpen: () => boolean,
+	show: (preventInitialFocus: boolean) => void,
+	close: () => void,
 }
 
 /**
@@ -176,7 +184,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_recentlyFocused!: object;
+	_recentlyFocused!: List;
 
 	/**
 	 * Stores settings of the dialog before the initial open.
@@ -244,6 +252,10 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	@slot()
 	filterItems!: Array<FilterItem>;
+
+	_dialog?: DialogTemp;
+	_sortOrder?: List;
+	_sortBy?: List;
 
 	static i18nBundle: I18nBundle;
 
@@ -396,8 +408,8 @@ class ViewSettingsDialog extends UI5Element {
 	get _sortSetttingsAreInitial() {
 		let settingsAreInitial = true;
 		["sortBy", "sortOrder"].forEach(sortList => {
-			this._currentSettings[sortList].forEach((item, index) => {
-				if (item.selected !== this._initialSettings[sortList][index].selected) {
+			this._currentSettings[sortList as keyof Settings].forEach((item, index) => {
+				if (item.selected !== this._initialSettings[sortList as keyof Settings][index].selected) {
 					settingsAreInitial = false;
 				}
 			});
@@ -481,15 +493,15 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _sortOrderListDomRef() {
-		return this.shadowRoot.querySelector("[ui5-list][sort-order]");
+		return this.shadowRoot!.querySelector<List>("[ui5-list][sort-order]")!;
 	}
 
 	get _sortByList() {
-		return this.shadowRoot.querySelector("[ui5-list][sort-by]");
+		return this.shadowRoot!.querySelector<List>("[ui5-list][sort-by]")!;
 	}
 
 	get _dialogDomRef() {
-		return this.shadowRoot.querySelector("[ui5-dialog]");
+		return this.shadowRoot!.querySelector<DialogTemp>("[ui5-dialog]")!;
 	}
 
 	/**
@@ -514,19 +526,20 @@ class ViewSettingsDialog extends UI5Element {
 		this.fireEvent("before-open", {}, true, false);
 		this._dialog.show(true);
 
-		this._dialog.querySelector("[ui5-list]").focusFirstItem();
+		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
 	}
 
-	_handleModeChange(event) {
-		this._currentMode = ViewSettingsDialogMode[event.detail.selectedItem.getAttribute("mode")];
+	_handleModeChange(e: CustomEvent) { // use SegmentedButton event when done
+		const mode = e.detail.selectedItem.getAttribute("mode") as ViewSettingsDialogMode;
+		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
-	_handleFilterValueItemClick(event) {
+	_handleFilterValueItemClick(e: CustomEvent) { // List#item-click
 		// Update the component state
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
 				filter.filterOptions.forEach(option => {
-					if (option.text === event.detail.item.innerText) {
+					if (option.text === e.detail.item.innerText) {
 						option.selected = !option.selected;
 					}
 				});
@@ -537,14 +550,14 @@ class ViewSettingsDialog extends UI5Element {
 		this._currentSettings = JSON.parse(JSON.stringify(this._currentSettings));
 	}
 
-	_navigateToFilters(event) {
+	_navigateToFilters() {
 		this._filterStepTwo = false;
 	}
 
-	_changeCurrentFilter(event) {
+	_changeCurrentFilter(e: CustomEvent) { // List#item-click
 		this._filterStepTwo = true;
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
-			filter.selected = filter.text === event.detail.item.innerText;
+			filter.selected = filter.text === e.detail.item.innerText;
 			return filter;
 		});
 	}
@@ -565,12 +578,14 @@ class ViewSettingsDialog extends UI5Element {
 		}
 		const recentlyFocusedSelectedItems = this._recentlyFocused.getSelectedItems(),
 			  recentlyFocusedItems = this._recentlyFocused.items,
-			  slottedNodesExist = recentlyFocusedItems[1] && recentlyFocusedItems[1].assignedNodes && recentlyFocusedItems[1].assignedNodes().length;
+			  recentlyFocusedItemsOne = recentlyFocusedItems[1] as unknown as HTMLSlotElement,
+			  slottedNodesExist = recentlyFocusedItemsOne && recentlyFocusedItemsOne.assignedNodes && recentlyFocusedItemsOne.assignedNodes().length;
 
 		if (recentlyFocusedSelectedItems.length) {
 			recentlyFocusedSelectedItems[0].focus();
 		} else if (slottedNodesExist) {
-			this._recentlyFocused.focusItem(recentlyFocusedItems[1].assignedNodes()[0]);
+			const itemToFocus = recentlyFocusedItemsOne.assignedNodes()[0] as StandardListItem;
+			this._recentlyFocused.focusItem(itemToFocus);
 		}
 	}
 
@@ -581,7 +596,7 @@ class ViewSettingsDialog extends UI5Element {
 		this.close();
 		this._confirmedSettings = this._currentSettings;
 
-		this.fireEvent("confirm", this.eventsParams);
+		this.fireEvent<ViewSettingsDialogEventDetail>("confirm", this.eventsParams);
 	}
 
 	/**
@@ -590,7 +605,7 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
 
-		this.fireEvent("cancel", this.eventsParams);
+		this.fireEvent<ViewSettingsDialogEventDetail>("cancel", this.eventsParams);
 		this.close();
 	}
 
@@ -612,10 +627,10 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get selectedFilters() {
-		const result = [];
+		const result: EventDetailFilters = [];
 
 		this._currentSettings.filters.forEach(filter => {
-			const selectedOptions = [];
+			const selectedOptions: Array<string> = [];
 
 			filter.filterOptions.forEach(option => {
 				if (option.selected) {
@@ -637,10 +652,10 @@ class ViewSettingsDialog extends UI5Element {
 	 *
 	 * @param {event} evt
 	 */
-	_restoreConfirmedOnEscape(evt) {
+	_restoreConfirmedOnEscape(evt: CustomEvent) { // Dialog#before-close
 		if (evt.detail.escPressed) {
 			this._cancelSettings();
-			this._currentMode = "Sort";
+			this._currentMode = ViewSettingsDialogMode.Sort;
 			this._filterStepTwo = false;
 		}
 	}
@@ -650,7 +665,7 @@ class ViewSettingsDialog extends UI5Element {
 	 */
 	 _resetSettings() {
 		this._restoreSettings(this._initialSettings);
-		this._recentlyFocused = this._sortOrder;
+		this._recentlyFocused = this._sortOrder!;
 		this._focusRecentlyUsedControl();
 	}
 
@@ -659,7 +674,7 @@ class ViewSettingsDialog extends UI5Element {
 	 *
 	 * @param {Object} settings
 	 */
-	_restoreSettings(settings) {
+	_restoreSettings(settings: Settings) {
 		this._currentSettings = JSON.parse(JSON.stringify(settings));
 		this._currentMode = ViewSettingsDialogMode.Sort;
 		this._filterStepTwo = false;
@@ -668,10 +683,10 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores <code>Sort Order</code> list as recently used control and its selected item in current state.
 	 */
-	_onSortOrderChange(event) {
-		this._recentlyFocused = this._sortOrder;
+	_onSortOrderChange(e: CustomEvent) { // List#item-click
+		this._recentlyFocused = this._sortOrder!;
 		this._currentSettings.sortOrder = this.initSortOrderItems.map(item => {
-			item.selected = item.text === event.detail.item.innerText;
+			item.selected = item.text === e.detail.item.innerText;
 			return item;
 		});
 
@@ -682,9 +697,9 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores <code>Sort By</code> list as recently used control and its selected item in current state.
 	 */
-	 _onSortByChange(event) {
-		const selectedItemIndex = Number(event.detail.item.getAttribute("data-ui5-external-action-item-index"));
-		this._recentlyFocused = this._sortBy;
+	 _onSortByChange(e: CustomEvent) { // List#item-click
+		const selectedItemIndex = Number(e.detail.item.getAttribute("data-ui5-external-action-item-index"));
+		this._recentlyFocused = this._sortBy!;
 		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {
 			item.selected = index === selectedItemIndex;
 			return item;
@@ -707,7 +722,7 @@ class ViewSettingsDialog extends UI5Element {
    * @param {Array.<Object>} settings.filters - filters
 	 * @public
 	 */
-	setConfirmedSettings(settings) {
+	setConfirmedSettings(settings: Settings) {
 		if (settings && this._dialog && !this._dialog.isOpen()) {
 			const tempSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {
@@ -731,13 +746,16 @@ class ViewSettingsDialog extends UI5Element {
 			}
 
 			if (settings.filters) {
-				const inputFilters = {};
+				const inputFilters: Record<string, Array<string>> = {};
 				for (let i = 0; i < settings.filters.length; i++) {
-					inputFilters[Object.keys(settings.filters[i])[0]] = settings.filters[i][Object.keys(settings.filters[i])[0]];
+					const key = Object.keys(settings.filters[i])[0];
+					// @ts-ignore
+					inputFilters[key] = settings.filters[i][key];
 				}
 
 				for (let i = 0; i < tempSettings.filters.length; i++) {
 					for (let j = 0; j < tempSettings.filters[i].filterOptions.length; j++) {
+						// @ts-ignore
 						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1) {
 							tempSettings.filters[i].filterOptions[j].selected = true;
 						} else {
