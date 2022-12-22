@@ -24,7 +24,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  * @implements sap.ui.webc.fiori.IFilterItemOption
  * @public
  */
-@customElement("filter-item-option")
+@customElement("ui5-filter-item-option")
 class FilterItemOption extends UI5Element {
 	/**
 	 * Defines the text of the component.
