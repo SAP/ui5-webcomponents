@@ -35,7 +35,7 @@ class FilterItem extends UI5Element {
 	 * @defaultvalue ""
 	 * @public
 	 */
-	@property({ type: String })
+	@property()
 	text!: string;
 
 	/**
@@ -45,7 +45,7 @@ class FilterItem extends UI5Element {
 	 * @defaultvalue ""
 	 * @public
 	 */
-	@property({ type: String })
+	@property()
 	additionalText!: string;
 
 	/**

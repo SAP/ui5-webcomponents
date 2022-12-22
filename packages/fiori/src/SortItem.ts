@@ -33,7 +33,7 @@ class SortItem extends UI5Element {
 	 * @defaultvalue ""
 	 * @public
 	 */
-	@property({ type: String })
+	@property()
 	text!: string;
 
 	/**

@@ -33,7 +33,7 @@ class FilterItemOption extends UI5Element {
 	 * @defaultvalue ""
 	 * @public
 	 */
-	@property({ type: String })
+	@property()
 	text!: string;
 
 	/**
