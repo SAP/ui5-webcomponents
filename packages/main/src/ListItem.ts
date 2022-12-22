@@ -53,12 +53,6 @@ type PressEventDetail = {
 	key: string,
 }
 
-type CloseEventDetail = {
-	item: ListItem,
-}
-
-type ToggleEventDetail = CloseEventDetail;
-
 /**
  * @class
  * A class to serve as a base
@@ -495,6 +489,4 @@ export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
 	PressEventDetail,
-	ToggleEventDetail,
-	CloseEventDetail,
 };

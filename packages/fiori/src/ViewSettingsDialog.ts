@@ -15,12 +15,14 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 // @ts-ignore
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
+import type { ClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 // @ts-ignore
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
 // @ts-ignore
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
+
 import Bar from "./Bar.js";
 import ViewSettingsDialogMode from "./types/ViewSettingsDialogMode.js";
 import "@ui5/webcomponents-icons/dist/sort.js";
@@ -74,7 +76,7 @@ type VSDInternalSettings = {
 	filters: Array<VSDItem & {filterOptions: Array<VSDItem>}>,
 }
 
-type DialogTemp = UI5Element & {
+type DialogTemp = UI5Element & { // Delete after Dialog is done
 	isOpen: () => boolean,
 	show: (preventInitialFocus: boolean) => void,
 	close: () => void,
@@ -531,7 +533,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
-	_handleFilterValueItemClick(e: CustomEvent) { // List#item-click
+	_handleFilterValueItemClick(e: CustomEvent<ClickEventDetail>) {
 		// Update the component state
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
@@ -551,7 +553,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._filterStepTwo = false;
 	}
 
-	_changeCurrentFilter(e: CustomEvent) { // List#item-click
+	_changeCurrentFilter(e: CustomEvent<ClickEventDetail>) {
 		this._filterStepTwo = true;
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			filter.selected = filter.text === e.detail.item.innerText;
@@ -573,16 +575,10 @@ class ViewSettingsDialog extends UI5Element {
 		if (!this._recentlyFocused || !Object.keys(this._recentlyFocused).length) {
 			return;
 		}
-		const recentlyFocusedSelectedItems = this._recentlyFocused.getSelectedItems(),
-			  recentlyFocusedItems = this._recentlyFocused.items,
-			  recentlyFocusedItemsOne = recentlyFocusedItems[1] as unknown as HTMLSlotElement,
-			  slottedNodesExist = recentlyFocusedItemsOne && recentlyFocusedItemsOne.assignedNodes && recentlyFocusedItemsOne.assignedNodes().length;
 
+		const recentlyFocusedSelectedItems = this._recentlyFocused.getSelectedItems();
 		if (recentlyFocusedSelectedItems.length) {
 			recentlyFocusedSelectedItems[0].focus();
-		} else if (slottedNodesExist) {
-			const itemToFocus = recentlyFocusedItemsOne.assignedNodes()[0] as StandardListItem;
-			this._recentlyFocused.focusItem(itemToFocus);
 		}
 	}
 
@@ -680,7 +676,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores <code>Sort Order</code> list as recently used control and its selected item in current state.
 	 */
-	_onSortOrderChange(e: CustomEvent) { // List#item-click
+	_onSortOrderChange(e: CustomEvent<ClickEventDetail>) {
 		this._recentlyFocused = this._sortOrder!;
 		this._currentSettings.sortOrder = this.initSortOrderItems.map(item => {
 			item.selected = item.text === e.detail.item.innerText;
@@ -694,7 +690,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores <code>Sort By</code> list as recently used control and its selected item in current state.
 	 */
-	 _onSortByChange(e: CustomEvent) { // List#item-click
+	 _onSortByChange(e: CustomEvent<ClickEventDetail>) {
 		const selectedItemIndex = Number(e.detail.item.getAttribute("data-ui5-external-action-item-index"));
 		this._recentlyFocused = this._sortBy!;
 		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {
