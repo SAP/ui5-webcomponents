@@ -392,7 +392,6 @@ describe("Acc", () => {
 	it("tests role setting from property", async () => {
 		const popover = await browser.$("#acc-role-popover");
 		await popover.removeAttribute("accessible-role");
-		//assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("accessible-role"), "Popover has role attribute set.");
 		assert.ok(await popover.shadow$("[role=dialog]"), "The default role is dialog.");
 
 		await popover.setAttribute("accessible-role", "menu");
