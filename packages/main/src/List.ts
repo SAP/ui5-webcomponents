@@ -32,8 +32,6 @@ import type ListItem from "./ListItem.js";
 import type {
 	SelectionRequestEventDetail,
 	PressEventDetail,
-	ToggleEventDetail,
-	CloseEventDetail,
 } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
 // @ts-ignore
@@ -57,6 +55,19 @@ import {
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 const PAGE_UP_DOWN_SIZE = 10;
+
+// ListItemBase-based events
+type FocusEventDetail = {
+	item: ListItemBase,
+}
+type DeleteEventDetail = FocusEventDetail;
+
+// ListItem-based events
+type CloseEventDetail = {
+	item: ListItem,
+}
+type ToggleEventDetail = CloseEventDetail;
+type ClickEventDetail = CloseEventDetail;
 
 /**
  * @class
@@ -220,6 +231,15 @@ const PAGE_UP_DOWN_SIZE = 10;
  * @since 1.0.0-rc.6
  */
 @event("load-more")
+
+/**
+ * @private
+ */
+@event("item-focused", {
+	detail: {
+		item: { type: HTMLElement },
+	},
+})
 class List extends UI5Element {
 	/**
 	 * Defines the component header text.
@@ -741,7 +761,7 @@ class List extends UI5Element {
 	}
 
 	handleDelete(item: ListItemBase): boolean {
-		this.fireEvent("item-delete", { item });
+		this.fireEvent<DeleteEventDetail>("item-delete", { item });
 
 		return true;
 	}
@@ -905,7 +925,7 @@ class List extends UI5Element {
 		e.stopPropagation();
 
 		this._itemNavigation.setCurrentItem(target);
-		this.fireEvent("item-focused", { item: target });
+		this.fireEvent<FocusEventDetail>("item-focused", { item: target });
 
 		if (this.mode === ListMode.SingleSelectAuto) {
 			const detail: SelectionRequestEventDetail = {
@@ -922,7 +942,7 @@ class List extends UI5Element {
 	onItemPress(e: CustomEvent<PressEventDetail>) {
 		const pressedItem = e.detail.item;
 
-		if (!this.fireEvent("item-click", { item: pressedItem }, true)) {
+		if (!this.fireEvent<ClickEventDetail>("item-click", { item: pressedItem }, true)) {
 			return;
 		}
 
@@ -941,13 +961,13 @@ class List extends UI5Element {
 		this._selectionRequested = false;
 	}
 
-	// This is applicable to NoficationListItem
+	// This is applicable to NotificationListItem
 	onItemClose(e: CustomEvent<CloseEventDetail>) {
-		this.fireEvent("item-close", { item: e.detail.item });
+		this.fireEvent<CloseEventDetail>("item-close", { item: e.detail.item });
 	}
 
 	onItemToggle(e: CustomEvent<ToggleEventDetail>) {
-		this.fireEvent("item-toggle", { item: e.detail.item });
+		this.fireEvent<ToggleEventDetail>("item-toggle", { item: e.detail.item });
 	}
 
 	onForwardBefore(e: CustomEvent) {
@@ -1102,3 +1122,10 @@ class List extends UI5Element {
 List.define();
 
 export default List;
+export type {
+	ClickEventDetail,
+	FocusEventDetail,
+	DeleteEventDetail,
+	CloseEventDetail,
+	ToggleEventDetail,
+};
