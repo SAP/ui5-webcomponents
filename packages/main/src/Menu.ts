@@ -516,6 +516,25 @@ class Menu extends UI5Element {
 		}
 	}
 
+	_itemKeyDown(e: KeyboardEvent) {
+		const isMenuClose = this.isRtl ? isRight(e) : isLeft(e);
+		const isMenuOpen = this.isRtl ? isLeft(e) : isRight(e);
+
+		if (isEnter(e)) {
+			e.preventDefault();
+		}
+		if (isMenuOpen) {
+			const opener = e.target as OpenerStandardListItem;
+			const item = opener.associatedItem;
+			const hoverId = opener.getAttribute("id");
+
+			item.hasChildren && this._prepareSubMenuDesktopTablet(item, opener, hoverId!);
+		} else if (isMenuClose && this._isSubMenu && this._parentMenuItem) {
+			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
+			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true);
+		}
+	}
+
 	_itemClick(e: CustomEvent<ClickEventDetail>) {
 		const opener = e.detail.item as OpenerStandardListItem;
 		const item = opener.associatedItem;
@@ -549,25 +568,6 @@ class Menu extends UI5Element {
 		} else if (isTablet()) {
 			// prepares and opens sub-menu on tablet
 			this._prepareSubMenuDesktopTablet(item, opener, actionId!);
-		}
-	}
-
-	_itemKeyDown(e: KeyboardEvent) {
-		const isMenuClose = this.isRtl ? isRight(e) : isLeft(e);
-		const isMenuOpen = this.isRtl ? isLeft(e) : isRight(e);
-
-		if (isEnter(e)) {
-			e.preventDefault();
-		}
-		if (isMenuOpen) {
-			const opener = e.target as OpenerStandardListItem;
-			const item = opener.associatedItem;
-			const hoverId = opener.getAttribute("id");
-
-			item.hasChildren && this._prepareSubMenuDesktopTablet(item, opener, hoverId!);
-		} else if (isMenuClose && this._isSubMenu && this._parentMenuItem) {
-			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
-			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true);
 		}
 	}
 
