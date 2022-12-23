@@ -290,9 +290,6 @@ class StepInput extends UI5Element implements IFormElement {
 	@property({ validator: Float, noAttribute: true })
 	_previousValue!: number;
 
-	@property({ type: ValueState, noAttribute: true, defaultValue: ValueState.None })
-	_previousValueState!: ValueState;
-
 	@property({ validator: Float, noAttribute: true })
 	_waitTimeout!: number;
 
