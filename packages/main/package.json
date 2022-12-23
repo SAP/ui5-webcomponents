@@ -41,7 +41,7 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git",
     "directory": "packages/main"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@ui5/webcomponents-base": "1.9.1",
     "@ui5/webcomponents-icons": "1.9.1",
     "@ui5/webcomponents-localization": "1.9.1",

@@ -34,7 +34,7 @@
     "mkdirp": "^1.0.4",
     "resolve": "^1.20.0"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@ui5/webcomponents-base": "1.9.1"
   }
 }
