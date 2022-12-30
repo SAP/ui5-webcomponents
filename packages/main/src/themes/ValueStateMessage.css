@@ -82,3 +82,8 @@
 .ui5-valuestatemessage-popover::part(footer) {
 	min-height: 0;
 }
+
+.ui5-valuestatemessage-popover::part(header),
+.ui5-suggestions-popover-with-value-state-header::part(header) {
+	margin-bottom: 0;
+}
