@@ -1620,7 +1620,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await arrow.click();
 			await input.keys("ArrowDown");
-.
+
 			groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
 
 			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
