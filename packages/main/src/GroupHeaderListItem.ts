@@ -1,6 +1,7 @@
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ListItemBase from "./ListItemBase.js";
 
+// @ts-ignore
 import { GROUP_HEADER_TEXT } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -8,44 +9,9 @@ import GroupHeaderListItemTemplate from "./generated/templates/GroupHeaderListIt
 
 // Styles
 import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-li-groupheader",
-	languageAware: true,
-	properties: /** @lends sap.ui.webc.main.GroupHeaderListItem.prototype */ {
-		/**
-		 * Defines the text alternative of the component.
-		 * Note: If not provided a default text alternative will be set, if present.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.GroupHeaderListItem.prototype */ {
-		/**
-		 * Defines the text of the component.
-		 * <br>
-		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.GroupHeaderListItem.prototype */ {
-	},
-};
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
 /**
  * @class
@@ -59,20 +25,33 @@ const metadata = {
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
+@customElement("ui5-li-groupheader")
+@languageAware
 class GroupHeaderListItem extends ListItemBase {
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Defines the text of the component.
+	 * <br>
+	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 *
+	 * @type {Node[]}
+	 * @slot
+	 * @public
+	 */
+
+	static i18nBundle: I18nBundle;
+
 	static get template() {
 		return GroupHeaderListItemTemplate;
-	}
-
-	static get metadata() {
-		return metadata;
 	}
 
 	static get styles() {
 		return [ListItemBase.styles, groupheaderListItemCss];
 	}
 
-	get group() {
+	get groupItem() {
 		return true;
 	}
 
@@ -83,6 +62,8 @@ class GroupHeaderListItem extends ListItemBase {
 	get ariaLabelText() {
 		return [this.textContent, this.accessibleName].filter(Boolean).join(" ");
 	}
+
+	_onkeyup() {}
 
 	static async onDefine() {
 		GroupHeaderListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
