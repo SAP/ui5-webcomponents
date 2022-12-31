@@ -1,4 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import type { ClassMap } from "@ui5/webcomponents-base/src/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
@@ -22,7 +28,7 @@ import {
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import I18nBundle, { I18nText, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -32,6 +38,11 @@ import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
+import type SuggestionItem from "./SuggestionItem.js";
+import type { InputSuggestionText, SuggestionComponent } from "./features/InputSuggestions.js";
+import type FormSupportT from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type SuggestionListItem from "./SuggestionListItem.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
@@ -62,17 +73,7 @@ import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
-import type SuggestionItem from "./SuggestionItem.js";
-import type { InputSuggestionText, SuggestionComponent } from "./features/InputSuggestions.js";
 import InputSuggestions from "./features/InputSuggestions.js";
-import FormSupportT, { IFormElement } from "./features/InputElementsFormSupport.js";
-import { ClassMap } from "@ui5/webcomponents-base/src/types.js";
-import SuggestionListItem from "./SuggestionListItem.js";
 
 interface NativeInputAttributes {
 	min?: number,
@@ -103,6 +104,10 @@ enum INPUT_EVENTS {
 enum INPUT_ACTIONS {
 	ACTION_ENTER = "enter",
 	ACTION_USER_INPUT = "input",
+}
+
+type InputEventDetail = {
+	inputType?: string;
 }
 
 /**
@@ -221,10 +226,7 @@ enum INPUT_ACTIONS {
 	},
 })
 
-
-
 class Input extends UI5Element implements SuggestionComponent, IFormElement {
-
 	/**
 	 * Defines whether the component is in disabled state.
 	 * <br><br>
@@ -695,7 +697,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		const autoCompletedChars = (innerInput as HTMLInputElement).selectionEnd! - (innerInput as HTMLInputElement).selectionStart!;
+		const autoCompletedChars = innerInput.selectionEnd! - innerInput.selectionStart!;
 
 		// Typehead causes issues on Android devices, so we disable it for now
 		// If there is already a selection the autocomplete has already been performed
@@ -991,7 +993,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_clear() {
 		this.value = "";
-		this.fireEvent(INPUT_EVENTS.EVENT_INPUT);
+		this.fireEvent<InputEventDetail>(INPUT_EVENTS.EVENT_INPUT);
 		if (!this._isPhone) {
 			this.focus();
 		}
@@ -1012,7 +1014,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_handleInput(e: InputEvent) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
-		const eventType = e.inputType || (e.detail && (e as unknown as CustomEvent).detail.inputType);
+		const eventType: string = e.inputType || (!!e.detail && (e as unknown as CustomEvent<InputEventDetail>).detail.inputType!) || "";
 		this._keepInnerValue = false;
 
 		const allowedEventTypes = [
@@ -1208,7 +1210,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 	}
 
-	selectSuggestion(item: SuggestionItem , keyboardUsed: boolean) {
+	selectSuggestion(item: SuggestionItem, keyboardUsed: boolean) {
 		if (item.groupItem) {
 			return;
 		}
@@ -1226,7 +1228,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 			innerInput!.value = itemText;
-			this.fireEvent(INPUT_EVENTS.EVENT_INPUT);
+			this.fireEvent<InputEventDetail>(INPUT_EVENTS.EVENT_INPUT);
 			this._handleChange();
 			innerInput!.setSelectionRange(this.value.length, this.value.length);
 		}
@@ -1257,8 +1259,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const innerInput = this.getInputDOMRefSync();
 		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || (item as unknown as HTMLElement).textContent);
 
-		this.value = itemValue ? itemValue : "";
-		innerInput!.value = itemValue ? itemValue : "";
+		this.value = itemValue || "";
+		innerInput!.value = itemValue || "";
 		innerInput!.setSelectionRange(this.valueBeforeAutoComplete.length, this.value.length);
 	}
 
@@ -1276,7 +1278,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return this.getSuggestionByListItem(this._previewItem);
 	}
 
-	async fireEventByAction(action: string, e: InputEvent ) {
+	async fireEventByAction(action: string, e: InputEvent) {
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -1289,7 +1291,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = inputValue;
 
 		if (isUserInput) { // input
-			this.fireEvent(INPUT_EVENTS.EVENT_INPUT, { inputType: e.inputType });
+			this.fireEvent<InputEventDetail>(INPUT_EVENTS.EVENT_INPUT, { inputType: e.inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
 		}
@@ -1307,7 +1309,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._getSuggestionPopover();
-			return this.Suggestions && this.Suggestions!.responsivePopover!.querySelector<HTMLElement>(".ui5-input-inner-phone");
+			return this.Suggestions && this.Suggestions.responsivePopover!.querySelector<HTMLElement>(".ui5-input-inner-phone");
 		}
 
 		return this.nativeInput;
@@ -1315,7 +1317,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	getInputDOMRefSync() {
 		if (isPhone() && this.Suggestions && this.Suggestions.responsivePopover) {
-			return this.Suggestions!.responsivePopover!.querySelector(".ui5-input-inner-phone")!.shadowRoot!.querySelector("input")!;
+			return this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone")!.shadowRoot!.querySelector("input")!;
 		}
 
 		return this.nativeInput;
@@ -1399,19 +1401,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get valueStateTypeMappings() {
 		return {
-			"Success": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
-			"Information": Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
-			"Error": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
-			"Warning": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
+			"Success": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS as I18nText),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION as I18nText),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR as I18nText),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING as I18nText),
 		};
 	}
 
 	valueStateTextMappings() {
 		return {
-			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
-			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR),
-			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS as I18nText),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION as I18nText),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR as I18nText),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING as I18nText),
 		};
 	}
 
@@ -1430,7 +1432,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get _headerTitleText() {
-		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE as I18nText);
 	}
 
 	get inputType() {
@@ -1483,10 +1485,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		const valueState = this.valueState !== ValueState.None ? this.valueStateTypeMappings[this.valueState] : ""
+		const valueState = this.valueState !== ValueState.None ? this.valueStateTypeMappings[this.valueState] : "";
 
 		if (this.shouldDisplayDefaultValueStateMessage) {
-			return `${valueState} ${this.valueStateText}`;
+			return this.valueStateText ? `${valueState} ${this.valueStateText}` : valueState;
 		}
 
 		return `${valueState}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
@@ -1518,18 +1520,18 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		const stylesObject = {
 			popoverHeader: {
-				"max-width": `${this._inputWidth}px`,
+				"max-width": this._inputWidth ? `${this._inputWidth}px` : "",
 			},
 			suggestionPopoverHeader: {
 				"display": this._listWidth === 0 ? "none" : "inline-block",
-				"width": `${this._listWidth}px`,
+				"width": this._listWidth ? `${this._listWidth}px` : "",
 			},
 			suggestionsPopover: {
-				"min-width": `${this._inputWidth}px`,
+				"min-width": this._inputWidth ? `${this._inputWidth}px` : "",
 				"max-width": this._inputWidth && (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
 			},
 			innerInput: {
-				"padding": ""
+				"padding": "",
 			},
 		};
 
@@ -1571,20 +1573,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get suggestionsText() {
-		return Input.i18nBundle.getText(INPUT_SUGGESTIONS);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS as I18nText);
 	}
 
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions?.isOpened())) {
 			switch (this.suggestionsTexts.length) {
-				case 0:
-					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
+			case 0:
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT as I18nText);
 
-				case 1:
-					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
+			case 1:
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT as I18nText);
 
-				default:
-					return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
+			default:
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS as I18nText, this.suggestionsTexts.length);
 			}
 		}
 
@@ -1628,9 +1630,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				${iconPerValueState[this.valueState]};
 			</svg>
 			`;
-		} else {
-			return "";
 		}
+
+		return "";
 	}
 
 	get _valueStatePopoverHorizontalAlign() {

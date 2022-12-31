@@ -1,3 +1,7 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
@@ -15,12 +19,8 @@ import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
 import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
-const ARROW_SIZE: number = 8;
+const ARROW_SIZE = 8;
 
 type PopoverSizeT = {
 	width: number;
@@ -186,7 +186,6 @@ class Popover extends Popup {
 	 */
 	@property({ type: Boolean })
 	hideArrow!: boolean;
-
 
 	/**
 	 * Determines if there is no enough space, the component can be placed
@@ -534,42 +533,42 @@ class Popover extends Popup {
 
 		// calc popover positions
 		switch (placementType) {
-			case PopoverPlacementType.Top:
-				left = this.getVerticalLeft(targetRect, popoverSize);
-				top = Math.max(targetRect.top - popoverSize.height - arrowOffset, 0);
+		case PopoverPlacementType.Top:
+			left = this.getVerticalLeft(targetRect, popoverSize);
+			top = Math.max(targetRect.top - popoverSize.height - arrowOffset, 0);
 
-				if (!allowTargetOverlap) {
-					maxHeight = targetRect.top - arrowOffset;
-				}
-				break;
-			case PopoverPlacementType.Bottom:
-				left = this.getVerticalLeft(targetRect, popoverSize);
-				top = targetRect.bottom + arrowOffset;
+			if (!allowTargetOverlap) {
+				maxHeight = targetRect.top - arrowOffset;
+			}
+			break;
+		case PopoverPlacementType.Bottom:
+			left = this.getVerticalLeft(targetRect, popoverSize);
+			top = targetRect.bottom + arrowOffset;
 
-				if (allowTargetOverlap) {
-					top = Math.max(Math.min(top, clientHeight - popoverSize.height), 0);
-				} else {
-					maxHeight = clientHeight - targetRect.bottom - arrowOffset;
-				}
-				break;
-			case PopoverPlacementType.Left:
-				left = Math.max(targetRect.left - popoverSize.width - arrowOffset, 0);
-				top = this.getHorizontalTop(targetRect, popoverSize);
+			if (allowTargetOverlap) {
+				top = Math.max(Math.min(top, clientHeight - popoverSize.height), 0);
+			} else {
+				maxHeight = clientHeight - targetRect.bottom - arrowOffset;
+			}
+			break;
+		case PopoverPlacementType.Left:
+			left = Math.max(targetRect.left - popoverSize.width - arrowOffset, 0);
+			top = this.getHorizontalTop(targetRect, popoverSize);
 
-				if (!allowTargetOverlap) {
-					maxWidth = targetRect.left - arrowOffset;
-				}
-				break;
-			case PopoverPlacementType.Right:
-				left = targetRect.left + targetRect.width + arrowOffset;
-				top = this.getHorizontalTop(targetRect, popoverSize);
+			if (!allowTargetOverlap) {
+				maxWidth = targetRect.left - arrowOffset;
+			}
+			break;
+		case PopoverPlacementType.Right:
+			left = targetRect.left + targetRect.width + arrowOffset;
+			top = this.getHorizontalTop(targetRect, popoverSize);
 
-				if (allowTargetOverlap) {
-					left = Math.max(Math.min(left, clientWidth - popoverSize.width), 0);
-				} else {
-					maxWidth = clientWidth - targetRect.right - arrowOffset;
-				}
-				break;
+			if (allowTargetOverlap) {
+				left = Math.max(Math.min(left, clientWidth - popoverSize.width), 0);
+			} else {
+				maxWidth = clientWidth - targetRect.right - arrowOffset;
+			}
+			break;
 		}
 
 		// correct popover positions
@@ -693,28 +692,28 @@ class Popover extends Popup {
 		const clientHeight = document.documentElement.clientHeight;
 
 		switch (placementType as string) {
-			case PopoverPlacementType.Top:
-				if (targetRect.top < popoverSize.height
-					&& targetRect.top < clientHeight - targetRect.bottom) {
-					actualPlacementType = PopoverPlacementType.Bottom;
-				}
-				break;
-			case PopoverPlacementType.Bottom:
-				if (clientHeight - targetRect.bottom < popoverSize.height
-					&& clientHeight - targetRect.bottom < targetRect.top) {
-					actualPlacementType = PopoverPlacementType.Top;
-				}
-				break;
-			case PopoverPlacementType.Left:
-				if (targetRect.left < popoverSize.width) {
-					actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
-				}
-				break;
-			case PopoverPlacementType.Right:
-				if (clientWidth - targetRect.right < popoverSize.width) {
-					actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
-				}
-				break;
+		case PopoverPlacementType.Top:
+			if (targetRect.top < popoverSize.height
+				&& targetRect.top < clientHeight - targetRect.bottom) {
+				actualPlacementType = PopoverPlacementType.Bottom;
+			}
+			break;
+		case PopoverPlacementType.Bottom:
+			if (clientHeight - targetRect.bottom < popoverSize.height
+				&& clientHeight - targetRect.bottom < targetRect.top) {
+				actualPlacementType = PopoverPlacementType.Top;
+			}
+			break;
+		case PopoverPlacementType.Left:
+			if (targetRect.left < popoverSize.width) {
+				actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
+			}
+			break;
+		case PopoverPlacementType.Right:
+			if (clientWidth - targetRect.right < popoverSize.width) {
+				actualPlacementType = this.fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) || placementType;
+			}
+			break;
 		}
 
 		return actualPlacementType;
@@ -724,17 +723,16 @@ class Popover extends Popup {
 		let left;
 
 		switch (this.horizontalAlign) {
-			case PopoverHorizontalAlign.Center:
-			case PopoverHorizontalAlign.Stretch:
-
-				left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
-				break;
-			case PopoverHorizontalAlign.Left:
-				left = targetRect.left;
-				break;
-			case PopoverHorizontalAlign.Right:
-				left = targetRect.right - popoverSize.width;
-				break;
+		case PopoverHorizontalAlign.Center:
+		case PopoverHorizontalAlign.Stretch:
+			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
+			break;
+		case PopoverHorizontalAlign.Left:
+			left = targetRect.left;
+			break;
+		case PopoverHorizontalAlign.Right:
+			left = targetRect.right - popoverSize.width;
+			break;
 		}
 
 		return left;
@@ -744,16 +742,16 @@ class Popover extends Popup {
 		let top;
 
 		switch (this.verticalAlign) {
-			case PopoverVerticalAlign.Center:
-			case PopoverVerticalAlign.Stretch:
-				top = targetRect.top - (popoverSize.height - targetRect.height) / 2;
-				break;
-			case PopoverVerticalAlign.Top:
-				top = targetRect.top;
-				break;
-			case PopoverVerticalAlign.Bottom:
-				top = targetRect.bottom - popoverSize.height;
-				break;
+		case PopoverVerticalAlign.Center:
+		case PopoverVerticalAlign.Stretch:
+			top = targetRect.top - (popoverSize.height - targetRect.height) / 2;
+			break;
+		case PopoverVerticalAlign.Top:
+			top = targetRect.top;
+			break;
+		case PopoverVerticalAlign.Bottom:
+			top = targetRect.bottom - popoverSize.height;
+			break;
 		}
 
 		return top;

@@ -1,5 +1,5 @@
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
-import Popup from "../Popup";
+import Popup from "../Popup.js";
 
 type RegisteredPopupT = {
 	instance: Popup;

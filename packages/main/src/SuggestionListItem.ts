@@ -27,7 +27,7 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
  */
 @customElement("ui5-li-suggestion-item")
 class SuggestionListItem extends StandardListItem {
-	@slot({ type: HTMLElement})
+	@slot({ type: HTMLElement })
 	richDescription!: Array<HTMLElement>
 
 	@slot({ type: Node, "default": true })

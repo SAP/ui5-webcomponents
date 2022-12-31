@@ -61,7 +61,7 @@ const detachGlobalClickHandler = () => {
 
 const clickHandler = (event: MouseEvent) => {
 	const openedPopups = getOpenedPopups();
-	const isTopPopupPopover = (openedPopups[openedPopups.length - 1].instance as Popover).showAt;
+	const isTopPopupPopover = typeof (openedPopups[openedPopups.length - 1].instance as Popover).showAt === "function";
 
 	if (openedPopups.length === 0 || !isTopPopupPopover) {
 		return;

@@ -326,7 +326,7 @@ class ColorPicker extends UI5Element {
 
 	_handleRGBInputsChange(e: CustomEvent) {
 		const target = e.target as Input;
-		const targetValue: number = parseInt(target.value as string) || 0;
+		const targetValue: number = parseInt(target.value) || 0;
 		let tempColor;
 		switch (target.id) {
 		case "red":

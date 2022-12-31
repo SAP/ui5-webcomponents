@@ -1,9 +1,13 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // @ts-ignore
 import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
-import List from "../List.js";
+import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import List, { ClickEventDetail, SelectionChangeEventDetail } from "../List.js";
 // @ts-ignore
 import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
@@ -13,6 +17,12 @@ import Icon from "../Icon.js";
 import Popover from "../Popover.js";
 import GroupHeaderListItem from "../GroupHeaderListItem.js";
 import SuggestionListItem from "../SuggestionListItem.js";
+
+import {
+	LIST_ITEM_POSITION,
+	// @ts-ignore
+} from "../generated/i18n/i18n-defaults.js";
+import type ListItemType from "../types/ListItemType.js";
 
 interface SuggestionComponent extends UI5Element {
 	_isValueStateFocused: boolean;
@@ -27,7 +37,7 @@ interface SuggestionComponent extends UI5Element {
 	onItemMouseOut: (e: MouseEvent) => void;
 	onItemSelected: (pressedItem: SuggestionItem, keyboardUsed: boolean) => void;
 	onItemPreviewed: (item: SuggestionListItem) => void;
-};
+}
 
 type InputSuggestionText = {
 	text: string;
@@ -41,19 +51,11 @@ type InputSuggestionText = {
 	key: number,
 }
 
-type SuggestionsAccInfo =  {
+type SuggestionsAccInfo = {
 	currentPos: number;
 	listSize: number;
 	itemText: string,
 }
-
-import {
-	LIST_ITEM_POSITION,
-	// @ts-ignore
-} from "../generated/i18n/i18n-defaults.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import ListItemType from "../types/ListItemType.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -74,11 +76,11 @@ class Suggestions {
 	_handledPress?: boolean;
 	attachedAfterOpened?: boolean;
 	attachedAfterClose?: boolean;
-	fnOnSuggestionItemPress: (e: CustomEvent) => void;
+	fnOnSuggestionItemPress: (e: CustomEvent<ClickEventDetail | SelectionChangeEventDetail>) => void;
 	fnOnSuggestionItemMouseOver: (e: MouseEvent) => void;
 	fnOnSuggestionItemMouseOut: (e: MouseEvent) => void;
 	static i18nBundle: I18nBundle;
-	static SCROLL_STEP: number = 60;
+	static SCROLL_STEP = 60;
 
 	constructor(component: SuggestionComponent, slotName: string, highlight: boolean, handleFocus: boolean) {
 		// The component, that the suggestion would plug into.
@@ -251,7 +253,7 @@ class Suggestions {
 		this._getComponent().open = true;
 		this._beforeOpen();
 
-		this.responsivePopover?.showAt(this._getComponent() as unknown as HTMLElement);
+		await this.responsivePopover?.showAt(this._getComponent() as unknown as HTMLElement);
 	}
 
 	async close(preventFocusRestore = false) {
@@ -309,7 +311,7 @@ class Suggestions {
 
 	/* Private methods */
 	onItemPress(event: CustomEvent) {
-		let pressedItem;
+		let pressedItem: SuggestionListItem;
 		const isPressEvent = event.type === "ui5-item-click";
 
 		// Only use the press event if the item is already selected, in all other cases we are listening for 'ui5-selection-change' from the list
@@ -351,13 +353,13 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			let suggestionPopover = await this._getSuggestionPopover();
+			const suggestionPopover = await this._getSuggestionPopover();
 			suggestionPopover.addEventListener("ui5-after-open", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			let suggestionPopover = await this._getSuggestionPopover();
+			const suggestionPopover = await this._getSuggestionPopover();
 			suggestionPopover.addEventListener("ui5-after-close", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
@@ -544,14 +546,14 @@ class Suggestions {
 	async _getScrollContainer() {
 		if (!this._scrollContainer) {
 			await this._getSuggestionPopover();
-			this._scrollContainer = this.responsivePopover?.shadowRoot!.querySelector<HTMLElement>(".ui5-popup-content")!;
+			this._scrollContainer = this.responsivePopover!.shadowRoot!.querySelector<HTMLElement>(".ui5-popup-content")!;
 		}
 
 		return this._scrollContainer;
 	}
 
 	_getItems() {
-		return !!this.responsivePopover ? [...this.responsivePopover.querySelector<List>("[ui5-list]")!.children] as Array<SuggestionListItem> : [] as Array<SuggestionListItem>;
+		return this.responsivePopover ? [...this.responsivePopover.querySelector<List>("[ui5-list]")!.children] as Array<SuggestionListItem> : [] as Array<SuggestionListItem>;
 	}
 
 	_getComponent(): SuggestionComponent {
@@ -560,7 +562,7 @@ class Suggestions {
 
 	async _getList() {
 		this.responsivePopover = await this._getSuggestionPopover();
-		return this.responsivePopover!.querySelector<List>("[ui5-list]")!;
+		return this.responsivePopover.querySelector<List>("[ui5-list]")!;
 	}
 
 	async _getListWidth() {
@@ -578,16 +580,16 @@ class Suggestions {
 		}
 
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem?.querySelector<Popover>("[ui5-responsive-popover]")!;
+		this.responsivePopover = staticAreaItem!.querySelector<Popover>("[ui5-responsive-popover]")!;
 		return this.responsivePopover;
 	}
 
 	get itemSelectionAnnounce() {
 		if (!this.accInfo) {
 			return null;
-		};
+		}
 
-		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION as I18nText, this.accInfo.currentPos, this.accInfo.listSize);
 
 		return `${this.accInfo.itemText} ${itemPositionText}`;
 	}
@@ -600,6 +602,8 @@ class Suggestions {
 		if (suggestion.description) {
 			return this.sanitizeText(suggestion.description);
 		}
+
+		return "";
 	}
 
 	getHighlightedText(suggestion: SuggestionItem, input: string) {
@@ -617,7 +621,7 @@ class Suggestions {
 	}
 
 	sanitizeText(text: string) {
-		return encodeXML(text);
+		return encodeXML(text) as string;
 	}
 
 	get _hasValueState() {
@@ -667,5 +671,5 @@ export default Suggestions;
 
 export type {
 	SuggestionComponent,
-	InputSuggestionText
-}
+	InputSuggestionText,
+};

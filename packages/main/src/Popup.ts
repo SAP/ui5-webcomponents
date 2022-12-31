@@ -23,7 +23,6 @@ import styles from "./generated/themes/Popup.css.js";
 import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
-
 const createBlockingStyle = (): void => {
 	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
 		createStyle(globalStyles, "data-ui5-popup-scroll-blocker");
@@ -94,7 +93,7 @@ const pageScrollingBlockers = new Set<Popup>();
  * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
  */
 @event("before-close", {
-	escPressed: { type: Boolean }
+	escPressed: { type: Boolean },
 })
 
 /**
@@ -441,7 +440,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		this._zIndex = getNextZIndex();
-		this.style.zIndex = `${this._zIndex}` || "";
+		this.style.zIndex = `${this._zIndex ? this._zIndex : ""}` || "";
 
 		this._focusedElementBeforeOpen = getFocusedElement();
 
