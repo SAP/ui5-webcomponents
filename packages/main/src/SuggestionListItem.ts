@@ -27,9 +27,23 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
  */
 @customElement("ui5-li-suggestion-item")
 class SuggestionListItem extends StandardListItem {
+	/**
+	 * Defines a description that can contain HTML.
+	 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
+	 * <br>
+	 * @type {HTMLElement}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.richDescription
+	 * @since 1.0.0-rc.8
+	 * @slot
+	 * @public
+	 */
 	@slot({ type: HTMLElement })
 	richDescription!: Array<HTMLElement>
 
+	/**
+	 * @type {Node}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.default
+	 */
 	@slot({ type: Node, "default": true })
 	titleText!: Array<Node>
 

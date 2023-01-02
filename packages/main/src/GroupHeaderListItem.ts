@@ -30,6 +30,16 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
 @customElement("ui5-li-groupheader")
 @languageAware
 class GroupHeaderListItem extends ListItemBase {
+	/**
+	 * Defines the text alternative of the component.
+	 * Note: If not provided a default text alternative will be set, if present.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.GroupHeaderListItem.prototype.valueStateMessage
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
 	@property()
 	accessibleName!: string;
 
@@ -39,6 +49,7 @@ class GroupHeaderListItem extends ListItemBase {
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
 	 * @type {Node[]}
+	 * @name sap.ui.webc.main.GroupHeaderListItem.prototype.default
 	 * @slot
 	 * @public
 	 */

@@ -116,6 +116,7 @@ abstract class Popup extends UI5Element {
 	 * Defines the ID of the HTML Element, which will get the initial focus.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Popup.prototype.initialFocus
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -126,6 +127,7 @@ abstract class Popup extends UI5Element {
 	 * Defines if the focus should be returned to the previously focused element,
 	 * when the popup closes.
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popup.prototype.preventFocusRestore
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -137,6 +139,7 @@ abstract class Popup extends UI5Element {
 	 * Indicates if the element is open
 	 * @public
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popup.prototype.open
 	 * @defaultvalue false
 	 * @since 1.2.0
 	 */
@@ -156,6 +159,7 @@ abstract class Popup extends UI5Element {
 	 * Defines the accessible name of the component.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Popup.prototype.accessibleName
 	 * @defaultvalue ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -167,6 +171,7 @@ abstract class Popup extends UI5Element {
 	 * Defines the IDs of the elements that label the component.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Popup.prototype.accessibleNameRef
 	 * @defaultvalue ""
 	 * @public
 	 * @since 1.1.0
@@ -207,6 +212,7 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Defines the content of the Popup.
 	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Popup.prototype.default
 	 * @slot content
 	 * @public
 	 */
@@ -390,6 +396,7 @@ abstract class Popup extends UI5Element {
 	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
+	 * @name sap.ui.webc.main.Popup#applyFocus
 	 * @async
 	 * @returns {Promise} Promise that resolves when the focus is applied
 	 */
@@ -412,6 +419,7 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Tells if the component is opened
 	 * @public
+	 * @name sap.ui.webc.main.Popup#isOpen
 	 * @returns {boolean}
 	 */
 	isOpen() {
@@ -470,6 +478,8 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Hides the block layer (for modal popups only)
 	 * @public
+	 * @name sap.ui.webc.main.Popup#close
+	 * @returns {void}
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!this.opened) {

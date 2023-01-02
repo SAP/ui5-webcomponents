@@ -94,6 +94,7 @@ class Popover extends Popup {
 	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Popover.prototype.headerText
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -112,6 +113,7 @@ class Popover extends Popup {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.PopoverPlacementType}
+	 * @name sap.ui.webc.main.Popover.prototype.placementType
 	 * @defaultvalue "Right"
 	 * @public
 	 */
@@ -130,6 +132,7 @@ class Popover extends Popup {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.PopoverHorizontalAlign}
+	 * @name sap.ui.webc.main.Popover.prototype.horizontalAlign
 	 * @defaultvalue "Center"
 	 * @public
 	 */
@@ -148,6 +151,7 @@ class Popover extends Popup {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.PopoverVerticalAlign}
+	 * @name sap.ui.webc.main.Popover.prototype.verticalAlign
 	 * @defaultvalue "Center"
 	 * @public
 	 */
@@ -160,6 +164,7 @@ class Popover extends Popup {
 	 * If enabled, it blocks any interaction with the background.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.modal
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -169,6 +174,7 @@ class Popover extends Popup {
 	/**
 	 * Defines whether the block layer will be shown if modal property is set to true.
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.hideBackdrop
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.0.0-rc.10
@@ -180,6 +186,7 @@ class Popover extends Popup {
 	 * Determines whether the component arrow is hidden.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.hideArrow
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -192,6 +199,7 @@ class Popover extends Popup {
 	 * over the target.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.allowTargetOverlap
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -202,10 +210,11 @@ class Popover extends Popup {
 	 * Defines the ID or DOM Reference of the element that the popover is shown at
 	 * @public
 	 * @type {sap.ui.webc.base.types.DOMReference}
+	 * @name sap.ui.webc.main.Popover.prototype.opener
 	 * @defaultvalue ""
 	 * @since 1.2.0
 	 */
-	@property({ type: DOMReference, defaultValue: "" })
+	@property({ validator: DOMReference, defaultValue: "" })
 	opener!: DOMReference;
 
 	/**
@@ -252,6 +261,7 @@ class Popover extends Popup {
 	 * Defines the header HTML Element.
 	 *
 	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Popover.prototype.header
 	 * @slot
 	 * @public
 	 */
@@ -262,6 +272,7 @@ class Popover extends Popup {
 	 * Defines the footer HTML Element.
 	 *
 	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Popover.prototype.footer
 	 * @slot
 	 * @public
 	 */
@@ -317,6 +328,7 @@ class Popover extends Popup {
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 * @async
+	 * @name sap.ui.webc.main.Popover#showAt
 	 * @returns {Promise} Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false) {

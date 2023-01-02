@@ -23,6 +23,7 @@ class SuggestionGroupItem extends UI5Element {
 	 * Defines the text of the <code>ui5-suggestion-group-item</code>.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.text
 	 * @defaultvalue ""
 	 * @public
 	 */

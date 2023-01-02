@@ -95,7 +95,7 @@ const processComponentFile = async (fileName) => {
 	allJSDocs = allJSDocs.map(match => match[0]); // all /** ..... */ comments
 
 	// Find where the class is defined in the original file
-	const tsClassDefinitionRegExp = new RegExp(`^class [\\w\\d_]+`, "gm");
+	const tsClassDefinitionRegExp = new RegExp(`^(abstract\\s)?class [\\w\\d_]+`, "gm");
 	let tsClassDefinitionMatch = tsFileContent.match(tsClassDefinitionRegExp);
 	if (!tsClassDefinitionMatch) {
 		return; // no class defined in this .ts file

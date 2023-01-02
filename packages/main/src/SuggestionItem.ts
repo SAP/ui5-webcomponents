@@ -24,6 +24,7 @@ class SuggestionItem extends UI5Element {
 	 * Defines the text of the component.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.text
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -38,6 +39,7 @@ class SuggestionItem extends UI5Element {
 	 * while when <code>Inactive</code> or <code>Detail</code> - will not.
 	 *
 	 * @type {sap.ui.webc.main.types.ListItemType}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.type
 	 * @defaultvalue "Active"
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -48,6 +50,7 @@ class SuggestionItem extends UI5Element {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
 	 * @type {string}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.description
 	 * @defaultvalue: ""
 	 * @public
 	 */
@@ -73,6 +76,7 @@ class SuggestionItem extends UI5Element {
 	 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.iconEnd
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -84,6 +88,7 @@ class SuggestionItem extends UI5Element {
 	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the item.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.image
 	 * @public
 	 */
 	@property()
@@ -92,6 +97,7 @@ class SuggestionItem extends UI5Element {
 	/**
 	 * Defines the <code>additionalText</code>, displayed in the end of the item.
 	 * @type {string}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.additionalText
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -103,6 +109,7 @@ class SuggestionItem extends UI5Element {
 	 * <br><br>
 	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
 	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.additionalTextState
 	 * @defaultvalue "None"
 	 * @since 1.0.0-rc.15
 	 * @public

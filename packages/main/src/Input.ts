@@ -233,6 +233,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * <b>Note:</b> A disabled component is completely noninteractive.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Input.prototype.disabled
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -257,6 +258,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines a short hint intended to aid the user with data entry when the
 	 * component has no value.
 	 * @type {string}
+	 * @name sap.ui.webc.main.Input.prototype.placeholder
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -270,6 +272,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * but still provides visual feedback upon user interaction.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Input.prototype.readonly
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -280,6 +283,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines whether the component is required.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Input.prototype.required
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.0.0-rc.3
@@ -291,6 +295,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines whether the value will be autcompleted to match an item
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Input.prototype.noTypeahead
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.4.0
@@ -312,6 +317,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.InputType}
+	 * @name sap.ui.webc.main.Input.prototype.type
 	 * @defaultvalue "Text"
 	 * @public
 	 */
@@ -324,6 +330,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * <b>Note:</b> The property is updated upon typing.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Input.prototype.value
 	 * @defaultvalue ""
 	 * @formEvents change input
 	 * @formProperty
@@ -357,6 +364,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @name sap.ui.webc.main.Input.prototype.valueState
 	 * @defaultvalue "None"
 	 * @public
 	 */
@@ -376,6 +384,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * part of an HTML form. Do not use this property unless you need to submit a form.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Input.prototype.name
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -388,6 +397,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * <b>Note:</b> You need to import the <code>InputSuggestions</code> module
 	 * from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Input.prototype.showSuggestions
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -399,6 +409,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * <br><br>
 	 * <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
 	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.Input.prototype.maxlength
 	 * @since 1.0.0-rc.5
 	 * @public
 	 */
@@ -409,6 +420,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Input.prototype.accessibleName
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -419,6 +431,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Receives id(or many ids) of the elements that label the input.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Input.prototype.accessibleNameRef
 	 * @defaultvalue ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -430,6 +443,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines whether the clear icon of the input will be shown.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Input.prototype.showClearIcon
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.2.0
@@ -441,6 +455,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines whether the clear icon is visible.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Input.prototype.effectiveShowClearIcon
 	 * @defaultvalue false
 	 * @private
 	 * @since 1.2.0
@@ -526,6 +541,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * automatically imports the <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item></code> for your convenience.
 	 *
 	 * @type {sap.ui.webc.main.IInputSuggestionItem[]}
+	 * @name sap.ui.webc.main.Input.prototype.default
 	 * @slot suggestionItems
 	 * @public
 	 */
@@ -553,6 +569,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * <b>Note:</b> If the component has <code>suggestionItems</code>,
 	 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
 	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Input.prototype.valueStateMessage
 	 * @since 1.0.0-rc.6
 	 * @slot
 	 * @public
@@ -1187,6 +1204,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
 	 * @since 1.3.0
 	 * @public
+	 * @name sap.ui.webc.main.Input#openPicker
+	 * @return {void}
 	 */
 	openPicker() {
 		if (!this.suggestionItems.length || this.disabled || this.readonly) {
@@ -1266,7 +1285,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * The suggestion item on preview.
-	 * @type {sap.ui.webc.main.IInputSuggestionItem}
+	 * @type {sap.ui.webc.main.IInputSuggestionItem | null}
+	 * @name sap.ui.webc.main.Popover.prototype.previewItem
 	 * @readonly
 	 * @public
 	 */
@@ -1309,7 +1329,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._getSuggestionPopover();
-			return this.Suggestions && this.Suggestions.responsivePopover!.querySelector<HTMLElement>(".ui5-input-inner-phone");
+			return this.Suggestions && this.Suggestions.responsivePopover!.querySelector<Input>(".ui5-input-inner-phone");
 		}
 
 		return this.nativeInput;
