@@ -287,7 +287,7 @@ class ColorPicker extends UI5Element {
 	}
 
 	_handleHueInput(e: CustomEvent) {
-		this.selectedHue = (e.target as Input).value;
+		this.selectedHue = parseInt((e.target as HTMLInputElement).value);
 		this._hue = this.selectedHue;
 		this._setMainColor(this._hue);
 		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
