@@ -1023,7 +1023,7 @@ class MultiComboBox extends UI5Element {
 
 	_handleEnter() {
 		const lowerCaseValue = this.value.toLowerCase();
-		const matchingItem = this.items.find(item => item.text.toLowerCase() === lowerCaseValue);
+		const matchingItem = this.items.find(item => (item.text.toLowerCase() === lowerCaseValue && !item.isGroupItem));
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
@@ -1328,6 +1328,8 @@ class MultiComboBox extends UI5Element {
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
+		// force resize of the tokenizer on invalidation
+		this._tokenizer._handleResize();
 	}
 
 	get _isPhone() {

@@ -108,8 +108,8 @@ class UI5ElementMetadata {
 	 */
 	static validatePropertyValue(value: PropertyValue, propData: Property) {
 		const isMultiple = propData.multiple;
-		if (isMultiple && Array.isArray(value)) {
-			return value.map((propValue: PropertyValue) => validateSingleProperty(propValue, propData));
+		if (isMultiple && value) {
+			return (value as Array<PropertyValue>).map((propValue: PropertyValue) => validateSingleProperty(propValue, propData));
 		}
 		return validateSingleProperty(value, propData);
 	}
