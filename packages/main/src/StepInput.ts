@@ -129,7 +129,7 @@ class StepInput extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ validator: Float })
-	min!: number;
+	min?: number;
 
 	/**
 	 * Defines a maximum value of the component.
@@ -139,7 +139,7 @@ class StepInput extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ validator: Float })
-	max!: number;
+	max?: number;
 
 	/**
 	 * Defines a step of increasing/decreasing the value of the component.

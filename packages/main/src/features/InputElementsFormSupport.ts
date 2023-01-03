@@ -125,7 +125,7 @@ class FormSupport {
 
 const copyDefaultProperties = (element: IFormElement, nativeInput: HTMLInputElement) => {
 	nativeInput.disabled = element.disabled!;
-	nativeInput.value = element.value!.toString();
+	nativeInput.value = element.value as string; // We do not explicitly convert to string to retain the current browser behavior
 };
 
 // Add form support to the global features registry so that Web Components can find and use it
