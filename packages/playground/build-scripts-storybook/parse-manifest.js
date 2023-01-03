@@ -5,7 +5,27 @@ const path = require("path");
 // Removes the attributes from the declarations as they are duplicated with the properties.
 
 // The following properties are excluded from the members array as they are not truly public.
-const EXCLUDE_LIST = ["isUI5Element", "effectiveDir"];
+const EXCLUDE_LIST = [
+    "effectiveDir",
+    "isUI5Element",
+    "attachInvalidate",
+    "define",
+    "detachInvalidate",
+    "fireEvent",
+    "focus",
+    "getDomRef",
+    "getFocusDomRef",
+    "getFocusDomRefAsync",
+    "getMetadata",
+    "getSlottedNodes",
+    "getUniqueDependencies",
+    "onAfterRendering",
+    "onBeforeRendering",
+    "onEnterDOM",
+    "onExitDOM",
+    "onInvalidation",
+    "getStaticAreaItemDomRef",
+];
 
 const loadManifest = () => {
     try {

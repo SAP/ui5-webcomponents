@@ -10,7 +10,7 @@ if (customElements?.modules) {
 
 export const parameters = {
     html: {
-        removeComments: true
+        removeComments: true,
     },
     actions: { argTypesRegex: "^ui5-[a-z].*" }, // automatically match ui5-* events for actions
     controls: {

@@ -60,6 +60,15 @@ const main = async () => {
 			}
 		});
 
+		moduleAPI?.slots?.forEach(prop => {
+			if (prop.visibility === 'public') {
+				args[prop.name] = {
+					control: "text",
+					description: `${prop.description} \n\n Type: \`${prop.type}\``,
+				};
+			}
+		});
+
 		// methods parsing because Storybook does not include them in the args by default from the custom-elements.json
 		// only changing the category to Methods so they are not displayed in the Properties tab
 		moduleAPI?.methods?.forEach((prop) => {

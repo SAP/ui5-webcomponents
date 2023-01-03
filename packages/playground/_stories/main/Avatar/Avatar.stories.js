@@ -23,7 +23,7 @@ const Template = (args) =>
         aria-haspopup="${ifDefined(args.ariaHaspopup)}"
         @ui5-click="${ifDefined(args["ui5-click"])}"
     >
-        ${unsafeHTML(args["defaultSlot"])}
+        ${unsafeHTML(args["default"])}
 </ui5-avatar>`;
 
 // Basic
@@ -43,7 +43,7 @@ WithImage.parameters = {
         include: [
             "size",
             "shape",
-            "defaultSlot",
+            "default",
             "interactive",
             "ariaHaspopup",
             "accessibleName",
@@ -51,7 +51,7 @@ WithImage.parameters = {
     },
 };
 WithImage.args = {
-    ["defaultSlot"]: `<img
+    ["default"]: `<img
 	alt="Woman 1"
 	src="../assets/images/avatars/man_avatar_1.png"
 />`,
@@ -77,7 +77,7 @@ Styles.args = {
     size: "XL",
     shape: "Square",
     style: "width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)",
-    defaultSlot: `<img
+    default: `<img
 	src="../assets/images/avatars/Lamp_avatar_01.jpg"
 	alt="Lamp"
 	style="object-fit: contain"

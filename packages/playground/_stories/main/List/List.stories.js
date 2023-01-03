@@ -27,7 +27,7 @@ const Template = (args) => {
         @ui5-item-delete="${ifDefined(args["ui5-item-delete"])}"
         @ui5-selection-change="${ifDefined(args["ui5-selection-change"])}"
     >
-        ${unsafeHTML(args.defaultSlot)}
+        ${unsafeHTML(args.default)}
 </ui5-list>`;
 };
 
@@ -36,7 +36,7 @@ export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
     ["ui5-item-click"]: (e) => action("ui5-item-click")(e.detail),
-    defaultSlot: `<ui5-li
+    default: `<ui5-li
 		icon="nutrition-activity"
 		description="Tropical plant with an edible fruit"
 		additional-text="In-stock"
@@ -112,6 +112,12 @@ export const Growing = () =>
 	});
 </script>`;
 Growing.storyName = "Growing";
+Growing.parameters = {
+    docs: {
+        // Opt-out of inline rendering
+        inlineStories: false,
+    },
+};
 
 // Single Selection
 export const SingleSelection = Template.bind({});
@@ -120,7 +126,7 @@ SingleSelection.args = {
     mode: "SingleSelect",
     headerText: "Select a country:",
     ["ui5-selection-change"]: (e) => action("ui5-selection-change")(e.detail),
-    defaultSlot: `
+    default: `
 	<ui5-li selected icon="map" icon-end>Argentina</ui5-li>
 	<ui5-li icon="map" icon-end>Bulgaria</ui5-li>
 	<ui5-li icon="map" icon-end>China</ui5-li>
@@ -134,7 +140,7 @@ MultiSelection.args = {
     ["ui5-selection-change"]: (e) => action("ui5-selection-change")(e.detail),
     mode: "MultiSelect",
     headerText: "Multiple selection is possible",
-    defaultSlot: `
+    default: `
 	<ui5-li>Pineapple</ui5-li>
 	<ui5-li selected="">Orange</ui5-li>
 	<ui5-li>Banana</ui5-li>
@@ -146,7 +152,7 @@ export const GroupHeaders = Template.bind({});
 GroupHeaders.storyName = "Group Headers";
 GroupHeaders.args = {
     mode: "MultiSelect",
-    defaultSlot: `<ui5-li-groupheader
+    default: `<ui5-li-groupheader
 	>Front End Developers</ui5-li-groupheader
 	>
 	<ui5-li
@@ -195,7 +201,7 @@ Delete.args = {
     mode: "Delete",
     ["ui5-item-delete"]: (e) => action("ui5-item-delete")(e.detail),
     headerText: "Note: The list items removal is up to application developers",
-    defaultSlot: `
+    default: `
 	<ui5-li>Argentina</ui5-li>
 	<ui5-li>Bulgaria</ui5-li>
 	<ui5-li>China</ui5-li>`,

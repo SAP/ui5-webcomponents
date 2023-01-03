@@ -22,7 +22,7 @@ const Template = (args) => {
         accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
         @ui5-change="${ifDefined(args["ui5-change"])}"
     >
-        ${unsafeHTML(args.defaultSlot)}
+        ${unsafeHTML(args.default)}
 </ui5-select> `;
 };
 
@@ -31,7 +31,7 @@ export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
     ["ui5-change"]: (e) => action("ui5-change")(e),
-    defaultSlot: `<ui5-option icon="iphone">Phone</ui5-option>
+    default: `<ui5-option icon="iphone">Phone</ui5-option>
 	<ui5-option icon="ipad">Tablet</ui5-option>
 	<ui5-option icon="laptop" selected="">Desktop</ui5-option>`,
 };

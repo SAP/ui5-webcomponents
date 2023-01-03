@@ -21,7 +21,7 @@ const Template = (args) =>
         .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
         @ui5-click="${ifDefined(args["ui5-click"])}"
     >
-        ${unsafeHTML(args.defaultSlot)}
+        ${unsafeHTML(args.default)}
 </ui5-avatar-group> `;
 
 // Basic
@@ -29,7 +29,7 @@ export const TypeGroup = Template.bind({});
 TypeGroup.storyName = "Type Group";
 TypeGroup.args = {
     ["ui5-click"]: (e) => action("ui5-click")(e.detail),
-    defaultSlot: `
+    default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
@@ -46,7 +46,7 @@ TypeIndividual.storyName = "Type Individual";
 TypeIndividual.args = {
     type: "Individual",
     ["ui5-click"]: (e) => action("ui5-click")(e.detail),
-    defaultSlot: `
+    default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
