@@ -23,7 +23,7 @@ table {
 }
 
 .ui5-table-header-row {
-	color: var(--sapTextColor);
+	color: var(--sapList_HeaderTextColor);
 	height: var(--ui5_table_header_row_height);
 	font-family: "72override", var(--sapFontFamily);
 	font-size: var(--sapFontSize);
