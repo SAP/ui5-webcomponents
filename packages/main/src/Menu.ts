@@ -248,7 +248,7 @@ class Menu extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-menu-item</code> for the intended design.
 	 *
-	 * @name sap.ui.webc.main.Menu.prototype.items
+	 * @name sap.ui.webc.main.Menu.prototype.default
 	 * @type {sap.ui.webc.main.IMenuItem[]}
 	 * @slot items
 	 * @public
@@ -366,15 +366,15 @@ class Menu extends UI5Element {
 		if (!this._isSubMenu) {
 			this._parentMenuItem = undefined;
 		}
-		this._popover = await this._getPopover();
-		this._popover.initialFocus = "";
+		const popover = await this._createPopover();
+		popover.initialFocus = "";
 		for (let index = 0; index < this._currentItems.length; index++) {
 			if (!this._currentItems[index].item.disabled) {
-				this._popover.initialFocus = `${this._id}-menu-item-${index}`;
+				popover.initialFocus = `${this._id}-menu-item-${index}`;
 				break;
 			}
 		}
-		this._popover.showAt(opener);
+		popover.showAt(opener);
 	}
 
 	/**
@@ -391,9 +391,10 @@ class Menu extends UI5Element {
 		}
 	}
 
-	async _getPopover() {
+	async _createPopover() {
 		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-		return staticAreaItemDomRef!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		this._popover = staticAreaItemDomRef!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		return this._popover;
 	}
 
 	_navigateBack() {
@@ -495,10 +496,10 @@ class Menu extends UI5Element {
 			// respect mouseover only on desktop
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
-			const hoverId = opener.getAttribute("id");
+			const hoverId = opener.getAttribute("id")!;
 
 			opener.focus();
-			this._prepareSubMenuDesktopTablet(item, opener, hoverId!);
+			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
 		}
 	}
 
@@ -526,9 +527,9 @@ class Menu extends UI5Element {
 		if (isMenuOpen) {
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
-			const hoverId = opener.getAttribute("id");
+			const hoverId = opener.getAttribute("id")!;
 
-			item.hasChildren && this._prepareSubMenuDesktopTablet(item, opener, hoverId!);
+			item.hasChildren && this._prepareSubMenuDesktopTablet(item, opener, hoverId);
 		} else if (isMenuClose && this._isSubMenu && this._parentMenuItem) {
 			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
 			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true);
@@ -538,7 +539,7 @@ class Menu extends UI5Element {
 	_itemClick(e: CustomEvent<ClickEventDetail>) {
 		const opener = e.detail.item as OpenerStandardListItem;
 		const item = opener.associatedItem;
-		const actionId = opener.getAttribute("id");
+		const actionId = opener.getAttribute("id")!;
 
 		if (!item.hasChildren) {
 			// click on an item that doesn't have sub-items fires an "item-click" event
@@ -567,11 +568,11 @@ class Menu extends UI5Element {
 			this._prepareSubMenuPhone(item);
 		} else if (isTablet()) {
 			// prepares and opens sub-menu on tablet
-			this._prepareSubMenuDesktopTablet(item, opener, actionId!);
+			this._prepareSubMenuDesktopTablet(item, opener, actionId);
 		}
 	}
 
-	_beforePopoverOpen(e: CustomEvent) { // Fix when Popover made TS
+	_beforePopoverOpen(e: CustomEvent) {
 		const prevented = !this.fireEvent("before-open", {}, true, false);
 
 		if (prevented) {

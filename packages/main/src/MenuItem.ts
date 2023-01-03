@@ -134,7 +134,7 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the items of this component.
 	 *
-	 * @name sap.ui.webc.main.MenuItem.prototype.items
+	 * @name sap.ui.webc.main.MenuItem.prototype.default
 	 * @type {sap.ui.webc.main.IMenuItem[]}
 	 * @slot items
 	 * @public
