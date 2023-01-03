@@ -105,7 +105,6 @@ const INITIAL_SPEED = 120; // milliseconds
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
  * @event sap.ui.webc.main.StepInput#change
- * @event
  * @public
  */
 @event("change")
@@ -332,11 +331,9 @@ class StepInput extends UI5Element implements IFormElement {
 	@slot()
 	formSupport!: Array<HTMLElement>;
 
-	static i18nBundle: I18nBundle;
+	_initialValueState?: ValueState;
 
-	constructor() {
-		super();
-	}
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -428,7 +425,7 @@ class StepInput extends UI5Element implements IFormElement {
 		}
 	}
 
-	get input() {
+	get input(): TempInput {
 		return this.shadowRoot!.querySelector<TempInput>("[ui5-input]")!;
 	}
 
@@ -459,9 +456,13 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	_validate() {
+		if (this._initialValueState === undefined) {
+			this._initialValueState = this.valueState;
+		}
+
 		this.valueState = ((this.min !== undefined && this.value < this.min)
 			|| (this.max !== undefined && this.value > this.max))
-			? ValueState.Error : this.valueState;
+			? ValueState.Error : this._initialValueState;
 	}
 
 	_preciseValue(value: number) {
@@ -524,7 +525,7 @@ class StepInput extends UI5Element implements IFormElement {
 
 	_onInputChange() {
 		if (this.input.value === "") {
-			this.input.value = (this.min || 0).toString();
+			this.input.value = (this.min || 0) as unknown as string;
 		}
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
 		if (this.value !== this._previousValue || this.value !== inputValue) {
