@@ -1,4 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import {
 	isUp,
 	isDown,
@@ -14,299 +18,34 @@ import {
 	isEnter,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import type FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
+// @ts-ignore
 import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
 import Icon from "./Icon.js";
+// @ts-ignore
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 
 // Styles
 import StepInputCss from "./generated/themes/StepInput.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-step-input",
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.main.StepInput.prototype */ {
-		/**
-		 * Defines a value of the component.
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @defaultvalue 0
-		 * @public
-		 */
-		value: {
-			type: Float,
-			defaultValue: 0,
-		},
-
-		/**
-		 * Defines a minimum value of the component.
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @public
-		 */
-		min: {
-			type: Float,
-		},
-
-		/**
-		 * Defines a maximum value of the component.
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @public
-		 */
-		max: {
-			type: Float,
-		},
-
-		/**
-		 * Defines a step of increasing/decreasing the value of the component.
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @defaultvalue 1
-		 * @public
-		 */
-		step: {
-			type: Float,
-			defaultValue: 1,
-		},
-
-		/**
-		 * Defines the value state of the component.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>None</code></li>
-		 * <li><code>Error</code></li>
-		 * <li><code>Warning</code></li>
-		 * <li><code>Success</code></li>
-		 * <li><code>Information</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.base.types.ValueState}
-		 * @defaultvalue "None"
-		 * @public
-		 */
-		valueState: {
-			type: ValueState,
-			defaultValue: ValueState.None,
-		},
-
-		/**
-		 * Defines whether the component is required.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		required: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether the component is displayed as disabled.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether the component is displayed as read-only.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		readonly: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines a short hint, intended to aid the user with data entry when the
-		 * component has no value.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
-		 *
-		 * @type {string}
-		 * @defaultvalue undefined
-		 * @public
-		 */
-		placeholder: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Determines the name with which the component will be submitted in an HTML form.
-		 *
-		 * <br><br>
-		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-		 *
-		 * <br><br>
-		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the component so that it can be submitted as
-		 * part of an HTML form. Do not use this property unless you need to submit a form.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		name: {
-			type: String,
-		},
-
-		/**
-		 * Determines the number of digits after the decimal point of the component.
-		 *
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 0
-		 * @public
-		 */
-		valuePrecision: {
-			type: Integer,
-			defaultValue: 0,
-		},
-
-		/**
-		 * Defines the accessible ARIA name of the component.
-		 *
-		 * @type {string}
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Receives id(or many ids) of the elements that label the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
-			defaultValue: "",
-		},
-
-		_decIconDisabled: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_incIconDisabled: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		/**
-		 * @type {boolean}
-		 * @private
-		 */
-		focused: {
-			type: Boolean,
-		},
-
-		_inputFocused: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_previousValue: {
-			type: Float,
-			noAttribute: true,
-		},
-
-		_previousValueState: {
-			type: String,
-			noAttribute: true,
-			defaultValue: "",
-		},
-
-		_waitTimeout: {
-			type: Float,
-			noAttribute: true,
-		},
-
-		_speed: {
-			type: Float,
-			noAttribute: true,
-		},
-
-		_btnDown: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_spinTimeoutId: {
-			type: Integer,
-			noAttribute: true,
-		},
-
-		_spinStarted: {
-			type: Boolean,
-			noAttribute: true,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.StepInput.prototype */ {
-		/**
-		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br><br>
-		 *
-		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
-		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-		 * @type {HTMLElement}
-		 * @slot
-		 * @public
-		 */
-		valueStateMessage: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-		 * when <code>name</code> property is set.
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @private
-		 */
-		formSupport: {
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.StepInput.prototype */ {
-		/**
-		 * Fired when the input operation has finished by pressing Enter or on focusout.
-		 *
-		 * @event
-		 * @public
-		*/
-		change: {},
-	},
-};
+type TempInput = HTMLElement & {
+	value: string,
+}
 
 // Spin variables
 const INITIAL_WAIT_TIMEOUT = 500; // milliseconds
@@ -361,14 +100,240 @@ const INITIAL_SPEED = 120; // milliseconds
  * @since 1.0.0-rc.13
  * @public
  */
-class StepInput extends UI5Element {
-	constructor() {
-		super();
-	}
+@customElement("ui5-step-input")
+/**
+ * Fired when the input operation has finished by pressing Enter or on focusout.
+ *
+ * @event sap.ui.webc.main.StepInput#change
+ * @public
+ */
+@event("change")
+class StepInput extends UI5Element implements IFormElement {
+	/**
+	 * Defines a value of the component.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.value
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @defaultvalue 0
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 0 })
+	value!: number;
 
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines a minimum value of the component.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.min
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @public
+	 */
+	@property({ validator: Float })
+	min?: number;
+
+	/**
+	 * Defines a maximum value of the component.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.max
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @public
+	 */
+	@property({ validator: Float })
+	max?: number;
+
+	/**
+	 * Defines a step of increasing/decreasing the value of the component.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.step
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @defaultvalue 1
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 1 })
+	step!: number;
+
+	/**
+	 * Defines the value state of the component.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>None</code></li>
+	 * <li><code>Error</code></li>
+	 * <li><code>Warning</code></li>
+	 * <li><code>Success</code></li>
+	 * <li><code>Information</code></li>
+	 * </ul>
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.valueState
+	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @defaultvalue "None"
+	 * @public
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	valueState!: ValueState;
+
+	/**
+	 * Defines whether the component is required.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.required
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	required!: boolean;
+
+	/**
+	 * Determines whether the component is displayed as disabled.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.disabled
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Determines whether the component is displayed as read-only.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.readonly
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
+
+	/**
+	 * Defines a short hint, intended to aid the user with data entry when the
+	 * component has no value.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.placeholder
+	 * @type {string}
+	 * @defaultvalue undefined
+	 * @public
+	 */
+	@property({ defaultValue: undefined })
+	placeholder?: string;
+
+	/**
+	 * Determines the name with which the component will be submitted in an HTML form.
+	 *
+	 * <br><br>
+	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 *
+	 * <br><br>
+	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * will be created inside the component so that it can be submitted as
+	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.name
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	name!: string;
+
+	/**
+	 * Determines the number of digits after the decimal point of the component.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.valuePrecision
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultvalue 0
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: 0 })
+	valuePrecision!: number;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.accessibleName
+	 * @type {string}
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.accessibleNameRef
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property({ defaultValue: "" })
+	accessibleNameRef!: string;
+
+	@property({ type: Boolean, noAttribute: true })
+	_decIconDisabled!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_incIconDisabled!: boolean;
+
+	@property({ type: Boolean })
+	focused!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_inputFocused!: boolean;
+
+	@property({ validator: Float, noAttribute: true })
+	_previousValue!: number;
+
+	@property({ validator: Float, noAttribute: true })
+	_waitTimeout!: number;
+
+	@property({ validator: Float, noAttribute: true })
+	_speed!: number;
+
+	@property({ type: Boolean, noAttribute: true })
+	_btnDown!: boolean;
+
+	@property({ validator: Integer, noAttribute: true })
+	_spinTimeoutId!: Timeout;
+
+	@property({ type: Boolean, noAttribute: true })
+	_spinStarted!: boolean;
+
+	/**
+	 * Defines the value state message that will be displayed as pop up under the component.
+	 * <br><br>
+	 *
+	 * @name sap.ui.webc.main.StepInput.prototype.valueState
+	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+	 * <br>
+	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * @type {HTMLElement}
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	valueStateMessage!: Array<HTMLElement>;
+
+	/**
+	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+	 * when <code>name</code> property is set.
+	 *
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @private
+	 */
+	@slot()
+	formSupport!: Array<HTMLElement>;
+
+	_initialValueState?: ValueState;
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -400,7 +365,7 @@ class StepInput extends UI5Element {
 	// icons-related
 
 	get decIconTitle() {
-		return StepInput.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
+		return StepInput.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE as I18nText);
 	}
 
 	get decIconName() {
@@ -408,7 +373,7 @@ class StepInput extends UI5Element {
 	}
 
 	get incIconTitle() {
-		return StepInput.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE);
+		return StepInput.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE as I18nText);
 	}
 
 	get incIconName() {
@@ -452,20 +417,20 @@ class StepInput extends UI5Element {
 			this._previousValue = this.value;
 		}
 
-		const FormSupport = getFeature("FormSupport");
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this);
+		const formSupport = getFeature<typeof FormSupport>("FormSupport");
+		if (formSupport) {
+			formSupport.syncNativeHiddenInput(this);
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
-	get input() {
-		return this.shadowRoot.querySelector("[ui5-input]");
+	get input(): TempInput {
+		return this.shadowRoot!.querySelector<TempInput>("[ui5-input]")!;
 	}
 
 	get inputOuter() {
-		return this.shadowRoot.querySelector(".ui5-step-input-input");
+		return this.shadowRoot!.querySelector(".ui5-step-input-input")!;
 	}
 
 	_onButtonFocusOut() {
@@ -491,15 +456,16 @@ class StepInput extends UI5Element {
 	}
 
 	_validate() {
-		if (this._previousValueState === "") {
-			this._previousValueState = this.valueState !== "" ? this.valueState : ValueState.None;
+		if (this._initialValueState === undefined) {
+			this._initialValueState = this.valueState;
 		}
+
 		this.valueState = ((this.min !== undefined && this.value < this.min)
 			|| (this.max !== undefined && this.value > this.max))
-			? ValueState.Error : this._previousValueState;
+			? ValueState.Error : this._initialValueState;
 	}
 
-	_preciseValue(value) {
+	_preciseValue(value: number) {
 		const pow = 10 ** this.valuePrecision;
 		return Math.round(value * pow) / pow;
 	}
@@ -518,7 +484,7 @@ class StepInput extends UI5Element {
 	 * @param {Float} modifier modifies the value of the component with the given modifier (positive or negative)
 	 * @param {boolean} fireChangeEvent if <code>true</code>, fires <code>change</code> event when the value is changed
 	 */
-	_modifyValue(modifier, fireChangeEvent) {
+	_modifyValue(modifier: number, fireChangeEvent = false) {
 		let value;
 		this.value = this._preciseValue(parseFloat(this.input.value));
 		value = this.value + modifier;
@@ -543,23 +509,23 @@ class StepInput extends UI5Element {
 		}
 	}
 
-	_incValue(event) {
-		if (this._incIconClickable && event.isTrusted && !this.disabled && !this.readonly) {
+	_incValue(e: CustomEvent) {
+		if (this._incIconClickable && e.isTrusted && !this.disabled && !this.readonly) {
 			this._modifyValue(this.step, true);
 			this._previousValue = this.value;
 		}
 	}
 
-	_decValue(event) {
-		if (this._decIconClickable && event.isTrusted && !this.disabled && !this.readonly) {
+	_decValue(e: CustomEvent) {
+		if (this._decIconClickable && e.isTrusted && !this.disabled && !this.readonly) {
 			this._modifyValue(-this.step, true);
 			this._previousValue = this.value;
 		}
 	}
 
-	_onInputChange(event) {
+	_onInputChange() {
 		if (this.input.value === "") {
-			this.input.value = this.min || 0;
+			this.input.value = (this.min || 0) as unknown as string;
 		}
 		const inputValue = this._preciseValue(parseFloat(this.input.value));
 		if (this.value !== this._previousValue || this.value !== inputValue) {
@@ -578,38 +544,38 @@ class StepInput extends UI5Element {
 		this.focused = false;
 	}
 
-	_onkeydown(event) {
+	_onkeydown(e: KeyboardEvent) {
 		let preventDefault = true;
 		if (this.disabled || this.readonly) {
 			return;
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			this._onInputChange();
 			return;
 		}
 
-		if (isUp(event)) {
+		if (isUp(e)) {
 			// step up
 			this._modifyValue(this.step);
-		} else if (isDown(event)) {
+		} else if (isDown(e)) {
 			// step down
 			this._modifyValue(-this.step);
-		} else if (isEscape(event)) {
+		} else if (isEscape(e)) {
 			// return previous value
 			this.value = this._previousValue;
 			this.input.value = this.value.toFixed(this.valuePrecision);
-		} else if (this.max !== undefined && (isPageUpShift(event) || isUpShiftCtrl(event))) {
+		} else if (this.max !== undefined && (isPageUpShift(e) || isUpShiftCtrl(e))) {
 			// step to max
 			this._modifyValue(this.max - this.value);
-		} else if (this.min !== undefined && (isPageDownShift(event) || isDownShiftCtrl(event))) {
+		} else if (this.min !== undefined && (isPageDownShift(e) || isDownShiftCtrl(e))) {
 			// step to min
 			this._modifyValue(this.min - this.value);
-		} else if (!isUpCtrl(event) && !isDownCtrl(event) && !isUpShift(event) && !isDownShift(event)) {
+		} else if (!isUpCtrl(e) && !isDownCtrl(e) && !isUpShift(e) && !isDownShift(e)) {
 			preventDefault = false;
 		}
 		if (preventDefault) {
-			event.preventDefault();
+			e.preventDefault();
 		}
 	}
 
@@ -639,7 +605,7 @@ class StepInput extends UI5Element {
 	 * @param {boolean} increment - is this the increment button or not so the values should be spin accordingly up or down
 	 * @param {boolean} resetVariables - whether to reset the spin-related variables or not
 	 */
-	_spinValue(increment, resetVariables) {
+	_spinValue(increment: boolean, resetVariables = false) {
 		if (resetVariables) {
 			this._waitTimeout = INITIAL_WAIT_TIMEOUT;
 			this._speed = INITIAL_SPEED;
