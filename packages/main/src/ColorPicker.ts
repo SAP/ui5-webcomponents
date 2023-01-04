@@ -40,6 +40,10 @@ import {
 // Styles
 import ColorPickerCss from "./generated/themes/ColorPicker.css.js";
 
+type TempSlider = HTMLElement & {
+	value: number;
+}
+
 const PICKER_POINTER_WIDTH = 6.5;
 
 type ColorCoordinates = {
@@ -286,7 +290,7 @@ class ColorPicker extends UI5Element {
 	}
 
 	_handleHueInput(e: CustomEvent) {
-		this.selectedHue = (e.target as Slider).value;
+		this.selectedHue = (e.target as TempSlider).value;
 		this._hue = this.selectedHue;
 		this._setMainColor(this._hue);
 		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.

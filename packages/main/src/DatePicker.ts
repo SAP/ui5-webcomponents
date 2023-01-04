@@ -543,9 +543,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		if (updateValue) {
-			this._getInput()?.getInputDOMRef().then((innnerInput: HTMLElement | null) => {
+			this._getInput()?.getInputDOMRef().then((innnerInput: Input | HTMLInputElement | null) => {
 				if (innnerInput) {
-					(innnerInput as HTMLInputElement).value = value;
+					innnerInput.value = value;
 				}
 			});
 			this.value = value;
@@ -564,11 +564,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_toggleAndFocusInput() {
 		this.togglePicker();
-		this._getInput()?.focus();
+		this._getInput().focus();
 	}
 
 	_getInput(): Input {
-		return this.shadowRoot!.querySelector("[ui5-input]") as Input;
+		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
 	}
 
 	/**

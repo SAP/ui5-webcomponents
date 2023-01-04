@@ -65,6 +65,7 @@ class SuggestionItem extends UI5Element {
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.icon
 	 * @public
 	 */
 	@property()

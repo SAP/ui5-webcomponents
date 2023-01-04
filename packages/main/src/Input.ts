@@ -78,13 +78,13 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
-interface NativeInputAttributes {
+type NativeInputAttributes = {
 	min?: number,
 	max?: number,
 	step?: number
 }
 
-interface AccInfo {
+type AccInfo = {
 	ariaRoledescription?: string,
 	ariaDescribedBy?: string,
 	ariaHasPopup?: string,
@@ -98,9 +98,9 @@ interface AccInfo {
 
 // all sementic events
 enum INPUT_EVENTS {
-	EVENT_CHANGE = "change",
-	EVENT_INPUT = "input",
-	EVENT_SUGGESTION_ITEM_SELECT = "suggestion-item-select",
+	CHANGE = "change",
+	INPUT = "input",
+	SUGGESTION_ITEM_SELECT = "suggestion-item-select",
 }
 
 // all user interactions
@@ -183,7 +183,7 @@ type SuggestionScrollEventDetail = {
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
- * @event
+ * @event sap.ui.webc.main.Input#change
  * @public
  */
 @event("change")
@@ -192,7 +192,7 @@ type SuggestionScrollEventDetail = {
  * Fired when the value of the component changes at each keystroke,
  * and when a suggestion item has been selected.
  *
- * @event
+ * @event sap.ui.webc.main.Input#input
  * @public
  */
 @event("input")
@@ -472,7 +472,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Defines whether the clear icon is visible.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Input.prototype.effectiveShowClearIcon
 	 * @defaultvalue false
 	 * @private
 	 * @since 1.2.0
@@ -697,10 +696,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (this.showSuggestions) {
 			this.enableSuggestions();
-
-			if (this.Suggestions) {
-				this.suggestionsTexts = this.Suggestions.defaultSlotProperties(this.highlightValue);
-			}
+			this.suggestionsTexts = this.Suggestions!.defaultSlotProperties(this.highlightValue);
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
@@ -740,7 +736,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 			// Keep the original typed in text intact
 			this.valueBeforeAutoComplete += value.slice(this.valueBeforeAutoComplete.length, value.length);
-			this._handleTypeAhead(item, value);
+			if (item) {
+				this._handleTypeAhead(item, value);
+			}
 		}
 	}
 
@@ -826,7 +824,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._keyDown = false;
 	}
 
-	/* Event handling */
 	_handleUp(e: KeyboardEvent) {
 		if (this.Suggestions && this.Suggestions.isOpened()) {
 			this.Suggestions.onUp(e);
@@ -888,7 +885,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_handlePageUp(e: KeyboardEvent) {
 		if (this._isSuggestionsFocused) {
-			this.Suggestions?.onPageUp(e);
+			this.Suggestions!.onPageUp(e);
 		} else {
 			e.preventDefault();
 		}
@@ -896,7 +893,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_handlePageDown(e: KeyboardEvent) {
 		if (this._isSuggestionsFocused) {
-			this.Suggestions?.onPageDown(e);
+			this.Suggestions!.onPageDown(e);
 		} else {
 			e.preventDefault();
 		}
@@ -904,13 +901,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_handleHome(e: KeyboardEvent) {
 		if (this._isSuggestionsFocused) {
-			this.Suggestions?.onHome(e);
+			this.Suggestions!.onHome(e);
 		}
 	}
 
 	_handleEnd(e: KeyboardEvent) {
 		if (this._isSuggestionsFocused) {
-			this.Suggestions?.onEnd(e);
+			this.Suggestions!.onEnd(e);
 		}
 	}
 
@@ -927,7 +924,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		if (hasSuggestions && isOpen && this.Suggestions?._isItemOnTarget()) {
+		if (isOpen && this.Suggestions!._isItemOnTarget()) {
 			// Restore the value.
 			this.value = this.valueBeforeAutoComplete || this.valueBeforeItemPreview;
 
@@ -1020,13 +1017,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (this.previousValue !== this.getInputDOMRefSync()!.value) {
 			this.previousValue = this.getInputDOMRefSync()!.value;
-			this.fireEvent(INPUT_EVENTS.EVENT_CHANGE);
+			this.fireEvent(INPUT_EVENTS.CHANGE);
 		}
 	}
 
 	_clear() {
 		this.value = "";
-		this.fireEvent<InputEventDetail>(INPUT_EVENTS.EVENT_INPUT);
+		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
 		if (!this._isPhone) {
 			this.focus();
 		}
@@ -1043,10 +1040,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		});
 	}
 
-	_handleInput(e: InputEvent) {
+	_handleInput(e: InputEvent | CustomEvent<InputEventDetail>) {
 		const inputDomRef = this.getInputDOMRefSync();
 		const emptyValueFiredOnNumberInput = this.value && this.isTypeNumber && !inputDomRef!.value;
-		const eventType: string = e.inputType || (!!e.detail && (e as unknown as CustomEvent<InputEventDetail>).detail.inputType!) || "";
+		const eventType: string = (e as InputEvent).inputType
+			|| (e.detail && (e as CustomEvent<InputEventDetail>).detail.inputType!)
+			|| "";
 		this._keepInnerValue = false;
 
 		const allowedEventTypes = [
@@ -1068,38 +1067,40 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._shouldAutocomplete = !allowedEventTypes.includes(eventType) && !this.noTypeahead;
 		this.suggestionSelectionCanceled = false;
 
-		// ---- Special cases of numeric Input ----
-		// ---------------- Start -----------------
+		if (e instanceof InputEvent) {
+			// ---- Special cases of numeric Input ----
+			// ---------------- Start -----------------
 
-		// When the last character after the delimiter is removed.
-		// In such cases, we want to skip the re-rendering of the
-		// component as this leads to cursor repositioning and causes user experience issues.
+			// When the last character after the delimiter is removed.
+			// In such cases, we want to skip the re-rendering of the
+			// component as this leads to cursor repositioning and causes user experience issues.
 
-		// There are few scenarios:
-		// Example: type "123.4" and press BACKSPACE - the native input is firing event with the whole part as value (123).
-		// Pressing BACKSPACE again will remove the delimiter and the native input will fire event with the whole part as value again (123).
-		// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with the whole part as value (123).
-		// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value.
-		const delimiterCase = this.isTypeNumber
-			&& (e.inputType === "deleteContentForward" || e.inputType === "deleteContentBackward")
-			&& !(e.target as HTMLInputElement).value.includes(".")
-			&& this.value.includes(".");
+			// There are few scenarios:
+			// Example: type "123.4" and press BACKSPACE - the native input is firing event with the whole part as value (123).
+			// Pressing BACKSPACE again will remove the delimiter and the native input will fire event with the whole part as value again (123).
+			// Example: type "123.456", select/mark "456" and press BACKSPACE - the native input is firing event with the whole part as value (123).
+			// Example: type "123.456", select/mark "123.456" and press BACKSPACE - the native input is firing event with empty value.
+			const delimiterCase = this.isTypeNumber
+				&& (e.inputType === "deleteContentForward" || e.inputType === "deleteContentBackward")
+				&& !(e.target as HTMLInputElement).value.includes(".")
+				&& this.value.includes(".");
 
-		// Handle special numeric notation with "e", example "12.5e12"
-		const eNotationCase = emptyValueFiredOnNumberInput && e.data === "e";
+			// Handle special numeric notation with "e", example "12.5e12"
+			const eNotationCase = emptyValueFiredOnNumberInput && e.data === "e";
 
-		// Handle special numeric notation with "-", example "-3"
-		// When pressing BACKSPACE, the native input fires event with empty value
-		const minusRemovalCase = emptyValueFiredOnNumberInput
-			&& this.value.startsWith("-")
-			&& this.value.length === 2
-			&& (e.inputType === "deleteContentForward" || e.inputType === "deleteContentBackward");
+			// Handle special numeric notation with "-", example "-3"
+			// When pressing BACKSPACE, the native input fires event with empty value
+			const minusRemovalCase = emptyValueFiredOnNumberInput
+				&& this.value.startsWith("-")
+				&& this.value.length === 2
+				&& (e.inputType === "deleteContentForward" || e.inputType === "deleteContentBackward");
 
-		if (delimiterCase || eNotationCase || minusRemovalCase) {
-			this.value = (e.target as HTMLInputElement).value;
-			this._keepInnerValue = true;
+			if (delimiterCase || eNotationCase || minusRemovalCase) {
+				this.value = (e.target as HTMLInputElement).value;
+				this._keepInnerValue = true;
+			}
+			// ----------------- End ------------------
 		}
-		// ----------------- End ------------------
 
 		if (e.target === inputDomRef) {
 			this.focused = true;
@@ -1108,14 +1109,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			e.stopImmediatePropagation();
 		}
 
-		this.fireEventByAction(INPUT_ACTIONS.ACTION_ENTER, e);
+		this.fireEventByAction(INPUT_ACTIONS.ACTION_ENTER, e as InputEvent);
 
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
 
-		if (this.Suggestions) {
-			this.Suggestions.updateSelectedItemPosition(-1);
-		}
+		this.Suggestions!.updateSelectedItemPosition(-1);
 
 		this.isTyping = true;
 	}
@@ -1138,11 +1137,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 	}
 
-	_handleTypeAhead(item: SuggestionItem | undefined, filterValue: string) {
-		if (!item) {
-			return;
-		}
-
+	_handleTypeAhead(item: SuggestionItem, filterValue: string) {
 		const value = item.text ? item.text : item.textContent || "";
 		const innerInput = this.getInputDOMRefSync()!;
 
@@ -1163,7 +1158,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_closeRespPopover() {
-		this.Suggestions?.close(true);
+		this.Suggestions!.close(true);
 	}
 
 	async _afterOpenPopover() {
@@ -1198,21 +1193,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	async openPopover() {
 		const popover = await this._getPopover();
 
-		if (popover) {
-			this._isPopoverOpen = true;
-			popover.showAt(this);
-		}
+		this._isPopoverOpen = true;
+		popover.showAt(this);
 	}
 
 	async closePopover() {
 		const popover = await this._getPopover();
 
-		popover && popover.close();
+		popover.close();
 	}
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem && staticAreaItem.querySelector<Popover>("[ui5-popover]");
+		return staticAreaItem!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
 	/**
@@ -1262,7 +1255,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 			innerInput.value = itemText;
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.EVENT_INPUT);
+			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
 			this._handleChange();
 			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
@@ -1270,7 +1263,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = "";
 		this.suggestionSelectionCanceled = false;
 
-		this.fireEvent<SuggestionItemSelectEventDetail>(INPUT_EVENTS.EVENT_SUGGESTION_ITEM_SELECT, { item });
+		this.fireEvent<SuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item });
 
 		this.isTyping = false;
 		this.openOnMobile = false;
@@ -1291,7 +1284,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	updateValueOnPreview(item: SuggestionListItem) {
 		const noPreview = item.type === "Inactive" || item.groupItem;
 		const innerInput = this.getInputDOMRefSync()!;
-		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || (item as HTMLElement).textContent || "");
+		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent || "");
 
 		this.value = itemValue;
 		innerInput.value = itemValue;
@@ -1301,7 +1294,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * The suggestion item on preview.
 	 * @type {sap.ui.webc.main.IInputSuggestionItem | null}
-	 * @name sap.ui.webc.main.Popover.prototype.previewItem
+	 * @name sap.ui.webc.main.Input.prototype.previewItem
 	 * @readonly
 	 * @public
 	 */
@@ -1326,7 +1319,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = inputValue;
 
 		if (isUserInput) { // input
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.EVENT_INPUT, { inputType: e.inputType });
+			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType });
 			// Angular two way data binding
 			this.fireEvent("value-changed");
 		}
@@ -1344,7 +1337,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	async getInputDOMRef() {
 		if (isPhone() && this.Suggestions) {
 			await this.Suggestions._getSuggestionPopover();
-			return this.Suggestions && this.Suggestions.responsivePopover!.querySelector<Input>(".ui5-input-inner-phone");
+			return this.Suggestions && this.Suggestions.responsivePopover!.querySelector<Input>(".ui5-input-inner-phone")!;
 		}
 
 		return this.nativeInput;
@@ -1352,7 +1345,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	getInputDOMRefSync() {
 		if (isPhone() && this.Suggestions && this.Suggestions.responsivePopover) {
-			return this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone")!.shadowRoot!.querySelector("input")!;
+			return this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone")!.shadowRoot!.querySelector<HTMLInputElement>("input")!;
 		}
 
 		return this.nativeInput;
@@ -1453,7 +1446,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	announceSelectedItem() {
-		const invisibleText = this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-selectionText`)!;
+		const invisibleText = this.shadowRoot!.querySelector(`#${this._id}-selectionText`)!;
 
 		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
 			invisibleText.textContent = this.itemSelectionAnnounce;
@@ -1612,7 +1605,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get availableSuggestionsCount() {
-		if (this.showSuggestions && (this.value || this.Suggestions?.isOpened())) {
+		if (this.showSuggestions && (this.value || this.Suggestions!.isOpened())) {
 			switch (this.suggestionsTexts.length) {
 			case 0:
 				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT as I18nText);

@@ -76,8 +76,6 @@ class GroupHeaderListItem extends ListItemBase {
 		return [this.textContent, this.accessibleName].filter(Boolean).join(" ");
 	}
 
-	_onkeyup() {}
-
 	static async onDefine() {
 		GroupHeaderListItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
