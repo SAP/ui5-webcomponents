@@ -47,6 +47,9 @@
 
 [ui5-responsive-popover] .ui5-valuestatemessage-header, [ui5-popover] .ui5-valuestatemessage-header  {
 	min-height: 2rem;
+}
+
+[ui5-responsive-popover] .ui5-valuestatemessage-header {
 	padding: var(--_ui5_value_state_header_padding);
 	border: var(--_ui5_value_state_header_border);
 	border-bottom: var(--_ui5_value_state_header_border_bottom);
