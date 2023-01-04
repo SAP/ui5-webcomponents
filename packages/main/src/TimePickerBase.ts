@@ -213,7 +213,7 @@ class TimePickerBase extends UI5Element {
 	 * @abstract
 	 * @protected
 	 */
-	get _placeholder() {
+	get _placeholder(): string | undefined {
 		return undefined;
 	}
 
@@ -221,7 +221,7 @@ class TimePickerBase extends UI5Element {
 	 * @abstract
 	 * @protected
 	 */
-	get _formatPattern() {
+	get _formatPattern(): string | undefined {
 		return undefined;
 	}
 
@@ -432,15 +432,11 @@ class TimePickerBase extends UI5Element {
 	 * @returns {boolean}
 	 */
 	isValid(value: string | undefined) {
-		if (value === undefined) {
-			return false;
-		}
-
 		if (value === "") {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value as string, undefined as unknown as boolean, undefined as unknown as boolean);
 	}
 
 	normalizeValue(value: string) {
@@ -452,11 +448,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		if (this._effectiveValue === undefined) {
-			return;
-		}
-
-		const date = this.getFormat().parse(this._effectiveValue, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const date = this.getFormat().parse(this._effectiveValue as string, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
 		if (!date) {
 			return;
 		}

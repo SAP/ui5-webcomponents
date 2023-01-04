@@ -1,51 +1,14 @@
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TimePickerBase from "./TimePickerBase.js";
 
 import {
 	TIMEPICKER_INPUT_DESCRIPTION,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-time-picker",
-	properties: /** @lends sap.ui.webc.main.TimePickerBase.prototype */ {
-		/**
-		 * Defines a short hint, intended to aid the user with data entry when the
-		 * component has no value.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
-		 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
-		 *
-		 * @type {string}
-		 * @defaultvalue undefined
-		 * @public
-		 */
-		placeholder: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Determines the format, displayed in the input field.
-		 *
-		 * Example:
-		 * HH:mm:ss -> 11:42:35
-		 * hh:mm:ss a -> 2:23:15 PM
-		 * mm:ss -> 12:04 (only minutes and seconds)
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		formatPattern: {
-			type: String,
-		},
-	},
-};
 
 /**
  * @class
@@ -112,10 +75,39 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.6
  */
+@customElement("ui5-time-picker")
 class TimePicker extends TimePickerBase {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines a short hint, intended to aid the user with data entry when the
+	 * component has no value.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> When no placeholder is set, the format pattern is displayed as a placeholder.
+	 * Passing an empty string as the value of this property will make the component appear empty - without placeholder or format pattern.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.TimePicker.prototype.placeholder
+	 * @defaultvalue undefined
+	 * @public
+	 */
+	@property({ defaultValue: undefined })
+	placeholder?: string;
+
+	/**
+	 * Determines the format, displayed in the input field.
+	 *
+	 * Example:
+	 * HH:mm:ss -> 11:42:35
+	 * hh:mm:ss a -> 2:23:15 PM
+	 * mm:ss -> 12:04 (only minutes and seconds)
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.TimePicker.prototype.formatPattern
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	formatPattern!: string;
 
 	get _formatPattern() {
 		const hasHours = !!this.formatPattern.match(/H/i);
@@ -126,7 +118,8 @@ class TimePicker extends TimePickerBase {
 	}
 
 	get _displayFormat() {
-		return this.getFormat().oFormatOptions.pattern;
+		// @ts-ignore oFormatOptions is a private API of DateFormat
+		return this.getFormat().oFormatOptions.pattern as string;
 	}
 
 	get _placeholder() {
@@ -141,7 +134,7 @@ class TimePicker extends TimePickerBase {
 	 * @public
 	 */
 	get dateValue() {
-		return this.getFormat().parse(this._effectiveValue);
+		return this.getFormat().parse(this._effectiveValue as string, undefined as unknown as boolean, undefined as unknown as boolean);
 	}
 
 	get accInfo() {
@@ -154,7 +147,7 @@ class TimePicker extends TimePickerBase {
 	}
 
 	get dateAriaDescription() {
-		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
+		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION as I18nText);
 	}
 }
 
