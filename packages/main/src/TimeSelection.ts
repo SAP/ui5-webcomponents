@@ -42,8 +42,6 @@ import timeSelectionCss from "./generated/themes/TimeSelection.css.js";
 import type { SelectEventDetail } from "./WheelSlider.js";
 import type { HourType } from "./timepicker-utils/TimeSlider.js";
 
-const capitalizeFirst = (str: string) => str.substr(0, 1).toUpperCase() + str.substr(1);
-
 /**
  * @class
  *
