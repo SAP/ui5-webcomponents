@@ -39,15 +39,15 @@ import {
 
 // Styles
 import timeSelectionCss from "./generated/themes/TimeSelection.css.js";
-import type { SelectEventDetail } from "./WheelSlider.js";
+import type { WheelSliderSelectEventDetail } from "./WheelSlider.js";
 import type { HourType } from "./timepicker-utils/TimeSlider.js";
 
-type ChangeEventDetail = {
+type TimeSelectionChangeEventDetail = {
 	value: string | undefined,
 	valid: boolean,
 }
 
-type SliderChangeEventDetail = {
+type TimeSelectionSliderChangeEventDetail = {
 	slider: string,
 }
 
@@ -305,11 +305,11 @@ class TimeSelection extends UI5Element {
 		const value = this.formatValue(date);
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
-			this.fireEvent("change", { value: this.value, valid: true });
+			this.fireEvent<TimeSelectionChangeEventDetail>("change", { value: this.value, valid: true });
 		}
 	}
 
-	onHoursChange(e: CustomEvent<SelectEventDetail>) {
+	onHoursChange(e: CustomEvent<WheelSliderSelectEventDetail>) {
 		let hours = parseInt(e.detail.value);
 		const isTwelveHoursFormat = this._hoursConfiguration.isTwelveHoursFormat;
 
@@ -328,21 +328,21 @@ class TimeSelection extends UI5Element {
 		this.setValue(date);
 	}
 
-	onMinutesChange(e: CustomEvent<SelectEventDetail>) {
+	onMinutesChange(e: CustomEvent<WheelSliderSelectEventDetail>) {
 		const minutes = parseInt(e.detail.value);
 		const date = this.validDateValue;
 		date.setMinutes(minutes);
 		this.setValue(date);
 	}
 
-	onSecondsChange(e: CustomEvent<SelectEventDetail>) {
+	onSecondsChange(e: CustomEvent<WheelSliderSelectEventDetail>) {
 		const seconds = parseInt(e.detail.value);
 		const date = this.validDateValue;
 		date.setSeconds(seconds);
 		this.setValue(date);
 	}
 
-	onPeriodChange(e: CustomEvent<SelectEventDetail>) {
+	onPeriodChange(e: CustomEvent<WheelSliderSelectEventDetail>) {
 		const period = e.detail.value;
 		const date = this.validDateValue;
 		if (period === this.periodsArray[0] && date.getHours() >= 12) {
@@ -392,7 +392,7 @@ class TimeSelection extends UI5Element {
 			return;
 		}
 		this._currentSlider = slider;
-		this.fireEvent("slider-change", { slider });
+		this.fireEvent<TimeSelectionSliderChangeEventDetail>("slider-change", { slider });
 	}
 
 	get _currentSliderDOM() {
@@ -506,6 +506,6 @@ TimeSelection.define();
 
 export default TimeSelection;
 export type {
-	ChangeEventDetail,
-	SliderChangeEventDetail,
+	TimeSelectionChangeEventDetail,
+	TimeSelectionSliderChangeEventDetail,
 };

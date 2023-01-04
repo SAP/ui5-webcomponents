@@ -82,9 +82,13 @@ type WeekNumber = {
 
 type Week = Array<Day | WeekNumber>;
 
-type SelectedDatesChangeEventDetail = {
+type DayPickerChangeEventDetail = {
 	dates: Array<number>,
 	timestamp?: number,
+}
+
+type DayPickerNavigateEventDetail = {
+	timestamp: number,
 }
 
 /**
@@ -451,7 +455,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	as Array<number> : [timestamp] as Array<number>;
 		}
 
-		this.fireEvent<SelectedDatesChangeEventDetail>("change", {
+		this.fireEvent<DayPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -482,7 +486,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 		});
 
-		this.fireEvent<SelectedDatesChangeEventDetail>("change", {
+		this.fireEvent<DayPickerChangeEventDetail>("change", {
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -693,7 +697,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent("navigate", { timestamp: this.timestamp });
+		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -704,7 +708,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
-		this.fireEvent("navigate", { timestamp: this.timestamp });
+		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -801,5 +805,6 @@ DayPicker.define();
 
 export default DayPicker;
 export type {
-	SelectedDatesChangeEventDetail,
+	DayPickerNavigateEventDetail,
+	DayPickerChangeEventDetail,
 };

@@ -35,7 +35,7 @@ import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTe
 import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelection from "./TimeSelection.js";
-import type { ChangeEventDetail } from "./TimeSelection.js";
+import type { TimeSelectionChangeEventDetail } from "./TimeSelection.js";
 
 import {
 	TIMEPICKER_SUBMIT_BUTTON,
@@ -233,7 +233,7 @@ class TimePickerBase extends UI5Element {
 		return this.tempValue;
 	}
 
-	onTimeSelectionChange(e: CustomEvent<ChangeEventDetail>) {
+	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this.tempValue = e.detail.value; // every time the user changes the sliders -> update tempValue
 	}
 

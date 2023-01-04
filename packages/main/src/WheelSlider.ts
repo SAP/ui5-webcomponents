@@ -23,7 +23,7 @@ import WheelSliderCss from "./generated/themes/WheelSlider.css.js";
 const CELL_SIZE_COMPACT = 32;
 const CELL_SIZE_COZY = 46;
 
-type SelectEventDetail = { value: string }
+type WheelSliderSelectEventDetail = { value: string }
 
 /**
  * @class
@@ -433,4 +433,4 @@ class WheelSlider extends UI5Element {
 WheelSlider.define();
 
 export default WheelSlider;
-export type { SelectEventDetail };
+export type { WheelSliderSelectEventDetail };
