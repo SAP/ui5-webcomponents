@@ -354,6 +354,7 @@ class Dialog extends Popup {
 		this._isRTL = this.effectiveDir === "rtl";
 		this.onPhone = isPhone();
 		this.onDesktop = isDesktop();
+		this.accessibleRole = this._role;
 	}
 
 	onAfterRendering() {
