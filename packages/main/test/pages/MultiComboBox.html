@@ -302,6 +302,8 @@
 			<ui5-mcb-item text="Haiti"></ui5-mcb-item>
 			<ui5-mcb-item text="United States"></ui5-mcb-item>
 		</ui5-multi-combobox>
+		<span>SelectionChange events emitted:</span>
+		<span id="selection-change-events-fired"></span>
 	</div>
 
 
@@ -389,6 +391,7 @@
 	</div>
 
 	<script>
+		let selectionChangeEventsFired = 0;
 		var eventNameInput = document.getElementById("events-input");
 		var eventParamsInput = document.getElementById("events-parameters");
 		var callCountInput = document.getElementById("events-call-count");
@@ -460,6 +463,11 @@
 				mcb.appendChild(item);
 			});
 		});
+
+		
+		document.getElementById("mcb-grouping").addEventListener("selection-change", (e) => {
+			document.getElementById("selection-change-events-fired").textContent =  ++selectionChangeEventsFired;
+		})
 	</script>
 
 </body>

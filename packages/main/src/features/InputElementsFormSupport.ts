@@ -2,7 +2,7 @@ import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.j
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
 
 interface IFormElement extends UI5Element {
-	value?: string,
+	value?: string | number,
 	name?: string,
 	disabled?: boolean,
 	required?: boolean,
@@ -125,7 +125,7 @@ class FormSupport {
 
 const copyDefaultProperties = (element: IFormElement, nativeInput: HTMLInputElement) => {
 	nativeInput.disabled = element.disabled!;
-	nativeInput.value = element.value!;
+	nativeInput.value = element.value as string; // We do not explicitly convert to string to retain the current browser behavior
 };
 
 // Add form support to the global features registry so that Web Components can find and use it
