@@ -42,6 +42,15 @@ import timeSelectionCss from "./generated/themes/TimeSelection.css.js";
 import type { SelectEventDetail } from "./WheelSlider.js";
 import type { HourType } from "./timepicker-utils/TimeSlider.js";
 
+type ChangeEventDetail = {
+	value: string | undefined,
+	valid: boolean,
+}
+
+type SliderChangeEventDetail = {
+	slider: string,
+}
+
 /**
  * @class
  *
@@ -59,12 +68,21 @@ import type { HourType } from "./timepicker-utils/TimeSlider.js";
 /**
  * Fired when the value changes due to user interaction with the sliders
  */
-@event("change")
+@event("change", {
+	detail: {
+		value: { type: String },
+		valid: { type: Boolean },
+	},
+})
 
 /**
  * Fired when the expanded/collapsed slider changes (a new slider is expanded or the expanded slider is collapsed)
  */
-@event("sliderChange")
+@event("sliderChange", {
+	detail: {
+		slider: { type: String },
+	},
+})
 class TimeSelection extends UI5Element {
 	/**
 	 * Defines a formatted time value.
@@ -487,3 +505,7 @@ class TimeSelection extends UI5Element {
 TimeSelection.define();
 
 export default TimeSelection;
+export type {
+	ChangeEventDetail,
+	SliderChangeEventDetail,
+};
