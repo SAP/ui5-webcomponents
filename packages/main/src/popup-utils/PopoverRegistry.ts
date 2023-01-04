@@ -18,7 +18,7 @@ const repositionPopovers = () => {
 };
 
 const closePopoversIfLostFocus = () => {
-	if (document.activeElement!.tagName === "IFRAME") {
+	if (document.activeElement?.tagName === "IFRAME") {
 		getRegistry().reverse().forEach(popup => popup.instance.close(false, false, true));
 	}
 };
@@ -61,7 +61,7 @@ const detachGlobalClickHandler = () => {
 
 const clickHandler = (event: MouseEvent) => {
 	const openedPopups = getOpenedPopups();
-	const isTopPopupPopover = typeof (openedPopups[openedPopups.length - 1].instance as Popover).showAt === "function";
+	const isTopPopupPopover = !!openedPopups[openedPopups.length - 1].instance.showAt;
 
 	if (openedPopups.length === 0 || !isTopPopupPopover) {
 		return;

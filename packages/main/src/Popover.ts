@@ -22,18 +22,18 @@ import PopoverCss from "./generated/themes/Popover.css.js";
 
 const ARROW_SIZE = 8;
 
-type PopoverSizeT = {
+type PopoverSize = {
 	width: number;
 	height: number;
 }
 
-type ArrowPositionT = {
+type ArrowPosition = {
 	x: number;
 	y: number;
 }
 
-type CalculatedPlacementT = {
-	arrow: ArrowPositionT,
+type CalculatedPlacement = {
+	arrow: ArrowPosition,
 	top: number,
 	left: number,
 	placementType: PopoverPlacementType,
@@ -215,7 +215,7 @@ class Popover extends Popup {
 	 * @since 1.2.0
 	 */
 	@property({ validator: DOMReference, defaultValue: "" })
-	opener!: DOMReference;
+	opener!: HTMLElement | string;
 
 	/**
 	 * Defines whether the content is scrollable.
@@ -252,10 +252,10 @@ class Popover extends Popup {
 	actualPlacementType!: PopoverPlacementType;
 
 	@property({ validator: Integer, noAttribute: true })
-	_maxHeight!: number;
+	_maxHeight?: number;
 
 	@property({ validator: Integer, noAttribute: true })
-	_maxWidth!: number;
+	_maxWidth?: number;
 
 	/**
 	 * Defines the header HTML Element.
@@ -284,7 +284,7 @@ class Popover extends Popup {
 	_preventRepositionAndClose?: boolean;
 	_top?: number;
 	_left?: number;
-	_oldPlacement?: CalculatedPlacementT;
+	_oldPlacement?: CalculatedPlacement;
 	_width?: string;
 
 	constructor() {
@@ -305,7 +305,7 @@ class Popover extends Popup {
 
 	onAfterRendering() {
 		if (!this.isOpen() && this.open) {
-			const opener = this.opener instanceof HTMLElement ? this.opener : (this.getRootNode() as ShadowRoot).getElementById(this.opener as string);
+			const opener = this.opener instanceof HTMLElement ? this.opener : (this.getRootNode() as ShadowRoot).getElementById(this.opener);
 			if (!opener) {
 				console.warn("Valid opener id is required."); // eslint-disable-line
 				return;
@@ -318,8 +318,8 @@ class Popover extends Popup {
 	}
 
 	isOpenerClicked(event: MouseEvent) {
-		const target = event.target;
-		return target === this._opener || ((target as UI5Element).getFocusDomRef && (target as UI5Element).getFocusDomRef() === this._opener) || event.composedPath().indexOf(this._opener as EventTarget) > -1;
+		const target = event.target as UI5Element;
+		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener) || event.composedPath().indexOf(this._opener as EventTarget) > -1;
 	}
 
 	/**
@@ -420,7 +420,7 @@ class Popover extends Popup {
 
 		if (this.isOpen()) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = (this._opener as HTMLElement).getBoundingClientRect();
+			this._openerRect = this._opener?.getBoundingClientRect();
 		}
 
 		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {
@@ -493,7 +493,7 @@ class Popover extends Popup {
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
 	}
 
-	getPopoverSize(): PopoverSizeT {
+	getPopoverSize(): PopoverSize {
 		if (!this.opened) {
 			Object.assign(this.style, {
 				display: "block",
@@ -516,7 +516,7 @@ class Popover extends Popup {
 	/**
 	 * @private
 	 */
-	calcPlacement(targetRect: DOMRect, popoverSize: PopoverSizeT): CalculatedPlacementT {
+	calcPlacement(targetRect: DOMRect, popoverSize: PopoverSize): CalculatedPlacement {
 		let left = 0;
 		let top = 0;
 		const allowTargetOverlap = this.allowTargetOverlap;
@@ -631,7 +631,7 @@ class Popover extends Popup {
 	 * @param {number} borderRadius Value of the border-radius property
 	 * @returns {{x: number, y: number}} Arrow's coordinates
 	 */
-	getArrowPosition(targetRect: DOMRect, { width, height }: PopoverSizeT, left: number, top: number, isVertical: boolean, borderRadius: number): ArrowPositionT {
+	getArrowPosition(targetRect: DOMRect, { width, height }: PopoverSize, left: number, top: number, isVertical: boolean, borderRadius: number): ArrowPosition {
 		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
@@ -678,7 +678,7 @@ class Popover extends Popup {
 	 * Fallbacks to new placement, prioritizing <code>Left</code> and <code>Right</code> placements.
 	 * @private
 	 */
-	fallbackPlacement(clientWidth: number, clientHeight: number, targetRect: DOMRect, popoverSize: PopoverSizeT): PopoverPlacementType | undefined {
+	fallbackPlacement(clientWidth: number, clientHeight: number, targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacementType | undefined {
 		if (targetRect.left > popoverSize.width) {
 			return PopoverPlacementType.Left;
 		}
@@ -696,14 +696,14 @@ class Popover extends Popup {
 		}
 	}
 
-	getActualPlacementType(targetRect: DOMRect, popoverSize: PopoverSizeT): PopoverPlacementType {
+	getActualPlacementType(targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacementType {
 		const placementType = this.placementType;
 		let actualPlacementType = placementType;
 
 		const clientWidth = document.documentElement.clientWidth;
 		const clientHeight = document.documentElement.clientHeight;
 
-		switch (placementType as string) {
+		switch (placementType) {
 		case PopoverPlacementType.Top:
 			if (targetRect.top < popoverSize.height
 				&& targetRect.top < clientHeight - targetRect.bottom) {
@@ -731,7 +731,7 @@ class Popover extends Popup {
 		return actualPlacementType;
 	}
 
-	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSizeT): number {
+	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
 		let left;
 
 		switch (this.horizontalAlign) {
@@ -750,7 +750,7 @@ class Popover extends Popup {
 		return left;
 	}
 
-	getHorizontalTop(targetRect: DOMRect, popoverSize: PopoverSizeT): number {
+	getHorizontalTop(targetRect: DOMRect, popoverSize: PopoverSize): number {
 		let top;
 
 		switch (this.verticalAlign) {
@@ -793,8 +793,8 @@ class Popover extends Popup {
 		return {
 			...super.styles,
 			root: {
-				"max-height": `${this._maxHeight}px`,
-				"max-width": `${this._maxWidth}px`,
+				"max-height": this._maxHeight ? `${this._maxHeight}px` : undefined,
+				"max-width": this._maxWidth ? `${this._maxWidth}px` : undefined,
 			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,

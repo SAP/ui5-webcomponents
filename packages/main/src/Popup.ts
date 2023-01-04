@@ -33,6 +33,11 @@ createBlockingStyle();
 
 const pageScrollingBlockers = new Set<Popup>();
 
+type ScrollEventDetail = {
+	scrollTop: number;
+	targetRef: HTMLElement
+}
+
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
@@ -311,9 +316,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireEvent("scroll", {
+		this.fireEvent<ScrollEventDetail>("scroll", {
 			scrollTop: (e.target as HTMLElement).scrollTop,
-			targetRef: e.target,
+			targetRef: e.target as HTMLElement,
 		});
 	}
 
@@ -448,7 +453,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		this._zIndex = getNextZIndex();
-		this.style.zIndex = `${this._zIndex ? this._zIndex : ""}` || "";
+		this.style.zIndex = this._zIndex as unknown as string;
 
 		this._focusedElementBeforeOpen = getFocusedElement();
 
@@ -548,6 +553,8 @@ abstract class Popup extends UI5Element {
 		this.style.display = "none";
 	}
 
+	abstract showAt(opener: HTMLElement, preventInitialFocus: boolean): void;
+
 	/**
 	 * Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
 	 *
@@ -629,3 +636,7 @@ abstract class Popup extends UI5Element {
 }
 
 export default Popup;
+
+export type {
+	ScrollEventDetail,
+};

@@ -404,9 +404,9 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 	}
 
-	async _getPopover(): Promise<Popover | null> {
+	async _getPopover(): Promise<Popover> {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-valuestatemessage-popover");
+		return staticAreaItem!.querySelector<Popover>(".ui5-valuestatemessage-popover")!;
 	}
 
 	/**

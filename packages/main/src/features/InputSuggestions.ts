@@ -7,7 +7,8 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import List, { ClickEventDetail, SelectionChangeEventDetail } from "../List.js";
+import List from "../List.js";
+import type { ClickEventDetail, SelectionChangeEventDetail } from "../List.js";
 // @ts-ignore
 import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
@@ -253,7 +254,7 @@ class Suggestions {
 		this._getComponent().open = true;
 		this._beforeOpen();
 
-		await this.responsivePopover?.showAt(this._getComponent() as unknown as HTMLElement);
+		await this.responsivePopover?.showAt(this._getComponent());
 	}
 
 	async close(preventFocusRestore = false) {
@@ -261,7 +262,7 @@ class Suggestions {
 
 		this._getComponent().open = false;
 		this.responsivePopover = await this._getSuggestionPopover();
-		this.responsivePopover?.close(false, false, preventFocusRestore);
+		this.responsivePopover.close(false, false, preventFocusRestore);
 
 		if (selectedItem && selectedItem.focused) {
 			selectedItem.focused = false;
@@ -567,7 +568,7 @@ class Suggestions {
 
 	async _getListWidth() {
 		const list = await this._getList();
-		return list?.offsetWidth || 0;
+		return list?.offsetWidth;
 	}
 
 	_getRealItems() {
@@ -580,7 +581,7 @@ class Suggestions {
 		}
 
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem!.querySelector<Popover>("[ui5-responsive-popover]")!;
+		this.responsivePopover = staticAreaItem!.querySelector<Popover>("[ui5-responsive-popover]")!; // change to ResposnivePopover when it is migrated.
 		return this.responsivePopover;
 	}
 
@@ -595,7 +596,7 @@ class Suggestions {
 	}
 
 	getRowText(suggestion: SuggestionItem) {
-		return this.sanitizeText(suggestion.text || (suggestion.textContent || ""));
+		return this.sanitizeText(suggestion.text || suggestion.textContent || "");
 	}
 
 	getRowDesc(suggestion: SuggestionItem) {
@@ -607,7 +608,7 @@ class Suggestions {
 	}
 
 	getHighlightedText(suggestion: SuggestionItem, input: string) {
-		const text = suggestion.text || (suggestion.textContent || "");
+		const text = suggestion.text || suggestion.textContent || "";
 		return this.hightlightInput(text, input);
 	}
 

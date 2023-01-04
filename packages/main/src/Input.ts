@@ -28,7 +28,9 @@ import {
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import I18nBundle, { I18nText, getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -40,9 +42,11 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
 import type { InputSuggestionText, SuggestionComponent } from "./features/InputSuggestions.js";
+import type InputSuggestions from "./features/InputSuggestions.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
+import type { ScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
@@ -73,7 +77,6 @@ import styles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
-import InputSuggestions from "./features/InputSuggestions.js";
 
 interface NativeInputAttributes {
 	min?: number,
@@ -108,6 +111,20 @@ enum INPUT_ACTIONS {
 
 type InputEventDetail = {
 	inputType?: string;
+}
+
+type SuggestionItemSelectEventDetail = {
+	item: SuggestionItem;
+}
+
+type SuggestionItemPreviewEventDetail = {
+	item: SuggestionItem;
+	targetRef: SuggestionListItem;
+}
+
+type SuggestionScrollEventDetail = {
+	scrollTop: number
+	scrollContainer: HTMLElement;
 }
 
 /**
@@ -508,7 +525,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_inputIconFocused!: boolean;
 
 	@slot({ type: HTMLElement })
-	icon!: Array<HTMLElement>;
+	icon!: Array<Icon>;
 
 	/**
 	 * Defines the suggestion items.
@@ -708,7 +725,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		const value = this.value;
-		const innerInput = this.getInputDOMRefSync()!;
+		const innerInput = this.getInputDOMRefSync();
 
 		if (!innerInput || !value) {
 			return;
@@ -870,30 +887,30 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_handlePageUp(e: KeyboardEvent) {
-		if (this._isSuggestionsFocused && this.Suggestions) {
-			this.Suggestions.onPageUp(e);
+		if (this._isSuggestionsFocused) {
+			this.Suggestions?.onPageUp(e);
 		} else {
 			e.preventDefault();
 		}
 	}
 
 	_handlePageDown(e: KeyboardEvent) {
-		if (this._isSuggestionsFocused && this.Suggestions) {
-			this.Suggestions.onPageDown(e);
+		if (this._isSuggestionsFocused) {
+			this.Suggestions?.onPageDown(e);
 		} else {
 			e.preventDefault();
 		}
 	}
 
 	_handleHome(e: KeyboardEvent) {
-		if (this._isSuggestionsFocused && this.Suggestions) {
-			this.Suggestions.onHome(e);
+		if (this._isSuggestionsFocused) {
+			this.Suggestions?.onHome(e);
 		}
 	}
 
 	_handleEnd(e: KeyboardEvent) {
-		if (this._isSuggestionsFocused && this.Suggestions) {
-			this.Suggestions.onEnd(e);
+		if (this._isSuggestionsFocused) {
+			this.Suggestions?.onEnd(e);
 		}
 	}
 
@@ -940,12 +957,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.previousValue = this.value;
 		this.valueBeforeItemPreview = this.value;
 
-		this._inputIconFocused = !!e.target && e.target === this.querySelector("[ui5-icon]");
+		this._inputIconFocused = !!e.target && e.target === this.querySelector<Icon>("[ui5-icon]");
 	}
 
 	_onfocusout(e: FocusEvent) {
-		const focusedOutToSuggestions = this.Suggestions && e.relatedTarget && (e.relatedTarget as HTMLElement).shadowRoot && (e.relatedTarget as HTMLElement).shadowRoot!.contains(this.Suggestions.responsivePopover as Node);
-		const focusedOutToValueStateMessage = e.relatedTarget && (e.relatedTarget as HTMLElement).shadowRoot && (e.relatedTarget as HTMLElement).shadowRoot!.querySelector(".ui5-valuestatemessage-root");
+		const toBeFocused = e.relatedTarget as HTMLElement;
+		const focusedOutToSuggestions = this.Suggestions && toBeFocused && toBeFocused.shadowRoot && toBeFocused.shadowRoot.contains(this.Suggestions.responsivePopover as Node);
+		const focusedOutToValueStateMessage = toBeFocused && toBeFocused.shadowRoot && toBeFocused.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
 		this._keepInnerValue = false;
 
@@ -961,9 +979,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		const toBeFocused = e.relatedTarget;
-
-		if (toBeFocused && (toBeFocused as HTMLElement).classList.contains(this._id)) {
+		if (toBeFocused && (toBeFocused).classList.contains(this._id)) {
 			return;
 		}
 
@@ -1020,11 +1036,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._clearIconClicked = true;
 	}
 
-	_scroll(e: CustomEvent) {
-		const detail = e.detail;
-		this.fireEvent("suggestion-scroll", {
-			scrollTop: detail.scrollTop,
-			scrollContainer: detail.targetRef,
+	_scroll(e: CustomEvent<ScrollEventDetail>) {
+		this.fireEvent<SuggestionScrollEventDetail>("suggestion-scroll", {
+			scrollTop: e.detail.scrollTop,
+			scrollContainer: e.detail.targetRef,
 		});
 	}
 
@@ -1147,8 +1162,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._inputWidth = this.offsetWidth;
 	}
 
-	_closeRespPopover(e: CustomEvent) {
-		this.Suggestions?.close(!!e);
+	_closeRespPopover() {
+		this.Suggestions?.close(true);
 	}
 
 	async _afterOpenPopover() {
@@ -1197,7 +1212,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem && staticAreaItem.querySelector("[ui5-popover]") as Popover;
+		return staticAreaItem && staticAreaItem.querySelector<Popover>("[ui5-popover]");
 	}
 
 	/**
@@ -1234,7 +1249,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		const innerInput = this.getInputDOMRefSync();
+		const innerInput = this.getInputDOMRefSync()!;
 		const value = this.valueBeforeAutoComplete || this.value;
 		const itemText = item.text || item.textContent || ""; // keep textContent for compatibility
 		const fireInput = keyboardUsed
@@ -1246,16 +1261,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
-			innerInput!.value = itemText;
+			innerInput.value = itemText;
 			this.fireEvent<InputEventDetail>(INPUT_EVENTS.EVENT_INPUT);
 			this._handleChange();
-			innerInput!.setSelectionRange(this.value.length, this.value.length);
+			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
 
 		this.valueBeforeItemPreview = "";
 		this.suggestionSelectionCanceled = false;
 
-		this.fireEvent(INPUT_EVENTS.EVENT_SUGGESTION_ITEM_SELECT, { item });
+		this.fireEvent<SuggestionItemSelectEventDetail>(INPUT_EVENTS.EVENT_SUGGESTION_ITEM_SELECT, { item });
 
 		this.isTyping = false;
 		this.openOnMobile = false;
@@ -1275,12 +1290,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 */
 	updateValueOnPreview(item: SuggestionListItem) {
 		const noPreview = item.type === "Inactive" || item.groupItem;
-		const innerInput = this.getInputDOMRefSync();
-		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || (item as unknown as HTMLElement).textContent);
+		const innerInput = this.getInputDOMRefSync()!;
+		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || (item as HTMLElement).textContent || "");
 
-		this.value = itemValue || "";
-		innerInput!.value = itemValue || "";
-		innerInput!.setSelectionRange(this.valueBeforeAutoComplete.length, this.value.length);
+		this.value = itemValue;
+		innerInput.value = itemValue;
+		innerInput.setSelectionRange(this.valueBeforeAutoComplete.length, this.value.length);
 	}
 
 	/**
@@ -1298,7 +1313,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return this.getSuggestionByListItem(this._previewItem);
 	}
 
-	async fireEventByAction(action: string, e: InputEvent) {
+	async fireEventByAction(action: INPUT_ACTIONS, e: InputEvent) {
 		if (this.disabled || this.readonly) {
 			return;
 		}
@@ -1321,7 +1336,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const domRef = this.getDomRef();
 
 		if (domRef) {
-			return (await this.getInputDOMRef() as HTMLInputElement).value;
+			return (await this.getInputDOMRef())!.value;
 		}
 		return "";
 	}
@@ -1361,7 +1376,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return this.getInputId();
 	}
 
-	getSuggestionByListItem(item: SuggestionListItem) {
+	getSuggestionByListItem(item: SuggestionListItem): SuggestionItem {
 		const key = parseInt(item.getAttribute("data-ui5-key")!);
 		return this.suggestionItems[key];
 	}
@@ -1413,7 +1428,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onItemPreviewed(item: SuggestionListItem) {
 		this.previewSuggestion(item);
-		this.fireEvent("suggestion-item-preview", {
+		this.fireEvent<SuggestionItemPreviewEventDetail>("suggestion-item-preview", {
 			item: this.getSuggestionByListItem(item),
 			targetRef: item,
 		});

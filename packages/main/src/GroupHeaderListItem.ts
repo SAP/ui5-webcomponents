@@ -35,7 +35,7 @@ class GroupHeaderListItem extends ListItemBase {
 	 * Note: If not provided a default text alternative will be set, if present.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.GroupHeaderListItem.prototype.valueStateMessage
+	 * @name sap.ui.webc.main.GroupHeaderListItem.prototype.accessibleName
 	 * @defaultvalue ""
 	 * @public
 	 * @since 1.0.0-rc.15

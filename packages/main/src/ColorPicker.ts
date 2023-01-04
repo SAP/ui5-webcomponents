@@ -21,7 +21,6 @@ import type {
 	ColorRGB,
 } from "@ui5/webcomponents-base/dist/util/ColorConversion.js";
 import ColorPickerTemplate from "./generated/templates/ColorPickerTemplate.lit.js";
-// @ts-ignore
 import Input from "./Input.js";
 // @ts-ignore
 import Slider from "./Slider.js";
@@ -287,7 +286,7 @@ class ColorPicker extends UI5Element {
 	}
 
 	_handleHueInput(e: CustomEvent) {
-		this.selectedHue = parseInt((e.target as HTMLInputElement).value);
+		this.selectedHue = (e.target as Slider).value;
 		this._hue = this.selectedHue;
 		this._setMainColor(this._hue);
 		// Idication that changes to the hue value triggered as a result of user pressing over the hue slider.
@@ -326,7 +325,7 @@ class ColorPicker extends UI5Element {
 
 	_handleRGBInputsChange(e: CustomEvent) {
 		const target = e.target as Input;
-		const targetValue: number = parseInt(target.value) || 0;
+		const targetValue = parseInt(target.value) || 0;
 		let tempColor;
 		switch (target.id) {
 		case "red":
