@@ -1,86 +1,86 @@
 <section
-    class="ui5-carousel-root"
-    tabindex="0"
-    role="listbox"
-    aria-activedescendant="{{ariaActiveDescendant}}"
-    @focusin="{{_onfocusin}}"
-    @keydown={{_onkeydown}}
-    @mouseout="{{_onmouseout}}"
-    @mouseover="{{_onmouseover}}"
+	class="ui5-carousel-root"
+	tabindex="0"
+	role="listbox"
+	aria-activedescendant="{{ariaActiveDescendant}}"
+	@focusin="{{_onfocusin}}"
+	@keydown={{_onkeydown}}
+	@mouseout="{{_onmouseout}}"
+	@mouseover="{{_onmouseover}}"
 >
-    <div class="{{classes.viewport}}" part="content">
-        <div class="{{classes.content}}" style="{{styles.content}}">
-            {{#each items}}
-                 <div id="{{id}}"
-                    class="ui5-carousel-item {{classes}}"
-                    style="{{styles}}"
-                    role="option"
-                    aria-posinset="{{posinset}}"
-                    aria-setsize="{{setsize}}"
-                    part="item"
-                >
-                    <slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
-                </div>
-            {{/each}}
-            </div>
-        </div>
+	<div class="{{classes.viewport}}" part="content">
+		<div class="{{classes.content}}" style="{{styles.content}}">
+			{{#each items}}
+				 <div id="{{id}}"
+					class="ui5-carousel-item {{classes}}"
+					style="{{styles}}"
+					role="option"
+					aria-posinset="{{posinset}}"
+					aria-setsize="{{setsize}}"
+					part="item"
+				>
+					<slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
+				</div>
+			{{/each}}
+			</div>
+		</div>
 
-        {{#if arrows.content}}
-            <div class="ui5-carousel-navigation-arrows">
-                {{> arrow-back}}
-                {{> arrow-forward}}
-            </div>
-        {{/if}}
+		{{#if arrows.content}}
+			<div class="ui5-carousel-navigation-arrows">
+				{{> arrow-back}}
+				{{> arrow-forward}}
+			</div>
+		{{/if}}
 
-        {{#if renderNavigation}}
-            <div class="{{classes.navigation}}">
-                {{#if arrows.navigation}}
-                    {{> arrow-back}}
-                {{/if}}
+		{{#if renderNavigation}}
+			<div class="{{classes.navigation}}">
+				{{#if arrows.navigation}}
+					{{> arrow-back}}
+				{{/if}}
 
-                <div class="ui5-carousel-navigation">
-                    {{#unless hidePageIndicator}}
-                        {{#if isPageTypeDots}}
-                            {{#each dots}}
-                                <div
-                                    role="img"
-                                    aria-label="{{ariaLabel}}"
-                                    ?active="{{active}}"
-                                    class="ui5-carousel-navigation-dot"
-                                ></div>
-                            {{/each}}
-                        {{else}}
-                            <ui5-label>{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</ui5-label>
-                        {{/if}}
-                    {{/unless}}
-                </div>
+				<div class="ui5-carousel-navigation">
+					{{#unless hidePageIndicator}}
+						{{#if isPageTypeDots}}
+							{{#each dots}}
+								<div
+									role="img"
+									aria-label="{{ariaLabel}}"
+									?active="{{active}}"
+									class="ui5-carousel-navigation-dot"
+								></div>
+							{{/each}}
+						{{else}}
+							<ui5-label>{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</ui5-label>
+						{{/if}}
+					{{/unless}}
+				</div>
 
-                {{#if arrows.navigation}}
-                    {{> arrow-forward}}
-                {{/if}}
-            </div>
-        {{/if}}
-    </div>
+				{{#if arrows.navigation}}
+					{{> arrow-forward}}
+				{{/if}}
+			</div>
+		{{/if}}
+	</div>
 </section>
 
 {{#*inline "arrow-back"}}
 	<ui5-button
-        arrow-back
-        tooltip="{{previousPageText}}"
-        class="ui5-carousel-navigation-button {{classes.navPrevButton}}"
-        icon="slim-arrow-left"
-        tabindex="-1"
-        @click={{_navButtonClick}}
-    ></ui5-button>
+		arrow-back
+		tooltip="{{previousPageText}}"
+		class="ui5-carousel-navigation-button {{classes.navPrevButton}}"
+		icon="slim-arrow-left"
+		tabindex="-1"
+		@click={{_navButtonClick}}
+	></ui5-button>
 {{/inline}}
 
 {{#*inline "arrow-forward"}}
-    <ui5-button
-        arrow-forward
-        tooltip="{{nextPageText}}"
-        class="ui5-carousel-navigation-button {{classes.navNextButton}}"
-        icon="slim-arrow-right"
-        tabindex="-1"
-        @click={{_navButtonClick}}
-    ></ui5-button>
+	<ui5-button
+		arrow-forward
+		tooltip="{{nextPageText}}"
+		class="ui5-carousel-navigation-button {{classes.navNextButton}}"
+		icon="slim-arrow-right"
+		tabindex="-1"
+		@click={{_navButtonClick}}
+	></ui5-button>
 {{/inline}}

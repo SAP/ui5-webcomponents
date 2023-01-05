@@ -22,6 +22,7 @@ import {
 	CAROUSEL_NEXT_ARROW_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
+import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -108,6 +109,18 @@ const metadata = {
 		 */
 		hidePageIndicator: {
 			type: Boolean,
+		},
+
+		/**
+		 * Defines the style 
+		 * @type {sap.ui.webc.main.types.CarouselPageIndicatorStyle}
+		 * @since 1.10
+		 * @defaultvalue "Default"
+		 * @public
+		 */
+		pageIndicatorStyle: {
+			type: CarouselPageIndicatorStyle,
+			defaultValue: CarouselPageIndicatorStyle.Default,
 		},
 
 		/**
@@ -612,6 +625,10 @@ class Carousel extends UI5Element {
 	}
 
 	get isPageTypeDots() {
+		if (this.pageIndicatorStyle === CarouselPageIndicatorStyle.Numeric) {
+			return false;
+		}
+
 		return this.pagesCount < Carousel.pageTypeLimit;
 	}
 
