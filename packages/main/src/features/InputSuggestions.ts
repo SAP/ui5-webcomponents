@@ -1,4 +1,4 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -24,6 +24,7 @@ import {
 	// @ts-ignore
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemType from "../types/ListItemType.js";
+import type ListItemBase from "../ListItemBase.js";
 
 interface SuggestionComponent extends UI5Element {
 	_isValueStateFocused: boolean;
@@ -45,18 +46,20 @@ type InputSuggestionText = {
 	description: string;
 	image?: string;
 	icon?: string;
-	type: ListItemType,
+	type: ListItemType;
 	additionalText?: string;
-	additionalTextState: ValueState,
-	groupItem: boolean,
-	key: number,
+	additionalTextState: ValueState;
+	groupItem: boolean;
+	key: number;
 }
 
 type SuggestionsAccInfo = {
 	currentPos: number;
 	listSize: number;
-	itemText: string,
+	itemText: string;
 }
+
+type TempResponsivePopover = Popover; // change to ResponsivePopover when implemented;
 
 /**
  * A class to manage the <code>Input</code suggestion items.
@@ -72,7 +75,7 @@ class Suggestions {
 	highlight: boolean;
 	selectedItemIndex: number;
 	accInfo?: SuggestionsAccInfo;
-	responsivePopover?: Popover;
+	responsivePopover?: TempResponsivePopover;
 	_scrollContainer?: HTMLElement;
 	_handledPress?: boolean;
 	attachedAfterOpened?: boolean;
@@ -134,21 +137,21 @@ class Suggestions {
 		return suggestions;
 	}
 
-	onUp(event: KeyboardEvent) {
-		event.preventDefault();
+	onUp(e: KeyboardEvent) {
+		e.preventDefault();
 		this._handleItemNavigation(false /* forward */);
 		return true;
 	}
 
-	onDown(event: KeyboardEvent) {
-		event.preventDefault();
+	onDown(e: KeyboardEvent) {
+		e.preventDefault();
 		this._handleItemNavigation(true /* forward */);
 		return true;
 	}
 
-	onSpace(event: KeyboardEvent) {
+	onSpace(e: KeyboardEvent) {
 		if (this._isItemOnTarget()) {
-			event.preventDefault();
+			e.preventDefault();
 			this.onItemSelected(null, true /* keyboardUsed */);
 			return true;
 		}
@@ -184,8 +187,8 @@ class Suggestions {
 		return true;
 	}
 
-	onPageDown(event: KeyboardEvent) {
-		event.preventDefault();
+	onPageDown(e: KeyboardEvent) {
+		e.preventDefault();
 
 		const items = this._getItems();
 		const lastItemIndex = items.length - 1;
@@ -201,8 +204,8 @@ class Suggestions {
 		return true;
 	}
 
-	onHome(event: KeyboardEvent) {
-		event.preventDefault();
+	onHome(e: KeyboardEvent) {
+		e.preventDefault();
 
 		if (this._hasValueState) {
 			this._focusValueState();
@@ -213,8 +216,8 @@ class Suggestions {
 		return true;
 	}
 
-	onEnd(event: KeyboardEvent) {
-		event.preventDefault();
+	onEnd(e: KeyboardEvent) {
+		e.preventDefault();
 
 		const lastItemIndex = this._getItems().length - 1;
 
@@ -235,13 +238,13 @@ class Suggestions {
 		return false;
 	}
 
-	toggle(bToggle: boolean, { preventFocusRestore }: { preventFocusRestore: boolean }) {
+	toggle(bToggle: boolean, options: { preventFocusRestore: boolean }) {
 		const toggle = bToggle !== undefined ? bToggle : !this.isOpened();
 
 		if (toggle) {
 			this.open();
 		} else {
-			this.close(preventFocusRestore);
+			this.close(options.preventFocusRestore);
 		}
 	}
 
@@ -254,7 +257,7 @@ class Suggestions {
 		this._getComponent().open = true;
 		this._beforeOpen();
 
-		await this.responsivePopover?.showAt(this._getComponent());
+		this.responsivePopover!.showAt(this._getComponent());
 	}
 
 	async close(preventFocusRestore = false) {
@@ -274,12 +277,12 @@ class Suggestions {
 	}
 
 	/* Interface methods */
-	onItemMouseOver(event: MouseEvent) {
-		this._getComponent().onItemMouseOver(event);
+	onItemMouseOver(e: MouseEvent) {
+		this._getComponent().onItemMouseOver(e);
 	}
 
-	onItemMouseOut(event: MouseEvent) {
-		this._getComponent().onItemMouseOut(event);
+	onItemMouseOut(e: MouseEvent) {
+		this._getComponent().onItemMouseOut(e);
 	}
 
 	onItemSelected(selectedItem: SuggestionListItem | null, keyboardUsed: boolean) {
@@ -311,24 +314,25 @@ class Suggestions {
 	}
 
 	/* Private methods */
-	onItemPress(event: CustomEvent) {
-		let pressedItem: SuggestionListItem;
-		const isPressEvent = event.type === "ui5-item-click";
+	// Note: Split into two separate handlers
+	onItemPress(e: CustomEvent<ClickEventDetail | SelectionChangeEventDetail>) {
+		let pressedItem: ListItemBase; // SuggestionListItem
+		const isPressEvent = e.type === "ui5-item-click";
 
-		// Only use the press event if the item is already selected, in all other cases we are listening for 'ui5-selection-change' from the list
+		// Only use the press e if the item is already selected, in all other cases we are listening for 'ui5-selection-change' from the list
 		// Also we have to check if the selection-change is fired by the list's 'item-click' event handling, to avoid double handling on our side
-		if ((isPressEvent && !event.detail.item.selected) || (this._handledPress && !isPressEvent)) {
+		if ((isPressEvent && !(e.detail as ClickEventDetail).item.selected) || (this._handledPress && !isPressEvent)) {
 			return;
 		}
 
-		if (isPressEvent && event.detail.item.selected) {
-			pressedItem = event.detail.item;
+		if (isPressEvent && (e.detail as ClickEventDetail).item.selected) {
+			pressedItem = (e.detail as ClickEventDetail).item;
 			this._handledPress = true;
 		} else {
-			pressedItem = event.detail.selectedItems[0];
+			pressedItem = (e.detail as SelectionChangeEventDetail).selectedItems[0];
 		}
 
-		this.onItemSelected(pressedItem, false /* keyboardUsed */);
+		this.onItemSelected(pressedItem as SuggestionListItem, false /* keyboardUsed */);
 	}
 
 	_beforeOpen() {
@@ -354,14 +358,12 @@ class Suggestions {
 		}
 
 		if (!this.attachedAfterOpened) {
-			const suggestionPopover = await this._getSuggestionPopover();
-			suggestionPopover.addEventListener("ui5-after-open", this._onOpen.bind(this));
+			this.responsivePopover!.addEventListener("ui5-after-open", this._onOpen.bind(this));
 			this.attachedAfterOpened = true;
 		}
 
 		if (!this.attachedAfterClose) {
-			const suggestionPopover = await this._getSuggestionPopover();
-			suggestionPopover.addEventListener("ui5-after-close", this._onClose.bind(this));
+			this.responsivePopover!.addEventListener("ui5-after-close", this._onClose.bind(this));
 			this.attachedAfterClose = true;
 		}
 	}
@@ -486,7 +488,7 @@ class Suggestions {
 		this.accInfo = {
 			currentPos: nextIdx + 1,
 			listSize: items.length,
-			itemText: this._getRealItems()[items.indexOf(currentItem)].description || "",
+			itemText: this._getRealItems()[items.indexOf(currentItem)].description,
 		};
 
 		if (previousItem) {
@@ -547,14 +549,14 @@ class Suggestions {
 	async _getScrollContainer() {
 		if (!this._scrollContainer) {
 			await this._getSuggestionPopover();
-			this._scrollContainer = this.responsivePopover!.shadowRoot!.querySelector<HTMLElement>(".ui5-popup-content")!;
+			this._scrollContainer = this.responsivePopover!.shadowRoot!.querySelector(".ui5-popup-content")!;
 		}
 
 		return this._scrollContainer;
 	}
 
-	_getItems() {
-		return this.responsivePopover ? [...this.responsivePopover.querySelector<List>("[ui5-list]")!.children] as Array<SuggestionListItem> : [] as Array<SuggestionListItem>;
+	_getItems(): Array<SuggestionListItem> {
+		return this.responsivePopover ? [...this.responsivePopover.querySelector<List>("[ui5-list]")!.children] as Array<SuggestionListItem> : [];
 	}
 
 	_getComponent(): SuggestionComponent {
@@ -568,7 +570,7 @@ class Suggestions {
 
 	async _getListWidth() {
 		const list = await this._getList();
-		return list?.offsetWidth;
+		return list!.offsetWidth;
 	}
 
 	_getRealItems() {
@@ -581,13 +583,13 @@ class Suggestions {
 		}
 
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem!.querySelector<Popover>("[ui5-responsive-popover]")!; // change to ResposnivePopover when it is migrated.
+		this.responsivePopover = staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
 		return this.responsivePopover;
 	}
 
 	get itemSelectionAnnounce() {
 		if (!this.accInfo) {
-			return null;
+			return "";
 		}
 
 		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION as I18nText, this.accInfo.currentPos, this.accInfo.listSize);
@@ -600,11 +602,7 @@ class Suggestions {
 	}
 
 	getRowDesc(suggestion: SuggestionItem) {
-		if (suggestion.description) {
-			return this.sanitizeText(suggestion.description);
-		}
-
-		return "";
+		return this.sanitizeText(suggestion.description || "");
 	}
 
 	getHighlightedText(suggestion: SuggestionItem, input: string) {
@@ -613,7 +611,7 @@ class Suggestions {
 	}
 
 	getHighlightedDesc(suggestion: SuggestionItem, input: string) {
-		const text = suggestion.description || "";
+		const text = suggestion.description;
 		return this.hightlightInput(text, input);
 	}
 

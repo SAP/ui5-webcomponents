@@ -96,7 +96,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 		}
 	}
 
-	_onkeyup(e: KeyboardEvent) {}
+	_onkeyup(e: KeyboardEvent) {} // eslint-disable-line
 
 	_handleTabNext(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;

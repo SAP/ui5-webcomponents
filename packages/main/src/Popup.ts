@@ -2,7 +2,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
@@ -35,7 +35,11 @@ const pageScrollingBlockers = new Set<Popup>();
 
 type ScrollEventDetail = {
 	scrollTop: number;
-	targetRef: HTMLElement
+	targetRef: HTMLElement;
+}
+
+type BeforeCloseEventDetail = {
+	escPressed: boolean;
 }
 
 /**
@@ -165,7 +169,7 @@ abstract class Popup extends UI5Element {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.Popup.prototype.accessibleName
-	 * @defaultvalue ""
+	 * @defaultvalue undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -181,7 +185,7 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @since 1.1.0
 	 */
-	@property()
+	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
 
 	/**
@@ -453,7 +457,7 @@ abstract class Popup extends UI5Element {
 		}
 
 		this._zIndex = getNextZIndex();
-		this.style.zIndex = this._zIndex as unknown as string;
+		this.style.zIndex = this._zIndex?.toString() || "";
 
 		this._focusedElementBeforeOpen = getFocusedElement();
 
@@ -491,7 +495,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent("before-close", { escPressed }, true, false);
+		const prevented = !this.fireEvent<BeforeCloseEventDetail>("before-close", { escPressed }, true, false);
 		if (prevented) {
 			return;
 		}
@@ -578,7 +582,7 @@ abstract class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {string}
+	 * @returns {string | undefined}
 	 */
 	abstract get _ariaLabelledBy(): string | undefined
 
@@ -617,7 +621,7 @@ abstract class Popup extends UI5Element {
 			root: {},
 			content: {},
 			blockLayer: {
-				"zIndex": (this._zIndex ? this._zIndex - 1 : undefined),
+				"zIndex": this._zIndex ? this._zIndex - 1 : "",
 			},
 		};
 	}
@@ -639,4 +643,5 @@ export default Popup;
 
 export type {
 	ScrollEventDetail,
+	BeforeCloseEventDetail,
 };

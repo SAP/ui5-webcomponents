@@ -32,7 +32,7 @@ class SuggestionListItem extends StandardListItem {
 	 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
 	 * <br>
 	 * @type {HTMLElement}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.richDescription
+	 * @name sap.ui.webc.main.SuggestionListItem.prototype.richDescription
 	 * @since 1.0.0-rc.8
 	 * @slot
 	 * @public
@@ -42,7 +42,7 @@ class SuggestionListItem extends StandardListItem {
 
 	/**
 	 * @type {Node}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.default
+	 * @name sap.ui.webc.main.SuggestionListItem.prototype.default
 	 */
 	@slot({ type: Node, "default": true })
 	titleText!: Array<Node>

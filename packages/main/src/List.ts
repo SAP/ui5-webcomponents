@@ -71,7 +71,7 @@ type DeleteEventDetail = FocusEventDetail;
 
 // ListItem-based events
 type CloseEventDetail = {
-	item: ListItem,
+	item: ListItemBase,
 }
 type ToggleEventDetail = CloseEventDetail;
 type ClickEventDetail = CloseEventDetail;

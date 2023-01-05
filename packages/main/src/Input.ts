@@ -123,7 +123,7 @@ type SuggestionItemPreviewEventDetail = {
 }
 
 type SuggestionScrollEventDetail = {
-	scrollTop: number
+	scrollTop: number;
 	scrollContainer: HTMLElement;
 }
 
@@ -1193,14 +1193,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	async openPopover() {
 		const popover = await this._getPopover();
 
-		this._isPopoverOpen = true;
-		popover.showAt(this);
+		if (popover) {
+			this._isPopoverOpen = true;
+			popover.showAt(this);
+		}
 	}
 
 	async closePopover() {
 		const popover = await this._getPopover();
 
-		popover.close();
+		popover && popover.close();
 	}
 
 	async _getPopover() {
@@ -1523,7 +1525,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get itemSelectionAnnounce() {
-		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : null;
+		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : "";
 	}
 
 	get classes(): ClassMap {

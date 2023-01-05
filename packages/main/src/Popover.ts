@@ -1,7 +1,7 @@
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
@@ -211,11 +211,11 @@ class Popover extends Popup {
 	 * @public
 	 * @type {sap.ui.webc.base.types.DOMReference}
 	 * @name sap.ui.webc.main.Popover.prototype.opener
-	 * @defaultvalue ""
+	 * @defaultvalue undefined
 	 * @since 1.2.0
 	 */
-	@property({ validator: DOMReference, defaultValue: "" })
-	opener!: HTMLElement | string;
+	@property({ validator: DOMReference })
+	opener?: HTMLElement | string;
 
 	/**
 	 * Defines whether the content is scrollable.
@@ -305,7 +305,14 @@ class Popover extends Popup {
 
 	onAfterRendering() {
 		if (!this.isOpen() && this.open) {
-			const opener = this.opener instanceof HTMLElement ? this.opener : (this.getRootNode() as ShadowRoot).getElementById(this.opener);
+			let opener;
+
+			if (this.opener instanceof HTMLElement) {
+				opener = this.opener;
+			} else if (typeof this.opener === "string") {
+				opener = (this.getRootNode() as Document).getElementById(this.opener);
+			}
+
 			if (!opener) {
 				console.warn("Valid opener id is required."); // eslint-disable-line
 				return;
@@ -318,8 +325,18 @@ class Popover extends Popup {
 	}
 
 	isOpenerClicked(event: MouseEvent) {
-		const target = event.target as UI5Element;
-		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener) || event.composedPath().indexOf(this._opener as EventTarget) > -1;
+		const target = event.target as HTMLElement;
+		if (target === this._opener) {
+			return true;
+		}
+
+		const ui5ElementTarget = target as UI5Element;
+
+		if (ui5ElementTarget.getFocusDomRef && ui5ElementTarget.getFocusDomRef() === this._opener) {
+			return true;
+		}
+
+		return event.composedPath().indexOf(this._opener as EventTarget) > -1;
 	}
 
 	/**
@@ -824,6 +841,12 @@ class Popover extends Popup {
 	}
 }
 
+const instanceOfPopover = (object: any): object is Popover => {
+	return "showAt" in object;
+};
+
 Popover.define();
 
 export default Popover;
+
+export { instanceOfPopover };
