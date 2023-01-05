@@ -543,7 +543,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		if (updateValue) {
-			this._getInput()?.getInputDOMRef().then((innerInput: Input | HTMLInputElement | null) => {
+			this._getInput().getInputDOMRef().then((innerInput: Input | HTMLInputElement | null) => {
 				if (innerInput) {
 					innerInput.value = value;
 				}

@@ -1114,7 +1114,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.hasSuggestionItemSelected = false;
 		this._isValueStateFocused = false;
 
-		this.Suggestions!.updateSelectedItemPosition(-1);
+		if (this.Suggestions) {
+			this.Suggestions.updateSelectedItemPosition(-1);
+		}
 
 		this.isTyping = true;
 	}
