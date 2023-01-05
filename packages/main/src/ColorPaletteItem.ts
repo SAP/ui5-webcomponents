@@ -60,7 +60,7 @@ class ColorPaletteItem extends UI5Element {
 	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
-	index!: number;
+	index?: number;
 
 	/**
 	 * Defines if the ColorPalette is on phone mode.

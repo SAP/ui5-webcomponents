@@ -25,6 +25,7 @@ import Title from "./Title.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail } from "./ColorPalette.js";
+import type ColorPaletteItem from "./ColorPaletteItem.js";
 
 type TempResponsivePopover = HTMLElement & {
 	initialFocus: string,
@@ -35,9 +36,7 @@ type TempResponsivePopover = HTMLElement & {
 	opened: boolean,
 }
 
-type ColorPalettePopoverItemClickEventDetail = {
-	color: string,
-}
+type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
 /**
  * @class
@@ -134,7 +133,7 @@ class ColorPalettePopover extends UI5Element {
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, individualSlots: true })
-	colors!: Array<HTMLElement>;
+	colors!: Array<ColorPaletteItem>;
 
 	static i18nBundle: I18nBundle;
 

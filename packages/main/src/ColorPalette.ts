@@ -42,6 +42,8 @@ type DialogTemp = HTMLElement & {
 	show: () => void,
 }
 
+type ColorPaletteNavigationItem = ColorPaletteItem | Button;
+
 type ColorPaletteItemClickEventDetail = {
 	color: string,
 }
@@ -384,7 +386,7 @@ class ColorPalette extends UI5Element {
 		}
 	}
 
-	focusColorElement(element: ColorPaletteItem | Button, itemNavigation: ItemNavigation) {
+	focusColorElement(element: ColorPaletteNavigationItem, itemNavigation: ItemNavigation) {
 		itemNavigation.setCurrentItem(element);
 		itemNavigation._focusCurrentItem();
 	}
@@ -465,7 +467,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get colorPaletteNavigationElements() {
-		const navigationElements: Array<ColorPaletteItem | Button> = [];
+		const navigationElements: Array<ColorPaletteNavigationItem> = [];
 		const rootElement = this.shadowRoot!.querySelector(".ui5-cp-root")!;
 
 		if (this.showDefaultColor) {
