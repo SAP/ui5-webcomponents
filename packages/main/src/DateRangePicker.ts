@@ -1,40 +1,18 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
+import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+// @ts-ignore
 import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-daterange-picker",
-	properties: /** @lends sap.ui.webc.main.DateRangePicker.prototype */ {
-		/**
-		 * Determines the symbol which separates the dates.
-		 * If not supplied, the default time interval delimiter for the current locale will be used.
-		 *
-		 * @type {string}
-		 * @public
-		 */
-		delimiter: {
-			type: String,
-			defaultValue: "-",
-		},
-
-		/**
-		 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
-		 * @private
-		 */
-		_tempValue: {
-			type: String,
-		},
-	},
-};
+import type { DatePickerChangeEventDetail } from "./DatePicker.js";
 
 /**
  * @class
@@ -75,12 +53,31 @@ const metadata = {
  * @since 1.0.0-rc.8
  * @public
  */
+@customElement("ui5-daterange-picker")
 class DateRangePicker extends DatePicker {
-	static get metadata() {
-		return metadata;
-	}
+	 /**
+	 * Determines the symbol which separates the dates.
+	 * If not supplied, the default time interval delimiter for the current locale will be used.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.DateRangePicker.prototype.delimiter
+	 * @defaultvalue "-"
+	 * @public
+	 */
+	@property({ defaultValue: "-" })
+	delimiter!: string;
 
-	static get styles() {
+	 /**
+	 * The first date in the range during selection (this is a temporary value, not the first date in the value range)
+	 *
+	 * @private
+	 */
+	@property()
+	_tempValue!: string;
+
+	private _prevDelimiter: string | null;
+
+	static get styles(): ComponentStylesData {
 		return [DatePicker.styles, DateRangePickerCss];
 	}
 
@@ -120,7 +117,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get _tempTimestamp() {
-		return this._tempValue && this.getFormat().parse(this._tempValue, true).getTime() / 1000;
+		return this._tempValue && (this.getFormat().parse(this._tempValue, true, undefined as unknown as boolean) as Date).getTime() / 1000;
 	}
 
 	/**
@@ -161,7 +158,7 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 */
 	get startDateValue() {
-		return CalendarDate.fromTimestamp(this._startDateTimestamp * 1000).toLocalJSDate();
+		return CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000).toLocalJSDate();
 	}
 
 	/**
@@ -172,7 +169,7 @@ class DateRangePicker extends DatePicker {
 	 * @public
 	 */
 	get endDateValue() {
-		return CalendarDate.fromTimestamp(this._endDateTimestamp * 1000).toLocalJSDate();
+		return CalendarDate.fromTimestamp(this._endDateTimestamp! * 1000).toLocalJSDate();
 	}
 
 	/**
@@ -183,13 +180,13 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get dateAriaDescription() {
-		return DateRangePicker.i18nBundle.getText(DATERANGE_DESCRIPTION);
+		return DateRangePicker.i18nBundle.getText(DATERANGE_DESCRIPTION as I18nText);
 	}
 
 	/**
 	 * @override
 	 */
-	async _onInputSubmit(event) {
+	async _onInputSubmit() {
 		const input = this._getInput();
 		const caretPos = input.getCaretPosition();
 		await renderFinished();
@@ -207,7 +204,7 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	isValid(value) {
+	isValid(value: string): boolean {
 		const parts = this._splitValueByDelimiter(value);
 		return parts.length <= 2 && parts.every(dateString => super.isValid(dateString)); // must be at most 2 dates and each must be valid
 	}
@@ -215,7 +212,7 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	isInValidRange(value) {
+	isInValidRange(value: string): boolean {
 		return this._splitValueByDelimiter(value).every(dateString => super.isInValidRange(dateString));
 	}
 
@@ -223,7 +220,7 @@ class DateRangePicker extends DatePicker {
 	 * Extract both dates as timestamps, flip if necessary, and build (which will use the desired format so we enforce the format too)
 	 * @override
 	 */
-	normalizeValue(value) {
+	normalizeValue(value: string) {
 		const firstDateTimestamp = this._extractFirstTimestamp(value);
 		const lastDateTimestamp = this._extractLastTimestamp(value);
 		if (firstDateTimestamp && lastDateTimestamp && firstDateTimestamp > lastDateTimestamp) { // if both are timestamps (not undefined), flip if necessary
@@ -235,7 +232,7 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(event) {
+	onSelectedDatesChange(event: CustomEvent<DatePickerChangeEventDetail>) {
 		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
 		const values = event.detail.values;
 
@@ -247,8 +244,7 @@ class DateRangePicker extends DatePicker {
 			this._tempValue = values[0];
 			return;
 		}
-
-		const newValue = this._buildValue(...event.detail.dates); // the value will be normalized so we don't need to order them here
+		const newValue = this._buildValue(event.detail.dates[0], event.detail.dates[1]); // the value will be normalized so we don't need to order them here
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 		this.closePicker();
 	}
@@ -256,17 +252,17 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	async _modifyDateValue(amount, unit) {
+	async _modifyDateValue(amount: number, unit: string) {
 		if (!this._endDateTimestamp) { // If empty or only one date -> treat as datepicker entirely
 			return super._modifyDateValue(amount, unit);
 		}
 
 		const input = this._getInput();
-		let caretPos = input.getCaretPosition();
+		let caretPos: number = input.getCaretPosition();
 		let newValue;
 
-		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the seoond date
-			const startDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._startDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
+		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the second date
+			const startDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000), amount, unit, this._minDate, this._maxDate);
 			const newStartDateTimestamp = startDateModified.valueOf() / 1000;
 			if (newStartDateTimestamp > this._endDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
 				caretPos += Math.ceil(this.value.length / 2);
@@ -276,7 +272,7 @@ class DateRangePicker extends DatePicker {
 			const endDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._endDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
 			const newEndDateTimestamp = endDateModified.valueOf() / 1000;
 			newValue = this._buildValue(this._startDateTimestamp, newEndDateTimestamp); // the value will be normalized so we don't try to order them here
-			if (newEndDateTimestamp < this._startDateTimestamp) { // dates flipped -> move the caret to the same position but on the first date
+			if (newEndDateTimestamp < this._startDateTimestamp!) { // dates flipped -> move the caret to the same position but on the first date
 				caretPos -= Math.ceil(this.value.length / 2);
 			}
 		}
@@ -286,16 +282,17 @@ class DateRangePicker extends DatePicker {
 		input.setCaretPosition(caretPos); // Return the caret to the previous (or the adjusted, if dates flipped) position after rendering
 	}
 
-	get _effectiveDelimiter() {
-		return this.delimiter || this.constructor.getMetadata().getProperties().delimiter.defaultValue; // treat empty string as the default value
+	get _effectiveDelimiter(): string {
+		const ctor = this.constructor as typeof DateRangePicker;
+		return this.delimiter || (ctor.getMetadata().getProperties().delimiter.defaultValue) as string;
 	}
 
-	_splitValueByDelimiter(value) {
-		const valuesArray = [];
+	_splitValueByDelimiter(value: string) {
+		const valuesArray: Array<string> = [];
 		const partsArray = value.split(this._prevDelimiter || this._effectiveDelimiter);
 
 		// if format successfully parse the value, the value contains only single date
-		if (this.getFormat().parse(value)) {
+		if (this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean)) {
 			valuesArray[0] = partsArray.join(this._effectiveDelimiter);
 			valuesArray[1] = "";
 		} else {
@@ -310,27 +307,30 @@ class DateRangePicker extends DatePicker {
 	 * Returns a UTC timestamp, representing the first date in the value string or undefined if the value is empty
 	 * @private
 	 */
-	_extractFirstTimestamp(value) {
+	_extractFirstTimestamp(value: string) {
 		if (!value || !this._checkValueValidity(value)) {
 			return undefined;
 		}
 
 		const dateStrings = this._splitValueByDelimiter(value); // at least one item guaranteed due to the checks above (non-empty and valid)
-		return this.getFormat().parse(dateStrings[0], true).getTime() / 1000;
+
+		const parsedDate = this.getFormat().parse(dateStrings[0], true, undefined as unknown as boolean) as Date;
+		return parsedDate.getTime() / 1000;
 	}
 
 	/**
 	 * Returns a UTC timestamp, representing the last date in the value string or undefined if the value is empty or there is just one date
 	 * @private
 	 */
-	_extractLastTimestamp(value) {
+	_extractLastTimestamp(value: string) {
 		if (!value || !this._checkValueValidity(value)) {
 			return undefined;
 		}
 
 		const dateStrings = this._splitValueByDelimiter(value);
 		if (dateStrings[1]) {
-			return this.getFormat().parse(dateStrings[1], true).getTime() / 1000;
+			const parsedDate = this.getFormat().parse(dateStrings[1], true, undefined as unknown as boolean) as Date;
+			return parsedDate.getTime() / 1000;
 		}
 
 		return undefined;
@@ -340,7 +340,7 @@ class DateRangePicker extends DatePicker {
 	 * Builds a string value out of two UTC timestamps - this method is the counterpart to _extractFirstTimestamp/_extractLastTimestamp
 	 * @private
 	 */
-	_buildValue(firstDateTimestamp, lastDateTimestamp) {
+	_buildValue(firstDateTimestamp: number | undefined, lastDateTimestamp: number | undefined) {
 		this._prevDelimiter = this._effectiveDelimiter;
 		if (firstDateTimestamp) {
 			const firstDateString = this._getStringFromTimestamp(firstDateTimestamp * 1000);

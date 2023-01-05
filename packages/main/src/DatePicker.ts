@@ -5,6 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -58,6 +59,11 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 type SelectedDateChangeDetail = {
 	values: Array<string>,
 }
+
+type DatePickerChangeEventDetail = {
+	dates: Array<number>;
+	values: Array<string>
+};
 
 /**
  * @class
@@ -382,7 +388,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return DatePickerPopoverTemplate;
 	}
 
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return datePickerCss;
 	}
 
@@ -440,7 +446,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @returns { number } the calendar timestamp
 	 */
 	get _calendarTimestamp(): number {
-		if (this.value && this._checkValueValidity(this.value)) {
+		if (this.value && this.dateValueUTC && this._checkValueValidity(this.value)) {
 			const millisecondsUTC = this.dateValueUTC.getTime();
 			return getRoundedTimestamp(millisecondsUTC);
 		}
@@ -832,13 +838,13 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @name sap.ui.webc.main.DatePicker.prototype.dateValue
 	 * @type { Date }
 	 */
-	get dateValue(): Date {
+	get dateValue(): Date | null {
 		const utc = undefined as unknown as boolean;
 		const strict = undefined as unknown as boolean;
 		return this.liveValue ? this.getFormat().parse(this.liveValue, utc, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;
 	}
 
-	get dateValueUTC() {
+	get dateValueUTC(): Date | null {
 		const utc = undefined as unknown as boolean;
 		const strict = undefined as unknown as boolean;
 		return this.liveValue ? this.getFormat().parse(this.liveValue, true, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;
@@ -871,3 +877,5 @@ class DatePicker extends DateComponentBase implements IFormElement {
 DatePicker.define();
 
 export default DatePicker;
+
+export type { DatePickerChangeEventDetail };
