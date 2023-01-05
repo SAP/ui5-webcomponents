@@ -1,8 +1,8 @@
 import { isClickInRect } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import type { Interval } from "@ui5/webcomponents-base/dist/types.js";
 import type Popover from "../Popover.js";
 import { instanceOfPopover } from "../Popover.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
-import type { Interval } from "@ui5/webcomponents-base/dist/types.js";
 
 type RegisteredPopover = {
 	instance: Popover;

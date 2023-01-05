@@ -253,7 +253,7 @@ class Suggestions {
 		return sc.offsetHeight < sc.scrollHeight;
 	}
 
-	async open() {
+	open() {
 		this._getComponent().open = true;
 		this._beforeOpen();
 
@@ -352,7 +352,7 @@ class Suggestions {
 		list.addEventListener("mouseout", this.fnOnSuggestionItemMouseOut);
 	}
 
-	async _attachPopupListeners() {
+	_attachPopupListeners() {
 		if (!this.handleFocus) {
 			return;
 		}
@@ -570,7 +570,7 @@ class Suggestions {
 
 	async _getListWidth() {
 		const list = await this._getList();
-		return list!.offsetWidth;
+		return list.offsetWidth;
 	}
 
 	_getRealItems() {
