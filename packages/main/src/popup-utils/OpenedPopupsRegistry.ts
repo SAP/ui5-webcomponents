@@ -1,9 +1,15 @@
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import Popup from "../Popup.js";
 
-let openedRegistry = [];
+type RegisteredPopupT = {
+	instance: Popup;
+	parentPopovers: Array<Popup>;
+}
 
-const addOpenedPopup = (instance, parentPopovers = []) => {
-	if (!openedRegistry.includes(instance)) {
+let openedRegistry: Array<RegisteredPopupT> = [];
+
+const addOpenedPopup = (instance: Popup, parentPopovers: Array<Popup> = []) => {
+	if (!openedRegistry.some(popup => popup.instance === instance)) {
 		openedRegistry.push({
 			instance,
 			parentPopovers,
@@ -17,7 +23,7 @@ const addOpenedPopup = (instance, parentPopovers = []) => {
 	}
 };
 
-const removeOpenedPopup = instance => {
+const removeOpenedPopup = (instance: Popup) => {
 	openedRegistry = openedRegistry.filter(el => {
 		return el.instance !== instance;
 	});
@@ -33,7 +39,7 @@ const getOpenedPopups = () => {
 	return [...openedRegistry];
 };
 
-const _keydownListener = event => {
+const _keydownListener = (event: KeyboardEvent) => {
 	if (!openedRegistry.length) {
 		return;
 	}
@@ -51,7 +57,7 @@ const detachGlobalListener = () => {
 	document.removeEventListener("keydown", _keydownListener);
 };
 
-const _updateTopModalPopup = event => {
+const _updateTopModalPopup = () => {
 	let popup;
 	let hasModal = false;
 

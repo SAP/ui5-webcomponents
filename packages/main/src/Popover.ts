@@ -1,3 +1,7 @@
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
@@ -18,223 +22,22 @@ import PopoverCss from "./generated/themes/Popover.css.js";
 
 const ARROW_SIZE = 8;
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-popover",
-	properties: /** @lends sap.ui.webc.main.Popover.prototype */ {
-		/**
-		 * Defines the header text.
-		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		headerText: {
-			type: String,
-		},
+type PopoverSize = {
+	width: number;
+	height: number;
+}
 
-		/**
-		 * Determines on which side the component is placed at.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Left</code></li>
-		 * <li><code>Right</code></li>
-		 * <li><code>Top</code></li>
-		 * <li><code>Bottom</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.PopoverPlacementType}
-		 * @defaultvalue "Right"
-		 * @public
-		 */
-		placementType: {
-			type: PopoverPlacementType,
-			defaultValue: PopoverPlacementType.Right,
-		},
+type ArrowPosition = {
+	x: number;
+	y: number;
+}
 
-		/**
-		 * Determines the horizontal alignment of the component.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Center</code></li>
-		 * <li><code>Left</code></li>
-		 * <li><code>Right</code></li>
-		 * <li><code>Stretch</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.PopoverHorizontalAlign}
-		 * @defaultvalue "Center"
-		 * @public
-		 */
-		horizontalAlign: {
-			type: PopoverHorizontalAlign,
-			defaultValue: PopoverHorizontalAlign.Center,
-		},
-
-		/**
-		 * Determines the vertical alignment of the component.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Center</code></li>
-		 * <li><code>Top</code></li>
-		 * <li><code>Bottom</code></li>
-		 * <li><code>Stretch</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.PopoverVerticalAlign}
-		 * @defaultvalue "Center"
-		 * @public
-		 */
-		verticalAlign: {
-			type: PopoverVerticalAlign,
-			defaultValue: PopoverVerticalAlign.Center,
-		},
-
-		/**
-		 * Defines whether the component should close when
-		 * clicking/tapping outside of the popover.
-		 * If enabled, it blocks any interaction with the background.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		modal: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines whether the block layer will be shown if modal property is set to true.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @since 1.0.0-rc.10
-		 */
-		hideBackdrop: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether the component arrow is hidden.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		hideArrow: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines if there is no enough space, the component can be placed
-		 * over the target.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		allowTargetOverlap: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the ID or DOM Reference of the element that the popover is shown at
-		 * @public
-		 * @type {sap.ui.webc.base.types.DOMReference}
-		 * @defaultvalue ""
-		 * @since 1.2.0
-		 */
-		opener: {
-			type: DOMReference,
-		},
-
-		/**
-		 * Defines whether the content is scrollable.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
-		 */
-		disableScrolling: {
-			type: Boolean,
-		},
-
-		/**
-		 * Sets the X translation of the arrow
-		 *
-		 * @private
-		 */
-		arrowTranslateX: {
-			type: Integer,
-			defaultValue: 0,
-			noAttribute: true,
-		},
-
-		/**
-		 * Sets the Y translation of the arrow
-		 *
-		 * @private
-		 */
-		arrowTranslateY: {
-			type: Integer,
-			defaultValue: 0,
-			noAttribute: true,
-		},
-
-		/**
-		 * Returns the calculated placement depending on the free space
-		 *
-		 * @private
-		 */
-		actualPlacementType: {
-			type: PopoverPlacementType,
-			defaultValue: PopoverPlacementType.Right,
-		},
-
-		_maxHeight: {
-			type: Integer,
-			noAttribute: true,
-		},
-		_maxWidth: {
-			type: Integer,
-			noAttribute: true,
-		},
-	},
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.main.Popover.prototype */ {
-		/**
-		 * Defines the header HTML Element.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		header: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the footer HTML Element.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		footer: {
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.Popover.prototype */ {
-	},
-};
+type CalculatedPlacement = {
+	arrow: ArrowPosition,
+	top: number,
+	left: number,
+	placementType: PopoverPlacementType,
+}
 
 /**
  * @class
@@ -283,13 +86,209 @@ const metadata = {
  * @since 1.0.0-rc.6
  * @public
  */
+@customElement("ui5-popover")
 class Popover extends Popup {
+	/**
+	 * Defines the header text.
+	 * <br><br>
+	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.Popover.prototype.headerText
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	headerText!: string;
+
+	/**
+	 * Determines on which side the component is placed at.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Left</code></li>
+	 * <li><code>Right</code></li>
+	 * <li><code>Top</code></li>
+	 * <li><code>Bottom</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.PopoverPlacementType}
+	 * @name sap.ui.webc.main.Popover.prototype.placementType
+	 * @defaultvalue "Right"
+	 * @public
+	 */
+	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
+	placementType!: PopoverPlacementType;
+
+	/**
+	 * Determines the horizontal alignment of the component.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Center</code></li>
+	 * <li><code>Left</code></li>
+	 * <li><code>Right</code></li>
+	 * <li><code>Stretch</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.PopoverHorizontalAlign}
+	 * @name sap.ui.webc.main.Popover.prototype.horizontalAlign
+	 * @defaultvalue "Center"
+	 * @public
+	 */
+	@property({ type: PopoverHorizontalAlign, defaultValue: PopoverHorizontalAlign.Center })
+	horizontalAlign!: PopoverHorizontalAlign;
+
+	/**
+	 * Determines the vertical alignment of the component.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Center</code></li>
+	 * <li><code>Top</code></li>
+	 * <li><code>Bottom</code></li>
+	 * <li><code>Stretch</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.PopoverVerticalAlign}
+	 * @name sap.ui.webc.main.Popover.prototype.verticalAlign
+	 * @defaultvalue "Center"
+	 * @public
+	 */
+	@property({ type: PopoverVerticalAlign, defaultValue: PopoverVerticalAlign.Center })
+	verticalAlign!: PopoverVerticalAlign;
+
+	/**
+	 * Defines whether the component should close when
+	 * clicking/tapping outside of the popover.
+	 * If enabled, it blocks any interaction with the background.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.modal
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	modal!: boolean;
+
+	/**
+	 * Defines whether the block layer will be shown if modal property is set to true.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.hideBackdrop
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.0.0-rc.10
+	 */
+	@property({ type: Boolean })
+	hideBackdrop!: boolean;
+
+	/**
+	 * Determines whether the component arrow is hidden.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.hideArrow
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property({ type: Boolean })
+	hideArrow!: boolean;
+
+	/**
+	 * Determines if there is no enough space, the component can be placed
+	 * over the target.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.allowTargetOverlap
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	allowTargetOverlap!: boolean;
+
+	/**
+	 * Defines the ID or DOM Reference of the element that the popover is shown at
+	 * @public
+	 * @type {sap.ui.webc.base.types.DOMReference}
+	 * @name sap.ui.webc.main.Popover.prototype.opener
+	 * @defaultvalue undefined
+	 * @since 1.2.0
+	 */
+	@property({ validator: DOMReference })
+	opener?: HTMLElement | string;
+
+	/**
+	 * Defines whether the content is scrollable.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	disableScrolling!: boolean;
+
+	/**
+	 * Sets the X translation of the arrow
+	 *
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
+	arrowTranslateX!: number;
+
+	/**
+	 * Sets the Y translation of the arrow
+	 *
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
+	arrowTranslateY!: number;
+
+	/**
+	 * Returns the calculated placement depending on the free space
+	 *
+	 * @private
+	 */
+	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
+	actualPlacementType!: PopoverPlacementType;
+
+	@property({ validator: Integer, noAttribute: true })
+	_maxHeight?: number;
+
+	@property({ validator: Integer, noAttribute: true })
+	_maxWidth?: number;
+
+	/**
+	 * Defines the header HTML Element.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Popover.prototype.header
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	header!: Array<HTMLElement>;
+
+	/**
+	 * Defines the footer HTML Element.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Popover.prototype.footer
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	footer!: Array<HTMLElement>;
+
+	_opener?: HTMLElement;
+	_openerRect?: DOMRect;
+	_preventRepositionAndClose?: boolean;
+	_top?: number;
+	_left?: number;
+	_oldPlacement?: CalculatedPlacement;
+	_width?: string;
+
 	constructor() {
 		super();
-	}
-
-	static get metadata() {
-		return metadata;
 	}
 
 	static get styles() {
@@ -306,7 +305,14 @@ class Popover extends Popup {
 
 	onAfterRendering() {
 		if (!this.isOpen() && this.open) {
-			const opener = this.opener instanceof HTMLElement ? this.opener : this.getRootNode().getElementById(this.opener);
+			let opener;
+
+			if (this.opener instanceof HTMLElement) {
+				opener = this.opener;
+			} else if (typeof this.opener === "string") {
+				opener = (this.getRootNode() as Document).getElementById(this.opener);
+			}
+
 			if (!opener) {
 				console.warn("Valid opener id is required."); // eslint-disable-line
 				return;
@@ -318,9 +324,19 @@ class Popover extends Popup {
 		}
 	}
 
-	isOpenerClicked(event) {
-		const target = event.target;
-		return target === this._opener || (target.getFocusDomRef && target.getFocusDomRef() === this._opener) || event.composedPath().indexOf(this._opener) > -1;
+	isOpenerClicked(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		if (target === this._opener) {
+			return true;
+		}
+
+		const ui5ElementTarget = target as UI5Element;
+
+		if (ui5ElementTarget.getFocusDomRef && ui5ElementTarget.getFocusDomRef() === this._opener) {
+			return true;
+		}
+
+		return event.composedPath().indexOf(this._opener as EventTarget) > -1;
 	}
 
 	/**
@@ -329,9 +345,10 @@ class Popover extends Popup {
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 * @async
+	 * @name sap.ui.webc.main.Popover#showAt
 	 * @returns {Promise} Resolved when the popover is open
 	 */
-	async showAt(opener, preventInitialFocus = false) {
+	async showAt(opener: HTMLElement, preventInitialFocus = false) {
 		if (!opener || this.opened) {
 			return;
 		}
@@ -358,7 +375,7 @@ class Popover extends Popup {
 		removeOpenedPopover(this);
 	}
 
-	shouldCloseDueToOverflow(placement, openerRect) {
+	shouldCloseDueToOverflow(placement: PopoverPlacementType, openerRect: DOMRect): boolean {
 		const threshold = 32;
 		const limits = {
 			"Right": openerRect.right,
@@ -367,27 +384,27 @@ class Popover extends Popup {
 			"Bottom": openerRect.bottom,
 		};
 
-		const closedPopupParent = getClosedPopupParent(this._opener);
+		const closedPopupParent = getClosedPopupParent(this._opener!);
 		let overflowsBottom = false;
 		let overflowsTop = false;
 
-		if (closedPopupParent.showAt) {
-			const contentRect = closedPopupParent.contentDOM.getBoundingClientRect();
+		if ((closedPopupParent as Popover).showAt) {
+			const contentRect = (closedPopupParent as Popover).contentDOM.getBoundingClientRect();
 			overflowsBottom = openerRect.top > (contentRect.top + contentRect.height);
 			overflowsTop = (openerRect.top + openerRect.height) < contentRect.top;
 		}
 
-		return (limits[placement] < 0 || (limits[placement] + threshold > closedPopupParent.innerHeight)) || overflowsBottom || overflowsTop;
+		return (limits[placement] < 0 || (limits[placement] + threshold > (closedPopupParent as unknown as Window).innerHeight)) || overflowsBottom || overflowsTop;
 	}
 
-	shouldCloseDueToNoOpener(openerRect) {
+	shouldCloseDueToNoOpener(openerRect: DOMRect): boolean {
 		return openerRect.top === 0
 			&& openerRect.bottom === 0
 			&& openerRect.left === 0
 			&& openerRect.right === 0;
 	}
 
-	isOpenerOutsideViewport(openerRect) {
+	isOpenerOutsideViewport(openerRect: DOMRect): boolean {
 		return openerRect.bottom < 0
 			|| openerRect.top > window.innerHeight
 			|| openerRect.right < 0
@@ -420,48 +437,48 @@ class Popover extends Popup {
 
 		if (this.isOpen()) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = this._opener.getBoundingClientRect();
+			this._openerRect = this._opener!.getBoundingClientRect();
 		}
 
-		if (this.shouldCloseDueToNoOpener(this._openerRect) && this.isFocusWithin()) {
+		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {
 			// reuse the old placement as the opener is not available,
 			// but keep the popover open as the focus is within
 			placement = this._oldPlacement;
 		} else {
-			placement = this.calcPlacement(this._openerRect, popoverSize);
+			placement = this.calcPlacement(this._openerRect!, popoverSize);
 		}
 
 		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
-		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect)) {
+		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect!)) {
 			return this.close();
 		}
 
 		this._oldPlacement = placement;
-		this.actualPlacementType = placement.placementType;
+		this.actualPlacementType = placement!.placementType;
 
 		let left = clamp(
-			this._left,
+			this._left!,
 			Popover.VIEWPORT_MARGIN,
 			document.documentElement.clientWidth - popoverSize.width - Popover.VIEWPORT_MARGIN,
 		);
 
 		if (this.actualPlacementType === PopoverPlacementType.Right) {
-			left = Math.max(left, this._left);
+			left = Math.max(left, this._left!);
 		}
 
 		let top = clamp(
-			this._top,
+			this._top!,
 			Popover.VIEWPORT_MARGIN,
 			document.documentElement.clientHeight - popoverSize.height - Popover.VIEWPORT_MARGIN,
 		);
 
 		if (this.actualPlacementType === PopoverPlacementType.Bottom) {
-			top = Math.max(top, this._top);
+			top = Math.max(top, this._top!);
 		}
 
-		this.arrowTranslateX = placement.arrow.x;
-		this.arrowTranslateY = placement.arrow.y;
+		this.arrowTranslateX = placement!.arrow.x;
+		this.arrowTranslateY = placement!.arrow.y;
 
 		top = this._adjustForIOSKeyboard(top);
 
@@ -483,7 +500,7 @@ class Popover extends Popup {
 	 * @param {int} top The target top in px.
 	 * @returns {int} The adjusted top in px.
 	 */
-	_adjustForIOSKeyboard(top) {
+	_adjustForIOSKeyboard(top: number): number {
 		if (!isIOS()) {
 			return top;
 		}
@@ -493,7 +510,7 @@ class Popover extends Popup {
 		return top + (Number.parseInt(this.style.top || "0") - actualTop);
 	}
 
-	getPopoverSize() {
+	getPopoverSize(): PopoverSize {
 		if (!this.opened) {
 			Object.assign(this.style, {
 				display: "block",
@@ -510,13 +527,13 @@ class Popover extends Popup {
 	}
 
 	get arrowDOM() {
-		return this.shadowRoot.querySelector(".ui5-popover-arrow");
+		return this.shadowRoot!.querySelector(".ui5-popover-arrow")!;
 	}
 
 	/**
 	 * @private
 	 */
-	calcPlacement(targetRect, popoverSize) {
+	calcPlacement(targetRect: DOMRect, popoverSize: PopoverSize): CalculatedPlacement {
 		let left = 0;
 		let top = 0;
 		const allowTargetOverlap = this.allowTargetOverlap;
@@ -631,37 +648,37 @@ class Popover extends Popup {
 	 * @param {number} borderRadius Value of the border-radius property
 	 * @returns {{x: number, y: number}} Arrow's coordinates
 	 */
-	getArrowPosition(targetRect, { width, height }, left, top, isVertical, borderRadius) {
+	getArrowPosition(targetRect: DOMRect, popoverSize: PopoverSize, left: number, top: number, isVertical: boolean, borderRadius: number): ArrowPosition {
 		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
 
 		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
 			arrowXCentered = true;
 		}
 
-		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + width >= targetRect.left + targetRect.width) {
+		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
 			arrowXCentered = true;
 		}
 
 		let arrowTranslateX = 0;
 		if (isVertical && arrowXCentered) {
-			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - width / 2;
+			arrowTranslateX = targetRect.left + targetRect.width / 2 - left - popoverSize.width / 2;
 		}
 
 		let arrowTranslateY = 0;
 		if (!isVertical) {
-			arrowTranslateY = targetRect.top + targetRect.height / 2 - top - height / 2;
+			arrowTranslateY = targetRect.top + targetRect.height / 2 - top - popoverSize.height / 2;
 		}
 
 		// Restricts the arrow's translate value along each dimension,
 		// so that the arrow does not clip over the popover's rounded borders.
-		const safeRangeForArrowY = height / 2 - borderRadius - ARROW_SIZE / 2;
+		const safeRangeForArrowY = popoverSize.height / 2 - borderRadius - ARROW_SIZE / 2;
 		arrowTranslateY = clamp(
 			arrowTranslateY,
 			-safeRangeForArrowY,
 			safeRangeForArrowY,
 		);
 
-		const safeRangeForArrowX = width / 2 - borderRadius - ARROW_SIZE / 2;
+		const safeRangeForArrowX = popoverSize.width / 2 - borderRadius - ARROW_SIZE / 2;
 		arrowTranslateX = clamp(
 			arrowTranslateX,
 			-safeRangeForArrowX,
@@ -678,7 +695,7 @@ class Popover extends Popup {
 	 * Fallbacks to new placement, prioritizing <code>Left</code> and <code>Right</code> placements.
 	 * @private
 	 */
-	fallbackPlacement(clientWidth, clientHeight, targetRect, popoverSize) {
+	fallbackPlacement(clientWidth: number, clientHeight: number, targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacementType | undefined {
 		if (targetRect.left > popoverSize.width) {
 			return PopoverPlacementType.Left;
 		}
@@ -696,7 +713,7 @@ class Popover extends Popup {
 		}
 	}
 
-	getActualPlacementType(targetRect, popoverSize) {
+	getActualPlacementType(targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacementType {
 		const placementType = this.placementType;
 		let actualPlacementType = placementType;
 
@@ -731,13 +748,12 @@ class Popover extends Popup {
 		return actualPlacementType;
 	}
 
-	getVerticalLeft(targetRect, popoverSize) {
+	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
 		let left;
 
 		switch (this.horizontalAlign) {
 		case PopoverHorizontalAlign.Center:
 		case PopoverHorizontalAlign.Stretch:
-
 			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
 			break;
 		case PopoverHorizontalAlign.Left:
@@ -751,7 +767,7 @@ class Popover extends Popup {
 		return left;
 	}
 
-	getHorizontalTop(targetRect, popoverSize) {
+	getHorizontalTop(targetRect: DOMRect, popoverSize: PopoverSize): number {
 		let top;
 
 		switch (this.verticalAlign) {
@@ -787,15 +803,15 @@ class Popover extends Popup {
 	}
 
 	get _ariaModal() { // Required by Popup.js
-		return true;
+		return "true";
 	}
 
 	get styles() {
 		return {
 			...super.styles,
 			root: {
-				"max-height": `${this._maxHeight}px`,
-				"max-width": `${this._maxWidth}px`,
+				"max-height": this._maxHeight ? `${this._maxHeight}px` : "",
+				"max-width": this._maxWidth ? `${this._maxWidth}px` : "",
 			},
 			arrow: {
 				transform: `translate(${this.arrowTranslateX}px, ${this.arrowTranslateY}px)`,
@@ -825,6 +841,12 @@ class Popover extends Popup {
 	}
 }
 
+const instanceOfPopover = (object: any): object is Popover => {
+	return "showAt" in object;
+};
+
 Popover.define();
 
 export default Popover;
+
+export { instanceOfPopover };

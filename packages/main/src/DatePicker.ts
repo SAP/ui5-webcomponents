@@ -41,7 +41,6 @@ import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
-// @ts-ignore - when the Input is migrated to TS, the comment can't be removed
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
@@ -474,7 +473,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			}
 		}
 
-		if ((this._getInput().isEqualNode(e.target) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
+		if ((this._getInput().isEqualNode(e.target as Node) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this.closePicker();
 		}
 
@@ -544,8 +543,10 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		if (updateValue) {
-			this._getInput().getInputDOMRef().then((innnerInput: HTMLInputElement) => {
-				innnerInput.value = value;
+			this._getInput().getInputDOMRef().then((innerInput: Input | HTMLInputElement | null) => {
+				if (innerInput) {
+					innerInput.value = value;
+				}
 			});
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
@@ -567,7 +568,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	_getInput(): Input {
-		return this.shadowRoot!.querySelector("[ui5-input]") as Input;
+		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
 	}
 
 	/**
