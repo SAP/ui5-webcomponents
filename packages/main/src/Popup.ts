@@ -25,7 +25,190 @@ import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 
+<<<<<<< HEAD:packages/main/src/Popup.ts
 const createBlockingStyle = (): void => {
+=======
+		/**
+		 * Defines the content of the Popup.
+		 * @type {HTMLElement[]}
+		 * @slot content
+		 * @public
+		 */
+		"default": {
+			type: HTMLElement,
+			propertyName: "content",
+		},
+	},
+	properties: /** @lends sap.ui.webc.main.Popup.prototype */ {
+		/**
+		 * Defines the ID of the HTML Element, which will get the initial focus.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 */
+		initialFocus: {
+			type: String,
+		},
+
+		/**
+		 * Defines if the focus should be returned to the previously focused element,
+		 * when the popup closes.
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @public
+		 * @since 1.0.0-rc.8
+		*/
+		preventFocusRestore: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element is open
+		 * @public
+		 * @type {boolean}
+		 * @defaultvalue false
+		 * @since 1.2.0
+		 */
+		open: {
+			type: Boolean,
+		},
+
+		/**
+		 * Indicates if the element is already open
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 */
+		opened: {
+			type: Boolean,
+			noAttribute: true,
+		},
+
+		/**
+		 * Defines the accessible name of the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.0.0-rc.15
+		 */
+		accessibleName: {
+			type: String,
+			defaultValue: undefined,
+		},
+
+		/**
+		 * Defines the IDs of the elements that label the component.
+		 *
+		 * @type {string}
+		 * @defaultvalue ""
+		 * @public
+		 * @since 1.1.0
+		 */
+		accessibleNameRef: {
+			type: String,
+			defaultValue: "",
+		},
+
+		/**
+		 * Defines the current media query size.
+		 *
+		 * @type {string}
+		 * @private
+		 */
+		mediaRange: {
+			type: String,
+		},
+
+		/**
+		 * @private
+		 */
+		_disableInitialFocus: {
+			type: Boolean,
+		},
+
+		_blockLayerHidden: {
+			type: Boolean,
+		},
+
+		/**
+		 * Allows setting a custom role
+		 * @type {string}
+		 * @public
+		 * @since 1.11.0
+		 */
+		accessibleRole: {
+			type: String,
+		},
+
+		/**
+		 * Indicates if the element is the top modal popup
+		 *
+		 * This property is calculated automatically
+		 *
+		 * @private
+		 * @type {boolean}
+		 * @defaultvalue false
+		 */
+		isTopModalPopup: {
+			type: Boolean,
+			noAttribute: true,
+		},
+	},
+	events: /** @lends sap.ui.webc.main.Popup.prototype */ {
+
+		/**
+		 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webc.main.Popup#before-open
+		 * @allowPreventDefault
+		 */
+		"before-open": {},
+
+		/**
+		 * Fired after the component is opened. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webc.main.Popup#after-open
+		 */
+		"after-open": {},
+
+		/**
+		 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webc.main.Popup#before-close
+		 * @allowPreventDefault
+		 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+		 */
+		"before-close": {
+			detail: {
+				escPressed: { type: Boolean },
+			},
+		},
+
+		/**
+		 * Fired after the component is closed. <b>This event does not bubble.</b>
+		 *
+		 * @public
+		 * @event sap.ui.webc.main.Popup#after-close
+		 */
+		"after-close": {},
+
+		/**
+		 * Fired whenever the popup content area is scrolled
+		 *
+		 * @private
+		 * @event sap.ui.webc.main.Popup#scroll
+		 */
+		"scroll": {},
+	},
+};
+
+const createBlockingStyle = () => {
+>>>>>>> 335750115 (fix: once gain fix role and status related behavior):packages/main/src/Popup.js
 	if (!hasStyle("data-ui5-popup-scroll-blocker")) {
 		createStyle(globalStyles, "data-ui5-popup-scroll-blocker");
 	}
@@ -623,11 +806,15 @@ abstract class Popup extends UI5Element {
 	}
 
 	get _role() {
+<<<<<<< HEAD:packages/main/src/Popup.ts
 		if (this.accessibleRole === PopupAccessibleRole.None) {
 			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("role");
 			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("aria-modal");
 		}
 		return this.accessibleRole;
+=======
+		return this.accessibleRole || "dialog";
+>>>>>>> 335750115 (fix: once gain fix role and status related behavior):packages/main/src/Popup.js
 	}
 
 	get contentDOM(): HTMLElement {

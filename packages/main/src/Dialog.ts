@@ -340,10 +340,10 @@ class Dialog extends Popup {
 	}
 
 	get _role() {
-		if (!this.getAttribute("accessible-role")) {
-			return (this.state === ValueState.Error || this.state === ValueState.Warning) ? "alertdialog" : "dialog";
+		if (this.accessibleRole) {
+			return this.accessibleRole;
 		}
-		return this.accessibleRole;
+		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? "alertdialog" : "dialog";
 	}
 
 	_show() {
