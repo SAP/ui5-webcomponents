@@ -42,6 +42,10 @@ type DialogTemp = HTMLElement & {
 	show: () => void,
 }
 
+type ColorPaletteItemClickEventDetail = {
+	color: string,
+}
+
 /**
  * @class
  *
@@ -251,7 +255,7 @@ class ColorPalette extends UI5Element {
 			}
 		}
 
-		this.fireEvent("item-click", {
+		this.fireEvent<ColorPaletteItemClickEventDetail>("item-click", {
 			color: this._selectedColor,
 		});
 	}
@@ -504,3 +508,4 @@ class ColorPalette extends UI5Element {
 ColorPalette.define();
 
 export default ColorPalette;
+export type { ColorPaletteItemClickEventDetail };
