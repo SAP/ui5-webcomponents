@@ -222,9 +222,9 @@ class ColorPalette extends UI5Element {
 		});
 
 		if (this.showMoreColors) {
-			const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-			if (colorPaletteMoreColors) {
-				this.moreColorsFeature = new colorPaletteMoreColors();
+			const ColorPaletteMoreColorsClass = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
+			if (ColorPaletteMoreColorsClass) {
+				this.moreColorsFeature = new ColorPaletteMoreColorsClass();
 			} else {
 				throw new Error(`You have to import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js" module to use the more-colors functionality.`);
 			}
