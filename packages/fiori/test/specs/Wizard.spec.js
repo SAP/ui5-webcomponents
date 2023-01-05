@@ -292,6 +292,19 @@ describe("Wizard general interaction", () => {
 			"No scrolling occures after re-rendering when the selected step remains the same.");
 	});
 
+	it("Tests if second step is scrolled into view when first step's height is bigger than viewport", async () => {
+		await browser.url(`test/pages/WizardScrolling.html`);
+
+		const btnToStep2 = await browser.$("#toStep2");
+
+		await btnToStep2.scrollIntoView();
+		await btnToStep2.click();
+
+		let isDisplayedInViewport = await browser.$("#step2").isDisplayedInViewport();
+
+		assert.ok(isDisplayedInViewport, "Step2 is scrolled into view.");
+	});
+
 	it("tests small screen", async () => {
 		await browser.url(`test/pages/Wizard_test_mobile.html`);
 
