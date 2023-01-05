@@ -340,7 +340,7 @@ class Dialog extends Popup {
 	}
 
 	get _role() {
-		if (this.accessibleRole) {
+		if (this.accessibleRole !== this.constructor.getMetadata().getProperties().accessibleRole.defaultValue) {
 			return this.accessibleRole;
 		}
 		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? "alertdialog" : "dialog";
