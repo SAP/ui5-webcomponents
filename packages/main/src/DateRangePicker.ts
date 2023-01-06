@@ -258,7 +258,7 @@ class DateRangePicker extends DatePicker {
 		}
 
 		const input = this._getInput();
-		let caretPos: number = input.getCaretPosition()! // caret position is always number for input of type text;
+		let caretPos: number = input.getCaretPosition()!; // caret position is always number for input of type text;
 		let newValue: string;
 
 		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the second date
