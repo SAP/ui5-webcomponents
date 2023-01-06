@@ -15,10 +15,7 @@ import {
 import styles from "./generated/themes/SliderBase.css.js";
 
 type StateStorage = {
-	step: number | null,
-	min: number | null,
-	max: number | null,
-	labelInterval: number | null,
+	[key: string]: number | null
 }
 
 type DirectionStart = "left" | "right";
@@ -163,7 +160,7 @@ class SliderBase extends UI5Element {
 	_hiddenTickmarks!: boolean;
 
 	_resizeHandler: () => void;
-	_moveHandler: () => void;
+	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: () => void;
 	_stateStorage: StateStorage;
 	_ontouchstart: {
@@ -173,9 +170,8 @@ class SliderBase extends UI5Element {
 	notResized = false;
 	_isUserInteraction = false;
 	_isInnerElementFocusing = false;
-	_moveEventType?: string;
 	_oldNumberOfLabels?: number;
-	_labelWidth?: number;
+	_labelWidth = 0;
 	_labelValues?: Array<string>;
 
 	constructor() {
@@ -201,7 +197,7 @@ class SliderBase extends UI5Element {
 		};
 	}
 
-	_handleMove() {}
+	_handleMove(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleUp() {}
 
@@ -425,14 +421,15 @@ class SliderBase extends UI5Element {
 
 		// Mark start of a user interaction
 		this._isUserInteraction = true;
-		// Only allow one type of move event to be listened to (the first one registered after the down event)
-		if (!this._moveEventType) {
-			this._moveEventType = e.type === "mousedown" ? "mousemove" : "touchmove";
-		}
 
 		window.addEventListener("mouseup", this._upHandler);
 		window.addEventListener("touchend", this._upHandler);
-		window.addEventListener(this._moveEventType, this._moveHandler);
+		// Only allow one type of move event to be listened to (the first one registered after the down event)
+		if (e instanceof TouchEvent) {
+			window.addEventListener("touchmove", this._moveHandler);
+		} else {
+			window.addEventListener("mousemove", this._moveHandler);
+		}
 
 		this._handleFocusOnMouseDown(e);
 		return newValue;
@@ -461,9 +458,10 @@ class SliderBase extends UI5Element {
 	handleUpBase() {
 		window.removeEventListener("mouseup", this._upHandler);
 		window.removeEventListener("touchend", this._upHandler);
-		window.removeEventListener(this._moveEventType!, this._moveHandler);
+		// Only one of the following was attached, but it's ok to remove both as there is no error
+		window.removeEventListener("mousemove", this._moveHandler);
+		window.removeEventListener("touchmove", this._moveHandler);
 
-		this._moveEventType = undefined;
 		this._isUserInteraction = false;
 		this._preserveFocus(false);
 	}
@@ -652,8 +650,8 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	isPropertyUpdated(...properties: Array<string>) {
-		return properties.some(prop => this.getStoredPropertyState(prop) !== this[prop as keyof SliderBase]);
+	isPropertyUpdated(...props: Array<string>) {
+		return props.some(prop => this.getStoredPropertyState(prop) !== this[prop as keyof SliderBase]);
 	}
 
 	/**
