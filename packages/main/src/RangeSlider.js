@@ -91,6 +91,17 @@ const metadata = {
  * <h3>Responsive Behavior</h3>
  * You can move the currently selected range by clicking on it and dragging it along the interval.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-range-slider</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>progress-container - Used to style the progress container(the horizontal bar which visually represents the range between the minimum and maximum value) of the <code>ui5-range-slider</code>.</li>
+ * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>.</li>
+ * <li>handle - Used to style the handles of the <code>ui5-range-slider</code>.</li>
+ * </ul>
+ *
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
