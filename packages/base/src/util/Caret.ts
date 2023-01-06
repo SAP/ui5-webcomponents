@@ -2,7 +2,7 @@
  * Returns the caret (cursor) position of the specified text field (field).
  * Return value range is 0-field.value.length.
  */
-const getCaretPosition = (field: HTMLInputElement) => {
+const getCaretPosition = (field: HTMLInputElement): number | null => {
 	// Initialize
 	let caretPos: number | null = 0;
 

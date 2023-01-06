@@ -19,11 +19,11 @@ import type CalendarDateComponentT from "./CalendarDate.js";
 import CalendarPart from "./CalendarPart.js";
 import CalendarHeader from "./CalendarHeader.js";
 import DayPicker from "./DayPicker.js";
-import type { SelectedDatesChangeEventDetail } from "./DayPicker.js";
+import type { DayPickerChangeEventDetail } from "./DayPicker.js";
 import MonthPicker from "./MonthPicker.js";
-import type { SelectedMonthChangeEventDetail } from "./MonthPicker.js";
+import type { MonthPickerChangeEventDetail } from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
-import type { SelectedYearChangeEventDetail } from "./YearPicker.js";
+import type { YearPickerChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
 
 // Default calendar for bundling
@@ -43,6 +43,12 @@ interface ICalendarPicker {
 	_autoFocus?: boolean,
 	_firstYear?: number,
 	_lastYear?: number,
+}
+
+type CalendarChangeEventDetail = {
+	values: Array<string>,
+	dates: Array<number>,
+	timestamp: number | undefined,
 }
 
 /**
@@ -408,7 +414,7 @@ class Calendar extends CalendarPart {
 		return this._currentPicker !== "year";
 	}
 
-	onSelectedDatesChange(e: CustomEvent<SelectedDatesChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
 		const timestamp = e.detail.timestamp;
 		const selectedDates = e.detail.dates;
 		const datesValues = selectedDates.map(ts => {
@@ -417,19 +423,19 @@ class Calendar extends CalendarPart {
 		});
 
 		this.timestamp = timestamp;
-		const defaultPrevented = !this.fireEvent("selected-dates-change", { timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp, dates: [...selectedDates], values: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
 	}
 
-	onSelectedMonthChange(e: CustomEvent<SelectedMonthChangeEventDetail>) {
+	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 		this._currentPicker = "day";
 		this._currentPickerDOM._autoFocus = true;
 	}
 
-	onSelectedYearChange(e: CustomEvent<SelectedYearChangeEventDetail>) {
+	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 		this._currentPicker = "day";
 		this._currentPickerDOM._autoFocus = true;
@@ -484,4 +490,5 @@ Calendar.define();
 export default Calendar;
 export type {
 	ICalendarPicker,
+	CalendarChangeEventDetail,
 };

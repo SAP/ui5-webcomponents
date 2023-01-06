@@ -1,5 +1,13 @@
-const generateTimeItemsArray = (x, step = 1) => {
-	const array = [];
+type HoursConfiguration = {
+	minHour: number,
+	maxHour: number
+	isTwelveHoursFormat: boolean,
+}
+
+type HourType = "hour0_23" | "hour1_24" | "hour0_11" | "hour1_12";
+
+const generateTimeItemsArray = (x: number, step = 1) => {
+	const array: Array<string> = [];
 	for (let i = 0; i < x; i++) {
 		if (i % step === 0) {
 			let tempString = i.toString();
@@ -14,7 +22,7 @@ const generateTimeItemsArray = (x, step = 1) => {
 	return array;
 };
 
-const getHours = (config, max) => {
+const getHours = (config: HoursConfiguration, max: number | undefined) => {
 	let hoursValueArray = [];
 
 	if (config.isTwelveHoursFormat) {
@@ -25,7 +33,7 @@ const getHours = (config, max) => {
 
 	if (config.minHour === 1) {
 		for (let i = 0; i < hoursValueArray.length; i++) {
-			const tempValue = hoursValueArray[i] * 1 + 1;
+			const tempValue = parseInt(hoursValueArray[i]) + 1;
 
 			if (tempValue.toString().length === 1) {
 				hoursValueArray[i] = `0${tempValue.toString()}`;
@@ -38,16 +46,20 @@ const getHours = (config, max) => {
 	return hoursValueArray;
 };
 
-const getMinutes = (max, step) => {
+const getMinutes = (max: number | undefined, step: number) => {
 	return generateTimeItemsArray(max || 60, step);
 };
 
-const getSeconds = (max, step) => {
+const getSeconds = (max: number | undefined, step: number) => {
 	return generateTimeItemsArray(max || 60, step);
 };
 
-const getHoursConfigByFormat = type => {
-	const config = {};
+const getHoursConfigByFormat = (type: HourType) => {
+	const config: HoursConfiguration = {
+		minHour: 0,
+		maxHour: 0,
+		isTwelveHoursFormat: false,
+	};
 
 	if (type === "hour0_23") {
 		config.minHour = 0;
@@ -70,7 +82,7 @@ const getHoursConfigByFormat = type => {
 	return config;
 };
 
-const getTimeControlsByFormat = (formatArray, hoursConfig) => {
+const getTimeControlsByFormat = (formatArray: Array<{ type: string }>, hoursConfig: HoursConfiguration) => {
 	const timeControls = [false, false, false, false]; // hours, minutes, seconds and am/pm
 
 	for (let i = 0; i < formatArray.length; i++) {
@@ -100,4 +112,9 @@ export {
 	getSeconds,
 	getHoursConfigByFormat,
 	getTimeControlsByFormat,
+};
+
+export type {
+	HourType,
+	HoursConfiguration,
 };
