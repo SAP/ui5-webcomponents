@@ -9,6 +9,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 // @ts-ignore
 import CheckBox from "./CheckBox.js";
+import type { TableColumnInfo } from "./Table.js";
 import TableGroupRowTemplate from "./generated/templates/TableGroupRowTemplate.lit.js";
 import TableMode from "./types/TableMode.js";
 
@@ -20,10 +21,6 @@ import {
 
 // Styles
 import styles from "./generated/themes/TableGroupRow.css.js";
-
-type ColumnInfo = {
-	visible: boolean;
-}
 
 /**
  * @class
@@ -72,7 +69,7 @@ class TableGroupRow extends UI5Element implements ITabbable {
 	mode!: TableMode;
 
 	@property({ type: Object, multiple: true })
-	_columnsInfo!: Array<ColumnInfo>;
+	_columnsInfo!: Array<TableColumnInfo>;
 
 	@property({ defaultValue: "-1" })
 	_tabIndex!: string;

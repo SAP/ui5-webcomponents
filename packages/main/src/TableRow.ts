@@ -223,7 +223,7 @@ class TableRow extends UI5Element implements ITabbable {
 
 	_ontouchstart: PassiveEventListenerObject;
 
-	// Properties set by the Table
+	// TODO: Properties set by the Table: move to common interface for both TableRow and TableGroupRow
 	_tabbables?: Array<HTMLElement>;
 	_columnsInfoString?: string;
 
