@@ -21,6 +21,11 @@ type StateStorage = {
 	labelInterval: number | null,
 }
 
+type MOVE_EVENT_MAP = {
+	mousedown: "mousemove",
+	touchstart: "touchmove",
+}
+
 /**
  * @class
  *
@@ -169,6 +174,8 @@ class SliderBase extends UI5Element {
 		passive: boolean,
 	};
 	notResized = false;
+	_isUserInteraction = false;
+	_isInnerElementFocusing = false;
 
 	constructor() {
 		super();
@@ -199,6 +206,8 @@ class SliderBase extends UI5Element {
 
 	_onmousedown(e: Event) {} // eslint-disable-line
 
+	_handleActionKeyPress(e: Event) {} // eslint-disable-line
+
 	static get render() {
 		return litRender;
 	}
@@ -209,13 +218,6 @@ class SliderBase extends UI5Element {
 
 	static get UP_EVENTS() {
 		return ["mouseup", "touchend"];
-	}
-
-	static get MOVE_EVENT_MAP() {
-		return {
-			mousedown: "mousemove",
-			touchstart: "touchmove",
-		};
 	}
 
 	static get ACTION_KEYS() {
@@ -297,20 +299,20 @@ class SliderBase extends UI5Element {
 		}
 	}
 
-	_onkeydown(event) {
+	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this._effectiveStep === 0) {
 			return;
 		}
 
-		if (SliderBase._isActionKey(event)) {
-			event.preventDefault();
+		if (SliderBase._isActionKey(e)) {
+			e.preventDefault();
 
 			this._isUserInteraction = true;
-			this._handleActionKeyPress(event);
+			this._handleActionKeyPress(e);
 		}
 	}
 
-	_onkeyup(event) {
+	_onkeyup() {
 		if (this.disabled) {
 			return;
 		}
@@ -323,7 +325,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	_preserveFocus(isFocusing) {
+	_preserveFocus(isFocusing: boolean) {
 		this._isInnerElementFocusing = isFocusing;
 	}
 
@@ -405,7 +407,7 @@ class SliderBase extends UI5Element {
 
 		// Check if there are any overlapping labels.
 		// If so - only the first and the last one should be visible
-		const labelItems = this.shadowRoot.querySelectorAll(".ui5-slider-labels li");
+		const labelItems = this.shadowRoot!.querySelectorAll(".ui5-slider-labels li");
 		this._labelsOverlapping = [...labelItems].some(label => label.scrollWidth > label.clientWidth);
 	}
 
@@ -416,23 +418,23 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	handleDownBase(event) {
+	handleDownBase(e: Event) {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 		const domRect = this.getBoundingClientRect();
 		const directionStart = this.directionStart;
 		const step = this._effectiveStep;
-		const newValue = SliderBase.getValueFromInteraction(event, step, min, max, domRect, directionStart);
+		const newValue = SliderBase.getValueFromInteraction(e, step, min, max, domRect, directionStart);
 
 		// Mark start of a user interaction
 		this._isUserInteraction = true;
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
-		this._moveEventType = !this._moveEventType ? SliderBase.MOVE_EVENT_MAP[event.type] : this._moveEventType;
+		this._moveEventType = !this._moveEventType ? SliderBase.MOVE_EVENT_MAP[e.type] : this._moveEventType;
 
 		SliderBase.UP_EVENTS.forEach(upEventType => window.addEventListener(upEventType, this._upHandler));
 		window.addEventListener(this._moveEventType, this._moveHandler);
 
-		this._handleFocusOnMouseDown(event);
+		this._handleFocusOnMouseDown(e);
 		return newValue;
 	}
 
