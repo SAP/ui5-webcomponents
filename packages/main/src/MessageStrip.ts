@@ -4,7 +4,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
-import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -46,10 +46,6 @@ enum IconMappings {
 }
 
 type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
-
-/**
- * @public
- */
 
 /**
  * @class
@@ -184,7 +180,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	_closeClick() {
-		this.fireEvent("close", {});
+		this.fireEvent("close");
 	}
 
 	static get dependencies() {
