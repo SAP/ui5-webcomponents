@@ -54,7 +54,11 @@ type Month = {
 
 type MothInterval = Array<Array<Month>>;
 
-type SelectedMonthChangeEventDetail = {
+type MonthPickerChangeEventDetail = {
+	timestamp: number,
+}
+
+type MonthPickerNavigateEventDetail = {
 	timestamp: number,
 }
 
@@ -250,7 +254,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent("navigate", { timestamp: this.timestamp! });
+		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -264,7 +268,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._safelyModifyTimestampBy(amount, "month");
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent("navigate", { timestamp: this.timestamp! });
+		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -286,7 +290,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		if (target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this._getTimestampFromDom(target);
 			this._safelySetTimestamp(timestamp);
-			this.fireEvent("change", { timestamp: this.timestamp! });
+			this.fireEvent<MonthPickerChangeEventDetail>("change", { timestamp: this.timestamp! });
 		}
 	}
 
@@ -342,5 +346,6 @@ MonthPicker.define();
 
 export default MonthPicker;
 export type {
-	SelectedMonthChangeEventDetail,
+	MonthPickerNavigateEventDetail,
+	MonthPickerChangeEventDetail,
 };
