@@ -196,14 +196,14 @@ class MessageStrip extends UI5Element {
 
 	static designAnnouncementMappings(): DesignTypeAnnouncemnt {
 		const getTranslation = (text:I18nText): string => {
-			return MessageStrip.i18nBundle.getText(text as I18nText);
+			return MessageStrip.i18nBundle.getText(text);
 		};
 
 		return {
-			Information: getTranslation(MESSAGE_STRIP_INFORMATION),
-			Positive: getTranslation(MESSAGE_STRIP_SUCCESS),
-			Negative: getTranslation(MESSAGE_STRIP_ERROR),
-			Warning: getTranslation(MESSAGE_STRIP_WARNING),
+			Information: getTranslation(MESSAGE_STRIP_INFORMATION as I18nText),
+			Positive: getTranslation(MESSAGE_STRIP_SUCCESS as I18nText),
+			Negative: getTranslation(MESSAGE_STRIP_ERROR as I18nText),
+			Warning: getTranslation(MESSAGE_STRIP_WARNING as I18nText),
 		};
 	}
 
