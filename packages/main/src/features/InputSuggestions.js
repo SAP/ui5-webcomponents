@@ -579,7 +579,7 @@ class Suggestions {
 		this.component.focused = false;
 		this.component.hasSuggestionItemSelected = false;
 		this.selectedItemIndex = null;
-		this.component.value = this.component.valueBeforeAutoComplete;
+		this.component.value = this.component.typedInValue;
 
 		items && this._scrollItemIntoView(items[0]);
 		this._deselectItems();
