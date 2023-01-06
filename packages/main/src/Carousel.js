@@ -113,6 +113,11 @@ const metadata = {
 
 		/**
 		 * Defines the style of the page indicator.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Default</code></li>
+		 * <li><code>Numeric</code></li>
+		 * </ul>
 		 * @type {sap.ui.webc.main.types.CarouselPageIndicatorStyle}
 		 * @since 1.10
 		 * @defaultvalue "Default"
