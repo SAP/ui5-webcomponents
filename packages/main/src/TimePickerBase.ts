@@ -76,7 +76,7 @@ type TempInput = HTMLElement & {
  * Fired when the input operation has finished by clicking the "OK" button or
  * when the text in the input field has changed and the focus leaves the input field.
  *
- * @event
+ * @event sap.ui.webc.main.TimePickerBase#change
  * @public
  */
 @event("change")
@@ -84,7 +84,7 @@ type TempInput = HTMLElement & {
 /**
  * Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
  *
- * @event
+ * @event sap.ui.webc.main.TimePickerBase#input
  * @public
  */
 @event("input")
@@ -264,7 +264,7 @@ class TimePickerBase extends UI5Element {
 		}
 
 		const valid = this.isValid(value);
-		if (value !== undefined && valid && normalizeValue) {
+		if (value !== undefined && valid && normalizeValue) { // if value === undefined, valid is guaranteed to be falsy
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
 

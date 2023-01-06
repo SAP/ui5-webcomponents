@@ -115,6 +115,8 @@ class TimeSelection extends UI5Element {
 	 * Hides the hours slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.hideHours
+	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideHours!: boolean;
@@ -123,6 +125,8 @@ class TimeSelection extends UI5Element {
 	 * Hides the minutes slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.hideMinutes
+	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideMinutes!: boolean;
@@ -131,6 +135,8 @@ class TimeSelection extends UI5Element {
 	 * Hides the seconds slider regardless of formatPattern
 	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
 	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.hideSeconds
+	 * @type {boolean}
 	 */
 	@property({ type: Boolean })
 	hideSeconds!: boolean;
@@ -138,6 +144,8 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
 	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.maxHours
+	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxHours?: number;
@@ -145,6 +153,8 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
 	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.maxMinutes
+	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxMinutes?: number;
@@ -152,6 +162,8 @@ class TimeSelection extends UI5Element {
 	/**
 	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
 	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.maxSeconds
+	 * @type {Integer}
 	 */
 	@property({ validator: Integer })
 	maxSeconds?: number;
@@ -383,7 +395,7 @@ class TimeSelection extends UI5Element {
 	 * @param event
 	 */
 	selectSlider(e: MouseEvent | FocusEvent) {
-		const target = e.target! as HTMLElement;
+		const target = e.target as HTMLElement;
 		this._setCurrentSlider(target.closest<WheelSlider>("[ui5-wheelslider]")!.getAttribute("data-sap-slider")!);
 	}
 
@@ -431,7 +443,7 @@ class TimeSelection extends UI5Element {
 		e.preventDefault();
 
 		const activeSliders = this._activeSliders;
-		const target = e.target! as HTMLElement;
+		const target = e.target as HTMLElement;
 		const activeSlider = target.closest<WheelSlider>("[ui5-wheelslider]")!.getAttribute("data-sap-slider")!;
 		let index = activeSliders.indexOf(activeSlider);
 		if (isLeft(e)) {
@@ -473,7 +485,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	get validDateValue() {
-		return this.value && this.isValid(this.value) ? this.dateValue : new Date();
+		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : new Date();
 	}
 
 	get hoursSliderTitle() {

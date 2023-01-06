@@ -362,7 +362,7 @@ class WheelSlider extends UI5Element {
 	}
 
 	_onclick(e: MouseEvent) {
-		const target = e.target! as HTMLElement;
+		const target = e.target as HTMLElement;
 
 		if (!target.classList.contains("ui5-wheelslider-item")) {
 			return;

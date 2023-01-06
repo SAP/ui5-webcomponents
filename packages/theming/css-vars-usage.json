@@ -322,6 +322,7 @@
   "--sapList_GroupHeaderBorderColor",
   "--sapList_HeaderBackground",
   "--sapList_HeaderBorderColor",
+  "--sapList_HeaderTextColor",
   "--sapList_Hover_Background",
   "--sapList_Hover_SelectionBackground",
   "--sapList_SelectionBackgroundColor",
