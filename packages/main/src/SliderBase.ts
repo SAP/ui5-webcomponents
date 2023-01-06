@@ -21,10 +21,7 @@ type StateStorage = {
 	labelInterval: number | null,
 }
 
-type MOVE_EVENT_MAP = {
-	mousedown: "mousemove",
-	touchstart: "touchmove",
-}
+type DirectionStart = "left" | "right";
 
 /**
  * @class
@@ -176,6 +173,10 @@ class SliderBase extends UI5Element {
 	notResized = false;
 	_isUserInteraction = false;
 	_isInnerElementFocusing = false;
+	_moveEventType?: string;
+	_oldNumberOfLabels?: number;
+	_labelWidth?: number;
+	_labelValues?: Array<string>;
 
 	constructor() {
 		super();
@@ -214,10 +215,6 @@ class SliderBase extends UI5Element {
 
 	static get styles() {
 		return styles;
-	}
-
-	static get UP_EVENTS() {
-		return ["mouseup", "touchend"];
 	}
 
 	static get ACTION_KEYS() {
@@ -418,7 +415,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	handleDownBase(e: Event) {
+	handleDownBase(e: TouchEvent | MouseEvent) {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 		const domRect = this.getBoundingClientRect();
@@ -429,9 +426,12 @@ class SliderBase extends UI5Element {
 		// Mark start of a user interaction
 		this._isUserInteraction = true;
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
-		this._moveEventType = !this._moveEventType ? SliderBase.MOVE_EVENT_MAP[e.type] : this._moveEventType;
+		if (!this._moveEventType) {
+			this._moveEventType = e.type === "mousedown" ? "mousemove" : "touchmove";
+		}
 
-		SliderBase.UP_EVENTS.forEach(upEventType => window.addEventListener(upEventType, this._upHandler));
+		window.addEventListener("mouseup", this._upHandler);
+		window.addEventListener("touchend", this._upHandler);
 		window.addEventListener(this._moveEventType, this._moveHandler);
 
 		this._handleFocusOnMouseDown(e);
@@ -443,10 +443,10 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	_handleFocusOnMouseDown(event) {
-		const focusedElement = this.shadowRoot.activeElement;
+	_handleFocusOnMouseDown(e: TouchEvent | MouseEvent) {
+		const focusedElement = this.shadowRoot!.activeElement;
 
-		if (!focusedElement || focusedElement !== event.target) {
+		if (!focusedElement || focusedElement !== e.target) {
 			this._preserveFocus(true);
 			this.focusInnerElement();
 		}
@@ -458,11 +458,12 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	handleUpBase(valueType) {
-		SliderBase.UP_EVENTS.forEach(upEventType => window.removeEventListener(upEventType, this._upHandler));
-		window.removeEventListener(this._moveEventType, this._moveHandler);
+	handleUpBase() {
+		window.removeEventListener("mouseup", this._upHandler);
+		window.removeEventListener("touchend", this._upHandler);
+		window.removeEventListener(this._moveEventType!, this._moveHandler);
 
-		this._moveEventType = null;
+		this._moveEventType = undefined;
 		this._isUserInteraction = false;
 		this._preserveFocus(false);
 	}
@@ -473,7 +474,8 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	updateValue(valueType, value) {
+	updateValue(valueType: string, value: number) {
+		// @ts-ignore
 		this[valueType] = value;
 		this.storePropertyState(valueType);
 		if (this._isUserInteraction) {
@@ -486,8 +488,8 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	static _isActionKey(event) {
-		return this.ACTION_KEYS.some(actionKey => actionKey(event));
+	static _isActionKey(e: KeyboardEvent) {
+		return this.ACTION_KEYS.some(actionKey => actionKey(e));
 	}
 
 	/**
@@ -495,7 +497,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	static clipValue(value, min, max) {
+	static clipValue(value: number, min: number, max: number): number {
 		value = Math.min(Math.max(value, min), max);
 		return value;
 	}
@@ -505,8 +507,8 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	static getValueFromInteraction(event, stepSize, min, max, boundingClientRect, directionStart) {
-		const pageX = this.getPageXValueFromEvent(event);
+	static getValueFromInteraction(e: TouchEvent | MouseEvent, stepSize: number, min: number, max: number, boundingClientRect: DOMRect, directionStart: DirectionStart): number {
+		const pageX = this.getPageXValueFromEvent(e);
 		const value = this.computedValueFromPageX(pageX, min, max, boundingClientRect, directionStart);
 		const steppedValue = this.getSteppedValue(value, stepSize, min);
 
@@ -518,7 +520,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	static getSteppedValue(value, stepSize, min) {
+	static getSteppedValue(value: number, stepSize: number, min: number): number {
 		const stepModuloValue = Math.abs((value - min) % stepSize);
 
 		if (stepSize === 0 || stepModuloValue === 0) {
@@ -530,7 +532,7 @@ class SliderBase extends UI5Element {
 
 		// If the step value is not a round number get its precision
 		const stepPrecision = SliderBase._getDecimalPrecisionOfNumber(stepSize);
-		return value.toFixed(stepPrecision);
+		return Number(value.toFixed(stepPrecision));
 	}
 
 	/**
@@ -538,12 +540,15 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	static getPageXValueFromEvent(event) {
-		if (event.targetTouches && event.targetTouches.length > 0) {
-			return event.targetTouches[0].pageX;
+	static getPageXValueFromEvent(e: TouchEvent | MouseEvent): number {
+		if (e instanceof TouchEvent) {
+			if (e.targetTouches && e.targetTouches.length > 0) {
+				return e.targetTouches[0].pageX;
+			}
+			return 0;
 		}
 
-		return event.pageX;
+		return e.pageX; // MouseEvent
 	}
 
 	/**
@@ -552,7 +557,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	static computedValueFromPageX(pageX, min, max, boundingClientRect, directionStart) {
+	static computedValueFromPageX(pageX: number, min: number, max: number, boundingClientRect: DOMRect, directionStart: DirectionStart) {
 		// Determine pageX position relative to the Slider DOM
 		const xRelativePosition = directionStart === "left" ? pageX - boundingClientRect[directionStart] : boundingClientRect[directionStart] - pageX;
 		// Calculate the percentage complete (the "progress")
@@ -566,11 +571,14 @@ class SliderBase extends UI5Element {
 	 * Handles scientific notation cases.
 	 * @private
 	 */
-	static _getDecimalPrecisionOfNumber(value) {
+	static _getDecimalPrecisionOfNumber(value: number) {
 		if (Number.isInteger(value)) {
 			return 0;
 		}
 		const match = (String(value)).match(/(?:\.(\d+))?(?:[eE]([+-]?\d+))?$/);
+		if (!match || match.length < 2) {
+			return 0;
+		}
 		return Math.max(0, (match[1] ? match[1].length : 0) - (match[2] ? Number(match[2]) : 0));
 	}
 
@@ -579,7 +587,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	syncUIAndState(...values) {
+	syncUIAndState(...values: Array<string>) {
 		// Validate step and update the stored state for the step property.
 		if (this.isPropertyUpdated("step")) {
 			this._validateStep(this.step);
@@ -594,7 +602,7 @@ class SliderBase extends UI5Element {
 			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
 			// min and max bounderies and update the previous state reference.
 			values.forEach(valueType => {
-				const normalizedValue = SliderBase.clipValue(this[valueType], this._effectiveMin, this._effectiveMax);
+				const normalizedValue = SliderBase.clipValue(this[valueType as keyof SliderBase] as number, this._effectiveMin, this._effectiveMax);
 				this.updateValue(valueType, normalizedValue);
 				this.storePropertyState(valueType);
 			});
@@ -626,7 +634,7 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	isCurrentStateOutdated() {
-		return Object.entries(this._stateStorage).some(([propName, propValue]) => this[propName] !== propValue);
+		return Object.entries(this._stateStorage).some(([propName, propValue]) => this[propName as keyof SliderBase] !== propValue);
 	}
 
 	/**
@@ -634,8 +642,8 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	getStoredPropertyState(property) {
-		return this._stateStorage[property];
+	getStoredPropertyState(prop: string) {
+		return this._stateStorage[prop as keyof StateStorage];
 	}
 
 	/**
@@ -644,8 +652,8 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	isPropertyUpdated(...properties) {
-		return properties.some(prop => this.getStoredPropertyState(prop) !== this[prop]);
+	isPropertyUpdated(...properties: Array<string>) {
+		return properties.some(prop => this.getStoredPropertyState(prop) !== this[prop as keyof SliderBase]);
 	}
 
 	/**
@@ -653,9 +661,9 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	storePropertyState(...props) {
-		props.forEach(property => {
-			this._stateStorage[property] = this[property];
+	storePropertyState(...props: Array<string>) {
+		props.forEach(prop => {
+			this._stateStorage[prop as keyof StateStorage] = this[prop as keyof SliderBase] as number;
 		});
 	}
 
@@ -703,11 +711,11 @@ class SliderBase extends UI5Element {
 		}
 	}
 
-	_handleActionKeyPressBase(event, affectedValue) {
-		const isUpAction = SliderBase._isIncreaseValueAction(event);
-		const isBigStep = SliderBase._isBigStepAction(event);
+	_handleActionKeyPressBase(e: KeyboardEvent, affectedValue: string) {
+		const isUpAction = SliderBase._isIncreaseValueAction(e);
+		const isBigStep = SliderBase._isBigStepAction(e);
 
-		const currentValue = this[affectedValue];
+		const currentValue = this[affectedValue as keyof SliderBase] as number;
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 
@@ -719,27 +727,27 @@ class SliderBase extends UI5Element {
 		// make a jump of 1/10th of the Slider's length, otherwise just use the normal step property.
 		step = isBigStep && ((max - min) / step > 10) ? (max - min) / 10 : step;
 
-		if (isEnd(event)) {
+		if (isEnd(e)) {
 			return max - currentValue;
 		}
 
-		if (isHome(event)) {
+		if (isHome(e)) {
 			return (currentValue - min) * -1;
 		}
 
 		return isUpAction ? step : step * -1;
 	}
 
-	static _isDecreaseValueAction(event) {
-		return isDown(event) || isDownCtrl(event) || isLeft(event) || isLeftCtrl(event) || isMinus(event) || isPageDown(event);
+	static _isDecreaseValueAction(e: KeyboardEvent) {
+		return isDown(e) || isDownCtrl(e) || isLeft(e) || isLeftCtrl(e) || isMinus(e) || isPageDown(e);
 	}
 
-	static _isIncreaseValueAction(event) {
-		return isUp(event) || isUpCtrl(event) || isRight(event) || isRightCtrl(event) || isPlus(event) || isPageUp(event);
+	static _isIncreaseValueAction(e: KeyboardEvent) {
+		return isUp(e) || isUpCtrl(e) || isRight(e) || isRightCtrl(e) || isPlus(e) || isPageUp(e);
 	}
 
-	static _isBigStepAction(event) {
-		return isDownCtrl(event) || isUpCtrl(event) || isLeftCtrl(event) || isRightCtrl(event) || isPageUp(event) || isPageDown(event);
+	static _isBigStepAction(e: KeyboardEvent) {
+		return isDownCtrl(e) || isUpCtrl(e) || isLeftCtrl(e) || isRightCtrl(e) || isPageUp(e) || isPageDown(e);
 	}
 
 	get _tickmarksCount() {
@@ -760,7 +768,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	_validateStep(step) {
+	_validateStep(step: any) {
 		if (step === 0) {
 			console.warn("The 'step' property must be a positive float number"); // eslint-disable-line
 		}
@@ -791,7 +799,7 @@ class SliderBase extends UI5Element {
 			step = Math.abs(step);
 		}
 
-		if (typeof step !== "number" || Number.isNaN(step)) {
+		if (Number.isNaN(step)) {
 			step = 1;
 		}
 
