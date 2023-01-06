@@ -4,6 +4,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -219,7 +220,7 @@ class MessageStrip extends UI5Element {
 		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSABLE as I18nText);
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		return {
 			root: {
 				"ui5-message-strip-root": true,
