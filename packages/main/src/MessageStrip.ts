@@ -30,6 +30,22 @@ import {
 // Styles
 import messageStripCss from "./generated/themes/MessageStrip.css.js";
 
+enum DesignClassesMapping {
+	Information = "ui5-message-strip-root--info",
+	Positive = "ui5-message-strip-root--positive",
+	Negative = "ui5-message-strip-root--negative",
+	Warning = "ui5-message-strip-root--warning",
+}
+
+enum IconMappings {
+	Information = "information",
+	Positive = "sys-enter-2",
+	Negative = "error",
+	Warning = "alert",
+}
+
+type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
+
 /**
  * @public
  */
@@ -71,16 +87,16 @@ import messageStripCss from "./generated/themes/MessageStrip.css.js";
  */
 @customElement("ui5-message-strip")
 @languageAware
+
 /**
  * Fired when the close button is pressed either with a
  * click/tap or by using the Enter or Space key.
  *
- * @event
+ * @event sap.ui.webc.main.MessageStrip#close
  * @public
  */
-@event("suggestion-scroll", {
-	close: {},
-})
+@event("close")
+
 class MessageStrip extends UI5Element {
 	/**
 	 * Defines the component type.
@@ -89,6 +105,7 @@ class MessageStrip extends UI5Element {
 	 * and <code>"Warning"</code>.
 	 *
 	 * @type {sap.ui.webc.main.types.MessageStripDesign}
+	 * @name sap.ui.webc.main.MessageStrip.prototype.design
 	 * @defaultvalue "Information"
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -104,6 +121,7 @@ class MessageStrip extends UI5Element {
 	 * You can directly provide an icon with the <code>icon</code> slot. Otherwise, the default icon for the type will be used.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.MessageStrip.prototype.hideIcon
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -115,6 +133,7 @@ class MessageStrip extends UI5Element {
 	 * Defines whether the MessageStrip renders close button.
 	 *
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.MessageStrip.prototype.hideCloseButton
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -127,9 +146,9 @@ class MessageStrip extends UI5Element {
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
 	 * @type {Node[]}
+	 * @name sap.ui.webc.main.MessageStrip.prototype.default
 	 * @slot
 	 * @public
-	 * @name sap.ui.webc.main.MessageStrip.prototype.default
 	 */
 
 	/**
@@ -142,10 +161,11 @@ class MessageStrip extends UI5Element {
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 	 *
 	 * @type {sap.ui.webc.main.IIcon}
+	 * @name sap.ui.webc.main.MessageStrip.prototype.icon
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	icon!: Array<Icon>;
 
 	static i18nBundle: I18nBundle;
@@ -174,37 +194,21 @@ class MessageStrip extends UI5Element {
 		MessageStrip.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	static designClassesMappings() {
-		return {
-			Information: "ui5-message-strip-root--info",
-			Positive: "ui5-message-strip-root--positive",
-			Negative: "ui5-message-strip-root--negative",
-			Warning: "ui5-message-strip-root--warning",
+	static designAnnouncementMappings(): DesignTypeAnnouncemnt {
+		const getTranslation = (text:I18nText): string => {
+			return MessageStrip.i18nBundle.getText(text as I18nText);
 		};
-	}
 
-	static iconMappings() {
 		return {
-			Information: "information",
-			Positive: "sys-enter-2",
-			Negative: "error",
-			Warning: "alert",
-		};
-	}
-
-	static designAnnouncementMappings() {
-		return {
-			Information: MessageStrip.i18nBundle.getText(MESSAGE_STRIP_INFORMATION as I18nText),
-			Positive: MessageStrip.i18nBundle.getText(MESSAGE_STRIP_SUCCESS as I18nText),
-			Negative: MessageStrip.i18nBundle.getText(MESSAGE_STRIP_ERROR as I18nText),
-			Warning: MessageStrip.i18nBundle.getText(MESSAGE_STRIP_WARNING as I18nText),
+			Information: getTranslation(MESSAGE_STRIP_INFORMATION),
+			Positive: getTranslation(MESSAGE_STRIP_SUCCESS),
+			Negative: getTranslation(MESSAGE_STRIP_ERROR),
+			Warning: getTranslation(MESSAGE_STRIP_WARNING),
 		};
 	}
 
 	get hiddenText() {
-		return `${MessageStrip.designAnnouncementMappings()[this.design]} ${
-			this.hideCloseButton ? "" : this._closableText
-		}`;
+		return `${MessageStrip.designAnnouncementMappings()[this.design]} ${this.hideCloseButton ? "" : this._closableText}`;
 	}
 
 	get _closeButtonText() {
@@ -231,11 +235,11 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return MessageStrip.iconMappings()[this.design];
+		return IconMappings[this.design];
 	}
 
 	get designClasses() {
-		return MessageStrip.designClassesMappings()[this.design];
+		return DesignClassesMapping[this.design];
 	}
 }
 
