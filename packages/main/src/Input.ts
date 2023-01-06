@@ -1689,7 +1689,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Returns the caret position inside the native input
 	 * @protected
 	 */
-	getCaretPosition() {
+	getCaretPosition(): number | null {
 		return getCaretPosition(this.nativeInput!);
 	}
 
@@ -1698,7 +1698,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @protected
 	 * @param pos
 	 */
-	setCaretPosition(pos: number) {
+	setCaretPosition(pos: number | null) {
 		setCaretPosition(this.nativeInput!, pos);
 	}
 
