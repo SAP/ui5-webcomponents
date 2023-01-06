@@ -41,6 +41,7 @@ import Button from "./Button.js";
 // @ts-ignore - when the ResponsivePopover is migrated to TS, the comment can't be removed
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
+import type { CalendarChangeEventDetail } from "./Calendar.js";
 import * as CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
@@ -54,10 +55,6 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import datePickerCss from "./generated/themes/DatePicker.css.js";
 import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-
-type SelectedDateChangeDetail = {
-	values: Array<string>,
-}
 
 type DatePickerChangeEventDetail = {
 	dates: Array<number>;
@@ -391,7 +388,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return datePickerCss;
 	}
 
-	static get staticAreaStyles() {
+	static get staticAreaStyles(): ComponentStylesData {
 		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
 	}
 
@@ -411,7 +408,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 
 		["minDate", "maxDate"].forEach((prop: string) => {
-			const propValue = this[prop as keyof typeof this] as string;
+			const propValue = this[prop as keyof DatePicker] as string;
 
 			if (!this.isValid(propValue)) {
 				console.warn(`Invalid value for property "${prop}": ${propValue} is not compatible with the configured format pattern: "${this._displayFormat}"`); // eslint-disable-line
@@ -751,7 +748,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @param event
 	 * @protected
 	 */
-	onSelectedDatesChange(e: CustomEvent<SelectedDateChangeDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarChangeEventDetail>) {
 		e.preventDefault();
 		const newValue = e.detail.values && e.detail.values[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);

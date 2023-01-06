@@ -1,4 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
@@ -17,108 +20,10 @@ import Button from "./Button.js";
 // Styles
 import WheelSliderCss from "./generated/themes/WheelSlider.css.js";
 
-/**
- * @private
- */
-const metadata = {
-	tag: "ui5-wheelslider",
-	properties: /** @lends sap.ui.webc.main.WheelSlider.prototype */ {
-		/**
-		 * Defines whether the component is disabled
-		 * (default is set to <code>false</code>).
-		 * A disabled component can't be pressed or
-		 * focused, and it is not in the tab chain.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the currently selected value
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		value: {
-			type: String,
-			defaultValue: "0",
-		},
-
-		/**
-		 * Defines the label of the wheelslider.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		label: {
-			type: String,
-			defaultValue: "",
-		},
-
-		/**
-		 * Indicates if the wheelslider is expanded.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		expanded: {
-			type: Boolean,
-		},
-
-		_items: {
-			type: String,
-			multiple: true,
-			compareValues: true,
-		},
-
-		_itemsToShow: {
-			type: Object,
-			multiple: true,
-		},
-
-		/**
-		 * Indicates if the wheelslider has a cyclic behaviour.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		cyclic: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.WheelSlider.prototype */ {
-
-	},
-	events: /** @lends sap.ui.webc.main.WheelSlider.prototype */ {
-		/**
-		 * Fires when the wheel slider is expanded.
-		 */
-		expand: {},
-
-		/**
-		 * Fires when the wheel slider is collapsed.
-		 */
-		collapse: {},
-
-		/**
-		 *  Fires when new value is selected.
-		 */
-		select: {
-			detail: {
-				value: {
-					type: String,
-				},
-			},
-		},
-	},
-};
-
 const CELL_SIZE_COMPACT = 32;
 const CELL_SIZE_COZY = 46;
+
+type WheelSliderSelectEventDetail = { value: string }
 
 /**
  * @class
@@ -139,10 +44,95 @@ const CELL_SIZE_COZY = 46;
  * @public
  * @since 1.0.0-rc.6
  */
+@customElement("ui5-wheelslider")
+
+/**
+ *  Fires when new value is selected.
+ */
+@event("select", {
+	detail: {
+		value: {
+			type: String,
+		},
+	},
+})
+
+/**
+ * Fires when the wheel slider is expanded.
+ */
+@event("expand")
+
+/**
+ * Fires when the wheel slider is collapsed.
+ */
+@event("collapse")
 class WheelSlider extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines whether the component is disabled
+	 * (default is set to <code>false</code>).
+	 * A disabled component can't be pressed or
+	 * focused, and it is not in the tab chain.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.WheelSlider.prototype.disabled
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Defines the currently selected value
+	 * @type {string}
+	 * @name sap.ui.webc.main.WheelSlider.prototype.value
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property({ defaultValue: "0" })
+	value!: string;
+
+	/**
+	 * Defines the label of the wheelslider.
+	 * @type {string}
+	 * @name sap.ui.webc.main.WheelSlider.prototype.label
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property({ defaultValue: "" })
+	label!: string;
+
+	/**
+	 * Indicates if the wheelslider is expanded.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.WheelSlider.prototype.expanded
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	expanded!: boolean;
+
+	/**
+	 * Indicates if the wheelslider has a cyclic behaviour.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.WheelSlider.prototype.cyclic
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	cyclic!: boolean;
+
+	@property({ multiple: true, compareValues: true })
+	_items!: Array<string>;
+
+	@property({ type: Object, multiple: true })
+	_itemsToShow!: Array<{
+		value: string,
+		selected: boolean,
+	}>;
+
+	_currentElementIndex: number;
+	_scroller: ScrollEnablement;
+	_prevWheelTimestamp?: number;
 
 	static get render() {
 		return litRender;
@@ -185,7 +175,7 @@ class WheelSlider extends UI5Element {
 
 	onAfterRendering() {
 		if (!this._scroller.scrollContainer) {
-			this._scroller.scrollContainer = this.shadowRoot.querySelector(`#${this._id}--wrapper`);
+			this._scroller.scrollContainer = this.shadowRoot!.querySelector(`#${this._id}--wrapper`)!;
 		}
 
 		if (!this.expanded) {
@@ -193,15 +183,16 @@ class WheelSlider extends UI5Element {
 		}
 
 		if (this.expanded) {
-			const elements = this.shadowRoot.querySelectorAll(".ui5-wheelslider-item");
+			const elements = this.shadowRoot!.querySelectorAll(".ui5-wheelslider-item");
 			for (let i = 0; i < elements.length; i++) {
-				if (elements[i].textContent === this.value) {
-					this._selectElementByIndex(Number(elements[i].dataset.itemIndex) + this._getCurrentRepetition() * this._items.length);
+				const el = elements[i] as HTMLElement;
+				if (el.textContent === this.value) {
+					this._selectElementByIndex(Number(el.dataset.itemIndex) + this._getCurrentRepetition() * this._items.length);
 					return true;
 				}
 			}
 
-			this._selectElement(elements[0]);
+			this._selectElement(elements[0] as HTMLElement);
 		}
 	}
 
@@ -227,8 +218,8 @@ class WheelSlider extends UI5Element {
 	get _itemCellHeight() {
 		const defaultSize = getEffectiveContentDensity(document.body) === "compact" ? CELL_SIZE_COMPACT : CELL_SIZE_COZY;
 
-		if (this.shadowRoot.querySelectorAll(".ui5-wheelslider-item").length) {
-			const itemComputedStyle = getComputedStyle(this.shadowRoot.querySelector(".ui5-wheelslider-item"));
+		if (this.shadowRoot!.querySelectorAll(".ui5-wheelslider-item").length) {
+			const itemComputedStyle = getComputedStyle(this.shadowRoot!.querySelector(".ui5-wheelslider-item")!);
 			const itemHeightValue = itemComputedStyle.getPropertyValue("--_ui5_wheelslider_item_height");
 			const onlyDigitsValue = itemHeightValue.replace("px", "");
 			return Number(onlyDigitsValue) || defaultSize;
@@ -269,8 +260,8 @@ class WheelSlider extends UI5Element {
 		}
 	}
 
-	_selectElement(element) {
-		if (element && this._items.indexOf(element.textContent) > -1) {
+	_selectElement(element: HTMLElement) {
+		if (element && element.textContent && this._items.indexOf(element.textContent) > -1) {
 			this._currentElementIndex = Number(element.dataset.itemIndex);
 			this._selectElementByIndex(this._currentElementIndex);
 		}
@@ -284,7 +275,7 @@ class WheelSlider extends UI5Element {
 		return 0;
 	}
 
-	_selectElementByIndex(currentIndex) {
+	_selectElementByIndex(currentIndex: number) {
 		let index = currentIndex;
 		const itemsCount = this._itemsToShow.length;
 		const cellSizeInPx = this._itemCellHeight;
@@ -328,7 +319,7 @@ class WheelSlider extends UI5Element {
 		});
 	}
 
-	_handleArrayBorderReached(currentIndex) {
+	_handleArrayBorderReached(currentIndex: number) {
 		const arrayLength = this._itemsToShow.length;
 		const maxVisibleElementsOnOneSide = 7;
 		let index = currentIndex;
@@ -349,7 +340,7 @@ class WheelSlider extends UI5Element {
 	 *
 	 * The listener for this event can't be passive as it calls preventDefault()
 	 */
-	_handleWheel(e) {
+	_handleWheel(e: WheelEvent) {
 		if (!e) {
 			return;
 		}
@@ -370,26 +361,28 @@ class WheelSlider extends UI5Element {
 		this._prevWheelTimestamp = e.timeStamp;
 	}
 
-	_onclick(e) {
-		if (!e.target.classList.contains("ui5-wheelslider-item")) {
+	_onclick(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+
+		if (!target.classList.contains("ui5-wheelslider-item")) {
 			return;
 		}
 
 		if (this.expanded) {
-			this.value = e.target.textContent;
-			this._selectElement(e.target);
+			this.value = target.textContent || "";
+			this._selectElement(target);
 			this.fireEvent("select", { value: this.value });
 		} else {
 			this.expanded = true;
 		}
 	}
 
-	_onArrowDown(e) {
+	_onArrowDown(e: KeyboardEvent) {
 		e.preventDefault();
 		this._itemDown();
 	}
 
-	_onArrowUp(e) {
+	_onArrowUp(e: KeyboardEvent) {
 		e.preventDefault();
 		this._itemUp();
 	}
@@ -404,7 +397,7 @@ class WheelSlider extends UI5Element {
 		this._selectElementByIndex(nextElementIndex);
 	}
 
-	_onkeydown(e) {
+	_onkeydown(e: KeyboardEvent) {
 		if (!this.expanded) {
 			return;
 		}
@@ -426,8 +419,8 @@ class WheelSlider extends UI5Element {
 		}
 	}
 
-	_selectLimitCell(event, isMax) {
-		event.preventDefault();
+	_selectLimitCell(e: KeyboardEvent, isMax: boolean) {
+		e.preventDefault();
 		const intexIncrease = this.cyclic ? this._items.length : 0;
 		if (isMax) {
 			this._selectElementByIndex(this._items.length - 1 + intexIncrease);
@@ -440,3 +433,4 @@ class WheelSlider extends UI5Element {
 WheelSlider.define();
 
 export default WheelSlider;
+export type { WheelSliderSelectEventDetail };

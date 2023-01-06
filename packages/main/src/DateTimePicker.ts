@@ -1,15 +1,23 @@
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import Button from "./Button.js";
+// @ts-ignore
 import ToggleButton from "./ToggleButton.js";
+// @ts-ignore
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
+import type { CalendarChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
 import TimeSelection from "./TimeSelection.js";
+import type { TimeSelectionChangeEventDetail, TimeSelectionSliderChangeEventDetail } from "./TimeSelection.js";
 
 // i18n texts
 import {
@@ -18,6 +26,7 @@ import {
 	DATETIME_DESCRIPTION,
 	DATETIME_PICKER_DATE_BUTTON,
 	DATETIME_PICKER_TIME_BUTTON,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -29,58 +38,18 @@ import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.c
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-datetime-picker",
-	properties: /** @lends sap.ui.webc.main.DateTimePicker.prototype */ {
+type PreviewValues = {
+	timeSelectionValue?: string,
+	calendarTimestamp?: number,
+	calendarValue?: string,
+}
 
-		/**
-		 * Defines the visibility of the time view in <code>phoneMode</code>.
-		 * For more information, see the <code>phoneMode</code> property.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> The date view would be displayed by default.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
-		 */
-		_showTimeView: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		/**
-		 * Defines if the <code>DateTimePicker</code> should be displayed in phone mode.
-		 * The phone mode turns on when the component is used on small screens or phone devices.
-		 * In phone mode the user can see either the calendar view, or the time view
-		 * and can switch between the views via toggle buttons.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
-		 */
-		_phoneMode: {
-			type: Boolean,
-		},
-
-		/**
-		 * Selected, but not yet confirmed date/time
-		 * @private
-		 */
-		_previewValues: {
-			type: Object,
-		},
-
-		/**
-		 * @private
-		 */
-		_currentTimeSlider: {
-			type: String,
-			defaultValue: "hours",
-		},
-	},
-};
+type TempResponsivePopover = HTMLElement & {
+	initialFocus: string,
+	showAt: (opener: HTMLElement) => Promise<void>,
+	close: () => void,
+	resetFocus: () => void,
+}
 
 /**
  * @class
@@ -153,20 +122,57 @@ const metadata = {
  * @since 1.0.0-rc.7
  * @public
  */
+@customElement("ui5-datetime-picker")
 class DateTimePicker extends DatePicker {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the visibility of the time view in <code>phoneMode</code>.
+	 * For more information, see the <code>phoneMode</code> property.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> The date view would be displayed by default.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_showTimeView!: boolean;
+
+	/**
+	 * Defines if the <code>DateTimePicker</code> should be displayed in phone mode.
+	 * The phone mode turns on when the component is used on small screens or phone devices.
+	 * In phone mode the user can see either the calendar view, or the time view
+	 * and can switch between the views via toggle buttons.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_phoneMode!: boolean;
+
+	/**
+	 * Selected, but not yet confirmed date/time
+	 * @private
+	 */
+	@property({ type: Object })
+	_previewValues!: PreviewValues;
+
+	/**
+	 * @private
+	 */
+	@property({ defaultValue: "hours" })
+	_currentTimeSlider!: string;
+
+	_handleResizeBound: () => void;
 
 	static get staticAreaTemplate() {
 		return DateTimePickerPopoverTemplate;
 	}
 
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return [super.styles, DateTimePickerCss];
 	}
 
-	static get staticAreaStyles() {
+	static get staticAreaStyles(): ComponentStylesData {
 		return [super.staticAreaStyles, DateTimePickerPopoverCss];
 	}
 
@@ -265,19 +271,19 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get btnOKLabel() {
-		return DateTimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
+		return DateTimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON as I18nText);
 	}
 
 	get btnCancelLabel() {
-		return DateTimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
+		return DateTimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON as I18nText);
 	}
 
 	get btnDateLabel() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON);
+		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON as I18nText);
 	}
 
 	get btnTimeLabel() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
+		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON as I18nText);
 	}
 
 	get showFooter() {
@@ -297,7 +303,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get dateAriaDescription() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION);
+		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION as I18nText);
 	}
 
 	/**
@@ -315,26 +321,27 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(event) {
-		event.preventDefault();
-		const dateTimePickerContent = event.path ? event.path[1] : event.composedPath()[1];
+	onSelectedDatesChange(e: CustomEvent<CalendarChangeEventDetail>) {
+		e.preventDefault();
+		// @ts-ignore Needed for FF
+		const dateTimePickerContent = e.path ? e.path[1] : e.composedPath()[1];
 		this._previewValues = {
 			...this._previewValues,
-			calendarTimestamp: event.detail.timestamp,
-			calendarValue: event.detail.values[0],
+			calendarTimestamp: e.detail.timestamp,
+			calendarValue: e.detail.values[0],
 			timeSelectionValue: dateTimePickerContent.lastChild.value,
 		};
 	}
 
-	onTimeSelectionChange(event) {
+	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this._previewValues = {
 			...this._previewValues,
-			timeSelectionValue: event.detail.value,
+			timeSelectionValue: e.detail.value,
 		};
 	}
 
-	onTimeSliderChange(event) {
-		this._currentTimeSlider = event.detail.slider;
+	onTimeSliderChange(e: CustomEvent<TimeSelectionSliderChangeEventDetail>) {
+		this._currentTimeSlider = e.detail.slider;
 	}
 
 	/**
@@ -379,10 +386,11 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * Handles the date/time switch available in <code>phoneMode</code> to switch
 	 * between the date and time views.
-	 * @param {Event} event
+	 * @param {Event} e
 	 */
-	_dateTimeSwitchChange(event) {
-		this._showTimeView = event.target.getAttribute("key") === "Time";
+	_dateTimeSwitchChange(e: CustomEvent) { // Note: fix when SegmentedButton is implemented in TS
+		const target = e.target as HTMLElement;
+		this._showTimeView = target.getAttribute("key") === "Time";
 		if (this._showTimeView) {
 			this._currentTimeSlider = "hours";
 		}
@@ -391,7 +399,7 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	_modifyDateValue(amount, unit) {
+	_modifyDateValue(amount: number, unit: string) {
 		if (!this.dateValue) {
 			return;
 		}
@@ -408,12 +416,12 @@ class DateTimePicker extends DatePicker {
 
 	async getPicker() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("[ui5-responsive-popover]");
+		return staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	getSelectedDateTime() {
-		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0]);
-		const selectedTime = this.getFormat().parse(this._timeSelectionValue);
+		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0], undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const selectedTime = this.getFormat().parse(this._timeSelectionValue, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
 		if (selectedTime) {
 			selectedDate.setHours(selectedTime.getHours());
 			selectedDate.setMinutes(selectedTime.getMinutes());

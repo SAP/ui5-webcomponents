@@ -1,8 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -28,131 +34,22 @@ import {
 	TIMEPICKER_HOURS_LABEL,
 	TIMEPICKER_MINUTES_LABEL,
 	TIMEPICKER_SECONDS_LABEL,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import timeSelectionCss from "./generated/themes/TimeSelection.css.js";
+import type { WheelSliderSelectEventDetail } from "./WheelSlider.js";
+import type { HourType } from "./timepicker-utils/TimeSlider.js";
 
-const capitalizeFirst = str => str.substr(0, 1).toUpperCase() + str.substr(1);
+type TimeSelectionChangeEventDetail = {
+	value: string | undefined,
+	valid: boolean,
+}
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-time-selection",
-	languageAware: true,
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.main.TimeSelection.prototype */ {
-		/**
-		 * Defines a formatted time value.
-		 *
-		 * @type {string}
-		 * @defaultvalue undefined
-		 * @public
-		 */
-		value: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * Determines the format, displayed in the input field.
-		 *
-		 * Example:
-		 * HH:mm:ss -> 11:42:35
-		 * hh:mm:ss a -> 2:23:15 PM
-		 * mm:ss -> 12:04 (only minutes and seconds)
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		formatPattern: {
-			type: String,
-		},
-
-		/**
-		 * Hides the hours slider regardless of formatPattern
-		 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-		 * @public
-		 */
-		hideHours: {
-			type: Boolean,
-		},
-
-		/**
-		 * Hides the minutes slider regardless of formatPattern
-		 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-		 * @public
-		 */
-		hideMinutes: {
-			type: Boolean,
-		},
-
-		/**
-		 * Hides the seconds slider regardless of formatPattern
-		 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-		 * @public
-		 */
-		hideSeconds: {
-			type: Boolean,
-		},
-
-		/**
-		 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
-		 * @public
-		 */
-		maxHours: {
-			type: Integer,
-		},
-
-		/**
-		 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
-		 * @public
-		 */
-		maxMinutes: {
-			type: Integer,
-		},
-
-		/**
-		 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
-		 * @public
-		 */
-		maxSeconds: {
-			type: Integer,
-		},
-
-		secondsStep: {
-			type: Integer,
-			defaultValue: 1,
-		},
-
-		minutesStep: {
-			type: Integer,
-			defaultValue: 1,
-		},
-
-		_currentSlider: {
-			type: String,
-			defaultValue: "hours",
-		},
-
-		_calendarType: {
-			type: CalendarType,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.TimeSelection.prototype */ {
-		/**
-		 * Fired when the value changes due to user interaction with the sliders
-		 */
-		change: {},
-
-		/**
-		 * Fired when the expanded/collapsed slider changes (a new slider is expanded or the expanded slider is collapsed)
-		 */
-		sliderChange: {},
-	},
-};
+type TimeSelectionSliderChangeEventDetail = {
+	slider: string,
+}
 
 /**
  * @class
@@ -165,10 +62,125 @@ const metadata = {
  * @private
  * @since 1.0.0-rc.12
  */
+@customElement("ui5-time-selection")
+@languageAware
+
+/**
+ * Fired when the value changes due to user interaction with the sliders
+ */
+@event("change", {
+	detail: {
+		value: { type: String },
+		valid: { type: Boolean },
+	},
+})
+
+/**
+ * Fired when the expanded/collapsed slider changes (a new slider is expanded or the expanded slider is collapsed)
+ */
+@event("sliderChange", {
+	detail: {
+		slider: { type: String },
+	},
+})
 class TimeSelection extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines a formatted time value.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.TimeSelection.prototype.value
+	 * @defaultvalue undefined
+	 * @public
+	 */
+	@property({ defaultValue: undefined })
+	value?: string;
+
+	/**
+	 * Determines the format, displayed in the input field.
+	 *
+	 * Example:
+	 * HH:mm:ss -> 11:42:35
+	 * hh:mm:ss a -> 2:23:15 PM
+	 * mm:ss -> 12:04 (only minutes and seconds)
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.TimeSelection.prototype.formatPattern
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	formatPattern!: string;
+
+	/**
+	 * Hides the hours slider regardless of formatPattern
+	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.hideHours
+	 * @type {boolean}
+	 */
+	@property({ type: Boolean })
+	hideHours!: boolean;
+
+	/**
+	 * Hides the minutes slider regardless of formatPattern
+	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.hideMinutes
+	 * @type {boolean}
+	 */
+	@property({ type: Boolean })
+	hideMinutes!: boolean;
+
+	/**
+	 * Hides the seconds slider regardless of formatPattern
+	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.hideSeconds
+	 * @type {boolean}
+	 */
+	@property({ type: Boolean })
+	hideSeconds!: boolean;
+
+	/**
+	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
+	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.maxHours
+	 * @type {Integer}
+	 */
+	@property({ validator: Integer })
+	maxHours?: number;
+
+	/**
+	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
+	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.maxMinutes
+	 * @type {Integer}
+	 */
+	@property({ validator: Integer })
+	maxMinutes?: number;
+
+	/**
+	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
+	 * @public
+	 * @name sap.ui.webc.main.TimeSelection.prototype.maxSeconds
+	 * @type {Integer}
+	 */
+	@property({ validator: Integer })
+	maxSeconds?: number;
+
+	@property({ validator: Integer, defaultValue: 1 })
+	secondsStep!: number;
+
+	@property({ validator: Integer, defaultValue: 1 })
+	minutesStep!: number;
+
+	@property({ defaultValue: "hours" })
+	_currentSlider!: string;
+
+	@property({ type: CalendarType })
+	_calendarType!: CalendarType;
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -198,12 +210,15 @@ class TimeSelection extends UI5Element {
 	}
 
 	get _hoursConfiguration() {
-		const hourFormat = this.getFormat().aFormatArray.find(item => item.type.startsWith("hour")); // try to find an entry for the hours
+		// @ts-ignore aFormatArray is a private API of DateFormat
+		const formatArray = this.getFormat().aFormatArray as Array<{ type: HourType }>;
+		const hourFormat = formatArray.find(item => item.type.startsWith("hour")); // try to find an entry for the hours
 		return getHoursConfigByFormat(hourFormat ? hourFormat.type : "hour0_23");
 	}
 
 	get _neededSliders() {
-		const formatArray = this.getFormat().aFormatArray;
+		// @ts-ignore aFormatArray is a private API of DateFormat
+		const formatArray = this.getFormat().aFormatArray as Array<{ type: HourType }>;
 		return getTimeControlsByFormat(formatArray, this._hoursConfiguration);
 	}
 
@@ -236,7 +251,9 @@ class TimeSelection extends UI5Element {
 	}
 
 	get periodsArray() {
-		return this.getFormat().aDayPeriodsAbbrev.map(x => x.toUpperCase());
+		// @ts-ignore aDayPeriodsAbbrev is a private API of DateFormat
+		const dayPeriodsAbbrev = this.getFormat().aDayPeriodsAbbrev as Array<string>;
+		return dayPeriodsAbbrev.map((x: string) => x.toUpperCase());
 	}
 
 	get _hoursSliderFocused() {
@@ -296,25 +313,25 @@ class TimeSelection extends UI5Element {
 		return period;
 	}
 
-	setValue(date) {
+	setValue(date: Date) {
 		const value = this.formatValue(date);
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
-			this.fireEvent("change", { value: this.value, valid: true });
+			this.fireEvent<TimeSelectionChangeEventDetail>("change", { value: this.value, valid: true });
 		}
 	}
 
-	onHoursChange(event) {
-		let hours = event.detail.value;
+	onHoursChange(e: CustomEvent<WheelSliderSelectEventDetail>) {
+		let hours = parseInt(e.detail.value);
 		const isTwelveHoursFormat = this._hoursConfiguration.isTwelveHoursFormat;
 
 		if (isTwelveHoursFormat) {
 			if (this._period === this.periodsArray[0]) { // AM
-				hours = hours === "12" ? 0 : hours;
+				hours = hours === 12 ? 0 : hours;
 			}
 
 			if (this._period === this.periodsArray[1]) { // PM
-				hours = hours === "12" ? hours : hours * 1 + 12;
+				hours = hours === 12 ? hours : hours + 12;
 			}
 		}
 
@@ -323,22 +340,22 @@ class TimeSelection extends UI5Element {
 		this.setValue(date);
 	}
 
-	onMinutesChange(event) {
-		const minutes = event.detail.value;
+	onMinutesChange(e: CustomEvent<WheelSliderSelectEventDetail>) {
+		const minutes = parseInt(e.detail.value);
 		const date = this.validDateValue;
 		date.setMinutes(minutes);
 		this.setValue(date);
 	}
 
-	onSecondsChange(event) {
-		const seconds = event.detail.value;
+	onSecondsChange(e: CustomEvent<WheelSliderSelectEventDetail>) {
+		const seconds = parseInt(e.detail.value);
 		const date = this.validDateValue;
 		date.setSeconds(seconds);
 		this.setValue(date);
 	}
 
-	onPeriodChange(event) {
-		const period = event.detail.value;
+	onPeriodChange(e: CustomEvent<WheelSliderSelectEventDetail>) {
+		const period = e.detail.value;
 		const date = this.validDateValue;
 		if (period === this.periodsArray[0] && date.getHours() >= 12) {
 			date.setHours(date.getHours() - 12);
@@ -348,16 +365,16 @@ class TimeSelection extends UI5Element {
 		this.setValue(date);
 	}
 
-	isValid(value) {
-		return value === "" || this.getFormat().parse(value);
+	isValid(value: string) {
+		return value === "" || this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
 	}
 
-	normalizeValue(value) {
+	normalizeValue(value: string) {
 		if (value === "") {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value));
+		return this.getFormat().format(this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean));
 	}
 
 	get _formatPattern() {
@@ -366,7 +383,7 @@ class TimeSelection extends UI5Element {
 		const fallback = !pattern || !hasHours;
 
 		const localeData = getCachedLocaleDataInstance(getLocale());
-		return fallback ? localeData.getCombinedDateTimePattern("medium", "medium", this._primaryCalendarType) : pattern;
+		return fallback ? localeData.getCombinedDateTimePattern("medium", "medium", undefined) : pattern;
 	}
 
 	get _isPattern() {
@@ -377,73 +394,80 @@ class TimeSelection extends UI5Element {
 	 * Event handler for the "click" and "focusin" events of the sliders
 	 * @param event
 	 */
-	selectSlider(event) {
-		this._setCurrentSlider(event.target.closest("[ui5-wheelslider]").getAttribute("data-sap-slider"));
+	selectSlider(e: MouseEvent | FocusEvent) {
+		const target = e.target as HTMLElement;
+		this._setCurrentSlider(target.closest<WheelSlider>("[ui5-wheelslider]")!.getAttribute("data-sap-slider")!);
 	}
 
-	_setCurrentSlider(slider) {
+	_setCurrentSlider(slider: string) {
 		if (this._currentSlider === slider) {
 			return;
 		}
 		this._currentSlider = slider;
-		this.fireEvent("slider-change", { slider });
+		this.fireEvent<TimeSelectionSliderChangeEventDetail>("slider-change", { slider });
 	}
 
 	get _currentSliderDOM() {
-		return this.shadowRoot.querySelector(`[data-sap-slider="${this._currentSlider}"]`);
+		return this.shadowRoot!.querySelector<WheelSlider>(`[data-sap-slider="${this._currentSlider}"]`)!;
 	}
 
 	get _activeSliders() {
-		return ["hours", "minutes", "seconds", "periods"].filter(slider => this[`_has${capitalizeFirst(slider)}Slider`]);
+		return [
+			this._hasHoursSlider ? "hours" : "",
+			this._hasMinutesSlider ? "minutes" : "",
+			this._hasSecondsSlider ? "seconds" : "",
+			this._hasPeriodsSlider ? "periods" : "",
+		].filter((x: string) => !!x);
 	}
 
-	_onfocusin(event) {
+	_onfocusin(e: FocusEvent) {
 		if (!this._currentSlider) {
 			this._setCurrentSlider(this._activeSliders[0]);
 		}
 
-		if (event.target === event.currentTarget) {
+		if (e.target === e.currentTarget) {
 			this._currentSliderDOM.focus();
 		}
 	}
 
-	_onfocusout(event) {
-		if (!this.shadowRoot.contains(event.relatedTarget)) {
+	_onfocusout(e: FocusEvent) {
+		if (!this.shadowRoot!.contains(e.relatedTarget as Node)) {
 			this._setCurrentSlider("");
 		}
 	}
 
-	async _onkeydown(event) {
-		if (!(isLeft(event) || isRight(event))) {
+	_onkeydown(e: KeyboardEvent) {
+		if (!(isLeft(e) || isRight(e))) {
 			return;
 		}
-		event.preventDefault();
+		e.preventDefault();
 
 		const activeSliders = this._activeSliders;
-		const activeSlider = event.target.closest("[ui5-wheelslider]").getAttribute("data-sap-slider");
+		const target = e.target as HTMLElement;
+		const activeSlider = target.closest<WheelSlider>("[ui5-wheelslider]")!.getAttribute("data-sap-slider")!;
 		let index = activeSliders.indexOf(activeSlider);
-		if (isLeft(event)) {
+		if (isLeft(e)) {
 			index = index === 0 ? activeSliders.length - 1 : index - 1;
-		} else if (isRight(event)) {
+		} else if (isRight(e)) {
 			index = index === activeSliders.length - 1 ? 0 : index + 1;
 		}
 		this._setCurrentSlider(activeSliders[index]);
 		this._currentSliderDOM.focus();
 	}
 
-	_handleWheel(e) {
+	_handleWheel(e: WheelEvent) {
 		e.preventDefault();
 	}
 
 	getFormat() {
-		let dateFormat;
+		let dateFormat: DateFormat;
 		if (this._isPattern) {
-			dateFormat = DateFormat.getInstance({
+			dateFormat = DateFormat.getDateInstance({
 				calendarType: this._calendarType,
 				pattern: this._formatPattern,
 			});
 		} else {
-			dateFormat = DateFormat.getInstance({
+			dateFormat = DateFormat.getDateInstance({
 				calendarType: this._calendarType,
 				style: this._formatPattern,
 			});
@@ -452,28 +476,28 @@ class TimeSelection extends UI5Element {
 		return dateFormat;
 	}
 
-	formatValue(date) {
+	formatValue(date: Date) {
 		return this.getFormat().format(date);
 	}
 
 	get dateValue() {
-		return this.value ? this.getFormat().parse(this.value) : new Date();
+		return this.value ? this.getFormat().parse(this.value, undefined as unknown as boolean, undefined as unknown as boolean) as Date : new Date();
 	}
 
 	get validDateValue() {
-		return this.isValid(this.value) ? this.dateValue : new Date();
+		return this.value !== undefined && this.isValid(this.value) ? this.dateValue : new Date();
 	}
 
 	get hoursSliderTitle() {
-		return TimeSelection.i18nBundle.getText(TIMEPICKER_HOURS_LABEL);
+		return TimeSelection.i18nBundle.getText(TIMEPICKER_HOURS_LABEL as I18nText);
 	}
 
 	get minutesSliderTitle() {
-		return TimeSelection.i18nBundle.getText(TIMEPICKER_MINUTES_LABEL);
+		return TimeSelection.i18nBundle.getText(TIMEPICKER_MINUTES_LABEL as I18nText);
 	}
 
 	get secondsSliderTitle() {
-		return TimeSelection.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL);
+		return TimeSelection.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL as I18nText);
 	}
 
 	get periodSliderTitle() {
@@ -493,3 +517,7 @@ class TimeSelection extends UI5Element {
 TimeSelection.define();
 
 export default TimeSelection;
+export type {
+	TimeSelectionChangeEventDetail,
+	TimeSelectionSliderChangeEventDetail,
+};
