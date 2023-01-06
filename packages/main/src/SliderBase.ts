@@ -1,4 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -12,137 +14,12 @@ import {
 // Styles
 import styles from "./generated/themes/SliderBase.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	properties: /** @lends sap.ui.webc.main.SliderBase.prototype */  {
-		/**
-		 * Defines the minimum value of the slider.
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @defaultvalue 0
-		 * @public
-		 */
-		min: {
-			type: Float,
-			defaultValue: 0,
-		},
-		/**
-		 * Defines the maximum value of the slider.
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @defaultvalue 100
-		 * @public
-		 */
-		max: {
-			type: Float,
-			defaultValue: 100,
-		},
-		/**
-		 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
-		 * <br><br>
-		 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
-		 *
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 1
-		 * @public
-		 */
-		step: {
-			type: Float,
-			defaultValue: 1,
-		},
-		/**
-		 * Displays a label with a value on every N-th step.
-		 * <br><br>
-		 * <b>Note:</b> The step and tickmarks properties must be enabled.
-		 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
-		 * tickmark will be labelled, which means every 4th value number.
-		 *
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 0
-		 * @public
-		 */
-		labelInterval: {
-			type: Integer,
-			defaultValue: 0,
-		},
-		/**
-		 * Enables tickmarks visualization for each step.
-		 * <br><br>
-		 * <b>Note:</b> The step must be a positive number.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showTickmarks: {
-			type: Boolean,
-		},
-		/**
-		 * Enables handle tooltip displaying the current value.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showTooltip: {
-			type: Boolean,
-		},
-		/**
-		 * Defines whether the slider is in disabled state.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the accessible ARIA name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue: ""
-		 * @public
-		 * @since 1.4.0
-		 */
-		 accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * @private
-		 */
-		_tooltipVisibility: {
-			type: String,
-			defaultValue: "hidden",
-		},
-		_labelsOverlapping: {
-			type: Boolean,
-		},
-		_hiddenTickmarks: {
-			type: Boolean,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.SliderBase.prototype */ {
-		/**
-		 * Fired when the value changes and the user has finished interacting with the slider.
-		 *
-		 * @event
-		 * @public
-		*/
-		change: {},
-		/**
-		 * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
-		 *
-		 * @event
-		 * @public
-		*/
-		input: {},
-	},
-};
+type StateStorage = {
+	step: number | null,
+	min: number | null,
+	max: number | null,
+	labelInterval: number | null,
+}
 
 /**
  * @class
@@ -157,7 +34,142 @@ const metadata = {
  * @tagname ui5-slider
  * @public
  */
+
+/**
+ * Fired when the value changes and the user has finished interacting with the slider.
+ *
+ * @event sap.ui.webc.main.SliderBase#change
+ * @public
+ */
+@event("change")
+
+/**
+ * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
+ *
+ * @event sap.ui.webc.main.SliderBase#input
+ * @public
+ */
+@event("input")
 class SliderBase extends UI5Element {
+	/**
+	 * Defines the minimum value of the slider.
+	 *
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @name sap.ui.webc.main.SliderBase.prototype.min
+	 * @defaultvalue 0
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 0 })
+	min!: number;
+
+	/**
+	 * Defines the maximum value of the slider.
+	 *
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @name sap.ui.webc.main.SliderBase.prototype.max
+	 * @defaultvalue 100
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 100 })
+	max!: number;
+
+	/**
+	 * Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10).
+	 * <br><br>
+	 * <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
+	 *
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.SliderBase.prototype.step
+	 * @defaultvalue 1
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 1 })
+	step!: number;
+
+	/**
+	 * Displays a label with a value on every N-th step.
+	 * <br><br>
+	 * <b>Note:</b> The step and tickmarks properties must be enabled.
+	 * Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second
+	 * tickmark will be labelled, which means every 4th value number.
+	 *
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.SliderBase.prototype.labelInterval
+	 * @defaultvalue 0
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: 0 })
+	labelInterval!: number;
+
+	/**
+	 * Enables tickmarks visualization for each step.
+	 * <br><br>
+	 * <b>Note:</b> The step must be a positive number.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.SliderBase.prototype.showTickmarks
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showTickmarks!: boolean;
+
+	/**
+	 * Enables handle tooltip displaying the current value.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.SliderBase.prototype.showTooltip
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showTooltip!: boolean;
+
+	/**
+	 * Defines whether the slider is in disabled state.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.SliderBase.prototype.disabled
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.SliderBase.prototype.accessibleName
+	 * @defaultvalue: ""
+	 * @public
+	 * @since 1.4.0
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * @private
+	 */
+	@property({ defaultValue: "hidden" })
+	_tooltipVisibility!: string;
+
+	@property({ type: Boolean })
+	_labelsOverlapping!: boolean;
+
+	@property({ type: Boolean })
+	_hiddenTickmarks!: boolean;
+
+	_resizeHandler: () => void;
+	_moveHandler: () => void;
+	_upHandler: () => void;
+	_stateStorage: StateStorage;
+	_ontouchstart: {
+		handleEvent: (e: TouchEvent) => void,
+		passive: boolean,
+	};
+	notResized = false;
+
 	constructor() {
 		super();
 		this._resizeHandler = this._handleResize.bind(this);
@@ -171,8 +183,8 @@ class SliderBase extends UI5Element {
 			labelInterval: null,
 		};
 
-		const handleTouchStartEvent = event => {
-			this._onmousedown(event);
+		const handleTouchStartEvent = (e: TouchEvent) => {
+			this._onmousedown(e);
 		};
 
 		this._ontouchstart = {
@@ -181,9 +193,11 @@ class SliderBase extends UI5Element {
 		};
 	}
 
-	static get metadata() {
-		return metadata;
-	}
+	_handleMove() {}
+
+	_handleUp() {}
+
+	_onmousedown(e: Event) {} // eslint-disable-line
 
 	static get render() {
 		return litRender;
@@ -251,7 +265,7 @@ class SliderBase extends UI5Element {
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this._handleResize);
+		ResizeHandler.deregister(this, this._resizeHandler);
 	}
 
 	onAfterRendering() {
@@ -266,7 +280,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	_onmouseover(event) {
+	_onmouseover() {
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.VISIBLE;
 		}
@@ -277,23 +291,10 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	_onmouseout(event) {
-		if (this.showTooltip && !this.shadowRoot.activeElement) {
+	_onmouseout() {
+		if (this.showTooltip && !this.shadowRoot!.activeElement) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
 		}
-	}
-
-	/**
-	 * Sets initial value when the component is focused in, can be restored with ESC key
-	 *
-	 * @private
-	 */
-	_setInitialValue(valueType, value) {
-		this[`_${valueType}Initial`] = value;
-	}
-
-	_getInitialValue(valueType) {
-		return this[`_${valueType}Initial`];
 	}
 
 	_onkeydown(event) {
@@ -804,7 +805,7 @@ class SliderBase extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this.disabled ? "-1" : "0";
+		return this.disabled ? -1 : 0;
 	}
 
 	get _ariaLabelledByHandleRefs() {

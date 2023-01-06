@@ -207,9 +207,9 @@ class RangeSlider extends SliderBase {
 	_onfocusin(event) {
 		// If this is the initial focusin of the component save its initial
 		// value properties so they could be restored on ESC key press
-		if (!this._getInitialValue("endValue")) {
-			this._setInitialValue("startValue", this.startValue);
-			this._setInitialValue("endValue", this.endValue);
+		if (!this._endValueInitial) {
+			this._startValueInitial = this.startValue;
+			this._endValueInitial = this.endValue;
 		}
 
 		if (this.showTooltip) {
@@ -236,8 +236,8 @@ class RangeSlider extends SliderBase {
 		}
 
 		this._setAffectedValue(null);
-		this._setInitialValue("startValue", null);
-		this._setInitialValue("endValue", null);
+		this._startValueInitial = null;
+		this._endValueInitial = null;
 
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
@@ -260,7 +260,7 @@ class RangeSlider extends SliderBase {
 
 	_handleActionKeyPress(event) {
 		if (isEscape(event)) {
-			this.update(null, this._getInitialValue("startValue"), this._getInitialValue("endValue"));
+			this.update(null, this._startValueInitial, this._endValueInitial);
 			return;
 		}
 

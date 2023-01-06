@@ -118,7 +118,7 @@ class Slider extends SliderBase {
 	constructor() {
 		super();
 		this._stateStorage.value = null;
-		this._setInitialValue("value", null);
+		this._valueInitial = null;
 	}
 
 	static get dependencies() {
@@ -163,8 +163,8 @@ class Slider extends SliderBase {
 
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
-		if (this._getInitialValue("value") === null) {
-			this._setInitialValue("value", this.value);
+		if (this._valueInitial === null) {
+			this._valueInitial = this.value;
 		}
 
 		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
@@ -177,8 +177,8 @@ class Slider extends SliderBase {
 	_onfocusin(event) {
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
-		if (this._getInitialValue("value") === null) {
-			this._setInitialValue("value", this.value);
+		if (this._valueInitial === null) {
+			this._valueInitial = this.value;
 		}
 
 		if (this.showTooltip) {
@@ -196,7 +196,7 @@ class Slider extends SliderBase {
 
 		// Reset focus state and the stored Slider's initial
 		// value that was saved when it was first focused in
-		this._setInitialValue("value", null);
+		this._valueInitial = null;
 
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
@@ -263,7 +263,7 @@ class Slider extends SliderBase {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 		const currentValue = this.value;
-		const newValue = isEscape(event) ? this._getInitialValue("value") : this.constructor.clipValue(this._handleActionKeyPressBase(event, "value") + currentValue, min, max);
+		const newValue = isEscape(event) ? this._valueInitial : this.constructor.clipValue(this._handleActionKeyPressBase(event, "value") + currentValue, min, max);
 
 		if (newValue !== currentValue) {
 			this._updateHandleAndProgress(newValue);
