@@ -1,77 +1,21 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ColorPaletteItemTemplate from "./generated/templates/ColorPaletteItemTemplate.lit.js";
 import {
 	COLORPALETTE_COLOR_LABEL,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
-
-/**
-* @public
-*/
-const metadata = {
-	tag: "ui5-color-palette-item",
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.main.ColorPaletteItem.prototype */ {
-		/**
-		 * Defines the colour of the component.
-		 * <br><br>
-		 * <b>Note:</b> The value should be a valid CSS color.
-		 *
-		 * @type {sap.ui.webc.base.types.CSSColor}
-		 * @public
-		 */
-		value: {
-			type: CSSColor,
-		},
-
-		/**
-		 * Defines the tab-index of the element, helper information for the ItemNavigation.
-		 * @private
-		 */
-		_tabIndex: {
-			type: String,
-			defaultValue: "-1",
-			noAttribute: true,
-		},
-
-		/**
-		 * Defines the index of the item inside of the ColorPalette.
-		 * @private
-		 * @type {string}
-		 */
-		index: {
-			type: String,
-		},
-
-		/**
-		 * Defines if the ColorPalette is on phone mode.
-		 * @private
-		 * @type {boolean}
-		 */
-		phone: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 * @type {boolean}
-		 * @since 1.0.0-rc.15
-		 */
-		_disabled: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.ColorPaletteItem.prototype */ {
-	},
-	events: /** @lends sap.ui.webc.main.ColorPaletteItem.prototype */ {
-	},
-};
 
 /**
  * @class
@@ -89,10 +33,52 @@ const metadata = {
  * @implements sap.ui.webc.main.IColorPaletteItem
  * @public
  */
+@customElement("ui5-color-palette-item")
 class ColorPaletteItem extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the colour of the component.
+	 * <br><br>
+	 * <b>Note:</b> The value should be a valid CSS color.
+	 *
+	 * @type {sap.ui.webc.base.types.CSSColor}
+	 * @name sap.ui.webc.main.ColorPaletteItem.prototype.value
+	 * @public
+	 */
+	@property({ validator: CSSColor })
+	value!: string;
+
+	/**
+	 * Defines the tab-index of the element, helper information for the ItemNavigation.
+	 * @private
+	 */
+	@property({ defaultValue: "-1", noAttribute: true })
+	_tabIndex!: string;
+
+	/**
+	 * Defines the index of the item inside of the ColorPalette.
+	 * @private
+	 * @type {Integer}
+	 */
+	@property({ validator: Integer })
+	index?: number;
+
+	/**
+	 * Defines if the ColorPalette is on phone mode.
+	 * @private
+	 * @type {boolean}
+	 */
+	@property({ type: Boolean })
+	phone!: boolean;
+
+	/**
+	 * @private
+	 * @type {boolean}
+	 * @since 1.0.0-rc.15
+	 */
+	@property({ type: Boolean })
+	_disabled!: boolean;
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -120,7 +106,7 @@ class ColorPaletteItem extends UI5Element {
 	}
 
 	get colorLabel() {
-		return ColorPaletteItem.i18nBundle.getText(COLORPALETTE_COLOR_LABEL);
+		return ColorPaletteItem.i18nBundle.getText(COLORPALETTE_COLOR_LABEL as I18nText);
 	}
 
 	get styles() {

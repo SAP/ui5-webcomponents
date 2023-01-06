@@ -1,5 +1,6 @@
 type PromiseResolve = (value: void | PromiseLike<void>) => void;
 type Timeout = ReturnType<typeof setTimeout>;
+type Interval = ReturnType<typeof setInterval>;
 
 type StyleDataCSP = {
 	content: string,
@@ -20,6 +21,7 @@ type PassiveEventListenerObject = EventListenerObject & { passive: boolean };
 export type {
 	PromiseResolve,
 	Timeout,
+	Interval,
 	StyleData,
 	StyleDataCSP,
 	ComponentStylesData,
