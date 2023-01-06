@@ -6,10 +6,9 @@
 
 .ui5-multi-input-tokenizer {
 	min-width: var(--_ui5_input_tokenizer_min_width);
-	max-width: calc(100% - 3rem - var(--_ui5_input_icon_min_width));
+	max-width: calc(100% - 3rem - var(--_ui5-input-icons-count) * var(--_ui5_input_icon_min_width));
 	border: none;
 	width: auto;
-	min-width: 0px;
 	height: 100%;
 }
 
@@ -19,4 +18,13 @@
 
 .ui5-multi-input-tokenizer::part(n-more-text) {
 	padding-right: 0.3125rem;
+}
+
+[inner-input] {
+	padding-left: calc((1 - var(--_ui5_input_has_tokens)) * var(--_ui5_input_inner_padding_left_no_tokens) + (var(--_ui5_input_has_tokens) * var(--_ui5_input_inner_padding_left_tokens)));
+}
+
+[inner-input][inner-input-with-icon] {
+	padding: var(--_ui5_input_inner_padding_with_icon);
+	padding-left: calc((1 - var(--_ui5_input_has_tokens)) * var(--_ui5_input_inner_padding_left_no_tokens) + (var(--_ui5_input_has_tokens) * var(--_ui5_input_inner_padding_left_tokens)));
 }

@@ -1023,7 +1023,7 @@ class MultiComboBox extends UI5Element {
 
 	_handleEnter() {
 		const lowerCaseValue = this.value.toLowerCase();
-		const matchingItem = this.items.find(item => item.text.toLowerCase() === lowerCaseValue);
+		const matchingItem = this.items.find(item => (item.text.toLowerCase() === lowerCaseValue && !item.isGroupItem));
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
@@ -1304,6 +1304,7 @@ class MultiComboBox extends UI5Element {
 
 		this.style.setProperty("--_ui5-input-icons-count", numIcons + numSlimDownIcon);
 		this.style.setProperty("--_ui5_input_has_tokens", this.isTokenizerAvailable ? 1 : 0);
+		this.style.tokenizerStyles = this.isTokenizerAvailable ? { } : { display: "none" };
 
 		if (!input || !value) {
 			return;
@@ -1334,6 +1335,8 @@ class MultiComboBox extends UI5Element {
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
+		// force resize of the tokenizer on invalidation
+		this._tokenizer._handleResize();
 	}
 
 	get _isPhone() {

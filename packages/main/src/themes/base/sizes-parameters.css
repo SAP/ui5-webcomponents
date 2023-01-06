@@ -1,7 +1,7 @@
 :root {
 	/* Calendar */
 	--_ui5_calendar_height: 24.5rem;
-	--_ui5_calendar_width: 20.5rem;
+	--_ui5_calendar_width: 20rem;
 	--_ui5_calendar_padding: 1rem;
 	--_ui5_calendar_left_right_padding:  0.5rem;
 	--_ui5_calendar_top_bottom_padding: 1rem;
@@ -38,6 +38,8 @@
 
 	--_ui5_input_inner_padding: 0 0.625rem;
 	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
+	--_ui5_input_inner_padding_left_no_tokens: 0.625rem;
+	--_ui5_input_inner_padding_left_tokens: 0.125rem;
 	--_ui5_input_value_state_icon_padding: var(--_ui5-input-icon-padding);
 	--_ui5_list_no_data_height: 3rem;
 	--_ui5_list_item_cb_margin_right: 0;
@@ -239,6 +241,9 @@
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);
 	--_ui5_input_inner_padding: 0 0.5rem;
+	--_ui5_input_inner_padding_with_icon: 0 0.2rem 0 0.5rem;
+	--_ui5_input_inner_padding_left_no_tokens: 0.5rem;
+	--_ui5_input_inner_padding_left_tokens: 0.125rem;
 	--_ui5_input_icon_min_width: var(--_ui5_input_compact_min_width);
 	--_ui5_input_icon_padding: .25rem .4375rem;
 	--_ui5_input_error_warning_icon_padding: .1875rem .375rem .1875rem .4375rem;

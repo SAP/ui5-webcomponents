@@ -91,6 +91,20 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.ok(await allPopover.getProperty("opened"), "All popover should not be displayed");
 		});
+
+		it("Checks if tokenizer is expanded when adding items dynamically", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+			await browser.setWindowSize(1920, 1080);
+	
+			const btn = await $("#add");
+			const mcb = await $("#mcb-dynamic-selection");
+	
+			await btn.click();
+	
+			const inlinedTokens = await mcb.shadow$$("ui5-token:not([overflows])");
+
+			assert.ok(inlinedTokens.length > 0, "Token is displayed");
+		});
 	});
 
 	describe("selection and filtering", () => {
@@ -1643,6 +1657,24 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await groupItem.getProperty("focused"), false, "The first group header should be focused");
 			assert.equal(await mcb.getProperty("focused"), true, "The first group header should be focused");
+		});
+
+		it ("Should not select group headers", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-grouping");
+			const input = await mcb.shadow$("#ui5-multi-combobox-input");
+
+			await input.click();
+			await mcb.setProperty("value", "Asia");
+			await mcb.keys("Enter");
+
+			let tokens = await browser.$("#mcb-grouping").shadow$$(".ui5-multi-combobox-token");
+			let selectionChangeFired = await browser.execute(() => document.getElementById("selection-change-events-fired").textContent);
+
+			assert.strictEqual(await input.getValue(), "Asia", "The value remains");
+			assert.strictEqual(tokens.length, 0, "The group header is not tokenized");
+			assert.strictEqual(selectionChangeFired, "", "SelectionChange event is not fired");
 		});
 	});
 

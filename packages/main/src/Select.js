@@ -328,7 +328,7 @@ class Select extends UI5Element {
 		this._enableFormSupport();
 
 		const numSelectedIcon = this.selectedOptionIcon ? 0 : 1;
-		this.style.setProperty("--_ui5-input-icons-count", 1 + numSelectedIcon);
+		this.style.setProperty("--_ui5-input-icons-count", numSelectedIcon);
 	}
 
 	onAfterRendering() {

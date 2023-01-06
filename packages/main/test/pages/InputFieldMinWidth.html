@@ -6,6 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ui5-input</title>
 	<script src="../../bundle.esm.js" type="module"></script>
+	<script>
+
+		delete Document.prototype.adoptedStyleSheets;
+
+	  </script>
 </head>
 
 <style>
@@ -51,7 +56,10 @@
 </style>
 
 <body>
-	<div class="wrapper">
+	<div class="wrapper" id="wrapper">
+		<div class="fields" >
+			<ui5-checkbox id="cbCompact" text="Compact" ></ui5-checkbox>
+		</div>
 		<div class="fields">
 			<ui5-label id="label-width2">fields width: 540</ui5-label>
 			<ui5-slider id="slider2" show-tickmarks value="540" min="0" max="540" step="1" label-interval="1"></ui5-slider>
@@ -157,6 +165,8 @@
 	<script>
 		const fields = document.querySelectorAll(".field");
 
+
+
 		document.getElementById("slider").addEventListener("input", event => {
 			Array.from(fields).forEach(el => {
 				el.style.width = `${event.target.value}px`;
@@ -171,6 +181,17 @@
 				document.getElementById("label-width").textContent = `Field width: ${event.target.value}px`;
 				document.getElementById("label-width2").textContent = `Field width: ${event.target.value/16}rem`;
 			})
+		});
+
+		const cbCompact = document.getElementById('cbCompact');
+		cbCompact.addEventListener('change', ()=> {
+			var el = document.getElementById('wrapper');
+			el.classList.remove('sapUiSizeCompact');
+			if(cbCompact.checked) {
+				el.classList.add('sapUiSizeCompact');
+			}
+
+
 		});
 	</script>
 </body>
