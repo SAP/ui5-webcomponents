@@ -115,8 +115,8 @@ const metadata = {
 		 * Defines the style of the page indicator.
 		 * Available options are:
 		 * <ul>
-		 * <li><code>Default</code></li>
-		 * <li><code>Numeric</code></li>
+		 * <li><code>Default</code> - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)</li>
+		 * <li><code>Numeric</code> - The page indicator will display the current page and the total number of pages. (e.g. X of Y)</li>
 		 * </ul>
 		 * @type {sap.ui.webc.main.types.CarouselPageIndicatorStyle}
 		 * @since 1.10
