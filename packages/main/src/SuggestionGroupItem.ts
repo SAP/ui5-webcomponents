@@ -1,28 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-suggestion-group-item",
-	properties: /** @lends sap.ui.webc.main.SuggestionGroupItem.prototype */ {
-		/**
-		 * Defines the text of the <code>ui5-suggestion-group-item</code>.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		text: {
-			type: String,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.SuggestionGroupItem.prototype */ {
-	},
-	events: /** @lends sap.ui.webc.main.SuggestionGroupItem.prototype */ {
-	},
-};
 
 /**
  * @class
@@ -38,10 +17,18 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.15
  */
-class SuggestionItem extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+@customElement("ui5-suggestion-group-item")
+class SuggestionGroupItem extends UI5Element {
+	/**
+	 * Defines the text of the <code>ui5-suggestion-group-item</code>.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.text
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	text!: string;
 
 	static get dependencies() {
 		return [
@@ -59,6 +46,6 @@ class SuggestionItem extends UI5Element {
 	}
 }
 
-SuggestionItem.define();
+SuggestionGroupItem.define();
 
-export default SuggestionItem;
+export default SuggestionGroupItem;

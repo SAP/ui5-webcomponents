@@ -1,31 +1,7 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import StandardListItem from "./StandardListItem.js";
 import SuggestionListItemTemplate from "./generated/templates/SuggestionListItemTemplate.lit.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-li-suggestion-item",
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.main.SuggestionListItem.prototype */ {
-		/**
-		 * Defines a description that can contain HTML.
-		 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
-		 * <br>
-		 * @type {HTMLElement}
-		 * @since 1.0.0-rc.8
-		 * @slot
-		 * @public
-		 */
-		richDescription: {
-			type: HTMLElement,
-		},
-		"default": {
-			type: Node,
-			propertyName: "titleText",
-		},
-	},
-};
 
 /**
  * @class
@@ -49,17 +25,34 @@ const metadata = {
  * @extends sap.ui.webc.main.StandardListItem
  * @tagname ui5-li-suggestion-item
  */
+@customElement("ui5-li-suggestion-item")
 class SuggestionListItem extends StandardListItem {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines a description that can contain HTML.
+	 * <b>Note:</b> If not specified, the <code>description</code> property will be used.
+	 * <br>
+	 * @type {HTMLElement}
+	 * @name sap.ui.webc.main.SuggestionListItem.prototype.richDescription
+	 * @since 1.0.0-rc.8
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	richDescription!: Array<HTMLElement>
+
+	/**
+	 * @type {Node}
+	 * @name sap.ui.webc.main.SuggestionListItem.prototype.default
+	 */
+	@slot({ type: Node, "default": true })
+	titleText!: Array<Node>
 
 	static get template() {
 		return SuggestionListItemTemplate;
 	}
 
-	onBeforeRendering(...params) {
-		super.onBeforeRendering(...params);
+	onBeforeRendering() {
+		super.onBeforeRendering();
 		this.hasTitle = !!this.titleText.length;
 	}
 
@@ -69,6 +62,10 @@ class SuggestionListItem extends StandardListItem {
 
 	get hasDescription() {
 		return this.richDescription.length || this.description;
+	}
+
+	get groupItem() {
+		return false;
 	}
 }
 

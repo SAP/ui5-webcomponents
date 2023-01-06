@@ -1,9 +1,17 @@
 import { isClickInRect } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import type { Interval } from "@ui5/webcomponents-base/dist/types.js";
+import type Popover from "../Popover.js";
+import { instanceOfPopover } from "../Popover.js";
 import { getOpenedPopups, addOpenedPopup, removeOpenedPopup } from "./OpenedPopupsRegistry.js";
 
-let updateInterval = null;
+type RegisteredPopover = {
+	instance: Popover;
+	parentPopovers: Array<Popover>;
+}
+
+let updateInterval: Interval;
 const intervalTimeout = 300;
-const openedRegistry = [];
+const openedRegistry: Array<RegisteredPopover> = [];
 
 const repositionPopovers = () => {
 	openedRegistry.forEach(popover => {
@@ -12,7 +20,7 @@ const repositionPopovers = () => {
 };
 
 const closePopoversIfLostFocus = () => {
-	if (document.activeElement.tagName === "IFRAME") {
+	if (document.activeElement!.tagName === "IFRAME") {
 		getRegistry().reverse().forEach(popup => popup.instance.close(false, false, true));
 	}
 };
@@ -37,12 +45,12 @@ const detachGlobalScrollHandler = () => {
 	document.body.removeEventListener("scroll", repositionPopovers, { capture: true });
 };
 
-const attachScrollHandler = popover => {
-	popover && popover.shadowRoot.addEventListener("scroll", repositionPopovers, { capture: true });
+const attachScrollHandler = (popover: Popover) => {
+	popover && popover.shadowRoot!.addEventListener("scroll", repositionPopovers, { capture: true });
 };
 
-const detachScrollHandler = popover => {
-	popover && popover.shadowRoot.removeEventListener("scroll", repositionPopovers, { capture: true });
+const detachScrollHandler = (popover: Popover) => {
+	popover && popover.shadowRoot!.removeEventListener("scroll", repositionPopovers, { capture: true });
 };
 
 const attachGlobalClickHandler = () => {
@@ -53,11 +61,16 @@ const detachGlobalClickHandler = () => {
 	document.removeEventListener("mousedown", clickHandler);
 };
 
-const clickHandler = event => {
+const clickHandler = (event: MouseEvent) => {
 	const openedPopups = getOpenedPopups();
-	const isTopPopupPopover = openedPopups[openedPopups.length - 1].instance.showAt;
 
-	if (openedPopups.length === 0 || !isTopPopupPopover) {
+	if (openedPopups.length === 0) {
+		return;
+	}
+
+	const isTopPopupPopover = instanceOfPopover(openedPopups[openedPopups.length - 1].instance);
+
+	if (!isTopPopupPopover) {
 		return;
 	}
 
@@ -66,7 +79,7 @@ const clickHandler = event => {
 		const popup = openedPopups[i].instance;
 
 		// if popup is modal, opener is clicked, popup is dialog skip closing
-		if (popup.isModal || popup.isOpenerClicked(event)) {
+		if (popup.isModal || (popup as Popover).isOpenerClicked(event)) {
 			return;
 		}
 
@@ -78,7 +91,7 @@ const clickHandler = event => {
 	}
 };
 
-const addOpenedPopover = instance => {
+const addOpenedPopover = (instance: Popover) => {
 	const parentPopovers = getParentPopoversIfNested(instance);
 
 	addOpenedPopup(instance, parentPopovers);
@@ -96,7 +109,7 @@ const addOpenedPopover = instance => {
 	}
 };
 
-const removeOpenedPopover = instance => {
+const removeOpenedPopover = (instance: Popover) => {
 	const popoversToClose = [instance];
 
 	for (let i = 0; i < openedRegistry.length; i++) {
@@ -108,7 +121,7 @@ const removeOpenedPopover = instance => {
 
 	for (let i = popoversToClose.length - 1; i >= 0; i--) {
 		for (let j = 0; j < openedRegistry.length; j++) {
-			let indexOfItemToRemove;
+			let indexOfItemToRemove = -1;
 			if (popoversToClose[i] === openedRegistry[j].instance) {
 				indexOfItemToRemove = j;
 			}
@@ -133,14 +146,14 @@ const getRegistry = () => {
 	return openedRegistry;
 };
 
-const getParentPopoversIfNested = instance => {
+const getParentPopoversIfNested = (instance: Popover) => {
 	let currentElement = instance.parentNode;
-	const parentPopovers = [];
+	const parentPopovers: Array<Popover> = [];
 
-	while (currentElement.parentNode) {
+	while (currentElement && currentElement.parentNode) {
 		for (let i = 0; i < openedRegistry.length; i++) {
-			if (currentElement && currentElement === openedRegistry[i].instance) {
-				parentPopovers.push(currentElement);
+			if (currentElement === openedRegistry[i].instance) {
+				parentPopovers.push(currentElement as Popover);
 			}
 		}
 

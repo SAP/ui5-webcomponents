@@ -189,7 +189,9 @@ class SegmentedButton extends UI5Element {
 	}
 
 	_selectItem(event) {
-		if (event.target.disabled || event.target === this.getDomRef()) {
+		const isTargetSegmentedButtonItem = event.target.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+
+		if (event.target.disabled || event.target === this.getDomRef() || !isTargetSegmentedButtonItem) {
 			return;
 		}
 
@@ -206,12 +208,13 @@ class SegmentedButton extends UI5Element {
 		this._selectedItem.pressed = true;
 		this._itemNavigation.setCurrentItem(this._selectedItem);
 
+		this.selectedItem.focus();
+
 		return this;
 	}
 
 	_onclick(event) {
 		this._selectItem(event);
-		this.selectedItem.focus();
 	}
 
 	_onkeydown(event) {
@@ -225,6 +228,17 @@ class SegmentedButton extends UI5Element {
 	_onkeyup(event) {
 		if (isSpace(event)) {
 			this._selectItem(event);
+		}
+	}
+
+	_onmousedown(event) {
+		const eventTarget = event.target;
+		const isTargetSegmentedButtonItem = eventTarget.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+
+		if (isTargetSegmentedButtonItem) {
+			eventTarget.focus();
+			this._itemNavigation.setCurrentItem(eventTarget);
+			this.hasPreviouslyFocusedItem = true;
 		}
 	}
 
