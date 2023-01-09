@@ -6,6 +6,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
@@ -201,7 +202,7 @@ class SliderBase extends UI5Element {
 
 	_handleUp() {}
 
-	_onmousedown(e: Event) {} // eslint-disable-line
+	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
 
@@ -209,7 +210,7 @@ class SliderBase extends UI5Element {
 		return litRender;
 	}
 
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return styles;
 	}
 
@@ -472,9 +473,9 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	updateValue(valueType: string, value: number) {
+	updateValue(valueType: string, value: number | null) {
 		// @ts-ignore
-		this[valueType] = value;
+		this[valueType] = value; // what happens with null?
 		this.storePropertyState(valueType);
 		if (this._isUserInteraction) {
 			this.fireEvent("input");
@@ -709,11 +710,11 @@ class SliderBase extends UI5Element {
 		}
 	}
 
-	_handleActionKeyPressBase(e: KeyboardEvent, affectedValue: string) {
+	_handleActionKeyPressBase(e: KeyboardEvent, affectedPropName: string) {
 		const isUpAction = SliderBase._isIncreaseValueAction(e);
 		const isBigStep = SliderBase._isBigStepAction(e);
 
-		const currentValue = this[affectedValue as keyof SliderBase] as number;
+		const currentValue = this[affectedPropName as keyof SliderBase] as number;
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 
@@ -766,7 +767,7 @@ class SliderBase extends UI5Element {
 	 *
 	 * @private
 	 */
-	_validateStep(step: any) {
+	_validateStep(step: number) {
 		if (step === 0) {
 			console.warn("The 'step' property must be a positive float number"); // eslint-disable-line
 		}
@@ -775,7 +776,7 @@ class SliderBase extends UI5Element {
 			console.warn("The 'step' property must be a positive float number. The provided negative number has been converted to its positve equivalent"); // eslint-disable-line
 		}
 
-		if (typeof step !== "number" || Number.isNaN(step)) {
+		if (Number.isNaN(step)) {
 			console.warn("The 'step' property must be a positive float number. It has been set to its default value of 1"); // eslint-disable-line
 		}
 	}

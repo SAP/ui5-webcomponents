@@ -95,6 +95,7 @@ class Slider extends SliderBase {
 	 * Current value of the slider
 	 *
 	 * @type {sap.ui.webc.base.types.Float}
+	 * @name sap.ui.webc.main.Slider.prototype.value
 	 * @defaultvalue 0
 	 * @formEvents change input
 	 * @formProperty
@@ -150,7 +151,7 @@ class Slider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_onmousedown(e: MouseEvent) {
+	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this.step === 0) {
