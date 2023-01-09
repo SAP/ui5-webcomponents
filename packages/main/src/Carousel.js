@@ -100,7 +100,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the visibility of the paging indicator.
+		 * Defines the visibility of the page indicator.
 		 * If set to true the page indicator will be hidden.
 		 * @type {boolean}
 		 * @since 1.0.0-rc.15
