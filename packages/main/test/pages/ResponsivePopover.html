@@ -18,6 +18,7 @@
 	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button> <br/>
 	<ui5-button id="btnOpen4" >accessibleName</ui5-button>
 	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
+	<ui5-button id="btnOpenAccRole">Open with custom role</ui5-button>
 
 	<!-- with header and footer slots -->
 	<ui5-responsive-popover id="respPopover">
@@ -149,6 +150,21 @@
 		<ui5-button id="rPOverRp3Btn">Close</ui5-button>
 	</ui5-responsive-popover>
 
+	<!-- with custom acc role -->
+	<ui5-responsive-popover id="respPopoverRole" accessible-role="testRole">
+		<div slot="header">
+			<ui5-title>Custom role</ui5-title>
+		</div>
+
+		<div class="popover-content">
+			<span>Hello World</span>
+		</div>
+
+		<div slot="footer" class="popover-footer">
+			<ui5-button id="btnCloseAccRole" design="Emphasized">Close</ui5-button>
+		</div>
+	</ui5-responsive-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.showAt(btnOpen);
@@ -235,6 +251,13 @@
 
 		rPOverRp3Btn.addEventListener("click", function () {
 			rPOverRp3.open = false;
+		});
+
+		btnOpenAccRole.addEventListener("click", function(event) {
+			respPopoverRole.showAt(btnOpenAccRole);
+		});
+		btnCloseAccRole.addEventListener("click", function(event) {
+			respPopoverRole.close();
 		});
 
 	</script>

@@ -18,3 +18,20 @@ describe("ResponsivePopover mobile general interaction", () => {
 		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 	});
 });
+
+describe("Acc", () => {
+	before(async () => {
+		await browser.emulateDevice('iPhone X');
+		await browser.url(`test/pages/ResponsivePopover.html`);
+	});
+
+	it("tests accessible-role", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenAccRole");
+
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#respPopoverRole");
+		const dialog = await popover.shadow$("ui5-dialog");
+		assert.ok(await dialog.shadow$("[role=testRole]"), "The correct custom role is applied.");
+	});
+});

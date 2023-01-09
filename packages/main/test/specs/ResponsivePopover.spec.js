@@ -62,3 +62,18 @@ describe("ResponsivePopover general interaction", () => {
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
 	});
 });
+
+describe("Acc", () => {
+	before(async () => {
+		await browser.url(`test/pages/ResponsivePopover.html`);
+	});
+
+	it("tests accessible-role", async () => {
+		const btnOpenPopover = await browser.$("#btnOpenAccRole");
+
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#respPopoverRole");
+		assert.ok(await popover.shadow$("[role=testRole]"), "The correct custom role is applied.");
+	});
+});
