@@ -81,6 +81,7 @@ class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	_ariaPosition!: string;
 
 	// Properties, set and handled by the Table
+	selected = false;
 	_tabbables: Array<HTMLElement> = [];
 	_columnsInfoString = "";
 

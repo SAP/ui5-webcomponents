@@ -6,7 +6,8 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -37,10 +38,10 @@ import TableGrowingMode from "./types/TableGrowingMode.js";
 // @ts-ignore
 import BusyIndicator from "./BusyIndicator.js";
 import type {
-	TableRowSelectionRequestedEvent,
-	TableRowF7PressEvent,
-	TableRowForwardBeforeEvent,
-	TableRowForwardAfterEvent,
+	TableRowSelectionRequestedEventDetail,
+	TableRowF7PressEventDetail,
+	TableRowForwardBeforeEventDetail,
+	TableRowForwardAfterEventDetail,
 } from "./TableRow.js";
 import type TableCell from "./TableCell.js";
 import type TableColumn from "./TableColumn.js";
@@ -70,7 +71,7 @@ const PAGE_UP_DOWN_SIZE = 20;
 
 interface ITableRow extends UI5Element {
 	mode: TableMode,
-	selected?: boolean,
+	selected: boolean,
 	_busy: boolean,
 	_tabIndex: string,
 	_ariaPosition: string,
@@ -80,8 +81,8 @@ interface ITableRow extends UI5Element {
 }
 
 type TableColumnInfo = {
+	cell?: TableCell,
 	index?: number,
-	cell?: TableCell
 	text?: string | null,
 	visible?: boolean,
 	demandPopin?: boolean,
@@ -204,7 +205,9 @@ enum TableFocusTargetElement {
 */
 @event("popin-change", {
 	detail: {
-		poppedColumns: {},
+		poppedColumns: {
+			type: Array,
+		},
 	},
 })
 
@@ -433,7 +436,7 @@ class Table extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_columnHeader!: TableColumnHeaderInfo;
+	_columnHeader: TableColumnHeaderInfo;
 
 	/**
 	 * Defines if the entire table is in view port.
@@ -528,8 +531,8 @@ class Table extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_prevFocusedRow?: ITableRow;
 
-	_afterElement?: HTMLElement | null;
-	_beforeElement?: HTMLElement | null;
+	_afterElement?: HTMLElement;
+	_beforeElement?: HTMLElement;
 
 	constructor() {
 		super();
@@ -704,12 +707,12 @@ class Table extends UI5Element {
 		if (!this.growsWithButton) {
 			this._focusForwardElement(true);
 		} else {
-			this.morеBtn?.focus();
+			this.morеBtn!.focus();
 		}
 	}
 
 	_handleArrowNav(e: KeyboardEvent) {
-		const isRowFocused = this.currentElement?.localName === "tr";
+		const isRowFocused = this.currentElement!.localName === "tr";
 
 		if (!isRowFocused) {
 			return;
@@ -724,7 +727,7 @@ class Table extends UI5Element {
 
 		const prevItem: ITableRow = this.rows[prevItemIdx];
 		const nextItem: ITableRow = this.rows[nextItemIdx];
-		const wasSelected: boolean | undefined = currentItem.selected;
+		const wasSelected = !!currentItem.selected;
 
 		if ((isUpShift(e) && !prevItem) || (isDownShift(e) && !nextItem)) {
 			return;
@@ -733,14 +736,12 @@ class Table extends UI5Element {
 		if (isUpShift(e)) {
 			currentItem.selected = currentItem.selected && !prevItem.selected;
 			prevItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
-
 			prevItem.focus();
 		}
 
 		if (isDownShift(e)) {
 			currentItem.selected = currentItem.selected && !nextItem.selected;
 			nextItem.selected = currentItem.selected || (wasSelected && !currentItem.selected);
-
 			nextItem.focus();
 		}
 
@@ -753,14 +754,14 @@ class Table extends UI5Element {
 	}
 
 	_handleHomeEndSelection(e: KeyboardEvent) {
-		const isRowFocused: boolean = this.currentElement?.localName === "tr";
+		const isRowFocused = this.currentElement!.localName === "tr";
 
 		if (!isRowFocused) {
 			return;
 		}
-		const rows: Array<ITableRow> = this.rows;
+		const rows = this.rows;
 		const previouslySelectedRows: Array<ITableRow> = this.selectedRows;
-		const currentItemIdx: number = this.currentItemIdx;
+		const currentItemIdx = this.currentItemIdx;
 
 		if (isHomeShift(e)) {
 			rows.slice(0, currentItemIdx + 1).forEach(item => {
@@ -788,7 +789,7 @@ class Table extends UI5Element {
 	 * Handles Alt + Up/Down.
 	 * Switches focus between column header, last focused item, and "More" button (if applicable).
 	 * @private
-	 * @param {CustomEvent} e
+	 * @param { KeyboardEvent } e
 	 */
 	_handleArrowAlt(e: KeyboardEvent) {
 		const shouldMoveUp: boolean = isUpAlt(e);
@@ -832,7 +833,7 @@ class Table extends UI5Element {
 	 * @param {object} element The DOM element
 	 * @returns {("columnHeader"|"tableRow"|"tableGroupRow"|"moreButton")} A string identifier
 	 */
-	getFocusedElementType(element: HTMLElement | ITableRow): TableFocusTargetElement | undefined {
+	getFocusedElementType(element: HTMLElement): TableFocusTargetElement | undefined {
 		if (element === this.columnHeader) {
 			return TableFocusTargetElement.ColumnHeader;
 		}
@@ -852,7 +853,7 @@ class Table extends UI5Element {
 	 * @private
 	 * @param { CustomEvent } e "ui5-f7-pressed"
 	 */
-	_handleF7(e: CustomEvent<TableRowF7PressEvent>) {
+	_handleF7(e: CustomEvent<TableRowF7PressEventDetail>) {
 		const row = e.detail.row;
 		row._tabbables = getTabbableElements(row);
 		const activeElement = getActiveElement();
@@ -883,7 +884,7 @@ class Table extends UI5Element {
 			if (this.lastFocusedElement) {
 				this.lastFocusedElement.focus();
 			} else {
-				this.currentElement?.focus();
+				this.currentElement!.focus();
 			}
 
 			e.stopImmediatePropagation();
@@ -892,37 +893,37 @@ class Table extends UI5Element {
 		this._forwardingFocus = false;
 	}
 
-	_onForwardBefore(e: CustomEvent<TableRowForwardBeforeEvent>) {
+	_onForwardBefore(e: CustomEvent<TableRowForwardBeforeEventDetail>) {
 		this.lastFocusedElement = e.detail.target;
 		this._focusForwardElement(false);
 		e.stopImmediatePropagation();
 	}
 
-	_onForwardAfter(e: CustomEvent<TableRowForwardAfterEvent>) {
+	_onForwardAfter(e: CustomEvent<TableRowForwardAfterEventDetail>) {
 		this.lastFocusedElement = e.detail.target;
 
 		if (!this.growsWithButton) {
 			this._focusForwardElement(true);
 		} else {
-			this.morеBtn?.focus();
+			this.morеBtn!.focus();
 		}
 	}
 
 	_focusForwardElement(isAfter: boolean) {
 		this._forwardingFocus = true;
-		this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-${isAfter ? "after" : "before"}`)?.focus();
+		this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-${isAfter ? "after" : "before"}`)!.focus();
 	}
 
 	_isForwardElement(element: HTMLElement): boolean {
-		const nodeId = element.id;
+		const elementId = element.id;
 		const afterElement = this._getForwardElement(true);
 		const beforeElement = this._getForwardElement(false);
 
-		if (this._id === nodeId || (beforeElement && beforeElement.id === nodeId)) {
+		if (this._id === elementId || (beforeElement && beforeElement.id === elementId)) {
 			return true;
 		}
 
-		return !!(afterElement && afterElement.id === nodeId);
+		return !!(afterElement && afterElement.id === elementId);
 	}
 
 	_getForwardElement(isAfter: boolean): HTMLElement | null {
@@ -933,17 +934,17 @@ class Table extends UI5Element {
 		return this._getBeforeForwardElement();
 	}
 
-	_getAfterForwardElement(): HTMLElement | null {
+	_getAfterForwardElement(): HTMLElement {
 		if (!this._afterElement) {
-			this._afterElement = this.shadowRoot!.querySelector(`#${this._id}-after`);
+			this._afterElement = this.shadowRoot!.querySelector(`#${this._id}-after`)!;
 		}
 
 		return this._afterElement;
 	}
 
-	_getBeforeForwardElement(): HTMLElement | null {
+	_getBeforeForwardElement(): HTMLElement {
 		if (!this._beforeElement) {
-			this._beforeElement = this.shadowRoot!.querySelector(`#${this._id}-before`);
+			this._beforeElement = this.shadowRoot!.querySelector(`#${this._id}-before`)!;
 		}
 
 		return this._beforeElement;
@@ -959,14 +960,14 @@ class Table extends UI5Element {
 
 	_onColumnHeaderClick(e: MouseEvent| KeyboardEvent) {
 		if (!e.target) {
-			this.columnHeader?.focus();
+			this.columnHeader!.focus();
 		}
 
 		const target = getNormalizedTarget(e.target as HTMLElement);
 		const isNestedElement = this.columnHeaderTabbables.includes(target);
 
 		if (!isNestedElement) {
-			this.columnHeader?.focus();
+			this.columnHeader!.focus();
 		}
 	}
 
@@ -1002,7 +1003,7 @@ class Table extends UI5Element {
 
 	observeTableEnd() {
 		if (!this.tableEndObserved) {
-			this.getIntersectionObserver().observe(this.tableEndDOM!);
+			this.getIntersectionObserver().observe(this.tableEndDOM);
 			this.tableEndObserved = true;
 		}
 	}
@@ -1017,9 +1018,14 @@ class Table extends UI5Element {
 		this.fireEvent("load-more");
 	}
 
-	_handleSingleSelect(e: CustomEvent<TableRowSelectionRequestedEvent>) {
+	_handleSingleSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
 		const row: ITableRow | undefined = this.getRowParent(e.target as HTMLElement);
-		if (row && !row.selected) {
+ 
+		if (!row) {
+			return;
+		}
+
+		if (!row.selected) {
 			const previouslySelectedRows = this.selectedRows;
 			this.rows.forEach(item => {
 				if (item.selected) {
@@ -1034,29 +1040,31 @@ class Table extends UI5Element {
 		}
 	}
 
-	_handleMultiSelect(e: CustomEvent<TableRowSelectionRequestedEvent>) {
+	_handleMultiSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
 		const row: ITableRow | undefined = this.getRowParent(e.target as HTMLElement);
 		const previouslySelectedRows: Array<ITableRow> = this.selectedRows;
 
-		if (row) {
-			row.selected = !row.selected;
-
-			const selectedRows = this.selectedRows;
-
-			if (selectedRows.length === this.rows.length) {
-				this._allRowsSelected = true;
-			} else {
-				this._allRowsSelected = false;
-			}
-
-			this.fireEvent<TableSelectionChangeEvent>("selection-change", {
-				selectedRows,
-				previouslySelectedRows,
-			});
+		if (!row) {
+			return;
 		}
+
+		row.selected = !row.selected;
+
+		const selectedRows = this.selectedRows;
+
+		if (selectedRows.length === this.rows.length) {
+			this._allRowsSelected = true;
+		} else {
+			this._allRowsSelected = false;
+		}
+
+		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+			selectedRows,
+			previouslySelectedRows,
+		});
 	}
 
-	_handleSelect(e: CustomEvent<TableRowSelectionRequestedEvent>) {
+	_handleSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
 		if (this.isSingleSelect) {
 			this._handleSingleSelect(e);
 			return;
@@ -1086,34 +1094,33 @@ class Table extends UI5Element {
 	}
 
 	getRowParent(child: HTMLElement): ITableRow | undefined {
-		const parent = child.parentElement;
-
 		if (child.hasAttribute("ui5-table-row")) {
 			return child as ITableRow;
 		}
+		
+		const parent = child.parentElement;
 
-		if (parent && parent.hasAttribute("ui5-table-row")) {
+		if (!parent) {
+			return;
+		}
+
+		if (parent.hasAttribute("ui5-table-row")) {
 			return parent as ITableRow;
 		}
 
-		this.getRowParent(parent!);
+		return this.getRowParent(parent);
 	}
 
 	get columnHeader(): HTMLElement | null {
 		const domRef = this.getDomRef();
-		if (!domRef) {
-			return null;
-		}
-
-		return domRef.querySelector<HTMLElement>(`#${this._id}-columnHeader`);
+		return domRef ? domRef.querySelector<HTMLElement>(`#${this._id}-columnHeader`) : null;
 	}
 
 	get morеBtn(): HTMLElement | null {
 		const domRef = this.getDomRef();
 
 		if (this.growsWithButton && domRef) {
-			const moreButton = domRef.querySelector<HTMLElement>(`#${this._id}-growingButton`);
-			return moreButton;
+			return domRef.querySelector<HTMLElement>(`#${this._id}-growingButton`);
 		}
 
 		return null;
@@ -1223,7 +1230,7 @@ class Table extends UI5Element {
 		const rowsCount = this.rows.length + 1;
 		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_INFORMATION as I18nText, rowsCount);
 		const columnsTitle = this.columns.map(column => {
-			return column.textContent?.trim();
+			return column.textContent!.trim();
 		}).join(" ");
 
 		return `${headerRowText} ${columnsTitle}`;
@@ -1245,8 +1252,8 @@ class Table extends UI5Element {
 		return `${this._id}-growingButton-text`;
 	}
 
-	get tableEndDOM(): Element | null {
-		return this.shadowRoot!.querySelector(".ui5-table-end-marker");
+	get tableEndDOM(): Element {
+		return this.shadowRoot!.querySelector(".ui5-table-end-marker")!;
 	}
 
 	get busyIndPosition(): string {
@@ -1270,7 +1277,7 @@ class Table extends UI5Element {
 	}
 
 	get currentItem(): ITableRow {
-		return (this.getRootNode() as unknown as DocumentOrShadowRoot).activeElement as ITableRow;
+		return (this.getRootNode() as Document).activeElement as ITableRow;
 	}
 
 	get currentElement(): HTMLElement | undefined {
@@ -1278,10 +1285,7 @@ class Table extends UI5Element {
 	}
 
 	get columnHeaderTabbables(): Array<HTMLElement> {
-		if (!this.columnHeader) {
-			return [];
-		}
-		return getTabbableElements(this.columnHeader);
+		return this.columnHeader ? getTabbableElements(this.columnHeader) : [];
 	}
 
 	get columnHeaderLastElement(): HTMLElement | null {

@@ -8,7 +8,7 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
 	isEnter,
@@ -38,23 +38,23 @@ import {
 // Styles
 import styles from "./generated/themes/TableRow.css.js";
 
-type TableRowClickEvent = {
+type TableRowClickEventDetail = {
 	row: TableRow,
 }
 
-type TableRowSelectionRequestedEvent = {
+type TableRowSelectionRequestedEventDetail = {
 	row: TableRow,
 }
 
-type TableRowForwardBeforeEvent = {
+type TableRowForwardBeforeEventDetail = {
 	target: HTMLElement,
 }
 
-type TableRowForwardAfterEvent = {
+type TableRowForwardAfterEventDetail = {
 	target: HTMLElement,
 }
 
-type TableRowF7PressEvent = {
+type TableRowF7PressEventDetail = {
 	row: TableRow,
 }
 
@@ -110,19 +110,6 @@ type TableRowF7PressEvent = {
  */
 @event("f7-pressed")
 class TableRow extends UI5Element implements ITableRow, ITabbable {
-	/**
-	 * Defines the cells of the component.
-	 * <br><br>
-	 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
-	 *
-	 * @type {sap.ui.webc.main.ITableCell[]}
-	 * @name sap.ui.webc.main.TableRow.prototype.default
-	 * @slot cells
-	 * @public
-	 */
-	@slot({ type: HTMLElement, "default": true, individualSlots: true })
-	cells!: Array<TableCell>;
-
 	/**
 	 * Defines the visual indication and behavior of the component.
 	 * <br><br>
@@ -201,6 +188,19 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	@property({ defaultValue: "", noAttribute: true })
 	_ariaPosition!: string;
 
+	/**
+	 * Defines the cells of the component.
+	 * <br><br>
+	 * <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.
+	 *
+	 * @type {sap.ui.webc.main.ITableCell[]}
+	 * @name sap.ui.webc.main.TableRow.prototype.default
+	 * @slot cells
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true, individualSlots: true })
+	cells!: Array<TableCell>;
+
 	static get styles() {
 		return styles;
 	}
@@ -219,8 +219,8 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 
 	static i18nBundle: I18nBundle;
 
-	visibleCells?: Array<TableCell>;
-	popinCells?: Array<TableColumnInfo>;
+	visibleCells: Array<TableCell> = [];
+	popinCells: Array<TableColumnInfo> = [];
 
 	_ontouchstart: PassiveEventListenerObject;
 
@@ -246,7 +246,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		const activeElement = getActiveElement();
+		const activeElement = getActiveElement() as HTMLElement;
 		const itemActive = this.type === TableRowType.Active;
 		const isSingleSelect = this.isSingleSelect;
 		const itemSelectable = isSingleSelect || this.isMultiSelect;
@@ -258,11 +258,11 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 		const lastFocusableElement = elements.pop();
 
 		if (isTabNext(e) && activeElement === (lastFocusableElement || this.root)) {
-			this.fireEvent<TableRowForwardAfterEvent>("_forward-after", { target: activeElement as HTMLElement });
+			this.fireEvent<TableRowForwardAfterEventDetail>("_forward-after", { target: activeElement });
 		}
 
 		if (isTabPrevious(e) && activeElement === this.root) {
-			this.fireEvent<TableRowForwardBeforeEvent>("_forward-before", { target: activeElement as HTMLElement });
+			this.fireEvent<TableRowForwardBeforeEventDetail>("_forward-before", { target: activeElement });
 		}
 
 		if (isSpace(e) && target.tagName.toLowerCase() === "tr") {
@@ -271,11 +271,11 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 
 		if (isRowFocused && !checkboxPressed) {
 			if ((isSpace(e) && itemSelectable) || (isEnter(e) && isSingleSelect)) {
-				this.fireEvent<TableRowSelectionRequestedEvent>("selection-requested", { row: this });
+				this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
 			}
 
 			if (isEnter(e) && itemActive) {
-				this.fireEvent<TableRowClickEvent>("row-click", { row: this });
+				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
 				if (!isSingleSelect) {
 					this.activate();
 				}
@@ -284,7 +284,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 
 		if (isF7(e)) {
 			e.preventDefault();
-			this.fireEvent<TableRowF7PressEvent>("f7-pressed", { row: this });
+			this.fireEvent<TableRowF7PressEventDetail>("f7-pressed", { row: this });
 		}
 	}
 
@@ -308,7 +308,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 			this.activate();
 		}
 
-		this.fireEvent("_focused", e);
+		this.fireEvent("_focused");
 	}
 
 	_onrowclick(e: MouseEvent) {
@@ -320,8 +320,8 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 			return;
 		}
 
-		const actveElement = (this.getRootNode() as unknown as Document).activeElement!;
-		if (!this.contains(actveElement)) {
+		const activeElement = (this.getRootNode() as Document).activeElement;
+		if (!this.contains(activeElement)) {
 			// If the user clickes on non-focusable element within the ui5-table-cell,
 			// the focus goes to the body, se we have to bring it back to the row.
 			// If the user clicks on input, button or similar clickable element,
@@ -336,17 +336,17 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 			}
 
 			if (this.type === TableRowType.Active && !checkboxPressed) {
-				this.fireEvent<TableRowClickEvent>("row-click", { row: this });
+				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
 			}
 		}
 	}
 
 	_handleSelection() {
-		this.fireEvent<TableRowSelectionRequestedEvent>("selection-requested", { row: this });
+		this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
 	}
 
 	_activeElementHasAttribute(attr: string) {
-		return (this.getRootNode() as unknown as DocumentOrShadowRoot).activeElement!.hasAttribute(attr);
+		return (this.getRootNode() as Document).activeElement!.hasAttribute(attr);
 	}
 
 	get _ariaCurrent() {
@@ -389,20 +389,20 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 
 		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
 		this._columnsInfo.forEach((info, index) => {
-			const cell: TableCell = this.cells[index];
-			const popinDisplay: boolean = info.popinDisplay === TableColumnPopinDisplay.Inline;
+			const cell = this.cells[index];
+			const popinDisplay = info.popinDisplay === TableColumnPopinDisplay.Inline;
 
 			if (!cell) {
 				return;
 			}
 
 			if (info.visible) {
-				this.visibleCells!.push(cell);
+				this.visibleCells.push(cell);
 				cell.popined = false;
 				cell._popinedInline = false;
 			} else if (info.demandPopin) {
-				const popinHeaderClass = this.popinCells!.length === 0 ? "popin-header" : "";
-				this.popinCells!.push({
+				const popinHeaderClass = this.popinCells.length === 0 ? "popin-header" : "";
+				this.popinCells.push({
 					cell,
 					popinText: info.popinText,
 					classes: `ui5-table-popin-row ${allColumnsPoppedInClass} ${popinHeaderClass}`,
@@ -416,7 +416,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 				cell.popined = false;
 				cell._popinedInline = false;
 			}
-		}, this);
+		});
 
 		const lastVisibleCell = this.visibleCells[this.visibleCells.length - 1];
 
@@ -426,7 +426,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	}
 
 	get visibleCellsCount() {
-		let visibleCellsCount = this.visibleCells!.length;
+		let visibleCellsCount = this.visibleCells.length;
 
 		if (this.isMultiSelect) {
 			visibleCellsCount += 1;
@@ -464,17 +464,13 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	}
 
 	get root() {
-		return this.shadowRoot!.querySelector(".ui5-table-row-root") as HTMLElement;
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-table-row-root")!;
 	}
 
 	getCellText(cell: TableCell): string {
 		const cellTextContent = cell.textContent;
 
-		if (!cellTextContent) {
-			return "";
-		}
-
-		return this.getNormilzedTextContent(cellTextContent);
+		return cellTextContent ? this.getNormilzedTextContent(cellTextContent) : "";
 	}
 
 	getColumnTextByIdx(index: number): string {
@@ -501,9 +497,9 @@ TableRow.define();
 export default TableRow;
 
 export type {
-	TableRowClickEvent,
-	TableRowSelectionRequestedEvent,
-	TableRowForwardBeforeEvent,
-	TableRowForwardAfterEvent,
-	TableRowF7PressEvent,
+	TableRowClickEventDetail,
+	TableRowSelectionRequestedEventDetail,
+	TableRowForwardBeforeEventDetail,
+	TableRowForwardAfterEventDetail,
+	TableRowF7PressEventDetail,
 };
