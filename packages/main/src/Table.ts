@@ -82,7 +82,7 @@ type TableColumnInfo = {
 	minWidth?: number,
 }
 
-type ColumnHeaderInfo = ITabbable;
+type TableColumnHeaderInfo = ITabbable;
 
 type TableSelectionChangeEvent = {
 	selectedRows: Array<TableRow>,
@@ -423,7 +423,7 @@ class Table extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object })
-	_columnHeader!: ColumnHeaderInfo;
+	_columnHeader!: TableColumnHeaderInfo;
 
 	/**
 	 * Defines if the entire table is in view port.
