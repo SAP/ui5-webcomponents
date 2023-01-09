@@ -70,13 +70,13 @@ const PAGE_UP_DOWN_SIZE = 20;
 
 interface ITableRow extends UI5Element {
 	mode: TableMode,
-	_columnsInfo: Array<TableColumnInfo>,
-	_tabIndex: string,
-	_busy: boolean,
-	_ariaPosition: string,
-	_tabbables: Array<HTMLElement>,
-	_columnsInfoString: string,
 	selected?: boolean,
+	_busy: boolean,
+	_tabIndex: string,
+	_ariaPosition: string,
+	_columnsInfoString: string,
+	_columnsInfo: Array<TableColumnInfo>,
+	_tabbables: Array<HTMLElement>,
 }
 
 type TableColumnInfo = {
@@ -552,10 +552,6 @@ class Table extends UI5Element {
 		this.fnHandleF7 = this._handleF7.bind(this);
 
 		this.tableEndObserved = false;
-
-		this.addEventListener("ui5-selection-requested", this._handleSelect.bind(this) as EventListener);
-		this.addEventListener("ui5-_forward-after", this._onForwardAfter.bind(this) as EventListener);
-		this.addEventListener("ui5-_forward-before", this._onForwardBefore.bind(this) as EventListener);
 
 		// Stores the last focused element within the table.
 		this.lastFocusedElement = null;
