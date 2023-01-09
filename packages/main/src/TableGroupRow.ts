@@ -9,7 +9,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 // @ts-ignore
 import CheckBox from "./CheckBox.js";
-import type { TableColumnInfo } from "./Table.js";
+import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableGroupRowTemplate from "./generated/templates/TableGroupRowTemplate.lit.js";
 import TableMode from "./types/TableMode.js";
 
@@ -49,7 +49,7 @@ import styles from "./generated/themes/TableGroupRow.css.js";
  */
 @customElement("ui5-table-group-row")
 @event("_focused")
-class TableGroupRow extends UI5Element implements ITabbable {
+class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	/**
 	 * Defines the mode of the row
 	 *
@@ -79,6 +79,10 @@ class TableGroupRow extends UI5Element implements ITabbable {
 
 	@property({ defaultValue: "", noAttribute: true })
 	_ariaPosition!: string;
+
+	// Properties, set and handled by the Table
+	_tabbables: Array<HTMLElement> = [];
+	_columnsInfoString = "";
 
 	/**
 	 * Defines the text of the component.

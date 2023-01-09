@@ -36,7 +36,6 @@ import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.j
 import TableGrowingMode from "./types/TableGrowingMode.js";
 // @ts-ignore
 import BusyIndicator from "./BusyIndicator.js";
-import type TableRow from "./TableRow.js";
 import type {
 	TableRowSelectionRequestedEvent,
 	TableRowF7PressEvent,
@@ -69,6 +68,17 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 const PAGE_UP_DOWN_SIZE = 20;
 
+interface ITableRow extends UI5Element {
+	mode: TableMode,
+	_columnsInfo: Array<TableColumnInfo>,
+	_tabIndex: string,
+	_busy: boolean,
+	_ariaPosition: string,
+	_tabbables: Array<HTMLElement>,
+	_columnsInfoString: string,
+	selected?: boolean,
+}
+
 type TableColumnInfo = {
 	index?: number,
 	cell?: TableCell
@@ -85,8 +95,8 @@ type TableColumnInfo = {
 type TableColumnHeaderInfo = ITabbable;
 
 type TableSelectionChangeEvent = {
-	selectedRows: Array<TableRow>,
-	previouslySelectedRows: Array<TableRow>,
+	selectedRows: Array<ITableRow>,
+	previouslySelectedRows: Array<ITableRow>,
 }
 
 type TablePopinChangeEvent = {
@@ -458,7 +468,7 @@ class Table extends UI5Element {
 		individualSlots: true,
 		invalidateOnChildChange: true,
 	})
-	rows!: Array<TableRow>;
+	rows!: Array<ITableRow>;
 
 	/**
 	 * Defines the configuration for the columns of the component.
@@ -516,7 +526,7 @@ class Table extends UI5Element {
 	_forwardingFocus: boolean;
 	_prevNestedElementIndex: number;
 	_itemNavigation: ItemNavigation;
-	_prevFocusedRow?: TableRow;
+	_prevFocusedRow?: ITableRow;
 
 	_afterElement?: HTMLElement | null;
 	_beforeElement?: HTMLElement | null;
@@ -709,16 +719,16 @@ class Table extends UI5Element {
 			return;
 		}
 
-		const previouslySelectedRows: Array<TableRow> = this.selectedRows;
-		const currentItem: TableRow = this.currentItem;
+		const previouslySelectedRows: Array<ITableRow> = this.selectedRows;
+		const currentItem: ITableRow = this.currentItem;
 		const currentItemIdx: number = this.currentItemIdx;
 
 		const prevItemIdx = currentItemIdx - 1;
 		const nextItemIdx = currentItemIdx + 1;
 
-		const prevItem: TableRow = this.rows[prevItemIdx];
-		const nextItem: TableRow = this.rows[nextItemIdx];
-		const wasSelected: boolean = currentItem.selected;
+		const prevItem: ITableRow = this.rows[prevItemIdx];
+		const nextItem: ITableRow = this.rows[nextItemIdx];
+		const wasSelected: boolean | undefined = currentItem.selected;
 
 		if ((isUpShift(e) && !prevItem) || (isDownShift(e) && !nextItem)) {
 			return;
@@ -752,8 +762,8 @@ class Table extends UI5Element {
 		if (!isRowFocused) {
 			return;
 		}
-		const rows: Array<TableRow> = this.rows;
-		const previouslySelectedRows: Array<TableRow> = this.selectedRows;
+		const rows: Array<ITableRow> = this.rows;
+		const previouslySelectedRows: Array<ITableRow> = this.selectedRows;
 		const currentItemIdx: number = this.currentItemIdx;
 
 		if (isHomeShift(e)) {
@@ -770,7 +780,7 @@ class Table extends UI5Element {
 			rows[rows.length - 1].focus();
 		}
 
-		const selectedRows: Array<TableRow> = this.selectedRows;
+		const selectedRows: Array<ITableRow> = this.selectedRows;
 
 		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
 			selectedRows,
@@ -786,7 +796,7 @@ class Table extends UI5Element {
 	 */
 	_handleArrowAlt(e: KeyboardEvent) {
 		const shouldMoveUp: boolean = isUpAlt(e);
-		const target = e.target as TableRow;
+		const target = e.target as ITableRow;
 		const focusedElementType = this.getFocusedElementType(target);
 
 		if (shouldMoveUp) {
@@ -826,7 +836,7 @@ class Table extends UI5Element {
 	 * @param {object} element The DOM element
 	 * @returns {("columnHeader"|"tableRow"|"tableGroupRow"|"moreButton")} A string identifier
 	 */
-	getFocusedElementType(element: HTMLElement | TableRow): TableFocusTargetElement | undefined {
+	getFocusedElementType(element: HTMLElement | ITableRow): TableFocusTargetElement | undefined {
 		if (element === this.columnHeader) {
 			return TableFocusTargetElement.ColumnHeader;
 		}
@@ -835,7 +845,7 @@ class Table extends UI5Element {
 			return TableFocusTargetElement.MoreButton;
 		}
 
-		if (this.rows.includes(element as TableRow)) {
+		if (this.rows.includes(element as ITableRow)) {
 			const isGroupRow = element.hasAttribute("ui5-table-group-row");
 			return isGroupRow ? TableFocusTargetElement.GroupRow : TableFocusTargetElement.Row;
 		}
@@ -944,7 +954,7 @@ class Table extends UI5Element {
 	}
 
 	onRowFocused(e: CustomEvent) {
-		this._itemNavigation.setCurrentItem(e.target as TableRow);
+		this._itemNavigation.setCurrentItem(e.target as ITableRow);
 	}
 
 	_onColumnHeaderFocused() {
@@ -1012,7 +1022,7 @@ class Table extends UI5Element {
 	}
 
 	_handleSingleSelect(e: CustomEvent<TableRowSelectionRequestedEvent>) {
-		const row: TableRow | undefined = this.getRowParent(e.target as HTMLElement);
+		const row: ITableRow | undefined = this.getRowParent(e.target as HTMLElement);
 		if (row && !row.selected) {
 			const previouslySelectedRows = this.selectedRows;
 			this.rows.forEach(item => {
@@ -1029,8 +1039,8 @@ class Table extends UI5Element {
 	}
 
 	_handleMultiSelect(e: CustomEvent<TableRowSelectionRequestedEvent>) {
-		const row: TableRow | undefined = this.getRowParent(e.target as HTMLElement);
-		const previouslySelectedRows: Array<TableRow> = this.selectedRows;
+		const row: ITableRow | undefined = this.getRowParent(e.target as HTMLElement);
+		const previouslySelectedRows: Array<ITableRow> = this.selectedRows;
 
 		if (row) {
 			row.selected = !row.selected;
@@ -1063,7 +1073,7 @@ class Table extends UI5Element {
 
 	_selectAll() {
 		const bAllSelected = !this._allRowsSelected;
-		const previouslySelectedRows: Array<TableRow> = this.rows.filter(row => row.selected);
+		const previouslySelectedRows: Array<ITableRow> = this.rows.filter(row => row.selected);
 
 		this._allRowsSelected = bAllSelected;
 
@@ -1079,15 +1089,15 @@ class Table extends UI5Element {
 		});
 	}
 
-	getRowParent(child: HTMLElement): TableRow | undefined {
+	getRowParent(child: HTMLElement): ITableRow | undefined {
 		const parent = child.parentElement;
 
 		if (child.hasAttribute("ui5-table-row")) {
-			return child as TableRow;
+			return child as ITableRow;
 		}
 
 		if (parent && parent.hasAttribute("ui5-table-row")) {
-			return parent as TableRow;
+			return parent as ITableRow;
 		}
 
 		this.getRowParent(parent!);
@@ -1255,7 +1265,7 @@ class Table extends UI5Element {
 		return this.mode === TableMode.SingleSelect;
 	}
 
-	get selectedRows(): Array<TableRow> {
+	get selectedRows(): Array<ITableRow> {
 		return this.rows.filter(row => row.selected);
 	}
 
@@ -1263,8 +1273,8 @@ class Table extends UI5Element {
 		return this.rows.indexOf(this.currentItem);
 	}
 
-	get currentItem(): TableRow {
-		return (this.getRootNode() as unknown as DocumentOrShadowRoot).activeElement as TableRow;
+	get currentItem(): ITableRow {
+		return (this.getRootNode() as unknown as DocumentOrShadowRoot).activeElement as ITableRow;
 	}
 
 	get currentElement(): HTMLElement | undefined {
@@ -1288,5 +1298,6 @@ Table.define();
 export default Table;
 
 export type {
+	ITableRow,
 	TableColumnInfo,
 };

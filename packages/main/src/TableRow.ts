@@ -20,12 +20,13 @@ import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import type TableCell from "./TableCell.js";
-import type { TableColumnInfo } from "./Table.js";
+import type { ITableRow, TableColumnInfo } from "./Table.js";
 
 // @ts-ignore
 import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
+import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 import TableRowTemplate from "./generated/templates/TableRowTemplate.lit.js";
 import {
 	ARIA_LABEL_ROW_SELECTION,
@@ -108,7 +109,7 @@ type TableRowF7PressEvent = {
  * @private
  */
 @event("f7-pressed")
-class TableRow extends UI5Element implements ITabbable {
+class TableRow extends UI5Element implements ITableRow, ITabbable {
 	/**
 	 * Defines the cells of the component.
 	 * <br><br>
@@ -223,9 +224,9 @@ class TableRow extends UI5Element implements ITabbable {
 
 	_ontouchstart: PassiveEventListenerObject;
 
-	// TODO: Properties set by the Table: move to common interface for both TableRow and TableGroupRow
-	_tabbables?: Array<HTMLElement>;
-	_columnsInfoString?: string;
+	// Properties, set and handled by the Table
+	_tabbables: Array<HTMLElement> = [];
+	_columnsInfoString = "";
 
 	constructor() {
 		super();
@@ -389,7 +390,7 @@ class TableRow extends UI5Element implements ITabbable {
 		const allColumnsPoppedInClass = this.allColumnsPoppedIn ? "all-columns-popped-in" : "";
 		this._columnsInfo.forEach((info, index) => {
 			const cell: TableCell = this.cells[index];
-			const popinDisplay: boolean = info.popinDisplay === "Inline";
+			const popinDisplay: boolean = info.popinDisplay === TableColumnPopinDisplay.Inline;
 
 			if (!cell) {
 				return;
@@ -408,7 +409,7 @@ class TableRow extends UI5Element implements ITabbable {
 					popinDisplayInline: popinDisplay,
 				});
 				cell.popined = true;
-				if (info.popinDisplay === "Inline") {
+				if (info.popinDisplay === TableColumnPopinDisplay.Inline) {
 					cell._popinedInline = true;
 				}
 			} else {
@@ -455,11 +456,11 @@ class TableRow extends UI5Element implements ITabbable {
 	}
 
 	get isSingleSelect() {
-		return this.mode === "SingleSelect";
+		return this.mode === TableMode.SingleSelect;
 	}
 
 	get isMultiSelect() {
-		return this.mode === "MultiSelect";
+		return this.mode === TableMode.MultiSelect;
 	}
 
 	get root() {
@@ -483,11 +484,7 @@ class TableRow extends UI5Element implements ITabbable {
 			return "";
 		}
 
-		if (!columnInfo.text) {
-			return "";
-		}
-
-		return this.getNormilzedTextContent(columnInfo.text);
+		return columnInfo.text ? this.getNormilzedTextContent(columnInfo.text) : "";
 	}
 
 	getNormilzedTextContent(textContent: string): string {
