@@ -1020,7 +1020,7 @@ class Table extends UI5Element {
 
 	_handleSingleSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
 		const row: ITableRow | undefined = this.getRowParent(e.target as HTMLElement);
- 
+
 		if (!row) {
 			return;
 		}
@@ -1097,7 +1097,7 @@ class Table extends UI5Element {
 		if (child.hasAttribute("ui5-table-row")) {
 			return child as ITableRow;
 		}
-		
+
 		const parent = child.parentElement;
 
 		if (!parent) {
