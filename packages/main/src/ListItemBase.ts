@@ -15,7 +15,6 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * A class to serve as a foundation
  * for the <code>ListItem</code> and <code>GroupHeaderListItem</code> classes.
  *
- * @abstract
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.ListItemBase
@@ -25,7 +24,7 @@ import styles from "./generated/themes/ListItemBase.css.js";
 @event("_focused")
 @event("_forward-after")
 @event("_forward-before")
-abstract class ListItemBase extends UI5Element implements ITabbable {
+class ListItemBase extends UI5Element implements ITabbable {
 	/**
 	 * Defines the selected state of the <code>ListItem</code>.
 	 * @type {boolean}
@@ -97,7 +96,7 @@ abstract class ListItemBase extends UI5Element implements ITabbable {
 		}
 	}
 
-	abstract _onkeyup(e: KeyboardEvent): void
+	_onkeyup(e: KeyboardEvent) {} // eslint-disable-line
 
 	_handleTabNext(e: KeyboardEvent) {
 		const target = e.target as HTMLElement;

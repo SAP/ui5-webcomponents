@@ -52,7 +52,11 @@ type Year = {
 
 type YearInterval = Array<Array<Year>>;
 
-type SelectedYearChangeEventDetail = {
+type YearPickerChangeEventDetail = {
+	timestamp: number,
+}
+
+type YearPickerNavigateEventDetail = {
 	timestamp: number,
 }
 
@@ -306,7 +310,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent("navigate", { timestamp: this.timestamp! });
+		this.fireEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	/**
@@ -319,7 +323,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._safelyModifyTimestampBy(amount, "year");
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent("navigate", { timestamp: this.timestamp! });
+		this.fireEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -339,7 +343,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		if (target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this._getTimestampFromDom(target);
 			this._safelySetTimestamp(timestamp);
-			this.fireEvent("change", { timestamp: this.timestamp! });
+			this.fireEvent<YearPickerChangeEventDetail>("change", { timestamp: this.timestamp! });
 		}
 	}
 
@@ -385,5 +389,6 @@ YearPicker.define();
 
 export default YearPicker;
 export type {
-	SelectedYearChangeEventDetail,
+	YearPickerChangeEventDetail,
+	YearPickerNavigateEventDetail,
 };
