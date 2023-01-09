@@ -173,7 +173,7 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
-	_overflowSize!: number
+	_overflowSize!: number;
 
 	/**
 	 * Defines the component items.
@@ -190,8 +190,11 @@ class Breadcrumbs extends UI5Element {
 
 	_itemNavigation: ItemNavigation
 	_onResizeHandler: () => void;
-	_breadcrumbItemWidths: WeakMap<BreadcrumbsItem, number>;
-	_dropdownArrowLinkWidth: number;
+
+	// maps items to their widths
+	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();
+	// the width of the interactive element that opens the overflow
+	_dropdownArrowLinkWidth = 0;
 	responsivePopover?: TempResponsivePopover;
 	_labelFocusAdaptor: FocusAdaptor;
 	static i18nBundle: I18nBundle;
@@ -225,11 +228,6 @@ class Breadcrumbs extends UI5Element {
 		});
 
 		this._onResizeHandler = this._updateOverflow.bind(this);
-
-		// maps items to their widths
-		this._breadcrumbItemWidths = new WeakMap();
-		// the width of the interactive element that opens the overflow
-		this._dropdownArrowLinkWidth = 0;
 
 		this._labelFocusAdaptor = {
 			id: `${this._id}-labelWrapper`,
@@ -293,7 +291,7 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	_getFocusableItems() {
-		const items = this._links as Array<ITabbable>;
+		const items: Array<ITabbable> = this._links;
 
 		if (!this._isOverflowEmpty) {
 			items.unshift(this._dropdownArrowLink);
@@ -326,7 +324,7 @@ class Breadcrumbs extends UI5Element {
 			return;
 		}
 		if ((isEnter(e) || isSpace(e)) && this._isCurrentLocationLabelFocused) {
-			this._onLabelPress();
+			this._onLabelPress(e);
 		}
 	}
 
@@ -347,7 +345,7 @@ class Breadcrumbs extends UI5Element {
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
-				link = this.shadowRoot!.querySelector(`#${item._id}-link-wrapper`)!;
+				link = this.shadowRoot!.querySelector<HTMLElement>(`#${item._id}-link-wrapper`)!;
 			map.set(item, this._getElementWidth(link));
 		}
 
@@ -358,9 +356,8 @@ class Breadcrumbs extends UI5Element {
 		}
 
 		if (!this._isOverflowEmpty) {
-			this._dropdownArrowLinkWidth = this._getElementWidth(
-				this.shadowRoot!.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper")!,
-			);
+			const arrow = this.shadowRoot!.querySelector<HTMLElement>(".ui5-breadcrumbs-dropdown-arrow-link-wrapper")!;
+			this._dropdownArrowLinkWidth = this._getElementWidth(arrow);
 		}
 	}
 
@@ -403,7 +400,7 @@ class Breadcrumbs extends UI5Element {
 		}
 	}
 
-	_getElementWidth(element: Element) {
+	_getElementWidth(element: HTMLElement) {
 		if (element) {
 			return Math.ceil(element.getBoundingClientRect().width);
 		}
@@ -422,23 +419,41 @@ class Breadcrumbs extends UI5Element {
 	_onLinkPress(e: CustomEvent<LinkClickEventDetail>) {
 		const link = e.target as Link,
 			items = this._getItems(),
-			item = items.find(x => `${x._id}-link` === link.id);
+			item = items.find(x => `${x._id}-link` === link.id),
+			{
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e.detail;
 
-		if (!this.fireEvent("item-click", { item, ...e.detail }, true)) {
+		if (!this.fireEvent("item-click", {
+			item,
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		}, true)) {
 			e.preventDefault();
 		}
 	}
 
-	_onLabelPress() {
+	_onLabelPress(e: MouseEvent | KeyboardEvent) {
 		const items = this._getItems(),
-			item = items[items.length - 1];
+			item = items[items.length - 1],
+			{
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e;
 
 		this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
-			altKey: false,
-			ctrlKey: false,
-			metaKey: false,
-			shiftKey: false,
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
 		});
 	}
 
@@ -538,7 +553,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _currentLocationLabel() {
-		return this.shadowRoot!.querySelector<Label>(".ui5-breadcrumbs-current-location [ui5-label]")!;
+		return this.shadowRoot!.querySelector<Label>(".ui5-breadcrumbs-current-location [ui5-label]");
 	}
 
 	get _isDropdownArrowFocused() {
