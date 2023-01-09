@@ -195,6 +195,7 @@
   "--sapContent_Informative_Shadow",
   "--sapContent_Interaction_Shadow",
   "--sapContent_LabelColor",
+  "--sapContent_MarkerIconColor",
   "--sapContent_MeasureIndicatorColor",
   "--sapContent_Negative_Shadow",
   "--sapContent_NonInteractiveIconColor",

@@ -22,6 +22,46 @@
 	outline: none;
 }
 
+:host([color="Contrast"]) {
+	color: var(--sapContent_ContrastIconColor);
+}
+
+:host([color="Critical"]) {
+	color: var(--sapCriticalElementColor);
+}
+
+:host([color="Default"]) {
+	color: var(--sapContent_IconColor);
+}
+
+:host([color="Information"]) {
+	color: var(--sapInformativeElementColor);
+}
+
+:host([color="Marker"]) {
+	color: var(--sapContent_MarkerIconColor);
+}
+
+:host([color="Negative"]) {
+	color: var(--sapNegativeElementColor);
+}
+
+:host([color="Neutral"]) {
+	color: var(--sapNeutralElementColor);
+}
+
+:host([color="NonInteractive"]) {
+	color: var(--sapContent_NonInteractiveIconColor);
+}
+
+:host([color="Positive"]) {
+	color: var(--sapPositiveElementColor);
+}
+
+:host([color="Tile"]) {
+	color: var(--sapTile_IconColor);
+}
+
 :host([interactive][focused]) .ui5-icon-root {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--ui5-icon-focus-border-radius);
