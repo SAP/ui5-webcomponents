@@ -599,9 +599,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	suggestionSelectionCanceled: boolean;
 	previousValue: string;
 	firstRendering: boolean;
-	highlightValue: string
+	typedInValue: string;
 	lastConfirmedValue: string
-	valueBeforeAutoComplete: string
 	isTyping: boolean
 	suggestionsTexts: Array<InputSuggestionText>;
 	_handleResizeBound: () => void;
@@ -661,14 +660,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		// Indicates, if the component is rendering for first time.
 		this.firstRendering = true;
 
-		// The value that should be highlited.
-		this.highlightValue = "";
+		// The typed in value.
+		this.typedInValue = "";
 
 		// The last value confirmed by the user with "ENTER"
 		this.lastConfirmedValue = "";
-
-		// The value that the user is typed in the input
-		this.valueBeforeAutoComplete = "";
 
 		// Indicates, if the user is typing. Gets reset once popup is closed
 		this.isTyping = false;
@@ -696,7 +692,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (this.showSuggestions) {
 			this.enableSuggestions();
-			this.suggestionsTexts = this.Suggestions!.defaultSlotProperties(this.highlightValue);
+			this.suggestionsTexts = this.Suggestions!.defaultSlotProperties(this.typedInValue);
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
@@ -733,9 +729,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		// If there is already a selection the autocomplete has already been performed
 		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars && !this._isKeyNavigation) {
 			const item = this._getFirstMatchingItem(value);
-
-			// Keep the original typed in text intact
-			this.valueBeforeAutoComplete += value.slice(this.valueBeforeAutoComplete.length, value.length);
 			if (item) {
 				this._handleTypeAhead(item, value);
 			}
@@ -800,10 +793,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (isEscape(e)) {
 			return this._handleEscape();
-		}
-
-		if (isBackSpace(e)) {
-			this._selectedText = window.getSelection()!.toString();
 		}
 
 		if (this.showSuggestions) {
@@ -926,7 +915,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (isOpen && this.Suggestions!._isItemOnTarget()) {
 			// Restore the value.
-			this.value = this.valueBeforeAutoComplete || this.valueBeforeItemPreview;
+			this.value = this.typedInValue || this.valueBeforeItemPreview;
 
 			// Mark that the selection has been canceled, so the popover can close
 			// and not reopen, due to receiving focus.
@@ -937,7 +926,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		if (isAutoCompleted) {
-			this.value = this.valueBeforeAutoComplete;
+			this.value = this.typedInValue;
 		}
 
 		if (this._isValueStateFocused) {
@@ -949,7 +938,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	async _onfocusin(e: FocusEvent) {
 		await this.getInputDOMRef();
 
-		this.valueBeforeAutoComplete = "";
 		this.focused = true; // invalidating property
 		this.previousValue = this.value;
 		this.valueBeforeItemPreview = this.value;
@@ -1247,7 +1235,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		const innerInput = this.getInputDOMRefSync()!;
-		const value = this.valueBeforeAutoComplete || this.value;
+		const value = this.typedInValue || this.value;
 		const itemText = item.text || item.textContent || ""; // keep textContent for compatibility
 		const fireInput = keyboardUsed
 			? this.valueBeforeItemSelection !== itemText : value !== itemText;
@@ -1292,7 +1280,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		this.value = itemValue;
 		innerInput.value = itemValue;
-		innerInput.setSelectionRange(this.valueBeforeAutoComplete.length, this.value.length);
+		innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
 	}
 
 	/**
@@ -1319,7 +1307,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const isUserInput = action === INPUT_ACTIONS.ACTION_ENTER;
 
 		this.value = inputValue;
-		this.highlightValue = inputValue;
+		this.typedInValue = inputValue;
 		this.valueBeforeItemPreview = inputValue;
 
 		if (isUserInput) { // input
