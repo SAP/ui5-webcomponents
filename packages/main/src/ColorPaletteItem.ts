@@ -5,6 +5,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -34,7 +35,7 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * @public
  */
 @customElement("ui5-color-palette-item")
-class ColorPaletteItem extends UI5Element {
+class ColorPaletteItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the colour of the component.
 	 * <br><br>
