@@ -6,7 +6,7 @@
 {{/inline}}
 
 {{#*inline "progressBar"}}
-	<div class="ui5-slider-progress-container">
+	<div class="ui5-slider-progress-container" part="progress-container">
 		<div class="ui5-slider-progress"
 			style="{{styles.progress}}"
 			@focusin="{{_onfocusin}}"
@@ -19,6 +19,7 @@
 			aria-valuetext="From {{startValue}} to {{endValue}}"
 			aria-labelledby="{{_ariaLabelledByProgressBarRefs}}"
 			aria-disabled="{{_ariaDisabled}}"
+			part="progress-bar"
 		></div>
 	</div>
 {{/inline}}
@@ -36,6 +37,7 @@
 		aria-valuenow="{{startValue}}"
 		aria-labelledby="{{_ariaLabelledByStartHandleRefs}}"
 		aria-disabled="{{_ariaDisabled}}"
+		part="handle-start"
 	>
 		<ui5-icon name="direction-arrows" slider-icon></ui5-icon>
 
@@ -58,6 +60,7 @@
 		aria-valuenow="{{endValue}}"
 		aria-labelledby="{{_ariaLabelledByEndHandleRefs}}"
 		aria-disabled="{{_ariaDisabled}}"
+		part="handle-end"
 	>
 		<ui5-icon name="direction-arrows" slider-icon></ui5-icon>
 
