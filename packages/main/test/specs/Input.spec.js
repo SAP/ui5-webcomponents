@@ -424,7 +424,6 @@ describe("Input general interaction", () => {
 		// paste a value completely corresponding to item text
 		await suggestionsInput.click();
 		await suggestionsInput.setValue("China");
-		await browser.pause(300);
 
 		// select the item
 		let firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
@@ -432,12 +431,9 @@ describe("Input general interaction", () => {
 
 		// without performing focus out delete the last character
 		await suggestionsInput.keys("Backspace");
-		await browser.pause(300);
 
 		// select the same item again
-		firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		await firstSuggestion.click();
-
 
 		assert.strictEqual(await suggestionsInput.getValue(), "China", "Input value should correspond to item text.");
 	});
