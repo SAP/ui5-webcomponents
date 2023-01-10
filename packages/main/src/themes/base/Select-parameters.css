@@ -5,5 +5,5 @@
 	--_ui5_select_state_error_warning_border_width: 0.125rem;
 	--_ui5_select_hover_icon_left_border: 1px solid transparent;
 	--_ui5_select_focus_width: 1px;
-	--_ui5_select_label_olor: var(--sapField_TextColor);
+	--_ui5_select_label_color: var(--sapField_TextColor);
 }

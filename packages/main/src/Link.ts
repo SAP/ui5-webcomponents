@@ -9,6 +9,7 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
@@ -21,6 +22,13 @@ import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js"
 
 // Styles
 import linkCss from "./generated/themes/Link.css.js";
+
+type LinkClickEventDetail = {
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
+}
 
 /**
  * @class
@@ -84,7 +92,7 @@ import linkCss from "./generated/themes/Link.css.js";
 		shiftKey: { type: Boolean },
 	},
 })
-class Link extends UI5Element {
+class Link extends UI5Element implements ITabbable {
 	/**
 	 * Defines whether the component is disabled.
 	 * <br><br>
@@ -343,7 +351,7 @@ class Link extends UI5Element {
 		e.stopImmediatePropagation();
 		markEvent(e, "link");
 
-		const executeEvent = this.fireEvent("click", {
+		const executeEvent = this.fireEvent<LinkClickEventDetail>("click", {
 			altKey,
 			ctrlKey,
 			metaKey,
@@ -394,3 +402,5 @@ class Link extends UI5Element {
 Link.define();
 
 export default Link;
+
+export type { LinkClickEventDetail };

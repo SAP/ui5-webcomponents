@@ -653,6 +653,7 @@ class Wizard extends UI5Element {
 	 */
 	changeSelectionByScroll(scrollPos) {
 		const newlySelectedIndex = this.getClosestStepIndexByScrollPos(scrollPos);
+		const stepToSelect = this.slottedSteps[newlySelectedIndex];
 
 		// Skip if already selected - stop.
 		if (this.selectedStepIndex === newlySelectedIndex) {
@@ -661,9 +662,7 @@ class Wizard extends UI5Element {
 
 		// If the calculated index is in range,
 		// change selection and fire "step-change".
-		if (newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
-			const stepToSelect = this.slottedSteps[newlySelectedIndex];
-
+		if (!stepToSelect.disabled && newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
 			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, false);
 			this.selectionRequestedByScroll = true;
 		}

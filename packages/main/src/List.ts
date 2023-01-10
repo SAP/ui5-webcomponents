@@ -60,11 +60,18 @@ const PAGE_UP_DOWN_SIZE = 10;
 type FocusEventDetail = {
 	item: ListItemBase,
 }
+type SelectionChangeEventDetail = {
+	selectedItems: Array<ListItemBase>;
+	previouslySelectedItems: Array<ListItemBase>;
+	selectionComponentPressed: boolean;
+	targetItem: ListItemBase;
+	key?: string;
+}
 type DeleteEventDetail = FocusEventDetail;
 
 // ListItem-based events
 type CloseEventDetail = {
-	item: ListItem,
+	item: ListItemBase,
 }
 type ToggleEventDetail = CloseEventDetail;
 type ClickEventDetail = CloseEventDetail;
@@ -722,7 +729,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent("selection-change", {
+			this.fireEvent<SelectionChangeEventDetail>("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: e.detail.selectionComponentPressed,
@@ -1128,4 +1135,5 @@ export type {
 	DeleteEventDetail,
 	CloseEventDetail,
 	ToggleEventDetail,
+	SelectionChangeEventDetail,
 };
