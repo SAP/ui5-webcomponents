@@ -99,7 +99,7 @@ const metadata = {
  * <ul>
  * <li>progress-container - Used to style the progress container(the horizontal bar which visually represents the range between the minimum and maximum value) of the <code>ui5-range-slider</code>.</li>
  * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>.</li>
- * <li>handle - Used to style the handleс of the <code>ui5-range-slider</code>.</li>
+ * <li>handle - Used to style the handles of the <code>ui5-range-slider</code>.</li>
  * </ul>
  *
  * <h3>Keyboard Handling</h3>
