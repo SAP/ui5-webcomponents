@@ -31,6 +31,8 @@ type AriaHandlesText = {
 	endHandleText?: string,
 }
 
+type AffectedValue = "startValue" | "endValue";
+
 /**
  * @class
  *
@@ -125,7 +127,7 @@ class RangeSlider extends SliderBase {
 
 	_startValueInitial?: number;
 	_endValueInitial?: number;
-	_valueAffected?: string;
+	_valueAffected?: AffectedValue;
 	_isPressInCurrentRange = false;
 	_handeIsPressed = false;
 	_initialPageXPosition?: number;
@@ -469,7 +471,7 @@ class RangeSlider extends SliderBase {
 		// No matter the which value is set as the one to be modified (by prev. user action) we want to modify both of them
 		this._setAffectedValue(undefined);
 
-		// Update the UI and the state acccording to the calculated new values
+		// Update the UI and the state according to the calculated new values
 		this.update(undefined, newValues[0], newValues[1]);
 	}
 
@@ -541,11 +543,11 @@ class RangeSlider extends SliderBase {
 	 * - mouse press position - cursor coordinates relative to the start/end handles
 	 * - selected inner element via a keyboard navigation
 	 *
-	 * @param {string} valuePropAffectedByInteraction The value that will get modified by the interaction
+	 * @param {string} affectedValue The value that will get modified by the interaction
 	 * @private
 	 */
-	_setAffectedValue(valuePropAffectedByInteraction: string | undefined) {
-		this._valueAffected = valuePropAffectedByInteraction;
+	_setAffectedValue(affectedValue: AffectedValue | undefined) {
+		this._valueAffected = affectedValue;
 
 		// If the values have been swapped reset the reversed flag
 		if (this._areValuesReversed()) {
