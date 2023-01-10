@@ -6,7 +6,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
@@ -164,10 +164,7 @@ class SliderBase extends UI5Element {
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: () => void;
 	_stateStorage: StateStorage;
-	_ontouchstart: {
-		handleEvent: (e: TouchEvent) => void,
-		passive: boolean,
-	};
+	_ontouchstart: PassiveEventListenerObject;
 	notResized = false;
 	_isUserInteraction = false;
 	_isInnerElementFocusing = false;
@@ -468,14 +465,12 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Updates value property of the component that has been changed due to a user action.
+	 * Updates state storage for the value-related property
 	 * Fires an <code>input</code> event indicating a value change via interaction that is not yet finished.
 	 *
 	 * @protected
 	 */
-	updateValue(valueType: string, value: number | undefined) {
-		// @ts-ignore
-		this[valueType] = value;
+	updateStateStorageAndFireInputEvent(valueType: string) {
 		this.storePropertyState(valueType);
 		if (this._isUserInteraction) {
 			this.fireEvent("input");
@@ -582,43 +577,6 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Normalize current properties, update the previously stored state.
-	 *
-	 * @protected
-	 */
-	syncUIAndState(...values: Array<string>) {
-		// Validate step and update the stored state for the step property.
-		if (this.isPropertyUpdated("step")) {
-			this._validateStep(this.step);
-			this.storePropertyState("step");
-		}
-
-		// Recalculate the tickmarks and labels and update the stored state.
-		if (this.isPropertyUpdated("min", "max", ...values)) {
-			this.storePropertyState("min", "max");
-
-			// Here the value props are changed programmatically (not by user interaction)
-			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
-			// min and max bounderies and update the previous state reference.
-			values.forEach(valueType => {
-				const normalizedValue = SliderBase.clipValue(this[valueType as keyof SliderBase] as number, this._effectiveMin, this._effectiveMax);
-				this.updateValue(valueType, normalizedValue);
-				this.storePropertyState(valueType);
-			});
-		}
-
-		// Labels must be updated if any of the min/max/step/labelInterval props are changed
-		if (this.labelInterval && this.showTickmarks) {
-			this._createLabels();
-		}
-
-		// Update the stored state for the labelInterval, if changed
-		if (this.isPropertyUpdated("labelInterval")) {
-			this.storePropertyState("labelInterval");
-		}
-	}
-
-	/**
 	 * In order to always keep the visual UI representation and the internal
 	 * state in sync, the component has a 'state storage' that is updated when the
 	 * current state is changed due to a user action.
@@ -674,7 +632,7 @@ class SliderBase extends UI5Element {
 	}
 
 	/**
-	 * Calculates the labels amout, width and text and creates them
+	 * Calculates the labels amount, width and text and creates them
 	 *
 	 * @private
 	 */

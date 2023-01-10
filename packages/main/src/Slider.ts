@@ -141,8 +141,38 @@ class Slider extends SliderBase {
 		}
 
 		this.notResized = true;
-		this.syncUIAndState("value");
+		this.syncUIAndState();
 		this._updateHandleAndProgress(this.value);
+	}
+
+	syncUIAndState() {
+		// Validate step and update the stored state for the step property.
+		if (this.isPropertyUpdated("step")) {
+			this._validateStep(this.step);
+			this.storePropertyState("step");
+		}
+
+		// Recalculate the tickmarks and labels and update the stored state.
+		if (this.isPropertyUpdated("min", "max", "value")) {
+			this.storePropertyState("min", "max");
+
+			// Here the value props are changed programmatically (not by user interaction)
+			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
+			// min and max bounderies and update the previous state reference.
+			this.value = SliderBase.clipValue(this.value, this._effectiveMin, this._effectiveMax);
+			this.updateStateStorageAndFireInputEvent("value");
+			this.storePropertyState("value");
+		}
+
+		// Labels must be updated if any of the min/max/step/labelInterval props are changed
+		if (this.labelInterval && this.showTickmarks) {
+			this._createLabels();
+		}
+
+		// Update the stored state for the labelInterval, if changed
+		if (this.isPropertyUpdated("labelInterval")) {
+			this.storePropertyState("labelInterval");
+		}
 	}
 
 	/**
@@ -170,7 +200,8 @@ class Slider extends SliderBase {
 		const ctor = this.constructor as typeof Slider;
 		if (!this._isHandlePressed(ctor.getPageXValueFromEvent(e))) {
 			this._updateHandleAndProgress(newValue);
-			this.updateValue("value", newValue);
+			this.value = newValue;
+			this.updateStateStorageAndFireInputEvent("value");
 		}
 	}
 
@@ -221,7 +252,8 @@ class Slider extends SliderBase {
 		const newValue = ctor.getValueFromInteraction(e, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
 
 		this._updateHandleAndProgress(newValue);
-		this.updateValue("value", newValue);
+		this.value = newValue;
+		this.updateStateStorageAndFireInputEvent("value");
 	}
 
 	/** Called when the user finish interacting with the slider
@@ -269,7 +301,8 @@ class Slider extends SliderBase {
 
 		if (newValue !== currentValue) {
 			this._updateHandleAndProgress(newValue!);
-			this.updateValue("value", newValue);
+			this.value = newValue!;
+			this.updateStateStorageAndFireInputEvent("value");
 		}
 	}
 

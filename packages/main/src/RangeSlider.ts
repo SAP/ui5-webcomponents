@@ -211,8 +211,44 @@ class RangeSlider extends SliderBase {
 		}
 
 		this.notResized = true;
-		this.syncUIAndState("startValue", "endValue");
+		this.syncUIAndState();
 		this._updateHandlesAndRange(undefined);
+	}
+
+	syncUIAndState() {
+		// Validate step and update the stored state for the step property.
+		if (this.isPropertyUpdated("step")) {
+			this._validateStep(this.step);
+			this.storePropertyState("step");
+		}
+
+		// Recalculate the tickmarks and labels and update the stored state.
+		if (this.isPropertyUpdated("min", "max", "startValue", "endValue")) {
+			this.storePropertyState("min", "max");
+
+			// Here the value props are changed programmatically (not by user interaction)
+			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
+			// min and max bounderies and update the previous state reference.
+			const normalizedStartValue = SliderBase.clipValue(this.startValue, this._effectiveMin, this._effectiveMax);
+			this.startValue = normalizedStartValue;
+			this.updateStateStorageAndFireInputEvent("startValue");
+			this.storePropertyState("startValue");
+
+			const normalizedEndValue = SliderBase.clipValue(this.endValue, this._effectiveMin, this._effectiveMax);
+			this.endValue = normalizedEndValue;
+			this.updateStateStorageAndFireInputEvent("endValue");
+			this.storePropertyState("endValue");
+		}
+
+		// Labels must be updated if any of the min/max/step/labelInterval props are changed
+		if (this.labelInterval && this.showTickmarks) {
+			this._createLabels();
+		}
+
+		// Update the stored state for the labelInterval, if changed
+		if (this.isPropertyUpdated("labelInterval")) {
+			this.storePropertyState("labelInterval");
+		}
 	}
 
 	_onfocusin() {
@@ -357,13 +393,25 @@ class RangeSlider extends SliderBase {
 	 */
 	update(affectedValue: string | undefined, startValue: number | undefined, endValue: number | undefined) {
 		if (!affectedValue) {
-			this.updateValue("startValue", startValue);
-			this.updateValue("endValue", endValue);
+			this.startValue = startValue!;
+			this.updateStateStorageAndFireInputEvent("startValue");
+
+			this.endValue = endValue!;
+			this.updateStateStorageAndFireInputEvent("endValue");
 			this._updateHandlesAndRange(undefined);
 		} else {
 			const newValue = startValue;
 			this._updateHandlesAndRange(newValue);
-			this.updateValue(affectedValue, newValue);
+
+			if (affectedValue === "startValue") {
+				this.startValue = newValue!;
+				this.updateStateStorageAndFireInputEvent("startValue");
+			}
+
+			if (affectedValue === "endValue") {
+				this.endValue = newValue!;
+				this.updateStateStorageAndFireInputEvent("endValue");
+			}
 		}
 	}
 
