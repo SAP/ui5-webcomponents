@@ -771,8 +771,8 @@ class SliderBase extends UI5Element {
 		return Math.max(this.min, this.max);
 	}
 
-	get tabIndex() {
-		return this.disabled ? -1 : 0;
+	get _tabIndex() {
+		return this.disabled ? "-1" : "0";
 	}
 
 	get _ariaLabelledByHandleRefs() {

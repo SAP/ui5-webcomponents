@@ -212,7 +212,7 @@ class RangeSlider extends SliderBase {
 
 		this.notResized = true;
 		this.syncUIAndState();
-		this._updateHandlesAndRange(undefined);
+		this._updateHandlesAndRange(0);
 	}
 
 	syncUIAndState() {
@@ -316,7 +316,7 @@ class RangeSlider extends SliderBase {
 
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
-		const affectedValue = this._valueAffected!; // Note: check if it is guaranteed to be defined
+		const affectedValue = this._valueAffected!;
 
 		// If home/end key is pressed and no single handle is focused the active element
 		// is the range selection - update both start and end values. Otherwise, if 'home'
@@ -398,10 +398,10 @@ class RangeSlider extends SliderBase {
 
 			this.endValue = endValue!;
 			this.updateStateStorageAndFireInputEvent("endValue");
-			this._updateHandlesAndRange(undefined);
+			this._updateHandlesAndRange(0);
 		} else {
 			const newValue = startValue;
-			this._updateHandlesAndRange(newValue);
+			this._updateHandlesAndRange(newValue || 0);
 
 			if (affectedValue === "startValue") {
 				this.startValue = newValue!;
@@ -735,22 +735,22 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_updateHandlesAndRange(newValue: number | undefined) {
+	_updateHandlesAndRange(newValue: number) {
 		const max = this._effectiveMax;
 		const min = this._effectiveMin;
-		const prevStartValue = this.getStoredPropertyState("startValue");
-		const prevEndValue = this.getStoredPropertyState("endValue");
+		const prevStartValue = this.getStoredPropertyState("startValue") || 0;
+		const prevEndValue = this.getStoredPropertyState("endValue") || 0;
 		const affectedValue = this._valueAffected;
 
 		// The value according to which we update the UI can be either the startValue
 		// or the endValue property. It is determined in _getClosestHandle()
 		// depending on to which handle is closer the user interaction.
 		if (affectedValue === "startValue") {
-			this._selectedRange = (prevEndValue! - newValue!) / (max - min);
-			this._firstHandlePositionFromStart = ((newValue! - min) / (max - min)) * 100;
+			this._selectedRange = (prevEndValue - newValue) / (max - min);
+			this._firstHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
 		} else if (affectedValue === "endValue") {
-			this._selectedRange = ((newValue! - prevStartValue!)) / (max - min);
-			this._secondHandlePositionFromStart = ((newValue! - min) / (max - min)) * 100;
+			this._selectedRange = ((newValue - prevStartValue)) / (max - min);
+			this._secondHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
 		} else {
 			// When both values are changed - UI sync or moving the whole selected range:
 			this._selectedRange = ((this.endValue - this.startValue)) / (max - min);
@@ -828,15 +828,15 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _startHandle() {
-		return this.shadowRoot!.querySelector(".ui5-slider-handle--start") as HTMLElement;
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-handle--start")!;
 	}
 
 	get _endHandle() {
-		return this.shadowRoot!.querySelector(".ui5-slider-handle--end") as HTMLElement;
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-handle--end")!;
 	}
 
 	get _progressBar() {
-		return this.shadowRoot!.querySelector(".ui5-slider-progress") as HTMLElement;
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-progress")!;
 	}
 
 	get _ariaLabelledByStartHandleRefs() {
