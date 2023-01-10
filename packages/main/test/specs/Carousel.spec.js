@@ -192,11 +192,18 @@ describe("Carousel general interaction", () => {
 		assert.strictEqual(await eventCounter.getProperty("value"), "6", "The navigate event is not fired as no previous item.");
 	});
 
+	it("page-indicator-style property", async () => {
+		const carousel = await browser.$("#carouselNumericPageIndicator");
+		await carousel.scrollIntoView();
+
+		assert.strictEqual(await carousel.shadow$(".ui5-carousel-navigation [ui5-label]").getText(), "1 of 2", "carousel is showing numeric page indicator");
+	});
+
 	it("hide-page-indicator property", async () => {
 		const carousel = await browser.$("#carouselHiddenPageIndicator");
 		await carousel.scrollIntoView();
 
-		assert.strictEqual(await carousel.shadow$$(".ui5-carousel-navigation > *").length, 0, "carousel has not rendered a page indicator")
+		assert.strictEqual(await carousel.shadow$$(".ui5-carousel-navigation > *").length, 0, "carousel has not rendered a page indicator");
 	});
 
 	it("navigateTo method and visibleItemsIndices", async () => {

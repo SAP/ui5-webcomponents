@@ -17,8 +17,8 @@ import type UI5Element from "../UI5Element.js";
 import { instanceOfUI5Element } from "../UI5Element.js";
 
 interface ITabbable {
-	id?: string,
-	_tabIndex?: string,
+	id: string,
+	_tabIndex: string,
 }
 
 type ItemNavigationOptions = {

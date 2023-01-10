@@ -1,4 +1,12 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isEnter,
@@ -6,10 +14,11 @@ import {
 	isShow,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
 import BreadcrumbsItem from "./BreadcrumbsItem.js";
@@ -18,11 +27,15 @@ import {
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 import Link from "./Link.js";
+import type { LinkClickEventDetail } from "./Link.js";
 import Label from "./Label.js";
+// @ts-ignore
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+import type { SelectionChangeEventDetail } from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -35,112 +48,23 @@ import BreadcrumbsPopoverTemplate from "./generated/templates/BreadcrumbsPopover
 import breadcrumbsCss from "./generated/themes/Breadcrumbs.css.js";
 import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-breadcrumbs",
-	managedSlots: true,
-	languageAware: true,
-	slots: /** @lends sap.ui.webc.main.Breadcrumbs.prototype */ {
+type BreadcrumbsItemClickEventDetail = {
+	item: BreadcrumbsItem;
+	altKey: boolean;
+	ctrlKey: boolean;
+	metaKey: boolean;
+	shiftKey: boolean;
+}
 
-		/**
-		 * Defines the component items.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> Use the <code>ui5-breadcrumbs-item</code> component to define the desired items.
-		 * @type {sap.ui.webc.main.IBreadcrumbsItem[]}
-		 * @slot items
-		 * @public
-		 */
-		"default": {
-			propertyName: "items",
-			type: HTMLElement,
-			invalidateOnChildChange: true,
-		},
+type TempResponsivePopover = HTMLElement & {
+	opened: boolean;
+	showAt: (opener: HTMLElement) => Promise<void>;
+	close: () => void,
+}
 
-	},
-	properties: /** @lends sap.ui.webc.main.Breadcrumbs.prototype */ {
-
-		/**
-		 * Defines the visual indication and behavior of the breadcrumbs.
-		 * Available options are <code>Standard</code> (by default) and <code>NoCurrentPage</code>.
-		 * <br><br>
-		 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
-		 * The last item contains only plain text and is not a link.
-		 *
-		 * @type {sap.ui.webc.main.types.BreadcrumbsDesign}
-		 * @defaultvalue "Standard"
-		 * @public
-		*/
-		design: {
-			type: BreadcrumbsDesign,
-			defaultValue: BreadcrumbsDesign.Standard,
-		},
-
-		/**
-		 * Determines the visual style of the separator between the breadcrumb items.
-		 *
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Slash</code></li>
-		 * <li><code>BackSlash</code></li>
-		 * <li><code>DoubleBackSlash</code></li>
-		 * <li><code>DoubleGreaterThan</code></li>
-		 * <li><code>DoubleSlash</code></li>
-		 * <li><code>GreaterThan</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.BreadcrumbsSeparatorStyle}
-		 * @defaultvalue "Slash"
-		 * @public
-		 */
-		separatorStyle: {
-			type: BreadcrumbsSeparatorStyle,
-			defaultValue: BreadcrumbsSeparatorStyle.Slash,
-		},
-
-		/**
-		 * Holds the number of items in the overflow.
-		 *
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 0
-		 * @private
-		 */
-		_overflowSize: {
-			type: Integer,
-			noAttribute: true,
-			defaultValue: 0,
-		},
-
-	},
-	events: /** @lends sap.ui.webc.main.Breadcrumbs.prototype */ {
-
-		/**
-		 * Fires when a <code>BreadcrumbsItem</code> is clicked.
-		 * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
-		 *
-		 * @event sap.ui.webc.main.Breadcrumbs#item-click
-		 * @allowPreventDefault
-		 * @param {HTMLElement} item The clicked item.
-		 * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
-		 * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
-		 * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
-		 * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
-		 * @public
-		 */
-		"item-click": {
-			detail: {
-				item: { type: HTMLElement },
-				altKey: { type: Boolean	},
-				ctrlKey: { type: Boolean },
-				metaKey: { type: Boolean },
-				shiftKey: { type: Boolean },
-			},
-		},
-	},
-};
+type FocusAdaptor = ITabbable & {
+	getlabelWrapper: () => Element | null;
+}
 
 /**
  * @class
@@ -178,10 +102,102 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.15
  */
+@customElement("ui5-breadcrumbs")
+@languageAware
+
+/**
+ * Fires when a <code>BreadcrumbsItem</code> is clicked.
+ * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
+ *
+ * @event sap.ui.webc.main.Breadcrumbs#item-click
+ * @allowPreventDefault
+ * @param {HTMLElement} item The clicked item.
+ * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+ * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+ * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+ * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
+ * @public
+ */
+@event("item-click", {
+	detail: {
+		item: { type: HTMLElement },
+		altKey: { type: Boolean },
+		ctrlKey: { type: Boolean },
+		metaKey: { type: Boolean },
+		shiftKey: { type: Boolean },
+	},
+})
 class Breadcrumbs extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the visual indication and behavior of the breadcrumbs.
+	 * Available options are <code>Standard</code> (by default) and <code>NoCurrentPage</code>.
+	 * <br><br>
+	 * <b>Note:</b> The <code>Standard</code> breadcrumbs show the current page as the last item in the trail.
+	 * The last item contains only plain text and is not a link.
+	 *
+	 * @type {sap.ui.webc.main.types.BreadcrumbsDesign}
+	 * @name sap.ui.webc.main.Breadcrumbs.prototype.design
+	 * @defaultvalue "Standard"
+	 * @public
+	*/
+	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
+	design!: BreadcrumbsDesign;
+
+	/**
+	 * Determines the visual style of the separator between the breadcrumb items.
+	 *
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Slash</code></li>
+	 * <li><code>BackSlash</code></li>
+	 * <li><code>DoubleBackSlash</code></li>
+	 * <li><code>DoubleGreaterThan</code></li>
+	 * <li><code>DoubleSlash</code></li>
+	 * <li><code>GreaterThan</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.BreadcrumbsSeparatorStyle}
+	 * @name sap.ui.webc.main.Breadcrumbs.prototype.separatorStyle
+	 * @defaultvalue "Slash"
+	 * @public
+	 */
+	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
+	separatorStyle!: BreadcrumbsSeparatorStyle;
+
+	/**
+	 * Holds the number of items in the overflow.
+	 *
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultvalue 0
+	 * @private
+	 */
+	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
+	_overflowSize!: number;
+
+	/**
+	 * Defines the component items.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Use the <code>ui5-breadcrumbs-item</code> component to define the desired items.
+	 * @type {sap.ui.webc.main.IBreadcrumbsItem[]}
+	 * @name sap.ui.webc.main.Breadcrumbs.prototype.default
+	 * @slot items
+	 * @public
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
+	items!: Array<BreadcrumbsItem>;
+
+	_itemNavigation: ItemNavigation
+	_onResizeHandler: () => void;
+
+	// maps items to their widths
+	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();
+	// the width of the interactive element that opens the overflow
+	_dropdownArrowLinkWidth = 0;
+	responsivePopover?: TempResponsivePopover;
+	_labelFocusAdaptor: FocusAdaptor;
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -205,32 +221,31 @@ class Breadcrumbs extends UI5Element {
 
 	constructor() {
 		super();
-		this._initItemNavigation();
+
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Horizontal,
+			getItemsCallback: () => this._getFocusableItems(),
+		});
 
 		this._onResizeHandler = this._updateOverflow.bind(this);
-
-		// maps items to their widths
-		this._breadcrumbItemWidths = new WeakMap();
-		// the width of the interactive element that opens the overflow
-		this._dropdownArrowLinkWidth = 0;
 
 		this._labelFocusAdaptor = {
 			id: `${this._id}-labelWrapper`,
 			getlabelWrapper: this.getCurrentLocationLabelWrapper.bind(this),
-			set _tabIndex(value) {
+			set _tabIndex(value: string) {
 				const wrapper = this.getlabelWrapper();
 				wrapper && wrapper.setAttribute("tabindex", value);
 			},
 			get _tabIndex() {
 				const wrapper = this.getlabelWrapper();
-				return (wrapper) ? wrapper.getAttribute("tabindex") : undefined;
+				return wrapper?.getAttribute("tabindex") || "";
 			},
 		};
 	}
 
-	onInvalidation(changeInfo) {
+	onInvalidation(changeInfo: ChangeInfo) {
 		if (changeInfo.reason === "childchange") {
-			const itemIndex = this.getSlottedNodes("items").indexOf(changeInfo.child),
+			const itemIndex = this._getItems().indexOf(changeInfo.child as BreadcrumbsItem),
 				isInOverflow = itemIndex < this._overflowSize;
 			if (isInOverflow) {
 				// the content of an overflowing item has changed
@@ -239,6 +254,10 @@ class Breadcrumbs extends UI5Element {
 				this._overflowSize = itemIndex;
 			}
 		}
+	}
+
+	_getItems() {
+		return this.getSlottedNodes("items") as Array<BreadcrumbsItem>;
 	}
 
 	onBeforeRendering() {
@@ -272,7 +291,7 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	_getFocusableItems() {
-		const items = this._links;
+		const items: Array<ITabbable> = this._links;
 
 		if (!this._isOverflowEmpty) {
 			items.unshift(this._dropdownArrowLink);
@@ -284,33 +303,33 @@ class Breadcrumbs extends UI5Element {
 		return items;
 	}
 
-	_onfocusin(event) {
-		const target = event.target,
+	_onfocusin(e: FocusEvent) {
+		const target = e.target,
 			labelWrapper = this.getCurrentLocationLabelWrapper(),
-			currentItem = (target === labelWrapper) ? this._labelFocusAdaptor : target;
+			currentItem = (target === labelWrapper) ? this._labelFocusAdaptor : target as Link;
 
 		this._itemNavigation.setCurrentItem(currentItem);
 	}
 
-	_onkeydown(event) {
+	_onkeydown(e: KeyboardEvent) {
 		const isDropdownArrowFocused = this._isDropdownArrowFocused;
 
-		if (isShow(event) && isDropdownArrowFocused && !this._isOverflowEmpty) {
-			event.preventDefault();
+		if (isShow(e) && isDropdownArrowFocused && !this._isOverflowEmpty) {
+			e.preventDefault();
 			this._toggleRespPopover();
 			return;
 		}
-		if (isSpace(event) && isDropdownArrowFocused && !this._isOverflowEmpty && !this._isPickerOpen) {
-			event.preventDefault();
+		if (isSpace(e) && isDropdownArrowFocused && !this._isOverflowEmpty && !this._isPickerOpen) {
+			e.preventDefault();
 			return;
 		}
-		if ((isEnter(event) || isSpace(event)) && this._isCurrentLocationLabelFocused) {
-			this._onLabelPress();
+		if ((isEnter(e) || isSpace(e)) && this._isCurrentLocationLabelFocused) {
+			this._onLabelPress(e);
 		}
 	}
 
-	_onkeyup(event) {
-		if (this._isDropdownArrowFocused && isSpace(event) && !this._isOverflowEmpty && !this._isPickerOpen) {
+	_onkeyup(e: KeyboardEvent) {
+		if (this._isDropdownArrowFocused && isSpace(e) && !this._isOverflowEmpty && !this._isPickerOpen) {
 			this._openRespPopover();
 		}
 	}
@@ -321,30 +340,30 @@ class Breadcrumbs extends UI5Element {
 	 */
 	_cacheWidths() {
 		const map = this._breadcrumbItemWidths,
-			items = this.getSlottedNodes("items"),
+			items = this._getItems(),
 			label = this._currentLocationLabel;
 
 		for (let i = this._overflowSize; i < items.length; i++) {
 			const item = items[i],
-				link = this.shadowRoot.querySelector(`#${item._id}-link-wrapper`);
-			map.set(item, this._getElementWidth(link) || 0);
+				link = this.shadowRoot!.querySelector<HTMLElement>(`#${item._id}-link-wrapper`)!;
+			map.set(item, this._getElementWidth(link));
 		}
 
 		if (items.length && this._endsWithCurrentLocationLabel && label) {
 			const item = items[items.length - 1];
+
 			map.set(item, this._getElementWidth(label));
 		}
 
 		if (!this._isOverflowEmpty) {
-			this._dropdownArrowLinkWidth = this._getElementWidth(
-				this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper"),
-			);
+			const arrow = this.shadowRoot!.querySelector<HTMLElement>(".ui5-breadcrumbs-dropdown-arrow-link-wrapper")!;
+			this._dropdownArrowLinkWidth = this._getElementWidth(arrow);
 		}
 	}
 
 	_updateOverflow() {
-		const items = this.getSlottedNodes("items"),
-			availableWidth = this.shadowRoot.querySelector(".ui5-breadcrumbs-root").offsetWidth;
+		const items = this._getItems(),
+			availableWidth = this.shadowRoot!.querySelector<HTMLElement>(".ui5-breadcrumbs-root")!.offsetWidth;
 		let requiredWidth = this._getTotalContentWidth(),
 			overflowSize = 0;
 
@@ -370,7 +389,7 @@ class Breadcrumbs extends UI5Element {
 
 		// if overflow was emptied while picker was open => close redundant popup
 		if (this._isOverflowEmpty && this._isPickerOpen) {
-			this.responsivePopover.close();
+			this.responsivePopover!.close();
 		}
 
 		// if the last focused link has done into the overflow =>
@@ -381,51 +400,77 @@ class Breadcrumbs extends UI5Element {
 		}
 	}
 
-	_getElementWidth(element) {
+	_getElementWidth(element: HTMLElement) {
 		if (element) {
 			return Math.ceil(element.getBoundingClientRect().width);
 		}
+
+		return 0;
 	}
 
 	_getTotalContentWidth() {
-		const items = this.getSlottedNodes("items"),
+		const items = this._getItems(),
 			widthsMap = this._breadcrumbItemWidths,
-			totalLinksWidth = items.reduce((sum, link) => sum + widthsMap.get(link), 0);
+			totalLinksWidth = items.reduce((sum, link) => sum + widthsMap.get(link)!, 0);
 
 		return totalLinksWidth;
 	}
 
-	_onLinkPress(event) {
-		const link = event.target,
-			items = this.getSlottedNodes("items"),
-			item = items.find(x => `${x._id}-link` === link.id);
+	_onLinkPress(e: CustomEvent<LinkClickEventDetail>) {
+		const link = e.target as Link,
+			items = this._getItems(),
+			item = items.find(x => `${x._id}-link` === link.id),
+			{
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e.detail;
 
-		if (!this.fireEvent("item-click", { item, ...event.detail }, true)) {
-			event.preventDefault();
+		if (!this.fireEvent("item-click", {
+			item,
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		}, true)) {
+			e.preventDefault();
 		}
 	}
 
-	_onLabelPress(event) {
-		const items = this.getSlottedNodes("items"),
-			item = items[items.length - 1];
+	_onLabelPress(e: MouseEvent | KeyboardEvent) {
+		const items = this._getItems(),
+			item = items[items.length - 1],
+			{
+				altKey,
+				ctrlKey,
+				metaKey,
+				shiftKey,
+			} = e;
 
-		this.fireEvent("item-click", { item, ...event.detail });
+		this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+			item,
+			altKey,
+			ctrlKey,
+			metaKey,
+			shiftKey,
+		});
 	}
 
-	_onOverflowListItemSelect(event) {
-		const listItem = event.detail.selectedItems[0],
-			items = this.getSlottedNodes("items"),
-			item = items.find(x => `${x._id}-li` === listItem.id);
+	_onOverflowListItemSelect(e: CustomEvent<SelectionChangeEventDetail>) {
+		const listItem = e.detail.selectedItems[0],
+			items = this._getItems(),
+			item = items.find(x => `${x._id}-li` === listItem.id)!;
 
 		if (this.fireEvent("item-click", { item }, true)) {
 			window.open(item.href, item.target || "_self", "noopener,noreferrer");
-			this.responsivePopover.close();
+			this.responsivePopover!.close();
 		}
 	}
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("[ui5-responsive-popover]");
+		return staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	async _toggleRespPopover() {
@@ -438,7 +483,7 @@ class Breadcrumbs extends UI5Element {
 		}
 	}
 
-	async _closeRespPopover() {
+	_closeRespPopover() {
 		this.responsivePopover && this.responsivePopover.close();
 	}
 
@@ -447,46 +492,47 @@ class Breadcrumbs extends UI5Element {
 		this.responsivePopover.showAt(this._dropdownArrowLink);
 	}
 
-	_isItemVisible(item) {
+	_isItemVisible(item: BreadcrumbsItem) {
 		return !item.hidden && this._hasVisibleContent(item);
 	}
 
-	_hasVisibleContent(item) {
+	_hasVisibleContent(item: BreadcrumbsItem) {
 		// the check is not complete but may be extended in the future if needed to cover
 		// cases besides the standard (UX-recommended) ones
-		return item.innerText || Array.from(item.children).some(child => !child.hidden);
+		return item.innerText || Array.from(item.children).some(child => !(child as HTMLElement).hidden);
 	}
 
 	_preprocessItems() {
 		this.items.forEach(item => {
-			item._getRealDomRef = () => this.getDomRef().querySelector(`[data-ui5-stable*=${item.stableDomRef}]`);
+			item._getRealDomRef = () => this.getDomRef()!.querySelector(`[data-ui5-stable*=${item.stableDomRef}]`)!;
 		});
 	}
 
-	_getItemPositionText(position, size) {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
+	_getItemPositionText(position: number, size: number) {
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS as I18nText, position, size);
 	}
 
-	_getItemAccessibleName(item, position, size) {
+	_getItemAccessibleName(item: BreadcrumbsItem, position: number, size: number) {
 		const positionText = this._getItemPositionText(position, size);
+		const itemsText = item.textContent || "";
 
 		// innerText is needed as it is no longer read out when label is set
 		let text = "";
 		if (item.accessibleName) {
-			text = `${item.textContent.trim()} ${item.accessibleName} ${positionText}`;
+			text = `${itemsText.trim()} ${item.accessibleName} ${positionText}`;
 		} else {
-			text = `${item.textContent.trim()} ${positionText}`;
+			text = `${itemsText.trim()} ${positionText}`;
 		}
 
 		return text;
 	}
 
 	getCurrentLocationLabelWrapper() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location > span");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-breadcrumbs-current-location > span");
 	}
 
 	get _visibleItems() {
-		return this.getSlottedNodes("items")
+		return this._getItems()
 			.slice(this._overflowSize)
 			.filter(i => this._isItemVisible(i));
 	}
@@ -496,7 +542,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _currentLocationText() {
-		const items = this.getSlottedNodes("items");
+		const items = this._getItems();
 		if (this._endsWithCurrentLocationLabel && items.length) {
 			const item = items[items.length - 1];
 			if (this._isItemVisible(item)) {
@@ -507,7 +553,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _currentLocationLabel() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-current-location [ui5-label]");
+		return this.shadowRoot!.querySelector<Label>(".ui5-breadcrumbs-current-location [ui5-label]");
 	}
 
 	get _isDropdownArrowFocused() {
@@ -524,7 +570,7 @@ class Breadcrumbs extends UI5Element {
 	 * with respect to the UX requirement to never overflow the last visible item
 	 */
 	get _maxAllowedOverflowSize() {
-		const items = this.getSlottedNodes("items").filter(item => this._isItemVisible(item));
+		const items = this._getItems().filter(item => this._isItemVisible(item));
 		// all items except tha last visible one are allowed to overflow by UX requirement
 		return items.length - 1;
 	}
@@ -534,14 +580,14 @@ class Breadcrumbs extends UI5Element {
 	 * @private
 	 */
 	get _dropdownArrowLink() {
-		return this.shadowRoot.querySelector(".ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link]");
+		return this.shadowRoot!.querySelector<Link>(".ui5-breadcrumbs-dropdown-arrow-link-wrapper [ui5-link]")!;
 	}
 
 	/**
 	 * Getter for the list of abstract breadcrumb items to be rendered as list-items inside the overflow
 	 */
 	get _overflowItemsData() {
-		return this.getSlottedNodes("items")
+		return this._getItems()
 			.slice(0, this._overflowSize)
 			.filter(item => this._isItemVisible(item))
 			.reverse();
@@ -578,18 +624,20 @@ class Breadcrumbs extends UI5Element {
 			return positionText;
 		}
 
+		const lastItemText = lastItem.textContent || "";
+
 		if (lastItem.accessibleName) {
-			return `${lastItem.textContent.trim()} ${lastItem.accessibleName} ${positionText}`;
+			return `${lastItemText.trim()} ${lastItem.accessibleName} ${positionText}`;
 		}
 
-		return `${lastItem.textContent.trim()} ${positionText}`;
+		return `${lastItemText.trim()} ${positionText}`;
 	}
 
 	/**
 	 * Getter for the list of links corresponding to the abstract breadcrumb items
 	 */
 	get _links() {
-		return Array.from(this.shadowRoot.querySelectorAll(".ui5-breadcrumbs-link-wrapper [ui5-link]"));
+		return Array.from(this.shadowRoot!.querySelectorAll<Link>(".ui5-breadcrumbs-link-wrapper [ui5-link]"));
 	}
 
 	get _isOverflowEmpty() {
@@ -608,15 +656,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _accessibleNameText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL as I18nText);
 	}
 
 	get _dropdownArrowAccessibleNameText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL as I18nText);
 	}
 
 	get _cancelButtonText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON as I18nText);
 	}
 
 	static get dependencies() {
