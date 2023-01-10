@@ -267,8 +267,8 @@ class Slider extends SliderBase {
 		const ctor = this.constructor as typeof Slider;
 		const newValue = isEscape(e) ? this._valueInitial : ctor.clipValue(this._handleActionKeyPressBase(e, "value") + currentValue, min, max);
 
-		if (newValue && newValue !== currentValue) {
-			this._updateHandleAndProgress(newValue);
+		if (newValue !== currentValue) {
+			this._updateHandleAndProgress(newValue!);
 			this.updateValue("value", newValue);
 		}
 	}
