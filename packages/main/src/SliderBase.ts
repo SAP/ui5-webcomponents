@@ -16,7 +16,7 @@ import {
 import styles from "./generated/themes/SliderBase.css.js";
 
 type StateStorage = {
-	[key: string]: number | null
+	[key: string]: number | undefined,
 }
 
 type DirectionStart = "left" | "right";
@@ -182,10 +182,10 @@ class SliderBase extends UI5Element {
 		this._upHandler = this._handleUp.bind(this);
 
 		this._stateStorage = {
-			step: null,
-			min: null,
-			max: null,
-			labelInterval: null,
+			step: undefined,
+			min: undefined,
+			max: undefined,
+			labelInterval: undefined,
 		};
 
 		const handleTouchStartEvent = (e: TouchEvent) => {
@@ -473,9 +473,9 @@ class SliderBase extends UI5Element {
 	 *
 	 * @protected
 	 */
-	updateValue(valueType: string, value: number | null) {
+	updateValue(valueType: string, value: number | undefined) {
 		// @ts-ignore
-		this[valueType] = value; // what happens with null?
+		this[valueType] = value;
 		this.storePropertyState(valueType);
 		if (this._isUserInteraction) {
 			this.fireEvent("input");

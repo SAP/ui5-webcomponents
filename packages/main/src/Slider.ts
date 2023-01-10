@@ -104,8 +104,8 @@ class Slider extends SliderBase {
 	@property({ validator: Float, defaultValue: 0 })
 	value!: number;
 
-	_valueInitial: number | null;
-	_valueOnInteractionStart?: number | null;
+	_valueInitial?: number;
+	_valueOnInteractionStart?: number;
 	_progressPercentage = 0;
 	_handlePositionFromStart = 0;
 
@@ -117,8 +117,7 @@ class Slider extends SliderBase {
 
 	constructor() {
 		super();
-		this._stateStorage.value = null;
-		this._valueInitial = null;
+		this._stateStorage.value = undefined;
 	}
 
 	static get dependencies() {
@@ -163,7 +162,7 @@ class Slider extends SliderBase {
 
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
-		if (this._valueInitial === null) {
+		if (this._valueInitial === undefined) {
 			this._valueInitial = this.value;
 		}
 
@@ -178,7 +177,7 @@ class Slider extends SliderBase {
 	_onfocusin() {
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
-		if (this._valueInitial === null) {
+		if (this._valueInitial === undefined) {
 			this._valueInitial = this.value;
 		}
 
@@ -197,7 +196,7 @@ class Slider extends SliderBase {
 
 		// Reset focus state and the stored Slider's initial
 		// value that was saved when it was first focused in
-		this._valueInitial = null;
+		this._valueInitial = undefined;
 
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
@@ -235,7 +234,7 @@ class Slider extends SliderBase {
 		}
 
 		this.handleUpBase();
-		this._valueOnInteractionStart = null;
+		this._valueOnInteractionStart = undefined;
 	}
 
 	/** Determines if the press is over the handle
