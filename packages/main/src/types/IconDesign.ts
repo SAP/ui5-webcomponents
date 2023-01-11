@@ -1,29 +1,29 @@
 /**
- * Different Icon semantic colors.
+ * Different Icon semantic designs.
 *
 * @class
 * @enum {string}
 * @public
 * @author SAP SE
-* @alias sap.ui.webc.main.types.IconColor
+* @alias sap.ui.webc.main.types.IconDesign
 */
-enum IconColor {
+enum IconDesign {
 	/**
-	 * Contrast color
+	 * Contrast design
 	 * @public
 	 * @type {Contrast}
 	 */
 	Contrast = "Contrast",
 
 	/**
-	 * Critical color
+	 * Critical design
 	 * @public
 	 * @type {Critical}
 	 */
 	Critical = "Critical",
 
 	/**
-	 * Default color (brand color)
+	 * Default design (brand design)
 	 * @public
 	 * @type {Default}
 	*/
@@ -37,46 +37,32 @@ enum IconColor {
 	Information = "Information",
 
 	/**
-	 * Color for icon used as a marker
-	 * @public
-	 * @type {Marker}
-	 */
-	Marker = "Marker",
-
-	/**
-	 * Negative color
+	 * Negative design
 	 * @public
 	 * @type {Negative}
 	 */
 	Negative = "Negative",
 
 	/**
-	 * Neutral color
+	 * Neutral design
 	 * @public
 	 * @type {Neutral}
 	 */
 	Neutral = "Neutral",
 
 	/**
-	 * Color that indicates an icon which isn't interactive
+	 * Design that indicates an icon which isn't interactive
 	 * @public
 	 * @type {NonInteractive}
 	 */
 	NonInteractive = "NonInteractive",
 
 	/**
-	 * Positive color
+	 * Positive design
 	 * @public
 	 * @type {Positive}
 	 */
-	Positive = "Positive",
-
-	/**
-	 * Color for icon used in a Tile
-	 * @public
-	 * @type {Tile}
-	 */
-	Tile = "Tile"
+	Positive = "Positive"
 }
 
-export default IconColor;
+export default IconDesign;
