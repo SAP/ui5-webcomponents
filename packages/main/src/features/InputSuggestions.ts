@@ -31,7 +31,7 @@ interface SuggestionComponent extends UI5Element {
 	focused: boolean;
 	hasSuggestionItemSelected: boolean;
 	value: string;
-	valueBeforeAutoComplete: string;
+	typedInValue: string;
 	hasValueStateMessage: boolean;
 	suggestionItems: Array<SuggestionItem>;
 	open: boolean;
@@ -634,7 +634,7 @@ class Suggestions {
 		this.component.focused = false;
 		this.component.hasSuggestionItemSelected = false;
 		this.selectedItemIndex = 0;
-		this.component.value = this.component.valueBeforeAutoComplete;
+		this.component.value = this.component.typedInValue;
 
 		items && this._scrollItemIntoView(items[0]);
 		this._deselectItems();

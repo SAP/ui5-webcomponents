@@ -1,5 +1,11 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isEscape,
 	isHome,
@@ -14,53 +20,18 @@ import {
 	RANGE_SLIDER_ARIA_DESCRIPTION,
 	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
 	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import rangeSliderStyles from "./generated/themes/RangeSlider.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-range-slider",
-	languageAware: true,
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.main.RangeSlider.prototype */  {
-		/**
-		 * Defines start point of a selection - position of a first handle on the slider.
-		 * <br><br>
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @defaultvalue 0
-		 * @formEvents change input
-		 * @formProperty
-		 * @public
-		 */
-		startValue: {
-			type: Float,
-			defaultValue: 0,
-		},
-		/**
-		 * Defines end point of a selection - position of a second handle on the slider.
-		 * <br><br>
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @defaultvalue 100
-		 * @formEvents change input
-		 * @formProperty
-		 * @public
-		 */
-		endValue: {
-			type: Float,
-			defaultValue: 100,
-		},
+type AriaHandlesText = {
+	startHandleText?: string,
+	endHandleText?: string,
+}
 
-		rangePressed: {
-			type: Boolean,
-		},
-	},
-};
+type AffectedValue = "startValue" | "endValue";
 
 /**
  * @class
@@ -91,6 +62,17 @@ const metadata = {
  * <h3>Responsive Behavior</h3>
  * You can move the currently selected range by clicking on it and dragging it along the interval.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-range-slider</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>progress-container - Used to style the progress container(the horizontal bar which visually represents the range between the minimum and maximum value) of the <code>ui5-range-slider</code>.</li>
+ * <li>progress-bar - Used to style the progress bar, which shows the progress of the <code>ui5-range-slider</code>.</li>
+ * <li>handle - Used to style the handles of the <code>ui5-range-slider</code>.</li>
+ * </ul>
+ *
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
@@ -120,43 +102,83 @@ const metadata = {
  * @since 1.0.0-rc.11
  * @public
  */
+@customElement("ui5-range-slider")
+@languageAware
 class RangeSlider extends SliderBase {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines start point of a selection - position of a first handle on the slider.
+	 * <br><br>
+	 *
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @name sap.ui.webc.main.RangeSlider.prototype.startValue
+	 * @defaultvalue 0
+	 * @formEvents change input
+	 * @formProperty
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 0 })
+	startValue!: number;
+
+	/**
+	 * Defines end point of a selection - position of a second handle on the slider.
+	 * <br><br>
+	 *
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @name sap.ui.webc.main.RangeSlider.prototype.endValue
+	 * @defaultvalue 100
+	 * @formEvents change input
+	 * @formProperty
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 100 })
+	endValue!: number;
+
+	@property({ type: Boolean })
+	rangePressed!: boolean;
+
+	_startValueInitial?: number;
+	_endValueInitial?: number;
+	_valueAffected?: AffectedValue;
+	_isPressInCurrentRange = false;
+	_handeIsPressed = false;
+	_initialPageXPosition?: number;
+	_startValueAtBeginningOfAction?: number;
+	_endValueAtBeginningOfAction?: number;
+	_initialStartHandlePageX?: number;
+	_firstHandlePositionFromStart?: number;
+	_secondHandlePositionFromStart?: number;
+	_selectedRange?: number;
+	_reversedValues = false;
+
+	static i18nBundle: I18nBundle;
 
 	static get template() {
 		return RangeSliderTemplate;
-	}
-
-	static get VALUES() {
-		return {
-			start: "startValue",
-			end: "endValue",
-		};
 	}
 
 	static get dependencies() {
 		return [Icon];
 	}
 
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return [SliderBase.styles, rangeSliderStyles];
 	}
 
 	constructor() {
 		super();
-		this._stateStorage.startValue = null;
-		this._stateStorage.endValue = null;
+		this._stateStorage.startValue = undefined;
+		this._stateStorage.endValue = undefined;
 	}
 
 	get tooltipStartValue() {
-		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
+		const ctor = this.constructor as typeof RangeSlider;
+		const stepPrecision = ctor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.startValue.toFixed(stepPrecision);
 	}
 
 	get tooltipEndValue() {
-		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
+		const ctor = this.constructor as typeof RangeSlider;
+		const stepPrecision = ctor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.endValue.toFixed(stepPrecision);
 	}
 
@@ -165,20 +187,20 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _ariaLabelledByText() {
-		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
+		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION as I18nText);
 	}
 
 	get _ariaHandlesText() {
 		const isRTL = this.effectiveDir === "rtl";
 		const isReversed = this._areValuesReversed();
-		const ariaHandlesText = {};
+		const ariaHandlesText: AriaHandlesText = {};
 
 		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
-			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
-			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION as I18nText);
+			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION as I18nText);
 		} else {
-			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
-			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION as I18nText);
+			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION as I18nText);
 		}
 
 		return ariaHandlesText;
@@ -200,16 +222,52 @@ class RangeSlider extends SliderBase {
 		}
 
 		this.notResized = true;
-		this.syncUIAndState("startValue", "endValue");
-		this._updateHandlesAndRange(null);
+		this.syncUIAndState();
+		this._updateHandlesAndRange(0);
 	}
 
-	_onfocusin(event) {
+	syncUIAndState() {
+		// Validate step and update the stored state for the step property.
+		if (this.isPropertyUpdated("step")) {
+			this._validateStep(this.step);
+			this.storePropertyState("step");
+		}
+
+		// Recalculate the tickmarks and labels and update the stored state.
+		if (this.isPropertyUpdated("min", "max", "startValue", "endValue")) {
+			this.storePropertyState("min", "max");
+
+			// Here the value props are changed programmatically (not by user interaction)
+			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
+			// min and max bounderies and update the previous state reference.
+			const normalizedStartValue = SliderBase.clipValue(this.startValue, this._effectiveMin, this._effectiveMax);
+			this.startValue = normalizedStartValue;
+			this.updateStateStorageAndFireInputEvent("startValue");
+			this.storePropertyState("startValue");
+
+			const normalizedEndValue = SliderBase.clipValue(this.endValue, this._effectiveMin, this._effectiveMax);
+			this.endValue = normalizedEndValue;
+			this.updateStateStorageAndFireInputEvent("endValue");
+			this.storePropertyState("endValue");
+		}
+
+		// Labels must be updated if any of the min/max/step/labelInterval props are changed
+		if (this.labelInterval && this.showTickmarks) {
+			this._createLabels();
+		}
+
+		// Update the stored state for the labelInterval, if changed
+		if (this.isPropertyUpdated("labelInterval")) {
+			this.storePropertyState("labelInterval");
+		}
+	}
+
+	_onfocusin() {
 		// If this is the initial focusin of the component save its initial
 		// value properties so they could be restored on ESC key press
-		if (!this._getInitialValue("endValue")) {
-			this._setInitialValue("startValue", this.startValue);
-			this._setInitialValue("endValue", this.endValue);
+		if (!this._endValueInitial) {
+			this._startValueInitial = this.startValue;
+			this._endValueInitial = this.endValue;
 		}
 
 		if (this.showTooltip) {
@@ -229,15 +287,15 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_onfocusout(event) {
+	_onfocusout() {
 		if (this._isFocusing()) {
 			this._preventFocusOut();
 			return;
 		}
 
-		this._setAffectedValue(null);
-		this._setInitialValue("startValue", null);
-		this._setInitialValue("endValue", null);
+		this._setAffectedValue(undefined);
+		this._startValueInitial = undefined;
+		this._endValueInitial = undefined;
 
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
@@ -251,16 +309,16 @@ class RangeSlider extends SliderBase {
 	*
 	* @private
 	*/
-	_onkeyup(event) {
-		super._onkeyup(event);
+	_onkeyup() {
+		super._onkeyup();
 
 		this._swapValues();
-		this._setAffectedValue(null);
+		this._setAffectedValue(undefined);
 	}
 
-	_handleActionKeyPress(event) {
-		if (isEscape(event)) {
-			this.update(null, this._getInitialValue("startValue"), this._getInitialValue("endValue"));
+	_handleActionKeyPress(e: KeyboardEvent) {
+		if (isEscape(e)) {
+			this.update(undefined, this._startValueInitial, this._endValueInitial);
 			return;
 		}
 
@@ -269,31 +327,33 @@ class RangeSlider extends SliderBase {
 
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
-		const affectedValue = this._valueAffected;
+		const affectedValue = this._valueAffected!;
 
 		// If home/end key is pressed and no single handle is focused the active element
 		// is the range selection - update both start and end values. Otherwise, if 'home'
 		// is pressed the 'startValue'will be used for the start-handle offset calculation,
 		// if 'End' is pressed - the 'endValue' will be used for the end-handle update.
-		if ((isEnd(event) || isHome(event)) && !affectedValue) {
-			this._homeEndForSelectedRange(event, isHome(event) ? "startValue" : "endValue", min, max);
+		if ((isEnd(e) || isHome(e)) && !affectedValue) {
+			this._homeEndForSelectedRange(e, isHome(e) ? "startValue" : "endValue", min, max);
 			return;
 		}
 
 		// Calculate how much the value should be increased/decreased based on the action key
-		const newValueOffset = this._handleActionKeyPressBase(event, affectedValue);
+		const newValueOffset = this._handleActionKeyPressBase(e, affectedValue);
 
 		if (!newValueOffset) {
 			return;
 		}
 
 		// Update a single value if one of the handles is focused or the range if not already at min or max
+		const ctor = this.constructor as typeof RangeSlider;
 		if (affectedValue && !this._isPressInCurrentRange) {
-			const newValue = this.constructor.clipValue(newValueOffset + this[affectedValue], min, max);
-			this.update(affectedValue, newValue, null);
+			const propValue = this[affectedValue as keyof RangeSlider] as number;
+			const newValue = ctor.clipValue(newValueOffset + propValue, min, max);
+			this.update(affectedValue, newValue, undefined);
 		} else if ((newValueOffset < 0 && this.startValue > min) || (newValueOffset > 0 && this.endValue < max)) {
-			const newStartValue = this.constructor.clipValue(newValueOffset + this.startValue, min, max);
-			const newEndValue = this.constructor.clipValue(newValueOffset + this.endValue, min, max);
+			const newStartValue = ctor.clipValue(newValueOffset + this.startValue, min, max);
+			const newEndValue = ctor.clipValue(newValueOffset + this.endValue, min, max);
 			this.update(affectedValue, newStartValue, newEndValue);
 		}
 	}
@@ -305,16 +365,16 @@ class RangeSlider extends SliderBase {
 	 * @private
 	 */
 	_setAffectedValueByFocusedElement() {
-		if (this.shadowRoot.activeElement === this._startHandle) {
-			this._setAffectedValue(RangeSlider.VALUES.start);
+		if (this.shadowRoot!.activeElement === this._startHandle) {
+			this._setAffectedValue("startValue");
 		}
 
-		if (this.shadowRoot.activeElement === this._endHandle) {
-			this._setAffectedValue(RangeSlider.VALUES.end);
+		if (this.shadowRoot!.activeElement === this._endHandle) {
+			this._setAffectedValue("endValue");
 		}
 
-		if (this.shadowRoot.activeElement === this._progressBar) {
-			this._setAffectedValue(null);
+		if (this.shadowRoot!.activeElement === this._progressBar) {
+			this._setAffectedValue(undefined);
 		}
 
 		this._setIsPressInCurrentRange(!this._valueAffected);
@@ -326,12 +386,13 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_homeEndForSelectedRange(event, affectedValue, min, max) {
-		const newValueOffset = this._handleActionKeyPressBase(event, affectedValue);
-		const newStartValue = this.constructor.clipValue(newValueOffset + this.startValue, min, max);
-		const newEndValue = this.constructor.clipValue(newValueOffset + this.endValue, min, max);
+	_homeEndForSelectedRange(e: KeyboardEvent, affectedValue: string, min: number, max: number) {
+		const newValueOffset = this._handleActionKeyPressBase(e, affectedValue);
+		const ctor = this.constructor as typeof RangeSlider;
+		const newStartValue = ctor.clipValue(newValueOffset + this.startValue, min, max);
+		const newEndValue = ctor.clipValue(newValueOffset + this.endValue, min, max);
 
-		this.update(null, newStartValue, newEndValue);
+		this.update(undefined, newStartValue, newEndValue);
 	}
 
 	/**
@@ -341,15 +402,27 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	update(affectedValue, startValue, endValue) {
+	update(affectedValue: string | undefined, startValue: number | undefined, endValue: number | undefined) {
 		if (!affectedValue) {
-			this.updateValue("startValue", startValue);
-			this.updateValue("endValue", endValue);
-			this._updateHandlesAndRange(null);
+			this.startValue = startValue!;
+			this.updateStateStorageAndFireInputEvent("startValue");
+
+			this.endValue = endValue!;
+			this.updateStateStorageAndFireInputEvent("endValue");
+			this._updateHandlesAndRange(0);
 		} else {
 			const newValue = startValue;
-			this._updateHandlesAndRange(newValue);
-			this.updateValue(affectedValue, newValue);
+			this._updateHandlesAndRange(newValue || 0);
+
+			if (affectedValue === "startValue") {
+				this.startValue = newValue!;
+				this.updateStateStorageAndFireInputEvent("startValue");
+			}
+
+			if (affectedValue === "endValue") {
+				this.endValue = newValue!;
+				this.updateStateStorageAndFireInputEvent("endValue");
+			}
 		}
 	}
 
@@ -358,7 +431,7 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_onmousedown(event) {
+	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this._effectiveStep === 0) {
@@ -366,10 +439,10 @@ class RangeSlider extends SliderBase {
 		}
 
 		// Calculate the new value from the press position of the event
-		const newValue = this.handleDownBase(event);
+		const newValue = this.handleDownBase(e);
 
 		// Determine the rest of the needed details from the start of the interaction.
-		this._saveInteractionStartData(event, newValue);
+		this._saveInteractionStartData(e, newValue);
 
 		this.rangePressed = this._isPressInCurrentRange;
 
@@ -380,7 +453,7 @@ class RangeSlider extends SliderBase {
 		}
 
 		// Update Slider UI and internal state
-		this.update(this._valueAffected, newValue, null);
+		this.update(this._valueAffected, newValue, undefined);
 	}
 
 	/**
@@ -393,15 +466,16 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_saveInteractionStartData(event, newValue) {
-		const progressBarDom = this.shadowRoot.querySelector(".ui5-slider-progress").getBoundingClientRect();
+	_saveInteractionStartData(e: TouchEvent | MouseEvent, newValue: number) {
+		const progressBarDom = this.shadowRoot!.querySelector(".ui5-slider-progress")!.getBoundingClientRect();
 
 		// Save the state of the value properties on the start of the interaction
 		this._startValueAtBeginningOfAction = this.startValue;
 		this._endValueAtBeginningOfAction = this.endValue;
 
 		// Save the initial press point coordinates (position)
-		this._initialPageXPosition = this.constructor.getPageXValueFromEvent(event);
+		const ctor = this.constructor as typeof RangeSlider;
+		this._initialPageXPosition = ctor.getPageXValueFromEvent(e);
 		// Which element of the Range Slider is pressed and which value property to be modified on further interaction
 		this._pressTargetAndAffectedValue(this._initialPageXPosition, newValue);
 		// Use the progress bar to save the initial coordinates of the start-handle when the interaction begins.
@@ -413,8 +487,8 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_handleMove(event) {
-		event.preventDefault();
+	_handleMove(e: TouchEvent | MouseEvent) {
+		e.preventDefault();
 
 		// If 'step' is 0 no interaction is available as there is no constant quantitative representation of the value
 		if (this.disabled || this._effectiveStep === 0) {
@@ -423,12 +497,12 @@ class RangeSlider extends SliderBase {
 
 		// Update UI and state when dragging a single Range Slider handle
 		if (!this._isPressInCurrentRange) {
-			this._updateValueOnHandleDrag(event);
+			this._updateValueOnHandleDrag(e);
 			return;
 		}
 
 		// Updates UI and state when dragging of the whole selected range
-		this._updateValueOnRangeDrag(event);
+		this._updateValueOnRangeDrag(e);
 	}
 
 	/**
@@ -436,9 +510,10 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_updateValueOnHandleDrag(event) {
-		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
-		this.update(this._valueAffected, newValue, null);
+	_updateValueOnHandleDrag(event: TouchEvent | MouseEvent) {
+		const ctor = this.constructor as typeof RangeSlider;
+		const newValue = ctor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
+		this.update(this._valueAffected, newValue, undefined);
 	}
 
 	/**
@@ -446,25 +521,26 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_updateValueOnRangeDrag(event) {
+	_updateValueOnRangeDrag(event: TouchEvent | MouseEvent) {
 		// Calculate the new 'start' and 'end' values from the offset between the original press point and the current position of the mouse
-		const currentPageXPos = this.constructor.getPageXValueFromEvent(event);
-		const newValues = this._calculateRangeOffset(currentPageXPos, this._initialStartHandlePageX);
+		const ctor = this.constructor as typeof RangeSlider;
+		const currentPageXPos = ctor.getPageXValueFromEvent(event);
+		const newValues = this._calculateRangeOffset(currentPageXPos, this._initialStartHandlePageX!);
 
 		// No matter the which value is set as the one to be modified (by prev. user action) we want to modify both of them
-		this._setAffectedValue(null);
+		this._setAffectedValue(undefined);
 
-		// Update the UI and the state acccording to the calculated new values
-		this.update(null, newValues[0], newValues[1]);
+		// Update the UI and the state according to the calculated new values
+		this.update(undefined, newValues[0], newValues[1]);
 	}
 
 	_handleUp() {
 		this._swapValues();
 		this._setAffectedValueByFocusedElement();
-		this._setAffectedValue(null);
+		this._setAffectedValue(undefined);
 
-		this._startValueAtBeginningOfAction = null;
-		this._endValueAtBeginningOfAction = null;
+		this._startValueAtBeginningOfAction = undefined;
+		this._endValueAtBeginningOfAction = undefined;
 		this._setIsPressInCurrentRange(false);
 
 		this.handleUpBase();
@@ -490,9 +566,9 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_pressTargetAndAffectedValue(clientX, value) {
-		const startHandle = this.shadowRoot.querySelector(".ui5-slider-handle--start");
-		const endHandle = this.shadowRoot.querySelector(".ui5-slider-handle--end");
+	_pressTargetAndAffectedValue(clientX: number, value: number) {
+		const startHandle = this.shadowRoot!.querySelector(".ui5-slider-handle--start")!;
+		const endHandle = this.shadowRoot!.querySelector(".ui5-slider-handle--end")!;
 
 		// Check if the press point is in the bounds of any of the Range Slider handles
 		const handleStartDomRect = startHandle.getBoundingClientRect();
@@ -507,16 +583,16 @@ class RangeSlider extends SliderBase {
 
 		// Return that handle that is closer to the press point
 		if (inHandleEndDom || value > this.endValue) {
-			this._setAffectedValue(RangeSlider.VALUES.end);
+			this._setAffectedValue("endValue");
 		}
 
 		// If one of the handle is pressed return that one
 		if (inHandleStartDom || value < this.startValue) {
-			this._setAffectedValue(RangeSlider.VALUES.start);
+			this._setAffectedValue("startValue");
 		}
 
 		// Flag if press is in the current select range
-		const isNewValueInCurrentRange = value >= this._startValueAtBeginningOfAction && value <= this._endValueAtBeginningOfAction;
+		const isNewValueInCurrentRange = this._startValueAtBeginningOfAction !== undefined && this._endValueAtBeginningOfAction !== undefined && value >= this._startValueAtBeginningOfAction && value <= this._endValueAtBeginningOfAction;
 		this._setIsPressInCurrentRange(!(this._valueAffected || this._handeIsPressed) ? isNewValueInCurrentRange : false);
 	}
 
@@ -526,11 +602,11 @@ class RangeSlider extends SliderBase {
 	 * - mouse press position - cursor coordinates relative to the start/end handles
 	 * - selected inner element via a keyboard navigation
 	 *
-	 * @param {string} valuePropAffectedByInteraction The value that will get modified by the interaction
+	 * @param {string} affectedValue The value that will get modified by the interaction
 	 * @private
 	 */
-	_setAffectedValue(valuePropAffectedByInteraction) {
-		this._valueAffected = valuePropAffectedByInteraction;
+	_setAffectedValue(affectedValue: AffectedValue | undefined) {
+		this._valueAffected = affectedValue;
 
 		// If the values have been swapped reset the reversed flag
 		if (this._areValuesReversed()) {
@@ -544,7 +620,7 @@ class RangeSlider extends SliderBase {
 	 * @param {boolean} isPressInCurrentRange Did the current press action occur in the current range (between the two handles)
 	 * @private
 	 */
-	_setIsPressInCurrentRange(isPressInCurrentRange) {
+	_setIsPressInCurrentRange(isPressInCurrentRange: boolean) {
 		this._isPressInCurrentRange = isPressInCurrentRange;
 	}
 
@@ -581,11 +657,11 @@ class RangeSlider extends SliderBase {
 			this._progressBar.focus();
 		}
 
-		if ((affectedValue === RangeSlider.VALUES.start && !isReversed) || (affectedValue === RangeSlider.VALUES.end && isReversed)) {
+		if ((affectedValue === "startValue" && !isReversed) || (affectedValue === "endValue" && isReversed)) {
 			this._startHandle.focus();
 		}
 
-		if ((affectedValue === RangeSlider.VALUES.end && !isReversed) || (affectedValue === RangeSlider.VALUES.start && isReversed)) {
+		if ((affectedValue === "endValue" && !isReversed) || (affectedValue === "startValue" && isReversed)) {
 			this._endHandle.focus();
 		}
 	}
@@ -601,9 +677,9 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_calculateRangeOffset(currentPageXPos, initialStartHandlePageXPos) {
+	_calculateRangeOffset(currentPageXPos: number, initialStartHandlePageXPos: number) {
 		// Return the current values if there is no difference in the
-		// possitions of the initial press and the current pointer
+		// positions of the initial press and the current pointer
 		if (this._initialPageXPosition === currentPageXPos) {
 			return [this.startValue, this.endValue];
 		}
@@ -617,7 +693,8 @@ class RangeSlider extends SliderBase {
 
 		// When the end handle reaches the max possible value prevent the start handle from moving
 		// And the opposite - if the start handle reaches the beginning of the slider keep the initially selected range.
-		startValue = this.constructor.clipValue(startValue, min, max - selectedRange);
+		const ctor = this.constructor as typeof RangeSlider;
+		startValue = ctor.clipValue(startValue, min, max - selectedRange);
 
 		return [startValue, startValue + selectedRange];
 	}
@@ -631,7 +708,7 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_calculateStartValueByOffset(currentPageXPos, initialStartHandlePageXPos) {
+	_calculateStartValueByOffset(currentPageXPos: number, initialStartHandlePageXPos: number) {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 		const step = this._effectiveStep;
@@ -645,18 +722,19 @@ class RangeSlider extends SliderBase {
 		- calculate the new position of the start handle from its old pageX value combined with the movement offset;
 		- calculate the start value based on its new pageX coordinates;
 		- 'stepify' the calculated value based on the specified step property; */
-		if (currentPageXPos > this._initialPageXPosition) {
+		const ctor = this.constructor as typeof RangeSlider;
+		if (currentPageXPos > this._initialPageXPosition!) {
 			// Difference between the new position of the pointer and when the press event initial occured
-			positionOffset = currentPageXPos - this._initialPageXPosition;
+			positionOffset = currentPageXPos - this._initialPageXPosition!;
 
 			startValuePageX = initialStartHandlePageXPos + positionOffset;
-			startValue = this.constructor.computedValueFromPageX(startValuePageX, min, max, dom, this.directionStart);
-			startValue = this.constructor.getSteppedValue(startValue, step, min);
+			startValue = ctor.computedValueFromPageX(startValuePageX, min, max, dom, this.directionStart);
+			startValue = ctor.getSteppedValue(startValue, step, min);
 		} else {
-			positionOffset = this._initialPageXPosition - currentPageXPos;
+			positionOffset = this._initialPageXPosition! - currentPageXPos;
 			startValuePageX = initialStartHandlePageXPos - positionOffset;
-			startValue = this.constructor.computedValueFromPageX(startValuePageX, min, max, dom, this.directionStart);
-			startValue = this.constructor.getSteppedValue(startValue, step, min);
+			startValue = ctor.computedValueFromPageX(startValuePageX, min, max, dom, this.directionStart);
+			startValue = ctor.getSteppedValue(startValue, step, min);
 		}
 
 		return startValue;
@@ -668,20 +746,20 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_updateHandlesAndRange(newValue) {
+	_updateHandlesAndRange(newValue: number) {
 		const max = this._effectiveMax;
 		const min = this._effectiveMin;
-		const prevStartValue = this.getStoredPropertyState("startValue");
-		const prevEndValue = this.getStoredPropertyState("endValue");
+		const prevStartValue = this.getStoredPropertyState("startValue") || 0;
+		const prevEndValue = this.getStoredPropertyState("endValue") || 0;
 		const affectedValue = this._valueAffected;
 
 		// The value according to which we update the UI can be either the startValue
 		// or the endValue property. It is determined in _getClosestHandle()
 		// depending on to which handle is closer the user interaction.
-		if (affectedValue === RangeSlider.VALUES.start) {
+		if (affectedValue === "startValue") {
 			this._selectedRange = (prevEndValue - newValue) / (max - min);
 			this._firstHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
-		} else if (affectedValue === RangeSlider.VALUES.end) {
+		} else if (affectedValue === "endValue") {
 			this._selectedRange = ((newValue - prevStartValue)) / (max - min);
 			this._secondHandlePositionFromStart = ((newValue - min) / (max - min)) * 100;
 		} else {
@@ -707,7 +785,7 @@ class RangeSlider extends SliderBase {
 	_swapValues() {
 		const affectedValue = this._valueAffected;
 
-		if (affectedValue === RangeSlider.VALUES.start && this.startValue > this.endValue) {
+		if (affectedValue === "startValue" && this.startValue > this.endValue) {
 			const prevEndValue = this.endValue;
 			this.endValue = this.startValue;
 			this.startValue = prevEndValue;
@@ -716,7 +794,7 @@ class RangeSlider extends SliderBase {
 			this.focusInnerElement();
 		}
 
-		if (affectedValue === RangeSlider.VALUES.end && this.endValue < this.startValue) {
+		if (affectedValue === "endValue" && this.endValue < this.startValue) {
 			const prevStartValue = this.startValue;
 			this.startValue = this.endValue;
 			this.endValue = prevStartValue;
@@ -761,15 +839,15 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _startHandle() {
-		return this.shadowRoot.querySelector(".ui5-slider-handle--start");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-handle--start")!;
 	}
 
 	get _endHandle() {
-		return this.shadowRoot.querySelector(".ui5-slider-handle--end");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-handle--end")!;
 	}
 
 	get _progressBar() {
-		return this.shadowRoot.querySelector(".ui5-slider-progress");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-slider-progress")!;
 	}
 
 	get _ariaLabelledByStartHandleRefs() {
@@ -787,18 +865,15 @@ class RangeSlider extends SliderBase {
 	get styles() {
 		return {
 			progress: {
-				"width": `${this._selectedRange * 100}%`,
+				"width": `${this._selectedRange! * 100}%`,
 				"transform-origin": `${this.directionStart} top`,
-				[this.directionStart]: `${this._firstHandlePositionFromStart}%`,
+				[this.directionStart]: `${this._firstHandlePositionFromStart!}%`,
 			},
 			startHandle: {
-				[this.directionStart]: `${this._firstHandlePositionFromStart}%`,
+				[this.directionStart]: `${this._firstHandlePositionFromStart!}%`,
 			},
 			endHandle: {
-				[this.directionStart]: `${this._secondHandlePositionFromStart}%`,
-			},
-			tickmarks: {
-				"background": `${this._tickmarks}`,
+				[this.directionStart]: `${this._secondHandlePositionFromStart!}%`,
 			},
 			label: {
 				"width": `${this._labelWidth}%`,
