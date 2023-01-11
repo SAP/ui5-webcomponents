@@ -35,9 +35,9 @@
   },
   "devDependencies": {
     "@buxlabs/amd-to-es6": "0.16.1",
-    "@openui5/sap.ui.core": "1.101.0",
+    "@openui5/sap.ui.core": "1.109.0",
     "@ui5/webcomponents-tools": "1.7.4",
-    "chromedriver": "104.0.0",
+    "chromedriver": "107.0.3",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",

@@ -236,7 +236,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	get periodsArray() {
-		return this.getFormat().aDayPeriods.map(x => x.toUpperCase());
+		return this.getFormat().aDayPeriodsAbbrev.map(x => x.toUpperCase());
 	}
 
 	get _hoursSliderFocused() {
