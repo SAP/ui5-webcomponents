@@ -14,12 +14,6 @@ export const parameters: Parameters = {
     removeComments: true,
   },
   actions: { argTypesRegex: "^ui5-[a-z].*" }, // automatically match ui5-* events for actions
-  controls: {
-    matchers: {
-      color: /(background|color)$/i,
-      date: /Date$/,
-    },
-  },
   docs: {
     iframeHeight: "300px", // stories including script tags are loaded in an iframe, this is the height of the iframe
     transformSource: (
