@@ -6,8 +6,12 @@
 {{/inline}}
 
 {{#*inline "progressBar"}}
-	<div class="ui5-slider-progress-container">
+	<div
+		class="ui5-slider-progress-container"
+		part="progress-container"
+	>
 		<div class="ui5-slider-progress"
+			part="progress-bar"
 			style="{{styles.progress}}"
 			@focusin="{{_onfocusin}}"
 			@focusout="{{_onfocusout}}"
@@ -25,6 +29,7 @@
 
 {{#*inline "handles"}}
 	<div class="ui5-slider-handle ui5-slider-handle--start"
+		part="handle"
 		style="{{styles.startHandle}}"
 		@focusin="{{_onfocusin}}"
 		@focusout="{{_onfocusout}}"
@@ -47,6 +52,7 @@
 	</div>
 
 	<div class="ui5-slider-handle ui5-slider-handle--end"
+		part="handle"
 		style="{{styles.endHandle}}"
 		@focusin="{{_onfocusin}}"
 		@focusout="{{_onfocusout}}"
