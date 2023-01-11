@@ -1,78 +1,26 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+// @ts-ignore
 import CheckBox from "./CheckBox.js";
+import type { ITableRow, TableColumnInfo } from "./Table.js";
 import TableGroupRowTemplate from "./generated/templates/TableGroupRowTemplate.lit.js";
 import TableMode from "./types/TableMode.js";
 
 // Texts
 import {
 	TABLE_GROUP_ROW_ARIA_LABEL,
+// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import styles from "./generated/themes/TableGroupRow.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-table-group-row",
-	slots: /** @lends sap.ui.webc.main.TableGroupRow.prototype */ {
-		/**
-		 * Defines the text of the component.
-		 * <br>
-		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.TableGroupRow.prototype */ {
-		/**
-		 * Defines the mode of the row
-		 *
-		 * <br><br>
-		 * <b>Note:</b>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>None</code></li>
-		 * <li><code>SingleSelect</code></li>
-		 * <li><code>MultiSelect</code></li>
-		 * </ul>
-		 * @type {sap.ui.webc.main.types.TableMode}
-		 * @defaultvalue "None"
-		 * @private
-		 */
-		mode: {
-			type: TableMode,
-			defaultValue: TableMode.None,
-		},
-		_columnsInfo: {
-			type: Object,
-			multiple: true,
-		},
-		_tabIndex: {
-			type: String,
-			defaultValue: "-1",
-		},
-		_busy: {
-			type: Boolean,
-		},
-		_ariaPosition: {
-			type: String,
-			defaultValue: "",
-			noAttribute: true,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.TableGroupRow.prototype */ {
-		_focused: {},
-	},
-};
 
 /**
  * @class
@@ -99,10 +47,54 @@ const metadata = {
  * @implements sap.ui.webc.main.ITableRow
  * @public
  */
-class TableGroupRow extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+@customElement("ui5-table-group-row")
+@event("_focused")
+class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
+	/**
+	 * Defines the mode of the row
+	 *
+	 * <br><br>
+	 * <b>Note:</b>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>None</code></li>
+	 * <li><code>SingleSelect</code></li>
+	 * <li><code>MultiSelect</code></li>
+	 * </ul>
+	 * @type {sap.ui.webc.main.types.TableMode}
+	 * @defaultvalue "None"
+	 * @private
+	 */
+	@property({ type: TableMode, defaultValue: TableMode.None })
+	mode!: TableMode;
+
+	@property({ type: Object, multiple: true })
+	_columnsInfo!: Array<TableColumnInfo>;
+
+	@property({ defaultValue: "-1" })
+	_tabIndex!: string;
+
+	@property({ type: Boolean })
+	_busy!: boolean;
+
+	@property({ defaultValue: "", noAttribute: true })
+	_ariaPosition!: string;
+
+	// Properties, set and handled by the Table
+	selected = false;
+	_tabbables: Array<HTMLElement> = [];
+	_columnsInfoString = "";
+
+	/**
+	 * Defines the text of the component.
+	 * <br>
+	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 *
+	 * @type {Node[]}
+	 * @name sap.ui.webc.main.TableGroupRow.prototype.default
+	 * @slot
+	 * @public
+	 */
 
 	static get styles() {
 		return styles;
@@ -122,19 +114,19 @@ class TableGroupRow extends UI5Element {
 		];
 	}
 
-	constructor() {
-		super();
-	}
+	static i18nBundle: I18nBundle;
+
+	_colSpan?: number;
 
 	get colSpan() {
 		return this._colSpan;
 	}
 
 	get ariaLabelText() {
-		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL)} ${this.innerText}. ${this._ariaPosition}`;
+		return `${TableGroupRow.i18nBundle.getText(TABLE_GROUP_ROW_ARIA_LABEL as I18nText)} ${this.innerText}. ${this._ariaPosition}`;
 	}
 
-	visibleColCount() {
+	visibleColCount(): number {
 		let count = this._columnsInfo.reduce((acc, column) => {
 			return column.visible ? ++acc : acc;
 		}, 0);
@@ -153,8 +145,8 @@ class TableGroupRow extends UI5Element {
 		this._colSpan = this.visibleColCount();
 	}
 
-	_onfocusin(event) {
-		this.fireEvent("_focused", event);
+	_onfocusin(e: FocusEvent) {
+		this.fireEvent("_focused", e);
 	}
 
 	static async onDefine() {

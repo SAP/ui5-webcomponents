@@ -1,5 +1,10 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
@@ -10,31 +15,8 @@ import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
 // Texts
 import {
 	SLIDER_ARIA_DESCRIPTION,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-slider",
-	languageAware: true,
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.main.Slider.prototype */  {
-		/**
-		 * Current value of the slider
-		 *
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @defaultvalue 0
-		 * @formEvents change input
-		 * @formProperty
-		 * @public
-		 */
-		value: {
-			type: Float,
-			defaultValue: 0,
-		},
-	},
-};
 
 /**
  * @class
@@ -106,10 +88,28 @@ const metadata = {
  * @since 1.0.0-rc.11
  * @public
  */
+@customElement("ui5-slider")
+@languageAware
 class Slider extends SliderBase {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Current value of the slider
+	 *
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @name sap.ui.webc.main.Slider.prototype.value
+	 * @defaultvalue 0
+	 * @formEvents change input
+	 * @formProperty
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 0 })
+	value!: number;
+
+	_valueInitial?: number;
+	_valueOnInteractionStart?: number;
+	_progressPercentage = 0;
+	_handlePositionFromStart = 0;
+
+	static i18nBundle: I18nBundle;
 
 	static get template() {
 		return SliderTemplate;
@@ -117,8 +117,7 @@ class Slider extends SliderBase {
 
 	constructor() {
 		super();
-		this._stateStorage.value = null;
-		this._setInitialValue("value", null);
+		this._stateStorage.value = undefined;
 	}
 
 	static get dependencies() {
@@ -142,8 +141,38 @@ class Slider extends SliderBase {
 		}
 
 		this.notResized = true;
-		this.syncUIAndState("value");
+		this.syncUIAndState();
 		this._updateHandleAndProgress(this.value);
+	}
+
+	syncUIAndState() {
+		// Validate step and update the stored state for the step property.
+		if (this.isPropertyUpdated("step")) {
+			this._validateStep(this.step);
+			this.storePropertyState("step");
+		}
+
+		// Recalculate the tickmarks and labels and update the stored state.
+		if (this.isPropertyUpdated("min", "max", "value")) {
+			this.storePropertyState("min", "max");
+
+			// Here the value props are changed programmatically (not by user interaction)
+			// and it won't be "stepified" (rounded to the nearest step). 'Clip' them within
+			// min and max bounderies and update the previous state reference.
+			this.value = SliderBase.clipValue(this.value, this._effectiveMin, this._effectiveMax);
+			this.updateStateStorageAndFireInputEvent("value");
+			this.storePropertyState("value");
+		}
+
+		// Labels must be updated if any of the min/max/step/labelInterval props are changed
+		if (this.labelInterval && this.showTickmarks) {
+			this._createLabels();
+		}
+
+		// Update the stored state for the labelInterval, if changed
+		if (this.isPropertyUpdated("labelInterval")) {
+			this.storePropertyState("labelInterval");
+		}
 	}
 
 	/**
@@ -151,34 +180,36 @@ class Slider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_onmousedown(event) {
+	_onmousedown(e: TouchEvent | MouseEvent) {
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
 		if (this.disabled || this.step === 0) {
 			return;
 		}
 
-		const newValue = this.handleDownBase(event);
+		const newValue = this.handleDownBase(e);
 		this._valueOnInteractionStart = this.value;
 
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
-		if (this._getInitialValue("value") === null) {
-			this._setInitialValue("value", this.value);
+		if (this._valueInitial === undefined) {
+			this._valueInitial = this.value;
 		}
 
 		// Do not yet update the Slider if press is over a handle. It will be updated if the user drags the mouse.
-		if (!this._isHandlePressed(this.constructor.getPageXValueFromEvent(event))) {
+		const ctor = this.constructor as typeof Slider;
+		if (!this._isHandlePressed(ctor.getPageXValueFromEvent(e))) {
 			this._updateHandleAndProgress(newValue);
-			this.updateValue("value", newValue);
+			this.value = newValue;
+			this.updateStateStorageAndFireInputEvent("value");
 		}
 	}
 
-	_onfocusin(event) {
+	_onfocusin() {
 		// Set initial value if one is not set previously on focus in.
 		// It will be restored if ESC key is pressed.
-		if (this._getInitialValue("value") === null) {
-			this._setInitialValue("value", this.value);
+		if (this._valueInitial === undefined) {
+			this._valueInitial = this.value;
 		}
 
 		if (this.showTooltip) {
@@ -186,7 +217,7 @@ class Slider extends SliderBase {
 		}
 	}
 
-	_onfocusout(event) {
+	_onfocusout() {
 		// Prevent focusout when the focus is getting set within the slider internal
 		// element (on the handle), before the Slider' customElement itself is finished focusing
 		if (this._isFocusing()) {
@@ -196,7 +227,7 @@ class Slider extends SliderBase {
 
 		// Reset focus state and the stored Slider's initial
 		// value that was saved when it was first focused in
-		this._setInitialValue("value", null);
+		this._valueInitial = undefined;
 
 		if (this.showTooltip) {
 			this._tooltipVisibility = SliderBase.TOOLTIP_VISIBILITY.HIDDEN;
@@ -208,8 +239,8 @@ class Slider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_handleMove(event) {
-		event.preventDefault();
+	_handleMove(e: TouchEvent | MouseEvent) {
+		e.preventDefault();
 
 		// If step is 0 no interaction is available because there is no constant
 		// (equal for all user environments) quantitative representation of the value
@@ -217,30 +248,32 @@ class Slider extends SliderBase {
 			return;
 		}
 
-		const newValue = this.constructor.getValueFromInteraction(event, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
+		const ctor = this.constructor as typeof Slider;
+		const newValue = ctor.getValueFromInteraction(e, this._effectiveStep, this._effectiveMin, this._effectiveMax, this.getBoundingClientRect(), this.directionStart);
 
 		this._updateHandleAndProgress(newValue);
-		this.updateValue("value", newValue);
+		this.value = newValue;
+		this.updateStateStorageAndFireInputEvent("value");
 	}
 
 	/** Called when the user finish interacting with the slider
 	 *
 	 * @private
 	 */
-	_handleUp(event) {
+	_handleUp() {
 		if (this._valueOnInteractionStart !== this.value) {
 			this.fireEvent("change");
 		}
 
 		this.handleUpBase();
-		this._valueOnInteractionStart = null;
+		this._valueOnInteractionStart = undefined;
 	}
 
 	/** Determines if the press is over the handle
 	 *
 	 * @private
 	 */
-	_isHandlePressed(clientX) {
+	_isHandlePressed(clientX: number) {
 		const sliderHandleDomRect = this._sliderHandle.getBoundingClientRect();
 		return clientX >= sliderHandleDomRect.left && clientX <= sliderHandleDomRect.right;
 	}
@@ -249,7 +282,7 @@ class Slider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_updateHandleAndProgress(newValue) {
+	_updateHandleAndProgress(newValue: number) {
 		const max = this._effectiveMax;
 		const min = this._effectiveMin;
 
@@ -259,15 +292,17 @@ class Slider extends SliderBase {
 		this._handlePositionFromStart = this._progressPercentage * 100;
 	}
 
-	_handleActionKeyPress(event) {
+	_handleActionKeyPress(e: KeyboardEvent) {
 		const min = this._effectiveMin;
 		const max = this._effectiveMax;
 		const currentValue = this.value;
-		const newValue = isEscape(event) ? this._getInitialValue("value") : this.constructor.clipValue(this._handleActionKeyPressBase(event, "value") + currentValue, min, max);
+		const ctor = this.constructor as typeof Slider;
+		const newValue = isEscape(e) ? this._valueInitial : ctor.clipValue(this._handleActionKeyPressBase(e, "value") + currentValue, min, max);
 
 		if (newValue !== currentValue) {
-			this._updateHandleAndProgress(newValue);
-			this.updateValue("value", newValue);
+			this._updateHandleAndProgress(newValue!);
+			this.value = newValue!;
+			this.updateStateStorageAndFireInputEvent("value");
 		}
 	}
 
@@ -294,15 +329,12 @@ class Slider extends SliderBase {
 	}
 
 	get _sliderHandle() {
-		return this.shadowRoot.querySelector(".ui5-slider-handle");
-	}
-
-	get labelItems() {
-		return this._labelItems;
+		return this.shadowRoot!.querySelector(".ui5-slider-handle")!;
 	}
 
 	get tooltipValue() {
-		const stepPrecision = this.constructor._getDecimalPrecisionOfNumber(this._effectiveStep);
+		const ctor = this.constructor as typeof Slider;
+		const stepPrecision = ctor._getDecimalPrecisionOfNumber(this._effectiveStep);
 		return this.value.toFixed(stepPrecision);
 	}
 
@@ -311,7 +343,7 @@ class Slider extends SliderBase {
 	}
 
 	get _ariaLabelledByText() {
-		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
+		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION as I18nText);
 	}
 
 	static async onDefine() {

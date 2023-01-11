@@ -10,6 +10,7 @@ import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
+import IconDesign from "./types/IconDesign.js";
 
 // Styles
 import iconCss from "./generated/themes/Icon.css.js";
@@ -118,6 +119,32 @@ const PRESENTATION_ROLE = "presentation";
  */
 @event("click")
 class Icon extends UI5Element {
+	/**
+	 * Defines the component semantic design.
+	 *
+	 * <br><br>
+	 * <b>The available values are:</b>
+	 *
+	 * <ul>
+	 * <li><code>Contrast</code></li>
+	 * <li><code>Critical</code></li>
+	 * <li><code>Default</code></li>
+	 * <li><code>Information</code></li>
+	 * <li><code>Negative</code></li>
+	 * <li><code>Neutral</code></li>
+	 * <li><code>NonInteractive</code></li>
+	 * <li><code>Positive</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.IconDesign}
+	 * @name sap.ui.webc.main.Icon.prototype.design
+	 * @defaultvalue "Default"
+	 * @public
+	 * @since 1.9.2
+	 */
+	@property({ type: IconDesign, defaultValue: IconDesign.Default })
+	design!: IconDesign;
+
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)
 	 * @name sap.ui.webc.main.Icon.prototype.interactive
