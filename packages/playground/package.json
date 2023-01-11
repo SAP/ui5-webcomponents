@@ -28,7 +28,8 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.1",
     "react-syntax-highlighter": "^15.5.0",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^4.9.4"
   },
   "scripts": {
     "build": "yarn install:dependencies && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist",
@@ -58,9 +59,6 @@
     "prepare:next:manifest": "node ./build-scripts-storybook/parse-manifest.js",
     "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js \"../../docs/\" \"./docs/\"",
     "storybook": "npm-run-all --parallel prepare:next:* && start-storybook -p 6006",
-    "build-storybook": "npm-run-all --parallel prepare:next:* && build-storybook -o ./dist/_playground"
-  },
-  "dependencies": {
-    "cheerio": "^1.0.0-rc.12"
+    "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && build-storybook -o ./dist/_playground"
   }
 }

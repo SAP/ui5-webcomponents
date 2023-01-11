@@ -33,7 +33,7 @@ const main = async () => {
 		console.log(`Generating argTypes for story ${component}`);
 		const apiData = getAPIData(api, component);
 
-		await fs.writeFile(componentPath + '/argTypes.js', `export default ` + apiData.storyArgsTypes);
+		await fs.writeFile(componentPath + '/argTypes.ts', `export default ` + apiData.storyArgsTypes);
 	};
 
 	function getAPIData(api, module) {

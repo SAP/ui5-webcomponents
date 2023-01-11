@@ -1,7 +1,11 @@
+import { Story, Meta } from "@storybook/web-components";
 import { action } from "@storybook/addon-actions";
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+
+// @ts-ignore
+import AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
 
 import argTypes from "./argTypes.js";
 
@@ -10,26 +14,26 @@ import TemplateIndividualWithPopover from "./TemplateIndividualWithPopover.js";
 import TemplateAvatarGroupSizes from "./TemplateAvatarGroupSizes.js";
 
 export default {
-    title: "Components/AvatarGroup",
-    component: "ui5-avatar-group",
-    argTypes,
-};
+  title: "Components/AvatarGroup",
+  component: "ui5-avatar-group",
+  argTypes,
+} as Meta<AvatarGroup>;
 
-const Template = (args) =>
-    html`<ui5-avatar-group
-        .type="${ifDefined(args.type)}"
-        .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
-        @ui5-click="${ifDefined(args["ui5-click"])}"
-    >
-        ${unsafeHTML(args.default)}
-</ui5-avatar-group> `;
+const Template: Story<AvatarGroup> = (args) =>
+  html`<ui5-avatar-group
+    .type="${ifDefined(args.type)}"
+    .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
+    @ui5-click="${ifDefined(args["ui5-click"])}"
+  >
+    ${unsafeHTML(args.default)}
+  </ui5-avatar-group> `;
 
 // Basic
 export const TypeGroup = Template.bind({});
 TypeGroup.storyName = "Type Group";
 TypeGroup.args = {
-    ["ui5-click"]: (e) => action("ui5-click")(e.detail),
-    default: `
+  ["ui5-click"]: (e: CustomEvent) => action("ui5-click")(e.detail),
+  default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
@@ -44,9 +48,9 @@ TypeGroup.args = {
 export const TypeIndividual = Template.bind({});
 TypeIndividual.storyName = "Type Individual";
 TypeIndividual.args = {
-    type: "Individual",
-    ["ui5-click"]: (e) => action("ui5-click")(e.detail),
-    default: `
+  type: "Individual",
+  ["ui5-click"]: (e: CustomEvent) => action("ui5-click")(e.detail),
+  default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
@@ -58,25 +62,25 @@ TypeIndividual.args = {
 };
 
 // Type Individual with Popover
-export const TypeIndividualWithPopover = TemplateIndividualWithPopover.bind({});
+export const TypeIndividualWithPopover: Story = TemplateIndividualWithPopover.bind({});
 TypeIndividualWithPopover.storyName = "Type Individual with Popover";
 TypeIndividualWithPopover.parameters = {
-    docs: {
-        // Opt-out of inline rendering
-        inlineStories: false,
-    },
+  docs: {
+    // Opt-out of inline rendering
+    inlineStories: false,
+  },
 };
 
 // Type Group with Popover
-export const TypeGroupWithPopover = TemplateGroupWithPopover.bind({});
+export const TypeGroupWithPopover: Story = TemplateGroupWithPopover.bind({});
 TypeGroupWithPopover.storyName = "Type Group with Popover";
 TypeGroupWithPopover.parameters = {
-    docs: {
-        // Opt-out of inline rendering
-        inlineStories: false,
-    },
+  docs: {
+    // Opt-out of inline rendering
+    inlineStories: false,
+  },
 };
 
 // Sizes
-export const Sizes = TemplateAvatarGroupSizes.bind({});
+export const Sizes: Story = TemplateAvatarGroupSizes.bind({});
 Sizes.storyName = "Sizes";

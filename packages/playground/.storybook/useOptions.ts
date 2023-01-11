@@ -15,7 +15,7 @@ export const useOptions = (StoryFn) => {
 
     useEffect(() => {
         const Conf = window["sap-ui-webcomponents-bundle"].configuration;
-        const currentTheme = themes[theme.replace(/ /g, "")]
+        const currentTheme: string = themes[theme.replace(/ /g, "")]
 
         Conf.setTheme(currentTheme);
 
