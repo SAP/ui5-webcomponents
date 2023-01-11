@@ -24,7 +24,7 @@ const Template: Story = (args) =>
     color-scheme="${ifDefined(args.colorScheme)}"
     ?interactive="${ifDefined(args.interactive)}"
     aria-haspopup="${ifDefined(args.ariaHaspopup)}"
-    @ui5-click="${ifDefined(args["ui5-click"])}"
+    @click="${ifDefined(args["click"])}"
   >
     ${unsafeHTML(args["default"])}
   </ui5-avatar>`;
@@ -35,7 +35,7 @@ Basic.storyName = "Basic";
 Basic.args = {
   initials: "FJ",
   interactive: true,
-  ["ui5-click"]: (event: CustomEvent) => action("ui5-click")(event.detail),
+  click: (event: CustomEvent) => action("ui5-click")(event.detail),
 };
 
 // With Image

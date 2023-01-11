@@ -25,7 +25,7 @@ const Template: Story<Select> = (args) => {
     selected-option="${ifDefined(args.selectedOption)}"
     accessible-name="${ifDefined(args.accessibleName)}"
     accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
-    @ui5-change="${ifDefined(args["ui5-change"])}"
+    @ui5-change="${ifDefined(args["change"])}"
   >
     ${unsafeHTML(args.default)}
   </ui5-select> `;
@@ -35,7 +35,7 @@ const Template: Story<Select> = (args) => {
 export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
-  ["ui5-change"]: (e: CustomEvent) => action("ui5-change")(e.detail),
+  ["change"]: (e: CustomEvent) => action("ui5-change")(e.detail),
   default: `<ui5-option icon="iphone">Phone</ui5-option>
 	<ui5-option icon="ipad">Tablet</ui5-option>
 	<ui5-option icon="laptop" selected="">Desktop</ui5-option>`,

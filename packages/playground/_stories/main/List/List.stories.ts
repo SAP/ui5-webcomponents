@@ -19,9 +19,9 @@ export default {
 const Template: Story<
   List & {
     default: string;
-    "ui5-item-click": (event: CustomEvent) => void;
-    "ui5-item-delete": (event: CustomEvent) => void;
-    "ui5-selection-change": (event: CustomEvent) => void;
+    "item-click": (event: CustomEvent) => void;
+    "item-delete": (event: CustomEvent) => void;
+    "selection-change": (event: CustomEvent) => void;
   }
 > = (args) => {
   return html` <ui5-list
@@ -36,9 +36,9 @@ const Template: Story<
     no-data-text="${ifDefined(args.noDataText)}"
     accessible-name="${ifDefined(args.accessibleName)}"
     accessible-role="${ifDefined(args.accessibleRole)}"
-    @ui5-item-click="${ifDefined(args["ui5-item-click"])}"
-    @ui5-item-delete="${ifDefined(args["ui5-item-delete"])}"
-    @ui5-selection-change="${ifDefined(args["ui5-selection-change"])}"
+    @item-click="${ifDefined(args["item-click"])}"
+    @item-delete="${ifDefined(args["item-delete"])}"
+    @selection-change="${ifDefined(args["selection-change"])}"
   >
     ${unsafeHTML(args.default)}
   </ui5-list>`;
@@ -48,7 +48,7 @@ const Template: Story<
 export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
-  ["ui5-item-click"]: (event: CustomEvent) =>
+  ["item-click"]: (event: CustomEvent) =>
     action("ui5-item-click")(event.detail),
   default: `<ui5-li
 		icon="nutrition-activity"
@@ -139,7 +139,7 @@ SingleSelection.storyName = "Single Selection";
 SingleSelection.args = {
   mode: ListMode.SingleSelect,
   headerText: "Select a country:",
-  ["ui5-selection-change"]: (e: CustomEvent) =>
+  ["selection-change"]: (e: CustomEvent) =>
     action("ui5-selection-change")(e.detail),
   default: `
 	<ui5-li selected icon="map" icon-end>Argentina</ui5-li>
@@ -152,7 +152,7 @@ SingleSelection.args = {
 export const MultiSelection = Template.bind({});
 MultiSelection.storyName = "Multi Selection";
 MultiSelection.args = {
-  ["ui5-selection-change"]: (e: CustomEvent) =>
+  ["selection-change"]: (e: CustomEvent) =>
     action("ui5-selection-change")(e.detail),
   mode: ListMode.MultiSelect,
   headerText: "Multiple selection is possible",
@@ -215,7 +215,7 @@ export const Delete = Template.bind({});
 Delete.storyName = "Delete Mode";
 Delete.args = {
   mode: ListMode.Delete,
-  ["ui5-item-delete"]: (e: CustomEvent) => action("ui5-item-delete")(e.detail),
+  ["item-delete"]: (e: CustomEvent) => action("ui5-item-delete")(e.detail),
   headerText: "Note: The list items removal is up to application developers",
   default: `
 	<ui5-li>Argentina</ui5-li>

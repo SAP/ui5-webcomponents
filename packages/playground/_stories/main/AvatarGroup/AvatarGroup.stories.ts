@@ -23,7 +23,7 @@ const Template: Story<AvatarGroup> = (args) =>
   html`<ui5-avatar-group
     .type="${ifDefined(args.type)}"
     .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
-    @ui5-click="${ifDefined(args["ui5-click"])}"
+    @click="${ifDefined(args["click"])}"
   >
     ${unsafeHTML(args.default)}
   </ui5-avatar-group> `;
@@ -32,7 +32,7 @@ const Template: Story<AvatarGroup> = (args) =>
 export const TypeGroup = Template.bind({});
 TypeGroup.storyName = "Type Group";
 TypeGroup.args = {
-  ["ui5-click"]: (e: CustomEvent) => action("ui5-click")(e.detail),
+  ["click"]: (e: CustomEvent) => action("ui5-click")(e.detail),
   default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
@@ -49,7 +49,7 @@ export const TypeIndividual = Template.bind({});
 TypeIndividual.storyName = "Type Individual";
 TypeIndividual.args = {
   type: "Individual",
-  ["ui5-click"]: (e: CustomEvent) => action("ui5-click")(e.detail),
+  ["click"]: (e: CustomEvent) => action("ui5-click")(e.detail),
   default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
