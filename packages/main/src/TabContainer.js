@@ -230,7 +230,7 @@ const metadata = {
 		/**
 		 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign}
 		 * @defaultvalue "Solid"
 		 * @since 1.10.0
 		 * @public
@@ -243,7 +243,7 @@ const metadata = {
 		/**
 		 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign.prototype}
+		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign}
 		 * @defaultvalue "Solid"
 		 * @since 1.10.0
 		 * @public
@@ -654,7 +654,7 @@ class TabContainer extends UI5Element {
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
 	 * @readonly
-	 *
+	 * @type {sap.ui.webcomponents.main.ITab[]}
 	 * @returns {sap.ui.webcomponents.main.ITab[]}
 	 */
 	get allItems() {
