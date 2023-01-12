@@ -5,7 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.9.3](https://github.com/SAP/ui5-webcomponents/compare/v1.9.2...v1.9.3) (2022-12-16)
 
-* **docs**:** fix JS Doc generation for Tree, TabContainer([e932f7d](https://github.com/SAP/ui5-webcomponents/commit/8dbc554b1e84fd3f9a2798aeb7108ac92f898506))
+* **docs**:** fix JS Doc generation for Tree, TabContainer([e932f7d](https://github.com/SAP/ui5-webcomponents/commit/764cce8ae08e2ae9b6900cd7f693dff8a44bf764#diff-6266293e8701207e2b7467774e4e5c6ffdb45f6f8669bed6ae220df0513c9704))
 
 
 
