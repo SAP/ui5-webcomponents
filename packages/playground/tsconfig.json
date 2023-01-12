@@ -1,13 +1,15 @@
 {
-    "include": ["_stories/**/*", "global.d.ts"],
+    "include": ["_stories/**/*", ".storybook/**/*", "global.d.ts"],
     "compilerOptions": {
-      "target": "ES2021",
-      // Generate d.ts files
-      "declaration": true,
-      "outDir": "dist",
-      "skipLibCheck": true,
-      "sourceMap": true,
-      "strict": true,
-      "moduleResolution": "node",
-    },
+        "target": "ES2021",
+        // Generate d.ts files
+        "declaration": true,
+        "outDir": "dist",
+        "skipLibCheck": true,
+        "sourceMap": true,
+        "strict": true,
+        "moduleResolution": "node",
+    		"resolveJsonModule": true,
+        "esModuleInterop": true,
+    }
 }

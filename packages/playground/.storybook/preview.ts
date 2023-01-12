@@ -17,7 +17,7 @@ export const parameters: Parameters = {
   docs: {
     iframeHeight: "300px", // stories including script tags are loaded in an iframe, this is the height of the iframe
     transformSource: (
-      source // this is called before rendering of the "code" inside the preview of the stories
+      source: string // this is called before rendering of the "code" inside the preview of the stories
     ) =>
       source
         // Clean empty boolean attribute values
