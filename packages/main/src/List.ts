@@ -674,10 +674,10 @@ class List extends UI5Element {
 	}
 
 	prepareListItems() {
-		const items = this.getItemsForProcessing();
+		const slottedItems = this.getItemsForProcessing();
 
-		items.forEach((item, key) => {
-			const isLastChild = key === items.length - 1;
+		slottedItems.forEach((item, key) => {
+			const isLastChild = key === slottedItems.length - 1;
 			const showBottomBorder = this.separators === ListSeparators.All
 				|| (this.separators === ListSeparators.Inner && !isLastChild);
 
