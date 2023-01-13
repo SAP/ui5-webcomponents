@@ -75,6 +75,7 @@ class Avatar extends UI5Element {
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
 	 * @type {boolean}
+	 * @name sap.ui.webc.main.Avatar.prototype.interactive
 	 * @defaultValue false
 	 * @public
 	 */
@@ -101,6 +102,7 @@ class Avatar extends UI5Element {
 	 *
 	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 	 * @type {string}
+	 * @name sap.ui.webc.main.Avatar.prototype.icon
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -113,6 +115,7 @@ class Avatar extends UI5Element {
 	 * Up to three Latin letters can be displayed as initials.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Avatar.prototype.initials
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -128,6 +131,7 @@ class Avatar extends UI5Element {
 	 * <li><code>Square</code></li>
 	 * </ul>
 	 * @type {sap.ui.webc.main.types.AvatarShape}
+	 * @name sap.ui.webc.main.Avatar.prototype.shape
 	 * @defaultvalue "Circle"
 	 * @public
 	 */
@@ -146,6 +150,7 @@ class Avatar extends UI5Element {
 	 * <li><code>XL</code></li>
 	 * </ul>
 	 * @type {sap.ui.webc.main.types.AvatarSize}
+	 * @name sap.ui.webc.main.Avatar.prototype.shape
 	 * @defaultvalue "S"
 	 * @public
 	 */
@@ -176,6 +181,7 @@ class Avatar extends UI5Element {
 	 * <li><code>Placeholder</code></li>
 	 * </ul>
 	 * @type {sap.ui.webc.main.types.AvatarColorScheme}
+	 * @name sap.ui.webc.main.Avatar.prototype.colorScheme
 	 * @defaultvalue "Accent6"
 	 * @public
 	 */
@@ -193,6 +199,7 @@ class Avatar extends UI5Element {
 	 * If not provided a default text alternative will be set, if present.
 	 *
 	 * @type {string}
+	 * @name sap.ui.webc.main.Avatar.prototype.accessibleName
 	 * @defaultvalue ""
 	 * @public
 	 * @since 1.0.0-rc.7
@@ -227,6 +234,7 @@ class Avatar extends UI5Element {
 	 *		} <br />
 	 * </code>
 	 * @type {HTMLElement}
+	 * @name sap.ui.webc.main.Avatar.prototype.default
 	 * @slot image
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -255,6 +263,7 @@ class Avatar extends UI5Element {
 	 * </ui5-avatar>
 	 *
 	 * @type {HTMLElement}
+	 * @name sap.ui.webc.main.Avatar.prototype.badge
 	 * @slot badge
 	 * @public
 	 * @since 1.7.0
