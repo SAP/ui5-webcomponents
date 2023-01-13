@@ -3,9 +3,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
-// @ts-ignore
 import Dialog from "../Dialog.js";
-// @ts-ignore
 import Button from "../Button.js";
 import ColorPicker from "../ColorPicker.js";
 
