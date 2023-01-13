@@ -206,7 +206,8 @@ class Dialog extends Popup {
 	 * <code>accessibleName</code> should be used.
 	 *
 	 * @type {HTMLElement[]}
-	 * @slot header
+	 * @name sap.ui.webc.main.Dialog.prototype.header
+	 * @slot
 	 * @public
 	 */
 	@slot()
@@ -216,7 +217,8 @@ class Dialog extends Popup {
 	 * Defines the footer HTML Element.
 	 *
 	 * @type {HTMLElement[]}
-	 * @slot footer
+	 * @name sap.ui.webc.main.Dialog.prototype.footer
+	 * @slot
 	 * @public
 	 */
 	@slot()
