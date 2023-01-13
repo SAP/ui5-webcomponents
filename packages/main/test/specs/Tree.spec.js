@@ -75,7 +75,7 @@ describe("Tree proxies properties to list", () => {
 		assert.strictEqual(await treeItem.getAttribute("_mode"), "MultiSelect", "Mode applied to the tree item");
 
 		const modes = ["None", "SingleSelect", "SingleSelectBegin", "SingleSelectEnd", "MultiSelect", "Delete"];
-		modes.map(async mode => {
+		modes.forEach(async mode => {
 			await tree.setAttribute("mode", mode);
 			assert.strictEqual(await list.getAttribute("mode"), mode, "Mode applied");
 		});
