@@ -802,7 +802,7 @@ class Popover extends Popup {
 		return undefined;
 	}
 
-	get _ariaModal() { // Required by Popup.js
+	get _ariaModal() {
 		return "true";
 	}
 

@@ -1,4 +1,7 @@
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import {
 	isUp, isDown, isLeft, isRight,
@@ -29,133 +32,11 @@ const STEP_SIZE = 16;
  * Defines the icons corresponding to the dialog's state.
  */
 const ICON_PER_STATE = {
+	[ValueState.None]: "TODO hack",
 	[ValueState.Error]: "error",
 	[ValueState.Warning]: "alert",
 	[ValueState.Success]: "sys-enter-2",
 	[ValueState.Information]: "information",
-};
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-dialog",
-	slots: /** @lends sap.ui.webc.main.Dialog.prototype */ {
-		/**
-		 * Defines the header HTML Element.
-		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
-		 * <code>accessibleName</code> should be used.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		header: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the footer HTML Element.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		footer: {
-			type: HTMLElement,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.Dialog.prototype */ {
-		/**
-		 * Defines the header text.
-		 * <br><br>
-		 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		headerText: {
-			type: String,
-		},
-
-		/**
-		 * Determines whether the component should be stretched to fullscreen.
-		 * <br><br>
-		 * <b>Note:</b> The component will be stretched to approximately
-		 * 90% of the viewport.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		stretch: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines whether the component is draggable.
-		 * If this property is set to true, the Dialog will be draggable by its header.
-		 * <br><br>
-		 * <b>Note:</b> The component can be draggable only in desktop mode.
-		 * <br><br>
-		 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
-		 * When "draggable" is set to true, the native browser "draggable"
-		 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @since 1.0.0-rc.9
-		 * @public
-		 */
-		draggable: {
-			type: Boolean,
-		},
-
-		/**
-		 * Configures the component to be resizable.
-		 * If this property is set to true, the Dialog will have a resize handle in its bottom right corner in LTR languages.
-		 * In RTL languages, the resize handle will be placed in the bottom left corner.
-		 * <br><br>
-		 * <b>Note:</b> The component can be resizable only in desktop mode.
-		 * <br>
-		 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @since 1.0.0-rc.10
-		 * @public
-		 */
-		resizable: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		onPhone: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		onDesktop: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the state of the <code>Dialog</code>.
-		 * <br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webc.base.types.ValueState}
-		 * @defaultvalue "None"
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		state: {
-			type: ValueState,
-			defaultValue: ValueState.None,
-		},
-	},
 };
 
 /**
@@ -210,7 +91,137 @@ const metadata = {
  * @tagname ui5-dialog
  * @public
  */
+@customElement("ui5-dialog")
 class Dialog extends Popup {
+	/**
+	 * Defines the header text.
+	 * <br><br>
+	 * <b>Note:</b> If <code>header</code> slot is provided, the <code>headerText</code> is ignored.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.Dialog.prototype.headerText
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	headerText!: string;
+
+	/**
+	 * Determines whether the component should be stretched to fullscreen.
+	 * <br><br>
+	 * <b>Note:</b> The component will be stretched to approximately
+	 * 90% of the viewport.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Dialog.prototype.stretch
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	stretch!: boolean;
+
+	/**
+	 * Determines whether the component is draggable.
+	 * If this property is set to true, the Dialog will be draggable by its header.
+	 * <br><br>
+	 * <b>Note:</b> The component can be draggable only in desktop mode.
+	 * <br><br>
+	 * <b>Note:</b> This property overrides the default HTML "draggable" attribute native behavior.
+	 * When "draggable" is set to true, the native browser "draggable"
+	 * behavior is prevented and only the Dialog custom logic ("draggable by its header") works.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Dialog.prototype.draggable
+	 * @defaultvalue false
+	 * @since 1.0.0-rc.9
+	 * @public
+	 */
+	@property({ type: Boolean })
+	draggable!: boolean;
+
+	/**
+	 * Configures the component to be resizable.
+	 * If this property is set to true, the Dialog will have a resize handle in its bottom right corner in LTR languages.
+	 * In RTL languages, the resize handle will be placed in the bottom left corner.
+	 * <br><br>
+	 * <b>Note:</b> The component can be resizable only in desktop mode.
+	 * <br>
+	 * <b>Note:</b> Upon resizing, externally defined height and width styling will be ignored.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Dialog.prototype.resizable
+	 * @defaultvalue false
+	 * @since 1.0.0-rc.10
+	 * @public
+	 */
+	@property({ type: Boolean })
+	resizable!: boolean;
+
+	/**
+	 * Defines the state of the <code>Dialog</code>.
+	 * <br>
+	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @name sap.ui.webc.main.Dialog.prototype.state
+	 * @defaultvalue "None"
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	state!: ValueState;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onPhone!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	onDesktop!: boolean;
+
+	_screenResizeHandler!: () => void;
+	_dragMouseMoveHandler!: (e: MouseEvent) => void;
+	_dragMouseUpHandler!: (e: MouseEvent) => void;
+	_resizeMouseMoveHandler!: (e: MouseEvent) => void;
+	_resizeMouseUpHandler!: (e: MouseEvent) => void;
+	_dragStartHandler!: (e: DragEvent) => void;
+	_y?: int;
+	_x?: int;
+	_isRTL?: boolean;
+	_screenResizeHandlerAttached?: boolean;
+	_initialX?: number;
+	_initialY?: number;
+	_initialWidth?: number;
+	_initialHeight?: number;
+	_initialTop?: number;
+	_initialLeft?: number;
+	_minWidth?: number;
+	_cachedMinHeight?: number;
+
+	/**
+	 * Defines the header HTML Element.
+	 * <br><br>
+	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
+	 * <code>accessibleName</code> should be used.
+	 *
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	header!: Array<HTMLElement>;
+
+	/**
+	 * Defines the footer HTML Element.
+	 *
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	footer!: Array<HTMLElement>;
+
 	constructor() {
 		super();
 
@@ -223,10 +234,6 @@ class Dialog extends Popup {
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
 
 		this._dragStartHandler = this._handleDragStart.bind(this);
-	}
-
-	static get metadata() {
-		return metadata;
 	}
 
 	static get dependencies() {
@@ -243,7 +250,7 @@ class Dialog extends Popup {
 		return [browserScrollbarCSS, PopupsCommonCss, dialogCSS];
 	}
 
-	static _isHeader(element) {
+	static _isHeader(element: HTMLElement) {
 		return element.classList.contains("ui5-popup-header-root") || element.getAttribute("slot") === "header";
 	}
 
@@ -277,8 +284,8 @@ class Dialog extends Popup {
 		return ariaLabelledById;
 	}
 
-	get _ariaModal() { // Required by Popup.js
-		return true;
+	get _ariaModal() {
+		return "true";
 	}
 
 	get _displayProp() {
@@ -307,12 +314,12 @@ class Dialog extends Popup {
 	get _minHeight() {
 		let minHeight = Number.parseInt(window.getComputedStyle(this.contentDOM).minHeight);
 
-		const header = this._root.querySelector(".ui5-popup-header-root");
+		const header = this._root.querySelector<HTMLElement>(".ui5-popup-header-root");
 		if (header) {
 			minHeight += header.offsetHeight;
 		}
 
-		const footer = this._root.querySelector(".ui5-popup-footer-root");
+		const footer = this._root.querySelector<HTMLElement>(".ui5-popup-footer-root");
 		if (footer) {
 			minHeight += footer.offsetHeight;
 		}
@@ -402,26 +409,25 @@ class Dialog extends Popup {
 		});
 	}
 
-	_revertSize() {
+	_revertSize = () => {
 		Object.assign(this.style, {
 			top: "",
 			left: "",
 			width: "",
 			height: "",
 		});
-		this.removeEventListener("ui5-before-close", this._revertSize);
 	}
 
 	/**
 	 * Event handlers
 	 */
-	_onDragMouseDown(event) {
+	_onDragMouseDown(e: DragEvent) {
 		// allow dragging only on the header
-		if (!this._movable || !this.draggable || !Dialog._isHeader(event.target)) {
+		if (!this._movable || !this.draggable || !Dialog._isHeader(e.target as HTMLElement)) {
 			return;
 		}
 
-		event.preventDefault();
+		e.preventDefault();
 
 		const {
 			top,
@@ -439,17 +445,18 @@ class Dialog extends Popup {
 			height: `${Math.round(Number.parseFloat(height) * 100) / 100}px`,
 		});
 
-		this._x = event.clientX;
-		this._y = event.clientY;
+		this._x = e.clientX;
+		this._y = e.clientY;
 
 		this._attachMouseDragHandlers();
 	}
 
-	_onDragMouseMove(event) {
-		event.preventDefault();
+	_onDragMouseMove(e: MouseEvent) {
+		e.preventDefault();
 
-		const calcX = this._x - event.clientX;
-		const calcY = this._y - event.clientY;
+		const { clientX, clientY } = e;
+		const calcX = this._x! - clientX;
+		const calcY = this._y! - clientY;
 		const {
 			left,
 			top,
@@ -460,33 +467,33 @@ class Dialog extends Popup {
 			top: `${Math.floor(top - calcY)}px`,
 		});
 
-		this._x = event.clientX;
-		this._y = event.clientY;
+		this._x = clientX;
+		this._y = clientY;
 	}
 
 	_onDragMouseUp() {
-		this._x = null;
-		this._y = null;
+		delete this._x;
+		delete this._y;
 
 		this._detachMouseDragHandlers();
 	}
 
-	_onDragOrResizeKeyDown(event) {
-		if (!this._movable || !Dialog._isHeader(event.target)) {
+	_onDragOrResizeKeyDown(e: KeyboardEvent) {
+		if (!this._movable || !Dialog._isHeader(e.target as HTMLElement)) {
 			return;
 		}
 
-		if (this.draggable && [isUp, isDown, isLeft, isRight].some(key => key(event))) {
-			this._dragWithEvent(event);
+		if (this.draggable && [isUp, isDown, isLeft, isRight].some(key => key(e))) {
+			this._dragWithEvent(e);
 			return;
 		}
 
-		if (this.resizable && [isUpShift, isDownShift, isLeftShift, isRightShift].some(key => key(event))) {
-			this._resizeWithEvent(event);
+		if (this.resizable && [isUpShift, isDownShift, isLeftShift, isRightShift].some(key => key(e))) {
+			this._resizeWithEvent(e);
 		}
 	}
 
-	_dragWithEvent(event) {
+	_dragWithEvent(e: KeyboardEvent) {
 		const {
 			top,
 			left,
@@ -494,23 +501,23 @@ class Dialog extends Popup {
 			height,
 		} = this.getBoundingClientRect();
 
-		let newPos,
-			posDirection;
+		let newPos = 0;
+		let posDirection: "top" | "left" = "top";
 
 		switch (true) {
-		case isUp(event):
+		case isUp(e):
 			newPos = top - STEP_SIZE;
 			posDirection = "top";
 			break;
-		case isDown(event):
+		case isDown(e):
 			newPos = top + STEP_SIZE;
 			posDirection = "top";
 			break;
-		case isLeft(event):
+		case isLeft(e):
 			newPos = left - STEP_SIZE;
 			posDirection = "left";
 			break;
-		case isRight(event):
+		case isRight(e):
 			newPos = left + STEP_SIZE;
 			posDirection = "left";
 			break;
@@ -525,9 +532,9 @@ class Dialog extends Popup {
 		this.style[posDirection] = `${newPos}px`;
 	}
 
-	_resizeWithEvent(event) {
+	_resizeWithEvent(e: KeyboardEvent) {
 		this._detachScreenResizeHandler();
-		this.addEventListener("ui5-before-close", this._revertSize);
+		this.addEventListener("ui5-before-close", this._revertSize, { once: true });
 
 		const { top, left } = this.getBoundingClientRect(),
 			style = window.getComputedStyle(this),
@@ -539,16 +546,16 @@ class Dialog extends Popup {
 			height = Number.parseFloat(style.height);
 
 		switch (true) {
-		case isUpShift(event):
+		case isUpShift(e):
 			height -= STEP_SIZE;
 			break;
-		case isDownShift(event):
+		case isDownShift(e):
 			height += STEP_SIZE;
 			break;
-		case isLeftShift(event):
+		case isLeftShift(e):
 			width -= STEP_SIZE;
 			break;
-		case isRightShift(event):
+		case isRightShift(e):
 			width += STEP_SIZE;
 			break;
 		}
@@ -574,12 +581,12 @@ class Dialog extends Popup {
 		window.removeEventListener("mouseup", this._dragMouseUpHandler);
 	}
 
-	_onResizeMouseDown(event) {
+	_onResizeMouseDown(e: MouseEvent) {
 		if (!this._movable || !this.resizable) {
 			return;
 		}
 
-		event.preventDefault();
+		e.preventDefault();
 
 		const {
 			top,
@@ -591,8 +598,8 @@ class Dialog extends Popup {
 			minWidth,
 		} = window.getComputedStyle(this);
 
-		this._initialX = event.clientX;
-		this._initialY = event.clientY;
+		this._initialX = e.clientX;
+		this._initialY = e.clientY;
 		this._initialWidth = Number.parseFloat(width);
 		this._initialHeight = Number.parseFloat(height);
 		this._initialTop = top;
@@ -608,36 +615,36 @@ class Dialog extends Popup {
 		this._attachMouseResizeHandlers();
 	}
 
-	_onResizeMouseMove(event) {
-		const { clientX, clientY } = event;
+	_onResizeMouseMove(e: MouseEvent) {
+		const { clientX, clientY } = e;
 
 		let newWidth,
 			newLeft;
 
 		if (this._isRTL) {
 			newWidth = clamp(
-				this._initialWidth - (clientX - this._initialX),
-				this._minWidth,
-				this._initialLeft + this._initialWidth,
+				this._initialWidth! - (clientX - this._initialX!),
+				this._minWidth!,
+				this._initialLeft! + this._initialWidth!,
 			);
 
 			newLeft = clamp(
-				this._initialLeft + (clientX - this._initialX),
+				this._initialLeft! + (clientX - this._initialX!),
 				0,
-				this._initialX + this._initialWidth - this._minWidth,
+				this._initialX! + this._initialWidth! - this._minWidth!,
 			);
 		} else {
 			newWidth = clamp(
-				this._initialWidth + (clientX - this._initialX),
-				this._minWidth,
-				window.innerWidth - this._initialLeft,
+				this._initialWidth! + (clientX - this._initialX!),
+				this._minWidth!,
+				window.innerWidth - this._initialLeft!,
 			);
 		}
 
 		const newHeight = clamp(
-			this._initialHeight + (clientY - this._initialY),
-			this._cachedMinHeight,
-			window.innerHeight - this._initialTop,
+			this._initialHeight! + (clientY - this._initialY!),
+			this._cachedMinHeight!,
+			window.innerHeight - this._initialTop!,
 		);
 
 		Object.assign(this.style, {
@@ -660,9 +667,9 @@ class Dialog extends Popup {
 		this._detachMouseResizeHandlers();
 	}
 
-	_handleDragStart(event) {
+	_handleDragStart(e: DragEvent) {
 		if (this.draggable) {
-			event.preventDefault();
+			e.preventDefault();
 		}
 	}
 
@@ -671,7 +678,7 @@ class Dialog extends Popup {
 
 		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.addEventListener("mouseup", this._resizeMouseUpHandler);
-		this.addEventListener("ui5-before-close", this._revertSize);
+		this.addEventListener("ui5-before-close", this._revertSize, { once: true });
 	}
 
 	_detachMouseResizeHandlers() {
