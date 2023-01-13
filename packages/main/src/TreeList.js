@@ -12,13 +12,18 @@ class TreeList extends List {
 	/*
 	 * @override
 	 */
-	getItems() {
+	getItems(includeCollapsed = false) {
 		const slottedItems = this.getSlottedNodes("items");
 		const flatItems = [];
 
-		flattenTree(slottedItems, flatItems);
+		flattenTree(slottedItems, flatItems, includeCollapsed);
 
 		return flatItems;
+	}
+
+	prepareListItems() {
+		const slottedItems = this.getItems(true);
+		super.prepareListItems(slottedItems);
 	}
 }
 
@@ -27,12 +32,13 @@ class TreeList extends List {
  *
  * @param {Array} treeItems
  * @param {Array} result
+ * @param {Boolean} includeCollapsed
  */
-const flattenTree = (items, result) => {
+const flattenTree = (items, result, includeCollapsed) => {
 	items.forEach(item => {
 		result.push(item);
 
-		if (item.expanded && item.items) {
+		if ((item.expanded || includeCollapsed) && item.items) {
 			flattenTree(item.items, result);
 		}
 	});
