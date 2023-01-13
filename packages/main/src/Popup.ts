@@ -557,8 +557,6 @@ abstract class Popup extends UI5Element {
 		this.style.display = "none";
 	}
 
-	abstract showAt(opener: HTMLElement, preventInitialFocus: boolean): void;
-
 	/**
 	 * Implement this getter with relevant logic regarding the modality of the popup (e.g. based on a public property)
 	 *

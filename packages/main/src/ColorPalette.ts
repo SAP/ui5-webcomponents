@@ -189,7 +189,12 @@ class ColorPalette extends UI5Element {
 
 	static get dependencies() {
 		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-		return [ColorPaletteItem, Button].concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
+
+		if (colorPaletteMoreColors) {
+			return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors.dependencies);
+		}
+
+		return [ColorPaletteItem, Button];
 	}
 
 	static async onDefine() {
