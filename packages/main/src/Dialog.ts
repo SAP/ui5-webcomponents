@@ -180,12 +180,12 @@ class Dialog extends Popup {
 	@property({ type: Boolean })
 	onDesktop!: boolean;
 
-	_screenResizeHandler!: () => void;
-	_dragMouseMoveHandler!: (e: MouseEvent) => void;
-	_dragMouseUpHandler!: (e: MouseEvent) => void;
-	_resizeMouseMoveHandler!: (e: MouseEvent) => void;
-	_resizeMouseUpHandler!: (e: MouseEvent) => void;
-	_dragStartHandler!: (e: DragEvent) => void;
+	_screenResizeHandler: () => void;
+	_dragMouseMoveHandler: (e: MouseEvent) => void;
+	_dragMouseUpHandler: (e: MouseEvent) => void;
+	_resizeMouseMoveHandler: (e: MouseEvent) => void;
+	_resizeMouseUpHandler: (e: MouseEvent) => void;
+	_dragStartHandler: (e: DragEvent) => void;
 	_y?: int;
 	_x?: int;
 	_isRTL?: boolean;
@@ -206,7 +206,7 @@ class Dialog extends Popup {
 	 * <code>accessibleName</code> should be used.
 	 *
 	 * @type {HTMLElement[]}
-	 * @slot
+	 * @slot header
 	 * @public
 	 */
 	@slot()
@@ -216,7 +216,7 @@ class Dialog extends Popup {
 	 * Defines the footer HTML Element.
 	 *
 	 * @type {HTMLElement[]}
-	 * @slot
+	 * @slot footer
 	 * @public
 	 */
 	@slot()
