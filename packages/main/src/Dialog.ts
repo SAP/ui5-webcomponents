@@ -28,11 +28,11 @@ import dialogCSS from "./generated/themes/Dialog.css.js";
  */
 const STEP_SIZE = 16;
 
+type ValueStateWithIcon = ValueState.Error | ValueState.Warning | ValueState.Success | ValueState.Information;
 /**
  * Defines the icons corresponding to the dialog's state.
  */
-const ICON_PER_STATE = {
-	[ValueState.None]: "TODO hack",
+const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 	[ValueState.Error]: "error",
 	[ValueState.Warning]: "alert",
 	[ValueState.Success]: "sys-enter-2",
@@ -332,7 +332,7 @@ class Dialog extends Popup {
 	}
 
 	get _dialogStateIcon() {
-		return ICON_PER_STATE[this.state];
+		return ICON_PER_STATE[this.state as ValueStateWithIcon];
 	}
 
 	get _role() {
