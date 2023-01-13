@@ -21,9 +21,8 @@ class TreeList extends List {
 		return flatItems;
 	}
 
-	prepareListItems() {
-		const slottedItems = this.getItems(true);
-		super.prepareListItems(slottedItems);
+	getItemsForProcessing() {
+		return this.getItems(true);
 	}
 }
 

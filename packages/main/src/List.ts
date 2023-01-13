@@ -533,8 +533,7 @@ class List extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const slottedItems = this.getItems();
-		this.prepareListItems(slottedItems);
+		this.prepareListItems();
 	}
 
 	onAfterRendering() {
@@ -674,7 +673,9 @@ class List extends UI5Element {
 		};
 	}
 
-	prepareListItems(items: Array<ListItemBase>) {
+	prepareListItems() {
+		const items = this.getItemsForProcessing();
+
 		items.forEach((item, key) => {
 			const isLastChild = key === items.length - 1;
 			const showBottomBorder = this.separators === ListSeparators.All
@@ -786,6 +787,10 @@ class List extends UI5Element {
 
 	getItems(): Array<ListItemBase> {
 		return this.getSlottedNodes("items") as Array<ListItemBase>;
+	}
+
+	getItemsForProcessing(): Array<ListItemBase> {
+		return this.getItems();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
