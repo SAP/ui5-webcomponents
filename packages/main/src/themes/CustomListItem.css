@@ -4,13 +4,11 @@
 }
 
 :host {
-	min-height: var(--_ui5_list_item_base_height);
-	height: auto;
+	height: var(--_ui5_list_item_base_height);
 	box-sizing: border-box;
 }
 
 .ui5-li-root.ui5-custom-li-root {
-	padding: 0;
 	pointer-events: inherit;
 }
 
