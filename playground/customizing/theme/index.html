@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Theme | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Theme" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/customizing/theme/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/customizing/theme/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Theme" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","url":"https://sap.github.io/ui5-webcomponents/playground/customizing/theme/","@type":"WebPage","headline":"Theme","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Theme","url":"https://sap.github.io/ui5-webcomponents/playground/customizing/theme/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -5898,11 +5901,11 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="custom-theming-with-ui-theme-designer">Custom Theming with <code class="highlighter-rouge">UI Theme Designer</code></h1>
+          <h1 id="custom-theming-with-ui-theme-designer">Custom Theming with <code class="language-plaintext highlighter-rouge">UI Theme Designer</code></h1>
 
-<p>UI5 Web Components are fully compatible with <code class="highlighter-rouge">UI Theme Designer</code>, a tool for building a custom theme. You can create your own theme and effortlessly integrate it in your UI5 Web Components project on HTML level. On top, this does not prevent you from switching to and from officially supported themes, while having your own.</p>
+<p>UI5 Web Components are fully compatible with <code class="language-plaintext highlighter-rouge">UI Theme Designer</code>, a tool for building a custom theme. You can create your own theme and effortlessly integrate it in your UI5 Web Components project on HTML level. On top, this does not prevent you from switching to and from officially supported themes, while having your own.</p>
 
-<p><b>Note:</b> <code class="highlighter-rouge">UI Theme Designer</code> is available for SAP customers only. We are currently working on a new tool, that will be publicly available.</p>
+<p><b>Note:</b> <code class="language-plaintext highlighter-rouge">UI Theme Designer</code> is available for SAP customers only. We are currently working on a new tool, that will be publicly available.</p>
 
 <p>Follow this simple tutorial to build a custom theme running with UI5 Web Components in 5 minutes:</p>
 
@@ -5913,7 +5916,7 @@
     <p>Go to the <a href="https://help.sap.com/viewer/09f6818d8e064537973102d6289e2aca/Cloud/en-US/935325fb130d41449362181fb6020dd0.html">official docs</a> and set up the Theme Designer.</p>
   </li>
   <li>
-    <p>Create your <strong>custom theme</strong> in <code class="highlighter-rouge">UI Theme Designer</code>.</p>
+    <p>Create your <strong>custom theme</strong> in <code class="language-plaintext highlighter-rouge">UI Theme Designer</code>.</p>
 
     <ul>
       <li>
@@ -5929,9 +5932,9 @@
         <p>Once you are done customizing, choose <strong>Theme</strong> -&gt; <strong>Export</strong> from the main menu on top. A dialog will appear,
 asking for <strong>Theme ID</strong> (technical name of your new theme) and a title.</p>
 
-        <p>The Theme ID you choose at this point will be the one you’ll use in order to switch to your custom theme, for example if you choose <code class="highlighter-rouge">mytheme</code>:</p>
+        <p>The Theme ID you choose at this point will be the one you’ll use in order to switch to your custom theme, for example if you choose <code class="language-plaintext highlighter-rouge">mytheme</code>:</p>
 
-        <p><code class="highlighter-rouge">index.html?sap-ui-theme=mytheme</code></p>
+        <p><code class="language-plaintext highlighter-rouge">index.html?sap-ui-theme=mytheme</code></p>
 
         <p><strong>Important:</strong> Before clicking the <strong>Export</strong> button, thus dismissing the dialog and finishing theme creation,
 it is <em>mandatory</em> that you expand the <strong>Optional Settings (for Experts)</strong> panel, and select the <strong>Source Files + CSS Resources</strong> option.
@@ -5940,28 +5943,28 @@ Otherwise, no CSS Variables will be generated.</p>
     </ul>
   </li>
   <li>
-    <p>Download the custom theme <code class="highlighter-rouge">.zip</code> file:</p>
+    <p>Download the custom theme <code class="language-plaintext highlighter-rouge">.zip</code> file:</p>
 
-    <p>Your browser will then download a <code class="highlighter-rouge">.zip</code> file with the name of your new theme, e.g. <code class="highlighter-rouge">mytheme.zip</code>.</p>
+    <p>Your browser will then download a <code class="language-plaintext highlighter-rouge">.zip</code> file with the name of your new theme, e.g. <code class="language-plaintext highlighter-rouge">mytheme.zip</code>.</p>
   </li>
   <li>
-    <p>Copy the <code class="highlighter-rouge">css_variables.css</code> file with all CSS Variables for your custom theme to your project.</p>
+    <p>Copy the <code class="language-plaintext highlighter-rouge">css_variables.css</code> file with all CSS Variables for your custom theme to your project.</p>
 
-    <p>You can find this file inside the <code class="highlighter-rouge">.zip</code> in the <code class="highlighter-rouge">\Base\baseLib\&lt;your theme name&gt;\</code> directory.</p>
+    <p>You can find this file inside the <code class="language-plaintext highlighter-rouge">.zip</code> in the <code class="language-plaintext highlighter-rouge">\Base\baseLib\&lt;your theme name&gt;\</code> directory.</p>
 
-    <p>For example: <code class="highlighter-rouge">mytheme.zip\Base\baseLib\mytheme\css_variables.css</code>.</p>
+    <p>For example: <code class="language-plaintext highlighter-rouge">mytheme.zip\Base\baseLib\mytheme\css_variables.css</code>.</p>
 
     <p>Just copy this file to a directory in your project where it can be statically served.</p>
   </li>
   <li>
-    <p>Include the file in your project <code class="highlighter-rouge">.html</code> page:</p>
+    <p>Include the file in your project <code class="language-plaintext highlighter-rouge">.html</code> page:</p>
 
-    <p>The simplest option would be to use a <code class="highlighter-rouge">&lt;link&gt;</code> tag and point to where you copied the file:</p>
+    <p>The simplest option would be to use a <code class="language-plaintext highlighter-rouge">&lt;link&gt;</code> tag and point to where you copied the file:</p>
 
     <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">type=</span><span class="s">"text/css"</span> <span class="na">href=</span><span class="s">"&lt;path-to-your-css-file&gt;/css_variables.css"</span><span class="nt">&gt;</span>
 </code></pre></div>    </div>
 
-    <p>but you could as well use a <code class="highlighter-rouge">&lt;style&gt;</code> tag and paste the content of <code class="highlighter-rouge">css_variables.css</code> inside,
+    <p>but you could as well use a <code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> tag and paste the content of <code class="language-plaintext highlighter-rouge">css_variables.css</code> inside,
 if that’s what you prefer:</p>
 
     <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;style&gt;</span>
@@ -5974,7 +5977,7 @@ if that’s what you prefer:</p>
 <p>And that’s it! Now you can use your custom theme by setting it either in the URL of your page,
 or in your configuration script:</p>
 
-<p><code class="highlighter-rouge">index.html?sap-ui-theme=mytheme</code></p>
+<p><code class="language-plaintext highlighter-rouge">index.html?sap-ui-theme=mytheme</code></p>
 
 <p>or</p>
 

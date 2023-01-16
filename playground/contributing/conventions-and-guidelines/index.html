@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Conventions and guidelines | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Conventions and guidelines" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/contributing/conventions-and-guidelines/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/contributing/conventions-and-guidelines/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Conventions and guidelines" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","url":"https://sap.github.io/ui5-webcomponents/playground/contributing/conventions-and-guidelines/","@type":"WebPage","headline":"Conventions and guidelines","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Conventions and guidelines","url":"https://sap.github.io/ui5-webcomponents/playground/contributing/conventions-and-guidelines/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -5900,11 +5903,11 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="development-conventions-and-guidelines">Development Conventions and Guidelines</h1>
 <h2 id="javascript-coding-guidelines">JavaScript Coding Guidelines</h2>
-<p>We enforce code style rules using <a href="https://eslint.org">ESLint</a>. Execute <code class="highlighter-rouge">npm run lint</code> to check your code for style issues.<br />
+<p>We enforce code style rules using <a href="https://eslint.org">ESLint</a>. Execute <code class="language-plaintext highlighter-rouge">npm run lint</code> to check your code for style issues.<br />
 You may also find an ESLint integration for your favorite IDE <a href="https://eslint.org/docs/user-guide/integrations">here</a>.</p>
 
 <h2 id="testing">Testing</h2>
-<p>Integration testing is based on <a href="https://webdriver.io/">Webdriver.io</a>. You can run all tests using <code class="highlighter-rouge">npm run test</code>.
+<p>Integration testing is based on <a href="https://webdriver.io/">Webdriver.io</a>. You can run all tests using <code class="language-plaintext highlighter-rouge">npm run test</code>.
 If reasonable, take the time and write a test for the proposed change or fix. Learn more about testing at the <a href="https://github.com/SAP/ui5-webcomponents/blob/main/docs/5-development/05-testing-UI5-Web-Components.md">Testing UI5 Web Components page</a>.</p>
 
 <h2 id="git-guidelines">Git Guidelines</h2>
@@ -5926,16 +5929,16 @@ If reasonable, take the time and write a test for the proposed change or fix. Le
 <ul>
   <li>It must be one of the following:
     <ul>
-      <li><code class="highlighter-rouge">fix</code> - a bug fix (note: this will indicate a release). If possible, include a test in your change.</li>
-      <li><code class="highlighter-rouge">feat</code> - a new feature (note: this will indicate a release)</li>
-      <li><code class="highlighter-rouge">docs</code> - documentation only changes</li>
-      <li><code class="highlighter-rouge">style</code> - changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)</li>
-      <li><code class="highlighter-rouge">refactor</code> - a code change that neither fixes a bug nor adds a feature</li>
-      <li><code class="highlighter-rouge">perf</code> - a code change that improves performance</li>
-      <li><code class="highlighter-rouge">test</code> - adding missing tests</li>
-      <li><code class="highlighter-rouge">chore</code> - changes to the build process or auxiliary tools and libraries such as documentation generation</li>
-      <li><code class="highlighter-rouge">revert</code> - revert to a commit</li>
-      <li><code class="highlighter-rouge">WIP</code> - work in progress</li>
+      <li><code class="language-plaintext highlighter-rouge">fix</code> - a bug fix (note: this will indicate a release). If possible, include a test in your change.</li>
+      <li><code class="language-plaintext highlighter-rouge">feat</code> - a new feature (note: this will indicate a release)</li>
+      <li><code class="language-plaintext highlighter-rouge">docs</code> - documentation only changes</li>
+      <li><code class="language-plaintext highlighter-rouge">style</code> - changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)</li>
+      <li><code class="language-plaintext highlighter-rouge">refactor</code> - a code change that neither fixes a bug nor adds a feature</li>
+      <li><code class="language-plaintext highlighter-rouge">perf</code> - a code change that improves performance</li>
+      <li><code class="language-plaintext highlighter-rouge">test</code> - adding missing tests</li>
+      <li><code class="language-plaintext highlighter-rouge">chore</code> - changes to the build process or auxiliary tools and libraries such as documentation generation</li>
+      <li><code class="language-plaintext highlighter-rouge">revert</code> - revert to a commit</li>
+      <li><code class="language-plaintext highlighter-rouge">WIP</code> - work in progress</li>
     </ul>
   </li>
 </ul>
@@ -5962,18 +5965,18 @@ If reasonable, take the time and write a test for the proposed change or fix. Le
 <ul>
   <li>If the change introduces a breaking change, it should start with <strong>BREAKING CHANGE:</strong> followed by a description of the change.
     <ul>
-      <li><code class="highlighter-rouge">BREAKING CHANGE: remove press event</code></li>
+      <li><code class="language-plaintext highlighter-rouge">BREAKING CHANGE: remove press event</code></li>
     </ul>
   </li>
   <li>If the change fixes an issue reported on GitHub, add the following line to the commit message:
     <ul>
-      <li><code class="highlighter-rouge">Fixes #&lt;issueNumber&gt;</code> (e.g. <code class="highlighter-rouge">Fixes #42</code>)</li>
+      <li><code class="language-plaintext highlighter-rouge">Fixes #&lt;issueNumber&gt;</code> (e.g. <code class="language-plaintext highlighter-rouge">Fixes #42</code>)</li>
     </ul>
   </li>
 </ul>
 
 <h4 id="example">Example</h4>
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fix(ui5-button): correct focus with 'tab' key
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>fix(ui5-button): correct focus with 'tab' key
 
 The button should receive a correct focus outline
 when the 'tab' key is pressed.

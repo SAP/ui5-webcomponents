@@ -1,5 +1,5 @@
-commit 0505eaa2bd38f0c4d37b4273bbb2ee212f2c9dd8
+commit e54012d22b1a3f819790d7d3264110a2ce57268b
 Author: Nayden Naydenov <nayden.naydenov@sap.com>
-Date:   Mon Jan 16 10:20:54 2023 +0200
+Date:   Mon Jan 16 11:03:17 2023 +0200
 
-    chore: restore playground changes
+    chore: playground fix

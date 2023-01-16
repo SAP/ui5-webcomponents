@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Accessibility | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Accessibility" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/advanced/accessibility/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/advanced/accessibility/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Accessibility" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","url":"https://sap.github.io/ui5-webcomponents/playground/advanced/accessibility/","@type":"WebPage","headline":"Accessibility","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Accessibility","url":"https://sap.github.io/ui5-webcomponents/playground/advanced/accessibility/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -5910,7 +5913,7 @@
 
 <p>This is not needed in UI5 Web Components, because when using our elements, all relevant accessibility attributes for a certain component will be applied in the shadow DOM, without further setup. Additionally, many accessibility-related APIs are available. They can be used to enhance the accessibility in the context of each application.</p>
 
-<p>As the Web Components are a new standard, there are still some gaps in regard to accessibility. For example - setting IDRef relationships is currently not possible due to the nature of the custom elements and their shadow DOM. This is a limitation in the ARIA support and there is a draft of a new <a href="https://github.com/WICG/aom">AOM (Accessibility Object Model)</a>, which addresses this issue and many more, and aims at a better JS-based accessibility support for all web elements. We are continuously working on improving the existing limitations. For example, in order to create a Label-Input relationship, you can use the <code class="highlighter-rouge">for</code> property of the label component to bind the label to an input, or <code class="highlighter-rouge">accessible-name-ref</code> property of the input component to bind the input to a label.</p>
+<p>As the Web Components are a new standard, there are still some gaps in regard to accessibility. For example - setting IDRef relationships is currently not possible due to the nature of the custom elements and their shadow DOM. This is a limitation in the ARIA support and there is a draft of a new <a href="https://github.com/WICG/aom">AOM (Accessibility Object Model)</a>, which addresses this issue and many more, and aims at a better JS-based accessibility support for all web elements. We are continuously working on improving the existing limitations. For example, in order to create a Label-Input relationship, you can use the <code class="language-plaintext highlighter-rouge">for</code> property of the label component to bind the label to an input, or <code class="language-plaintext highlighter-rouge">accessible-name-ref</code> property of the input component to bind the input to a label.</p>
 
 <h2 id="accessibility-features">Accessibility Features</h2>
 
@@ -5920,27 +5923,27 @@
 
 <p>UI5 Web Components provide the prerequisites for screen reader support based on the HTML, ARIA, and WCAG standards support in order to aid people using screen reader software.</p>
 
-<p>Navigation with the keyboard and screen reader should work properly together. In order for this to happen, you need to use the correct ARIA attributes and to map them to their HTML counterparts. With UI5 Web Components you will receive ARIA mapped elements out of the box. For example let’s add a <code class="highlighter-rouge">ui5-combobox</code> component:</p>
+<p>Navigation with the keyboard and screen reader should work properly together. In order for this to happen, you need to use the correct ARIA attributes and to map them to their HTML counterparts. With UI5 Web Components you will receive ARIA mapped elements out of the box. For example let’s add a <code class="language-plaintext highlighter-rouge">ui5-combobox</code> component:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-combobox&gt;</span>
     <span class="nt">&lt;ui5-cb-item</span> <span class="na">text=</span><span class="s">"Item 1"</span><span class="nt">&gt;&lt;/ui5-cb-item&gt;</span>
 <span class="nt">&lt;/ui5-combobox&gt;</span>
 </code></pre></div></div>
 
-<p>By doing so, you receive an input element with <code class="highlighter-rouge">role="combobox"</code> with all aria attributes relevant for this role in the shadow DOM. Also, if you set the <code class="highlighter-rouge">disabled</code> property, this will automatically add <code class="highlighter-rouge">disabled</code> to the shadow <code class="highlighter-rouge">combobox</code> element. Attribute mapping is available for all relevant properties - <code class="highlighter-rouge">required</code>, <code class="highlighter-rouge">disabled</code>, <code class="highlighter-rouge">readonly</code>, and more.</p>
+<p>By doing so, you receive an input element with <code class="language-plaintext highlighter-rouge">role="combobox"</code> with all aria attributes relevant for this role in the shadow DOM. Also, if you set the <code class="language-plaintext highlighter-rouge">disabled</code> property, this will automatically add <code class="language-plaintext highlighter-rouge">disabled</code> to the shadow <code class="language-plaintext highlighter-rouge">combobox</code> element. Attribute mapping is available for all relevant properties - <code class="language-plaintext highlighter-rouge">required</code>, <code class="language-plaintext highlighter-rouge">disabled</code>, <code class="language-plaintext highlighter-rouge">readonly</code>, and more.</p>
 
 <p>In order to ease the setting of aria attributes, we have introduced properties that are available for developers to extend the accessibility support in the context of the application. More information about the available properties could be found in the Accessibility APIs section below.</p>
 
 <h3 id="invisible-messaging"><strong>Invisible Messaging</strong></h3>
 <p>The Invisible Message provides a way to programmaticaly expose dynamic content changes in a way that can be announced by screen readers. It marks the dynamic content changes as ARIA live regions so that you are able to inform the users of assistive technologies for a change that has happened to the UI.</p>
 
-<p>The Invisible Messaging service is designed to be used both internally in the components logic and from the applications. Using the service, you have to specify the message to be announced by the screen reader and the mode which will be inserted in the <code class="highlighter-rouge">aria-live</code> attribute via the <code class="highlighter-rouge">InvisibleMessage.announce(message, mode)</code> method. The possible modes to choose from are:</p>
+<p>The Invisible Messaging service is designed to be used both internally in the components logic and from the applications. Using the service, you have to specify the message to be announced by the screen reader and the mode which will be inserted in the <code class="language-plaintext highlighter-rouge">aria-live</code> attribute via the <code class="language-plaintext highlighter-rouge">InvisibleMessage.announce(message, mode)</code> method. The possible modes to choose from are:</p>
 <ul>
-  <li><code class="highlighter-rouge"> InvisibleMessageMode.Assertive</code> - indicates that updates to the region have the highest priority and should be presented to the user immediately.</li>
-  <li><code class="highlighter-rouge">InvisibleMessageMode.Polite</code> - indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.</li>
+  <li>` InvisibleMessageMode.Assertive` - indicates that updates to the region have the highest priority and should be presented to the user immediately.</li>
+  <li><code class="language-plaintext highlighter-rouge">InvisibleMessageMode.Polite</code> - indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.</li>
 </ul>
 
-<p>According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message  as early as possible in the application. Then, you should specify the text, that has to be announced by the screen reader and the live region’s mode using the <code class="highlighter-rouge">announce</code> method.
+<p>According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message  as early as possible in the application. Then, you should specify the text, that has to be announced by the screen reader and the live region’s mode using the <code class="language-plaintext highlighter-rouge">announce</code> method.
 Here is an example usage of the invisible messaging service - <a href="https://sap.github.io/ui5-webcomponents/playground/components/MessageStrip/">Dynamic MessageStrip Generator Sample</a></p>
 
 <h3 id="keyboard-handling"><strong>Keyboard Handling</strong></h3>
@@ -5969,63 +5972,63 @@ Here is an example usage of the invisible messaging service - <a href="https://s
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">accessibleName</code></td>
-      <td><code class="highlighter-rouge">aria-label</code></td>
+      <td><code class="language-plaintext highlighter-rouge">accessibleName</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-label</code></td>
       <td>Defines the text alternative of the component. If not provided, a default text alternative is set, if present.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">accessibleNameRef</code></td>
-      <td><code class="highlighter-rouge">aria-label</code></td>
-      <td>Alternative for <code class="highlighter-rouge">aria-labelledby</code>. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the <code class="highlighter-rouge">aria-label</code> attribute.</td>
+      <td><code class="language-plaintext highlighter-rouge">accessibleNameRef</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-label</code></td>
+      <td>Alternative for <code class="language-plaintext highlighter-rouge">aria-labelledby</code>. Receives ID (or many IDs) of the elements that serve as labels of the component. Those labels are passed as a concatenated string to the <code class="language-plaintext highlighter-rouge">aria-label</code> attribute.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">accessibleRole</code></td>
-      <td><code class="highlighter-rouge">role</code></td>
+      <td><code class="language-plaintext highlighter-rouge">accessibleRole</code></td>
+      <td><code class="language-plaintext highlighter-rouge">role</code></td>
       <td>Sets the accessible aria role of the component.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">accessibilityTexts</code></td>
-      <td><code class="highlighter-rouge">aria-label</code></td>
+      <td><code class="language-plaintext highlighter-rouge">accessibilityTexts</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-label</code></td>
       <td>An object of strings that define several additional accessibility texts for further customization.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">accessibilityAttributes</code></td>
-      <td><code class="highlighter-rouge">aria-expanded</code>, <code class="highlighter-rouge">aria-haspopup</code>, <code class="highlighter-rouge">aria-controls</code></td>
+      <td><code class="language-plaintext highlighter-rouge">accessibilityAttributes</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-expanded</code>, <code class="language-plaintext highlighter-rouge">aria-haspopup</code>, <code class="language-plaintext highlighter-rouge">aria-controls</code></td>
       <td>An object of strings that defines several additional accessibility attribute values for customization depending on the use case.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">accessibilityRoles</code></td>
-      <td><code class="highlighter-rouge">role</code></td>
+      <td><code class="language-plaintext highlighter-rouge">accessibilityRoles</code></td>
+      <td><code class="language-plaintext highlighter-rouge">role</code></td>
       <td>An object of strings that define several additional accessibility roles for further customization.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">required</code></td>
-      <td><code class="highlighter-rouge">aria-required</code></td>
+      <td><code class="language-plaintext highlighter-rouge">required</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-required</code></td>
       <td>Defines whether the component is required.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">readonly</code></td>
-      <td><code class="highlighter-rouge">aria-readonly</code></td>
+      <td><code class="language-plaintext highlighter-rouge">readonly</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-readonly</code></td>
       <td>Defines whether the component is read-only.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">disabled</code></td>
-      <td><code class="highlighter-rouge">aria-disabled</code></td>
+      <td><code class="language-plaintext highlighter-rouge">disabled</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-disabled</code></td>
       <td>Defines whether the component is disabled.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">checked</code></td>
-      <td><code class="highlighter-rouge">aria-checked</code></td>
+      <td><code class="language-plaintext highlighter-rouge">checked</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-checked</code></td>
       <td>Defines whether the component is checked.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">level</code>, <code class="highlighter-rouge">headerLevel</code></td>
-      <td><code class="highlighter-rouge">aria-level</code></td>
+      <td><code class="language-plaintext highlighter-rouge">level</code>, <code class="language-plaintext highlighter-rouge">headerLevel</code></td>
+      <td><code class="language-plaintext highlighter-rouge">aria-level</code></td>
       <td>Defines the heading level of a title. Available options are: “H6” to “H1”.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">interactive</code></td>
-      <td><code class="highlighter-rouge">tabindex</code></td>
+      <td><code class="language-plaintext highlighter-rouge">interactive</code></td>
+      <td><code class="language-plaintext highlighter-rouge">tabindex</code></td>
       <td>Defines if the component is interactive (focusable and pressable).</td>
     </tr>
   </tbody>
@@ -6043,7 +6046,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">role=</span><span class="s">"combobox"</span> <span class="na">aria-label=</span><span class="s">"Enter value"</span> <span class="err">...</span> <span class="nt">&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">accessible-name</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">accessible-name</code> property is currently supported in:</p>
 <ul>
   <li>Popups: <a href="https://sap.github.io/ui5-webcomponents/playground/components/Dialog">Dialog</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/Popover">Popover</a></li>
   <li>User input components (e.g. <a href="https://sap.github.io/ui5-webcomponents/playground/components/Input">Input</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/RadioButton">RadioButton</a>)</li>
@@ -6074,7 +6077,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">aria-label=</span><span class="s">"Date of birth"</span> <span class="err">...</span> <span class="nt">&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">accessible-name-ref</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">accessible-name-ref</code> property is currently supported in:</p>
 <ul>
   <li>Popups: <a href="https://sap.github.io/ui5-webcomponents/playground/components/Dialog">Dialog</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/Popover">Popover</a></li>
   <li>User input components (e.g. <a href="https://sap.github.io/ui5-webcomponents/playground/components/Input">Input</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/RadioButton">RadioButton</a>)</li>
@@ -6091,7 +6094,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 
 <h3 id="accessibilitytexts">accessibilityTexts</h3>
 
-<p>This property accepts <code class="highlighter-rouge">object</code> with property values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a>.</p>
+<p>This property accepts <code class="language-plaintext highlighter-rouge">object</code> with property values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a>.</p>
 
 <p>Setting the property on the custom element as:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-flexible-column-layout</span> <span class="na">id=</span><span class="s">"component"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/ui5-flexible-column-layout&gt;</span>
@@ -6114,7 +6117,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">accessibilityTexts</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">accessibilityTexts</code> property is currently supported in:</p>
 <ul>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a></li>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/ShellBar">ShellBar</a></li>
@@ -6124,7 +6127,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 
 <h3 id="accessibilityattributes">accessibilityAttributes</h3>
 
-<p>This property accepts an <code class="highlighter-rouge">object</code> with property values, which will be used to generate additinal accessibility attributes to the root element. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/Button/">Button</a>.</p>
+<p>This property accepts an <code class="language-plaintext highlighter-rouge">object</code> with property values, which will be used to generate additinal accessibility attributes to the root element. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/Button/">Button</a>.</p>
 
 <p>Setting the property on the custom element as:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"button"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/ui5-button&gt;</span>
@@ -6145,7 +6148,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 <span class="nt">&lt;/button&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">accessibilityAttributes</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">accessibilityAttributes</code> property is currently supported in:</p>
 <ul>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Button">Button</a></li>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Link">Link</a></li>
@@ -6155,7 +6158,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 
 <h3 id="accessibilityroles">accessibilityRoles</h3>
 
-<p>This property accepts <code class="highlighter-rouge">object</code> with property values for different parts of the <code class="highlighter-rouge">FlexibleColumnLayout</code> elements. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a>.</p>
+<p>This property accepts <code class="language-plaintext highlighter-rouge">object</code> with property values for different parts of the <code class="language-plaintext highlighter-rouge">FlexibleColumnLayout</code> elements. For more detailed information on every object property, read the API description in <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a>.</p>
 
 <p>Setting the property on the custom element as:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-flexible-column-layout</span> <span class="na">id=</span><span class="s">"component"</span><span class="nt">&gt;</span>...<span class="nt">&lt;/ui5-flexible-column-layout&gt;</span>
@@ -6174,7 +6177,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">accessibilityRoles</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">accessibilityRoles</code> property is currently supported in:</p>
 <ul>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout">FlexibleColumnLayout</a></li>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/ShellBar">ShellBar</a></li>
@@ -6196,7 +6199,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">accessible-role</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">accessible-role</code> property is currently supported in:</p>
 <ul>
   <li>User input components (e.g. <a href="https://sap.github.io/ui5-webcomponents/playground/components/Input">Input</a>, <a href="https://sap.github.io/ui5-webcomponents/playground/components/RadioButton">RadioButton</a>)</li>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Panel">Panel</a></li>
@@ -6226,12 +6229,12 @@ Here is an example usage of the invisible messaging service - <a href="https://s
     ...
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
-<p>The <code class="highlighter-rouge">level</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">level</code> property is currently supported in:</p>
 <ul>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Title">Title</a></li>
 </ul>
 
-<p>The <code class="highlighter-rouge">header-level</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">header-level</code> property is currently supported in:</p>
 <ul>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Panel">Panel</a></li>
 </ul>
@@ -6248,7 +6251,7 @@ Here is an example usage of the invisible messaging service - <a href="https://s
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;svg</span> <span class="na">tabindex=</span><span class="s">"0"</span> <span class="na">role=</span><span class="s">"button"</span> <span class="err">...</span> <span class="nt">&gt;&lt;/svg&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">interactive</code> property is currently supported in:</p>
+<p>The <code class="language-plaintext highlighter-rouge">interactive</code> property is currently supported in:</p>
 <ul>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Avatar">Avatar</a></li>
   <li><a href="https://sap.github.io/ui5-webcomponents/playground/components/Icon">Icon</a></li>

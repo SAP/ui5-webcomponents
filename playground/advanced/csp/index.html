@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>CSP | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="CSP" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/advanced/csp/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/advanced/csp/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="CSP" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","url":"https://sap.github.io/ui5-webcomponents/playground/advanced/csp/","@type":"WebPage","headline":"CSP","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"CSP","url":"https://sap.github.io/ui5-webcomponents/playground/advanced/csp/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -5907,12 +5910,12 @@
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setUseLinks</span><span class="p">,</span> <span class="nx">setPackageCSSRoot</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CSP.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>These functions affect the way the UI5 Web Components framework manages CSS. This is important if you are aiming for CSP-compliance, since in order to be CSP-compliant, in the most general case, a site cannot use <code class="highlighter-rouge">&lt;style&gt;</code> tags.</p>
+<p>These functions affect the way the UI5 Web Components framework manages CSS. This is important if you are aiming for CSP-compliance, since in order to be CSP-compliant, in the most general case, a site cannot use <code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> tags.</p>
 
 <h2 id="background">Background</h2>
 
-<p>The UI5 Web Components framework can leverage CSS (for shadow roots and the <code class="highlighter-rouge">&lt;head&gt;</code>) in 3 ways: with Constructable StyleSheets (<code class="highlighter-rouge">document.adoptedStyleSheets</code>)
-for the browsers that support them, with <code class="highlighter-rouge">&lt;style&gt;</code> tags, and with <code class="highlighter-rouge">&lt;link&gt;</code> tags.</p>
+<p>The UI5 Web Components framework can leverage CSS (for shadow roots and the <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code>) in 3 ways: with Constructable StyleSheets (<code class="language-plaintext highlighter-rouge">document.adoptedStyleSheets</code>)
+for the browsers that support them, with <code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> tags, and with <code class="language-plaintext highlighter-rouge">&lt;link&gt;</code> tags.</p>
 
 <table>
   <thead>
@@ -5931,13 +5934,13 @@ for the browsers that support them, with <code class="highlighter-rouge">&lt;sty
       <td>No</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">&lt;style&gt;</code> (<strong>default</strong> for Firefox/Safari)</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> (<strong>default</strong> for Firefox/Safari)</td>
       <td>all</td>
       <td>No</td>
       <td>No</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">&lt;link&gt;</code> (<em>optional for all browsers</em>)</td>
+      <td><code class="language-plaintext highlighter-rouge">&lt;link&gt;</code> (<em>optional for all browsers</em>)</td>
       <td>all</td>
       <td>Yes</td>
       <td>Yes (CSS files must be statically served)</td>
@@ -5947,17 +5950,17 @@ for the browsers that support them, with <code class="highlighter-rouge">&lt;sty
 
 <p>In summary, Constructable Stylesheets are both CSP-compliant and require no extra work on your part.
 Therefore, browsers that can use them (Chrome, Edge) are CSP-compliant out of the box. Firefox and Safari,
-on the other hand, use <code class="highlighter-rouge">&lt;style&gt;</code> tags by default, for both the shadow roots of web components, and in the HTML document’s head,
+on the other hand, use <code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> tags by default, for both the shadow roots of web components, and in the HTML document’s head,
 and are therefore <strong>not</strong> CSP-compliant by default.</p>
 
 <h2 id="turning-on-csp-compliance-for-firefox-and-safari">Turning on CSP Compliance for Firefox and Safari</h2>
 
 <p>To make UI5 Web Components CSP-compliant also on Firefox and Safari, you need to copy the CSS resources for all relevant
-UI5 Web Components packages to where you can serve them, and use the <code class="highlighter-rouge">setUseLinks</code> and <code class="highlighter-rouge">setPackageCSSRoot</code> functions.</p>
+UI5 Web Components packages to where you can serve them, and use the <code class="language-plaintext highlighter-rouge">setUseLinks</code> and <code class="language-plaintext highlighter-rouge">setPackageCSSRoot</code> functions.</p>
 
 <p>Example:</p>
 
-<p>1) First, copy the CSS files for all relevant packages to a directory that can be served, in this example, <code class="highlighter-rouge">public/css/</code>:</p>
+<p>1) First, copy the CSS files for all relevant packages to a directory that can be served, in this example, <code class="language-plaintext highlighter-rouge">public/css/</code>:</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp</span> <span class="nt">-r</span> node_modules/@ui5/webcomponents-base/dist/css/ public/css/base/
 <span class="nb">cp</span> <span class="nt">-r</span> node_modules/@ui5/webcomponents-theming/dist/css/ public/css/theming/
@@ -5967,10 +5970,10 @@ UI5 Web Components packages to where you can serve them, and use the <code class
 
 <p><em>Note: make these commands part of your build task, if your app needs to be CSP-compliant on all browsers.</em></p>
 
-<p>You will always need the CSS resources of the framework-level packages (<code class="highlighter-rouge">@ui5/webcomponents-base</code> and <code class="highlighter-rouge">@ui5/webcomponents-theming</code>),
-and additionally the ones of all components packages your app is going to use (such as <code class="highlighter-rouge">@ui5/webcomponents</code> and <code class="highlighter-rouge">@ui5/webcomponents-fiori</code>).</p>
+<p>You will always need the CSS resources of the framework-level packages (<code class="language-plaintext highlighter-rouge">@ui5/webcomponents-base</code> and <code class="language-plaintext highlighter-rouge">@ui5/webcomponents-theming</code>),
+and additionally the ones of all components packages your app is going to use (such as <code class="language-plaintext highlighter-rouge">@ui5/webcomponents</code> and <code class="language-plaintext highlighter-rouge">@ui5/webcomponents-fiori</code>).</p>
 
-<p>By convention, the CSS files are found in the <code class="highlighter-rouge">dist/css/</code> directory for each package that ships CSS resources.</p>
+<p>By convention, the CSS files are found in the <code class="language-plaintext highlighter-rouge">dist/css/</code> directory for each package that ships CSS resources.</p>
 
 <p>2) Call the 2 functions, described above, as follows:</p>
 
@@ -5983,11 +5986,11 @@ and additionally the ones of all components packages your app is going to use (s
 <span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-fiori</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">public/css/fiori/</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>Calling <code class="highlighter-rouge">setUseLinks</code> with <code class="highlighter-rouge">!document.adoptedStyleSheets</code> as its argument is an easy way to tell the
-framework to use <code class="highlighter-rouge">&lt;link&gt;</code> tags only for the browsers that don’t support Constructable Stylesheets.
-However, you can call <code class="highlighter-rouge">setUseLinks(true)</code> to make all browsers consume CSS from <code class="highlighter-rouge">&lt;link&gt;</code>s, if you prefer so.</p>
+<p>Calling <code class="language-plaintext highlighter-rouge">setUseLinks</code> with <code class="language-plaintext highlighter-rouge">!document.adoptedStyleSheets</code> as its argument is an easy way to tell the
+framework to use <code class="language-plaintext highlighter-rouge">&lt;link&gt;</code> tags only for the browsers that don’t support Constructable Stylesheets.
+However, you can call <code class="language-plaintext highlighter-rouge">setUseLinks(true)</code> to make all browsers consume CSS from <code class="language-plaintext highlighter-rouge">&lt;link&gt;</code>s, if you prefer so.</p>
 
-<p>Then, for each package, call <code class="highlighter-rouge">setPackageCSSRoot</code> and pass the directory, from which the CSS files will be
+<p>Then, for each package, call <code class="language-plaintext highlighter-rouge">setPackageCSSRoot</code> and pass the directory, from which the CSS files will be
 served. You can pass relative paths to your HTML page, as in the example above, or fully qualified paths, for example:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-base</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">https://my.site/path/to/public/css/base/</span><span class="dl">"</span><span class="p">);</span>
@@ -5996,16 +5999,16 @@ served. You can pass relative paths to your HTML page, as in the example above, 
 <span class="nx">setPackageCSSRoot</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-fiori</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">https://my.site/path/to/public/css/fiori/</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>It’s simpler to just use relative paths, if your app is going to have one <code class="highlighter-rouge">index.html</code> file, and you can
+<p>It’s simpler to just use relative paths, if your app is going to have one <code class="language-plaintext highlighter-rouge">index.html</code> file, and you can
 conveniently point to a directory, relative to it. However, in case components will be used in different
 pages across your site, or you are using URL re-writing, it would be safest to use fully qualified paths.</p>
 
 <h2 id="links-preloading">Links Preloading</h2>
 
-<p>By default, when using <code class="highlighter-rouge">&lt;link&gt;</code>s, they are preloaded in the browser’s <code class="highlighter-rouge">&lt;head&gt;</code> (even the ones for shadow roots) in order to avoid
-flashing of un-styled content. These preloads have the form: <code class="highlighter-rouge">&lt;link rel="preload" as="style" ...&gt;</code>.</p>
+<p>By default, when using <code class="language-plaintext highlighter-rouge">&lt;link&gt;</code>s, they are preloaded in the browser’s <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code> (even the ones for shadow roots) in order to avoid
+flashing of un-styled content. These preloads have the form: <code class="language-plaintext highlighter-rouge">&lt;link rel="preload" as="style" ...&gt;</code>.</p>
 
-<p>If, for any reason, you want to opt out of these preloads, you can do so by calling the <code class="highlighter-rouge">setPreloadLinks</code> function:</p>
+<p>If, for any reason, you want to opt out of these preloads, you can do so by calling the <code class="language-plaintext highlighter-rouge">setPreloadLinks</code> function:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">setPreloadLinks</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/CSP.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="nx">setPreloadLinks</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
@@ -6013,10 +6016,10 @@ flashing of un-styled content. These preloads have the form: <code class="highli
 
 <h2 id="summary">Summary</h2>
 
-<p>By default, the UI5 Web Components framework manages CSS resources either with Constructable Stylesheets, or with <code class="highlighter-rouge">&lt;style&gt;</code> tags.
+<p>By default, the UI5 Web Components framework manages CSS resources either with Constructable Stylesheets, or with <code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> tags.
 Since Constructable Stylesheets are CSP-compliant, UI5 Web Components is CSP-compliant on browsers
 that support them (Chrome, Edge) out of the box. For the other browsers (Firefox, Safari), in order to
-achieve CSP-compliance, you must instruct the framework to use <code class="highlighter-rouge">&lt;link&gt;</code> instead of <code class="highlighter-rouge">&lt;style&gt;</code> tags, but
+achieve CSP-compliance, you must instruct the framework to use <code class="language-plaintext highlighter-rouge">&lt;link&gt;</code> instead of <code class="language-plaintext highlighter-rouge">&lt;style&gt;</code> tags, but
 then you must also copy the CSS resources to a directory you can serve them from.</p>
 
 

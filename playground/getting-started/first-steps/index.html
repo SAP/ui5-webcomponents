@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>First steps | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="First steps" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/getting-started/first-steps/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/getting-started/first-steps/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="First steps" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","url":"https://sap.github.io/ui5-webcomponents/playground/getting-started/first-steps/","@type":"WebPage","headline":"First steps","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"First steps","url":"https://sap.github.io/ui5-webcomponents/playground/getting-started/first-steps/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -5908,9 +5911,9 @@
 
 <p>The most commonly used ones are:</p>
 <ul>
-  <li><code class="highlighter-rouge">@ui5/webcomponents</code> - components library, containing bread-and-butter components (buttons, inputs, pickers, etc.);</li>
-  <li><code class="highlighter-rouge">@ui5/webcomponents-fiori</code> - components library, containing semantic, higher-order components;</li>
-  <li><code class="highlighter-rouge">@ui5/webcomponents-icons</code> - icons collection, containing general-purpose and business-oriented icons.</li>
+  <li><code class="language-plaintext highlighter-rouge">@ui5/webcomponents</code> - components library, containing bread-and-butter components (buttons, inputs, pickers, etc.);</li>
+  <li><code class="language-plaintext highlighter-rouge">@ui5/webcomponents-fiori</code> - components library, containing semantic, higher-order components;</li>
+  <li><code class="language-plaintext highlighter-rouge">@ui5/webcomponents-icons</code> - icons collection, containing general-purpose and business-oriented icons.</li>
 </ul>
 
 <p><strong>Important: There is no CDN for UI5 Web Components</strong>. Each application is expected to <strong>import</strong> and <strong>bundle</strong> only the components (and any other resources) it is going to use.</p>
@@ -5919,7 +5922,7 @@
 
 <p>To build your UI5 Web Components project you can use any bundling tool that supports the following features:</p>
 <ul>
-  <li><code class="highlighter-rouge">.json</code> imports;</li>
+  <li><code class="language-plaintext highlighter-rouge">.json</code> imports;</li>
   <li>dynamic ES6 imports.</li>
 </ul>
 
@@ -5935,30 +5938,30 @@
 </span></code></pre></div></div>
 
 <ul>
-  <li>Select a project name: <code class="highlighter-rouge">my-webcomponents-app</code></li>
-  <li>Select a framework: <code class="highlighter-rouge">vanilla</code></li>
-  <li>Select a variant: <code class="highlighter-rouge">JavaScript</code></li>
+  <li>Select a project name: <code class="language-plaintext highlighter-rouge">my-webcomponents-app</code></li>
+  <li>Select a framework: <code class="language-plaintext highlighter-rouge">vanilla</code></li>
+  <li>Select a variant: <code class="language-plaintext highlighter-rouge">JavaScript</code></li>
 </ul>
 
-<p>This command will create a project structure under <code class="highlighter-rouge">my-webcomponents-app</code>. Follow the instructions on the screen to install the initial depenednecies and start a dev server.</p>
+<p>This command will create a project structure under <code class="language-plaintext highlighter-rouge">my-webcomponents-app</code>. Follow the instructions on the screen to install the initial depenednecies and start a dev server.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd my-webcomponents-app
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd my-webcomponents-app
 npm install
 npm run dev​
 </code></pre></div></div>
 
-<p>You should see a message that a server is running on <code class="highlighter-rouge">Local: http://localhost:3000/</code>. Launch your favourite IDE and change some code, the browser page will be automatically refreshed.</p>
+<p>You should see a message that a server is running on <code class="language-plaintext highlighter-rouge">Local: http://localhost:3000/</code>. Launch your favourite IDE and change some code, the browser page will be automatically refreshed.</p>
 
 <h3 id="installation">Installation</h3>
 
 <p><a name="installation"></a></p>
 
-<p>Install <code class="highlighter-rouge">@ui5/webcomponents</code></p>
+<p>Install <code class="language-plaintext highlighter-rouge">@ui5/webcomponents</code></p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents
 </code></pre></div></div>
 
-<p>This command downloads the published source code of the UI5 Web Components to the <code class="highlighter-rouge">node_modules</code> folder. Now, you can add them to your code to get them on the web page.</p>
+<p>This command downloads the published source code of the UI5 Web Components to the <code class="language-plaintext highlighter-rouge">node_modules</code> folder. Now, you can add them to your code to get them on the web page.</p>
 
 <h3 id="documentation">Documentation</h3>
 
@@ -5972,7 +5975,7 @@ npm run dev​
 <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Button.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>This line runs the code that registers the <code class="highlighter-rouge">&lt;ui5-button&gt;</code> tag with the browser. Now, when the browser sees such a tag, it knows how to render it.</p>
+<p>This line runs the code that registers the <code class="language-plaintext highlighter-rouge">&lt;ui5-button&gt;</code> tag with the browser. Now, when the browser sees such a tag, it knows how to render it.</p>
 
 <h4 id="2-instantiate-the-web-component">2. Instantiate the Web Component.</h4>
 
@@ -6004,7 +6007,7 @@ dist/assets/index.4116dceb.js 0.12kb / brotli: 0.09kb
 dist/assets/vendor.c05c7785.js 114.92kb / brotli: 24.30kb
 </span></code></pre></div></div>
 
-<p>The contents of the <code class="highlighter-rouge">dist</code> folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.</p>
+<p>The contents of the <code class="language-plaintext highlighter-rouge">dist</code> folder is ready to be deployed for productive usage. The hashes in the file names make them safe for caching and the produced bundle is optimized for production.</p>
 
 <h4 id="4-enjoy-ui5-web-components">4. Enjoy UI5 Web Components.</h4>
 

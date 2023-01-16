@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Custom UI5 Web Components Packages | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Custom UI5 Web Components Packages" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Custom UI5 Web Components Packages" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","url":"https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/","@type":"WebPage","headline":"Custom UI5 Web Components Packages","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Custom UI5 Web Components Packages","url":"https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -5903,11 +5906,11 @@
 <p>This tutorial explains how to:</p>
 <ul>
   <li>Create an NPM package for your own UI5 Web Components.</li>
-  <li>Use UI5 Web Components’ standard build tools: <code class="highlighter-rouge">@ui5/webcomponents-tools</code>.</li>
-  <li>Gain all <code class="highlighter-rouge">@ui5/webcomponents</code> capabilities such as HBS template support, i18n, theming, test setup, etc.</li>
+  <li>Use UI5 Web Components’ standard build tools: <code class="language-plaintext highlighter-rouge">@ui5/webcomponents-tools</code>.</li>
+  <li>Gain all <code class="language-plaintext highlighter-rouge">@ui5/webcomponents</code> capabilities such as HBS template support, i18n, theming, test setup, etc.</li>
 </ul>
 
-<p><strong>Note:</strong> Whether you use <code class="highlighter-rouge">npm</code> or <code class="highlighter-rouge">yarn</code> is a matter of preference.</p>
+<p><strong>Note:</strong> Whether you use <code class="language-plaintext highlighter-rouge">npm</code> or <code class="language-plaintext highlighter-rouge">yarn</code> is a matter of preference.</p>
 
 <h2 id="step-1-create-an-npm-package">Step 1. Create an NPM package.</h2>
 
@@ -5920,36 +5923,36 @@ Make sure you haven’t created a directory yourself.</p>
   <li>
     <p>With <strong>npm</strong>:</p>
 
-    <p><code class="highlighter-rouge">npm init @ui5/webcomponents-package</code></p>
+    <p><code class="language-plaintext highlighter-rouge">npm init @ui5/webcomponents-package</code></p>
 
     <p>or</p>
 
-    <p><code class="highlighter-rouge">npm init @ui5/webcomponents-package &lt;NEW-PACKAGE-NAME&gt;</code></p>
+    <p><code class="language-plaintext highlighter-rouge">npm init @ui5/webcomponents-package &lt;NEW-PACKAGE-NAME&gt;</code></p>
   </li>
   <li>
     <p>With <strong>yarn</strong>:</p>
 
-    <p><code class="highlighter-rouge">yarn create @ui5/webcomponents-package</code></p>
+    <p><code class="language-plaintext highlighter-rouge">yarn create @ui5/webcomponents-package</code></p>
 
     <p>or</p>
 
-    <p><code class="highlighter-rouge">yarn create @ui5/webcomponents-package &lt;NEW-PACKAGE-NAME&gt;</code></p>
+    <p><code class="language-plaintext highlighter-rouge">yarn create @ui5/webcomponents-package &lt;NEW-PACKAGE-NAME&gt;</code></p>
   </li>
 </ul>
 
-<p>where <code class="highlighter-rouge">&lt;NEW-PACKAGE-NAME&gt;</code> is the name of your new package (and the name of the directory to be created), for example:</p>
+<p>where <code class="language-plaintext highlighter-rouge">&lt;NEW-PACKAGE-NAME&gt;</code> is the name of your new package (and the name of the directory to be created), for example:</p>
 
-<p><code class="highlighter-rouge">npm init @ui5/webcomponents-package my-components</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm init @ui5/webcomponents-package my-components</code></p>
 
-<p>will create a <code class="highlighter-rouge">my-components</code> directory and initialize the package there.</p>
+<p>will create a <code class="language-plaintext highlighter-rouge">my-components</code> directory and initialize the package there.</p>
 
 <h3 id="follow-the-prompts">Follow the prompts.</h3>
 
 <p>The initialization script will ask you to choose:</p>
 <ul>
   <li>The <strong>name</strong> of your package (if you did not already pass a name when running the command above);</li>
-  <li>The <strong>port</strong> for your dev server (<code class="highlighter-rouge">8080</code> by default - just press Enter to select this);</li>
-  <li>The <strong>tag</strong> of the sample web component that will be created (<code class="highlighter-rouge">my-first-component</code> by default - just press Enter to select this).</li>
+  <li>The <strong>port</strong> for your dev server (<code class="language-plaintext highlighter-rouge">8080</code> by default - just press Enter to select this);</li>
+  <li>The <strong>tag</strong> of the sample web component that will be created (<code class="language-plaintext highlighter-rouge">my-first-component</code> by default - just press Enter to select this).</li>
 </ul>
 
 <h3 id="your-package-is-ready">Your package is ready!</h3>
@@ -5957,49 +5960,49 @@ Make sure you haven’t created a directory yourself.</p>
 <p>Just follow the instructions:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">cd &lt;NEW-PACKAGE-NAME&gt;</code></li>
-  <li><code class="highlighter-rouge">npm i</code> (or <code class="highlighter-rouge">yarn</code> if you prefer)</li>
-  <li><code class="highlighter-rouge">npm start</code> (or <code class="highlighter-rouge">yarn start</code> if you prefer)</li>
+  <li><code class="language-plaintext highlighter-rouge">cd &lt;NEW-PACKAGE-NAME&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">npm i</code> (or <code class="language-plaintext highlighter-rouge">yarn</code> if you prefer)</li>
+  <li><code class="language-plaintext highlighter-rouge">npm start</code> (or <code class="language-plaintext highlighter-rouge">yarn start</code> if you prefer)</li>
 </ul>
 
 <h2 id="step-2-run-the-dev-server-and-test-the-build">Step 2. Run the dev server and test the build.</h2>
 
 <p>To run the dev server, as instructed above:</p>
 
-<p><code class="highlighter-rouge">npm run start</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm run start</code></p>
 
 <p>or</p>
 
-<p><code class="highlighter-rouge">yarn start</code></p>
+<p><code class="language-plaintext highlighter-rouge">yarn start</code></p>
 
 <p>and once the project is built for the first time, the browser will automatically open the dev server URL.</p>
 
 <p>You can also run the tests:</p>
 
-<p><code class="highlighter-rouge">npm run test</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm run test</code></p>
 
 <p>or</p>
 
-<p><code class="highlighter-rouge">yarn test</code></p>
+<p><code class="language-plaintext highlighter-rouge">yarn test</code></p>
 
 <p>and the production build:</p>
 
-<p><code class="highlighter-rouge">npm run build</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm run build</code></p>
 
 <p>or</p>
 
-<p><code class="highlighter-rouge">yarn build</code>.</p>
+<p><code class="language-plaintext highlighter-rouge">yarn build</code>.</p>
 
-<p><strong>Note:</strong> In order to run the tests for the first time, you must have built the project with either <code class="highlighter-rouge">start</code> or <code class="highlighter-rouge">build</code>.</p>
+<p><strong>Note:</strong> In order to run the tests for the first time, you must have built the project with either <code class="language-plaintext highlighter-rouge">start</code> or <code class="language-plaintext highlighter-rouge">build</code>.</p>
 
 <p>That’s it!</p>
 
 <h2 id="understanding-the-project-structure">Understanding the Project Structure</h2>
 
-<h3 id="packagejson"><code class="highlighter-rouge">package.json</code></h3>
+<h3 id="packagejson"><code class="language-plaintext highlighter-rouge">package.json</code></h3>
 
 <p>The initialization script will add several packages as dependencies.
-These three <code class="highlighter-rouge">@ui5/</code> packages will serve as the foundation of your own package and Web Components.</p>
+These three <code class="language-plaintext highlighter-rouge">@ui5/</code> packages will serve as the foundation of your own package and Web Components.</p>
 
 <table>
   <thead>
@@ -6011,24 +6014,24 @@ These three <code class="highlighter-rouge">@ui5/</code> packages will serve as 
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-base</code></td>
-      <td><code class="highlighter-rouge">dependency</code></td>
+      <td><code class="language-plaintext highlighter-rouge">@ui5/webcomponents-base</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dependency</code></td>
       <td>Base classes and framework</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-theming</code></td>
-      <td><code class="highlighter-rouge">dependency</code></td>
+      <td><code class="language-plaintext highlighter-rouge">@ui5/webcomponents-theming</code></td>
+      <td><code class="language-plaintext highlighter-rouge">dependency</code></td>
       <td>Base theming assets</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-tools</code></td>
-      <td><code class="highlighter-rouge">devDependency</code></td>
+      <td><code class="language-plaintext highlighter-rouge">@ui5/webcomponents-tools</code></td>
+      <td><code class="language-plaintext highlighter-rouge">devDependency</code></td>
       <td>Build tools and configuration assets</td>
     </tr>
   </tbody>
 </table>
 
-<p>The initialization script will create several NPM scripts for you in <code class="highlighter-rouge">package.json</code>.</p>
+<p>The initialization script will create several NPM scripts for you in <code class="language-plaintext highlighter-rouge">package.json</code>.</p>
 
 <table>
   <thead>
@@ -6040,15 +6043,15 @@ These three <code class="highlighter-rouge">@ui5/</code> packages will serve as 
   <tbody>
     <tr>
       <td>clean</td>
-      <td>Delete the <code class="highlighter-rouge">dist/</code> directory with the build output.</td>
+      <td>Delete the <code class="language-plaintext highlighter-rouge">dist/</code> directory with the build output.</td>
     </tr>
     <tr>
       <td>build</td>
-      <td>Production build to the <code class="highlighter-rouge">dist/</code> directory.</td>
+      <td>Production build to the <code class="language-plaintext highlighter-rouge">dist/</code> directory.</td>
     </tr>
     <tr>
       <td>lint</td>
-      <td>Run a static code scan with <code class="highlighter-rouge">eslint</code>.</td>
+      <td>Run a static code scan with <code class="language-plaintext highlighter-rouge">eslint</code>.</td>
     </tr>
     <tr>
       <td>start</td>
@@ -6064,7 +6067,7 @@ These three <code class="highlighter-rouge">@ui5/</code> packages will serve as 
     </tr>
     <tr>
       <td>test</td>
-      <td>Run the dev server and execute the specs from the <code class="highlighter-rouge">test/specs/</code> directory.</td>
+      <td>Run the dev server and execute the specs from the <code class="language-plaintext highlighter-rouge">test/specs/</code> directory.</td>
     </tr>
     <tr>
       <td>create-ui5-element</td>
@@ -6087,7 +6090,7 @@ These three <code class="highlighter-rouge">@ui5/</code> packages will serve as 
   <tbody>
     <tr>
       <td>.eslintignore</td>
-      <td>Excludes the <code class="highlighter-rouge">dist/</code> and <code class="highlighter-rouge">test/</code> directories from static code scans.</td>
+      <td>Excludes the <code class="language-plaintext highlighter-rouge">dist/</code> and <code class="language-plaintext highlighter-rouge">test/</code> directories from static code scans.</td>
     </tr>
     <tr>
       <td>package-scripts.js</td>
@@ -6100,25 +6103,25 @@ These three <code class="highlighter-rouge">@ui5/</code> packages will serve as 
   </tbody>
 </table>
 
-<p>You’ll likely only need to change <code class="highlighter-rouge">bundle.js</code> to import your new components there.</p>
+<p>You’ll likely only need to change <code class="language-plaintext highlighter-rouge">bundle.js</code> to import your new components there.</p>
 
-<h3 id="the-config-directory">The <code class="highlighter-rouge">config/</code> directory</h3>
+<h3 id="the-config-directory">The <code class="language-plaintext highlighter-rouge">config/</code> directory</h3>
 
-<p>The <code class="highlighter-rouge">config/</code> directory serves as a central place for most build and test tools configuration assets. Normally, you
+<p>The <code class="language-plaintext highlighter-rouge">config/</code> directory serves as a central place for most build and test tools configuration assets. Normally, you
 don’t need to change any files there.</p>
 
 <h4 id="custom-configuration">Custom configuration</h4>
 
-<p>The files in the <code class="highlighter-rouge">config/</code> directory simply import UI5 Web Components default configuration for all tasks: <code class="highlighter-rouge">rollup</code>, <code class="highlighter-rouge">wdio</code>, <code class="highlighter-rouge">eslint</code>, etc.</p>
+<p>The files in the <code class="language-plaintext highlighter-rouge">config/</code> directory simply import UI5 Web Components default configuration for all tasks: <code class="language-plaintext highlighter-rouge">rollup</code>, <code class="language-plaintext highlighter-rouge">wdio</code>, <code class="language-plaintext highlighter-rouge">eslint</code>, etc.</p>
 
-<p>If you need to customize any configuration, simply put your own content into the respective file in <code class="highlighter-rouge">config/</code>.</p>
+<p>If you need to customize any configuration, simply put your own content into the respective file in <code class="language-plaintext highlighter-rouge">config/</code>.</p>
 
 <p>Examples:</p>
 <ul>
   <li>
-    <p>Modifying <code class="highlighter-rouge">eslint</code> settings.</p>
+    <p>Modifying <code class="language-plaintext highlighter-rouge">eslint</code> settings.</p>
 
-    <p>Open <code class="highlighter-rouge">config/.eslintrc.js</code>. It should look like this:</p>
+    <p>Open <code class="language-plaintext highlighter-rouge">config/.eslintrc.js</code>. It should look like this:</p>
     <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-tools/components-package/eslint.js</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div>    </div>
     <p>As you can see, this is just a proxy to UI5 Web Components default configuration.
@@ -6135,16 +6138,16 @@ don’t need to change any files there.</p>
 </code></pre></div>    </div>
   </li>
   <li>
-    <p>Modifying <code class="highlighter-rouge">wdio</code> settings.</p>
+    <p>Modifying <code class="language-plaintext highlighter-rouge">wdio</code> settings.</p>
 
-    <p>Open <code class="highlighter-rouge">config/wdio.conf.js</code>. It should look like this:</p>
+    <p>Open <code class="language-plaintext highlighter-rouge">config/wdio.conf.js</code>. It should look like this:</p>
 
     <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@ui5/webcomponents-tools/components-package/wdio.js</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div>    </div>
 
     <p>Again, this is a proxy to UI5 Web Components default configuration.</p>
 
-    <p>You could just paste the content of <code class="highlighter-rouge">@ui5/webcomponents-tools/components-package/wdio.js</code> here and modify at will.</p>
+    <p>You could just paste the content of <code class="language-plaintext highlighter-rouge">@ui5/webcomponents-tools/components-package/wdio.js</code> here and modify at will.</p>
 
     <p>However, let’s not replace the whole file by hand this time, but just modify the exported configuration object.</p>
 
@@ -6153,14 +6156,14 @@ don’t need to change any files there.</p>
  <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">result</span><span class="p">;</span>
 </code></pre></div>    </div>
 
-    <p>In this example, what we did was simply replace one option in the configuration object to disable <code class="highlighter-rouge">headless</code> mode
- so that we can use <code class="highlighter-rouge">browser.debug()</code> in our <code class="highlighter-rouge">*.spec.js</code> files. For more on testing, see <a href="../testing-ui5-web-components">Testing Web Components</a>.</p>
+    <p>In this example, what we did was simply replace one option in the configuration object to disable <code class="language-plaintext highlighter-rouge">headless</code> mode
+ so that we can use <code class="language-plaintext highlighter-rouge">browser.debug()</code> in our <code class="language-plaintext highlighter-rouge">*.spec.js</code> files. For more on testing, see <a href="../testing-ui5-web-components">Testing Web Components</a>.</p>
   </li>
 </ul>
 
-<h3 id="the-src-directory">The <code class="highlighter-rouge">src/</code> directory</h3>
+<h3 id="the-src-directory">The <code class="language-plaintext highlighter-rouge">src/</code> directory</h3>
 
-<p>This is where you’ll do most of the development. Let’s see the necessary files for a <code class="highlighter-rouge">my-first-component</code> component.</p>
+<p>This is where you’ll do most of the development. Let’s see the necessary files for a <code class="language-plaintext highlighter-rouge">my-first-component</code> component.</p>
 
 <h4 id="class-and-template-files">Class and template files</h4>
 
@@ -6175,11 +6178,11 @@ don’t need to change any files there.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">src/MyFirstComponent.js</code></td>
+      <td><code class="language-plaintext highlighter-rouge">src/MyFirstComponent.js</code></td>
       <td>Web Component class</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/MyFirstComponent.hbs</code></td>
+      <td><code class="language-plaintext highlighter-rouge">src/MyFirstComponent.hbs</code></td>
       <td>Handlebars template</td>
     </tr>
   </tbody>
@@ -6194,9 +6197,9 @@ script and are in a working state already.</p>
 <h4 id="theming-related-files">Theming-related files</h4>
 
 <p>A single set of CSS rules will be used for all themes. The only difference between themes may be the values of CSS Variables.
-Some CSS Vars, such as <code class="highlighter-rouge">--sapBackgroundColor</code> and <code class="highlighter-rouge">--sapTextColor</code> are standard and automatically managed by the framework.
+Some CSS Vars, such as <code class="language-plaintext highlighter-rouge">--sapBackgroundColor</code> and <code class="language-plaintext highlighter-rouge">--sapTextColor</code> are standard and automatically managed by the framework.
 In addition, you can define your own CSS Vars and provide different values for them for the different themes. Set these CSS Vars in the
-<code class="highlighter-rouge">parameters-bundle.css</code> file for each theme. These files are the entry points for the styles build script.</p>
+<code class="language-plaintext highlighter-rouge">parameters-bundle.css</code> file for each theme. These files are the entry points for the styles build script.</p>
 
 <table>
   <thead>
@@ -6207,49 +6210,49 @@ In addition, you can define your own CSS Vars and provide different values for t
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">src/themes/MyFirstComponent.css</code></td>
+      <td><code class="language-plaintext highlighter-rouge">src/themes/MyFirstComponent.css</code></td>
       <td>All CSS rules for the Web Component, same for all themes; will be inserted in the shadow root.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_belize/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize</code> theme</td>
+      <td><code class="language-plaintext highlighter-rouge">src/themes/sap_belize/parameters-bundle.css</code></td>
+      <td>Values for the component-specific CSS Vars for the <code class="language-plaintext highlighter-rouge">sap_belize</code> theme</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_belize_hcb/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize_hcb</code> theme</td>
+      <td><code class="language-plaintext highlighter-rouge">src/themes/sap_belize_hcb/parameters-bundle.css</code></td>
+      <td>Values for the component-specific CSS Vars for the <code class="language-plaintext highlighter-rouge">sap_belize_hcb</code> theme</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_belize_hcw/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_belize_hcw</code> theme</td>
+      <td><code class="language-plaintext highlighter-rouge">src/themes/sap_belize_hcw/parameters-bundle.css</code></td>
+      <td>Values for the component-specific CSS Vars for the <code class="language-plaintext highlighter-rouge">sap_belize_hcw</code> theme</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_fiori_3/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3</code> theme</td>
+      <td><code class="language-plaintext highlighter-rouge">src/themes/sap_fiori_3/parameters-bundle.css</code></td>
+      <td>Values for the component-specific CSS Vars for the <code class="language-plaintext highlighter-rouge">sap_fiori_3</code> theme</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_fiori_3_dark/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3_dark</code> theme</td>
+      <td><code class="language-plaintext highlighter-rouge">src/themes/sap_fiori_3_dark/parameters-bundle.css</code></td>
+      <td>Values for the component-specific CSS Vars for the <code class="language-plaintext highlighter-rouge">sap_fiori_3_dark</code> theme</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_fiori_3_hcb/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3_hcb</code> theme</td>
+      <td><code class="language-plaintext highlighter-rouge">src/themes/sap_fiori_3_hcb/parameters-bundle.css</code></td>
+      <td>Values for the component-specific CSS Vars for the <code class="language-plaintext highlighter-rouge">sap_fiori_3_hcb</code> theme</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/themes/sap_fiori_3_hcw/parameters-bundle.css</code></td>
-      <td>Values for the component-specific CSS Vars for the <code class="highlighter-rouge">sap_fiori_3_hcw</code> theme</td>
+      <td><code class="language-plaintext highlighter-rouge">src/themes/sap_fiori_3_hcw/parameters-bundle.css</code></td>
+      <td>Values for the component-specific CSS Vars for the <code class="language-plaintext highlighter-rouge">sap_fiori_3_hcw</code> theme</td>
     </tr>
   </tbody>
 </table>
 
-<p><strong>Note:</strong> It’s up to you whether to put the CSS Vars directly in the <code class="highlighter-rouge">parameters-bundle.css</code> files for the different themes or to
-import them from separate <code class="highlighter-rouge">.css</code> files. You could have, for example, a <code class="highlighter-rouge">MyFirstComponent-params.css</code> file for each theme and
-import it into the <code class="highlighter-rouge">parameters-bundle.css</code> file: <code class="highlighter-rouge">@import "MyFirstComponent-params.css";</code>.</p>
+<p><strong>Note:</strong> It’s up to you whether to put the CSS Vars directly in the <code class="language-plaintext highlighter-rouge">parameters-bundle.css</code> files for the different themes or to
+import them from separate <code class="language-plaintext highlighter-rouge">.css</code> files. You could have, for example, a <code class="language-plaintext highlighter-rouge">MyFirstComponent-params.css</code> file for each theme and
+import it into the <code class="language-plaintext highlighter-rouge">parameters-bundle.css</code> file: <code class="language-plaintext highlighter-rouge">@import "MyFirstComponent-params.css";</code>.</p>
 
 <p>Again, to know more about how these files work, you could have a look at the <a href="../custom-ui5-web-components#css">Developing Web Components</a> section of the documentation.</p>
 
 <h4 id="i18n-files">i18n files</h4>
 
-<p>You can define translatable texts as key-value pairs, separated by <code class="highlighter-rouge">=</code> in the <code class="highlighter-rouge">messagebundle.properties</code> file. Then you can provide translations for as many languages
+<p>You can define translatable texts as key-value pairs, separated by <code class="language-plaintext highlighter-rouge">=</code> in the <code class="language-plaintext highlighter-rouge">messagebundle.properties</code> file. Then you can provide translations for as many languages
 as needed.</p>
 
 <table>
@@ -6261,15 +6264,15 @@ as needed.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">src/i18n/messagebundle.properties</code></td>
+      <td><code class="language-plaintext highlighter-rouge">src/i18n/messagebundle.properties</code></td>
       <td>Source file for all translatable texts</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/i18n/messagebundle_de.properties</code></td>
+      <td><code class="language-plaintext highlighter-rouge">src/i18n/messagebundle_de.properties</code></td>
       <td>Translations in German</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/i18n/messagebundle_en.properties</code></td>
+      <td><code class="language-plaintext highlighter-rouge">src/i18n/messagebundle_en.properties</code></td>
       <td>Translations in English</td>
     </tr>
     <tr>
@@ -6279,17 +6282,17 @@ as needed.</p>
   </tbody>
 </table>
 
-<p>Let’s have a look at the sample <code class="highlighter-rouge">messagebundle.properties</code> file, generated by the script.</p>
+<p>Let’s have a look at the sample <code class="language-plaintext highlighter-rouge">messagebundle.properties</code> file, generated by the script.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#please wait text for the sample component
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#please wait text for the sample component
 PLEASE_WAIT=wait
 </code></pre></div></div>
 
-<p>Here’s where you define all i18n texts, optionally with comments for the translators (<code class="highlighter-rouge"># Comment</code>).</p>
+<p>Here’s where you define all i18n texts, optionally with comments for the translators (<code class="language-plaintext highlighter-rouge"># Comment</code>).</p>
 
-<p>And now let’s have a look at a sample file with translations, for example <code class="highlighter-rouge">messagebundle_es.properties</code>:</p>
+<p>And now let’s have a look at a sample file with translations, for example <code class="language-plaintext highlighter-rouge">messagebundle_es.properties</code>:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PLEASE_WAIT=Espere
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PLEASE_WAIT=Espere
 </code></pre></div></div>
 
 <h4 id="assets-additional-themes-i18n-texts-etc">Assets (additional themes, i18n texts, etc.)</h4>
@@ -6303,18 +6306,18 @@ PLEASE_WAIT=wait
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">src/Assets.js</code></td>
+      <td><code class="language-plaintext highlighter-rouge">src/Assets.js</code></td>
       <td>Entry point for your package assets.</td>
     </tr>
   </tbody>
 </table>
 
-<p>This module imports all base assets (such as <code class="highlighter-rouge">CLDR</code> and the base theme parameters), but also your own
+<p>This module imports all base assets (such as <code class="language-plaintext highlighter-rouge">CLDR</code> and the base theme parameters), but also your own
 package assets (i18n and package-specific theme parameters). Users of your package will have to import this module in their production applications in order to get additional themes support and i18n support.</p>
 
-<p><strong>Note:</strong> For easier development and testing, <code class="highlighter-rouge">Assets.js</code> is also imported in the dev/test bundle <code class="highlighter-rouge">bundle.esm.js</code> by the initialization script.</p>
+<p><strong>Note:</strong> For easier development and testing, <code class="language-plaintext highlighter-rouge">Assets.js</code> is also imported in the dev/test bundle <code class="language-plaintext highlighter-rouge">bundle.esm.js</code> by the initialization script.</p>
 
-<h3 id="the-test-directory">The <code class="highlighter-rouge">test/</code> directory</h3>
+<h3 id="the-test-directory">The <code class="language-plaintext highlighter-rouge">test/</code> directory</h3>
 
 <table>
   <thead>
@@ -6325,28 +6328,28 @@ package assets (i18n and package-specific theme parameters). Users of your packa
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">test/pages/*</code></td>
-      <td>Simple <code class="highlighter-rouge">.html</code> pages used for development and tests.</td>
+      <td><code class="language-plaintext highlighter-rouge">test/pages/*</code></td>
+      <td>Simple <code class="language-plaintext highlighter-rouge">.html</code> pages used for development and tests.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">src/specs/*</code></td>
+      <td><code class="language-plaintext highlighter-rouge">src/specs/*</code></td>
       <td>Test specs, based on <a href="https://www.npmjs.com/package/wdio">WDIO</a>. They use the test pages for setup.</td>
     </tr>
   </tbody>
 </table>
 
-<p>You can execute all specs by running <code class="highlighter-rouge">yarn test</code> or <code class="highlighter-rouge">npm run test</code>.</p>
+<p>You can execute all specs by running <code class="language-plaintext highlighter-rouge">yarn test</code> or <code class="language-plaintext highlighter-rouge">npm run test</code>.</p>
 
 <p>For more on testing, see our <a href="../testing-ui5-web-components">Testing Web Components</a> section.</p>
 
 <h2 id="public-consumption-of-your-custom-ui5-web-components-package">Public Consumption of Your Custom UI5 Web Components Package</h2>
 
-<p>Once you’ve developed your package and published it to NPM, application developers can import from the <code class="highlighter-rouge">dist/</code> directory
-of your package any of your Web Components, and optionally the <code class="highlighter-rouge">Assets.js</code> module, if they want additional themes and i18n.</p>
+<p>Once you’ve developed your package and published it to NPM, application developers can import from the <code class="language-plaintext highlighter-rouge">dist/</code> directory
+of your package any of your Web Components, and optionally the <code class="language-plaintext highlighter-rouge">Assets.js</code> module, if they want additional themes and i18n.</p>
 
-<p>For example, if your package is called <code class="highlighter-rouge">my-ui5-webcomponents</code>, users will install it by:</p>
+<p>For example, if your package is called <code class="language-plaintext highlighter-rouge">my-ui5-webcomponents</code>, users will install it by:</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i my-ui5-webcomponents --save
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i my-ui5-webcomponents --save
 </code></pre></div></div>
 
 <p>and then use it by:</p>

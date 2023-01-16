@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Deep dive and best practices | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Deep dive and best practices" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/development/deep-dive-and-best-practices/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/development/deep-dive-and-best-practices/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Deep dive and best practices" />
 <script type="application/ld+json">
-{"description":"Enterprise-flavored sugar on top of native APIs!","url":"https://sap.github.io/ui5-webcomponents/playground/development/deep-dive-and-best-practices/","@type":"WebPage","headline":"Deep dive and best practices","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Deep dive and best practices","url":"https://sap.github.io/ui5-webcomponents/playground/development/deep-dive-and-best-practices/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -5906,7 +5909,7 @@
 <ul>
   <li><a href="./02-custom-UI5-Web-Components.md">Developing Custom UI5 Web Components</a></li>
   <li><a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a></li>
-  <li><a href="./04-understanding-hbs-templates.md">Understanding the Handlebars (<code class="highlighter-rouge">.hbs</code>) templates</a></li>
+  <li><a href="./04-understanding-hbs-templates.md">Understanding the Handlebars (<code class="language-plaintext highlighter-rouge">.hbs</code>) templates</a></li>
 </ul>
 
 <p>as this article will expand on many of the notions, introduced there.</p>
@@ -5931,10 +5934,10 @@
   </li>
   <li><a href="#lifecycle">Lifecycle hooks</a>
     <ul>
-      <li><a href="#lifecycle_constructor"><code class="highlighter-rouge">constructor</code></a></li>
-      <li><a href="#lifecycle_before"><code class="highlighter-rouge">onBeforeRendering</code></a></li>
-      <li><a href="#lifecycle_after"><code class="highlighter-rouge">onAfterRendering</code></a></li>
-      <li><a href="#lifecycle_dom"><code class="highlighter-rouge">onEnterDOM</code> and <code class="highlighter-rouge">onExitDOM</code></a></li>
+      <li><a href="#lifecycle_constructor"><code class="language-plaintext highlighter-rouge">constructor</code></a></li>
+      <li><a href="#lifecycle_before"><code class="language-plaintext highlighter-rouge">onBeforeRendering</code></a></li>
+      <li><a href="#lifecycle_after"><code class="language-plaintext highlighter-rouge">onAfterRendering</code></a></li>
+      <li><a href="#lifecycle_dom"><code class="language-plaintext highlighter-rouge">onEnterDOM</code> and <code class="language-plaintext highlighter-rouge">onExitDOM</code></a></li>
     </ul>
   </li>
   <li><a href="#static">The static area</a>
@@ -5949,7 +5952,7 @@
 
 <h2 id="metadata-deep-dive-">Metadata deep dive <a name="metadata"></a></h2>
 
-<p>The <code class="highlighter-rouge">static get metadata()</code> method defines the public API of your component. Among other things, here you define:</p>
+<p>The <code class="language-plaintext highlighter-rouge">static get metadata()</code> method defines the public API of your component. Among other things, here you define:</p>
 <ul>
   <li>the tag name</li>
   <li>what properties/attributes (and of what type) your component supports</li>
@@ -5959,7 +5962,7 @@
 
 <h3 id="tag-">Tag <a name="metadata_tag"></a></h3>
 
-<p>The tag name must include a <code class="highlighter-rouge">-</code> as required for any custom element:</p>
+<p>The tag name must include a <code class="language-plaintext highlighter-rouge">-</code> as required for any custom element:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">metadata</span><span class="p">:</span> <span class="p">{</span>
 	<span class="nl">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-component</span><span class="dl">"</span>
@@ -5970,17 +5973,17 @@
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;my-component&gt;&lt;/my-component&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">tag</code>, as defined in <code class="highlighter-rouge">metadata</code>, is sometimes also referred to as the “pure tag”, meaning it is not suffixed.
+<p>The <code class="language-plaintext highlighter-rouge">tag</code>, as defined in <code class="language-plaintext highlighter-rouge">metadata</code>, is sometimes also referred to as the “pure tag”, meaning it is not suffixed.
 See <a href="../2-advanced/03-scoping.md">Scoping</a> for more on using a suffix with tag names.</p>
 
 <p>Important: the pure tag name of every UI5 Web Component is always set as an <strong>attribute</strong> to the component too.</p>
 
-<p>For example, when you create a <code class="highlighter-rouge">ui5-button</code>:</p>
+<p>For example, when you create a <code class="language-plaintext highlighter-rouge">ui5-button</code>:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"b1"</span> <span class="na">class=</span><span class="s">"button1"</span> <span class="na">design=</span><span class="s">"Emphasized"</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 </code></pre></div></div>
 
-<p>the framework will create an empty attribute with the name <code class="highlighter-rouge">ui5-button</code> too, so the actual DOM would look like this:</p>
+<p>the framework will create an empty attribute with the name <code class="language-plaintext highlighter-rouge">ui5-button</code> too, so the actual DOM would look like this:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"b1"</span> <span class="na">class=</span><span class="s">"button1"</span> <span class="na">design=</span><span class="s">"Emphasized"</span> <span class="na">ui5-button</span><span class="nt">&gt;&lt;/ui5-button&gt;</span>
 </code></pre></div></div>
@@ -5988,17 +5991,17 @@ See <a href="../2-advanced/03-scoping.md">Scoping</a> for more on using a suffix
 <p>Even if a suffix for tag names is configured (as described in <a href="../2-advanced/03-scoping.md">Scoping</a>), the attribute with
 the pure tag name will be the same.</p>
 
-<p>For example, if the configured suffix is <code class="highlighter-rouge">-demo</code> and all components are used with this suffix:</p>
+<p>For example, if the configured suffix is <code class="language-plaintext highlighter-rouge">-demo</code> and all components are used with this suffix:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button-demo</span> <span class="na">id=</span><span class="s">"b1"</span> <span class="na">class=</span><span class="s">"button1"</span> <span class="na">design=</span><span class="s">"Emphasized"</span> <span class="na">ui5-button</span><span class="nt">&gt;&lt;/ui5-button-demo&gt;</span>
 </code></pre></div></div>
 
-<p>the <strong>attribute</strong> will still be the same (<code class="highlighter-rouge">ui5-button</code> as opposed to the tag name of <code class="highlighter-rouge">ui5-button-demo</code>).</p>
+<p>the <strong>attribute</strong> will still be the same (<code class="language-plaintext highlighter-rouge">ui5-button</code> as opposed to the tag name of <code class="language-plaintext highlighter-rouge">ui5-button-demo</code>).</p>
 
 <p>Therefore, the best practice when developing UI5 Web Components is to write CSS selectors for the shadow roots using
 attribute selectors, instead of tag selectors.</p>
 
-<p>For example, if the <code class="highlighter-rouge">Demo.hbs</code> file looks like this:</p>
+<p>For example, if the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file looks like this:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"my-component"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"openBtn"</span><span class="nt">&gt;</span>Open<span class="nt">&lt;/ui5-button&gt;</span>
@@ -6009,7 +6012,7 @@ attribute selectors, instead of tag selectors.</p>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>you should not write selectors by tag name for other components in the <code class="highlighter-rouge">Demo.css</code> file:</p>
+<p>you should not write selectors by tag name for other components in the <code class="language-plaintext highlighter-rouge">Demo.css</code> file:</p>
 
 <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">ui5-button</span> <span class="p">{</span>
 	<span class="nl">width</span><span class="p">:</span> <span class="m">50px</span><span class="p">;</span>
@@ -6042,52 +6045,52 @@ attribute selectors, instead of tag selectors.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">metadata</span><span class="p">:</span> <span class="p">{</span>
 	<span class="nl">properties</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">text</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nb">String</span>
+		<span class="na">text</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nb">String</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>you can use the <code class="highlighter-rouge">text</code> getter/setter on this component’s instances:</p>
+<p>you can use the <code class="language-plaintext highlighter-rouge">text</code> getter/setter on this component’s instances:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">myComponent</span><span class="p">.</span><span class="nx">text</span><span class="p">;</span>
 <span class="nx">myComponent</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">New text</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>Whenever <code class="highlighter-rouge">text</code> is read or set, the framework-defined getter/setter will be called and thus the framework will be in control of the property.</p>
+<p>Whenever <code class="language-plaintext highlighter-rouge">text</code> is read or set, the framework-defined getter/setter will be called and thus the framework will be in control of the property.</p>
 
 <h4 id="properties-vs-attributes">Properties vs attributes</h4>
 
-<p>The <code class="highlighter-rouge">properties</code> section defines both properties and attributes for your component. By default, for each property (<code class="highlighter-rouge">camelCase</code> name) an attribute with the
-same name but in <code class="highlighter-rouge">kebab-case</code> is supported. Properties of type <code class="highlighter-rouge">Object</code> have no attribute counterparts. If you wish to not have an attribute for a given property regardless of type, you can configure it with <code class="highlighter-rouge">noAttribute: true</code>.</p>
+<p>The <code class="language-plaintext highlighter-rouge">properties</code> section defines both properties and attributes for your component. By default, for each property (<code class="language-plaintext highlighter-rouge">camelCase</code> name) an attribute with the
+same name but in <code class="language-plaintext highlighter-rouge">kebab-case</code> is supported. Properties of type <code class="language-plaintext highlighter-rouge">Object</code> have no attribute counterparts. If you wish to not have an attribute for a given property regardless of type, you can configure it with <code class="language-plaintext highlighter-rouge">noAttribute: true</code>.</p>
 
 <h4 id="public-vs-private-properties">Public vs private properties</h4>
 
 <p>The framework does not distinguish between <em>public</em> and <em>private</em> properties. You can treat some properties as private in a sense that you can document them as such and not advertise them to users.
-The usual convention is that private properties start with an <code class="highlighter-rouge">_</code>, but this is not mandatory. In the end, all properties defined in the metadata, public or private,
+The usual convention is that private properties start with an <code class="language-plaintext highlighter-rouge">_</code>, but this is not mandatory. In the end, all properties defined in the metadata, public or private,
 are <em>component state</em>, therefore cause the component to be invalidated and subsequently re-rendered, when changed.</p>
 
 <h4 id="property-types-and-default-values">Property types and default values</h4>
 
-<p>The most common types of properties are <code class="highlighter-rouge">String</code>, <code class="highlighter-rouge">Boolean</code>, <code class="highlighter-rouge">Object</code>, <code class="highlighter-rouge">Integer</code> and <code class="highlighter-rouge">Float</code>. The last two are custom types, provided by the framework, that you must import (they do not exist in the browser).</p>
+<p>The most common types of properties are <code class="language-plaintext highlighter-rouge">String</code>, <code class="language-plaintext highlighter-rouge">Boolean</code>, <code class="language-plaintext highlighter-rouge">Object</code>, <code class="language-plaintext highlighter-rouge">Integer</code> and <code class="language-plaintext highlighter-rouge">Float</code>. The last two are custom types, provided by the framework, that you must import (they do not exist in the browser).</p>
 
-<p>Most property types can have a <code class="highlighter-rouge">defaultValue</code> set. <code class="highlighter-rouge">Boolean</code> is always <code class="highlighter-rouge">false</code> by default and <code class="highlighter-rouge">Object</code> is always <code class="highlighter-rouge">{}</code> by default, so <code class="highlighter-rouge">defaultValue</code> is not allowed for these types.</p>
+<p>Most property types can have a <code class="language-plaintext highlighter-rouge">defaultValue</code> set. <code class="language-plaintext highlighter-rouge">Boolean</code> is always <code class="language-plaintext highlighter-rouge">false</code> by default and <code class="language-plaintext highlighter-rouge">Object</code> is always <code class="language-plaintext highlighter-rouge">{}</code> by default, so <code class="language-plaintext highlighter-rouge">defaultValue</code> is not allowed for these types.</p>
 
-<p>You can also create custom property types by extending <code class="highlighter-rouge">@ui5/webcomponents-base/dist/DataType.js</code> and implementing its methods for your type.</p>
+<p>You can also create custom property types by extending <code class="language-plaintext highlighter-rouge">@ui5/webcomponents-base/dist/DataType.js</code> and implementing its methods for your type.</p>
 
-<h4 id="properties-with-multiple-true">Properties with <code class="highlighter-rouge">multiple: true</code></h4>
+<h4 id="properties-with-multiple-true">Properties with <code class="language-plaintext highlighter-rouge">multiple: true</code></h4>
 
-<p>If you configure a property with <code class="highlighter-rouge">multiple: true</code>, it will be an array of elements of the given <code class="highlighter-rouge">type</code>, and will be treated by the framework exactly as
-a property of type <code class="highlighter-rouge">Object</code> would be (as arrays are technically objects). For example, it will not have an attribute counterpart.</p>
+<p>If you configure a property with <code class="language-plaintext highlighter-rouge">multiple: true</code>, it will be an array of elements of the given <code class="language-plaintext highlighter-rouge">type</code>, and will be treated by the framework exactly as
+a property of type <code class="language-plaintext highlighter-rouge">Object</code> would be (as arrays are technically objects). For example, it will not have an attribute counterpart.</p>
 
 <p>Example:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">metadata</span><span class="p">:</span> <span class="p">{</span>
 	<span class="nl">properties</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">numbers</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nx">Integer</span><span class="p">,</span>
-			<span class="nx">multiple</span><span class="p">:</span> <span class="kc">true</span>
+		<span class="na">numbers</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nx">Integer</span><span class="p">,</span>
+			<span class="na">multiple</span><span class="p">:</span> <span class="kc">true</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
 <span class="p">}</span>
@@ -6096,11 +6099,11 @@ a property of type <code class="highlighter-rouge">Object</code> would be (as ar
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">myComponent</span><span class="p">.</span><span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">];</span>
 </code></pre></div></div>
 
-<p>Properties with <code class="highlighter-rouge">multiple: true</code> are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript).
+<p>Properties with <code class="language-plaintext highlighter-rouge">multiple: true</code> are rarely used in practice, as they are not DOM-friendly (cannot be set in a declarative way, only with Javascript).
 Their most common use case is as <em>private</em> properties for communication between related components. For example, the higher-order “date picker” component
-communicates with its “day picker”, “month picker”, and “year picker” parts by means of private <code class="highlighter-rouge">multiple</code> properties (to pass arrays of selected dates).</p>
+communicates with its “day picker”, “month picker”, and “year picker” parts by means of private <code class="language-plaintext highlighter-rouge">multiple</code> properties (to pass arrays of selected dates).</p>
 
-<p>If you need to use a property with <code class="highlighter-rouge">multiple: true</code> as part of your component’s public API, that is fine, but bear in mind the limitations 
+<p>If you need to use a property with <code class="language-plaintext highlighter-rouge">multiple: true</code> as part of your component’s public API, that is fine, but bear in mind the limitations 
 (no declarative support as with all Objects, so no attribute for this property).</p>
 
 <p>The alternative would be to use <em>abstract</em> items, for example:</p>
@@ -6112,8 +6115,8 @@ communicates with its “day picker”, “month picker”, and “year picker�
 <span class="nt">&lt;/my-component&gt;</span>
 </code></pre></div></div>
 
-<p>Here instead of having a <code class="highlighter-rouge">numbers</code> property of type <code class="highlighter-rouge">Integer</code>, configured with <code class="highlighter-rouge">multiple: true</code>, we have a <code class="highlighter-rouge">numbers</code> slot, and inside this slot we pass abstract items with
-a <code class="highlighter-rouge">value</code> property of type <code class="highlighter-rouge">Integer</code>. This is now completely declarative, and is preferable unless the number of items is very large (in which case the 
+<p>Here instead of having a <code class="language-plaintext highlighter-rouge">numbers</code> property of type <code class="language-plaintext highlighter-rouge">Integer</code>, configured with <code class="language-plaintext highlighter-rouge">multiple: true</code>, we have a <code class="language-plaintext highlighter-rouge">numbers</code> slot, and inside this slot we pass abstract items with
+a <code class="language-plaintext highlighter-rouge">value</code> property of type <code class="language-plaintext highlighter-rouge">Integer</code>. This is now completely declarative, and is preferable unless the number of items is very large (in which case the 
 solution with the multiple property would likely be better).</p>
 
 <h4 id="examples">Examples</h4>
@@ -6128,8 +6131,8 @@ solution with the multiple property would likely be better).</p>
 	<span class="nl">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-component</span><span class="dl">"</span><span class="p">,</span>
 	<span class="nx">properties</span><span class="p">:</span> <span class="p">{</span>
 		<span class="nl">text</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
-			<span class="nx">defaultValue</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+			<span class="na">defaultValue</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span>
 		<span class="p">},</span>
 		<span class="nx">width</span><span class="p">:</span> <span class="p">{</span>
 			<span class="nl">type</span><span class="p">:</span> <span class="nx">Integer</span><span class="p">,</span>
@@ -6141,7 +6144,7 @@ solution with the multiple property would likely be better).</p>
 			<span class="nx">defaultValue</span><span class="p">:</span> <span class="mf">0.5</span>
 		<span class="p">}</span>
 		<span class="nl">data</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nb">Object</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nb">Object</span>
 		<span class="p">},</span>
 		<span class="cm">/**
 		 * @private
@@ -6153,16 +6156,16 @@ solution with the multiple property would likely be better).</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Here <code class="highlighter-rouge">text</code>, <code class="highlighter-rouge">width</code>, <code class="highlighter-rouge">scale</code> and <code class="highlighter-rouge">data</code> are public properties, and <code class="highlighter-rouge">_isPhone</code> private, but only by convention. If the user (or the component internally) changes any of these properties, the component will be invalidated.</p>
+<p>Here <code class="language-plaintext highlighter-rouge">text</code>, <code class="language-plaintext highlighter-rouge">width</code>, <code class="language-plaintext highlighter-rouge">scale</code> and <code class="language-plaintext highlighter-rouge">data</code> are public properties, and <code class="language-plaintext highlighter-rouge">_isPhone</code> private, but only by convention. If the user (or the component internally) changes any of these properties, the component will be invalidated.</p>
 
 <h4 id="best-practices-for-using-properties">Best practices for using properties</h4>
 
-<p>The best practice is to <strong>never</strong> change public properties from within the component (they are owned by the application) unless the property changes due to user interaction (f.e. the user typed in an input - so you change the <code class="highlighter-rouge">value</code> property; or the user clicked a checkbox - and you flip the <code class="highlighter-rouge">checked</code> property). It is also
+<p>The best practice is to <strong>never</strong> change public properties from within the component (they are owned by the application) unless the property changes due to user interaction (f.e. the user typed in an input - so you change the <code class="language-plaintext highlighter-rouge">value</code> property; or the user clicked a checkbox - and you flip the <code class="language-plaintext highlighter-rouge">checked</code> property). It is also
 a best practice to always <strong>fire an event</strong> if you change a public property due to user interaction, to let the application know and synchronize its own state.</p>
 
 <p>As for private properties, the best practice is to <strong>only</strong> change them internally and never let the application know about their existence.</p>
 
-<p>Both public and private properties are great ways to create CSS selectors for your component with the <code class="highlighter-rouge">:host()</code> selector. The <code class="highlighter-rouge">:host()</code> selector targets the custom element itself, and can be combined with other selectors:</p>
+<p>Both public and private properties are great ways to create CSS selectors for your component with the <code class="language-plaintext highlighter-rouge">:host()</code> selector. The <code class="language-plaintext highlighter-rouge">:host()</code> selector targets the custom element itself, and can be combined with other selectors:</p>
 
 <div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">:host</span> <span class="p">{</span>
 	<span class="nl">height</span><span class="p">:</span> <span class="m">5rem</span><span class="p">;</span>
@@ -6178,8 +6181,8 @@ a best practice to always <strong>fire an event</strong> if you change a public 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;my-comopnent</span> <span class="na">size=</span><span class="s">"XS"</span><span class="nt">&gt;&lt;/my-comopnent&gt;</span> <span class="c">&lt;!-- :host() targets my-component --&gt;</span>
 </code></pre></div></div>
 
-<p>Here for example, if the <code class="highlighter-rouge">size</code> property (respectively the attribute with the same name) is set to <code class="highlighter-rouge">XS</code>, the component’s dimensions will be changed from <code class="highlighter-rouge">5rem</code> to <code class="highlighter-rouge">2rem</code>. 
-Using attribute selectors is the best practice as you don’t have to set CSS classes on your component - you can write CSS selectors with <code class="highlighter-rouge">:host()</code> by attribute.</p>
+<p>Here for example, if the <code class="language-plaintext highlighter-rouge">size</code> property (respectively the attribute with the same name) is set to <code class="language-plaintext highlighter-rouge">XS</code>, the component’s dimensions will be changed from <code class="language-plaintext highlighter-rouge">5rem</code> to <code class="language-plaintext highlighter-rouge">2rem</code>. 
+Using attribute selectors is the best practice as you don’t have to set CSS classes on your component - you can write CSS selectors with <code class="language-plaintext highlighter-rouge">:host()</code> by attribute.</p>
 
 <h4 id="metadata-properties-vs-normal-js-properties">Metadata properties vs normal JS properties</h4>
 
@@ -6201,19 +6204,19 @@ that they will not be managed by the framework.</p>
 <p>While <em>properties</em> define the objective characteristics of a component, <em>slots</em> define the way a component can nest other HTML elements.
 You don’t need to define slots for every component - some components are not meant to hold any other HTML elements, and are fully operated by properties and events alone.</p>
 
-<p>You implement slots by configuring them with the <code class="highlighter-rouge">slots</code> metadata object, and rendering respective <code class="highlighter-rouge">&lt;slot&gt;</code> elements in your <code class="highlighter-rouge">.hbs</code> template.</p>
+<p>You implement slots by configuring them with the <code class="language-plaintext highlighter-rouge">slots</code> metadata object, and rendering respective <code class="language-plaintext highlighter-rouge">&lt;slot&gt;</code> elements in your <code class="language-plaintext highlighter-rouge">.hbs</code> template.</p>
 
-<p>You can read more about the <code class="highlighter-rouge">slot</code> HTML Element <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot">here</a>.</p>
+<p>You can read more about the <code class="language-plaintext highlighter-rouge">slot</code> HTML Element <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot">here</a>.</p>
 
 <h4 id="default-slot-and-named-slots">Default slot and named slots</h4>
 
-<p>For <em>named</em> slots you set the name you wish to use for the slot as the key in the <code class="highlighter-rouge">slots</code> metadata object.</p>
+<p>For <em>named</em> slots you set the name you wish to use for the slot as the key in the <code class="language-plaintext highlighter-rouge">slots</code> metadata object.</p>
 
 <p>Example:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">slots</span><span class="p">:</span> <span class="p">{</span>
 	<span class="nl">items</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
+		<span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
 	<span class="p">},</span>
 	<span class="nx">footer</span><span class="p">:</span> <span class="p">{</span>
 		<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
@@ -6221,9 +6224,9 @@ You don’t need to define slots for every component - some components are not m
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>and then in your <code class="highlighter-rouge">.hbs</code> template you render respectively <code class="highlighter-rouge">&lt;slot name="items"&gt;&lt;/slot&gt;</code> and <code class="highlighter-rouge">&lt;slot name="footer"&gt;&lt;/slot&gt;</code>.</p>
+<p>and then in your <code class="language-plaintext highlighter-rouge">.hbs</code> template you render respectively <code class="language-plaintext highlighter-rouge">&lt;slot name="items"&gt;&lt;/slot&gt;</code> and <code class="language-plaintext highlighter-rouge">&lt;slot name="footer"&gt;&lt;/slot&gt;</code>.</p>
 
-<p>The <em>default</em> slot on the other hand must be defined with the <code class="highlighter-rouge">default</code> key in the <code class="highlighter-rouge">slots</code> metadata object (also note the quotes around the <code class="highlighter-rouge">default</code> key as it is a reserved word):</p>
+<p>The <em>default</em> slot on the other hand must be defined with the <code class="language-plaintext highlighter-rouge">default</code> key in the <code class="language-plaintext highlighter-rouge">slots</code> metadata object (also note the quotes around the <code class="language-plaintext highlighter-rouge">default</code> key as it is a reserved word):</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">slots</span><span class="p">:</span> <span class="p">{</span>
 	<span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
@@ -6232,29 +6235,29 @@ You don’t need to define slots for every component - some components are not m
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>and then in the <code class="highlighter-rouge">.hbs</code> template you render <code class="highlighter-rouge">&lt;slot&gt;&lt;/slot&gt;</code>.</p>
+<p>and then in the <code class="language-plaintext highlighter-rouge">.hbs</code> template you render <code class="language-plaintext highlighter-rouge">&lt;slot&gt;&lt;/slot&gt;</code>.</p>
 
 <h4 id="slot-types">Slot types</h4>
 
-<p>Unlike properties, slots can be of only two types: <code class="highlighter-rouge">HTMLElement</code> and <code class="highlighter-rouge">Node</code>.</p>
+<p>Unlike properties, slots can be of only two types: <code class="language-plaintext highlighter-rouge">HTMLElement</code> and <code class="language-plaintext highlighter-rouge">Node</code>.</p>
 
-<p><code class="highlighter-rouge">HTMLElement</code> means the slot accepts only other HTML Elements. You can use this type for any slot (default or named).</p>
+<p><code class="language-plaintext highlighter-rouge">HTMLElement</code> means the slot accepts only other HTML Elements. You can use this type for any slot (default or named).</p>
 
-<p><code class="highlighter-rouge">Node</code> means that the slot can accept both HTML Elements and Text nodes, and is allowed only for the <code class="highlighter-rouge">default</code> slot. 
+<p><code class="language-plaintext highlighter-rouge">Node</code> means that the slot can accept both HTML Elements and Text nodes, and is allowed only for the <code class="language-plaintext highlighter-rouge">default</code> slot. 
 The reason for this restriction is that text nodes in HTML cannot have attributes, hence they cannot be slotted as HTML Elements can.
-As a result, text can only go the default slot, hence <code class="highlighter-rouge">Node</code> is applicable only for default slots.</p>
+As a result, text can only go the default slot, hence <code class="language-plaintext highlighter-rouge">Node</code> is applicable only for default slots.</p>
 
 <h4 id="are-slots-managed-state">Are slots managed state?</h4>
 
 <p>Unlike metadata <em>properties</em>, which are always managed state (see the previous section), <em>slots</em> are not managed by the framework by default. 
 Changes to slots do not trigger lifecycle events such as invalidation.</p>
 
-<p>However, you can change this by setting <code class="highlighter-rouge">managedSlots: true</code> in the <code class="highlighter-rouge">metadata</code> object. This setting is global and affects all slots for your component.</p>
+<p>However, you can change this by setting <code class="language-plaintext highlighter-rouge">managedSlots: true</code> in the <code class="language-plaintext highlighter-rouge">metadata</code> object. This setting is global and affects all slots for your component.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">managedSlots</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="nx">slots</span><span class="p">:</span>	<span class="p">{</span>
 	<span class="nl">items</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
+		<span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
 	<span class="p">},</span>
 	<span class="nx">footer</span><span class="p">:</span> <span class="p">{</span>
 		<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
@@ -6266,13 +6269,13 @@ Changes to slots do not trigger lifecycle events such as invalidation.</p>
 
 <h4 id="slot-accessors">Slot accessors</h4>
 
-<p>Additionally, when you set <code class="highlighter-rouge">managedSlots: true</code>, you get a <strong>read-only</strong> accessor for the children in that slot.</p>
+<p>Additionally, when you set <code class="language-plaintext highlighter-rouge">managedSlots: true</code>, you get a <strong>read-only</strong> accessor for the children in that slot.</p>
 
 <p>Taking the example from above:</p>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">managedSlots</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="nx">slots</span><span class="p">:</span>	<span class="p">{</span>
 	<span class="nl">items</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
+		<span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
 	<span class="p">},</span>
 	<span class="nx">footer</span><span class="p">:</span> <span class="p">{</span>
 		<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
@@ -6286,8 +6289,8 @@ Changes to slots do not trigger lifecycle events such as invalidation.</p>
 <span class="kd">const</span> <span class="nx">childrenInFooter</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">footer</span><span class="p">;</span> <span class="c1">// array of all children in the footer slot</span>
 </code></pre></div></div>
 
-<p>Finally, it’s possible to define the property name for the accessor of the <em>default</em> slot (as using the <code class="highlighter-rouge">default</code> key is not convenient in Javascript).
-You can do this with the <code class="highlighter-rouge">propertyName</code> setting:</p>
+<p>Finally, it’s possible to define the property name for the accessor of the <em>default</em> slot (as using the <code class="language-plaintext highlighter-rouge">default</code> key is not convenient in Javascript).
+You can do this with the <code class="language-plaintext highlighter-rouge">propertyName</code> setting:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">managedSlots</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="nx">slots</span><span class="p">:</span> <span class="p">{</span>
@@ -6310,15 +6313,15 @@ You can do this with the <code class="highlighter-rouge">propertyName</code> set
 <span class="kd">const</span> <span class="nx">childrenInFooter</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">footer</span><span class="p">;</span> <span class="c1">// array of all children in the footer slot</span>
 </code></pre></div></div>
 
-<p>These getters are helpful if your code needs to analyze/communicate with the children in a certain slot. They are also often used in the <code class="highlighter-rouge">.hbs</code>
+<p>These getters are helpful if your code needs to analyze/communicate with the children in a certain slot. They are also often used in the <code class="language-plaintext highlighter-rouge">.hbs</code>
 template where you need for example to loop over the items of a component.</p>
 
 <h4 id="individual-slots">Individual slots</h4>
 
-<p>All children, assigned to a certain <code class="highlighter-rouge">slot</code>, are rendered by the browser next to each other in the exact order in which they were passed to the component.
+<p>All children, assigned to a certain <code class="language-plaintext highlighter-rouge">slot</code>, are rendered by the browser next to each other in the exact order in which they were passed to the component.
 Sometimes, however, each child must be placed separately in the shadow root, potentially wrapped in other HTML elements, to satisfy the UX design of the component.</p>
 
-<p>The <code class="highlighter-rouge">individualSlots</code> slot metadata configuration setting (see <a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>) allows you to have a separate physical slot for each child belonging to a certain slot.</p>
+<p>The <code class="language-plaintext highlighter-rouge">individualSlots</code> slot metadata configuration setting (see <a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>) allows you to have a separate physical slot for each child belonging to a certain slot.</p>
 
 <p>Example:</p>
 
@@ -6334,14 +6337,14 @@ Sometimes, however, each child must be placed separately in the shadow root, pot
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The framework will then create an <code class="highlighter-rouge">_individualSlot</code> property on each child, belonging to the slot. Just render these slots in the <code class="highlighter-rouge">.hbs</code> template
+<p>The framework will then create an <code class="language-plaintext highlighter-rouge">_individualSlot</code> property on each child, belonging to the slot. Just render these slots in the <code class="language-plaintext highlighter-rouge">.hbs</code> template
 to have all children belonging to the slot displayed by the browser separately in your HTML markup of choice.</p>
 
-<p>For more information on individual slots and how to render them in the <code class="highlighter-rouge">.hbs</code> template click <a href="./04-understanding-hbs-templates.md#slots_individual">here</a>.</p>
+<p>For more information on individual slots and how to render them in the <code class="language-plaintext highlighter-rouge">.hbs</code> template click <a href="./04-understanding-hbs-templates.md#slots_individual">here</a>.</p>
 
 <h4 id="the-invalidateonchildchange-setting">The invalidateOnChildChange setting</h4>
 
-<p>There is one last configuration setting for slots - <code class="highlighter-rouge">invalidateOnChildChange</code>. When set to <code class="highlighter-rouge">true</code>, whenever a child in a certain slot is invalidated,
+<p>There is one last configuration setting for slots - <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code>. When set to <code class="language-plaintext highlighter-rouge">true</code>, whenever a child in a certain slot is invalidated,
 your component will be invalidated as well.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">managedSlots</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -6357,19 +6360,19 @@ your component will be invalidated as well.</p>
 <p>Now, the component will be invalidated not only when children are added/removed/rearranged, but also when children themselves change. This is very handy
 for components working with abstract items.</p>
 
-<p>Read more about abstract items and <code class="highlighter-rouge">invalidateOnChildChange</code> in the <a href="#invalidation">Invalidation</a> section later in this article.</p>
+<p>Read more about abstract items and <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> in the <a href="#invalidation">Invalidation</a> section later in this article.</p>
 
 <h3 id="events-">Events <a name="metadata_events"></a></h3>
 
 <p>Most components fire <em>events</em> to notify the application of user interaction.</p>
 
-<p>You can list the events fired by your component in the <code class="highlighter-rouge">events</code> metadata object, but this is optional and mostly done for documentation purposes.
+<p>You can list the events fired by your component in the <code class="language-plaintext highlighter-rouge">events</code> metadata object, but this is optional and mostly done for documentation purposes.
 Any event that you dispatch from your component will reach the application anyway.</p>
 
 <p>Here is an example how to fire an event from your component:</p>
 
 <ol>
-  <li>Declare the event in your <code class="highlighter-rouge">metadata</code> (optional, but highly recommended for documentation purposes and clarity):</li>
+  <li>Declare the event in your <code class="language-plaintext highlighter-rouge">metadata</code> (optional, but highly recommended for documentation purposes and clarity):</li>
 </ol>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">events</span><span class="p">:</span> <span class="p">{</span>
@@ -6378,7 +6381,7 @@ Any event that you dispatch from your component will reach the application anywa
 </code></pre></div></div>
 
 <ol>
-  <li>In the <code class="highlighter-rouge">.hbs</code> template bind an event listener to some part of your component’s HTML to be able to take action on user interaction:</li>
+  <li>In the <code class="language-plaintext highlighter-rouge">.hbs</code> template bind an event listener to some part of your component’s HTML to be able to take action on user interaction:</li>
 </ol>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"my-panel"</span><span class="nt">&gt;</span>
@@ -6390,9 +6393,9 @@ Any event that you dispatch from your component will reach the application anywa
 </code></pre></div></div>
 
 <p>In this example we have a simplified “panel” component consisting of a toggle button and a slot for the panel content.
-We bind the <code class="highlighter-rouge">click</code> event of the <code class="highlighter-rouge">&lt;button&gt;</code> we’ll use for toggling our panel to the <code class="highlighter-rouge">onPanelToggleClick</code> method.</p>
+We bind the <code class="language-plaintext highlighter-rouge">click</code> event of the <code class="language-plaintext highlighter-rouge">&lt;button&gt;</code> we’ll use for toggling our panel to the <code class="language-plaintext highlighter-rouge">onPanelToggleClick</code> method.</p>
 
-<p>For more on the <code class="highlighter-rouge">.hbs</code> template syntax and event listeners click <a href="./04-understanding-hbs-templates.md#syntax_at">here</a>.</p>
+<p>For more on the <code class="language-plaintext highlighter-rouge">.hbs</code> template syntax and event listeners click <a href="./04-understanding-hbs-templates.md#syntax_at">here</a>.</p>
 
 <ol>
   <li>Implement the event handler in your component:</li>
@@ -6408,10 +6411,10 @@ We bind the <code class="highlighter-rouge">click</code> event of the <code clas
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">fireEvent</code> method is provided by the base <code class="highlighter-rouge">UI5Element.js</code> class and is therefore available to all components. The best practice is to always use
-this method instead of simply calling the standard <code class="highlighter-rouge">dispatchEvent</code> function as <code class="highlighter-rouge">fireEvent</code> has framework-related enhanced functionality.</p>
+<p>The <code class="language-plaintext highlighter-rouge">fireEvent</code> method is provided by the base <code class="language-plaintext highlighter-rouge">UI5Element.js</code> class and is therefore available to all components. The best practice is to always use
+this method instead of simply calling the standard <code class="language-plaintext highlighter-rouge">dispatchEvent</code> function as <code class="language-plaintext highlighter-rouge">fireEvent</code> has framework-related enhanced functionality.</p>
 
-<p>That’s all it takes to manage an event’s lifecycle! Now your component’s users may listen for the <code class="highlighter-rouge">toggle</code> event:</p>
+<p>That’s all it takes to manage an event’s lifecycle! Now your component’s users may listen for the <code class="language-plaintext highlighter-rouge">toggle</code> event:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">panel</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="dl">"</span><span class="s2">my-panel</span><span class="dl">"</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
 <span class="nx">panel</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">"</span><span class="s2">toggle</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{});</span>
@@ -6424,21 +6427,21 @@ this method instead of simply calling the standard <code class="highlighter-roug
 <p>Here’s how:</p>
 
 <ol>
-  <li>Declare the event in your <code class="highlighter-rouge">metadata</code> and describe its parameters (again, optional, but good for consistency and documentation purposes):</li>
+  <li>Declare the event in your <code class="language-plaintext highlighter-rouge">metadata</code> and describe its parameters (again, optional, but good for consistency and documentation purposes):</li>
 </ol>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">events</span><span class="p">:</span> <span class="p">{</span>
 	<span class="nl">selectionChange</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">detail</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">item</span><span class="p">:</span> <span class="p">{</span> <span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span> <span class="p">},</span>
-			<span class="nx">oldItem</span><span class="p">:</span> <span class="p">{</span> <span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span> <span class="p">}</span>
+		<span class="na">detail</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">item</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span> <span class="p">},</span>
+			<span class="na">oldItem</span><span class="p">:</span> <span class="p">{</span> <span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span> <span class="p">}</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Here we define a <code class="highlighter-rouge">selectionChange</code> event which gives the app two pieces of information: <code class="highlighter-rouge">item</code> (the newly selected item) and <code class="highlighter-rouge">oldItem</code> (the previously selected item).
-Respectively they will be accessible by the app with <code class="highlighter-rouge">event.detail.item</code> and <code class="highlighter-rouge">event.detail.oldItem</code> in the event handler, exactly like it works with native browser events.</p>
+<p>Here we define a <code class="language-plaintext highlighter-rouge">selectionChange</code> event which gives the app two pieces of information: <code class="language-plaintext highlighter-rouge">item</code> (the newly selected item) and <code class="language-plaintext highlighter-rouge">oldItem</code> (the previously selected item).
+Respectively they will be accessible by the app with <code class="language-plaintext highlighter-rouge">event.detail.item</code> and <code class="language-plaintext highlighter-rouge">event.detail.oldItem</code> in the event handler, exactly like it works with native browser events.</p>
 
 <ol>
   <li>Pass the data when firing the event:</li>
@@ -6458,7 +6461,7 @@ Respectively they will be accessible by the app with <code class="highlighter-ro
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>To pass parameters, simply provide a second parameter of type <code class="highlighter-rouge">Object</code> to <code class="highlighter-rouge">fireEvent</code> with keys for all event parameters.</p>
+<p>To pass parameters, simply provide a second parameter of type <code class="language-plaintext highlighter-rouge">Object</code> to <code class="language-plaintext highlighter-rouge">fireEvent</code> with keys for all event parameters.</p>
 
 <p>The usage of the event by the app will be exactly like in the case of a native HTML element:</p>
 
@@ -6471,8 +6474,8 @@ Respectively they will be accessible by the app with <code class="highlighter-ro
 
 <h4 id="events-and-noconflict-mode">Events and noConflict mode</h4>
 
-<p>By default, when using the <code class="highlighter-rouge">fireEvent</code> method, as demonstrated above, actually not just one, but two custom events are fired: one with the name, provided as the first argument to <code class="highlighter-rouge">fireEvent</code>,
-and one more with the same name, but prefixed by <code class="highlighter-rouge">ui5-</code>.</p>
+<p>By default, when using the <code class="language-plaintext highlighter-rouge">fireEvent</code> method, as demonstrated above, actually not just one, but two custom events are fired: one with the name, provided as the first argument to <code class="language-plaintext highlighter-rouge">fireEvent</code>,
+and one more with the same name, but prefixed by <code class="language-plaintext highlighter-rouge">ui5-</code>.</p>
 
 <p>For example, the following code:</p>
 
@@ -6481,24 +6484,24 @@ and one more with the same name, but prefixed by <code class="highlighter-rouge"
 
 <p>will dispatch two <a href="https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events">custom events</a> by default:</p>
 <ul>
-  <li><code class="highlighter-rouge">toggle</code></li>
-  <li><code class="highlighter-rouge">ui5-toggle</code></li>
+  <li><code class="language-plaintext highlighter-rouge">toggle</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ui5-toggle</code></li>
 </ul>
 
-<p>However, if you set the <a href="../2-advanced/01-configuration.md#no_conflict">noConflict</a> configuration setting to <code class="highlighter-rouge">true</code>, only the <strong>prefixed</strong> event will be dispatched.</p>
+<p>However, if you set the <a href="../2-advanced/01-configuration.md#no_conflict">noConflict</a> configuration setting to <code class="language-plaintext highlighter-rouge">true</code>, only the <strong>prefixed</strong> event will be dispatched.</p>
 
-<p>So, when <code class="highlighter-rouge">noConflict: true</code> is configured, the same code:</p>
+<p>So, when <code class="language-plaintext highlighter-rouge">noConflict: true</code> is configured, the same code:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">fireEvent</span><span class="p">(</span><span class="dl">"</span><span class="s2">toggle</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
 <p>would result in just:</p>
 <ul>
-  <li><code class="highlighter-rouge">ui5-toggle</code></li>
+  <li><code class="language-plaintext highlighter-rouge">ui5-toggle</code></li>
 </ul>
 
-<p>Therefore, the best practice when binding to events, <strong>fired by other UI5 Web Components</strong> in your <code class="highlighter-rouge">.hbs</code> template, is to 
-always use the prefixed (<code class="highlighter-rouge">ui5-</code>) event.</p>
+<p>Therefore, the best practice when binding to events, <strong>fired by other UI5 Web Components</strong> in your <code class="language-plaintext highlighter-rouge">.hbs</code> template, is to 
+always use the prefixed (<code class="language-plaintext highlighter-rouge">ui5-</code>) event.</p>
 
 <p>Example:</p>
 
@@ -6515,8 +6518,8 @@ always use the prefixed (<code class="highlighter-rouge">ui5-</code>) event.</p>
 
 <p>Please note the following:</p>
 <ul>
-  <li>For native HTML elements (<code class="highlighter-rouge">input</code>, <code class="highlighter-rouge">button</code>) we bind to their respective events (<code class="highlighter-rouge">change</code>, <code class="highlighter-rouge">click</code>) normally.</li>
-  <li>For other UI5 Web Components (<code class="highlighter-rouge">ui5-button</code>, <code class="highlighter-rouge">ui5-input</code>, <code class="highlighter-rouge">ui5-list</code>), rendered by our component, we bind to the <code class="highlighter-rouge">ui5-</code> events as these are guaranteed to be dispatched even when <code class="highlighter-rouge">noConflict</code> is configured to <code class="highlighter-rouge">true</code>.</li>
+  <li>For native HTML elements (<code class="language-plaintext highlighter-rouge">input</code>, <code class="language-plaintext highlighter-rouge">button</code>) we bind to their respective events (<code class="language-plaintext highlighter-rouge">change</code>, <code class="language-plaintext highlighter-rouge">click</code>) normally.</li>
+  <li>For other UI5 Web Components (<code class="language-plaintext highlighter-rouge">ui5-button</code>, <code class="language-plaintext highlighter-rouge">ui5-input</code>, <code class="language-plaintext highlighter-rouge">ui5-list</code>), rendered by our component, we bind to the <code class="language-plaintext highlighter-rouge">ui5-</code> events as these are guaranteed to be dispatched even when <code class="language-plaintext highlighter-rouge">noConflict</code> is configured to <code class="language-plaintext highlighter-rouge">true</code>.</li>
 </ul>
 
 <p>If we used the non-prefixed versions:</p>
@@ -6532,9 +6535,9 @@ always use the prefixed (<code class="highlighter-rouge">ui5-</code>) event.</p>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>this would work well only with the default configuration (where <code class="highlighter-rouge">noConflict</code> is <code class="highlighter-rouge">false</code> and both events are fired), but our code would
-“break” the moment an app sets <code class="highlighter-rouge">noConflict: true</code> since that would suppress UI5 Web Components from firing the non-prefixed versions and 
-our event handlers (<code class="highlighter-rouge">onUI5ButtonClick</code>, <code class="highlighter-rouge">onUI5InputChange</code>, etc.) would never be executed.</p>
+<p>this would work well only with the default configuration (where <code class="language-plaintext highlighter-rouge">noConflict</code> is <code class="language-plaintext highlighter-rouge">false</code> and both events are fired), but our code would
+“break” the moment an app sets <code class="language-plaintext highlighter-rouge">noConflict: true</code> since that would suppress UI5 Web Components from firing the non-prefixed versions and 
+our event handlers (<code class="language-plaintext highlighter-rouge">onUI5ButtonClick</code>, <code class="language-plaintext highlighter-rouge">onUI5InputChange</code>, etc.) would never be executed.</p>
 
 <h3 id="wrapping-up-metadata-">Wrapping up metadata <a name="metadata_wrapping_up"></a></h3>
 
@@ -6546,8 +6549,8 @@ our event handlers (<code class="highlighter-rouge">onUI5ButtonClick</code>, <co
 	<span class="nl">tag</span><span class="p">:</span> <span class="dl">"</span><span class="s2">my-demo-component</span><span class="dl">"</span><span class="p">,</span>
 	<span class="nx">properties</span><span class="p">:</span> <span class="p">{</span>
 		<span class="nl">text</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
-			<span class="nx">defaultValue</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+			<span class="na">defaultValue</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span>
 		<span class="p">},</span>
 		<span class="nx">selected</span><span class="p">:</span> <span class="p">{</span>
 			<span class="nl">type</span><span class="p">:</span> <span class="nb">Boolean</span><span class="p">,</span>
@@ -6567,8 +6570,8 @@ our event handlers (<code class="highlighter-rouge">onUI5ButtonClick</code>, <co
 	<span class="p">},</span>
 	<span class="nx">events</span><span class="p">:</span> <span class="p">{</span>
 		<span class="nl">change</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">detail</span><span class="p">:</span> <span class="p">{</span>
-				<span class="nl">newText</span><span class="p">:</span> <span class="p">{</span><span class="nl">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">}</span>
+			<span class="na">detail</span><span class="p">:</span> <span class="p">{</span>
+				<span class="na">newText</span><span class="p">:</span> <span class="p">{</span><span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">}</span>
 			<span class="p">}</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
@@ -6579,27 +6582,27 @@ our event handlers (<code class="highlighter-rouge">onUI5ButtonClick</code>, <co
 
 <p>This component will have the following getters/setters, created for it by the framework:</p>
 <ul>
-  <li><code class="highlighter-rouge">this.text</code> (getter/setter, due to the <code class="highlighter-rouge">text</code> property) with default value of “Hello”</li>
-  <li><code class="highlighter-rouge">this.selected</code> (getter/setter, due to the <code class="highlighter-rouge">selected</code> property) with default value of <code class="highlighter-rouge">false</code> (all Booleans are <code class="highlighter-rouge">false</code> by default in HTML and <code class="highlighter-rouge">defaultValue</code> cannot be configured for them)</li>
-  <li><code class="highlighter-rouge">this.items</code> (getter only, due to having <code class="highlighter-rouge">managedSlots: true</code> and the <code class="highlighter-rouge">propertyName</code> of the default slot being <code class="highlighter-rouge">items</code>) - an array of all <em>Text Nodes and HTML Elements</em> in the default slot</li>
-  <li><code class="highlighter-rouge">this.icon</code> (getter only, due to having <code class="highlighter-rouge">managedSlots: true</code> and the <code class="highlighter-rouge">icon</code> slot) - an array of all HTML Elements in the <code class="highlighter-rouge">icon</code> slot</li>
+  <li><code class="language-plaintext highlighter-rouge">this.text</code> (getter/setter, due to the <code class="language-plaintext highlighter-rouge">text</code> property) with default value of “Hello”</li>
+  <li><code class="language-plaintext highlighter-rouge">this.selected</code> (getter/setter, due to the <code class="language-plaintext highlighter-rouge">selected</code> property) with default value of <code class="language-plaintext highlighter-rouge">false</code> (all Booleans are <code class="language-plaintext highlighter-rouge">false</code> by default in HTML and <code class="language-plaintext highlighter-rouge">defaultValue</code> cannot be configured for them)</li>
+  <li><code class="language-plaintext highlighter-rouge">this.items</code> (getter only, due to having <code class="language-plaintext highlighter-rouge">managedSlots: true</code> and the <code class="language-plaintext highlighter-rouge">propertyName</code> of the default slot being <code class="language-plaintext highlighter-rouge">items</code>) - an array of all <em>Text Nodes and HTML Elements</em> in the default slot</li>
+  <li><code class="language-plaintext highlighter-rouge">this.icon</code> (getter only, due to having <code class="language-plaintext highlighter-rouge">managedSlots: true</code> and the <code class="language-plaintext highlighter-rouge">icon</code> slot) - an array of all HTML Elements in the <code class="language-plaintext highlighter-rouge">icon</code> slot</li>
 </ul>
 
 <p>The component will have only 1 attribute:</p>
 <ul>
-  <li><code class="highlighter-rouge">text</code> due to the <code class="highlighter-rouge">text</code> property (the other property has <code class="highlighter-rouge">noAttribute: true</code> set)</li>
+  <li><code class="language-plaintext highlighter-rouge">text</code> due to the <code class="language-plaintext highlighter-rouge">text</code> property (the other property has <code class="language-plaintext highlighter-rouge">noAttribute: true</code> set)</li>
 </ul>
 
-<p>When the <code class="highlighter-rouge">text</code> property changes, the <code class="highlighter-rouge">text</code> attribute will also be reflected and vice-versa.</p>
+<p>When the <code class="language-plaintext highlighter-rouge">text</code> property changes, the <code class="language-plaintext highlighter-rouge">text</code> attribute will also be reflected and vice-versa.</p>
 
 <p>The component fires 1 event:</p>
 <ul>
-  <li><code class="highlighter-rouge">change</code> with one string parameter: <code class="highlighter-rouge">newText</code></li>
+  <li><code class="language-plaintext highlighter-rouge">change</code> with one string parameter: <code class="language-plaintext highlighter-rouge">newText</code></li>
 </ul>
 
-<p>This component will be invalidated whenever any of its properties changes, any of its slots has new/removed/rearranged children, and additionally when any UI5 Web Component in the <code class="highlighter-rouge">default</code> slot is invalidated.</p>
+<p>This component will be invalidated whenever any of its properties changes, any of its slots has new/removed/rearranged children, and additionally when any UI5 Web Component in the <code class="language-plaintext highlighter-rouge">default</code> slot is invalidated.</p>
 
-<p>In this component’s <code class="highlighter-rouge">.hbs</code> you are expected to render the two slots and to bind an event listener for the event:</p>
+<p>In this component’s <code class="language-plaintext highlighter-rouge">.hbs</code> you are expected to render the two slots and to bind an event listener for the event:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"my-demo-component"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;header&gt;</span>
@@ -6625,9 +6628,9 @@ our event handlers (<code class="highlighter-rouge">onUI5ButtonClick</code>, <co
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Whenever the user stops typing in the <code class="highlighter-rouge">&lt;input&gt;</code> and its <code class="highlighter-rouge">change</code> event is fired, our component’s <code class="highlighter-rouge">onInputChange</code> event handler will be executed.
-There we get the new value of the input, update the <code class="highlighter-rouge">text</code> metadata property to reflect its new state, stop the input’s native <code class="highlighter-rouge">change</code> event from propagating since we’ll be firing our custom event
-with the same name (and we don’t want the user to get 2 events with the same name), and finally we fire our metadata event (<code class="highlighter-rouge">change</code>) with the <code class="highlighter-rouge">newText</code> parameter.</p>
+<p>Whenever the user stops typing in the <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> and its <code class="language-plaintext highlighter-rouge">change</code> event is fired, our component’s <code class="language-plaintext highlighter-rouge">onInputChange</code> event handler will be executed.
+There we get the new value of the input, update the <code class="language-plaintext highlighter-rouge">text</code> metadata property to reflect its new state, stop the input’s native <code class="language-plaintext highlighter-rouge">change</code> event from propagating since we’ll be firing our custom event
+with the same name (and we don’t want the user to get 2 events with the same name), and finally we fire our metadata event (<code class="language-plaintext highlighter-rouge">change</code>) with the <code class="language-plaintext highlighter-rouge">newText</code> parameter.</p>
 
 <h2 id="understanding-rendering-">Understanding rendering <a name="rendering"></a></h2>
 
@@ -6637,7 +6640,7 @@ with the same name (and we don’t want the user to get 2 events with the same n
 
 <h3 id="physical-and-logical-components-">Physical and logical components <a name="rendering_physical_logical"></a></h3>
 
-<p>Each component that provides a <code class="highlighter-rouge">static get template()</code> method will be rendered (will have its shadow DOM built) initially and every time it gets invalidated.</p>
+<p>Each component that provides a <code class="language-plaintext highlighter-rouge">static get template()</code> method will be rendered (will have its shadow DOM built) initially and every time it gets invalidated.</p>
 
 <p>Example:</p>
 
@@ -6649,7 +6652,7 @@ with the same name (and we don’t want the user to get 2 events with the same n
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Components that do not provide a <code class="highlighter-rouge">static get template()</code> method are considered <em>logical</em> or <em>marker</em> elements only. These components are never rendered (do not have a shadow root at all)
+<p>Components that do not provide a <code class="language-plaintext highlighter-rouge">static get template()</code> method are considered <em>logical</em> or <em>marker</em> elements only. These components are never rendered (do not have a shadow root at all)
 and their only purpose is to serve as items for higher-order components. The classical example of a logical component is a select option.</p>
 
 <p>Example:</p>
@@ -6661,8 +6664,8 @@ and their only purpose is to serve as items for higher-order components. The cla
 <span class="nt">&lt;/ui5-select&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">ui5-option</code> component does not provide a template, and is therefore never rendered. However, the <code class="highlighter-rouge">ui5-select</code> component, which is a physical component that has a template, 
-renders HTML corresponding to each of its children (<code class="highlighter-rouge">ui5-option</code> instances) as part of its own shadow DOM.</p>
+<p>The <code class="language-plaintext highlighter-rouge">ui5-option</code> component does not provide a template, and is therefore never rendered. However, the <code class="language-plaintext highlighter-rouge">ui5-select</code> component, which is a physical component that has a template, 
+renders HTML corresponding to each of its children (<code class="language-plaintext highlighter-rouge">ui5-option</code> instances) as part of its own shadow DOM.</p>
 
 <h3 id="what-is-invalidation-">What is invalidation? <a name="invalidation"></a></h3>
 
@@ -6674,20 +6677,20 @@ again, before having been re-rendered, this will have no downside - it’s in th
 <p>A component becomes <em>invalidated</em> whenever:</p>
 <ul>
   <li>a <em>metadata-defined</em> <strong>property</strong> changes (not regular properties that f.e. you define in the constructor)</li>
-  <li>children are added/removed/rearranged in any <strong>slot</strong> and the component has <code class="highlighter-rouge">managedSlots: true</code> set in the metadata object</li>
-  <li>a slotted child in a <strong>slot</strong> configured with <code class="highlighter-rouge">invalidateOnChildChange: true</code> is invalidated.</li>
+  <li>children are added/removed/rearranged in any <strong>slot</strong> and the component has <code class="language-plaintext highlighter-rouge">managedSlots: true</code> set in the metadata object</li>
+  <li>a slotted child in a <strong>slot</strong> configured with <code class="language-plaintext highlighter-rouge">invalidateOnChildChange: true</code> is invalidated.</li>
 </ul>
 
 <p>Changes to properties always cause an invalidation. No specific metadata configuration is needed.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">properties</span><span class="p">:</span> <span class="p">{</span>
 	<span class="nl">text</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">type</span><span class="p">:</span> <span class="nb">String</span>
+		<span class="na">type</span><span class="p">:</span> <span class="nb">String</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Whenever <code class="highlighter-rouge">text</code> changes, the component will be invalidated.</p>
+<p>Whenever <code class="language-plaintext highlighter-rouge">text</code> changes, the component will be invalidated.</p>
 
 <p>Changes to slots do not cause an invalidation by default. Most components do not need to render differently based on whether they have any slotted children or not.
 The most common example for this are simple general-purpose containers (completely agnostic of their content).</p>
@@ -6695,13 +6698,13 @@ The most common example for this are simple general-purpose containers (complete
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">metadata</span><span class="p">:</span> <span class="p">{</span>
 	<span class="nl">slots</span><span class="p">:</span> <span class="p">{</span>
 		<span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
 		<span class="p">},</span>
-		<span class="nx">header</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
+		<span class="na">header</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
 		<span class="p">},</span>
-		<span class="nx">footer</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
+		<span class="na">footer</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
 <span class="p">}</span>
@@ -6710,7 +6713,7 @@ The most common example for this are simple general-purpose containers (complete
 <p>This component will not invalidate when children are added/removed from any of its slots.</p>
 
 <p>However, some components render differently based on whether they have children or not (e.g. show counters/other UX elements for the number of children, f.e. carousel; or have special styles when empty or have a child in a specific slot, f.e. button with an icon).
-If that is the case for the component you’re building, set <code class="highlighter-rouge">managedSlots: true</code> in your component’s metadata. Thus, your component will become invalidated whenever children are added, removed or swap places in any of its slots.</p>
+If that is the case for the component you’re building, set <code class="language-plaintext highlighter-rouge">managedSlots: true</code> in your component’s metadata. Thus, your component will become invalidated whenever children are added, removed or swap places in any of its slots.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">managedSlots</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="nx">slots</span><span class="p">:</span> <span class="p">{</span>
@@ -6726,7 +6729,7 @@ If that is the case for the component you’re building, set <code class="highli
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Now that this component has <code class="highlighter-rouge">managedSlots: true</code>, changes to each slot will trigger an invalidation. Note that the <code class="highlighter-rouge">managedSlots</code> configuration is global (and not per slot).</p>
+<p>Now that this component has <code class="language-plaintext highlighter-rouge">managedSlots: true</code>, changes to each slot will trigger an invalidation. Note that the <code class="language-plaintext highlighter-rouge">managedSlots</code> configuration is global (and not per slot).</p>
 
 <p>And finally, there are components that not only need to render differently based on the number/type of children they have, but they must also get invalidated
 whenever their children change. This holds true for all components that work with abstract items (such as select with options, combo box with combo box items)
@@ -6747,29 +6750,29 @@ because these abstract items do not have a template (do not render themselves) a
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Only changes to children in the “default” slot will trigger invalidation for this component. Note that <code class="highlighter-rouge">invalidateOnChildChange</code> is defined per slot (and not globally like <code class="highlighter-rouge">managedSlots</code>).
-Finally, <code class="highlighter-rouge">invalidateOnChildChange</code> allows for more fine-granular rules when exactly children can invalidate their parents - see <a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>.</p>
+<p>Only changes to children in the “default” slot will trigger invalidation for this component. Note that <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> is defined per slot (and not globally like <code class="language-plaintext highlighter-rouge">managedSlots</code>).
+Finally, <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> allows for more fine-granular rules when exactly children can invalidate their parents - see <a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>.</p>
 
 <h2 id="lifecycle-hooks-">Lifecycle hooks <a name="lifecycle"></a></h2>
 
 <p>Using the right lifecycle hook for the task is crucial to a well-designed and performant component.</p>
 
-<h3 id="1-constructor-">1. <code class="highlighter-rouge">constructor</code> <a name="lifecycle_constructor"></a></h3>
+<h3 id="1-constructor-">1. <code class="language-plaintext highlighter-rouge">constructor</code> <a name="lifecycle_constructor"></a></h3>
 
 <p>Use the constructor for one-time initialization tasks.</p>
 
 <p>What to do:</p>
 <ul>
   <li>initialize private variables</li>
-  <li>bind functions to <code class="highlighter-rouge">this</code> (very common when using the <code class="highlighter-rouge">ResizeHandler</code> helper class)</li>
-  <li>do one-time work when the first instance of a given component is created (f.e. instantiate a helper class or attach a special event listener to the <code class="highlighter-rouge">window</code> object)</li>
+  <li>bind functions to <code class="language-plaintext highlighter-rouge">this</code> (very common when using the <code class="language-plaintext highlighter-rouge">ResizeHandler</code> helper class)</li>
+  <li>do one-time work when the first instance of a given component is created (f.e. instantiate a helper class or attach a special event listener to the <code class="language-plaintext highlighter-rouge">window</code> object)</li>
 </ul>
 
 <p>What not to do:</p>
 <ul>
-  <li>anything rendering-related (use <code class="highlighter-rouge">onBeforeRendering</code>/<code class="highlighter-rouge">onAfterRendering</code>)</li>
-  <li>anything related to the state (use <code class="highlighter-rouge">onBeforeRendering</code>)</li>
-  <li>anything requiring DOM manipulation (the component isn’t attached to the DOM yet - use <code class="highlighter-rouge">onAfterRendering</code> or <code class="highlighter-rouge">onEnterDOM</code>/<code class="highlighter-rouge">onExitDOM</code>)</li>
+  <li>anything rendering-related (use <code class="language-plaintext highlighter-rouge">onBeforeRendering</code>/<code class="language-plaintext highlighter-rouge">onAfterRendering</code>)</li>
+  <li>anything related to the state (use <code class="language-plaintext highlighter-rouge">onBeforeRendering</code>)</li>
+  <li>anything requiring DOM manipulation (the component isn’t attached to the DOM yet - use <code class="language-plaintext highlighter-rouge">onAfterRendering</code> or <code class="language-plaintext highlighter-rouge">onEnterDOM</code>/<code class="language-plaintext highlighter-rouge">onExitDOM</code>)</li>
 </ul>
 
 <p>Example:</p>
@@ -6797,9 +6800,9 @@ Finally, <code class="highlighter-rouge">invalidateOnChildChange</code> allows f
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h3 id="2-onbeforerendering-">2. <code class="highlighter-rouge">onBeforeRendering</code> <a name="lifecycle_before"></a></h3>
+<h3 id="2-onbeforerendering-">2. <code class="language-plaintext highlighter-rouge">onBeforeRendering</code> <a name="lifecycle_before"></a></h3>
 
-<p>Use <code class="highlighter-rouge">onBeforeRendering</code> to prepare variables to be used in the <code class="highlighter-rouge">.hbs</code> template.</p>
+<p>Use <code class="language-plaintext highlighter-rouge">onBeforeRendering</code> to prepare variables to be used in the <code class="language-plaintext highlighter-rouge">.hbs</code> template.</p>
 
 <p>What to do:</p>
 <ul>
@@ -6808,15 +6811,15 @@ Finally, <code class="highlighter-rouge">invalidateOnChildChange</code> allows f
 
 <p>What not to do:</p>
 <ul>
-  <li>do not try to access the DOM (use <code class="highlighter-rouge">onAfterRendering</code> instead)</li>
+  <li>do not try to access the DOM (use <code class="language-plaintext highlighter-rouge">onAfterRendering</code> instead)</li>
 </ul>
 
 <p>Let’s take for example a component with the following metadata:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
 	<span class="nl">properties</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">filter</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nb">String</span>
+		<span class="na">filter</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nb">String</span>
 		<span class="p">}</span>
 	<span class="p">},</span>
 	<span class="nx">managedSlots</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
@@ -6830,9 +6833,9 @@ Finally, <code class="highlighter-rouge">invalidateOnChildChange</code> allows f
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>This component has a <code class="highlighter-rouge">filter</code> property and a <code class="highlighter-rouge">default</code> slot that we want to call <code class="highlighter-rouge">items</code> (thus accessible with <code class="highlighter-rouge">this.items</code>).</p>
+<p>This component has a <code class="language-plaintext highlighter-rouge">filter</code> property and a <code class="language-plaintext highlighter-rouge">default</code> slot that we want to call <code class="language-plaintext highlighter-rouge">items</code> (thus accessible with <code class="language-plaintext highlighter-rouge">this.items</code>).</p>
 
-<p>Let’s imagine we want to only show the items whose <code class="highlighter-rouge">name</code> property matches the value of our <code class="highlighter-rouge">filter</code> property - so we filter the items by name.</p>
+<p>Let’s imagine we want to only show the items whose <code class="language-plaintext highlighter-rouge">name</code> property matches the value of our <code class="language-plaintext highlighter-rouge">filter</code> property - so we filter the items by name.</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
 	<span class="k">super</span><span class="p">();</span>
@@ -6843,9 +6846,9 @@ Finally, <code class="highlighter-rouge">invalidateOnChildChange</code> allows f
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>In <code class="highlighter-rouge">onBeforeRendering</code> we prepare a <code class="highlighter-rouge">_filteredItems</code> array with some of the component’s children (only the ones that have the <code class="highlighter-rouge">this.filter</code> text as part of their <code class="highlighter-rouge">name</code> property)</p>
+<p>In <code class="language-plaintext highlighter-rouge">onBeforeRendering</code> we prepare a <code class="language-plaintext highlighter-rouge">_filteredItems</code> array with some of the component’s children (only the ones that have the <code class="language-plaintext highlighter-rouge">this.filter</code> text as part of their <code class="language-plaintext highlighter-rouge">name</code> property)</p>
 
-<p>And finally, in the <code class="highlighter-rouge">.hbs</code> template we have for example:</p>
+<p>And finally, in the <code class="language-plaintext highlighter-rouge">.hbs</code> template we have for example:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"my-filter-component"</span><span class="nt">&gt;</span>
 	
@@ -6856,8 +6859,8 @@ Finally, <code class="highlighter-rouge">invalidateOnChildChange</code> allows f
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>We loop over the <code class="highlighter-rouge">_fiteredItems</code> array that we prepared in <code class="highlighter-rouge">onBeforeRendering</code> and for each child we render a <code class="highlighter-rouge">slot</code> based on the child’s <code class="highlighter-rouge">_individualSlot</code> property,
-created automatically by the framework due to the default slot’s metadata configuration (<code class="highlighter-rouge">individualSlots: true</code>).</p>
+<p>We loop over the <code class="language-plaintext highlighter-rouge">_fiteredItems</code> array that we prepared in <code class="language-plaintext highlighter-rouge">onBeforeRendering</code> and for each child we render a <code class="language-plaintext highlighter-rouge">slot</code> based on the child’s <code class="language-plaintext highlighter-rouge">_individualSlot</code> property,
+created automatically by the framework due to the default slot’s metadata configuration (<code class="language-plaintext highlighter-rouge">individualSlots: true</code>).</p>
 
 <p>The usage of this component would be for example:</p>
 
@@ -6868,13 +6871,13 @@ created automatically by the framework due to the default slot’s metadata conf
 <span class="nt">&lt;/my-filter-component&gt;</span>
 </code></pre></div></div>
 
-<p>The user would only see the first and third items as these are the only ones we rendered an individual slot for (the ones matching the <code class="highlighter-rouge">filter</code> value of “John”).</p>
+<p>The user would only see the first and third items as these are the only ones we rendered an individual slot for (the ones matching the <code class="language-plaintext highlighter-rouge">filter</code> value of “John”).</p>
 
-<p>In summary: <code class="highlighter-rouge">onBeforeRendering</code> is the best place to prepare all the variables you are going to need in the <code class="highlighter-rouge">.hbs</code> template.</p>
+<p>In summary: <code class="language-plaintext highlighter-rouge">onBeforeRendering</code> is the best place to prepare all the variables you are going to need in the <code class="language-plaintext highlighter-rouge">.hbs</code> template.</p>
 
-<h3 id="3-onafterrendering-">3. <code class="highlighter-rouge">onAfterRendering</code> <a name="lifecycle_after"></a></h3>
+<h3 id="3-onafterrendering-">3. <code class="language-plaintext highlighter-rouge">onAfterRendering</code> <a name="lifecycle_after"></a></h3>
 
-<p>The <code class="highlighter-rouge">onAfterRendering</code> lifecycle hook allows you to access the DOM every time the component is rendered.</p>
+<p>The <code class="language-plaintext highlighter-rouge">onAfterRendering</code> lifecycle hook allows you to access the DOM every time the component is rendered.</p>
 
 <p>You should avoid using this method whenever possible. It’s best to delegate all HTML manipulation to the framework: change the state of the component,
 the component will be invalidated, the template will be executed with the latest state, and DOM will be updated accordingly.
@@ -6902,17 +6905,17 @@ It is an anti-pattern to manually change the DOM.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<h3 id="4-onenterdom-and-onexitdom-">4. <code class="highlighter-rouge">onEnterDOM</code> and <code class="highlighter-rouge">onExitDOM</code> <a name="lifecycle_dom"></a></h3>
+<h3 id="4-onenterdom-and-onexitdom-">4. <code class="language-plaintext highlighter-rouge">onEnterDOM</code> and <code class="language-plaintext highlighter-rouge">onExitDOM</code> <a name="lifecycle_dom"></a></h3>
 
-<p>Unlike <code class="highlighter-rouge">onBeforeRendering</code> and <code class="highlighter-rouge">onAfterRendering</code>, which sound like parts of the same flow (but are not, and are actually used for completely independent tasks),
-<code class="highlighter-rouge">onEnterDOM</code> and <code class="highlighter-rouge">onExitDOM</code> should almost always be used together, therefore they are presented as a whole in this article.</p>
+<p>Unlike <code class="language-plaintext highlighter-rouge">onBeforeRendering</code> and <code class="language-plaintext highlighter-rouge">onAfterRendering</code>, which sound like parts of the same flow (but are not, and are actually used for completely independent tasks),
+<code class="language-plaintext highlighter-rouge">onEnterDOM</code> and <code class="language-plaintext highlighter-rouge">onExitDOM</code> should almost always be used together, therefore they are presented as a whole in this article.</p>
 
 <ul>
-  <li><code class="highlighter-rouge">onEnterDOM</code> is executed during the web component’s standard <code class="highlighter-rouge">connectedCallback</code> method’s execution</li>
-  <li><code class="highlighter-rouge">onExitDOM</code> is executed during the web component’s standard <code class="highlighter-rouge">disconnectedCallback</code> method’s execution</li>
+  <li><code class="language-plaintext highlighter-rouge">onEnterDOM</code> is executed during the web component’s standard <code class="language-plaintext highlighter-rouge">connectedCallback</code> method’s execution</li>
+  <li><code class="language-plaintext highlighter-rouge">onExitDOM</code> is executed during the web component’s standard <code class="language-plaintext highlighter-rouge">disconnectedCallback</code> method’s execution</li>
 </ul>
 
-<p>If you have prior experience with web component development, you could think of <code class="highlighter-rouge">onEnterDOM</code> as <code class="highlighter-rouge">connectedCallback</code> and of <code class="highlighter-rouge">onExitDOM</code> as <code class="highlighter-rouge">disconnectedCallback</code>.</p>
+<p>If you have prior experience with web component development, you could think of <code class="language-plaintext highlighter-rouge">onEnterDOM</code> as <code class="language-plaintext highlighter-rouge">connectedCallback</code> and of <code class="language-plaintext highlighter-rouge">onExitDOM</code> as <code class="language-plaintext highlighter-rouge">disconnectedCallback</code>.</p>
 
 <p>Note that these hooks are completely independent of the component’s rendering lifecycle, and are solely related to its insertion and removal from DOM.</p>
 
@@ -6921,7 +6924,7 @@ It is an anti-pattern to manually change the DOM.</p>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">b</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-button</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>it is already fully operational, although it isn’t in DOM yet. Therefore, you should use <code class="highlighter-rouge">onEnterDOM</code> and <code class="highlighter-rouge">onExitDOM</code> only for functionality, related to
+<p>it is already fully operational, although it isn’t in DOM yet. Therefore, you should use <code class="language-plaintext highlighter-rouge">onEnterDOM</code> and <code class="language-plaintext highlighter-rouge">onExitDOM</code> only for functionality, related to
 the component being in the DOM tree at all (and not to rendering, stying or anything related to the shadow root).</p>
 
 <p>Common use cases are:</p>
@@ -6931,16 +6934,16 @@ the component being in the DOM tree at all (and not to rendering, stying or anyt
   <li>any work you want to carry out only if the component is in the DOM;</li>
 </ul>
 
-<p>Probably the best example of these hooks is the usage of the <code class="highlighter-rouge">ResizeHandler</code> helper class.</p>
+<p>Probably the best example of these hooks is the usage of the <code class="language-plaintext highlighter-rouge">ResizeHandler</code> helper class.</p>
 
-<p>The component has a private <code class="highlighter-rouge">_width</code> property, defined in its metadata:</p>
+<p>The component has a private <code class="language-plaintext highlighter-rouge">_width</code> property, defined in its metadata:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">properties</span><span class="p">:</span> <span class="p">{</span>
 	<span class="cm">/**
 	 * @private
 	 */</span>
 	<span class="nl">_width</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">type</span><span class="p">:</span> <span class="nx">Integer</span>
+		<span class="na">type</span><span class="p">:</span> <span class="nx">Integer</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
@@ -6978,11 +6981,11 @@ the component being in the DOM tree at all (and not to rendering, stying or anyt
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">constructor</code> we bind the <code class="highlighter-rouge">_onResize</code> method to the component’s instance to get a function with the correct context,
-and then in <code class="highlighter-rouge">onEnterDOM</code> and <code class="highlighter-rouge">onExitDOM</code> we register/deregister this function with the <code class="highlighter-rouge">ResizeHandler</code> helper class.</p>
+<p>In the <code class="language-plaintext highlighter-rouge">constructor</code> we bind the <code class="language-plaintext highlighter-rouge">_onResize</code> method to the component’s instance to get a function with the correct context,
+and then in <code class="language-plaintext highlighter-rouge">onEnterDOM</code> and <code class="language-plaintext highlighter-rouge">onExitDOM</code> we register/deregister this function with the <code class="language-plaintext highlighter-rouge">ResizeHandler</code> helper class.</p>
 
-<p>Then, whenever the component resizes, the <code class="highlighter-rouge">ResizeHandler</code> will trigger the callback, the metadata <code class="highlighter-rouge">_width</code> property will be updated to a new value in <code class="highlighter-rouge">_onResize</code>,
-the component will be invalidated, and the template will be executed with the new value of <code class="highlighter-rouge">_width</code>, respectively <code class="highlighter-rouge">styles</code>.</p>
+<p>Then, whenever the component resizes, the <code class="language-plaintext highlighter-rouge">ResizeHandler</code> will trigger the callback, the metadata <code class="language-plaintext highlighter-rouge">_width</code> property will be updated to a new value in <code class="language-plaintext highlighter-rouge">_onResize</code>,
+the component will be invalidated, and the template will be executed with the new value of <code class="language-plaintext highlighter-rouge">_width</code>, respectively <code class="language-plaintext highlighter-rouge">styles</code>.</p>
 
 <h2 id="the-static-area-">The static area <a name="static"></a></h2>
 
@@ -6997,7 +7000,7 @@ the component will be invalidated, and the template will be executed with the ne
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-button</span> <span class="na">id=</span><span class="s">"button"</span><span class="nt">&gt;</span>Click me<span class="nt">&lt;/ui5-button&gt;</span>
 </code></pre></div></div>
 
-<p>All HTML, belonging to this <code class="highlighter-rouge">ui5-button</code> instance is in its own shadow DOM.</p>
+<p>All HTML, belonging to this <code class="language-plaintext highlighter-rouge">ui5-button</code> instance is in its own shadow DOM.</p>
 
 <p>Respectively, in the class where the button component is defined, we provide one template and one piece of CSS:</p>
 
@@ -7022,12 +7025,12 @@ the component will be invalidated, and the template will be executed with the ne
 
 <p>However, there are more complex components, whose HTML is split in two parts - the custom element’s shadow DOM (as is the case with the button),
 but also a so called <strong>static area</strong> part, holding all popups this component might open. This is the case with most components that have any kind of 
-popup-related functionality (dropdowns, rich tooltips, popovers, dialogs). Prominent examples are <code class="highlighter-rouge">ui5-select</code>, <code class="highlighter-rouge">ui5-combobox</code>, <code class="highlighter-rouge">ui5-textarea</code>, <code class="highlighter-rouge">ui5-date-picker</code>.</p>
+popup-related functionality (dropdowns, rich tooltips, popovers, dialogs). Prominent examples are <code class="language-plaintext highlighter-rouge">ui5-select</code>, <code class="language-plaintext highlighter-rouge">ui5-combobox</code>, <code class="language-plaintext highlighter-rouge">ui5-textarea</code>, <code class="language-plaintext highlighter-rouge">ui5-date-picker</code>.</p>
 
 <h3 id="what-is-the-static-area-and-why-is-it-needed-">What is the static area and why is it needed? <a name="static_what_why"></a></h3>
 
-<p>The static area is a special <em>singleton</em> custom element (<code class="highlighter-rouge">ui5-static-area</code>), placed automatically by the framework as the first child of the <code class="highlighter-rouge">body</code>.
-For each component, having a <strong>static area</strong> part, a <code class="highlighter-rouge">ui5-static-area-item</code> custom element is created inside the static area.</p>
+<p>The static area is a special <em>singleton</em> custom element (<code class="language-plaintext highlighter-rouge">ui5-static-area</code>), placed automatically by the framework as the first child of the <code class="language-plaintext highlighter-rouge">body</code>.
+For each component, having a <strong>static area</strong> part, a <code class="language-plaintext highlighter-rouge">ui5-static-area-item</code> custom element is created inside the static area.</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
 	<span class="nt">&lt;ui5-static-area&gt;</span> <span class="c">&lt;!-- created automatically only once --&gt;</span>
@@ -7041,30 +7044,30 @@ For each component, having a <strong>static area</strong> part, a <code class="h
 <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
 
-<p>In this example 3 UI5 Web Components are used: <code class="highlighter-rouge">ui5-select</code>, <code class="highlighter-rouge">ui5-date-picker</code>, and <code class="highlighter-rouge">ui5-button</code>. 
-Since two of them have static area parts, the framework has created a <code class="highlighter-rouge">ui5-static-area</code> (one for the whole page) and inside it a <code class="highlighter-rouge">ui5-static-area-item</code>
+<p>In this example 3 UI5 Web Components are used: <code class="language-plaintext highlighter-rouge">ui5-select</code>, <code class="language-plaintext highlighter-rouge">ui5-date-picker</code>, and <code class="language-plaintext highlighter-rouge">ui5-button</code>. 
+Since two of them have static area parts, the framework has created a <code class="language-plaintext highlighter-rouge">ui5-static-area</code> (one for the whole page) and inside it a <code class="language-plaintext highlighter-rouge">ui5-static-area-item</code>
 for each component with a static area part.</p>
 
-<p>Thus, the HTML, defining the <code class="highlighter-rouge">ui5-select</code> and <code class="highlighter-rouge">ui5-date-picker</code> components is split in two parts of the HTML page:</p>
+<p>Thus, the HTML, defining the <code class="language-plaintext highlighter-rouge">ui5-select</code> and <code class="language-plaintext highlighter-rouge">ui5-date-picker</code> components is split in two parts of the HTML page:</p>
 <ul>
-  <li>the shadow DOM of the custom element itself (<code class="highlighter-rouge">ui5-select</code>, <code class="highlighter-rouge">ui5-date-picker</code>)</li>
-  <li>the shadow DOM of the <code class="highlighter-rouge">static-area-item</code>, created for the respective component.</li>
+  <li>the shadow DOM of the custom element itself (<code class="language-plaintext highlighter-rouge">ui5-select</code>, <code class="language-plaintext highlighter-rouge">ui5-date-picker</code>)</li>
+  <li>the shadow DOM of the <code class="language-plaintext highlighter-rouge">static-area-item</code>, created for the respective component.</li>
 </ul>
 
 <p><strong>This is necessary because such a split is the only way to guarantee that a popup (dropdown, rich tooltip, popover, etc.) will always be
 positioned correctly on the HTML page</strong>, even if parts of the page have:</p>
 <ul>
-  <li><code class="highlighter-rouge">transform: translate</code></li>
-  <li><code class="highlighter-rouge">overflow: hidden</code></li>
-  <li><code class="highlighter-rouge">z-index</code></li>
+  <li><code class="language-plaintext highlighter-rouge">transform: translate</code></li>
+  <li><code class="language-plaintext highlighter-rouge">overflow: hidden</code></li>
+  <li><code class="language-plaintext highlighter-rouge">z-index</code></li>
 </ul>
 
-<p>Since the <code class="highlighter-rouge">ui5-statia-area</code> is a top-level <code class="highlighter-rouge">body</code> child, it is guaranteed to be on top of everything else on the page with the correct CSS styles,
+<p>Since the <code class="language-plaintext highlighter-rouge">ui5-statia-area</code> is a top-level <code class="language-plaintext highlighter-rouge">body</code> child, it is guaranteed to be on top of everything else on the page with the correct CSS styles,
 regardless of the page structure and <a href="https://developer.mozilla.org/en-US/docs/Glossary/Stacking_context">stacking context</a>.</p>
 
 <p>If we did not use a static area, for example as in a component, defined like this:</p>
 
-<p>In the <code class="highlighter-rouge">MySelect.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">MySelect.js</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"my-select"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;h1&gt;</span>Click to open the dropdown:<span class="nt">&lt;/h1&gt;</span>
@@ -7080,7 +7083,7 @@ regardless of the page structure and <a href="https://developer.mozilla.org/en-U
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">MySelect.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">MySelect.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MySelect</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
 	<span class="p">...</span>
@@ -7090,7 +7093,7 @@ regardless of the page structure and <a href="https://developer.mozilla.org/en-U
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>then when the user clicks the <code class="highlighter-rouge">button</code>, and the <code class="highlighter-rouge">ui5-popover</code> opens (due to its <code class="highlighter-rouge">open</code> property having been set to <code class="highlighter-rouge">true</code>),
+<p>then when the user clicks the <code class="language-plaintext highlighter-rouge">button</code>, and the <code class="language-plaintext highlighter-rouge">ui5-popover</code> opens (due to its <code class="language-plaintext highlighter-rouge">open</code> property having been set to <code class="language-plaintext highlighter-rouge">true</code>),
 this popover might be partially or entirely “cut” or misplaced, depending on the position of the component on the page.</p>
 
 <p>Example 1:</p>
@@ -7100,7 +7103,7 @@ this popover might be partially or entirely “cut” or misplaced, depending on
 <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
 
-<p>Here the <code class="highlighter-rouge">my-select</code> component would work just fine as it is the only component on the page and no other components create a stacking context or overflow.</p>
+<p>Here the <code class="language-plaintext highlighter-rouge">my-select</code> component would work just fine as it is the only component on the page and no other components create a stacking context or overflow.</p>
 
 <p>However, consider example 2:</p>
 
@@ -7111,7 +7114,7 @@ this popover might be partially or entirely “cut” or misplaced, depending on
 <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
 
-<p>Now, when the popover opens, only a <code class="highlighter-rouge">20px</code>-high strip of it would be visible due to the parent element’s CSS.</p>
+<p>Now, when the popover opens, only a <code class="language-plaintext highlighter-rouge">20px</code>-high strip of it would be visible due to the parent element’s CSS.</p>
 
 <p>This is an oversimplified example that could easily be fixed, but in real-world scenarios there are often parts of the HTML page we cannot
 influence which cause problems with popups.</p>
@@ -7124,7 +7127,7 @@ influence which cause problems with popups.</p>
   <li>Split the template and CSS of the component:</li>
 </ol>
 
-<p>Instead of having the dropdown (<code class="highlighter-rouge">ui5-popover</code>) in the main template:</p>
+<p>Instead of having the dropdown (<code class="language-plaintext highlighter-rouge">ui5-popover</code>) in the main template:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"my-select"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;h1&gt;</span>Click to open the dropdown:<span class="nt">&lt;/h1&gt;</span>
@@ -7140,9 +7143,9 @@ influence which cause problems with popups.</p>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>split <code class="highlighter-rouge">MySelect.hbs</code> into <code class="highlighter-rouge">MySelect.hbs</code> and <code class="highlighter-rouge">MySelectDropdown.hbs</code>:</p>
+<p>split <code class="language-plaintext highlighter-rouge">MySelect.hbs</code> into <code class="language-plaintext highlighter-rouge">MySelect.hbs</code> and <code class="language-plaintext highlighter-rouge">MySelectDropdown.hbs</code>:</p>
 
-<p>The <code class="highlighter-rouge">MySelect.hbs</code> file:</p>
+<p>The <code class="language-plaintext highlighter-rouge">MySelect.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"my-select"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;h1&gt;</span>Click to open the dropdown:<span class="nt">&lt;/h1&gt;</span>
@@ -7150,7 +7153,7 @@ influence which cause problems with popups.</p>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>The <code class="highlighter-rouge">MySelectDropdown.hbs</code> file:</p>
+<p>The <code class="language-plaintext highlighter-rouge">MySelectDropdown.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-popover</span> <span class="na">id=</span><span class="s">"#popover"</span> <span class="err">?</span><span class="na">open=</span><span class="s">""</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;ui5-list&gt;</span>
@@ -7163,15 +7166,15 @@ influence which cause problems with popups.</p>
 
 <p>Also, create the CSS of the component in 2 files:</p>
 <ul>
-  <li><code class="highlighter-rouge">MySelect.css</code> (with styles for the select itself, f.e. <code class="highlighter-rouge">.my-select {}</code>)</li>
-  <li><code class="highlighter-rouge">MySelectDropdown.css</code> (with styles for the dropdown only, f.e. <code class="highlighter-rouge">#dropdown {}</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">MySelect.css</code> (with styles for the select itself, f.e. <code class="language-plaintext highlighter-rouge">.my-select {}</code>)</li>
+  <li><code class="language-plaintext highlighter-rouge">MySelectDropdown.css</code> (with styles for the dropdown only, f.e. <code class="language-plaintext highlighter-rouge">#dropdown {}</code>)</li>
 </ul>
 
 <ol>
   <li>Pass the new template and CSS to the component class</li>
 </ol>
 
-<p>The <code class="highlighter-rouge">MySelect.js</code> file:</p>
+<p>The <code class="language-plaintext highlighter-rouge">MySelect.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">MySelectTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/MySelect.lit.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="nx">MySelectDropdownTemplate</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">./generated/templates/MySelectDropdown.lit.js</span><span class="dl">"</span><span class="p">;</span>
@@ -7201,11 +7204,11 @@ influence which cause problems with popups.</p>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Creating the <code class="highlighter-rouge">static get staticAreaTemplate()</code> method is the indication that your component has a static area part,
+<p>Creating the <code class="language-plaintext highlighter-rouge">static get staticAreaTemplate()</code> method is the indication that your component has a static area part,
 and will trigger the respective framework functionality to support it.</p>
 
 <ol>
-  <li>Use the <code class="highlighter-rouge">async getStaticAreaItemDomRef()</code> method to create the static area item <strong>on demand</strong>, whenever necessary.</li>
+  <li>Use the <code class="language-plaintext highlighter-rouge">async getStaticAreaItemDomRef()</code> method to create the static area item <strong>on demand</strong>, whenever necessary.</li>
 </ol>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MySelect</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
@@ -7221,13 +7224,13 @@ and will trigger the respective framework functionality to support it.</p>
 
 <p>This is all it takes to make your component work with the static area.</p>
 
-<p><strong>Important:</strong> please note that the static area item is only created <strong>on demand</strong> - when you call the <code class="highlighter-rouge">async getStaticAreaItemDomRef()</code> function.
+<p><strong>Important:</strong> please note that the static area item is only created <strong>on demand</strong> - when you call the <code class="language-plaintext highlighter-rouge">async getStaticAreaItemDomRef()</code> function.
 For most components this is when the user opens a menu/dropdown/hovers over an element for a tooltip, etc.</p>
 
 <p>Let’s go over the whole process in more detail:</p>
 
 <ol>
-  <li>The browser renders a <code class="highlighter-rouge">&lt;my-select&gt;&lt;/my-select&gt;</code> component:</li>
+  <li>The browser renders a <code class="language-plaintext highlighter-rouge">&lt;my-select&gt;&lt;/my-select&gt;</code> component:</li>
 </ol>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body&gt;</span>
@@ -7235,15 +7238,15 @@ For most components this is when the user opens a menu/dropdown/hovers over an e
 <span class="nt">&lt;/body&gt;</span>
 </code></pre></div></div>
 
-<p>The shadow root of the <code class="highlighter-rouge">my-select</code> component will be created with the content from the <code class="highlighter-rouge">MySelect.hbs</code> template, as it was provided as <code class="highlighter-rouge">static get template()</code>.
-Note that until this point nothing related to the static area has happened. The lifecycle of this component so far is not much different than that of a <code class="highlighter-rouge">ui5-button</code>.</p>
+<p>The shadow root of the <code class="language-plaintext highlighter-rouge">my-select</code> component will be created with the content from the <code class="language-plaintext highlighter-rouge">MySelect.hbs</code> template, as it was provided as <code class="language-plaintext highlighter-rouge">static get template()</code>.
+Note that until this point nothing related to the static area has happened. The lifecycle of this component so far is not much different than that of a <code class="language-plaintext highlighter-rouge">ui5-button</code>.</p>
 
 <ol>
   <li>The user interacts with the component (clicks the “Dropdown” button)</li>
 </ol>
 
-<p>This will trigger the <code class="highlighter-rouge">onOpenDropdownClick</code> event handler we’ve bound in <code class="highlighter-rouge">MySelect.hbs</code>
-and once the first line of this event handler is executed (the <code class="highlighter-rouge">await this.getStatiAreaItemDomRef</code> part):</p>
+<p>This will trigger the <code class="language-plaintext highlighter-rouge">onOpenDropdownClick</code> event handler we’ve bound in <code class="language-plaintext highlighter-rouge">MySelect.hbs</code>
+and once the first line of this event handler is executed (the <code class="language-plaintext highlighter-rouge">await this.getStatiAreaItemDomRef</code> part):</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="nx">onOpenDropdownClick</span><span class="p">()</span> <span class="p">{</span>
 	<span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">getStaticAreaItemDomRef</span><span class="p">();</span>
@@ -7251,7 +7254,7 @@ and once the first line of this event handler is executed (the <code class="high
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>the framework will create the <code class="highlighter-rouge">ui5-static-area</code> and a <code class="highlighter-rouge">ui5-static-area-item</code> and will create its shadow root with the content from the <code class="highlighter-rouge">MySelectDropdown.hbs</code> template, as it was provided as <code class="highlighter-rouge">static get staticAreaTemplate()</code>.</p>
+<p>the framework will create the <code class="language-plaintext highlighter-rouge">ui5-static-area</code> and a <code class="language-plaintext highlighter-rouge">ui5-static-area-item</code> and will create its shadow root with the content from the <code class="language-plaintext highlighter-rouge">MySelectDropdown.hbs</code> template, as it was provided as <code class="language-plaintext highlighter-rouge">static get staticAreaTemplate()</code>.</p>
 
 <p>The DOM would then look like this:</p>
 
@@ -7272,7 +7275,7 @@ and once the first line of this event handler is executed (the <code class="high
 
 <h3 id="accessing-the-static-area-item-">Accessing the static area item <a name="static_accessing"></a></h3>
 
-<p>The <code class="highlighter-rouge">async getStaticAreaItemDomRef()</code> function from the example above:</p>
+<p>The <code class="language-plaintext highlighter-rouge">async getStaticAreaItemDomRef()</code> function from the example above:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="nx">onOpenDropdownClick</span><span class="p">()</span> <span class="p">{</span>
 	<span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">getStaticAreaItemDomRef</span><span class="p">();</span>
@@ -7280,7 +7283,7 @@ and once the first line of this event handler is executed (the <code class="high
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>returns a reference to the <code class="highlighter-rouge">shadowRoot</code> of the static area item for this component.</p>
+<p>returns a reference to the <code class="language-plaintext highlighter-rouge">shadowRoot</code> of the static area item for this component.</p>
 
 <p>You can therefore access it like this:</p>
 
@@ -7288,10 +7291,10 @@ and once the first line of this event handler is executed (the <code class="high
 <span class="kd">const</span> <span class="nx">popover</span> <span class="o">=</span> <span class="nx">staticAreaItem</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">"</span><span class="s2">[ui5-popover]</span><span class="dl">"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>First, we get a reference to the static area item’s shadow root in <code class="highlighter-rouge">staticAreaItem</code>, and then we get the instance of the <code class="highlighter-rouge">ui5-popover</code> element
-by using the attribute selector (<code class="highlighter-rouge">[ui5-popover]</code>), as is the best practice. See <a href="#metadata_tag">Tag</a> in the <a href="#metadata">Metadata deep dive</a> section above.</p>
+<p>First, we get a reference to the static area item’s shadow root in <code class="language-plaintext highlighter-rouge">staticAreaItem</code>, and then we get the instance of the <code class="language-plaintext highlighter-rouge">ui5-popover</code> element
+by using the attribute selector (<code class="language-plaintext highlighter-rouge">[ui5-popover]</code>), as is the best practice. See <a href="#metadata_tag">Tag</a> in the <a href="#metadata">Metadata deep dive</a> section above.</p>
 
-<p>Also, note that no matter how many times you call <code class="highlighter-rouge">getStaticAreaItemDomRef</code>, the static area item will be created only the first time.</p>
+<p>Also, note that no matter how many times you call <code class="language-plaintext highlighter-rouge">getStaticAreaItemDomRef</code>, the static area item will be created only the first time.</p>
 
 
 <footer class="footer-wrapper">
