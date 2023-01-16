@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1673877064
+  buildTime: 1673878774
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -14715,7 +14715,7 @@ let Input = Input_1 = class Input2 extends UI5Element {
   async getInputDOMRef() {
     if (isPhone() && this.Suggestions) {
       await this.Suggestions._getSuggestionPopover();
-      return this.Suggestions && this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
+      return this.Suggestions.responsivePopover.querySelector(".ui5-input-inner-phone");
     }
     return this.nativeInput;
   }
