@@ -1,5 +1,5 @@
-commit e54012d22b1a3f819790d7d3264110a2ce57268b
-Author: Nayden Naydenov <nayden.naydenov@sap.com>
-Date:   Mon Jan 16 11:03:17 2023 +0200
+commit 00d9e705edd2116afea0d416db99643d4f6633f3
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Jan 16 12:51:59 2023 +0200
 
-    chore: playground fix
+    fix(playground): build and deploy (#6279)
