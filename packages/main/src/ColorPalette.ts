@@ -23,6 +23,7 @@ import ColorPaletteTemplate from "./generated/templates/ColorPaletteTemplate.lit
 import ColorPaletteDialogTemplate from "./generated/templates/ColorPaletteDialogTemplate.lit.js";
 import ColorPaletteItem from "./ColorPaletteItem.js";
 import Button from "./Button.js";
+import type Dialog from "./Dialog.js";
 import type ColorPaletteMoreColors from "./features/ColorPaletteMoreColors.js";
 import type ColorPicker from "./ColorPicker.js";
 
@@ -35,12 +36,6 @@ import {
 // Styles
 import ColorPaletteCss from "./generated/themes/ColorPalette.css.js";
 import ColorPaletteStaticAreaCss from "./generated/themes/ColorPaletteStaticArea.css.js";
-
-type DialogTemp = HTMLElement & {
-	content: Array<HTMLElement>,
-	close: () => void,
-	show: () => void,
-}
 
 type ColorPaletteNavigationItem = ColorPaletteItem | Button;
 
@@ -503,7 +498,7 @@ class ColorPalette extends UI5Element {
 
 	async _getDialog() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<DialogTemp>("[ui5-dialog]")!;
+		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
 	async getColorPicker() {

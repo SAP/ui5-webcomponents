@@ -31,7 +31,6 @@ import Icon from "./Icon.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
-// @ts-ignore
 import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelection from "./TimeSelection.js";
@@ -53,11 +52,6 @@ type TempResponsivePopover = HTMLElement & {
 	showAt: (opener: HTMLElement) => Promise<void>,
 	close: () => void,
 	resetFocus: () => void,
-}
-
-type TempInput = HTMLElement & {
-	value: string,
-	getInputDOMRef: () => Promise<HTMLInputElement>,
 }
 
 /**
@@ -254,7 +248,7 @@ class TimePickerBase extends UI5Element {
 		const inputField = await this._getInputField();
 
 		if (inputField) {
-			inputField.select();
+			(inputField as HTMLInputElement).select();
 		}
 	}
 
@@ -289,12 +283,12 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_handleInputChange(e: CustomEvent) {
-		const target = e.target as TempInput;
+		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, true, ["change", "value-changed"]);
 	}
 
 	_handleInputLiveChange(e: CustomEvent) {
-		const target = e.target as TempInput;
+		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
 	}
 
@@ -347,8 +341,8 @@ class TimePickerBase extends UI5Element {
 		return staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	_getInput() {
-		return this.shadowRoot!.querySelector<TempInput>("[ui5-input]")!;
+	_getInput(): Input {
+		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
 	}
 
 	_getInputField() {

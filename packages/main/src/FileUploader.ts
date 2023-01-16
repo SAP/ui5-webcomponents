@@ -22,9 +22,7 @@ import {
 // @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
-// @ts-ignore
 import Input from "./Input.js";
-// @ts-ignore
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 
@@ -510,7 +508,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	}
 
 	get ui5Input() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-file-uploader-input");
+		return this.shadowRoot!.querySelector<Input>(".ui5-file-uploader-input");
 	}
 
 	static get dependencies() {
