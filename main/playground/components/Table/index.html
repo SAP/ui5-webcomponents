@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Table | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Table" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/components/Table/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/components/Table/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Table" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Table","url":"https://sap.github.io/ui5-webcomponents/main/playground/components/Table/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Table","url":"https://sap.github.io/ui5-webcomponents/main/playground/components/Table/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -6108,7 +6147,7 @@
 			<span class="nt">&lt;ui5-table-column</span> <span class="na">slot=</span><span class="s">"columns"</span> <span class="na">class=</span><span class="s">"table-header-text-alignment"</span> <span class="na">popin-display=</span><span class="s">"Inline"</span><span class="nt">&gt;</span>
 				<span class="nt">&lt;span&gt;</span>Price<span class="nt">&lt;/span&gt;</span>
 			<span class="nt">&lt;/ui5-table-column&gt;</span>
-		<span class="nt">&lt;/ui5-table&gt;&lt;/ui5-table&gt;</span>
+		<span class="nt">&lt;/ui5-table&gt;</span>
 	</code></pre></figure></pre>
 </section>
 
@@ -7585,7 +7624,7 @@
         <section class="component-description">
           <h3 class="comment-api-title">Overview</h3>
 
-The <code>ui5-table</code> component provides a set of sophisticated and convenient functions for responsive table design. It provides a comprehensive set of features for displaying and dealing with vast amounts of data. <br><br> To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the order of the item <code>cells</code> in the <code>rows</code>. <br><br> Desktop and tablet devices are supported. On tablets, special consideration should be given to the number of visible columns and rows due to the limited performance of some devices.
+The <code>ui5-import type { table } from "./TableRow.js";/code> component provides a set of sophisticated and convenient functions for responsive table design. It provides a comprehensive set of features for displaying and dealing with vast amounts of data. <br><br> To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the order of the item <code>cells</code> in the <code>rows</code>. <br><br> Desktop and tablet devices are supported. On tablets, special consideration should be given to the number of visible columns and rows due to the limited performance of some devices.
 
 <h3>Selection</h3> To benefit from the selection mechanism of <code>ui5-table</code> component, you can use the available selection modes: <code>SingleSelect</code> and <code>MultiSelect</code>. <br> In additition to the used mode, you can also specify the <code>ui5-table-row</code> type choosing between <code>Active</code> or <code>Inactive</code>. <br><br> In <code>SingleSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row via mouse or by pressing the <code>Space</code> or <code>Enter</code> keys. <br> In <code>MultiSelect</code> mode, you can select both an <code>Active</code> and <code>Inactive</code> row by pressing the <code>Space</code> key when a row is on focus or via mouse click over the selection checkbox of the row. In order to select all the available rows at once, you can use the selection checkbox presented in the table's header. <br><br> <b>Note:</b> Currently, when a column is shown as a pop-in, the visual indication for selection is not presented over it.
 
@@ -7657,7 +7696,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                             <br>
                                  <code>busy-delay</code>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.Integer</div>
+                        <div class="cell api-table-content-cell">Integer</div>
                         <div class="cell api-table-content-cell">1000</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the delay in milliseconds, after which the busy indicator will show up for this component.
@@ -7668,7 +7707,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                           growing
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.TableGrowingMode</div>
+                        <div class="cell api-table-content-cell">TableGrowingMode</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines whether the table will have growing capability either by pressing a <code>More</code> button, or via user scroll. In both cases <code>load-more</code> event is fired. <br><br>
@@ -7727,7 +7766,7 @@ The <code>ui5-table</code> component provides a set of sophisticated and conveni
                           mode
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.TableMode</div>
+                        <div class="cell api-table-content-cell">TableMode</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the mode of the component. <br><br> Available options are: <ul> <li><code>MultiSelect</code></li> <li><code>SingleSelect</code></li> <li><code>None</code></li> <ul>
@@ -7902,7 +7941,7 @@ The <code>ui5-table-column</code> component allows to define column specific pro
                             <br>
                                  <code>min-width</code>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.Integer</div>
+                        <div class="cell api-table-content-cell">sap.ui.webc.base.types.Integer</div>
                         <div class="cell api-table-content-cell">Infinity</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the minimum table width required to display this column. By default it is always displayed. <br><br> The responsive behavior of the <code>ui5-table</code> is determined by this property. As an example, by setting <code>minWidth</code> property to <code>400</code> sets the minimum width to 400 pixels, and shows this column on tablet (and desktop) but hides it on mobile. <br> For further responsive design options, see <code>demandPopin</code> property.
@@ -7914,7 +7953,7 @@ The <code>ui5-table-column</code> component allows to define column specific pro
                             <br>
                                  <code>popin-display</code>
                         </div>
-                        <div class="cell api-table-content-cell">TableCellPopinDisplayType</div>
+                        <div class="cell api-table-content-cell">TableColumnPopinDisplay</div>
                         <div class="cell api-table-content-cell">&quot;Block&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines how the popin row is displayed.
@@ -8018,7 +8057,7 @@ The <code>ui5-table-row</code> component represents a row in the <code>ui5-table
                           type
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.TableRowType</div>
+                        <div class="cell api-table-content-cell">sap.ui.webc.main.types.TableRowType</div>
                         <div class="cell api-table-content-cell">&quot;Inactive&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the visual indication and behavior of the component. <br><br> Available options are: <ul> <li><code>Active</code></li> <li><code>Inactive</code></li> </ul> <br><br> <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press, while with type <code>Inactive</code> - will not.
@@ -8044,7 +8083,7 @@ The <code>ui5-table-row</code> component represents a row in the <code>ui5-table
             
                     <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">default</div>
-                      <div class="cell api-table-content-cell">sap.ui.webcomponents.main.ITableCell [0..n]</div>
+                      <div class="cell api-table-content-cell">sap.ui.webc.main.ITableCell [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the cells of the component. <br><br> <b>Note:</b> Use <code>ui5-table-cell</code> for the intended design.</div>
                     </div>
             

@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Input | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Input" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/components/Input/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/components/Input/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Input" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Input","url":"https://sap.github.io/ui5-webcomponents/main/playground/components/Input/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Input","url":"https://sap.github.io/ui5-webcomponents/main/playground/components/Input/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -6450,7 +6489,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                           maxlength
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.Integer</div>
+                        <div class="cell api-table-content-cell">Integer</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Sets the maximum number of characters available in the input field. <br><br> <b>Note:</b> This property is not compatible with the ui5-input type InputType.Number. If the ui5-input type is set to Number, the maxlength value is ignored.
@@ -6487,6 +6526,19 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          openPicker
+                            <br>
+                                 <code>open-picker</code>
+                        </div>
+                        <div class="cell api-table-content-cell">undefined</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.3.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           placeholder
                             <br>
                         </div>
@@ -6496,20 +6548,20 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines a short hint intended to aid the user with data entry when the component has no value.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           previewItem
                             (readonly)
                             <br>
                                  <code>preview-item</code>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.IInputSuggestionItem</div>
+                        <div class="cell api-table-content-cell">IInputSuggestionItem|null</div>
                         <div class="cell api-table-content-cell"></div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             The suggestion item on preview.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           readonly
                             <br>
@@ -6520,7 +6572,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines whether the component is read-only. <br><br> <b>Note:</b> A read-only component is not editable, but still provides visual feedback upon user interaction.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           required
                             <br>
@@ -6532,7 +6584,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.3</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showClearIcon
                             <br>
@@ -6545,7 +6597,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showSuggestions
                             <br>
@@ -6557,18 +6609,18 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines whether the component should show suggestions, if such are present. <br><br> <b>Note:</b> You need to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           type
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.InputType</div>
+                        <div class="cell api-table-content-cell">InputType</div>
                         <div class="cell api-table-content-cell">&quot;Text&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the HTML type of the component. Available options are: <code>Text</code>, <code>Email</code>, <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>. <br><br> <b>Notes:</b> <ul> <li>The particular effect of this property differs depending on the browser and the current language settings, especially for type <code>Number</code>.</li> <li>The property is mostly intended to be used with touch devices that use different soft keyboard layouts depending on the given input type.</li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -6579,13 +6631,13 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the value of the component. <br><br> <b>Note:</b> The property is updated upon typing.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>
                                  <code>value-state</code>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.ValueState</div>
+                        <div class="cell api-table-content-cell">ValueState</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the value state of the component. <br><br> Available options are: <ul> <li><code>None</code></li> <li><code>Error</code></li> <li><code>Warning</code></li> <li><code>Success</code></li> <li><code>Information</code></li> </ul>
@@ -6614,11 +6666,6 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the suggestion items. <br><br> Example: <br><br> &lt;ui5-input show-suggestions><br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #1">&lt;/ui5-suggestion-item><br> &nbsp;&nbsp;&nbsp;&nbsp;&lt;ui5-suggestion-item text="Item #2">&lt;/ui5-suggestion-item><br> &lt;/ui5-input> <br> <ui5-input show-suggestions> <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item> <ui5-suggestion-item text="Item #1"></ui5-suggestion-item> <ui5-suggestion-item text="Item #2"></ui5-suggestion-item> <ui5-suggestion-group-item text="Group #2"></ui5-suggestion-group-item> <ui5-suggestion-item text="Item #3"></ui5-suggestion-item> <ui5-suggestion-item text="Item #4"></ui5-suggestion-item> </ui5-input> <br><br> <b>Note:</b> The suggestions would be displayed only if the <code>showSuggestions</code> property is set to <code>true</code>. <br><br> <b>Note:</b> The <code>&lt;ui5-suggestion-item&gt;</code> and <code>&lt;ui5-suggestion-group-item&gt;</code> are recommended to be used as suggestion items. <br><br> <b>Note:</b> Importing the Input Suggestions Support feature: <br> <code>import "@ui5/webcomponents/dist/features/InputSuggestions.js";</code> <br> automatically imports the <code>&lt;ui5-suggestion-item></code> and <code>&lt;ui5-suggestion-group-item></code> for your convenience.</div>
                     </div>
                     <div class="row api-table-roll-odd">
-                      <div class="cell api-table-content-cell api-table-content-cell-bold">icon</div>
-                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
-                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the icon to be displayed in the component.</div>
-                    </div>
-                    <div class="row api-table-roll-even">
                       <div class="cell api-table-content-cell api-table-content-cell-bold">valueStateMessage</div>
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the value state message that will be displayed as pop up under the component. <br><br>
@@ -6686,21 +6733,6 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         </tr>
                   </div>
             
-                  <h3 class="comment-api-title space-top">Methods</h3>
-                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">openPicker</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.</div>
-                      </div>
-            
-                  </div>
             
           </section>
         </section>
@@ -6710,6 +6742,19 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
         <h1>SuggestionItem</h1>
         <section class="component-description">
           The <code>ui5-suggestion-item</code> represents the suggestion item of the <code>ui5-input</code>.
+          <section class="component-api space-top">
+            
+            
+            
+            
+            
+          </section>
+        </section>
+      </div>
+      <div class="api-container appended-doc">
+        <h1>SuggestionGroupItem</h1>
+        <section class="component-description">
+          The <code>ui5-suggestion-group-item</code> is type of suggestion item, that can be used to split the <code>ui5-input</code> suggestions into groups.
           <section class="component-api space-top">
             
                   <h3 class="comment-api-title" >Properties/Attributes</h3>
@@ -6742,7 +6787,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             <br>
                                  <code>additional-text-state</code>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.base.types.ValueState</div>
+                        <div class="cell api-table-content-cell">sap.ui.webc.base.types.ValueState</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the state of the <code>additionalText</code>. <br><br> Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
@@ -6810,48 +6855,11 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                           type
                             <br>
                         </div>
-                        <div class="cell api-table-content-cell">sap.ui.webcomponents.main.types.ListItemType</div>
+                        <div class="cell api-table-content-cell">sap.ui.webc.main.types.ListItemType</div>
                         <div class="cell api-table-content-cell">&quot;Active&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the visual indication and behavior of the item. Available options are <code>Active</code> (by default), <code>Inactive</code> and <code>Detail</code>. <br><br> <b>Note:</b> When set to <code>Active</code>, the item will provide visual response upon press and hover, while when <code>Inactive</code> or <code>Detail</code> - will not.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
-                        </div>
-                      </div>
-            
-                  </div>
-            
-            
-            
-            
-          </section>
-        </section>
-      </div>
-      <div class="api-container appended-doc">
-        <h1>SuggestionGroupItem</h1>
-        <section class="component-description">
-          The <code>ui5-suggestion-group-item</code> is type of suggestion item, that can be used to split the <code>ui5-input</code> suggestions into groups.
-          <section class="component-api space-top">
-            
-                  <h3 class="comment-api-title" >Properties/Attributes</h3>
-                  <p class="small-space-top" >You can use both properties and attributes with the same effect. The name of each attribute is listed below the name of the property, if different.</p>
-            
-                  <div class="small-space-top api-table">
-                    <div class="head api-table-header-roll">
-                      <div class="cell api-table-header-cell">Name</div>
-                      <div class="cell api-table-header-cell">Type</div>
-                      <div class="cell api-table-header-cell">Default Value</div>
-                      <div class="cell api-table-header-cell">Description</div>
-                    </div>
-            
-                      <div class="row api-table-roll-even">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          text
-                            <br>
-                        </div>
-                        <div class="cell api-table-content-cell">string</div>
-                        <div class="cell api-table-content-cell">&quot;&quot;</div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the text of the <code>ui5-suggestion-group-item</code>.
                         </div>
                       </div>
             

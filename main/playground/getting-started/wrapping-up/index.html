@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Wrapping up | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Wrapping up" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/getting-started/wrapping-up/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/getting-started/wrapping-up/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Wrapping up" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Wrapping up","url":"https://sap.github.io/ui5-webcomponents/main/playground/getting-started/wrapping-up/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Wrapping up","url":"https://sap.github.io/ui5-webcomponents/main/playground/getting-started/wrapping-up/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5868,18 +5907,18 @@
 
 <p><em>This section illustrates how all these concepts combine</em>.</p>
 
-<h2 id="applying-the-learnings-in-the-vite-app">Applying the Learnings in the <code class="highlighter-rouge">vite</code> App</h2>
+<h2 id="applying-the-learnings-in-the-vite-app">Applying the Learnings in the <code class="language-plaintext highlighter-rouge">vite</code> App</h2>
 
 <p>If you created the test app, described in <a href="./01.%20Getting%20Started.md">Getting Started</a>, you can enhance it as follows:</p>
 
-<p>1) In the “Getting Started” section you installed the <code class="highlighter-rouge">@ui5/webcomponents</code> package.</p>
+<p>1) In the “Getting Started” section you installed the <code class="language-plaintext highlighter-rouge">@ui5/webcomponents</code> package.</p>
 
-<p>Now, let’s do the same for <code class="highlighter-rouge">@ui5/webcomponents-icons</code>:</p>
+<p>Now, let’s do the same for <code class="language-plaintext highlighter-rouge">@ui5/webcomponents-icons</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents-icons
 </code></pre></div></div>
 
-<p>2) Change the <code class="highlighter-rouge">main.js</code> file as follows:</p>
+<p>2) Change the <code class="language-plaintext highlighter-rouge">main.js</code> file as follows:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents/dist/Assets.js</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Assets for the main package</span>
    <span class="k">import</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-icons/dist/Assets.js</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// Assets for the icons package</span>
@@ -5892,7 +5931,7 @@
 
 <p>You now import assets, components, features and icons.</p>
 
-<p>3) Change the <code class="highlighter-rouge">index.html</code> file as follows:</p>
+<p>3) Change the <code class="language-plaintext highlighter-rouge">index.html</code> file as follows:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   <span class="nt">&lt;html&gt;</span>
        <span class="nt">&lt;body&gt;</span>
@@ -5907,11 +5946,11 @@
    <span class="nt">&lt;/html&gt;</span>
 </code></pre></div></div>
 
-<p>to use <code class="highlighter-rouge">ui5-button</code> with the <code class="highlighter-rouge">add</code> icon imported in <code class="highlighter-rouge">main.js</code> and the <code class="highlighter-rouge">ui5-color-palette</code> component with the <code class="highlighter-rouge">show-more-colors</code> feature.</p>
+<p>to use <code class="language-plaintext highlighter-rouge">ui5-button</code> with the <code class="language-plaintext highlighter-rouge">add</code> icon imported in <code class="language-plaintext highlighter-rouge">main.js</code> and the <code class="language-plaintext highlighter-rouge">ui5-color-palette</code> component with the <code class="language-plaintext highlighter-rouge">show-more-colors</code> feature.</p>
 
 <p>4) Run the project.</p>
 
-<p>If <code class="highlighter-rouge">vite</code> is running, it will just refresh your browser, otherwise run the project again.</p>
+<p>If <code class="language-plaintext highlighter-rouge">vite</code> is running, it will just refresh your browser, otherwise run the project again.</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  npm run dev
 </code></pre></div></div>
@@ -5920,7 +5959,7 @@
 
 <p>5) Test the assets.</p>
 
-<p>Try running the test page with the following URL parameters: <code class="highlighter-rouge">sap-ui-theme=sap_belize_hcb&amp;sap-ui-language=de</code></p>
+<p>Try running the test page with the following URL parameters: <code class="language-plaintext highlighter-rouge">sap-ui-theme=sap_belize_hcb&amp;sap-ui-language=de</code></p>
 
 <p><a href="http://localhost:3000/?sap-ui-theme=sap_belize_hcb&amp;sap-ui-language=de">http://localhost:3000/?sap-ui-theme=sap_belize_hcb&amp;sap-ui-language=de</a></p>
 

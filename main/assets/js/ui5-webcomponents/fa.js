@@ -1,6 +1,6 @@
 const __license = "This file has been derived from Unicode Common Locale Data Repository (CLDR) files (http://cldr.unicode.org). See the copyright and permission notice in the Unicode-Data-Files-LICENSE.txt available at the same location as this file or visit http://www.unicode.org/copyright.html";
 const __version = "35.1.0";
-const __buildtime = "2020-10-20T05:15:22.539Z";
+const __buildtime = "2022-05-02T19:26:05.809Z";
 const languages = {
   aa: "\u0622\u0641\u0627\u0631\u06CC",
   ab: "\u0622\u0628\u062E\u0627\u0632\u06CC",
@@ -1373,6 +1373,474 @@ const dateFields = {
     displayName: "\u0645\u0646\u0637\u0642\u0647\u0654 \u0632\u0645\u0627\u0646\u06CC"
   }
 };
+const timezoneNames = {
+  Africa: {
+    Abidjan: "\u0622\u0628\u06CC\u062C\u0627\u0646",
+    Accra: "\u0627\u06A9\u0631\u0627",
+    Addis_Ababa: "\u0622\u062F\u06CC\u0633 \u0622\u0628\u0627\u0628\u0627",
+    Algiers: "\u0627\u0644\u062C\u0632\u06CC\u0631\u0647",
+    Asmara: "\u0627\u0633\u0645\u0631\u0647",
+    Bamako: "\u0628\u0627\u0645\u0627\u06A9\u0648",
+    Bangui: "\u0628\u0627\u0646\u06AF\u06CC",
+    Banjul: "\u0628\u0627\u0646\u062C\u0648\u0644",
+    Bissau: "\u0628\u06CC\u0633\u0627\u0626\u0648",
+    Blantyre: "\u0628\u0644\u0627\u0646\u062A\u06CC\u0631\u0647",
+    Brazzaville: "\u0628\u0631\u0627\u0632\u0648\u06CC\u0644",
+    Bujumbura: "\u0628\u0648\u062C\u0648\u0645\u0628\u0648\u0631\u0627",
+    Cairo: "\u0642\u0627\u0647\u0631\u0647",
+    Casablanca: "\u06A9\u0627\u0632\u0627\u0628\u0644\u0627\u0646\u06A9\u0627",
+    Ceuta: "\u0633\u0628\u062A\u0647",
+    Conakry: "\u06A9\u0648\u0646\u0627\u06A9\u0631\u06CC",
+    Dakar: "\u062F\u0627\u06A9\u0627\u0631",
+    Dar_es_Salaam: "\u062F\u0627\u0631\u0627\u0644\u0633\u0644\u0627\u0645",
+    Djibouti: "\u062C\u06CC\u0628\u0648\u062A\u06CC",
+    Douala: "\u062F\u0648\u0622\u0644\u0627",
+    El_Aaiun: "\u0627\u0644\u0639\u06CC\u0648\u0646",
+    Freetown: "\u0641\u0631\u06CC\u200C\u062A\u0627\u0648\u0646",
+    Gaborone: "\u06AF\u0627\u0628\u0648\u0631\u0648\u0646",
+    Harare: "\u0647\u0631\u0627\u0631\u0647",
+    Johannesburg: "\u0698\u0648\u0647\u0627\u0646\u0633\u0628\u0648\u0631\u06AF",
+    Juba: "\u062C\u0648\u0628\u0627",
+    Kampala: "\u06A9\u0627\u0645\u067E\u0627\u0644\u0627",
+    Khartoum: "\u062E\u0627\u0631\u0637\u0648\u0645",
+    Kigali: "\u06A9\u06CC\u06AF\u0627\u0644\u06CC",
+    Kinshasa: "\u06A9\u06CC\u0646\u0634\u0627\u0633\u0627",
+    Lagos: "\u0644\u0627\u06AF\u0648\u0633",
+    Libreville: "\u0644\u06CC\u0628\u0631\u0648\u06CC\u0644",
+    Lome: "\u0644\u0648\u0645\u0647",
+    Luanda: "\u0644\u0648\u0627\u0646\u062F\u0627",
+    Lubumbashi: "\u0644\u0648\u0628\u0648\u0645\u0628\u0627\u0634\u06CC",
+    Lusaka: "\u0644\u0648\u0632\u0627\u06A9\u0627",
+    Malabo: "\u0645\u0627\u0644\u0627\u0628\u0648",
+    Maputo: "\u0645\u0627\u067E\u0648\u062A\u0648",
+    Maseru: "\u0645\u0627\u0633\u0631\u0648",
+    Mbabane: "\u0645\u0628\u0627\u0628\u0627\u0646\u0647",
+    Mogadishu: "\u0645\u0648\u06AF\u0627\u062F\u06CC\u0634\u0648",
+    Monrovia: "\u0645\u0648\u0646\u0631\u0648\u0648\u06CC\u0627",
+    Nairobi: "\u0646\u0627\u06CC\u0631\u0648\u0628\u06CC",
+    Ndjamena: "\u0627\u0646\u062C\u0627\u0645\u0646\u0627",
+    Niamey: "\u0646\u06CC\u0627\u0645\u06CC",
+    Nouakchott: "\u0646\u0648\u0622\u06A9\u0634\u0648\u062A",
+    Ouagadougou: "\u0627\u0648\u0622\u06AF\u0627\u062F\u0648\u06AF\u0648",
+    "Porto-Novo": "\u067E\u0648\u0631\u062A\u0648 \u0646\u0648\u0648\u0648",
+    Sao_Tome: "\u0633\u0627\u0626\u0648\u062A\u0648\u0645\u0647",
+    Tripoli: "\u0637\u0631\u0627\u0628\u0644\u0633",
+    Tunis: "\u0634\u0647\u0631 \u062A\u0648\u0646\u0633",
+    Windhoek: "\u0648\u06CC\u0646\u062F\u0647\u0648\u06A9",
+    _parent: "\u0627\u0641\u0631\u06CC\u0642\u0627"
+  },
+  America: {
+    Adak: "\u0627\u06CC\u062F\u06A9",
+    Anchorage: "\u0627\u0646\u06A9\u0648\u0631\u06CC\u062C",
+    Anguilla: "\u0622\u0646\u06AF\u0648\u0626\u06CC\u0644\u0627",
+    Antigua: "\u0622\u0646\u062A\u06CC\u06AF\u0648\u0627",
+    Araguaina: "\u0622\u0631\u0627\u06AF\u0648\u0627\u06CC\u0646\u0627",
+    Argentina: {
+      Buenos_Aires: "\u0628\u0648\u0626\u0646\u0648\u0633\u200C\u0622\u06CC\u0631\u0633",
+      Catamarca: "\u06A9\u0627\u062A\u0627\u0645\u0627\u0631\u06A9\u0627",
+      Cordoba: "\u06A9\u0648\u0631\u062F\u0648\u0648\u0627",
+      Jujuy: "\u062E\u0648\u062E\u0648\u06CC",
+      La_Rioja: "\u0644\u0627\u0631\u06CC\u0648\u062E\u0627",
+      Mendoza: "\u0645\u0646\u062F\u0648\u0633\u0627",
+      Rio_Gallegos: "\u0631\u06CC\u0648\u06AF\u0627\u0644\u06AF\u0648\u0633",
+      Salta: "\u0633\u0627\u0644\u062A\u0627",
+      San_Juan: "\u0633\u0646\u200C\u062E\u0648\u0627\u0646",
+      San_Luis: "\u0633\u0646\u200C\u0644\u0648\u0626\u06CC\u0633",
+      Tucuman: "\u062A\u0648\u06A9\u0648\u0645\u0646",
+      Ushuaia: "\u0627\u0648\u0634\u0648\u0627\u06CC\u0627",
+      _parent: "\u0622\u0631\u0698\u0627\u0646\u062A\u06CC\u0646"
+    },
+    Aruba: "\u0627\u0631\u0648\u0628\u0627",
+    Asuncion: "\u0622\u0633\u0648\u0646\u0633\u06CC\u0648\u0646",
+    Atikokan: "\u0627\u062A\u06A9\u0648\u06A9\u0627\u0646",
+    Bahia: "\u0628\u0627\u06CC\u0627",
+    Bahia_Banderas: "\u0628\u0627\u0647\u06CC\u0627 \u0628\u0627\u0646\u062F\u0631\u0627\u0633",
+    Barbados: "\u0628\u0627\u0631\u0628\u0627\u062F\u0648\u0633",
+    Belem: "\u0628\u0644\u0645",
+    Belize: "\u0628\u0644\u06CC\u0632",
+    "Blanc-Sablon": "\u0628\u0644\u0627\u0646\u2010\u0633\u0627\u0628\u0644\u0648\u0646",
+    Boa_Vista: "\u0628\u0648\u0626\u0627\u0648\u06CC\u0633\u062A\u0627",
+    Bogota: "\u0628\u0648\u06AF\u0648\u062A\u0627",
+    Boise: "\u0628\u0648\u06CC\u0633\u06CC",
+    Cambridge_Bay: "\u06A9\u0645\u0628\u0631\u06CC\u062C\u200C\u0628\u06CC",
+    Campo_Grande: "\u06A9\u0645\u067E\u0648 \u06AF\u0631\u0627\u0646\u062F\u0647",
+    Cancun: "\u06A9\u0627\u0646\u06A9\u0648\u0646",
+    Caracas: "\u06A9\u0627\u0631\u0627\u06A9\u0627\u0633",
+    Cayenne: "\u06A9\u0627\u06CC\u0646",
+    Cayman: "\u06A9\u06CC\u0645\u0646",
+    Chicago: "\u0634\u06CC\u06A9\u0627\u06AF\u0648",
+    Chihuahua: "\u0686\u06CC\u0648\u0627\u0648\u0627",
+    Costa_Rica: "\u06A9\u0627\u0633\u062A\u0627\u0631\u06CC\u06A9\u0627",
+    Creston: "\u06A9\u0631\u0633\u062A\u0648\u0646",
+    Cuiaba: "\u06A9\u0648\u06CC\u0627\u0648\u0627",
+    Curacao: "\u06A9\u0648\u0631\u0627\u0633\u0627\u0626\u0648",
+    Danmarkshavn: "\u062F\u0627\u0646\u0645\u0627\u0631\u06A9\u0633\u200C\u0647\u0627\u0648\u0646",
+    Dawson: "\u062F\u0627\u0648\u0633\u0646",
+    Dawson_Creek: "\u062F\u0627\u0648\u0633\u0646 \u06A9\u0631\u06CC\u06A9",
+    Denver: "\u062F\u0646\u0648\u0631",
+    Detroit: "\u062F\u06CC\u062A\u0631\u0648\u06CC\u062A",
+    Dominica: "\u062F\u0648\u0645\u06CC\u0646\u06CC\u06A9\u0627",
+    Edmonton: "\u0627\u062F\u0645\u0648\u0646\u062A\u0648\u0646",
+    Eirunepe: "\u0627\u06CC\u0631\u0648\u0646\u067E\u0647",
+    El_Salvador: "\u0627\u0644\u0633\u0627\u0644\u0648\u0627\u062F\u0648\u0631",
+    Fort_Nelson: "\u0641\u0648\u0631\u062A \u0646\u0644\u0633\u0648\u0646",
+    Fortaleza: "\u0641\u0648\u0631\u062A\u0627\u0644\u0632\u0627",
+    Glace_Bay: "\u06AF\u0644\u06CC\u0633\u200C\u0628\u06CC",
+    Goose_Bay: "\u06AF\u0648\u0633\u200C\u0628\u06CC",
+    Grand_Turk: "\u06AF\u0631\u0627\u0646\u062F \u062A\u0648\u0631\u06A9",
+    Grenada: "\u06AF\u0631\u0646\u0627\u062F\u0627",
+    Guadeloupe: "\u06AF\u0648\u0627\u062F\u0644\u0648\u067E",
+    Guatemala: "\u06AF\u0648\u0627\u062A\u0645\u0627\u0644\u0627",
+    Guayaquil: "\u06AF\u0648\u0627\u06CC\u0627\u06A9\u06CC\u0644",
+    Guyana: "\u06AF\u0648\u06CC\u0627\u0646",
+    Halifax: "\u0647\u0644\u06CC\u0641\u06A9\u0633",
+    Havana: "\u0647\u0627\u0648\u0627\u0646\u0627",
+    Hermosillo: "\u0627\u0631\u0645\u0648\u0633\u06CC\u0648",
+    Indiana: {
+      Indianapolis: "\u0627\u06CC\u0646\u062F\u06CC\u0627\u0646\u0627\u067E\u0648\u0644\u06CC\u0633",
+      Knox: "\u0646\u0627\u06A9\u0633\u060C \u0627\u06CC\u0646\u062F\u06CC\u0627\u0646\u0627",
+      Marengo: "\u0645\u0627\u0631\u0646\u06AF\u0648\u060C \u0627\u06CC\u0646\u062F\u06CC\u0627\u0646\u0627",
+      Petersburg: "\u067E\u06CC\u062A\u0631\u0632\u0628\u0631\u06AF\u060C \u0627\u06CC\u0646\u062F\u06CC\u0627\u0646\u0627",
+      Tell_City: "\u062A\u0644\u200C\u0633\u06CC\u062A\u06CC\u060C \u0627\u06CC\u0646\u062F\u06CC\u0627\u0646\u0627",
+      Vevay: "\u0648\u06CC\u0648\u06CC\u060C \u0627\u06CC\u0646\u062F\u06CC\u0627\u0646\u0627",
+      Vincennes: "\u0648\u06CC\u0646\u0633\u0646\u0633\u060C \u0627\u0646\u062F\u06CC\u0627\u0646\u0627",
+      Winamac: "\u0648\u06CC\u0646\u0627\u0645\u0627\u06A9\u060C \u0627\u06CC\u0646\u062F\u06CC\u0627\u0646\u0627"
+    },
+    Inuvik: "\u0627\u06CC\u0646\u0648\u0648\u06CC\u06A9",
+    Iqaluit: "\u0627\u06CC\u06A9\u0644\u0648\u0626\u062A",
+    Jamaica: "\u062C\u0627\u0645\u0627\u0626\u06CC\u06A9\u0627",
+    Juneau: "\u062C\u0648\u0646\u0648",
+    Kentucky: {
+      Louisville: "\u0644\u0648\u0626\u06CC\u0632\u0648\u06CC\u0644",
+      Monticello: "\u0645\u0627\u0646\u062A\u06CC\u0633\u0644\u0648\u060C \u06A9\u0646\u062A\u0627\u06A9\u06CC"
+    },
+    Kralendijk: "\u06A9\u0631\u0627\u0644\u0646\u062F\u06CC\u06A9",
+    La_Paz: "\u0644\u0627\u067E\u0627\u0632",
+    Lima: "\u0644\u06CC\u0645\u0627",
+    Los_Angeles: "\u0644\u0648\u0633\u200C\u0622\u0646\u062C\u0644\u0633",
+    Lower_Princes: "\u0628\u062E\u0634 \u0634\u0627\u0647\u0632\u0627\u062F\u0647\u200C\u200C\u0646\u0634\u06CC\u0646 \u067E\u0627\u06CC\u06CC\u0646",
+    Maceio: "\u0645\u0627\u0633\u06CC\u0648",
+    Managua: "\u0645\u0627\u0646\u0627\u06AF\u0648\u0627",
+    Manaus: "\u0645\u0627\u0646\u0627\u0648\u0633",
+    Marigot: "\u0645\u0627\u0631\u06CC\u06AF\u0627\u062A",
+    Martinique: "\u0645\u0627\u0631\u062A\u06CC\u0646\u06CC\u06A9",
+    Matamoros: "\u0645\u0627\u062A\u0627\u0645\u0648\u0631\u0648\u0633",
+    Mazatlan: "\u0645\u0627\u0633\u0627\u062A\u0644\u0627\u0646",
+    Menominee: "\u0645\u0646\u0627\u0645\u06CC\u0646\u06CC",
+    Merida: "\u0645\u0631\u06CC\u062F\u0627",
+    Metlakatla: "\u0645\u062A\u0627\u0644\u0627\u06A9\u0627\u062A\u0644\u0627",
+    Mexico_City: "\u0645\u06A9\u0632\u06CC\u06A9\u0648\u0633\u06CC\u062A\u06CC",
+    Miquelon: "\u0645\u06CC\u06A9\u0644\u0648\u0646",
+    Moncton: "\u0645\u0627\u0646\u06A9\u062A\u0648\u0646",
+    Monterrey: "\u0645\u0648\u0646\u062A\u0631\u06CC",
+    Montevideo: "\u0645\u0648\u0646\u062A\u0647\u200C\u0648\u06CC\u062F\u0626\u0648",
+    Montserrat: "\u0645\u0648\u0646\u062A\u0633\u0631\u0627\u062A",
+    Nassau: "\u0646\u0627\u0633\u0627\u0626\u0648",
+    New_York: "\u0646\u06CC\u0648\u06CC\u0648\u0631\u06A9",
+    Nipigon: "\u0646\u06CC\u067E\u06CC\u06AF\u0627\u0646",
+    Nome: "\u0646\u0648\u0645",
+    Noronha: "\u0646\u0648\u0631\u0648\u0646\u06CC\u0627",
+    North_Dakota: {
+      Beulah: "\u0628\u06CC\u0648\u0644\u0627\u060C \u062F\u0627\u06A9\u0648\u062A\u0627\u06CC \u0634\u0645\u0627\u0644\u06CC",
+      Center: "\u0633\u0646\u062A\u0631\u060C \u062F\u0627\u06A9\u0648\u062A\u0627\u06CC \u0634\u0645\u0627\u0644\u06CC",
+      New_Salem: "\u0646\u06CC\u0648\u0633\u0627\u0644\u0645\u060C \u062F\u0627\u06A9\u0648\u062A\u0627\u06CC \u0634\u0645\u0627\u0644\u06CC"
+    },
+    Nuuk: "\u0646\u0648\u0648\u06A9",
+    Ojinaga: "\u0627\u062E\u06CC\u0646\u0627\u06AF\u0627",
+    Panama: "\u067E\u0627\u0646\u0627\u0645\u0627",
+    Pangnirtung: "\u067E\u0627\u0646\u06AF\u0646\u06CC\u0631\u062A\u0648\u0646\u06AF",
+    Paramaribo: "\u067E\u0627\u0631\u0627\u0645\u0627\u0631\u06CC\u0628\u0648",
+    Phoenix: "\u0641\u06CC\u0646\u06A9\u0633",
+    "Port-au-Prince": "\u067E\u0648\u0631\u062A\u0648\u067E\u0631\u0646\u0633",
+    Port_of_Spain: "\u067E\u0648\u0631\u062A\u200C\u0622\u0648\u0627\u0633\u067E\u06CC\u0646",
+    Porto_Velho: "\u067E\u0648\u0631\u062A\u0648\u0648\u0644\u06CC\u0648",
+    Puerto_Rico: "\u067E\u0648\u0631\u062A\u0648\u0631\u06CC\u06A9\u0648",
+    Punta_Arenas: "\u067E\u0648\u0646\u062A\u0627 \u0622\u0631\u0646\u0627\u0633",
+    Rainy_River: "\u0631\u06CC\u0646\u06CC\u200C\u0631\u06CC\u0648\u0631",
+    Rankin_Inlet: "\u062E\u0644\u06CC\u062C\u06A9 \u0631\u0646\u06A9\u06CC\u0646",
+    Recife: "\u0631\u06CC\u0633\u06CC\u0641\u06CC",
+    Regina: "\u0631\u062C\u0627\u06CC\u0646\u0627",
+    Resolute: "\u0631\u0632\u0648\u0644\u0648\u062A",
+    Rio_Branco: "\u0631\u06CC\u0648\u0628\u0631\u0627\u0646\u06A9\u0648",
+    Santa_Isabel: "\u0633\u0627\u0646\u062A\u0627 \u0627\u06CC\u0632\u0627\u0628\u0644",
+    Santarem: "\u0633\u0646\u062A\u0627\u0631\u0645",
+    Santiago: "\u0633\u0627\u0646\u062A\u06CC\u0627\u06AF\u0648",
+    Santo_Domingo: "\u0633\u0627\u0646\u062A\u0648 \u062F\u0648\u0645\u06CC\u0646\u06AF\u0648",
+    Sao_Paulo: "\u0633\u0627\u0626\u0648\u067E\u0627\u0626\u0648\u0644\u0648",
+    Scoresbysund: "\u0627\u0633\u06A9\u0648\u0631\u0633\u0628\u06CC\u0633\u0648\u0646\u062F",
+    Sitka: "\u0633\u06CC\u062A\u06A9\u0627",
+    St_Barthelemy: "\u0633\u0646\u062A \u0628\u0627\u0631\u062A\u0644\u0645\u06CC",
+    St_Johns: "\u0633\u0646\u062A \u062C\u0627\u0646",
+    St_Kitts: "\u0633\u0646\u062A \u06A9\u06CC\u062A\u0633",
+    St_Lucia: "\u0633\u0646\u062A \u0644\u0648\u0633\u06CC\u0627",
+    St_Thomas: "\u0633\u0646\u062A \u062A\u0648\u0645\u0627\u0633",
+    St_Vincent: "\u0633\u0646\u062A \u0648\u06CC\u0646\u0633\u0646\u062A",
+    Swift_Current: "\u0633\u0648\u06CC\u0641\u062A\u200C\u06A9\u0627\u0631\u0646\u062A",
+    Tegucigalpa: "\u062A\u06AF\u0648\u0633\u06CC\u06AF\u0627\u0644\u067E\u0627",
+    Thule: "\u062A\u0648\u0644",
+    Thunder_Bay: "\u062A\u0627\u0646\u062F\u0631\u0628\u06CC",
+    Tijuana: "\u062A\u06CC\u062E\u0648\u0627\u0646\u0627",
+    Toronto: "\u062A\u0648\u0631\u0646\u062A\u0648",
+    Tortola: "\u062A\u0648\u0631\u062A\u0648\u0644\u0627",
+    Vancouver: "\u0648\u0646\u06A9\u0648\u0648\u0631",
+    Whitehorse: "\u0648\u0627\u06CC\u062A\u200C\u0647\u0648\u0631\u0633",
+    Winnipeg: "\u0648\u06CC\u0646\u06CC\u067E\u06AF",
+    Yakutat: "\u06CC\u0627\u06A9\u0648\u062A\u0627\u062A",
+    Yellowknife: "\u06CC\u0644\u0648\u0646\u0627\u06CC\u0641",
+    _parent: "\u0627\u0645\u0631\u06CC\u06A9\u0627"
+  },
+  Antarctica: {
+    Casey: "\u06A9\u06CC\u0633\u06CC",
+    Davis: "\u062F\u06CC\u0648\u06CC\u0633",
+    DumontDUrville: "\u062F\u0648\u0645\u0648\u0646 \u062F\u0648\u0631\u0648\u06CC\u0644",
+    Macquarie: "\u0645\u06A9\u0648\u0627\u0631\u06CC",
+    Mawson: "\u0645\u0627\u0648\u0633\u0648\u0646",
+    McMurdo: "\u0645\u06A9\u200C\u0645\u0648\u0631\u062F\u0648",
+    Palmer: "\u067E\u0627\u0644\u0645\u0631",
+    Rothera: "\u0631\u0648\u062A\u0631\u0627",
+    Syowa: "\u0634\u0648\u0648\u0627",
+    Troll: "\u062A\u0631\u0648\u0644",
+    Vostok: "\u0648\u0633\u062A\u0648\u06A9",
+    _parent: "\u062C\u0646\u0648\u0628\u06AF\u0627\u0646"
+  },
+  Arctic: {
+    Longyearbyen: "\u0644\u0627\u0646\u06AF\u200C\u06CC\u0631\u0628\u06CC\u0646"
+  },
+  Asia: {
+    Aden: "\u0639\u062F\u0646",
+    Almaty: "\u0622\u0644\u0645\u0627\u062A\u06CC",
+    Amman: "\u0639\u0645\u0651\u0627\u0646",
+    Anadyr: "\u0622\u0646\u0627\u062F\u06CC\u0631",
+    Aqtau: "\u0622\u0642\u062A\u0627\u0648",
+    Aqtobe: "\u0622\u0642\u062A\u0648\u0628\u0647",
+    Ashgabat: "\u0639\u0634\u0642\u200C\u0622\u0628\u0627\u062F",
+    Atyrau: "\u0622\u062A\u06CC\u0631\u0627\u0648",
+    Baghdad: "\u0628\u063A\u062F\u0627\u062F",
+    Bahrain: "\u0628\u062D\u0631\u06CC\u0646",
+    Baku: "\u0628\u0627\u06A9\u0648",
+    Bangkok: "\u0628\u0627\u0646\u06A9\u0648\u06A9",
+    Barnaul: "\u0628\u0627\u0631\u0646\u0627\u0626\u0648\u0644",
+    Beirut: "\u0628\u06CC\u0631\u0648\u062A",
+    Bishkek: "\u0628\u06CC\u0634\u06A9\u06A9",
+    Brunei: "\u0628\u0631\u0648\u0646\u0626\u06CC",
+    Chita: "\u0686\u06CC\u062A\u0627",
+    Choibalsan: "\u0686\u0648\u06CC\u0628\u0627\u0644\u0633\u0627\u0646",
+    Colombo: "\u06A9\u0644\u0645\u0628\u0648",
+    Damascus: "\u062F\u0645\u0634\u0642",
+    Dhaka: "\u062F\u0627\u06A9\u0627",
+    Dili: "\u062F\u06CC\u0644\u06CC",
+    Dubai: "\u062F\u0628\u06CC",
+    Dushanbe: "\u062F\u0648\u0634\u0646\u0628\u0647",
+    Famagusta: "\u0641\u0627\u0645\u0627\u06AF\u0648\u0633\u062A\u0627",
+    Gaza: "\u063A\u0632\u0647",
+    Hebron: "\u0627\u0644\u062E\u0644\u06CC\u0644",
+    Ho_Chi_Minh: "\u0647\u0648\u0634\u06CC\u200C\u0645\u06CC\u0646\u200C\u0633\u06CC\u062A\u06CC",
+    Hong_Kong: "\u0647\u0646\u06AF\u200C\u06A9\u0646\u06AF",
+    Hovd: "\u062E\u0648\u0648\u062F",
+    Irkutsk: "\u0627\u06CC\u0631\u06A9\u0648\u062A\u0633\u06A9",
+    Jakarta: "\u062C\u0627\u06A9\u0627\u0631\u062A\u0627",
+    Jayapura: "\u062C\u0627\u06CC\u0627\u067E\u0648\u0631\u0627",
+    Jerusalem: "\u0627\u0648\u0631\u0634\u0644\u06CC\u0645",
+    Kabul: "\u06A9\u0627\u0628\u0644",
+    Kamchatka: "\u06A9\u0627\u0645\u0686\u0627\u062A\u06A9\u0627",
+    Karachi: "\u06A9\u0631\u0627\u0686\u06CC",
+    Kathmandu: "\u06A9\u0627\u062A\u0645\u0627\u0646\u062F\u0648",
+    Khandyga: "\u062E\u0627\u0646\u062F\u06CC\u06AF\u0627",
+    Kolkata: "\u06A9\u0644\u06A9\u062A\u0647",
+    Krasnoyarsk: "\u06A9\u0631\u0627\u0633\u0646\u0648\u06CC\u0627\u0631\u0633\u06A9",
+    Kuala_Lumpur: "\u06A9\u0648\u0627\u0644\u0627\u0644\u0627\u0645\u067E\u0648\u0631",
+    Kuching: "\u06A9\u0648\u0686\u06CC\u0646\u06AF",
+    Kuwait: "\u06A9\u0648\u06CC\u062A",
+    Macau: "\u0645\u0627\u06A9\u0627\u0626\u0648",
+    Magadan: "\u0645\u0627\u06AF\u0627\u062F\u0627\u0646",
+    Makassar: "\u0645\u0627\u06A9\u0627\u0633\u0627\u0631",
+    Manila: "\u0645\u0627\u0646\u06CC\u0644",
+    Muscat: "\u0645\u0633\u0642\u0637",
+    Nicosia: "\u0646\u06CC\u06A9\u0648\u0632\u06CC\u0627",
+    Novokuznetsk: "\u0646\u0648\u0648\u0648\u06A9\u0648\u0632\u0646\u062A\u0633\u06A9",
+    Novosibirsk: "\u0646\u0648\u0648\u0633\u06CC\u0628\u06CC\u0631\u06CC\u0633\u06A9",
+    Omsk: "\u0627\u0648\u0645\u0633\u06A9",
+    Oral: "\u0627\u0648\u0631\u0627\u0644",
+    Phnom_Penh: "\u067E\u0646\u0648\u0645\u200C\u067E\u0646",
+    Pontianak: "\u067E\u0648\u0646\u062A\u06CC\u0627\u0646\u0627\u06A9",
+    Pyongyang: "\u067E\u06CC\u0648\u0646\u06AF\u200C\u06CC\u0627\u0646\u06AF",
+    Qatar: "\u0642\u0637\u0631",
+    Qostanay: "\u0642\u0648\u0633\u062A\u0627\u0646\u0627\u06CC",
+    Qyzylorda: "\u0642\u06CC\u0632\u06CC\u0644\u200C\u0627\u0648\u0631\u062F\u0627",
+    Riyadh: "\u0631\u06CC\u0627\u0636",
+    Sakhalin: "\u0633\u0627\u062E\u0627\u0644\u06CC\u0646",
+    Samarkand: "\u0633\u0645\u0631\u0642\u0646\u062F",
+    Seoul: "\u0633\u0626\u0648\u0644",
+    Shanghai: "\u0634\u0627\u0646\u06AF\u0647\u0627\u06CC",
+    Singapore: "\u0633\u0646\u06AF\u0627\u067E\u0648\u0631",
+    Srednekolymsk: "\u0627\u0633\u0631\u062F\u0646\u06A9\u0648\u0644\u06CC\u0645\u0633\u06A9",
+    Taipei: "\u062A\u0627\u06CC\u067E\u0647",
+    Tashkent: "\u062A\u0627\u0634\u06A9\u0646\u062F",
+    Tbilisi: "\u062A\u0641\u0644\u06CC\u0633",
+    Tehran: "\u062A\u0647\u0631\u0627\u0646",
+    Thimphu: "\u062A\u06CC\u0645\u0641\u0648",
+    Tokyo: "\u062A\u0648\u06A9\u06CC\u0648",
+    Tomsk: "\u062A\u0648\u0645\u0633\u06A9",
+    Ulaanbaatar: "\u0627\u0648\u0644\u0627\u0646\u200C\u0628\u0627\u062A\u0648\u0631",
+    Urumqi: "\u0627\u0631\u0648\u0645\u0686\u06CC",
+    "Ust-Nera": "\u0627\u0648\u0633\u062A \u0646\u0631\u0627",
+    Vientiane: "\u0648\u06CC\u0646\u062A\u06CC\u0627\u0646",
+    Vladivostok: "\u0648\u0644\u0627\u062F\u06CC\u200C\u0648\u0633\u062A\u0648\u06A9",
+    Yakutsk: "\u06CC\u0627\u06A9\u0648\u062A\u0633\u06A9",
+    Yangon: "\u06CC\u0627\u0646\u06AF\u0648\u0646",
+    Yekaterinburg: "\u06CC\u06A9\u0627\u062A\u0631\u06CC\u0646\u0628\u0631\u06AF",
+    Yerevan: "\u0627\u06CC\u0631\u0648\u0627\u0646",
+    _parent: "\u0622\u0633\u06CC\u0627"
+  },
+  Atlantic: {
+    Azores: "\u0622\u0632\u0648\u0631",
+    Bermuda: "\u0628\u0631\u0645\u0648\u062F\u0627",
+    Canary: "\u0642\u0646\u0627\u0631\u06CC",
+    Cape_Verde: "\u06A9\u06CC\u067E\u200C\u0648\u0631\u062F",
+    Faroe: "\u0641\u0627\u0631\u0648",
+    Madeira: "\u0645\u0627\u062F\u06CC\u0631\u0627",
+    Reykjavik: "\u0631\u06CC\u06A9\u06CC\u0627\u0648\u06CC\u06A9",
+    South_Georgia: "\u062C\u0648\u0631\u062C\u06CC\u0627\u06CC \u062C\u0646\u0648\u0628\u06CC",
+    St_Helena: "\u0633\u0646\u062A \u0647\u0644\u0646\u0627",
+    Stanley: "\u0627\u0633\u062A\u0627\u0646\u0644\u06CC"
+  },
+  Australia: {
+    Adelaide: "\u0622\u062F\u0644\u0627\u06CC\u062F",
+    Brisbane: "\u0628\u0631\u06CC\u0633\u0628\u06CC\u0646",
+    Broken_Hill: "\u0628\u0631\u0648\u06A9\u0646\u200C\u0647\u06CC\u0644",
+    Darwin: "\u062F\u0627\u0631\u0648\u06CC\u0646",
+    Eucla: "\u0627\u0648\u06A9\u0644\u0627",
+    Hobart: "\u0647\u0648\u0628\u0627\u0631\u062A",
+    Lindeman: "\u0644\u06CC\u0646\u062F\u0645\u0646",
+    Lord_Howe: "\u0644\u0631\u062F\u0647\u0627\u0648",
+    Melbourne: "\u0645\u0644\u0628\u0648\u0631\u0646",
+    Perth: "\u067E\u0631\u062A",
+    Sydney: "\u0633\u06CC\u062F\u0646\u06CC",
+    _parent: "\u0627\u0633\u062A\u0631\u0627\u0644\u06CC\u0627"
+  },
+  Etc: {
+    UTC: "UTC",
+    Universal: "\u0632\u0645\u0627\u0646 \u0647\u0645\u0627\u0647\u0646\u06AF \u062C\u0647\u0627\u0646\u06CC"
+  },
+  Europe: {
+    Amsterdam: "\u0622\u0645\u0633\u062A\u0631\u062F\u0627\u0645",
+    Andorra: "\u0622\u0646\u062F\u0648\u0631\u0627",
+    Astrakhan: "\u0622\u0633\u062A\u0631\u0627\u062E\u0627\u0646",
+    Athens: "\u0622\u062A\u0646",
+    Belgrade: "\u0628\u0644\u06AF\u0631\u0627\u062F",
+    Berlin: "\u0628\u0631\u0644\u06CC\u0646",
+    Bratislava: "\u0628\u0631\u0627\u062A\u06CC\u0633\u0644\u0627\u0648\u0627",
+    Brussels: "\u0628\u0631\u0648\u06A9\u0633\u0644",
+    Bucharest: "\u0628\u062E\u0627\u0631\u0633\u062A",
+    Budapest: "\u0628\u0648\u062F\u0627\u067E\u0633\u062A",
+    Busingen: "\u0628\u0627\u0632\u0646\u06AF\u0646",
+    Chisinau: "\u06A9\u06CC\u0634\u06CC\u0646\u0627\u0648",
+    Copenhagen: "\u06A9\u067E\u0646\u0647\u0627\u06AF",
+    Dublin: "\u062F\u0648\u0628\u0644\u06CC\u0646",
+    Gibraltar: "\u062C\u0628\u0644\u200C\u0627\u0644\u0637\u0627\u0631\u0642",
+    Guernsey: "\u06AF\u0631\u0646\u0632\u06CC",
+    Helsinki: "\u0647\u0644\u0633\u06CC\u0646\u06A9\u06CC",
+    Isle_of_Man: "\u062C\u0632\u06CC\u0631\u0647\u0654 \u0645\u0646",
+    Istanbul: "\u0627\u0633\u062A\u0627\u0646\u0628\u0648\u0644",
+    Jersey: "\u062C\u0631\u0632\u06CC",
+    Kaliningrad: "\u06A9\u0627\u0644\u06CC\u0646\u06CC\u0646\u06AF\u0631\u0627\u062F",
+    Kiev: "\u06A9\u06CC\u0641",
+    Kirov: "\u06A9\u06CC\u0631\u0648\u0641",
+    Lisbon: "\u0644\u06CC\u0633\u0628\u0648\u0646",
+    Ljubljana: "\u0644\u06CC\u0648\u0628\u0644\u06CC\u0627\u0646\u0627",
+    London: "\u0644\u0646\u062F\u0646",
+    Luxembourg: "\u0644\u0648\u06A9\u0632\u0627\u0645\u0628\u0648\u0631\u06AF",
+    Madrid: "\u0645\u0627\u062F\u0631\u06CC\u062F",
+    Malta: "\u0645\u0627\u0644\u062A",
+    Mariehamn: "\u0645\u0627\u0631\u06CC\u0647\u200C\u0647\u0627\u0645\u0646",
+    Minsk: "\u0645\u06CC\u0646\u0633\u06A9",
+    Monaco: "\u0645\u0648\u0646\u0627\u06A9\u0648",
+    Moscow: "\u0645\u0633\u06A9\u0648",
+    Oslo: "\u0627\u0633\u0644\u0648",
+    Paris: "\u067E\u0627\u0631\u06CC\u0633",
+    Podgorica: "\u067E\u0627\u062F\u06AF\u0627\u0631\u06CC\u062A\u0633\u0627",
+    Prague: "\u067E\u0631\u0627\u06AF",
+    Riga: "\u0631\u06CC\u06AF\u0627",
+    Rome: "\u0631\u0645",
+    Samara: "\u0633\u0627\u0645\u0627\u0631\u0627",
+    San_Marino: "\u0633\u0627\u0646\u200C\u0645\u0627\u0631\u06CC\u0646\u0648",
+    Sarajevo: "\u0633\u0627\u0631\u0627\u06CC\u0648\u0648",
+    Saratov: "\u0633\u0627\u0631\u0627\u062A\u0648\u0641",
+    Simferopol: "\u0633\u06CC\u0645\u0641\u0631\u0648\u067E\u0644",
+    Skopje: "\u0627\u0633\u06A9\u0648\u067E\u06CC\u0647",
+    Sofia: "\u0635\u0648\u0641\u06CC\u0647",
+    Stockholm: "\u0627\u0633\u062A\u06A9\u0647\u0644\u0645",
+    Tallinn: "\u062A\u0627\u0644\u06CC\u0646",
+    Tirane: "\u062A\u06CC\u0631\u0627\u0646\u0627",
+    Ulyanovsk: "\u0627\u0648\u0644\u06CC\u0627\u0646\u0648\u0641\u0633\u06A9",
+    Uzhgorod: "\u0627\u0648\u0698\u06AF\u0648\u0631\u0648\u062F",
+    Vaduz: "\u0641\u0627\u062F\u0648\u062A\u0633",
+    Vatican: "\u0648\u0627\u062A\u06CC\u06A9\u0627\u0646",
+    Vienna: "\u0648\u06CC\u0646",
+    Vilnius: "\u0648\u06CC\u0644\u0646\u06CC\u0648\u0633",
+    Volgograd: "\u0648\u0644\u06AF\u0627\u06AF\u0631\u0627\u062F",
+    Warsaw: "\u0648\u0631\u0634\u0648",
+    Zagreb: "\u0632\u0627\u06AF\u0631\u0628",
+    Zaporozhye: "\u0632\u0627\u067E\u0648\u0631\u0648\u0698\u06CC\u0627",
+    Zurich: "\u0632\u0648\u0631\u06CC\u062E",
+    _parent: "\u0627\u0631\u0648\u067E\u0627"
+  },
+  Indian: {
+    Antananarivo: "\u0622\u0646\u062A\u0627\u0646\u0627\u0646\u0627\u0631\u06CC\u0648\u0648",
+    Chagos: "\u0634\u0627\u06AF\u0648\u0633",
+    Christmas: "\u06A9\u0631\u06CC\u0633\u0645\u0633",
+    Cocos: "\u06A9\u0648\u06A9\u0648\u0633",
+    Comoro: "\u06A9\u0648\u0645\u0648\u0631\u0648",
+    Kerguelen: "\u06A9\u0631\u06AF\u0648\u0644\u0646",
+    Mahe: "\u0645\u0627\u0647\u0647",
+    Maldives: "\u0645\u0627\u0644\u062F\u06CC\u0648",
+    Mauritius: "\u0645\u0648\u0631\u06CC\u0633",
+    Mayotte: "\u0645\u0627\u06CC\u0648\u062A",
+    Reunion: "\u0631\u0626\u0648\u0646\u06CC\u0648\u0646"
+  },
+  Pacific: {
+    Apia: "\u0622\u067E\u06CC\u0627",
+    Auckland: "\u0627\u0648\u06A9\u0644\u0646\u062F",
+    Bougainville: "\u0628\u0648\u06AF\u0646\u0648\u06CC\u0644",
+    Chatham: "\u0686\u062A\u0645",
+    Chuuk: "\u0686\u0648\u06A9",
+    Easter: "\u0627\u06CC\u0633\u062A\u0631",
+    Efate: "\u0627\u0641\u0627\u062A\u0647",
+    Fakaofo: "\u0641\u0627\u06A9\u0627\u0626\u0648\u0641\u0648",
+    Fiji: "\u0641\u06CC\u062C\u06CC",
+    Funafuti: "\u0641\u0648\u0646\u0627\u0641\u0648\u062A\u06CC",
+    Galapagos: "\u06AF\u0627\u0644\u0627\u067E\u0627\u06AF\u0648\u0633",
+    Gambier: "\u06AF\u0627\u0645\u0628\u06CC\u0631",
+    Guadalcanal: "\u06AF\u0648\u0627\u062F\u0627\u0644\u200C\u06A9\u0627\u0646\u0627\u0644",
+    Guam: "\u06AF\u0648\u0627\u0645",
+    Honolulu: "\u0647\u0648\u0646\u0648\u0644\u0648\u0644\u0648",
+    Kiritimati: "\u06A9\u0631\u06CC\u062A\u06CC\u0645\u0627\u062A\u06CC",
+    Kosrae: "\u06A9\u0648\u0633\u0631\u0627\u06CC",
+    Kwajalein: "\u06A9\u0648\u0627\u062C\u06CC\u0644\u06CC\u0646",
+    Majuro: "\u0645\u0627\u062C\u0648\u0631\u0648",
+    Marquesas: "\u0645\u0627\u0631\u06A9\u0648\u0632\u0647",
+    Midway: "\u0645\u06CC\u062F\u0648\u06CC",
+    Nauru: "\u0646\u0627\u0626\u0648\u0631\u0648",
+    Niue: "\u0646\u06CC\u0648\u0626\u0647",
+    Norfolk: "\u0646\u0648\u0631\u0641\u0648\u0644\u06A9",
+    Noumea: "\u0646\u0648\u0645\u0626\u0627",
+    Pago_Pago: "\u067E\u0627\u06AF\u0648\u067E\u0627\u06AF\u0648",
+    Palau: "\u067E\u0627\u0644\u0627\u0626\u0648",
+    Pitcairn: "\u067E\u06CC\u062A\u200C\u06A9\u0631\u0646",
+    Pohnpei: "\u067E\u0627\u0646\u067E\u06CC",
+    Port_Moresby: "\u067E\u0648\u0631\u062A\u200C\u0645\u0648\u0631\u0632\u0628\u06CC",
+    Rarotonga: "\u0631\u0627\u0631\u0648\u062A\u0648\u0646\u06AF\u0627",
+    Saipan: "\u0633\u0627\u06CC\u067E\u0627\u0646",
+    Tahiti: "\u062A\u0627\u0647\u06CC\u062A\u06CC",
+    Tarawa: "\u062A\u0627\u0631\u0627\u0648\u0627",
+    Tongatapu: "\u062A\u0648\u0646\u06AF\u0627\u062A\u0627\u067E\u0648",
+    Wake: "\u0648\u06CC\u06A9",
+    Wallis: "\u0648\u0627\u0644\u06CC\u0633"
+  }
+};
+const timezoneNamesFormats = {
+  gmtFormat: "{0} \u06AF\u0631\u06CC\u0646\u0648\u06CC\u0686"
+};
 const decimalFormat = {
   standard: "#,##0.###"
 };
@@ -2308,6 +2776,32 @@ const timeData = {
   _allowed: "hB H",
   _preferred: "H"
 };
+const dayPeriodRules = {
+  afternoon1: {
+    _before: "13:00",
+    _from: "12:00"
+  },
+  afternoon2: {
+    _before: "19:00",
+    _from: "13:00"
+  },
+  morning1: {
+    _before: "04:00",
+    _from: "01:00"
+  },
+  morning2: {
+    _before: "12:00",
+    _from: "04:00"
+  },
+  night1: {
+    _before: "24:00",
+    _from: "19:00"
+  },
+  night2: {
+    _before: "01:00",
+    _from: "00:00"
+  }
+};
 const calendarPreference = "persian gregorian islamic islamic-civil islamic-tbla";
 var fa = {
   __license,
@@ -2781,6 +3275,60 @@ var fa = {
           "\u0642\u0628\u0644\u200C\u0627\u0632\u0638\u0647\u0631",
           "\u0628\u0639\u062F\u0627\u0632\u0638\u0647\u0631"
         ]
+      }
+    },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
       }
     },
     "era-wide": {
@@ -3263,6 +3811,60 @@ var fa = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
+      }
+    },
     "era-wide": {
       "0": "\u0647\u062C\u0631\u06CC \u0642\u0645\u0631\u06CC"
     },
@@ -3738,6 +4340,60 @@ var fa = {
           "\u0642\u0628\u0644\u200C\u0627\u0632\u0638\u0647\u0631",
           "\u0628\u0639\u062F\u0627\u0632\u0638\u0647\u0631"
         ]
+      }
+    },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
       }
     },
     "era-wide": {
@@ -4221,6 +4877,60 @@ var fa = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
+      }
+    },
     "era-wide": {
       "0": "\u0647\u062C\u0631\u06CC \u0634\u0645\u0633\u06CC"
     },
@@ -4690,6 +5400,60 @@ var fa = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        },
+        narrow: {
+          morning1: "\u0628",
+          morning2: "\u0635",
+          afternoon1: "\u0638",
+          afternoon2: "\u0639",
+          night1: "\u0634",
+          night2: "\u0646"
+        },
+        wide: {
+          morning1: "\u0628\u0627\u0645\u062F\u0627\u062F",
+          morning2: "\u0635\u0628\u062D",
+          afternoon1: "\u0638\u0647\u0631",
+          afternoon2: "\u0639\u0635\u0631",
+          night1: "\u0634\u0628",
+          night2: "\u0646\u06CC\u0645\u0647\u200C\u0634\u0628"
+        }
+      }
+    },
     "era-wide": {
       "0": "\u062A\u0642\u0648\u06CC\u0645 \u0628\u0648\u062F\u0627\u06CC\u06CC"
     },
@@ -4701,6 +5465,8 @@ var fa = {
     }
   },
   dateFields,
+  timezoneNames,
+  timezoneNamesFormats,
   decimalFormat,
   "decimalFormat-long": {
     "1000-one": "0 \u0647\u0632\u0627\u0631",
@@ -4901,6 +5667,7 @@ var fa = {
       _start: "2019-5-1"
     }
   },
+  dayPeriodRules,
   calendarPreference
 };
-export { __buildtime, __license, __version, calendarPreference, currencyDigits, currencyFormat, currencySymbols, dateFields, decimalFormat, fa as default, languages, miscPattern, orientation, percentFormat, plurals, rtl, scientificFormat, scripts, territories, timeData, units };
+export { __buildtime, __license, __version, calendarPreference, currencyDigits, currencyFormat, currencySymbols, dateFields, dayPeriodRules, decimalFormat, fa as default, languages, miscPattern, orientation, percentFormat, plurals, rtl, scientificFormat, scripts, territories, timeData, timezoneNames, timezoneNamesFormats, units };

@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Understanding hbs templates | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Understanding hbs templates" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/development/understanding-hbs-templates/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/development/understanding-hbs-templates/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Understanding hbs templates" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Understanding hbs templates","url":"https://sap.github.io/ui5-webcomponents/main/playground/development/understanding-hbs-templates/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Understanding hbs templates","url":"https://sap.github.io/ui5-webcomponents/main/playground/development/understanding-hbs-templates/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5862,7 +5901,7 @@
           
         
         <div id="main-content" class="page-content" role="main">
-          <h1 id="understanding-the-handlebars-hbs-templates">Understanding the Handlebars (<code class="highlighter-rouge">.hbs</code>) templates</h1>
+          <h1 id="understanding-the-handlebars-hbs-templates">Understanding the Handlebars (<code class="language-plaintext highlighter-rouge">.hbs</code>) templates</h1>
 
 <p>The preferred way to write the renderers for UI5 Web Components (and supported directly by the build tools) is to use standard Handlebars templates with some additional custom syntax.</p>
 
@@ -5870,28 +5909,28 @@
 <ol>
   <li><a href="#compilation">Handlebars compilation</a></li>
   <li><a href="#design_goals">Design goals</a></li>
-  <li><a href="#context">The context in <code class="highlighter-rouge">.hbs</code> files</a>
+  <li><a href="#context">The context in <code class="language-plaintext highlighter-rouge">.hbs</code> files</a>
     <ul>
       <li><a href="#context_global">Global context</a></li>
       <li><a href="#context_loops">Context in loops</a></li>
       <li><a href="#context_loops_accessing">Accessing the global context from loops</a></li>
     </ul>
   </li>
-  <li><a href="#syntax">The <code class="highlighter-rouge">.hbs</code> syntax</a>
+  <li><a href="#syntax">The <code class="language-plaintext highlighter-rouge">.hbs</code> syntax</a>
     <ul>
       <li><a href="#syntax_bindings">Bindings</a></li>
       <li><a href="#syntax_conditional">Conditions</a></li>
       <li><a href="#syntax_loops">Loops</a></li>
-      <li><a href="#syntax_dot">Property assignment (the <code class="highlighter-rouge">.</code> prefix)</a></li>
-      <li><a href="#syntax_question_mark">Boolean attribute assignment (the <code class="highlighter-rouge">?</code> prefix)</a></li>
-      <li><a href="#syntax_at">Event handlers assignment (the <code class="highlighter-rouge">@</code> prefix)</a></li>
+      <li><a href="#syntax_dot">Property assignment (the <code class="language-plaintext highlighter-rouge">.</code> prefix)</a></li>
+      <li><a href="#syntax_question_mark">Boolean attribute assignment (the <code class="language-plaintext highlighter-rouge">?</code> prefix)</a></li>
+      <li><a href="#syntax_at">Event handlers assignment (the <code class="language-plaintext highlighter-rouge">@</code> prefix)</a></li>
       <li><a href="#syntax_style_maps">Style maps</a></li>
       <li><a href="#syntax_class_maps">Class maps</a></li>
       <li><a href="#syntax_partials">Partials</a></li>
       <li><a href="#syntax_include">Include</a></li>
     </ul>
   </li>
-  <li><a href="#slots">Using the <code class="highlighter-rouge">slot</code> element</a>
+  <li><a href="#slots">Using the <code class="language-plaintext highlighter-rouge">slot</code> element</a>
     <ul>
       <li><a href="#slots_rendering">Rendering slots</a></li>
       <li><a href="#slots_individual">Individual slots</a></li>
@@ -5901,16 +5940,16 @@
 
 <h2 id="1-handlebars-compilation-">1. Handlebars compilation <a name="compilation"></a></h2>
 
-<p><a href="https://handlebarsjs.com/guide/#simple-expressions">Handlebars</a> templates (<code class="highlighter-rouge">.hbs</code>) are compiled during build/development to <a href="https://lit.dev/docs/v1/lit-html/introduction/">lit-html</a> templates (<code class="highlighter-rouge">.lit.js</code>) and the lit templates are what’s actually executed during runtime.</p>
+<p><a href="https://handlebarsjs.com/guide/#simple-expressions">Handlebars</a> templates (<code class="language-plaintext highlighter-rouge">.hbs</code>) are compiled during build/development to <a href="https://lit.dev/docs/v1/lit-html/introduction/">lit-html</a> templates (<code class="language-plaintext highlighter-rouge">.lit.js</code>) and the lit templates are what’s actually executed during runtime.</p>
 
 <p>Example:</p>
 
-<p>The following <code class="highlighter-rouge">src/Demo.hbs</code> template</p>
+<p>The following <code class="language-plaintext highlighter-rouge">src/Demo.hbs</code> template</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button&gt;&lt;/button&gt;</span>
 </code></pre></div></div>
 
-<p>will be compiled to <code class="highlighter-rouge">dist/generated/templates/DemoTemplate.lit.js</code> with the following content:</p>
+<p>will be compiled to <code class="language-plaintext highlighter-rouge">dist/generated/templates/DemoTemplate.lit.js</code> with the following content:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="p">{</span> <span class="nx">html</span><span class="p">,</span> <span class="nx">svg</span><span class="p">,</span> <span class="nx">repeat</span><span class="p">,</span> <span class="nx">classMap</span><span class="p">,</span> <span class="nx">styleMap</span><span class="p">,</span> <span class="nx">ifDefined</span><span class="p">,</span> <span class="nx">unsafeHTML</span><span class="p">,</span> <span class="nx">scopeTag</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/renderer/LitRenderer.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">block0</span> <span class="o">=</span> <span class="p">(</span><span class="nx">context</span><span class="p">,</span> <span class="nx">tags</span><span class="p">,</span> <span class="nx">suffix</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">html</span><span class="s2">`&lt;button&gt;</span><span class="p">${</span><span class="nx">ifDefined</span><span class="p">(</span><span class="nx">context</span><span class="p">.</span><span class="nx">text</span><span class="p">)}</span><span class="s2">&lt;/button&gt;`</span><span class="p">;</span>
@@ -5919,7 +5958,7 @@
 
 <p>and later tree-shaken by the bundler and bundled along with the rest of the component’s code.</p>
 
-<p>Therefore, the <code class="highlighter-rouge">.hbs</code> file is there just for convenience, the end result will always be optimized lit-html.</p>
+<p>Therefore, the <code class="language-plaintext highlighter-rouge">.hbs</code> file is there just for convenience, the end result will always be optimized lit-html.</p>
 
 <h2 id="2-design-goals-of-the-handlebars-templates-">2. Design goals of the Handlebars templates <a name="design_goals"></a></h2>
 
@@ -5929,22 +5968,22 @@
   <li><strong>Separation of concerns</strong>: the template must be as simple as possible with no complex expressions or calculations - variables that control structures (for example, `` statements) should be precalculated.</li>
 </ul>
 
-<p>For these reasons, we would suggest you use <code class="highlighter-rouge">.hbs</code> templates and have them compiled to lit-html, instead of directly writing <code class="highlighter-rouge">lit-html</code> renderers, although that’s also possible if you prefer so.</p>
+<p>For these reasons, we would suggest you use <code class="language-plaintext highlighter-rouge">.hbs</code> templates and have them compiled to lit-html, instead of directly writing <code class="language-plaintext highlighter-rouge">lit-html</code> renderers, although that’s also possible if you prefer so.</p>
 
-<h2 id="3-the-context-in-hbs-files-">3. The context in <code class="highlighter-rouge">.hbs</code> files <a name="context"></a></h2>
+<h2 id="3-the-context-in-hbs-files-">3. The context in <code class="language-plaintext highlighter-rouge">.hbs</code> files <a name="context"></a></h2>
 
 <h3 id="31-global-context-">3.1 Global context <a name="context_global"></a></h3>
 
-<p>The context in the <code class="highlighter-rouge">.hbs</code> file is the <strong>web component instance</strong>, and you do not have to write the <code class="highlighter-rouge">this</code> keyword (although you can).
+<p>The context in the <code class="language-plaintext highlighter-rouge">.hbs</code> file is the <strong>web component instance</strong>, and you do not have to write the <code class="language-plaintext highlighter-rouge">this</code> keyword (although you can).
 Therefore, you can directly use metadata entities (property, slot, event names) or any other Javascript property on the component directly:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">age</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">fullName</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file you can just use them directly:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file you can just use them directly:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 <span class="nt">&lt;p&gt;&lt;/p&gt;</span>
@@ -5956,7 +5995,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 <span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
-<p>but <code class="highlighter-rouge">this</code> is optional, so it’s almost never used.</p>
+<p>but <code class="language-plaintext highlighter-rouge">this</code> is optional, so it’s almost never used.</p>
 
 <h3 id="32-context-in-loops--">3.2 Context in loops  <a name="context_loops"></a></h3>
 
@@ -5964,7 +6003,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>Example:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="p">[</span>
 	<span class="p">{</span>
@@ -5982,7 +6021,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 <span class="p">]</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span>
@@ -5993,7 +6032,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 </code></pre></div></div>
 
-<p>Again, you can use the <code class="highlighter-rouge">this</code> keyword, but it’s not necessary. The following code will be the same as the one above:</p>
+<p>Again, you can use the <code class="language-plaintext highlighter-rouge">this</code> keyword, but it’s not necessary. The following code will be the same as the one above:</p>
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span>
 		 <span class="na">role=</span><span class="s">"option"</span>
@@ -6003,7 +6042,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 </code></pre></div></div>
 
-<p>The only use case where you must use the <code class="highlighter-rouge">this</code> keyword is when you want to refer to the looped over item directly (and not its properties).</p>
+<p>The only use case where you must use the <code class="language-plaintext highlighter-rouge">this</code> keyword is when you want to refer to the looped over item directly (and not its properties).</p>
 
 <p>Example:</p>
 
@@ -6014,11 +6053,11 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 </code></pre></div></div>
 
-<p>Here, each <code class="highlighter-rouge">div</code> inside the loop gets assigned an <code class="highlighter-rouge">item</code> property that points to the respective item from the array we’re looping over.</p>
+<p>Here, each <code class="language-plaintext highlighter-rouge">div</code> inside the loop gets assigned an <code class="language-plaintext highlighter-rouge">item</code> property that points to the respective item from the array we’re looping over.</p>
 
-<p>Here’s another example for the <code class="highlighter-rouge">this</code> keyword:</p>
+<p>Here’s another example for the <code class="language-plaintext highlighter-rouge">this</code> keyword:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">numbers</span> <span class="o">=</span> <span class="p">[</span>
 	<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
@@ -6026,7 +6065,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 <span class="p">];</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div&gt;</span>
@@ -6043,15 +6082,15 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 <span class="nt">&lt;div&gt;&lt;span&gt;</span>4<span class="nt">&lt;/span&gt;&lt;span&gt;</span>5<span class="nt">&lt;/span&gt;&lt;span&gt;</span>6<span class="nt">&lt;/span&gt;&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>In this example, the first usage of <code class="highlighter-rouge">this</code> (in the nested <code class="highlighter-rouge">#each</code>) is the nested array (for example, <code class="highlighter-rouge">[1, 2, 3]</code>), and the second usage of <code class="highlighter-rouge">this</code> inside the <code class="highlighter-rouge">span</code> is the number itself.</p>
+<p>In this example, the first usage of <code class="language-plaintext highlighter-rouge">this</code> (in the nested <code class="language-plaintext highlighter-rouge">#each</code>) is the nested array (for example, <code class="language-plaintext highlighter-rouge">[1, 2, 3]</code>), and the second usage of <code class="language-plaintext highlighter-rouge">this</code> inside the <code class="language-plaintext highlighter-rouge">span</code> is the number itself.</p>
 
 <h3 id="33-accessing-the-global-context-from-loops--">3.3 Accessing the global context from loops  <a name="context_loops_accessing"></a></h3>
 
-<p>You can access the global context inside loops with the “one-level-up” expression: <code class="highlighter-rouge">../</code></p>
+<p>You can access the global context inside loops with the “one-level-up” expression: <code class="language-plaintext highlighter-rouge">../</code></p>
 
 <p>Example:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">John Smith</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="p">[</span>
@@ -6064,30 +6103,30 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 <span class="p">]</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span><span class="nt">&gt;&lt;/div&gt;</span>
 
 </code></pre></div></div>
 
-<p>In this example, even though we’re looping over an item from the array, we can still access the global context and use the <code class="highlighter-rouge">name</code> property of the web component instance.</p>
+<p>In this example, even though we’re looping over an item from the array, we can still access the global context and use the <code class="language-plaintext highlighter-rouge">name</code> property of the web component instance.</p>
 
-<h2 id="4-the-hbs-syntax-">4. The <code class="highlighter-rouge">.hbs</code> syntax <a name="syntax"></a></h2>
+<h2 id="4-the-hbs-syntax-">4. The <code class="language-plaintext highlighter-rouge">.hbs</code> syntax <a name="syntax"></a></h2>
 
-<p>You can use the following features when writing <code class="highlighter-rouge">.hbs</code> templates:</p>
+<p>You can use the following features when writing <code class="language-plaintext highlighter-rouge">.hbs</code> templates:</p>
 
 <h3 id="bindings-">Bindings <a name="syntax_bindings"></a></h3>
 
-<p>You can access any property from the context (generally the web component instance) in your <code class="highlighter-rouge">.hbs</code> template with ``.</p>
+<p>You can access any property from the context (generally the web component instance) in your <code class="language-plaintext highlighter-rouge">.hbs</code> template with ``.</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">tooltip</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Some tooltip</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">txt</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Some text</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="na">title=</span><span class="s">""</span><span class="nt">&gt;&lt;button/&gt;</span>
 </code></pre></div></div>
@@ -6101,7 +6140,7 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 
 <p>You can access object properties:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">person</span> <span class="o">=</span> <span class="p">{</span>
 	<span class="na">name</span><span class="p">:</span> <span class="dl">"</span><span class="s2">John</span><span class="dl">"</span><span class="p">,</span>
@@ -6109,39 +6148,39 @@ Therefore, you can directly use metadata entities (property, slot, event names) 
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;</span> <span class="nt">&lt;/p&gt;</span>
 </code></pre></div></div>
 
-<p>but you cannot use expressions inside <code class="highlighter-rouge">.hbs</code> templates. The following is <strong>not allowed</strong>:</p>
+<p>but you cannot use expressions inside <code class="language-plaintext highlighter-rouge">.hbs</code> templates. The following is <strong>not allowed</strong>:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
-<p>Instead, you should precalculate the required value in the <code class="highlighter-rouge">.js</code> file and use it directly in the template:</p>
+<p>Instead, you should precalculate the required value in the <code class="language-plaintext highlighter-rouge">.js</code> file and use it directly in the template:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">get</span> <span class="nx">fullName</span><span class="p">()</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="s2">`</span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">person</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2"> </span><span class="p">${</span><span class="k">this</span><span class="p">.</span><span class="nx">person</span><span class="p">.</span><span class="nx">lastName</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
 <p>By default, all content that you pass is <em>escaped</em> for security purposes.
-However, you can pass <strong>arbitrary HTML</strong> with <code class="highlighter-rouge">}</code>:</p>
+However, you can pass <strong>arbitrary HTML</strong> with <code class="language-plaintext highlighter-rouge">}</code>:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">unsafeMessage</span> <span class="o">=</span> <span class="s2">`&lt;span&gt;This is unsafe content&lt;/span&gt;`</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;</span>}<span class="nt">&lt;/p&gt;</span>
 </code></pre></div></div>
@@ -6151,16 +6190,16 @@ However, you can pass <strong>arbitrary HTML</strong> with <code class="highligh
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;span&gt;</span>This is unsafe content<span class="nt">&lt;/span&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
-<p><em>Note:</em> Using <code class="highlighter-rouge">}</code> is strongly discouraged and should be avoided whenever possible. If you must use it, make sure you’ve sanitized
-your HTML manually beforehand. A common use-case for the <code class="highlighter-rouge">}</code> binding is to manually add <code class="highlighter-rouge">&lt;strong&gt;</code> tags to parts of a string
+<p><em>Note:</em> Using <code class="language-plaintext highlighter-rouge">}</code> is strongly discouraged and should be avoided whenever possible. If you must use it, make sure you’ve sanitized
+your HTML manually beforehand. A common use-case for the <code class="language-plaintext highlighter-rouge">}</code> binding is to manually add <code class="language-plaintext highlighter-rouge">&lt;strong&gt;</code> tags to parts of a string
 to implement highlighting while the user is typing. Here’s an example:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">userInput</span> <span class="o">=</span> <span class="s2">`&lt;strong&gt;Arg&lt;/strong&gt;entina`</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div&gt;</span>}<span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
@@ -6169,13 +6208,13 @@ to implement highlighting while the user is typing. Here’s an example:</p>
 
 <p>Finally, it is possible to pass HTML elements (not just strings as in all examples above), and they will be rendered:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">messageDiv</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">div</span><span class="dl">"</span><span class="p">);</span>
 <span class="k">this</span><span class="p">.</span><span class="nx">messageDiv</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Hello</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
@@ -6185,15 +6224,15 @@ to implement highlighting while the user is typing. Here’s an example:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;p&gt;&lt;div&gt;</span>Hello<span class="nt">&lt;/div&gt;&lt;/p&gt;</span>
 </code></pre></div></div>
 
-<p><em>Note:</em> This is not to be confused with <code class="highlighter-rouge">}</code>. The <code class="highlighter-rouge">}</code> binding expects a <em>string, containing HTML</em>,
-while the example above demonstrates passing an <em>HTML element</em> (hence <code class="highlighter-rouge">Object</code>, not <code class="highlighter-rouge">String</code>) directly.</p>
+<p><em>Note:</em> This is not to be confused with <code class="language-plaintext highlighter-rouge">}</code>. The <code class="language-plaintext highlighter-rouge">}</code> binding expects a <em>string, containing HTML</em>,
+while the example above demonstrates passing an <em>HTML element</em> (hence <code class="language-plaintext highlighter-rouge">Object</code>, not <code class="language-plaintext highlighter-rouge">String</code>) directly.</p>
 
 <p><em>Note:</em> Although this technique is allowed and has its uses (such as cloning slotted elements to another component),
 passing HTML directly is strongly discouraged. The best practice is to always write your HTML explicitly in the template.</p>
 
 <h3 id="conditions-">Conditions <a name="syntax_conditional"></a></h3>
 
-<p>You can use <code class="highlighter-rouge">if</code>, <code class="highlighter-rouge">else</code> and <code class="highlighter-rouge">unless</code> to create conditions.</p>
+<p>You can use <code class="language-plaintext highlighter-rouge">if</code>, <code class="language-plaintext highlighter-rouge">else</code> and <code class="language-plaintext highlighter-rouge">unless</code> to create conditions.</p>
 
 <p>Examples:</p>
 
@@ -6236,16 +6275,16 @@ passing HTML directly is strongly discouraged. The best practice is to always wr
 
 </code></pre></div></div>
 
-<p>Instead, you should have a precalculated value in your <code class="highlighter-rouge">.js file</code>, for example:</p>
+<p>Instead, you should have a precalculated value in your <code class="language-plaintext highlighter-rouge">.js file</code>, for example:</p>
 
-<p>In <code class="highlighter-rouge">Demo.js</code>:</p>
+<p>In <code class="language-plaintext highlighter-rouge">Demo.js</code>:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">get</span> <span class="nx">isAdmin</span><span class="p">()</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">person</span><span class="p">.</span><span class="nx">access</span> <span class="o">===</span> <span class="dl">"</span><span class="s2">admin</span><span class="dl">"</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>and then use this value in <code class="highlighter-rouge">Demo.hbs</code>:</p>
+<p>and then use this value in <code class="language-plaintext highlighter-rouge">Demo.hbs</code>:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;p&gt;</span>Show admin functionality<span class="nt">&lt;/p&gt;</span>
@@ -6254,9 +6293,9 @@ passing HTML directly is strongly discouraged. The best practice is to always wr
 
 <h3 id="loops-">Loops <a name="syntax_loops"></a></h3>
 
-<p>You can use <code class="highlighter-rouge">each</code> to loop over arrays.</p>
+<p>You can use <code class="language-plaintext highlighter-rouge">each</code> to loop over arrays.</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">items</span> <span class="o">=</span> <span class="p">[</span>
 	<span class="p">{</span>
@@ -6274,7 +6313,7 @@ passing HTML directly is strongly discouraged. The best practice is to always wr
 <span class="p">]</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">""</span>
@@ -6285,9 +6324,9 @@ passing HTML directly is strongly discouraged. The best practice is to always wr
 
 </code></pre></div></div>
 
-<p>See the previous section (especially the <a href="#context_loops">Context in loops</a> part) for more examples and the meaning of the <code class="highlighter-rouge">this</code> keyword in loops.</p>
+<p>See the previous section (especially the <a href="#context_loops">Context in loops</a> part) for more examples and the meaning of the <code class="language-plaintext highlighter-rouge">this</code> keyword in loops.</p>
 
-<p>You can access the index of the currently looped item with the special <code class="highlighter-rouge">variable. Note that</code> is zero-based.</p>
+<p>You can access the index of the currently looped item with the special <code class="language-plaintext highlighter-rouge">variable. Note that</code> is zero-based.</p>
 
 <p>For example, the following template:</p>
 
@@ -6307,9 +6346,9 @@ passing HTML directly is strongly discouraged. The best practice is to always wr
 <p>This is a common technique to create unique <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">shadow parts</a> for items
 within a UI5 Web Component.</p>
 
-<h3 id="property-assignment-the--prefix-">Property assignment (the <code class="highlighter-rouge">.</code> prefix) <a name="syntax_dot"></a></h3>
+<h3 id="property-assignment-the--prefix-">Property assignment (the <code class="language-plaintext highlighter-rouge">.</code> prefix) <a name="syntax_dot"></a></h3>
 
-<p>The <code class="highlighter-rouge">.</code> prefix allows you to bind by property, rather than by attribute.</p>
+<p>The <code class="language-plaintext highlighter-rouge">.</code> prefix allows you to bind by property, rather than by attribute.</p>
 
 <p>Consider the following example:</p>
 
@@ -6331,22 +6370,22 @@ within a UI5 Web Component.</p>
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>While <code class="highlighter-rouge">data-info</code> is set as an attribute (default assignment), <code class="highlighter-rouge">item</code> is set as a property due to the <code class="highlighter-rouge">.</code> used.
+<p>While <code class="language-plaintext highlighter-rouge">data-info</code> is set as an attribute (default assignment), <code class="language-plaintext highlighter-rouge">item</code> is set as a property due to the <code class="language-plaintext highlighter-rouge">.</code> used.
 The result in the DOM would be:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"myId"</span> <span class="na">data-info=</span><span class="s">"Some data"</span><span class="nt">&gt;</span>Some text<span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>There would be no <code class="highlighter-rouge">item</code> in the DOM at all, but the following code:</p>
+<p>There would be no <code class="language-plaintext highlighter-rouge">item</code> in the DOM at all, but the following code:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">myId</span><span class="dl">"</span><span class="p">).</span><span class="nx">item</span>
 </code></pre></div></div>
 
-<p>would return the <code class="highlighter-rouge">item</code> object because it was set as a property.</p>
+<p>would return the <code class="language-plaintext highlighter-rouge">item</code> object because it was set as a property.</p>
 
-<h3 id="boolean-attribute-assignment-the--prefix-">Boolean attribute assignment (the <code class="highlighter-rouge">?</code> prefix) <a name="syntax_question_mark"></a></h3>
+<h3 id="boolean-attribute-assignment-the--prefix-">Boolean attribute assignment (the <code class="language-plaintext highlighter-rouge">?</code> prefix) <a name="syntax_question_mark"></a></h3>
 
-<p>The <code class="highlighter-rouge">?</code> prefix signifies that an attribute must not be set in DOM at all, if the bound value is falsy.</p>
+<p>The <code class="language-plaintext highlighter-rouge">?</code> prefix signifies that an attribute must not be set in DOM at all, if the bound value is falsy.</p>
 
 <p>Consider the following example:</p>
 
@@ -6368,7 +6407,7 @@ The result in the DOM would be:</p>
 <span class="nt">/&gt;</span>
 </code></pre></div></div>
 
-<p>Since the <code class="highlighter-rouge">checked</code>, <code class="highlighter-rouge">readonly</code>, and <code class="highlighter-rouge">disabled</code> attributes are all <code class="highlighter-rouge">Boolean</code>, they must not be in the DOM if we want the <code class="highlighter-rouge">&lt;input&gt;</code> to be interactive.</p>
+<p>Since the <code class="language-plaintext highlighter-rouge">checked</code>, <code class="language-plaintext highlighter-rouge">readonly</code>, and <code class="language-plaintext highlighter-rouge">disabled</code> attributes are all <code class="language-plaintext highlighter-rouge">Boolean</code>, they must not be in the DOM if we want the <code class="language-plaintext highlighter-rouge">&lt;input&gt;</code> to be interactive.</p>
 
 <p>The output in DOM would be:</p>
 
@@ -6381,9 +6420,9 @@ The result in the DOM would be:</p>
 <span class="nt">/&gt;</span>
 </code></pre></div></div>
 
-<p>All attributes that had the <code class="highlighter-rouge">?</code> prefix and were bound to a falsy value are gone from DOM.</p>
+<p>All attributes that had the <code class="language-plaintext highlighter-rouge">?</code> prefix and were bound to a falsy value are gone from DOM.</p>
 
-<p>However, if you did not use the <code class="highlighter-rouge">?</code> prefix:</p>
+<p>However, if you did not use the <code class="language-plaintext highlighter-rouge">?</code> prefix:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span>
 	<span class="na">id=</span><span class="s">"-CB"</span>
@@ -6397,7 +6436,7 @@ The result in the DOM would be:</p>
 <span class="nt">/&gt;</span>
 </code></pre></div></div>
 
-<p>even though <code class="highlighter-rouge">checked</code>, <code class="highlighter-rouge">readonly</code>, and <code class="highlighter-rouge">disabled</code> are equal to <code class="highlighter-rouge">false</code>, the resulting DOM would be:</p>
+<p>even though <code class="language-plaintext highlighter-rouge">checked</code>, <code class="language-plaintext highlighter-rouge">readonly</code>, and <code class="language-plaintext highlighter-rouge">disabled</code> are equal to <code class="language-plaintext highlighter-rouge">false</code>, the resulting DOM would be:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span>
 	<span class="na">id=</span><span class="s">"myCB-CB"</span>
@@ -6412,18 +6451,18 @@ The result in the DOM would be:</p>
 </code></pre></div></div>
 
 <p>which is not what we want, since boolean HTML attributes don’t need to have a value at all to be considered set, only their presence is required.
-Therefore, always bind boolean attributes with <code class="highlighter-rouge">?</code>.</p>
+Therefore, always bind boolean attributes with <code class="language-plaintext highlighter-rouge">?</code>.</p>
 
-<h3 id="event-handlers-assignment-the--prefix-">Event handlers assignment (the <code class="highlighter-rouge">@</code> prefix) <a name="syntax_at"></a></h3>
+<h3 id="event-handlers-assignment-the--prefix-">Event handlers assignment (the <code class="language-plaintext highlighter-rouge">@</code> prefix) <a name="syntax_at"></a></h3>
 
 <p>You can bind events as follows:</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">onClick</span> <span class="o">=</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{};</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="err">@</span><span class="na">click=</span><span class="s">""</span><span class="nt">&gt;&lt;/button&gt;</span>
 </code></pre></div></div>
@@ -6432,10 +6471,10 @@ Therefore, always bind boolean attributes with <code class="highlighter-rouge">?
 
 <p>Style maps are an easy and useful tool to apply multiple styles to an element dynamically.</p>
 
-<p>In order to use a style map in your <code class="highlighter-rouge">.hbs</code> template you must bind a <code class="highlighter-rouge">styles</code> property (or as in the next example, a getter called <code class="highlighter-rouge">styles</code>).
-Any binding to a <code class="highlighter-rouge">styles</code> object on a <code class="highlighter-rouge">style</code> attribute will be treated as a style map.</p>
+<p>In order to use a style map in your <code class="language-plaintext highlighter-rouge">.hbs</code> template you must bind a <code class="language-plaintext highlighter-rouge">styles</code> property (or as in the next example, a getter called <code class="language-plaintext highlighter-rouge">styles</code>).
+Any binding to a <code class="language-plaintext highlighter-rouge">styles</code> object on a <code class="language-plaintext highlighter-rouge">style</code> attribute will be treated as a style map.</p>
 
-<p>In the <code class="highlighter-rouge">Demo.js</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">get</span> <span class="nx">styles</span><span class="p">()</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="p">{</span>
@@ -6451,7 +6490,7 @@ Any binding to a <code class="highlighter-rouge">styles</code> object on a <code
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>In the <code class="highlighter-rouge">Demo.hbs</code> file:</p>
+<p>In the <code class="language-plaintext highlighter-rouge">Demo.hbs</code> file:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">style=</span><span class="s">""</span><span class="nt">&gt;</span>
 	Some content
@@ -6459,7 +6498,7 @@ Any binding to a <code class="highlighter-rouge">styles</code> object on a <code
 <span class="nt">&lt;/div&gt;</span>
 </code></pre></div></div>
 
-<p>After the following code is run, both the <code class="highlighter-rouge">div</code> and the <code class="highlighter-rouge">footer</code> will have the respective CSS styles applied to them.</p>
+<p>After the following code is run, both the <code class="language-plaintext highlighter-rouge">div</code> and the <code class="language-plaintext highlighter-rouge">footer</code> will have the respective CSS styles applied to them.</p>
 
 <p><strong>Important:</strong> do not build styles manually. Always use style maps as they are CSP-compliant and they will not build style strings and assign them,
 but will use Javascript APIs to apply each style/CSS variable separately.</p>
@@ -6481,7 +6520,7 @@ The correct way would be to pass objects (as in the first example), in which cas
 
 <p>Class maps are an easy tool to set multiple classes to an element - either conditionally, or unconditionally.</p>
 
-<p>In order to use a class map in your <code class="highlighter-rouge">.hbs</code> template you must bind a <code class="highlighter-rouge">classes</code> property (or as in the next example, a getter called <code class="highlighter-rouge">classes</code>) to a <code class="highlighter-rouge">class</code> attribute:</p>
+<p>In order to use a class map in your <code class="language-plaintext highlighter-rouge">.hbs</code> template you must bind a <code class="language-plaintext highlighter-rouge">classes</code> property (or as in the next example, a getter called <code class="language-plaintext highlighter-rouge">classes</code>) to a <code class="language-plaintext highlighter-rouge">class</code> attribute:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">get</span> <span class="nx">classes</span><span class="p">()</span> <span class="p">{</span>
 	<span class="k">return</span> <span class="p">{</span>
@@ -6508,13 +6547,13 @@ The correct way would be to pass objects (as in the first example), in which cas
 </code></pre></div></div>
 
 <p>Here, all 3 HTML elements will have their classes applied based on the conditions in the definition of the class map. Some entries in the class map
-are unconditional (<code class="highlighter-rouge">ui5-demo-main</code> and <code class="highlighter-rouge">ui5-section</code>) so these classes will always be set, however the rest are going to be set only if certain criteria are met.</p>
+are unconditional (<code class="language-plaintext highlighter-rouge">ui5-demo-main</code> and <code class="language-plaintext highlighter-rouge">ui5-section</code>) so these classes will always be set, however the rest are going to be set only if certain criteria are met.</p>
 
 <h3 id="partials-">Partials <a name="syntax_partials"></a></h3>
 
-<p>You can use partials to reuse code in <code class="highlighter-rouge">.hbs</code> templates:</p>
+<p>You can use partials to reuse code in <code class="language-plaintext highlighter-rouge">.hbs</code> templates:</p>
 
-<p>You can define a partial with <code class="highlighter-rouge">and use it with</code> where <code class="highlighter-rouge">NAME</code> is the name of the partial.</p>
+<p>You can define a partial with <code class="language-plaintext highlighter-rouge">and use it with</code> where <code class="language-plaintext highlighter-rouge">NAME</code> is the name of the partial.</p>
 
 <p>Consider the following example:</p>
 
@@ -6533,13 +6572,13 @@ are unconditional (<code class="highlighter-rouge">ui5-demo-main</code> and <cod
 
 </code></pre></div></div>
 
-<p>Here we define some common code in the <code class="highlighter-rouge">valueStateMessage</code> partial and use it twice within the template.</p>
+<p>Here we define some common code in the <code class="language-plaintext highlighter-rouge">valueStateMessage</code> partial and use it twice within the template.</p>
 
 <p>Partials are very often used to define <strong>hooks</strong> - extension points for other components.</p>
 
 <p>Example:</p>
 
-<p>In <code class="highlighter-rouge">Demo.hbs</code>:</p>
+<p>In <code class="language-plaintext highlighter-rouge">Demo.hbs</code>:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;section&gt;</span>
 	<span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">"first-fe"</span> <span class="na">data-ui5-focus-trap</span> <span class="na">tabindex=</span><span class="s">"0"</span> <span class="err">@</span><span class="na">focusin=</span><span class="err">&gt;</span><span class="s">&lt;/span</span><span class="nt">&gt;</span>
@@ -6561,30 +6600,30 @@ are unconditional (<code class="highlighter-rouge">ui5-demo-main</code> and <cod
 
 </code></pre></div></div>
 
-<p>Here we define two empty partials (<code class="highlighter-rouge">beforeContent</code> and <code class="highlighter-rouge">afterContent</code>) for others to implement.</p>
+<p>Here we define two empty partials (<code class="language-plaintext highlighter-rouge">beforeContent</code> and <code class="language-plaintext highlighter-rouge">afterContent</code>) for others to implement.</p>
 
 <p><em>Note:</em> Partials do not have their own context. When a partial is processed, its content is treated as if directly
 written at the partial’s insertion point.</p>
 
 <h3 id="include-">Include <a name="syntax_include"></a></h3>
 
-<p>You can include other <code class="highlighter-rouge">.hbs</code> files with `` where <code class="highlighter-rouge">PATH_TO_FILE</code> is a relative or absolute path to the <code class="highlighter-rouge">.hbs</code> file you want to include.</p>
+<p>You can include other <code class="language-plaintext highlighter-rouge">.hbs</code> files with `` where <code class="language-plaintext highlighter-rouge">PATH_TO_FILE</code> is a relative or absolute path to the <code class="language-plaintext highlighter-rouge">.hbs</code> file you want to include.</p>
 
 <p>Example:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 </code></pre></div></div>
 
-<p>Paths to <code class="highlighter-rouge">.hbs</code> files from other <code class="highlighter-rouge">node_modules/</code> libraries are also supported.</p>
+<p>Paths to <code class="language-plaintext highlighter-rouge">.hbs</code> files from other <code class="language-plaintext highlighter-rouge">node_modules/</code> libraries are also supported.</p>
 
 <p>Example:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 </code></pre></div></div>
 
-<p>The most common use case for `` is to include an <code class="highlighter-rouge">.hbs</code> file that has extension points (hooks) and implement them. Given the example from the previous section (about Partials), consider the following:</p>
+<p>The most common use case for `` is to include an <code class="language-plaintext highlighter-rouge">.hbs</code> file that has extension points (hooks) and implement them. Given the example from the previous section (about Partials), consider the following:</p>
 
-<p>In <code class="highlighter-rouge">Demo2.hbs</code>:</p>
+<p>In <code class="language-plaintext highlighter-rouge">Demo2.hbs</code>:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 
@@ -6597,16 +6636,16 @@ written at the partial’s insertion point.</p>
 
 </code></pre></div></div>
 
-<p>Then the <code class="highlighter-rouge">Demo2</code> component will use the <code class="highlighter-rouge">.hbs</code> file of the <code class="highlighter-rouge">Demo</code> component, however with its own version of its partials.</p>
+<p>Then the <code class="language-plaintext highlighter-rouge">Demo2</code> component will use the <code class="language-plaintext highlighter-rouge">.hbs</code> file of the <code class="language-plaintext highlighter-rouge">Demo</code> component, however with its own version of its partials.</p>
 
-<h2 id="5-using-the-slot-element-">5. Using the <code class="highlighter-rouge">slot</code> element <a name="slots"></a></h2>
+<h2 id="5-using-the-slot-element-">5. Using the <code class="language-plaintext highlighter-rouge">slot</code> element <a name="slots"></a></h2>
 
 <h3 id="rendering-slots-">Rendering slots <a name="slots_rendering"></a></h3>
 
 <p>The <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot">slot</a> element allows you to render children, nested in your web component, in a desired place in the shadow DOM.
-You should render each slot, defined in your component’s metadata (see <a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>), somewhere in the <code class="highlighter-rouge">.hbs</code> template.</p>
+You should render each slot, defined in your component’s metadata (see <a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>), somewhere in the <code class="language-plaintext highlighter-rouge">.hbs</code> template.</p>
 
-<p>To render the default slot simply render a <code class="highlighter-rouge">slot</code> tag:</p>
+<p>To render the default slot simply render a <code class="language-plaintext highlighter-rouge">slot</code> tag:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;slot&gt;&lt;/slot&gt;</span>
 </code></pre></div></div>
@@ -6618,11 +6657,11 @@ You should render each slot, defined in your component’s metadata (see <a href
 
 <p>Here’s a real-world example of a “page” component:</p>
 
-<p>In <code class="highlighter-rouge">Page.js</code> (metadata object):</p>
+<p>In <code class="language-plaintext highlighter-rouge">Page.js</code> (metadata object):</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">slots</span><span class="p">:</span> <span class="p">{</span>
 	<span class="nl">header</span><span class="p">:</span> <span class="p">{</span>
-		<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
+		<span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span>
 	<span class="p">},</span>
 	<span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
 		<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
@@ -6634,7 +6673,7 @@ You should render each slot, defined in your component’s metadata (see <a href
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>In <code class="highlighter-rouge">Page.hbs</code>:</p>
+<p>In <code class="language-plaintext highlighter-rouge">Page.hbs</code>:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"ui5-page-root"</span><span class="nt">&gt;</span>
 	<span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"ui5-page-header-root"</span> <span class="na">id=</span><span class="s">"ui5-page-header"</span><span class="nt">&gt;</span>
@@ -6652,42 +6691,42 @@ You should render each slot, defined in your component’s metadata (see <a href
 
 </code></pre></div></div>
 
-<p>We render 3 <code class="highlighter-rouge">slot</code> elements - a default slot (unnamed) and 2 named slots - respectively with <code class="highlighter-rouge">name</code> equal to <code class="highlighter-rouge">header</code> and <code class="highlighter-rouge">footer</code>.</p>
+<p>We render 3 <code class="language-plaintext highlighter-rouge">slot</code> elements - a default slot (unnamed) and 2 named slots - respectively with <code class="language-plaintext highlighter-rouge">name</code> equal to <code class="language-plaintext highlighter-rouge">header</code> and <code class="language-plaintext highlighter-rouge">footer</code>.</p>
 
-<p>All children, passed to the component, with no <code class="highlighter-rouge">slot</code> attribute will then be rendered by the browser where the default <code class="highlighter-rouge">&lt;slot&gt;&lt;/slot&gt;</code> is,
-and all children with attributes <code class="highlighter-rouge">slot="header"</code> / <code class="highlighter-rouge">slot="footer"</code> will be rendered where the respective named <code class="highlighter-rouge">slot</code> is.</p>
+<p>All children, passed to the component, with no <code class="language-plaintext highlighter-rouge">slot</code> attribute will then be rendered by the browser where the default <code class="language-plaintext highlighter-rouge">&lt;slot&gt;&lt;/slot&gt;</code> is,
+and all children with attributes <code class="language-plaintext highlighter-rouge">slot="header"</code> / <code class="language-plaintext highlighter-rouge">slot="footer"</code> will be rendered where the respective named <code class="language-plaintext highlighter-rouge">slot</code> is.</p>
 
 <h3 id="individual-slots-">Individual slots <a name="slots_individual"></a></h3>
 
-<p>All children, assigned to a certain <code class="highlighter-rouge">slot</code>, are rendered by the browser next to each other in the exact order in which they were passed to the component.
+<p>All children, assigned to a certain <code class="language-plaintext highlighter-rouge">slot</code>, are rendered by the browser next to each other in the exact order in which they were passed to the component.
 Sometimes, however, each child must be placed separately in the shadow root, potentially wrapped in other HTML elements, to satisfy the UX design of the component.</p>
 
-<p>The <code class="highlighter-rouge">individualSlots</code> slot metadata configuration setting (see <a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>) allows you to have a separate physical slot for each child belonging to a certain slot.</p>
+<p>The <code class="language-plaintext highlighter-rouge">individualSlots</code> slot metadata configuration setting (see <a href="./03-understanding-components-metadata.md">Understanding UI5 Web Components Metadata</a>) allows you to have a separate physical slot for each child belonging to a certain slot.</p>
 
-<p>However, setting <code class="highlighter-rouge">individualSlots: true</code> in the metadata configuration only creates an <code class="highlighter-rouge">_individualSlot</code> property on each element belonging to the slot, but does not create any slots automatically.
-The individual slots must be explicitly rendered by the developer in the <code class="highlighter-rouge">.hbs</code> template.</p>
+<p>However, setting <code class="language-plaintext highlighter-rouge">individualSlots: true</code> in the metadata configuration only creates an <code class="language-plaintext highlighter-rouge">_individualSlot</code> property on each element belonging to the slot, but does not create any slots automatically.
+The individual slots must be explicitly rendered by the developer in the <code class="language-plaintext highlighter-rouge">.hbs</code> template.</p>
 
-<p>To do so, simply render a <code class="highlighter-rouge">slot</code> with a <code class="highlighter-rouge">name</code> property equal to the <code class="highlighter-rouge">_individualSlot</code> value for each child.</p>
+<p>To do so, simply render a <code class="language-plaintext highlighter-rouge">slot</code> with a <code class="language-plaintext highlighter-rouge">name</code> property equal to the <code class="language-plaintext highlighter-rouge">_individualSlot</code> value for each child.</p>
 
 <p>Here’s an example:</p>
 
-<p>In <code class="highlighter-rouge">Demo.js</code> (metadata object):</p>
+<p>In <code class="language-plaintext highlighter-rouge">Demo.js</code> (metadata object):</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
 	<span class="nl">slots</span><span class="p">:</span> <span class="p">{</span>
 		<span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-			<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
-			<span class="nx">propertyName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">items</span><span class="dl">"</span><span class="p">,</span>
-			<span class="nx">individualSlots</span><span class="p">:</span> <span class="kc">true</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
+			<span class="na">propertyName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">items</span><span class="dl">"</span><span class="p">,</span>
+			<span class="na">individualSlots</span><span class="p">:</span> <span class="kc">true</span>
 		<span class="p">}</span>
 	<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>Since <code class="highlighter-rouge">propertyName</code> is set to <code class="highlighter-rouge">items</code>, the children of the default slot will be accessible on the web component instance with <code class="highlighter-rouge">this.items</code>;
-and since <code class="highlighter-rouge">individualSlots</code> is set to <code class="highlighter-rouge">true</code>, every child in <code class="highlighter-rouge">this.items</code> (every child slotted in the default slot) will have an <code class="highlighter-rouge">_individualSlots</code> property created by the framework.</p>
+<p>Since <code class="language-plaintext highlighter-rouge">propertyName</code> is set to <code class="language-plaintext highlighter-rouge">items</code>, the children of the default slot will be accessible on the web component instance with <code class="language-plaintext highlighter-rouge">this.items</code>;
+and since <code class="language-plaintext highlighter-rouge">individualSlots</code> is set to <code class="language-plaintext highlighter-rouge">true</code>, every child in <code class="language-plaintext highlighter-rouge">this.items</code> (every child slotted in the default slot) will have an <code class="language-plaintext highlighter-rouge">_individualSlots</code> property created by the framework.</p>
 
-<p>In <code class="highlighter-rouge">Demo.hbs</code> you must render a slot for each child with <code class="highlighter-rouge">name</code> equal to the <code class="highlighter-rouge">_individualSlot</code> property value for this child:</p>
+<p>In <code class="language-plaintext highlighter-rouge">Demo.hbs</code> you must render a slot for each child with <code class="language-plaintext highlighter-rouge">name</code> equal to the <code class="language-plaintext highlighter-rouge">_individualSlot</code> property value for this child:</p>
 
 <div class="language-handlebars highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
 	 <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"item-wrapper"</span><span class="nt">&gt;</span>

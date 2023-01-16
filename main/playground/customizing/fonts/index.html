@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Fonts | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Fonts" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/fonts/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/customizing/fonts/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Fonts" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Fonts","url":"https://sap.github.io/ui5-webcomponents/main/playground/customizing/fonts/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Fonts","url":"https://sap.github.io/ui5-webcomponents/main/playground/customizing/fonts/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5864,9 +5903,9 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="custom-fonts">Custom Fonts</h1>
 
-<h2 id="the-data-ui5-font-face-font-face-style-tag">The <code class="highlighter-rouge">data-ui5-font-face</code> Font-Face <code class="highlighter-rouge">style</code> Tag</h2>
+<h2 id="the-data-ui5-font-face-font-face-style-tag">The <code class="language-plaintext highlighter-rouge">data-ui5-font-face</code> Font-Face <code class="language-plaintext highlighter-rouge">style</code> Tag</h2>
 
-<p>Upon <code class="highlighter-rouge">boot</code>, the UI5 Web Components framework creates a <code class="highlighter-rouge">&lt;style data-ui5-font-face&gt;</code> tag in the <code class="highlighter-rouge">&lt;head&gt;</code> in order to load the necessary fonts.</p>
+<p>Upon <code class="language-plaintext highlighter-rouge">boot</code>, the UI5 Web Components framework creates a <code class="language-plaintext highlighter-rouge">&lt;style data-ui5-font-face&gt;</code> tag in the <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code> in order to load the necessary fonts.</p>
 
 <p>For example:</p>
 
@@ -5883,27 +5922,27 @@
 <span class="nt">&lt;/style&gt;</span>
 </code></pre></div></div>
 
-<p><strong>Important:</strong> Notice the <code class="highlighter-rouge">data-ui5-font-face</code> attribute. It is unique and recognized by UI5 Web Components.</p>
+<p><strong>Important:</strong> Notice the <code class="language-plaintext highlighter-rouge">data-ui5-font-face</code> attribute. It is unique and recognized by UI5 Web Components.</p>
 
 <h2 id="customizing-fonts">Customizing Fonts</h2>
 
 <p>You might need to customize fonts for several reasons:</p>
 <ul>
   <li>To provide different paths for the fonts (e.g. no public internet connection on the server).</li>
-  <li>To provide additional declarations inside <code class="highlighter-rouge">@font-face</code>.</li>
-  <li>To download additional fonts, such as e.g. <code class="highlighter-rouge">72-Light</code>.</li>
+  <li>To provide additional declarations inside <code class="language-plaintext highlighter-rouge">@font-face</code>.</li>
+  <li>To download additional fonts, such as e.g. <code class="language-plaintext highlighter-rouge">72-Light</code>.</li>
   <li>Not to download any of the default fonts.</li>
 </ul>
 
-<p>To do that, just create a <code class="highlighter-rouge">&lt;style type="text/css" data-ui5-font-face=""&gt;</code> tag in the <code class="highlighter-rouge">head</code> of your HTML page and 
+<p>To do that, just create a <code class="language-plaintext highlighter-rouge">&lt;style type="text/css" data-ui5-font-face=""&gt;</code> tag in the <code class="language-plaintext highlighter-rouge">head</code> of your HTML page and 
 provide arbitrary content for it.</p>
 
-<p>Then, when the UI5 Web Components framework boots, it will detect the existence of this tag by the <code class="highlighter-rouge">data-ui5-font-face</code>
+<p>Then, when the UI5 Web Components framework boots, it will detect the existence of this tag by the <code class="language-plaintext highlighter-rouge">data-ui5-font-face</code>
 attribute, and will not create it. The one you provided will be used instead.</p>
 
 <h2 id="example">Example</h2>
 
-<p>In order to use the <code class="highlighter-rouge">72-Light</code> font in your app and have an additional setting (<code class="highlighter-rouge">font-display</code>), you could add the following markup in the <code class="highlighter-rouge">&lt;head&gt;</code> of your HTML page:</p>
+<p>In order to use the <code class="language-plaintext highlighter-rouge">72-Light</code> font in your app and have an additional setting (<code class="language-plaintext highlighter-rouge">font-display</code>), you could add the following markup in the <code class="language-plaintext highlighter-rouge">&lt;head&gt;</code> of your HTML page:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="nt">&lt;style </span><span class="na">type=</span><span class="s">"text/css"</span> <span class="na">data-ui5-font-face=</span><span class="s">""</span><span class="nt">&gt;</span>
         <span class="k">@font-face</span> <span class="p">{</span>

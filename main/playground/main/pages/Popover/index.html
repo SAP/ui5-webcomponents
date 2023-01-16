@@ -9,7 +9,7 @@
 	<script data-ui5-config type="application/json">
 		{
 			"language": "EN",
-			"libs": "sap.ui.webcomponents.main"
+			"libs": "sap.ui.webc.main"
 		}
 	</script>
 
@@ -22,38 +22,14 @@
 	<script>
 		// delete Document.prototype.adoptedStyleSheets
 	</script>
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.849b454c.js'></script>
-  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Popover.html.87315ecf.css'>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.3fdf352d.js'></script>
+  <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Popover.html.6d4f19ad.css'>
 </head>
 
 <body class="popover2auto">
-	<!-- <ui5-button id="btnOpenPopover" design="Emphasized" icon="employee">Open Popover</ui5-button>
-
-	<ui5-popover id="popoverToOpen" header-text="Popover">
-		<div class="popover3auto">
-			<ui5-title level="H2">Hello World!</ui5-title>
-		</div>
-		<ui5-textarea
-			placeholder="Type some text"
-			max-length="2"
-			show-exceeded-text>
-		</ui5-textarea>
-		<div slot="footer" class="popover4auto">
-			<div class="popover5auto"></div>
-			<ui5-button id="btnInPopover">Close</ui5-button>
-
-
-			<ui5-select id="test">
-				<ui5-option>Hello</ui5-option>
-				<ui5-option>World</ui5-option>
-			</ui5-select>
-		</div>
-	</ui5-popover>
-
-	<ui5-input id="field"></ui5-input> -->
+	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
 
 	<ui5-button id="btn">Click me !</ui5-button>
-
 
 	<ui5-popover id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
 		<div slot="header">
@@ -72,7 +48,6 @@
 		<ui5-button id="popbtn">Open Popover</ui5-button>
 
 		<ui5-popover placement-type="Bottom" hide-arrow id="danger">
-
 
 			<ui5-list>
 				<ui5-li>Hello</ui5-li>
@@ -105,8 +80,6 @@
 		<br>
 		<br>
 
-		<!-- <ui5-date-picker></ui5-date-picker> -->
-
 		<div slot="footer">
 			<ui5-button>I am in the footer</ui5-button>
 		</div>
@@ -135,7 +108,6 @@
 
 	<br>
 	<br>
-
 
 	<ui5-multi-combobox>
 		<ui5-cb-item text="Hello"></ui5-cb-item>

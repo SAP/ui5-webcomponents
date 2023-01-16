@@ -1,6 +1,6 @@
 const __license = "This file has been derived from Unicode Common Locale Data Repository (CLDR) files (http://cldr.unicode.org). See the copyright and permission notice in the Unicode-Data-Files-LICENSE.txt available at the same location as this file or visit http://www.unicode.org/copyright.html";
 const __version = "35.1.0";
-const __buildtime = "2020-10-20T05:15:22.539Z";
+const __buildtime = "2022-05-02T19:26:05.809Z";
 const languages = {
   aa: "afar",
   ab: "abhaasi",
@@ -1476,6 +1476,474 @@ const dateFields = {
     displayName: "aikavy\xF6hyke"
   }
 };
+const timezoneNames = {
+  Africa: {
+    Abidjan: "Abidjan",
+    Accra: "Accra",
+    Addis_Ababa: "Addis Abeba",
+    Algiers: "Alger",
+    Asmara: "Asmara",
+    Bamako: "Bamako",
+    Bangui: "Bangui",
+    Banjul: "Banjul",
+    Bissau: "Bissau",
+    Blantyre: "Blantyre",
+    Brazzaville: "Brazzaville",
+    Bujumbura: "Bujumbura",
+    Cairo: "Kairo",
+    Casablanca: "Casablanca",
+    Ceuta: "Ceuta",
+    Conakry: "Conakry",
+    Dakar: "Dakar",
+    Dar_es_Salaam: "Dar es Salaam",
+    Djibouti: "Djibouti",
+    Douala: "Douala",
+    El_Aaiun: "El Aai\xFAn",
+    Freetown: "Freetown",
+    Gaborone: "Gaborone",
+    Harare: "Harare",
+    Johannesburg: "Johannesburg",
+    Juba: "Juba",
+    Kampala: "Kampala",
+    Khartoum: "Khartum",
+    Kigali: "Kigali",
+    Kinshasa: "Kinshasa",
+    Lagos: "Lagos",
+    Libreville: "Libreville",
+    Lome: "Lom\xE9",
+    Luanda: "Luanda",
+    Lubumbashi: "Lubumbashi",
+    Lusaka: "Lusaka",
+    Malabo: "Malabo",
+    Maputo: "Maputo",
+    Maseru: "Maseru",
+    Mbabane: "Mbabane",
+    Mogadishu: "Mogadishu",
+    Monrovia: "Monrovia",
+    Nairobi: "Nairobi",
+    Ndjamena: "N\u2019Djamena",
+    Niamey: "Niamey",
+    Nouakchott: "Nouakchott",
+    Ouagadougou: "Ouagadougou",
+    "Porto-Novo": "Porto-Novo",
+    Sao_Tome: "S\xE3o Tom\xE9",
+    Tripoli: "Tripoli",
+    Tunis: "Tunis",
+    Windhoek: "Windhoek",
+    _parent: "Afrikka"
+  },
+  America: {
+    Adak: "Adak",
+    Anchorage: "Anchorage",
+    Anguilla: "Anguilla",
+    Antigua: "Antigua",
+    Araguaina: "Aragua\xEDna",
+    Argentina: {
+      Buenos_Aires: "Buenos Aires",
+      Catamarca: "Catamarca",
+      Cordoba: "C\xF3rdoba",
+      Jujuy: "Jujuy",
+      La_Rioja: "La Rioja",
+      Mendoza: "Mendoza",
+      Rio_Gallegos: "Rio Gallegos",
+      Salta: "Salta",
+      San_Juan: "San Juan",
+      San_Luis: "San Luis",
+      Tucuman: "Tucum\xE1n",
+      Ushuaia: "Ushuaia",
+      _parent: "Argentiina"
+    },
+    Aruba: "Aruba",
+    Asuncion: "Asunci\xF3n",
+    Atikokan: "Atikokan",
+    Bahia: "Bahia",
+    Bahia_Banderas: "Bah\xEDa de Banderas",
+    Barbados: "Barbados",
+    Belem: "Belem",
+    Belize: "Belize",
+    "Blanc-Sablon": "Blanc-Sablon",
+    Boa_Vista: "Boa Vista",
+    Bogota: "Bogot\xE1",
+    Boise: "Boise",
+    Cambridge_Bay: "Cambridge Bay",
+    Campo_Grande: "Campo Grande",
+    Cancun: "Canc\xFAn",
+    Caracas: "Caracas",
+    Cayenne: "Cayenne",
+    Cayman: "Cayman",
+    Chicago: "Chicago",
+    Chihuahua: "Chihuahua",
+    Costa_Rica: "Costa Rica",
+    Creston: "Creston",
+    Cuiaba: "Cuiab\xE1",
+    Curacao: "Cura\xE7ao",
+    Danmarkshavn: "Danmarkshavn",
+    Dawson: "Dawson",
+    Dawson_Creek: "Dawson Creek",
+    Denver: "Denver",
+    Detroit: "Detroit",
+    Dominica: "Dominica",
+    Edmonton: "Edmonton",
+    Eirunepe: "Eirunep\xE9",
+    El_Salvador: "El Salvador",
+    Fort_Nelson: "Fort Nelson",
+    Fortaleza: "Fortaleza",
+    Glace_Bay: "Glace Bay",
+    Goose_Bay: "Goose Bay",
+    Grand_Turk: "Grand Turk",
+    Grenada: "Grenada",
+    Guadeloupe: "Guadeloupe",
+    Guatemala: "Guatemala",
+    Guayaquil: "Guayaquil",
+    Guyana: "Guyana",
+    Halifax: "Halifax",
+    Havana: "Havanna",
+    Hermosillo: "Hermosillo",
+    Indiana: {
+      Indianapolis: "Indianapolis",
+      Knox: "Knox, Indiana",
+      Marengo: "Marengo, Indiana",
+      Petersburg: "Petersburg, Indiana",
+      Tell_City: "Tell City, Indiana",
+      Vevay: "Vevay, Indiana",
+      Vincennes: "Vincennes, Indiana",
+      Winamac: "Winamac, Indiana"
+    },
+    Inuvik: "Inuvik",
+    Iqaluit: "Iqaluit",
+    Jamaica: "Jamaika",
+    Juneau: "Juneau",
+    Kentucky: {
+      Louisville: "Louisville",
+      Monticello: "Monticello, Kentucky"
+    },
+    Kralendijk: "Kralendijk",
+    La_Paz: "La Paz",
+    Lima: "Lima",
+    Los_Angeles: "Los Angeles",
+    Lower_Princes: "Lower Prince\u2019s Quarter",
+    Maceio: "Macei\xF3",
+    Managua: "Managua",
+    Manaus: "Manaus",
+    Marigot: "Marigot",
+    Martinique: "Martinique",
+    Matamoros: "Matamoros",
+    Mazatlan: "Mazatl\xE1n",
+    Menominee: "Menominee",
+    Merida: "M\xE9rida",
+    Metlakatla: "Metlakatla",
+    Mexico_City: "Ciudad de M\xE9xico",
+    Miquelon: "Miquelon",
+    Moncton: "Moncton",
+    Monterrey: "Monterrey",
+    Montevideo: "Montevideo",
+    Montserrat: "Montserrat",
+    Nassau: "Nassau",
+    New_York: "New York",
+    Nipigon: "Nipigon",
+    Nome: "Nome",
+    Noronha: "Noronha",
+    North_Dakota: {
+      Beulah: "Beulah, Pohjois-Dakota",
+      Center: "Center, Pohjois-Dakota",
+      New_Salem: "New Salem, Pohjois-Dakota"
+    },
+    Nuuk: "Nuuk",
+    Ojinaga: "Ojinaga",
+    Panama: "Panama",
+    Pangnirtung: "Pangnirtung",
+    Paramaribo: "Paramaribo",
+    Phoenix: "Phoenix",
+    "Port-au-Prince": "Port-au-Prince",
+    Port_of_Spain: "Port of Spain",
+    Porto_Velho: "Porto Velho",
+    Puerto_Rico: "Puerto Rico",
+    Punta_Arenas: "Punta Arenas",
+    Rainy_River: "Rainy River",
+    Rankin_Inlet: "Rankin Inlet",
+    Recife: "Recife",
+    Regina: "Regina",
+    Resolute: "Resolute",
+    Rio_Branco: "Rio Branco",
+    Santa_Isabel: "Santa Isabel",
+    Santarem: "Santar\xE9m",
+    Santiago: "Santiago de Chile",
+    Santo_Domingo: "Santo Domingo",
+    Sao_Paulo: "S\xE3o Paulo",
+    Scoresbysund: "Ittoqqortoormiit",
+    Sitka: "Sitka",
+    St_Barthelemy: "Saint-Barth\xE9lemy",
+    St_Johns: "St. John\u2019s",
+    St_Kitts: "Saint Kitts",
+    St_Lucia: "Saint Lucia",
+    St_Thomas: "Saint Thomas",
+    St_Vincent: "Saint Vincent",
+    Swift_Current: "Swift Current",
+    Tegucigalpa: "Tegucigalpa",
+    Thule: "Thule",
+    Thunder_Bay: "Thunder Bay",
+    Tijuana: "Tijuana",
+    Toronto: "Toronto",
+    Tortola: "Tortola",
+    Vancouver: "Vancouver",
+    Whitehorse: "Whitehorse",
+    Winnipeg: "Winnipeg",
+    Yakutat: "Yakutat",
+    Yellowknife: "Yellowknife",
+    _parent: "Amerikka"
+  },
+  Antarctica: {
+    Casey: "Casey",
+    Davis: "Davis",
+    DumontDUrville: "Dumont d\u2019Urville",
+    Macquarie: "Macquariensaari",
+    Mawson: "Mawson",
+    McMurdo: "McMurdo",
+    Palmer: "Palmer",
+    Rothera: "Rothera",
+    Syowa: "Syowa",
+    Troll: "Troll",
+    Vostok: "Vostok",
+    _parent: "Antarktis"
+  },
+  Arctic: {
+    Longyearbyen: "Longyearbyen"
+  },
+  Asia: {
+    Aden: "Aden",
+    Almaty: "Almaty",
+    Amman: "Amman",
+    Anadyr: "Anadyr",
+    Aqtau: "Aqtaw",
+    Aqtobe: "Aqt\xF6be",
+    Ashgabat: "A\u0161gabat",
+    Atyrau: "At\u0131raw",
+    Baghdad: "Bagdad",
+    Bahrain: "Bahrain",
+    Baku: "Baku",
+    Bangkok: "Bangkok",
+    Barnaul: "Barnaul",
+    Beirut: "Beirut",
+    Bishkek: "Bi\u0161kek",
+    Brunei: "Brunei",
+    Chita: "T\u0161ita",
+    Choibalsan: "T\u0161oibalsa",
+    Colombo: "Colombo",
+    Damascus: "Damaskos",
+    Dhaka: "Dhaka",
+    Dili: "Dili",
+    Dubai: "Dubai",
+    Dushanbe: "Du\u0161anbe",
+    Famagusta: "Famagusta",
+    Gaza: "Gaza",
+    Hebron: "Hebron",
+    Ho_Chi_Minh: "H\u1ED3 Ch\xED Minhin kaupunki",
+    Hong_Kong: "Hongkong",
+    Hovd: "Hovd",
+    Irkutsk: "Irkutsk",
+    Jakarta: "Jakarta",
+    Jayapura: "Jayapura",
+    Jerusalem: "Jerusalem",
+    Kabul: "Kabul",
+    Kamchatka: "Kamt\u0161atka",
+    Karachi: "Karachi",
+    Kathmandu: "Kathmandu",
+    Khandyga: "Handyga",
+    Kolkata: "Kalkutta",
+    Krasnoyarsk: "Krasnojarsk",
+    Kuala_Lumpur: "Kuala Lumpur",
+    Kuching: "Kuching",
+    Kuwait: "Kuwait",
+    Macau: "Macao",
+    Magadan: "Magadan",
+    Makassar: "Makassar",
+    Manila: "Manila",
+    Muscat: "Masqat",
+    Nicosia: "Nikosia",
+    Novokuznetsk: "Novokuznetsk",
+    Novosibirsk: "Novosibirsk",
+    Omsk: "Omsk",
+    Oral: "Uralsk",
+    Phnom_Penh: "Phnom Penh",
+    Pontianak: "Pontianak",
+    Pyongyang: "Pjongjang",
+    Qatar: "Qatar",
+    Qostanay: "Qostanay",
+    Qyzylorda: "Q\u0131z\u0131lorda",
+    Riyadh: "Riad",
+    Sakhalin: "Sahalin",
+    Samarkand: "Samarkand",
+    Seoul: "Soul",
+    Shanghai: "Shanghai",
+    Singapore: "Singapore",
+    Srednekolymsk: "Srednekolymsk",
+    Taipei: "Taipei",
+    Tashkent: "Ta\u0161kent",
+    Tbilisi: "Tbilisi",
+    Tehran: "Teheran",
+    Thimphu: "Thimphu",
+    Tokyo: "Tokio",
+    Tomsk: "Tomsk",
+    Ulaanbaatar: "Ulan Bator",
+    Urumqi: "\xDCr\xFCmqi",
+    "Ust-Nera": "Ust-Nera",
+    Vientiane: "Vientiane",
+    Vladivostok: "Vladivostok",
+    Yakutsk: "Jakutsk",
+    Yangon: "Yangon",
+    Yekaterinburg: "Jekaterinburg",
+    Yerevan: "Jerevan",
+    _parent: "Aasia"
+  },
+  Atlantic: {
+    Azores: "Azorit",
+    Bermuda: "Bermuda",
+    Canary: "Kanariansaaret",
+    Cape_Verde: "Kap Verde",
+    Faroe: "F\xE4rsaaret",
+    Madeira: "Madeira",
+    Reykjavik: "Reykjav\xEDk",
+    South_Georgia: "Etel\xE4-Georgia",
+    St_Helena: "Saint Helena",
+    Stanley: "Stanley"
+  },
+  Australia: {
+    Adelaide: "Adelaide",
+    Brisbane: "Brisbane",
+    Broken_Hill: "Broken Hill",
+    Darwin: "Darwin",
+    Eucla: "Eucla",
+    Hobart: "Hobart",
+    Lindeman: "Lindeman",
+    Lord_Howe: "Lord Howe",
+    Melbourne: "Melbourne",
+    Perth: "Perth",
+    Sydney: "Sydney",
+    _parent: "Australia"
+  },
+  Etc: {
+    UTC: "UTC",
+    Universal: "UTC-yleisaika"
+  },
+  Europe: {
+    Amsterdam: "Amsterdam",
+    Andorra: "Andorra",
+    Astrakhan: "Astrahan",
+    Athens: "Ateena",
+    Belgrade: "Belgrad",
+    Berlin: "Berliini",
+    Bratislava: "Bratislava",
+    Brussels: "Bryssel",
+    Bucharest: "Bukarest",
+    Budapest: "Budapest",
+    Busingen: "B\xFCsingen",
+    Chisinau: "Chi\u015Fin\u0103u",
+    Copenhagen: "K\xF6\xF6penhamina",
+    Dublin: "Dublin",
+    Gibraltar: "Gibraltar",
+    Guernsey: "Guernsey",
+    Helsinki: "Helsinki",
+    Isle_of_Man: "Mansaari",
+    Istanbul: "Istanbul",
+    Jersey: "Jersey",
+    Kaliningrad: "Kaliningrad",
+    Kiev: "Kiova",
+    Kirov: "Kirov",
+    Lisbon: "Lissabon",
+    Ljubljana: "Ljubljana",
+    London: "Lontoo",
+    Luxembourg: "Luxemburg",
+    Madrid: "Madrid",
+    Malta: "Malta",
+    Mariehamn: "Maarianhamina",
+    Minsk: "Minsk",
+    Monaco: "Monaco",
+    Moscow: "Moskova",
+    Oslo: "Oslo",
+    Paris: "Pariisi",
+    Podgorica: "Podgorica",
+    Prague: "Praha",
+    Riga: "Riika",
+    Rome: "Rooma",
+    Samara: "Samara",
+    San_Marino: "San Marino",
+    Sarajevo: "Sarajevo",
+    Saratov: "Saratov",
+    Simferopol: "Simferopol",
+    Skopje: "Skopje",
+    Sofia: "Sofia",
+    Stockholm: "Tukholma",
+    Tallinn: "Tallinna",
+    Tirane: "Tirana",
+    Ulyanovsk: "Uljanovsk",
+    Uzhgorod: "U\u017Egorod",
+    Vaduz: "Vaduz",
+    Vatican: "Vatikaani",
+    Vienna: "Wien",
+    Vilnius: "Vilna",
+    Volgograd: "Volgograd",
+    Warsaw: "Varsova",
+    Zagreb: "Zagreb",
+    Zaporozhye: "Zapori\u017E\u017Eja",
+    Zurich: "Z\xFCrich",
+    _parent: "Eurooppa"
+  },
+  Indian: {
+    Antananarivo: "Antananarivo",
+    Chagos: "Chagos",
+    Christmas: "Joulusaari",
+    Cocos: "Kookossaaret",
+    Comoro: "Komorit",
+    Kerguelen: "Kerguelensaaret",
+    Mahe: "Mah\xE9",
+    Maldives: "Malediivit",
+    Mauritius: "Mauritius",
+    Mayotte: "Mayotte",
+    Reunion: "R\xE9union"
+  },
+  Pacific: {
+    Apia: "Apia",
+    Auckland: "Auckland",
+    Bougainville: "Bougainville",
+    Chatham: "Chathamsaaret",
+    Chuuk: "Chuuk",
+    Easter: "P\xE4\xE4si\xE4issaari",
+    Efate: "Efate",
+    Fakaofo: "Fakaofo",
+    Fiji: "Fid\u017Ei",
+    Funafuti: "Funafuti",
+    Galapagos: "Galapagos",
+    Gambier: "Gambiersaaret",
+    Guadalcanal: "Guadalcanal",
+    Guam: "Guam",
+    Honolulu: "Honolulu",
+    Kiritimati: "Kiritimati",
+    Kosrae: "Kosrae",
+    Kwajalein: "Kwajalein",
+    Majuro: "Majuro",
+    Marquesas: "Marquesassaaret",
+    Midway: "Midwaysaaret",
+    Nauru: "Nauru",
+    Niue: "Niue",
+    Norfolk: "Norfolk",
+    Noumea: "Noum\xE9a",
+    Pago_Pago: "Pago Pago",
+    Palau: "Palau",
+    Pitcairn: "Pitcairn",
+    Pohnpei: "Pohnpei",
+    Port_Moresby: "Port Moresby",
+    Rarotonga: "Rarotonga",
+    Saipan: "Saipan",
+    Tahiti: "Tahiti",
+    Tarawa: "Tarawa",
+    Tongatapu: "Tongatapu",
+    Wake: "Wake",
+    Wallis: "Wallis"
+  }
+};
+const timezoneNamesFormats = {
+  gmtFormat: "UTC{0}"
+};
 const decimalFormat = {
   standard: "#,##0.###"
 };
@@ -2406,6 +2874,34 @@ const timeData = {
   _allowed: "H",
   _preferred: "H"
 };
+const dayPeriodRules = {
+  afternoon1: {
+    _before: "18:00",
+    _from: "12:00"
+  },
+  evening1: {
+    _before: "23:00",
+    _from: "18:00"
+  },
+  midnight: {
+    _at: "00:00"
+  },
+  morning1: {
+    _before: "10:00",
+    _from: "05:00"
+  },
+  morning2: {
+    _before: "12:00",
+    _from: "10:00"
+  },
+  night1: {
+    _before: "05:00",
+    _from: "23:00"
+  },
+  noon: {
+    _at: "12:00"
+  }
+};
 var fi = {
   __license,
   __version,
@@ -2904,6 +3400,66 @@ var fi = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip.",
+          morning1: "aamulla",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamulla",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        wide: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip\xE4iv\xE4ll\xE4",
+          morning1: "aamulla",
+          morning2: "aamup\xE4iv\xE4ll\xE4",
+          afternoon1: "iltap\xE4iv\xE4ll\xE4",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "keskiy\xF6",
+          noon: "keskip.",
+          morning1: "aamu",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamu",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        wide: {
+          midnight: "keskiy\xF6",
+          noon: "keskip\xE4iv\xE4",
+          morning1: "aamu",
+          morning2: "aamup\xE4iv\xE4",
+          afternoon1: "iltap\xE4iv\xE4",
+          evening1: "ilta",
+          night1: "y\xF6"
+        }
+      }
+    },
     "era-wide": {
       "0": "ennen Kristuksen syntym\xE4\xE4",
       "1": "j\xE4lkeen Kristuksen syntym\xE4n"
@@ -3377,6 +3933,66 @@ var fi = {
           "ap.",
           "ip."
         ]
+      }
+    },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip.",
+          morning1: "aamulla",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamulla",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        wide: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip\xE4iv\xE4ll\xE4",
+          morning1: "aamulla",
+          morning2: "aamup\xE4iv\xE4ll\xE4",
+          afternoon1: "iltap\xE4iv\xE4ll\xE4",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "keskiy\xF6",
+          noon: "keskip.",
+          morning1: "aamu",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamu",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        wide: {
+          midnight: "keskiy\xF6",
+          noon: "keskip\xE4iv\xE4",
+          morning1: "aamu",
+          morning2: "aamup\xE4iv\xE4",
+          afternoon1: "iltap\xE4iv\xE4",
+          evening1: "ilta",
+          night1: "y\xF6"
+        }
       }
     },
     "era-wide": {
@@ -3857,6 +4473,66 @@ var fi = {
           "ap.",
           "ip."
         ]
+      }
+    },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip.",
+          morning1: "aamulla",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamulla",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        wide: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip\xE4iv\xE4ll\xE4",
+          morning1: "aamulla",
+          morning2: "aamup\xE4iv\xE4ll\xE4",
+          afternoon1: "iltap\xE4iv\xE4ll\xE4",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "keskiy\xF6",
+          noon: "keskip.",
+          morning1: "aamu",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamu",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        wide: {
+          midnight: "keskiy\xF6",
+          noon: "keskip\xE4iv\xE4",
+          morning1: "aamu",
+          morning2: "aamup\xE4iv\xE4",
+          afternoon1: "iltap\xE4iv\xE4",
+          evening1: "ilta",
+          night1: "y\xF6"
+        }
       }
     },
     "era-wide": {
@@ -4343,6 +5019,66 @@ var fi = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip.",
+          morning1: "aamulla",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamulla",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        wide: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip\xE4iv\xE4ll\xE4",
+          morning1: "aamulla",
+          morning2: "aamup\xE4iv\xE4ll\xE4",
+          afternoon1: "iltap\xE4iv\xE4ll\xE4",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "keskiy\xF6",
+          noon: "keskip.",
+          morning1: "aamu",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamu",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        wide: {
+          midnight: "keskiy\xF6",
+          noon: "keskip\xE4iv\xE4",
+          morning1: "aamu",
+          morning2: "aamup\xE4iv\xE4",
+          afternoon1: "iltap\xE4iv\xE4",
+          evening1: "ilta",
+          night1: "y\xF6"
+        }
+      }
+    },
     "era-wide": {
       "0": "Anno Persico"
     },
@@ -4815,6 +5551,66 @@ var fi = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip.",
+          morning1: "aamulla",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamulla",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        },
+        wide: {
+          midnight: "keskiy\xF6ll\xE4",
+          noon: "keskip\xE4iv\xE4ll\xE4",
+          morning1: "aamulla",
+          morning2: "aamup\xE4iv\xE4ll\xE4",
+          afternoon1: "iltap\xE4iv\xE4ll\xE4",
+          evening1: "illalla",
+          night1: "y\xF6ll\xE4"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "keskiy\xF6",
+          noon: "keskip.",
+          morning1: "aamu",
+          morning2: "aamup.",
+          afternoon1: "iltap.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        narrow: {
+          midnight: "ky.",
+          noon: "kp.",
+          morning1: "aamu",
+          morning2: "ap.",
+          afternoon1: "ip.",
+          evening1: "ilta",
+          night1: "y\xF6"
+        },
+        wide: {
+          midnight: "keskiy\xF6",
+          noon: "keskip\xE4iv\xE4",
+          morning1: "aamu",
+          morning2: "aamup\xE4iv\xE4",
+          afternoon1: "iltap\xE4iv\xE4",
+          evening1: "ilta",
+          night1: "y\xF6"
+        }
+      }
+    },
     "era-wide": {
       "0": "buddhalainen aika"
     },
@@ -4826,6 +5622,8 @@ var fi = {
     }
   },
   dateFields,
+  timezoneNames,
+  timezoneNamesFormats,
   decimalFormat,
   "decimalFormat-long": {
     "1000-one": "0 tuhat",
@@ -5025,6 +5823,7 @@ var fi = {
     "236": {
       _start: "2019-5-1"
     }
-  }
+  },
+  dayPeriodRules
 };
-export { __buildtime, __license, __version, currencyDigits, currencyFormat, currencySymbols, dateFields, decimalFormat, fi as default, languages, miscPattern, orientation, percentFormat, plurals, rtl, scientificFormat, scripts, territories, timeData, units };
+export { __buildtime, __license, __version, currencyDigits, currencyFormat, currencySymbols, dateFields, dayPeriodRules, decimalFormat, fi as default, languages, miscPattern, orientation, percentFormat, plurals, rtl, scientificFormat, scripts, territories, timeData, timezoneNames, timezoneNamesFormats, units };

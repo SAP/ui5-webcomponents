@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Vue | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Vue" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/frameworks/vue/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/frameworks/vue/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Vue" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Vue","url":"https://sap.github.io/ui5-webcomponents/main/playground/frameworks/vue/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Vue","url":"https://sap.github.io/ui5-webcomponents/main/playground/frameworks/vue/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5882,9 +5921,9 @@
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span> @ui5/webcomponents <span class="nt">--save</span>
 </code></pre></div></div>
 
-<h3 id="step-4a-in-vue-2x-add-ui5-web-components-to-vue-ignoredelement">Step 4a. In Vue 2.x add UI5 Web Components to Vue <code class="highlighter-rouge">ignoredElement</code>.</h3>
+<h3 id="step-4a-in-vue-2x-add-ui5-web-components-to-vue-ignoredelement">Step 4a. In Vue 2.x add UI5 Web Components to Vue <code class="language-plaintext highlighter-rouge">ignoredElement</code>.</h3>
 
-<p>Add the following line to your <code class="highlighter-rouge">main.js</code> file:</p>
+<p>Add the following line to your <code class="language-plaintext highlighter-rouge">main.js</code> file:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">Vue</span><span class="p">.</span><span class="nx">config</span><span class="p">.</span><span class="nx">ignoredElements</span> <span class="o">=</span> <span class="p">[</span><span class="sr">/^ui5-/</span><span class="p">];</span>
 </code></pre></div></div>
@@ -5892,7 +5931,7 @@
 <h3 id="step-4b-in-vue-3x-the-web-components-check-is-performed-during-template-compilation-there-are-two-options-to-instruct-the-compiler-to-treat-ui5-web-components-as-custom-elements">Step 4b. In Vue 3.x the web components check is performed during template compilation. There are two options to instruct the compiler to treat UI5 Web Components as custom elements.</h3>
 
 <ul>
-  <li>If using a build step: pass the <code class="highlighter-rouge">isCustomElement</code> option to the Vue template compiler. If using <code class="highlighter-rouge">vue-loader</code>, this should be passed via vue-loader’s <code class="highlighter-rouge">compilerOptions</code> option:</li>
+  <li>If using a build step: pass the <code class="language-plaintext highlighter-rouge">isCustomElement</code> option to the Vue template compiler. If using <code class="language-plaintext highlighter-rouge">vue-loader</code>, this should be passed via vue-loader’s <code class="language-plaintext highlighter-rouge">compilerOptions</code> option:</li>
 </ul>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// in webpack config</span>
@@ -5910,7 +5949,7 @@
 </code></pre></div></div>
 
 <ul>
-  <li>If using on-the-fly template compilation, pass the check via <code class="highlighter-rouge">app.config.isCustomElement</code>:</li>
+  <li>If using on-the-fly template compilation, pass the check via <code class="language-plaintext highlighter-rouge">app.config.isCustomElement</code>:</li>
 </ul>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">app</span> <span class="o">=</span> <span class="nx">createApp</span><span class="p">({})</span>
@@ -5935,7 +5974,7 @@
 
 <h3 id="two-way-data-binding">Two-Way Data Binding</h3>
 
-<p><code class="highlighter-rouge">v-model</code> binding doesn’t work for custom elements. In order to use two-way data binding, you need to bind and update the value yourself like this:</p>
+<p><code class="language-plaintext highlighter-rouge">v-model</code> binding doesn’t work for custom elements. In order to use two-way data binding, you need to bind and update the value yourself like this:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-input</span>
 	<span class="na">:value=</span><span class="s">"inputValue"</span>

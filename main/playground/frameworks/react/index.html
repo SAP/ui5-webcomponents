@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>React | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="React" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/frameworks/react/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/frameworks/react/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="React" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"React","url":"https://sap.github.io/ui5-webcomponents/main/playground/frameworks/react/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"React","url":"https://sap.github.io/ui5-webcomponents/main/playground/frameworks/react/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5870,7 +5909,7 @@
 
 <p>Here are the steps to use pure UI5 Web Components in React:</p>
 
-<h3 id="step-1-create-a-new-application-for-example-with-create-react-app">Step 1. Create a new application. For example, with <code class="highlighter-rouge">create-react-app</code>.</h3>
+<h3 id="step-1-create-a-new-application-for-example-with-create-react-app">Step 1. Create a new application. For example, with <code class="language-plaintext highlighter-rouge">create-react-app</code>.</h3>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npx create-react-app ui5-web-components-application
 <span class="nb">cd </span>ui5-web-components-application
@@ -5902,7 +5941,7 @@
 
 <h3 id="event-binding">Event Binding</h3>
 
-<p>In order to use the events provided by UI5 Web Components, currently you need to get a <code class="highlighter-rouge">ref</code> to the component because React doesn’t support custom events. Here is an example of what you need to do in order to use the events provided by UI5 Web Components:</p>
+<p>In order to use the events provided by UI5 Web Components, currently you need to get a <code class="language-plaintext highlighter-rouge">ref</code> to the component because React doesn’t support custom events. Here is an example of what you need to do in order to use the events provided by UI5 Web Components:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Home</span> <span class="kd">extends</span> <span class="nx">Component</span> <span class="p">{</span>
 
@@ -5927,7 +5966,7 @@
 
 <h3 id="boolean-properties-binding">Boolean Properties Binding</h3>
 
-<p>For boolean properties like <code class="highlighter-rouge">collapsed</code>  in <code class="highlighter-rouge">ui5-panel</code>, instead of setting true or false, you have to take care of the presence of the property. Here is an example:</p>
+<p>For boolean properties like <code class="language-plaintext highlighter-rouge">collapsed</code>  in <code class="language-plaintext highlighter-rouge">ui5-panel</code>, instead of setting true or false, you have to take care of the presence of the property. Here is an example:</p>
 
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;ui5-panel</span> <span class="na">header-text=</span><span class="s">"Achievements"</span> <span class="na">collapsed=</span><span class="s">{!this.state.achievements.length</span> <span class="err">||</span> <span class="na">undefined</span><span class="err">}</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- Content of ui5-panel --&gt;</span>

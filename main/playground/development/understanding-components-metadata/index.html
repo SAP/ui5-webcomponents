@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Understanding components metadata | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Understanding components metadata" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/development/understanding-components-metadata/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/development/understanding-components-metadata/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Understanding components metadata" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Understanding components metadata","url":"https://sap.github.io/ui5-webcomponents/main/playground/development/understanding-components-metadata/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Understanding components metadata","url":"https://sap.github.io/ui5-webcomponents/main/playground/development/understanding-components-metadata/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5883,8 +5922,8 @@
 
 <p>Defines the HTML properties for the Web Component.</p>
 
-<p><strong>Note about attributes:</strong> By default, for each property an equivalent attribute is supported. Attributes have the same names as properties, but in <code class="highlighter-rouge">kebab-case</code> rather than <code class="highlighter-rouge">camelCase</code>.
-Properties of type <code class="highlighter-rouge">Object</code>, properties with <code class="highlighter-rouge">multiple</code> set to<code class="highlighter-rouge">true</code> and properties with <code class="highlighter-rouge">noAttribute</code> set to <code class="highlighter-rouge">true</code> do not have an attribute equivalent.</p>
+<p><strong>Note about attributes:</strong> By default, for each property an equivalent attribute is supported. Attributes have the same names as properties, but in <code class="language-plaintext highlighter-rouge">kebab-case</code> rather than <code class="language-plaintext highlighter-rouge">camelCase</code>.
+Properties of type <code class="language-plaintext highlighter-rouge">Object</code>, properties with <code class="language-plaintext highlighter-rouge">multiple</code> set to<code class="language-plaintext highlighter-rouge">true</code> and properties with <code class="language-plaintext highlighter-rouge">noAttribute</code> set to <code class="language-plaintext highlighter-rouge">true</code> do not have an attribute equivalent.</p>
 
 <h4 id="example-1">Example</h4>
 
@@ -5908,10 +5947,6 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
 		</span><span class="nl">"animationDuration"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
 			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="err">Integer</span><span class="p">,</span><span class="w">
 		</span><span class="p">},</span><span class="w">
-		</span><span class="nl">"width"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-			</span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="err">CSSSize</span><span class="p">,</span><span class="w">
-			</span><span class="nl">"defaultValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">
-		</span><span class="p">},</span><span class="w">
 	</span><span class="p">},</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
@@ -5929,25 +5964,25 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">type</code></td>
+      <td><code class="language-plaintext highlighter-rouge">type</code></td>
       <td>Property type</td>
       <td>N/A</td>
       <td>The type of the property. For more information on types see the table below.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">defaultValue</code></td>
+      <td><code class="language-plaintext highlighter-rouge">defaultValue</code></td>
       <td>Any valid value for the type</td>
       <td>undefined</td>
       <td>Default value of the property. Cannot be set for type “Boolean”. Booleans are always false by default in HTML.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">multiple</code></td>
+      <td><code class="language-plaintext highlighter-rouge">multiple</code></td>
       <td>Boolean</td>
       <td>false</td>
       <td>Indicates whether the property represents a single value or is an array of values of the given type.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">noAttribute</code></td>
+      <td><code class="language-plaintext highlighter-rouge">noAttribute</code></td>
       <td>Boolean</td>
       <td>false</td>
       <td>No attribute equivalent will be created for that property. Always true for properties of type Object.</td>
@@ -5955,7 +5990,7 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
   </tbody>
 </table>
 
-<p>The <code class="highlighter-rouge">type</code> setting is required.</p>
+<p>The <code class="language-plaintext highlighter-rouge">type</code> setting is required.</p>
 
 <h4 id="types">Types</h4>
 
@@ -5970,22 +6005,22 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
   <tbody>
     <tr>
       <td>string</td>
-      <td><code class="highlighter-rouge">String</code></td>
+      <td><code class="language-plaintext highlighter-rouge">String</code></td>
       <td>String value</td>
     </tr>
     <tr>
       <td>boolean</td>
-      <td><code class="highlighter-rouge">Boolean</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Boolean</code></td>
       <td>Boolean value - always false by default</td>
     </tr>
     <tr>
       <td>object</td>
-      <td><code class="highlighter-rouge">Object</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Object</code></td>
       <td>JS Object</td>
     </tr>
     <tr>
       <td>custom type</td>
-      <td>Extend <code class="highlighter-rouge">@ui5/webcomponents-base/dist/types/DataType.js</code></td>
+      <td>Extend <code class="language-plaintext highlighter-rouge">@ui5/webcomponents-base/dist/types/DataType.js</code></td>
       <td>Used mainly for enumerations</td>
     </tr>
   </tbody>
@@ -6004,25 +6039,20 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
   <tbody>
     <tr>
       <td>Integer</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/types/Integer.js</code></td>
+      <td><code class="language-plaintext highlighter-rouge">@ui5/webcomponents-base/dist/types/Integer.js</code></td>
       <td>Integer value</td>
     </tr>
     <tr>
-      <td>CSSSize</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/types/CSSSize.js</code></td>
-      <td>Any valid CSS size definition (<code class="highlighter-rouge">px</code>, <code class="highlighter-rouge">rem</code>, etc.)</td>
-    </tr>
-    <tr>
       <td>ValueState</td>
-      <td><code class="highlighter-rouge">@ui5/webcomponents-base/dist/types/ValueState.js</code></td>
-      <td>Enumeration with: <code class="highlighter-rouge">None</code>, <code class="highlighter-rouge">Error</code>, <code class="highlighter-rouge">Warning</code>, <code class="highlighter-rouge">Success</code> values</td>
+      <td><code class="language-plaintext highlighter-rouge">@ui5/webcomponents-base/dist/types/ValueState.js</code></td>
+      <td>Enumeration with: <code class="language-plaintext highlighter-rouge">None</code>, <code class="language-plaintext highlighter-rouge">Error</code>, <code class="language-plaintext highlighter-rouge">Warning</code>, <code class="language-plaintext highlighter-rouge">Success</code> values</td>
     </tr>
   </tbody>
 </table>
 
 <h2 id="slots">Slots</h2>
 
-<p>Defines the <code class="highlighter-rouge">slots</code> that will be provided by this UI5 Web Component.</p>
+<p>Defines the <code class="language-plaintext highlighter-rouge">slots</code> that will be provided by this UI5 Web Component.</p>
 
 <h4 id="example-2">Example</h4>
 
@@ -6055,45 +6085,45 @@ Properties of type <code class="highlighter-rouge">Object</code>, properties wit
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">type</code> *</td>
-      <td><code class="highlighter-rouge">HTMLElement</code> or <code class="highlighter-rouge">Node</code></td>
+      <td><code class="language-plaintext highlighter-rouge">type</code> *</td>
+      <td><code class="language-plaintext highlighter-rouge">HTMLElement</code> or <code class="language-plaintext highlighter-rouge">Node</code></td>
       <td>N/A</td>
       <td>The type of the children that can go into that slot.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">individualSlots</code></td>
-      <td><code class="highlighter-rouge">Boolean</code></td>
+      <td><code class="language-plaintext highlighter-rouge">individualSlots</code></td>
+      <td><code class="language-plaintext highlighter-rouge">Boolean</code></td>
       <td>false</td>
-      <td>If set to <code class="highlighter-rouge">true</code>, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.</td>
+      <td>If set to <code class="language-plaintext highlighter-rouge">true</code>, each child will have its own slot, allowing you to arrange/wrap the children arbitrarily.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">propertyName</code></td>
-      <td><code class="highlighter-rouge">String</code></td>
+      <td><code class="language-plaintext highlighter-rouge">propertyName</code></td>
+      <td><code class="language-plaintext highlighter-rouge">String</code></td>
       <td>N/A</td>
       <td>Allows to set the name of the property on the Web Component, where the children belonging to this slot will be stored.</td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">invalidateOnChildChange</code> **</td>
-      <td><code class="highlighter-rouge">Boolean</code> or <code class="highlighter-rouge">Object</code></td>
+      <td><code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> **</td>
+      <td><code class="language-plaintext highlighter-rouge">Boolean</code> or <code class="language-plaintext highlighter-rouge">Object</code></td>
       <td>false</td>
       <td><strong>Experimental, do not use.</strong> Defines whether every invalidation of a UI5 Web Component in this slot should trigger an invalidation of the parent UI5 Web Component.</td>
     </tr>
   </tbody>
 </table>
 
-<p><code class="highlighter-rouge">*</code> The <code class="highlighter-rouge">type</code> setting is required.</p>
+<p><code class="language-plaintext highlighter-rouge">*</code> The <code class="language-plaintext highlighter-rouge">type</code> setting is required.</p>
 
-<p><code class="highlighter-rouge">**</code> 
-<strong>Important:</strong> <code class="highlighter-rouge">invalidateOnChildChange</code> is not meant to be used with standard DOM Elements and is not to be confused with <code class="highlighter-rouge">MutationObserver</code>-like functionality. 
-It rather targets the use case of components that slot abstract items (<code class="highlighter-rouge">UI5Element</code> instances without a template) and require to be invalidated in turn whenever these items are invalidated.</p>
+<p><code class="language-plaintext highlighter-rouge">**</code> 
+<strong>Important:</strong> <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> is not meant to be used with standard DOM Elements and is not to be confused with <code class="language-plaintext highlighter-rouge">MutationObserver</code>-like functionality. 
+It rather targets the use case of components that slot abstract items (<code class="language-plaintext highlighter-rouge">UI5Element</code> instances without a template) and require to be invalidated in turn whenever these items are invalidated.</p>
 
-<p>The <code class="highlighter-rouge">invalidateOnChildChange</code> setting can be either a <code class="highlighter-rouge">Boolean</code> (<code class="highlighter-rouge">true</code> meaning invalidate the component on any change of a child in this slot) or an <code class="highlighter-rouge">Object</code> with <code class="highlighter-rouge">properties</code> and <code class="highlighter-rouge">slots</code> fields. They in turn can be either of
-type <code class="highlighter-rouge">Boolean</code> (<code class="highlighter-rouge">true</code> meaning invalidate on any property change or any slot change) or <code class="highlighter-rouge">Array</code> of strings indicating exactly which properties or slots lead to invalidation.</p>
+<p>The <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> setting can be either a <code class="language-plaintext highlighter-rouge">Boolean</code> (<code class="language-plaintext highlighter-rouge">true</code> meaning invalidate the component on any change of a child in this slot) or an <code class="language-plaintext highlighter-rouge">Object</code> with <code class="language-plaintext highlighter-rouge">properties</code> and <code class="language-plaintext highlighter-rouge">slots</code> fields. They in turn can be either of
+type <code class="language-plaintext highlighter-rouge">Boolean</code> (<code class="language-plaintext highlighter-rouge">true</code> meaning invalidate on any property change or any slot change) or <code class="language-plaintext highlighter-rouge">Array</code> of strings indicating exactly which properties or slots lead to invalidation.</p>
 
 <p>Examples:</p>
 
 <ul>
-  <li>In the following example, since <code class="highlighter-rouge">invalidateOnChildChange</code> is not used (<code class="highlighter-rouge">false</code> by default), the component will be invalidated whenever children are added/removed in the <code class="highlighter-rouge">tabs</code> slot,
+  <li>In the following example, since <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> is not used (<code class="language-plaintext highlighter-rouge">false</code> by default), the component will be invalidated whenever children are added/removed in the <code class="language-plaintext highlighter-rouge">tabs</code> slot,
  but not whenever a child in that slot changes.
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
  </span><span class="err">managedSlots:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -6106,7 +6136,7 @@ type <code class="highlighter-rouge">Boolean</code> (<code class="highlighter-ro
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>    </div>
   </li>
-  <li>Setting <code class="highlighter-rouge">invalidateOnChildChange</code> to <code class="highlighter-rouge">true</code> means: invalidate the component whenever a child in the <code class="highlighter-rouge">tabs</code> slot gets invalidated, regardless of the reason.
+  <li>Setting <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> to <code class="language-plaintext highlighter-rouge">true</code> means: invalidate the component whenever a child in the <code class="language-plaintext highlighter-rouge">tabs</code> slot gets invalidated, regardless of the reason.
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
  </span><span class="err">managedSlots:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
  </span><span class="err">slots:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -6119,7 +6149,7 @@ type <code class="highlighter-rouge">Boolean</code> (<code class="highlighter-ro
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>    </div>
   </li>
-  <li>The example below results in exactly the same behavior as the one above, but it uses the more explicit <code class="highlighter-rouge">Object</code> format:
+  <li>The example below results in exactly the same behavior as the one above, but it uses the more explicit <code class="language-plaintext highlighter-rouge">Object</code> format:
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
  </span><span class="err">managedSlots:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
  </span><span class="err">slots:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -6135,8 +6165,8 @@ type <code class="highlighter-rouge">Boolean</code> (<code class="highlighter-ro
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>    </div>
   </li>
-  <li>The following example uses the <code class="highlighter-rouge">Object</code> format again and means: invalidate the component whenever the children in this slot are invalidated due to property changes, but not due 
- to slot changes. Here <code class="highlighter-rouge">"slots": false</code> is added for completeness (as <code class="highlighter-rouge">false</code> is the default value for both <code class="highlighter-rouge">properties</code> and <code class="highlighter-rouge">slots</code>)
+  <li>The following example uses the <code class="language-plaintext highlighter-rouge">Object</code> format again and means: invalidate the component whenever the children in this slot are invalidated due to property changes, but not due 
+ to slot changes. Here <code class="language-plaintext highlighter-rouge">"slots": false</code> is added for completeness (as <code class="language-plaintext highlighter-rouge">false</code> is the default value for both <code class="language-plaintext highlighter-rouge">properties</code> and <code class="language-plaintext highlighter-rouge">slots</code>)
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
  </span><span class="err">managedSlots:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
  </span><span class="err">slots:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -6152,7 +6182,7 @@ type <code class="highlighter-rouge">Boolean</code> (<code class="highlighter-ro
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div>    </div>
   </li>
-  <li>The final example shows the most complex format of <code class="highlighter-rouge">invalidateOnChildChange</code> which allows to define which slots or properties in the children inside that slot lead to invalidation of the component:
+  <li>The final example shows the most complex format of <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> which allows to define which slots or properties in the children inside that slot lead to invalidation of the component:
     <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
  </span><span class="err">managedSlots:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
  </span><span class="err">slots:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -6172,12 +6202,12 @@ type <code class="highlighter-rouge">Boolean</code> (<code class="highlighter-ro
 
 <p>Notes:</p>
 <ul>
-  <li>Children without a <code class="highlighter-rouge">slot</code> attribute will be assigned to the <code class="highlighter-rouge">default</code> slot.</li>
-  <li>All HTML text nodes will be assigned to the <code class="highlighter-rouge">default</code> slot, as they cannot have a <code class="highlighter-rouge">slot</code> attribute.</li>
+  <li>Children without a <code class="language-plaintext highlighter-rouge">slot</code> attribute will be assigned to the <code class="language-plaintext highlighter-rouge">default</code> slot.</li>
+  <li>All HTML text nodes will be assigned to the <code class="language-plaintext highlighter-rouge">default</code> slot, as they cannot have a <code class="language-plaintext highlighter-rouge">slot</code> attribute.</li>
   <li>For all slots the Web Component will have a property created, with the name of the slot, to hold a list of all children assigned to this slot.
- For example, if you have a slot named “rows”, “this.rows” will be an array, holding references to all children with <code class="highlighter-rouge">slot="rows"</code>, or no slot, if rows was default.</li>
-  <li>For the <code class="highlighter-rouge">default</code> slot you can provide a <code class="highlighter-rouge">propertyName</code> setting. 
- For example, if your default slot has a <code class="highlighter-rouge">propertyName: "items"</code>, then “this.items” will hold all children that were assigned to the default slot.</li>
+ For example, if you have a slot named “rows”, “this.rows” will be an array, holding references to all children with <code class="language-plaintext highlighter-rouge">slot="rows"</code>, or no slot, if rows was default.</li>
+  <li>For the <code class="language-plaintext highlighter-rouge">default</code> slot you can provide a <code class="language-plaintext highlighter-rouge">propertyName</code> setting. 
+ For example, if your default slot has a <code class="language-plaintext highlighter-rouge">propertyName: "items"</code>, then “this.items” will hold all children that were assigned to the default slot.</li>
 </ul>
 
 <p>#### Allowed slot types</p>
@@ -6213,27 +6243,27 @@ rendering on the presence/absence/type of children.</p>
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<p>When <code class="highlighter-rouge">managedSlots</code> is set to <code class="highlighter-rouge">true</code>:</p>
+<p>When <code class="language-plaintext highlighter-rouge">managedSlots</code> is set to <code class="language-plaintext highlighter-rouge">true</code>:</p>
 <ul>
-  <li>The framework will invalidate this UI5 Web Component, whenever its children are added/removed/rearranged (and additionally when invalidated, if <code class="highlighter-rouge">invalidateOnChildChange</code> is set).</li>
+  <li>The framework will invalidate this UI5 Web Component, whenever its children are added/removed/rearranged (and additionally when invalidated, if <code class="language-plaintext highlighter-rouge">invalidateOnChildChange</code> is set).</li>
   <li>If any of this UI5 Web Component’s children are custom elements, the framework will await until they are all
  defined and upgraded, before rendering the component for the first time.</li>
   <li>The framework will create properties for each slot on this UI5 Web Component’s instances for easier access
- to the slotted children. For example, if there are <code class="highlighter-rouge">header</code>, <code class="highlighter-rouge">content</code> and <code class="highlighter-rouge">footer</code> slots, there will be
- respectively <code class="highlighter-rouge">header</code>, <code class="highlighter-rouge">content</code> and <code class="highlighter-rouge">footer</code> properties of type <code class="highlighter-rouge">Array</code> holding the slotted children for each slot.
- <strong>Note:</strong> You can use the <code class="highlighter-rouge">propertyName</code> metadata entity, described above, to modify these.</li>
+ to the slotted children. For example, if there are <code class="language-plaintext highlighter-rouge">header</code>, <code class="language-plaintext highlighter-rouge">content</code> and <code class="language-plaintext highlighter-rouge">footer</code> slots, there will be
+ respectively <code class="language-plaintext highlighter-rouge">header</code>, <code class="language-plaintext highlighter-rouge">content</code> and <code class="language-plaintext highlighter-rouge">footer</code> properties of type <code class="language-plaintext highlighter-rouge">Array</code> holding the slotted children for each slot.
+ <strong>Note:</strong> You can use the <code class="language-plaintext highlighter-rouge">propertyName</code> metadata entity, described above, to modify these.</li>
 </ul>
 
-<p>In essence, set this to <code class="highlighter-rouge">true</code> if the UI5 Web Component you’re developing should be aware of its children
+<p>In essence, set this to <code class="language-plaintext highlighter-rouge">true</code> if the UI5 Web Component you’re developing should be aware of its children
  for the purposes of its own state management and rendering (contrary to just displaying them).</p>
 
-<p>An example of a component that would benefit from <code class="highlighter-rouge">managedSlots</code> is a Tab Container that monitors its children (Tabs)
+<p>An example of a component that would benefit from <code class="language-plaintext highlighter-rouge">managedSlots</code> is a Tab Container that monitors its children (Tabs)
  in order to display a link on its Tab Strip for each Tab child. Therefore, it would need to be invalidated whenever
  Tabs are added/removed, in order to update its own state and visualization.</p>
 
 <h2 id="language-aware-components">Language-aware components</h2>
 
-<p>The <code class="highlighter-rouge">languageAware</code> metadata setting determines if the component should be re-rendered whenever the language changes.</p>
+<p>The <code class="language-plaintext highlighter-rouge">languageAware</code> metadata setting determines if the component should be re-rendered whenever the language changes.</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
 	</span><span class="nl">"languageAware"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
@@ -6245,7 +6275,7 @@ changes the language.</p>
 
 <h2 id="theme-aware-components">Theme-aware components</h2>
 
-<p>The <code class="highlighter-rouge">themeAware</code> metadata setting determines if the component should re-render whenever the theme changes.</p>
+<p>The <code class="language-plaintext highlighter-rouge">themeAware</code> metadata setting determines if the component should re-render whenever the theme changes.</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
 	</span><span class="nl">"themeAware"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
@@ -6259,10 +6289,10 @@ is exactly the same for all themes and whenever the theme changes <em>only CSS V
 does not need to be re-rendered - the browser automatically updates the styles when CSS Variables get new values.</p>
 
 <p>However, there are some very rare cases where a component must behave differently (opposed to just look differently) based on the theme.
-For example, the <code class="highlighter-rouge">ui5-icon</code> component must show different versions of the icons based on the theme. Use the <code class="highlighter-rouge">themeAware</code> setting
+For example, the <code class="language-plaintext highlighter-rouge">ui5-icon</code> component must show different versions of the icons based on the theme. Use the <code class="language-plaintext highlighter-rouge">themeAware</code> setting
 in these exceptional cases to guarantee that your component will be re-rendered on theme change.</p>
 
-<p>Next: <a href="./04-understanding-hbs-templates.md">Understanding the Handlebars (<code class="highlighter-rouge">.hbs</code>) templates</a></p>
+<p>Next: <a href="./04-understanding-hbs-templates.md">Understanding the Handlebars (<code class="language-plaintext highlighter-rouge">.hbs</code>) templates</a></p>
 
 
 <footer class="footer-wrapper">

@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>RTL and compact mode | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="RTL and compact mode" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/advanced/rtl-and-compact-mode/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/advanced/rtl-and-compact-mode/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="RTL and compact mode" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"RTL and compact mode","url":"https://sap.github.io/ui5-webcomponents/main/playground/advanced/rtl-and-compact-mode/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"RTL and compact mode","url":"https://sap.github.io/ui5-webcomponents/main/playground/advanced/rtl-and-compact-mode/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5874,7 +5913,7 @@
 
 <h3 id="setting-rtl">Setting RTL</h3>
 
-<p>To have the components render in RTL mode, just set the HTML attribute <code class="highlighter-rouge">dir</code> to <code class="highlighter-rouge">rtl</code> on the component itself, the <code class="highlighter-rouge">body</code>, <code class="highlighter-rouge">html</code> or any other relevant region of your application.</p>
+<p>To have the components render in RTL mode, just set the HTML attribute <code class="language-plaintext highlighter-rouge">dir</code> to <code class="language-plaintext highlighter-rouge">rtl</code> on the component itself, the <code class="language-plaintext highlighter-rouge">body</code>, <code class="language-plaintext highlighter-rouge">html</code> or any other relevant region of your application.</p>
 
 <p>Example 1:</p>
 <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;body</span> <span class="na">dir=</span><span class="s">"rtl"</span><span class="nt">&gt;</span>
@@ -5897,9 +5936,9 @@
 
 <h3 id="changing-rtl-dynamically">Changing RTL Dynamically</h3>
 
-<p>The first time UI5 Web Components are rendered, they will take into account the <code class="highlighter-rouge">dir</code> attribute  of the respective part of the DOM tree they are placed in.</p>
+<p>The first time UI5 Web Components are rendered, they will take into account the <code class="language-plaintext highlighter-rouge">dir</code> attribute  of the respective part of the DOM tree they are placed in.</p>
 
-<p>However, if you change <code class="highlighter-rouge">dir</code> dynamically afterwards, you must call the <code class="highlighter-rouge">applyDirection</code> method to re-render all RTL-aware components.</p>
+<p>However, if you change <code class="language-plaintext highlighter-rouge">dir</code> dynamically afterwards, you must call the <code class="language-plaintext highlighter-rouge">applyDirection</code> method to re-render all RTL-aware components.</p>
 
 <p>Example:</p>
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">applyDirection</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/locale/applyDirection.js</span><span class="dl">"</span><span class="p">;</span>
@@ -5908,18 +5947,18 @@
 <span class="nx">applyDirection</span><span class="p">();</span>
 </code></pre></div></div>
 
-<p><em>Technical Note:</em> Whenever you change the <code class="highlighter-rouge">dir</code> attribute, the browser will automatically re-render that part of the DOM tree (including any Web Components) by default.
-The <code class="highlighter-rouge">applyDirection</code> call is only needed to adjust paddings, margins and other CSS selectors that are not affected by <code class="highlighter-rouge">dir</code>. As more advanced CSS
-features become available in the near future, <code class="highlighter-rouge">applyDirection</code> will not be needed and will eventually be deprecated.</p>
+<p><em>Technical Note:</em> Whenever you change the <code class="language-plaintext highlighter-rouge">dir</code> attribute, the browser will automatically re-render that part of the DOM tree (including any Web Components) by default.
+The <code class="language-plaintext highlighter-rouge">applyDirection</code> call is only needed to adjust paddings, margins and other CSS selectors that are not affected by <code class="language-plaintext highlighter-rouge">dir</code>. As more advanced CSS
+features become available in the near future, <code class="language-plaintext highlighter-rouge">applyDirection</code> will not be needed and will eventually be deprecated.</p>
 
 <h2 id="compact-mode">Compact Mode</h2>
 
 <p>Some UI5 Web Components support compact mode, meaning they can be rendered with smaller sizes, margins and paddings in order to preserve as much space as possible.</p>
 
-<p>To enable compact mode, use any of the following markers on the component itself, the <code class="highlighter-rouge">body</code>, <code class="highlighter-rouge">html</code> or any other relevant region of your application:</p>
+<p>To enable compact mode, use any of the following markers on the component itself, the <code class="language-plaintext highlighter-rouge">body</code>, <code class="language-plaintext highlighter-rouge">html</code> or any other relevant region of your application:</p>
 <ul>
-  <li><code class="highlighter-rouge">data-ui5-compact-size</code> <strong>attribute</strong></li>
-  <li><code class="highlighter-rouge">ui5-content-density-compact</code> <strong>class</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">data-ui5-compact-size</code> <strong>attribute</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">ui5-content-density-compact</code> <strong>class</strong></li>
 </ul>
 
 <p>Example 1:</p>

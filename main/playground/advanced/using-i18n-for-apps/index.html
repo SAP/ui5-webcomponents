@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Using i18n for apps | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Using i18n for apps" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/advanced/using-i18n-for-apps/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/advanced/using-i18n-for-apps/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Using i18n for apps" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Using i18n for apps","url":"https://sap.github.io/ui5-webcomponents/main/playground/advanced/using-i18n-for-apps/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Using i18n for apps","url":"https://sap.github.io/ui5-webcomponents/main/playground/advanced/using-i18n-for-apps/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5864,19 +5903,19 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="ui5-web-components-i18n-for-apps">UI5 Web Components i18n for Apps</h1>
 
-<p><em>This section explains how to use the UI5 Web Components <code class="highlighter-rouge">i18n</code> functionality for the purpose of your app’s translatable texts.
+<p><em>This section explains how to use the UI5 Web Components <code class="language-plaintext highlighter-rouge">i18n</code> functionality for the purpose of your app’s translatable texts.
 None of the code below implies or requires the usage of UI5 Web Components, and can be used completely stand-alone.</em></p>
 
-<p>The <code class="highlighter-rouge">@ui5/webcomponents-base</code> package allows the usage of <code class="highlighter-rouge">i18n</code> functionality not just for UI5 Web Components,
+<p>The <code class="language-plaintext highlighter-rouge">@ui5/webcomponents-base</code> package allows the usage of <code class="language-plaintext highlighter-rouge">i18n</code> functionality not just for UI5 Web Components,
 but for apps as well.</p>
 
-<p><em>Note:</em> This section is dedicated to apps. For information on how to set up <code class="highlighter-rouge">i18n</code> for your custom components, please see <a href="./dev/Developing%20Web%20Components.md">Developing Web Components</a>.</p>
+<p><em>Note:</em> This section is dedicated to apps. For information on how to set up <code class="language-plaintext highlighter-rouge">i18n</code> for your custom components, please see <a href="./dev/Developing%20Web%20Components.md">Developing Web Components</a>.</p>
 
 <h2 id="step-by-step-tutorial">Step-by-Step Tutorial</h2>
 
-<p>This tutorial will show you how to use the UI5 Web Components <code class="highlighter-rouge">i18n</code> functionality for the purpose of your apps.</p>
+<p>This tutorial will show you how to use the UI5 Web Components <code class="language-plaintext highlighter-rouge">i18n</code> functionality for the purpose of your apps.</p>
 
-<h3 id="1-start-by-creating-some-i18n-resources-in-properties-format-in-a-directory-that-can-be-served-for-example">1. Start by creating some <code class="highlighter-rouge">i18n</code> resources in <code class="highlighter-rouge">.properties</code> format in a directory that can be served, for example:</h3>
+<h3 id="1-start-by-creating-some-i18n-resources-in-properties-format-in-a-directory-that-can-be-served-for-example">1. Start by creating some <code class="language-plaintext highlighter-rouge">i18n</code> resources in <code class="language-plaintext highlighter-rouge">.properties</code> format in a directory that can be served, for example:</h3>
 
 <table>
   <thead>
@@ -5887,34 +5926,34 @@ but for apps as well.</p>
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_de.properties</code></td>
-      <td><code class="highlighter-rouge">PLEASE_WAIT=Bitte warten</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assets/messagebundle_de.properties</code></td>
+      <td><code class="language-plaintext highlighter-rouge">PLEASE_WAIT=Bitte warten</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_fr.properties</code></td>
-      <td><code class="highlighter-rouge">PLEASE_WAIT=Patientez.</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assets/messagebundle_fr.properties</code></td>
+      <td><code class="language-plaintext highlighter-rouge">PLEASE_WAIT=Patientez.</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_es.properties</code></td>
-      <td><code class="highlighter-rouge">PLEASE_WAIT=Espere</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assets/messagebundle_es.properties</code></td>
+      <td><code class="language-plaintext highlighter-rouge">PLEASE_WAIT=Espere</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_en.properties</code></td>
-      <td><code class="highlighter-rouge">PLEASE_WAIT=Please wait</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assets/messagebundle_en.properties</code></td>
+      <td><code class="language-plaintext highlighter-rouge">PLEASE_WAIT=Please wait</code></td>
     </tr>
   </tbody>
 </table>
 
 <p>(This example demonstrates just one translatable text per file for simplicity. You can have any number of texts per file, each on a new line.)</p>
 
-<h3 id="2-import-the-following-i18n-related-modules-to-your-app">2. Import the following <code class="highlighter-rouge">i18n</code>-related modules to your app:</h3>
+<h3 id="2-import-the-following-i18n-related-modules-to-your-app">2. Import the following <code class="language-plaintext highlighter-rouge">i18n</code>-related modules to your app:</h3>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">parseProperties</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/PropertiesFileFormat.js</span><span class="dl">"</span><span class="p">;</span>
 <span class="k">import</span> <span class="p">{</span> <span class="nx">registerI18nLoader</span><span class="p">,</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>The first one provides support for <code class="highlighter-rouge">.properties</code> files, as used in the example, and the second one - the functions
-that will allow you to take advantage of the <code class="highlighter-rouge">i18n</code> functionality.</p>
+<p>The first one provides support for <code class="language-plaintext highlighter-rouge">.properties</code> files, as used in the example, and the second one - the functions
+that will allow you to take advantage of the <code class="language-plaintext highlighter-rouge">i18n</code> functionality.</p>
 
 <h3 id="3-register-a-loader-function-that-can-retrieve-and-process-the-actual-content-of-your-message-bundles">3. Register a loader function that can retrieve and process the actual content of your message bundles:</h3>
 
@@ -5927,7 +5966,7 @@ that will allow you to take advantage of the <code class="highlighter-rouge">i18
 <span class="p">});</span>
 </code></pre></div></div>
 
-<p>The first argument to <code class="highlighter-rouge">registerI18nLoader</code> is an ID that will be used to reference this message bundle, the second is the locale this loader can load, and the third is a function that can load and process the content for the specified package/locale combination.</p>
+<p>The first argument to <code class="language-plaintext highlighter-rouge">registerI18nLoader</code> is an ID that will be used to reference this message bundle, the second is the locale this loader can load, and the third is a function that can load and process the content for the specified package/locale combination.</p>
 
 <p><em>Note:</em> For more assets, a loop is used to register a loader for each package/locale combination. The same loader function can be registered and its parameter can be used to distinguish which locale resource is requested.</p>
 
@@ -5940,21 +5979,21 @@ that will allow you to take advantage of the <code class="highlighter-rouge">i18
 <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">Please wait in the current language is: </span><span class="dl">"</span><span class="p">,</span> <span class="nx">pleaseWait</span><span class="p">);</span>
 </code></pre></div></div>
 
-<p>You can pass multiple additional values to <code class="highlighter-rouge">getText</code> for texts with placeholders.</p>
+<p>You can pass multiple additional values to <code class="language-plaintext highlighter-rouge">getText</code> for texts with placeholders.</p>
 
 <p>If your text looks like this</p>
 
-<p><code class="highlighter-rouge">CAROUSEL_DOT_TEXT=Item {0} of {1} displayed</code></p>
+<p><code class="language-plaintext highlighter-rouge">CAROUSEL_DOT_TEXT=Item {0} of {1} displayed</code></p>
 
-<p>you can call <code class="highlighter-rouge">getText</code></p>
+<p>you can call <code class="language-plaintext highlighter-rouge">getText</code></p>
 
-<p><code class="highlighter-rouge">bundle.getText("CAROUSEL_DOT_TEXT", 5, 20);</code></p>
+<p><code class="language-plaintext highlighter-rouge">bundle.getText("CAROUSEL_DOT_TEXT", 5, 20);</code></p>
 
 <p>which will finally result in</p>
 
-<p><code class="highlighter-rouge">Item 5 of 20 displayed</code>.</p>
+<p><code class="language-plaintext highlighter-rouge">Item 5 of 20 displayed</code>.</p>
 
-<h3 id="5-test-your-page-using-different-languages-eg-set-sap-ui-languagede-in-the-url-or-change-the-configuration">5. Test your page using different languages, e.g. set <code class="highlighter-rouge">?sap-ui-language=de</code> in the URL or change the configuration.</h3>
+<h3 id="5-test-your-page-using-different-languages-eg-set-sap-ui-languagede-in-the-url-or-change-the-configuration">5. Test your page using different languages, e.g. set <code class="language-plaintext highlighter-rouge">?sap-ui-language=de</code> in the URL or change the configuration.</h3>
 
 <h2 id="summary">Summary</h2>
 
@@ -5978,17 +6017,17 @@ that will allow you to take advantage of the <code class="highlighter-rouge">i18
 </code></pre></div></div>
 
 <p>You register your assets for all supported languages, then you fetch the data for the currently active language,
-get a reference to the bundle and call the <code class="highlighter-rouge">getText</code> method to get texts for your app.</p>
+get a reference to the bundle and call the <code class="language-plaintext highlighter-rouge">getText</code> method to get texts for your app.</p>
 
 <h2 id="tips-and-tricks">Tips and Tricks</h2>
 
 <ul>
-  <li>You can skip the <code class="highlighter-rouge">.properties</code> format support import</li>
+  <li>You can skip the <code class="language-plaintext highlighter-rouge">.properties</code> format support import</li>
 </ul>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">return</span> <span class="k">await</span> <span class="p">(</span><span class="k">await</span> <span class="nx">fetch</span><span class="p">(</span><span class="s2">`./assets/messagebundle_</span><span class="p">${</span><span class="nx">localeId</span><span class="p">}</span><span class="s2">.json`</span><span class="p">)).</span><span class="nx">json</span><span class="p">();</span>
 </code></pre></div></div>
-<p>and return the data directly in <code class="highlighter-rouge">.json</code> format if you want to load a little bit less code in the runtime.</p>
+<p>and return the data directly in <code class="language-plaintext highlighter-rouge">.json</code> format if you want to load a little bit less code in the runtime.</p>
 
 <table>
   <thead>
@@ -5999,20 +6038,20 @@ get a reference to the bundle and call the <code class="highlighter-rouge">getTe
   </thead>
   <tbody>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_de.json</code></td>
-      <td><code class="highlighter-rouge">{"PLEASE_WAIT": "Bitte warten"}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assets/messagebundle_de.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{"PLEASE_WAIT": "Bitte warten"}</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_fr.json</code></td>
-      <td><code class="highlighter-rouge">{"PLEASE_WAIT": "Patientez."}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assets/messagebundle_fr.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{"PLEASE_WAIT": "Patientez."}</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_es.json</code></td>
-      <td><code class="highlighter-rouge">{"PLEASE_WAIT": "Espere"}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assets/messagebundle_es.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{"PLEASE_WAIT": "Espere"}</code></td>
     </tr>
     <tr>
-      <td><code class="highlighter-rouge">assets/messagebundle_en.json</code></td>
-      <td><code class="highlighter-rouge">{"PLEASE_WAIT": "Please wait"}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">assets/messagebundle_en.json</code></td>
+      <td><code class="language-plaintext highlighter-rouge">{"PLEASE_WAIT": "Please wait"}</code></td>
     </tr>
   </tbody>
 </table>

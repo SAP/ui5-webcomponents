@@ -22,9 +22,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<!-- Begin Jekyll SEO tag v2.6.1 -->
+<!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Scoping | UI5 Web Components</title>
-<meta name="generator" content="Jekyll v3.8.6" />
+<meta name="generator" content="Jekyll v4.3.1" />
 <meta property="og:title" content="Scoping" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
@@ -32,8 +32,11 @@
 <link rel="canonical" href="https://sap.github.io/ui5-webcomponents/main/playground/advanced/scoping/" />
 <meta property="og:url" content="https://sap.github.io/ui5-webcomponents/main/playground/advanced/scoping/" />
 <meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Scoping" />
 <script type="application/ld+json">
-{"@type":"WebPage","headline":"Scoping","url":"https://sap.github.io/ui5-webcomponents/main/playground/advanced/scoping/","description":"Enterprise-flavored sugar on top of native APIs!","@context":"https://schema.org"}</script>
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"Scoping","url":"https://sap.github.io/ui5-webcomponents/main/playground/advanced/scoping/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -60,6 +63,10 @@
         <nav role="navigation" aria-label="Main navigation">
   <ul class="navigation-list">
     
+    
+      
+    
+      
     
       
     
@@ -355,6 +362,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -959,6 +970,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -1843,6 +1858,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/customizing/theme/" class="navigation-list-link">
@@ -2124,6 +2143,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -2940,6 +2963,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
@@ -3263,6 +3290,10 @@
             
               
               <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
                 
                   
                 
@@ -4189,6 +4220,10 @@
                   
                 
                   
+                
+                  
+                
+                  
                     <li class="navigation-list-item ">
                       
                       <a href="https://sap.github.io/ui5-webcomponents/main/playground/changelog/1.9.0.md/" class="navigation-list-link">
@@ -4578,6 +4613,10 @@
             
               
               <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
                 
                   
                 
@@ -5864,9 +5903,9 @@
         <div id="main-content" class="page-content" role="main">
           <h1 id="micro-frontends-and-custom-elements-scoping">Micro-Frontends and Custom Elements Scoping</h1>
 
-<h2 id="what-does-scoping-mean">What does <code class="highlighter-rouge">scoping</code> mean?</h2>
+<h2 id="what-does-scoping-mean">What does <code class="language-plaintext highlighter-rouge">scoping</code> mean?</h2>
 
-<p>The <code class="highlighter-rouge">scoping</code> feature lets you add an arbitrary suffix to the names of all UI5 Web Components’ custom elements:</p>
+<p>The <code class="language-plaintext highlighter-rouge">scoping</code> feature lets you add an arbitrary suffix to the names of all UI5 Web Components’ custom elements:</p>
 
 <p>Example:</p>
 
@@ -5889,9 +5928,9 @@
 
 <p>will not have any effect.</p>
 
-<h2 id="when-do-i-need-to-use-the-scoping-feature">When do I need to use the <code class="highlighter-rouge">scoping</code> feature?</h2>
+<h2 id="when-do-i-need-to-use-the-scoping-feature">When do I need to use the <code class="language-plaintext highlighter-rouge">scoping</code> feature?</h2>
 
-<p>The <code class="highlighter-rouge">scoping</code> feature is completely optional. It is not needed for application development, but it is strongly recommended when building <strong>libraries</strong> and <strong>micro-frontends</strong>. 
+<p>The <code class="language-plaintext highlighter-rouge">scoping</code> feature is completely optional. It is not needed for application development, but it is strongly recommended when building <strong>libraries</strong> and <strong>micro-frontends</strong>. 
 It ensures that the custom elements that your code uses have not already been reserved by another library or an older version of UI5 Web Components.</p>
 
 <p>If, for example, your code may be loaded on demand by unknown applications as a third-party service, there is always the risk that the app
@@ -5930,12 +5969,12 @@ upgraded with this version, while your code may rely on newer features.</p>
 
 <p>In the example above:</p>
 <ul>
-  <li>The app itself is using an old version (<code class="highlighter-rouge">1.0.1</code>) of UI5 Web Components (which has already upgraded the <code class="highlighter-rouge">ui5-card</code>, <code class="highlighter-rouge">ui5-button</code> and <code class="highlighter-rouge">ui5-input</code> tags).</li>
-  <li>The imaginary “common help” library, based on a newer version (<code class="highlighter-rouge">1.2.0</code>), uses the scoping suffix <code class="highlighter-rouge">chlp</code>.</li>
-  <li>The imaginary “global footer” library, based on an even newer version (<code class="highlighter-rouge">1.3.0</code>), uses the scoping suffix <code class="highlighter-rouge">glob-foot</code>.</li>
+  <li>The app itself is using an old version (<code class="language-plaintext highlighter-rouge">1.0.1</code>) of UI5 Web Components (which has already upgraded the <code class="language-plaintext highlighter-rouge">ui5-card</code>, <code class="language-plaintext highlighter-rouge">ui5-button</code> and <code class="language-plaintext highlighter-rouge">ui5-input</code> tags).</li>
+  <li>The imaginary “common help” library, based on a newer version (<code class="language-plaintext highlighter-rouge">1.2.0</code>), uses the scoping suffix <code class="language-plaintext highlighter-rouge">chlp</code>.</li>
+  <li>The imaginary “global footer” library, based on an even newer version (<code class="language-plaintext highlighter-rouge">1.3.0</code>), uses the scoping suffix <code class="language-plaintext highlighter-rouge">glob-foot</code>.</li>
 </ul>
 
-<p>This allows the libraries to use new <code class="highlighter-rouge">ui5-button</code> properties such as <code class="highlighter-rouge">newButtonProp</code> and <code class="highlighter-rouge">evenNewerButtonProp</code> that are not found in older versions.</p>
+<p>This allows the libraries to use new <code class="language-plaintext highlighter-rouge">ui5-button</code> properties such as <code class="language-plaintext highlighter-rouge">newButtonProp</code> and <code class="language-plaintext highlighter-rouge">evenNewerButtonProp</code> that are not found in older versions.</p>
 
 <h2 id="how-can-i-fine-tune-the-scoping-feature">How can I fine-tune the scoping feature?</h2>
 
@@ -5944,9 +5983,9 @@ upgraded with this version, while your code may rely on newer features.</p>
 <span class="nx">setCustomElementsScopingRules</span><span class="p">({</span><span class="na">include</span><span class="p">:</span> <span class="p">[</span><span class="sr">/^ui5-/</span><span class="p">],</span> <span class="na">exclude</span><span class="p">:</span> <span class="p">[</span><span class="sr">/^ui5-my-/</span><span class="p">,</span> <span class="sr">/-test-/</span><span class="p">]});</span>
 </code></pre></div></div>
 
-<p>By default, all UI5 Web Components starting with <code class="highlighter-rouge">ui5-</code> are scoped when you call <code class="highlighter-rouge">setCustomElementsScopingSuffix</code>.
-However, you have full control over which tags are scoped and which not. In the example above, tags starting with <code class="highlighter-rouge">ui5-my-</code> and tags
-having the word <code class="highlighter-rouge">-test-</code> in their name are not scoped.</p>
+<p>By default, all UI5 Web Components starting with <code class="language-plaintext highlighter-rouge">ui5-</code> are scoped when you call <code class="language-plaintext highlighter-rouge">setCustomElementsScopingSuffix</code>.
+However, you have full control over which tags are scoped and which not. In the example above, tags starting with <code class="language-plaintext highlighter-rouge">ui5-my-</code> and tags
+having the word <code class="language-plaintext highlighter-rouge">-test-</code> in their name are not scoped.</p>
 
 <p>Setting scoping rules is handy if, for example, your library uses both standard and custom UI5 Web Components and you don’t want
 to scope the custom ones (as no disambiguation will be necessary for them).</p>
