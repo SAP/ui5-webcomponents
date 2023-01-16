@@ -5,6 +5,7 @@ PATH
       jekyll (~> 3.8.5)
       jekyll-seo-tag (~> 2.0)
       rake (~> 12.3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -64,11 +65,14 @@ GEM
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
+
 PLATFORMS
   ruby
   x64-mingw32
+
 DEPENDENCIES
   UI5-Web-Components-Playground!
   bundler (~> 2.0.1)
+
 BUNDLED WITH
    2.0.2
