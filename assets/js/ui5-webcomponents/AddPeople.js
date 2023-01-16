@@ -1,4 +1,4 @@
-import { r as registerIllustration, d as IM_TITLE_ADDPEOPLE, e as IM_SUBTITLE_ADDPEOPLE } from "./bundle.esm2.js";
+import { r as registerIllustration, b as IM_TITLE_ADDPEOPLE, c as IM_SUBTITLE_ADDPEOPLE } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="161" height="153" viewBox="0 0 161 153" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-AddPeople">
 <circle cx="84.186" cy="76.1691" r="76.1691" fill="var(--sapContent_Illustrative_Color7)"/>
 <mask id="mask0_1663_6845" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="8" y="0" width="153" height="153">

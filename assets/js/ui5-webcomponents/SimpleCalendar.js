@@ -1,4 +1,4 @@
-import { r as registerIllustration, j as IM_TITLE_NOACTIVITIES, k as IM_SUBTITLE_NOACTIVITIES } from "./bundle.esm2.js";
+import { r as registerIllustration, h as IM_TITLE_NOACTIVITIES, i as IM_SUBTITLE_NOACTIVITIES } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-SimpleCalendar">
 <g clip-path="url(#clip0_101_5566)">
 <path d="M137.769 31.0923H14.3444C13.448 31.0923 12.7214 31.8189 12.7214 32.7152V128.339C12.7214 129.236 13.448 129.962 14.3444 129.962H137.769C138.665 129.962 139.392 129.236 139.392 128.339V32.7152C139.392 31.8189 138.665 31.0923 137.769 31.0923Z" fill="var(--sapContent_Illustrative_Color6)"/>

@@ -1,4 +1,4 @@
-import { r as registerIllustration, P as IM_TITLE_RESIZECOLUMN, Q as IM_SUBTITLE_RESIZECOLUMN } from "./bundle.esm2.js";
+import { r as registerIllustration, L as IM_TITLE_RESIZECOLUMN, M as IM_SUBTITLE_RESIZECOLUMN } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="156" viewBox="0 0 160 156" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-ResizeColumn">
 <mask id="mask0_1663_6341" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="0" y="0" width="156" height="156">
 <path d="M77.9331 155.866C120.974 155.866 155.866 120.974 155.866 77.9331C155.866 34.8918 120.974 0 77.9331 0C34.8918 0 0 34.8918 0 77.9331C0 120.974 34.8918 155.866 77.9331 155.866Z" fill="var(--sapContent_Illustrative_Color7)"/>

@@ -1,4 +1,4 @@
-import { r as registerIllustration, A as IM_TITLE_NOFILTERRESULTS, B as IM_SUBTITLE_NOFILTERRESULTS } from "./bundle.esm2.js";
+import { r as registerIllustration, w as IM_TITLE_NOFILTERRESULTS, x as IM_SUBTITLE_NOFILTERRESULTS } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="130" viewBox="0 0 160 130" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-NoFilterResults">
 <circle cx="79.1838" cy="67.6523" r="61.502" fill="var(--sapContent_Illustrative_Color7)"/>
 <path d="M5.96874 29.286L3.04155 31.2197L8.34712 39.2936L11.2743 37.3599L5.96874 29.286Z" fill="var(--sapContent_Illustrative_Color19)"/>

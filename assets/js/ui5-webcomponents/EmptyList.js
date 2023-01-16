@@ -1,4 +1,4 @@
-import { r as registerIllustration, l as IM_TITLE_NOENTRIES, m as IM_SUBTITLE_NOENTRIES } from "./bundle.esm2.js";
+import { r as registerIllustration, j as IM_TITLE_NOENTRIES, k as IM_SUBTITLE_NOENTRIES } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-EmptyList">
 <mask id="mask0_20012_10743" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="0" y="10" width="141" height="141">
 <circle cx="70.4545" cy="80.4545" r="70.4545" fill="var(--sapContent_Illustrative_Color7)"/>

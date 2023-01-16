@@ -1,4 +1,4 @@
-import { r as registerIllustration, T as IM_TITLE_SUCCESSSCREEN, U as IM_SUBTITLE_SUCCESSSCREEN } from "./bundle.esm2.js";
+import { r as registerIllustration, P as IM_TITLE_SUCCESSSCREEN, Q as IM_SUBTITLE_SUCCESSSCREEN } from "./bundle.esm2.js";
 var dialogSvg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="160" viewBox="0 0 160 160" id="sapIllus-Dialog-SuccessCheckMark">
       <circle class="sapIllus_ObjectFillColor" cx="79.0022" cy="84.5367" r="41.9985"/>
       <ellipse class="sapIllus_BackgroundColor" cx="78.9954" cy="145.5428" rx="36.9935" ry="5.9976"/>

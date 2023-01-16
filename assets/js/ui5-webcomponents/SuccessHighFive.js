@@ -1,4 +1,4 @@
-import { r as registerIllustration, f as IM_TITLE_BALLOONSKY, g as IM_SUBTITLE_BALLOONSKY } from "./bundle.esm2.js";
+import { r as registerIllustration, d as IM_TITLE_BALLOONSKY, e as IM_SUBTITLE_BALLOONSKY } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="139" height="160" viewBox="0 0 139 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-SuccessHighFive">
 <circle cx="69.2255" cy="90.7748" r="69.2255" fill="var(--sapContent_Illustrative_Color7)"/>
 <path d="M33.5638 65.5206C33.5638 64.7133 31.2204 64.0671 28.0893 63.9203C27.9103 60.7932 27.221 58.4679 26.4136 58.4697C25.6062 58.4715 24.9349 60.8146 24.763 63.9579C21.623 64.1727 19.2885 64.8744 19.2992 65.6835C19.31 66.4926 21.6427 67.1388 24.7738 67.2838C24.9617 70.4109 25.642 72.7362 26.4476 72.7344C27.2532 72.7326 27.9282 70.3894 28.1 67.2462C31.2401 67.0314 33.5728 66.3297 33.5638 65.5206Z" fill="var(--sapContent_Illustrative_Color18)"/>

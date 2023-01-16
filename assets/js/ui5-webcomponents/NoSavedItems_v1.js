@@ -1,4 +1,4 @@
-import { r as registerIllustration, G as IM_TITLE_NOSAVEDITEMS, H as IM_SUBTITLE_NOSAVEDITEMS } from "./bundle.esm2.js";
+import { r as registerIllustration, C as IM_TITLE_NOSAVEDITEMS, D as IM_SUBTITLE_NOSAVEDITEMS } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="125" viewBox="0 0 160 125" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-NoSavedItems_v1">
 <ellipse cx="82.188" cy="62.0287" rx="62.0287" ry="62.0287" fill="var(--sapContent_Illustrative_Color7)"/>
 <path d="M139.207 29.722C137.39 36.3629 134.742 43.7837 129.768 41.8663C123.533 39.4605 125.799 33.3601 127.623 26.6992C129.447 20.0384 131.903 14.8315 136.737 16.1602C141.275 17.3996 141.03 23.0516 139.207 29.722Z" fill="var(--sapContent_Illustrative_Color20)"/>

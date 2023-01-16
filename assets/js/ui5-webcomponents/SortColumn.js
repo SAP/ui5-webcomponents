@@ -1,4 +1,4 @@
-import { r as registerIllustration, V as IM_TITLE_SORTCOLUMN, W as IM_SUBTITLE_SORTCOLUMN } from "./bundle.esm2.js";
+import { r as registerIllustration, R as IM_TITLE_SORTCOLUMN, S as IM_SUBTITLE_SORTCOLUMN } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="159" viewBox="0 0 160 159" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-SortColumn">
 <mask id="mask0_1663_6101" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="0" y="0" width="159" height="159">
 <path d="M79.3943 158.789C123.243 158.789 158.789 123.243 158.789 79.3943C158.789 35.546 123.243 0 79.3943 0C35.546 0 0 35.546 0 79.3943C0 123.243 35.546 158.789 79.3943 158.789Z" fill="var(--sapContent_Illustrative_Color7)"/>

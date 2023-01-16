@@ -1,4 +1,4 @@
-import { r as registerIllustration, J as IM_TITLE_NOSEARCHRESULTS, K as IM_SUBTITLE_NOSEARCHRESULTS } from "./bundle.esm2.js";
+import { r as registerIllustration, E as IM_TITLE_NOSEARCHRESULTS, F as IM_SUBTITLE_NOSEARCHRESULTS } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="84" height="160" viewBox="0 0 84 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-SimpleNotFoundMagnifier">
 <g clip-path="url(#clip0_101_5290)">
 <circle cx="36.502" cy="51.5" r="34.5" fill="var(--sapContent_Illustrative_Color8)"/>

@@ -1,4 +1,4 @@
-import { r as registerIllustration, C as IM_TITLE_NOMAIL, D as IM_SUBTITLE_NOMAIL } from "./bundle.esm2.js";
+import { r as registerIllustration, y as IM_TITLE_NOMAIL, z as IM_SUBTITLE_NOMAIL } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="143" viewBox="0 0 160 143" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-NoMail_v1">
 <path d="M1.04419 83.1589C1.08652 83.4059 1.13238 83.6563 1.17471 83.9032V83.166L1.04419 83.1589Z" fill="var(--sapContent_Illustrative_Color7)"/>
 <path d="M32.496 130.689C43.9194 138.086 57.2352 142.028 70.8442 142.041V130.689H32.496Z" fill="var(--sapContent_Illustrative_Color7)"/>
