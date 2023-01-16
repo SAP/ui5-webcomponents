@@ -1,4 +1,4 @@
-import { r as registerIllustration, s as IM_TITLE_GROUPTABLE, t as IM_SUBTITLE_GROUPTABLE } from "./bundle.esm2.js";
+import { r as registerIllustration, u as IM_TITLE_GROUPTABLE, v as IM_SUBTITLE_GROUPTABLE } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-GroupTable">
 <circle cx="80" cy="80" r="80" fill="var(--sapContent_Illustrative_Color7)"/>
 <path d="M124.428 37.4707H55.4125C51.2306 37.4707 47.8405 40.8608 47.8405 45.0427V130.4C47.8405 134.582 51.2306 137.972 55.4125 137.972H124.428C128.61 137.972 132 134.582 132 130.4V45.0427C132 40.8608 128.61 37.4707 124.428 37.4707Z" fill="var(--sapContent_Illustrative_Color18)"/>

@@ -1,4 +1,4 @@
-import { r as registerIllustration, p as IM_TITLE_FILTERTABLE, q as IM_SUBTITLE_FILTERTABLE } from "./bundle.esm2.js";
+import { r as registerIllustration, s as IM_TITLE_FILTERTABLE, t as IM_SUBTITLE_FILTERTABLE } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="156" viewBox="0 0 160 156" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-FilterTable">
 <circle cx="82.4128" cy="77.5872" r="77.5872" fill="var(--sapContent_Illustrative_Color7)"/>
 <path d="M93.5321 32.0046H9.24732C4.14017 32.0046 0 36.1448 0 41.252V145.495C0 150.602 4.14017 154.742 9.24732 154.742H93.5321C98.6393 154.742 102.779 150.602 102.779 145.495V41.252C102.779 36.1448 98.6393 32.0046 93.5321 32.0046Z" fill="var(--sapContent_Illustrative_Color8)"/>

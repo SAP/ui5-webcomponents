@@ -1,5 +1,5 @@
-commit 36f0969bff789207fc13c347235418e4e4490204
-Author: ilhan007 <ilhan.myumyun@sap.com>
-Date:   Mon Nov 14 10:22:03 2022 +0200
+commit 0505eaa2bd38f0c4d37b4273bbb2ee212f2c9dd8
+Author: Nayden Naydenov <nayden.naydenov@sap.com>
+Date:   Mon Jan 16 10:20:54 2023 +0200
 
-    chore: fix @ui5/webcomponents-base dependency
+    chore: restore playground changes

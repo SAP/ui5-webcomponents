@@ -1,4 +1,4 @@
-import { r as registerIllustration, N as IM_TITLE_BEFORESEARCH, O as IM_SUBTITLE_BEFORESEARCH } from "./bundle.esm2.js";
+import { r as registerIllustration, R as IM_TITLE_BEFORESEARCH, S as IM_SUBTITLE_BEFORESEARCH } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="103" height="160" viewBox="0 0 103 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-SimpleMagnifier">
 <path opacity="0.5" d="M41.5299 80.4307C63.0691 80.4307 80.537 62.6487 80.537 40.6709C80.537 18.6932 63.0761 0.907593 41.5299 0.907593C19.9837 0.907593 2.51221 18.6897 2.51221 40.6709C2.51221 62.6522 19.9801 80.4307 41.5299 80.4307Z" fill="var(--sapContent_Illustrative_Color7)"/>
 <path d="M56.9426 5.559L42.363 0.925415L17.9214 73.583L32.508 78.206L56.9426 5.559Z" fill="var(--sapContent_Illustrative_Color8)"/>

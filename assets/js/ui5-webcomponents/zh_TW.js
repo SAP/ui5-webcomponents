@@ -1,6 +1,6 @@
 const __license = "This file has been derived from Unicode Common Locale Data Repository (CLDR) files (http://cldr.unicode.org). See the copyright and permission notice in the Unicode-Data-Files-LICENSE.txt available at the same location as this file or visit http://www.unicode.org/copyright.html";
 const __version = "35.1.0";
-const __buildtime = "2020-10-20T05:15:22.539Z";
+const __buildtime = "2022-05-02T19:26:05.809Z";
 const languages = {
   aa: "\u963F\u6CD5\u6587",
   ab: "\u963F\u5E03\u54C8\u8332\u6587",
@@ -1419,6 +1419,474 @@ const dateFields = {
     displayName: "\u6642\u5340"
   }
 };
+const timezoneNames = {
+  Africa: {
+    Abidjan: "\u963F\u6BD4\u8B93",
+    Accra: "\u963F\u514B\u62C9",
+    Addis_Ababa: "\u963F\u8FEA\u65AF\u963F\u8C9D\u5DF4",
+    Algiers: "\u963F\u723E\u53CA\u723E",
+    Asmara: "\u963F\u65AF\u746A\u62C9",
+    Bamako: "\u5DF4\u99AC\u79D1",
+    Bangui: "\u73ED\u5409",
+    Banjul: "\u73ED\u7AF9",
+    Bissau: "\u6BD4\u7D39",
+    Blantyre: "\u5E03\u862D\u592A\u723E",
+    Brazzaville: "\u5E03\u62C9\u67F4\u7DAD\u723E",
+    Bujumbura: "\u5E03\u677E\u5E03\u62C9",
+    Cairo: "\u958B\u7F85",
+    Casablanca: "\u5361\u85A9\u5E03\u862D\u5361",
+    Ceuta: "\u4F11\u9054",
+    Conakry: "\u67EF\u90A3\u514B\u91CC",
+    Dakar: "\u9054\u5580\u723E",
+    Dar_es_Salaam: "\u6C99\u862D\u6E2F",
+    Djibouti: "\u5409\u5E03\u5730",
+    Douala: "\u675C\u963F\u62C9",
+    El_Aaiun: "\u963F\u5C24\u6069",
+    Freetown: "\u81EA\u7531\u57CE",
+    Gaborone: "\u5609\u67CF\u9686\u91CC",
+    Harare: "\u54C8\u62C9\u96F7",
+    Johannesburg: "\u7D04\u7FF0\u5C3C\u65AF\u5821",
+    Juba: "\u6731\u5DF4",
+    Kampala: "\u574E\u5E15\u62C9",
+    Khartoum: "\u5580\u571F\u7A46",
+    Kigali: "\u57FA\u52A0\u5229",
+    Kinshasa: "\u91D1\u590F\u6C99",
+    Lagos: "\u62C9\u54E5\u65AF",
+    Libreville: "\u81EA\u7531\u5E02",
+    Lome: "\u6D1B\u7F8E",
+    Luanda: "\u7F85\u5B89\u9054",
+    Lubumbashi: "\u76E7\u672C\u5DF4\u5E0C",
+    Lusaka: "\u8DEF\u6C99\u5361",
+    Malabo: "\u99AC\u62C9\u535A",
+    Maputo: "\u99AC\u666E\u6258",
+    Maseru: "\u99AC\u8CFD\u9B6F",
+    Mbabane: "\u58A8\u5DF4\u672C",
+    Mogadishu: "\u6469\u52A0\u8FEA\u4F11",
+    Monrovia: "\u8499\u7F85\u7DAD\u4E9E",
+    Nairobi: "\u5948\u6D1B\u6BD4",
+    Ndjamena: "\u6069\u8CC8\u6885\u7D0D",
+    Niamey: "\u5C3C\u4E9E\u7F8E",
+    Nouakchott: "\u8AFE\u514B\u5C11",
+    Ouagadougou: "\u74E6\u52A0\u675C\u53E4",
+    "Porto-Novo": "\u6CE2\u591A\u8AFE\u4F5B",
+    Sao_Tome: "\u8056\u591A\u7F8E",
+    Tripoli: "\u7684\u9ECE\u6CE2\u91CC",
+    Tunis: "\u7A81\u5C3C\u65AF",
+    Windhoek: "\u6EAB\u5F97\u548C\u514B",
+    _parent: "\u975E\u6D32"
+  },
+  America: {
+    Adak: "\u827E\u9054\u514B",
+    Anchorage: "\u5B89\u514B\u62C9\u6CBB",
+    Anguilla: "\u5B89\u594E\u62C9",
+    Antigua: "\u5B89\u5730\u5361",
+    Araguaina: "\u963F\u62C9\u572D\u90A3",
+    Argentina: {
+      Buenos_Aires: "\u5E03\u5B9C\u8AFE\u65AF\u827E\u5229\u65AF",
+      Catamarca: "\u5361\u5854\u99AC\u5361",
+      Cordoba: "\u54E5\u591A\u83EF",
+      Jujuy: "\u80E1\u80E1\u4F0A",
+      La_Rioja: "\u62C9\u7565\u54C8",
+      Mendoza: "\u9580\u591A\u85A9",
+      Rio_Gallegos: "\u91CC\u5967\u52A0\u8036\u6208\u65AF",
+      Salta: "\u85A9\u723E\u5854",
+      San_Juan: "\u8056\u80E1\u5B89",
+      San_Luis: "\u8056\u8DEF\u6613",
+      Tucuman: "\u5410\u5EAB\u66FC",
+      Ushuaia: "\u70CF\u65AF\u61F7\u4E9E",
+      _parent: "\u963F\u6839\u5EF7"
+    },
+    Aruba: "\u8377\u5C6C\u963F\u9B6F\u5DF4",
+    Asuncion: "\u4E9E\u677E\u68EE",
+    Atikokan: "\u963F\u8482\u79D1\u80AF",
+    Bahia: "\u5DF4\u4F0A\u963F",
+    Bahia_Banderas: "\u5DF4\u4F0A\u4E9E\u73ED\u5FB7\u62C9\u65AF",
+    Barbados: "\u5DF4\u8C9D\u591A",
+    Belem: "\u8C9D\u502B",
+    Belize: "\u8C9D\u91CC\u65AF",
+    "Blanc-Sablon": "\u767D\u6717\u85A9\u5E03\u9686",
+    Boa_Vista: "\u4FDD\u7DAD\u65AF\u5854",
+    Bogota: "\u6CE2\u54E5\u5927",
+    Boise: "\u6CE2\u5915",
+    Cambridge_Bay: "\u528D\u6A4B\u7063",
+    Campo_Grande: "\u683C\u862D\u5834",
+    Cancun: "\u574E\u6606",
+    Caracas: "\u5361\u62C9\u5361\u65AF",
+    Cayenne: "\u958B\u96F2",
+    Cayman: "\u958B\u66FC\u7FA4\u5CF6",
+    Chicago: "\u829D\u52A0\u54E5",
+    Chihuahua: "\u5947\u83EF\u83EF",
+    Costa_Rica: "\u54E5\u65AF\u5927\u9ECE\u52A0",
+    Creston: "\u514B\u96F7\u65AF\u9813",
+    Cuiaba: "\u53E4\u96C5\u5DF4",
+    Curacao: "\u5EAB\u62C9\u7D22",
+    Danmarkshavn: "\u4E39\u99AC\u6C99\u6587",
+    Dawson: "\u9053\u68EE",
+    Dawson_Creek: "\u9053\u68EE\u514B\u91CC\u514B",
+    Denver: "\u4E39\u4F5B",
+    Detroit: "\u5E95\u7279\u5F8B",
+    Dominica: "\u591A\u7C73\u5C3C\u514B",
+    Edmonton: "\u827E\u5FB7\u8499\u541E",
+    Eirunepe: "\u827E\u9B6F\u5167\u4F69",
+    El_Salvador: "\u85A9\u723E\u74E6\u591A",
+    Fort_Nelson: "\u7D0D\u723E\u905C\u5821",
+    Fortaleza: "\u798F\u5854\u529B\u838E",
+    Glace_Bay: "\u683C\u96F7\u65AF\u8C9D",
+    Goose_Bay: "\u9D5D\u7063",
+    Grand_Turk: "\u5927\u7279\u514B\u5CF6",
+    Grenada: "\u683C\u745E\u7D0D\u9054",
+    Guadeloupe: "\u74DC\u5730\u6D1B\u666E",
+    Guatemala: "\u74DC\u5730\u99AC\u62C9",
+    Guayaquil: "\u74DC\u4E9E\u57FA\u723E",
+    Guyana: "\u84CB\u4E9E\u90A3",
+    Halifax: "\u54C8\u91CC\u6CD5\u514B\u65AF",
+    Havana: "\u54C8\u74E6\u90A3",
+    Hermosillo: "\u57C3\u83AB\u897F\u7D04",
+    Indiana: {
+      Indianapolis: "\u5370\u7B2C\u5B89\u90A3\u6CE2\u91CC\u65AF",
+      Knox: "\u5370\u7B2C\u5B89\u90A3\u5DDE\u8AFE\u514B\u65AF",
+      Marengo: "\u5370\u7B2C\u5B89\u90A3\u5DDE\u99AC\u502B\u54E5",
+      Petersburg: "\u5370\u7B2C\u5B89\u90A3\u5DDE\u5F7C\u5F97\u5821",
+      Tell_City: "\u5370\u7B2C\u5B89\u90A3\u5DDE\u6CF0\u723E\u57CE",
+      Vevay: "\u5370\u7B2C\u5B89\u90A3\u5DDE\u7DAD\u5A01",
+      Vincennes: "\u5370\u7B2C\u5B89\u90A3\u5DDE\u6EAB\u68EE\u65AF",
+      Winamac: "\u5370\u7B2C\u5B89\u90A3\u5DDE\u5A01\u7D0D\u99AC\u514B"
+    },
+    Inuvik: "\u4F0A\u5974\u7DAD\u514B",
+    Iqaluit: "\u4F0A\u9B41\u7279",
+    Jamaica: "\u7259\u8CB7\u52A0",
+    Juneau: "\u6731\u8AFE",
+    Kentucky: {
+      Louisville: "\u8DEF\u6613\u65AF\u7DAD\u723E",
+      Monticello: "\u80AF\u5854\u57FA\u5DDE\u8499\u5730\u537B\u7F85"
+    },
+    Kralendijk: "\u514B\u62C9\u502B\u4EE3\u514B",
+    La_Paz: "\u62C9\u5DF4\u65AF",
+    Lima: "\u5229\u99AC",
+    Los_Angeles: "\u6D1B\u6749\u78EF",
+    Lower_Princes: "\u4E0B\u592A\u5B50\u5340",
+    Maceio: "\u99AC\u745F\u6B50",
+    Managua: "\u99AC\u62FF\u74DC",
+    Manaus: "\u746A\u7459\u65AF",
+    Marigot: "\u99AC\u91CC\u6208\u7279",
+    Martinique: "\u99AC\u4E01\u5C3C\u514B",
+    Matamoros: "\u99AC\u5854\u83AB\u7F85\u65AF",
+    Mazatlan: "\u99AC\u85A9\u7279\u862D",
+    Menominee: "\u7F8E\u8AFE\u7C73\u5C3C",
+    Merida: "\u6885\u91CC\u9054",
+    Metlakatla: "\u6885\u7279\u62C9\u5361\u7279\u62C9",
+    Mexico_City: "\u58A8\u897F\u54E5\u5E02",
+    Miquelon: "\u5BC6\u555F\u5D19",
+    Moncton: "\u8499\u514B\u9813",
+    Monterrey: "\u8499\u7279\u745E",
+    Montevideo: "\u8499\u7279\u7DAD\u591A",
+    Montserrat: "\u8499\u54F2\u81D8",
+    Nassau: "\u62FF\u7D22",
+    New_York: "\u7D10\u7D04",
+    Nipigon: "\u5C3C\u76AE\u5CA1",
+    Nome: "\u8AFE\u59C6",
+    Noronha: "\u8AFE\u502B\u54C8",
+    North_Dakota: {
+      Beulah: "\u5317\u9054\u79D1\u4ED6\u5DDE\u5E03\u7531\u62C9",
+      Center: "\u5317\u9054\u79D1\u4ED6\u5DDE\u4E2D\u5FC3",
+      New_Salem: "\u5317\u9054\u79D1\u4ED6\u5DDE\u7D10\u6C99\u502B"
+    },
+    Nuuk: "\u52AA\u514B",
+    Ojinaga: "\u5967\u5E0C\u7D0D\u52A0",
+    Panama: "\u5DF4\u62FF\u99AC",
+    Pangnirtung: "\u6F58\u5C3C\u723E\u6771",
+    Paramaribo: "\u5DF4\u62C9\u99AC\u5229\u6CE2",
+    Phoenix: "\u9CF3\u51F0\u57CE",
+    "Port-au-Prince": "\u592A\u5B50\u6E2F",
+    Port_of_Spain: "\u897F\u73ED\u7259\u6E2F",
+    Porto_Velho: "\u7DAD\u7559\u6E2F",
+    Puerto_Rico: "\u6CE2\u591A\u9ECE\u5404",
+    Punta_Arenas: "\u84EC\u5854\u963F\u96F7\u7D0D\u65AF",
+    Rainy_River: "\u96E8\u6CB3\u93AE",
+    Rankin_Inlet: "\u862D\u4ECA\u7063",
+    Recife: "\u96F7\u897F\u975E",
+    Regina: "\u91CC\u8CC8\u7D0D",
+    Resolute: "\u7F85\u65AF\u9B6F\u7279",
+    Rio_Branco: "\u91CC\u7D04\u5E03\u862D",
+    Santa_Isabel: "\u8056\u4F0A\u85A9\u8C9D\u723E",
+    Santarem: "\u8056\u5854\u502B",
+    Santiago: "\u8056\u5730\u7259\u54E5",
+    Santo_Domingo: "\u8056\u591A\u660E\u54E5",
+    Sao_Paulo: "\u8056\u4FDD\u7F85",
+    Scoresbysund: "\u4F0A\u6258\u79D1\u723E\u6258\u7C73\u7279",
+    Sitka: "\u932B\u7279\u5361",
+    St_Barthelemy: "\u8056\u5DF4\u6258\u6D1B\u7E46\u5CF6",
+    St_Johns: "\u8056\u7D04\u7FF0",
+    St_Kitts: "\u8056\u57FA\u8328",
+    St_Lucia: "\u8056\u9732\u897F\u4E9E",
+    St_Thomas: "\u8056\u6258\u99AC\u65AF",
+    St_Vincent: "\u8056\u6587\u68EE",
+    Swift_Current: "\u65AF\u5A01\u592B\u7279\u5361\u502B\u7279",
+    Tegucigalpa: "\u5FB7\u53E4\u65AF\u52A0\u5DF4",
+    Thule: "\u675C\u91CC",
+    Thunder_Bay: "\u73CA\u5FB7\u7063",
+    Tijuana: "\u63D0\u83EF\u7D0D",
+    Toronto: "\u591A\u502B\u591A",
+    Tortola: "\u6258\u723E\u6258\u62C9",
+    Vancouver: "\u6EAB\u54E5\u83EF",
+    Whitehorse: "\u61F7\u7279\u970D\u65AF",
+    Winnipeg: "\u6EAB\u5C3C\u4F2F",
+    Yakutat: "\u96C5\u5EAB\u5854",
+    Yellowknife: "\u8036\u6D1B\u5948\u592B",
+    _parent: "\u7F8E\u6D32"
+  },
+  Antarctica: {
+    Casey: "\u51F1\u897F",
+    Davis: "\u6234\u7DAD\u65AF",
+    DumontDUrville: "\u675C\u8499\u675C\u6BD4\u723E",
+    Macquarie: "\u9EA5\u89BA\u7406",
+    Mawson: "\u83AB\u68EE",
+    McMurdo: "\u9EA5\u514B\u9ED8\u591A",
+    Palmer: "\u5E15\u9EA5",
+    Rothera: "\u7F85\u745F\u62C9",
+    Syowa: "\u662D\u548C\u57FA\u5730",
+    Troll: "\u7DBD\u723E",
+    Vostok: "\u6C83\u65AF\u6258\u514B",
+    _parent: "\u5357\u6975\u6D32"
+  },
+  Arctic: {
+    Longyearbyen: "\u9686\u610F\u8033\u62DC\u6069"
+  },
+  Asia: {
+    Aden: "\u4E9E\u4E01",
+    Almaty: "\u963F\u62C9\u6728\u5716",
+    Amman: "\u5B89\u66FC",
+    Anadyr: "\u963F\u90A3\u5E95",
+    Aqtau: "\u963F\u514B\u5957",
+    Aqtobe: "\u963F\u514B\u6258\u6BD4",
+    Ashgabat: "\u963F\u4EC0\u54C8\u5DF4\u7279",
+    Atyrau: "\u963F\u7279\u52DE",
+    Baghdad: "\u5DF4\u683C\u9054",
+    Bahrain: "\u5DF4\u6797",
+    Baku: "\u5DF4\u5EAB",
+    Bangkok: "\u66FC\u8C37",
+    Barnaul: "\u5DF4\u723E\u7459\u723E",
+    Beirut: "\u8C9D\u9B6F\u7279",
+    Bishkek: "\u6BD4\u4EC0\u51F1\u514B",
+    Brunei: "\u6C76\u840A",
+    Chita: "\u8D64\u5854",
+    Choibalsan: "\u55AC\u5DF4\u5C71",
+    Colombo: "\u53EF\u502B\u5761",
+    Damascus: "\u5927\u99AC\u58EB\u9769",
+    Dhaka: "\u9054\u5361",
+    Dili: "\u5E1D\u529B",
+    Dubai: "\u675C\u62DC",
+    Dushanbe: "\u675C\u6851\u8C9D",
+    Famagusta: "\u6CD5\u99AC\u53E4\u65AF\u5854",
+    Gaza: "\u52A0\u85A9",
+    Hebron: "\u8D6B\u5E03\u9686",
+    Ho_Chi_Minh: "\u80E1\u5FD7\u660E\u5E02",
+    Hong_Kong: "\u9999\u6E2F",
+    Hovd: "\u79D1\u5E03\u591A",
+    Irkutsk: "\u4F0A\u723E\u5EAB\u6B21\u514B",
+    Jakarta: "\u96C5\u52A0\u9054",
+    Jayapura: "\u52A0\u4E9E\u5E03\u62C9",
+    Jerusalem: "\u8036\u8DEF\u6492\u51B7",
+    Kabul: "\u5580\u5E03\u723E",
+    Kamchatka: "\u582A\u5BDF\u52A0",
+    Karachi: "\u5580\u62C9\u86A9",
+    Kathmandu: "\u52A0\u5FB7\u6EFF\u90FD",
+    Khandyga: "\u582A\u5730\u52A0",
+    Kolkata: "\u52A0\u723E\u5404\u7B54",
+    Krasnoyarsk: "\u514B\u62C9\u65AF\u8AFE\u4E9E\u723E\u65AF\u514B",
+    Kuala_Lumpur: "\u5409\u9686\u5761",
+    Kuching: "\u53E4\u6649",
+    Kuwait: "\u79D1\u5A01\u7279",
+    Macau: "\u6FB3\u9580",
+    Magadan: "\u99AC\u52A0\u4E39",
+    Makassar: "\u99AC\u5361\u6C99\u723E",
+    Manila: "\u99AC\u5C3C\u62C9",
+    Muscat: "\u99AC\u65AF\u958B\u7279",
+    Nicosia: "\u5C3C\u53E4\u897F\u4E9E",
+    Novokuznetsk: "\u65B0\u5EAB\u8332\u6D85\u8328\u514B",
+    Novosibirsk: "\u65B0\u897F\u4F2F\u5229\u4E9E",
+    Omsk: "\u9102\u6728\u65AF\u514B",
+    Oral: "\u70CF\u62C9\u723E",
+    Phnom_Penh: "\u91D1\u908A",
+    Pontianak: "\u5764\u7538",
+    Pyongyang: "\u5E73\u58E4",
+    Qatar: "\u5361\u9054",
+    Qostanay: "\u5EAB\u65AF\u5854\u5948",
+    Qyzylorda: "\u514B\u5B5C\u52D2\u5967\u723E\u9054",
+    Riyadh: "\u5229\u96C5\u5FB7",
+    Sakhalin: "\u5EAB\u9801\u5CF6",
+    Samarkand: "\u6492\u99AC\u723E\u7F55",
+    Seoul: "\u9996\u723E",
+    Shanghai: "\u4E0A\u6D77",
+    Singapore: "\u65B0\u52A0\u5761",
+    Srednekolymsk: "\u4E2D\u79D1\u96F7\u59C6\u65AF\u514B",
+    Taipei: "\u53F0\u5317",
+    Tashkent: "\u5854\u4EC0\u5E72",
+    Tbilisi: "\u7B2C\u6BD4\u5229\u65AF",
+    Tehran: "\u5FB7\u9ED1\u862D",
+    Thimphu: "\u5EF7\u5E03",
+    Tokyo: "\u6771\u4EAC",
+    Tomsk: "\u6258\u6728\u65AF\u514B",
+    Ulaanbaatar: "\u70CF\u862D\u5DF4\u6258",
+    Urumqi: "\u70CF\u9B6F\u6728\u9F4A",
+    "Ust-Nera": "\u70CF\u65AF\u5167\u62C9",
+    Vientiane: "\u6C38\u73CD",
+    Vladivostok: "\u6D77\u53C3\u5D34",
+    Yakutsk: "\u96C5\u5EAB\u6B21\u514B",
+    Yangon: "\u4EF0\u5149",
+    Yekaterinburg: "\u8449\u5361\u6377\u6797\u5821",
+    Yerevan: "\u8449\u91CC\u6EAB",
+    _parent: "\u4E9E\u6D32"
+  },
+  Atlantic: {
+    Azores: "\u4E9E\u901F\u723E\u7FA4\u5CF6",
+    Bermuda: "\u767E\u6155\u9054",
+    Canary: "\u52A0\u7D0D\u5229",
+    Cape_Verde: "\u7DAD\u5FB7\u89D2",
+    Faroe: "\u6CD5\u7F85\u7FA4\u5CF6",
+    Madeira: "\u99AC\u5F97\u62C9\u7FA4\u5CF6",
+    Reykjavik: "\u96F7\u514B\u96C5\u7DAD\u514B",
+    South_Georgia: "\u5357\u55AC\u6CBB\u4E9E",
+    St_Helena: "\u8056\u8D6B\u52D2\u62FF\u5CF6",
+    Stanley: "\u53F2\u5766\u5229"
+  },
+  Australia: {
+    Adelaide: "\u963F\u5F97\u96F7\u5FB7",
+    Brisbane: "\u5E03\u5229\u65AF\u73ED",
+    Broken_Hill: "\u5E03\u7F85\u80AF\u5E0C\u723E",
+    Darwin: "\u9054\u723E\u6587",
+    Eucla: "\u5C24\u514B\u62C9",
+    Hobart: "\u8377\u5DF4\u7279",
+    Lindeman: "\u6797\u5FB7\u66FC",
+    Lord_Howe: "\u8C6A\u52F3\u7235\u5CF6",
+    Melbourne: "\u58A8\u723E\u672C",
+    Perth: "\u4F2F\u65AF",
+    Sydney: "\u96EA\u68A8",
+    _parent: "\u6FB3\u6D32"
+  },
+  Etc: {
+    UTC: "UTC",
+    Universal: "\u4E16\u754C\u6A19\u6E96\u6642\u9593"
+  },
+  Europe: {
+    Amsterdam: "\u963F\u59C6\u65AF\u7279\u4E39",
+    Andorra: "\u5B89\u9053\u723E",
+    Astrakhan: "\u963F\u65AF\u7279\u62C9\u7F55",
+    Athens: "\u96C5\u5178",
+    Belgrade: "\u8C9D\u723E\u683C\u52D2",
+    Berlin: "\u67CF\u6797",
+    Bratislava: "\u5E03\u62C9\u63D0\u65AF\u62C9\u74E6",
+    Brussels: "\u5E03\u9B6F\u585E\u723E",
+    Bucharest: "\u5E03\u52A0\u52D2\u65AF\u7279",
+    Budapest: "\u5E03\u9054\u4F69\u65AF",
+    Busingen: "\u5E03\u8F9B\u6839",
+    Chisinau: "\u57FA\u897F\u7D10",
+    Copenhagen: "\u54E5\u672C\u54C8\u6839",
+    Dublin: "\u90FD\u67CF\u6797",
+    Gibraltar: "\u76F4\u5E03\u7F85\u9640",
+    Guernsey: "\u6839\u606F\u5CF6",
+    Helsinki: "\u8D6B\u723E\u8F9B\u57FA",
+    Isle_of_Man: "\u66FC\u5CF6",
+    Istanbul: "\u4F0A\u65AF\u5766\u5821",
+    Jersey: "\u6FA4\u897F\u5CF6",
+    Kaliningrad: "\u52A0\u91CC\u5BE7\u683C\u52D2",
+    Kiev: "\u57FA\u8F14",
+    Kirov: "\u57FA\u6D1B\u592B",
+    Lisbon: "\u91CC\u65AF\u672C",
+    Ljubljana: "\u76E7\u6BD4\u5B89\u7D0D",
+    London: "\u502B\u6566",
+    Luxembourg: "\u76E7\u68EE\u5821",
+    Madrid: "\u99AC\u5FB7\u91CC",
+    Malta: "\u99AC\u723E\u4ED6",
+    Mariehamn: "\u746A\u9E97\u6E2F",
+    Minsk: "\u660E\u65AF\u514B",
+    Monaco: "\u6469\u7D0D\u54E5",
+    Moscow: "\u83AB\u65AF\u79D1",
+    Oslo: "\u5967\u65AF\u9678",
+    Paris: "\u5DF4\u9ECE",
+    Podgorica: "\u6CE2\u591A\u91CC\u5BDF",
+    Prague: "\u5E03\u62C9\u683C",
+    Riga: "\u91CC\u52A0",
+    Rome: "\u7F85\u99AC",
+    Samara: "\u6C99\u99AC\u62C9",
+    San_Marino: "\u8056\u99AC\u5229\u8AFE",
+    Sarajevo: "\u585E\u62C9\u8036\u4F5B",
+    Saratov: "\u85A9\u62C9\u6258\u592B",
+    Simferopol: "\u8F9B\u975E\u6D1B\u6D66",
+    Skopje: "\u53F2\u9AD8\u6BD4\u8036",
+    Sofia: "\u7D22\u83F2\u4E9E",
+    Stockholm: "\u65AF\u5FB7\u54E5\u723E\u6469",
+    Tallinn: "\u5854\u6797",
+    Tirane: "\u5730\u62C9\u90A3",
+    Ulyanovsk: "\u70CF\u91CC\u63DA\u8AFE\u592B\u65AF\u514B",
+    Uzhgorod: "\u70CF\u8332\u54E5\u6D1B",
+    Vaduz: "\u74E6\u90FD\u8332",
+    Vatican: "\u68B5\u8482\u5CA1",
+    Vienna: "\u7DAD\u4E5F\u7D0D",
+    Vilnius: "\u7DAD\u723E\u7D10\u65AF",
+    Volgograd: "\u4F0F\u723E\u52A0\u683C\u52D2",
+    Warsaw: "\u83EF\u6C99",
+    Zagreb: "\u672D\u683C\u745E\u5E03",
+    Zaporozhye: "\u672D\u6CE2\u7F85\u7D50",
+    Zurich: "\u8607\u9ECE\u4E16",
+    _parent: "\u6B50\u6D32"
+  },
+  Indian: {
+    Antananarivo: "\u5B89\u5854\u90A3\u90A3\u5229\u5F17",
+    Chagos: "\u67E5\u6208\u65AF",
+    Christmas: "\u8056\u8A95\u5CF6",
+    Cocos: "\u79D1\u79D1\u65AF\u7FA4\u5CF6",
+    Comoro: "\u79D1\u6469\u7F85\u7FA4\u5CF6",
+    Kerguelen: "\u51F1\u723E\u84CB\u6717\u5CF6",
+    Mahe: "\u99AC\u57C3\u5CF6",
+    Maldives: "\u99AC\u723E\u5730\u592B",
+    Mauritius: "\u6A21\u91CC\u897F\u65AF",
+    Mayotte: "\u99AC\u7D04\u7279\u5CF6",
+    Reunion: "\u7559\u5C3C\u65FA\u5CF6"
+  },
+  Pacific: {
+    Apia: "\u963F\u76AE\u4E9E",
+    Auckland: "\u5967\u514B\u862D",
+    Bougainville: "\u5E03\u5E72\u7DAD\u723E",
+    Chatham: "\u67E5\u5766",
+    Chuuk: "\u695A\u514B",
+    Easter: "\u5FA9\u6D3B\u5CF6",
+    Efate: "\u57C3\u6CD5\u7279",
+    Fakaofo: "\u6CD5\u8003\u798F",
+    Fiji: "\u6590\u6FDF",
+    Funafuti: "\u5BCC\u90A3\u5BCC\u63D0",
+    Galapagos: "\u52A0\u62C9\u5DF4\u54E5\u7FA4\u5CF6",
+    Gambier: "\u7518\u6BD4\u723E\u7FA4\u5CF6",
+    Guadalcanal: "\u74DC\u9054\u5EB7\u7D0D\u723E\u5CF6",
+    Guam: "\u95DC\u5CF6",
+    Honolulu: "\u6A80\u9999\u5C71",
+    Kiritimati: "\u57FA\u91CC\u5730\u99AC\u5730\u5CF6",
+    Kosrae: "\u79D1\u65AF\u745E",
+    Kwajalein: "\u74DC\u52A0\u6797\u5CF6",
+    Majuro: "\u99AC\u6731\u8AFE",
+    Marquesas: "\u99AC\u53EF\u85A9\u65AF\u5CF6",
+    Midway: "\u4E2D\u9014\u5CF6",
+    Nauru: "\u8AFE\u9B6F",
+    Niue: "\u7D10\u57C3\u5CF6",
+    Norfolk: "\u8AFE\u798F\u514B",
+    Noumea: "\u8AFE\u7F8E\u4E9E",
+    Pago_Pago: "\u5DF4\u54E5\u5DF4\u54E5",
+    Palau: "\u5E1B\u7409",
+    Pitcairn: "\u76AE\u7279\u80AF\u7FA4\u5CF6",
+    Pohnpei: "\u6CE2\u7D0D\u4F69",
+    Port_Moresby: "\u83AB\u58EB\u6BD4\u6E2F",
+    Rarotonga: "\u62C9\u7F85\u6E6F\u52A0",
+    Saipan: "\u585E\u73ED",
+    Tahiti: "\u5927\u6EAA\u5730",
+    Tarawa: "\u5854\u62C9\u74E6",
+    Tongatapu: "\u6771\u52A0\u5854\u5E03\u5CF6",
+    Wake: "\u5A01\u514B",
+    Wallis: "\u74E6\u5229\u65AF"
+  }
+};
+const timezoneNamesFormats = {
+  gmtFormat: "GMT{0}"
+};
 const decimalFormat = {
   standard: "#,##0.###"
 };
@@ -2204,6 +2672,35 @@ const timeData = {
   _allowed: "hB hb h H",
   _preferred: "h"
 };
+const dayPeriodRules = {
+  afternoon1: {
+    _before: "13:00",
+    _from: "12:00"
+  },
+  afternoon2: {
+    _before: "19:00",
+    _from: "13:00"
+  },
+  evening1: {
+    _before: "24:00",
+    _from: "19:00"
+  },
+  midnight: {
+    _at: "00:00"
+  },
+  morning1: {
+    _before: "08:00",
+    _from: "05:00"
+  },
+  morning2: {
+    _before: "12:00",
+    _from: "08:00"
+  },
+  night1: {
+    _before: "05:00",
+    _from: "00:00"
+  }
+};
 const calendarPreference = "gregorian roc chinese";
 var zh_TW = {
   __license,
@@ -2680,6 +3177,66 @@ var zh_TW = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
+      }
+    },
     "era-wide": {
       "0": "\u897F\u5143\u524D",
       "1": "\u897F\u5143"
@@ -3151,6 +3708,66 @@ var zh_TW = {
           "\u4E0A\u5348",
           "\u4E0B\u5348"
         ]
+      }
+    },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
       }
     },
     "era-wide": {
@@ -3629,6 +4246,66 @@ var zh_TW = {
           "\u4E0A\u5348",
           "\u4E0B\u5348"
         ]
+      }
+    },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
       }
     },
     "era-wide": {
@@ -4113,6 +4790,66 @@ var zh_TW = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
+      }
+    },
     "era-wide": {
       "0": "\u6CE2\u65AF\u66C6"
     },
@@ -4583,6 +5320,66 @@ var zh_TW = {
         ]
       }
     },
+    flexibleDayPeriods: {
+      format: {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
+      },
+      "stand-alone": {
+        abbreviated: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        narrow: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        },
+        wide: {
+          midnight: "\u5348\u591C",
+          morning1: "\u6E05\u6668",
+          morning2: "\u4E0A\u5348",
+          afternoon1: "\u4E2D\u5348",
+          afternoon2: "\u4E0B\u5348",
+          evening1: "\u665A\u4E0A",
+          night1: "\u51CC\u6668"
+        }
+      }
+    },
     "era-wide": {
       "0": "\u4F5B\u66C6"
     },
@@ -4594,6 +5391,8 @@ var zh_TW = {
     }
   },
   dateFields,
+  timezoneNames,
+  timezoneNamesFormats,
   decimalFormat,
   "decimalFormat-long": {
     "1000-other": "0",
@@ -4746,6 +5545,7 @@ var zh_TW = {
       _start: "2019-5-1"
     }
   },
+  dayPeriodRules,
   calendarPreference
 };
-export { __buildtime, __license, __version, calendarPreference, currencyDigits, currencyFormat, currencySymbols, dateFields, decimalFormat, zh_TW as default, languages, miscPattern, orientation, percentFormat, plurals, rtl, scientificFormat, scripts, territories, timeData, units };
+export { __buildtime, __license, __version, calendarPreference, currencyDigits, currencyFormat, currencySymbols, dateFields, dayPeriodRules, decimalFormat, zh_TW as default, languages, miscPattern, orientation, percentFormat, plurals, rtl, scientificFormat, scripts, territories, timeData, timezoneNames, timezoneNamesFormats, units };

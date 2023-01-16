@@ -1,4 +1,4 @@
-import { r as registerIllustration, A as IM_TITLE_NONOTIFICATIONS, B as IM_SUBTITLE_NONOTIFICATIONS } from "./bundle.esm2.js";
+import { r as registerIllustration, E as IM_TITLE_NONOTIFICATIONS, F as IM_SUBTITLE_NONOTIFICATIONS } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="161" height="161" viewBox="0 0 161 161" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-SimpleBell">
 <path d="M89.1201 18.9023C87.0112 18.9023 84.9887 19.74 83.4975 21.2312C82.0064 22.7224 81.1687 24.7448 81.1687 26.8536V37.8408H97.0823V26.8536C97.0794 24.7438 96.2392 22.7214 94.7463 21.2305C93.2534 19.7397 91.2299 18.9023 89.1201 18.9023Z" fill="var(--sapContent_Illustrative_Color15)"/>
 <path d="M130.616 71.4721V107.405H47.062V71.4721C47.062 60.3921 51.4635 49.766 59.2983 41.9312C67.133 34.0965 77.7592 29.6949 88.8392 29.6949C99.9192 29.6949 110.545 34.0965 118.38 41.9312C126.215 49.766 130.616 60.3921 130.616 71.4721Z" fill="var(--sapContent_Illustrative_Color3)"/>

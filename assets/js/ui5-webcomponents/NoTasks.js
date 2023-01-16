@@ -1,4 +1,4 @@
-import { r as registerIllustration, G as IM_TITLE_NOTASKS, H as IM_SUBTITLE_NOTASKS } from "./bundle.esm2.js";
+import { r as registerIllustration, L as IM_TITLE_NOTASKS, M as IM_SUBTITLE_NOTASKS } from "./bundle.esm2.js";
 var dialogSvg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="160" viewBox="0 0 160 160" id="sapIllus-Dialog-NoTasks">
       <path class="sapIllus_BackgroundColor" d="M145,97.0426c0,27.58-18.2211,42.8945-41.6416,48.3423-20.648,4.8028-46.97,8.5323-66.6763-3.1025-17.9374-10.5906-19.2452-34.5187-19.6677-54.4875C16.1976,49.1763,50.3365,30,81.7246,30,118.7682,30,144.9991,61.7174,145,97.0426Z"/>
       <path class="sapIllus_AccentColor" d="M19.7272,15.5613c-2.7045-1.0646-4.0164-3.65-5.0313-6.2854A.4261.4261,0,0,0,14.305,9H14.3a.4257.4257,0,0,0-.3926.2662c-1.3535,3.2757-3.3658,4.95-5.6959,6.8894l-.054.0451a.4415.4415,0,0,0-.1456.44.4315.4315,0,0,0,.3261.3235c2.0556.4456,5.2367,4.4551,5.2367,6.6A.4248.4248,0,0,0,14.0005,24a.4271.4271,0,0,0,.4084-.3125c.6822-2.3748,2.6612-6.2815,5.3166-7.3129a.439.439,0,0,0,.0017-.8133Z"/>

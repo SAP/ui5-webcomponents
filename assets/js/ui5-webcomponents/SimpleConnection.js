@@ -1,4 +1,4 @@
-import { r as registerIllustration, f as IM_TITLE_UNABLETOLOAD, g as IM_SUBTITLE_UNABLETOLOAD } from "./bundle.esm2.js";
+import { r as registerIllustration, h as IM_TITLE_UNABLETOLOAD, i as IM_SUBTITLE_UNABLETOLOAD } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="121" height="160" viewBox="0 0 121 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-SimpleConnection">
 <g clip-path="url(#clip0_291_417)">
 <path d="M41.6147 80.1929H60.123C61.4007 80.1929 62.4365 79.157 62.4365 77.8793C62.4365 76.6016 61.4007 75.5658 60.123 75.5658H41.6147C40.337 75.5658 39.3012 76.6016 39.3012 77.8793C39.3012 79.157 40.337 80.1929 41.6147 80.1929Z" fill="var(--sapContent_Illustrative_Color3)"/>

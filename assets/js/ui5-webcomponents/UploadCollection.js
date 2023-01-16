@@ -1,4 +1,4 @@
-import { r as registerIllustration, V as IM_TITLE_UPLOADCOLLECTION, W as IM_SUBTITLE_UPLOADCOLLECTION } from "./bundle.esm2.js";
+import { r as registerIllustration, Z as IM_TITLE_UPLOADCOLLECTION, _ as IM_SUBTITLE_UPLOADCOLLECTION } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="135" viewBox="0 0 160 135" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-UploadCollection">
 <circle cx="60.9869" cy="60.9869" r="60.9869" fill="var(--sapContent_Illustrative_Color7)"/>
 <mask id="mask0_1663_6930" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="0" y="0" width="122" height="122">
