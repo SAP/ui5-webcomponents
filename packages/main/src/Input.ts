@@ -1708,7 +1708,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	static get dependencies() {
 		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
 
-		return [Popover, Icon].concat(Suggestions ? Suggestions.dependencies : []);
+		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {

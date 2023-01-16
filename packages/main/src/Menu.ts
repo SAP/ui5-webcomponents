@@ -19,7 +19,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-// @ts-ignore
 import ResponsivePopover from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
@@ -27,6 +26,7 @@ import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import type MenuItem from "./MenuItem.js";
 import type { ClickEventDetail } from "./List.js";
+import type { BeforeCloseEventDetail } from "./Popup.js";
 import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
@@ -36,13 +36,6 @@ import {
 
 // Styles
 import staticAreaMenuCss from "./generated/themes/Menu.css.js";
-
-type TempResponsivePopover = HTMLElement & {
-	initialFocus: string,
-	showAt: (opener: HTMLElement) => Promise<void>,
-	close: () => void,
-	resetFocus: () => void,
-}
 
 type CurrentItem = {
 	item: MenuItem,
@@ -182,7 +175,7 @@ class Menu extends UI5Element {
 	 *
 	 * @name sap.ui.webc.main.Menu.prototype.opener
 	 * @public
-	 * @type {DOMReference}
+	 * @type {sap.ui.webc.base.types.DOMReference}
 	 * @defaultvalue ""
 	 * @since 1.10.0
 	 */
@@ -229,7 +222,7 @@ class Menu extends UI5Element {
 	 * Stores the ResponsivePopover instance
 	 */
 	@property({ type: Object, defaultValue: undefined })
-	_popover?: TempResponsivePopover;
+	_popover?: ResponsivePopover;
 
 	/**
 	 * Stores parent menu item (if there is such).
@@ -393,7 +386,7 @@ class Menu extends UI5Element {
 
 	async _createPopover() {
 		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-		this._popover = staticAreaItemDomRef!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		this._popover = staticAreaItemDomRef!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this._popover;
 	}
 
@@ -586,8 +579,8 @@ class Menu extends UI5Element {
 		this.fireEvent("after-open");
 	}
 
-	_beforePopoverClose(e: CustomEvent) { // Fix when Popover made TS
-		const prevented = !this.fireEvent("before-close", { escPressed: e.detail.escPressed	}, true, false);
+	_beforePopoverClose(e: CustomEvent<BeforeCloseEventDetail>) {
+		const prevented = !this.fireEvent("before-close", { escPressed: e.detail.escPressed }, true, false);
 
 		if (prevented) {
 			this.open = true;

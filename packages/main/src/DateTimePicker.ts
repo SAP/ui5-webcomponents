@@ -9,6 +9,7 @@ import "@ui5/webcomponents-icons/dist/date-time.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import Button from "./Button.js";
+import type ResponsivePopover from "./ResponsivePopover.js";
 // @ts-ignore
 import ToggleButton from "./ToggleButton.js";
 // @ts-ignore
@@ -42,13 +43,6 @@ type PreviewValues = {
 	timeSelectionValue?: string,
 	calendarTimestamp?: number,
 	calendarValue?: string,
-}
-
-type TempResponsivePopover = HTMLElement & {
-	initialFocus: string,
-	showAt: (opener: HTMLElement) => Promise<void>,
-	close: () => void,
-	resetFocus: () => void,
 }
 
 /**
@@ -416,7 +410,7 @@ class DateTimePicker extends DatePicker {
 
 	async getPicker() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	getSelectedDateTime() {
