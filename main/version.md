@@ -1,5 +1,5 @@
-commit 00d9e705edd2116afea0d416db99643d4f6633f3
+commit c4b77ef800f861b4eeb4c140c298e8c688832363
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Jan 16 12:51:59 2023 +0200
+Date:   Mon Jan 16 15:50:00 2023 +0200
 
-    fix(playground): build and deploy (#6279)
+    chore(playground): change latest version (#6282)
