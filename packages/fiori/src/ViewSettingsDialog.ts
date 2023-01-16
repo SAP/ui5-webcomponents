@@ -8,11 +8,9 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-// @ts-ignore
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
-// @ts-ignore
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import type { ClickEventDetail } from "@ui5/webcomponents/dist/List.js";
@@ -74,12 +72,6 @@ type VSDInternalSettings = {
 	sortOrder: Array<VSDItem>,
 	sortBy: Array<VSDItem & {index: number}>,
 	filters: Array<VSDItem & {filterOptions: Array<VSDItem>}>,
-}
-
-type DialogTemp = UI5Element & { // Delete after Dialog is done
-	isOpen: () => boolean,
-	show: (preventInitialFocus: boolean) => void,
-	close: () => void,
 }
 
 /**
@@ -254,7 +246,7 @@ class ViewSettingsDialog extends UI5Element {
 	@slot()
 	filterItems!: Array<FilterItem>;
 
-	_dialog?: DialogTemp;
+	_dialog?: Dialog;
 	_sortOrder?: List;
 	_sortBy?: List;
 
@@ -302,11 +294,11 @@ class ViewSettingsDialog extends UI5Element {
 			Bar,
 			Button,
 			Title,
-			Dialog as typeof UI5Element,
+			Dialog,
 			Label,
 			List,
 			StandardListItem,
-			GroupHeaderListItem as typeof UI5Element,
+			GroupHeaderListItem,
 			SegmentedButton as typeof UI5Element,
 			SegmentedButtonItem as typeof UI5Element,
 		];
@@ -502,7 +494,7 @@ class ViewSettingsDialog extends UI5Element {
 	}
 
 	get _dialogDomRef() {
-		return this.shadowRoot!.querySelector<DialogTemp>("[ui5-dialog]")!;
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
 	/**
