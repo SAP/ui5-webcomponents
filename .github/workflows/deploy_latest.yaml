@@ -2,7 +2,7 @@ name: Deploy Latest Playground
 
 on:
   push:
-    branches: [ latest-release-website ]
+    branches: [ playground-test ]
 jobs:
   deploy:
     runs-on: ubuntu-latest
