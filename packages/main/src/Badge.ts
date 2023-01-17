@@ -44,7 +44,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * @since 0.12.0
  * @public
  */
-@customElement("ui5-avatar")
+@customElement("ui5-badge")
 @languageAware
 class Badge extends UI5Element {
 	/**
@@ -85,7 +85,7 @@ class Badge extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
-	text!: Array<HTMLElement>;
+	text!: Array<Node>;
 
 	/**
 	 * Defines the icon to be displayed in the component.
