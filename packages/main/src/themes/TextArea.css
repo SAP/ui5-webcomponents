@@ -412,7 +412,7 @@
 	display: none;
 }
 
-:host:not([disabled]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host(:not([disabled])) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 	border-top-right-radius: var(--sapField_BorderCornerRadius);
