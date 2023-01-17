@@ -1,15 +1,7 @@
-commit 665107b983424a60d3cf735ef3e0f99498f237de
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Tue Jan 17 16:31:01 2023 +0200
+commit 9d833ff4c0820e1a7f5c4244bbbb953db8fbd58e
+Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
+Date:   Tue Jan 17 16:47:09 2023 +0200
 
-    fix(ui5-tree): correct forwarding of mode value to items (#6277)
+    refactor(ui5-card, ui5-card-header): migrate to TypeScript (#6290)
     
-    * fix(ui5-tree): prepare the whole set of items by ui5-list
-    
-    * fix: test code
-    
-    * feat: better solution
-    
-    * chore: restore package.json
-    
-    * chore: restore variable name
+    * refactor(ui5-card, ui5-card-header): migrated to TS
