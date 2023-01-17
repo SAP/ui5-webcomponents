@@ -14,7 +14,7 @@ import Icon from "./Icon.js";
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,
-	//@ts-ignore
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -120,8 +120,8 @@ class Card extends UI5Element {
 			root: {
 				"ui5-card-root": true,
 				"ui5-card--nocontent": !this.content.length,
-			}
-		}
+			},
+		};
 	}
 
 	get _hasHeader() {

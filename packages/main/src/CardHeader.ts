@@ -69,7 +69,6 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  */
 @event("click")
 class CardHeader extends UI5Element {
-
 	/**
 	 * Defines the title text.
 	 * @type {string}
@@ -165,8 +164,8 @@ class CardHeader extends UI5Element {
 				"ui5-card-header--interactive": this.interactive,
 				"ui5-card-header--active": this.interactive && this._headerActive,
 				"ui5-card-header-ff": isFirefox(),
-			}
-		}
+			},
+		};
 	}
 
 	get _root() {
