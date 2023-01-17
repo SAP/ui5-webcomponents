@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1673962047
+  buildTime: 1673965922
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -9227,7 +9227,7 @@ let List = List_1 = class List2 extends UI5Element {
     };
   }
   prepareListItems() {
-    const slottedItems = this.getItems();
+    const slottedItems = this.getItemsForProcessing();
     slottedItems.forEach((item, key) => {
       const isLastChild = key === slottedItems.length - 1;
       const showBottomBorder = this.separators === ListSeparators$1.All || this.separators === ListSeparators$1.Inner && !isLastChild;
@@ -9317,6 +9317,9 @@ let List = List_1 = class List2 extends UI5Element {
   }
   getItems() {
     return this.getSlottedNodes("items");
+  }
+  getItemsForProcessing() {
+    return this.getItems();
   }
   _onkeydown(e2) {
     if (isTabNext(e2)) {
@@ -34007,17 +34010,20 @@ class TreeList extends List$1 {
   static get metadata() {
     return metadata$i;
   }
-  getItems() {
+  getItems(includeCollapsed = false) {
     const slottedItems = this.getSlottedNodes("items");
     const flatItems = [];
-    flattenTree(slottedItems, flatItems);
+    flattenTree(slottedItems, flatItems, includeCollapsed);
     return flatItems;
   }
+  getItemsForProcessing() {
+    return this.getItems(true);
+  }
 }
-const flattenTree = (items, result) => {
+const flattenTree = (items, result, includeCollapsed) => {
   items.forEach((item) => {
     result.push(item);
-    if (item.expanded && item.items) {
+    if ((item.expanded || includeCollapsed) && item.items) {
       flattenTree(item.items, result);
     }
   });

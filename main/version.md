@@ -1,9 +1,15 @@
-commit 2075b2cee52151f2ac0f9cf6188d3c400cc37d83
-Author: niyap <38278268+niyap@users.noreply.github.com>
-Date:   Tue Jan 17 15:26:12 2023 +0200
+commit 665107b983424a60d3cf735ef3e0f99498f237de
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Tue Jan 17 16:31:01 2023 +0200
 
-    fix(ui5-textarea): adjust styles according to the visual specification (#6274)
+    fix(ui5-tree): correct forwarding of mode value to items (#6277)
     
-    * fix(ui5-textarea): adjust styles according to the visual specification
+    * fix(ui5-tree): prepare the whole set of items by ui5-list
     
-    * fix(ui5-textarea): fix scrollbar background-image
+    * fix: test code
+    
+    * feat: better solution
+    
+    * chore: restore package.json
+    
+    * chore: restore variable name
