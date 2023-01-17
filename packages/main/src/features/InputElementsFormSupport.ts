@@ -7,6 +7,7 @@ interface IFormElement extends UI5Element {
 	disabled?: boolean,
 	required?: boolean,
 	multiple?: boolean,
+	checked?: boolean,
 }
 
 type NativeInputUpdateCallback = (element: IFormElement, nativeInput: HTMLInputElement) => void;
