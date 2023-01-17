@@ -24,13 +24,13 @@ import {
 	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
-// Template
-import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
-
 // Styles
 import checkboxCss from "./generated/themes/CheckBox.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
+
+// Template
+import CheckBoxTemplate from "./generated/templates/CheckBoxTemplate.lit.js";
 
 let isGlobalHandlerAttached = false;
 let activeCb: CheckBox;
@@ -87,7 +87,7 @@ let activeCb: CheckBox;
  * Fired when the component checked state changes.
  *
  * @public
- * @event
+ * @event sap.ui.webc.main.CheckBox#change
  */
 @event("change")
 
@@ -95,9 +95,9 @@ class CheckBox extends UI5Element {
 	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @type {string}
-	 * @defaultvalue ""packages/main/src/CheckBox.ts
+	 * @defaultvalue ""
 	 * @name sap.ui.webc.main.CheckBox.prototype.accessibleNameRef
-	 * @publicpackages/main/src/CheckBox_2.js
+	 * @public
 	 * @since 1.1.0
 	 */
 	@property()
@@ -414,7 +414,7 @@ class CheckBox extends UI5Element {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get effectiveriaChecked() {
+	get effectiveriAChecked() {
 		return this.indeterminate && this.checked ? "mixed" : this.checked;
 	}
 
@@ -435,7 +435,9 @@ class CheckBox extends UI5Element {
 	}
 
 	get valueStateText() {
-		return this.valueState !== ValueState.None && this.valueState !== ValueState.Information ? this.valueStateTextMappings()[this.valueState] : undefined;
+		if (this.valueState !== ValueState.None && this.valueState !== ValueState.Information) {
+			return this.valueStateTextMappings()[this.valueState];
+		}
 	}
 
 	get effectiveTabIndex() {
