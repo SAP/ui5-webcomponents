@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1673878774
+  buildTime: 1673938886
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -1557,7 +1557,7 @@ const SAPSupportabilityLocales = /(?:^|-)(saptrc|sappsd)(?:-|$)/i;
 const M_ISO639_NEW_TO_OLD = {
   "he": "iw",
   "yi": "ji",
-  "id": "in",
+  "nb": "no",
   "sr": "sh"
 };
 const normalizeLocale = (locale) => {

@@ -1,7 +1,10 @@
-commit 237d113bf6ed189e97a00cf4c557bf57740b4ead
+commit 7fef62f269c2e3903139aaf9dbb92519a77c6918
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 16 16:18:29 2023 +0200
+Date:   Tue Jan 17 09:00:19 2023 +0200
 
-    chore: remove ts-ignore on migrated components imports (#6280)
+    fix(i18n): add mapping for norwegian locale (#6284)
     
-    We used to have temp types for components that haven't been migrated to TS. Now as they are in TS, we can directly use them and remove the "ts-ignore" comments on those component imports any temp types created meanwhile.
+    The change adds "nb": "no" to fallback to "no" locale, when "nb" is set.
+    In addition the mapping from the old ISO639 language code "in" to "id" removed to align with SAPUI5/OpenUI5 mappings, where "in" to "id" mapping has been also removed with SAP/openui5@b4efdf1
+    
+    Fixes: #6283
