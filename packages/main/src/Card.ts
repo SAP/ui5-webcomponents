@@ -1,6 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -8,76 +14,11 @@ import Icon from "./Icon.js";
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,
+	//@ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import cardCss from "./generated/themes/Card.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-card",
-	languageAware: true,
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.main.Card.prototype */ {
-
-		/**
-		 * Defines the content of the component.
-		 * @type {HTMLElement[]}
-		 * @slot content
-		 * @public
-		 */
-		"default": {
-			propertyName: "content",
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the header of the component.
-		 * <br><br>
-		 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
-		 * @type {HTMLElement[]}
-		 * @since 1.0.0-rc.15
-		 * @slot content
-		 * @public
-		 */
-		header: {
-			type: HTMLElement,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.Card.prototype */ {
-
-		/**
-		 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
-		 * <b>Note:</b> <code>accessibleName</code> should be always set, unless <code>accessibleNameRef</code> is set.
-		 *
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.16
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Defines the IDs of the elements that label the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.16
-		 */
-		accessibleNameRef: {
-			type: String,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.Card.prototype */ {
-
-	},
-};
 
 /**
  * @class
@@ -108,10 +49,59 @@ const metadata = {
  * @public
  * @appenddocs CardHeader
  */
+@customElement("ui5-card")
+@languageAware
 class Card extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
+	 * <b>Note:</b> <code>accessibleName</code> should be always set, unless <code>accessibleNameRef</code> is set.
+	 *
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.Card.prototype.accessibleName
+	 * @public
+	 * @since 1.0.0-rc.16
+	*/
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Defines the IDs of the elements that label the component.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.Card.prototype.accessibleNameRef
+	 * @public
+	 * @since 1.0.0-rc.16
+	*/
+	@property()
+	accessibleNameRef!: string;
+
+	/**
+	 * Defines the content of the component.
+	 * @type {HTMLElement[]}
+	 * @slot content
+	 * @name sap.ui.webc.main.Card.prototype.default
+	 * @public
+	*/
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
+
+	/**
+	 * Defines the header of the component.
+	 * <br><br>
+	 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
+	 * @type {HTMLElement[]}
+	 * @since 1.0.0-rc.15
+	 * @slot header
+	 * @name sap.ui.webc.main.Card.prototype.header
+	 * @public
+	*/
+	@slot()
+	header!: Array<HTMLElement>;
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -127,9 +117,11 @@ class Card extends UI5Element {
 
 	get classes() {
 		return {
-			"ui5-card-root": true,
-			"ui5-card--nocontent": !this.content.length,
-		};
+			root: {
+				"ui5-card-root": true,
+				"ui5-card--nocontent": !this.content.length,
+			}
+		}
 	}
 
 	get _hasHeader() {
@@ -139,11 +131,11 @@ class Card extends UI5Element {
 	get _getAriaLabel() {
 		const effectiveAriaLabelText = getEffectiveAriaLabelText(this),
 			effectiveAriaLabel = effectiveAriaLabelText ? ` ${effectiveAriaLabelText}` : "";
-		return Card.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD) + effectiveAriaLabel;
+		return Card.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD as I18nText) + effectiveAriaLabel;
 	}
 
 	get _ariaCardContentLabel() {
-		return Card.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
+		return Card.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT as I18nText);
 	}
 
 	static get dependencies() {
