@@ -10,7 +10,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
-// @ts-ignore: ignore will no longer be required, when List is migrated to TS
 import List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -239,7 +238,7 @@ class UploadCollection extends UI5Element {
 			Label,
 			List,
 			Title,
-		] as Array<typeof UI5Element>; // Note: casting will no longer be required, when List is migrated to TS
+		];
 	}
 
 	static async onDefine() {
