@@ -10,5 +10,12 @@
       "strict": true,
       "moduleResolution": "node",
       "experimentalDecorators": true,
+      "composite": true,
+      "rootDir": "src",
+      "tsBuildInfoFile": "dist/.tsbuildinfo",
     },
+    "references": [
+      { "path": "../base" },
+      { "path": "../localization" }
+    ]
 }

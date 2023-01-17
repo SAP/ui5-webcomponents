@@ -9,5 +9,11 @@
 		"sourceMap": true,
 		"strict": true,
 		"moduleResolution": "node",
+		"composite": true,
+		"rootDir": "src",
+		"tsBuildInfoFile": "dist/.tsbuildinfo",
 	},
+	"references": [
+        { "path": "../base" }
+    ]
 }

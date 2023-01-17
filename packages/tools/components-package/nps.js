@@ -14,7 +14,7 @@ const getScripts = (options) => {
 	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
 	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
 	const createIllustrationsLoadersScript = options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "";
-	const tsCommand = options.typescript ? "tsc" : "";
+	const tsCommand = options.typescript ? "tsc --build" : "";
 	const tsWatchCommand = options.typescript ? "tsc --watch" : "";
 
 	let viteConfig;
@@ -52,7 +52,7 @@ const getScripts = (options) => {
 		},
 		typescript: tsCommand,
 		build: {
-			default: "nps lint prepare build.bundle",
+			default: "nps prepare build.bundle2",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
 				default: "nps build.styles.themes build.styles.components",
@@ -74,6 +74,7 @@ const getScripts = (options) => {
 				illustrationsLoaders: createIllustrationsLoadersScript,
 			},
 			bundle: `vite build ${viteConfig}`,
+			bundle2: ``,
 			illustrations: createIllustrationsJSImportsScript,
 		},
 		copy: {

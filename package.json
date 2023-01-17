@@ -9,9 +9,12 @@
     "ui5"
   ],
   "scripts": {
+    "build:new": "npm-run-all --sequential build:new1 build:new2",
+    "build:new1": "npm-run-all --parallel build:base build:localization build:main build:fiori build:theming build:icons build:icons-business-suite build:icons-tnt",
+    "build:new2": "npm-run-all --parallel lint build:bundles",
     "build": "npm-run-all --sequential build:prerequisitesWithLint build:bundles build:customElementsManifest",
     "build:bundles": "npm-run-all --parallel bundle:main bundle:fiori",
-    "build:prerequisitesWithLint": "npm-run-all build:base build:prerequisites prepare:main prepare:fiori lint:main lint:fiori",
+    "build:prerequisitesWithLint": "npm-run-all build:base build:prerequisites prepare:main prepare:fiori lint",
     "build:prerequisites": "npm-run-all --parallel build:localization build:theming build:icons build:icons-business-suite build:icons-tnt",
     "build:localization": "yarn workspace @ui5/webcomponents-localization build",
     "build:base": "yarn workspace @ui5/webcomponents-base build",

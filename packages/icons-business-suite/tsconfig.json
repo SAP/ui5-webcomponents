@@ -12,4 +12,7 @@
 		"moduleResolution": "node",
 		"resolveJsonModule": true,
 	},
+	"references": [
+		{ "path": "../base" },
+	]
 }

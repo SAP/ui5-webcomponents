@@ -58,7 +58,7 @@ const getScripts = (options) => {
 			},
 			icons: createJSImportsCmd,
 		},
-		typescript: "tsc",
+		typescript: "tsc --build",
 	};
 
 	return scripts;

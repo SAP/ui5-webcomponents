@@ -11,4 +11,7 @@
 		"strict": true,
 		"moduleResolution": "node",
 	},
+	"references": [
+		{ "path": "../base" },
+	]
 }
