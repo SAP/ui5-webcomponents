@@ -1,7 +1,9 @@
-commit af6437d0ced46a64a63d5fa5b097fc37b939c05a
-Author: Siyana Todorova <72251110+s-todorova@users.noreply.github.com>
-Date:   Tue Jan 17 11:18:00 2023 +0200
+commit 2075b2cee52151f2ac0f9cf6188d3c400cc37d83
+Author: niyap <38278268+niyap@users.noreply.github.com>
+Date:   Tue Jan 17 15:26:12 2023 +0200
 
-    refactor(ui5-badge): convert to TS (#6287)
+    fix(ui5-textarea): adjust styles according to the visual specification (#6274)
     
-    Related to: #4337
+    * fix(ui5-textarea): adjust styles according to the visual specification
+    
+    * fix(ui5-textarea): fix scrollbar background-image
