@@ -7,7 +7,7 @@ const SAPSupportabilityLocales = /(?:^|-)(saptrc|sappsd)(?:-|$)/i;
 const M_ISO639_NEW_TO_OLD = {
 	"he": "iw",
 	"yi": "ji",
-	"id": "in",
+	"nb": "no",
 	"sr": "sh",
 };
 
