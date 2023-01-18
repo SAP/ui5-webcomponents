@@ -3,10 +3,11 @@ import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { Story, Meta } from "@storybook/web-components";
-//@ts-ignore
 import Avatar from "@ui5/webcomponents/dist/Avatar.js";
 
 import argTypes from "./argTypes.js";
+import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
+import AvatarShape from "@ui5/webcomponents/dist/types/AvatarShape.js";
 
 export default {
   title: "Components/Avatar",
@@ -14,7 +15,13 @@ export default {
   argTypes,
 } as Meta<Avatar>;
 
-const Template: Story = (args) =>
+type AvatarEventMap = {
+  "ui5-click": (event: CustomEvent) => void;
+};
+
+type AvatarStoryArgs = Avatar & AvatarEventMap & { componentStyle: string };
+
+const Template: Story<AvatarStoryArgs> = (args) =>
   html`<ui5-avatar
     icon="${ifDefined(args.icon)}"
     size="${ifDefined(args.size)}"
@@ -24,9 +31,9 @@ const Template: Story = (args) =>
     color-scheme="${ifDefined(args.colorScheme)}"
     ?interactive="${ifDefined(args.interactive)}"
     aria-haspopup="${ifDefined(args.ariaHaspopup)}"
-    @click="${ifDefined(args["click"])}"
+    @click="${ifDefined(args["ui5-click"])}"
   >
-    ${unsafeHTML(args["default"])}
+    ${unsafeHTML(args.innerHTML)}
   </ui5-avatar>`;
 
 // Basic
@@ -35,26 +42,14 @@ Basic.storyName = "Basic";
 Basic.args = {
   initials: "FJ",
   interactive: true,
-  click: (event: CustomEvent) => action("ui5-click")(event.detail),
+  "ui5-click": (event: CustomEvent) => action("ui5-click")(event.detail),
 };
 
 // With Image
 export const WithImage = Template.bind({});
 WithImage.storyName = "Avatar with image";
-WithImage.parameters = {
-  controls: {
-    include: [
-      "size",
-      "shape",
-      "default",
-      "interactive",
-      "ariaHaspopup",
-      "accessibleName",
-    ],
-  },
-};
 WithImage.args = {
-  ["default"]: `<img
+  innerHTML: `<img
 	alt="Woman 1"
 	src="../assets/images/avatars/man_avatar_1.png"
 />`,
@@ -63,25 +58,25 @@ WithImage.args = {
 // Sizes
 export const Size = Template.bind({});
 Size.storyName = "Avatar Size";
-Size.parameters = {
-  controls: {
-    include: ["icon", "size"],
-  },
-};
 Size.args = {
-  size: "L",
+  size: AvatarSize.L,
   icon: "home",
 };
 
 // Styles
 export const Styles = Template.bind({});
 Styles.storyName = "Avatar Styles";
+Styles.argTypes = {
+  componentStyle: {
+    name: "style",
+  },
+};
 Styles.args = {
-  size: "XL",
-  shape: "Square",
-  style:
+  size: AvatarSize.XL,
+  shape: AvatarShape.Square,
+  componentStyle:
     "width: 250px; height: 250px; border: 1px solid var(--sapField_BorderColor)",
-  default: `<img
+  innerHTML: `<img
 	src="../assets/images/avatars/Lamp_avatar_01.jpg"
 	alt="Lamp"
 	style="object-fit: contain"

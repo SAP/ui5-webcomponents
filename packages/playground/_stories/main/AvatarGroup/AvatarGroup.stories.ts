@@ -5,7 +5,8 @@ import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 // @ts-ignore
-import AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
+import type AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
+import AvatarGroupType from "@ui5/webcomponents/dist/types/AvatarGroupType.js";
 
 import argTypes from "./argTypes.js";
 
@@ -19,21 +20,27 @@ export default {
   argTypes,
 } as Meta<AvatarGroup>;
 
-const Template: Story<AvatarGroup> = (args) =>
+type AvatarGroupEventMap = {
+  "ui5-click": (event: CustomEvent) => void;
+};
+
+type AvatarGroupStoryArgs = AvatarGroup & AvatarGroupEventMap;
+
+const Template: Story<AvatarGroupStoryArgs> = (args) =>
   html`<ui5-avatar-group
     .type="${ifDefined(args.type)}"
     .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
     @click="${ifDefined(args["click"])}"
   >
-    ${unsafeHTML(args.default)}
+    ${unsafeHTML(args.innerHTML)}
   </ui5-avatar-group> `;
 
 // Basic
 export const TypeGroup = Template.bind({});
 TypeGroup.storyName = "Type Group";
 TypeGroup.args = {
-  ["click"]: (e: CustomEvent) => action("ui5-click")(e.detail),
-  default: `
+  "ui5-click": (e: CustomEvent) => action("ui5-click")(e.detail),
+  innerHTML: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
@@ -48,9 +55,9 @@ TypeGroup.args = {
 export const TypeIndividual = Template.bind({});
 TypeIndividual.storyName = "Type Individual";
 TypeIndividual.args = {
-  type: "Individual",
-  ["click"]: (e: CustomEvent) => action("ui5-click")(e.detail),
-  default: `
+  type: AvatarGroupType.Individual,
+  "ui5-click": (e: CustomEvent) => action("ui5-click")(e.detail),
+  innerHTML: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
@@ -62,7 +69,8 @@ TypeIndividual.args = {
 };
 
 // Type Individual with Popover
-export const TypeIndividualWithPopover: Story = TemplateIndividualWithPopover.bind({});
+export const TypeIndividualWithPopover: Story =
+  TemplateIndividualWithPopover.bind({});
 TypeIndividualWithPopover.storyName = "Type Individual with Popover";
 TypeIndividualWithPopover.parameters = {
   docs: {

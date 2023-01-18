@@ -62,7 +62,9 @@ const main = async () => {
 
 		moduleAPI?.slots?.forEach(prop => {
 			if (prop.visibility === 'public') {
-				args[prop.name] = {
+				const propName = prop.name === 'default' ? 'innerHTML' : prop.name;
+				args[propName] = {
+					name: prop.name,
 					control: "text",
 					description: `${prop.description} \n\n Type: \`${prop.type}\``,
 				};

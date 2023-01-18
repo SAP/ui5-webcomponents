@@ -5,7 +5,7 @@ import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 // @ts-ignore
-import Select from "@ui5/webcomponents/dist/Select.js";
+import type Select from "@ui5/webcomponents/dist/Select.js";
 
 import argTypes from "./argTypes.js";
 
@@ -15,7 +15,13 @@ export default {
   argTypes,
 } as Meta<Select>;
 
-const Template: Story<Select> = (args) => {
+type SelectEventMap = {
+  "ui5-change": (event: CustomEvent) => void;
+};
+
+type SelectStoryArgs = Select & SelectEventMap;
+
+const Template: Story<SelectStoryArgs> = (args) => {
   return html`<ui5-select
     name="${ifDefined(args.name)}"
     ?disabled="${ifDefined(args.disabled)}"
@@ -27,7 +33,7 @@ const Template: Story<Select> = (args) => {
     accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
     @ui5-change="${ifDefined(args["change"])}"
   >
-    ${unsafeHTML(args.default)}
+    ${unsafeHTML(args.innerHTML)}
   </ui5-select> `;
 };
 
@@ -35,8 +41,8 @@ const Template: Story<Select> = (args) => {
 export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
-  ["change"]: (e: CustomEvent) => action("ui5-change")(e.detail),
-  default: `<ui5-option icon="iphone">Phone</ui5-option>
+  "ui5-change": (e: CustomEvent) => action("ui5-change")(e.detail),
+  innerHTML: `<ui5-option icon="iphone">Phone</ui5-option>
 	<ui5-option icon="ipad">Tablet</ui5-option>
 	<ui5-option icon="laptop" selected="">Desktop</ui5-option>`,
 };

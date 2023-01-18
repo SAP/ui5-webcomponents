@@ -4,11 +4,19 @@ import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { Meta, Story } from "@storybook/web-components";
 
-import List from "@ui5/webcomponents/dist/List.js";
-import ListMode from '@ui5/webcomponents/dist/types/ListMode.js';
+import type List from "@ui5/webcomponents/dist/List.js";
+import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
 
 import argTypes from "./argTypes.js";
+
+type ListEventMap = {
+  "item-click": (event: CustomEvent) => void;
+  "item-delete": (event: CustomEvent) => void;
+  "selection-change": (event: CustomEvent) => void;
+};
+
+type ListStoryArgs = List & ListEventMap;
 
 export default {
   title: "Components/List",
@@ -16,14 +24,7 @@ export default {
   argTypes,
 } as Meta<List>;
 
-const Template: Story<
-  List & {
-    default: string;
-    "item-click": (event: CustomEvent) => void;
-    "item-delete": (event: CustomEvent) => void;
-    "selection-change": (event: CustomEvent) => void;
-  }
-> = (args) => {
+const Template: Story<ListStoryArgs> = (args) => {
   return html` <ui5-list
     mode="${ifDefined(args.mode)}"
     ?busy="${ifDefined(args.busy)}"
@@ -40,17 +41,17 @@ const Template: Story<
     @item-delete="${ifDefined(args["item-delete"])}"
     @selection-change="${ifDefined(args["selection-change"])}"
   >
-    ${unsafeHTML(args.default)}
+    ${unsafeHTML(args.innerHTML)}
   </ui5-list>`;
 };
 
 // Basic
 export const Basic = Template.bind({});
+
 Basic.storyName = "Basic";
 Basic.args = {
-  ["item-click"]: (event: CustomEvent) =>
-    action("ui5-item-click")(event.detail),
-  default: `<ui5-li
+  "item-click": (event: CustomEvent) => action("ui5-item-click")(event.detail),
+  innerHTML: `<ui5-li
 		icon="nutrition-activity"
 		description="Tropical plant with an edible fruit"
 		additional-text="In-stock"
@@ -139,9 +140,7 @@ SingleSelection.storyName = "Single Selection";
 SingleSelection.args = {
   mode: ListMode.SingleSelect,
   headerText: "Select a country:",
-  ["selection-change"]: (e: CustomEvent) =>
-    action("ui5-selection-change")(e.detail),
-  default: `
+  innerHTML: `
 	<ui5-li selected icon="map" icon-end>Argentina</ui5-li>
 	<ui5-li icon="map" icon-end>Bulgaria</ui5-li>
 	<ui5-li icon="map" icon-end>China</ui5-li>
@@ -152,11 +151,9 @@ SingleSelection.args = {
 export const MultiSelection = Template.bind({});
 MultiSelection.storyName = "Multi Selection";
 MultiSelection.args = {
-  ["selection-change"]: (e: CustomEvent) =>
-    action("ui5-selection-change")(e.detail),
   mode: ListMode.MultiSelect,
   headerText: "Multiple selection is possible",
-  default: `
+  innerHTML: `
 	<ui5-li>Pineapple</ui5-li>
 	<ui5-li selected="">Orange</ui5-li>
 	<ui5-li>Banana</ui5-li>
@@ -168,7 +165,7 @@ export const GroupHeaders = Template.bind({});
 GroupHeaders.storyName = "Group Headers";
 GroupHeaders.args = {
   mode: ListMode.MultiSelect,
-  default: `<ui5-li-groupheader
+  innerHTML: `<ui5-li-groupheader
 	>Front End Developers</ui5-li-groupheader
 	>
 	<ui5-li
@@ -215,9 +212,8 @@ export const Delete = Template.bind({});
 Delete.storyName = "Delete Mode";
 Delete.args = {
   mode: ListMode.Delete,
-  ["item-delete"]: (e: CustomEvent) => action("ui5-item-delete")(e.detail),
   headerText: "Note: The list items removal is up to application developers",
-  default: `
+  innerHTML: `
 	<ui5-li>Argentina</ui5-li>
 	<ui5-li>Bulgaria</ui5-li>
 	<ui5-li>China</ui5-li>`,
