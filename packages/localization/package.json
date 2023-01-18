@@ -30,7 +30,7 @@
     "@openui5/sap.ui.core": "1.109.0",
     "@types/openui5": "^1.108.0",
     "@ui5/webcomponents-tools": "1.9.1",
-    "chromedriver": "107.0.3",
+    "chromedriver": "109.0.0",
     "mkdirp": "^1.0.4",
     "resolve": "^1.20.0"
   },
