@@ -414,7 +414,7 @@ class CheckBox extends UI5Element implements IFormElement {
 		return this.disabled ? "true" : undefined;
 	}
 
-	get effectiveriAChecked() {
+	get effectiveAriaChecked() {
 		return this.indeterminate && this.checked ? "mixed" : this.checked;
 	}
 
