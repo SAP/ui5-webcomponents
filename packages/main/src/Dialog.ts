@@ -268,15 +268,15 @@ class Dialog extends Popup {
 		await super._open(preventInitialFocus);
 	}
 
-	get isModal() { // Required by Popup.js
+	get isModal() {
 		return true;
 	}
 
-	get shouldHideBackdrop() { // Required by Popup.js
+	get shouldHideBackdrop() {
 		return false;
 	}
 
-	get _ariaLabelledBy() { // Required by Popup.js
+	get _ariaLabelledBy() {
 		let ariaLabelledById;
 
 		if (this.headerText !== "" && !this._ariaLabel) {

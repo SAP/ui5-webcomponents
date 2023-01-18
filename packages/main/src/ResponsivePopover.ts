@@ -11,7 +11,7 @@ import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
 
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
-import type { BeforeCloseEventDetail } from "./Popup.js";
+import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
@@ -189,22 +189,22 @@ class ResponsivePopover extends Popover {
 		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON as I18nText);
 	}
 
-	_beforeDialogOpen(event: CustomEvent<BeforeCloseEventDetail>) {
+	_beforeDialogOpen(e: CustomEvent<PopupBeforeCloseEventDetail>) {
 		this.open = true;
 		this.opened = true;
-		this._propagateDialogEvent(event);
+		this._propagateDialogEvent(e);
 	}
 
-	_afterDialogClose(event: CustomEvent) {
+	_afterDialogClose(e: CustomEvent) {
 		this.open = false;
 		this.opened = false;
-		this._propagateDialogEvent(event);
+		this._propagateDialogEvent(e);
 	}
 
-	_propagateDialogEvent(event: CustomEvent) {
-		const type = event.type.replace("ui5-", "");
+	_propagateDialogEvent(e: CustomEvent) {
+		const type = e.type.replace("ui5-", "");
 
-		this.fireEvent(type, event.detail);
+		this.fireEvent(type, e.detail);
 	}
 
 	get isModal() {
