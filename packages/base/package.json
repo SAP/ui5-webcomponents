@@ -31,14 +31,13 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
-    "chromedriver": "108",
     "lit-html": "^2.0.1"
   },
   "devDependencies": {
     "@buxlabs/amd-to-es6": "0.16.1",
     "@openui5/sap.ui.core": "1.109.0",
     "@ui5/webcomponents-tools": "1.9.1",
-    "chromedriver": "109.0.0",
+    "chromedriver": "108.0.0",
     "clean-css": "^5.2.2",
     "copy-and-watch": "^0.1.5",
     "cross-env": "^7.0.3",

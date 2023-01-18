@@ -26,11 +26,10 @@
     "directory": "packages/icons-tnt"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.9.1",
-    "chromedriver": "108"
+    "@ui5/webcomponents-base": "1.9.1"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.9.1",
-    "chromedriver": "109.0.0"
+    "chromedriver": "108.0.0"
   }
 }
