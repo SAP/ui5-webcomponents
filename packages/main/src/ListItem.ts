@@ -9,6 +9,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import ListItemType from "./types/ListItemType.js";
@@ -188,6 +189,13 @@ abstract class ListItem extends ListItemBase {
 	_level?: number;
 
 	/**
+	 * Used in UploadCollectionItem
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	disableDeleteButton!: boolean;
+
+	/**
 	 * Defines the delete button, displayed in "Delete" mode.
 	 * <b>Note:</b> While the slot allows custom buttons, to match
 	 * design guidelines, please use the <code>ui5-button</code> component.
@@ -216,7 +224,7 @@ abstract class ListItem extends ListItemBase {
 			Button,
 			RadioButton,
 			CheckBox,
-		];
+		] as Array<typeof UI5Element>;
 	}
 
 	constructor() {
@@ -404,9 +412,6 @@ abstract class ListItem extends ListItemBase {
 		return this.modeDelete;
 	}
 
-	get disableDeleteButton() {
-		return false;
-	}
 	/**
 	 * End
 	 */
