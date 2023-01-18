@@ -26,7 +26,8 @@
     "directory": "packages/icons"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.9.1"
+    "@ui5/webcomponents-base": "1.9.1",
+    "chromedriver": "108"
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.9.1",

@@ -754,9 +754,9 @@
     form-data "^3.0.0"
 
 "@types/node@*":
-  version "18.11.7"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.7.tgz#8ccef136f240770c1379d50100796a6952f01f94"
-  integrity sha512-LhFTglglr63mNXUSRYD8A+ZAIu5sFqNJ4Y2fPuY7UlrySJH87rRRlhtVmMHplmfk5WkoJGmDjE9oiTfyX94CpQ==
+  version "18.11.18"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.11.18.tgz#8dfb97f0da23c2293e554c5a50d61ef134d7697f"
+  integrity sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==
 
 "@types/node@>=12":
   version "17.0.23"
@@ -1524,7 +1524,7 @@ axe-core@4.2.3:
   resolved "https://registry.npmjs.org/axe-core/-/axe-core-4.2.3.tgz#2a3afc332f0031b42f602f4a3de03c211ca98f72"
   integrity sha512-pXnVMfJKSIWU2Ml4JHP7pZEPIrgBO1Fd3WGx+fPBsS+KRGhE4vxooD8XBGWbQOIVSZsVK7pUDBBkCicNu80yzQ==
 
-axios@^1.2.1:
+axios@^1.1.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/axios/-/axios-1.2.3.tgz#31a3d824c0ebf754a004b585e5f04a5f87e6c4ff"
   integrity sha512-pdDkMYJeuXLZ6Xj/Q5J3Phpe+jbGdsSzlQaFVkMQzRUL05+6+tetX8TV3p4HrU4kzuO9bt+io/yGQxuyxA/xcw==
@@ -1968,13 +1968,13 @@ chrome-launcher@^0.15.0:
     is-wsl "^2.2.0"
     lighthouse-logger "^1.0.0"
 
-chromedriver@109.0.0:
-  version "109.0.0"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-109.0.0.tgz#9407af72f2a01bb19e6db1b85cfc87eb3acd4f6b"
-  integrity sha512-jdmBq11IUwfThLFiygGTZ89qbROSQI4bICQjvOVQy2Bqr1LwC+MFkhwyZp3YG99eehQbZuTlQmmfCZBfpewTNA==
+chromedriver@108:
+  version "108.0.0"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-108.0.0.tgz#7994013f423d8b95a513bb9553a55088de81b252"
+  integrity sha512-/kb0rb0dlC4RfXh2BOT7RV87K6d+It3VV5YXebLzO5a8t2knNffiTE23XPJQCH+l1xmgoW8/sOX/NB9irskvOQ==
   dependencies:
     "@testim/chrome-version" "^1.1.3"
-    axios "^1.2.1"
+    axios "^1.1.3"
     compare-versions "^5.0.1"
     extract-zip "^2.0.1"
     https-proxy-agent "^5.0.1"
@@ -2140,9 +2140,9 @@ compare-func@^2.0.0:
     dot-prop "^5.1.0"
 
 compare-versions@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-5.0.1.tgz#14c6008436d994c3787aba38d4087fabe858555e"
-  integrity sha512-v8Au3l0b+Nwkp4G142JcgJFh1/TUhdxut7wzD1Nq1dyp5oa3tXaqb03EXOAB6jS4gMlalkjAUPZBMiAfKUixHQ==
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/compare-versions/-/compare-versions-5.0.3.tgz#a9b34fea217472650ef4a2651d905f42c28ebfd7"
+  integrity sha512-4UZlZP8Z99MGEY+Ovg/uJxJuvoXuN4M6B3hKaiackiHrgzQFEe3diJi1mf1PNHbFujM7FvLrK2bpgIaImbtZ1A==
 
 compress-commons@^4.1.0:
   version "4.1.1"
