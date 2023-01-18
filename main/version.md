@@ -1,5 +1,5 @@
-commit a9130e855afc01dafc1e22c561f07c0d666d7155
-Author: TeodorTaushanov <teodor.taushanov@sap.com>
-Date:   Wed Jan 18 10:02:56 2023 +0200
+commit 49cef2d021d6f981036846f29caa5c3ac823e186
+Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
+Date:   Wed Jan 18 11:32:21 2023 +0200
 
-    fix(ui5-dialog, ui5-popover): change header level to H1 (#6293)
+    feat(ui5-checkbox): migrated to Typescript (#6292)
