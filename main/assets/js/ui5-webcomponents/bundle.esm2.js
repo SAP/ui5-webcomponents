@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1673966891
+  buildTime: 1674029052
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -9661,7 +9661,7 @@ const block6$z = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("
 const block7$u = (context, tags, suffix) => effectiveHtml`<section style="${styleMap(context.styles.root)}" class="${o$1(context.classes.root)}" role="${l(context._role)}" aria-modal="${l(context._ariaModal)}" aria-label="${l(context._ariaLabel)}" aria-labelledby="${l(context._ariaLabelledBy)}" @keydown=${context._onkeydown} @focusout=${context._onfocusout} @mouseup=${context._onmouseup} @mousedown=${context._onmousedown}><span class="first-fe" data-ui5-focus-trap tabindex="0" @focusin=${context.forwardToLast}></span><span class="ui5-popover-arrow" style="${styleMap(context.styles.arrow)}"></span>${context._displayHeader ? block8$t(context) : void 0}<div style="${styleMap(context.styles.content)}" class="${o$1(context.classes.content)}"  @scroll="${context._scroll}" part="content"><slot></slot></div>${context._displayFooter ? block11$e(context) : void 0}<span class="last-fe" data-ui5-focus-trap tabindex="0" @focusin=${context.forwardToFirst}></span></section>`;
 const block8$t = (context, tags, suffix) => effectiveHtml`<header class="ui5-popup-header-root" id="ui5-popup-header" part="header">${context.header.length ? block9$o() : block10$g(context)}</header>`;
 const block9$o = (context, tags, suffix) => effectiveHtml`<slot name="header"></slot>`;
-const block10$g = (context, tags, suffix) => effectiveHtml`<h2 class="ui5-popup-header-text">${l(context.headerText)}</h2>`;
+const block10$g = (context, tags, suffix) => effectiveHtml`<h1 class="ui5-popup-header-text">${l(context.headerText)}</h1>`;
 const block11$e = (context, tags, suffix) => effectiveHtml`${context.footer.length ? block12$d() : void 0}`;
 const block12$d = (context, tags, suffix) => effectiveHtml`<footer class="ui5-popup-footer-root" part="footer"><slot name="footer"></slot></footer>`;
 class DOMReference extends DataType {
@@ -10205,7 +10205,7 @@ const getParentPopoversIfNested = (instance) => {
 const block0$1H = (context, tags, suffix) => effectiveHtml`<section style="${styleMap(context.styles.root)}" class="${o$1(context.classes.root)}" role="${l(context._role)}" aria-modal="${l(context._ariaModal)}" aria-label="${l(context._ariaLabel)}" aria-labelledby="${l(context._ariaLabelledBy)}" @keydown=${context._onkeydown} @focusout=${context._onfocusout} @mouseup=${context._onmouseup} @mousedown=${context._onmousedown}><span class="first-fe" data-ui5-focus-trap tabindex="0" @focusin=${context.forwardToLast}></span><span class="ui5-popover-arrow" style="${styleMap(context.styles.arrow)}"></span>${context._displayHeader ? block1$1o(context) : void 0}<div style="${styleMap(context.styles.content)}" class="${o$1(context.classes.content)}"  @scroll="${context._scroll}" part="content"><slot></slot></div>${context._displayFooter ? block4$O(context) : void 0}<span class="last-fe" data-ui5-focus-trap tabindex="0" @focusin=${context.forwardToFirst}></span></section> `;
 const block1$1o = (context, tags, suffix) => effectiveHtml`<header class="ui5-popup-header-root" id="ui5-popup-header" part="header">${context.header.length ? block2$1b() : block3$Z(context)}</header>`;
 const block2$1b = (context, tags, suffix) => effectiveHtml`<slot name="header"></slot>`;
-const block3$Z = (context, tags, suffix) => effectiveHtml`<h2 class="ui5-popup-header-text">${l(context.headerText)}</h2>`;
+const block3$Z = (context, tags, suffix) => effectiveHtml`<h1 class="ui5-popup-header-text">${l(context.headerText)}</h1>`;
 const block4$O = (context, tags, suffix) => effectiveHtml`${context.footer.length ? block5$H() : void 0}`;
 const block5$H = (context, tags, suffix) => effectiveHtml`<footer class="ui5-popup-footer-root" part="footer"><slot name="footer"></slot></footer>`;
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
@@ -10941,7 +10941,7 @@ const block0$1F = (context, tags, suffix) => effectiveHtml`<section style="${sty
 const block1$1m = (context, tags, suffix) => effectiveHtml`<header class="ui5-popup-header-root" id="ui5-popup-header" tabindex="${l(context._headerTabIndex)}" @keydown="${context._onDragOrResizeKeyDown}" @mousedown="${context._onDragMouseDown}" part="header" state="${l(context.state)}">${context.hasValueState ? block2$19(context, tags, suffix) : void 0}${context.header.length ? block3$X() : block4$N(context)}</header>`;
 const block2$19 = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-icon", tags, suffix)} class="ui5-dialog-value-state-icon" name="${l(context._dialogStateIcon)}"></${scopeTag("ui5-icon", tags, suffix)}>` : effectiveHtml`<ui5-icon class="ui5-dialog-value-state-icon" name="${l(context._dialogStateIcon)}"></ui5-icon>`;
 const block3$X = (context, tags, suffix) => effectiveHtml`<slot name="header"></slot>`;
-const block4$N = (context, tags, suffix) => effectiveHtml`<h2 id="ui5-popup-header-text" class="ui5-popup-header-text">${l(context.headerText)}</h2>`;
+const block4$N = (context, tags, suffix) => effectiveHtml`<h1 id="ui5-popup-header-text" class="ui5-popup-header-text">${l(context.headerText)}</h1>`;
 const block5$G = (context, tags, suffix) => effectiveHtml`<footer class="ui5-popup-footer-root" part="footer"><slot name="footer"></slot></footer>`;
 const block6$y = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-icon", tags, suffix)} name="resize-corner" class="ui5-popup-resize-handle" @mousedown="${context._onResizeMouseDown}"></${scopeTag("ui5-icon", tags, suffix)}>` : effectiveHtml`<ui5-icon name="resize-corner" class="ui5-popup-resize-handle" @mousedown="${context._onResizeMouseDown}"></ui5-icon>`;
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
