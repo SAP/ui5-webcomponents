@@ -91,7 +91,7 @@ let activeCb: CheckBox;
  */
 @event("change")
 
-class CheckBox extends UI5Element {
+class CheckBox extends UI5Element implements IFormElement {
 	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @type {string}
