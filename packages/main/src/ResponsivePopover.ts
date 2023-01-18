@@ -21,6 +21,8 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
+type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
+
 /**
  * @class
  *
@@ -223,3 +225,6 @@ class ResponsivePopover extends Popover {
 ResponsivePopover.define();
 
 export default ResponsivePopover;
+export type {
+	ResponsivePopoverBeforeCloseEventDetail,
+};

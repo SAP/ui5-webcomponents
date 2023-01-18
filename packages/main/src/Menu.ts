@@ -20,13 +20,13 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
+import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import type MenuItem from "./MenuItem.js";
 import type { ClickEventDetail } from "./List.js";
-import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
@@ -579,7 +579,7 @@ class Menu extends UI5Element {
 		this.fireEvent("after-open");
 	}
 
-	_beforePopoverClose(e: CustomEvent<PopupBeforeCloseEventDetail>) {
+	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
 		const prevented = !this.fireEvent("before-close", { escPressed: e.detail.escPressed }, true, false);
 
 		if (prevented) {
