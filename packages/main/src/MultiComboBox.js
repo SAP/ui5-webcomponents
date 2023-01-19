@@ -341,9 +341,9 @@ const metadata = {
 		 * Indicates whether the tokenizer has tokens inside
 		 * @private
 		 */
-		isTokenizerAvailable : {
+		isTokenizerAvailable: {
 			type: Boolean,
-		}
+		},
 	},
 	events: /** @lends sap.ui.webc.main.MultiComboBox.prototype */ {
 		/**
@@ -1641,7 +1641,7 @@ class MultiComboBox extends UI5Element {
 			suggestionsPopover: {
 				"min-width": `${this._inputWidth}px`,
 				"max-width": (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
-			}
+			},
 		};
 	}
 
