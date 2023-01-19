@@ -354,11 +354,8 @@ class FlexibleColumnLayout extends UI5Element {
 		ResizeHandler.register(this, this._handleResize.bind(this));
 	}
 
-	onExitDOM() {
+	onExitDOM = () => {
 		ResizeHandler.deregister(this, this._handleResize);
-		this.startColumnDOM.removeEventListener("transitionend", this.columnResizeHandler);
-		this.midColumnDOM.removeEventListener("transitionend", this.columnResizeHandler);
-		this.endColumnDOM.removeEventListener("transitionend", this.columnResizeHandler);
 	}
 
 	onAfterRendering() {
@@ -480,7 +477,7 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 	}
 
-	columnResizeHandler(e: Event) {
+	columnResizeHandler = (e: Event) => {
 		(e.target as HTMLElement).classList.add("ui5-fcl-column--hidden");
 	}
 
