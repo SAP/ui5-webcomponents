@@ -1,7 +1,5 @@
-commit ec0f2d8e37b7365d2781bf71aa6a665dd8065714
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu Jan 19 18:05:18 2023 +0200
+commit 960a8482cecc99cab70c085c9baf0047b49a7ff1
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Thu Jan 19 21:34:05 2023 +0200
 
-    refactor(ui5-responsive-popover): migrate to TypeScript (#6288)
-    
-    Part of #4337
+    chore: add github action to release on tag (#6314)
