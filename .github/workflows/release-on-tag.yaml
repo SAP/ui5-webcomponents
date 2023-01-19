@@ -1,0 +1,47 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Release on tag
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+
+    - name: Install
+      run: yarn --frozen-lockfile
+
+    - name: Build
+      run: yarn build
+
+    - name: Publish
+      env:
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
+      run: |
+        node ./.github/actions/release.js
+
+  create-release:
+    needs: publish-npm
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
