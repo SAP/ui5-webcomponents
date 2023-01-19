@@ -75,9 +75,8 @@ const isClass = text => {
 	return text.includes("@abstract") || text.includes("@class");
 };
 
-const isAnnotationComment = (comment, fileContent) =>  {
-	const index = fileContent.indexOf(comment);
-	return fileContent.substr(index + comment.length).trim().charAt(0) === "@";
+const isAnnotationComment = (comment) =>  {
+	return comment.includes("@name")
 }
 
 const processComponentFile = async (fileName) => {
