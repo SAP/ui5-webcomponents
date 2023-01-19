@@ -25,7 +25,7 @@
 			</div>
 		</div>
 
-		{{#if arrows.content}}
+		{{#if showArrows.content}}
 			<div class="ui5-carousel-navigation-arrows">
 				{{> arrow-back}}
 				{{> arrow-forward}}
@@ -34,7 +34,7 @@
 
 		{{#if renderNavigation}}
 			<div class="{{classes.navigation}}">
-				{{#if arrows.navigation}}
+				{{#if showArrows.navigation}}
 					{{> arrow-back}}
 				{{/if}}
 
@@ -55,7 +55,7 @@
 					{{/unless}}
 				</div>
 
-				{{#if arrows.navigation}}
+				{{#if showArrows.navigation}}
 					{{> arrow-forward}}
 				{{/if}}
 			</div>

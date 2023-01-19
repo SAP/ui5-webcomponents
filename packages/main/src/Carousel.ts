@@ -1,4 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
@@ -9,7 +15,10 @@ import {
 	isF7,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
+import type { ScrollEnablementEventListenerParam } from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
@@ -20,6 +29,7 @@ import {
 	CAROUSEL_DOT_TEXT,
 	CAROUSEL_PREVIOUS_ARROW_TEXT,
 	CAROUSEL_NEXT_ARROW_TEXT,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
@@ -33,192 +43,9 @@ import Label from "./Label.js";
 // Styles
 import CarouselCss from "./generated/themes/Carousel.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-carousel",
-	languageAware: true,
-	fastNavigation: true,
-	properties: /** @lends sap.ui.webc.main.Carousel.prototype */ {
-		/**
-		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		cyclic: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 1
-		 * @public
-		 */
-		itemsPerPageS: {
-			type: Integer,
-			defaultValue: 1,
-		},
-
-		/**
-		 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 1
-		 * @public
-		 */
-		itemsPerPageM: {
-			type: Integer,
-			defaultValue: 1,
-		},
-
-		/**
-		 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 1
-		 * @public
-		 */
-		itemsPerPageL: {
-			type: Integer,
-			defaultValue: 1,
-		},
-
-		/**
-		 * Defines the visibility of the navigation arrows.
-		 * If set to true the navigation arrows will be hidden.
-		 * <br><br>
-		 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
-		 * In this case, the user can swipe to navigate through the items.
-		 * @type {boolean}
-		 * @since 1.0.0-rc.15
-		 * @defaultvalue false
-		 * @public
-		 */
-		hideNavigationArrows: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the visibility of the page indicator.
-		 * If set to true the page indicator will be hidden.
-		 * @type {boolean}
-		 * @since 1.0.0-rc.15
-		 * @defaultvalue false
-		 * @public
-		 */
-		hidePageIndicator: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the style of the page indicator.
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Default</code> - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)</li>
-		 * <li><code>Numeric</code> - The page indicator will display the current page and the total number of pages. (e.g. X of Y)</li>
-		 * </ul>
-		 * @type {sap.ui.webc.main.types.CarouselPageIndicatorStyle}
-		 * @since 1.10
-		 * @defaultvalue "Default"
-		 * @public
-		 */
-		pageIndicatorStyle: {
-			type: CarouselPageIndicatorStyle,
-			defaultValue: CarouselPageIndicatorStyle.Default,
-		},
-
-		/**
-		 * Defines the index of the initially selected item.
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 0
-		 * @private
-		 */
-		_selectedIndex: {
-			type: Integer,
-			defaultValue: 0,
-		},
-
-		/**
-		 * Defines the position of arrows.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Content</code></li>
-		 * <li><code>Navigation</code></li>
-		 * </ul>
-		 * <br>
-		 * When set to "Content", the arrows are placed on the sides of the current page.
-		 * <br>
-		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
-		 * @type {sap.ui.webc.main.types.CarouselArrowsPlacement}
-		 * @defaultvalue "Content"
-		 * @public
-		 */
-		arrowsPlacement: {
-			type: CarouselArrowsPlacement,
-			defaultValue: CarouselArrowsPlacement.Content,
-		},
-
-		/**
-		 * Defines the carousel width in pixels.
-		 * @private
-		 */
-		_width: {
-			type: Integer,
-		},
-
-		/**
-		 * Defines the carousel item width in pixels.
-		 * @private
-		 */
-		_itemWidth: {
-			type: Integer,
-		},
-
-		/**
-		 * If set to true navigation arrows are shown.
-		 * @private
-		 * @since 1.0.0-rc.15
-		 */
-		_visibleNavigationArrows: {
-			type: Boolean,
-			noAttribute: true,
-		},
-	},
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.main.Carousel.prototype */ {
-		/**
-		 * Defines the content of the component.
-		 * @type {HTMLElement[]}
-		 * @slot content
-		 * @public
-		 */
-		"default": {
-			propertyName: "content",
-			type: HTMLElement,
-			individualSlots: true,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.Carousel.prototype */ {
-
-		/**
-		 * Fired whenever the page changes due to user interaction,
-		 * when the user clicks on the navigation arrows or while resizing,
-		 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
-		 *
-		 * @event
-		 * @param {Integer} selectedIndex the current selected index
-		 * @public
-		 * @since 1.0.0-rc.7
-		 */
-		navigate: {
-			detail: {
-				selectedIndex: { type: Integer },
-			},
-		},
-	},
-};
+type CarouselNavigateEventDetail = {
+	selectedIndex: number;
+}
 
 /**
  * @class
@@ -288,10 +115,179 @@ const metadata = {
  * @since 1.0.0-rc.6
  * @public
  */
+@customElement("ui5-carousel")
+@languageAware
+@fastNavigation
+
+/**
+ * Fired whenever the page changes due to user interaction,
+ * when the user clicks on the navigation arrows or while resizing,
+ * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
+ *
+ * @event sap.ui.webc.main.Carousel#navigate
+ * @param {Integer} selectedIndex the current selected index
+ * @public
+ * @since 1.0.0-rc.7
+ */
+@event("navigate", {
+	detail: {
+		selectedIndex: { type: Integer },
+	},
+})
+
 class Carousel extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Carousel.prototype.cyclic
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	cyclic!: boolean;
+
+	/**
+	 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageS
+	 * @defaultvalue 1
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: 1 })
+	itemsPerPageS!: number;
+
+	/**
+	 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageM
+	 * @defaultvalue 1
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: 1 })
+	itemsPerPageM!: number;
+
+	/**
+	 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.Carousel.prototype.itemsPerPageL
+	 * @defaultvalue 1
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: 1 })
+	itemsPerPageL!: number;
+
+	/**
+	 * Defines the visibility of the navigation arrows.
+	 * If set to true the navigation arrows will be hidden.
+	 * <br><br>
+	 * <b>Note:</b> The navigation arrows are never displayed on touch devices.
+	 * In this case, the user can swipe to navigate through the items.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Carousel.prototype.hideNavigationArrows
+	 * @since 1.0.0-rc.15
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hideNavigationArrows!: boolean;
+
+	/**
+	 * Defines the visibility of the page indicator.
+	 * If set to true the page indicator will be hidden.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Carousel.prototype.hidePageIndicator
+	 * @since 1.0.0-rc.15
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	hidePageIndicator!: boolean;
+
+	/**
+	 * Defines the style of the page indicator.
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Default</code> - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)</li>
+	 * <li><code>Numeric</code> - The page indicator will display the current page and the total number of pages. (e.g. X of Y)</li>
+	 * </ul>
+	 * @type {sap.ui.webc.main.types.CarouselPageIndicatorStyle}
+	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorStyle
+	 * @since 1.10
+	 * @defaultvalue "Default"
+	 * @public
+	 */
+	@property({ type: CarouselPageIndicatorStyle, defaultValue: CarouselPageIndicatorStyle.Default })
+	pageIndicatorStyle!: CarouselPageIndicatorStyle;
+
+	/**
+	 * Defines the index of the initially selected item.
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.Carousel.prototype._selectedIndex
+	 * @defaultvalue 0
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: 0 })
+	_selectedIndex!: number;
+
+	/**
+	 * Defines the position of arrows.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Content</code></li>
+	 * <li><code>Navigation</code></li>
+	 * </ul>
+	 * <br>
+	 * When set to "Content", the arrows are placed on the sides of the current page.
+	 * <br>
+	 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
+	 * @type {sap.ui.webc.main.types.CarouselArrowsPlacement}
+	 * @name sap.ui.webc.main.Carousel.prototype.arrowsPlacement
+	 * @defaultvalue "Content"
+	 * @public
+	 */
+	@property({ type: CarouselArrowsPlacement, defaultValue: CarouselArrowsPlacement.Content })
+	arrowsPlacement!: CarouselArrowsPlacement;
+
+	/**
+	 * Defines the carousel width in pixels.
+	 * @private
+	 */
+	@property({ validator: Integer })
+	_width!: number;
+
+	/**
+	 * Defines the carousel item width in pixels.
+	 * @private
+	 */
+	@property({ validator: Integer })
+	_itemWidth!: number;
+
+	/**
+	 * If set to true navigation arrows are shown.
+	 * @private
+	 * @since 1.0.0-rc.15
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_visibleNavigationArrows!: boolean;
+
+	_scrollEnablement: ScrollEnablement;
+	_onResizeBound: () => void;
+	_resizing: boolean;
+	_lastFocusedElements: Array<HTMLElement>;
+	_orderOfLastFocusedPages: Array<number>;
+
+	/**
+	 * Defines the content of the component.
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @name sap.ui.webc.main.Carousel.prototype.default
+	 * @public
+	 */
+	@slot({ "default": true, type: HTMLElement, individualSlots: true })
+	content!: Array<HTMLElement>;
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -313,8 +309,8 @@ class Carousel extends UI5Element {
 		super();
 
 		this._scrollEnablement = new ScrollEnablement(this);
-		this._scrollEnablement.attachEvent("touchend", event => {
-			this._updateScrolling(event);
+		this._scrollEnablement.attachEvent("touchend", e => {
+			this._updateScrolling(e);
 		});
 		this._onResizeBound = this._onResize.bind(this);
 		this._resizing = false; // indicates if the carousel is in process of resizing
@@ -332,7 +328,7 @@ class Carousel extends UI5Element {
 	}
 
 	onAfterRendering() {
-		this._scrollEnablement.scrollContainer = this.getDomRef();
+		this._scrollEnablement.scrollContainer = this.getDomRef()!;
 		this._resizing = false; // not invalidating
 	}
 
@@ -368,52 +364,53 @@ class Carousel extends UI5Element {
 
 		if (this._selectedIndex > this.pagesCount - 1) {
 			this._selectedIndex = this.pagesCount - 1;
-			this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
+			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
-	_updateScrolling(event) {
-		if (!event) {
+	_updateScrolling(e: ScrollEnablementEventListenerParam) {
+		if (!e) {
 			return;
 		}
 
-		if (event.isLeft) {
+		if (e.isLeft) {
 			this.navigateLeft();
-		} else if (event.isRight) {
+		} else if (e.isRight) {
 			this.navigateRight();
 		}
 	}
 
-	async _onkeydown(event) {
-		if (isF7(event)) {
-			this._handleF7Key(event);
+	async _onkeydown(e: KeyboardEvent) {
+		if (isF7(e)) {
+			this._handleF7Key(e);
 			return;
 		}
 
-		if (event.target !== this.getDomRef()) {
+		if (e.target !== this.getDomRef()) {
 			return;
 		}
 
-		if (isLeft(event) || isDown(event)) {
+		if (isLeft(e) || isDown(e)) {
 			this.navigateLeft();
 			await renderFinished();
-			this.getDomRef().focus();
-		} else if (isRight(event) || isUp(event)) {
+			this.getDomRef()!.focus();
+		} else if (isRight(e) || isUp(e)) {
 			this.navigateRight();
 			await renderFinished();
-			this.getDomRef().focus();
+			this.getDomRef()!.focus();
 		}
 	}
 
-	_onfocusin(event) {
-		if (event.target === this.getDomRef()) {
+	_onfocusin(e: FocusEvent) {
+		const target = e.target as HTMLElement;
+
+		if (target === this.getDomRef()) {
 			return;
 		}
 
 		let pageIndex = -1;
-
 		for (let i = 0; i < this.content.length; i++) {
-			if (this.content[i].contains(event.target)) {
+			if (this.content[i].contains(target)) {
 				pageIndex = i;
 				break;
 			}
@@ -424,7 +421,7 @@ class Carousel extends UI5Element {
 		}
 
 		// Save reference of the last focused element for each page
-		this._lastFocusedElements[pageIndex] = event.target;
+		this._lastFocusedElements[pageIndex] = target;
 
 		const sortedPageIndex = this._orderOfLastFocusedPages.indexOf(pageIndex);
 		if (sortedPageIndex === -1) {
@@ -446,13 +443,13 @@ class Carousel extends UI5Element {
 		}
 	}
 
-	_handleF7Key(event) {
+	_handleF7Key(e: KeyboardEvent) {
 		const lastFocusedElement = this._lastFocusedElements[this._getLastFocusedActivePageIndex];
 
-		if (event.target === this.getDomRef() && lastFocusedElement) {
+		if (e.target === this.getDomRef() && lastFocusedElement) {
 			lastFocusedElement.focus();
 		} else {
-			this.getDomRef().focus();
+			this.getDomRef()!.focus();
 		}
 	}
 
@@ -482,7 +479,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
+			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -502,12 +499,13 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent("navigate", { selectedIndex: this._selectedIndex });
+			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
 		}
 	}
 
-	_navButtonClick(event) {
-		if (event.target.hasAttribute("arrow-forward")) {
+	_navButtonClick(e: MouseEvent) {
+		const button = e.target as Button;
+		if (button.hasAttribute("arrow-forward")) {
 			this.navigateRight();
 		} else {
 			this.navigateLeft();
@@ -520,9 +518,11 @@ class Carousel extends UI5Element {
 	 * Changes the currently displayed page.
 	 * @param {Integer} itemIndex The index of the target page
 	 * @since 1.0.0-rc.15
+	 * @method
+	 * @name sap.ui.webc.main.Carousel#navigateTo
 	 * @public
 	 */
-	navigateTo(itemIndex) {
+	navigateTo(itemIndex: number) {
 		this._resizing = false;
 		this._selectedIndex = itemIndex;
 	}
@@ -538,8 +538,8 @@ class Carousel extends UI5Element {
 				id: `${this._id}-carousel-item-${idx + 1}`,
 				item,
 				tabIndex: visible ? "0" : "-1",
-				posinset: idx + 1,
-				setsize: this.content.length,
+				posinset: `${idx + 1}`,
+				setsize: `${this.content.length}`,
 				styles: {
 					width: `${this._itemWidth}px`,
 				},
@@ -548,7 +548,7 @@ class Carousel extends UI5Element {
 		});
 	}
 
-	get effectiveItemsPerPage() {
+	get effectiveItemsPerPage(): number {
 		if (this._width <= 640) {
 			return this.itemsPerPageS;
 		}
@@ -560,11 +560,11 @@ class Carousel extends UI5Element {
 		return this.itemsPerPageL;
 	}
 
-	isItemInViewport(index) {
+	isItemInViewport(index: number): boolean {
 		return index >= this._selectedIndex && index <= this._selectedIndex + this.effectiveItemsPerPage - 1;
 	}
 
-	isIndexInRange(index) {
+	isIndexInRange(index: number): boolean {
 		return index >= 0 && index <= this.pagesCount - 1;
 	}
 
@@ -644,19 +644,19 @@ class Carousel extends UI5Element {
 		for (let index = 0; index < pages; index++) {
 			dots.push({
 				active: index === this._selectedIndex,
-				ariaLabel: Carousel.i18nBundle.getText(CAROUSEL_DOT_TEXT, index + 1, pages),
+				ariaLabel: Carousel.i18nBundle.getText(CAROUSEL_DOT_TEXT as I18nText, index + 1, pages),
 			});
 		}
 
 		return dots;
 	}
 
-	get arrows() {
-		const showArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
+	get showArrows() {
+		const displayArrows = this._visibleNavigationArrows && this.hasManyPages && isDesktop();
 
 		return {
-			content: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
-			navigation: !this.hideNavigationArrows && showArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
+			content: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Content,
+			navigation: !this.hideNavigationArrows && displayArrows && this.arrowsPlacement === CarouselArrowsPlacement.Navigation,
 		};
 	}
 
@@ -681,7 +681,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ofText() {
-		return Carousel.i18nBundle.getText(CAROUSEL_OF_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_OF_TEXT as I18nText);
 	}
 
 	get ariaActiveDescendant() {
@@ -689,11 +689,11 @@ class Carousel extends UI5Element {
 	}
 
 	get nextPageText() {
-		return Carousel.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT as I18nText);
 	}
 
 	get previousPageText() {
-		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
+		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT as I18nText);
 	}
 
 	/**
@@ -703,7 +703,7 @@ class Carousel extends UI5Element {
 	 * @returns {Integer[]} the indices of the visible items
 	 */
 	get visibleItemsIndices() {
-		const visibleItemsIndices = [];
+		const visibleItemsIndices: Array<number> = [];
 
 		this.items.forEach((item, index) => {
 			if (this.isItemInViewport(index)) {
@@ -729,3 +729,6 @@ class Carousel extends UI5Element {
 Carousel.define();
 
 export default Carousel;
+export type {
+	CarouselNavigateEventDetail,
+};
