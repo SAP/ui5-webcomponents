@@ -241,6 +241,7 @@ class ViewSettingsDialog extends UI5Element {
 	 *
 	 * @type {sap.ui.webc.fiori.IFilterItem[]}
 	 * @name sap.ui.webc.fiori.ViewSettingsDialog.prototype.filterItems
+	 * @slot filterItems
 	 * @public
 	 */
 	@slot()
