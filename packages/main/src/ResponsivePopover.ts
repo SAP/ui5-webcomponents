@@ -121,6 +121,8 @@ class ResponsivePopover extends Popover {
 	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
 	 * @public
 	 * @async
+	 * @method
+	 * @name sap.ui.webc.main.ResponsivePopover#showAt
 	 * @returns {Promise} Resolves when the responsive popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false) {
@@ -141,6 +143,9 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Closes the popover/dialog.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.ResponsivePopover#close
+	 * @returns {void}
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!isPhone()) {
@@ -159,8 +164,10 @@ class ResponsivePopover extends Popover {
 	}
 
 	/**
-	 * Tells if the responsive popover is open
+	 * Tells if the responsive popover is open.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.ResponsivePopover#isOpen
 	 * @returns {boolean}
 	 */
 	isOpen() {

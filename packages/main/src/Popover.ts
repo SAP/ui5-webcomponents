@@ -346,6 +346,7 @@ class Popover extends Popup {
 	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
 	 * @public
 	 * @async
+	 * @method
 	 * @name sap.ui.webc.main.Popover#showAt
 	 * @returns {Promise} Resolved when the popover is open
 	 */

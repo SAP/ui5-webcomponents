@@ -428,6 +428,7 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Tells if the component is opened
 	 * @public
+	 * @method
 	 * @name sap.ui.webc.main.Popup#isOpen
 	 * @returns {boolean}
 	 */
@@ -485,8 +486,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Hides the block layer (for modal popups only)
+	 * Closes the popup.
 	 * @public
+	 * @method
 	 * @name sap.ui.webc.main.Popup#close
 	 * @returns {void}
 	 */
