@@ -501,7 +501,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * Shows the dialog.
 	 * @public
 	 * @method
-	 * @name sap.ui.webc.fiori.ViewSettingsDialog#isValid
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog#show
 	 */
 	show() {
 		if (!this._dialog) {
