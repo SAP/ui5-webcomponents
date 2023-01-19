@@ -6555,19 +6555,6 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                       </div>
                       <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
-                          openPicker
-                            <br>
-                                 <code>open-picker</code>
-                        </div>
-                        <div class="cell api-table-content-cell">undefined</div>
-                        <div class="cell api-table-content-cell"></div>
-                        <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
-                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.3.0</div>
-                        </div>
-                      </div>
-                      <div class="row api-table-roll-odd">
-                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           placeholder
                             <br>
                         </div>
@@ -6577,7 +6564,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines a short hint intended to aid the user with data entry when the component has no value.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           previewItem
                             (readonly)
@@ -6590,7 +6577,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             The suggestion item on preview.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           readonly
                             <br>
@@ -6601,7 +6588,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines whether the component is read-only. <br><br> <b>Note:</b> A read-only component is not editable, but still provides visual feedback upon user interaction.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           required
                             <br>
@@ -6613,7 +6600,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.3</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showClearIcon
                             <br>
@@ -6626,7 +6613,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           showSuggestions
                             <br>
@@ -6638,7 +6625,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines whether the component should show suggestions, if such are present. <br><br> <b>Note:</b> You need to import the <code>InputSuggestions</code> module from <code>"@ui5/webcomponents/dist/features/InputSuggestions.js"</code> to enable this functionality.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           type
                             <br>
@@ -6649,7 +6636,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the HTML type of the component. Available options are: <code>Text</code>, <code>Email</code>, <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>. <br><br> <b>Notes:</b> <ul> <li>The particular effect of this property differs depending on the browser and the current language settings, especially for type <code>Number</code>.</li> <li>The property is mostly intended to be used with touch devices that use different soft keyboard layouts depending on the given input type.</li> </ul>
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           value
                             <br>
@@ -6660,7 +6647,7 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                             Defines the value of the component. <br><br> <b>Note:</b> The property is updated upon typing.
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           valueState
                             <br>
@@ -6767,6 +6754,21 @@ The <code>ui5-input</code> component allows the user to enter and edit text or n
                         </tr>
                   </div>
             
+                  <h3 class="comment-api-title space-top">Methods</h3>
+                  <p class="small-space-top" >This Web Component exposes public methods. You can invoke them directly on the Web Component instance.</p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">openPicker</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.</div>
+                      </div>
+            
+                  </div>
             
           </section>
         </section>
