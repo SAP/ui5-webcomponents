@@ -523,9 +523,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	@property({ type: Boolean, noAttribute: true })
 	_inputIconFocused!: boolean;
 
-	@slot({ type: HTMLElement })
-	icon!: Array<Icon>;
-
 	/**
 	 * Defines the suggestion items.
 	 * <br><br>
@@ -565,12 +562,23 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	suggestionItems!: Array<SuggestionItem>;
 
 	/**
+	 * Defines the icon to be displayed in the component.
+	 *
+	 * @type {sap.ui.webcomponents.main.IIcon[]}
+	 * @name sap.ui.webc.main.Input.prototype.icon
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	icon!: Array<Icon>;
+
+	/**
 	 * The slot is used for native <code>input</code> HTML element to enable form submit,
 	 * when <code>name</code> property is set.
 	 * @type {HTMLElement[]}
 	 * @private
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	formSupport!: Array<HTMLElement>;
 
 	/**
@@ -590,7 +598,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
 	hasSuggestionItemSelected: boolean;
