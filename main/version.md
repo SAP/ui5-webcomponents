@@ -1,5 +1,5 @@
-commit dfad623d88ad78b7f2f434ba305bdf0b40944467
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Thu Jan 19 15:37:40 2023 +0200
+commit 098c03fc926982a127f0320586243e343924b59c
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jan 19 16:26:23 2023 +0200
 
-    chore: fix copy-and-watch usage (#6305)
+    docs: fix jsdoc preprocessing of default slot (#6308)
