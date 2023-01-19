@@ -295,6 +295,8 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Closes the picker
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#closePicker
 	 */
 	async closePicker() {
 		const responsivePopover = await this._getPopover();
@@ -326,6 +328,8 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Checks if the picker is open
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#isOpen
 	 * @returns {boolean}
 	 */
 	isOpen() {
@@ -410,6 +414,8 @@ class TimePickerBase extends UI5Element {
 	 * according to the <code>formatPattern</code> property of the TimePicker instance
 	 * @param {object} date A Java Script date object to be formatted as string
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#formatValue
 	 * @returns {string}
 	 */
 	formatValue(date: Date) {
@@ -423,6 +429,8 @@ class TimePickerBase extends UI5Element {
 	 * <b>Note:</b> an empty string is considered as valid value.
 	 * @param {string} value The value to be tested against the current date format
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#isValid
 	 * @returns {boolean}
 	 */
 	isValid(value: string | undefined) {

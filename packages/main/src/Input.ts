@@ -1202,10 +1202,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
-	 * @since 1.3.0
 	 * @public
+	 * @method
 	 * @name sap.ui.webc.main.Input#openPicker
 	 * @return {void}
+	 * @since 1.3.0
 	 */
 	openPicker() {
 		if (!this.suggestionItems.length || this.disabled || this.readonly) {
