@@ -42,6 +42,15 @@ const metadata = {
 		expandedTokenizer: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates whether the tokenizer has tokens inside
+		 * @private
+		 */
+		isTokenizerAvailable: {
+			type: Boolean,
+		},
+
 	},
 	slots: /** @lends sap.ui.webc.main.MultiInput.prototype */ {
 		/**
@@ -328,16 +337,12 @@ class MultiInput extends Input {
 			);
 		}
 
+		this.isTokenizerAvailable = this.tokens && this.tokens.length > 0;
 		this.style.setProperty("--_ui5_input_has_tokens", this.isTokenizerAvailable ? 1 : 0);
-		this.style.tokenizerStyles = this.isTokenizerAvailable ? { } : { display: "none" };
 	}
 
 	get tokenizer() {
 		return this.shadowRoot.querySelector("[ui5-tokenizer]");
-	}
-
-	get isTokenizerAvailable() {
-		return this.tokens && this.tokens.length > 0;
 	}
 
 	get _tokensCountText() {

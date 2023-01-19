@@ -28,3 +28,7 @@
 	padding: var(--_ui5_input_inner_padding_with_icon);
 	padding-left: calc((1 - var(--_ui5_input_has_tokens)) * var(--_ui5_input_inner_padding_left_no_tokens) + (var(--_ui5_input_has_tokens) * var(--_ui5_input_inner_padding_left_tokens)));
 }
+
+:host(:not([is-tokenizer-available])) .ui5-multi-input-tokenizer {
+	display: none;
+}

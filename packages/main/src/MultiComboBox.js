@@ -336,6 +336,14 @@ const metadata = {
 		_performingSelectionTwice: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates whether the tokenizer has tokens inside
+		 * @private
+		 */
+		isTokenizerAvailable : {
+			type: Boolean,
+		}
 	},
 	events: /** @lends sap.ui.webc.main.MultiComboBox.prototype */ {
 		/**
@@ -1302,9 +1310,9 @@ class MultiComboBox extends UI5Element {
 		const numIcons = this.icon ? this.icon.length : 0;
 		const numSlimDownIcon = this.readonly ? 0 : 1;
 
+		this.isTokenizerAvailable = this.items && this.items.length > 0;
 		this.style.setProperty("--_ui5-input-icons-count", numIcons + numSlimDownIcon);
 		this.style.setProperty("--_ui5_input_has_tokens", this.isTokenizerAvailable ? 1 : 0);
-		this.style.tokenizerStyles = this.isTokenizerAvailable ? { } : { display: "none" };
 
 		if (!input || !value) {
 			return;
@@ -1598,10 +1606,6 @@ class MultiComboBox extends UI5Element {
 		return shouldBeExpanded;
 	}
 
-	get isTokenizerAvailable() {
-		return this.items && this.items.length > 0;
-	}
-
 	get _valueStatePopoverHorizontalAlign() {
 		return this.effectiveDir !== "rtl" ? "Left" : "Right";
 	}
@@ -1637,7 +1641,7 @@ class MultiComboBox extends UI5Element {
 			suggestionsPopover: {
 				"min-width": `${this._inputWidth}px`,
 				"max-width": (this._inputWidth / remSizeIxPx) > 40 ? `${this._inputWidth}px` : "40rem",
-			},
+			}
 		};
 	}
 
