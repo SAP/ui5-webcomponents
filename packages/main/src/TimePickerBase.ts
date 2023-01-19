@@ -308,6 +308,8 @@ class TimePickerBase extends UI5Element {
 	 * Opens the picker.
 	 * @async
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#openPicker
 	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
