@@ -240,7 +240,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
 	 *
 	 * @type {sap.ui.webc.fiori.IFilterItem[]}
-	 * @slot filterItems
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog.prototype.filterItems
 	 * @public
 	 */
 	@slot()

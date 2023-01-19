@@ -303,7 +303,7 @@ class StepInput extends UI5Element implements IFormElement {
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 * <br><br>
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.valueState
+	 * @name sap.ui.webc.main.StepInput.prototype.valueStateMessage
 	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
