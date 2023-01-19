@@ -357,6 +357,8 @@ class Menu extends UI5Element {
 	 * Shows the Menu near the opener element.
 	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.Menu#showAt
 	 */
 	async showAt(opener: HTMLElement) {
 		if (isPhone()) {
@@ -380,6 +382,8 @@ class Menu extends UI5Element {
 	/**
 	 * Closes the Menu.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.Menu#close
 	 */
 	close() {
 		if (this._popover) {
