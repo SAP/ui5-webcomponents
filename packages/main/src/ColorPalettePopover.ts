@@ -181,6 +181,8 @@ class ColorPalettePopover extends UI5Element {
 	 * Shows the ColorPalettePopover.
 	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.ColorPalettePopover#showAt
 	 * @since 1.1.1
 	 */
 	showAt(opener: HTMLElement) {
@@ -192,6 +194,8 @@ class ColorPalettePopover extends UI5Element {
 	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
 	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.ColorPalettePopover#openPopover
 	 * @since 1.0.0-rc.16
 	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
 	 */
