@@ -261,8 +261,6 @@ class Dialog extends Popup {
 	 *
 	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
 	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.Dialog#show
 	 * @async
 	 * @method
 	 * @name sap.ui.webc.main.Dialog#show
