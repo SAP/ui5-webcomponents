@@ -564,7 +564,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Defines the icon to be displayed in the component.
 	 *
-	 * @type {sap.ui.webcomponents.main.IIcon[]}
+	 * @type {sap.ui.webc.main.IIcon[]}
 	 * @name sap.ui.webc.main.Input.prototype.icon
 	 * @slot
 	 * @public
