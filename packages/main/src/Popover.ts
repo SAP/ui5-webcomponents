@@ -348,6 +348,7 @@ class Popover extends Popup {
 	 * @async
 	 * @method
 	 * @name sap.ui.webc.main.Popover#showAt
+	 * @async
 	 * @returns {Promise} Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false) {

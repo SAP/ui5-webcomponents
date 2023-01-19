@@ -501,6 +501,8 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Shows the dialog.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog#show
 	 */
 	show() {
 		if (!this._dialog) {
@@ -704,11 +706,13 @@ class ViewSettingsDialog extends UI5Element {
 	 * <code>
 	 *  {sortOrder: "Ascending", sortBy: "Name", filters: [{"Filter 1": ["Some filter 1", "Some filter 2"]}, {"Filter 2": ["Some filter 4"]}]}
 	 * </code>
-   * @param {Object} settings - predefined settings.
-   * @param {string} settings.sortOrder - sort order
-   * @param {string} settings.sortBy - sort by
-   * @param {Array.<Object>} settings.filters - filters
+	 * @param {Object} settings - predefined settings.
+	 * @param {string} settings.sortOrder - sort order
+	 * @param {string} settings.sortBy - sort by
+	 * @param {Array.<Object>} settings.filters - filters
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog#setConfirmedSettings
 	 */
 	setConfirmedSettings(settings: VSDSettings) {
 		if (settings && this._dialog && !this._dialog.isOpen()) {

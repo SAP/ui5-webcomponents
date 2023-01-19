@@ -322,6 +322,8 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.fiori.DynamicSideContent#toggleContents
 	 */
 	toggleContents() {
 		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {

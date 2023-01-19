@@ -92,6 +92,7 @@ class DateRangePicker extends DatePicker {
 	 * @readonly
 	 * @type {Date}
 	 * @public
+	 * @name sap.ui.webc.main.DateRangePicker.prototype.dateValue
 	 */
 	get dateValue() {
 		return null;
@@ -103,6 +104,7 @@ class DateRangePicker extends DatePicker {
 	 * @readonly
 	 * @type {Date}
 	 * @public
+	 * @name sap.ui.webc.main.DateRangePicker.prototype.dateValueUTC
 	 */
 	get dateValueUTC() {
 		return null;
@@ -156,6 +158,7 @@ class DateRangePicker extends DatePicker {
 	 * @readonly
 	 * @type {Date}
 	 * @public
+	 * @name sap.ui.webc.main.DateRangePicker.prototype.startDateValue
 	 */
 	get startDateValue() {
 		return CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000).toLocalJSDate();
@@ -167,6 +170,7 @@ class DateRangePicker extends DatePicker {
 	 * @readonly
 	 * @type {Date}
 	 * @public
+	 * @name sap.ui.webc.main.DateRangePicker.prototype.endDateValue
 	 */
 	get endDateValue() {
 		return CalendarDate.fromTimestamp(this._endDateTimestamp! * 1000).toLocalJSDate();

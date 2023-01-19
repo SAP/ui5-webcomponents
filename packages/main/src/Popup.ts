@@ -405,6 +405,7 @@ abstract class Popup extends UI5Element {
 	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
+	 * @method
 	 * @name sap.ui.webc.main.Popup#applyFocus
 	 * @async
 	 * @returns {Promise} Promise that resolves when the focus is applied
