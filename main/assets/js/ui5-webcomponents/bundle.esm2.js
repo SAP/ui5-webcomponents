@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1674113195
+  buildTime: 1674119848
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -15091,16 +15091,16 @@ __decorate$U([
   property({ type: Boolean, noAttribute: true })
 ], Input.prototype, "_inputIconFocused", void 0);
 __decorate$U([
-  slot({ type: HTMLElement })
-], Input.prototype, "icon", void 0);
-__decorate$U([
   slot({ type: HTMLElement, "default": true })
 ], Input.prototype, "suggestionItems", void 0);
 __decorate$U([
-  slot({ type: HTMLElement })
+  slot()
+], Input.prototype, "icon", void 0);
+__decorate$U([
+  slot()
 ], Input.prototype, "formSupport", void 0);
 __decorate$U([
-  slot({ type: HTMLElement })
+  slot()
 ], Input.prototype, "valueStateMessage", void 0);
 Input = Input_1 = __decorate$U([
   customElement("ui5-input"),
