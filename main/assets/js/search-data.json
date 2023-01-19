@@ -1184,45 +1184,45 @@
   },
   "170": {
     "id": "170",
-    "title": "Getting started",
-    "content": "Getting Started Read on to start using UI5 Web Components right away! This section outlines the basic concepts you need to get acquainted with.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/getting-started",
-    "relUrl": "/playground/getting-started"
-  },
-  "171": {
-    "id": "171",
-    "title": "Contributing",
-    "content": "Contributing to the UI5 Web Components Project Contributions are welcome! This section explains our conventions, how to run the project locally, and more.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/contributing",
-    "relUrl": "/playground/contributing"
-  },
-  "172": {
-    "id": "172",
-    "title": "Development",
-    "content": "UI5 Web Components Custom Development This section explains how to create your own custom UI5 Web Components packages and develop your own UI5 Web Components.",
-    "url": "https://sap.github.io/ui5-webcomponents/main/playground/development",
-    "relUrl": "/playground/development"
-  },
-  "173": {
-    "id": "173",
     "title": "Frameworks",
     "content": "Usage with Frameworks In this section, you can find framework-specific tutorials on how to get started with UI5 Web Components. We have created a bunch of tutorials that cover the integration of UI5 Web Components with some of the most popular existing frameworks. In these tutorials, you will find some framework-specific features &amp; learn how to use them. You might want to check them before you start active development.",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/frameworks",
     "relUrl": "/playground/frameworks"
   },
-  "174": {
-    "id": "174",
+  "171": {
+    "id": "171",
+    "title": "Getting started",
+    "content": "Getting Started Read on to start using UI5 Web Components right away! This section outlines the basic concepts you need to get acquainted with.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/getting-started",
+    "relUrl": "/playground/getting-started"
+  },
+  "172": {
+    "id": "172",
     "title": "Advanced",
     "content": "Advanced Concepts This section outlines more advanced concepts, related to application development with UI5 Web Components.",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/advanced",
     "relUrl": "/playground/advanced"
   },
-  "175": {
-    "id": "175",
+  "173": {
+    "id": "173",
+    "title": "Development",
+    "content": "UI5 Web Components Custom Development This section explains how to create your own custom UI5 Web Components packages and develop your own UI5 Web Components.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/development",
+    "relUrl": "/playground/development"
+  },
+  "174": {
+    "id": "174",
     "title": "Customizing",
     "content": "Providing Custom Resources This section shows ways (other than the public APIs) to customize UI5 Web Components. Start with: Custom Theming with UI Theme Designer",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/customizing",
     "relUrl": "/playground/customizing"
+  },
+  "175": {
+    "id": "175",
+    "title": "Contributing",
+    "content": "Contributing to the UI5 Web Components Project Contributions are welcome! This section explains our conventions, how to run the project locally, and more.",
+    "url": "https://sap.github.io/ui5-webcomponents/main/playground/contributing",
+    "relUrl": "/playground/contributing"
   },
   "176": {
     "id": "176",
@@ -1290,7 +1290,7 @@
   "185": {
     "id": "185",
     "title": "Responsive Popover",
-    "content": "ResponsivePopover v1.0.0-rc.6 @ui5/webcomponents &lt;ui5-responsive-popover&gt; Basic ResponsivePopover Open ResponsivePopover Email: Note: If you open the page in mobile, dialog would be displayed. Subscribe &lt;ui5-button id=&quot;openBtn&quot; design=&quot;Emphasized&quot;&gt;Open Popover&lt;/ui5-button&gt; &lt;ui5-responsive-popover id=&quot;hello-popover&quot; header-text=&quot;Newsletter subscription&quot;&gt; &lt;div class=&quot;flex-column&quot;&gt; &lt;ui5-label for=&quot;emailInput&quot; required&gt;Email: &lt;/ui5-label&gt; &lt;ui5-input id=&quot;emailInput&quot; class=&quot;samples-margin-top&quot; placeholder=&quot;Enter Email&quot;&gt;&lt;/ui5-input&gt; &lt;ui5-label&gt;Note: If you open the page in mobile, dialog would be displayed.&lt;/ui5-label&gt; &lt;/div&gt; &lt;div slot=&quot;footer&quot; class=&quot;popover-footer&quot;&gt; &lt;div style=&quot;flex: 1;&quot;&gt;&lt;/div&gt; &lt;ui5-button id=&quot;closePopoverButton&quot; design=&quot;Emphasized&quot;&gt;Subscribe&lt;/ui5-button&gt; &lt;/div&gt; &lt;/ui5-responsive-popover&gt; &lt;script&gt; var popover = document.getElementById(&quot;hello-popover&quot;); var popoverOpener = document.getElementById(&quot;openBtn&quot;); var popoverCloser = document.getElementById(&quot;closePopoverButton&quot;); popoverOpener.addEventListener(&quot;click&quot;, function() { popover.showAt(popoverOpener); }); popoverCloser.addEventListener(&quot;click&quot;, function() { popover.close(); }); &lt;/script&gt; &lt;div class=&quot;page-container&quot;&gt; &lt;div class=&quot;api-container&quot;&gt; &lt;section class=&quot;component-description&quot;&gt; &lt;h3 class=&quot;comment-api-title&quot;&gt;Overview&lt;/h3&gt; The &lt;code&gt;ui5-responsive-popover&lt;/code&gt; acts as a Popover on desktop and tablet, while on phone it acts as a Dialog. The component improves tremendously the user experience on mobile. Usage Use it when you want to make sure that all the content is visible on any device. CSS Shadow Parts CSS Shadow Parts allow developers to style elements inside the Shadow DOM. The ui5-responsive-popover exposes the following CSS Shadow Parts: &lt;ul&gt; &lt;li&gt;header - Used to style the header of the component&lt;/li&gt; &lt;li&gt;content - Used to style the content of the component&lt;/li&gt; &lt;li&gt;footer - Used to style the footer of the component&lt;/li&gt; &lt;/ul&gt; &lt;section class=&quot;component-api space-top&quot;&gt; &lt;h3 class=&quot;comment-api-title space-top&quot;&gt;Methods&lt;/h3&gt; &lt;p class=&quot;small-space-top&quot; &gt;This Web Component exposes public methods. You can invoke them directly on the Web Component instance.&lt;/p&gt; &lt;div class=&quot;small-space-top api-table&quot;&gt; &lt;div class=&quot;head api-table-header-roll&quot;&gt; &lt;div class=&quot;cell api-table-header-cell&quot;&gt;Name&lt;/div&gt; &lt;div class=&quot;cell api-table-header-cell&quot;&gt;Description&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;row api-table-roll-even&quot;&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold&quot;&gt;close&lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-description&quot;&gt;Closes the popover/dialog.&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;row api-table-roll-odd&quot;&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold&quot;&gt;isOpen&lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-description&quot;&gt;Tells if the responsive popover is open&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;row api-table-roll-even&quot;&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold&quot;&gt;showAt&lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-description&quot;&gt;Shows popover on desktop and dialog on mobile.&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold api-table-param-name&quot;&gt;opener&lt;/div&gt; &lt;div class=&quot;cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description&quot;&gt;&lt;strong class=&quot;bold&quot; &gt;type:&lt;/strong&gt; HTMLElement &lt;br/&gt; &lt;strong class=&quot;api-table-event-description bold&quot;&gt;description:&lt;/strong&gt; the element that the popover is shown at&lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold api-table-param-name&quot;&gt;preventInitialFocus&lt;/div&gt; &lt;div class=&quot;cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description&quot;&gt;&lt;strong class=&quot;bold&quot; &gt;type:&lt;/strong&gt; boolean &lt;br/&gt; &lt;strong class=&quot;api-table-event-description bold&quot;&gt;description:&lt;/strong&gt; Prevents applying the focus inside the popup&lt;/div&gt; &lt;/div&gt; &lt;/section&gt; &lt;/section&gt; &lt;/div&gt; &lt;/div&gt; &lt;footer class=&quot;footer-wrapper&quot;&gt; &lt;div class=&quot;footer-links&quot;&gt; &lt;a class=&quot;separator&quot; href=&quot;https://www.sap.com/about/legal/privacy.html&quot; target=&quot;_blank&quot;&gt;Privacy Policy&lt;/a&gt; &lt;a href=&quot;https://www.sap.com/about/legal/impressum.html&quot; target=&quot;_blank&quot;&gt;Legal&lt;/a&gt; &lt;/div&gt; &lt;img src=&quot;../../../assets/images/sap-logo-svg.svg&quot; alt=&quot;Sap Logo&quot; /&gt; &lt;/footer&gt;",
+    "content": "ResponsivePopover v1.0.0-rc.6 @ui5/webcomponents &lt;ui5-responsive-popover&gt; Basic ResponsivePopover Open ResponsivePopover Email: Note: If you open the page in mobile, dialog would be displayed. Subscribe &lt;ui5-button id=&quot;openBtn&quot; design=&quot;Emphasized&quot;&gt;Open Popover&lt;/ui5-button&gt; &lt;ui5-responsive-popover id=&quot;hello-popover&quot; header-text=&quot;Newsletter subscription&quot;&gt; &lt;div class=&quot;flex-column&quot;&gt; &lt;ui5-label for=&quot;emailInput&quot; required&gt;Email: &lt;/ui5-label&gt; &lt;ui5-input id=&quot;emailInput&quot; class=&quot;samples-margin-top&quot; placeholder=&quot;Enter Email&quot;&gt;&lt;/ui5-input&gt; &lt;ui5-label&gt;Note: If you open the page in mobile, dialog would be displayed.&lt;/ui5-label&gt; &lt;/div&gt; &lt;div slot=&quot;footer&quot; class=&quot;popover-footer&quot;&gt; &lt;div style=&quot;flex: 1;&quot;&gt;&lt;/div&gt; &lt;ui5-button id=&quot;closePopoverButton&quot; design=&quot;Emphasized&quot;&gt;Subscribe&lt;/ui5-button&gt; &lt;/div&gt; &lt;/ui5-responsive-popover&gt; &lt;script&gt; var popover = document.getElementById(&quot;hello-popover&quot;); var popoverOpener = document.getElementById(&quot;openBtn&quot;); var popoverCloser = document.getElementById(&quot;closePopoverButton&quot;); popoverOpener.addEventListener(&quot;click&quot;, function() { popover.showAt(popoverOpener); }); popoverCloser.addEventListener(&quot;click&quot;, function() { popover.close(); }); &lt;/script&gt; &lt;div class=&quot;page-container&quot;&gt; &lt;div class=&quot;api-container&quot;&gt; &lt;section class=&quot;component-description&quot;&gt; &lt;h3 class=&quot;comment-api-title&quot;&gt;Overview&lt;/h3&gt; The &lt;code&gt;ui5-responsive-popover&lt;/code&gt; acts as a Popover on desktop and tablet, while on phone it acts as a Dialog. The component improves tremendously the user experience on mobile. Usage Use it when you want to make sure that all the content is visible on any device. CSS Shadow Parts CSS Shadow Parts allow developers to style elements inside the Shadow DOM. The ui5-responsive-popover exposes the following CSS Shadow Parts: &lt;ul&gt; &lt;li&gt;header - Used to style the header of the component&lt;/li&gt; &lt;li&gt;content - Used to style the content of the component&lt;/li&gt; &lt;li&gt;footer - Used to style the footer of the component&lt;/li&gt; &lt;/ul&gt; &lt;section class=&quot;component-api space-top&quot;&gt; &lt;h3 class=&quot;comment-api-title space-top&quot;&gt;Methods&lt;/h3&gt; &lt;p class=&quot;small-space-top&quot; &gt;This Web Component exposes public methods. You can invoke them directly on the Web Component instance.&lt;/p&gt; &lt;div class=&quot;small-space-top api-table&quot;&gt; &lt;div class=&quot;head api-table-header-roll&quot;&gt; &lt;div class=&quot;cell api-table-header-cell&quot;&gt;Name&lt;/div&gt; &lt;div class=&quot;cell api-table-header-cell&quot;&gt;Description&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;row api-table-roll-even&quot;&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold&quot;&gt;close&lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-description&quot;&gt;Closes the popover/dialog.&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;row api-table-roll-odd&quot;&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold&quot;&gt;isOpen&lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-description&quot;&gt;Tells if the responsive popover is open.&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;row api-table-roll-even&quot;&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold&quot;&gt;showAt&lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-description&quot;&gt;Shows popover on desktop and dialog on mobile.&lt;/div&gt; &lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold api-table-param-name&quot;&gt;opener&lt;/div&gt; &lt;div class=&quot;cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description&quot;&gt;&lt;strong class=&quot;bold&quot; &gt;type:&lt;/strong&gt; HTMLElement &lt;br/&gt; &lt;strong class=&quot;api-table-event-description bold&quot;&gt;description:&lt;/strong&gt; the element that the popover is shown at&lt;/div&gt; &lt;div class=&quot;cell api-table-content-cell api-table-content-cell-bold api-table-param-name&quot;&gt;preventInitialFocus&lt;/div&gt; &lt;div class=&quot;cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description&quot;&gt;&lt;strong class=&quot;bold&quot; &gt;type:&lt;/strong&gt; boolean &lt;br/&gt; &lt;strong class=&quot;api-table-event-description bold&quot;&gt;description:&lt;/strong&gt; Prevents applying the focus inside the popup&lt;/div&gt; &lt;/div&gt; &lt;/section&gt; &lt;/section&gt; &lt;/div&gt; &lt;/div&gt; &lt;footer class=&quot;footer-wrapper&quot;&gt; &lt;div class=&quot;footer-links&quot;&gt; &lt;a class=&quot;separator&quot; href=&quot;https://www.sap.com/about/legal/privacy.html&quot; target=&quot;_blank&quot;&gt;Privacy Policy&lt;/a&gt; &lt;a href=&quot;https://www.sap.com/about/legal/impressum.html&quot; target=&quot;_blank&quot;&gt;Legal&lt;/a&gt; &lt;/div&gt; &lt;img src=&quot;../../../assets/images/sap-logo-svg.svg&quot; alt=&quot;Sap Logo&quot; /&gt; &lt;/footer&gt;",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/components/ResponsivePopover/",
     "relUrl": "/playground/components/ResponsivePopover/"
   },

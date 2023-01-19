@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 1,
   suffix: "",
   isNext: false,
-  buildTime: 1674144280
+  buildTime: 1674144384
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -975,21 +975,21 @@ const isNodeContainedWithin = (parent, child) => {
 const isPointInRect = (x2, y2, rect) => {
   return x2 >= rect.left && x2 <= rect.right && y2 >= rect.top && y2 <= rect.bottom;
 };
-const isClickInRect = (event2, rect) => {
+const isClickInRect = (e2, rect) => {
   let x2;
   let y2;
-  if (event2 instanceof MouseEvent) {
-    x2 = event2.clientX;
-    y2 = event2.clientY;
+  if (e2 instanceof MouseEvent) {
+    x2 = e2.clientX;
+    y2 = e2.clientY;
   } else {
-    const touch2 = event2.touches[0];
+    const touch2 = e2.touches[0];
     x2 = touch2.clientX;
     y2 = touch2.clientY;
   }
   return isPointInRect(x2, y2, rect);
 };
 function instanceOfPopup(object) {
-  return "isUI5Element" in object && "showAt" in object;
+  return "isUI5Element" in object && "_show" in object;
 }
 const getClosedPopupParent = (el) => {
   const parent = el.parentElement || el.getRootNode && el.getRootNode().host;
@@ -2999,7 +2999,7 @@ function _invalidate(changeInfo) {
   renderDeferred(this);
   this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
-let metadata$L = {};
+let metadata$K = {};
 class UI5Element extends HTMLElement {
   constructor() {
     super();
@@ -3533,10 +3533,10 @@ class UI5Element extends HTMLElement {
     }
   }
   static get metadata() {
-    return metadata$L;
+    return metadata$K;
   }
   static set metadata(newMetadata) {
-    metadata$L = newMetadata;
+    metadata$K = newMetadata;
   }
   static get styles() {
     return "";
@@ -8582,7 +8582,7 @@ var defaultTheme$1 = { packageName: "@ui5/webcomponents", fileName: "themes/sap_
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var labelCss = { packageName: "@ui5/webcomponents", fileName: "themes/Label.css", content: ':host(:not([hidden])){display:inline-flex}:host{max-width:100%;color:var(--sapContent_LabelColor);font-family:"72override",var(--sapFontFamily);font-size:var(--sapFontSize);font-weight:400;cursor:text}.ui5-label-root{width:100%;cursor:inherit}:host([wrapping-type=Normal]) .ui5-label-root{white-space:normal}:host(:not([wrapping-type=Normal])) .ui5-label-root{display:inline-block;white-space:nowrap}bdi{content:"";padding-right:.075rem}:host(:not([wrapping-type=Normal])) .ui5-label-text-wrapper{text-overflow:ellipsis;overflow:hidden;display:inline-block;vertical-align:top;max-width:100%}:host(:not([wrapping-type=Normal])[required][show-colon]) .ui5-label-text-wrapper,:host(:not([wrapping-type=Normal])[required][show-colon]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari{max-width:calc(100% - .8rem)}:host(:not([wrapping-type=Normal])[required]) .ui5-label-text-wrapper{max-width:calc(100% - .475rem)}:host(:not([wrapping-type=Normal])[required]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari{max-width:calc(100% - .425rem)}:host(:not([wrapping-type=Normal])[show-colon]) .ui5-label-text-wrapper{max-width:calc(100% - .125rem)}:host([show-colon]) .ui5-label-required-colon{margin-left:-.05rem}:host([show-colon]) .ui5-label-required-colon:before{content:":"}:host([required]) .ui5-label-required-colon:after{content:"*";color:var(--sapField_RequiredColor);font-size:1.25rem;font-weight:700;position:relative;font-style:normal;vertical-align:middle;line-height:0}:host([required][show-colon]) .ui5-label-required-colon:after{margin-inline-start:.125rem}' };
-var __decorate$1a = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$1b = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -8620,19 +8620,19 @@ let Label = class Label2 extends UI5Element {
     }
   }
 };
-__decorate$1a([
+__decorate$1b([
   property()
 ], Label.prototype, "for", void 0);
-__decorate$1a([
+__decorate$1b([
   property({ type: Boolean })
 ], Label.prototype, "showColon", void 0);
-__decorate$1a([
+__decorate$1b([
   property({ type: Boolean })
 ], Label.prototype, "required", void 0);
-__decorate$1a([
+__decorate$1b([
   property({ type: WrappingType$1, defaultValue: WrappingType$1.None })
 ], Label.prototype, "wrappingType", void 0);
-Label = __decorate$1a([
+Label = __decorate$1b([
   customElement("ui5-label")
 ], Label);
 Label.define();
@@ -8927,7 +8927,7 @@ var defaultTexts = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePr
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var busyIndicatorCss = { packageName: "@ui5/webcomponents", fileName: "themes/BusyIndicator.css", content: ':host(:not([hidden])){display:inline-block}:host([_is-busy]){color:var(--_ui5_busy_indicator_color)}:host([size=Small]) .ui5-busy-indicator-root{min-width:1.5rem;min-height:.5rem}:host([size=Small][text]:not([text=""])) .ui5-busy-indicator-root{min-height:1.75rem}:host([size=Small]) .ui5-busy-indicator-circle{width:.5rem;height:.5rem}:host(:not([size])) .ui5-busy-indicator-root,:host([size=Medium]) .ui5-busy-indicator-root{min-width:3rem;min-height:1rem}:host(:not([size])[text]:not([text=""])) .ui5-busy-indicator-root,:host([size=Medium][text]:not([text=""])) .ui5-busy-indicator-root{min-height:2.25rem}:host(:not([size])) .ui5-busy-indicator-circle,:host([size=Medium]) .ui5-busy-indicator-circle{width:1rem;height:1rem}:host([size=Large]) .ui5-busy-indicator-root{min-width:6rem;min-height:2rem}:host([size=Large][text]:not([text=""])) .ui5-busy-indicator-root{min-height:3.25rem}:host([size=Large]) .ui5-busy-indicator-circle{width:2rem;height:2rem}.ui5-busy-indicator-root{display:flex;justify-content:center;align-items:center;position:relative;background-color:inherit}.ui5-busy-indicator-busy-area{position:absolute;z-index:99;left:0;right:0;top:0;bottom:0;display:flex;justify-content:center;align-items:center;background-color:inherit;flex-direction:column}.ui5-busy-indicator-busy-area:focus-visible{outline:var(--_ui5_busy_indicator_focus_outline);outline-offset:-2px;border-radius:var(--_ui5_busy_indicator_focus_border_radius)}.ui5-busy-indicator-circles-wrapper{line-height:0}.ui5-busy-indicator-circle{display:inline-block;background-color:currentColor;border-radius:50%}.ui5-busy-indicator-circle:before{content:"";width:100%;height:100%;border-radius:100%}.circle-animation-0{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite}.circle-animation-1{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite;animation-delay:.2s}.circle-animation-2{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite;animation-delay:.4s}.ui5-busy-indicator-text{width:100%;margin-top:.25rem;text-align:center}@keyframes grow{0%,50%,to{-webkit-transform:scale(.5);-moz-transform:scale(.5);transform:scale(.5)}25%{-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}}' };
-const metadata$K = {
+const metadata$J = {
   tag: "ui5-busy-indicator",
   languageAware: true,
   slots: {
@@ -8978,7 +8978,7 @@ class BusyIndicator extends UI5Element {
     this.removeEventListener("keyup", this._preventEventHandler, true);
   }
   static get metadata() {
-    return metadata$K;
+    return metadata$J;
   }
   static get styles() {
     return busyIndicatorCss;
@@ -9064,7 +9064,7 @@ var listCss = { packageName: "@ui5/webcomponents", fileName: "themes/List.css", 
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var browserScrollbarCSS = { packageName: "@ui5/webcomponents", fileName: "themes/BrowserScrollbar.css", content: ":not(.ui5-content-native-scrollbars) ::-webkit-scrollbar:horizontal{height:var(--sapScrollBar_Dimension)}:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar:vertical{width:var(--sapScrollBar_Dimension)}:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar{background-color:var(--sapScrollBar_TrackColor);border-left:var(--browser_scrollbar_border)}:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-thumb{border-radius:var(--browser_scrollbar_border_radius);background-color:var(--sapScrollBar_FaceColor)}:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-thumb:hover{background-color:var(--sapScrollBar_Hover_FaceColor)}:not(.ui5-content-native-scrollbars) ::-webkit-scrollbar-corner{background-color:var(--sapScrollBar_TrackColor)}" };
-var __decorate$19 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$1a = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -9560,58 +9560,58 @@ let List = List_1 = class List2 extends UI5Element {
     return this.growingIntersectionObserver;
   }
 };
-__decorate$19([
+__decorate$1a([
   property()
 ], List.prototype, "headerText", void 0);
-__decorate$19([
+__decorate$1a([
   property()
 ], List.prototype, "footerText", void 0);
-__decorate$19([
+__decorate$1a([
   property({ type: Boolean })
 ], List.prototype, "indent", void 0);
-__decorate$19([
+__decorate$1a([
   property({ type: ListMode$1, defaultValue: ListMode$1.None })
 ], List.prototype, "mode", void 0);
-__decorate$19([
+__decorate$1a([
   property()
 ], List.prototype, "noDataText", void 0);
-__decorate$19([
+__decorate$1a([
   property({ type: ListSeparators$1, defaultValue: ListSeparators$1.All })
 ], List.prototype, "separators", void 0);
-__decorate$19([
+__decorate$1a([
   property({ type: ListGrowingMode$1, defaultValue: ListGrowingMode$1.None })
 ], List.prototype, "growing", void 0);
-__decorate$19([
+__decorate$1a([
   property({ type: Boolean })
 ], List.prototype, "busy", void 0);
-__decorate$19([
+__decorate$1a([
   property({ validator: Integer, defaultValue: 1e3 })
 ], List.prototype, "busyDelay", void 0);
-__decorate$19([
+__decorate$1a([
   property()
 ], List.prototype, "accessibleName", void 0);
-__decorate$19([
+__decorate$1a([
   property({ defaultValue: "" })
 ], List.prototype, "accessibleNameRef", void 0);
-__decorate$19([
+__decorate$1a([
   property({ defaultValue: "list" })
 ], List.prototype, "accessibleRole", void 0);
-__decorate$19([
+__decorate$1a([
   property({ defaultValue: void 0, noAttribute: true })
 ], List.prototype, "accessibleRoleDescription", void 0);
-__decorate$19([
+__decorate$1a([
   property({ type: Boolean })
 ], List.prototype, "_inViewport", void 0);
-__decorate$19([
+__decorate$1a([
   property({ type: Boolean })
 ], List.prototype, "_loadMoreActive", void 0);
-__decorate$19([
+__decorate$1a([
   slot({ type: HTMLElement, "default": true })
 ], List.prototype, "items", void 0);
-__decorate$19([
+__decorate$1a([
   slot()
 ], List.prototype, "header", void 0);
-List = List_1 = __decorate$19([
+List = List_1 = __decorate$1a([
   customElement("ui5-list"),
   fastNavigation,
   event("item-click", {
@@ -9774,7 +9774,7 @@ var staticAreaStyles = { packageName: "@ui5/webcomponents", fileName: "themes/Po
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var globalStyles = { packageName: "@ui5/webcomponents", fileName: "themes/PopupGlobal.css", content: ".ui5-popup-scroll-blocker{overflow:hidden}" };
-var __decorate$18 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$19 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -10017,40 +10017,40 @@ let Popup = Popup_1 = class Popup2 extends UI5Element {
     };
   }
 };
-__decorate$18([
+__decorate$19([
   property()
 ], Popup.prototype, "initialFocus", void 0);
-__decorate$18([
+__decorate$19([
   property({ type: Boolean })
 ], Popup.prototype, "preventFocusRestore", void 0);
-__decorate$18([
+__decorate$19([
   property({ type: Boolean })
 ], Popup.prototype, "open", void 0);
-__decorate$18([
+__decorate$19([
   property({ type: Boolean, noAttribute: true })
 ], Popup.prototype, "opened", void 0);
-__decorate$18([
+__decorate$19([
   property({ defaultValue: void 0 })
 ], Popup.prototype, "accessibleName", void 0);
-__decorate$18([
+__decorate$19([
   property({ defaultValue: "" })
 ], Popup.prototype, "accessibleNameRef", void 0);
-__decorate$18([
+__decorate$19([
   property()
 ], Popup.prototype, "mediaRange", void 0);
-__decorate$18([
+__decorate$19([
   property({ type: Boolean })
 ], Popup.prototype, "_disableInitialFocus", void 0);
-__decorate$18([
+__decorate$19([
   property({ type: Boolean })
 ], Popup.prototype, "_blockLayerHidden", void 0);
-__decorate$18([
+__decorate$19([
   property({ type: Boolean, noAttribute: true })
 ], Popup.prototype, "isTopModalPopup", void 0);
-__decorate$18([
+__decorate$19([
   slot({ type: HTMLElement, "default": true })
 ], Popup.prototype, "content", void 0);
-Popup = Popup_1 = __decorate$18([
+Popup = Popup_1 = __decorate$19([
   event("before-open"),
   event("after-open"),
   event("before-close", {
@@ -10214,7 +10214,7 @@ var PopupsCommonCss = { packageName: "@ui5/webcomponents", fileName: "themes/Pop
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var PopoverCss = { packageName: "@ui5/webcomponents", fileName: "themes/Popover.css", content: '.ui5-popover-arrow{pointer-events:none;display:block;width:1rem;height:1rem;position:absolute;overflow:hidden}.ui5-popover-arrow:after{content:"";display:block;width:.7rem;height:.7rem;background-color:var(--sapGroup_ContentBackground);box-shadow:var(--sapContent_Shadow3);transform:rotate(-45deg)}:host{max-width:calc(100% - var(--_ui5_popup_viewport_margin)*2)}:host([opened][actual-placement-type=Top]){margin-top:var(--_ui5-popover-margin-bottom)}:host([opened][actual-placement-type=Bottom]){margin-top:var(--_ui5-popover-margin-top)}:host([actual-placement-type=Bottom]) .ui5-popover-arrow{left:calc(50% - .5625rem);top:-.5rem;height:.5625rem}:host([actual-placement-type=Bottom]) .ui5-popover-arrow:after{margin:var(--_ui5_popover_upward_arrow_margin)}:host([actual-placement-type=Left]) .ui5-popover-arrow{top:calc(50% - .5625rem);right:-.5625rem;width:.5625rem}:host([actual-placement-type=Left]) .ui5-popover-arrow:after{margin:var(--_ui5_popover_right_arrow_margin)}:host([actual-placement-type=Top]) .ui5-popover-arrow{left:calc(50% - .5625rem);height:.5625rem;top:100%}:host([actual-placement-type=Top]) .ui5-popover-arrow:after{margin:var(--_ui5_popover_downward_arrow_margin)}:host(:not([actual-placement-type])) .ui5-popover-arrow,:host([actual-placement-type=Right]) .ui5-popover-arrow{left:-.5625rem;top:calc(50% - .5625rem);width:.5625rem;height:1rem}:host(:not([actual-placement-type])) .ui5-popover-arrow:after,:host([actual-placement-type=Right]) .ui5-popover-arrow:after{margin:var(--_ui5_popover_left_arrow_margin)}:host([hide-arrow]) .ui5-popover-arrow{display:none}.ui5-popover-root{min-width:6.25rem}' };
-var __decorate$17 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$18 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -10256,8 +10256,8 @@ let Popover = Popover_1 = class Popover2 extends Popup$1 {
       this.close();
     }
   }
-  isOpenerClicked(event2) {
-    const target = event2.target;
+  isOpenerClicked(e2) {
+    const target = e2.target;
     if (target === this._opener) {
       return true;
     }
@@ -10265,7 +10265,7 @@ let Popover = Popover_1 = class Popover2 extends Popup$1 {
     if (ui5ElementTarget.getFocusDomRef && ui5ElementTarget.getFocusDomRef() === this._opener) {
       return true;
     }
-    return event2.composedPath().indexOf(this._opener) > -1;
+    return e2.composedPath().indexOf(this._opener) > -1;
   }
   async showAt(opener, preventInitialFocus = false) {
     if (!opener || this.opened) {
@@ -10590,64 +10590,64 @@ let Popover = Popover_1 = class Popover2 extends Popup$1 {
     return allClasses;
   }
   get _displayHeader() {
-    return this.header.length || this.headerText;
+    return !!(this.header.length || this.headerText);
   }
   get _displayFooter() {
     return true;
   }
 };
-__decorate$17([
+__decorate$18([
   property()
 ], Popover.prototype, "headerText", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: PopoverPlacementType$1, defaultValue: PopoverPlacementType$1.Right })
 ], Popover.prototype, "placementType", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: PopoverHorizontalAlign$1, defaultValue: PopoverHorizontalAlign$1.Center })
 ], Popover.prototype, "horizontalAlign", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: PopoverVerticalAlign$1, defaultValue: PopoverVerticalAlign$1.Center })
 ], Popover.prototype, "verticalAlign", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: Boolean })
 ], Popover.prototype, "modal", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: Boolean })
 ], Popover.prototype, "hideBackdrop", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: Boolean })
 ], Popover.prototype, "hideArrow", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: Boolean })
 ], Popover.prototype, "allowTargetOverlap", void 0);
-__decorate$17([
+__decorate$18([
   property({ validator: DOMReference })
 ], Popover.prototype, "opener", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: Boolean })
 ], Popover.prototype, "disableScrolling", void 0);
-__decorate$17([
+__decorate$18([
   property({ validator: Integer, defaultValue: 0, noAttribute: true })
 ], Popover.prototype, "arrowTranslateX", void 0);
-__decorate$17([
+__decorate$18([
   property({ validator: Integer, defaultValue: 0, noAttribute: true })
 ], Popover.prototype, "arrowTranslateY", void 0);
-__decorate$17([
+__decorate$18([
   property({ type: PopoverPlacementType$1, defaultValue: PopoverPlacementType$1.Right })
 ], Popover.prototype, "actualPlacementType", void 0);
-__decorate$17([
+__decorate$18([
   property({ validator: Integer, noAttribute: true })
 ], Popover.prototype, "_maxHeight", void 0);
-__decorate$17([
+__decorate$18([
   property({ validator: Integer, noAttribute: true })
 ], Popover.prototype, "_maxWidth", void 0);
-__decorate$17([
+__decorate$18([
   slot({ type: HTMLElement })
 ], Popover.prototype, "header", void 0);
-__decorate$17([
+__decorate$18([
   slot({ type: HTMLElement })
 ], Popover.prototype, "footer", void 0);
-Popover = Popover_1 = __decorate$17([
+Popover = Popover_1 = __decorate$18([
   customElement("ui5-popover")
 ], Popover);
 const instanceOfPopover = (object) => {
@@ -10696,7 +10696,7 @@ var IconDesign$1 = IconDesign;
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var iconCss = { packageName: "@ui5/webcomponents", fileName: "themes/Icon.css", content: ":host{-webkit-tap-highlight-color:rgba(0,0,0,0)}:host([hidden]){display:none}:host([invalid]){display:none}:host(:not([hidden]).ui5_hovered){opacity:.7}:host{display:inline-block;width:1rem;height:1rem;color:var(--sapContent_NonInteractiveIconColor);fill:currentColor;outline:none}:host([design=Contrast]){color:var(--sapContent_ContrastIconColor)}:host([design=Critical]){color:var(--sapCriticalElementColor)}:host([design=Default]){color:var(--sapContent_IconColor)}:host([design=Information]){color:var(--sapInformativeElementColor)}:host([design=Negative]){color:var(--sapNegativeElementColor)}:host([design=Neutral]){color:var(--sapNeutralElementColor)}:host([design=NonInteractive]){color:var(--sapContent_NonInteractiveIconColor)}:host([design=Positive]){color:var(--sapPositiveElementColor)}:host([interactive][focused]) .ui5-icon-root{outline:var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);border-radius:var(--ui5-icon-focus-border-radius)}.ui5-icon-root{display:flex;height:100%;width:100%;outline:none;vertical-align:top}:host([interactive]){cursor:pointer}.ui5-icon-root:not([dir=ltr]){transform:var(--_ui5_icon_transform_scale);transform-origin:center}" };
-var __decorate$16 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$17 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -10814,43 +10814,43 @@ let Icon = class Icon2 extends UI5Element {
     return this.showTooltip && this.effectiveAccessibleName;
   }
 };
-__decorate$16([
+__decorate$17([
   property({ type: IconDesign$1, defaultValue: IconDesign$1.Default })
 ], Icon.prototype, "design", void 0);
-__decorate$16([
+__decorate$17([
   property({ type: Boolean })
 ], Icon.prototype, "interactive", void 0);
-__decorate$16([
+__decorate$17([
   property()
 ], Icon.prototype, "name", void 0);
-__decorate$16([
+__decorate$17([
   property()
 ], Icon.prototype, "accessibleName", void 0);
-__decorate$16([
+__decorate$17([
   property({ type: Boolean })
 ], Icon.prototype, "showTooltip", void 0);
-__decorate$16([
+__decorate$17([
   property()
 ], Icon.prototype, "accessibleRole", void 0);
-__decorate$16([
+__decorate$17([
   property()
 ], Icon.prototype, "ariaHidden", void 0);
-__decorate$16([
+__decorate$17([
   property({ multiple: true })
 ], Icon.prototype, "pathData", void 0);
-__decorate$16([
+__decorate$17([
   property({ type: Object, noAttribute: true })
 ], Icon.prototype, "accData", void 0);
-__decorate$16([
+__decorate$17([
   property({ type: Boolean })
 ], Icon.prototype, "focused", void 0);
-__decorate$16([
+__decorate$17([
   property({ type: Boolean })
 ], Icon.prototype, "invalid", void 0);
-__decorate$16([
+__decorate$17([
   property({ noAttribute: true, defaultValue: void 0 })
 ], Icon.prototype, "effectiveAccessibleName", void 0);
-Icon = __decorate$16([
+Icon = __decorate$17([
   customElement("ui5-icon"),
   languageAware,
   themeAware,
@@ -10947,7 +10947,7 @@ const block6$y = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var dialogCSS = { packageName: "@ui5/webcomponents", fileName: "themes/Dialog.css", content: ':host{min-width:20rem;min-height:6rem;max-height:94%;max-width:90%;flex-direction:column;box-shadow:var(--sapContent_Shadow3);border-radius:var(--sapElement_BorderCornerRadius)}:host([stretch]){width:90%;height:94%}:host([stretch][on-phone]){width:100%;height:100%;max-height:100%;max-width:100%;border-radius:0}:host([draggable]) .ui5-popup-header-root,:host([draggable]) ::slotted([slot=header]){cursor:move}:host([draggable]) .ui5-popup-header-root *{cursor:auto}:host([draggable]) .ui5-popup-root{user-select:text}.ui5-popup-root{display:flex;flex-direction:column;max-width:100vw}.ui5-popup-header-root{position:relative}:host([state=Error]) .ui5-popup-header-root{box-shadow:var(--_ui5_dialog_header_error_state_box_shadow)}:host([state=Information]) .ui5-popup-header-root{box-shadow:var(--_ui5_dialog_header_information_state_box_shadow)}:host([state=Success]) .ui5-popup-header-root{box-shadow:var(--_ui5_dialog_header_success_state_box_shadow)}:host([state=Warning]) .ui5-popup-header-root{box-shadow:var(--_ui5_dialog_header_warning_state_box_shadow)}.ui5-dialog-value-state-icon{margin-inline-end:.5rem}:host([state=Error]) .ui5-dialog-value-state-icon{color:var(--_ui5_dialog_header_error_state_icon_color)}:host([state=Information]) .ui5-dialog-value-state-icon{color:var(--_ui5_dialog_header_information_state_icon_color)}:host([state=Success]) .ui5-dialog-value-state-icon{color:var(--_ui5_dialog_header_success_state_icon_color)}:host([state=Warning]) .ui5-dialog-value-state-icon{color:var(--_ui5_dialog_header_warning_state_icon_color)}.ui5-popup-header-root{outline:none}.ui5-popup-header-root:focus-visible:after{content:"";position:absolute;left:var(--_ui5_dialog_header_focus_left_offset);bottom:var(--_ui5_dialog_header_focus_bottom_offset);right:var(--_ui5_dialog_header_focus_right_offset);top:var(--_ui5_dialog_header_focus_top_offset);border:var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);border-radius:var(--_ui5_dialog_header_border_radius) var(--_ui5_dialog_header_border_radius) 0 0;pointer-events:none}:host([stretch]) .ui5-popup-content{width:100%;height:100%}.ui5-popup-content{min-height:var(--_ui5_dialog_content_min_height);flex:1 1 auto}.ui5-popup-resize-handle{position:absolute;bottom:var(--_ui5_dialog_resize_handle_bottom);inset-inline-end:var(--_ui5_dialog_resize_handle_right);cursor:var(--_ui5_dialog_resize_cursor);color:var(--_ui5_dialog_resize_handle_color)}:host ::slotted([slot=footer]){height:var(--_ui5_dialog_footer_height)}' };
-var __decorate$15 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$16 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -11275,34 +11275,34 @@ let Dialog = Dialog_1 = class Dialog2 extends Popup$1 {
     window.removeEventListener("mouseup", this._resizeMouseUpHandler);
   }
 };
-__decorate$15([
+__decorate$16([
   property()
 ], Dialog.prototype, "headerText", void 0);
-__decorate$15([
+__decorate$16([
   property({ type: Boolean })
 ], Dialog.prototype, "stretch", void 0);
-__decorate$15([
+__decorate$16([
   property({ type: Boolean })
 ], Dialog.prototype, "draggable", void 0);
-__decorate$15([
+__decorate$16([
   property({ type: Boolean })
 ], Dialog.prototype, "resizable", void 0);
-__decorate$15([
+__decorate$16([
   property({ type: ValueState$1, defaultValue: ValueState$1.None })
 ], Dialog.prototype, "state", void 0);
-__decorate$15([
+__decorate$16([
   property({ type: Boolean })
 ], Dialog.prototype, "onPhone", void 0);
-__decorate$15([
+__decorate$16([
   property({ type: Boolean })
 ], Dialog.prototype, "onDesktop", void 0);
-__decorate$15([
+__decorate$16([
   slot()
 ], Dialog.prototype, "header", void 0);
-__decorate$15([
+__decorate$16([
   slot()
 ], Dialog.prototype, "footer", void 0);
-Dialog = Dialog_1 = __decorate$15([
+Dialog = Dialog_1 = __decorate$16([
   customElement("ui5-dialog")
 ], Dialog);
 Dialog.define();
@@ -11335,7 +11335,7 @@ const block2$18 = (context, tags, suffix) => effectiveHtml`<span class="ui5-hidd
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var buttonCss = { packageName: "@ui5/webcomponents", fileName: "themes/Button.css", content: '.ui5-hidden-text{position:absolute;clip:rect(1px,1px,1px,1px);user-select:none;left:-1000px;top:-1000px;pointer-events:none;font-size:0}:host(:not([hidden])){display:inline-block}:host{min-width:var(--_ui5_button_base_min_width);height:var(--_ui5_button_base_height);line-height:normal;font-family:var(--_ui5_button_fontFamily);font-size:var(--sapFontSize);text-shadow:var(--_ui5_button_text_shadow);border-radius:var(--_ui5_button_border_radius);cursor:pointer;background-color:var(--sapButton_Background);border:var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);color:var(--sapButton_TextColor);box-sizing:border-box;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ui5-button-root{min-width:inherit;cursor:inherit;height:100%;width:100%;box-sizing:border-box;display:flex;justify-content:center;align-items:center;outline:none;padding:0 var(--_ui5_button_base_padding);position:relative;background:transparent;border:none;color:inherit;text-shadow:inherit;font:inherit;white-space:inherit;overflow:inherit;text-overflow:inherit;letter-spacing:inherit;word-spacing:inherit;line-height:inherit;-webkit-user-select:none;-moz-user-select:none;user-select:none}:host(:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),:host(:not([hidden]):not([disabled]).ui5_hovered){background:var(--sapButton_Hover_Background);box-shadow:var(--sapContent_Interaction_Shadow);border:1px solid var(--sapButton_Hover_BorderColor);color:var(--sapButton_Hover_TextColor)}.ui5-button-icon{color:inherit;flex-shrink:0}:host([icon-end]) .ui5-button-root{flex-direction:row-reverse}:host([icon-end]) .ui5-button-icon{margin-inline-start:var(--_ui5_button_base_icon_margin)}:host([icon-only]) .ui5-button-root{min-width:auto;padding:0}:host([icon-only]) .ui5-button-text{display:none}.ui5-button-text{outline:none;position:relative;white-space:inherit;overflow:inherit;text-overflow:inherit}:host([has-icon]:not([icon-end])) .ui5-button-text{margin-inline-start:var(--_ui5_button_base_icon_margin)}:host([has-icon][icon-end]) .ui5-button-text{margin-inline-start:0}:host([disabled]){opacity:var(--sapContent_DisabledOpacity);pointer-events:unset;cursor:default}:host([has-icon]:not([icon-only])) .ui5-button-text{min-width:calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem)}:host([focused]) .ui5-button-root:after{content:"";position:absolute;box-sizing:border-box;left:.0625rem;top:.0625rem;right:.0625rem;bottom:.0625rem;border:var(--_ui5_button_focused_border);pointer-events:none;border-radius:var(--_ui5_button_focused_border_radius)}:host([design=Emphasized][focused]) .ui5-button-root:after{border-color:var(--_ui5_button_emphasized_focused_border_color)}:host([design=Emphasized][focused]) .ui5-button-root:before{content:"";position:absolute;box-sizing:border-box;left:.0625rem;top:.0625rem;right:.0625rem;bottom:.0625rem;border:var(--_ui5_button_emphasized_focused_border_before);pointer-events:none;border-radius:var(--_ui5_button_focused_border_radius)}.ui5-button-root::-moz-focus-inner{border:0}bdi{display:block;white-space:inherit;overflow:inherit;text-overflow:inherit}:host([ui5-button][active]:not([disabled]):not([non-interactive])){background-image:none;background-color:var(--sapButton_Active_Background);border-color:var(--sapButton_Active_BorderColor);color:var(--sapButton_Active_TextColor)}:host([design=Positive]){background-color:var(--sapButton_Accept_Background);border-color:var(--sapButton_Accept_BorderColor);color:var(--sapButton_Accept_TextColor)}:host([design=Positive]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered),:host([design=Positive]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover){background-color:var(--sapButton_Accept_Hover_Background);border-color:var(--sapButton_Accept_Hover_BorderColor);box-shadow:var(--sapContent_Positive_Shadow);color:var(--sapButton_Accept_Hover_TextColor)}:host([ui5-button][design=Positive][active]:not([non-interactive])){background-color:var(--sapButton_Accept_Active_Background);border-color:var(--sapButton_Accept_Active_BorderColor);color:var(--sapButton_Accept_Active_TextColor)}:host([design=Negative]){background-color:var(--sapButton_Reject_Background);border-color:var(--sapButton_Reject_BorderColor);color:var(--sapButton_Reject_TextColor)}:host([design=Negative]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered),:host([design=Negative]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover){background-color:var(--sapButton_Reject_Hover_Background);border-color:var(--sapButton_Reject_Hover_BorderColor);box-shadow:var(--sapContent_Negative_Shadow);color:var(--sapButton_Reject_Hover_TextColor)}:host([ui5-button][design=Negative][active]:not([non-interactive])){background-color:var(--sapButton_Reject_Active_Background);border-color:var(--sapButton_Reject_Active_BorderColor);color:var(--sapButton_Reject_Active_TextColor)}:host([design=Attention]){background-color:var(--sapButton_Attention_Background);border-color:var(--sapButton_Attention_BorderColor);color:var(--sapButton_Attention_TextColor)}:host([design=Attention]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered),:host([design=Attention]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover){background-color:var(--sapButton_Attention_Hover_Background);border-color:var(--sapButton_Attention_Hover_BorderColor);color:var(--sapButton_Attention_Hover_TextColor);box-shadow:var(--sapContent_Critical_Shadow)}:host([ui5-button][design=Attention][active]:not([non-interactive])){background-color:var(--sapButton_Attention_Active_Background);border-color:var(--sapButton_Attention_Active_BorderColor);color:var(--sapButton_Attention_Active_TextColor)}:host([design=Emphasized]){background-color:var(--sapButton_Emphasized_Background);border-color:var(--sapButton_Emphasized_BorderColor);border-width:var(--_ui5_button_emphasized_border_width);color:var(--sapButton_Emphasized_TextColor);font-weight:var(--_ui5_button_emphasized_font_weight)}:host([design=Emphasized]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered),:host([design=Emphasized]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover){background-color:var(--sapButton_Emphasized_Hover_Background);border-color:var(--sapButton_Emphasized_Hover_BorderColor);border-width:var(--_ui5_button_emphasized_border_width);color:var(--sapButton_Emphasized_Hover_TextColor);box-shadow:none}:host([ui5-button][design=Empasized][active]:not([non-interactive])){background-color:var(--sapButton_Emphasized_Active_Background);border-color:var(--sapButton_Emphasized_Active_BorderColor);color:var(--sapButton_Emphasized_Active_TextColor)}:host([design=Emphasized][focused]) .ui5-button-root:after{border-color:var(--sapContent_ContrastFocusColor);outline:none}:host([design=Transparent]){background-color:var(--sapButton_Lite_Background);color:var(--sapButton_Lite_TextColor);border-color:var(--sapButton_Lite_BorderColor)}:host([design=Transparent]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered),:host([design=Transparent]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover){background-color:var(--sapButton_Lite_Hover_Background);border-color:var(--sapButton_Lite_Hover_BorderColor);box-shadow:var(--sapContent_Interaction_Shadow);color:var(--sapButton_Lite_Hover_TextColor)}:host([ui5-button][design=Transparent][active]:not([non-interactive])){background-color:var(--sapButton_Lite_Active_Background);border-color:var(--sapButton_Lite_Active_BorderColor);color:var(--sapButton_Active_TextColor)}:host([pressed][focused]) .ui5-button-root:after,:host([ui5-segmented-button-item][active][focused]) .ui5-button-root:after{border-color:var(--_ui5_button_pressed_focused_border_color);outline:none}:host([ui5-segmented-button-item][focused]:not(:last-child)) .ui5-button-root:after{border-top-right-radius:var(--_ui5_button_focused_inner_border_radius);border-bottom-right-radius:var(--_ui5_button_focused_inner_border_radius)}:host([ui5-segmented-button-item][focused]:not(:first-child)) .ui5-button-root:after{border-top-left-radius:var(--_ui5_button_focused_inner_border_radius);border-bottom-left-radius:var(--_ui5_button_focused_inner_border_radius)}' };
-var __decorate$14 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$15 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -11494,61 +11494,61 @@ let Button = Button_1 = class Button2 extends UI5Element {
     Button_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
   }
 };
-__decorate$14([
+__decorate$15([
   property({ type: ButtonDesign$1, defaultValue: ButtonDesign$1.Default })
 ], Button.prototype, "design", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "disabled", void 0);
-__decorate$14([
+__decorate$15([
   property()
 ], Button.prototype, "icon", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "iconEnd", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "submits", void 0);
-__decorate$14([
+__decorate$15([
   property()
 ], Button.prototype, "tooltip", void 0);
-__decorate$14([
+__decorate$15([
   property({ defaultValue: void 0 })
 ], Button.prototype, "accessibleName", void 0);
-__decorate$14([
+__decorate$15([
   property({ defaultValue: "" })
 ], Button.prototype, "accessibleNameRef", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Object })
 ], Button.prototype, "accessibilityAttributes", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "active", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "iconOnly", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "focused", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "hasIcon", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "nonInteractive", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Object })
 ], Button.prototype, "_iconSettings", void 0);
-__decorate$14([
+__decorate$15([
   property({ defaultValue: "0", noAttribute: true })
 ], Button.prototype, "_tabIndex", void 0);
-__decorate$14([
+__decorate$15([
   property({ type: Boolean })
 ], Button.prototype, "_isTouch", void 0);
-__decorate$14([
+__decorate$15([
   slot({ type: Node, "default": true })
 ], Button.prototype, "text", void 0);
-Button = Button_1 = __decorate$14([
+Button = Button_1 = __decorate$15([
   customElement("ui5-button"),
   languageAware,
   event("click")
@@ -11575,7 +11575,7 @@ const block6$x = (context, tags, suffix) => effectiveHtml`<h6 class="ui5-title-r
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var titleCss = { packageName: "@ui5/webcomponents", fileName: "themes/Title.css", content: ':host(:not([hidden])){display:block;cursor:text}:host{max-width:100%;color:var(--sapGroup_TitleTextColor);font-size:var(--sapFontHeader2Size);font-family:"72override",var(--sapFontHeaderFamily);text-shadow:var(--sapContent_TextShadow)}.ui5-title-root{display:inline-block;position:relative;font-weight:400;font-size:inherit;box-sizing:border-box;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:100%;vertical-align:bottom;-webkit-margin-before:0;-webkit-margin-after:0;-webkit-margin-start:0;-webkit-margin-end:0;margin:0;cursor:inherit}:host([wrapping-type=Normal]) .ui5-title-root{white-space:pre-line}:host([level=H1]){font-size:var(--sapFontHeader1Size)}:host([level=H2]){font-size:var(--sapFontHeader2Size)}:host([level=H3]){font-size:var(--sapFontHeader3Size)}:host([level=H4]){font-size:var(--sapFontHeader4Size)}:host([level=H5]){font-size:var(--sapFontHeader5Size)}:host([level=H6]){font-size:var(--sapFontHeader6Size)}' };
-var __decorate$13 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$14 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -11617,13 +11617,13 @@ let Title = class Title2 extends UI5Element {
     return this.normalizedLevel === "h6";
   }
 };
-__decorate$13([
+__decorate$14([
   property({ type: WrappingType$1, defaultValue: WrappingType$1.None })
 ], Title.prototype, "wrappingType", void 0);
-__decorate$13([
+__decorate$14([
   property({ type: TitleLevel$1, defaultValue: TitleLevel$1.H2 })
 ], Title.prototype, "level", void 0);
-Title = __decorate$13([
+Title = __decorate$14([
   customElement("ui5-title")
 ], Title);
 Title.define();
@@ -11646,26 +11646,20 @@ isThemeFamily("sap_horizon") ? pathData$1d : pathData$1c;
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var ResponsivePopoverCss = { packageName: "@ui5/webcomponents", fileName: "themes/ResponsivePopover.css", content: ":host{--_ui5_input_width:100%;min-width:6.25rem;min-height:2rem}:host([opened]){display:inline-block}.ui5-responsive-popover-header{height:var(--_ui5-responsive_popover_header_height);display:flex;justify-content:space-between;align-items:center;width:100%}.ui5-responsive-popover-header-text{width:calc(100% - var(--_ui5_button_base_min_width))}.ui5-responsive-popover-header-no-title{justify-content:flex-end}" };
-const metadata$J = {
-  tag: "ui5-responsive-popover",
-  properties: {
-    contentOnlyOnDesktop: {
-      type: Boolean
-    },
-    _hideHeader: {
-      type: Boolean
-    },
-    _hideCloseButton: {
-      type: Boolean
-    }
-  }
+var __decorate$13 = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+  var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    r2 = Reflect.decorate(decorators, target, key, desc);
+  else
+    for (var i2 = decorators.length - 1; i2 >= 0; i2--)
+      if (d2 = decorators[i2])
+        r2 = (c2 < 3 ? d2(r2) : c2 > 3 ? d2(target, key, r2) : d2(target, key)) || r2;
+  return c2 > 3 && r2 && Object.defineProperty(target, key, r2), r2;
 };
-class ResponsivePopover extends Popover$1 {
+var ResponsivePopover_1;
+let ResponsivePopover = ResponsivePopover_1 = class ResponsivePopover2 extends Popover$1 {
   constructor() {
     super();
-  }
-  static get metadata() {
-    return metadata$J;
   }
   static get styles() {
     return [Popover$1.styles, ResponsivePopoverCss];
@@ -11694,7 +11688,11 @@ class ResponsivePopover extends Popover$1 {
       await super.showAt(opener, preventInitialFocus);
     } else {
       this.style.display = "contents";
-      this.style.zIndex = getNextZIndex();
+      const nextZIndex = getNextZIndex();
+      if (!nextZIndex) {
+        return;
+      }
+      this.style.zIndex = nextZIndex.toString();
       await this._dialog.show(preventInitialFocus);
     }
   }
@@ -11718,33 +11716,33 @@ class ResponsivePopover extends Popover$1 {
     return this.shadowRoot.querySelector("[ui5-dialog]");
   }
   get contentDOM() {
-    return this._isPhone ? this._dialog.contentDOM : super.contentDOM;
+    return isPhone() ? this._dialog.contentDOM : super.contentDOM;
   }
   get _isPhone() {
     return isPhone();
   }
   get _displayHeader() {
-    return (this._isPhone || !this.contentOnlyOnDesktop) && super._displayHeader;
+    return (isPhone() || !this.contentOnlyOnDesktop) && super._displayHeader;
   }
   get _displayFooter() {
-    return this._isPhone || !this.contentOnlyOnDesktop;
+    return isPhone() || !this.contentOnlyOnDesktop;
   }
   get _closeDialogAriaLabel() {
-    return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
+    return ResponsivePopover_1.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
   }
-  _beforeDialogOpen(event2) {
+  _beforeDialogOpen(e2) {
     this.open = true;
     this.opened = true;
-    this._propagateDialogEvent(event2);
+    this._propagateDialogEvent(e2);
   }
-  _afterDialogClose(event2) {
+  _afterDialogClose(e2) {
     this.open = false;
     this.opened = false;
-    this._propagateDialogEvent(event2);
+    this._propagateDialogEvent(e2);
   }
-  _propagateDialogEvent(event2) {
-    const type = event2.type.replace("ui5-", "");
-    this.fireEvent(type, event2.detail);
+  _propagateDialogEvent(e2) {
+    const type = e2.type.replace("ui5-", "");
+    this.fireEvent(type, e2.detail);
   }
   get isModal() {
     if (!isPhone()) {
@@ -11753,10 +11751,23 @@ class ResponsivePopover extends Popover$1 {
     return this._dialog.isModal;
   }
   static async onDefine() {
-    ResponsivePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+    ResponsivePopover_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
   }
-}
+};
+__decorate$13([
+  property({ type: Boolean })
+], ResponsivePopover.prototype, "contentOnlyOnDesktop", void 0);
+__decorate$13([
+  property({ type: Boolean })
+], ResponsivePopover.prototype, "_hideHeader", void 0);
+__decorate$13([
+  property({ type: Boolean })
+], ResponsivePopover.prototype, "_hideCloseButton", void 0);
+ResponsivePopover = ResponsivePopover_1 = __decorate$13([
+  customElement("ui5-responsive-popover")
+], ResponsivePopover);
 ResponsivePopover.define();
+var ResponsivePopover$1 = ResponsivePopover;
 const name$1c = "edit";
 const pathData$1b = "M501.5 88q8 7 8 19 0 10-8 18l-373 379q-5 4-9 6t-10 2h-80q-12 0-19.5-7.5T2.5 485v-80q0-10 8-18l374-379q8-8 18-8 11 0 19 8zm-136 99l-43-43-256 261 43 43zm80-80l-43-43-42 43 42 42z";
 const ltr$1b = false;
@@ -13799,7 +13810,7 @@ class Suggestions {
     return [
       SuggestionItem$1,
       SuggestionGroupItem$1,
-      ResponsivePopover,
+      ResponsivePopover$1,
       List$1,
       SuggestionListItem$1,
       GroupHeaderListItem$1,
@@ -17013,7 +17024,7 @@ let Breadcrumbs = Breadcrumbs_1 = class Breadcrumbs2 extends UI5Element {
       BreadcrumbsItem$1,
       Link$1,
       Label$1,
-      ResponsivePopover,
+      ResponsivePopover$1,
       List$1,
       StandardListItem$1,
       Icon$1,
@@ -18375,7 +18386,7 @@ let ColorPalettePopover = ColorPalettePopover_1 = class ColorPalettePopover2 ext
   }
   static get dependencies() {
     return [
-      ResponsivePopover,
+      ResponsivePopover$1,
       Button$1,
       Title$1,
       ColorPalette$1
@@ -19223,7 +19234,7 @@ class ComboBox extends UI5Element {
     return [
       ComboBoxItem,
       Icon$1,
-      ResponsivePopover,
+      ResponsivePopover$1,
       List$1,
       BusyIndicator,
       Button$1,
@@ -23567,7 +23578,7 @@ let DatePicker = DatePicker_1 = class DatePicker2 extends DateComponentBase$1 {
   }
   async _respPopover() {
     const staticAreaItem = await this.getStaticAreaItemDomRef();
-    return staticAreaItem == null ? void 0 : staticAreaItem.querySelector("[ui5-responsive-popover]");
+    return staticAreaItem.querySelector("[ui5-responsive-popover]");
   }
   _canOpenPicker() {
     return !this.disabled && !this.readonly;
@@ -23629,7 +23640,7 @@ let DatePicker = DatePicker_1 = class DatePicker2 extends DateComponentBase$1 {
   static get dependencies() {
     return [
       Icon$1,
-      ResponsivePopover,
+      ResponsivePopover$1,
       Calendar$1,
       CalendarDate$1,
       Input$1,
@@ -25182,7 +25193,7 @@ let TimePickerBase = TimePickerBase_1 = class TimePickerBase2 extends UI5Element
   static get dependencies() {
     return [
       Icon$1,
-      ResponsivePopover,
+      ResponsivePopover$1,
       TimeSelection$1,
       Input$1,
       Button$1
@@ -26436,7 +26447,7 @@ class Tokenizer extends UI5Element {
   }
   static get dependencies() {
     return [
-      ResponsivePopover,
+      ResponsivePopover$1,
       List$1,
       StandardListItem$1,
       Title$1,
@@ -26727,7 +26738,7 @@ let Menu = Menu_1 = class Menu2 extends UI5Element {
   }
   static get dependencies() {
     return [
-      ResponsivePopover,
+      ResponsivePopover$1,
       Button$1,
       List$1,
       StandardListItem$1,
@@ -28004,7 +28015,7 @@ class Select extends UI5Element {
     return [
       Option,
       Label$1,
-      ResponsivePopover,
+      ResponsivePopover$1,
       Popover$1,
       List$1,
       StandardListItem$1,
@@ -29496,7 +29507,7 @@ class MultiComboBox extends UI5Element {
       Tokenizer,
       Token,
       Icon$1,
-      ResponsivePopover,
+      ResponsivePopover$1,
       Popover$1,
       List$1,
       StandardListItem$1,
@@ -31532,7 +31543,7 @@ class TabContainer extends UI5Element {
       Button$1,
       Icon$1,
       List$1,
-      ResponsivePopover
+      ResponsivePopover$1
     ];
   }
   static async onDefine() {
@@ -40347,7 +40358,7 @@ class SideNavigation extends UI5Element {
       StandardListItem$1,
       Tree,
       TreeItem,
-      ResponsivePopover
+      ResponsivePopover$1
     ];
   }
   onBeforeRendering() {
@@ -43127,7 +43138,7 @@ class Wizard extends UI5Element {
     return [
       WizardTab,
       WizardStep,
-      ResponsivePopover,
+      ResponsivePopover$1,
       Button$1
     ];
   }

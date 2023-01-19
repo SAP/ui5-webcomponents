@@ -1,7 +1,7 @@
-commit a1c1301a39cda9906c2185b2b8b31fef86bc9c96
+commit ec0f2d8e37b7365d2781bf71aa6a665dd8065714
 Author: gmkv <georgi.minkov@sap.com>
-Date:   Thu Jan 19 18:03:19 2023 +0200
+Date:   Thu Jan 19 18:05:18 2023 +0200
 
-    refactor(ui5-upload-collection-item): migrate to TypeScript (#6296)
+    refactor(ui5-responsive-popover): migrate to TypeScript (#6288)
     
     Part of #4337
