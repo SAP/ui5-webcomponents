@@ -1,7 +1,5 @@
-commit 21dfb5025946c86d249addc80c72392024b12404
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jan 19 11:16:13 2023 +0200
+commit dfad623d88ad78b7f2f434ba305bdf0b40944467
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Thu Jan 19 15:37:40 2023 +0200
 
-    docs: fix jsdoc in several components (#6301)
-    
-    Related to: #6300
+    chore: fix copy-and-watch usage (#6305)
