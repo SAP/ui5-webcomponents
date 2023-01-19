@@ -2,6 +2,7 @@ import getSharedResource from "../getSharedResource.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import getActiveElement from "./getActiveElement.js";
 import type OpenUI5Support from "../features/OpenUI5Support.js";
+import type Popup from "../../../main/src/Popup.js";
 
 type PopupUtilsData = {
 	currentZIndex: number
@@ -70,12 +71,7 @@ const isClickInRect = (e: MouseEvent | TouchEvent, rect: DOMRect) => {
 	return isPointInRect(x, y, rect);
 };
 
-interface PopupInterface { // Refactor: replace with Popup.js
-	_show: () => void,
-	open: boolean,
-}
-
-function instanceOfPopup(object: any): object is PopupInterface {
+function instanceOfPopup(object: any): object is Popup {
 	return "isUI5Element" in object && "_show" in object;
 }
 
