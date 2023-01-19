@@ -674,7 +674,7 @@ class List extends UI5Element {
 	}
 
 	prepareListItems() {
-		const slottedItems = this.getItems();
+		const slottedItems = this.getItemsForProcessing();
 
 		slottedItems.forEach((item, key) => {
 			const isLastChild = key === slottedItems.length - 1;
@@ -787,6 +787,10 @@ class List extends UI5Element {
 
 	getItems(): Array<ListItemBase> {
 		return this.getSlottedNodes("items") as Array<ListItemBase>;
+	}
+
+	getItemsForProcessing(): Array<ListItemBase> {
+		return this.getItems();
 	}
 
 	_onkeydown(e: KeyboardEvent) {

@@ -150,7 +150,7 @@ class Avatar extends UI5Element {
 	 * <li><code>XL</code></li>
 	 * </ul>
 	 * @type {sap.ui.webc.main.types.AvatarSize}
-	 * @name sap.ui.webc.main.Avatar.prototype.shape
+	 * @name sap.ui.webc.main.Avatar.prototype.size
 	 * @defaultvalue "S"
 	 * @public
 	 */
