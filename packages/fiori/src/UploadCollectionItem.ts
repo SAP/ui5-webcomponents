@@ -390,10 +390,6 @@ class UploadCollectionItem extends ListItem {
 		return this.getDomRef();
 	}
 
-	get list() {
-		return this.assignedSlot!.parentElement;
-	}
-
 	/**
 	 * @override
 	 */
