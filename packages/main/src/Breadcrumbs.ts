@@ -32,7 +32,6 @@ import {
 import Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
 import Label from "./Label.js";
-// @ts-ignore
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { SelectionChangeEventDetail } from "./List.js";
@@ -54,12 +53,6 @@ type BreadcrumbsItemClickEventDetail = {
 	ctrlKey: boolean;
 	metaKey: boolean;
 	shiftKey: boolean;
-}
-
-type TempResponsivePopover = HTMLElement & {
-	opened: boolean;
-	showAt: (opener: HTMLElement) => Promise<void>;
-	close: () => void,
 }
 
 type FocusAdaptor = ITabbable & {
@@ -195,7 +188,7 @@ class Breadcrumbs extends UI5Element {
 	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();
 	// the width of the interactive element that opens the overflow
 	_dropdownArrowLinkWidth = 0;
-	responsivePopover?: TempResponsivePopover;
+	responsivePopover?: ResponsivePopover;
 	_labelFocusAdaptor: FocusAdaptor;
 	static i18nBundle: I18nBundle;
 
@@ -470,7 +463,7 @@ class Breadcrumbs extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	async _toggleRespPopover() {

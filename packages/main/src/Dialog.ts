@@ -264,21 +264,23 @@ class Dialog extends Popup {
 	 * @method
 	 * @name sap.ui.webc.main.Dialog#show
 	 * @async
+	 * @method
+	 * @name sap.ui.webc.main.Dialog#show
 	 * @returns {Promise} Resolves when the dialog is open
 	 */
 	async show(preventInitialFocus = false) {
 		await super._open(preventInitialFocus);
 	}
 
-	get isModal() { // Required by Popup.js
+	get isModal() {
 		return true;
 	}
 
-	get shouldHideBackdrop() { // Required by Popup.js
+	get shouldHideBackdrop() {
 		return false;
 	}
 
-	get _ariaLabelledBy() { // Required by Popup.js
+	get _ariaLabelledBy() {
 		let ariaLabelledById;
 
 		if (this.headerText !== "" && !this._ariaLabel) {

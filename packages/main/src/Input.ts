@@ -46,7 +46,7 @@ import type InputSuggestions from "./features/InputSuggestions.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
-import type { ScrollEventDetail } from "./Popup.js";
+import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
@@ -1029,7 +1029,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._clearIconClicked = true;
 	}
 
-	_scroll(e: CustomEvent<ScrollEventDetail>) {
+	_scroll(e: CustomEvent<PopupScrollEventDetail>) {
 		this.fireEvent<SuggestionScrollEventDetail>("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
@@ -1717,7 +1717,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	static get dependencies() {
 		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
 
-		return [Popover, Icon].concat(Suggestions ? Suggestions.dependencies : []);
+		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {

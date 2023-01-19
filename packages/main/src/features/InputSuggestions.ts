@@ -9,7 +9,6 @@ import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generat
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import List from "../List.js";
 import type { ClickEventDetail, SelectionChangeEventDetail } from "../List.js";
-// @ts-ignore
 import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
 import SuggestionGroupItem from "../SuggestionGroupItem.js";
@@ -59,8 +58,6 @@ type SuggestionsAccInfo = {
 	itemText: string;
 }
 
-type TempResponsivePopover = Popover; // change to ResponsivePopover when implemented;
-
 /**
  * A class to manage the <code>Input</code suggestion items.
  *
@@ -75,7 +72,7 @@ class Suggestions {
 	highlight: boolean;
 	selectedItemIndex: number;
 	accInfo?: SuggestionsAccInfo;
-	responsivePopover?: TempResponsivePopover;
+	responsivePopover?: ResponsivePopover;
 	_scrollContainer?: HTMLElement;
 	_handledPress?: boolean;
 	attachedAfterOpened?: boolean;
@@ -583,7 +580,7 @@ class Suggestions {
 		}
 
 		const staticAreaItem = await this._getComponent().getStaticAreaItemDomRef();
-		this.responsivePopover = staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		this.responsivePopover = staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this.responsivePopover;
 	}
 
