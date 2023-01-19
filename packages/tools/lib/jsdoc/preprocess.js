@@ -76,7 +76,7 @@ const isClass = text => {
 };
 
 const isAnnotationComment = (comment) =>  {
-	return comment.includes("@name")
+	return comment.includes("@name");
 }
 
 const processComponentFile = async (fileName) => {
