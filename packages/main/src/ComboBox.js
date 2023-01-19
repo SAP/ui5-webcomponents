@@ -432,9 +432,9 @@ class ComboBox extends UI5Element {
 		this._selectMatchingItem();
 		this._initialRendering = false;
 
-		const numIcons = this.icon ? this.icon.length : 0;
-		const numSlimDownIcon = this.readonly ? 0 : 1;
-		this.style.setProperty("--_ui5-input-icons-count", numIcons + numSlimDownIcon);
+		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const arrowDownIconsCount = this.readonly ? 0 : 1;
+		this.style.setProperty("--_ui5-input-icons-count", slottedIconsCount + arrowDownIconsCount);
 	}
 
 	async onAfterRendering() {

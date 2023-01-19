@@ -86,7 +86,7 @@
 :host([value-state="Information"]:not([readonly]):not([disabled])[focused]),
 :host([value-state="Warning"]:not([readonly]):not([disabled])[focused]){
 	background-color: var(--sapField_Focus_Background);
-} 
+}
 
 :host([value-state="Success"]:not([readonly]):not([disabled]))::after,
 :host([value-state="Error"]:not([readonly]):not([disabled]))::after,
@@ -150,15 +150,16 @@
 	vertical-align: top;
 	margin-top: var(--_ui5_step_input_input_margin_top);
 	min-width: var(--_ui5_step_input_min_width);
+	padding-left: var(--_ui5_step_input_padding_left);
+	padding-right: var(--_ui5_step_input_padding_right);
 	position: relative;
-	padding: 0px 2.5rem 0px 2.4375rem;
 	outline: none;
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
 }
 
-:host .ui5-step-input-input[readonly] { 
+:host .ui5-step-input-input[readonly] {
 	padding: 0;
 }
 

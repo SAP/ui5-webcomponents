@@ -47,7 +47,7 @@ const metadata = {
 		 * Indicates whether the tokenizer has tokens inside
 		 * @private
 		 */
-		isTokenizerAvailable: {
+		tokenizerAvailable: {
 			type: Boolean,
 		},
 
@@ -337,8 +337,8 @@ class MultiInput extends Input {
 			);
 		}
 
-		this.isTokenizerAvailable = this.tokens && this.tokens.length > 0;
-		this.style.setProperty("--_ui5_input_has_tokens", this.isTokenizerAvailable ? 1 : 0);
+		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+		this.style.setProperty("--_ui5_input_has_tokens", this.tokenizerAvailable ? 1 : 0);
 	}
 
 	get tokenizer() {

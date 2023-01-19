@@ -696,10 +696,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
-		const numIcons = this.icon ? this.icon.length : 0;
-		const numEffectiveIcon = Number(this.effectiveShowClearIcon);
+		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const clearIconCount = Number(this.effectiveShowClearIcon);
 
-		this.style.setProperty("--_ui5-input-icons-count", `${numIcons + numEffectiveIcon}`);
+		this.style.setProperty("--_ui5-input-icons-count", `${slottedIconsCount + clearIconCount}`);
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		const hasItems = !!this.suggestionItems.length;
