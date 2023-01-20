@@ -1,5 +1,5 @@
-commit d4174c53d96fa043f68f1aba71e6d1a4dd89a4ad
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Jan 20 13:27:39 2023 +0200
+commit a7032d86e27e46620b2779eedef77362baa21cfd
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Fri Jan 20 13:28:14 2023 +0200
 
-    chore: fix StepInput value-state-msg slot jsdoc (#6321)
+    chore: mark JSdoc function parameters as optional (#6322)
