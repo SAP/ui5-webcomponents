@@ -129,11 +129,19 @@
 	</ui5-popover>
 
 	<ui5-button id="acc-role-popover-button">
-		Open ACC role Popover
+		Open Popover ACC role - AlertDialog
 	</ui5-button>
 
-	<ui5-popover placement-type="Bottom" id="acc-role-popover" header-text="Test ACC world" accessible-role="menu">
+	<ui5-button id="acc-role-popover-button2">
+		Open Popover ACC role - None
+	</ui5-button>
+
+	<ui5-popover placement-type="Bottom" id="acc-role-popover" header-text="Test ACC world" accessible-role="AlertDialog">
 		<ui5-list id="bigList2"></ui5-list>
+	</ui5-popover>
+
+	<ui5-popover placement-type="Bottom" id="acc-role-popover2" header-text="Test ACC world" accessible-role="None">
+		<ui5-list id="bigList3"></ui5-list>
 	</ui5-popover>
 
 	<ui5-button id="btnPopModal">Opens modal popover!</ui5-button>
@@ -479,12 +487,20 @@
 			return "<ui5-li>" + item + "</ui5-li>";
 		}).join("");
 
+		document.getElementById("bigList3").innerHTML = [].map.call("Ullamco ea ad fugiat enim elit dolore ullamco ad magna excepteur cupidatat.", function (item, index) {
+			return "<ui5-li>" + item + "</ui5-li>";
+		}).join("");
+
 		document.getElementById("big-popover-button").addEventListener("click", function (event) {
 			document.getElementById("big-popover").showAt(event.target);
 		});
 
 		document.getElementById("acc-role-popover-button").addEventListener("click", function (event) {
 			document.getElementById("acc-role-popover").showAt(event.target);
+		});
+
+		document.getElementById("acc-role-popover-button2").addEventListener("click", function (event) {
+			document.getElementById("acc-role-popover2").showAt(event.target);
 		});
 
 		btnFullWidth.addEventListener("click", function (event) {

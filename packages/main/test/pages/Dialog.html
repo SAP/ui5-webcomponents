@@ -487,6 +487,44 @@
 		</ui5-dialog>
 	</div>
 	<br>
+	<div>
+		<div>
+			<ui5-label>Dialog roles</ui5-label>
+		</div>
+		<ui5-button id="btn-role-default">Error State, no role set</ui5-button>
+		<ui5-dialog id="dialog-error-no-role" state="Error">
+			<div slot="header">
+				<ui5-title level="H1">Error</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-role-alert">No State, 'AlertDialog' role set</ui5-button>
+		<ui5-dialog id="dialog-no-state-alert-role">
+			<div slot="header">
+				<ui5-title level="H1">No state</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-role-none">Role 'None' set</ui5-button>
+		<ui5-dialog id="dialog-none-role" accessible-role="None">
+			<div slot="header">
+				<ui5-title level="H1">Role 'None'</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-role-alert-success-state">Success State, 'AlertDialog' role set</ui5-button>
+		<ui5-dialog id="dialog-success-state-alert-role" state="Success" accessible-role="AlertDialog">
+			<div slot="header">
+				<ui5-title level="H1">Success</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+	</div>
+	<br>
 	<ui5-button id="dialogOverDialogBtn">Dialog over a Dialog</ui5-button>
 	<ui5-dialog id="dialogOverDialog1">
 		<div slot="header">
@@ -680,6 +718,22 @@
 
 		window["btn-warn-state"].addEventListener("click", function () {
 			window["dialog-warn-state"].show();
+		});
+
+		window["btn-role-default"].addEventListener("click", function () {
+			window["dialog-error-no-role"].show();
+		});
+
+		window["btn-role-alert"].addEventListener("click", function () {
+			window["dialog-no-state-alert-role"].show();
+		});
+
+		window["btn-role-none"].addEventListener("click", function () {
+			window["dialog-none-role"].show();
+		});
+
+		window["btn-role-alert-success-state"].addEventListener("click", function () {
+			window["dialog-success-state-alert-role"].show();
 		});
 
 		window["dialogOverDialogBtn"].addEventListener("click", function () {
