@@ -264,8 +264,6 @@ class Dialog extends Popup {
 	 * @method
 	 * @name sap.ui.webc.main.Dialog#show
 	 * @async
-	 * @method
-	 * @name sap.ui.webc.main.Dialog#show
 	 * @returns {Promise} Resolves when the dialog is open
 	 */
 	async show(preventInitialFocus = false) {
