@@ -8,6 +8,7 @@ import {
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 import Popup from "./Popup.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
@@ -23,7 +24,6 @@ import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
 import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
-import UI5Element from "@ui5/webcomponents-base/src/UI5Element.js";
 
 /**
  * Defines the step size at which this component would change by when being dragged or resized with the keyboard.
@@ -342,7 +342,7 @@ class Dialog extends Popup {
 	}
 
 	get _role() {
-		if (this.accessibleRole === PopupAccessibleRole.None){
+		if (this.accessibleRole === PopupAccessibleRole.None) {
 			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("role");
 			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("aria-modal");
 		}
@@ -350,7 +350,6 @@ class Dialog extends Popup {
 			return this.accessibleRole;
 		}
 		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? PopupAccessibleRole.AlertDialog : PopupAccessibleRole.Dialog;
-		//return this.accessibleRole
 	}
 
 	_show() {
