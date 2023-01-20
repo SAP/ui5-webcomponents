@@ -254,14 +254,14 @@ class Carousel extends UI5Element {
 	 * @private
 	 */
 	@property({ validator: Integer })
-	_width!: number;
+	_width?: number;
 
 	/**
 	 * Defines the carousel item width in pixels.
 	 * @private
 	 */
 	@property({ validator: Integer })
-	_itemWidth!: number;
+	_itemWidth?: number;
 
 	/**
 	 * If set to true navigation arrows are shown.
@@ -541,7 +541,7 @@ class Carousel extends UI5Element {
 				posinset: `${idx + 1}`,
 				setsize: `${this.content.length}`,
 				styles: {
-					width: `${this._itemWidth}px`,
+					width: `${this._itemWidth || 0}px`,
 				},
 				classes: visible ? "" : "ui5-carousel-item--hidden",
 			};
@@ -549,6 +549,10 @@ class Carousel extends UI5Element {
 	}
 
 	get effectiveItemsPerPage(): number {
+		if (!this._width) {
+			return this.itemsPerPageL;
+		}
+
 		if (this._width <= 640) {
 			return this.itemsPerPageS;
 		}
@@ -592,9 +596,10 @@ class Carousel extends UI5Element {
 	}
 
 	get styles() {
+		const items = this._itemWidth || 0;
 		return {
 			content: {
-				transform: `translateX(${this._isRTL ? "" : "-"}${this._selectedIndex * this._itemWidth}px`,
+				transform: `translateX(${this._isRTL ? "" : "-"}${this._selectedIndex * items}px`,
 			},
 		};
 	}
