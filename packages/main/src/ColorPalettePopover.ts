@@ -21,20 +21,10 @@ import {
 
 import Button from "./Button.js";
 import Title from "./Title.js";
-// @ts-ignore
 import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
-
-type TempResponsivePopover = HTMLElement & {
-	initialFocus: string,
-	showAt: (opener: HTMLElement, focus: boolean) => Promise<void>,
-	close: () => void,
-	resetFocus: () => void,
-	content: Array<HTMLElement>,
-	opened: boolean,
-}
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
@@ -137,7 +127,7 @@ class ColorPalettePopover extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	responsivePopover?: TempResponsivePopover;
+	responsivePopover?: ResponsivePopover;
 
 	static get render() {
 		return litRender;
@@ -169,7 +159,7 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	_respPopover() {
-		this.responsivePopover = this.shadowRoot!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		this.responsivePopover = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this.responsivePopover;
 	}
 

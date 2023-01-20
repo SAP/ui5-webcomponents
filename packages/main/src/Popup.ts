@@ -33,12 +33,12 @@ createBlockingStyle();
 
 const pageScrollingBlockers = new Set<Popup>();
 
-type ScrollEventDetail = {
+type PopupScrollEventDetail = {
 	scrollTop: number;
 	targetRef: HTMLElement;
 }
 
-type BeforeCloseEventDetail = {
+type PopupBeforeCloseEventDetail = {
 	escPressed: boolean;
 }
 
@@ -320,7 +320,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireEvent<ScrollEventDetail>("scroll", {
+		this.fireEvent<PopupScrollEventDetail>("scroll", {
 			scrollTop: (e.target as HTMLElement).scrollTop,
 			targetRef: e.target as HTMLElement,
 		});
@@ -487,7 +487,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Hides the block layer (for modal popups only)
+	 * Closes the popup.
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.Popup#close
@@ -498,7 +498,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent<BeforeCloseEventDetail>("before-close", { escPressed }, true, false);
+		const prevented = !this.fireEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed }, true, false);
 		if (prevented) {
 			return;
 		}
@@ -643,6 +643,6 @@ abstract class Popup extends UI5Element {
 export default Popup;
 
 export type {
-	ScrollEventDetail,
-	BeforeCloseEventDetail,
+	PopupScrollEventDetail,
+	PopupBeforeCloseEventDetail,
 };
