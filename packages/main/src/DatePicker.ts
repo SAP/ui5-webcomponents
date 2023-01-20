@@ -369,6 +369,17 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	@slot({ type: HTMLElement })
 	formSupport!: Array<HTMLElement>;
 
+	
+	/**
+	 * This slot is used to render the code for adding duration to date range.
+	 * @type {HTMLElement}
+	 * @name sap.ui.webc.main.DatePicker.prototype.dateRangeDuration
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	dateRangeDuration!: HTMLElement;
+
 	responsivePopover?: ResponsivePopover;
 
 	FormSupport?: typeof FormSupportT;
