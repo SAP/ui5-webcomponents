@@ -27,6 +27,7 @@
     "lint": "nps lint",
     "start": "nps start",
     "build": "nps build",
+    "bundle": "nps build.bundle",
     "test": "nps test",
     "prepublishOnly": "npm run clean && npm run build"
   },

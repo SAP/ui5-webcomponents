@@ -21,6 +21,7 @@
     "start": "wc-dev start",
     "watch": "wc-dev watch",
     "build": "wc-dev build",
+    "bundle": "nps build.bundle",
     "test": "wc-dev test",
     "test:suite-1": "wc-dev test-suite-1",
     "test:suite-2": "wc-dev test-suite-2",
@@ -50,6 +51,8 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.9.1",
+    "@ui5/webcomponents-icons-tnt": "1.9.1",
+    "@ui5/webcomponents-icons-business-suite": "1.9.1",
     "chromedriver": "108.0.0"
   }
 }
