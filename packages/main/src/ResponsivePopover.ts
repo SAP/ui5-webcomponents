@@ -118,7 +118,7 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Shows popover on desktop and dialog on mobile.
 	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
+	 * @param {boolean} [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
 	 * @async
 	 * @method

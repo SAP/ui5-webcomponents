@@ -620,7 +620,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.DatePicker#isValid
-	 * @param { string } value A value to be tested against the current date format
+	 * @param { string } [value=""] A value to be tested against the current date format
 	 * @returns { boolean }
 	 */
 	isValid(value = ""): boolean {
@@ -638,7 +638,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.DatePicker#isInValidRange
-	 * @param { string } value A value to be checked
+	 * @param { string } [value=""] A value to be checked
 	 * @returns { boolean }
 	 */
 	isInValidRange(value = ""): boolean {
