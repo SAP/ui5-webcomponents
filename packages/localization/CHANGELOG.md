@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0) (2023-01-20)
+
+
+### Features
+
+* add TS types for localization packages  ([#6147](https://github.com/SAP/ui5-webcomponents/issues/6147)) ([39dcbfd](https://github.com/SAP/ui5-webcomponents/commit/39dcbfd91e6bc728f1c3feaff5e229ae3a359b06))
+* **ui5-button, ui5-date-picker, ui5-calendar:** migrate to TS ([#6173](https://github.com/SAP/ui5-webcomponents/issues/6173)) ([7232ca0](https://github.com/SAP/ui5-webcomponents/commit/7232ca08f286c5dde10080373fb62247f1acf7b7)), closes [#6080](https://github.com/SAP/ui5-webcomponents/issues/6080)
+
+
+
+
+
 ## [1.9.3](https://github.com/SAP/ui5-webcomponents/compare/v1.9.2...v1.9.3) (2022-12-16)
 
 **Note:** Version bump only for package @ui5/webcomponents-localization

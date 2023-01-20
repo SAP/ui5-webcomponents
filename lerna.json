@@ -12,7 +12,7 @@
 		"packages/playground",
 		"packages/create-package"
 	],
-	"version": "1.9.3",
+	"version": "1.10.0",
 	"command": {
 		"publish": {
 			"conventionalCommits": true

@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0) (2023-01-20)
+
+
+### Bug Fixes
+
+* **infra:** set Content-Type header on testsuite ([#6108](https://github.com/SAP/ui5-webcomponents/issues/6108)) ([fae3f91](https://github.com/SAP/ui5-webcomponents/commit/fae3f91975ab1dad7135bea2227f61986eff403f))
+
+
+### Features
+
+* enable TS in main, fiori ([#6064](https://github.com/SAP/ui5-webcomponents/issues/6064)) ([0b56130](https://github.com/SAP/ui5-webcomponents/commit/0b561307b93b8af465dc5bee67650069ee138f7f))
+* migrate illustrated-message component to TS, small refactor ([#6195](https://github.com/SAP/ui5-webcomponents/issues/6195)) ([046c779](https://github.com/SAP/ui5-webcomponents/commit/046c779f654648172619dd720c0d90342ec78fb9))
+* support decorators for custom elements metadata ([#6072](https://github.com/SAP/ui5-webcomponents/issues/6072)) ([fc9ee6e](https://github.com/SAP/ui5-webcomponents/commit/fc9ee6e2af10b4315fde072a50ab37efa180c809))
+* **ui5-button, ui5-date-picker, ui5-calendar:** migrate to TS ([#6173](https://github.com/SAP/ui5-webcomponents/issues/6173)) ([7232ca0](https://github.com/SAP/ui5-webcomponents/commit/7232ca08f286c5dde10080373fb62247f1acf7b7)), closes [#6080](https://github.com/SAP/ui5-webcomponents/issues/6080)
+* use Typescript for the `base` package ([#5982](https://github.com/SAP/ui5-webcomponents/issues/5982)) ([bd184d8](https://github.com/SAP/ui5-webcomponents/commit/bd184d81a4218328bc7bf04baf2bc1f69a361679))
+
+
+
+
+
 ## [1.9.3](https://github.com/SAP/ui5-webcomponents/compare/v1.9.2...v1.9.3) (2022-12-16)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

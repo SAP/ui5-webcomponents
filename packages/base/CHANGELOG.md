@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0) (2023-01-20)
+
+
+### Bug Fixes
+
+* **i18n:** add mapping for norwegian locale ([#6284](https://github.com/SAP/ui5-webcomponents/issues/6284)) ([7fef62f](https://github.com/SAP/ui5-webcomponents/commit/7fef62f269c2e3903139aaf9dbb92519a77c6918)), closes [#6283](https://github.com/SAP/ui5-webcomponents/issues/6283)
+* **i18n:** processing text with formater ([#6041](https://github.com/SAP/ui5-webcomponents/issues/6041)) ([f155dee](https://github.com/SAP/ui5-webcomponents/commit/f155deee5ca7b1cb4a0e1e61298a895344321eb0))
+* **ui5-popover:** clicking on iframe now closes an open popover ([#6145](https://github.com/SAP/ui5-webcomponents/issues/6145)) ([f01e872](https://github.com/SAP/ui5-webcomponents/commit/f01e87276fb043c6b523623d0d72c53a0a0856fc)), closes [#6087](https://github.com/SAP/ui5-webcomponents/issues/6087)
+* **ui5-side-navigation:** focus handling of tree inside popover ([#6155](https://github.com/SAP/ui5-webcomponents/issues/6155)) ([cf024bd](https://github.com/SAP/ui5-webcomponents/commit/cf024bd43e08dd4dccc6cab225b81b3f4f771a74))
+
+
+### Features
+
+* add TS types for localization packages  ([#6147](https://github.com/SAP/ui5-webcomponents/issues/6147)) ([39dcbfd](https://github.com/SAP/ui5-webcomponents/commit/39dcbfd91e6bc728f1c3feaff5e229ae3a359b06))
+* create better types for rendering-related functionality ([#6059](https://github.com/SAP/ui5-webcomponents/issues/6059)) ([5fad3ca](https://github.com/SAP/ui5-webcomponents/commit/5fad3ca31158348d0a2ee22f72feeeeec1cb0dce))
+* enable TS in main, fiori ([#6064](https://github.com/SAP/ui5-webcomponents/issues/6064)) ([0b56130](https://github.com/SAP/ui5-webcomponents/commit/0b561307b93b8af465dc5bee67650069ee138f7f))
+* migrate illustrated-message component to TS, small refactor ([#6195](https://github.com/SAP/ui5-webcomponents/issues/6195)) ([046c779](https://github.com/SAP/ui5-webcomponents/commit/046c779f654648172619dd720c0d90342ec78fb9))
+* support decorators for custom elements metadata ([#6072](https://github.com/SAP/ui5-webcomponents/issues/6072)) ([fc9ee6e](https://github.com/SAP/ui5-webcomponents/commit/fc9ee6e2af10b4315fde072a50ab37efa180c809))
+* **ui5-breadcrumbs:** migrate to TS ([#6254](https://github.com/SAP/ui5-webcomponents/issues/6254)) ([02a6d64](https://github.com/SAP/ui5-webcomponents/commit/02a6d64a3c915b48f293d01ca008da8ad49095c7))
+* **ui5-button, ui5-date-picker, ui5-calendar:** migrate to TS ([#6173](https://github.com/SAP/ui5-webcomponents/issues/6173)) ([7232ca0](https://github.com/SAP/ui5-webcomponents/commit/7232ca08f286c5dde10080373fb62247f1acf7b7)), closes [#6080](https://github.com/SAP/ui5-webcomponents/issues/6080)
+* **ui5-list, ui5-li, ui5-li-custom:** migrate to TS ([#6166](https://github.com/SAP/ui5-webcomponents/issues/6166)) ([12b3570](https://github.com/SAP/ui5-webcomponents/commit/12b35707c3f0934dcb98fdcde0ed715140a4af4a))
+* **ui5-tree-item-custom:** initial implementation ([#5962](https://github.com/SAP/ui5-webcomponents/issues/5962)) ([b148c23](https://github.com/SAP/ui5-webcomponents/commit/b148c23cf7ed11b4e17c9eda61a20fc48882ba4f))
+* **ui5:** display focus outline via keyboard only ([#6084](https://github.com/SAP/ui5-webcomponents/issues/6084)) ([848997b](https://github.com/SAP/ui5-webcomponents/commit/848997bccf753a1b9b687a27083f3536f0335ff9))
+* use Typescript for the `base` package ([#5982](https://github.com/SAP/ui5-webcomponents/issues/5982)) ([bd184d8](https://github.com/SAP/ui5-webcomponents/commit/bd184d81a4218328bc7bf04baf2bc1f69a361679))
+
+
+
+
+
 ## [1.9.3](https://github.com/SAP/ui5-webcomponents/compare/v1.9.2...v1.9.3) (2022-12-16)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
