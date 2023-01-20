@@ -1,4 +1,4 @@
-import { r as registerIllustration, J as IM_TITLE_PAGENOTFOUND, K as IM_SUBTITLE_PAGENOTFOUND } from "./bundle.esm2.js";
+import { r as registerIllustration, N as IM_TITLE_PAGENOTFOUND, O as IM_SUBTITLE_PAGENOTFOUND } from "./bundle.esm2.js";
 var dialogSvg = `<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" id="sapIllus-Dialog-PageNotFound">
 <mask id="mask0_2331_5787" class="sapIllus_MaskTypeAlpha" maskUnits="userSpaceOnUse" x="12" y="12" width="148" height="148">
 <circle cx="86.1146" cy="86.1148" r="73.8854" fill="var(--sapContent_Illustrative_Color7)"/>

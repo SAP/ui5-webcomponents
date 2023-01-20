@@ -1,0 +1,6376 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="keywords" content="ui5-webcomponents,ui5 webcomponents,ui5 web components,webcomponents,web components,ui5,api,docs,documentation,sample,usage,examples,demo,Fiori 3">
+
+  
+    <title>1.10.0 - UI5 Web Components</title>
+
+    
+  
+
+  <link rel="shortcut icon" href="https://sap.github.io/ui5-webcomponents/assets/images/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" href="https://sap.github.io/ui5-webcomponents/assets/css/main.css">
+
+  <!--  -->
+
+  <script data-ui5-config type="application/json">
+    {
+      "theme": "sap_horizon"
+    }
+  </script>
+
+  <script type="text/javascript" src="https://sap.github.io/ui5-webcomponents/assets/js/vendor/lunr.min.js"></script>
+  <script type="text/javascript" src="https://sap.github.io/ui5-webcomponents/assets/js/playground.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>1.10.0 | UI5 Web Components</title>
+<meta name="generator" content="Jekyll v4.3.1" />
+<meta property="og:title" content="1.10.0" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Enterprise-flavored sugar on top of native APIs!" />
+<meta property="og:description" content="Enterprise-flavored sugar on top of native APIs!" />
+<link rel="canonical" href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.10.0.md/" />
+<meta property="og:url" content="https://sap.github.io/ui5-webcomponents/playground/changelog/1.10.0.md/" />
+<meta property="og:site_name" content="UI5 Web Components" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="1.10.0" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Enterprise-flavored sugar on top of native APIs!","headline":"1.10.0","url":"https://sap.github.io/ui5-webcomponents/playground/changelog/1.10.0.md/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+
+<body>
+
+  <div class="page-wrap">
+      <div class="page-header">
+        <a class="logo-wrapper" href="https://sap.github.io/ui5-webcomponents/">
+          <img src="https://sap.github.io/ui5-webcomponents/assets/images/ui5-logo.png" alt="Logo" class="logo">
+          <div class="heading">UI5 Web Components</div>
+        </a>
+        <div class="search js-search">
+          <div class="search-input-wrap">
+            <input type="text" class="js-search-input search-input" tabindex="0" placeholder="Search" aria-label="Search UI5 Web Components docs" autocomplete="off">
+            <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"></path><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"></path></g></svg>
+          </div>
+          <div class="js-search-results search-results-wrap"></div>
+        </div>
+        <button class="js-main-nav-trigger navigation-list-toggle" id="mobile-button" type="button">Menu</button>
+      </div>
+    <div class="side-bar">
+      <div class="navigation main-nav js-main-nav">
+        <nav role="navigation" aria-label="Main navigation">
+  <ul class="navigation-list">
+    
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started" class="navigation-list-link">Getting started</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started/first-steps/" class="navigation-list-link">
+                        <div class="component-name">First steps</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started/importing-components/" class="navigation-list-link">
+                        <div class="component-name">Importing components</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started/understanding-components-apis/" class="navigation-list-link">
+                        <div class="component-name">Understanding components APIs</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started/using-icons/" class="navigation-list-link">
+                        <div class="component-name">Using icons</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started/using-assets/" class="navigation-list-link">
+                        <div class="component-name">Using assets</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started/using-features/" class="navigation-list-link">
+                        <div class="component-name">Using features</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/getting-started/wrapping-up/" class="navigation-list-link">
+                        <div class="component-name">Wrapping up</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/advanced" class="navigation-list-link">Advanced</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/configuration/" class="navigation-list-link">
+                        <div class="component-name">Configuration</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/rtl-and-compact-mode/" class="navigation-list-link">
+                        <div class="component-name">RTL and compact mode</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/scoping/" class="navigation-list-link">
+                        <div class="component-name">Scoping</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/openui5-integration/" class="navigation-list-link">
+                        <div class="component-name">OpenUI5 integration</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/other-framework-level-apis/" class="navigation-list-link">
+                        <div class="component-name">Other framework level APIs</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/using-i18n-for-apps/" class="navigation-list-link">
+                        <div class="component-name">Using i18n for apps</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/accessibility/" class="navigation-list-link">
+                        <div class="component-name">Accessibility</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/csp/" class="navigation-list-link">
+                        <div class="component-name">CSP</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/advanced/scrollbars-customization/" class="navigation-list-link">
+                        <div class="component-name">Scrollbars customization</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/customizing" class="navigation-list-link">Customizing</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/customizing/theme/" class="navigation-list-link">
+                        <div class="component-name">Theme</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/customizing/fonts/" class="navigation-list-link">
+                        <div class="component-name">Fonts</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/frameworks" class="navigation-list-link">Frameworks</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/frameworks/react/" class="navigation-list-link">
+                        <div class="component-name">React</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/frameworks/angular/" class="navigation-list-link">
+                        <div class="component-name">Angular</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/frameworks/vue/" class="navigation-list-link">
+                        <div class="component-name">Vue</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/development" class="navigation-list-link">Development</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components-packages/" class="navigation-list-link">
+                        <div class="component-name">Custom UI5 Web Components Packages</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/custom-ui5-web-components/" class="navigation-list-link">
+                        <div class="component-name">Custom UI5 Web Components</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/understanding-components-metadata/" class="navigation-list-link">
+                        <div class="component-name">Understanding components metadata</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/understanding-hbs-templates/" class="navigation-list-link">
+                        <div class="component-name">Understanding hbs templates</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/testing-ui5-web-components/" class="navigation-list-link">
+                        <div class="component-name">Testing UI5 Web Components</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/deep-dive-and-best-practices/" class="navigation-list-link">
+                        <div class="component-name">Deep dive and best practices</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/development/ts/" class="navigation-list-link">
+                        <div class="component-name">Ts</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/contributing" class="navigation-list-link">Contributing</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/contributing/development-workflow/" class="navigation-list-link">
+                        <div class="component-name">Development workflow</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/contributing/conventions-and-guidelines/" class="navigation-list-link">
+                        <div class="component-name">Conventions and guidelines</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/contributing/playground-app/" class="navigation-list-link">
+                        <div class="component-name">Playground app</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/faq" class="navigation-list-link">FAQ</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/changelog" class="navigation-list-link">Changelog</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.10.0.md/" class="navigation-list-link active">
+                        <div class="component-name">1.10.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.9.3.md/" class="navigation-list-link">
+                        <div class="component-name">1.9.3</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.9.2.md/" class="navigation-list-link">
+                        <div class="component-name">1.9.2</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.9.1.md/" class="navigation-list-link">
+                        <div class="component-name">1.9.1</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.9.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.9.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.8.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.8.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.7.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.7.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.6.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.6.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.4.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.5.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.4.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.4.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.3.1.md/" class="navigation-list-link">
+                        <div class="component-name">1.3.1</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/rc15/" class="navigation-list-link">
+                        <div class="component-name">1.0.0-rc.15</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.3.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.3.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/rc16/" class="navigation-list-link">
+                        <div class="component-name">1.0.0-rc.16</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.2.1.md/" class="navigation-list-link">
+                        <div class="component-name">1.2.1</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.2.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.2.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.1.2.md/" class="navigation-list-link">
+                        <div class="component-name">1.1.2</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.1.1.md/" class="navigation-list-link">
+                        <div class="component-name">1.1.1</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.1.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.1.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/changelog/1.0.0.md/" class="navigation-list-link">
+                        <div class="component-name">1.0.0</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://sap.github.io/ui5-webcomponents/playground/components" class="navigation-list-link">Components</a>
+            
+              
+              <ul class="navigation-list-child-list  visible">
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Avatar/" class="navigation-list-link">
+                        <div class="component-name">Avatar</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/AvatarGroup/" class="navigation-list-link">
+                        <div class="component-name">Avatar Group</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Badge/" class="navigation-list-link">
+                        <div class="component-name">Badge</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Bar/" class="navigation-list-link">
+                        <div class="component-name">Bar</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/BarcodeScannerDialog/" class="navigation-list-link">
+                        <div class="component-name">Barcode Scanner Dialog</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Breadcrumbs/" class="navigation-list-link">
+                        <div class="component-name">Breadcrumbs</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/BusyIndicator/" class="navigation-list-link">
+                        <div class="component-name">Busy Indicator</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Button/" class="navigation-list-link">
+                        <div class="component-name">Button</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Calendar/" class="navigation-list-link">
+                        <div class="component-name">Calendar</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Card/" class="navigation-list-link">
+                        <div class="component-name">Card</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Carousel/" class="navigation-list-link">
+                        <div class="component-name">Carousel</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/CheckBox/" class="navigation-list-link">
+                        <div class="component-name">Check Box</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ColorPalette/" class="navigation-list-link">
+                        <div class="component-name">Color Palette</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ColorPalettePopover/" class="navigation-list-link">
+                        <div class="component-name">Color Palette Popover</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ColorPicker/" class="navigation-list-link">
+                        <div class="component-name">Color Picker</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ComboBox/" class="navigation-list-link">
+                        <div class="component-name">Combo Box</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/DatePicker/" class="navigation-list-link">
+                        <div class="component-name">Date Picker</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/DateRangePicker/" class="navigation-list-link">
+                        <div class="component-name">Date Range Picker</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/DateTimePicker/" class="navigation-list-link">
+                        <div class="component-name">Date Time Picker</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Dialog/" class="navigation-list-link">
+                        <div class="component-name">Dialog</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/DynamicSideContent/" class="navigation-list-link">
+                        <div class="component-name">Dynamic Side Content</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/FileUploader/" class="navigation-list-link">
+                        <div class="component-name">File Uploader</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout/" class="navigation-list-link">
+                        <div class="component-name">Flexible Column Layout</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Icon/" class="navigation-list-link">
+                        <div class="component-name">Icon</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/IllustratedMessage/" class="navigation-list-link">
+                        <div class="component-name">Illustrated Message</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Input/" class="navigation-list-link">
+                        <div class="component-name">Input</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Label/" class="navigation-list-link">
+                        <div class="component-name">Label</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Link/" class="navigation-list-link">
+                        <div class="component-name">Link</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/List/" class="navigation-list-link">
+                        <div class="component-name">List</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/MediaGallery/" class="navigation-list-link">
+                        <div class="component-name">Media Gallery</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Menu/" class="navigation-list-link">
+                        <div class="component-name">Menu</div>
+                        
+                          <span class="new-tag">NEW</span>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/MessageStrip/" class="navigation-list-link">
+                        <div class="component-name">Message Strip</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/MultiComboBox/" class="navigation-list-link">
+                        <div class="component-name">Multi Combo Box</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/MultiInput/" class="navigation-list-link">
+                        <div class="component-name">Multi Input</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/NotificationListGroupItem/" class="navigation-list-link">
+                        <div class="component-name">Notification List Group Item</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/NotificationListItem/" class="navigation-list-link">
+                        <div class="component-name">Notification List Item</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Page/" class="navigation-list-link">
+                        <div class="component-name">Page</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Panel/" class="navigation-list-link">
+                        <div class="component-name">Panel</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Popover/" class="navigation-list-link">
+                        <div class="component-name">Popover</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ProductSwitch/" class="navigation-list-link">
+                        <div class="component-name">Product Switch</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ProgressIndicator/" class="navigation-list-link">
+                        <div class="component-name">Progress Indicator</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/RadioButton/" class="navigation-list-link">
+                        <div class="component-name">Radio Button</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/RangeSlider/" class="navigation-list-link">
+                        <div class="component-name">Range Slider</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/RatingIndicator/" class="navigation-list-link">
+                        <div class="component-name">Rating Indicator</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ResponsivePopover/" class="navigation-list-link">
+                        <div class="component-name">Responsive Popover</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/SegmentedButton/" class="navigation-list-link">
+                        <div class="component-name">Segmented Button</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Select/" class="navigation-list-link">
+                        <div class="component-name">Select</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ShellBar/" class="navigation-list-link">
+                        <div class="component-name">Shell Bar</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/SideNavigation/" class="navigation-list-link">
+                        <div class="component-name">Side Navigation</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Slider/" class="navigation-list-link">
+                        <div class="component-name">Slider</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/SplitButton/" class="navigation-list-link">
+                        <div class="component-name">Split Button</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/StepInput/" class="navigation-list-link">
+                        <div class="component-name">Step Input</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Switch/" class="navigation-list-link">
+                        <div class="component-name">Switch</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/TabContainer/" class="navigation-list-link">
+                        <div class="component-name">Tab Container</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Table/" class="navigation-list-link">
+                        <div class="component-name">Table</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/TextArea/" class="navigation-list-link">
+                        <div class="component-name">Text Area</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/TimePicker/" class="navigation-list-link">
+                        <div class="component-name">Time Picker</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Timeline/" class="navigation-list-link">
+                        <div class="component-name">Timeline</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Title/" class="navigation-list-link">
+                        <div class="component-name">Title</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Toast/" class="navigation-list-link">
+                        <div class="component-name">Toast</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ToggleButton/" class="navigation-list-link">
+                        <div class="component-name">Toggle Button</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Tree/" class="navigation-list-link">
+                        <div class="component-name">Tree</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/UploadCollection/" class="navigation-list-link">
+                        <div class="component-name">Upload Collection</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/ViewSettingsDialog/" class="navigation-list-link">
+                        <div class="component-name">View Settings Dialog</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://sap.github.io/ui5-webcomponents/playground/components/Wizard/" class="navigation-list-link">
+                        <div class="component-name">Wizard</div>
+                        
+                      </a>
+                      
+                    </li>
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+    </div>
+    <div class="main-content-wrap js-main-content" tabindex="0">
+      <div class="main-content">
+        
+          
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="https://sap.github.io/ui5-webcomponents/playground/changelog">Changelog</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>1.10.0</span></li>
+              </ol>
+            </nav>
+          
+        
+        <div id="main-content" class="page-content" role="main">
+          <h1 id="change-log">Change Log</h1>
+
+<p>All notable changes to this project will be documented in this file.
+See <a href="https://conventionalcommits.org">Conventional Commits</a> for commit guidelines.</p>
+
+<h1 id="1100-2023-01-20"><a href="https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0">1.10.0</a> (2023-01-20)</h1>
+
+<h3 id="new-component">New component</h3>
+<ul>
+  <li><strong>ui5-tree-item-custom:</strong> initial implementation (<a href="https://github.com/SAP/ui5-webcomponents/issues/5962">#5962</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/b148c23cf7ed11b4e17c9eda61a20fc48882ba4f">b148c23</a>)</li>
+</ul>
+
+<h3 id="typescript">Typescript</h3>
+<ul>
+  <li><strong>framework:</strong> rewrite the framework in Typescript and provide TS types for all framework APIs (<a href="https://github.com/SAP/ui5-webcomponents/issues/5982">#5982</a>) (<a href="https://github.com/SAP/ui5-webcomponents/issues/6147">#6147</a>) (<a href="https://github.com/SAP/ui5-webcomponents/pull/6159">#6159</a>)(<a href="https://github.com/SAP/ui5-webcomponents/pull/6156">#6156</a>)</li>
+  <li><strong>components:</strong> rewrite components in Typescript and provide TS types  (<a href="https://github.com/SAP/ui5-webcomponents/issues/6076">#6076</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/918b4fbe7e14220c46115f7426a3d844f5c6ac1f">918b4fb</a>)</li>
+  <li>
+    <ul>
+      <li><strong>ui5-avatar:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6272">#6272</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/3f3a03f8ec2600836d7f0c2e6dd8617ec9dcc829">3f3a03f</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-bar:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6194">#6194</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-badge:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6287">#6287</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-breadcrumbs:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6254">#6254</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/02a6d64a3c915b48f293d01ca008da8ad49095c7">02a6d64</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-button, ui5-date-picker, ui5-calendar:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6173">#6173</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/7232ca08f286c5dde10080373fb62247f1acf7b7">7232ca0</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6080">#6080</a></li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-checkbox:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6292">#6292</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/49cef2d021d6f981036846f29caa5c3ac823e186">49cef2d</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-card, ui5-card-header:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6290">#6290</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-color-picker:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6213">#6213</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-color-palette:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6244">#6244</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/ec3bf435480b010fdae018c25ba0e407fca219b1">ec3bf43</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-dialog:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6276">#6276</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-daterange-picker:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6246">#6246</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/63986f557a78ac14674d2e618ed40967ed5a1102">63986f5</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-dynamic-side-content:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6209">#6209</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-file-uploader:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6211">#6211</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-input:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6235">#6235</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-illustrated-message:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6195">#6195</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/046c779f654648172619dd720c0d90342ec78fb9">046c779</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-link:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6204">#6204</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-list, ui5-li, ui5-li-custom:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6166">#6166</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/12b35707c3f0934dcb98fdcde0ed715140a4af4a">12b3570</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-menu:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6224">#6224</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-message-strip:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6248">#6248</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/0325626b76169a0af28caafa40a6ac4692b739fd">0325626</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-page:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6205">#6205</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-panel:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6202">#6202</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-popover:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6235">#6235</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-progress-indicator:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6201">#6201</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-responsive-popover:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6288">#6288</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-slider:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6251">#6251</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/b9a082a17c563ee7053096eee0293b41d642093f">b9a082a</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-step-input:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6225">#6225</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-split-button:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6208">#6208</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-switch:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6210">#6210</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-table, ui5-table-row, ui5-table-column, ui5-table-*:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6253">#6253</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-timepicker:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6240">#6240</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/f1035eb701f9a6ef02a21cb4a9bfd9b11c118c08">f1035eb</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-timeline:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6206">#6206</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-viewsettings-dialog:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/issues/6218">#6218</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/ee3bbe46b070092dffd054b1350f444fa072539e">ee3bbe4</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-upload-collection:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6194">#6194</a>)</li>
+    </ul>
+  </li>
+  <li>
+    <ul>
+      <li><strong>ui5-upload-collection-item:</strong> (<a href="https://github.com/SAP/ui5-webcomponents/pull/6296">#6296</a>)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="features">Features</h3>
+
+<ul>
+  <li><strong>framework:</strong> support decorators for defining custom elements metadata (<a href="https://github.com/SAP/ui5-webcomponents/issues/6072">#6072</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/fc9ee6e2af10b4315fde072a50ab37efa180c809">fc9ee6e</a>)</li>
+  <li><strong>ui5-carousel:</strong> allow page indicator to always display numbers (<a href="https://github.com/SAP/ui5-webcomponents/issues/6245">#6245</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/36ef5a6e1f00c86da8dd99f66a487be0dfce277d">36ef5a6</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5409">#5409</a></li>
+  <li><strong>ui5-icon:</strong> add new <code class="language-plaintext highlighter-rouge">design</code> property (<a href="https://github.com/SAP/ui5-webcomponents/issues/6261">#6261</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/566c46bd47666f8e096ffb9af9195cbe1c27a65a">566c46b</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6019">#6019</a></li>
+  <li><strong>ui5-illustrated-message:</strong> illustrations update in the default set (<a href="https://github.com/SAP/ui5-webcomponents/issues/6013">#6013</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/329f80cca0d9c195e0e776a21d693cb0097d640a">329f80c</a>)</li>
+  <li><strong>ui5-illustrated-message:</strong> updated missing illustration texts (<a href="https://github.com/SAP/ui5-webcomponents/issues/6075">#6075</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/78c3227ac5766903df551f6211dbc04c767cea88">78c3227</a>)</li>
+  <li><strong>ui5-input:</strong> correct disabled state style for horizon (<a href="https://github.com/SAP/ui5-webcomponents/issues/6046">#6046</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/42a64e73d6b65dde428ef5b896dd961197e87aad">42a64e7</a>)</li>
+  <li><strong>ui5-li:</strong> new <code class="language-plaintext highlighter-rouge">imageContent</code> slot is added (<a href="https://github.com/SAP/ui5-webcomponents/issues/6083">#6083</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/2dc0d2c23e54510d0aeefece477fd85a047f3613">2dc0d2c</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5462">#5462</a></li>
+  <li><strong>ui5-li:</strong> <code class="language-plaintext highlighter-rouge">navigation</code> mode is enabled (<a href="https://github.com/SAP/ui5-webcomponents/issues/6024">#6024</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/97afa691fa9a67721bb10f0cbddf03e7b800d6a7">97afa69</a>)</li>
+  <li><strong>ui5-menu:</strong> add <code class="language-plaintext highlighter-rouge">open/opener</code> functionality and <code class="language-plaintext highlighter-rouge">open/close</code> events (<a href="https://github.com/SAP/ui5-webcomponents/issues/5984">#5984</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/951f09a1a5e3db9bdc3052537c2774e816f0ae12">951f09a</a>)</li>
+  <li><strong>ui5-range-slider:</strong> expose shadow parts (<a href="https://github.com/SAP/ui5-webcomponents/issues/6258">#6258</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/518fe86db869158aa3cb6647072ca73be4fd05b6">518fe86</a>)</li>
+  <li><strong>ui5-shellbar:</strong> add new <code class="language-plaintext highlighter-rouge">accessibilityAttributes</code> property (<a href="https://github.com/SAP/ui5-webcomponents/issues/6117">#6117</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/056ed9fc21c9dac8b6a289d57a23fcb6f9e44c04">056ed9f</a>)</li>
+  <li><strong>ui5-shellbar:</strong> programmatically show search field (<a href="https://github.com/SAP/ui5-webcomponents/issues/6085">#6085</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/e0658a6503ea0203df74317f57e4fb0a5be7620e">e0658a6</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5818">#5818</a></li>
+  <li><strong>ui5-shellbar:</strong> use header semantic element (<a href="https://github.com/SAP/ui5-webcomponents/issues/6146">#6146</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/9865eb2d5825d1ce799fc110611288e5fa090613">9865eb2</a>)</li>
+  <li><strong>ui5-table:</strong> add inline display property (<a href="https://github.com/SAP/ui5-webcomponents/issues/6007">#6007</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/d41445f21f5de0b3d6c234f052a4fe69f29f1a30">d41445f</a>)</li>
+  <li><strong>ui5-textarea:</strong> integrate label enablement support (<a href="https://github.com/SAP/ui5-webcomponents/issues/6027">#6027</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/e1b02714a79c30001af99b7ed689f723610d43a3">e1b0271</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5710">#5710</a></li>
+  <li><strong>ui5-wizard:</strong> adopt responsive paddings (<a href="https://github.com/SAP/ui5-webcomponents/issues/6061">#6061</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/402bc28137fab738778f8c7da099c073cc39f45d">402bc28</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5597">#5597</a></li>
+  <li><strong>ui5-card-header, ui5-radio-button, ui5-tabcontainer, ui5-dialog:</strong> display focus outline via keyboard only (<a href="https://github.com/SAP/ui5-webcomponents/issues/6084">#6084</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/848997bccf753a1b9b687a27083f3536f0335ff9">848997b</a>)</li>
+</ul>
+
+<h3 id="bug-fixes">Bug Fixes</h3>
+
+<ul>
+  <li><strong>framework:</strong> check and report validity of input components (<a href="https://github.com/SAP/ui5-webcomponents/issues/5987">#5987</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/22d5f60c6435df94bd4a3f3d8ede1511934c092f">22d5f60</a>)</li>
+  <li><strong>framework:</strong> add mapping for norwegian locale (<a href="https://github.com/SAP/ui5-webcomponents/issues/6284">#6284</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/7fef62f269c2e3903139aaf9dbb92519a77c6918">7fef62f</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6283">#6283</a></li>
+  <li><strong>framework:</strong> fix processing of i18n text with formater (<a href="https://github.com/SAP/ui5-webcomponents/issues/6041">#6041</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/f155deee5ca7b1cb4a0e1e61298a895344321eb0">f155dee</a>)</li>
+  <li><strong>framework:</strong> set Content-Type header on testsuite (<a href="https://github.com/SAP/ui5-webcomponents/issues/6108">#6108</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/fae3f91975ab1dad7135bea2227f61986eff403f">fae3f91</a>)</li>
+  <li><strong>ui5-multi-input, ui5-multi-combobox:</strong> remove value state message spacing (<a href="https://github.com/SAP/ui5-webcomponents/issues/6233">#6233</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/fd13f96b289b6cd71e0d0eff6f54ac93f534ba6d">fd13f96</a>)</li>
+  <li><strong>ui5-avatar:</strong> fix icon rendering inside ui5-avatar (<a href="https://github.com/SAP/ui5-webcomponents/issues/6060">#6060</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/9899466e75196cb424946a9281583c74948d7b09">9899466</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6043">#6043</a></li>
+  <li><strong>ui5-avatar:</strong> fix incorrect img slot border alignment (<a href="https://github.com/SAP/ui5-webcomponents/issues/6133">#6133</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/dc410d1a507294d026abbc6c8429cfe2bc5a5519">dc410d1</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5919">#5919</a></li>
+  <li><strong>ui5-avatar:</strong> improve documentation of initials property (<a href="https://github.com/SAP/ui5-webcomponents/issues/6138">#6138</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/8cc1303c84bb4f17e80f5347963f756b77576bbf">8cc1303</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6136">#6136</a></li>
+  <li><strong>ui5-button:</strong> adjust tooltip display (<a href="https://github.com/SAP/ui5-webcomponents/issues/5936">#5936</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/98dd38eefb238a46b1c4aca956019cbec473d340">98dd38e</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5083">#5083</a></li>
+  <li><strong>ui5-calendar:</strong> adjust displayed width (<a href="https://github.com/SAP/ui5-webcomponents/issues/6196">#6196</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/5eaf13c7a6df457eb2d46b558de27afab352a614">5eaf13c</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5641">#5641</a></li>
+  <li><strong>ui5-calendar:</strong> set proper roledescription on the pickers (<a href="https://github.com/SAP/ui5-webcomponents/issues/6197">#6197</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/ebd3cc0237d9289b9ad0032542199fdb6165a64a">ebd3cc0</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5858">#5858</a></li>
+  <li><strong>ui5-carousel:</strong> fix screen readers reading when a page is changed (<a href="https://github.com/SAP/ui5-webcomponents/issues/6105">#6105</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/5da4e5f7508573c41d990a448b9bad139f65e3c7">5da4e5f</a>)</li>
+  <li><strong>ui5-checkbox:</strong> fix focus outline (<a href="https://github.com/SAP/ui5-webcomponents/issues/6033">#6033</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/3fa961c4a9fc8f16ac9bfce985ee34f3c2e88c27">3fa961c</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5915">#5915</a></li>
+  <li><strong>ui5-date-picker:</strong> align styles to input (<a href="https://github.com/SAP/ui5-webcomponents/issues/6149">#6149</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/8d3e3f1ba69aaac6fef2d971a9839c5aed40a256">8d3e3f1</a>)</li>
+  <li><strong>ui5-dialog, ui5-popover:</strong> change header level to H1 (<a href="https://github.com/SAP/ui5-webcomponents/issues/6293">#6293</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/a9130e855afc01dafc1e22c561f07c0d666d7155">a9130e8</a>)</li>
+  <li><strong>ui5-dialog:</strong> fix block layers when multiple dialogs are open (<a href="https://github.com/SAP/ui5-webcomponents/issues/6183">#6183</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/018f52166c72a176719ac52dbb0f0db5f62f966e">018f521</a>)</li>
+  <li><strong>ui5-icon:</strong> add cursor “pointer” for interactive icons (<a href="https://github.com/SAP/ui5-webcomponents/issues/6042">#6042</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/58fba641900313b88db37fedbc2fb8c88f734d9a">58fba64</a>)</li>
+  <li><strong>ui5-icon:</strong> improve <code class="language-plaintext highlighter-rouge">showTooltip</code> property documentation (<a href="https://github.com/SAP/ui5-webcomponents/issues/6165">#6165</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/10849b737709730e48555f31ba32aad029a1e1fd">10849b7</a>)</li>
+  <li><strong>ui5-illustrated-message:</strong> fix i18n texts (<a href="https://github.com/SAP/ui5-webcomponents/issues/6037">#6037</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/68350bc57f50d0f220321a05fb59238bef3dde96">68350bc</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5974">#5974</a></li>
+  <li><strong>ui5-illustrated-message:</strong> fix resizing issues (<a href="https://github.com/SAP/ui5-webcomponents/issues/6179">#6179</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/d52c8afda49b5a0c880551d516b82cc99a0cebc5">d52c8af</a>)</li>
+  <li><strong>ui5-input:</strong> correct input value on item re-selection (<a href="https://github.com/SAP/ui5-webcomponents/issues/6252">#6252</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/17bedbec56535bc6fd3891e712f05d160f7d8c9d">17bedbe</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6091">#6091</a></li>
+  <li><strong>ui5-input:</strong> fix typo in renderer (<a href="https://github.com/SAP/ui5-webcomponents/issues/6185">#6185</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/0134ed1e731ef50caafd14254b1edca20a6971bc">0134ed1</a>)</li>
+  <li><strong>ui5-input:</strong> make icons responsive when height is changed (<a href="https://github.com/SAP/ui5-webcomponents/issues/5908">#5908</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/3d3f0479f110cb8b0a8a7c7a6814802808867e0b">3d3f047</a>)</li>
+  <li><strong>ui5-li:</strong> allow support for anchor tags in ListItem (<a href="https://github.com/SAP/ui5-webcomponents/issues/6126">#6126</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/db51f5910f3efb0268e1bea65f021c61eb212dba">db51f59</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6121">#6121</a></li>
+  <li><strong>ui5-li:</strong> bottom border is now visible in evening horizon (<a href="https://github.com/SAP/ui5-webcomponents/issues/6129">#6129</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/3dbd53ddd6cc9a320b6bfa6179a67ec1e8a32f5b">3dbd53d</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6116">#6116</a></li>
+  <li><strong>ui5-multi-combobox:</strong> delete long tokens when icon is clicked (<a href="https://github.com/SAP/ui5-webcomponents/issues/6069">#6069</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/18e0b6e747678dacfb32bc2352ca9f045e4fb493">18e0b6e</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6048">#6048</a></li>
+  <li><strong>ui5-multi-combobox:</strong> force tokenizer layouting when selected items are added (<a href="https://github.com/SAP/ui5-webcomponents/issues/6168">#6168</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/9760c6148a541abbb727e73897cb3d072b638489">9760c61</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6092">#6092</a></li>
+  <li><strong>ui5-multi-combobox:</strong> prevent tokenizing of group headers (<a href="https://github.com/SAP/ui5-webcomponents/issues/6230">#6230</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/ff920da01e003780fad8462d75e27b59cb3cca36">ff920da</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6222">#6222</a></li>
+  <li><strong>ui5-multi-input:</strong> focus input when all tokens are deleted (<a href="https://github.com/SAP/ui5-webcomponents/issues/6170">#6170</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/f087209a1121576fdd5d8cca73922625f986544b">f087209</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6073">#6073</a></li>
+  <li><strong>ui5-panel:</strong> remove aria controls from expand button (<a href="https://github.com/SAP/ui5-webcomponents/issues/6167">#6167</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/473e4bb48382ec195b8c4f9499c15e3f928f9799">473e4bb</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6157">#6157</a></li>
+  <li><strong>ui5-popover:</strong> clicking on iframe now closes an open popover (<a href="https://github.com/SAP/ui5-webcomponents/issues/6145">#6145</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/f01e87276fb043c6b523623d0d72c53a0a0856fc">f01e872</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6087">#6087</a></li>
+  <li><strong>ui5-range-slider:</strong> fire change event after value swapping (<a href="https://github.com/SAP/ui5-webcomponents/issues/6057">#6057</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/4134a7c10c381b44ddc944a35575ecb6444aa9db">4134a7c</a>)</li>
+  <li><strong>ui5-segmented-button:</strong> align mousedown and mouseup on item behaviour (<a href="https://github.com/SAP/ui5-webcomponents/issues/6142">#6142</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/9d687d80f0f9282b674ede0ce48c97c4e90700d8">9d687d8</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5390">#5390</a></li>
+  <li><strong>ui5-select:</strong> correct typo in –_ui5_select_label_color (<a href="https://github.com/SAP/ui5-webcomponents/issues/6217">#6217</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/117b9f883cc28342c2178f3d47775c0da82ed95a">117b9f8</a>)</li>
+  <li><strong>ui5-shellbar:</strong> fixed typo in samples (<a href="https://github.com/SAP/ui5-webcomponents/issues/6128">#6128</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/c6799f49c60297cdbaad53f9442776630d3ea884">c6799f4</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6116">#6116</a></li>
+  <li><strong>ui5-shellbar:</strong> focus on popover fixed (<a href="https://github.com/SAP/ui5-webcomponents/issues/6113">#6113</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/61c9989d318c4725eff97c7da70430e11c9eb56f">61c9989</a>)</li>
+  <li><strong>ui5-side-navigation:</strong> fixed accessibility of the Popover (<a href="https://github.com/SAP/ui5-webcomponents/issues/6045">#6045</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/e0e13e11d26abbcb2746e4abd1c72d312212ebaf">e0e13e1</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5827">#5827</a></li>
+  <li><strong>ui5-side-navigation:</strong> fixed accessibility roles and attributes when Side Navigation is collapsed (<a href="https://github.com/SAP/ui5-webcomponents/issues/5877">#5877</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/92b9dc99ea4c598f22111dfea3a435e55c585dfc">92b9dc9</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5827">#5827</a></li>
+  <li><strong>ui5-side-navigation:</strong> focus handling of tree inside popover (<a href="https://github.com/SAP/ui5-webcomponents/issues/6155">#6155</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/cf024bd43e08dd4dccc6cab225b81b3f4f771a74">cf024bd</a>)</li>
+  <li><strong>ui5-split-button:</strong> add split-arrow-down icon to dependencies (<a href="https://github.com/SAP/ui5-webcomponents/issues/6065">#6065</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/1473859e53c3679372dc084415d2c1ffdfdc47ce">1473859</a>)</li>
+  <li><strong>ui5-tabcontainer:</strong> added tab expand button tooltip (<a href="https://github.com/SAP/ui5-webcomponents/issues/6100">#6100</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/8d81f01885278ffb07c6bd8c9fea73d30b70d886">8d81f01</a>)</li>
+  <li><strong>ui5-tabcontainer:</strong> adding selected tab programatically deselects previously selected tab (<a href="https://github.com/SAP/ui5-webcomponents/issues/6036">#6036</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/e73ec210df94ffc10cec8ac6a17d22354962ac46">e73ec21</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/5932">#5932</a> <a href="https://github.com/SAP/ui5-webcomponents/issues/5932">#5932</a></li>
+  <li><strong>ui5-table:</strong> apply correct color to the header row text (<a href="https://github.com/SAP/ui5-webcomponents/issues/6232">#6232</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/6ad1c4c51f3731523511083edd2e7d1337eec21f">6ad1c4c</a>)</li>
+  <li><strong>ui5-textarea:</strong> adjust styles according to the visual specification (<a href="https://github.com/SAP/ui5-webcomponents/issues/6274">#6274</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/2075b2cee52151f2ac0f9cf6188d3c400cc37d83">2075b2c</a>)</li>
+  <li><strong>ui5-textarea:</strong> fix the minimum width of the component (<a href="https://github.com/SAP/ui5-webcomponents/issues/6054">#6054</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/1b5b24a1304cbe0079d4ad48093ec97c24c0046a">1b5b24a</a>)</li>
+  <li><strong>ui5-tokenizer:</strong> apply correct color to N-more text (<a href="https://github.com/SAP/ui5-webcomponents/issues/6267">#6267</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/7208c2f2a2f1a684b27c4610b6ab082870c48b34">7208c2f</a>)</li>
+  <li><strong>ui5-tree:</strong> change isTreeItem getter visibility (<a href="https://github.com/SAP/ui5-webcomponents/issues/6200">#6200</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/9a7c91a1f2a0f37e68a74a8e80fefca540f5c51a">9a7c91a</a>)</li>
+  <li><strong>ui5-tree:</strong> correct forwarding of mode value to items (<a href="https://github.com/SAP/ui5-webcomponents/issues/6277">#6277</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/665107b983424a60d3cf735ef3e0f99498f237de">665107b</a>)</li>
+  <li><strong>ui5-wizard:</strong> allow scrolling when step is bigger than viewport (<a href="https://github.com/SAP/ui5-webcomponents/issues/6241">#6241</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/259b61afafd46f1e5bc881bf780e636683769ac1">259b61a</a>)</li>
+  <li><strong>ui5-wizard:</strong> prevent step overlapping in navigator (<a href="https://github.com/SAP/ui5-webcomponents/issues/6169">#6169</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/9349e167eba0c0feac41004b41abf17fbca348b2">9349e16</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/6067">#6067</a></li>
+</ul>
+
+
+<footer class="footer-wrapper">
+    <div class="footer-links">
+        <a class="separator" href="https://www.sap.com/about/legal/privacy.html" target="_blank">Privacy Policy</a>
+        <a href="https://www.sap.com/about/legal/impressum.html" target="_blank">Legal</a>
+    </div>
+	<img src="https://sap.github.io/ui5-webcomponents/ui5-webcomponents/assets/images/sap-logo-svg.svg" alt="SAP Logo" />
+</footer>
+
+<style>
+    .footer-wrapper {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        padding-bottom: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        border-top: 1px solid #D8D8D8;
+        font-family: "72-Regular";
+    }
+
+    .footer-links {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        font-family: "72-Regular";
+    }
+
+    .footer-links > a {
+        color: #333333;
+        text-decoration: none;
+    }
+
+    .footer-links > a:hover {
+        text-decoration: underline;
+    }
+
+    .separator::after {
+        content: "|";
+        padding: 0 1rem;
+        color: #D8D8D8;
+        text-decoration: none;
+    }
+</style>
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0) (2023-01-20)
+
+
+### Bug Fixes
+
+* **playground:** build and deploy ([#6279](https://github.com/SAP/ui5-webcomponents/issues/6279)) ([00d9e70](https://github.com/SAP/ui5-webcomponents/commit/00d9e705edd2116afea0d416db99643d4f6633f3))
+* **playground:** remove role application from body ([#6053](https://github.com/SAP/ui5-webcomponents/issues/6053)) ([0f9d9b9](https://github.com/SAP/ui5-webcomponents/commit/0f9d9b93435fd646c4276bbe211a6e7f252d2cdc))
+
+
+### Features
+
+* **ui5-textarea:** integrate label enablement support ([#6027](https://github.com/SAP/ui5-webcomponents/issues/6027)) ([e1b0271](https://github.com/SAP/ui5-webcomponents/commit/e1b02714a79c30001af99b7ed689f723610d43a3)), closes [#5710](https://github.com/SAP/ui5-webcomponents/issues/5710)
+
+
+
+
+
 ## [1.9.3](https://github.com/SAP/ui5-webcomponents/compare/v1.9.2...v1.9.3) (2022-12-16)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

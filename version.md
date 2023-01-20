@@ -1,5 +1,5 @@
-commit aa73e738f8ca348a605d09d69c57f7e65cd2bba2
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Jan 16 12:51:59 2023 +0200
+commit d7a5d4145cdd3d0ac8678698ab540ba728f86454
+Author: ilhan007 <ilhan.myumyun@sap.com>
+Date:   Fri Jan 20 18:53:50 2023 +0200
 
-    fix(playground): build and deploy (#6279)
+    Merge branch 'release-1.10.0' into latest-release-website

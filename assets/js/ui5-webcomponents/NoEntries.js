@@ -1,4 +1,4 @@
-import { r as registerIllustration, j as IM_TITLE_NOENTRIES, k as IM_SUBTITLE_NOENTRIES } from "./bundle.esm2.js";
+import { r as registerIllustration, l as IM_TITLE_NOENTRIES, m as IM_SUBTITLE_NOENTRIES } from "./bundle.esm2.js";
 var dialogSvg = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="160" height="160" viewBox="0 0 160 160" id="sapIllus-Dialog-NoEntries">
     <rect class="sapIllus_ObjectFillColor" x="33.3289" y="32.0861" width="90" height="90" rx="2.9999"/>
     <path class="sapIllus_PatternShadow" d="M128.8289,42.4468a3.8608,3.8608,0,0,0-3.8608-3.8607H42.6845a3.857,3.857,0,0,0-3.8556,3.8581l.0582,82.2837a3.8571,3.8571,0,0,0,3.8557,3.8582h82.2253a3.8609,3.8609,0,0,0,3.8608-3.8608Z"/>
