@@ -1,5 +1,5 @@
-commit 960a8482cecc99cab70c085c9baf0047b49a7ff1
+commit a8e886a072fd08498abc9d80c6e564c0d721c230
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Jan 19 21:34:05 2023 +0200
+Date:   Fri Jan 20 11:06:27 2023 +0200
 
-    chore: add github action to release on tag (#6314)
+    chore: remove duplicate annotations in jsdoc (#6320)
