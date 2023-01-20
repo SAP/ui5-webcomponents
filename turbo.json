@@ -12,12 +12,13 @@
             "outputs": ["dist/**"]
         },
         "bundle": {
-            "dependsOn": ["^build", "build"]
+            "dependsOn": ["^build", "build"],
+            "outputs": ["dist/**"]
         },
         "test": {
             // A package's `test` script depends on that package's
             // own `build` script being completed first.
-            "dependsOn": ["build"],
+            "dependsOn": ["bundle"],
             // A package's `test` script should only be rerun when
             // either a `.tsx` or `.ts` file has changed in `src` or `test` folders.
             "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
