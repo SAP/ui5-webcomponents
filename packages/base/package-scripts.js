@@ -17,7 +17,7 @@ const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf dist && rimraf .port",
 	lint: `eslint . ${eslintConfig}`,
 	prepare: "nps clean integrate copy typescript generateAssetParameters generateVersionInfo generateStyles generateTemplates generateAPI",
-	typescript: "tsc",
+	typescript: "tsc -b",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
