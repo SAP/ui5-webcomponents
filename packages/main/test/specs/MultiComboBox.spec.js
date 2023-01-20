@@ -1178,7 +1178,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
 		});
 
-		it ("should not be able to paste tokenwith CTRL+V in disabled multi combo box", async () => {
+		it ("should not be able to paste tokenwith CTRL+V in read only multi combo box", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#multi1");
