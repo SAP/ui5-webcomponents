@@ -421,18 +421,18 @@ class TimePickerBase extends UI5Element {
 	 *
 	 * <br><br>
 	 * <b>Note:</b> an empty string is considered as valid value.
-	 * @param {string} value The value to be tested against the current date format
+	 * @param {string} [value=""] The value to be tested against the current date format
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#isValid
 	 * @returns {boolean}
 	 */
-	isValid(value: string | undefined) {
+	isValid(value = "") {
 		if (value === "") {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value as string, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
 	}
 
 	normalizeValue(value: string) {
