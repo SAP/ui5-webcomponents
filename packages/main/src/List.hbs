@@ -2,6 +2,14 @@
 	class="{{classes.root}}"
 	@focusin="{{_onfocusin}}"
 	@keydown="{{_onkeydown}}"
+	@ui5-_press={{onItemPress}}
+	@ui5-close={{onItemClose}}
+	@ui5-toggle={{onItemToggle}}
+	@ui5-_focused={{onItemFocused}}
+	@ui5-_forward-after={{onForwardAfter}}
+	@ui5-_forward-before={{onForwardBefore}}
+	@ui5-_selection-requested={{onSelectionRequested}}
+	@ui5-_focus-requested={{onFocusRequested}}
 >
 	<div class="ui5-list-scroll-container">
 		{{! header}}
@@ -15,7 +23,7 @@
 		{{/if}}
 
 		{{#if hasData}}
-			<div id="{{_id}}-before" tabindex="0" class="ui5-list-focusarea"></div>
+			<div id="{{_id}}-before" tabindex="0" role="none" class="ui5-list-focusarea"></div>
 		{{/if}}
 
 		<span id="{{_id}}-modeLabel" class="ui5-hidden-text">{{ariaLabelModeText}}</span>
@@ -25,6 +33,7 @@
 			role="{{accessibleRole}}"
 			aria-label="{{ariaLabelTxt}}"
 			aria-labelledby="{{ariaLabelledBy}}"
+			aria-roledescription="{{accessibleRoleDescription}}"
 		>
 			<slot></slot>
 
@@ -48,7 +57,7 @@
 		{{/if}}
 
 		{{#if hasData}}
-			<div id="{{_id}}-after" tabindex="0" class="ui5-list-focusarea"></div>
+			<div id="{{_id}}-after" tabindex="0" role="none" class="ui5-list-focusarea"></div>
 		{{/if}}
 
 		<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span>

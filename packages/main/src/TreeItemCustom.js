@@ -11,7 +11,7 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
  */
 const metadata = {
 	tag: "ui5-tree-item-custom",
-	properties: /** @lends sap.ui.webcomponents.main.TreeItemCustom.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TreeItemCustom.prototype */ {
 		/**
 		 * Defines whether the tree list item should display the selection element.
 		 *
@@ -23,7 +23,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.TreeItemCustom.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TreeItemCustom.prototype */ {
 		/**
 		 * Defines the content of the <code>ui5-tree-item</code>.
 		 *
@@ -62,11 +62,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TreeItemCustom
- * @extends sap.ui.webcomponents.main.TreeItemBase
+ * @alias sap.ui.webc.main.TreeItemCustom
+ * @extends sap.ui.webc.main.TreeItemBase
  * @tagname ui5-tree-item-custom
  * @public
- * @implements sap.ui.webcomponents.main.ITreeItem
+ * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
 class TreeItemCustom extends TreeItemBase {

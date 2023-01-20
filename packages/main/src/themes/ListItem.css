@@ -27,6 +27,16 @@
 	outline-color: var(--sapContent_ContrastFocusColor);
 }
 
+/* navigated */
+:host([navigated]) .ui5-li-root .ui5-li-navigated {
+	width: 0.1875rem;
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: var(--sapList_SelectionBorderColor);
+}
+
 /* active */
 :host([active][actionable]) .ui5-li-root .ui5-li-icon {
 	color: var(--sapList_Active_TextColor);
@@ -62,6 +72,10 @@
 }
 
 :host([has-title][image]) {
+	height: 5rem;
+}
+
+:host([_has-image-content]) {
 	height: 5rem;
 }
 
@@ -141,13 +155,17 @@
 
 .ui5-li-img {
 	width: var(--_ui5_list_item_img_size);
-	min-width: var(--_ui5_list_item_img_size);
 	height: var(--_ui5_list_item_img_size);
+	border-radius: var(--ui5-avatar-border-radius);
+}
+
+.ui5-li-img,
+.ui5-li-imgContent {
+	min-width: var(--_ui5_list_item_img_size);
 	min-height: var(--_ui5_list_item_img_size);
 	margin-top: var(--_ui5_list_item_img_top_margin);
 	margin-bottom: var(--_ui5_list_item_img_bottom_margin);
 	margin-inline-end: var(--_ui5_list_item_img_hn_margin);
-	border-radius: var(--ui5-avatar-border-radius);
 }
 
 .ui5-li-img-inner {

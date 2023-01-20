@@ -50,6 +50,13 @@ const STEP_SWITCH_THRESHOLDS = {
 	MAX: 1,
 };
 
+const RESPONSIVE_BREAKPOINTS = {
+	"0": "S",
+	"599": "M",
+	"1023": "L",
+	"1439": "XL",
+};
+
 /**
  * @public
  */
@@ -57,7 +64,7 @@ const metadata = {
 	tag: "ui5-wizard",
 	managedSlots: true,
 	fastNavigation: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.Wizard.prototype */ {
 		/**
 		 * Defines the width of the <code>ui5-wizard</code>.
 		 * @private
@@ -79,7 +86,7 @@ const metadata = {
 		 * <b>Note:</b> Supported values are between 0.5 and 1
 		 * and values out of the range will be normalized to 0.5 and 1 respectively.
 		 * @private
-		 * @type {sap.ui.webcomponents.base.types.Float}
+		 * @type {sap.ui.webc.base.types.Float}
 		 * @defaultvalue 0.7
 		 * @since 1.0.0-rc.13
 		 */
@@ -100,14 +107,18 @@ const metadata = {
 			type: String,
 			multiple: true,
 		},
+
+		_breakpoint: {
+			type: String,
+		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.Wizard.prototype */ {
 		/**
 		 * Defines the steps.
 		 * <br><br>
 		 * <b>Note:</b> Use the available <code>ui5-wizard-step</code> component.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.IWizardStep[]}
+		 * @type {sap.ui.webc.fiori.IWizardStep[]}
 		 * @public
 		 * @slot steps
 		 */
@@ -118,12 +129,12 @@ const metadata = {
 			invalidateOnChildChange: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.Wizard.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.Wizard.prototype */ {
 		/**
 		 * Fired when the step is changed by user interaction - either with scrolling,
 		 * or by clicking on the steps within the component header.
 		 *
-		 * @event sap.ui.webcomponents.fiori.Wizard#step-change
+		 * @event sap.ui.webc.fiori.Wizard#step-change
 		 * @param {HTMLElement} step The new step.
 		 * @param {HTMLElement} previousStep The previous step.
 		 * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
@@ -160,6 +171,16 @@ const metadata = {
  * <b>Note:</b> If no selected step is defined, the first step will be auto selected.
  * <br>
  * <b>Note:</b> If multiple selected steps are defined, the last step will be selected.
+ *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-wizard</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>navigator - Used to style the progress navigator of the <code>ui5-wizard</code>.</li>
+ * <li>step-content - Used to style a <code>ui5-wizard-step</code> container.</li>
+ * </ul>
  *
  * <h3>Keyboard Handling</h3>
  * The user can navigate using the following keyboard shortcuts:
@@ -223,8 +244,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.Wizard
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.Wizard
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-wizard
  * @since 1.0.0-rc.10
  * @appenddocs WizardStep
@@ -310,10 +331,6 @@ class Wizard extends UI5Element {
 
 	static async onDefine() {
 		Wizard.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
-	}
-
-	static get PHONE_BREAKPOINT() {
-		return 599;
 	}
 
 	static get SCROLL_DEBOUNCE_RATE() {
@@ -476,6 +493,7 @@ class Wizard extends UI5Element {
 
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
+		this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast(size => Number(size) < this.width)];
 	}
 
 	attachStepsResizeObserver() {
@@ -498,15 +516,15 @@ class Wizard extends UI5Element {
 	_adjustHeaderOverflow() {
 		let counter = 0;
 		let isForward = true;
-		const iWidth = this.width;
-		const iCurrStep = this.getSelectedStepIndex();
-		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
-
 		const tabs = this.shadowRoot.querySelectorAll("[ui5-wizard-tab]");
 
 		if (!tabs.length) {
 			return;
 		}
+
+		const iWidth = this.progressNavigatorListDOM.getBoundingClientRect().width;
+		const iCurrStep = this.getSelectedStepIndex();
+		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
 
 		[].forEach.call(tabs, (step, index) => {
 			step.setAttribute(EXPANDED_STEP, false);
@@ -635,6 +653,7 @@ class Wizard extends UI5Element {
 	 */
 	changeSelectionByScroll(scrollPos) {
 		const newlySelectedIndex = this.getClosestStepIndexByScrollPos(scrollPos);
+		const stepToSelect = this.slottedSteps[newlySelectedIndex];
 
 		// Skip if already selected - stop.
 		if (this.selectedStepIndex === newlySelectedIndex) {
@@ -643,9 +662,7 @@ class Wizard extends UI5Element {
 
 		// If the calculated index is in range,
 		// change selection and fire "step-change".
-		if (newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
-			const stepToSelect = this.slottedSteps[newlySelectedIndex];
-
+		if (!stepToSelect.disabled && newlySelectedIndex >= 0 && newlySelectedIndex <= this.stepsCount - 1) {
 			this.switchSelectionFromOldToNewStep(this.selectedStep, stepToSelect, newlySelectedIndex, false);
 			this.selectionRequestedByScroll = true;
 		}
@@ -700,6 +717,10 @@ class Wizard extends UI5Element {
 
 	get stepsDOM() {
 		return Array.from(this.shadowRoot.querySelectorAll(".ui5-wiz-content-item"));
+	}
+
+	get progressNavigatorListDOM() {
+		return this.shadowRoot.querySelector(".ui5-wiz-nav-list");
 	}
 
 	get _stepsInHeader() {
@@ -763,14 +784,6 @@ class Wizard extends UI5Element {
 
 	get enabledStepsInHeaderDOM() {
 		return this.stepsInHeaderDOM;
-	}
-
-	get phoneMode() {
-		if (isPhone()) {
-			return true;
-		}
-
-		return this.width <= Wizard.PHONE_BREAKPOINT;
 	}
 
 	get navAriaRoleDescription() {

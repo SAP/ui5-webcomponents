@@ -57,13 +57,13 @@ const metadata = {
 	languageAware: true,
 	managedSlots: true,
 	fastNavigation: true,
-	slots: /** @lends sap.ui.webcomponents.main.TabContainer.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TabContainer.prototype */ {
 		/**
 		 * Defines the tabs.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
 		 *
-		 * @type {sap.ui.webcomponents.main.ITab[]}
+		 * @type {sap.ui.webc.main.ITab[]}
 		 * @public
 		 * @slot items
 		 */
@@ -81,7 +81,7 @@ const metadata = {
 		 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
 		 * the default button will be used.
 		 *
-		 * @type {sap.ui.webcomponents.main.IButton}
+		 * @type {sap.ui.webc.main.IButton}
 		 * @public
 		 * @slot
 		 * @since 1.0.0-rc.9
@@ -94,7 +94,7 @@ const metadata = {
 		 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
 		 * the default button will be used.
 		 *
-		 * @type {sap.ui.webcomponents.main.IButton}
+		 * @type {sap.ui.webc.main.IButton}
 		 * @public
 		 * @slot
 		 * @since 1.1.0
@@ -103,7 +103,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.TabContainer.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TabContainer.prototype */ {
 		/**
 		 * Defines whether the tabs are in a fixed state that is not
 		 * expandable/collapsible by user interaction.
@@ -141,7 +141,7 @@ const metadata = {
 		 * <li><code>Bottom</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabContainerTabsPlacement}
+		 * @type {sap.ui.webc.main.types.TabContainerTabsPlacement}
 		 * @defaultvalue "Top"
 		 * @since 1.0.0-rc.7
 		 * @private
@@ -182,7 +182,7 @@ const metadata = {
 		 * <li><code>Inline</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabLayout}
+		 * @type {sap.ui.webc.main.types.TabLayout}
 		 * @defaultvalue "Standard"
 		 * @public
 		 */
@@ -207,7 +207,7 @@ const metadata = {
 		 * <li><code>StartAndEnd</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabsOverflowMode}
+		 * @type {sap.ui.webc.main.types.TabsOverflowMode}
 		 * @defaultvalue "End"
 		 * @since 1.1.0
 		 * @public
@@ -230,7 +230,7 @@ const metadata = {
 		/**
 		 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign}
+		 * @type {sap.ui.webc.main.types.TabContainerBackgroundDesign}
 		 * @defaultvalue "Solid"
 		 * @since 1.10.0
 		 * @public
@@ -243,7 +243,7 @@ const metadata = {
 		/**
 		 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
 		 *
-		 * @type {sap.ui.webcomponents.main.types.TabContainerBackgroundDesign}
+		 * @type {sap.ui.webc.main.types.TabContainerBackgroundDesign}
 		 * @defaultvalue "Solid"
 		 * @since 1.10.0
 		 * @public
@@ -284,12 +284,12 @@ const metadata = {
 			multiple: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TabContainer.prototype */ {
+	events: /** @lends sap.ui.webc.main.TabContainer.prototype */ {
 
 		/**
 		 * Fired when a tab is selected.
 		 *
-		 * @event sap.ui.webcomponents.main.TabContainer#tab-select
+		 * @event sap.ui.webc.main.TabContainer#tab-select
 		 * @param {HTMLElement} tab The selected <code>tab</code>.
 		 * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
 		 * @public
@@ -353,8 +353,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TabContainer
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TabContainer
+ * @extends sap.ui.webc.base.UI5Element
  * @appenddocs Tab TabSeparator
  * @tagname ui5-tabcontainer
  * @public
@@ -413,6 +413,7 @@ class TabContainer extends UI5Element {
 		// update selected tab
 		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
 		if (selectedTabs.length) {
+			this._selectedTab._selected = false;
 			this._selectedTab = selectedTabs[0];
 		} else {
 			this._selectedTab = this._allItemsAndSubItems[0];
@@ -533,7 +534,7 @@ class TabContainer extends UI5Element {
 		let tabInstance = button.tab;
 
 		if (tabInstance) {
-			tabInstance.focus();
+			tabInstance.focus({ focusVisible: true });
 		}
 
 		if ((event.type === "keydown") && !event.target._realTab.isSingleClickArea) {
@@ -633,7 +634,7 @@ class TabContainer extends UI5Element {
 		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
-		selectedTopLevel.getTabInStripDomRef().focus();
+		selectedTopLevel.getTabInStripDomRef().focus({ focusVisible: true });
 	}
 
 	/**
@@ -654,8 +655,7 @@ class TabContainer extends UI5Element {
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
 	 * @readonly
-	 * @type {sap.ui.webcomponents.main.ITab[]}
-	 * @returns {sap.ui.webcomponents.main.ITab[]}
+	 * @returns {sap.ui.webc.main.ITab[]}
 	 */
 	get allItems() {
 		return this._getAllSubItems(this.items);
@@ -754,11 +754,11 @@ class TabContainer extends UI5Element {
 	}
 
 	slideContentDown(element) {
-		return slideDown({ element }).promise();
+		return slideDown(element).promise();
 	}
 
 	slideContentUp(element) {
-		return slideUp({ element }).promise();
+		return slideUp(element).promise();
 	}
 
 	async _onOverflowClick(event) {

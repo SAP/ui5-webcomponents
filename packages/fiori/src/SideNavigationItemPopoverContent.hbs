@@ -5,22 +5,29 @@
 	aria-modal="true"
 	@ui5-after-open="{{_onAfterOpen}}"
 >
-	<ui5-list
-		mode="None"
-		@ui5-item-click="{{handleListItemClick}}"
+	<span id="{{_id}}-sideNavigationPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
+
+	<ui5-side-navigation 
+		class="ui5-side-navigation-in-popover"
+		@ui5-selection-change="{{handlePopoverItemClick}}"
 	>
-		<ui5-li
+		<ui5-side-navigation-item
 			title="{{_popoverContent.mainItem._tooltip}}"
-			?selected="{{_popoverContent.mainItemSelected}}"
+			text="{{_popoverContent.mainItem.text}}"
+			expanded="true"
+			_fixed="true"
+			?selected="{{_popoverContent.mainItem.selected}}"
 			.associatedItem="{{_popoverContent.mainItem}}"
-		>{{_popoverContent.mainItem.text}}</ui5-li>
+		>
 
 		{{#each _popoverContent.subItems}}
-			<ui5-li
+			<ui5-side-navigation-sub-item
 				title="{{this._tooltip}}"
+				text="{{this.text}}"
 				?selected="{{this.selected}}"
 				.associatedItem="{{this}}"
-			>{{this.text}}</ui5-li>
+			></ui5-side-navigation-sub-item>
 		{{/each}}
-	</ui5-list>
+		</ui5-side-navigation-item>
+	</ui5-side-navigation>
 </ui5-responsive-popover>

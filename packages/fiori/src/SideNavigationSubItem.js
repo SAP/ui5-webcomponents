@@ -5,7 +5,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  */
 const metadata = {
 	tag: "ui5-side-navigation-sub-item",
-	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.SideNavigationSubItem.prototype */ {
 		/**
 		 * Defines the text of the item.
 		 *
@@ -55,7 +55,7 @@ const metadata = {
 		},
 	},
 
-	events: /** @lends sap.ui.webcomponents.fiori.SideNavigationSubItem.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.SideNavigationSubItem.prototype */ {
 	},
 };
 
@@ -72,12 +72,12 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.SideNavigationSubItem
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.SideNavigationSubItem
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-side-navigation-sub-item
  * @public
  * @since 1.0.0-rc.8
- * @implements sap.ui.webcomponents.fiori.ISideNavigationSubItem
+ * @implements sap.ui.webc.fiori.ISideNavigationSubItem
  */
 class SideNavigationSubItem extends UI5Element {
 	static get metadata() {

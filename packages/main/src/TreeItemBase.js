@@ -26,12 +26,12 @@ import HasPopup from "./types/HasPopup.js";
 const metadata = {
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.TreeItemBase.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TreeItemBase.prototype */ {
 
 		/**
 		 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @protected
 		 * @defaultValue 1
 		 */
@@ -114,7 +114,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -203,7 +203,7 @@ const metadata = {
 
 		/**
 		 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
-		 * @type {sap.ui.webcomponents.main.types.HasPopup}
+		 * @type {sap.ui.webc.main.types.HasPopup}
 		 * @since 1.10.0
 		 * @private
 		 */
@@ -212,14 +212,14 @@ const metadata = {
 			noAttribute: true,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.TreeItemBase.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TreeItemBase.prototype */ {
 		/**
 		 * Defines the items of the component.
 		 * <br />
 		 * <br />
 		 * <b>Note:</b> Use <code>ui5-tree-item</code> or <code>ui5-tree-item-custom</code>
 		 *
-		 * @type {sap.ui.webcomponents.main.ITreeItem}
+		 * @type {sap.ui.webc.main.ITreeItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -228,7 +228,7 @@ const metadata = {
 			propertyName: "items",
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TreeItemBase.prototype */ {
+	events: /** @lends sap.ui.webc.main.TreeItemBase.prototype */ {
 
 		/**
 		 * Fired when the user interacts with the expand/collapse button of the tree list item.
@@ -245,7 +245,7 @@ const metadata = {
 		/**
 		 * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
 		 *
-		 * @event sap.ui.webcomponents.main.TreeItemBase#step-in
+		 * @event sap.ui.webc.main.TreeItemBase#step-in
 		 * @param {HTMLElement} item the item on which right arrow was pressed.
 		 * @protected
 		 */
@@ -258,7 +258,7 @@ const metadata = {
 		/**
 		 * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
 		 *
-		 * @event sap.ui.webcomponents.main.TreeItemBase#step-out
+		 * @event sap.ui.webc.main.TreeItemBase#step-out
 		 * @param {HTMLElement} item the item on which left arrow was pressed.
 		 * @protected
 		 */
@@ -277,8 +277,8 @@ const metadata = {
  * @abstract
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TreeItemBase
- * @extends sap.ui.webcomponents.main.ListItem
+ * @alias sap.ui.webc.main.TreeItemBase
+ * @extends sap.ui.webc.main.ListItem
  * @public
  */
 class TreeItemBase extends ListItem {
@@ -377,8 +377,7 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Used to duck-type TreeItem elements without using instanceof
 	 * @returns {boolean}
-	 * @type { boolean }
-	 * @public
+	 * @protected
 	 */
 	get isTreeItem() {
 		return true;

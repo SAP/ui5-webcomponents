@@ -2,5 +2,4 @@
 
 :root {
 	--ui5-listitem-active-border-color: var(--sapContent_FocusColor);
-    --ui5-listitem-border-bottom: 1px solid transparent;
 }

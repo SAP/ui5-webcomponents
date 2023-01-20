@@ -1,5 +1,6 @@
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
@@ -31,7 +32,7 @@ const ICON_PER_PRIORITY = {
  */
 const metadata = {
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.NotificationListItemBase.prototype */ {
 
 		/**
 		 * Defines the <code>titleText</code> of the item.
@@ -52,7 +53,7 @@ const metadata = {
 		 * <li><code>Medium</code></li>
 		 * <li><code>High</code></li>
 		 * </ul>
-		 * @type {sap.ui.webcomponents.main.types.Priority}
+		 * @type {sap.ui.webc.main.types.Priority}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -98,7 +99,7 @@ const metadata = {
 		/**
 		 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultValue 1000
 		 * @public
 		 */
@@ -107,14 +108,14 @@ const metadata = {
 			defaultValue: 1000,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.NotificationListItemBase.prototype */ {
 
 		/**
 		 * Defines the actions, displayed in the top-right area.
 		 * <br><br>
 		 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
 		 *
-		 * @type {sap.ui.webcomponents.fiori.INotificationAction[]}
+		 * @type {sap.ui.webc.fiori.INotificationAction[]}
 		 * @slot
 		 * @public
 		 */
@@ -122,14 +123,19 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.NotificationListItemBase.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.NotificationListItemBase.prototype */ {
 		/**
 		 * Fired when the <code>Close</code> button is pressed.
 		 *
-		 * @event
+		 * @event sap.ui.webc.fiori.NotificationListItemBase#close
+		 * @param {HTMLElement} item the closed item.
 		 * @public
 		 */
-		close: {},
+		close: {
+			detail: {
+				item: HTMLElement,
+			},
+		},
 	},
 };
 
@@ -141,8 +147,8 @@ const metadata = {
  * @abstract
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.NotificationListItemBase
- * @extends sap.ui.webcomponents.main.ListItemBase
+ * @alias sap.ui.webc.fiori.NotificationListItemBase
+ * @extends sap.ui.webc.main.ListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
  * @appenddocs NotificationAction
@@ -236,7 +242,7 @@ class NotificationListItemBase extends ListItemBase {
 	_onkeydown(event) {
 		super._onkeydown(event);
 
-		if (event.isMarked === "button") {
+		if (getEventMark(event) === "button") {
 			return;
 		}
 

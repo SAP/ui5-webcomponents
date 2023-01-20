@@ -5,7 +5,7 @@ import ComboBoxItem from "./ComboBoxItem.js";
  */
 const metadata = {
 	tag: "ui5-mcb-item",
-	properties: /** @lends sap.ui.webcomponents.main.MultiComboBoxItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.MultiComboBoxItem.prototype */ {
 		/**
 		 * Defines the selected state of the component.
 		 * @type {boolean}
@@ -22,10 +22,10 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.MultiComboBoxItem
- * @extends sap.ui.webcomponents.main.ComboBoxItem
+ * @alias sap.ui.webc.main.MultiComboBoxItem
+ * @extends sap.ui.webc.main.ComboBoxItem
  * @tagname ui5-mcb-item
- * @implements sap.ui.webcomponents.main.IMultiComboBoxItem
+ * @implements sap.ui.webc.main.IMultiComboBoxItem
  * @public
  */
 class MultiComboBoxItem extends ComboBoxItem {

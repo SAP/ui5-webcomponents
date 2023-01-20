@@ -22,9 +22,8 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
  */
 const metadata = {
 	tag: "ui5-segmented-button",
-	altTag: "ui5-segmentedbutton",
 	languageAware: true,
-	properties: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */  {
+	properties: /** @lends sap.ui.webc.main.SegmentedButton.prototype */  {
 		/**
 		 * Defines the accessible ARIA name of the component.
 		 *
@@ -39,7 +38,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
+	slots: /** @lends sap.ui.webc.main.SegmentedButton.prototype */ {
 
 		/**
 		 * Defines the items of <code>ui5-segmented-button</code>.
@@ -47,7 +46,7 @@ const metadata = {
 		 * <b>Note:</b> Multiple items are allowed.
 		 * <br><br>
 		 * <b>Note:</b> Use the <code>ui5-segmented-button-item</code> for the intended design.
-		 * @type {sap.ui.webcomponents.main.ISegmentedButtonItem[]}
+		 * @type {sap.ui.webc.main.ISegmentedButtonItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -56,12 +55,12 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.SegmentedButton.prototype */ {
+	events: /** @lends sap.ui.webc.main.SegmentedButton.prototype */ {
 
 		/**
 		 * Fired when the selected item changes.
 		 *
-		 * @event sap.ui.webcomponents.main.SegmentedButton#selection-change
+		 * @event sap.ui.webc.main.SegmentedButton#selection-change
 		 * @param {HTMLElement} selectedItem the pressed item.
 		 * @public
 		 */
@@ -90,8 +89,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.SegmentedButton
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.SegmentedButton
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-segmented-button
  * @since 1.0.0-rc.6
  * @appenddocs SegmentedButtonItem
@@ -190,7 +189,9 @@ class SegmentedButton extends UI5Element {
 	}
 
 	_selectItem(event) {
-		if (event.target.disabled || event.target === this.getDomRef()) {
+		const isTargetSegmentedButtonItem = event.target.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+
+		if (event.target.disabled || event.target === this.getDomRef() || !isTargetSegmentedButtonItem) {
 			return;
 		}
 
@@ -207,12 +208,13 @@ class SegmentedButton extends UI5Element {
 		this._selectedItem.pressed = true;
 		this._itemNavigation.setCurrentItem(this._selectedItem);
 
+		this.selectedItem.focus();
+
 		return this;
 	}
 
 	_onclick(event) {
 		this._selectItem(event);
-		this.selectedItem.focus();
 	}
 
 	_onkeydown(event) {
@@ -226,6 +228,17 @@ class SegmentedButton extends UI5Element {
 	_onkeyup(event) {
 		if (isSpace(event)) {
 			this._selectItem(event);
+		}
+	}
+
+	_onmousedown(event) {
+		const eventTarget = event.target;
+		const isTargetSegmentedButtonItem = eventTarget.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+
+		if (isTargetSegmentedButtonItem) {
+			eventTarget.focus();
+			this._itemNavigation.setCurrentItem(eventTarget);
+			this.hasPreviouslyFocusedItem = true;
 		}
 	}
 
@@ -273,7 +286,7 @@ class SegmentedButton extends UI5Element {
 	 * Currently selected item.
 	 *
 	 * @readonly
-	 * @type {sap.ui.webcomponents.main.ISegmentedButtonItem}
+	 * @type {sap.ui.webc.main.ISegmentedButtonItem}
 	 * @public
 	 */
 	get selectedItem() {

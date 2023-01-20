@@ -42,7 +42,7 @@
 }
 
 /* focused */
-:host(:not([disabled])) .ui5-radio-root:focus:before {
+:host(:not([disabled])) .ui5-radio-root:focus-visible:before {
 	content: "";
 	display: var(--_ui5_radio_button_focus_outline);
 	position: absolute;
@@ -56,11 +56,11 @@
 }
 
 /* horizon readonly focus */
-:host(:not([disabled])[readonly]) .ui5-radio-root:focus:before {
+:host(:not([disabled])[readonly]) .ui5-radio-root:focus-visible:before {
 	border: var(--_ui5_radio_button_border_width) var(--_ui5_radio_button_border_readonly_focus_style) var(--sapContent_FocusColor);
 }
 
-:host(:not([disabled])) .ui5-radio-root:focus {
+:host(:not([disabled])) .ui5-radio-root:focus-visible {
 	border-radius: var(--_ui5_radio_button_border_radius);
 	border: var(--_ui5_radio_button_focus_border);
 }
@@ -84,7 +84,7 @@
 	stroke: var(--_ui5_radio_button_outer_ring_checked_hover_color);
 }
 
-.ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer, 
+.ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer,
 :host([checked]) .ui5-radio-root:hover .ui5-radio-inner--hoverable .ui5-radio-svg-outer {
 	fill: var(--_ui5_radio_button_hover_fill);
 }
@@ -100,7 +100,7 @@
 }
 
 /* with label */
-:host([text]) .ui5-radio-root:focus:before {
+:host([text]) .ui5-radio-root:focus-visible:before {
 	inset-inline: var(--_ui5_radio_button_focus_dist) 0;
 }
 
@@ -234,7 +234,7 @@
 	vertical-align: top;
 }
 
-.ui5-radio-inner:focus {
+.ui5-radio-inner {
 	outline: none;
 }
 

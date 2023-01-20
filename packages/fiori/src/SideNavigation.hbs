@@ -1,4 +1,4 @@
-<div class="ui5-sn-root">
+<div class="ui5-sn-root" role="navigation">
 	{{> header }}
 
 	{{#if items.length}}
@@ -6,6 +6,7 @@
 			id="ui5-sn-items-tree"
 			class="ui5-sn-items-tree"
 			mode="None"
+			.accessibleRoleDescription="{{ariaRoleDescNavigationList}}"
 			?_minimal="{{collapsed}}"
 			_toggle-button-end
 			@ui5-item-click="{{handleTreeItemClick}}"
@@ -19,6 +20,9 @@
 					?has-children="{{this.item.items.length}}"
 					?expanded="{{this.item.expanded}}"
 					?selected="{{this.selected}}"
+					.ariaHaspopup="{{this.item._ariaHasPopup}}"
+					.accessibleRoleDescription="{{../ariaRoleDescNavigationListItem}}"
+					._fixed="{{this.item._fixed}}"
 				>
 					{{#unless ../collapsed}}
 						{{#each this.item.items}}
@@ -28,6 +32,7 @@
 								title="{{this._tooltip}}"
 								icon="{{this.icon}}"
 								?selected="{{this.selected}}"
+								.accessibleRoleDescription="{{../ariaRoleDescNavigationListItem}}"
 							>
 							</ui5-tree-item>
 						{{/each}}
@@ -50,6 +55,7 @@
 				?_minimal="{{collapsed}}"
 				_toggle-button-end
 				@ui5-item-click="{{handleTreeItemClick}}"
+				.accessibleRoleDescription="{{ariaRoleDescNavigationList}}"
 			>
 				{{#each _fixedItems}}
 					<ui5-tree-item
@@ -60,6 +66,8 @@
 						?has-children="{{this.item.items.length}}"
 						?expanded="{{this.item.expanded}}"
 						?selected="{{this.selected}}"
+						.ariaHaspopup="{{this.item._ariaHasPopup}}"
+						.accessibleRoleDescription="{{../ariaRoleDescNavigationListItem}}"
 					>
 						{{#unless ../collapsed}}
 							{{#each this.item.items}}
@@ -68,6 +76,7 @@
 									text="{{this.text}}"
 									title="{{this._tooltip}}"
 									?selected="{{this.selected}}"
+									.accessibleRoleDescription="{{../ariaRoleDescNavigationListItem}}"
 								>
 								</ui5-tree-item>
 							{{/each}}

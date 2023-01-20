@@ -9,7 +9,7 @@
 	<script data-ui5-config type="application/json">
 		{
 			"language": "EN",
-			"libs": "sap.ui.webcomponents.main"
+			"libs": "sap.ui.webc.main"
 		}
 	</script>
 
@@ -25,33 +25,9 @@
 </head>
 
 <body class="popover2auto">
-	<!-- <ui5-button id="btnOpenPopover" design="Emphasized" icon="employee">Open Popover</ui5-button>
-
-	<ui5-popover id="popoverToOpen" header-text="Popover">
-		<div class="popover3auto">
-			<ui5-title level="H2">Hello World!</ui5-title>
-		</div>
-		<ui5-textarea
-			placeholder="Type some text"
-			max-length="2"
-			show-exceeded-text>
-		</ui5-textarea>
-		<div slot="footer" class="popover4auto">
-			<div class="popover5auto"></div>
-			<ui5-button id="btnInPopover">Close</ui5-button>
-
-
-			<ui5-select id="test">
-				<ui5-option>Hello</ui5-option>
-				<ui5-option>World</ui5-option>
-			</ui5-select>
-		</div>
-	</ui5-popover>
-
-	<ui5-input id="field"></ui5-input> -->
+	<iframe id="clickThisIframe" src="//localhost:8080"></iframe>
 
 	<ui5-button id="btn">Click me !</ui5-button>
-
 
 	<ui5-popover id="pop" class="popover6auto" placement-type="Top" accessible-name="This popover is important">
 		<div slot="header">
@@ -70,7 +46,6 @@
 		<ui5-button id="popbtn">Open Popover</ui5-button>
 
 		<ui5-popover placement-type="Bottom" hide-arrow id="danger">
-
 
 			<ui5-list>
 				<ui5-li>Hello</ui5-li>
@@ -103,8 +78,6 @@
 		<br>
 		<br>
 
-		<!-- <ui5-date-picker></ui5-date-picker> -->
-
 		<div slot="footer">
 			<ui5-button>I am in the footer</ui5-button>
 		</div>
@@ -133,7 +106,6 @@
 
 	<br>
 	<br>
-
 
 	<ui5-multi-combobox>
 		<ui5-cb-item text="Hello"></ui5-cb-item>

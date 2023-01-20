@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.9.3",
-    "chromedriver": "106.0.1"
+    "chromedriver": "108.0.0"
   }
 }

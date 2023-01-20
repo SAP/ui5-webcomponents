@@ -19,7 +19,7 @@ const MAX_DURATION = 1000;
  */
 const metadata = {
 	tag: "ui5-toast",
-	properties: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Toast.prototype */ {
 
 		/**
 		 * Defines the duration in milliseconds for which component
@@ -28,7 +28,7 @@ const metadata = {
 		 * <b>Note:</b> The minimum supported value is <code>500</code> ms
 		 * and even if a lower value is set, the duration would remain <code>500</code> ms.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 3000
 		 * @public
 		 */
@@ -53,7 +53,7 @@ const metadata = {
 		 * <li><code>BottomEnd</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.main.types.ToastPlacement}
+		 * @type {sap.ui.webc.main.types.ToastPlacement}
 		 * @defaultvalue "BottomCenter"
 		 * @public
 		 */
@@ -89,7 +89,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.Toast.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Toast.prototype */ {
 		/**
 		 * Defines the text of the component.
 		 * <br><br>
@@ -136,8 +136,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Toast
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Toast
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toast
  * @public
  * @since 1.0.0-rc.6

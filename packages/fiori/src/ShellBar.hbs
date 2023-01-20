@@ -1,6 +1,5 @@
-<div
+<header
 	class="{{classes.wrapper}}"
-	role="banner"
 	aria-label="{{_shellbarText}}"
 	part="root"
 >
@@ -170,6 +169,7 @@
 				data-ui5-notifications-count="{{notificationsCount}}"
 				@click={{_handleNotificationsPress}}
 				tooltip="{{_notificationsText}}"
+				.accessibilityAttributes={{accInfo.notifications.accessibilityAttributes}}
 				data-ui5-stable="notifications"
 			></ui5-button>
 			{{/if}}
@@ -198,12 +198,13 @@
 				data-ui5-text="Product Switch"
 				@click={{_handleProductSwitchPress}}
 				tooltip="{{_productsText}}"
+				.accessibilityAttributes={{accInfo.products.accessibilityAttributes}}
 				data-ui5-stable="product-switch"
 			></ui5-button>
 			{{/if}}
 		</div>
 	</div>
-</div>
+</header>
 
 {{#*inline "profileButton"}}
 	<ui5-button
@@ -213,6 +214,7 @@
 		style="{{styles.items.profile}}"
 		tooltip="{{_profileText}}"
 		class="ui5-shellbar-button ui5-shellbar-image-button"
+		.accessibilityAttributes={{accInfo.profile.accessibilityAttributes}}
 		data-ui5-stable="profile"
 	>
 		<slot name="profile"></slot>

@@ -19,6 +19,7 @@
 	<ui5-select id="illustrationSelect">
 		<ui5-option>AddColumn</ui5-option>
 		<ui5-option>AddPeople</ui5-option>
+		<ui5-option>AddDimensions</ui5-option>
 		<ui5-option>BalloonSky</ui5-option>
 		<ui5-option>BeforeSearch</ui5-option>
 		<ui5-option>Connection</ui5-option>
@@ -40,6 +41,7 @@
 		<ui5-option>NoSearchResults</ui5-option>
 		<ui5-option>NoTasks_v1</ui5-option>
 		<ui5-option>NoTasks</ui5-option>
+		<ui5-option>NoDimensionsSet</ui5-option>
 		<ui5-option>PageNotFound</ui5-option>
 		<ui5-option>ReloadScreen</ui5-option>
 		<ui5-option>ResizeColumn</ui5-option>
@@ -69,6 +71,7 @@
 		<ui5-option>UnableToLoad</ui5-option>
 		<ui5-option>UnableToLoadImage</ui5-option>
 		<ui5-option>UnableToUpload</ui5-option>
+		<ui5-option>UploadToCloud</ui5-option>
 		<ui5-option>UploadCollection</ui5-option>
 		<ui5-option>TntChartArea</ui5-option>
 		<ui5-option>TntChartArea2</ui5-option>
@@ -134,6 +137,20 @@
 	<ui5-illustrated-message id="illustratedMsg3" name="UnableToUpload">
 		<ui5-title slot="title" level="H1">This is a slotted title</ui5-title>
 	</ui5-illustrated-message>
+
+	<ui5-panel id="panel1" accessible-role="Complementary" no-animation>
+
+		<!-- Panel header -->
+		<div slot="header" class="header">
+			<ui5-title id="p1-title">Expandable panel title</ui5-title>
+		</div>
+
+        <ui5-illustrated-message
+          name="AddColumn"
+          titleText="No milestones yet."
+		  id="illustratedMsg4"
+        ></ui5-illustrated-message>
+    </ui5-panel>
 
 	<script>
 		const illustrationSelect = document.getElementById("illustrationSelect");

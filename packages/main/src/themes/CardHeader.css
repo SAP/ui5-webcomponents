@@ -12,7 +12,7 @@
 	align-items: flex-start;
 }
 
-.ui5-card-header:not(.ui5-card-header-hide-focus):focus-within:before {
+.ui5-card-header.ui5-card-header-ff:not(.ui5-card-header-hide-focus):focus-within:before {
 	outline: none;
 	content: "";
 	position: absolute;
@@ -28,7 +28,24 @@
 	border-bottom-right-radius: var(--_ui5_card_header_focus_bottom_radius);
 }
 
-.ui5-card-header-focusable-element:focus {
+/* cannot be combined with the above style, because :has selector breaks the whole style if FF */
+.ui5-card-header:not(.ui5-card-header-ff):not(.ui5-card-header-hide-focus):has(.ui5-card-header-focusable-element:focus-visible):before {
+	outline: none;
+	content: "";
+	position: absolute;
+	border: var(--_ui5_card_header_focus_border);
+	pointer-events: none;
+	top: var(--_ui5_card_header_focus_offset);
+	left: var(--_ui5_card_header_focus_offset);
+	right: var(--_ui5_card_header_focus_offset);
+	bottom: var(--_ui5_card_header_focus_offset);
+	border-top-left-radius: var(--_ui5_card_header_focus_radius);
+	border-top-right-radius: var(--_ui5_card_header_focus_radius);
+	border-bottom-left-radius: var(--_ui5_card_header_focus_bottom_radius);
+	border-bottom-right-radius: var(--_ui5_card_header_focus_bottom_radius);
+}
+
+.ui5-card-header-focusable-element {
 	outline: none;
 }
 

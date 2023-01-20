@@ -16,7 +16,7 @@
 	border-radius: var(--_ui5-datepicker_border_radius);
 }
 
-:host([value-state="Error"]):not([disabled]):not([readonly]) {
+:host([value-state="Error"]:not([readonly]):not([disabled])) {
 	background-color: var(--sapField_InvalidBackground);
 }
 
@@ -50,6 +50,12 @@
 
 :host(:not([disabled]):not([readonly])) .ui5-date-picker-input[focused] {
 	background-color: var(--_ui5-datepicker-hover-background);
+}
+
+:host([readonly]) {
+	border-color: var(--_ui5_input_readonly_border_color);
+	background: var(--sapField_ReadOnly_BackgroundStyle);
+	background-color: var(--_ui5_input_readonly_background);
 }
 
 [slot="icon"] {

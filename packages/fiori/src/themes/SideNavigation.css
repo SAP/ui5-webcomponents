@@ -15,6 +15,10 @@
     width: var(--_ui5_side_navigation_collapsed_state_width);
 }
 
+:host(.ui5-side-navigation-in-popover) .ui5-sn-root {
+    border-right: none;
+}
+
 .ui5-sn-root {
     height: 100%;
     display: flex;

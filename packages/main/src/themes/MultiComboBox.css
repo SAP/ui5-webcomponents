@@ -21,7 +21,3 @@
 	min-width: 0px;
 	height: 100%;
 }
-
-:host([readonly]) .ui5-multi-combobox-tokenizer::part(n-more-text) {
-	color: var(--sapLinkColor);
-}

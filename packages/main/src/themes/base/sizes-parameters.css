@@ -1,7 +1,7 @@
 :root {
 	/* Calendar */
 	--_ui5_calendar_height: 24.5rem;
-	--_ui5_calendar_width: 20.5rem;
+	--_ui5_calendar_width: 20rem;
 	--_ui5_calendar_padding: 1rem;
 	--_ui5_calendar_left_right_padding:  0.5rem;
 	--_ui5_calendar_top_bottom_padding: 1rem;
@@ -119,10 +119,6 @@
 	--_ui5_tc_item_add_text_margin_top: 0.375rem;
 
 	/* TextArea */
-	--_ui5_textarea_padding_top: 0.4375rem;
-	--_ui5_textarea_padding_bottom:0.4375rem;
-	--_ui5_textarea_padding_left: 0.625rem;
-	--_ui5_textarea_padding_right: 0.625rem;
 	--_ui5_textarea_margin: .25rem 0;
 
 	/* Panel */
@@ -291,10 +287,6 @@
 	--_ui5_token_wrapper_right_padding: 0.25rem;
 	--_ui5_token_wrapper_left_padding: 0;
 	--_ui5_token_outline_offset: -0.125rem;
-	--_ui5_textarea_padding_top: 0.125rem;
-	--_ui5_textarea_padding_bottom: 0.125rem;
-	--_ui5_textarea_padding_left: 0.5rem;
-	--_ui5_textarea_padding_right: 0.5rem;
 
 	--_ui5_tl_bubble_padding: .5rem;
 	--_ui5_tl_indicator_before_bottom: -.5rem;

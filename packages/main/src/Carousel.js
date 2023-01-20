@@ -22,6 +22,7 @@ import {
 	CAROUSEL_NEXT_ARROW_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
+import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -39,7 +40,7 @@ const metadata = {
 	tag: "ui5-carousel",
 	languageAware: true,
 	fastNavigation: true,
-	properties: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Carousel.prototype */ {
 		/**
 		 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
 		 * @type {boolean}
@@ -52,7 +53,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on small size (up to 640px). One item per page shown by default.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -63,7 +64,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on medium size (from 640px to 1024px). One item per page shown by default.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -74,7 +75,7 @@ const metadata = {
 
 		/**
 		 * Defines the number of items per page on large size (more than 1024px). One item per page shown by default.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 1
 		 * @public
 		 */
@@ -99,7 +100,7 @@ const metadata = {
 		},
 
 		/**
-		 * Defines the visibility of the paging indicator.
+		 * Defines the visibility of the page indicator.
 		 * If set to true the page indicator will be hidden.
 		 * @type {boolean}
 		 * @since 1.0.0-rc.15
@@ -111,8 +112,25 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the style of the page indicator.
+		 * Available options are:
+		 * <ul>
+		 * <li><code>Default</code> - The page indicator will be visualized as dots if there are fewer than 9 pages. If there are more pages, the page indicator will switch to displaying the current page and the total number of pages. (e.g. X of Y)</li>
+		 * <li><code>Numeric</code> - The page indicator will display the current page and the total number of pages. (e.g. X of Y)</li>
+		 * </ul>
+		 * @type {sap.ui.webc.main.types.CarouselPageIndicatorStyle}
+		 * @since 1.10
+		 * @defaultvalue "Default"
+		 * @public
+		 */
+		pageIndicatorStyle: {
+			type: CarouselPageIndicatorStyle,
+			defaultValue: CarouselPageIndicatorStyle.Default,
+		},
+
+		/**
 		 * Defines the index of the initially selected item.
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 0
 		 * @private
 		 */
@@ -133,7 +151,7 @@ const metadata = {
 		 * When set to "Content", the arrows are placed on the sides of the current page.
 		 * <br>
 		 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
-		 * @type {sap.ui.webcomponents.main.types.CarouselArrowsPlacement}
+		 * @type {sap.ui.webc.main.types.CarouselArrowsPlacement}
 		 * @defaultvalue "Content"
 		 * @public
 		 */
@@ -169,7 +187,7 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Carousel.prototype */ {
 		/**
 		 * Defines the content of the component.
 		 * @type {HTMLElement[]}
@@ -182,7 +200,7 @@ const metadata = {
 			individualSlots: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Carousel.prototype */ {
+	events: /** @lends sap.ui.webc.main.Carousel.prototype */ {
 
 		/**
 		 * Fired whenever the page changes due to user interaction,
@@ -264,8 +282,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Carousel
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Carousel
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-carousel
  * @since 1.0.0-rc.6
  * @public
@@ -612,6 +630,10 @@ class Carousel extends UI5Element {
 	}
 
 	get isPageTypeDots() {
+		if (this.pageIndicatorStyle === CarouselPageIndicatorStyle.Numeric) {
+			return false;
+		}
+
 		return this.pagesCount < Carousel.pageTypeLimit;
 	}
 

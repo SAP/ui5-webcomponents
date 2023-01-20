@@ -41,9 +41,9 @@ const defaultMediaConstraints = {
 const metadata = {
 	tag: "ui5-barcode-scanner-dialog",
 	languageAware: true,
-	slots: /** @lends sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.BarcodeScannerDialog.prototype */ {
 	},
-	properties: /** @lends sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.BarcodeScannerDialog.prototype */ {
 		/**
 		 * Indicates whether a loading indicator should be displayed in the dialog.
 		 *
@@ -55,11 +55,11 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.BarcodeScannerDialog.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.BarcodeScannerDialog.prototype */ {
 		/**
 		 * Fires when the scan is completed successfuuly.
 		 *
-		 * @event sap.ui.webcomponents.fiori.BarcodeScannerDialog#scan-success
+		 * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-success
 		 * @param {string} text the scan result as string
 		 * @param {Object} rawBytes the scan result as a Uint8Array
 		 * @public
@@ -74,7 +74,7 @@ const metadata = {
 		/**
 		 * Fires when the scan fails with error.
 		 *
-		 * @event sap.ui.webcomponents.fiori.BarcodeScannerDialog#scan-error
+		 * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-error
 		 * @param {string} message the error message
 		 * @public
 		 */
@@ -105,8 +105,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.BarcodeScannerDialog
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.BarcodeScannerDialog
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-barcode-scanner-dialog
  * @public
  * @since 1.0.0-rc.15

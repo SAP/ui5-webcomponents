@@ -94,11 +94,11 @@ const metadata = {
 	tag: "ui5-multi-combobox",
 	languageAware: true,
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
+	slots: /** @lends sap.ui.webc.main.MultiComboBox.prototype */ {
 		/**
 		 * Defines the component items.
 		 *
-		 * @type {sap.ui.webcomponents.main.IMultiComboBoxItem[]}
+		 * @type {sap.ui.webc.main.IMultiComboBoxItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -111,7 +111,7 @@ const metadata = {
 		/**
 		* Defines the icon to be displayed in the component.
 		*
-		* @type {sap.ui.webcomponents.main.IIcon}
+		* @type {sap.ui.webc.main.IIcon}
 		* @slot
 		* @public
 		* @since 1.0.0-rc.9
@@ -137,7 +137,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	properties: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
+	properties: /** @lends sap.ui.webc.main.MultiComboBox.prototype */ {
 		/**
 		 * Defines the value of the component.
 		 * <br><br>
@@ -214,7 +214,7 @@ const metadata = {
 		 * <li><code>Information</code></li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 */
@@ -337,7 +337,7 @@ const metadata = {
 			type: Boolean,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.MultiComboBox.prototype */ {
+	events: /** @lends sap.ui.webc.main.MultiComboBox.prototype */ {
 		/**
 		 * Fired when the input operation has finished by pressing Enter or on focusout.
 		 *
@@ -357,7 +357,7 @@ const metadata = {
 		/**
 		 * Fired when the dropdown is opened or closed.
 		 *
-		 * @event sap.ui.webcomponents.main.MultiComboBox#open-change
+		 * @event sap.ui.webc.main.MultiComboBox#open-change
 		 * @since 1.0.0-rc.5
 		 * @public
 		 */
@@ -367,7 +367,7 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event sap.ui.webcomponents.main.MultiComboBox#selection-change
+		 * @event sap.ui.webc.main.MultiComboBox#selection-change
 		 * @param {Array} items an array of the selected items.
 		 * @public
 		 */
@@ -430,8 +430,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.MultiComboBox
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.MultiComboBox
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-multi-combobox
  * @public
  * @appenddocs MultiComboBoxItem MultiComboBoxGroupItem
@@ -1023,7 +1023,7 @@ class MultiComboBox extends UI5Element {
 
 	_handleEnter() {
 		const lowerCaseValue = this.value.toLowerCase();
-		const matchingItem = this.items.find(item => item.text.toLowerCase() === lowerCaseValue);
+		const matchingItem = this.items.find(item => (item.text.toLowerCase() === lowerCaseValue && !item.isGroupItem));
 		const oldValueState = this.valueState;
 		const innerInput = this._innerInput;
 
@@ -1328,6 +1328,8 @@ class MultiComboBox extends UI5Element {
 		this.storeResponsivePopoverWidth();
 
 		this._deleting = false;
+		// force resize of the tokenizer on invalidation
+		this._tokenizer._handleResize();
 	}
 
 	get _isPhone() {

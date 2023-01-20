@@ -1,7 +1,7 @@
 <li
 	part="native-li"
 	data-sap-focus-ref
-	tabindex="{{tabIndex}}"
+	tabindex="{{_effectiveTabIndex}}"
 	class="{{classes.main}}"
 	@focusin="{{_onfocusin}}"
 	@focusout="{{_onfocusout}}"
@@ -18,10 +18,11 @@
 	aria-level="{{_accInfo.ariaLevel}}"
 	aria-haspopup="{{_accInfo.ariaHaspopup}}"
 	aria-posinset="{{_accInfo.posinset}}"
+	aria-roledescription="{{accessibleRoleDescription}}"
 	aria-setsize="{{_accInfo.setsize}}"
 	aria-describedby="{{_id}}-invisibleText-describedby"
 	aria-labelledby="{{_accessibleNameRef}}"
-	aria-disabled="{{ariaDisabled}}"
+	aria-disabled="{{_ariaDisabled}}"
 	aria-selected="{{_accInfo.ariaSelected}}"
 	aria-checked="{{_accInfo.ariaChecked}}"
 	aria-owns="{{_accInfo.ariaOwns}}"
@@ -48,6 +49,15 @@
 				></ui5-button>
 			</div>
 		{{/if}}
+
+		{{#if typeNavigation}}
+			<ui5-icon name ="slim-arrow-right"></ui5-icon>
+		{{/if}}
+
+		{{#if navigated}}
+			<div class="ui5-li-navigated"></div>
+		{{/if}}
+
 
 		{{#if placeSelectionElementAfter}}
 			{{> selectionElement}}

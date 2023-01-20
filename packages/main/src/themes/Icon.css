@@ -22,6 +22,38 @@
 	outline: none;
 }
 
+:host([design="Contrast"]) {
+	color: var(--sapContent_ContrastIconColor);
+}
+
+:host([design="Critical"]) {
+	color: var(--sapCriticalElementColor);
+}
+
+:host([design="Default"]) {
+	color: var(--sapContent_IconColor);
+}
+
+:host([design="Information"]) {
+	color: var(--sapInformativeElementColor);
+}
+
+:host([design="Negative"]) {
+	color: var(--sapNegativeElementColor);
+}
+
+:host([design="Neutral"]) {
+	color: var(--sapNeutralElementColor);
+}
+
+:host([design="NonInteractive"]) {
+	color: var(--sapContent_NonInteractiveIconColor);
+}
+
+:host([design="Positive"]) {
+	color: var(--sapPositiveElementColor);
+}
+
 :host([interactive][focused]) .ui5-icon-root {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--ui5-icon-focus-border-radius);
@@ -33,6 +65,11 @@
 	width: 100%;
 	outline: none;
 	vertical-align: top;
+}
+
+
+:host([interactive]) {
+	cursor: pointer;
 }
 
 /*

@@ -40,7 +40,9 @@
 		/>
 
 		{{#if effectiveShowClearIcon}}
-			<ui5-icon @click={{_clear}} @mousedown={{_iconMouseDown}} tabindex="-1" input-icon class="ui5-input-clear-icon" name="decline"></ui5-icon>
+			<div @click={{_clear}} @mousedown={{_iconMouseDown}} class="ui5-input-clear-icon-wrapper" input-icon tabindex="-1">
+				<ui5-icon tabindex="-1" class="ui5-input-clear-icon" name="decline"></ui5-icon>
+			</div>
 		{{/if}}
 
 		{{#if icon.length}}

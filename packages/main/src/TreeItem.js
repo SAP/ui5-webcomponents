@@ -11,7 +11,7 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
  */
 const metadata = {
 	tag: "ui5-tree-item",
-	properties: /** @lends sap.ui.webcomponents.main.TreeItem.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TreeItem.prototype */ {
 
 		/**
 		 * Defines the text of the tree item.
@@ -38,7 +38,7 @@ const metadata = {
 		 * Defines the state of the <code>additionalText</code>.
 		 * <br>
 		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @public
 		 * @since 1.0.0-rc.15
@@ -74,11 +74,11 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TreeItem
- * @extends sap.ui.webcomponents.main.TreeItemBase
+ * @alias sap.ui.webc.main.TreeItem
+ * @extends sap.ui.webc.main.TreeItemBase
  * @tagname ui5-tree-item
  * @public
- * @implements sap.ui.webcomponents.main.ITreeItem
+ * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
 class TreeItem extends TreeItemBase {

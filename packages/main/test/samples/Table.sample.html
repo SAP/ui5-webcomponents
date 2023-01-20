@@ -190,6 +190,68 @@
 	</xmp></pre>
 </section>
 
+<section class="table-example">
+	<h3>Table Display Inline</h3>
+	<div class="snippet flex-column">
+		<!-- Header -->
+		<div class="header">
+			<span>Products table - resize your browser to make the columns display inline</span>
+			<button id="toggleSticky" style="height: 32px">Toggle Sticky Column Header</button>
+		</div>
+		<ui5-table class="demo-table" id="tblDisplayInline">
+			<!-- Columns -->
+			<ui5-table-column slot="columns" popin-display="Inline">
+				<span>Product</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="600" popin-text="Supplier" demand-popin popin-display="Inline">
+				<span>Supplier</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin class="table-header-text-alignment" popin-display="Inline">
+				<span>Dimensions</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin class="table-header-text-alignment" popin-display="Inline">
+				<span>Weight</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" class="table-header-text-alignment" popin-display="Inline">
+				<span>Price</span>
+			</ui5-table-column>
+		</ui5-table>
+	</div>
+
+	<pre class="prettyprint lang-html"><xmp>
+		<div class="header">
+			<span>Products table - resize your browser to make the columns display inline</span>
+			<button id="toggleSticky" style="height: 32px">Toggle Sticky Column Header</button>
+		</div>
+		<ui5-table class="demo-table" id="tblDisplayInline">
+			<!-- Columns -->
+			<ui5-table-column slot="columns" popin-display="Inline">
+				<span>Product</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="600" popin-text="Supplier" demand-popin popin-display="Inline">
+				<span>Supplier</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin class="table-header-text-alignment" popin-display="Inline">
+				<span>Dimensions</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin class="table-header-text-alignment" popin-display="Inline">
+				<span>Weight</span>
+			</ui5-table-column>
+
+			<ui5-table-column slot="columns" class="table-header-text-alignment" popin-display="Inline">
+				<span>Price</span>
+			</ui5-table-column>
+		</ui5-table>
+	</xmp></pre>
+</section>
+
 	<section>
 		<h3>Table with No Data</h3>
 		<div class="snippet flex-column">
@@ -525,6 +587,7 @@
 	document.getElementById("tbl").insertAdjacentHTML('beforeend', html);
 	document.getElementById("singleSelectTbl").insertAdjacentHTML('beforeend', html);
 	document.getElementById("multiSelectTbl").insertAdjacentHTML('beforeend', html);
+	document.getElementById("tblDisplayInline").insertAdjacentHTML('beforeend', html);
 
 	document.getElementById("singleSelectTbl").addEventListener("ui5-selection-change", function(event) {
 		if (event.detail.previouslySelectedRows.length) {

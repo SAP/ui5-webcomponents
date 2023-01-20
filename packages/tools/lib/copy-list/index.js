@@ -3,7 +3,7 @@ const path = require("path");
 
 const fileList = process.argv[2];
 const dest = process.argv[3];
-const src = "../../node_modules/@openui5/sap.ui.core/src/";
+const src = "@openui5/sap.ui.core/src/";
 
 const generate = async () => {
 	const filesToCopy = (await fs.readFile(fileList)).toString();
@@ -15,7 +15,7 @@ const generate = async () => {
 	const trimFile = file => file.trim();
 
 	return filesToCopy.split("\n").map(trimFile).filter(shouldCopy).map(async moduleName => {
-		const srcPath = path.join(src, moduleName);
+		const srcPath = require.resolve(path.join(src, moduleName), {paths: [process.cwd()]});
 		const destPath = path.join(dest, moduleName);
 
 		await fs.mkdir(path.dirname(destPath), { recursive: true });

@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -43,7 +43,7 @@ const metadata = {
 	tag: "ui5-textarea",
 	languageAware: true,
 	managedSlots: true,
-	properties: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
+	properties: /** @lends sap.ui.webc.main.TextArea.prototype */ {
 		/**
 		 * Defines the value of the component.
 		 *
@@ -120,7 +120,7 @@ const metadata = {
 		 * <b>Note:</b> If <code>maxlength</code> property is set,
 		 * the component turns into "Warning" state once the characters exceeds the limit.
 		 * In this case, only the "Error" state is considered and can be applied.
-		 * @type {sap.ui.webcomponents.base.types.ValueState}
+		 * @type {sap.ui.webc.base.types.ValueState}
 		 * @defaultvalue "None"
 		 * @since 1.0.0-rc.7
 		 * @public
@@ -140,7 +140,7 @@ const metadata = {
 		 * <li>The CSS <code>height</code> property wins over the <code>rows</code> property, if both are set.</li>
 		 * </ul>
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -152,7 +152,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of characters that the <code>value</code> can have.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultValue null
 		 * @public
 		 */
@@ -192,7 +192,7 @@ const metadata = {
 		/**
 		 * Defines the maximum number of lines that the component can grow.
 		 *
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @defaultvalue 0
 		 * @public
 		 */
@@ -282,7 +282,7 @@ const metadata = {
 			type: Integer,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
+	slots: /** @lends sap.ui.webc.main.TextArea.prototype */ {
 
 		/**
 		 * Defines the value state message that will be displayed as pop up under the component.
@@ -313,7 +313,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.TextArea.prototype */ {
+	events: /** @lends sap.ui.webc.main.TextArea.prototype */ {
 		/**
 		 * Fired when the text has changed and the focus leaves the component.
 		 *
@@ -359,8 +359,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.TextArea
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.TextArea
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-textarea
  * @public
  */
@@ -594,7 +594,7 @@ class TextArea extends UI5Element {
 	}
 
 	get ariaLabelText() {
-		const effectiveAriaLabelText = getEffectiveAriaLabelText(this);
+		const effectiveAriaLabelText = getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this);
 
 		if (this.showExceededText) {
 			if (effectiveAriaLabelText) {

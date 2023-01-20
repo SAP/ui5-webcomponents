@@ -1,0 +1,29 @@
+{
+	"source": {
+		"include": "jsdoc-dist",
+		"excludePattern": "(/|\\\\)library-all\\.js|(/|\\\\).*-preload\\.js|^jquery-.*\\.js|^sap-.*\\.js|.+Renderer\\.lit\\.js|.*library\\.js|thirdparty"
+	},
+	"opts" : {
+		"recurse": true,
+		"template" : "template",
+		"destination": ""
+	},
+	"plugins": [
+		"./plugin.js"
+	],
+	"templates" : {
+		"ui5" : {
+			"variants": [
+				"apijson"
+			],
+			"version": "1.62",
+			"apiJsonFolder": "",
+			"apiJsonFile": "dist/api.json",
+			"includeSettingsInConstructor": false
+		}
+	},
+	"tags": {
+		"allowUnknownTags": true,
+		"dictionaries": ["jsdoc"]
+	}
+}

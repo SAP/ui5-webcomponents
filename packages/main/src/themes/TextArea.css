@@ -6,6 +6,7 @@
 
 :host {
 	width: 100%;
+	min-width: 6rem;
 	color: var(--sapField_TextColor);
 	min-height: var(--__ui5_textarea_min_height);
 	font-size: var(--sapFontSize);
@@ -18,7 +19,7 @@
 	margin: var(--_ui5_textarea_margin);
 }
 
-:host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper, :host([value-state][disabled]) .ui5-textarea-wrapper {
+:host(:not([value-state]):not([readonly]):not([disabled]):not([focused])) .ui5-textarea-wrapper {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapField_Background);
 }
@@ -91,6 +92,13 @@
 	right: var(--_ui5_textarea_focus_offset);
 }
 
+:host([focused][readonly]) .ui5-textarea-wrapper::after {
+	top: var(--_ui5_textarea_readonly_focus_offset);
+	bottom: var(--_ui5_textarea_readonly_focus_offset);
+	left: var(--_ui5_textarea_readonly_focus_offset);
+	right: var(--_ui5_textarea_readonly_focus_offset);
+}
+
 :host([focused][value-state="Error"]:not([disabled])) .ui5-textarea-wrapper::after,
 :host([focused][value-state="Warning"]:not([disabled])) .ui5-textarea-wrapper::after,
 :host([focused][value-state="Information"]:not([disabled])) .ui5-textarea-wrapper::after {
@@ -104,12 +112,8 @@
 	border: none;
 	box-sizing: border-box;
 	width: 100%;
-	min-width: 6rem;
 	margin: 0;
-	padding-top: var(--_ui5_textarea_padding_top);
-	padding-bottom: var(--_ui5_textarea_padding_bottom);
-	padding-left: var(--_ui5_textarea_padding_left);
-	padding-right: var(--_ui5_textarea_padding_right);
+	padding: var(--_ui5_textarea_padding_top) var(--_ui5_textarea_padding_right_and_left) var(--_ui5_textarea_padding_bottom);
 	color: inherit;
 	font-size: inherit;
 	font-family: inherit;
@@ -224,14 +228,14 @@
 	border-color: var(--sapField_ReadOnly_BorderColor);
 }
 
-:host([readonly][focused]) .ui5-textarea-root .ui5-textarea-wrapper {
-	background-image: none;
+:host([readonly]) .ui5-textarea-inner {
+	padding: var(--_ui5_textarea_padding_top_readonly) var(--_ui5_textarea_padding_right_and_left_readonly) var(--_ui5_textarea_padding_bottom_readonly);
 }
 
 :host([readonly]) .ui5-textarea-root .ui5-textarea-wrapper {
-	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
+	border-style: var(--_ui5_textarea_readonly_border_style);
 }
 
 :host([show-exceeded-text]) .ui5-textarea-root {
@@ -310,13 +314,8 @@
 :host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
 	font-style: var(--_ui5_textarea_error_warning_font_style);
 	font-weight: var(--_ui5_textarea_error_warning_font_weight);
-	padding-top: var(--_ui5_textarea_padding_top_error_warning);
+	padding: var(--_ui5_textarea_padding_top_error_warning) var(--_ui5_textarea_padding_right_and_left_error_warning) var(--_ui5_textarea_padding_bottom_error_warning);
 }
-
-:host([value-state="Error"]:not([disabled]):not([readonly])) .ui5-textarea-inner,
-:host([value-state="Warning"]:not([disabled]):not([readonly])) .ui5-textarea-inner {
-	padding-bottom: var(--_ui5_textarea_padding_bottom_error_warning);
-}	
 
 :host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper,
 :host([value-state="Warning"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
@@ -377,8 +376,7 @@
 }
 
 :host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-inner {
-	padding-top: var(--_ui5_textarea_padding_top_information);
-	padding-bottom: var(--_ui5_textarea_padding_bottom_information);
+	padding: var(--_ui5_textarea_padding_top_information) var(--_ui5_textarea_padding_right_and_left_information) var(--_ui5_textarea_padding_bottom_information);
 }
 
 :host([value-state="Information"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
@@ -414,16 +412,11 @@
 	display: none;
 }
 
-:host :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host(:not([disabled])) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 	border-top-right-radius: var(--sapField_BorderCornerRadius);
 	border-bottom-right-radius: var(--sapField_BorderCornerRadius);
-}
-
-:host([readonly]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
-	background: var(--sapField_ReadOnly_BackgroundStyle);
-	background-color: var(--sapScrollBar_TrackColor);
 }
 
 :host([value-state="Error"]) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {

@@ -21,6 +21,9 @@
 	word-spacing: normal;
 	text-align: start;
 	transition: var(--_ui5_input_transition);
+}
+
+:host(:not([disabled])) {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--_ui5_input_background_color);
 }
@@ -430,12 +433,33 @@
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 }
 
+.ui5-input-clear-icon-wrapper {
+	height: var(--_ui5_input_icon_wrapper_height);
+	padding: 0;
+	width: var(--_ui5_input_icon_width);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: border-box;
+}
 
+:host([value-state]:not([value-state="None"]):not([value-state="Success"])) .ui5-input-clear-icon-wrapper {
+	height: var(--_ui5_input_icon_wrapper_state_height);
+	vertical-align: top;
+}
 
+:host([value-state="Success"]) .ui5-input-clear-icon-wrapper {
+	height: var(--_ui5_input_icon_wrapper_success_state_height);
+}
+
+[ui5-icon].ui5-input-clear-icon {
+	padding: 0;
+	color: inherit;
+}
 
 /* Chrome, Safari, Edge, Opera */
 [inner-input]::-webkit-outer-spin-button,
 [inner-input]::-webkit-inner-spin-button {
-  -webkit-appearance: inherit;
-  margin: inherit;
+	-webkit-appearance: inherit;
+	margin: inherit;
 }

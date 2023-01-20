@@ -27,7 +27,7 @@ const metadata = {
 	tag: "ui5-side-navigation",
 	managedSlots: true,
 	fastNavigation: true,
-	properties: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
+	properties: /** @lends sap.ui.webc.fiori.SideNavigation.prototype */ {
 		/**
 		 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
 		 *
@@ -46,14 +46,14 @@ const metadata = {
 			type: Object,
 		},
 	},
-	slots: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
+	slots: /** @lends sap.ui.webc.fiori.SideNavigation.prototype */ {
 		/**
 		 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
 		 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
 		 * inside the items.
 		 *
 		 * @public
-		 * @type {sap.ui.webcomponents.fiori.ISideNavigationItem}
+		 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
 		 * @slot items
 		 */
 		"default": {
@@ -84,7 +84,7 @@ const metadata = {
 		 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 		 *
 		 * @public
-		 * @type {sap.ui.webcomponents.fiori.ISideNavigationItem}
+		 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
 		 * @slot
 		 */
 		fixedItems: {
@@ -92,11 +92,11 @@ const metadata = {
 			invalidateOnChildChange: true,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.fiori.SideNavigation.prototype */ {
+	events: /** @lends sap.ui.webc.fiori.SideNavigation.prototype */ {
 		/**
 		 * Fired when the selection has changed via user interaction
 		 *
-		 * @event sap.ui.webcomponents.fiori.SideNavigation#selection-change
+		 * @event sap.ui.webc.fiori.SideNavigation#selection-change
 		 * @param {HTMLElement} item the clicked item.
 		 * @allowPreventDefault
 		 * @public
@@ -148,8 +148,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.fiori.SideNavigation
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.fiori.SideNavigation
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-side-navigation
  * @since 1.0.0-rc.8
  * @appenddocs SideNavigationItem SideNavigationSubItem

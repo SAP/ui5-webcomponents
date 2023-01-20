@@ -413,6 +413,31 @@ describe("Input general interaction", () => {
 			"The value is restored as ESC has been pressed.");
 	});
 
+	it("Input value should correspond to suggestion item when it is clicked", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const suggestionsInput = await browser.$("#myInput").shadow$("input");
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#myInput");
+		const respPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// paste a value completely corresponding to item text
+		await suggestionsInput.click();
+		await suggestionsInput.setValue("China");
+
+		// select the item
+		let firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
+		await firstSuggestion.click();
+
+		// without performing focus out delete the last character
+		await suggestionsInput.keys("Backspace");
+
+		// select the same item again
+		await firstSuggestion.click();
+
+		assert.strictEqual(await suggestionsInput.getValue(), "China", "Input value should correspond to item text.");
+	});
+
 	it("input value should be cleared with ESC", async () => {
 		await browser.url(`test/pages/Input.html`);
 
@@ -848,7 +873,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await changeCounter.getText(), "0", "Change event not called yet");
 		assert.strictEqual(await inputCounter.getText(), "1", "Input event called when typing");
 
-		const clearIcon = await input.shadow$(".ui5-input-clear-icon");
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
 
 		// press clear icon
 		await clearIcon.click();
@@ -872,7 +897,7 @@ describe("Input general interaction", () => {
 		await innerInput.keys("a");
 		await changeCounter.click();
 
-		const clearIcon = await input.shadow$(".ui5-input-clear-icon");
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
 
 		// press clear icon
 		await clearIcon.click();

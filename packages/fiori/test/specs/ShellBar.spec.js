@@ -58,6 +58,14 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await logoDOM.getAttribute("role"), "link",
 				"Logo has the correct custom role.");
 		});
+
+		it("tests accessibilityAttributes property", async () => {
+			const NOTIFICATIONS_BTN_ARIA_HASPOPUP = "Dialog";
+			const sb = await browser.$("#sbAccAttr");
+
+			assert.strictEqual(await sb.getProperty("_notificationsHasPopup"), NOTIFICATIONS_BTN_ARIA_HASPOPUP,
+				"Notifications aria-haspopup could be customized.");
+		});
 	});
 
 	describe("ui5-shellbar menu", () => {
@@ -404,6 +412,17 @@ describe("Component Behavior", () => {
 				await searchIcon.click();
 				assert.notOk(await searchField.isDisplayed(), "Search is hidden after clicking again on the icon");
 			});
+
+			it("tests if searchfield toggles when altering the showSearchField property", async () => {
+				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
+				const shellBar = await browser.$("#shellbar");
+				
+				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
+
+				await shellBar.setProperty('showSearchField', true);
+				assert.ok(await searchField.isDisplayed(), "Search is visible after altering the showSearchField property of the ShellBar");
+				await shellBar.setProperty('showSearchField', false); // Clean Up
+			});
 		});
 
 		describe("Small screen", () => {
@@ -492,7 +511,18 @@ describe("Component Behavior", () => {
 				assert.ok(await searchField.isDisplayed(), "Search is visible after clicking on the search icon within the overflow");
 
 				await cancelButton.click();
-				assert.notOk(await searchField.isDisplayed(), "Search is hidden after clicking on the search icon agian");
+				assert.notOk(await searchField.isDisplayed(), "Search is hidden after clicking on the search icon again");
+			});
+
+			it("tests if searchfield toggles when altering the showSearchField property", async () => {
+				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
+				const shellBar = await browser.$("#shellbar");
+				
+				assert.notOk(await searchField.isDisplayed(), "Search is hidden by default");
+
+				await shellBar.setProperty('showSearchField', true);
+				assert.ok(await searchField.isDisplayed(), "Search is visible after altering the showSearchField property of the ShellBar");
+				await shellBar.setProperty('showSearchField', false); // Clean Up
 			});
 		});
 	});

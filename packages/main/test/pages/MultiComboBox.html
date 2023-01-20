@@ -302,6 +302,8 @@
 			<ui5-mcb-item text="Haiti"></ui5-mcb-item>
 			<ui5-mcb-item text="United States"></ui5-mcb-item>
 		</ui5-multi-combobox>
+		<span>SelectionChange events emitted:</span>
+		<span id="selection-change-events-fired"></span>
 	</div>
 
 
@@ -377,7 +379,19 @@
 		</ui5-multi-combobox>
 	</div>
 
+	<div>
+		<ui5-multi-combobox id="mcb-long-token">
+			<ui5-mcb-item selected text="Longest word in the world"></ui5-mcb-item>
+		</ui5-multi-combobox>
+	</div>
+
+	<div class="sample-container">
+		<ui5-button id="add">Add Tokens</ui5-button>
+		<ui5-multi-combobox id="mcb-dynamic-selection"></ui5-multi-combobox>
+	</div>
+
 	<script>
+		let selectionChangeEventsFired = 0;
 		var eventNameInput = document.getElementById("events-input");
 		var eventParamsInput = document.getElementById("events-parameters");
 		var callCountInput = document.getElementById("events-call-count");
@@ -437,6 +451,23 @@
 		btnfocusMCB.addEventListener("click", () => {
 			mcbFocus.focus();
 		});
+
+		document.getElementById("add").addEventListener("click", event => {
+			const mcb = document.getElementById("mcb-dynamic-selection");
+
+			["Item 1", "Item 2", "Item 3", "Item 4", "Item 5", "Item 6"].forEach(text => {
+				const item = document.createElement("ui5-mcb-item");
+				item.text = text;
+				item.selected = true;
+
+				mcb.appendChild(item);
+			});
+		});
+
+		
+		document.getElementById("mcb-grouping").addEventListener("selection-change", (e) => {
+			document.getElementById("selection-change-events-fired").textContent =  ++selectionChangeEventsFired;
+		})
 	</script>
 
 </body>

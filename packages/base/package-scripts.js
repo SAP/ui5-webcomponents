@@ -6,6 +6,7 @@ const stylesScript = resolve.sync("@ui5/webcomponents-base/lib/generate-styles/i
 const versionScript = resolve.sync("@ui5/webcomponents-base/lib/generate-version-info/index.js");
 const copyUsedModules = resolve.sync("@ui5/webcomponents-tools/lib/copy-list/index.js");
 const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/index.js");
+const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/preprocess.js");
 
 const LIB = path.join(__dirname, `../tools/lib/`);
 
@@ -13,9 +14,10 @@ const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-p
 const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}`;
 
 const scripts = {
-	clean: "rimraf dist && rimraf .port",
+	clean: "rimraf jsdoc-dist && rimraf dist && rimraf .port",
 	lint: `eslint . ${eslintConfig}`,
-	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates generateAPI",
+	prepare: "nps clean integrate copy typescript generateAssetParameters generateVersionInfo generateStyles generateTemplates generateAPI",
+	typescript: "tsc",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
 		"copy-used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
@@ -40,11 +42,18 @@ const scripts = {
 	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
 	generateTemplates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d test/elements -o dist/generated/templates`,
-	generateAPI: `jsdoc -c "${LIB}/jsdoc/config.json"`,
+	generateAPI: {
+		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
+		prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,
+		preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/`,
+		jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
+		cleanup: "rimraf jsdoc-dist/"
+	},
 	watch: {
-		default: 'concurrently "nps watch.src" "nps watch.styles"',
-		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles"',
+		default: 'concurrently "nps watch.src" "nps watch.styles" "nps watch.typescript"',
+		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.typescript"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
+		typescript: 'tsc --watch',
 		bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},

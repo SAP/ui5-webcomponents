@@ -17,7 +17,7 @@ import TreeCss from "./generated/themes/Tree.css.js";
  */
 const metadata = {
 	tag: "ui5-tree",
-	properties: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
+	properties: /** @lends sap.ui.webc.main.Tree.prototype */ {
 		/**
 		 * Defines the mode of the component. Since the tree uses a <code>ui5-list</code> to display its structure,
 		 * the tree modes are exactly the same as the list modes, and are all applicable.
@@ -35,7 +35,7 @@ const metadata = {
 		 * </ul>
 		 *
 		 * @public
-		 * @type {sap.ui.webcomponents.main.types.ListMode}
+		 * @type {sap.ui.webc.main.types.ListMode}
 		 * @defaultValue "None"
 		 */
 		mode: {
@@ -104,6 +104,20 @@ const metadata = {
 		},
 
 		/**
+		 * Defines the description for the accessible role of the component.
+		 * @protected
+		 * @type {string}
+		 * @defaultvalue undefined
+		 * @since 1.10.0
+		 */
+
+		 accessibleRoleDescription: {
+			type: String,
+			defaultValue: undefined,
+			noAttribute: true,
+		},
+
+		/**
 		 * An array, containing a flat structure of list items to render
 		 *
 		 * @private
@@ -134,14 +148,14 @@ const metadata = {
 		},
 	},
 	managedSlots: true,
-	slots: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
+	slots: /** @lends sap.ui.webc.main.Tree.prototype */ {
 
 		/**
 		 * Defines the items of the component. Tree items may have other tree items as children.
 		 * <br><br>
 		 * <b>Note:</b> Use <code>ui5-tree-item</code> for the intended design.
 		 *
-		 * @type {sap.ui.webcomponents.main.ITreeItem[]}
+		 * @type {sap.ui.webc.main.ITreeItem[]}
 		 * @slot items
 		 * @public
 		 */
@@ -165,7 +179,7 @@ const metadata = {
 			type: HTMLElement,
 		},
 	},
-	events: /** @lends sap.ui.webcomponents.main.Tree.prototype */ {
+	events: /** @lends sap.ui.webc.main.Tree.prototype */ {
 
 		/**
 		 * Fired when a tree item is expanded or collapsed.
@@ -173,7 +187,7 @@ const metadata = {
 		 * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
 		 * Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
 		 *
-		 * @event sap.ui.webcomponents.main.Tree#item-toggle
+		 * @event sap.ui.webc.main.Tree#item-toggle
 		 * @param {HTMLElement} item the toggled item.
 		 * @allowPreventDefault
 		 * @public
@@ -186,7 +200,7 @@ const metadata = {
 
 		/**
 		 * Fired when the mouse cursor enters the tree item borders.
-		 * @event sap.ui.webcomponents.main.Tree#item-mouseover
+		 * @event sap.ui.webc.main.Tree#item-mouseover
 		 * @param {HTMLElement} item the hovered item.
 		 * @since 1.0.0-rc.16
 		 * @public
@@ -199,7 +213,7 @@ const metadata = {
 
 		/**
 		 * Fired when the mouse cursor leaves the tree item borders.
-		 * @event sap.ui.webcomponents.main.Tree#item-mouseout
+		 * @event sap.ui.webc.main.Tree#item-mouseout
 		 * @param {HTMLElement} item the hovered item.
 		 * @since 1.0.0-rc.16
 		 * @public
@@ -213,7 +227,7 @@ const metadata = {
 		/**
 		 * Fired when a tree item is activated.
 		 *
-		 * @event sap.ui.webcomponents.main.Tree#item-click
+		 * @event sap.ui.webc.main.Tree#item-click
 		 * @allowPreventDefault
 		 * @param {HTMLElement} item The clicked item.
 		 * @public
@@ -230,7 +244,7 @@ const metadata = {
 		 * <b>Note:</b> A Delete button is displayed on each item,
 		 * when the component <code>mode</code> property is set to <code>Delete</code>.
 		 *
-		 * @event sap.ui.webcomponents.main.Tree#item-delete
+		 * @event sap.ui.webc.main.Tree#item-delete
 		 * @param {HTMLElement} item the deleted item.
 		 * @public
 		 */
@@ -244,7 +258,7 @@ const metadata = {
 		 * Fired when selection is changed by user interaction
 		 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
 		 *
-		 * @event sap.ui.webcomponents.main.Tree#selection-change
+		 * @event sap.ui.webc.main.Tree#selection-change
 		 * @param {Array} selectedItems An array of the selected items.
 		 * @param {Array} previouslySelectedItems An array of the previously selected items.
 		 * @param {HTMLElement} targetItem The item triggering the event.
@@ -306,8 +320,8 @@ const metadata = {
  *
  * @constructor
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.Tree
- * @extends sap.ui.webcomponents.base.UI5Element
+ * @alias sap.ui.webc.main.Tree
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-tree
  * @appenddocs TreeItem
  * @public
@@ -347,7 +361,7 @@ class Tree extends UI5Element {
 	}
 
 	get _role() {
-		return "tree";
+		return this._minimal ? "menubar" : "tree";
 	}
 
 	get _label() {

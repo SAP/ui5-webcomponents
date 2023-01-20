@@ -11,7 +11,7 @@ import {
  */
 const metadata = {
 	tag: "ui5-duration-picker",
-	properties: /** @lends sap.ui.webcomponents.main.DurationPicker.prototype */ {
+	properties: /** @lends sap.ui.webc.main.DurationPicker.prototype */ {
 		/**
 		 * Defines a formatted time value.
 		 *
@@ -26,7 +26,7 @@ const metadata = {
 
 		/**
 		 * Defines the selection step for the minutes
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @public
 		 * @defaultValue 1
 		 * @since 1.0.0-rc.8
@@ -38,7 +38,7 @@ const metadata = {
 
 		/**
 		 * Defines the selection step for the seconds
-		 * @type {sap.ui.webcomponents.base.types.Integer}
+		 * @type {sap.ui.webc.base.types.Integer}
 		 * @public
 		 * @defaultValue 1
 		 * @since 1.0.0-rc.8
@@ -161,8 +161,8 @@ const pad = number => {
  * @constructor
  * @since 1.0.0-rc.7
  * @author SAP SE
- * @alias sap.ui.webcomponents.main.DurationPicker
- * @extends sap.ui.webcomponents.main.TimePickerBase
+ * @alias sap.ui.webc.main.DurationPicker
+ * @extends sap.ui.webc.main.TimePickerBase
  * @tagname ui5-duration-picker
  * @private
  */
