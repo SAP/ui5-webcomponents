@@ -8,7 +8,8 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
-     - uses: actions/checkout@v3
+    steps:
+    - uses: actions/checkout@v3
       with:
           token: ${{ secrets.GH_TOKEN }}
           fetch-depth: 0
@@ -17,7 +18,7 @@ jobs:
         node-version: 16
         cache: 'yarn'
 
-    - name: Set Versrion env
+    - name: Set Version env
       run: |
           VERSION=${GITHUB_REF_NAME#v}
           echo Version: $VERSION
