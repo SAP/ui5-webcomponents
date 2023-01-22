@@ -8,11 +8,20 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
-    - uses: actions/checkout@v3
+     - uses: actions/checkout@v3
+      with:
+          token: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
         node-version: 16
         cache: 'yarn'
+
+    - name: Set Versrion env
+      run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo Version: $VERSION
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Install
       run: yarn --frozen-lockfile
@@ -20,13 +29,7 @@ jobs:
     - name: Build
       run: yarn build
 
-    - name: Publish
-      env:
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
-      run: |
-        node ./.github/actions/release.js
-
- - name: Get Branch
+    - name: Get Branch
       run: |
         raw=$(git branch -r --contains ${{ github.ref }})
         BRANCH=${raw/origin\/}
