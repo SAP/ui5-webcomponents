@@ -24,7 +24,7 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Install
-      run: yarn
+      run: yarn --frozen-lockfile
 
     - name: Build
       run: yarn build
