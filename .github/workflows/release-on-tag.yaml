@@ -3,7 +3,7 @@ name: Release on tag
 on:
   push:
     tags:
-      - "v*"
+      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
   build-and-release:
@@ -21,7 +21,7 @@ jobs:
       run: |
           VERSION=${GITHUB_REF_NAME#v}
           echo Version: $VERSION
-          echo "VERSION=$VERSION" >> $GITHUB_ENV'
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Install
       run: yarn
@@ -47,6 +47,6 @@ jobs:
         npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
         git config user.name "${{ github.actor }}"
         git config user.email "${{ github.actor}}@users.noreply.github.com"
-        git checkout ${{ env.BRANCH }}
-        yarn lerna version ${{ env.VERSION }} --conventional-commits --force-git-tag --yes --create-release github 
+        git checkout main
+        yarn lerna version ${{ env.VERSION }} --conventional-commits --yes --force-git-tag --create-release github 
         yarn lerna publish from-git --yes
