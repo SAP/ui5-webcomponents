@@ -21,7 +21,7 @@
 		},
 		"version": {
 			"allowBranch": "*",
-			"message": "chore(release): publish %s"
+			"message": "chore(release): publish %s",
 			"conventionalCommits": true,
 			"verifyAccess": false
 		}
