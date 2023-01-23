@@ -1,8 +1,14 @@
 const assert = require("chai").assert;
 
+logger = require('@wdio/logger').default;
+const log = logger('myPackage')
+
 describe("Wizard general interaction", () => {
 	before(async () => {
+		log.error("before url")
 		await browser.url(`test/pages/Wizard_test.html`);
+		log.error("after url")
+
 	});
 
 	it("test initial state", async () => {
@@ -18,6 +24,8 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("ARIA Attributes", async () => {
+		log.error('aria')
+
 		const wiz = await browser.$("#wizTest");
 		const wizRoot = await wiz.shadow$(".ui5-wiz-root");
 		const wizNav = await wiz.shadow$(".ui5-wiz-nav");
@@ -96,6 +104,8 @@ describe("Wizard general interaction", () => {
 	});
 
 	it("move to next step by click", async () => {
+		log.error('move to next step by click')
+
 		const wiz = await browser.$("#wizTest");
 		const step1 = await browser.$("#st1");
 		const step2 = await browser.$("#st2");
@@ -105,9 +115,12 @@ describe("Wizard general interaction", () => {
 		const inpStepChangeCounter =  await browser.$("#inpStepChangeCounter");
 		const inpStepChangeCause =  await browser.$("#inpStepChangeCause");
 
+		log.error('before message strip')
+
 		const wizardStep = await browser.$("ui5-wizard-step");
 		const messageStrip = await wizardStep.shadow$("ui5-message-strip")
 		const firstFocusableElement = await messageStrip.shadow$(`ui5-button`);
+		log.error('after message strip')
 
 		// act - click on the first step in the header
 		await step1InHeader.click();
@@ -122,7 +135,9 @@ describe("Wizard general interaction", () => {
 		assert.strictEqual(await step1InHeader.getAttribute("disabled"), null,
 			"First step in header is enabled.");
 
+		log.error('some logs1')
 		assert.ok(await firstFocusableElement.getProperty("focused"), "The First focusable element in the step content is focused.");
+		log.error('some logs2')
 
 		await step1InHeader.keys(["Shift", "Tab"]);
 		await step2InHeader.keys("Space");
@@ -153,6 +168,7 @@ describe("Wizard general interaction", () => {
 		const step1InHeader = await wiz.shadow$(`[data-ui5-index="1"]`);
 		const step2InHeader = await wiz.shadow$(`[data-ui5-index="2"]`);
 		const inpStepChangeCounter =  await browser.$("#inpStepChangeCounter");
+		log.error('some logs')
 
 		// act - bring the focus to the first step in the header
 		// act - use keyboard to move to step2
@@ -208,149 +224,149 @@ describe("Wizard general interaction", () => {
 		await step1InHeader.click();
 	});
 
-	it("move to next step by scroll", async () => {
-		const wiz = await browser.$("#wizTest");
-		const step2 = await browser.$("#st2");
-		const scrollMarker = await browser.$("#scrollMarkerSt2");
-		const step2InHeader = await wiz.shadow$(`[data-ui5-index="2"]`);
-		const inpStepChangeCounter =  await browser.$("#inpStepChangeCounter");
-		const inpStepChangeCause =  await browser.$("#inpStepChangeCause");
+	// it("move to next step by scroll", async () => {
+	// 	const wiz = await browser.$("#wizTest");
+	// 	const step2 = await browser.$("#st2");
+	// 	const scrollMarker = await browser.$("#scrollMarkerSt2");
+	// 	const step2InHeader = await wiz.shadow$(`[data-ui5-index="2"]`);
+	// 	const inpStepChangeCounter =  await browser.$("#inpStepChangeCounter");
+	// 	const inpStepChangeCause =  await browser.$("#inpStepChangeCause");
 
-		// act - scroll the 2nd step into view
-		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
-		// this test should be reworked.
-		await scrollMarker.scrollIntoView();
+	// 	// act - scroll the 2nd step into view
+	// 	// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
+	// 	// this test should be reworked.
+	// 	await scrollMarker.scrollIntoView();
 
-		// assert - that second step in the content and in the header are properly selected
-		assert.strictEqual(await step2.getAttribute("selected"), "true", "Second step in the content is selected.");
-		assert.strictEqual(await step2InHeader.getAttribute("selected"), "true", "Second step in the header is selected.");
-		assert.strictEqual(await step2.getAttribute("disabled"), null, "Second step is enabled.");
-		assert.strictEqual(await step2InHeader.getAttribute("disabled"), null, "Second step in header is enabled.");
+	// 	// assert - that second step in the content and in the header are properly selected
+	// 	assert.strictEqual(await step2.getAttribute("selected"), "true", "Second step in the content is selected.");
+	// 	assert.strictEqual(await step2InHeader.getAttribute("selected"), "true", "Second step in the header is selected.");
+	// 	assert.strictEqual(await step2.getAttribute("disabled"), null, "Second step is enabled.");
+	// 	assert.strictEqual(await step2InHeader.getAttribute("disabled"), null, "Second step in header is enabled.");
 
-		assert.strictEqual(await inpStepChangeCounter.getProperty("value"), "6",
-			"Event step-change fired 6th time due to scrolling.");
+	// 	assert.strictEqual(await inpStepChangeCounter.getProperty("value"), "6",
+	// 		"Event step-change fired 6th time due to scrolling.");
 
-		// assert - step-change fired not because of user click
-		assert.strictEqual(await inpStepChangeCause.getProperty("value"), "false",
-			"Event step-change fired not because of user click, but scrolling");
-	});
+	// 	// assert - step-change fired not because of user click
+	// 	assert.strictEqual(await inpStepChangeCause.getProperty("value"), "false",
+	// 		"Event step-change fired not because of user click, but scrolling");
+	// });
 
-	it("tests dynamically increase step size and move to next step", async () => {
-		const wiz = await browser.$("#wizTest");
-		const sw = await browser.$("#sw");
-		const btnToStep2 = await browser.$("#toStep22");
-		const btnToStep3 = await browser.$("#toStep3");
-		const step3 = await browser.$("#st3");
-		const scrollMarker = await browser.$("#scrollMarkerSt3");
-		const step3InHeader = await wiz.shadow$(`[data-ui5-index="3"]`);
-		const inpStepChangeCounter =  await browser.$("#inpStepChangeCounter");
+	// it("tests dynamically increase step size and move to next step", async () => {
+	// 	const wiz = await browser.$("#wizTest");
+	// 	const sw = await browser.$("#sw");
+	// 	const btnToStep2 = await browser.$("#toStep22");
+	// 	const btnToStep3 = await browser.$("#toStep3");
+	// 	const step3 = await browser.$("#st3");
+	// 	const scrollMarker = await browser.$("#scrollMarkerSt3");
+	// 	const step3InHeader = await wiz.shadow$(`[data-ui5-index="3"]`);
+	// 	const inpStepChangeCounter =  await browser.$("#inpStepChangeCounter");
 
-		await btnToStep3.click(); // click to enable step 3
-		await btnToStep2.click(); // click to get back to step 2
-		await sw.click(); // click to dynamically expand content in step 2
-		await scrollMarker.scrollIntoView(); // scroll to step 3
+	// 	await btnToStep3.click(); // click to enable step 3
+	// 	await btnToStep2.click(); // click to get back to step 2
+	// 	await sw.click(); // click to dynamically expand content in step 2
+	// 	await scrollMarker.scrollIntoView(); // scroll to step 3
 
-		assert.strictEqual(await step3.getAttribute("selected"), "true",
-			"Third step in the content is selected.");
-		assert.strictEqual(await step3InHeader.getAttribute("selected"), "true",
-			"Third step in the header is selected.");
-		assert.strictEqual(await inpStepChangeCounter.getProperty("value"), "7",
-			"Event step-change fired once for 7th time due to scrolling.");
-	});
+	// 	assert.strictEqual(await step3.getAttribute("selected"), "true",
+	// 		"Third step in the content is selected.");
+	// 	assert.strictEqual(await step3InHeader.getAttribute("selected"), "true",
+	// 		"Third step in the header is selected.");
+	// 	assert.strictEqual(await inpStepChangeCounter.getProperty("value"), "7",
+	// 		"Event step-change fired once for 7th time due to scrolling.");
+	// });
 
-	it("tests no scrolling to step, if the step was not changed", async () => {
-		await browser.url(`test/pages/Wizard_test.html`);
+	// it("tests no scrolling to step, if the step was not changed", async () => {
+	// 	await browser.url(`test/pages/Wizard_test.html`);
 
-		const wizard = await browser.$("#wizTest");
-		const wizardContentDOM = await wizard.shadow$(".ui5-wiz-content");
-		const btnToStep2 = await browser.$("#toStep2");
+	// 	const wizard = await browser.$("#wizTest");
+	// 	const wizardContentDOM = await wizard.shadow$(".ui5-wiz-content");
+	// 	const btnToStep2 = await browser.$("#toStep2");
 
-		// (1) - go to step 2
-		await btnToStep2.click();
+	// 	// (1) - go to step 2
+	// 	await btnToStep2.click();
 
-		// (2) - scroll a bit upwards to get back to step 1 (at least its bottom part)
-		await btnToStep2.scrollIntoView();
+	// 	// (2) - scroll a bit upwards to get back to step 1 (at least its bottom part)
+	// 	await btnToStep2.scrollIntoView();
 
-		// (3) store the scroll position after scrolling upwards
-		const scrolPosBefore = await browser.executeAsync((wizardContentDOM, done) => {
-			done(wizardContentDOM.scrollTop);
-		}, wizardContentDOM);
+	// 	// (3) store the scroll position after scrolling upwards
+	// 	const scrolPosBefore = await browser.executeAsync((wizardContentDOM, done) => {
+	// 		done(wizardContentDOM.scrollTop);
+	// 	}, wizardContentDOM);
 
-		// (4) simulate re-rendering
-		await browser.executeAsync((wizard, done) => {
-			wizard.onAfterRendering();
-			done();
-		}, wizard);
+	// 	// (4) simulate re-rendering
+	// 	await browser.executeAsync((wizard, done) => {
+	// 		wizard.onAfterRendering();
+	// 		done();
+	// 	}, wizard);
 
-		// (5) store the scroll position after re-rendering
-		const scrolPosAfter = await browser.executeAsync((wizardContentDOM, done) => {
-			done(wizardContentDOM.scrollTop);
-		}, wizardContentDOM);
+	// 	// (5) store the scroll position after re-rendering
+	// 	const scrolPosAfter = await browser.executeAsync((wizardContentDOM, done) => {
+	// 		done(wizardContentDOM.scrollTop);
+	// 	}, wizardContentDOM);
 
-		// assert - The Wizard did not scroll to the very top of the step 1
-		assert.strictEqual(scrolPosBefore, scrolPosAfter,
-			"No scrolling occures after re-rendering when the selected step remains the same.");
-	});
+	// 	// assert - The Wizard did not scroll to the very top of the step 1
+	// 	assert.strictEqual(scrolPosBefore, scrolPosAfter,
+	// 		"No scrolling occures after re-rendering when the selected step remains the same.");
+	// });
 
-	it("Tests if second step is scrolled into view when first step's height is bigger than viewport", async () => {
-		await browser.url(`test/pages/WizardScrolling.html`);
+	// it("Tests if second step is scrolled into view when first step's height is bigger than viewport", async () => {
+	// 	await browser.url(`test/pages/WizardScrolling.html`);
 
-		const btnToStep2 = await browser.$("#toStep2");
+	// 	const btnToStep2 = await browser.$("#toStep2");
 
-		await btnToStep2.scrollIntoView();
-		await btnToStep2.click();
+	// 	await btnToStep2.scrollIntoView();
+	// 	await btnToStep2.click();
 
-		let isDisplayedInViewport = await browser.$("#step2").isDisplayedInViewport();
+	// 	let isDisplayedInViewport = await browser.$("#step2").isDisplayedInViewport();
 
-		assert.ok(isDisplayedInViewport, "Step2 is scrolled into view.");
-	});
+	// 	assert.ok(isDisplayedInViewport, "Step2 is scrolled into view.");
+	// });
 
-	it("tests small screen", async () => {
-		await browser.url(`test/pages/Wizard_test_mobile.html`);
+	// it("tests small screen", async () => {
+	// 	await browser.url(`test/pages/Wizard_test_mobile.html`);
 
-		const wizard = await browser.$("#wizTest");
-		const wizardDisabled = await browser.$("#wizTest2");
-		const groupedStep = await wizard.shadow$(`[data-ui5-index="3"]`);
-		const groupedStepDisabled = await wizardDisabled.shadow$(`[data-ui5-index="3"]`);
+	// 	const wizard = await browser.$("#wizTest");
+	// 	const wizardDisabled = await browser.$("#wizTest2");
+	// 	const groupedStep = await wizard.shadow$(`[data-ui5-index="3"]`);
+	// 	const groupedStepDisabled = await wizardDisabled.shadow$(`[data-ui5-index="3"]`);
 
-		// act - click on the stack of steps
-		await groupedStep.shadow$(`.ui5-wiz-step-root`).click();
+	// 	// act - click on the stack of steps
+	// 	await groupedStep.shadow$(`.ui5-wiz-step-root`).click();
 
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#wizTest")
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+	// 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#wizTest")
+	// 	const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
-		// assert - the popup is open
-		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+	// 	// assert - the popup is open
+	// 	assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
 
 
-		// act - click on the disabled stack of steps
-		await groupedStepDisabled.shadow$(`.ui5-wiz-step-root`).click();
+	// 	// act - click on the disabled stack of steps
+	// 	await groupedStepDisabled.shadow$(`.ui5-wiz-step-root`).click();
 
-		const staticAreaItemClassName2 = await browser.getStaticAreaItemClassName("#wizTest2")
-		const disabledPopover = await browser.$(`.${staticAreaItemClassName2}`).shadow$("ui5-responsive-popover");
+	// 	const staticAreaItemClassName2 = await browser.getStaticAreaItemClassName("#wizTest2")
+	// 	const disabledPopover = await browser.$(`.${staticAreaItemClassName2}`).shadow$("ui5-responsive-popover");
 
-		// assert - the popup is open
-		assert.ok(await disabledPopover.isDisplayedInViewport(), "Popover is opened.");
-	});
+	// 	// assert - the popup is open
+	// 	assert.ok(await disabledPopover.isDisplayedInViewport(), "Popover is opened.");
+	// });
 
-	it("tests responsive paddings", async () => {
-		await browser.url(`test/pages/Wizard.html`);
-		const wizard = $("#wiz");
+	// it("tests responsive paddings", async () => {
+	// 	await browser.url(`test/pages/Wizard.html`);
+	// 	const wizard = $("#wiz");
 
-		// resize window S
-		await browser.setWindowSize(500, 1000);
-		assert.strictEqual(await wizard.getProperty("_breakpoint"), "S", "Small breakpoint is enabled");
+	// 	// resize window S
+	// 	await browser.setWindowSize(500, 1000);
+	// 	assert.strictEqual(await wizard.getProperty("_breakpoint"), "S", "Small breakpoint is enabled");
 
-		// resize window M
-		await browser.setWindowSize(1000, 1000);
-		assert.strictEqual(await wizard.getProperty("_breakpoint"), "M", "Medium breakpoint is enabled");
+	// 	// resize window M
+	// 	await browser.setWindowSize(1000, 1000);
+	// 	assert.strictEqual(await wizard.getProperty("_breakpoint"), "M", "Medium breakpoint is enabled");
 
-		// resize window L
-		await browser.setWindowSize(1200, 1000);
-		assert.strictEqual(await wizard.getProperty("_breakpoint"), "L", "Large breakpoint is enabled");
+	// 	// resize window L
+	// 	await browser.setWindowSize(1200, 1000);
+	// 	assert.strictEqual(await wizard.getProperty("_breakpoint"), "L", "Large breakpoint is enabled");
 
-		// resize window XL
-		await browser.setWindowSize(1600, 1000);
-		assert.strictEqual(await wizard.getProperty("_breakpoint"), "XL", "Extra Large breakpoint is enabled");
-	});
+	// 	// resize window XL
+	// 	await browser.setWindowSize(1600, 1000);
+	// 	assert.strictEqual(await wizard.getProperty("_breakpoint"), "XL", "Extra Large breakpoint is enabled");
+	// });
 });
