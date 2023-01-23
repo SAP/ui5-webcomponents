@@ -485,6 +485,9 @@ class Wizard extends UI5Element {
 	 */
 	onStepResize() {
 		this.width = this.getBoundingClientRect().width;
+		if (this.width === 0) {
+			return; // Do not re-calculate steps and render until the wizard has non-zero width
+		}
 		this.contentHeight = this.getContentHeight();
 
 		if (this._prevWidth !== this.width || this.contentHeight !== this._prevContentHeight) {
