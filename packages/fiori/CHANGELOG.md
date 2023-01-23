@@ -3,6 +3,53 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.10.0](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0) (2023-01-20)
+
+
+### Bug Fixes
+
+* **docs:** samples typos ([#6236](https://github.com/SAP/ui5-webcomponents/issues/6236)) ([be26877](https://github.com/SAP/ui5-webcomponents/commit/be26877e361cd17407498b370e08cf11c175a2d5))
+* **i18n:** processing text with formater ([#6041](https://github.com/SAP/ui5-webcomponents/issues/6041)) ([f155dee](https://github.com/SAP/ui5-webcomponents/commit/f155deee5ca7b1cb4a0e1e61298a895344321eb0))
+* **ui5-illustrated-message:** i18n texts are fixed ([#6037](https://github.com/SAP/ui5-webcomponents/issues/6037)) ([68350bc](https://github.com/SAP/ui5-webcomponents/commit/68350bc57f50d0f220321a05fb59238bef3dde96)), closes [#5974](https://github.com/SAP/ui5-webcomponents/issues/5974)
+* **ui5-illustrated-message:** resize fixed ([#6179](https://github.com/SAP/ui5-webcomponents/issues/6179)) ([d52c8af](https://github.com/SAP/ui5-webcomponents/commit/d52c8afda49b5a0c880551d516b82cc99a0cebc5))
+* **ui5-shellbar:** fixed typo in samples ([#6128](https://github.com/SAP/ui5-webcomponents/issues/6128)) ([c6799f4](https://github.com/SAP/ui5-webcomponents/commit/c6799f49c60297cdbaad53f9442776630d3ea884)), closes [#6116](https://github.com/SAP/ui5-webcomponents/issues/6116)
+* **ui5-shellbar:** focus on popover fixed ([#6113](https://github.com/SAP/ui5-webcomponents/issues/6113)) ([61c9989](https://github.com/SAP/ui5-webcomponents/commit/61c9989d318c4725eff97c7da70430e11c9eb56f))
+* **ui5-side-navigation:** fixed accessibility of the Popover ([#6045](https://github.com/SAP/ui5-webcomponents/issues/6045)) ([e0e13e1](https://github.com/SAP/ui5-webcomponents/commit/e0e13e11d26abbcb2746e4abd1c72d312212ebaf)), closes [#5827](https://github.com/SAP/ui5-webcomponents/issues/5827)
+* **ui5-side-navigation:** fixed accessibility roles and attributes when Side Navigation is collapsed ([#5877](https://github.com/SAP/ui5-webcomponents/issues/5877)) ([92b9dc9](https://github.com/SAP/ui5-webcomponents/commit/92b9dc99ea4c598f22111dfea3a435e55c585dfc)), closes [#5827](https://github.com/SAP/ui5-webcomponents/issues/5827)
+* **ui5-side-navigation:** focus handling of tree inside popover ([#6155](https://github.com/SAP/ui5-webcomponents/issues/6155)) ([cf024bd](https://github.com/SAP/ui5-webcomponents/commit/cf024bd43e08dd4dccc6cab225b81b3f4f771a74))
+* **ui5-wizard:** allow scrolling when step is bigger than viewport ([#6241](https://github.com/SAP/ui5-webcomponents/issues/6241)) ([259b61a](https://github.com/SAP/ui5-webcomponents/commit/259b61afafd46f1e5bc881bf780e636683769ac1))
+* **ui5-wizard:** prevent step overlapping in navigator ([#6169](https://github.com/SAP/ui5-webcomponents/issues/6169)) ([9349e16](https://github.com/SAP/ui5-webcomponents/commit/9349e167eba0c0feac41004b41abf17fbca348b2)), closes [#6067](https://github.com/SAP/ui5-webcomponents/issues/6067)
+
+
+### Features
+
+* enable TS in main, fiori ([#6064](https://github.com/SAP/ui5-webcomponents/issues/6064)) ([0b56130](https://github.com/SAP/ui5-webcomponents/commit/0b561307b93b8af465dc5bee67650069ee138f7f))
+* fiori `types` folder to TypeScript  ([#6076](https://github.com/SAP/ui5-webcomponents/issues/6076)) ([918b4fb](https://github.com/SAP/ui5-webcomponents/commit/918b4fbe7e14220c46115f7426a3d844f5c6ac1f))
+* migrate illustrated-message component to TS, small refactor ([#6195](https://github.com/SAP/ui5-webcomponents/issues/6195)) ([046c779](https://github.com/SAP/ui5-webcomponents/commit/046c779f654648172619dd720c0d90342ec78fb9))
+* support decorators for custom elements metadata ([#6072](https://github.com/SAP/ui5-webcomponents/issues/6072)) ([fc9ee6e](https://github.com/SAP/ui5-webcomponents/commit/fc9ee6e2af10b4315fde072a50ab37efa180c809))
+* **ui5-button, ui5-date-picker, ui5-calendar:** migrate to TS ([#6173](https://github.com/SAP/ui5-webcomponents/issues/6173)) ([7232ca0](https://github.com/SAP/ui5-webcomponents/commit/7232ca08f286c5dde10080373fb62247f1acf7b7)), closes [#6080](https://github.com/SAP/ui5-webcomponents/issues/6080)
+* **ui5-Illustrated-message:** illustrations update in the default set ([#6013](https://github.com/SAP/ui5-webcomponents/issues/6013)) ([329f80c](https://github.com/SAP/ui5-webcomponents/commit/329f80cca0d9c195e0e776a21d693cb0097d640a))
+* **ui5-Illustrated-message:** updated missing illustration texts ([#6075](https://github.com/SAP/ui5-webcomponents/issues/6075)) ([78c3227](https://github.com/SAP/ui5-webcomponents/commit/78c3227ac5766903df551f6211dbc04c767cea88))
+* **ui5-list, ui5-li, ui5-li-custom:** migrate to TS ([#6166](https://github.com/SAP/ui5-webcomponents/issues/6166)) ([12b3570](https://github.com/SAP/ui5-webcomponents/commit/12b35707c3f0934dcb98fdcde0ed715140a4af4a))
+* **ui5-shellbar:** accessibilityAttributes property added ([#6117](https://github.com/SAP/ui5-webcomponents/issues/6117)) ([056ed9f](https://github.com/SAP/ui5-webcomponents/commit/056ed9fc21c9dac8b6a289d57a23fcb6f9e44c04))
+* **ui5-shellbar:** programmatically show search field ([#6085](https://github.com/SAP/ui5-webcomponents/issues/6085)) ([e0658a6](https://github.com/SAP/ui5-webcomponents/commit/e0658a6503ea0203df74317f57e4fb0a5be7620e)), closes [#5818](https://github.com/SAP/ui5-webcomponents/issues/5818)
+* **ui5-shellbar:** use header semantic element ([#6146](https://github.com/SAP/ui5-webcomponents/issues/6146)) ([9865eb2](https://github.com/SAP/ui5-webcomponents/commit/9865eb2d5825d1ce799fc110611288e5fa090613))
+* **ui5-tree-item-custom:** initial implementation ([#5962](https://github.com/SAP/ui5-webcomponents/issues/5962)) ([b148c23](https://github.com/SAP/ui5-webcomponents/commit/b148c23cf7ed11b4e17c9eda61a20fc48882ba4f))
+* **ui5-viewsettings-dialog:** migrate to Typescript ([#6218](https://github.com/SAP/ui5-webcomponents/issues/6218)) ([ee3bbe4](https://github.com/SAP/ui5-webcomponents/commit/ee3bbe46b070092dffd054b1350f444fa072539e))
+* **ui5-wizard:** adopt responsive paddings ([#6061](https://github.com/SAP/ui5-webcomponents/issues/6061)) ([402bc28](https://github.com/SAP/ui5-webcomponents/commit/402bc28137fab738778f8c7da099c073cc39f45d)), closes [#5597](https://github.com/SAP/ui5-webcomponents/issues/5597)
+
+
+
+
+
+## [1.9.3](https://github.com/SAP/ui5-webcomponents/compare/v1.9.2...v1.9.3) (2022-12-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 ## [1.9.1](https://github.com/SAP/ui5-webcomponents/compare/v1.9.0...v1.9.1) (2022-11-10)
 
 
