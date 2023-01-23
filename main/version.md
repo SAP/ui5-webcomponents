@@ -1,7 +1,5 @@
-commit eea1822a1a72811521eace8d7548d7f3fd48e1b0
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Mon Jan 23 14:09:47 2023 +0200
+commit 83b5a44971714ac238045bf6533b936fc52cfd85
+Author: Oliver Mueller <39769800+OlMue@users.noreply.github.com>
+Date:   Mon Jan 23 17:38:18 2023 +0100
 
-    refactor(ui5-carousel): migrate to TypeScript (#6311)
-    
-    Part of #4337
+    docs(ui5-checkbox): typo red-only -> read-only (#6337)
