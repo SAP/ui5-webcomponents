@@ -485,9 +485,6 @@ class Wizard extends UI5Element {
 	 */
 	onStepResize() {
 		this.width = this.getBoundingClientRect().width;
-		if (this.width === 0) {
-			return; // Do not re-calculate steps and render until the wizard has non-zero width
-		}
 		this.contentHeight = this.getContentHeight();
 
 		if (this._prevWidth !== this.width || this.contentHeight !== this._prevContentHeight) {
@@ -496,7 +493,7 @@ class Wizard extends UI5Element {
 
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
-		this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast(size => Number(size) < this.width)];
+		this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast(size => Number(size) < this.width)] || RESPONSIVE_BREAKPOINTS["0"];
 	}
 
 	attachStepsResizeObserver() {
