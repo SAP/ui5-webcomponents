@@ -1,8 +1,17 @@
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+
+// @ts-ignore
 import { RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON } from "./generated/i18n/i18n-defaults.js";
+
 import ResponsivePopoverTemplate from "./generated/templates/ResponsivePopoverTemplate.lit.js";
+import type { PopupBeforeCloseEventDetail } from "./Popup.js";
 import Popover from "./Popover.js";
 import Dialog from "./Dialog.js";
 import Button from "./Button.js";
@@ -12,43 +21,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 // Styles
 import ResponsivePopoverCss from "./generated/themes/ResponsivePopover.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-responsive-popover",
-	properties: /** @lends sap.ui.webc.main.ResponsivePopover.prototype */ {
-		/**
-		 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
-		 * By default both the header and footer would be displayed.
-		 * @private
-		 */
-		contentOnlyOnDesktop: {
-			type: Boolean,
-		},
-
-		/**
-		 * Used internaly for controls which must not have header.
-		 * @private
-		 */
-		_hideHeader: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines whether a close button will be rendered in the header of the component
-		 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
-		 *
-		 * @private
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @since 1.0.0-rc.16
-		 */
-		_hideCloseButton: {
-			type: Boolean,
-		},
-	},
-};
+type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
 
 /**
  * @class
@@ -79,16 +52,42 @@ const metadata = {
  * @since 1.0.0-rc.6
  * @public
  */
+@customElement("ui5-responsive-popover")
 class ResponsivePopover extends Popover {
+	/**
+	 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
+	 * By default both the header and footer would be displayed.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	contentOnlyOnDesktop!: boolean;
+
+	/**
+	 * Used internaly for controls which must not have header.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_hideHeader!: boolean;
+
+	/**
+	 * Defines whether a close button will be rendered in the header of the component
+	 * <b>Note:</b> If you are using the <code>header</code> slot, this property will have no effect
+	 *
+	 * @private
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @since 1.0.0-rc.16
+	 */
+	@property({ type: Boolean })
+	_hideCloseButton!: boolean;
+
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 	}
 
-	static get metadata() {
-		return metadata;
-	}
-
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return [Popover.styles, ResponsivePopoverCss];
 	}
 
@@ -119,17 +118,24 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Shows popover on desktop and dialog on mobile.
 	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
+	 * @param {boolean} [preventInitialFocus=false] Prevents applying the focus inside the popup
 	 * @public
 	 * @async
+	 * @method
+	 * @name sap.ui.webc.main.ResponsivePopover#showAt
 	 * @returns {Promise} Resolves when the responsive popover is open
 	 */
-	async showAt(opener, preventInitialFocus = false) {
+	async showAt(opener: HTMLElement, preventInitialFocus = false) {
 		if (!isPhone()) {
 			await super.showAt(opener, preventInitialFocus);
 		} else {
 			this.style.display = "contents";
-			this.style.zIndex = getNextZIndex();
+			const nextZIndex = getNextZIndex();
+			if (!nextZIndex) {
+				return;
+			}
+
+			this.style.zIndex = nextZIndex.toString();
 			await this._dialog.show(preventInitialFocus);
 		}
 	}
@@ -137,6 +143,9 @@ class ResponsivePopover extends Popover {
 	/**
 	 * Closes the popover/dialog.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.ResponsivePopover#close
+	 * @returns {void}
 	 */
 	close(escPressed = false, preventRegistryUpdate = false, preventFocusRestore = false) {
 		if (!isPhone()) {
@@ -146,7 +155,7 @@ class ResponsivePopover extends Popover {
 		}
 	}
 
-	toggle(opener) {
+	toggle(opener: HTMLElement) {
 		if (this.isOpen()) {
 			return this.close();
 		}
@@ -155,8 +164,10 @@ class ResponsivePopover extends Popover {
 	}
 
 	/**
-	 * Tells if the responsive popover is open
+	 * Tells if the responsive popover is open.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.ResponsivePopover#isOpen
 	 * @returns {boolean}
 	 */
 	isOpen() {
@@ -164,11 +175,11 @@ class ResponsivePopover extends Popover {
 	}
 
 	get _dialog() {
-		return this.shadowRoot.querySelector("[ui5-dialog]");
+		return this.shadowRoot!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
 	get contentDOM() {
-		return this._isPhone ? this._dialog.contentDOM : super.contentDOM;
+		return isPhone() ? this._dialog.contentDOM : super.contentDOM;
 	}
 
 	get _isPhone() {
@@ -176,33 +187,33 @@ class ResponsivePopover extends Popover {
 	}
 
 	get _displayHeader() {
-		return (this._isPhone || !this.contentOnlyOnDesktop) && super._displayHeader;
+		return (isPhone() || !this.contentOnlyOnDesktop) && super._displayHeader;
 	}
 
 	get _displayFooter() {
-		return this._isPhone || !this.contentOnlyOnDesktop;
+		return isPhone() || !this.contentOnlyOnDesktop;
 	}
 
 	get _closeDialogAriaLabel() {
-		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON);
+		return ResponsivePopover.i18nBundle.getText(RESPONSIVE_POPOVER_CLOSE_DIALOG_BUTTON as I18nText);
 	}
 
-	_beforeDialogOpen(event) {
+	_beforeDialogOpen(e: CustomEvent<PopupBeforeCloseEventDetail>) {
 		this.open = true;
 		this.opened = true;
-		this._propagateDialogEvent(event);
+		this._propagateDialogEvent(e);
 	}
 
-	_afterDialogClose(event) {
+	_afterDialogClose(e: CustomEvent) {
 		this.open = false;
 		this.opened = false;
-		this._propagateDialogEvent(event);
+		this._propagateDialogEvent(e);
 	}
 
-	_propagateDialogEvent(event) {
-		const type = event.type.replace("ui5-", "");
+	_propagateDialogEvent(e: CustomEvent) {
+		const type = e.type.replace("ui5-", "");
 
-		this.fireEvent(type, event.detail);
+		this.fireEvent(type, e.detail);
 	}
 
 	get isModal() {
@@ -221,3 +232,6 @@ class ResponsivePopover extends Popover {
 ResponsivePopover.define();
 
 export default ResponsivePopover;
+export type {
+	ResponsivePopoverBeforeCloseEventDetail,
+};

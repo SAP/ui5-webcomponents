@@ -73,7 +73,7 @@ class CardHeader extends UI5Element {
 	 * Defines the title text.
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Card.prototype.titleText
+	 * @name sap.ui.webc.main.CardHeader.prototype.titleText
 	 * @public
 	*/
 	@property()
@@ -83,7 +83,7 @@ class CardHeader extends UI5Element {
 	 * Defines the subtitle text.
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Card.prototype.subtitleText
+	 * @name sap.ui.webc.main.CardHeader.prototype.subtitleText
 	 * @public
 	*/
 	@property()
@@ -93,7 +93,7 @@ class CardHeader extends UI5Element {
 	 * Defines the status text.
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Card.prototype.status
+	 * @name sap.ui.webc.main.CardHeader.prototype.status
 	 * @public
 	*/
 	@property()
@@ -104,7 +104,7 @@ class CardHeader extends UI5Element {
 	 * e.g gets hover effect, gets focus outline and <code>click</code> event is fired, when pressed.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Card.prototype.interactive
+	 * @name sap.ui.webc.main.CardHeader.prototype.interactive
 	 * @public
 	*/
 	@property({ type: Boolean })
@@ -127,7 +127,7 @@ class CardHeader extends UI5Element {
 	 * Defines an avatar image, displayed in the left most part of the header.
 	 * @type {HTMLElement[]}
 	 * @slot
-	 * @name sap.ui.webc.main.Card.prototype.avatar
+	 * @name sap.ui.webc.main.CardHeader.prototype.avatar
 	 * @public
 	*/
 	@slot()
@@ -137,7 +137,7 @@ class CardHeader extends UI5Element {
 	 * Defines an action, displayed in the right most part of the header.
 	 * @type {HTMLElement[]}
 	 * @slot
-	 * @name sap.ui.webc.main.Card.prototype.action
+	 * @name sap.ui.webc.main.CardHeader.prototype.action
 	 * @public
 	*/
 	@slot()

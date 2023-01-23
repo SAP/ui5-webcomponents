@@ -46,7 +46,7 @@ import type InputSuggestions from "./features/InputSuggestions.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
-import type { ScrollEventDetail } from "./Popup.js";
+import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
@@ -523,9 +523,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	@property({ type: Boolean, noAttribute: true })
 	_inputIconFocused!: boolean;
 
-	@slot({ type: HTMLElement })
-	icon!: Array<Icon>;
-
 	/**
 	 * Defines the suggestion items.
 	 * <br><br>
@@ -565,12 +562,23 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	suggestionItems!: Array<SuggestionItem>;
 
 	/**
+	 * Defines the icon to be displayed in the component.
+	 *
+	 * @type {sap.ui.webc.main.IIcon[]}
+	 * @name sap.ui.webc.main.Input.prototype.icon
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	icon!: Array<Icon>;
+
+	/**
 	 * The slot is used for native <code>input</code> HTML element to enable form submit,
 	 * when <code>name</code> property is set.
 	 * @type {HTMLElement[]}
 	 * @private
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	formSupport!: Array<HTMLElement>;
 
 	/**
@@ -590,7 +598,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
 	hasSuggestionItemSelected: boolean;
@@ -1021,7 +1029,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._clearIconClicked = true;
 	}
 
-	_scroll(e: CustomEvent<ScrollEventDetail>) {
+	_scroll(e: CustomEvent<PopupScrollEventDetail>) {
 		this.fireEvent<SuggestionScrollEventDetail>("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
@@ -1202,10 +1210,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Manually opens the suggestions popover, assuming suggestions are enabled. Items must be preloaded for it to open.
-	 * @since 1.3.0
 	 * @public
+	 * @method
 	 * @name sap.ui.webc.main.Input#openPicker
 	 * @return {void}
+	 * @since 1.3.0
 	 */
 	openPicker() {
 		if (!this.suggestionItems.length || this.disabled || this.readonly) {
@@ -1708,7 +1717,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	static get dependencies() {
 		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
 
-		return [Popover, Icon].concat(Suggestions ? Suggestions.dependencies : []);
+		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
 	}
 
 	static async onDefine() {

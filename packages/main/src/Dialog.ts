@@ -259,24 +259,26 @@ class Dialog extends Popup {
 	/**
 	 * Shows the dialog.
 	 *
-	 * @param {boolean} preventInitialFocus Prevents applying the focus inside the popup
+	 * @param {boolean} [preventInitialFocus=false] Prevents applying the focus inside the popup
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.Dialog#show
 	 * @async
 	 * @returns {Promise} Resolves when the dialog is open
-	 * @public
 	 */
 	async show(preventInitialFocus = false) {
 		await super._open(preventInitialFocus);
 	}
 
-	get isModal() { // Required by Popup.js
+	get isModal() {
 		return true;
 	}
 
-	get shouldHideBackdrop() { // Required by Popup.js
+	get shouldHideBackdrop() {
 		return false;
 	}
 
-	get _ariaLabelledBy() { // Required by Popup.js
+	get _ariaLabelledBy() {
 		let ariaLabelledById;
 
 		if (this.headerText !== "" && !this._ariaLabel) {

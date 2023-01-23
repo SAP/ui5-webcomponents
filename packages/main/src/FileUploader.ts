@@ -312,6 +312,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @readonly
 	 * @type {FileList}
 	 * @public
+	 * @name sap.ui.webc.main.FileUploader.prototype.files
 	 */
 	get files() {
 		if (this._input) {
