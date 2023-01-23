@@ -15,10 +15,15 @@
 	"version": "1.10.0",
 	"command": {
 		"publish": {
+			"allowBranch": "*",
 			"conventionalCommits": true
+			"verifyAccess": false,
 		},
 		"version": {
+			"allowBranch": "*",
 			"message": "chore(release): publish %s"
+			"conventionalCommits": true,
+			"verifyAccess": false,
 		}
 	},
 	"npmClient": "yarn",
