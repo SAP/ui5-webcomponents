@@ -16,14 +16,14 @@
 	"command": {
 		"publish": {
 			"allowBranch": "*",
-			"conventionalCommits": true
-			"verifyAccess": false,
+			"conventionalCommits": true,
+			"verifyAccess": false
 		},
 		"version": {
 			"allowBranch": "*",
 			"message": "chore(release): publish %s"
 			"conventionalCommits": true,
-			"verifyAccess": false,
+			"verifyAccess": false
 		}
 	},
 	"npmClient": "yarn",
