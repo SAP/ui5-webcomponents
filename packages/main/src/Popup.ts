@@ -198,8 +198,8 @@ abstract class Popup extends UI5Element {
 	 * @public
 	 * @since 1.10.0
 	 */
-	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.dialog })
-	accessibleRole?: PopupAccessibleRole;
+	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
+	accessibleRole!: PopupAccessibleRole;
 
 	/**
 	 * Defines the current media query size.
@@ -623,7 +623,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	get _role() {
-		return (this.accessibleRole === PopupAccessibleRole.none) ? undefined : this.accessibleRole;
+		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : this.accessibleRole.toLowerCase();
 	}
 
 	get contentDOM(): HTMLElement {

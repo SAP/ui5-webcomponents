@@ -807,7 +807,7 @@ class Popover extends Popup {
 	}
 
 	get _ariaModal() {
-		return (this.accessibleRole === PopupAccessibleRole.none) ? undefined : "true";
+		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : "true";
 	}
 
 	get styles() {
