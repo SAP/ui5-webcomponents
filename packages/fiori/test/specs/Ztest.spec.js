@@ -9,7 +9,7 @@ describe("BarcodeScannerDialog Behavior", () => {
 		// Setup: deny permissions to access the camera
 		await browser.setPermissions({ name: 'camera'}, 'denied');
 		const btnScan = await browser.$("#btnScan"),
-		scanError = await browser.$("#scanError");
+			scanError = await browser.$("#scanError");
 
 		await btnScan.click();
 
