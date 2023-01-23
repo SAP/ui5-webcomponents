@@ -7,15 +7,18 @@ on:
         description: 'New version'     
         required: true
       tag:
-          description: 'Tag'     
-          required: true
-          default: latest
+        description: 'Tag'     
+        required: true
+        default: latest
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
         node-version: 16
@@ -29,6 +32,13 @@ jobs:
 
     - name: Publish
       env:
+        NPM_USERNAME: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        node ./.github/actions/release.js --version=${{ github.event.inputs.version }} --tag=${{ github.event.inputs.tag }}
+        npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor}}@users.noreply.github.com"
+        yarn lerna version ${{ github.event.inputs.version }} --conventional-commits --yes --create-release github 
+        yarn lerna publish from-git --yes
