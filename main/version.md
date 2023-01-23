@@ -1,5 +1,5 @@
-commit b4e45bd8973e8f08fec87be5f6091f91a4acaec7
+commit 691b231f5d79f00e5f0a19e4a3c65a4409f254b8
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 23 08:14:01 2023 +0200
+Date:   Mon Jan 23 09:35:54 2023 +0200
 
-    chore: release v1.10.0 (#6326)
+    chore: auto release and changelog in GitHub (#6327)
