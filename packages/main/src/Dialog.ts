@@ -291,7 +291,7 @@ class Dialog extends Popup {
 	}
 
 	get _ariaModal() {
-		return "true";
+		return (this.accessibleRole === PopupAccessibleRole.none) ? undefined : "true";
 	}
 
 	get _displayProp() {
@@ -342,14 +342,13 @@ class Dialog extends Popup {
 	}
 
 	get _role() {
-		if (this.accessibleRole === PopupAccessibleRole.None) {
-			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("role");
-			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("aria-modal");
+		if (this.accessibleRole === PopupAccessibleRole.none) {
+			return undefined;
 		}
 		if (this.accessibleRole !== (this.constructor as typeof UI5Element).getMetadata().getProperties().accessibleRole.defaultValue) {
 			return this.accessibleRole;
 		}
-		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? PopupAccessibleRole.AlertDialog : PopupAccessibleRole.Dialog;
+		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? PopupAccessibleRole.alertdialog : PopupAccessibleRole.dialog;
 	}
 
 	_show() {

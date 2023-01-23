@@ -14,21 +14,21 @@ enum PopupAccessibleRole {
 	 * @public
 	 * @type {None}
 	 */
-	None = "None",
+	none = "none",
 
 	/**
-	 * Represents the ARIA role "Dialog".
+	 * Represents the ARIA role "dialog".
 	 * @public
 	 * @type {Dialog}
 	 */
-	Dialog = "Dialog",
+	dialog = "dialog",
 
 	/**
-	 * Represents the ARIA role "AlertDialog".
+	 * Represents the ARIA role "alertdialog".
 	 * @public
 	 * @type {AlertDialog}
 	 */
-	AlertDialog = "AlertDialog",
+	alertdialog = "alertdialog",
 }
 
 export default PopupAccessibleRole;

@@ -190,15 +190,16 @@ abstract class Popup extends UI5Element {
 	accessibleNameRef!: string;
 
 	/**
-	 * Allows setting a custom role
+	 * Allows setting a custom role. Available options are:
+	 * <code>Dialog</code>, <code>None</code> and <code>AlertDialog</code>.
 	 * @type {sap.ui.webc.main.types.PopupAccessibleRole}
 	 * @name sap.ui.webc.main.Popup.prototype.accessibleRole
 	 * @defaultvalue "Dialog"
 	 * @public
 	 * @since 1.10.0
 	 */
-	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
-	accessibleRole!: PopupAccessibleRole;
+	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.dialog })
+	accessibleRole?: PopupAccessibleRole;
 
 	/**
 	 * Defines the current media query size.
@@ -606,7 +607,7 @@ abstract class Popup extends UI5Element {
 	 * @abstract
 	 * @returns {string}
 	 */
-	abstract get _ariaModal(): string
+	abstract get _ariaModal(): string | undefined
 
 	/**
 	 * Ensures ariaLabel is never null or empty string
@@ -622,11 +623,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	get _role() {
-		if (this.accessibleRole === PopupAccessibleRole.None) {
-			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("role");
-			this.shadowRoot!.querySelector(".ui5-popup-root")?.removeAttribute("aria-modal");
-		}
-		return this.accessibleRole;
+		return (this.accessibleRole === PopupAccessibleRole.none) ? undefined : this.accessibleRole;
 	}
 
 	get contentDOM(): HTMLElement {
