@@ -1,5 +1,5 @@
-commit a7032d86e27e46620b2779eedef77362baa21cfd
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Jan 20 13:28:14 2023 +0200
+commit b4e45bd8973e8f08fec87be5f6091f91a4acaec7
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Mon Jan 23 08:14:01 2023 +0200
 
-    chore: mark JSdoc function parameters as optional (#6322)
+    chore: release v1.10.0 (#6326)

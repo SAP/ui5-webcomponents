@@ -366,13 +366,13 @@ const getSharedResource = (namespace, initialValue) => {
   return current;
 };
 const VersionInfo = {
-  version: "1.9.1",
+  version: "1.10.0",
   major: 1,
-  minor: 9,
-  patch: 1,
+  minor: 10,
+  patch: 0,
   suffix: "",
   isNext: false,
-  buildTime: 1674214155
+  buildTime: 1674454506
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
