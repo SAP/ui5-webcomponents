@@ -51,8 +51,8 @@
   },
   "devDependencies": {
     "@ui5/webcomponents-tools": "1.10.0",
-    "@ui5/webcomponents-icons-tnt": "1.10.1",
-    "@ui5/webcomponents-icons-business-suite": "1.10.1",
+    "@ui5/webcomponents-icons-tnt": "1.10.0",
+    "@ui5/webcomponents-icons-business-suite": "1.10.0",
     "chromedriver": "108.0.0"
   }
 }
