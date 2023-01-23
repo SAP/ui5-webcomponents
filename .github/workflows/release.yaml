@@ -37,8 +37,8 @@ jobs:
         NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_NAME : $ {{ secrets.UI5_WEBCOMP_BOT_NAME }}
-        GH_EMAIL : $ {{ secrets.UI5_WEBCOMP_BOT_EMAIL }}
+        GH_NAME: $ {{ secrets.UI5_WEBCOMP_BOT_NAME }}
+        GH_EMAIL: $ {{ secrets.UI5_WEBCOMP_BOT_EMAIL }}
       run: |
         npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
         git config user.name "${{ GH_NAME }}"
