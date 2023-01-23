@@ -3,9 +3,10 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'New version'     
+      release_type:
+        description: 'Release Type: patch | minor | major'     
         required: true
+        default: 'patch'
       tag:
         description: 'Tag'     
         required: true
@@ -40,5 +41,5 @@ jobs:
         npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
         git config user.name "${{ github.actor }}"
         git config user.email "${{ github.actor}}@users.noreply.github.com"
-        yarn lerna version ${{ github.event.inputs.version }} --conventional-commits --yes --create-release github 
+        yarn lerna version ${{ github.event.inputs.release_type }} --conventional-commits --yes --create-release github 
         yarn lerna publish from-git --yes

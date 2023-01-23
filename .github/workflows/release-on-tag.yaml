@@ -1,4 +1,4 @@
-name: Release on tag
+name: Release-on-tag
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
-  build-and-release:
+  build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -29,6 +29,11 @@ jobs:
     - name: Build
       run: yarn build
 
+  create-release:
+    needs: build
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
     - name: Get Branch
       run: |
         raw=$(git branch -r --contains ${{ github.ref }})
