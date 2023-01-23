@@ -1,8 +1,4 @@
-enum MEDIA {
-	PHONE = "phone",
-	TABLET = "tablet",
-	DESKTOP = "desktop",
-}
+import { MEDIA }  from "../FlexibleColumnLayout.js";
 
 type LayoutConfiguration = {
 	[key in MEDIA]: {
@@ -265,6 +261,5 @@ export {
 };
 
 export type {
-	MEDIA,
 	LayoutConfiguration,
 };
