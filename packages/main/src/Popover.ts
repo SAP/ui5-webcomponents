@@ -343,7 +343,7 @@ class Popover extends Popup {
 	/**
 	 * Shows the popover.
 	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
+	 * @param {boolean} [preventInitialFocus=false] prevents applying the focus inside the popover
 	 * @public
 	 * @async
 	 * @method
