@@ -1,4 +1,4 @@
-import { MEDIA }  from "../FlexibleColumnLayout.js";
+import { MEDIA } from "../FlexibleColumnLayout.js";
 
 type LayoutConfiguration = {
 	[key in MEDIA]: {
