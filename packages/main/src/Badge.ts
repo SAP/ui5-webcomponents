@@ -90,7 +90,7 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the icon to be displayed in the component.
 	 *
-	 * @type {sap.ui.webc.main.IIcon}
+	 * @type {sap.ui.webc.main.IIcon[]}
 	 * @name sap.ui.webc.main.Badge.prototype.icon
 	 * @slot
 	 * @public
