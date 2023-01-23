@@ -1,20 +1,27 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Release on tag
 
 on:
   push:
     tags:
-      - "v*"
+      - "v*" # Push events to matching v*, i.e. v1.0, v20.15.10
 
 jobs:
-  publish-npm:
+  build-and-release:
     runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
         node-version: 16
         cache: 'yarn'
+    - name: Set env
+      run: |
+          VERSION=${GITHUB_REF_NAME#v}
+          echo Version: $VERSION
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
     - name: Install
       run: yarn --frozen-lockfile
@@ -22,26 +29,24 @@ jobs:
     - name: Build
       run: yarn build
 
+    - name: Get Branch
+      run: |
+        raw=$(git branch -r --contains ${{ github.ref }})
+        BRANCH=${raw/origin\/}
+        echo BRANCH: $BRANCH
+        echo "BRANCH=$BRANCH" >> $GITHUB_ENV
+
     - name: Publish
       env:
+        NPM_USERNAME: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
-        node ./.github/actions/release.js
-
-  create-release:
-    needs: publish-npm
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+        echo ${{ env.BRANCH }}
+        npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
+        git config user.name "${{ github.actor }}"
+        git config user.email "${{ github.actor}}@users.noreply.github.com"
+        git checkout main
+        yarn lerna version ${{ env.VERSION }} --conventional-commits --yes --force-git-tag --create-release github 
+        yarn lerna publish from-git --yes
