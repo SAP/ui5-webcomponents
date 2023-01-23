@@ -3,11 +3,14 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import I18nBundle, { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -132,6 +135,7 @@ type AccessibilityRoles = {
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-flexible-column-layout")
+@fastNavigation
 
 /**
  * Fired when the layout changes via user interaction by clicking the arrows
@@ -249,7 +253,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @private
 	*/
 	@property({ validator: Float, defaultValue: 0 })
-	private _width!: number;
+	_width!: number;
 
 	/**
 	* Defines the effective columns layout,
@@ -261,7 +265,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @private
 	*/
 	@property({ type: Object, defaultValue: undefined })
-	private _columnLayout?: ColumnLayout;
+	_columnLayout?: ColumnLayout;
 
 	/**
 	* Defines the visible columns count - 1, 2 or 3.
@@ -270,8 +274,8 @@ class FlexibleColumnLayout extends UI5Element {
 	* @defaultvalue 1
 	* @private
 	*/
-	@property({ validator: Integer, defaultValue: 1 })
-	private _visibleColumns!: number;
+	@property({ validator: Integer, defaultValue: 0 })
+	_visibleColumns!: number;
 
 	/**
 	* Allows the user to replace the whole layouts configuration
@@ -281,7 +285,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @sap-restricted
 	*/
 	@property({ type: Object, defaultValue: undefined })
-	private _layoutsConfiguration?: LayoutConfiguration;
+	_layoutsConfiguration?: LayoutConfiguration;
 
 	/**
 	* Defines the content in the start column.
@@ -314,9 +318,9 @@ class FlexibleColumnLayout extends UI5Element {
 	endColumn!: Array<HTMLElement>;
 
 	initialRendering: boolean;
-	private _handleResize: () => void;
+	_handleResize: () => void;
 	static i18nBundle: I18nBundle;
-	private _prevLayout: FCLLayout | null;
+	_prevLayout: FCLLayout | null;
 
 	constructor() {
 		super();
@@ -379,7 +383,7 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 
 		// store the previous layout
-		const prevLayoutHash = this.columnLayout?.join();
+		const prevLayoutHash = this.columnLayout!.join();
 
 		// update the column layout, based on the current width
 		this.updateLayout();
@@ -481,7 +485,7 @@ class FlexibleColumnLayout extends UI5Element {
 		(e.target as HTMLElement).classList.add("ui5-fcl-column--hidden");
 	}
 
-	nextLayout(layout: FCLLayout, arrowsInfo: { start?: boolean, end?: boolean }) {
+	nextLayout(layout: FCLLayout, arrowsInfo: { start: boolean, end: boolean }) {
 		if (!arrowsInfo) {
 			return;
 		}
@@ -500,7 +504,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	calcVisibleColumns(colLayot: Array<string>) {
-		return colLayot.filter(col => col !== null && col !== undefined).length;
+		return colLayot.filter(col => col !== "0px").length;
 	}
 
 	fireLayoutChange(arrowUsed: boolean, resize: boolean) {
@@ -527,7 +531,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.columnLayout
 	* @public
 	*/
-	get columnLayout() {
+	get columnLayout(): ColumnLayout | undefined {
 		return this._columnLayout;
 	}
 
@@ -539,7 +543,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.startColumnVisible
 	* @public
 	*/
-	get startColumnVisible() {
+	get startColumnVisible(): boolean {
 		if (this._columnLayout) {
 			return this._columnLayout[0] !== "0px";
 		}
@@ -555,7 +559,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.midColumnVisible
 	* @public
 	*/
-	get midColumnVisible() {
+	get midColumnVisible(): boolean {
 		if (this._columnLayout) {
 			return this._columnLayout[1] !== "0px";
 		}
@@ -571,7 +575,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.endColumnVisible
 	* @public
 	*/
-	get endColumnVisible() {
+	get endColumnVisible(): boolean {
 		if (this._columnLayout) {
 			return this._columnLayout[2] !== "0px";
 		}
@@ -587,7 +591,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @name sap.ui.webc.fiori.FlexibleColumnLayout.prototype.visibleColumns
 	* @public
 	*/
-	get visibleColumns() {
+	get visibleColumns(): number {
 		return this._visibleColumns;
 	}
 
@@ -813,3 +817,5 @@ class FlexibleColumnLayout extends UI5Element {
 FlexibleColumnLayout.define();
 
 export default FlexibleColumnLayout;
+
+export { MEDIA };
