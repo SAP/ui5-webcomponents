@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "",
   isNext: false,
-  buildTime: 1674473449
+  buildTime: 1674474700
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -2999,7 +2999,7 @@ function _invalidate(changeInfo) {
   renderDeferred(this);
   this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
-let metadata$K = {};
+let metadata$J = {};
 class UI5Element extends HTMLElement {
   constructor() {
     super();
@@ -3533,10 +3533,10 @@ class UI5Element extends HTMLElement {
     }
   }
   static get metadata() {
-    return metadata$K;
+    return metadata$J;
   }
   static set metadata(newMetadata) {
-    metadata$K = newMetadata;
+    metadata$J = newMetadata;
   }
   static get styles() {
     return "";
@@ -8478,6 +8478,12 @@ var ListSeparators;
   ListSeparators2["None"] = "None";
 })(ListSeparators || (ListSeparators = {}));
 var ListSeparators$1 = ListSeparators;
+const languageAware = (target) => {
+  if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
+    target.decoratorMetadata = {};
+  }
+  target.decoratorMetadata.languageAware = true;
+};
 var BusyIndicatorSize;
 (function(BusyIndicatorSize2) {
   BusyIndicatorSize2["Small"] = "Small";
@@ -8582,7 +8588,7 @@ var defaultTheme$1 = { packageName: "@ui5/webcomponents", fileName: "themes/sap_
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var labelCss = { packageName: "@ui5/webcomponents", fileName: "themes/Label.css", content: ':host(:not([hidden])){display:inline-flex}:host{max-width:100%;color:var(--sapContent_LabelColor);font-family:"72override",var(--sapFontFamily);font-size:var(--sapFontSize);font-weight:400;cursor:text}.ui5-label-root{width:100%;cursor:inherit}:host([wrapping-type=Normal]) .ui5-label-root{white-space:normal}:host(:not([wrapping-type=Normal])) .ui5-label-root{display:inline-block;white-space:nowrap}bdi{content:"";padding-right:.075rem}:host(:not([wrapping-type=Normal])) .ui5-label-text-wrapper{text-overflow:ellipsis;overflow:hidden;display:inline-block;vertical-align:top;max-width:100%}:host(:not([wrapping-type=Normal])[required][show-colon]) .ui5-label-text-wrapper,:host(:not([wrapping-type=Normal])[required][show-colon]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari{max-width:calc(100% - .8rem)}:host(:not([wrapping-type=Normal])[required]) .ui5-label-text-wrapper{max-width:calc(100% - .475rem)}:host(:not([wrapping-type=Normal])[required]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari{max-width:calc(100% - .425rem)}:host(:not([wrapping-type=Normal])[show-colon]) .ui5-label-text-wrapper{max-width:calc(100% - .125rem)}:host([show-colon]) .ui5-label-required-colon{margin-left:-.05rem}:host([show-colon]) .ui5-label-required-colon:before{content:":"}:host([required]) .ui5-label-required-colon:after{content:"*";color:var(--sapField_RequiredColor);font-size:1.25rem;font-weight:700;position:relative;font-style:normal;vertical-align:middle;line-height:0}:host([required][show-colon]) .ui5-label-required-colon:after{margin-inline-start:.125rem}' };
-var __decorate$1b = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+var __decorate$1c = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
   var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
   if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
     r2 = Reflect.decorate(decorators, target, key, desc);
@@ -8620,19 +8626,19 @@ let Label = class Label2 extends UI5Element {
     }
   }
 };
-__decorate$1b([
+__decorate$1c([
   property()
 ], Label.prototype, "for", void 0);
-__decorate$1b([
+__decorate$1c([
   property({ type: Boolean })
 ], Label.prototype, "showColon", void 0);
-__decorate$1b([
+__decorate$1c([
   property({ type: Boolean })
 ], Label.prototype, "required", void 0);
-__decorate$1b([
+__decorate$1c([
   property({ type: WrappingType$1, defaultValue: WrappingType$1.None })
 ], Label.prototype, "wrappingType", void 0);
-Label = __decorate$1b([
+Label = __decorate$1c([
   customElement("ui5-label")
 ], Label);
 Label.define();
@@ -8927,35 +8933,18 @@ var defaultTexts = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.definePr
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => defaultThemeBase);
 registerThemePropertiesLoader("@ui5/webcomponents", "sap_fiori_3", () => defaultTheme$1);
 var busyIndicatorCss = { packageName: "@ui5/webcomponents", fileName: "themes/BusyIndicator.css", content: ':host(:not([hidden])){display:inline-block}:host([_is-busy]){color:var(--_ui5_busy_indicator_color)}:host([size=Small]) .ui5-busy-indicator-root{min-width:1.5rem;min-height:.5rem}:host([size=Small][text]:not([text=""])) .ui5-busy-indicator-root{min-height:1.75rem}:host([size=Small]) .ui5-busy-indicator-circle{width:.5rem;height:.5rem}:host(:not([size])) .ui5-busy-indicator-root,:host([size=Medium]) .ui5-busy-indicator-root{min-width:3rem;min-height:1rem}:host(:not([size])[text]:not([text=""])) .ui5-busy-indicator-root,:host([size=Medium][text]:not([text=""])) .ui5-busy-indicator-root{min-height:2.25rem}:host(:not([size])) .ui5-busy-indicator-circle,:host([size=Medium]) .ui5-busy-indicator-circle{width:1rem;height:1rem}:host([size=Large]) .ui5-busy-indicator-root{min-width:6rem;min-height:2rem}:host([size=Large][text]:not([text=""])) .ui5-busy-indicator-root{min-height:3.25rem}:host([size=Large]) .ui5-busy-indicator-circle{width:2rem;height:2rem}.ui5-busy-indicator-root{display:flex;justify-content:center;align-items:center;position:relative;background-color:inherit}.ui5-busy-indicator-busy-area{position:absolute;z-index:99;left:0;right:0;top:0;bottom:0;display:flex;justify-content:center;align-items:center;background-color:inherit;flex-direction:column}.ui5-busy-indicator-busy-area:focus-visible{outline:var(--_ui5_busy_indicator_focus_outline);outline-offset:-2px;border-radius:var(--_ui5_busy_indicator_focus_border_radius)}.ui5-busy-indicator-circles-wrapper{line-height:0}.ui5-busy-indicator-circle{display:inline-block;background-color:currentColor;border-radius:50%}.ui5-busy-indicator-circle:before{content:"";width:100%;height:100%;border-radius:100%}.circle-animation-0{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite}.circle-animation-1{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite;animation-delay:.2s}.circle-animation-2{animation:grow 1.6s cubic-bezier(.32,.06,.85,1.11) infinite;animation-delay:.4s}.ui5-busy-indicator-text{width:100%;margin-top:.25rem;text-align:center}@keyframes grow{0%,50%,to{-webkit-transform:scale(.5);-moz-transform:scale(.5);transform:scale(.5)}25%{-webkit-transform:scale(1);-moz-transform:scale(1);transform:scale(1)}}' };
-const metadata$J = {
-  tag: "ui5-busy-indicator",
-  languageAware: true,
-  slots: {
-    "default": {
-      type: Node
-    }
-  },
-  properties: {
-    text: {
-      type: String
-    },
-    size: {
-      type: BusyIndicatorSize$1,
-      defaultValue: BusyIndicatorSize$1.Medium
-    },
-    active: {
-      type: Boolean
-    },
-    delay: {
-      type: Integer,
-      defaultValue: 1e3
-    },
-    _isBusy: {
-      type: Boolean
-    }
-  }
+var __decorate$1b = globalThis && globalThis.__decorate || function(decorators, target, key, desc) {
+  var c2 = arguments.length, r2 = c2 < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d2;
+  if (typeof Reflect === "object" && typeof Reflect.decorate === "function")
+    r2 = Reflect.decorate(decorators, target, key, desc);
+  else
+    for (var i2 = decorators.length - 1; i2 >= 0; i2--)
+      if (d2 = decorators[i2])
+        r2 = (c2 < 3 ? d2(r2) : c2 > 3 ? d2(target, key, r2) : d2(target, key)) || r2;
+  return c2 > 3 && r2 && Object.defineProperty(target, key, r2), r2;
 };
-class BusyIndicator extends UI5Element {
+var BusyIndicator_1;
+let BusyIndicator = BusyIndicator_1 = class BusyIndicator2 extends UI5Element {
   constructor() {
     super();
     this._keydownHandler = this._handleKeydown.bind(this);
@@ -8977,9 +8966,6 @@ class BusyIndicator extends UI5Element {
     this.removeEventListener("keydown", this._keydownHandler, true);
     this.removeEventListener("keyup", this._preventEventHandler, true);
   }
-  static get metadata() {
-    return metadata$J;
-  }
   static get styles() {
     return busyIndicatorCss;
   }
@@ -8993,10 +8979,10 @@ class BusyIndicator extends UI5Element {
     return [Label$1];
   }
   static async onDefine() {
-    BusyIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+    BusyIndicator_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
   }
   get ariaTitle() {
-    return BusyIndicator.i18nBundle.getText(BUSY_INDICATOR_TITLE);
+    return BusyIndicator_1.i18nBundle.getText(BUSY_INDICATOR_TITLE);
   }
   get labelId() {
     return this.text ? `${this._id}-label` : void 0;
@@ -9024,31 +9010,51 @@ class BusyIndicator extends UI5Element {
       this._isBusy = false;
     }
   }
-  _handleKeydown(event2) {
+  _handleKeydown(e2) {
     if (!this._isBusy) {
       return;
     }
-    event2.stopImmediatePropagation();
-    if (isTabNext(event2)) {
+    e2.stopImmediatePropagation();
+    if (isTabNext(e2)) {
       this.focusForward = true;
       this.shadowRoot.querySelector("[data-ui5-focus-redirect]").focus();
       this.focusForward = false;
     }
   }
-  _preventEvent(event2) {
+  _preventEvent(e2) {
     if (this._isBusy) {
-      event2.stopImmediatePropagation();
+      e2.stopImmediatePropagation();
     }
   }
-  _redirectFocus(event2) {
+  _redirectFocus(e2) {
     if (this.focusForward) {
       return;
     }
-    event2.preventDefault();
+    e2.preventDefault();
     this.shadowRoot.querySelector(".ui5-busy-indicator-busy-area").focus();
   }
-}
+};
+__decorate$1b([
+  property()
+], BusyIndicator.prototype, "text", void 0);
+__decorate$1b([
+  property({ type: BusyIndicatorSize$1, defaultValue: BusyIndicatorSize$1.Medium })
+], BusyIndicator.prototype, "size", void 0);
+__decorate$1b([
+  property({ type: Boolean })
+], BusyIndicator.prototype, "active", void 0);
+__decorate$1b([
+  property({ validator: Integer, defaultValue: 1e3 })
+], BusyIndicator.prototype, "delay", void 0);
+__decorate$1b([
+  property({ type: Boolean })
+], BusyIndicator.prototype, "_isBusy", void 0);
+BusyIndicator = BusyIndicator_1 = __decorate$1b([
+  customElement("ui5-busy-indicator"),
+  languageAware
+], BusyIndicator);
 BusyIndicator.define();
+var BusyIndicator$1 = BusyIndicator;
 const block0$1L = (context, tags, suffix) => effectiveHtml`<div class="${o$1(context.classes.root)}" @focusin="${context._onfocusin}" @keydown="${context._onkeydown}" @ui5-_press=${l(context.onItemPress)} @ui5-close=${l(context.onItemClose)} @ui5-toggle=${l(context.onItemToggle)} @ui5-_focused=${l(context.onItemFocused)} @ui5-_forward-after=${l(context.onForwardAfter)} @ui5-_forward-before=${l(context.onForwardBefore)} @ui5-_selection-requested=${l(context.onSelectionRequested)} @ui5-_focus-requested=${l(context.onFocusRequested)}><div class="ui5-list-scroll-container">${context.header.length ? block1$1q() : void 0}${context.shouldRenderH1 ? block2$1d(context) : void 0}${context.hasData ? block3$$(context) : void 0}<span id="${l(context._id)}-modeLabel" class="ui5-hidden-text">${l(context.ariaLabelModeText)}</span><ul id="${l(context._id)}-listUl" class="ui5-list-ul" role="${l(context.accessibleRole)}" aria-label="${l(context.ariaLabelTxt)}" aria-labelledby="${l(context.ariaLabelledBy)}" aria-roledescription="${l(context.accessibleRoleDescription)}"><slot></slot>${context.showNoDataText ? block4$Q(context) : void 0}</ul>${context.growsWithButton ? block5$J(context) : void 0}${context.footerText ? block6$A(context) : void 0}${context.hasData ? block7$v(context) : void 0}<span tabindex="-1" aria-hidden="true" class="ui5-list-end-marker"></span></div>${context.busy ? block8$u(context, tags, suffix) : void 0}</div> `;
 const block1$1q = (context, tags, suffix) => effectiveHtml`<slot name="header" />`;
 const block2$1d = (context, tags, suffix) => effectiveHtml`<header id="${l(context.headerID)}" class="ui5-list-header">${l(context.headerText)}</header>`;
@@ -9091,7 +9097,7 @@ let List = List_1 = class List2 extends UI5Element {
     List_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
   }
   static get dependencies() {
-    return [BusyIndicator];
+    return [BusyIndicator$1];
   }
   constructor() {
     super();
@@ -10664,12 +10670,6 @@ var ValueState;
   ValueState2["Information"] = "Information";
 })(ValueState || (ValueState = {}));
 var ValueState$1 = ValueState;
-const languageAware = (target) => {
-  if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
-    target.decoratorMetadata = {};
-  }
-  target.decoratorMetadata.languageAware = true;
-};
 const themeAware = (target) => {
   if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
     target.decoratorMetadata = {};
@@ -19236,7 +19236,7 @@ class ComboBox extends UI5Element {
       Icon$1,
       ResponsivePopover$1,
       List$1,
-      BusyIndicator,
+      BusyIndicator$1,
       Button$1,
       StandardListItem$1,
       GroupHeaderListItem$1,
@@ -32028,7 +32028,7 @@ let Table = Table_1 = class Table2 extends UI5Element {
     return block0$A;
   }
   static get dependencies() {
-    return [BusyIndicator, CheckBox$1];
+    return [BusyIndicator$1, CheckBox$1];
   }
   static async onDefine() {
     Table_1.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -42582,7 +42582,7 @@ class NotificationListItem extends NotificationListItemBase {
     return [
       Button$1,
       Icon$1,
-      BusyIndicator,
+      BusyIndicator$1,
       Link$1,
       Popover$1
     ];
@@ -42795,7 +42795,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
       List$1,
       Button$1,
       Icon$1,
-      BusyIndicator,
+      BusyIndicator$1,
       Popover$1
     ];
   }
@@ -54635,7 +54635,7 @@ class BarcodeScannerDialog extends UI5Element {
   static get dependencies() {
     return [
       Dialog$1,
-      BusyIndicator,
+      BusyIndicator$1,
       Button$1
     ];
   }
