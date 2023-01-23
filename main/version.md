@@ -1,5 +1,5 @@
-commit be549baacd25f004a18dddef75cb298669759e7b
+commit 5c8850c9b40b0b396be4ad86c7df9d2e0ecfdbea
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 23 20:18:28 2023 +0200
+Date:   Mon Jan 23 20:25:50 2023 +0200
 
-    chore: use ui5-webc-bot name for auto commits (#6341)
+    chore: update release.yaml
