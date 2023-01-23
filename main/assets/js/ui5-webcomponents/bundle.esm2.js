@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "",
   isNext: false,
-  buildTime: 1674459435
+  buildTime: 1674470326
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -43222,6 +43222,9 @@ class Wizard extends UI5Element {
   }
   onStepResize() {
     this.width = this.getBoundingClientRect().width;
+    if (this.width === 0) {
+      return;
+    }
     this.contentHeight = this.getContentHeight();
     if (this._prevWidth !== this.width || this.contentHeight !== this._prevContentHeight) {
       this._closeRespPopover();

@@ -1,5 +1,5 @@
-commit 691b231f5d79f00e5f0a19e4a3c65a4409f254b8
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 23 09:35:54 2023 +0200
+commit 277d29c2baeb0856ae3e9ddb7c3033aaf5344941
+Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
+Date:   Mon Jan 23 12:37:31 2023 +0200
 
-    chore: auto release and changelog in GitHub (#6327)
+    chore(ui5-wizard): do not update steps if width is 0 (#6332)
