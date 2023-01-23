@@ -1,5 +1,5 @@
-commit ed8b5266fc5f989a24f51363745a5f3a8dc21769
+commit fa23fb4bff45cb11cc5c922627f47b9e282b59f9
 Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Mon Jan 23 13:25:13 2023 +0200
+Date:   Mon Jan 23 13:29:39 2023 +0200
 
-    chore: upgrade Chromedriver to 109 (#6329)
+    chore(ui5-wizard): provide a better fix (#6333)

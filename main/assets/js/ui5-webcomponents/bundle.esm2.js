@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "",
   isNext: false,
-  buildTime: 1674473189
+  buildTime: 1674473449
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -43222,16 +43222,13 @@ class Wizard extends UI5Element {
   }
   onStepResize() {
     this.width = this.getBoundingClientRect().width;
-    if (this.width === 0) {
-      return;
-    }
     this.contentHeight = this.getContentHeight();
     if (this._prevWidth !== this.width || this.contentHeight !== this._prevContentHeight) {
       this._closeRespPopover();
     }
     this._prevWidth = this.width;
     this._prevContentHeight = this.contentHeight;
-    this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast((size) => Number(size) < this.width)];
+    this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast((size) => Number(size) < this.width)] || RESPONSIVE_BREAKPOINTS["0"];
   }
   attachStepsResizeObserver() {
     this.stepsDOM.forEach((stepDOM) => {
