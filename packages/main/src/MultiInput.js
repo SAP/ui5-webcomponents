@@ -44,7 +44,7 @@ const metadata = {
 		},
 
 		/**
-		 * Indicates whether the tokenizer has tokens inside
+		 * Indicates whether the tokenizer has tokens
 		 * @private
 		 */
 		tokenizerAvailable: {

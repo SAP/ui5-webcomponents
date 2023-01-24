@@ -5,7 +5,6 @@
 	box-sizing: border-box;
 	border: 1px solid black;
 	height: 2.25rem;
-	/* min-width: 3.25rem; */
 }
 
 .ui5-tokenizer-root {
