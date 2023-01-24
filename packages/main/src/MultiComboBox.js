@@ -111,7 +111,7 @@ const metadata = {
 		/**
 		* Defines the icon to be displayed in the component.
 		*
-		* @type {sap.ui.webc.main.IIcon}
+		* @type {sap.ui.webc.main.IIcon[]}
 		* @slot
 		* @public
 		* @since 1.0.0-rc.9
@@ -681,6 +681,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _handlePaste(event) {
+		if (this.readonly) {
+			return;
+		}
+
 		const pastedText = await navigator.clipboard.readText();
 
 		if (!pastedText) {
