@@ -681,6 +681,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _handlePaste(event) {
+		if (this.readonly) {
+			return;
+		}
+
 		const pastedText = await navigator.clipboard.readText();
 
 		if (!pastedText) {
