@@ -1641,9 +1641,9 @@
     "@types/istanbul-lib-report" "*"
 
 "@types/jquery@*":
-  version "3.5.14"
-  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.14.tgz#ac8e11ee591e94d4d58da602cb3a5a8320dee577"
-  integrity sha512-X1gtMRMbziVQkErhTQmSe2jFwwENA/Zr+PprCkF63vFq+Yt5PZ4AlKqgmeNlwgn7dhsXEK888eIW2520EpC+xg==
+  version "3.5.16"
+  resolved "https://registry.yarnpkg.com/@types/jquery/-/jquery-3.5.16.tgz#632131baf30951915b0317d48c98e9890bdf051d"
+  integrity sha512-bsI7y4ZgeMkmpG9OM710RRzDFp+w4P1RGiIt30C1mSBT+ExCleeh4HObwgArnDFELmRrOpXgSYN9VF1hj+f1lw==
   dependencies:
     "@types/sizzle" "*"
 
@@ -1773,10 +1773,10 @@
   resolved "https://registry.yarnpkg.com/@types/object-inspect/-/object-inspect-1.8.1.tgz#7c08197ad05cc0e513f529b1f3919cc99f720e1f"
   integrity sha512-0JTdf3CGV0oWzE6Wa40Ayv2e2GhpP3pEJMcrlM74vBSJPuuNkVwfDnl0SZxyFCXETcB4oKA/MpTVfuYSMOelBg==
 
-"@types/openui5@^1.108.0":
-  version "1.108.0"
-  resolved "https://registry.yarnpkg.com/@types/openui5/-/openui5-1.108.0.tgz#d67dc4269bba5b60b661705d06383728df44edfd"
-  integrity sha512-sGAVYe/GBDyCQnAVk+wIsgtllpc+Suc+0/weCn5aC+0SiHDa8NzFb6lAXUrnp4MpyDnwop0i5v+k296+6myzuA==
+"@types/openui5@^1.109.0":
+  version "1.109.0"
+  resolved "https://registry.yarnpkg.com/@types/openui5/-/openui5-1.109.0.tgz#ce93d82943aaaff43007195ca4de0d487f1a884c"
+  integrity sha512-ZKbf6yYV0eZFnn7NR9bdNhsKeVl6AIjVEYaBHX+dLRpOS1Q5z+sZvJilthyHI2SSoKxd8nhA/jeTleSUqBjsJw==
   dependencies:
     "@types/jquery" "*"
     "@types/qunit" "*"
@@ -1797,9 +1797,9 @@
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
 
 "@types/qunit@*":
-  version "2.19.3"
-  resolved "https://registry.yarnpkg.com/@types/qunit/-/qunit-2.19.3.tgz#16e975469a36092929627f997c3dafca198a1aea"
-  integrity sha512-Vi47qmJ0viJoxW1kRDbhuYXGd2F0RREDfh69Hd4v/nlDV0YIjXPCAy6OebWKCZIZr680bQVQTJTL1OfhQoTvVw==
+  version "2.19.4"
+  resolved "https://registry.yarnpkg.com/@types/qunit/-/qunit-2.19.4.tgz#14eb571e9c03af9c361299898c83e44f41b3e426"
+  integrity sha512-EocRiD2JRWrOaA0dnyyLX083DIo1p3OSBBiGODcHaMzOFhteXtvRRp0kKsiYYqynnBSMqnqRI92iE32axdoXZw==
 
 "@types/range-parser@*":
   version "1.2.4"
