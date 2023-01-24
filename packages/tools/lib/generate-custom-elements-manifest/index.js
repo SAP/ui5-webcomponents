@@ -335,6 +335,10 @@ const generate = async () => {
 		require.resolve("@ui5/webcomponents-fiori/dist/api.json"),
 	];
 
+	console.warn("Base", apiFilesPaths[0]);
+	console.warn("Main", apiFilesPaths[1]);
+	console.warn("Fiori", apiFilesPaths[2]);
+
 	let apiFiles = new Map();
 
 	await Promise.all(apiFilesPaths.map(async (apiFilePath) => {
@@ -363,6 +367,8 @@ const generate = async () => {
 				customElementsManifest.modules.push(generateJavaScriptModule(entity));
 			}
 		});
+
+		console.warn(apiFilePath.replace("api.json", "custom-elements.json"));
 
 		await fs.writeFile(apiFilePath.replace("api.json", "custom-elements.json"), JSON.stringify(customElementsManifest));
 	}));
