@@ -345,10 +345,7 @@ class Dialog extends Popup {
 		if (this.accessibleRole === PopupAccessibleRole.None) {
 			return undefined;
 		}
-		if (this.accessibleRole !== (this.constructor as typeof UI5Element).getMetadata().getProperties().accessibleRole.defaultValue) {
-			return this.accessibleRole.toLowerCase();
-		}
-		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? PopupAccessibleRole.AlertDialog.toLowerCase() : PopupAccessibleRole.Dialog.toLowerCase();
+		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? PopupAccessibleRole.AlertDialog.toLowerCase() : this.accessibleRole.toLowerCase();
 	}
 
 	_show() {
