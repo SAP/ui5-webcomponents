@@ -1,5 +1,7 @@
-commit b3edd639d6011958d52a47ba3d67d7a16cad256d
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Jan 24 14:03:46 2023 +0200
+commit 1b75f8032423934790245c4f852e158c8382aacc
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jan 24 21:16:46 2023 +0200
 
-    chore: fix API tables in playground (#6349)
+    chore: update release workflow
+    
+    The bot still not configured properly to push commits to the repo, so fallback to users (admins) email/users from webc core team
