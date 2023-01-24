@@ -442,7 +442,7 @@ const metadata = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-multi-combobox
  * @public
- * @appenddocs MultiComboBoxItem MultiComboBoxGroupItem
+ * @appenddocs sap.ui.webc.main.MultiComboBoxItem sap.ui.webc.main.MultiComboBoxGroupItem
  * @since 0.11.0
  */
 class MultiComboBox extends UI5Element {

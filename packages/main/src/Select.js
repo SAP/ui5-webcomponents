@@ -282,7 +282,7 @@ const metadata = {
  * @alias sap.ui.webc.main.Select
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-select
- * @appenddocs Option
+ * @appenddocs sap.ui.webc.main.Option
  * @public
  * @since 0.8.0
  */

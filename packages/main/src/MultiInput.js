@@ -110,7 +110,7 @@ const metadata = {
  * @alias sap.ui.webc.main.MultiInput
  * @extends sap.ui.webc.main.Input
  * @tagname ui5-multi-input
- * @appenddocs Token
+ * @appenddocs sap.ui.webc.main.Token
  * @since 1.0.0-rc.9
  * @public
  */

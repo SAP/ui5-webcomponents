@@ -1,4 +1,4 @@
-import { StyleData } from "./src/types.js";
+import { StyleData } from "./types.js";
 
 export {};
 

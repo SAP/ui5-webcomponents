@@ -170,7 +170,7 @@ const metadata = {
  * @alias sap.ui.webc.fiori.NotificationListItem
  * @extends sap.ui.webc.fiori.NotificationListItemBase
  * @tagname ui5-li-notification
- * @appenddocs NotificationAction
+ * @appenddocs sap.ui.webc.fiori.NotificationAction
  * @since 1.0.0-rc.8
  * @implements sap.ui.webc.fiori.INotificationListItem, sap.ui.webc.main.IListItem
  * @public
