@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/SAP/ui5-webcomponents/compare/v0.0.0-7b49a7ff1...v1.10.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** correct types ([#6347](https://github.com/SAP/ui5-webcomponents/issues/6347)) ([620bf8d](https://github.com/SAP/ui5-webcomponents/commit/620bf8dd72f71e93dcdebeac2b6d452a1f3406c7))
+* **ui5-multi-combobox:** paste in readonly component prevented ([#6325](https://github.com/SAP/ui5-webcomponents/issues/6325)) ([9141e5a](https://github.com/SAP/ui5-webcomponents/commit/9141e5a2663df5c3c4e6a4fdf3c59dfa863340a9)), closes [#6175](https://github.com/SAP/ui5-webcomponents/issues/6175)
+
+
+
+
+
 # [1.10.0](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0) (2023-01-20)
 
 
