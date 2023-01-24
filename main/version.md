@@ -1,9 +1,21 @@
-commit f68b94f1870275c023dc33cd4985f9f2872f2254
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Jan 24 12:51:39 2023 -0800
+commit ac122bda1a1dcf0293aa24489f43a735205bd52c
+Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+Date:   Tue Jan 24 22:52:24 2023 +0200
 
-    Translation Delivery (#6342)
+    build(deps): bump ua-parser-js from 1.0.2 to 1.0.33 (#6354)
     
-    chore: translation delivery
+    Bumps [ua-parser-js](https://github.com/faisalman/ua-parser-js) from 1.0.2 to 1.0.33.
+    - [Release notes](https://github.com/faisalman/ua-parser-js/releases)
+    - [Changelog](https://github.com/faisalman/ua-parser-js/blob/master/changelog.md)
+    - [Commits](https://github.com/faisalman/ua-parser-js/compare/1.0.2...1.0.33)
     
-    Change-Id: I55b02b1ca4096f8148fd9eb2aff8fe178f7636b8
+    ---
+    updated-dependencies:
+    - dependency-name: ua-parser-js
+      dependency-type: indirect
+    ...
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+    
+    Signed-off-by: dependabot[bot] <support@github.com>
+    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
