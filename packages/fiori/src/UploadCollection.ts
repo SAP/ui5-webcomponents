@@ -62,7 +62,7 @@ type ItemDeleteEventDetail = {
  * @alias sap.ui.webc.fiori.UploadCollection
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-upload-collection
- * @appenddocs UploadCollectionItem
+ * @appenddocs sap.ui.webc.fiori.UploadCollectionItem
  * @public
  * @since 1.0.0-rc.7
  */
