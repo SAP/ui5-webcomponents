@@ -358,7 +358,7 @@ class FlexibleColumnLayout extends UI5Element {
 		ResizeHandler.register(this, this._handleResize.bind(this));
 	}
 
-	onExitDOM = () => {
+	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 

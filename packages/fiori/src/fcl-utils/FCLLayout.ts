@@ -1,8 +1,9 @@
 import { MEDIA } from "../FlexibleColumnLayout.js";
+import FCLLayout from "../types/FCLLayout.js";
 
 type LayoutConfiguration = {
-	[key in MEDIA]: {
-		[key: string]: {
+	[device in MEDIA]: {
+		[layoutName in FCLLayout]: {
 			layout: Array<string>;
 			arrows: Array<{
 				visible: boolean;
@@ -35,13 +36,6 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: false, dir: null },
-				],
-			},
-			"ThreeColumnsStartExpanded": {
-				layout: ["25%", "50%", "25%"],
-				arrows: [
-					{ visible: true, dir: null },
-					{ visible: true, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpanded": {
@@ -109,13 +103,6 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 					{ visible: false, dir: null },
 				],
 			},
-			"ThreeColumnsStartExpanded": {
-				layout: ["67%", "33%", "0px"],
-				arrows: [
-					{ visible: true, dir: "mirror" },
-					{ visible: false, dir: null },
-				],
-			},
 			"ThreeColumnsMidExpanded": {
 				layout: ["0px", "67%", "33%"],
 				arrows: [
@@ -176,13 +163,6 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 			},
 			"TwoColumnsMidExpanded": {
 				layout: ["0px", "100%", "0px"],
-				arrows: [
-					{ visible: false, dir: null },
-					{ visible: false, dir: null },
-				],
-			},
-			"ThreeColumnsStartExpanded": {
-				layout: ["0px", "0px", "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
