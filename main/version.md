@@ -1,5 +1,5 @@
-commit 2f06c71eefb455db179cdbb9bd4b293af5b5aa2b
-Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Jan 24 12:18:21 2023 +0200
+commit 620bf8dd72f71e93dcdebeac2b6d452a1f3406c7
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Tue Jan 24 12:27:51 2023 +0200
 
-    fix: add openui5 types as a dependency (#6346)
+    fix(ui5-dialog): correct types (#6347)
