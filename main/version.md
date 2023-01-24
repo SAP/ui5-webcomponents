@@ -1,7 +1,9 @@
-commit d00f2cd580b7d3cab60b1ca2e9e9324649f73fe0
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jan 24 22:48:38 2023 +0200
+commit f68b94f1870275c023dc33cd4985f9f2872f2254
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Tue Jan 24 12:51:39 2023 -0800
 
-    chore: replace GITHUB_TOKEN with team one
+    Translation Delivery (#6342)
     
-    The standard GitHub token is not privileged enough to push on main
+    chore: translation delivery
+    
+    Change-Id: I55b02b1ca4096f8148fd9eb2aff8fe178f7636b8
