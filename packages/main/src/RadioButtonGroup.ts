@@ -1,4 +1,4 @@
-import RadioButton from "./RadioButton.js";
+import type RadioButton from "./RadioButton.js";
 
 class RadioButtonGroup {
 	static _groups: Map<string, Array<RadioButton>>;
@@ -35,15 +35,16 @@ class RadioButtonGroup {
 	}
 
 	static removeFromGroup(radioBtn: RadioButton, groupName: string) {
-		if (!this.hasGroup(groupName)) {
+		const group = this.getGroup(groupName);
+
+		if (!group) {
 			return;
 		}
 
-		const group = this.getGroup(groupName);
 		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
 
 		// Remove the radio button from the given group
-		group!.forEach((_radioBtn, idx, arr) => {
+		group.forEach((_radioBtn, idx, arr) => {
 			if (radioBtn._id === _radioBtn._id) {
 				return arr.splice(idx, 1);
 			}
@@ -54,7 +55,7 @@ class RadioButtonGroup {
 		}
 
 		// Remove the group if it is empty
-		if (!group!.length) {
+		if (!group.length) {
 			this.removeGroup(groupName);
 		}
 
@@ -70,12 +71,12 @@ class RadioButtonGroup {
 	}
 
 	static selectNextItem(item: RadioButton, groupName: string) {
-		if (!this.hasGroup(groupName)) {
+		const group = this.getGroup(groupName);
+		if (!group) {
 			return;
 		}
 
-		const group = this.getGroup(groupName)!,
-			groupLength = group.length,
+		const groupLength = group.length,
 			currentItemPosition = group.indexOf(item);
 
 		if (groupLength <= 1) {
@@ -91,11 +92,12 @@ class RadioButtonGroup {
 	}
 
 	static updateTabOrder(groupName: string) {
-		if (!this.hasGroup(groupName)) {
+		const group = this.getGroup(groupName);
+
+		if (!group) {
 			return;
 		}
 
-		const group = this.getGroup(groupName)!;
 		const hasCheckedRadio = group.some(radioBtn => radioBtn.checked);
 
 		group.filter(radioBtn => !radioBtn.disabled).forEach((radioBtn, idx) => {
@@ -108,12 +110,13 @@ class RadioButtonGroup {
 	}
 
 	static selectPreviousItem(item: RadioButton, groupName: string) {
-		if (!this.hasGroup(groupName)) {
+		const group = this.getGroup(groupName);
+
+		if (!group) {
 			return;
 		}
 
-		const group = this.getGroup(groupName)!,
-			groupLength = group.length,
+		const groupLength = group.length,
 			currentItemPosition = group.indexOf(item);
 
 		if (groupLength <= 1) {

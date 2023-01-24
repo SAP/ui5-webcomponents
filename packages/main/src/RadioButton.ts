@@ -43,7 +43,7 @@ import {
 import radioButtonCss from "./generated/themes/RadioButton.css.js";
 
 let isGlobalHandlerAttached = false;
-let activeRadio: RadioButton|null = null;
+let activeRadio: RadioButton;
 
 /**
  * @class
@@ -84,7 +84,7 @@ let activeRadio: RadioButton|null = null;
 /**
  * Fired when the component checked state changes.
  *
- * @event
+ * @event sap.ui.webc.main.CheckBox#change
  * @public
  * @since 1.0.0-rc.15
  */
@@ -265,7 +265,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	@property()
 	accessibleNameRef!: string;
 
-	@property({ type: String, defaultValue: "-1", noAttribute: true })
+	@property({ defaultValue: "-1", noAttribute: true })
 	_tabIndex!: string;
 
 	/**
@@ -283,7 +283,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @slot
 	 * @private
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	formSupport!: Array<HTMLElement>;
 
 	_deactivate: () => void;
@@ -472,16 +472,14 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	get classes(): ClassMap {
 		return {
-			root: {
-				main: {},
-				inner: {
-					"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
-				},
+			main: {},
+			inner: {
+				"ui5-radio-inner--hoverable": !this.disabled && !this.readonly && isDesktop(),
 			},
 		};
 	}
 
-	get ariaDisabled() {
+	get effectiveAriaDisabled() {
 		return this.disabled ? "true" : null;
 	}
 
@@ -489,7 +487,7 @@ class RadioButton extends UI5Element implements IFormElement {
 		return [getEffectiveAriaLabelText(this), this.text].filter(Boolean).join(" ");
 	}
 
-	get ariaDescribedBy() {
+	get effectiveAriaDescribedBy() {
 		return this.hasValueState ? `${this._id}-descr` : undefined;
 	}
 

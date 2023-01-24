@@ -1,8 +1,8 @@
-<div class="ui5-radio-root {{classes.root.main}}"
+<div class="ui5-radio-root {{classes.main}}"
 	role="radio"
 	aria-checked="{{checked}}"
-	aria-disabled="{{ariaDisabled}}"
-	aria-describedby="{{ariaDescribedBy}}"
+	aria-disabled="{{effectiveAriaDisabled}}"
+	aria-describedby="{{effectiveAriaDescribedBy}}"
 	aria-label="{{ariaLabelText}}"
 	tabindex="{{effectiveTabIndex}}"
 	@click="{{_onclick}}"
@@ -13,12 +13,12 @@
 	@focusout="{{_onfocusout}}"
 >
 
-	<div class='ui5-radio-inner {{classes.root.inner}}'>
+	<div class='ui5-radio-inner {{classes.inner}}'>
 		<svg class="ui5-radio-svg" focusable="false" aria-hidden="true">
 			<circle class="ui5-radio-svg-outer" cx="50%" cy="50%" r="50%" />
 			<circle class="ui5-radio-svg-inner" cx="50%" cy="50%" />
 		</svg>
-		<input type='radio' ?required="{{required}}" ?checked="{{checked}}" ?readonly="{{readonly}}" ?disabled="{{ariaDisabled}}" name="{{name}}"  data-sap-no-tab-ref/>
+		<input type='radio' ?required="{{required}}" ?checked="{{checked}}" ?readonly="{{readonly}}" ?disabled="{{effectiveAriaDisabled}}" name="{{name}}"  data-sap-no-tab-ref/>
 	</div>
 
 	{{#if text}}
