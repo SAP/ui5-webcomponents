@@ -1,5 +1,5 @@
-commit 462542b91c76483f82a37af19ad069bb65a7c5bf
+commit 2f06c71eefb455db179cdbb9bd4b293af5b5aa2b
 Author: Peter Skelin <petar.skelin@sap.com>
-Date:   Tue Jan 24 11:29:30 2023 +0200
+Date:   Tue Jan 24 12:18:21 2023 +0200
 
-    chore: change all src imports to dist (#6343)
+    fix: add openui5 types as a dependency (#6346)
