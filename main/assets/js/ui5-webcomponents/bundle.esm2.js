@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "",
   isNext: false,
-  buildTime: 1674501122
+  buildTime: 1674548981
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -29672,6 +29672,9 @@ class MultiComboBox extends UI5Element {
     this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(event2) || isDelete(event2) || isEscape(event2) || isEnter(event2));
   }
   async _handlePaste(event2) {
+    if (this.readonly) {
+      return;
+    }
     const pastedText = await navigator.clipboard.readText();
     if (!pastedText) {
       return;

@@ -1,5 +1,9 @@
-commit b23976538bfd042cc590919fa4d4b6a2f46057ec
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Mon Jan 23 21:11:00 2023 +0200
+commit 9141e5a2663df5c3c4e6a4fdf3c59dfa863340a9
+Author: Hristo Petrov <h.petrov@sap.com>
+Date:   Tue Jan 24 10:28:28 2023 +0200
 
-    chore: fix type in lerna.json
+    fix(ui5-multi-combobox): paste in readonly component prevented (#6325)
+    
+    fix(ui5-multi-combobox): paste in readonly component prevented
+    
+    Fixes #6175
