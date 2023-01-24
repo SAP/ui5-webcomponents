@@ -333,10 +333,11 @@ const generate = async () => {
 		require.resolve("@ui5/webcomponents-base/dist/api.json"),
 		require.resolve("@ui5/webcomponents/dist/api.json"),
 		require.resolve("@ui5/webcomponents-fiori/dist/api.json"),
-	];
+];
 
 	console.warn("Base", apiFilesPaths[0]);
 	console.warn("Main", apiFilesPaths[1]);
+	console.warn("Main", await fs.readdir(apiFilesPaths[1].replace("/api.json", "")));
 	console.warn("Fiori", apiFilesPaths[2]);
 
 	let apiFiles = new Map();
@@ -373,6 +374,8 @@ const generate = async () => {
 		await fs.writeFile(apiFilePath.replace("api.json", "custom-elements.json"), JSON.stringify(customElementsManifest));
 	}));
 };
+
+console.warn(process.cwd());
 
 generate().then(() => {
 	console.log("Custom elements manifest generated.");
