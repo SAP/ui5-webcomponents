@@ -93,7 +93,7 @@ const metadata = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-segmented-button
  * @since 1.0.0-rc.6
- * @appenddocs SegmentedButtonItem
+ * @appenddocs sap.ui.webc.main.SegmentedButtonItem
  * @public
  */
 class SegmentedButton extends UI5Element {

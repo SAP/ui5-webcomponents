@@ -91,7 +91,7 @@ type FocusAdaptor = ITabbable & {
  * @alias sap.ui.webc.main.Breadcrumbs
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-breadcrumbs
- * @appenddocs BreadcrumbsItem
+ * @appenddocs sap.ui.webc.main.BreadcrumbsItem
  * @public
  * @since 1.0.0-rc.15
  */

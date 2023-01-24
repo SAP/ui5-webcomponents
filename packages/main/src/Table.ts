@@ -178,7 +178,7 @@ enum TableFocusTargetElement {
  * @alias sap.ui.webc.main.Table
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-table
- * @appenddocs TableColumn TableRow TableGroupRow TableCell
+ * @appenddocs sap.ui.webc.main.TableColumn sap.ui.webc.main.TableRow sap.ui.webc.main.TableGroupRow sap.ui.webc.main.TableCell
  * @public
  */
 @customElement("ui5-table")

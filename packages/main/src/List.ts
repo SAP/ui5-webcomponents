@@ -140,7 +140,7 @@ type ClickEventDetail = CloseEventDetail;
  * @alias sap.ui.webc.main.List
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-list
- * @appenddocs StandardListItem CustomListItem GroupHeaderListItem
+ * @appenddocs sap.ui.webc.main.StandardListItem sap.ui.webc.main.CustomListItem sap.ui.webc.main.GroupHeaderListItem
  * @public
  */
 @customElement("ui5-list")

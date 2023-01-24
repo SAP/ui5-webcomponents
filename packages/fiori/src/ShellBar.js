@@ -455,7 +455,7 @@ const metadata = {
  * @alias sap.ui.webc.fiori.ShellBar
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-shellbar
- * @appenddocs ShellBarItem
+ * @appenddocs sap.ui.webc.fiori.ShellBarItem
  * @public
  * @since 0.8.0
  */
