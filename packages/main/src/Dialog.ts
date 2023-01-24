@@ -291,7 +291,7 @@ class Dialog extends Popup {
 	}
 
 	get _ariaModal() {
-		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : "true";
+		return this.accessibleRole === PopupAccessibleRole.None ? undefined : "true";
 	}
 
 	get _displayProp() {
@@ -345,7 +345,10 @@ class Dialog extends Popup {
 		if (this.accessibleRole === PopupAccessibleRole.None) {
 			return undefined;
 		}
-		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? PopupAccessibleRole.AlertDialog.toLowerCase() : this.accessibleRole.toLowerCase();
+		if (this.state === ValueState.Error || this.state === ValueState.Warning) {
+			return PopupAccessibleRole.AlertDialog.toLowerCase();
+		}
+		return this.accessibleRole.toLowerCase();
 	}
 
 	_show() {

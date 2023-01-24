@@ -191,7 +191,11 @@ abstract class Popup extends UI5Element {
 
 	/**
 	 * Allows setting a custom role. Available options are:
-	 * <code>Dialog</code>, <code>None</code> and <code>AlertDialog</code>.
+	 * <ul>
+	 * <li><code>Dialog</code></li>
+	 * <li><code>None</code></li>
+	 * <li><code>AlertDialog</code></li>
+	 * </ul>
 	 * @type {sap.ui.webc.main.types.PopupAccessibleRole}
 	 * @name sap.ui.webc.main.Popup.prototype.accessibleRole
 	 * @defaultvalue "Dialog"
