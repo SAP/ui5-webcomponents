@@ -6387,6 +6387,76 @@ The user can: <ul> <li>display a <code>Close</code> button</li> <li>can control 
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          busy
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines if a busy indicator would be displayed over the item.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.8</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          busyDelay
+                            <br>
+                                 <code>busy-delay</code>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">1000</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          priority
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Priority</div>
+                        <div class="cell api-table-content-cell">&quot;None&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>priority</code> of the item. Available options are: <ul> <li><code>None</code></li> <li><code>Low</code></li> <li><code>Medium</code></li> <li><code>High</code></li> </ul>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          read
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines if the <code>notification</code> is new or has been already read. <br><br> <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font, if set to true - it has a normal font.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showClose
+                            <br>
+                                 <code>show-close</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines if the <code>close</code> button would be displayed.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          titleText
+                            <br>
+                                 <code>title-text</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell">&quot;&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the <code>titleText</code> of the item.
+                        </div>
+                      </div>
             
                   </div>
             
@@ -6423,9 +6493,37 @@ The user can: <ul> <li>display a <code>Close</code> button</li> <li>can control 
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the elements, displayed in the footer of the of the component.</div>
                     </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">actions</div>
+                      <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the actions, displayed in the top-right area. <br><br> <b>Note:</b> use the <code>ui5-notification-action</code> component.</div>
+                    </div>
             
                 </div>
             
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">close</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the <code>Close</code> button is pressed.
+                        </div>
+                      </div>
+            
+                        <tr class="api-table-event-param">
+                          <div class="api-table-content-event-params-wrapper">
+                            <div class="cell api-table-param-name api-table-content-cell api-table-content-cell-bold">item</div>
+                            <div class="cell api-table-event-param-cell api-table-content-cell api-table-content-cell-description"><strong class="bold" >type:</strong> HTMLElement <br/> <strong class="api-table-event-description bold">description:</strong> the closed item.</div>
+                          </div>
+                        </tr>
+                  </div>
             
             
           </section>

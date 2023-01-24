@@ -6142,10 +6142,127 @@
                             Current value of the slider
                         </div>
                       </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleName
+                            <br>
+                                 <code>accessible-name</code>
+                        </div>
+                        <div class="cell api-table-content-cell">string</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the accessible ARIA name of the component.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.4.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          disabled
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines whether the slider is in disabled state.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          labelInterval
+                            <br>
+                                 <code>label-interval</code>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">0</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Displays a label with a value on every N-th step. <br><br> <b>Note:</b> The step and tickmarks properties must be enabled. Example - if the step value is set to 2 and the label interval is also specified to 2 - then every second tickmark will be labelled, which means every 4th value number.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          max
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Float</div>
+                        <div class="cell api-table-content-cell">100</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the maximum value of the slider.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          min
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Float</div>
+                        <div class="cell api-table-content-cell">0</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the minimum value of the slider.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showTickmarks
+                            <br>
+                                 <code>show-tickmarks</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Enables tickmarks visualization for each step. <br><br> <b>Note:</b> The step must be a positive number.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          showTooltip
+                            <br>
+                                 <code>show-tooltip</code>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Enables handle tooltip displaying the current value.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          step
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">Integer</div>
+                        <div class="cell api-table-content-cell">1</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the size of the slider's selection intervals (e.g. min = 0, max = 10, step = 5 would result in possible selection of the values 0, 5, 10). <br><br> <b>Note:</b> If set to 0 the slider handle movement is disabled. When negative number or value other than a number, the component fallbacks to its default value.
+                        </div>
+                      </div>
             
                   </div>
             
             
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">change</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the value changes and the user has finished interacting with the slider.
+                        </div>
+                      </div>
+            
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">input</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
+                        </div>
+                      </div>
+            
+                  </div>
             
             
           </section>

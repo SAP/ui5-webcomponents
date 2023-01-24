@@ -35,16 +35,17 @@ const main = async () => {
 
 		files.forEach(async (file) => {
 			const currentSampleName = file.slice(0, file.indexOf('.'));
+			const currentNameWithNamespace = `sap.ui.webc.${package}.${currentSampleName}`
 
 			// read file
 			let result = (await fs.readFile(path.join(samplesPath, file))).toString();
-			
+
 			// replace pre
 			result = result.replaceAll(`<pre class="prettyprint lang-html"><xmp>`, '<pre class="highlight">{% highlight html %}');
 			result = result.replaceAll(`</xmp></pre>`, '{% endhighlight %}</pre>');
-			
+
 			// add api
-			result = await enrichSampleWihAPI(currentSampleName, api, result);
+			result = await enrichSampleWihAPI(currentNameWithNamespace, api, result);
 
 			// prepend front matter
 			result = `---

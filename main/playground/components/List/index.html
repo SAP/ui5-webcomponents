@@ -6771,6 +6771,40 @@ This is a list item, providing the most common use cases such as <code>text</cod
                             Defines the <code>image</code> source URI. <br><br> <b>Note:</b> The <code>image</code> would be displayed in the beginning of the list item.
                         </div>
                       </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          navigated
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            The navigated state of the list item. If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.10.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          type
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">sap.ui.webc.main.types.ListItemType</div>
+                        <div class="cell api-table-content-cell">&quot;Active&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the visual indication and behavior of the list items. Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>. <br><br> <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover, while with type <code>Inactive</code> and <code>Detail</code> - will not.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selected
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the selected state of the <code>ListItem</code>.
+                        </div>
+                      </div>
             
                   </div>
             
@@ -6798,9 +6832,31 @@ This is a list item, providing the most common use cases such as <code>text</cod
                       <div class="cell api-table-content-cell">HTMLElement [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description"><b>Note:</b> While the slot allows option for setting custom avatar, to match the design guidelines, please use the <code>ui5-avatar</code> with it`s default size - S. <b>Note:</b> If bigger <code>ui5-avatar</code> needs to be used, then the size of the <code>ui5-li</code> should be customized in order to fit.</div>
                     </div>
+                    <div class="row api-table-roll-even">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">deleteButton</div>
+                      <div class="cell api-table-content-cell">sap.ui.webc.main.IButton</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the delete button, displayed in "Delete" mode. <b>Note:</b> While the slot allows custom buttons, to match design guidelines, please use the <code>ui5-button</code> component. <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.</div>
+                    </div>
             
                 </div>
             
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">detail-click</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the user clicks on the detail button when type is <code>Detail</code>.
+                        </div>
+                      </div>
+            
+                  </div>
             
             
           </section>
@@ -6838,6 +6894,40 @@ The component accepts arbitrary HTML content to allow full customization.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          navigated
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell"></div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            The navigated state of the list item. If set to <code>true</code>, a navigation indicator is displayed at the end of the list item.
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.10.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          type
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">sap.ui.webc.main.types.ListItemType</div>
+                        <div class="cell api-table-content-cell">&quot;Active&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the visual indication and behavior of the list items. Available options are <code>Active</code> (by default), <code>Inactive</code>, <code>Detail</code> and <code>Navigation</code>. <br><br> <b>Note:</b> When set to <code>Active</code> or <code>Navigation</code>, the item will provide visual response upon press and hover, while with type <code>Inactive</code> and <code>Detail</code> - will not.
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selected
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the selected state of the <code>ListItem</code>.
+                        </div>
+                      </div>
             
                   </div>
             
@@ -6860,9 +6950,31 @@ The component accepts arbitrary HTML content to allow full customization.
                       <div class="cell api-table-content-cell">Node [0..n]</div>
                       <div class="cell api-table-content-cell api-table-content-cell-description">Defines the content of the component.</div>
                     </div>
+                    <div class="row api-table-roll-odd">
+                      <div class="cell api-table-content-cell api-table-content-cell-bold">deleteButton</div>
+                      <div class="cell api-table-content-cell">sap.ui.webc.main.IButton</div>
+                      <div class="cell api-table-content-cell api-table-content-cell-description">Defines the delete button, displayed in "Delete" mode. <b>Note:</b> While the slot allows custom buttons, to match design guidelines, please use the <code>ui5-button</code> component. <b>Note:</b> When the slot is not present, a built-in delete button will be displayed.</div>
+                    </div>
             
                 </div>
             
+                  <h3 class="comment-api-title space-top">Events</h3>
+                  <p class="small-space-top" >This Web Component fires semantic events upon user interaction. You can bind to these events with the standard DOM APIs, such as <code>addEventListener</code>. </p>
+            
+                  <div class="small-space-top api-table">
+                    <div class="head api-table-header-roll">
+                      <div class="cell api-table-header-cell">Name</div>
+                      <div class="cell api-table-header-cell">Description</div>
+                    </div>
+            
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">detail-click</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                        Fired when the user clicks on the detail button when type is <code>Detail</code>.
+                        </div>
+                      </div>
+            
+                  </div>
             
             
           </section>
@@ -6896,6 +7008,17 @@ The component accepts arbitrary HTML content to allow full customization.
                         <div class="cell api-table-content-cell api-table-content-cell-description">
                             Defines the text alternative of the component. Note: If not provided a default text alternative will be set, if present.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-odd">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          selected
+                            <br>
+                        </div>
+                        <div class="cell api-table-content-cell">boolean</div>
+                        <div class="cell api-table-content-cell">false</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Defines the selected state of the <code>ListItem</code>.
                         </div>
                       </div>
             
