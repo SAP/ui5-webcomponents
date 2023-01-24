@@ -36,16 +36,11 @@ import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
 
 import Icon from "./Icon.js";
-// @ts-ignore
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 
 // Styles
 import StepInputCss from "./generated/themes/StepInput.css.js";
-
-type TempInput = HTMLElement & {
-	value: string,
-}
 
 // Spin variables
 const INITIAL_WAIT_TIMEOUT = 500; // milliseconds
@@ -308,13 +303,13 @@ class StepInput extends UI5Element implements IFormElement {
 	 * Defines the value state message that will be displayed as pop up under the component.
 	 * <br><br>
 	 *
-	 * @name sap.ui.webc.main.StepInput.prototype.valueState
 	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
 	 * <br>
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 	 * @type {HTMLElement}
 	 * @slot
+	 * @name sap.ui.webc.main.StepInput.prototype.valueStateMessage
 	 * @public
 	 */
 	@slot()
@@ -425,8 +420,8 @@ class StepInput extends UI5Element implements IFormElement {
 		}
 	}
 
-	get input(): TempInput {
-		return this.shadowRoot!.querySelector<TempInput>("[ui5-input]")!;
+	get input(): Input {
+		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
 	}
 
 	get inputOuter() {

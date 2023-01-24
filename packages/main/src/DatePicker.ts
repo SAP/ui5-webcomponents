@@ -38,7 +38,6 @@ import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTI
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-// @ts-ignore - when the ResponsivePopover is migrated to TS, the comment can't be removed
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import type { CalendarChangeEventDetail } from "./Calendar.js";
@@ -611,7 +610,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_click(e: MouseEvent) {
 		if (isPhone()) {
-			this.responsivePopover.showAt(this);
+			this.responsivePopover!.showAt(this);
 			e.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -621,7 +620,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.DatePicker#isValid
-	 * @param { string } value A value to be tested against the current date format
+	 * @param { string } [value=""] A value to be tested against the current date format
 	 * @returns { boolean }
 	 */
 	isValid(value = ""): boolean {
@@ -639,7 +638,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.DatePicker#isInValidRange
-	 * @param { string } value A value to be checked
+	 * @param { string } [value=""] A value to be checked
 	 * @returns { boolean }
 	 */
 	isInValidRange(value = ""): boolean {
@@ -736,7 +735,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem?.querySelector("[ui5-responsive-popover]");
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	_canOpenPicker() {
@@ -790,7 +789,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @name sap.ui.webc.main.DatePicker#closePicker
 	 */
 	closePicker() {
-		this.responsivePopover.close();
+		this.responsivePopover!.close();
 	}
 
 	/**

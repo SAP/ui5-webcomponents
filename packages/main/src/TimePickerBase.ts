@@ -27,11 +27,9 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import Icon from "./Icon.js";
-// @ts-ignore
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
-// @ts-ignore
 import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelection from "./TimeSelection.js";
@@ -47,18 +45,6 @@ import {
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-
-type TempResponsivePopover = HTMLElement & {
-	initialFocus: string,
-	showAt: (opener: HTMLElement) => Promise<void>,
-	close: () => void,
-	resetFocus: () => void,
-}
-
-type TempInput = HTMLElement & {
-	value: string,
-	getInputDOMRef: () => Promise<HTMLInputElement>,
-}
 
 /**
  * @class
@@ -254,7 +240,7 @@ class TimePickerBase extends UI5Element {
 		const inputField = await this._getInputField();
 
 		if (inputField) {
-			inputField.select();
+			(inputField as HTMLInputElement).select();
 		}
 	}
 
@@ -289,18 +275,20 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_handleInputChange(e: CustomEvent) {
-		const target = e.target as TempInput;
+		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, true, ["change", "value-changed"]);
 	}
 
 	_handleInputLiveChange(e: CustomEvent) {
-		const target = e.target as TempInput;
+		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
 	}
 
 	/**
 	 * Closes the picker
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#closePicker
 	 */
 	async closePicker() {
 		const responsivePopover = await this._getPopover();
@@ -312,6 +300,8 @@ class TimePickerBase extends UI5Element {
 	 * Opens the picker.
 	 * @async
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#openPicker
 	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
@@ -332,6 +322,8 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Checks if the picker is open
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#isOpen
 	 * @returns {boolean}
 	 */
 	isOpen() {
@@ -344,11 +336,11 @@ class TimePickerBase extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
-	_getInput() {
-		return this.shadowRoot!.querySelector<TempInput>("[ui5-input]")!;
+	_getInput(): Input {
+		return this.shadowRoot!.querySelector<Input>("[ui5-input]")!;
 	}
 
 	_getInputField() {
@@ -416,6 +408,8 @@ class TimePickerBase extends UI5Element {
 	 * according to the <code>formatPattern</code> property of the TimePicker instance
 	 * @param {object} date A Java Script date object to be formatted as string
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#formatValue
 	 * @returns {string}
 	 */
 	formatValue(date: Date) {
@@ -429,6 +423,8 @@ class TimePickerBase extends UI5Element {
 	 * <b>Note:</b> an empty string is considered as valid value.
 	 * @param {string} value The value to be tested against the current date format
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#isValid
 	 * @returns {boolean}
 	 */
 	isValid(value: string | undefined) {

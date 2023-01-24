@@ -1,6 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -10,112 +17,11 @@ import {
 	AVATAR_TOOLTIP,
 	ARIA_ROLEDESCRIPTION_CARD_HEADER,
 	ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER,
+	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import cardHeaderCss from "./generated/themes/CardHeader.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-card-header",
-	languageAware: true,
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.main.CardHeader.prototype */ {
-
-		/**
-		 * Defines an avatar image, displayed in the left most part of the header.
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		avatar: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines an action, displayed in the right most part of the header.
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		action: {
-			type: HTMLElement,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.CardHeader.prototype */ {
-
-		/**
-		 * Defines the title text.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		titleText: {
-			type: String,
-		},
-
-		/**
-		 * Defines the subtitle text.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		subtitleText: {
-			type: String,
-		},
-
-		/**
-		 * Defines the status text.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		status: {
-			type: String,
-		},
-
-		/**
-		 * Defines if the component would be interactive,
-		 * e.g gets hover effect, gets focus outline and <code>click</code> event is fired, when pressed.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		interactive: {
-			type: Boolean,
-		},
-
-		/**
-		 * Define the <code>aria-level</code> attribute of the component
-		 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
-		 * @private
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultValue 3
-		 */
-		ariaLevel: {
-			type: Integer,
-			defaultValue: 3,
-		},
-
-		_headerActive: {
-			type: Boolean,
-			noAttribute: true,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.CardHeader.prototype */ {
-
-		/**
-		 * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
-		 * <br><br>
-		 * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
-		 * @event sap.ui.webc.main.CardHeader#click
-		 * @public
-		 */
-		"click": {},
-	},
-};
 
 /**
  * @class
@@ -152,10 +58,92 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.15
  */
+@customElement("ui5-card-header")
+@languageAware
+/**
+ * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
+ * <br><br>
+ * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
+ * @event sap.ui.webc.main.CardHeader#click
+ * @public
+ */
+@event("click")
 class CardHeader extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the title text.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.CardHeader.prototype.titleText
+	 * @public
+	*/
+	@property()
+	titleText!: string;
+
+	/**
+	 * Defines the subtitle text.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.CardHeader.prototype.subtitleText
+	 * @public
+	*/
+	@property()
+	subtitleText!: string;
+
+	/**
+	 * Defines the status text.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.CardHeader.prototype.status
+	 * @public
+	*/
+	@property()
+	status!: string;
+
+	/**
+	 * Defines if the component would be interactive,
+	 * e.g gets hover effect, gets focus outline and <code>click</code> event is fired, when pressed.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.CardHeader.prototype.interactive
+	 * @public
+	*/
+	@property({ type: Boolean })
+	interactive!: boolean;
+
+	/**
+	 * Define the <code>aria-level</code> attribute of the component
+	 * <b>Note: </b> If the interactive property is set, <code>aria-level</code> attribute is not rendered at all.
+	 * @private
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultValue 3
+	*/
+	@property({ validator: Integer, defaultValue: 3 })
+	_ariaLevel!: number;
+
+	@property({ type: Boolean, noAttribute: true })
+	_headerActive!: boolean;
+
+	/**
+	 * Defines an avatar image, displayed in the left most part of the header.
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @name sap.ui.webc.main.CardHeader.prototype.avatar
+	 * @public
+	*/
+	@slot()
+	avatar!: Array<HTMLElement>;
+
+	/**
+	 * Defines an action, displayed in the right most part of the header.
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @name sap.ui.webc.main.CardHeader.prototype.action
+	 * @public
+	*/
+	@slot()
+	action!: Array<HTMLElement>;
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -171,19 +159,21 @@ class CardHeader extends UI5Element {
 
 	get classes() {
 		return {
-			"ui5-card-header": true,
-			"ui5-card-header--interactive": this.interactive,
-			"ui5-card-header--active": this.interactive && this._headerActive,
-			"ui5-card-header-ff": isFirefox(),
+			root: {
+				"ui5-card-header": true,
+				"ui5-card-header--interactive": this.interactive,
+				"ui5-card-header--active": this.interactive && this._headerActive,
+				"ui5-card-header-ff": isFirefox(),
+			},
 		};
 	}
 
 	get _root() {
-		return this.shadowRoot.querySelector(".ui5-card-header");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-card-header")!;
 	}
 
 	get ariaRoleDescription() {
-		return this.interactive ? CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
+		return this.interactive ? CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER as I18nText) : CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER as I18nText);
 	}
 
 	get ariaRoleFocusableElement() {
@@ -191,7 +181,7 @@ class CardHeader extends UI5Element {
 	}
 
 	get ariaCardAvatarLabel() {
-		return CardHeader.i18nBundle.getText(AVATAR_TOOLTIP);
+		return CardHeader.i18nBundle.getText(AVATAR_TOOLTIP as I18nText);
 	}
 
 	get ariaLabelledBy() {
@@ -236,22 +226,22 @@ class CardHeader extends UI5Element {
 		this._root.classList.remove("ui5-card-header-hide-focus");
 	}
 
-	_click(event) {
+	_click(e: MouseEvent) {
 		// prevents the native browser "click" event from firing
-		event.stopImmediatePropagation();
+		e.stopImmediatePropagation();
 
-		if (this.interactive && this._root.contains(event.target)) {
+		if (this.interactive && this._root.contains(e.target as HTMLElement)) {
 			this.fireEvent("click");
 		}
 	}
 
-	_keydown(event) {
-		if (!this.interactive || !this._root.contains(event.target)) {
+	_keydown(e: KeyboardEvent) {
+		if (!this.interactive || !this._root.contains(e.target as HTMLElement)) {
 			return;
 		}
 
-		const enter = isEnter(event);
-		const space = isSpace(event);
+		const enter = isEnter(e);
+		const space = isSpace(e);
 
 		this._headerActive = enter || space;
 
@@ -261,16 +251,16 @@ class CardHeader extends UI5Element {
 		}
 
 		if (space) {
-			event.preventDefault();
+			e.preventDefault();
 		}
 	}
 
-	_keyup(event) {
-		if (!this.interactive || !this._root.contains(event.target)) {
+	_keyup(e: KeyboardEvent) {
+		if (!this.interactive || !this._root.contains(e.target as HTMLElement)) {
 			return;
 		}
 
-		const space = isSpace(event);
+		const space = isSpace(e);
 
 		this._headerActive = false;
 

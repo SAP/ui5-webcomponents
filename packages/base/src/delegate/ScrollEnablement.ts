@@ -6,13 +6,13 @@ import type UI5Element from "../UI5Element.js";
 const scrollEventName = "scroll";
 const touchEndEventName = supportsTouch() ? "touchend" : "mouseup";
 
-type EventListenerParam = {
+type ScrollEnablementEventListenerParam = {
 	isLeft: boolean;
 	isRight: boolean
 }
-type EventListenerReturn = void;
+type ScrollEnablementEventListenerReturn = void;
 
-class ScrollEnablement extends EventProvider<EventListenerParam, EventListenerReturn> {
+class ScrollEnablement extends EventProvider<ScrollEnablementEventListenerParam, ScrollEnablementEventListenerReturn> {
 	containerComponent: UI5Element;
 	mouseMove: (event: MouseEvent | TouchEvent) => void;
 	mouseUp: (event: MouseEvent | TouchEvent) => void;
@@ -219,3 +219,6 @@ class ScrollEnablement extends EventProvider<EventListenerParam, EventListenerRe
 }
 
 export default ScrollEnablement;
+export type {
+	ScrollEnablementEventListenerParam,
+};

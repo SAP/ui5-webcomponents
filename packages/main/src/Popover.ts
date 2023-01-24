@@ -3,6 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
@@ -291,7 +292,7 @@ class Popover extends Popup {
 		super();
 	}
 
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return [browserScrollbarCSS, PopupsCommonCss, PopoverCss];
 	}
 
@@ -324,8 +325,8 @@ class Popover extends Popup {
 		}
 	}
 
-	isOpenerClicked(event: MouseEvent) {
-		const target = event.target as HTMLElement;
+	isOpenerClicked(e: MouseEvent) {
+		const target = e.target as HTMLElement;
 		if (target === this._opener) {
 			return true;
 		}
@@ -336,16 +337,18 @@ class Popover extends Popup {
 			return true;
 		}
 
-		return event.composedPath().indexOf(this._opener as EventTarget) > -1;
+		return e.composedPath().indexOf(this._opener as EventTarget) > -1;
 	}
 
 	/**
 	 * Shows the popover.
 	 * @param {HTMLElement} opener the element that the popover is shown at
-	 * @param {boolean} preventInitialFocus prevents applying the focus inside the popover
+	 * @param {boolean} [preventInitialFocus=false] prevents applying the focus inside the popover
 	 * @public
 	 * @async
+	 * @method
 	 * @name sap.ui.webc.main.Popover#showAt
+	 * @async
 	 * @returns {Promise} Resolved when the popover is open
 	 */
 	async showAt(opener: HTMLElement, preventInitialFocus = false) {
@@ -802,7 +805,7 @@ class Popover extends Popup {
 		return undefined;
 	}
 
-	get _ariaModal() { // Required by Popup.js
+	get _ariaModal() {
 		return "true";
 	}
 
@@ -830,7 +833,7 @@ class Popover extends Popup {
 	 * Hook for descendants to hide header.
 	 */
 	get _displayHeader() {
-		return this.header.length || this.headerText;
+		return !!(this.header.length || this.headerText);
 	}
 
 	/**

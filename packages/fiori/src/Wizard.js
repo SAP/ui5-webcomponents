@@ -493,7 +493,7 @@ class Wizard extends UI5Element {
 
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
-		this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast(size => Number(size) < this.width)];
+		this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast(size => Number(size) < this.width)] || RESPONSIVE_BREAKPOINTS["0"];
 	}
 
 	attachStepsResizeObserver() {
