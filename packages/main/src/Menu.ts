@@ -79,7 +79,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @alias sap.ui.webc.main.Menu
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-menu
- * @appenddocs MenuItem
+ * @appenddocs sap.ui.webc.main.MenuItem
  * @since 1.3.0
  * @public
  */

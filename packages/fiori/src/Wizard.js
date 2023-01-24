@@ -248,7 +248,7 @@ const metadata = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-wizard
  * @since 1.0.0-rc.10
- * @appenddocs WizardStep
+ * @appenddocs sap.ui.webc.fiori.WizardStep
  * @public
  */
 class Wizard extends UI5Element {

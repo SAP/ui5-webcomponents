@@ -56,7 +56,7 @@ import type ProductSwitchItem from "./ProductSwitchItem.js";
  * @alias sap.ui.webc.fiori.ProductSwitch
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-product-switch
- * @appenddocs ProductSwitchItem
+ * @appenddocs sap.ui.webc.fiori.ProductSwitchItem
  * @public
  * @since 1.0.0-rc.5
  */

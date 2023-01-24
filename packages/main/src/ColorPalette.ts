@@ -64,7 +64,7 @@ type ColorPaletteItemClickEventDetail = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-color-palette
  * @since 1.0.0-rc.12
- * @appenddocs ColorPaletteItem
+ * @appenddocs sap.ui.webc.main.ColorPaletteItem
  * @public
  */
 @customElement("ui5-color-palette")
