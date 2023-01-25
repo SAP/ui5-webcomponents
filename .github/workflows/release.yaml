@@ -39,7 +39,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
-        git config user.name "${{ github.actor }}"
-        git config user.email "${{ github.actor}}@users.noreply.github.com"
-        yarn lerna version ${{ github.event.inputs.release_type }} --conventional-commits --yes --create-release github 
+        git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
+        git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
+        yarn lerna version ${{ github.event.inputs.release_type }} --force-publish --conventional-commits --yes --exact --create-release github 
         yarn lerna publish from-git --yes
