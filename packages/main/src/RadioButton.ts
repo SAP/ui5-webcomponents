@@ -12,7 +12,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isSpace,
 	isEnter,
@@ -328,7 +327,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	}
 
 	onBeforeRendering() {
-		this.syncGroup(false);
+		this.syncGroup();
 
 		this._enableFormSupport();
 	}
@@ -337,7 +336,7 @@ class RadioButton extends UI5Element implements IFormElement {
 		this.syncGroup(true);
 	}
 
-	syncGroup(forceRemove: boolean) {
+	syncGroup(forceRemove?: boolean) {
 		const oldGroup = this._name;
 		const currentGroup = this.name;
 		const oldChecked = this._checked;
@@ -470,7 +469,7 @@ class RadioButton extends UI5Element implements IFormElement {
 		return !(this.disabled || this.readonly || this.checked);
 	}
 
-	get classes(): ClassMap {
+	get classes() {
 		return {
 			main: {},
 			inner: {
