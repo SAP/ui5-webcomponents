@@ -88,12 +88,21 @@ const createWebcomponentsPackage = async () => {
 
 	// Add TypeScript support
 	response = await prompts({
-		type: "confirm",
-		name: "typescript",
+		type: "select",
+		name: "language",
 		message: "Support TypeScript:",
-		initial: "Y",
+		choices: [
+			{
+				title: "JavaScript",
+				value: "js",
+			},
+			{
+				title: "TypeScript",
+				value: "ts",
+			},
+		]
 	});
-	const typescript = response.typescript;
+	const typescript = response.language === "ts";
 
 	// Get the port
 	response = await prompts({
