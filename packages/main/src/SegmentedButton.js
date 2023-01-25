@@ -233,7 +233,7 @@ class SegmentedButton extends UI5Element {
 
 	_onmousedown(event) {
 		const eventTarget = event.target;
-		const isTargetSegmentedButtonItem = eventTarget.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+		const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
 
 		if (isTargetSegmentedButtonItem) {
 			eventTarget.focus();
