@@ -2,7 +2,7 @@ name: Release-auto-weekly
 
 on:
   schedule:
-  - cron: "00 8 * * FRI"
+  - cron: "00 08 * * THU"
 
 jobs:
   build-and-release:
