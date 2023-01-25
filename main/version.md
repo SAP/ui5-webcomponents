@@ -1,5 +1,5 @@
-commit 594fee4b521053b79fa7a84bfd30a85f18ababfd
+commit a115bc9273e00082b3455019868d134d0339b541
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Jan 25 14:58:42 2023 +0200
+Date:   Wed Jan 25 14:59:04 2023 +0200
 
-    fix(ui5-segmented-button): ignore scoping suffix when checking tag name (#6353)
+    chore: add option to enable ts support in new packages (#6358)
