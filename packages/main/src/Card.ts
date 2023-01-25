@@ -47,7 +47,7 @@ import cardCss from "./generated/themes/Card.css.js";
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-card
  * @public
- * @appenddocs CardHeader
+ * @appenddocs sap.ui.webc.main.CardHeader
  */
 @customElement("ui5-card")
 @languageAware

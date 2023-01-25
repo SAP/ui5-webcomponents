@@ -39,7 +39,7 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @alias sap.ui.webc.fiori.Timeline
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-timeline
- * @appenddocs TimelineItem
+ * @appenddocs sap.ui.webc.fiori.TimelineItem
  * @public
  * @since 0.8.0
  */

@@ -173,7 +173,7 @@ type SuggestionScrollEventDetail = {
  * @alias sap.ui.webc.main.Input
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-input
- * @appenddocs SuggestionItem SuggestionGroupItem
+ * @appenddocs sap.ui.webc.main.SuggestionItem sap.ui.webc.main.SuggestionGroupItem
  * @implements sap.ui.webc.main.IInput
  * @public
  */

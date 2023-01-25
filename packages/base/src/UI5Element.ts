@@ -668,7 +668,7 @@ abstract class UI5Element extends HTMLElement {
 				}
 				res = `${res}: ${x.name}`;
 				if (x.type === "property") {
-					res = `${res} ${x.oldValue} => ${x.newValue}`;
+					res = `${res} ${JSON.stringify(x.oldValue)} => ${JSON.stringify(x.newValue)}`;
 				}
 
 				return res;

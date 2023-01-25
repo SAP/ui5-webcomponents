@@ -131,7 +131,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	/**
 	 * Defines whether the component is read-only.
 	 * <br><br>
-	 * <b>Note:</b> A red-only component is not editable,
+	 * <b>Note:</b> A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
 	 *
 	 * @type {boolean}

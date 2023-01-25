@@ -102,7 +102,7 @@ type VSDInternalSettings = {
  * @alias sap.ui.webc.fiori.ViewSettingsDialog
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-view-settings-dialog
- * @appenddocs SortItem FilterItem FilterItemOption
+ * @appenddocs sap.ui.webc.fiori.SortItem sap.ui.webc.fiori.FilterItem sap.ui.webc.fiori.FilterItemOption
  * @since 1.0.0-rc.16
  * @public
  */
