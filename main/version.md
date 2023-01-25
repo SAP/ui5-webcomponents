@@ -1,5 +1,5 @@
-commit 96e98c995b1569c918643cd0e2b672856fefe495
+commit 594fee4b521053b79fa7a84bfd30a85f18ababfd
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Wed Jan 25 12:19:57 2023 +0200
+Date:   Wed Jan 25 14:58:42 2023 +0200
 
-    chore: generate custom element manifest when package is build (#6352)
+    fix(ui5-segmented-button): ignore scoping suffix when checking tag name (#6353)

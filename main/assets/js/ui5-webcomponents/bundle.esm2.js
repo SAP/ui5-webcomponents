@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 3,
   suffix: "",
   isNext: false,
-  buildTime: 1674642062
+  buildTime: 1674651584
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -24093,7 +24093,7 @@ class SegmentedButton extends UI5Element {
     }
   }
   _selectItem(event2) {
-    const isTargetSegmentedButtonItem = event2.target.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+    const isTargetSegmentedButtonItem = event2.target.hasAttribute("ui5-segmented-button-item");
     if (event2.target.disabled || event2.target === this.getDomRef() || !isTargetSegmentedButtonItem) {
       return;
     }
@@ -24128,7 +24128,7 @@ class SegmentedButton extends UI5Element {
   }
   _onmousedown(event2) {
     const eventTarget = event2.target;
-    const isTargetSegmentedButtonItem = eventTarget.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+    const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
     if (isTargetSegmentedButtonItem) {
       eventTarget.focus();
       this._itemNavigation.setCurrentItem(eventTarget);
