@@ -1,7 +1,8 @@
 const fs = require("fs").promises;
+const path = require("path");
 // https://github.com/webcomponents/custom-elements-manifest/blob/main/schema.json
 
-const apiIndexFilePath = process.argv[2];
+const inputDir = process.argv[2];
 const outputDir = process.argv[3];
 
 const camelToKebabMap = new Map();
@@ -305,7 +306,7 @@ const filterPublicApi = array => {
 };
 
 const generate = async () => {
-	const file = JSON.parse(await fs.readFile(apiIndexFilePath));
+	const file = JSON.parse(await fs.readFile(path.join(inputDir, "api.json")));
 	let customElementsManifest = {
 		schemaVersion: "1.0.0",
 		readme: "",
@@ -318,7 +319,7 @@ const generate = async () => {
 		}
 	});
 
-	await fs.writeFile(`${outputDir}custom-elements.json`, JSON.stringify(customElementsManifest));
+	await fs.writeFile(path.join(outputDir, "custom-elements.json"), JSON.stringify(customElementsManifest));
 };
 
 generate().then(() => {

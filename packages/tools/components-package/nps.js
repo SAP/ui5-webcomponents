@@ -122,7 +122,7 @@ const getScripts = (options) => {
 		generateAPI: {
 			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest",
 			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
-			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" "dist/api.json" "dist/"`,
+			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
 			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
 			jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
 			cleanup: "rimraf jsdoc-dist/"
