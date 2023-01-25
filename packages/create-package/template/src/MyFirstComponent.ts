@@ -44,7 +44,7 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	}
 
 	static async onDefine() {
-		INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle = await getI18nBundle("test");
+		INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle = await getI18nBundle("INIT_PACKAGE_VAR_NAME");
 	}
 
 	get pleaseWaitText() {
