@@ -1,5 +1,5 @@
-commit 78222ac6ff90e19163d924b84ef405d39943e98d
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Wed Jan 25 06:39:15 2023 +0000
+commit 96e98c995b1569c918643cd0e2b672856fefe495
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Wed Jan 25 12:19:57 2023 +0200
 
-    chore(release): publish v1.10.3
+    chore: generate custom element manifest when package is build (#6352)
