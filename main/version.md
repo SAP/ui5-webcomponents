@@ -1,5 +1,5 @@
-commit 389fdb3fd2e90389567a1291716eb2ee0c42bfdd
-Author: ilhan007 <ilhan007@users.noreply.github.com>
-Date:   Wed Jan 25 05:38:24 2023 +0000
+commit 104dcfe8ea80ac77eda78d2da53ceff1370e4115
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Jan 25 08:19:57 2023 +0200
 
-    chore(release): publish v1.10.2
+    chore: release 1.10.2 to keep all packages in sync (#6356)
