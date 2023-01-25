@@ -2,6 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Template
 import INIT_PACKAGE_VAR_CLASS_NAMETemplate from "./generated/templates/INIT_PACKAGE_VAR_CLASS_NAMETemplate.lit.js";
@@ -27,6 +29,8 @@ import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
  */
 @customElement("INIT_PACKAGE_VAR_TAG")
 class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
+	static i18nBundle: I18nBundle;
+
 	static get render() {
 		return litRender;
 	}
@@ -40,11 +44,11 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	}
 
 	static async onDefine() {
-		INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle = await getI18nBundle("INIT_PACKAGE_VAR_NAME");
+		INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle = await getI18nBundle("test");
 	}
 
 	get pleaseWaitText() {
-		return INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle.getText(PLEASE_WAIT);
+		return INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle.getText(PLEASE_WAIT as I18nText);
 	}
 }
 
