@@ -84,7 +84,7 @@ let activeRadio: RadioButton;
 /**
  * Fired when the component checked state changes.
  *
- * @event sap.ui.webc.main.CheckBox#change
+ * @event sap.ui.webc.main.RadioButton#change
  * @public
  * @since 1.0.0-rc.15
  */
