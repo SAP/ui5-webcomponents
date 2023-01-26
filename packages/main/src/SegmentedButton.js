@@ -93,7 +93,7 @@ const metadata = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-segmented-button
  * @since 1.0.0-rc.6
- * @appenddocs SegmentedButtonItem
+ * @appenddocs sap.ui.webc.main.SegmentedButtonItem
  * @public
  */
 class SegmentedButton extends UI5Element {
@@ -189,7 +189,9 @@ class SegmentedButton extends UI5Element {
 	}
 
 	_selectItem(event) {
-		if (event.target.disabled || event.target === this.getDomRef()) {
+		const isTargetSegmentedButtonItem = event.target.hasAttribute("ui5-segmented-button-item");
+
+		if (event.target.disabled || event.target === this.getDomRef() || !isTargetSegmentedButtonItem) {
 			return;
 		}
 
@@ -206,12 +208,13 @@ class SegmentedButton extends UI5Element {
 		this._selectedItem.pressed = true;
 		this._itemNavigation.setCurrentItem(this._selectedItem);
 
+		this.selectedItem.focus();
+
 		return this;
 	}
 
 	_onclick(event) {
 		this._selectItem(event);
-		this.selectedItem.focus();
 	}
 
 	_onkeydown(event) {
@@ -225,6 +228,17 @@ class SegmentedButton extends UI5Element {
 	_onkeyup(event) {
 		if (isSpace(event)) {
 			this._selectItem(event);
+		}
+	}
+
+	_onmousedown(event) {
+		const eventTarget = event.target;
+		const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
+
+		if (isTargetSegmentedButtonItem) {
+			eventTarget.focus();
+			this._itemNavigation.setCurrentItem(eventTarget);
+			this.hasPreviouslyFocusedItem = true;
 		}
 	}
 

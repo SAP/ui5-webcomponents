@@ -1,9 +1,12 @@
 const fs = require("fs").promises;
+const path = require("path");
 // https://github.com/webcomponents/custom-elements-manifest/blob/main/schema.json
+
+const inputDir = process.argv[2];
+const outputDir = process.argv[3];
 
 const camelToKebabMap = new Map();
 const apiIndex = new Map();
-const processedApiIndex = new Set();
 const forbiddenAttributeTypes = ["object", "array"];
 
 const camelToKebabCase = string => {
@@ -16,7 +19,7 @@ const camelToKebabCase = string => {
 
 const generateJavaScriptExport = entity => {
 	return {
-		declaration: generateRefenrece(entity),
+		declaration: generateRefenrece(entity.name),
 		deprecated: !!entity.deprecated,
 		kind: "js",
 		name: "default",
@@ -226,8 +229,6 @@ const generateSlots = slots => {
 };
 
 const generateCustomElementDeclaration = entity => {
-	entity = generateFullComponentApi(entity);
-
 	let generatedCustomElementDeclaration = {
 		deprecated: !!entity.deprecated,
 		customElement: true,
@@ -265,63 +266,39 @@ const generateCustomElementDeclaration = entity => {
 	}
 
 	if (entity.extends && entity.extends !== "HTMLElement") {
-		generatedCustomElementDeclaration.superclass = generateRefenrece(apiIndex.get(entity.extends));
+		generatedCustomElementDeclaration.superclass = generateRefenrece(entity.extends);
 	}
 
 	return generatedCustomElementDeclaration;
 };
 
-const generateRefenrece = (entity) => {
+const generateRefenrece = (entityName) => {
 	let packageName;
+	let basename;
 
-	if (!entity.name) {
+	if (!entityName) {
 		throw new Error("JSDoc error: entity not found in api.json.");
 	}
 
-	if (entity.name.includes("sap.ui.webc.main")) {
+	if (entityName.includes(".")) {
+		basename = entityName.split(".").pop();
+	} else {
+		basename = entityName
+	}
+
+	if (entityName.includes("sap.ui.webc.main")) {
 		packageName = "@ui5/webcomponents";
-	} else if (entity.name.includes("sap.ui.webc.fiori")) {
+	} else if (entityName.includes("sap.ui.webc.fiori")) {
 		packageName = "@ui5/webcomponents-fiori";
-	} else if (entity.name.includes("sap.ui.webc.base")) {
+	} else if (entityName.includes("sap.ui.webc.base")) {
 		packageName = "@ui5/webcomponents-base";
 	}
 
 	return {
-		module: `${entity.module}.js`,
-		name: `${entity.basename}`,
+		module: `${basename}.js`,
+		name: `${basename}`,
 		package: packageName,
 	};
-};
-
-const generateFullComponentApi = entity => {
-	const componentProps = ["properties", "slots", "events", "methods"];
-	let parent = apiIndex.get(entity.extends);
-
-	if (!parent) {
-		processedApiIndex.add(entity.name);
-
-		return entity;
-	}
-
-	parent = processedApiIndex.has(entity.extends) ? apiIndex.get(entity.extends) : generateFullComponentApi(parent);
-
-	componentProps.forEach(prop => {
-		if (parent[prop] && parent[prop].length) {
-			if (entity[prop] && entity[prop].length) {
-				const uniqueParentState = parent[prop].filter(pSlot => {
-					return !entity[prop].some(eSlot => eSlot.name === pSlot.name);
-				});
-
-				entity[prop] = entity[prop].concat(uniqueParentState);
-			} else {
-				entity[prop] = [...parent[prop]];
-			}
-		}
-	});
-
-	processedApiIndex.add(entity.name);
-
-	return entity;
 };
 
 const filterPublicApi = array => {
@@ -329,43 +306,20 @@ const filterPublicApi = array => {
 };
 
 const generate = async () => {
-	const apiFilesPaths = [
-		require.resolve("@ui5/webcomponents-base/dist/api.json"),
-		require.resolve("@ui5/webcomponents/dist/api.json"),
-		require.resolve("@ui5/webcomponents-fiori/dist/api.json"),
-	];
+	const file = JSON.parse(await fs.readFile(path.join(inputDir, "api.json")));
+	let customElementsManifest = {
+		schemaVersion: "1.0.0",
+		readme: "",
+		modules: [],
+	};
 
-	let apiFiles = new Map();
-
-	await Promise.all(apiFilesPaths.map(async (apiFilePath) => {
-		const file = JSON.parse(await fs.readFile(apiFilePath));
-
-		apiFiles.set(apiFilePath, file);
-
-		file.symbols.forEach(symbol => {
-			apiIndex.set(symbol.name, symbol);
-		});
-	}));
-
-	await Promise.all(apiFilesPaths.map(async (apiFilePath) => {
-		if (apiFilePath.includes("base")) {
-			return;
+	file.symbols.forEach(entity => {
+		if (entity.tagname) {
+			customElementsManifest.modules.push(generateJavaScriptModule(entity));
 		}
+	});
 
-		let customElementsManifest = {
-			schemaVersion: "1.0.0",
-			readme: "",
-			modules: [],
-		};
-
-		apiFiles.get(apiFilePath).symbols.forEach(entity => {
-			if (entity.tagname) {
-				customElementsManifest.modules.push(generateJavaScriptModule(entity));
-			}
-		});
-
-		await fs.writeFile(apiFilePath.replace("api.json", "custom-elements.json"), JSON.stringify(customElementsManifest));
-	}));
+	await fs.writeFile(path.join(outputDir, "custom-elements.json"), JSON.stringify(customElementsManifest));
 };
 
 generate().then(() => {

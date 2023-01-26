@@ -10,7 +10,6 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
-// @ts-ignore: ignore will no longer be required, when List is migrated to TS
 import List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
@@ -39,11 +38,11 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
 type SelectionChangeEventDetail = {
-	selectedItems: Array<HTMLElement>, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more presice.
+	selectedItems: Array<HTMLElement>, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more precise.
 };
 
 type ItemDeleteEventDetail = {
-	item: HTMLElement, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more presice.
+	item: HTMLElement, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more precise.
 };
 
 /**
@@ -63,7 +62,7 @@ type ItemDeleteEventDetail = {
  * @alias sap.ui.webc.fiori.UploadCollection
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-upload-collection
- * @appenddocs UploadCollectionItem
+ * @appenddocs sap.ui.webc.fiori.UploadCollectionItem
  * @public
  * @since 1.0.0-rc.7
  */
@@ -239,7 +238,7 @@ class UploadCollection extends UI5Element {
 			Label,
 			List,
 			Title,
-		] as Array<typeof UI5Element>; // Note: casting will no longer be required, when List is migrated to TS
+		];
 	}
 
 	static async onDefine() {

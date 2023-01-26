@@ -55,7 +55,7 @@
 	white-space: nowrap;
 	font-size: var(--sapFontSize);
 	font-weight: normal;
-	color: var(--sapField_TextColor);
+	color: var(--_ui5_tokenizer_n_more_text_color);
 }
 
 :host([expanded]) .ui5-tokenizer--content {

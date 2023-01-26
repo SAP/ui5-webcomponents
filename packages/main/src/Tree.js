@@ -323,7 +323,7 @@ const metadata = {
  * @alias sap.ui.webc.main.Tree
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-tree
- * @appenddocs TreeItem
+ * @appenddocs sap.ui.webc.main.TreeItem
  * @public
  * @since 1.0.0-rc.8
  */

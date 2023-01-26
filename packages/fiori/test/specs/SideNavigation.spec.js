@@ -1,4 +1,3 @@
-
 const assert = require("chai").assert;
 
 async function getTreeItemsInPopover() {

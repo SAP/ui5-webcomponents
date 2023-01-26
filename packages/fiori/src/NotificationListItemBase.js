@@ -127,10 +127,15 @@ const metadata = {
 		/**
 		 * Fired when the <code>Close</code> button is pressed.
 		 *
-		 * @event
+		 * @event sap.ui.webc.fiori.NotificationListItemBase#close
+		 * @param {HTMLElement} item the closed item.
 		 * @public
 		 */
-		close: {},
+		close: {
+			detail: {
+				item: HTMLElement,
+			},
+		},
 	},
 };
 
@@ -146,7 +151,7 @@ const metadata = {
  * @extends sap.ui.webc.main.ListItemBase
  * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
- * @appenddocs NotificationAction
+ * @appenddocs sap.ui.webc.fiori.NotificationAction
  * @public
  */
 class NotificationListItemBase extends ListItemBase {

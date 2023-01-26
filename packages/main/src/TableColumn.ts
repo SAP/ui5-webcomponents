@@ -1,8 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.js";
 import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 

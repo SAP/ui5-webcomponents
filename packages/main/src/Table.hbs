@@ -1,4 +1,10 @@
-<div class="ui5-table-root" @focusin="{{_onfocusin}}">
+<div 
+	class="ui5-table-root"
+	@ui5-selection-requested="{{_handleSelect}}"
+	@ui5-_forward-after="{{_onForwardAfter}}"
+	@ui5-_forward-before="{{_onForwardBefore}}"
+	@focusin="{{_onfocusin}}"
+>
 	<div id="{{_id}}-before" tabindex="0" class="ui5-table-focusarea"></div>
 
 	{{#if busy}}
