@@ -1,5 +1,5 @@
-commit b618aed1a969ce5a738b620cb8b2d7d796638d4c
-Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
-Date:   Thu Jan 26 08:09:32 2023 +0000
+commit 0be60a68c3081a7aec94f6b98c954e412c48fa0f
+Author: Georgieva <lidiya.georgieva@sap.com>
+Date:   Thu Jan 26 11:42:14 2023 +0200
 
-    chore(release): publish v1.10.4-rc.0
+    refactor(ui5-radio-button): convert to TS (#6334)
