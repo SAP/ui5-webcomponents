@@ -91,8 +91,6 @@ describe("MultiInput general interaction", () => {
 	});
 
 	it ("adds an overflowing token to multi input", async () => {
-
-
 		const mi = await browser.$("#multiple-token");
 		const btn = await browser.$("#add-to-multiple");
 
@@ -103,9 +101,9 @@ describe("MultiInput general interaction", () => {
 
 		assert.notOk(await allTokens[0].getProperty("overflows"), `Token 0 should not overflow`);
 		assert.notOk(await allTokens[1].getProperty("overflows"), `Token 1 should not overflow`);
-		for (let i = 2; i <= 4; i++) {
-			assert.ok(await allTokens[i].getProperty("overflows"), `Token ${i} should overflow`);
-		}
+		assert.ok(await allTokens[2].getProperty("overflows"), `Token 2 should not overflow`);
+		assert.ok(await allTokens[3].getProperty("overflows"), `Token 3 should not overflow`);
+		assert.ok(await allTokens[4].getProperty("overflows"), `Token 4 should not overflow`);
 
 		await btn.click();
 
@@ -114,9 +112,10 @@ describe("MultiInput general interaction", () => {
 
 		assert.notOk(await allTokens[0].getProperty("overflows"), `Token 0 should not overflow`);
 		assert.notOk(await allTokens[1].getProperty("overflows"), `Token 1 should not overflow`);
-		for (let i = 2; i <= 4; i++) {
-			assert.ok(await allTokens[i].getProperty("overflows"), `Token ${i} should overflow`);
-		}
+		assert.ok(await allTokens[2].getProperty("overflows"), `Token 2 should not overflow`);
+		assert.ok(await allTokens[3].getProperty("overflows"), `Token 3 should not overflow`);
+		assert.ok(await allTokens[4].getProperty("overflows"), `Token 4 should not overflow`);
+		assert.ok(await allTokens[5].getProperty("overflows"), `Token 5 should not overflow`);
 	});
 
 	it ("adds a token after selection change", async () => {

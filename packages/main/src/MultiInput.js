@@ -338,7 +338,6 @@ class MultiInput extends Input {
 		}
 
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
-		this.style.setProperty("--_ui5_input_has_tokens", this.tokenizerAvailable ? 1 : 0);
 	}
 
 	get tokenizer() {

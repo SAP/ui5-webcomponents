@@ -1316,7 +1316,6 @@ class MultiComboBox extends UI5Element {
 
 		this.tokenizerAvailable = this.items && this.items.length > 0;
 		this.style.setProperty("--_ui5-input-icons-count", slottedIconsCount + arrowDownIconsCount);
-		this.style.setProperty("--_ui5_input_has_tokens", this.tokenizerAvailable ? 1 : 0);
 
 		if (!input || !value) {
 			return;

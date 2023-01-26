@@ -1,7 +1,11 @@
 @import "./InputIcon.css";
 
 :host {
-	min-width: calc(var(--_ui5_input_min_width) + (var(--_ui5-input-icons-count)*var(--_ui5_input_icon_width)) + (var(--_ui5_input_has_tokens)*var(--_ui5_input_tokenizer_min_width)));
+	min-width: calc(var(--_ui5_input_min_width) + (var(--_ui5-input-icons-count)*var(--_ui5_input_icon_width)));
+}
+
+:host[tokenizer-available] {
+	min-width: calc(var(--_ui5_input_min_width) + (var(--_ui5-input-icons-count)*var(--_ui5_input_icon_width)) +var(--_ui5_input_tokenizer_min_width));
 }
 
 .ui5-multi-input-tokenizer {
@@ -21,12 +25,21 @@
 }
 
 [inner-input] {
-	padding-left: calc((1 - var(--_ui5_input_has_tokens)) * var(--_ui5_input_inner_padding_left_no_tokens) + (var(--_ui5_input_has_tokens) * var(--_ui5_input_inner_padding_left_tokens)));
+	padding-left: var(--_ui5_input_inner_padding_left_no_tokens);
 }
 
 [inner-input][inner-input-with-icon] {
 	padding: var(--_ui5_input_inner_padding_with_icon);
-	padding-left: calc((1 - var(--_ui5_input_has_tokens)) * var(--_ui5_input_inner_padding_left_no_tokens) + (var(--_ui5_input_has_tokens) * var(--_ui5_input_inner_padding_left_tokens)));
+	padding-left: var(--_ui5_input_inner_padding_left_no_tokens);
+}
+
+:host([tokenizer-available]) [inner-input] {
+	padding-left: var(--_ui5_input_inner_padding_left_tokens);
+}
+
+:host([tokenizer-available]) [inner-input][inner-input-with-icon] {
+	padding: var(--_ui5_input_inner_padding_with_icon);
+	padding-left: var(--_ui5_input_inner_padding_left_tokens);
 }
 
 :host(:not([tokenizer-available])) .ui5-multi-input-tokenizer {
