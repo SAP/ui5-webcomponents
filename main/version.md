@@ -1,9 +1,5 @@
-commit 6b19ca3c2bd8d4cfceeef9077fe04d74802038f8
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jan 26 09:48:21 2023 -0800
+commit 6453d49bdf07a2274f5c384d549fcf61e6eff82c
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Thu Jan 26 20:36:37 2023 +0200
 
-    Translation Delivery (#6367)
-    
-    chore: translation delivery
-    
-    Change-Id: I2fbeaea163853ac2b9b046b414c116c8c11fbd91
+    chore: ts-ignore cleanup for migrated components (#6369)
