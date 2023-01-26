@@ -15,9 +15,7 @@ import "@ui5/webcomponents-icons/dist/edit.js";
 import ListItemType from "./types/ListItemType.js";
 import ListMode from "./types/ListMode.js";
 import ListItemBase from "./ListItemBase.js";
-// @ts-ignore
 import RadioButton from "./RadioButton.js";
-// @ts-ignore
 import CheckBox from "./CheckBox.js";
 import Button from "./Button.js";
 import {
