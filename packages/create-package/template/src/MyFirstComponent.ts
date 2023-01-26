@@ -10,7 +10,6 @@ import INIT_PACKAGE_VAR_CLASS_NAMETemplate from "./generated/templates/INIT_PACK
 // Styles
 import INIT_PACKAGE_VAR_CLASS_NAMECss from "./generated/themes/INIT_PACKAGE_VAR_CLASS_NAME.css.js";
 
-// @ts-ignore
 import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
 
 /**
