@@ -1,5 +1,9 @@
-commit 4cd61da1f18225ef920a38f306796420ad9a1679
-Author: ui5-webcomponents-bot <107212218+ui5-webcomponents-bot@users.noreply.github.com>
-Date:   Thu Jan 26 19:42:57 2023 +0200
+commit 6b19ca3c2bd8d4cfceeef9077fe04d74802038f8
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jan 26 09:48:21 2023 -0800
 
-    chore: replace personal token with bot's token
+    Translation Delivery (#6367)
+    
+    chore: translation delivery
+    
+    Change-Id: I2fbeaea163853ac2b9b046b414c116c8c11fbd91
