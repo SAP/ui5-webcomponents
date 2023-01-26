@@ -31,7 +31,7 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Build
-      run: yarn build
+      run: yarn build --cache-dir=.turbo
 
     - name: Test
       run: yarn test:${{ matrix.suite }}

@@ -9,9 +9,9 @@
     "ui5"
   ],
   "scripts": {
-    "build": "turbo run build bundle --cache-dir=.turbo",
+    "build": "turbo run build bundle lint",
     "build2": "npm-run-all --sequential build:phase1 build:phase2 build:customElementsManifest",
-    "build:phase1": "yarn wsrun -p @ui5/webcomponents-base @ui5/webcomponents-localization @ui5/webcomponents @ui5/webcomponents-fiori @ui5/webcomponents-theming @ui5/webcomponents-icons @ui5/webcomponents-icons-business-suite @ui5/webcomponents-icons-tnt -c build",
+    "build:phase1": "turbo run build",
     "build:phase2": "npm-run-all --parallel lint build:bundles",
     "build:bundles": "npm-run-all --parallel bundle:base bundle:main bundle:fiori",
     "build:customElementsManifest": "node packages/tools/lib/generate-custom-elements-manifest/index.js",
