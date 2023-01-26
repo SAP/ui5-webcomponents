@@ -31,7 +31,13 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {
+	getEffectiveAriaLabelText,
+	getAssociatedLabelForTexts,
+	observeAssosiatedLabels,
+	disposeAssosiatedLabelsObservers,
+	updateInputAssociatedObservers,
+} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -524,6 +530,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_inputIconFocused!: boolean;
 
 	/**
+	 * Constantly updated value of texts collected from the assosiated labels
+	 * @private
+	 */
+	@property({ type: String, noAttribute: true })
+	_assosiatedLabelsTexts: string | undefined;
+
+	/**
 	 * Defines the suggestion items.
 	 * <br><br>
 	 * Example:
@@ -687,10 +700,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
+		observeAssosiatedLabels(this, this._updateAssosiatedLabelsTexts.bind(this));
+		this._updateAssosiatedLabelsTexts();
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
+		disposeAssosiatedLabelsObservers(this);
 	}
 
 	onBeforeRendering() {
@@ -1155,6 +1171,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._inputWidth = this.offsetWidth;
 	}
 
+	_updateAssosiatedLabelsTexts() {
+		this._assosiatedLabelsTexts = getAssociatedLabelForTexts(this);
+		updateInputAssociatedObservers(this);
+	}
+
 	_closeRespPopover() {
 		this.Suggestions!.close(true);
 	}
@@ -1496,7 +1517,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this),
+				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this) || this._assosiatedLabelsTexts,
 			},
 		};
 	}
