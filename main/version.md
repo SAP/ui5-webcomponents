@@ -1,5 +1,5 @@
-commit 0be60a68c3081a7aec94f6b98c954e412c48fa0f
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Thu Jan 26 11:42:14 2023 +0200
+commit a421f9cc998da2e08dd56ba7a84b23f3f0ad7036
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Jan 26 01:49:57 2023 -0800
 
-    refactor(ui5-radio-button): convert to TS (#6334)
+    Translation Delivery (#6357)
