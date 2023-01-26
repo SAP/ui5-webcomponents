@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -32,7 +31,6 @@ import {
 	ARIA_LABEL_ROW_SELECTION,
 	LIST_ITEM_NOT_SELECTED,
 	LIST_ITEM_SELECTED,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -436,7 +434,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	}
 
 	get ariaLabelText() {
-		const isSelected = this.selected ? TableRow.i18nBundle.getText(LIST_ITEM_SELECTED as I18nText) : TableRow.i18nBundle.getText(LIST_ITEM_NOT_SELECTED as I18nText);
+		const isSelected = this.selected ? TableRow.i18nBundle.getText(LIST_ITEM_SELECTED) : TableRow.i18nBundle.getText(LIST_ITEM_NOT_SELECTED);
 		const isRowSelectable = this.isSingleSelect || this.isMultiSelect;
 		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
@@ -452,7 +450,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	}
 
 	get ariaLabelRowSelection() {
-		return TableRow.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION as I18nText);
+		return TableRow.i18nBundle.getText(ARIA_LABEL_ROW_SELECTION);
 	}
 
 	get isSingleSelect() {

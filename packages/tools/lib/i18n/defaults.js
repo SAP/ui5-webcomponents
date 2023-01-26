@@ -8,7 +8,7 @@ const generate = async () => {
 
 	const messageBundle = path.normalize(`${process.argv[2]}/messagebundle.properties`);
 	const messageBundleDefaultLanguage = path.normalize(`${process.argv[2]}/messagebundle_${defaultLanguage}.properties`);
-	const outputFile = path.normalize(`${process.argv[3]}/i18n-defaults.js`);
+	const outputFile = path.normalize(`${process.argv[3]}/i18n-defaults.ts`);
 
 	if (!messageBundle || !outputFile) {
 		return;

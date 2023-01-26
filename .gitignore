@@ -6,6 +6,7 @@ temp
 target
 dist
 jsdoc-dist
+src/generated
 .dev-server-port
 # TODO remove this as the tools no longer generate it, kept for clean up (in the clean task as well)
 .port
