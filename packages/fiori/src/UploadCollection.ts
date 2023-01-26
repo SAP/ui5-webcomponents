@@ -38,11 +38,11 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
 type SelectionChangeEventDetail = {
-	selectedItems: Array<HTMLElement>, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more presice.
+	selectedItems: Array<HTMLElement>, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more precise.
 };
 
 type ItemDeleteEventDetail = {
-	item: HTMLElement, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more presice.
+	item: HTMLElement, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more precise.
 };
 
 /**
