@@ -34,7 +34,6 @@ import type {
 	PressEventDetail,
 } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
-// @ts-ignore
 import BusyIndicator from "./BusyIndicator.js";
 
 // Template

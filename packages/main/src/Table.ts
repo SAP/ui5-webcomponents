@@ -35,7 +35,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
-// @ts-ignore
 import BusyIndicator from "./BusyIndicator.js";
 import type {
 	TableRowSelectionRequestedEventDetail,
@@ -47,7 +46,6 @@ import type TableCell from "./TableCell.js";
 import type TableColumn from "./TableColumn.js";
 import type TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 import TableMode from "./types/TableMode.js";
-// @ts-ignore
 import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
