@@ -609,13 +609,13 @@ abstract class Popup extends UI5Element {
 	 *
 	 * @protected
 	 * @abstract
-	 * @returns {string}
+	 * @returns {string | undefined}
 	 */
 	abstract get _ariaModal(): string | undefined
 
 	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {string|undefined}
+	 * @returns {string | undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {
