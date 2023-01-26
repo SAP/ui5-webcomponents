@@ -1,5 +1,5 @@
-commit eea6709321e139bd0b699c910cfdab658ca44950
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Jan 25 20:00:59 2023 +0200
+commit b618aed1a969ce5a738b620cb8b2d7d796638d4c
+Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
+Date:   Thu Jan 26 08:09:32 2023 +0000
 
-    chore: add weekly auto release action (#6359)
+    chore(release): publish v1.10.4-rc.0
