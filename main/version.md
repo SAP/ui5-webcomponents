@@ -1,5 +1,5 @@
-commit a421f9cc998da2e08dd56ba7a84b23f3f0ad7036
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Jan 26 01:49:57 2023 -0800
+commit 4cd61da1f18225ef920a38f306796420ad9a1679
+Author: ui5-webcomponents-bot <107212218+ui5-webcomponents-bot@users.noreply.github.com>
+Date:   Thu Jan 26 19:42:57 2023 +0200
 
-    Translation Delivery (#6357)
+    chore: replace personal token with bot's token
