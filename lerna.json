@@ -12,7 +12,7 @@
 		"packages/playground",
 		"packages/create-package"
 	],
-	"version": "1.10.3",
+	"version": "1.10.4-rc.0",
 	"command": {
 		"publish": {
 			"allowBranch": "*",
