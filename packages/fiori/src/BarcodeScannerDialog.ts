@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
@@ -17,7 +16,6 @@ import type { BrowserMultiFormatReader as BrowserMultiFormatReaderT, Result, Exc
 import {
 	BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT,
 	BARCODE_SCANNER_DIALOG_LOADING_TXT,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -246,11 +244,11 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	get _cancelButtonText() {
-		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT as I18nText);
+		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT);
 	}
 
 	get _busyIndicatorText() {
-		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT as I18nText);
+		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
 	}
 
 	static get dependencies() {
