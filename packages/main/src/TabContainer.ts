@@ -69,22 +69,22 @@ interface ITab extends UI5Element {
 	disabled: boolean;
 	design: SemanticColor;
 	stableDomRef: string;
-	getTabInStripDomRef: () => HTMLElement;
+	getTabInStripDomRef: () => HTMLElement | null;
 	tabs: Array<ITab>
 	isSingleClickArea: boolean;
 	requiresExpandButton: boolean;
 	_tabIndex: string;
 	_hasOwnContent: boolean;
-	_level: number;
+	_level?: number;
 	_selected: boolean;
-	_getElementInStrip: () => HTMLElement;
-	_isInline: boolean;
-	_mixedMode: boolean;
-	_posinset: number;
-	_setsize: number;
+	_getElementInStrip?: () => HTMLElement | null;
+	_isInline?: boolean;
+	_mixedMode?: boolean;
+	_posinset?: number;
+	_setsize?: number;
 	_realTab: ITab;
 	_isTopLevelTab: boolean;
-	_style: any;
+	_style?: any;
 }
 
 interface TabContainerExpandButton extends Button {
@@ -494,7 +494,7 @@ class TabContainer extends UI5Element {
 	_setItemsPrivateProperties(items: Array<ITab>) {
 		// set real dom ref to all items, then return only the tabs for further processing
 		const allTabs = items.filter(item => {
-			item._getElementInStrip = () => this.getDomRef()!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
+			item._getElementInStrip = () => this.getDomRef()!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 			return !item.isSeparator;
 		});
 
@@ -548,7 +548,7 @@ class TabContainer extends UI5Element {
 				this._setPopoverInitialFocus();
 			}
 
-			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef());
+			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef()!);
 			return;
 		}
 		this._onHeaderItemSelect(tab);
@@ -664,7 +664,7 @@ class TabContainer extends UI5Element {
 		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
-		selectedTopLevel.getTabInStripDomRef().focus({ focusVisible: true } as FocusOptions);
+		selectedTopLevel.getTabInStripDomRef()!.focus({ focusVisible: true } as FocusOptions);
 	}
 
 	/**
@@ -833,7 +833,7 @@ class TabContainer extends UI5Element {
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
 		walk(tabs, tab => {
-			let level = tab._level - 1;
+			let level = tab._level! - 1;
 
 			if (tab.isSeparator) {
 				level += 1;
@@ -866,7 +866,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef());
+		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef()!);
 
 		// make sure the overflows are hidden
 		this._getStartOverflow().setAttribute("hidden", "");
@@ -911,7 +911,7 @@ class TabContainer extends UI5Element {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
 		const containerWidth = this._getTabStrip().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
@@ -928,7 +928,7 @@ class TabContainer extends UI5Element {
 	_updateStartAndEndOverflow(itemsDomRefs: Array<HTMLElement>) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -1125,7 +1125,7 @@ class TabContainer extends UI5Element {
 		let endOverflowItemsCount = 0;
 
 		this._getTabs()
-			.map(tab => tab.getTabInStripDomRef())
+			.map(tab => tab.getTabInStripDomRef()!)
 			.forEach(tab => {
 				if (tab.hasAttribute("start-overflow")) {
 					startOverflowItemsCount++;
@@ -1317,3 +1317,6 @@ const walk = (tabs: Array<ITab>, callback: (_: ITab) => void) => {
 TabContainer.define();
 
 export default TabContainer;
+export type {
+	ITab,
+};

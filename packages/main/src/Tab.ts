@@ -20,8 +20,8 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import SemanticColor from "./types/SemanticColor.js";
 import ListItemType from "./types/ListItemType.js";
-// @ts-ignore
 import TabContainer from "./TabContainer.js";
+import type { ITab } from "./TabContainer.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
 import CustomListItem from "./CustomListItem.js";
@@ -59,7 +59,7 @@ const DESIGN_DESCRIPTIONS = {
  */
 @customElement("ui5-tab")
 @languageAware
-class Tab extends UI5Element {
+class Tab extends UI5Element implements ITab {
 	/**
 	 * The text to be displayed for the item.
 	 * @type {string}
@@ -187,7 +187,7 @@ class Tab extends UI5Element {
 
 	_isInline?: boolean;
 	_mixedMode?: boolean;
-	_getElementInStrip?: () => HTMLElement;
+	_getElementInStrip?: () => HTMLElement | null;
 	_individualSlot!: string;
 
 	static get render() {
@@ -299,8 +299,8 @@ class Tab extends UI5Element {
 	getFocusDomRef() {
 		let focusedDomRef = super.getFocusDomRef();
 
-		if (this._getElementInStrip) {
-			focusedDomRef = this._getElementInStrip();
+		if (this._getElementInStrip && this._getElementInStrip()) {
+			focusedDomRef = this._getElementInStrip()!;
 		}
 
 		return focusedDomRef;
