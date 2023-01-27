@@ -45,7 +45,7 @@ const generate = async () => {
 		let effectiveValue = defaultLanguageValue || value;
 		effectiveValue = effectiveValue.replace(/\"/g, "\\\""); // escape double quotes in translations
 
-		return `const ${key} = {key: "${key}", defaultText: "${effectiveValue}"};`;
+		return `const ${key}: I18nText = {key: "${key}", defaultText: "${effectiveValue}"};`;
 	};
 
 	/*
@@ -62,7 +62,8 @@ const generate = async () => {
 		const textKeys = Object.keys(properties);
 		const texts = textKeys.map(prop => getTextInfo(prop, properties[prop], defaultLanguageProperties && defaultLanguageProperties[prop])).join('');
 
-		return `${texts}
+		return `import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+${texts}
 export {${textKeys.join()}};`;
 	};
 
