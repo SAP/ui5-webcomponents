@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.4-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.3...v1.10.4-rc.0) (2023-01-26)
+
+
+### Bug Fixes
+
+* **ui5-segmented-button:** ignore scoping suffix when checking tag name ([#6353](https://github.com/SAP/ui5-webcomponents/issues/6353)) ([594fee4](https://github.com/SAP/ui5-webcomponents/commit/594fee4b521053b79fa7a84bfd30a85f18ababfd))
+
+
+
+
+
 ## [1.10.3](https://github.com/SAP/ui5-webcomponents/compare/v1.10.2...v1.10.3) (2023-01-25)
 
 **Note:** Version bump only for package @ui5/webcomponents

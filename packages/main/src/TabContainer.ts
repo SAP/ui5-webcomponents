@@ -13,7 +13,7 @@ import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
 	isEnter,
@@ -33,12 +33,11 @@ import {
 	TABCONTAINER_OVERFLOW_MENU_TITLE,
 	TABCONTAINER_END_OVERFLOW,
 	TABCONTAINER_POPOVER_CANCEL_BUTTON,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
-import type { ClickEventDetail }  from "./List.js";
+import type { ClickEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -69,7 +68,7 @@ interface ITab extends UI5Element {
 	isSeparator: boolean;
 	disabled: boolean;
 	design: SemanticColor;
-	stableDomRef: () => string;
+	stableDomRef: string;
 	getTabInStripDomRef: () => HTMLElement;
 	tabs: Array<ITab>
 	isSingleClickArea: boolean;
@@ -86,7 +85,7 @@ interface ITab extends UI5Element {
 	_realTab: ITab;
 	_isTopLevelTab: boolean;
 	_style: any;
-};
+}
 
 interface TabContainerExpandButton extends Button {
 	tab: ITab;
@@ -167,7 +166,7 @@ interface TabContainerTabInOverflow extends CustomListItem {
 	detail: {
 		tab: { type: HTMLElement },
 		tabIndex: { type: Number },
-	}
+	},
 })
 class TabContainer extends UI5Element {
 	/**
@@ -342,7 +341,7 @@ class TabContainer extends UI5Element {
 	 * @name sap.ui.webc.main.TabContainer.prototype.default
 	 */
 	@slot({
-		default: true,
+		"default": true,
 		type: HTMLElement,
 		individualSlots: true,
 		invalidateOnChildChange: {
@@ -469,11 +468,13 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this._getHeader(), this._handleResize);
+		// TO DO: handleResize is promise, it shouldn't be
+		ResizeHandler.register(this._getHeader(), this._handleResize); /* eslint-disable-line */
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this._getHeader(), this._handleResize);
+		// TO DO: handleResize is promise, it shouldn't be
+		ResizeHandler.deregister(this._getHeader(), this._handleResize); /* eslint-disable-line */
 	}
 
 	async _handleResize() {
@@ -517,9 +518,9 @@ class TabContainer extends UI5Element {
 		if (tab) {
 			target = tab._realTab;
 		}
-		
+
 		// @ts-ignore
-		// TODO
+		// TO DO
 		this._itemNavigation.setCurrentItem(target);
 	}
 
@@ -553,7 +554,7 @@ class TabContainer extends UI5Element {
 		this._onHeaderItemSelect(tab);
 	}
 
-	// TODO: review with care
+	// TO DO: review with care
 	async _onTabExpandButtonClick(e: Event) {
 		e.stopPropagation();
 		e.preventDefault();
@@ -566,7 +567,7 @@ class TabContainer extends UI5Element {
 		}
 
 		if (e.type === "keydown" && !(<ITab>e.target!)._realTab.isSingleClickArea) {
-			button = <HTMLElement>(<ITab>e.target)!.querySelectorAll(".ui5-tab-expand-button")[0];
+			button = (<ITab>e.target)!.querySelectorAll<HTMLElement>(".ui5-tab-expand-button")[0];
 			tabInstance = (<ITab>e.target)!._realTab;
 		}
 
@@ -588,7 +589,7 @@ class TabContainer extends UI5Element {
 		this.responsivePopover.showAt(button);
 	}
 
-	async _setPopoverInitialFocus() {
+	_setPopoverInitialFocus() {
 		const selectedTabInOverflow = this._getSelectedTabInOverflow();
 		const tab = selectedTabInOverflow || this._getFirstFocusableItemInOverflow();
 
@@ -596,13 +597,13 @@ class TabContainer extends UI5Element {
 	}
 
 	_getSelectedTabInOverflow() {
-		return <TabContainerTabInOverflow>(<List>this.responsivePopover!.content[0]).items.find(item => {
+		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => {
 			return (<TabContainerTabInOverflow>item)._realTab && (<TabContainerTabInOverflow>item)._realTab.selected;
 		});
 	}
 
 	_getFirstFocusableItemInOverflow() {
-		return <TabContainerTabInOverflow>(<List>this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
+		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
 	}
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
@@ -738,7 +739,7 @@ class TabContainer extends UI5Element {
 	}
 
 	async toggleAnimated(selectedTab: ITab, previousTab: ITab) {
-		const content = <HTMLElement>this.shadowRoot!.querySelector(".ui5-tc__content");
+		const content = this.shadowRoot!.querySelector<HTMLElement>(".ui5-tc__content")!;
 		let animationPromise = null;
 
 		this._animationRunning = true;
@@ -814,7 +815,7 @@ class TabContainer extends UI5Element {
 		let opener;
 		if (isEndOverflow) {
 			opener = this.overflowButton[0] || this._getEndOverflowBtnDOM();
-		} else { // TODO: test this
+		} else { // TO DO: test this
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
@@ -1168,7 +1169,7 @@ class TabContainer extends UI5Element {
 	}
 
 	_getHeader() {
-		return <HTMLElement>this.shadowRoot!.querySelector(`#${this._id}-header`);
+		return this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-header`)!;
 	}
 
 	_getTabs() {
@@ -1176,28 +1177,28 @@ class TabContainer extends UI5Element {
 	}
 
 	_getTabStrip() {
-		return <HTMLDivElement>this.shadowRoot!.querySelector(`#${this._id}-tabStrip`);
+		return this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-tabStrip`)!;
 	}
 
 	_getStartOverflow() {
-		return <HTMLElement>this.shadowRoot!.querySelector(".ui5-tc__overflow--start");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tc__overflow--start")!;
 	}
 
 	_getEndOverflow() {
-		return <HTMLElement>this.shadowRoot!.querySelector(".ui5-tc__overflow--end");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tc__overflow--end")!;
 	}
 
 	_getStartOverflowBtnDOM() {
-		return <Button>this._getStartOverflow().querySelector("[ui5-button]");
+		return this._getStartOverflow().querySelector<Button>("[ui5-button]");
 	}
 
 	_getEndOverflowBtnDOM() {
-		return <Button>this._getEndOverflow().querySelector("[ui5-button]");
+		return this._getEndOverflow().querySelector<Button>("[ui5-button]");
 	}
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return <ResponsivePopover>staticAreaItem!.querySelector(`#${this._id}-overflowMenu`);
+		return staticAreaItem!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
 	}
 
 	async _closeRespPopover() {
