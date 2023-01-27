@@ -562,7 +562,6 @@ class TabContainer extends UI5Element {
 		let tabInstance = (<TabContainerExpandButton>button).tab;
 
 		if (tabInstance) {
-			// @ts-ignore
 			tabInstance.focus({ focusVisible: true } as FocusOptions);
 		}
 
