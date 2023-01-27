@@ -13,6 +13,7 @@ import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 import { addOpenedPopover, removeOpenedPopover } from "./popup-utils/PopoverRegistry.js";
+import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 
 // Template
 import PopoverTemplate from "./generated/templates/PopoverTemplate.lit.js";
@@ -360,6 +361,28 @@ class Popover extends Popup {
 		this._openerRect = opener.getBoundingClientRect();
 
 		await super._open(preventInitialFocus);
+	}
+
+	/**
+	 * @override
+	 */
+	async findFocusableElements(forward: boolean) {
+		let focusableElement;
+		const elements = [...this.header, ...this.content, ...this.footer];
+
+		if (!forward) {
+			elements.reverse();
+		}
+
+		for (const element of elements) { // eslint-disable-line no-restricted-syntax
+			focusableElement = await getFirstFocusableElement(element); // eslint-disable-line no-await-in-loop
+
+			if (focusableElement) {
+				return focusableElement;
+			}
+		}
+
+		return null;
 	}
 
 	/**

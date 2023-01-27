@@ -329,6 +329,25 @@ describe("Dialog general interaction", () => {
 		await browser.keys("Escape");
 		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed");
 	});
+
+	it("Test initial focus when content is provided before the header", async () => {
+		const listContainerItem = await browser.$("#dialogFocus");
+		await listContainerItem.scrollIntoView();
+		await listContainerItem.click();
+
+		const closeButton = await browser.$("#closeDialogFocusButton");
+
+		await browser.waitUntil(async () => {
+			const activeElement = await browser.$(await browser.getActiveElement());
+			return await activeElement.getProperty("id") === "fistButtonInDialog";
+		}, {
+			timeout: 500,
+			timeoutMsg: "the active element must be the button in the content of the dialog"
+		});
+
+		await closeButton.click();
+
+	});
 });
 
 
