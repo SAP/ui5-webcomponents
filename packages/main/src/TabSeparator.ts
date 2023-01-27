@@ -3,6 +3,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TabContainer from "./TabContainer.js";
+import type { ITab } from "./TabContainer.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -25,7 +26,7 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
  * @public
  */
 @customElement("ui5-tab-separator")
-class TabSeparator extends UI5Element {
+class TabSeparator extends UI5Element implements ITab {
 	_getElementInStrip?: () => HTMLElement | null;
 
 	static get render() {

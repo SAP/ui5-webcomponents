@@ -13,7 +13,7 @@ import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
 	isEnter,
@@ -60,30 +60,30 @@ const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
 interface ITab extends UI5Element {
-	additionalText: string;
-	icon: string;
-	text: string;
-	selected: boolean;
-	subTabs: Array<ITab>;
+	additionalText?: string;
+	icon?: string;
+	text?: string;
+	selected?: boolean;
+	subTabs?: Array<ITab>;
 	isSeparator: boolean;
-	disabled: boolean;
-	design: SemanticColor;
+	disabled?: boolean;
+	design?: SemanticColor;
 	stableDomRef: string;
 	getTabInStripDomRef: () => HTMLElement | null;
-	tabs: Array<ITab>
-	isSingleClickArea: boolean;
-	requiresExpandButton: boolean;
-	_tabIndex: string;
-	_hasOwnContent: boolean;
+	tabs?: Array<ITab>
+	isSingleClickArea?: boolean;
+	requiresExpandButton?: boolean;
+	_tabIndex?: string;
+	_hasOwnContent?: boolean;
 	_level?: number;
-	_selected: boolean;
+	_selected?: boolean;
 	_getElementInStrip?: () => HTMLElement | null;
 	_isInline?: boolean;
 	_mixedMode?: boolean;
 	_posinset?: number;
 	_setsize?: number;
-	_realTab: ITab;
-	_isTopLevelTab: boolean;
+	_realTab?: ITab;
+	_isTopLevelTab?: boolean;
 	_style?: any;
 }
 
@@ -463,7 +463,7 @@ class TabContainer extends UI5Element {
 
 		if (!this.shadowRoot!.contains(document.activeElement)) {
 			const focusStart = this._getRootTab(this._selectedTab);
-			this._itemNavigation.setCurrentItem(focusStart);
+			this._itemNavigation.setCurrentItem(focusStart as ITabbable);
 		}
 	}
 
@@ -515,13 +515,13 @@ class TabContainer extends UI5Element {
 		const tab = getTab(e.target as HTMLElement);
 
 		if (tab) {
-			this._itemNavigation.setCurrentItem(tab._realTab);
+			this._itemNavigation.setCurrentItem(tab._realTab as ITabbable);
 		}
 	}
 
 	async _onTabStripClick(e: Event) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab.disabled) {
+		if (!tab || tab._realTab!.disabled) {
 			return;
 		}
 
@@ -532,8 +532,8 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (!tab._realTab._hasOwnContent && tab._realTab.tabs.length) {
-			this._overflowItems = tab._realTab.subTabs;
+		if (!tab._realTab!._hasOwnContent && tab._realTab!.tabs!.length) {
+			this._overflowItems = tab._realTab!.subTabs!;
 			this._addStyleIndent(this._overflowItems);
 
 			this.responsivePopover = await this._respPopover();
@@ -543,7 +543,7 @@ class TabContainer extends UI5Element {
 				this._setPopoverInitialFocus();
 			}
 
-			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef()!);
+			this.responsivePopover.showAt(tab._realTab!.getTabInStripDomRef()!);
 			return;
 		}
 		this._onHeaderItemSelect(tab);
@@ -560,9 +560,9 @@ class TabContainer extends UI5Element {
 			tabInstance.focus({ focusVisible: true } as FocusOptions);
 		}
 
-		if (e.type === "keydown" && !(<ITab>e.target!)._realTab.isSingleClickArea) {
+		if (e.type === "keydown" && !(<ITab>e.target!)._realTab!.isSingleClickArea) {
 			button = (<ITab>e.target)!.querySelectorAll<HTMLElement>(".ui5-tab-expand-button")[0];
-			tabInstance = (<ITab>e.target)!._realTab;
+			tabInstance = (<ITab>e.target)!._realTab!;
 		}
 
 		// if clicked between the expand button and the tab
@@ -571,7 +571,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._overflowItems = tabInstance.subTabs;
+		this._overflowItems = tabInstance.subTabs!;
 		this._addStyleIndent(this._overflowItems);
 
 		this.responsivePopover = await this._respPopover();
@@ -602,12 +602,12 @@ class TabContainer extends UI5Element {
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab.disabled) {
+		if (!tab || tab._realTab!.disabled) {
 			return;
 		}
 
 		if (isEnter(e)) {
-			if (tab._realTab.isSingleClickArea) {
+			if (tab._realTab!.isSingleClickArea) {
 				this._onTabStripClick(e);
 			} else {
 				this._onHeaderItemSelect(tab);
@@ -619,10 +619,10 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isDown(e) || isUp(e)) {
-			if (tab._realTab.requiresExpandButton) {
+			if (tab._realTab!.requiresExpandButton) {
 				this._onTabExpandButtonClick(e);
 			}
-			if (tab._realTab.isSingleClickArea) {
+			if (tab._realTab!.isSingleClickArea) {
 				this._onTabStripClick(e);
 			}
 		}
@@ -630,13 +630,13 @@ class TabContainer extends UI5Element {
 
 	_onTabStripKeyUp(e: KeyboardEvent) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab.disabled) {
+		if (!tab || tab._realTab!.disabled) {
 			return;
 		}
 
 		if (isSpace(e)) {
 			e.preventDefault();
-			if (tab._realTab.isSingleClickArea) {
+			if (tab._realTab!.isSingleClickArea) {
 				this._onTabStripClick(e);
 			} else {
 				this._onHeaderItemSelect(tab);
