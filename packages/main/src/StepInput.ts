@@ -19,7 +19,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -30,7 +29,6 @@ import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import StepInputTemplate from "./generated/templates/StepInputTemplate.lit.js";
-// @ts-ignore
 import { STEPINPUT_DEC_ICON_TITLE, STEPINPUT_INC_ICON_TITLE } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/less.js";
 import "@ui5/webcomponents-icons/dist/add.js";
@@ -360,7 +358,7 @@ class StepInput extends UI5Element implements IFormElement {
 	// icons-related
 
 	get decIconTitle() {
-		return StepInput.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE as I18nText);
+		return StepInput.i18nBundle.getText(STEPINPUT_DEC_ICON_TITLE);
 	}
 
 	get decIconName() {
@@ -368,7 +366,7 @@ class StepInput extends UI5Element implements IFormElement {
 	}
 
 	get incIconTitle() {
-		return StepInput.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE as I18nText);
+		return StepInput.i18nBundle.getText(STEPINPUT_INC_ICON_TITLE);
 	}
 
 	get incIconName() {

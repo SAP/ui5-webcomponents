@@ -1,0 +1,4 @@
+node_modules
+dist
+jsdoc-dist
+src/generated

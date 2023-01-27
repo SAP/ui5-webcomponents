@@ -7,7 +7,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
@@ -17,7 +16,6 @@ import CalendarHeaderTemplate from "./generated/templates/CalendarHeaderTemplate
 import {
 	CALENDAR_HEADER_NEXT_BUTTON,
 	CALENDAR_HEADER_PREVIOUS_BUTTON,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -129,8 +127,8 @@ class CalendarHeader extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._prevButtonText = CalendarHeader.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON as I18nText);
-		this._nextButtonText = CalendarHeader.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON as I18nText);
+		this._prevButtonText = CalendarHeader.i18nBundle.getText(CALENDAR_HEADER_PREVIOUS_BUTTON);
+		this._nextButtonText = CalendarHeader.i18nBundle.getText(CALENDAR_HEADER_NEXT_BUTTON);
 
 		if (this.hasSecondaryCalendarType) {
 			this._secondMonthButtonText = this.buttonTextForSecondaryCalendarType.monthButtonText;

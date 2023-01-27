@@ -1,5 +1,4 @@
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -19,7 +18,6 @@ import ProductSwitchTemplate from "./generated/templates/ProductSwitchTemplate.l
 
 import {
 	PRODUCT_SWITCH_CONTAINER_LABEL,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -125,7 +123,7 @@ class ProductSwitch extends UI5Element {
 	}
 
 	get _ariaLabelText() {
-		return ProductSwitch.i18nBundle.getText(PRODUCT_SWITCH_CONTAINER_LABEL as I18nText);
+		return ProductSwitch.i18nBundle.getText(PRODUCT_SWITCH_CONTAINER_LABEL);
 	}
 
 	onEnterDOM() {

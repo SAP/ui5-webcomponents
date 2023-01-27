@@ -5,7 +5,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
@@ -15,7 +14,6 @@ import Label from "./Label.js";
 // Template
 import BusyIndicatorTemplate from "./generated/templates/BusyIndicatorTemplate.lit.js";
 
-// @ts-ignore
 import { BUSY_INDICATOR_TITLE } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -189,7 +187,7 @@ class BusyIndicator extends UI5Element {
 	}
 
 	get ariaTitle() {
-		return BusyIndicator.i18nBundle.getText(BUSY_INDICATOR_TITLE as I18nText);
+		return BusyIndicator.i18nBundle.getText(BUSY_INDICATOR_TITLE);
 	}
 
 	get labelId() {
