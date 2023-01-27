@@ -1,29 +1,14 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
 // Styles
 import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-toggle-button",
-	properties: /** @lends sap.ui.webc.main.ToggleButton.prototype */ {
-		/**
-		 * Determines whether the component is displayed as pressed.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		pressed: {
-			type: Boolean,
-		},
-	},
-};
 
 /**
  * @class
@@ -50,16 +35,24 @@ const metadata = {
  * @tagname ui5-toggle-button
  * @public
  */
+@customElement("ui5-toggle-button")
 class ToggleButton extends Button {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Determines whether the component is displayed as pressed.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.ToggleButton.prototype.pressed
+	 * @public
+	 */
+	@property({ type: Boolean })
+	pressed!: boolean;
 
 	static get template() {
 		return ToggleButtonTemplate;
 	}
 
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return [Button.styles, toggleBtnCss];
 	}
 
@@ -67,17 +60,17 @@ class ToggleButton extends Button {
 		this.pressed = !this.pressed;
 
 		if (isSafari()) {
-			this.getDomRef().focus();
+			this.getDomRef()?.focus();
 		}
 	}
 
-	_onkeyup(event) {
-		if (isSpaceShift(event)) {
-			event.preventDefault();
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpaceShift(e)) {
+			e.preventDefault();
 			return;
 		}
 
-		super._onkeyup(event);
+		super._onkeyup(e);
 	}
 }
 
