@@ -1,6 +1,6 @@
 // eslint-disable-next-line
-import "@ui5/webcomponents-base/global";
-import { TemplateFunction } from "@ui5/webcomponents-base/src/renderer/executeTemplate.js";
+import "@ui5/webcomponents-base/dist/global";
+import { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import type { BrowserMultiFormatReader, NotFoundException } from "@zxing/library/esm5/index";
 
 export {};

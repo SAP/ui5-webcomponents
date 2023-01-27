@@ -186,8 +186,8 @@ class Dialog extends Popup {
 	_resizeMouseMoveHandler: (e: MouseEvent) => void;
 	_resizeMouseUpHandler: (e: MouseEvent) => void;
 	_dragStartHandler: (e: DragEvent) => void;
-	_y?: int;
-	_x?: int;
+	_y?: number;
+	_x?: number;
 	_isRTL?: boolean;
 	_screenResizeHandlerAttached?: boolean;
 	_initialX?: number;
