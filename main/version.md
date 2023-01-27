@@ -1,5 +1,5 @@
-commit 6453d49bdf07a2274f5c384d549fcf61e6eff82c
+commit fe050edc63a4a7dfdcb884939e126e10e42acebf
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Thu Jan 26 20:36:37 2023 +0200
+Date:   Fri Jan 27 12:13:05 2023 +0200
 
-    chore: ts-ignore cleanup for migrated components (#6369)
+    chore: generate TypeScript definition for translations text (#6366)
