@@ -1172,7 +1172,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_updateAssosiatedLabelsTexts() {
-		this._assosiatedLabelsTexts = getAssociatedLabelForTexts(this) ?? '';
+		this._assosiatedLabelsTexts = getAssociatedLabelForTexts(this) ?? "";
 		updateInputAssociatedObservers(this);
 	}
 
