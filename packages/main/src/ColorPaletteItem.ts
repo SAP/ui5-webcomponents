@@ -27,6 +27,7 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.ColorPaletteItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-color-palette-item
  * @since 1.0.0-rc.12
  * @implements sap.ui.webc.main.IColorPaletteItem

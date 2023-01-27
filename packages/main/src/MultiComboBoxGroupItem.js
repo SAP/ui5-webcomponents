@@ -33,6 +33,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webc.main.MultiComboBoxGroupItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-mcb-group-item
  * @public
  * @implements sap.ui.webc.main.IMultiComboBoxItem
