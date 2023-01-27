@@ -512,16 +512,11 @@ class TabContainer extends UI5Element {
 	}
 
 	_onHeaderFocusin(e: FocusEvent) {
-		let target = e.target;
+		const tab = getTab(e.target as HTMLElement);
 
-		const tab = getTab(target as HTMLElement);
 		if (tab) {
-			target = tab._realTab;
+			this._itemNavigation.setCurrentItem(tab._realTab);
 		}
-
-		// @ts-ignore
-		// TO DO
-		this._itemNavigation.setCurrentItem(target);
 	}
 
 	async _onTabStripClick(e: Event) {
