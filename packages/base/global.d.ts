@@ -18,7 +18,6 @@ declare global {
 		sap: any;
 		chrome: any;
 		v8: any;
-		ZXing: any
 	}
 	module "*.css.js" {
 		const content: StyleData;

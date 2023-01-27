@@ -6,12 +6,12 @@ import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
-// @ts-ignore
 import * as ZXing from "@zxing/library/umd/index.min.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type { BrowserMultiFormatReader as BrowserMultiFormatReaderT, Result, Exception } from "@zxing/library/esm5/index";
 
 // Texts
 import {
@@ -50,17 +50,6 @@ type BarcodeScannerDialogScanSuccessEventDetail = {
 };
 
 type BarcodeScannerDialogScanErrorEventDetail = {
-	message: string,
-};
-
-// replace with node_modules/@zxing/library/esm/core/Result.d.ts
-type TempResult = {
-	getText: () => string,
-	getRawBytes: () => Uint8Array,
-};
-
-// replace with node_modules/@zxing/library/esm/core/Exception.d.ts
-type TempException = {
 	message: string,
 };
 
@@ -131,7 +120,7 @@ class BarcodeScannerDialog extends UI5Element {
 	@property({ type: Boolean })
 	loading!: boolean;
 
-	_codeReader: any;
+	_codeReader: BrowserMultiFormatReaderT;
 	dialog?: Dialog;
 	static i18nBundle: I18nBundle;
 
@@ -241,7 +230,7 @@ class BarcodeScannerDialog extends UI5Element {
 
 	async _decodeFromCamera() {
 		const videoElement = await this._getVideoElement();
-		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: TempResult, err: TempException) => {
+		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
 			this.loading = false;
 			if (result) {
 				this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
