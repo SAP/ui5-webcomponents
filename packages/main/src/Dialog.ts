@@ -383,8 +383,7 @@ class Dialog extends Popup {
 	 * @override
 	 */
 	async findFocusableElements(forward: boolean) {
-
-		if (this.shadowRoot && (this.draggable ||  this.resizable)) {
+		if (this.shadowRoot && (this.draggable || this.resizable)) {
 			return this.shadowRoot.querySelector("header");
 		}
 
