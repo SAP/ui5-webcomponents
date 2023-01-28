@@ -1,5 +1,7 @@
-commit 84184dae53d0c6358d1a03733639e5403c503be0
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Jan 27 17:17:33 2023 +0200
+commit 4c88da6bdb1c2ed95ffa619f879d9a71900c797b
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Sat Jan 28 11:44:13 2023 +0200
 
-    docs: mark abstract components (#6331)
+    chore: change default release from patch to auto
+    
+    Previously "patch" was the default release type, now it's "auto detected" by default - means lerna will auto detect the commits and perform the required release type
