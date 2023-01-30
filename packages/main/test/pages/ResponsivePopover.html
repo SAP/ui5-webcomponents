@@ -18,7 +18,6 @@
 	<ui5-button id="btnOpen3" design="Negative">Header/Footer hidden on Desktop</ui5-button> <br/>
 	<ui5-button id="btnOpen4" >accessibleName</ui5-button>
 	<ui5-button id="btnOpenWithAttr">Open with Attribute</ui5-button>
-	<ui5-button id="btnOpenAccRole">Open with custom role</ui5-button>
 
 	<!-- with header and footer slots -->
 	<ui5-responsive-popover id="respPopover">
@@ -150,19 +149,20 @@
 		<ui5-button id="rPOverRp3Btn">Close</ui5-button>
 	</ui5-responsive-popover>
 
-	<!-- with custom acc role -->
-	<ui5-responsive-popover id="respPopoverRole" accessible-role="testRole">
+	<ui5-button id="btnRoleAlert">Role = 'AlertDialog'</ui5-button>
+	<ui5-responsive-popover id="rPAlertRole" accessible-role="AlertDialog">
 		<div slot="header">
-			<ui5-title>Custom role</ui5-title>
+			<ui5-title level="H1">Role 'AlertDialog'</ui5-title>
 		</div>
+		<span>Hello World!</span>
+	</ui5-responsive-popover>
 
-		<div class="popover-content">
-			<span>Hello World</span>
+	<ui5-button id="btnRoleNone">Role = 'None'</ui5-button>
+	<ui5-responsive-popover id="rPNoneRole" accessible-role="None">
+		<div slot="header">
+			<ui5-title level="H1">Role 'None'</ui5-title>
 		</div>
-
-		<div slot="footer" class="popover-footer">
-			<ui5-button id="btnCloseAccRole" design="Emphasized">Close</ui5-button>
-		</div>
+		<span>Hello World!</span>
 	</ui5-responsive-popover>
 
 	<script>
@@ -215,7 +215,7 @@
 		});
 
 		btnRpWithPopover.addEventListener("click", function () {
-			btnRpWithPopoverRP.showAt(btnRpWithPopover)
+			btnRpWithPopoverRP.showAt(btnRpWithPopover);
 		});
 
 		btnRpWithPopoverOpener.addEventListener("click", function () {
@@ -233,7 +233,6 @@
 		btnCloseWithAttr.addEventListener("click", function () {
 			popoverAttr.removeAttribute("open");
 		});
-
 
 		rPOverDialogBtn.addEventListener("click", function () {
 			rPOverDialog1.open = true;
@@ -253,11 +252,12 @@
 			rPOverRp3.open = false;
 		});
 
-		btnOpenAccRole.addEventListener("click", function(event) {
-			respPopoverRole.showAt(btnOpenAccRole);
+		btnRoleAlert.addEventListener("click", function () {
+			rPAlertRole.showAt(btnRoleAlert);
 		});
-		btnCloseAccRole.addEventListener("click", function(event) {
-			respPopoverRole.close();
+
+		btnRoleNone.addEventListener("click", function () {
+			rPNoneRole.showAt(btnRoleNone);
 		});
 
 	</script>

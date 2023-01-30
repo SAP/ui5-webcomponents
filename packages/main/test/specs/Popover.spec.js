@@ -335,10 +335,10 @@ describe("Popover general interaction", () => {
 		await openChainedPopover1.scrollIntoView();
 		await openChainedPopover1.click();
 		await browser.keys("Enter");
-	
+
 		assert.ok(await browser.$("#chainedPopover2").isDisplayedInViewport(), "'Chained popover 2' opened with ENTER key should remain open")
 		assert.notOk(await browser.$("#chainedPopover1").isDisplayedInViewport(), "'Chained popover 1' should be successfully closed")
-		
+
 		await browser.keys("Escape");
 		const activeElement = await browser.$(await browser.getActiveElement());
 
@@ -387,15 +387,5 @@ describe("Acc", () => {
 		const popoverWithoutHeader = await browser.$("#popoverAttr");
 
 		assert.isNull(await popoverWithoutHeader.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "Popover should NOT have aria-labelledby set.");
-	});
-
-	it("tests role setting from property", async () => {
-		const popover = await browser.$("#acc-role-popover");
-		await popover.removeAttribute("accessible-role");
-		assert.ok(await popover.shadow$("[role=dialog]"), "The default role is dialog.");
-
-		await popover.setAttribute("accessible-role", "menu");
-		assert.ok(await popover.shadow$(".ui5-popup-root").getAttribute("role"), "Popover has role attribute set.");
-		assert.ok(await popover.shadow$("[role=menu]"), "The new role is correctly set to menu.");
 	});
 });

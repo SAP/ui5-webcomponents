@@ -26,12 +26,19 @@ describe("Acc", () => {
 	});
 
 	it("tests accessible-role", async () => {
-		const btnOpenPopover = await browser.$("#btnOpenAccRole");
+		const respPopover = await browser.$("#respPopover");
 
-		await btnOpenPopover.click();
+		assert.ok(await respPopover.shadow$("[role=dialog]"), "The default role is applied.");
+		assert.ok(await respPopover.shadow$("[aria-modal=true]"), "aria-modal=true is applied.");
 
-		const popover = await browser.$("#respPopoverRole");
-		const dialog = await popover.shadow$("ui5-dialog");
-		assert.ok(await dialog.shadow$("[role=testRole]"), "The correct custom role is applied.");
+		const respPopoverAlertRole = await browser.$("#rPAlertRole");
+
+		assert.ok(await respPopoverAlertRole.shadow$("[role=alertdialog]"), "role='alertdialog' is applied.");
+		assert.ok(await respPopoverAlertRole.shadow$("[aria-modal=true]"), "aria-modal=true is applied.");
+
+		const respPopoverNoneRole = await browser.$("#rPNoneRole");
+
+		assert.notOk(await respPopoverNoneRole.shadow$("[ui5-dialog]").shadow$(".ui5-popup-root").getAttribute("role"), "role is not set.");
+		assert.notOk(await respPopoverNoneRole.shadow$("[ui5-dialog]").shadow$(".ui5-popup-root").getAttribute("aria-modal"), "aria-modal not set.");
 	});
 });
