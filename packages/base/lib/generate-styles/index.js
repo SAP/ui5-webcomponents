@@ -3,19 +3,24 @@ const path = require('path');
 const CleanCSS = require('clean-css');
 
 const generate = async () => {
-	await fs.mkdir("dist/generated/css/", {recursive: true});
+	await fs.mkdir("src/generated/css/", {recursive: true});
 
 	const files = (await fs.readdir("src/css/")).filter(file => file.endsWith(".css"));
 	const filesPromises = files.map(async file => {
 		let content = await fs.readFile(path.join("src/css/", file));
 		const res = new CleanCSS().minify(`${content}`);
-		content = `export default {
+		content = `import type { StyleData } from "../../types.js";
+
+const styleData: StyleData = {
 	packageName: "@ui5/webcomponents-base",
 	fileName: "${file}",
-	content: \`${res.styles}\`
-};`;
+	content: \`${res.styles}\`,
+};
 
-		return fs.writeFile(path.join("dist/generated/css/", `${file}.js`), content);
+export default styleData;
+`;
+
+		return fs.writeFile(path.join("src/generated/css/", `${file}.ts`), content);
 	});
 
 	return Promise.all(filesPromises);

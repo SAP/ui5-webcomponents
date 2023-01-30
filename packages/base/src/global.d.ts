@@ -19,10 +19,6 @@ declare global {
 		chrome: any;
 		v8: any;
 	}
-	module "*.css.js" {
-		const content: StyleData;
-		export default content;
-	}
 
 	module "*generated/AssetParameters.js" {
 		const DEFAULT_THEME: string;
