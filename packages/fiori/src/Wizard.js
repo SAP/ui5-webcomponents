@@ -248,7 +248,7 @@ const metadata = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-wizard
  * @since 1.0.0-rc.10
- * @appenddocs WizardStep
+ * @appenddocs sap.ui.webc.fiori.WizardStep
  * @public
  */
 class Wizard extends UI5Element {
@@ -493,7 +493,7 @@ class Wizard extends UI5Element {
 
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
-		this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast(size => Number(size) < this.width)];
+		this._breakpoint = RESPONSIVE_BREAKPOINTS[Object.keys(RESPONSIVE_BREAKPOINTS).findLast(size => Number(size) < this.width)] || RESPONSIVE_BREAKPOINTS["0"];
 	}
 
 	attachStepsResizeObserver() {

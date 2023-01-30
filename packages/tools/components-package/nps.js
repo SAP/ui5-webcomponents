@@ -42,12 +42,12 @@ const getScripts = (options) => {
 	}
 
 	const scripts = {
-		clean: 'rimraf jsdoc-dist && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
+		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
-			default: "nps clean prepare.all generateAPI",
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps typescript" "nps build.illustrations"',
+			default: "nps clean prepare.all typescript generateAPI",
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		typescript: tsCommand,
@@ -61,7 +61,7 @@ const getScripts = (options) => {
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n dist/generated/i18n`,
+				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
 				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
@@ -120,8 +120,9 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		},
 		generateAPI: {
-			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
+			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest",
 			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
+			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
 			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
 			jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
 			cleanup: "rimraf jsdoc-dist/"

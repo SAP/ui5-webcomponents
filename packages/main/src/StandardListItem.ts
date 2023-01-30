@@ -5,7 +5,6 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import type { IAccessibleListItem } from "./ListItem.js";
 import Icon from "./Icon.js";
-// @ts-ignore
 import Avatar from "./Avatar.js";
 import WrappingType from "./types/WrappingType.js";
 import StandardListItemTemplate from "./generated/templates/StandardListItemTemplate.lit.js";
