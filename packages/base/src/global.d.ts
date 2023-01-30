@@ -1,5 +1,3 @@
-import { StyleData } from "./types.js";
-
 export {};
 
 declare global {
