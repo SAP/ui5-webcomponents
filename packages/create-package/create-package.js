@@ -80,8 +80,6 @@ const createWebcomponentsPackage = async () => {
 
 	// Get the name
 	let name = argv.name;
-	// Get the port
-	const port = argv || 8080;
 	// Get the tag
 	let tag = argv.tag;
 	// Get the TypeScript support
@@ -116,7 +114,7 @@ const createWebcomponentsPackage = async () => {
 		typescript = response.language === "ts";
 	}
 
-	if (!isTagValid(port)) {
+	if (!isTagValid(tag)) {
 		response = await prompts({
 			type: "text",
 			name: "tag",
@@ -132,7 +130,6 @@ const createWebcomponentsPackage = async () => {
 	// All variables that will be replaced in the content of the resources/
 	const vars = {
 		INIT_PACKAGE_VAR_NAME: name,
-		INIT_PACKAGE_VAR_PORT: port,
 		INIT_PACKAGE_VAR_TAG: tag,
 		INIT_PACKAGE_VAR_CLASS_NAME: className,
 		INIT_PACKAGE_VAR_TYPESCRIPT: typescript
