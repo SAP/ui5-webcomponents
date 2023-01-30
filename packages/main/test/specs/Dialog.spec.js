@@ -384,8 +384,8 @@ describe("Acc", () => {
 
 		const dialog4 = await browser.$("#dialog-none-role");
 
-		assert.strictEqual(await dialog4.shadow$(".ui5-popup-root").getAttribute("role"), null, "role is not set");
-		assert.strictEqual(await dialog4.shadow$(".ui5-popup-root").getAttribute("aria-modal"), null, "aria-modal is not set");
+		assert.notOk(await dialog4.shadow$(".ui5-popup-root").getAttribute("role"),  "role is not set");
+		assert.notOk(await dialog4.shadow$(".ui5-popup-root").getAttribute("aria-modal"), "aria-modal is not set");
 
 		const dialog5 = await browser.$("#dialog-success-state-alert-role");
 

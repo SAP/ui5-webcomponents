@@ -28,13 +28,13 @@ describe("Acc", () => {
 	it("tests accessible-role", async () => {
 		const respPopover = await browser.$("#respPopover");
 
-		assert.ok(await respPopover.shadow$("[role=dialog]"), "The default role is applied.");
-		assert.ok(await respPopover.shadow$("[aria-modal=true]"), "aria-modal=true is applied.");
+		assert.strictEqual(await respPopover.shadow$("[ui5-dialog]").shadow$(".ui5-popup-root").getAttribute("role"), "dialog","The default role is applied.");
+		assert.strictEqual(await respPopover.shadow$("[ui5-dialog]").shadow$(".ui5-popup-root").getAttribute("aria-modal"), "true", "aria-modal=true is applied.");
 
 		const respPopoverAlertRole = await browser.$("#rPAlertRole");
 
-		assert.ok(await respPopoverAlertRole.shadow$("[role=alertdialog]"), "role='alertdialog' is applied.");
-		assert.ok(await respPopoverAlertRole.shadow$("[aria-modal=true]"), "aria-modal=true is applied.");
+		assert.strictEqual(await respPopoverAlertRole.shadow$("[ui5-dialog]").shadow$(".ui5-popup-root").getAttribute("role"), "alertdialog", "role='alertdialog' is applied.");
+		assert.strictEqual(await respPopoverAlertRole.shadow$("[ui5-dialog]").shadow$(".ui5-popup-root").getAttribute("aria-modal"), "true", "aria-modal=true is applied.");
 
 		const respPopoverNoneRole = await browser.$("#rPNoneRole");
 
