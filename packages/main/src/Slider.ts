@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
 import SliderBase from "./SliderBase.js";
 import Icon from "./Icon.js";
@@ -15,7 +14,6 @@ import SliderTemplate from "./generated/templates/SliderTemplate.lit.js";
 // Texts
 import {
 	SLIDER_ARIA_DESCRIPTION,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -343,7 +341,7 @@ class Slider extends SliderBase {
 	}
 
 	get _ariaLabelledByText() {
-		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION as I18nText);
+		return Slider.i18nBundle.getText(SLIDER_ARIA_DESCRIPTION);
 	}
 
 	static async onDefine() {

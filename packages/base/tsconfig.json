@@ -1,5 +1,5 @@
 {
-    "include": ["src/**/*", "global.d.ts"],
+    "include": ["src/**/*", "src/global.d.ts"],
     "compilerOptions": {
       "target": "ES2021",
       // Generate d.ts files

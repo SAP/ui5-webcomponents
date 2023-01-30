@@ -8,7 +8,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -21,7 +20,6 @@ import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -131,7 +129,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	/**
 	 * Defines whether the component is read-only.
 	 * <br><br>
-	 * <b>Note:</b> A red-only component is not editable,
+	 * <b>Note:</b> A read-only component is not editable,
 	 * but still provides visual feedback upon user interaction.
 	 *
 	 * @type {boolean}
@@ -388,9 +386,9 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	valueStateTextMappings() {
 		return {
-			"Error": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR as I18nText),
-			"Warning": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING as I18nText),
-			"Success": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS as I18nText),
+			"Error": CheckBox.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": CheckBox.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": CheckBox.i18nBundle.getText(VALUE_STATE_SUCCESS),
 		};
 	}
 

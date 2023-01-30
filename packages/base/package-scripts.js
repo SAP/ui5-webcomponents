@@ -36,7 +36,7 @@ const scripts = {
 	},
 	copy: {
 		default: "nps copy.src",
-		src: `copy-and-watch "src/**/*.{js,css}" dist/`,
+		src: `copy-and-watch "src/**/*.{js,css,d.ts}" dist/`,
 	},
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	generateVersionInfo: `node "${versionScript}"`,

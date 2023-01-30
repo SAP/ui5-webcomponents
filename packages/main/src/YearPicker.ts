@@ -24,13 +24,9 @@ import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDat
 import { getMaxCalendarDate } from "@ui5/webcomponents-localization/dist/dates/ExtremeDates.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CalendarPart from "./CalendarPart.js";
 import type { ICalendarPicker } from "./Calendar.js";
-import {
-	YEAR_PICKER_DESCRIPTION,
-// @ts-ignore
-} from "./generated/i18n/i18n-defaults.js";
+import { YEAR_PICKER_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
@@ -125,7 +121,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	}
 
 	get roleDescription() {
-		return YearPicker.i18nBundle.getText(YEAR_PICKER_DESCRIPTION as I18nText);
+		return YearPicker.i18nBundle.getText(YEAR_PICKER_DESCRIPTION);
 	}
 
 	onBeforeRendering() {
