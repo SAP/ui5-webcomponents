@@ -36,7 +36,6 @@ import {
 	getAssociatedLabelForTexts,
 	observeAssosiatedLabels,
 	disposeAssosiatedLabelsObservers,
-	updateInputAssociatedObservers,
 } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -537,6 +536,13 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_assosiatedLabelsTexts!: string;
 
 	/**
+	 * Constantly updated value of texts collected from the accessibleNameRef elements
+	 * @private
+	 */
+	@property({ type: String, noAttribute: true })
+	_accessibleLabelsRefTexts!: string;
+
+	/**
 	 * Defines the suggestion items.
 	 * <br><br>
 	 * Example:
@@ -700,8 +706,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
-		observeAssosiatedLabels(this, this._updateAssosiatedLabelsTexts.bind(this));
-		this._updateAssosiatedLabelsTexts();
+		observeAssosiatedLabels(this, this._updateAssosiatedLabelsTexts.bind(this), ["accessibleNameRef", "accessibleName"]);
 	}
 
 	onExitDOM() {
@@ -1173,7 +1178,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	_updateAssosiatedLabelsTexts() {
 		this._assosiatedLabelsTexts = getAssociatedLabelForTexts(this) ?? "";
-		updateInputAssociatedObservers(this);
+		this._accessibleLabelsRefTexts = getEffectiveAriaLabelText(this) ?? "";
 	}
 
 	_closeRespPopover() {
