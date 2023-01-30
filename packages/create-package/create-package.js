@@ -5,6 +5,10 @@ const path = require("path");
 const mkdirp = require("mkdirp");
 const prompts = require("prompts");
 const parser = require("npm-config-user-agent-parser");
+const yargs = require('yargs/yargs');
+const { hideBin } = require('yargs/helpers');
+
+const argv = yargs(hideBin(process.argv)).argv;
 
 const version = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))).version;
 
@@ -75,13 +79,13 @@ const createWebcomponentsPackage = async () => {
 	let typescript = false;
 
 	// Get the name
-	let name = process.argv[2];
+	let name = argv.name;
 	// Get the port
-	let port = process.argv[3];
+	const port = argv || 8080;
 	// Get the tag
-	let tag = process.argv[4];
+	let tag = argv.tag;
 	// Get the TypeScript support
-	let typescriptSupport = process.argv[5];
+	let typescriptSupport = argv.enableTypescript;
 
 	if (!isNameValid(name)) {
 		response = await prompts({
@@ -110,17 +114,6 @@ const createWebcomponentsPackage = async () => {
 			]
 		});
 		typescript = response.language === "ts";
-	}
-
-	if (!isPortValid(port)) {
-		response = await prompts({
-			type: "text",
-			name: "port",
-			message: "Dev server port:",
-			validate: isPortValid,
-			initial: "8080",
-		});
-		port = response.port;
 	}
 
 	if (!isTagValid(port)) {

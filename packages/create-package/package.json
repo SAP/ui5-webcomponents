@@ -11,7 +11,7 @@
     "ui5"
   ],
   "bin": {
-    "create-webcomponents-package": "index.js"
+    "create-webcomponents-package": "create-package.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,8 @@
     "mkdirp": "^1.0.4",
     "npm-config-user-agent-parser": "^1.0.0",
     "prompts": "^2.4.1"
+  },
+  "devDependencies": {
+    "yargs": "^17.5.1"
   }
 }
