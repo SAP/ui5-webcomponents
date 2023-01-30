@@ -10,13 +10,17 @@ Provides an `npm init` script for creating new "UI5 Web Components" packages.
 
 with `npm`
 
-- `npm init @ui5/webcomponents-package` (the user will be asked for **name**, **port**, **tag**);
-- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME>` (the user will be asked for **port** and **tag** only).
+- `npm init @ui5/webcomponents-package` (the user will be asked for **name**, **port**, **tag**, **typescript support**);
+- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME>` (the user will be asked for **port**, **tag** and **typescript support** only).
+- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT>` (the user will be asked for **tag** and **typescript support** only).
+- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT> <NEW-PACKAGE-TAG>` (the user will be asked for **typescript support** only).
 
 And with `yarn`
 
 - `yarn create @ui5/webcomponents-package`
 - `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`.
+- `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT>`.
+- `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT> <NEW-PACKAGE-TAG>`.
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
 components package.

@@ -75,6 +75,10 @@ const createWebcomponentsPackage = async () => {
 
 	// Get the name
 	let name = process.argv[2];
+	// Get the port
+	let port = process.argv[3];
+	// Get the tag
+	let tag = process.argv[4];
 
 	if (!isNameValid(name)) {
 		response = await prompts({
@@ -104,25 +108,27 @@ const createWebcomponentsPackage = async () => {
 	});
 	const typescript = response.language === "ts";
 
-	// Get the port
-	response = await prompts({
-		type: "text",
-		name: "port",
-		message: "Dev server port:",
-		validate: isPortValid,
-		initial: "8080",
-	});
-	const port = response.port;
+	if (!isPortValid(port)) {
+		response = await prompts({
+			type: "text",
+			name: "port",
+			message: "Dev server port:",
+			validate: isPortValid,
+			initial: "8080",
+		});
+		port = response.port;
+	}
 
-	// Get the tag
-	response = await prompts({
-		type: "text",
-		name: "tag",
-		message: "Demo component name:",
-		initial: "my-first-component",
-		validate: isTagValid,
-	});
-	const tag = response.tag;
+	if (!isTagValid(port)) {
+		response = await prompts({
+			type: "text",
+			name: "tag",
+			message: "Demo component name:",
+			initial: "my-first-component",
+			validate: isTagValid,
+		});
+		tag = response.tag;
+	}
 
 	const className = capitalizeFirst(kebabToCamelCase(tag));
 
