@@ -43,6 +43,8 @@ import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
+import TabLayout from "./types/TabLayout.js";
+import TabsOverflowMode from "./types/TabsOverflowMode.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -51,12 +53,9 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import TabLayout from "./types/TabLayout.js";
-import TabsOverflowMode from "./types/TabsOverflowMode.js";
 
 const tabStyles: Array<StyleData> = [];
 const staticAreaTabStyles: Array<StyleData> = [];
-
 const PAGE_UP_DOWN_SIZE = 5;
 
 interface ITab extends UI5Element {
@@ -224,12 +223,12 @@ class TabContainer extends UI5Element {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.TabLayout}
-	 * @name sap.ui.webc.main.TabContainer.prototype.TabLayout
+	 * @name sap.ui.webc.main.TabContainer.prototype.tabLayout
 	 * @defaultvalue "Standard"
 	 * @public
 	 */
 	@property({ defaultValue: TabLayout.Standard })
-	tabLayout!: string;
+	tabLayout!: TabLayout;
 
 	/**
 	 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
@@ -361,9 +360,7 @@ class TabContainer extends UI5Element {
 	 * @since 1.0.0-rc.9
 	 * @name sap.ui.webc.main.TabContainer.prototype.overflowButton
 	 */
-	@slot({
-		type: HTMLElement,
-	})
+	@slot()
 	overflowButton!: Array<Button>;
 
 	/**
@@ -376,9 +373,7 @@ class TabContainer extends UI5Element {
 	 * @since 1.1.0
 	 * @name sap.ui.webc.main.TabContainer.prototype.startOverflowButton
 	 */
-	@slot({
-		type: HTMLElement,
-	})
+	@slot()
 	startOverflowButton!: Array<Button>;
 
 	_itemNavigation: ItemNavigation;

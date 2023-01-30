@@ -157,13 +157,12 @@ class Tab extends UI5Element implements ITab {
 	@slot({
 		type: Node,
 		"default": true,
-		propertyName: "content",
 		invalidateOnChildChange: {
 			properties: true,
 			slots: false,
 		},
 	})
-	content!: Array<HTMLElement>;
+	content!: Array<Node>;
 
 	/**
 	 * Defines hierarchies with nested sub tabs.
