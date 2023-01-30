@@ -39,7 +39,7 @@ module.exports = function (opts) {
 			mkdirp.sync(path.dirname(targetFile));
 
 			const filePath = `${targetFile}.ts`;
-			let defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : requiredImports;
+			const defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : requiredImports;
 
 			// it seems slower to read the old content, but writing the same content with no real changes
 			// (as in initial build and then watch mode) will cause an unnecessary dev server refresh
