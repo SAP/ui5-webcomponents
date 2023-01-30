@@ -44,7 +44,7 @@ const defaultMediaConstraints = {
 
 type BarcodeScannerDialogScanSuccessEventDetail = {
 	text: string,
-	rawBytes: object,
+	rawBytes: Uint8Array,
 };
 
 type BarcodeScannerDialogScanErrorEventDetail = {
