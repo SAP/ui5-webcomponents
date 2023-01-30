@@ -60,19 +60,19 @@ const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
 interface ITab extends UI5Element {
-	additionalText?: string;
-	icon?: string;
-	text?: string;
-	selected?: boolean;
-	subTabs?: Array<ITab>;
 	isSeparator: boolean;
-	disabled?: boolean;
-	design?: SemanticColor;
-	stableDomRef: string;
 	getTabInStripDomRef: () => HTMLElement | null;
-	tabs?: Array<ITab>
+	stableDomRef: string;
+	additionalText?: string;
+	design?: SemanticColor;
+	disabled?: boolean;
+	icon?: string;
 	isSingleClickArea?: boolean;
 	requiresExpandButton?: boolean;
+	selected?: boolean;
+	subTabs?: Array<ITab>;
+	tabs?: Array<ITab>
+	text?: string;
 	_tabIndex?: string;
 	_hasOwnContent?: boolean;
 	_level?: number;
@@ -84,7 +84,7 @@ interface ITab extends UI5Element {
 	_setsize?: number;
 	_realTab?: ITab;
 	_isTopLevelTab?: boolean;
-	_style?: any;
+	_style?: Record<string, any>;
 }
 
 interface TabContainerExpandButton extends Button {
@@ -527,6 +527,7 @@ class TabContainer extends UI5Element {
 
 		e.stopPropagation();
 		e.preventDefault();
+
 		if ((e.target as HTMLElement).hasAttribute("ui5-button")) {
 			this._onTabExpandButtonClick(e);
 			return;
@@ -546,13 +547,14 @@ class TabContainer extends UI5Element {
 			this.responsivePopover.showAt(tab._realTab!.getTabInStripDomRef()!);
 			return;
 		}
+
 		this._onHeaderItemSelect(tab);
 	}
 
-	// TO DO: review with care
 	async _onTabExpandButtonClick(e: Event) {
 		e.stopPropagation();
 		e.preventDefault();
+
 		let button = <HTMLElement>e.target!;
 		let tabInstance = (<TabContainerExpandButton>button).tab;
 
@@ -809,7 +811,7 @@ class TabContainer extends UI5Element {
 		let opener;
 		if (isEndOverflow) {
 			opener = this.overflowButton[0] || this._getEndOverflowBtnDOM();
-		} else { // TO DO: test this
+		} else {
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
