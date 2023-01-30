@@ -14,6 +14,7 @@ with `npm`
 - `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME>` (the user will be asked for **port**, **tag** and **typescript support** only).
 - `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT>` (the user will be asked for **tag** and **typescript support** only).
 - `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT> <NEW-PACKAGE-TAG>` (the user will be asked for **typescript support** only).
+- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT> <NEW-PACKAGE-TAG> <NEW-PACKAGE-TYPESCRIPT-SUPPORT>` (the user will not be asked for anything).
 
 And with `yarn`
 
@@ -21,6 +22,7 @@ And with `yarn`
 - `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`.
 - `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT>`.
 - `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT> <NEW-PACKAGE-TAG>`.
+- `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME> <NEW-PACKAGE-PORT> <NEW-PACKAGE-TAG> <NEW-PACKAGE-TYPESCRIPT-SUPPORT>`.
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
 components package.

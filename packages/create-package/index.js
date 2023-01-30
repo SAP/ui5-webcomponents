@@ -72,6 +72,7 @@ const copyFiles = (vars, sourcePath, destPath) => {
 // Main function
 const createWebcomponentsPackage = async () => {
 	let response;
+	let typescript = false;
 
 	// Get the name
 	let name = process.argv[2];
@@ -79,6 +80,8 @@ const createWebcomponentsPackage = async () => {
 	let port = process.argv[3];
 	// Get the tag
 	let tag = process.argv[4];
+	// Get the TypeScript support
+	let typescriptSupport = process.argv[5];
 
 	if (!isNameValid(name)) {
 		response = await prompts({
@@ -90,23 +93,24 @@ const createWebcomponentsPackage = async () => {
 		name = response.name;
 	}
 
-	// Add TypeScript support
-	response = await prompts({
-		type: "select",
-		name: "language",
-		message: "Support TypeScript:",
-		choices: [
-			{
-				title: "JavaScript",
-				value: "js",
-			},
-			{
-				title: "TypeScript",
-				value: "ts",
-			},
-		]
-	});
-	const typescript = response.language === "ts";
+	if (!typescriptSupport) {
+		response = await prompts({
+			type: "select",
+			name: "language",
+			message: "Support TypeScript:",
+			choices: [
+				{
+					title: "JavaScript",
+					value: "js",
+				},
+				{
+					title: "TypeScript",
+					value: "ts",
+				},
+			]
+		});
+		typescript = response.language === "ts";
+	}
 
 	if (!isPortValid(port)) {
 		response = await prompts({
