@@ -9,7 +9,6 @@ import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import Popup from "./Popup.js";
-import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -804,10 +803,6 @@ class Popover extends Popup {
 		}
 
 		return undefined;
-	}
-
-	get _ariaModal() {
-		return this.accessibleRole === PopupAccessibleRole.None ? undefined : "true";
 	}
 
 	get styles() {

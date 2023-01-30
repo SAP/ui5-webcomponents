@@ -605,15 +605,6 @@ abstract class Popup extends UI5Element {
 	abstract get _ariaLabelledBy(): string | undefined
 
 	/**
-	 * Return the value for aria-modal for this popup
-	 *
-	 * @protected
-	 * @abstract
-	 * @returns {string | undefined}
-	 */
-	abstract get _ariaModal(): string | undefined
-
-	/**
 	 * Ensures ariaLabel is never null or empty string
 	 * @returns {string | undefined}
 	 * @protected
@@ -626,8 +617,12 @@ abstract class Popup extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-popup-root")!;
 	}
 
-	get _role() {
+	get _role(): string | undefined {
 		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : this.accessibleRole.toLowerCase();
+	}
+
+	get _ariaModal(): string | undefined {
+		return this.accessibleRole === PopupAccessibleRole.None ? undefined : "true";
 	}
 
 	get contentDOM(): HTMLElement {
