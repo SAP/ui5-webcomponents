@@ -117,6 +117,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webc.main.Option
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-option
  * @implements sap.ui.webc.main.ISelectOption
  * @public

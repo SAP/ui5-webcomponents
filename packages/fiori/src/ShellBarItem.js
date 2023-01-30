@@ -64,10 +64,12 @@ const metadata = {
  * <br><br>
  * <h3>ES6 Module Import</h3>
  * <code>import "@ui5/webcomponents-fiori/dist/ShellBarItem";</code>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.fiori.ShellBarItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-shellbar-item
  * @implements sap.ui.webc.fiori.IShellBarItem
  * @public
