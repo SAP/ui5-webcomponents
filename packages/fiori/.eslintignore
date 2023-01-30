@@ -2,7 +2,6 @@
 target
 dist
 jsdoc-dist
-src/generated
 lib
 test
 bundle.*.js
