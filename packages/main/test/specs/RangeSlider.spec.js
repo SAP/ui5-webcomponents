@@ -313,6 +313,22 @@ describe("Testing events", () => {
 		assert.strictEqual(changeEventEndValue, "4", "Values are swapped prior to the firing of change event");
 	});
 
+	it("Should fire input event with correctly swiped values", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
+		const rangeSlider = await browser.$("#test-slider");
+		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		await rangeSlider.setProperty("endValue", 3);
+		await firstHandle.dragAndDrop({ x: 300, y: 1 });
+
+		const inputEventStartValue = await browser.execute(() => document.querySelector("#input-event-startValue").innerText);
+		const inputEventEndValue = await browser.execute(() => document.querySelector("#input-event-endValue").innerText);
+
+		assert.strictEqual(inputEventStartValue, "3", "The input event is fired with the correct values");
+		assert.strictEqual(inputEventEndValue, "4", "The input event is fired with the correct values");
+	});
+
 	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", async () => {
 		await browser.url(`test/pages/RangeSlider.html`);
 
