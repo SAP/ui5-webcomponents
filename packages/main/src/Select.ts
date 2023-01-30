@@ -18,7 +18,6 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -30,9 +29,9 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
-import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import List from "./List.js";
 import type { SelectionChangeEventDetail } from "./List.js";
@@ -48,7 +47,6 @@ import {
 	INPUT_SUGGESTIONS_TITLE,
 	LIST_ITEM_POSITION,
 	SELECT_ROLE_DESCRIPTION,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
 import Label from "./Label.js";
@@ -191,11 +189,11 @@ class Select extends UI5Element implements IFormElement {
 	 * @type {string}
 	 * @since 1.0.0-rc.9
 	 * @public
-	 * @defaultvalue undefined
+	 * @defaultvalue ""
 	 * @name sap.ui.webc.main.Select.accessibleName
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: undefined })
+	@property()
 	accessibleName!: string;
 
 	/**
@@ -214,7 +212,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	@property({ type: String, noAttribute: true })
-	_text!: string;
+	_text?: string | null;
 
 	/**
 	 * @private
@@ -229,10 +227,11 @@ class Select extends UI5Element implements IFormElement {
 	opened!: boolean;
 
 	/**
+	 * @type {sap.ui.webc.base.types.Integer}
 	 * @private
 	 */
-	@property({ type: Integer, defaultValue: 0, noAttribute: true })
-	_listWidth!: int;
+	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
+	_listWidth!: number;
 
 	/**
 	 * @private
@@ -241,16 +240,15 @@ class Select extends UI5Element implements IFormElement {
 	focused!: boolean;
 
 	_syncedOptions: Array<Option>;
-	_selectedIndex: int;
-	_selectedIndexBeforeOpen: int;
+	_selectedIndex: number;
+	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
-	_lastSelectedOption!: Option | null;
+	_lastSelectedOption: Option | null;
 	_typedChars: string;
-	_typingTimeoutID!: Timeout | int;
+	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
-	option!: Option;
-	selectedItem!: string;
-	popover!: Popover;
+	selectedItem?: string | null;
+	popover?: Popover;
 	value!: string;
 
 	/**
@@ -264,6 +262,7 @@ class Select extends UI5Element implements IFormElement {
 	 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 	 * @type {sap.ui.webc.main.ISelectOption[]}
 	 * @slot options
+	 * @name sap.ui.webc.main.Select.prototype.options
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -362,7 +361,7 @@ class Select extends UI5Element implements IFormElement {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]");
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	/**
@@ -377,7 +376,7 @@ class Select extends UI5Element implements IFormElement {
 
 	async _toggleRespPopover() {
 		this._iconPressed = true;
-		this.responsivePopover = await this._respPopover() as ResponsivePopover;
+		this.responsivePopover = await this._respPopover();
 		if (this.disabled) {
 			return;
 		}
@@ -390,7 +389,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	async _attachRealDomRefs() {
-		this.responsivePopover = await this._respPopover() as ResponsivePopover;
+		this.responsivePopover = await this._respPopover();
 
 		this.options.forEach(option => {
 			option._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${option.stableDomRef}]`) as HTMLElement;
@@ -431,7 +430,7 @@ class Select extends UI5Element implements IFormElement {
 			syncOpts[lastSelectedOptionIndex]._focused = true;
 			options[lastSelectedOptionIndex].selected = true;
 			options[lastSelectedOptionIndex]._focused = true;
-			this._text = syncOpts[lastSelectedOptionIndex].textContent as string;
+			this._text = syncOpts[lastSelectedOptionIndex].textContent;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
 			this._text = "";
@@ -442,7 +441,7 @@ class Select extends UI5Element implements IFormElement {
 				options[firstEnabledOptionIndex].selected = true;
 				options[firstEnabledOptionIndex]._focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
-				this._text = options[firstEnabledOptionIndex].textContent as string;
+				this._text = options[firstEnabledOptionIndex].textContent;
 			}
 		}
 
@@ -453,8 +452,9 @@ class Select extends UI5Element implements IFormElement {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
 			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
+				const selectElement = (element as Select);
 				nativeInput.disabled = !!element.disabled;
-				nativeInput.value = element._currentlySelectedOption ? element._currentlySelectedOption.value : "";
+				nativeInput.value = selectElement._currentlySelectedOption ? selectElement._currentlySelectedOption.value : "";
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -533,7 +533,7 @@ class Select extends UI5Element implements IFormElement {
 
 		orderedOptions = optionsAfterSelected.concat(optionsBeforeSelected);
 
-		return orderedOptions.find(option => option.textContent!.toLowerCase().startsWith(text));
+		return orderedOptions.find(option => (option.textContent || "").toLowerCase().startsWith(text));
 	}
 
 	_handleHomeKey(e: KeyboardEvent) {
@@ -562,7 +562,7 @@ class Select extends UI5Element implements IFormElement {
 		return this._filteredItems.findIndex(option => `${option._id}-li` === item.id);
 	}
 
-	_select(index: int) {
+	_select(index: number) {
 		this._filteredItems[this._selectedIndex].selected = false;
 		this._selectedIndex = index;
 		this._filteredItems[index].selected = true;
@@ -621,7 +621,7 @@ class Select extends UI5Element implements IFormElement {
 		}
 	}
 
-	_changeSelectedItem(oldIndex: int, newIndex: int) {
+	_changeSelectedItem(oldIndex: number, newIndex: number) {
 		const options = this._filteredItems;
 
 		options[oldIndex].selected = false;
@@ -673,25 +673,25 @@ class Select extends UI5Element implements IFormElement {
 		this.fireEvent("change", { selectedOption });
 
 		//  Angular two way data binding
-		this.selectedItem = selectedOption.textContent as string;
+		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
 	}
 
-	get valueStateTextMappings(): Record<string, string> {
+	get valueStateTextMappings() {
 		return {
-			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS as I18nText),
-			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_INFORMATION as I18nText),
-			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_ERROR as I18nText),
-			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_WARNING as I18nText),
+			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_ERROR),
+			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
 	get valueStateTypeMappings() {
 		return {
-			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS as I18nText),
-			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION as I18nText),
-			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR as I18nText),
-			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING as I18nText),
+			[ValueState.Success]: Select.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			[ValueState.Information]: Select.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			[ValueState.Error]: Select.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			[ValueState.Warning]: Select.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
@@ -708,7 +708,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get valueStateDefaultText() {
-		return this.valueStateTextMappings[this.valueState];
+		return this.valueState !== ValueState.None ? this.valueStateTextMappings[this.valueState] : "";
 	}
 
 	get valueStateTypeText() {
@@ -728,11 +728,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _headerTitleText() {
-		return Select.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE as I18nText);
-	}
-
-	get _currentSelectedItem() {
-		return this.shadowRoot?.querySelector(`#${this._filteredItems[this._selectedIndex]._id}-li`);
+		return Select.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get _currentlySelectedOption() {
@@ -811,7 +807,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _ariaRoleDescription() {
-		return Select.i18nBundle.getText(SELECT_ROLE_DESCRIPTION as I18nText);
+		return Select.i18nBundle.getText(SELECT_ROLE_DESCRIPTION);
 	}
 
 	get _isPhone() {
@@ -825,7 +821,7 @@ class Select extends UI5Element implements IFormElement {
 	itemSelectionAnnounce() {
 		let text;
 		const optionsCount = this._filteredItems.length;
-		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION as I18nText, this._selectedIndex + 1, optionsCount);
+		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
 			text = `${this._currentlySelectedOption.textContent as string} ${this._isPickerOpen ? itemPositionText : ""}`;

@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
@@ -20,7 +19,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
  * @public
  */
 @customElement("ui5-option")
-@languageAware
 class Option extends UI5Element {
 	/**
 	 * Defines the selected state of the component.
@@ -66,8 +64,8 @@ class Option extends UI5Element {
 	 * @name sap.ui.webc.main.Option.icon
 	 * @public
 	 */
-	@property()
-	icon!: string | null;
+	@property({ defaultValue: null })
+	icon?: string;
 
 	/**
 	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
@@ -111,6 +109,7 @@ class Option extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
+	text!: Array<Node>;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;

@@ -1,6 +1,5 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
-import Option from "../Option.js";
 
 interface IFormElement extends UI5Element {
 	value?: string | number,
@@ -9,7 +8,6 @@ interface IFormElement extends UI5Element {
 	required?: boolean,
 	multiple?: boolean,
 	checked?: boolean,
-	_currentlySelectedOption?: Option,
 }
 
 type NativeInputUpdateCallback = (element: IFormElement, nativeInput: HTMLInputElement) => void;
