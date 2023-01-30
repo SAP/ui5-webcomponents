@@ -13,6 +13,7 @@ Usage:
     npm init @ui5/webcomponents-package [OPTIONS]
 Options:
     --name <string>     - defines package name
+    --port <number>     - defines default package server port
     --tag <string>      - defines predefined custom element tag name
     --enable-typescript - enables TypeScript support to the package
 ```
