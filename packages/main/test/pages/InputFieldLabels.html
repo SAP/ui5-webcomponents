@@ -1,112 +1,147 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>ui5-input</title>
-        <script src="../../bundle.esm.js" type="module"></script>
-    </head>
 
-    <style>
-        html,
-        body {
-            margin: 0;
-            height: 100%;
-            width: 100%;
-        }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ui5-input</title>
+    <script src="../../bundle.esm.js" type="module"></script>
+</head>
 
-        body {
-            padding: 1rem;
-            box-sizing: border-box;
-        }
+<style>
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+        width: 100%;
+    }
 
-        .wrapper {
-            padding: 0.5rem;
-            box-sizing: border-box;
-            border: 1px grey dashed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+    body {
+        padding: 1rem;
+        box-sizing: border-box;
+    }
 
-        .field {
-            margin-top: 0.25rem;
-            display: block;
-            max-width: 100%;
-        }
+    .wrapper {
+        padding: 0.5rem;
+        box-sizing: border-box;
+        border: 1px grey dashed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 
-        .field,
-        .fields {
-            width: 540px;
-            max-width: 100%;
-        }
-    </style>
+    .field {
+        margin-top: 0.25rem;
+        display: block;
+        max-width: 100%;
+    }
 
-    <body>
-        <div class="wrapper">
-            <div class="fields">
-                <p>
-                    <ui5-label id="lblDesc1" for="myInput"
-                        >Description that will change</ui5-label
-                    >
-                </p>
-                <p>
-                    <ui5-label id="lblDesc2" for="myInput"
-                        >Another description</ui5-label
-                    >
-                </p>
-                <p>
-                    <ui5-input
-                        id="myInput"
-                        placeholder="input placeholder"
-                        class="field"
-                    ></ui5-input>
-                </p>
-                <p>
-                    <ui5-label id="lblDesc3" for="myInput">
-					Description that will be removed</ui5-label>
-                </p>
-                <p><label for="myInput">DescLabel</label></p>
-                <p><ui5-button id="btnChange">Change Desc</ui5-button></p>
-                <p><ui5-button id="btnRemove">Remove Label</ui5-button></p>
-                <p id="actualLabel">Actual Desc from input:</p>
-            </div>
+    .field,
+    .fields {
+        width: 540px;
+        max-width: 100%;
+    }
+</style>
+
+<body>
+    <div class="wrapper">
+        <div class="fields">
+            <p>
+                <ui5-label id="lblDesc1" for="myInput">Description that will change</ui5-label>
+            </p>
+            <p>
+                <ui5-label id="lblDesc2" for="myInput">Another description</ui5-label>
+            </p>
+            <p>
+                <ui5-input id="myInput" placeholder="input placeholder" class="field"></ui5-input>
+            </p>
+            <p>
+                <ui5-label id="lblDesc3" for="myInput">
+                    Description that will be removed</ui5-label>
+            </p>
+            <p><label for="myInput">DescLabel</label></p>
+            <p><ui5-button id="btnChange">Change Desc</ui5-button></p>
+            <p id="actualLabel">Actual Desc from input:</p>
+            <hr />
+            <p>
+                lblEnterName1 &nbsp;<ui5-label id="lblEnterName1">First Label Desc</ui5-label>
+            </p>
+            <p>
+                lblEnterName2 &nbsp; <ui5-label id="lblEnterName2">Second Label Desc</ui5-label>
+            </p>
+            <p>
+                <ui5-input id="inputEnterName" accessible-name-ref="lblEnterName1" placeholder="Enter your name"
+                    class="field"></ui5-input>
+            </p>
+            <p><ui5-button id="btnChange2">Change Desc</ui5-button></p>
+            <p><ui5-button id="btnChange3">Change Accessible Name Ref</ui5-button></p>
+            <p id="actualLabel2">Actual Desc from input2:</p>
+            <hr>
+            <p><ui5-button id="btnShow">Show Latest</ui5-button></p>
         </div>
+    </div>
 
-        <script>
-            function show() {
-                const inputShadowRoot =
-                    document.getElementById("myInput").shadowRoot;
-                const innerInput =
-                    inputShadowRoot.querySelector(".ui5-input-inner");
-                const ariaLabel = innerInput.getAttribute("aria-label");
-                document.getElementById(
-                    "actualLabel"
-                ).innerHTML = `Actual Desc from input: ${ariaLabel}`;
-            }
+    <script>
+        function showNow() {
+            const inputShadowRoot =
+                document.getElementById("myInput").shadowRoot;
+            const innerInput =
+                inputShadowRoot.querySelector(".ui5-input-inner");
+            const ariaLabel = innerInput.getAttribute("aria-label");
+            document.getElementById(
+                "actualLabel"
+            ).innerHTML = `Actual Desc from input: ${ariaLabel}`;
+            const inputShadowRoot2 =
+                document.getElementById("inputEnterName").shadowRoot;
+            const innerInput2 =
+                inputShadowRoot2.querySelector(".ui5-input-inner");
+            const ariaLabel2 = innerInput2.getAttribute("aria-label");
+            document.getElementById("actualLabel2").innerHTML = `Actual Desc from input2: ${ariaLabel2}`;
+        }
 
-            let btnChange = document.getElementById("btnChange");
-            btnChange.addEventListener("click", () => {
-                let lblDesc1 = document.getElementById("lblDesc1");
-                let lblDesc2 = (document.getElementById("lblDesc2").for =
-                    "other");
-                let lblDesc3 = document.getElementById("lblDesc3");
-                lblDesc3?.remove();
-                lblDesc1.innerHTML =
-                    "Desc" + ((Math.random() * 10000) % 100 << 0);
-                setTimeout(() => {
-                    this.show();
-                }, 250);
-            });
+        function show() {
+            setTimeout(() => { showNow(); }, 200);
+        }
 
-            window.addEventListener(
-                "DOMContentLoaded",
-                () => {
-                    setTimeout(() => {
-                    this.show();
-                }, 250);
-                });
-        </script>
-    </body>
+
+        const btnChange = document.getElementById("btnChange");
+        btnChange.addEventListener("click", () => {
+            const lblDesc1 = document.getElementById("lblDesc1");
+            const lblDesc2 = (document.getElementById("lblDesc2").for =
+                "other");
+            const lblDesc3 = document.getElementById("lblDesc3");
+            lblDesc3?.remove();
+            lblDesc1.innerHTML =
+                "Desc" + ((Math.random() * 10000) % 100 << 0);
+            show();
+        });
+
+        const btnChange2 = document.getElementById("btnChange2");
+        btnChange2.addEventListener("click", () => {
+            const lblEnterName = document.getElementById("lblEnterName");
+            lblEnterName.innerHTML =
+                "Enter Name Desc" + ((Math.random() * 10000) % 100 << 0);
+            show();
+        });
+
+        btnChange3.addEventListener("click", () => {
+            const inputEnterName = document.getElementById("inputEnterName");
+            debugger;
+            let refValue = inputEnterName['accessibleNameRef'];
+            if(refValue.indexOf('1')!==-1)  { refValue = refValue.replace('1', '2'); }
+            else { refValue = refValue.replace('2', '1'); }
+            inputEnterName['accessibleNameRef']=refValue;
+            show();
+        });
+
+        const btnShow = document.getElementById("btnShow");
+        btnShow.addEventListener("click", () => {
+            show();
+        });
+
+
+    </script>
+</body>
+
 </html>
