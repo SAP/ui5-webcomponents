@@ -49,6 +49,7 @@ import {
 	SELECT_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
+import type { IOption } from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Popover from "./Popover.js";
@@ -67,7 +68,11 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import { IFormElement } from "./features/InputElementsFormSupport.js";
-import ListItemBase from "./ListItemBase.js";
+import type ListItemBase from "./ListItemBase.js";
+
+type SelectChangeEventDetail = {
+	selectedOption: Option,
+}
 
 /**
  * @class
@@ -117,6 +122,8 @@ import ListItemBase from "./ListItemBase.js";
 	},
 })
 class Select extends UI5Element implements IFormElement {
+	static i18nBundle: I18nBundle;
+
 	/**
 	 * Defines whether the component is in disabled state.
 	 * <br><br>
@@ -239,7 +246,7 @@ class Select extends UI5Element implements IFormElement {
 	@property({ type: Boolean })
 	focused!: boolean;
 
-	_syncedOptions: Array<Option>;
+	_syncedOptions: Array<IOption>;
 	_selectedIndex: number;
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
@@ -262,7 +269,7 @@ class Select extends UI5Element implements IFormElement {
 	 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
 	 * @type {sap.ui.webc.main.ISelectOption[]}
 	 * @slot options
-	 * @name sap.ui.webc.main.Select.prototype.options
+	 * @name sap.ui.webc.main.Select.prototype.default
 	 * @public
 	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
@@ -316,8 +323,6 @@ class Select extends UI5Element implements IFormElement {
 	static get staticAreaStyles() {
 		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SelectPopoverCss];
 	}
-
-	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
@@ -392,7 +397,7 @@ class Select extends UI5Element implements IFormElement {
 		this.responsivePopover = await this._respPopover();
 
 		this.options.forEach(option => {
-			option._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${option.stableDomRef}]`) as HTMLElement;
+			option._getRealDomRef = () => this.responsivePopover.querySelector<HTMLElement>(`*[data-ui5-stable=${option.stableDomRef}]`)!;
 		});
 	}
 
@@ -425,7 +430,7 @@ class Select extends UI5Element implements IFormElement {
 			};
 		});
 
-		if (lastSelectedOptionIndex > -1 && !(syncOpts[lastSelectedOptionIndex] as Option).disabled) {
+		if (lastSelectedOptionIndex > -1) {
 			syncOpts[lastSelectedOptionIndex].selected = true;
 			syncOpts[lastSelectedOptionIndex]._focused = true;
 			options[lastSelectedOptionIndex].selected = true;
@@ -445,7 +450,7 @@ class Select extends UI5Element implements IFormElement {
 			}
 		}
 
-		this._syncedOptions = syncOpts as Array<Option>;
+		this._syncedOptions = syncOpts as Array<IOption>;
 	}
 
 	_enableFormSupport() {
@@ -670,7 +675,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_fireChangeEvent(selectedOption: Option) {
-		this.fireEvent("change", { selectedOption });
+		this.fireEvent<SelectChangeEventDetail>("change", { selectedOption });
 
 		//  Angular two way data binding
 		this.selectedItem = selectedOption.textContent;
@@ -879,3 +884,6 @@ class Select extends UI5Element implements IFormElement {
 Select.define();
 
 export default Select;
+export type {
+	SelectChangeEventDetail,
+};

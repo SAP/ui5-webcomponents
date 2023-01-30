@@ -3,6 +3,18 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 
+interface IOption extends UI5Element {
+	selected: boolean,
+	_focused: boolean,
+	icon?: string | undefined,
+	value: string,
+	textContent: string | null,
+	title: string,
+	additionalText: string,
+	id: string,
+	stableDomRef: string,
+}
+
 /**
  * @class
  *
@@ -19,7 +31,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
  * @public
  */
 @customElement("ui5-option")
-class Option extends UI5Element {
+class Option extends UI5Element implements IOption {
 	/**
 	 * Defines the selected state of the component.
 	 * @type {boolean}
@@ -119,3 +131,6 @@ class Option extends UI5Element {
 Option.define();
 
 export default Option;
+export type {
+	IOption,
+};
