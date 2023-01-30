@@ -1,7 +1,6 @@
 import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 // @ts-ignore
 import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.js";
@@ -20,7 +19,6 @@ import SuggestionListItem from "../SuggestionListItem.js";
 
 import {
 	LIST_ITEM_POSITION,
-	// @ts-ignore
 } from "../generated/i18n/i18n-defaults.js";
 import type ListItemType from "../types/ListItemType.js";
 import type ListItemBase from "../ListItemBase.js";
@@ -589,7 +587,7 @@ class Suggestions {
 			return "";
 		}
 
-		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION as I18nText, this.accInfo.currentPos, this.accInfo.listSize);
+		const itemPositionText = Suggestions.i18nBundle.getText(LIST_ITEM_POSITION, this.accInfo.currentPos, this.accInfo.listSize);
 
 		return `${this.accInfo.itemText} ${itemPositionText}`;
 	}

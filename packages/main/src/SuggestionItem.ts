@@ -14,6 +14,7 @@ import ListItemType from "./types/ListItemType.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.SuggestionItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-suggestion-item
  * @implements sap.ui.webc.main.IInputSuggestionItem
  * @public

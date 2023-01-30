@@ -34,6 +34,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webc.main.ComboBoxItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-cb-item
  * @implements sap.ui.webc.main.IComboBoxItem
  * @public
