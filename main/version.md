@@ -1,7 +1,5 @@
-commit a77b4202751e71c4bdafc01609542753374bef4c
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Tue Jan 31 16:46:47 2023 +0200
+commit d0055cabec9ca6c8d2036a1f84a0e9074941634f
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Tue Jan 31 19:04:01 2023 +0200
 
-    docs(ui5-dialog): add advice for opening multiple dialogs (#6384)
-    
-    Fixes #6344
+    chore: add action for release on pushing tag
