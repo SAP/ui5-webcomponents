@@ -92,6 +92,7 @@ const _createInvalidateCallbackForProperty = (el: UI5Element, propName: string, 
 			if (!(param.type === "property" && param.name === propName)) {
 				return;
 			}
+			debugger;
 			// remove old refferenced elements from tracking
 			const oldValue = param.oldValue;
 			if (oldValue) {
@@ -134,11 +135,12 @@ const observeAssosiatedLabels = (el: UI5Element, callback: () => void, trackedPr
 		if (propertyValue) {
 			const ids = propertyValue.split(" ");
 			ids.forEach(id => {
+				debugger;
 				const refEl = _getRefferencedElement(el, id);
-				if (refEl && assosiatedElementsArray.indexOf(refEl) === -1) {
+				if (refEl && !assosiatedElementsArray.includes(refEl)) {
 					assosiatedElementsArray.push(refEl);
 					_createLabelObserver(el, callback, refEl);
-					_createInvalidateCallbackForProperty(el, id, assosiatedElementsArray, callback);
+					_createInvalidateCallbackForProperty(el, propName, assosiatedElementsArray, callback);
 				}
 			});
 		}
