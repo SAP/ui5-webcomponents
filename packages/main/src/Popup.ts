@@ -370,7 +370,7 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	async forwardToFirst() {
-		const firstFocusable = await this.findFocusableElements(true);
+		const firstFocusable = await getFirstFocusableElement(this);
 
 		if (firstFocusable) {
 			firstFocusable.focus({ focusVisible: true } as FocusOptions);
@@ -384,7 +384,7 @@ abstract class Popup extends UI5Element {
 	 * @private
 	 */
 	async forwardToLast() {
-		const lastFocusable = await this.findFocusableElements(false);
+		const lastFocusable = await getLastFocusableElement(this);
 
 		if (lastFocusable) {
 			lastFocusable.focus({ focusVisible: true } as FocusOptions);
@@ -413,16 +413,10 @@ abstract class Popup extends UI5Element {
 	async applyFocus() {
 		await this._waitForDomRef();
 
-		let element = (this.getRootNode() as Document).getElementById(this.initialFocus)
-			|| document.getElementById(this.initialFocus);
-
-		if (!element) {
-			element = await this.findFocusableElements(true);
-		}
-
-		if (!element) {
-			element = this._root; // in case of no focusable content focus the root
-		}
+		const element = (this.getRootNode() as Document).getElementById(this.initialFocus)
+			|| document.getElementById(this.initialFocus)
+			|| await getFirstFocusableElement(this)
+			|| this._root; // in case of no focusable content focus the root
 
 		if (element) {
 			if (element === this._root) {
@@ -430,14 +424,6 @@ abstract class Popup extends UI5Element {
 			}
 			element.focus({ focusVisible: true } as FocusOptions);
 		}
-	}
-
-	async findFocusableElements(forward: boolean) {
-		if (forward) {
-			return getFirstFocusableElement(this);
-		}
-
-		return getLastFocusableElement(this);
 	}
 
 	/**

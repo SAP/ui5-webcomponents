@@ -8,7 +8,7 @@ import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
-import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
+
 import Popup from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
@@ -361,28 +361,6 @@ class Popover extends Popup {
 		this._openerRect = opener.getBoundingClientRect();
 
 		await super._open(preventInitialFocus);
-	}
-
-	/**
-	 * @override
-	 */
-	async findFocusableElements(forward: boolean) {
-		let focusableElement;
-		const elements = [...this.header, ...this.content, ...this.footer];
-
-		if (!forward) {
-			elements.reverse();
-		}
-
-		for (const element of elements) { // eslint-disable-line no-restricted-syntax
-			focusableElement = await getFirstFocusableElement(element); // eslint-disable-line no-await-in-loop
-
-			if (focusableElement) {
-				return focusableElement;
-			}
-		}
-
-		return null;
 	}
 
 	/**

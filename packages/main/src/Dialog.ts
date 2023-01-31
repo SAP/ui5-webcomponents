@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
-import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import {
 	isUp, isDown, isLeft, isRight,
 	isUpShift, isDownShift, isLeftShift, isRightShift,
@@ -378,32 +377,6 @@ class Dialog extends Popup {
 		this._detachScreenResizeHandler();
 
 		this.removeEventListener("dragstart", this._dragStartHandler);
-	}
-
-	/**
-	 * @override
-	 */
-	async findFocusableElements(forward: boolean) {
-		if (this.shadowRoot && (this.draggable || this.resizable)) {
-			return this.shadowRoot.querySelector("header");
-		}
-
-		let focusableElement;
-		const elements = [...this.header, ...this.content, ...this.footer];
-
-		if (!forward) {
-			elements.reverse();
-		}
-
-		for (const element of elements) { // eslint-disable-line no-restricted-syntax
-			focusableElement = await getFirstFocusableElement(element); // eslint-disable-line no-await-in-loop
-
-			if (focusableElement) {
-				return focusableElement;
-			}
-		}
-
-		return null;
 	}
 
 	/**
