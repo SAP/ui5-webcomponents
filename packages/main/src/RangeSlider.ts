@@ -223,7 +223,6 @@ class RangeSlider extends SliderBase {
 			this._swapValues();
 			this._setAffectedValue(affectedValue);
 			this.update(affectedValue, this.startValue, this.endValue);
-
 		}
 
 		if (!this.isCurrentStateOutdated()) {
@@ -798,14 +797,12 @@ class RangeSlider extends SliderBase {
 			const prevEndValue = this.endValue;
 			this.endValue = this.startValue;
 			this.startValue = prevEndValue;
-
 		}
 
 		if (affectedValue === "endValue" && this.endValue < this.startValue) {
 			const prevStartValue = this.startValue;
 			this.startValue = this.endValue;
 			this.endValue = prevStartValue;
-
 		}
 
 		this._setValuesAreReversed();
