@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       release_type:
-        description: 'Release Type: patch | minor | major'     
+        description: 'Release Type: use patch | minor | major or leave empty for auto'     
         required: false
-        default: 'patch'
+        default: ''
       prerelease:
         type: boolean
         description: 'pre-release'

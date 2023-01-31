@@ -7,13 +7,11 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
 
-// @ts-ignore
 import { AVATAR_TOOLTIP } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -347,7 +345,7 @@ class Avatar extends UI5Element {
 			return this.accessibleName;
 		}
 
-		return Avatar.i18nBundle.getText(AVATAR_TOOLTIP as I18nText) || undefined;
+		return Avatar.i18nBundle.getText(AVATAR_TOOLTIP) || undefined;
 	}
 
 	get hasImage() {
