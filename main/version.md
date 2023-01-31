@@ -1,9 +1,8 @@
-commit 491f01ee0132d6be72c42341e7e3c5a883f6f044
-Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
-Date:   Tue Jan 31 11:16:42 2023 +0200
+commit d4fef1f28bdb863bb19967357af34c0d5766b54c
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Tue Jan 31 12:48:15 2023 +0200
 
-    fix(ui5-avatar-group):Chrome offsetParent precise calculation aligned (#6368)
+    refactor(ui5-select): migrate to TypeScript (#6362)
     
-    * fix(ui5-illustrated-message): resize fixed
-    
-    * fix(ui5-avatar-group): chrome calc offsetleft fix
+    * refactor(ui5-select): migrate to TypeScript
+    Part of #4337
