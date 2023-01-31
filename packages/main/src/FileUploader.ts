@@ -9,7 +9,6 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import {
@@ -19,7 +18,6 @@ import {
 	VALUE_STATE_INFORMATION,
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 import Input from "./Input.js";
@@ -421,11 +419,11 @@ class FileUploader extends UI5Element implements IFormElement {
 	}
 
 	get browseText(): string {
-		return FileUploader.i18nBundle.getText(FILEUPLOAD_BROWSE as I18nText);
+		return FileUploader.i18nBundle.getText(FILEUPLOAD_BROWSE);
 	}
 
 	get titleText(): string {
-		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE as I18nText);
+		return FileUploader.i18nBundle.getText(FILEUPLOADER_TITLE);
 	}
 
 	get _canUseNativeFormSupport(): boolean {
@@ -443,10 +441,10 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	get valueStateTextMappings(): Record<string, string> {
 		return {
-			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS as I18nText),
-			"Information": FileUploader.i18nBundle.getText(VALUE_STATE_INFORMATION as I18nText),
-			"Error": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR as I18nText),
-			"Warning": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING as I18nText),
+			"Success": FileUploader.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": FileUploader.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": FileUploader.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": FileUploader.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 

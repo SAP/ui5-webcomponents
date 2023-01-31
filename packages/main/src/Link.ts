@@ -17,7 +17,6 @@ import WrappingType from "./types/WrappingType.js";
 // Template
 import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
 
-// @ts-ignore
 import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles

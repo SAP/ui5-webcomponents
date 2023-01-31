@@ -12,6 +12,7 @@
     html,
     body {
         margin: 0;
+        padding: 0;
         height: 100%;
         width: 100%;
     }
@@ -24,11 +25,12 @@
     .wrapper {
         padding: 0.5rem;
         box-sizing: border-box;
-        border: 1px grey dashed;
+        border: 1px #e1e1e1 dashed;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        margin: 0;
     }
 
     .field {
@@ -37,16 +39,34 @@
         max-width: 100%;
     }
 
+    .fields {
+        padding: 1rem 2rem;
+        margin-bottom: 2rem;
+        background-color: #e1e1e1;
+        border-bottom: 1px solid #888888;
+    }
+
     .field,
     .fields {
-        width: 540px;
+        width: 85%;
         max-width: 100%;
+    }
+
+    h4 {
+        text-align: start;
+        border-bottom: 1px solid #2f2f2f;
+    }
+
+    .actual-html {
+        color: cadetblue;
     }
 </style>
 
 <body>
     <div class="wrapper">
+        <p><ui5-button id="btnShow">Show Latest</ui5-button></p>
         <div class="fields">
+            <h4>Label-For Tests</h4>
             <p>
                 <ui5-label id="lblDesc1" for="myInput">Description that will change</ui5-label>
             </p>
@@ -62,49 +82,99 @@
             </p>
             <p><label for="myInput">DescLabel</label></p>
             <p><ui5-button id="btnChange">Change Desc</ui5-button></p>
-            <p id="actualLabel">Actual Desc from input:</p>
-            <hr />
+            <p><ui5-button id="btnChange11">Remove for attr from Another Description</ui5-button></p>
+            <p id="actualLabel1">Actual Desc from myInput:</p>
+            <p class="actual-html" id="actualInput1"></p>
+        </div>
+        <div class="fields">
+            <h4>Input accessibleNameRef Tests</h4>
             <p>
-                lblEnterName1 &nbsp;<ui5-label id="lblEnterName1">First Label Desc</ui5-label>
+                lblEnterName1: &nbsp;<ui5-label id="lblEnterName1">First Label Desc</ui5-label>
             </p>
             <p>
-                lblEnterName2 &nbsp; <ui5-label id="lblEnterName2">Second Label Desc</ui5-label>
+                lblEnterName2: &nbsp; <ui5-label id="lblEnterName2">Second Label Desc</ui5-label>
             </p>
             <p>
-                <ui5-input id="inputEnterName" accessible-name-ref="lblEnterName1" placeholder="Enter your name"
+                lblEnterName3: &nbsp; <ui5-label id="lblEnterName3">This label description stays until removed</ui5-label>
+            </p>
+            <p>
+                <ui5-input id="inputEnterName" accessible-name-ref="lblEnterName1 lblEnterName3" placeholder="Enter your name"
                     class="field"></ui5-input>
             </p>
-            <p><ui5-button id="btnChange2">Change Desc</ui5-button></p>
-            <p><ui5-button id="btnChange3">Change Accessible Name Ref</ui5-button></p>
-            <p id="actualLabel2">Actual Desc from input2:</p>
-            <hr>
-            <p><ui5-button id="btnShow">Show Latest</ui5-button></p>
+            <p><ui5-button id="btnChange2">Change Desc lblEnterName1</ui5-button>&nbsp;<ui5-button id="btnChange22">Change Desc lblEnterName2</ui5-button></p>
+            <p><ui5-button id="btnChange3">Swap Accessible Name Ref 1 and 2</ui5-button></p>
+            <p><ui5-button id="btnChange35">Remove lblEnterName3 from accessible-name-ref</ui5-button></p>
+            <p class="actual-desc" id="actualLabel2">Actual Desc from inputEnterName:</p>
+            <p class="actual-html" id="actualInput2"></p>
+        </div>
+        <div class="fields">
+            <h4>Input accessibleName and accessibleNameRef Tests <ui5-button class="show-btn">Show Latest</ui5-button></h4>
+            <p>
+                lblEnterDesc1: &nbsp; <ui5-label id="lblEnterDesc1" for="inputEnterDesc">Label for inputEnterDesc</ui5-label>
+            </p>
+            <p>
+                lblEnterDesc3: &nbsp; <ui5-label id="lblEnterDesc3">Label to be added/removed as accessible-name-ref</ui5-label>
+            </p>
+            <p>
+                <ui5-input id="inputEnterDesc" accessible-name="Some description added by accessibleName" placeholder="Enter description"
+                    class="field"></ui5-input>
+            </p>
+            <p><ui5-button id="btnChange4">Toggle AccessibleName Value</ui5-button></p>
+            <p><ui5-button id="btnChange5">Remove AccessibleName Attribute</ui5-button></p>
+            <p><ui5-button id="btnChange6">Add Accessible Name Ref</ui5-button></p>
+            <p class="actual-desc" id="actualLabel3">Actual Desc from inputEnterDesc:</p>
+            <p class="actual-html" id="actualInput3"></p>
+        </div>
+        <div class="fields">
+            <h4>Three inputs with same label accessibleNameRef Tests <ui5-button class="show-btn">Show Latest</ui5-button></h4>
+            <p>
+                lblTestDesc: &nbsp; <ui5-label id="lblTestDesc" for="testInput1">Label for testInput1 Desc</ui5-label>
+            </p>
+            <p>
+                <ui5-input id="testInput1" placeholder="Enter description1" class="field"></ui5-input>
+                <ui5-input id="testInput2" accessible-name-ref="lblTestDesc" accessible-name="Hello" placeholder="Enter description2" class="field"></ui5-input>
+                <ui5-input id="testInput3" accessible-name-ref="lblTestDesc" placeholder="Enter description3" class="field"></ui5-input>
+            </p>
+            <p><ui5-button id="btnChange71">Remove For Attribute On Label</ui5-button></p>
+            <p><ui5-button id="btnChange72">Remove AccessibleNameRef Attribute For Input 2</ui5-button></p>
+            <p><ui5-button id="btnChange73">Remove AccessibleNameRef Attribute For Input 3</ui5-button></p>
+            <p><ui5-button id="btnChange74">Change Desc</ui5-button></p>
+            <p class="actual-desc" id="actualLabel41">Actual Desc from testInput1:</p>
+            <p class="actual-desc" id="actualLabel42">Actual Desc from testInput2:</p>
+            <p class="actual-desc" id="actualLabel43">Actual Desc from testInput3:</p>
+            <p class="actual-html" id="actualInput41"></p>
+            <p class="actual-html" id="actualInput42"></p>
+            <p class="actual-html" id="actualInput43"></p>
         </div>
     </div>
 
     <script>
-        function showNow() {
-            const inputShadowRoot =
-                document.getElementById("myInput").shadowRoot;
-            const innerInput =
-                inputShadowRoot.querySelector(".ui5-input-inner");
+        function showAriaLabelForInput(inputId, descId) {
+            const shadowRoot = document.getElementById(inputId).shadowRoot;
+            const innerInput = shadowRoot.querySelector(".ui5-input-inner");
             const ariaLabel = innerInput.getAttribute("aria-label");
-            document.getElementById(
-                "actualLabel"
-            ).innerHTML = `Actual Desc from input: ${ariaLabel}`;
-            const inputShadowRoot2 =
-                document.getElementById("inputEnterName").shadowRoot;
-            const innerInput2 =
-                inputShadowRoot2.querySelector(".ui5-input-inner");
-            const ariaLabel2 = innerInput2.getAttribute("aria-label");
-            document.getElementById("actualLabel2").innerHTML = `Actual Desc from input2: ${ariaLabel2}`;
+            document.getElementById(descId).innerHTML = `Actual Desc from ${inputId}: ${ariaLabel}`;
+            const actualInputHTML = document.getElementById(descId.replace('Label','Input'));
+            if(actualInputHTML) {
+                actualInputHTML.innerHTML = `<code>${innerInput.outerHTML.replace('<','&lt;').replace('>','&gt;')}</code>`;
+            }
+        }
+
+
+        function showNow() {
+            showAriaLabelForInput("myInput", "actualLabel1");
+            showAriaLabelForInput("inputEnterName", "actualLabel2");
+            showAriaLabelForInput("inputEnterDesc", "actualLabel3");
+            showAriaLabelForInput("testInput1", "actualLabel41");
+            showAriaLabelForInput("testInput2", "actualLabel42");
+            showAriaLabelForInput("testInput3", "actualLabel43");
         }
 
         function show() {
             setTimeout(() => { showNow(); }, 200);
         }
 
-        let counter = 0;
+
         let counterMyInput = 0;
 
         const btnChange = document.getElementById("btnChange");
@@ -119,14 +189,35 @@
             show();
         });
 
+
+        const btnChange11 = document.getElementById("btnChange11");
+        btnChange11.addEventListener("click", () => {
+            document.getElementById("lblDesc2").for = "";
+            show();
+        });
+
+
+
+        let counterEnterName = 0;
+        let counterEnterName2 = 0;
+
         const btnChange2 = document.getElementById("btnChange2");
         btnChange2.addEventListener("click", () => {
             const lblEnterName = document.getElementById("lblEnterName1");
             lblEnterName.innerHTML =
-                "First Label Desc " + (++counter);
+                "First Label Desc " + (++counterEnterName);
             show();
         });
 
+        const btnChange22 = document.getElementById("btnChange22");
+        btnChange22.addEventListener("click", () => {
+            const lblEnterName = document.getElementById("lblEnterName2");
+            lblEnterName.innerHTML =
+                "Second Label Desc " + (++counterEnterName2);
+            show();
+        });
+
+        const btnChange3 = document.getElementById("btnChange3");
         btnChange3.addEventListener("click", () => {
             const inputEnterName = document.getElementById("inputEnterName");
             let refValue = inputEnterName['accessibleNameRef'];
@@ -136,9 +227,118 @@
             show();
         });
 
+        const btnChange35 = document.getElementById("btnChange35");
+        btnChange35.addEventListener("click", () => {
+            const inputEnterName = document.getElementById("inputEnterName");
+            let refValue = inputEnterName['accessibleNameRef'];
+            if(refValue.indexOf('lblEnterName3')!==-1)  {
+                refValue = refValue.replace(' lblEnterName3', '');
+                btnChange35.innerHTML = btnChange35.innerHTML.replace('Remove','Add');
+            }
+            else {
+                refValue = refValue + ' lblEnterName3';
+                btnChange35.innerHTML = btnChange35.innerHTML.replace('Add','Remove');
+            }
+            inputEnterName['accessibleNameRef']=refValue;
+            show();
+        });
+
+
+
+        const btnChange4 = document.getElementById("btnChange4");
+        btnChange4.addEventListener("click", () => {
+            const inputEnterDesc = document.getElementById("inputEnterDesc");
+            let accessibleName = inputEnterDesc['accessibleName'];
+            if(accessibleName.includes('Some')) {
+                accessibleName = accessibleName.replace('Some','Another');
+            } else {
+                accessibleName = accessibleName.replace('Another', 'Some');
+            }
+            inputEnterDesc['accessibleName'] = accessibleName;
+            show();
+        });
+
+        const btnChange5 = document.getElementById("btnChange5");
+        btnChange5.addEventListener("click", () => {
+            const inputEnterDesc = document.getElementById("inputEnterDesc");
+            let accessibleName = inputEnterDesc['accessibleName'];
+            if(accessibleName.length) {
+                accessibleName = '';
+                btnChange5.innerHTML = btnChange5.innerHTML.replace('Remove','Add');
+            } else {
+                accessibleName = 'Some description added by accessibleName'
+                btnChange5.innerHTML = btnChange5.innerHTML.replace('Add', 'Remove');
+            }
+            inputEnterDesc['accessibleName'] = accessibleName;
+            show();
+        });
+
+        const btnChange6 = document.getElementById("btnChange6");
+        btnChange6.addEventListener("click", () => {
+            const inputEnterDesc = document.getElementById("inputEnterDesc");
+            const accessibleNameRef = inputEnterDesc['accessibleNameRef'];
+            if(accessibleNameRef==="") {
+                inputEnterDesc['accessibleNameRef']="lblEnterDesc3";
+                btnChange6.innerHTML = btnChange6.innerHTML.replace('Add','Remove');
+            } else {
+                inputEnterDesc['accessibleNameRef']="";
+                btnChange6.innerHTML = btnChange6.innerHTML.replace('Remove','Add');
+            }
+            show();
+        });
+
+        const btnChange71 = document.getElementById("btnChange71");
+        btnChange71.addEventListener("click", () => {
+            if(document.getElementById("lblTestDesc").for === "testInput1") {
+                document.getElementById("lblTestDesc").for = "";
+                btnChange71.innerHTML = btnChange71.innerHTML.replace('Remove','Add');
+            } else {
+                document.getElementById("lblTestDesc").for = "testInput1";
+                btnChange71.innerHTML = btnChange71.innerHTML.replace('Add','Remove');
+            }
+            show();
+        });
+
+        const btnChange72 = document.getElementById("btnChange72");
+        btnChange72.addEventListener("click", () => {
+            const inputEnterName = document.getElementById("testInput2");
+            let refValue = inputEnterName['accessibleNameRef'];
+            if(refValue.indexOf('lblTestDesc')!==-1)  {
+                refValue = refValue.replace('lblTestDesc', '');
+                btnChange72.innerHTML = btnChange72.innerHTML.replace('Remove','Add');
+            }
+            else {
+                refValue = refValue + 'lblTestDesc';
+                btnChange72.innerHTML = btnChange72.innerHTML.replace('Add','Remove');
+            }
+            inputEnterName['accessibleNameRef']=refValue;
+            show();
+        });
+
+        const btnChange73 = document.getElementById("btnChange73");
+        btnChange73.addEventListener("click", () => {
+            const inputEnterName = document.getElementById("testInput3");
+            let refValue = inputEnterName['accessibleNameRef'];
+            if(refValue.indexOf('lblTestDesc')!==-1)  {
+                refValue = refValue.replace('lblTestDesc', '');
+                btnChange73.innerHTML = btnChange73.innerHTML.replace('Remove','Add');
+            }
+            else {
+                refValue = refValue + 'lblTestDesc';
+                btnChange73.innerHTML = btnChange73.innerHTML.replace('Add','Remove');
+            }
+            inputEnterName['accessibleNameRef']=refValue;
+            show();
+        });
+
+
         const btnShow = document.getElementById("btnShow");
         btnShow.addEventListener("click", () => {
             show();
+        });
+        Array.from(document.querySelectorAll('.show-btn')).forEach(
+        btn => {
+            btn.addEventListener("click", () => { show(); });
         });
 
 

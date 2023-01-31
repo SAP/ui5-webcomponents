@@ -6,7 +6,6 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
@@ -27,7 +26,6 @@ import {
 	DATETIME_DESCRIPTION,
 	DATETIME_PICKER_DATE_BUTTON,
 	DATETIME_PICKER_TIME_BUTTON,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -265,19 +263,19 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get btnOKLabel() {
-		return DateTimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON as I18nText);
+		return DateTimePicker.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get btnCancelLabel() {
-		return DateTimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON as I18nText);
+		return DateTimePicker.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
 	get btnDateLabel() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON as I18nText);
+		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_DATE_BUTTON);
 	}
 
 	get btnTimeLabel() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON as I18nText);
+		return DateTimePicker.i18nBundle.getText(DATETIME_PICKER_TIME_BUTTON);
 	}
 
 	get showFooter() {
@@ -297,7 +295,7 @@ class DateTimePicker extends DatePicker {
 	}
 
 	get dateAriaDescription() {
-		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION as I18nText);
+		return DateTimePicker.i18nBundle.getText(DATETIME_DESCRIPTION);
 	}
 
 	/**

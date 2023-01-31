@@ -29,13 +29,12 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
-	getEffectiveAriaLabelText,
 	getAssociatedLabelForTexts,
-	observeAssosiatedLabels,
-	disposeAssosiatedLabelsObservers,
+	getAllAccessibleNameRefTexts,
+	registerUI5Element,
+	unregisterUI5Element,
 } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -74,7 +73,6 @@ import {
 	INPUT_SUGGESTIONS_ONE_HIT,
 	INPUT_SUGGESTIONS_MORE_HITS,
 	INPUT_SUGGESTIONS_NO_HIT,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -529,11 +527,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_inputIconFocused!: boolean;
 
 	/**
-	 * Constantly updated value of texts collected from the assosiated labels
+	 * Constantly updated value of texts collected from the associated labels
 	 * @private
 	 */
 	@property({ type: String, noAttribute: true })
-	_assosiatedLabelsTexts!: string;
+	_associatedLabelsTexts!: string;
 
 	/**
 	 * Constantly updated value of texts collected from the accessibleNameRef elements
@@ -706,12 +704,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
-		observeAssosiatedLabels(this, this._updateAssosiatedLabelsTexts.bind(this), ["accessibleNameRef", "accessibleName"]);
+		registerUI5Element(this, this._updateAssosiatedLabelsTexts.bind(this), ["accessibleNameRef"]);
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
-		disposeAssosiatedLabelsObservers(this);
+		unregisterUI5Element(this);
 	}
 
 	onBeforeRendering() {
@@ -1177,8 +1175,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_updateAssosiatedLabelsTexts() {
-		this._assosiatedLabelsTexts = getAssociatedLabelForTexts(this) ?? "";
-		this._accessibleLabelsRefTexts = getEffectiveAriaLabelText(this) ?? "";
+		this._associatedLabelsTexts = getAssociatedLabelForTexts(this) ?? "";
+		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this) ?? "";
 	}
 
 	_closeRespPopover() {
@@ -1456,19 +1454,19 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get valueStateTypeMappings() {
 		return {
-			"Success": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS as I18nText),
-			"Information": Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION as I18nText),
-			"Error": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR as I18nText),
-			"Warning": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING as I18nText),
+			"Success": Input.i18nBundle.getText(VALUE_STATE_TYPE_SUCCESS),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
 	}
 
 	valueStateTextMappings() {
 		return {
-			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS as I18nText),
-			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION as I18nText),
-			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR as I18nText),
-			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING as I18nText),
+			"Success": Input.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": Input.i18nBundle.getText(VALUE_STATE_INFORMATION),
+			"Error": Input.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": Input.i18nBundle.getText(VALUE_STATE_WARNING),
 		};
 	}
 
@@ -1487,7 +1485,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get _headerTitleText() {
-		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE as I18nText);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get inputType() {
@@ -1511,7 +1509,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
 		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
-		return {
+		const info = {
 			"input": {
 				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
 				"ariaDescribedBy": ariaDescribedBy || undefined,
@@ -1522,9 +1520,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this) || this._assosiatedLabelsTexts,
+				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts,
 			},
 		};
+		return info;
 	}
 
 	get nativeInputAttributes() {
@@ -1628,20 +1627,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	get suggestionsText() {
-		return Input.i18nBundle.getText(INPUT_SUGGESTIONS as I18nText);
+		return Input.i18nBundle.getText(INPUT_SUGGESTIONS);
 	}
 
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions!.isOpened())) {
 			switch (this.suggestionsTexts.length) {
 			case 0:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT as I18nText);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
 
 			case 1:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT as I18nText);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
 
 			default:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS as I18nText, this.suggestionsTexts.length);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
 			}
 		}
 

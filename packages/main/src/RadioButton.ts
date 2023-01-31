@@ -9,7 +9,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
@@ -35,7 +34,6 @@ import {
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -496,13 +494,13 @@ class RadioButton extends UI5Element implements IFormElement {
 	get valueStateText() {
 		switch (this.valueState) {
 		case ValueState.Error:
-			return RadioButton.i18nBundle.getText(VALUE_STATE_ERROR as I18nText);
+			return RadioButton.i18nBundle.getText(VALUE_STATE_ERROR);
 		case ValueState.Warning:
-			return RadioButton.i18nBundle.getText(VALUE_STATE_WARNING as I18nText);
+			return RadioButton.i18nBundle.getText(VALUE_STATE_WARNING);
 		case ValueState.Success:
-			return RadioButton.i18nBundle.getText(VALUE_STATE_SUCCESS as I18nText);
+			return RadioButton.i18nBundle.getText(VALUE_STATE_SUCCESS);
 		case ValueState.Information:
-			return RadioButton.i18nBundle.getText(VALUE_STATE_INFORMATION as I18nText);
+			return RadioButton.i18nBundle.getText(VALUE_STATE_INFORMATION);
 		default:
 			return "";
 		}
