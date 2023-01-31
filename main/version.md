@@ -1,5 +1,5 @@
-commit d0055cabec9ca6c8d2036a1f84a0e9074941634f
+commit c2e9525f1bfa4d8ca0c24eeb7f642567f5573634
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jan 31 19:04:01 2023 +0200
+Date:   Tue Jan 31 21:28:45 2023 +0200
 
-    chore: add action for release on pushing tag
+    chore: update workflow for release custom tag
