@@ -1,7 +1,9 @@
-commit 4c88da6bdb1c2ed95ffa619f879d9a71900c797b
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Sat Jan 28 11:44:13 2023 +0200
+commit 491f01ee0132d6be72c42341e7e3c5a883f6f044
+Author: PetyaMarkovaBogdanova <petya.markova-bogdanova@sap.com>
+Date:   Tue Jan 31 11:16:42 2023 +0200
 
-    chore: change default release from patch to auto
+    fix(ui5-avatar-group):Chrome offsetParent precise calculation aligned (#6368)
     
-    Previously "patch" was the default release type, now it's "auto detected" by default - means lerna will auto detect the commits and perform the required release type
+    * fix(ui5-illustrated-message): resize fixed
+    
+    * fix(ui5-avatar-group): chrome calc offsetleft fix

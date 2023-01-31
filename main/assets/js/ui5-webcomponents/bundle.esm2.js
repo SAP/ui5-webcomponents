@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 4,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1674899119
+  buildTime: 1675156666
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -16268,13 +16268,9 @@ class AvatarGroup extends UI5Element {
     const button = this._customOverflowButton ? this._customOverflowButton : this._overflowButton;
     if (this._isGroup) {
       let item = this.items[1];
-      let ltrEffectiveWidth;
+      const ltrEffectiveWidth = item.offsetLeft - this.offsetLeft;
       if (!item || item.hidden) {
         item = button;
-      }
-      ltrEffectiveWidth = item.offsetLeft;
-      if (!isChrome()) {
-        ltrEffectiveWidth = item.offsetLeft - this.offsetLeft;
       }
       return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : ltrEffectiveWidth;
     }
@@ -16369,13 +16365,9 @@ class AvatarGroup extends UI5Element {
   }
   _getWidthToItem(item) {
     const isRTL = this.effectiveDir === "rtl";
-    let ltrWidthToItem;
+    const ltrWidthToItem = item.offsetLeft - this.offsetLeft;
     if (isRTL) {
       return item.offsetParent.offsetWidth - item.offsetLeft - item.offsetWidth;
-    }
-    ltrWidthToItem = item.offsetLeft;
-    if (!isChrome()) {
-      ltrWidthToItem = item.offsetLeft - this.offsetLeft;
     }
     return ltrWidthToItem;
   }
