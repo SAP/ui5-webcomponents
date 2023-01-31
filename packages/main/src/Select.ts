@@ -49,7 +49,6 @@ import {
 	SELECT_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Option from "./Option.js";
-import type { IOption } from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Popover from "./Popover.js";
@@ -72,6 +71,18 @@ import type ListItemBase from "./ListItemBase.js";
 
 type SelectChangeEventDetail = {
 	selectedOption: Option,
+}
+
+interface IOption extends UI5Element {
+	selected: boolean,
+	_focused: boolean,
+	icon?: string | undefined,
+	value: string,
+	textContent: string | null,
+	title: string,
+	additionalText: string,
+	id: string,
+	stableDomRef: string,
 }
 
 /**
@@ -886,4 +897,5 @@ Select.define();
 export default Select;
 export type {
 	SelectChangeEventDetail,
+	IOption,
 };
