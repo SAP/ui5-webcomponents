@@ -13,7 +13,7 @@ import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import ItemNavigation, { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import {
 	isSpace,
 	isEnter,
@@ -37,6 +37,7 @@ import {
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
+import type Tab from "./Tab.js";
 import type { ClickEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -81,17 +82,17 @@ interface ITab extends UI5Element {
 	_mixedMode?: boolean;
 	_posinset?: number;
 	_setsize?: number;
-	_realTab?: ITab;
+	_realTab?: Tab;
 	_isTopLevelTab?: boolean;
 	_style?: Record<string, any>;
 }
 
 interface TabContainerExpandButton extends Button {
-	tab: ITab;
+	tab: Tab;
 }
 
 interface TabContainerTabInOverflow extends CustomListItem {
-	_realTab: ITab;
+	_realTab: Tab;
 }
 
 /**
@@ -312,7 +313,7 @@ class TabContainer extends UI5Element {
 	mediaRange!: string;
 
 	@property({ type: Object })
-	_selectedTab!: ITab;
+	_selectedTab!: Tab;
 
 	@property({ type: Boolean, noAttribute: true })
 	_animationRunning!: boolean;
@@ -429,12 +430,12 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected tab
-		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
+		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected) as Array<Tab>;
 		if (selectedTabs.length) {
 			this._selectedTab._selected = false;
 			this._selectedTab = selectedTabs[0];
 		} else {
-			this._selectedTab = this._allItemsAndSubItems[0];
+			this._selectedTab = this._allItemsAndSubItems[0] as Tab;
 			this._selectedTab._selected = true;
 		}
 
@@ -458,7 +459,7 @@ class TabContainer extends UI5Element {
 
 		if (!this.shadowRoot!.contains(document.activeElement)) {
 			const focusStart = this._getRootTab(this._selectedTab);
-			this._itemNavigation.setCurrentItem(focusStart as ITabbable);
+			this._itemNavigation.setCurrentItem(focusStart);
 		}
 	}
 
@@ -510,13 +511,13 @@ class TabContainer extends UI5Element {
 		const tab = getTab(e.target as HTMLElement);
 
 		if (tab) {
-			this._itemNavigation.setCurrentItem(tab._realTab as ITabbable);
+			this._itemNavigation.setCurrentItem(tab._realTab);
 		}
 	}
 
 	async _onTabStripClick(e: Event) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab!.disabled) {
+		if (!tab || tab._realTab.disabled) {
 			return;
 		}
 
@@ -528,8 +529,8 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (!tab._realTab!._hasOwnContent && tab._realTab!.tabs!.length) {
-			this._overflowItems = tab._realTab!.subTabs!;
+		if (!tab._realTab._hasOwnContent && tab._realTab.tabs.length) {
+			this._overflowItems = tab._realTab.subTabs;
 			this._addStyleIndent(this._overflowItems);
 
 			this.responsivePopover = await this._respPopover();
@@ -539,7 +540,7 @@ class TabContainer extends UI5Element {
 				this._setPopoverInitialFocus();
 			}
 
-			this.responsivePopover.showAt(tab._realTab!.getTabInStripDomRef()!);
+			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef()!);
 			return;
 		}
 
@@ -550,16 +551,16 @@ class TabContainer extends UI5Element {
 		e.stopPropagation();
 		e.preventDefault();
 
-		let button = <HTMLElement>e.target!;
-		let tabInstance = (<TabContainerExpandButton>button).tab;
+		let button = e.target as HTMLElement;
+		let tabInstance = (button as TabContainerExpandButton).tab;
 
 		if (tabInstance) {
 			tabInstance.focus({ focusVisible: true } as FocusOptions);
 		}
 
-		if (e.type === "keydown" && !(<ITab>e.target!)._realTab!.isSingleClickArea) {
-			button = (<ITab>e.target)!.querySelectorAll<HTMLElement>(".ui5-tab-expand-button")[0];
-			tabInstance = (<ITab>e.target)!._realTab!;
+		if (e.type === "keydown" && !(e.target as Tab)._realTab.isSingleClickArea) {
+			button = (e.target as Tab).querySelectorAll<HTMLElement>(".ui5-tab-expand-button")[0];
+			tabInstance = (e.target as Tab)._realTab;
 		}
 
 		// if clicked between the expand button and the tab
@@ -568,7 +569,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		this._overflowItems = tabInstance.subTabs!;
+		this._overflowItems = tabInstance.subTabs;
 		this._addStyleIndent(this._overflowItems);
 
 		this.responsivePopover = await this._respPopover();
@@ -599,12 +600,12 @@ class TabContainer extends UI5Element {
 
 	_onTabStripKeyDown(e: KeyboardEvent) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab!.disabled) {
+		if (!tab || tab._realTab.disabled) {
 			return;
 		}
 
 		if (isEnter(e)) {
-			if (tab._realTab!.isSingleClickArea) {
+			if (tab._realTab.isSingleClickArea) {
 				this._onTabStripClick(e);
 			} else {
 				this._onHeaderItemSelect(tab);
@@ -616,10 +617,10 @@ class TabContainer extends UI5Element {
 		}
 
 		if (isDown(e) || isUp(e)) {
-			if (tab._realTab!.requiresExpandButton) {
+			if (tab._realTab.requiresExpandButton) {
 				this._onTabExpandButtonClick(e);
 			}
-			if (tab._realTab!.isSingleClickArea) {
+			if (tab._realTab.isSingleClickArea) {
 				this._onTabStripClick(e);
 			}
 		}
@@ -627,13 +628,13 @@ class TabContainer extends UI5Element {
 
 	_onTabStripKeyUp(e: KeyboardEvent) {
 		const tab = getTab(e.target as HTMLElement);
-		if (!tab || tab._realTab!.disabled) {
+		if (!tab || tab._realTab.disabled) {
 			return;
 		}
 
 		if (isSpace(e)) {
 			e.preventDefault();
-			if (tab._realTab!.isSingleClickArea) {
+			if (tab._realTab.isSingleClickArea) {
 				this._onTabStripClick(e);
 			} else {
 				this._onHeaderItemSelect(tab);
@@ -701,7 +702,7 @@ class TabContainer extends UI5Element {
 	_onItemSelect(selectedTabId: string) {
 		const previousTab = this._selectedTab;
 		const selectedTabIndex = this._allItemsAndSubItems!.findIndex(item => item.__id === selectedTabId);
-		const selectedTab = this._allItemsAndSubItems![selectedTabIndex];
+		const selectedTab = this._allItemsAndSubItems![selectedTabIndex] as Tab;
 
 		const selectionSuccessful = this.selectTab(selectedTab, selectedTabIndex);
 		if (!selectionSuccessful) {
@@ -729,7 +730,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	async toggleAnimated(selectedTab: ITab, previousTab: ITab) {
+	async toggleAnimated(selectedTab: Tab, previousTab: Tab) {
 		const content = this.shadowRoot!.querySelector<HTMLElement>(".ui5-tc__content")!;
 		let animationPromise = null;
 
@@ -750,7 +751,7 @@ class TabContainer extends UI5Element {
 		this._animationRunning = false;
 	}
 
-	toggle(selectedTab: ITab, previousTab: ITab) {
+	toggle(selectedTab: Tab, previousTab: Tab) {
 		if (selectedTab === previousTab) {
 			this.collapsed = !this.collapsed;
 		} else {
@@ -767,7 +768,7 @@ class TabContainer extends UI5Element {
 	 * @param {number} selectedTabIndex selected tab index for an array containing all tabs and sub tabs. <b>Note:</b> Use the method <code>allTabs</code> to get this array.
 	 * @returns {boolean} true if the tab selection is successful, false if it was prevented
 	 */
-	selectTab(selectedTab: ITab, selectedTabIndex: number) {
+	selectTab(selectedTab: Tab, selectedTabIndex: number) {
 		if (!this.fireEvent("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
 			return false;
 		}
@@ -888,15 +889,16 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_getRootTab(tab: HTMLElement) {
+	_getRootTab(tab: Tab) {
 		while (tab.hasAttribute("ui5-tab")) {
 			if (tab.parentElement!.hasAttribute("ui5-tabcontainer")) {
 				break;
 			}
-			tab = tab.parentElement!;
+
+			tab = tab.parentElement as Tab;
 		}
 
-		return <ITab>tab;
+		return tab;
 	}
 
 	_updateEndOverflow(itemsDomRefs: Array<HTMLElement>) {
@@ -1163,8 +1165,8 @@ class TabContainer extends UI5Element {
 		return this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-header`)!;
 	}
 
-	_getTabs() {
-		return this.items.filter(item => !item.isSeparator);
+	_getTabs(): Array<Tab> {
+		return this.items.filter((item): item is Tab => !item.isSeparator);
 	}
 
 	_getTabStrip() {
@@ -1288,7 +1290,7 @@ const isTabDiv = (el: HTMLElement) => el.localName === "div" && el.getAttribute(
 const getTab = (el: HTMLElement | null) => {
 	while (el) {
 		if (isTabDiv(el)) {
-			return <ITab>el;
+			return el as Tab;
 		}
 
 		el = el.parentElement;
