@@ -1,5 +1,5 @@
-commit cf56f1308160b0c10a0f366ef5e4df90036c4161
+commit 8b3c13b24dd81594cf384a4b8ee87e8e63577241
 Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Tue Jan 31 15:09:10 2023 +0200
+Date:   Tue Jan 31 15:13:26 2023 +0200
 
-    fix(framework): find correct focusable element (#6388)
+    chore: generate TypeScript types for component styles (#6378)
