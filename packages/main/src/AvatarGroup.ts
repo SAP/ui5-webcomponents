@@ -3,11 +3,21 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
 import {
 	isEnter,
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import Button from "./Button.js";
+import type Avatar from "./Avatar";
+import AvatarSize from "./types/AvatarSize.js";
+import AvatarGroupType from "./types/AvatarGroupType.js";
+import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 import {
 	AVATAR_GROUP_DISPLAYED_HIDDEN_LABEL,
@@ -17,15 +27,11 @@ import {
 	AVATAR_GROUP_MOVE,
 } from "./generated/i18n/i18n-defaults.js";
 
-// Template
-import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
 // Styles
 import AvatarGroupCss from "./generated/themes/AvatarGroup.css.js";
 
-import Button from "./Button.js";
-import AvatarSize from "./types/AvatarSize.js";
-import AvatarGroupType from "./types/AvatarGroupType.js";
-import AvatarColorScheme from "./types/AvatarColorScheme.js";
+// Template
+import AvatarGroupTemplate from "./generated/templates/AvatarGroupTemplate.lit.js";
 
 const OVERFLOW_BTN_CLASS = "ui5-avatar-group-overflow-btn";
 const AVATAR_GROUP_OVERFLOW_BTN_SELECTOR = `.${OVERFLOW_BTN_CLASS}`;
@@ -54,110 +60,9 @@ const offsets = {
 	},
 };
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-avatar-group",
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.main.AvatarGroup.prototype */  {
-
-		/**
-	 	 * Defines the mode of the <code>AvatarGroup</code>.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Group</code></li>
-		 * <li><code>Individual</code></li>
-		 * </ul>
-		 * @type {sap.ui.webc.main.types.AvatarGroupType}
-		 * @defaultValue "Group"
-		 * @public
-		 */
-		type: {
-			type: AvatarGroupType,
-			defaultValue: AvatarGroupType.Group,
-		},
-
-		/**
-		 * Defines the aria-haspopup value of the component on:
-		 * <br><br>
-		 * <ul>
-		 * <li> the whole container when <code>type</code> property is <code>Group</code></li>
-		 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
-		 * </ul>
-		 * <br><br>
-		 * @type String
-		 * @since 1.0.0-rc.15
-		 * @protected
-		 */
-		ariaHaspopup: {
-			type: String,
-		},
-
-		/**
-		 * @private
-		 */
-		_overflowButtonText: {
-			type: String,
-			noAttribute: true,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.AvatarGroup.prototype */ {
-		/**
-		 * Defines the items of the component. Use the <code>ui5-avatar</code> component as an item.
-		 * <br><br>
-		 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
-		 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
-		 * as the built-in overflow action has "Circle" shape.
-		 * @type {sap.ui.webc.main.IAvatar[]}
-		 * @slot items
-		 * @public
-		 */
-		"default": {
-			type: HTMLElement,
-			propertyName: "items",
-		},
-		/**
-		 * Defines the overflow button of the component.
-		 * <b>Note:</b> We recommend using the <code>ui5-button</code> component.
-		 * <br><br>
-		 * <b>Note:</b> If this slot is not used, the component will
-		 * display the built-in overflow button.
-		 * @type {HTMLElement}
-		 * @slot overflowButton
-		 * @public
-		 * @since 1.0.0-rc.13
-		 */
-		 overflowButton: {
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.AvatarGroup.prototype */ {
-		/**
-		* Fired when the component is activated either with a
-		* click/tap or by using the Enter or Space key.
-		* @param {HTMLElement} targetRef The DOM ref of the clicked item.
-		* @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
-		* @event
-		* @public
-		* @since 1.0.0-rc.11
-		*/
-		click: {
-			detail: {
-				targetRef: { type: HTMLElement },
-				overflowButtonClicked: { type: Boolean },
-			},
-		},
-		/**
-		* Fired when the count of visible <code>ui5-avatar</code> elements in the
-		* component has changed
-		* @event
-		* @public
-		* @since 1.0.0-rc.13
-		*/
-		overflow: {},
-	},
+type AvatarGroupClickEventDetail = {
+	targetRef: HTMLElement,
+	overflowButtonClicked: boolean,
 };
 
 /**
@@ -233,23 +138,118 @@ const metadata = {
  * @since 1.0.0-rc.11
  * @public
  */
+
+@customElement("ui5-avatar-group")
+
+/**
+* Fired when the component is activated either with a
+* click/tap or by using the Enter or Space key.
+* @param {HTMLElement} targetRef The DOM ref of the clicked item.
+* @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
+* @event sap.ui.webc.main.AvatarGroup#click
+* @public
+* @since 1.0.0-rc.11
+*/
+@event("click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+		overflowButtonClicked: { type: Boolean },
+	},
+})
+
+/**
+* Fired when the count of visible <code>ui5-avatar</code> elements in the
+* component has changed
+* @event sap.ui.webc.main.AvatarGroup#overflow
+* @public
+* @since 1.0.0-rc.13
+*/
+@event("overflow")
+
 class AvatarGroup extends UI5Element {
+	/**
+	 * Defines the mode of the <code>AvatarGroup</code>.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Group</code></li>
+	 * <li><code>Individual</code></li>
+	 * </ul>
+	 * @type {sap.ui.webc.main.types.AvatarGroupType}
+	 * @name sap.ui.webc.main.AvatarGroup.prototype.type
+	 * @defaultValue "Group"
+	 * @public
+	 */
+	@property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
+	type!: AvatarGroupType
+
+	/**
+	 * Defines the aria-haspopup value of the component on:
+	 * <br><br>
+	 * <ul>
+	 * <li> the whole container when <code>type</code> property is <code>Group</code></li>
+	 * <li> the default "More" overflow button when <code>type</code> is <code>Individual</code></li>
+	 * </ul>
+	 * <br><br>
+	 * @type String
+	 * @name sap.ui.webc.main.AvatarGroup.prototype.ariaHaspopup
+	 * @since 1.0.0-rc.15
+	 * @protected
+	 */
+	@property()
+	ariaHaspopup!: string
+
+	/**
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	_overflowButtonText!: string
+
+	/**
+	 * Defines the items of the component. Use the <code>ui5-avatar</code> component as an item.
+	 * <br><br>
+	 * <b>Note:</b> The UX guidelines recommends using avatars with "Circle" shape.
+	 * Moreover, if you use avatars with "Square" shape, there will be visual inconsistency
+	 * as the built-in overflow action has "Circle" shape.
+	 * @type {sap.ui.webc.main.IAvatar[]}
+	 * @name sap.ui.webc.main.AvatarGroup.prototype.default
+	 * @slot items
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	items!: Array<Avatar>;
+
+	/**
+	 * Defines the overflow button of the component.
+	 * <b>Note:</b> We recommend using the <code>ui5-button</code> component.
+	 * <br><br>
+	 * <b>Note:</b> If this slot is not used, the component will
+	 * display the built-in overflow button.
+	 * @type {HTMLElement}
+	 * @name sap.ui.webc.main.AvatarGroup.prototype.overflowButton
+	 * @slot overflowButton
+	 * @public
+	 * @since 1.0.0-rc.13
+	 */
+	@slot()
+	overflowButton!: Array<Button>;
+
+	static i18nBundle: I18nBundle;
+	_onResizeHandler: () => void;
+	// _itemNavigation: ItemNavigation;
+	_colorIndex: number;
+	_hiddenItems: number;
+	_itemNavigation: ItemNavigation;
+
 	constructor() {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => {
-				return this._isGroup ? [] : this.items.slice(0, this._hiddenStartIndex);
-			},
+			getItemsCallback: () => this.items,
 		});
-
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
-	}
-
-	static get metadata() {
-		return metadata;
 	}
 
 	static get render() {
@@ -360,7 +360,7 @@ class AvatarGroup extends UI5Element {
 	}
 
 	get _overflowButton() {
-		return this.shadowRoot.querySelector(AVATAR_GROUP_OVERFLOW_BTN_SELECTOR);
+		return this.shadowRoot!.querySelector<Button>(AVATAR_GROUP_OVERFLOW_BTN_SELECTOR);
 	}
 
 	/**
@@ -374,8 +374,13 @@ class AvatarGroup extends UI5Element {
 	get _overflowButtonEffectiveWidth() {
 		const button = this._customOverflowButton ? this._customOverflowButton : this._overflowButton;
 		// if in "Group" mode overflow button size is equal to the offset from second item
+
+		if (!button) {
+			return 0;
+		}
+
 		if (this._isGroup) {
-			let item = this.items[1];
+			let item: HTMLElement = this.items[1];
 			const ltrEffectiveWidth = item.offsetLeft - this.offsetLeft;
 
 			// in some cases when second avatar is overflowed the offset of the button is the right one
@@ -386,7 +391,7 @@ class AvatarGroup extends UI5Element {
 			return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : ltrEffectiveWidth;
 		}
 
-		return button.offsetWidth;
+		return button ? button.offsetWidth : 0;
 	}
 
 	get firstAvatarSize() {
@@ -430,53 +435,55 @@ class AvatarGroup extends UI5Element {
 		this._overflowItems();
 	}
 
-	_onkeydown(event) {
+	_onkeydown(e: KeyboardEvent) {
 		// when type is "Individual" the ui5-avatar and ui5-button both
 		// fire "click" event when SPACE or ENTER are pressed and
 		// AvatarGroup "click" is fired in their handlers (_onClick, _onUI5Click).
 		if (this._isGroup) {
-			if (isEnter(event)) {
-				this._fireGroupEvent(event.target);
-			} else if (isSpace(event)) {
+			if (isEnter(e)) {
+				this._fireGroupEvent(e.target as HTMLElement);
+			} else if (isSpace(e)) {
 				// prevent scrolling
-				event.preventDefault();
+				e.preventDefault();
 			}
 		}
 	}
 
-	_onkeyup(event) {
-		if (!event.shiftKey && isSpace(event) && this._isGroup) {
-			this._fireGroupEvent(event.target);
-			event.preventDefault();
+	_onkeyup(e: KeyboardEvent) {
+		if (!e.shiftKey && isSpace(e) && this._isGroup) {
+			this._fireGroupEvent(e.target as HTMLElement);
+			e.preventDefault();
 		}
 	}
 
-	_fireGroupEvent(targetRef) {
+	_fireGroupEvent(targetRef: HTMLElement) {
 		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
-		this.fireEvent("click", {
+		this.fireEvent<AvatarGroupClickEventDetail>("click", {
 			targetRef,
 			overflowButtonClicked: isOverflowButtonClicked,
 		});
 	}
 
-	_onClick(event) {
+	_onClick(e: MouseEvent) {
+		const target = e.target as HTMLElement;
 		// no matter the value of noConflict, the ui5-button and the group container (div) always fire a native click event
-		const isButton = event.target.hasAttribute("ui5-button");
-		event.stopPropagation();
+		const isButton = target.hasAttribute("ui5-button");
+		e.stopPropagation();
 
 		if (this._isGroup || isButton) {
-			this._fireGroupEvent(event.target);
+			this._fireGroupEvent(target);
 		}
 	}
 
-	_onUI5Click(event) {
+	_onUI5Click(e: MouseEvent) {
+		const target = e.target as HTMLElement;
 		// when noConflict=true only ui5-avatar will fire ui5-click event
-		const isAvatar = event.target.hasAttribute("ui5-avatar");
-		event.stopPropagation();
+		const isAvatar = target.hasAttribute("ui5-avatar");
+		e.stopPropagation();
 
 		if (isAvatar) {
-			this._fireGroupEvent(event.target);
+			this._fireGroupEvent(target as HTMLAnchorElement);
 		}
 	}
 
@@ -495,20 +502,23 @@ class AvatarGroup extends UI5Element {
 
 			if (!avatar.getAttribute("_color-scheme")) {
 				// AvatarGroup respects colors set to ui5-avatar
-				avatar.setAttribute("_color-scheme", AvatarColorScheme[`Accent${colorIndex}`]);
+				avatar.setAttribute("_color-scheme", AvatarColorScheme[`Accent${colorIndex}` as keyof typeof AvatarColorScheme]);
 			}
 
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
 			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
 				// based on RTL margin left or right is set to avatars
-				avatar.style[`margin-${RTL ? "left" : "right"}`] = offsets[avatar._effectiveSize][this.type];
+				if (RTL) {
+					avatar.style.marginLeft = offsets[avatar._effectiveSize][this.type];
+				} else {
+					avatar.style.marginRight = offsets[avatar._effectiveSize][this.type];
+				}
 			}
 		});
 	}
 
-	_onfocusin(event) {
-		const target = event.target;
-		this._itemNavigation.setCurrentItem(target);
+	_onfocusin(e: FocusEvent) {
+		this._itemNavigation.setCurrentItem(e.target as Avatar);
 	}
 
 	/**
@@ -517,14 +527,21 @@ class AvatarGroup extends UI5Element {
 	 * @private
 	 * @param {HTMLElement} item
 	 */
-	_getWidthToItem(item) {
+	_getWidthToItem(item: HTMLElement) {
 		const isRTL = this.effectiveDir === "rtl";
 		const ltrWidthToItem = item.offsetLeft - this.offsetLeft;
 
 		if (isRTL) {
+			const itemOffsetParent = item.offsetParent as HTMLElement;
+
 			// in RTL the total width is equal to difference of the parent container width and
 			// how much is the item offset to the left minus its offsetWidth
-			return item.offsetParent.offsetWidth - item.offsetLeft - item.offsetWidth;
+
+			if (!itemOffsetParent) {
+				return 0;
+			}
+
+			return itemOffsetParent.offsetWidth - item.offsetLeft - item.offsetWidth;
 		}
 
 		return ltrWidthToItem;
@@ -543,7 +560,7 @@ class AvatarGroup extends UI5Element {
 		let hiddenItems = 0;
 
 		for (let index = 0; index < this._itemsCount; index++) {
-			const item = this.items[index];
+			const item: HTMLElement = this.items[index];
 
 			// show item to determine if it will fit the new container size
 			item.hidden = false;
@@ -574,7 +591,7 @@ class AvatarGroup extends UI5Element {
 		return this._colorIndex;
 	}
 
-	_setHiddenItems(hiddenItems) {
+	_setHiddenItems(hiddenItems: number) {
 		const shouldFireEvent = this._hiddenItems !== hiddenItems;
 
 		this._hiddenItems = hiddenItems;
@@ -602,3 +619,6 @@ class AvatarGroup extends UI5Element {
 AvatarGroup.define();
 
 export default AvatarGroup;
+export type {
+	AvatarGroupClickEventDetail,
+};
