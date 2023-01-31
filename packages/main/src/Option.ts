@@ -120,8 +120,6 @@ class Option extends UI5Element implements IOption {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: Node, "default": true })
-	text!: Array<Node>;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
