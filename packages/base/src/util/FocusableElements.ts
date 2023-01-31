@@ -30,12 +30,15 @@ const isElemFocusable = (el: HTMLElement) => {
 
 const findFocusableElement = async (container: HTMLElement, forward: boolean, startFromContainer?: boolean): FocusableElementPromise => {
 	let child: HTMLElement | undefined;
+	let assignedElements;
+	let currentIndex = -1;
 
 	if (container.shadowRoot) {
 		child = forward ? container.shadowRoot.firstChild as HTMLElement : container.shadowRoot.lastChild as HTMLElement;
 	} else if (container instanceof HTMLSlotElement && container.assignedNodes()) {
-		const assignedElements = container.assignedNodes();
-		child = forward ? assignedElements[0] as HTMLElement : assignedElements[assignedElements.length - 1] as HTMLElement;
+		assignedElements = container.assignedNodes();
+		currentIndex = forward ? 0 : assignedElements.length - 1;
+		child = assignedElements[currentIndex] as HTMLElement;
 	} else if (startFromContainer) {
 		child = container;
 	} else {
@@ -69,6 +72,13 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 		}
 
 		child = forward ? originalChild.nextSibling as HTMLElement : originalChild.previousSibling as HTMLElement;
+
+		// If the child element is not part of the currently assigned element,
+		// we have to check the next element assigned to the slot or continue with the next sibling of the slot,
+		// otherwise, the nextSibling is the next element inside the light DOM
+		if (assignedElements && !assignedElements[currentIndex].contains(child)) {
+			child = assignedElements[++currentIndex] as HTMLElement;
+		}
 	}
 
 	/* eslint-enable no-await-in-loop */
