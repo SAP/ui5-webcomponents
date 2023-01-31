@@ -227,7 +227,7 @@ class TabContainer extends UI5Element {
 	 * @defaultvalue "Standard"
 	 * @public
 	 */
-	@property({ defaultValue: TabLayout.Standard })
+	@property({ type: TabLayout, defaultValue: TabLayout.Standard })
 	tabLayout!: TabLayout;
 
 	/**

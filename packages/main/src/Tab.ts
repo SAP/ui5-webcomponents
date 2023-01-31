@@ -182,7 +182,7 @@ class Tab extends UI5Element implements ITab {
 			slots: false,
 		},
 	})
-	subTabs!: Array<Tab>
+	subTabs!: Array<ITab>
 
 	_isInline?: boolean;
 	_mixedMode?: boolean;
@@ -330,8 +330,8 @@ class Tab extends UI5Element implements ITab {
 		return !this.effectiveSelected;
 	}
 
-	get tabs() {
-		return this.subTabs.filter(tab => !tab.isSeparator);
+	get tabs(): Array<Tab> {
+		return this.subTabs.filter((tab): tab is Tab => !tab.isSeparator);
 	}
 
 	get ariaLabelledBy() {
