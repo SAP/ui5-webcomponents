@@ -15,10 +15,18 @@
 	"version": "1.9.3",
 	"command": {
 		"publish": {
-			"conventionalCommits": true
+			"allowBranch": "*",
+			"conventionalCommits": true,
+			"verifyAccess": false,
+			"preid": "rc",
+			"preDistTag": "next"
 		},
 		"version": {
-			"message": "chore(release): publish %s"
+			"allowBranch": "*",
+			"message": "chore(release): publish %s",
+			"conventionalCommits": true,
+			"verifyAccess": false,
+			"preid": "rc"
 		}
 	},
 	"npmClient": "yarn",
