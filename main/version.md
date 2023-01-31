@@ -1,8 +1,7 @@
-commit d4fef1f28bdb863bb19967357af34c0d5766b54c
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Tue Jan 31 12:48:15 2023 +0200
+commit 10b4417e8ea4229b6bd2ef5b4957bbf00d155d39
+Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
+Date:   Tue Jan 31 14:44:31 2023 +0200
 
-    refactor(ui5-select): migrate to TypeScript (#6362)
+    feat(ui5-barcode-scanner-dialog): migrated to Typescript (#6338)
     
-    * refactor(ui5-select): migrate to TypeScript
-    Part of #4337
+    Related to: https://github.com/SAP/ui5-webcomponents/issues/4337
