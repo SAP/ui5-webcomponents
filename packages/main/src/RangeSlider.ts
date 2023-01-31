@@ -222,6 +222,8 @@ class RangeSlider extends SliderBase {
 
 			this._swapValues();
 			this._setAffectedValue(affectedValue);
+			this.update(affectedValue, this.startValue, this.endValue);
+
 		}
 
 		if (!this.isCurrentStateOutdated()) {
@@ -797,8 +799,6 @@ class RangeSlider extends SliderBase {
 			this.endValue = this.startValue;
 			this.startValue = prevEndValue;
 
-			this._setValuesAreReversed();
-			this.focusInnerElement();
 		}
 
 		if (affectedValue === "endValue" && this.endValue < this.startValue) {
@@ -806,11 +806,11 @@ class RangeSlider extends SliderBase {
 			this.startValue = this.endValue;
 			this.endValue = prevStartValue;
 
-			this._setValuesAreReversed();
-			this.focusInnerElement();
 		}
 
+		this._setValuesAreReversed();
 		this._updateHandlesAndRange(this[affectedValue]);
+		this.focusInnerElement();
 		this.syncUIAndState();
 	}
 
