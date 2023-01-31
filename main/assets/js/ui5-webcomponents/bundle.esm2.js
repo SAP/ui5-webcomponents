@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 4,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675169137
+  buildTime: 1675170620
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -3638,11 +3638,14 @@ const isElemFocusable = (el) => {
 };
 const findFocusableElement = async (container, forward, startFromContainer) => {
   let child;
+  let assignedElements;
+  let currentIndex = -1;
   if (container.shadowRoot) {
     child = forward ? container.shadowRoot.firstChild : container.shadowRoot.lastChild;
   } else if (container instanceof HTMLSlotElement && container.assignedNodes()) {
-    const assignedElements = container.assignedNodes();
-    child = forward ? assignedElements[0] : assignedElements[assignedElements.length - 1];
+    assignedElements = container.assignedNodes();
+    currentIndex = forward ? 0 : assignedElements.length - 1;
+    child = assignedElements[currentIndex];
   } else if (startFromContainer) {
     child = container;
   } else {
@@ -3667,6 +3670,9 @@ const findFocusableElement = async (container, forward, startFromContainer) => {
       }
     }
     child = forward ? originalChild.nextSibling : originalChild.previousSibling;
+    if (assignedElements && !assignedElements[currentIndex].contains(child)) {
+      child = assignedElements[++currentIndex];
+    }
   }
   return null;
 };
