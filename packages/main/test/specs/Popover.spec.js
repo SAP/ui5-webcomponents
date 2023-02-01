@@ -357,7 +357,24 @@ describe("Popover general interaction", () => {
 		await iframe.click();
 
 		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
-	})
+	});
+
+	it("Test initial focus when content is provided after the header and footer", async () => {
+		const listContainerItem = await browser.$("#popoverFocusButton");
+		await listContainerItem.scrollIntoView();
+		await listContainerItem.click();
+
+		await browser.waitUntil(async () => {
+			const activeElement = await browser.$(await browser.getActiveElement());
+			return await activeElement.getProperty("id") === "fistButtonInPopover";
+		}, {
+			timeout: 500,
+			timeoutMsg: "the active element must be the button in the content of the popover"
+		});
+
+		await browser.keys("Escape");
+
+	});
 });
 
 describe("Acc", () => {
