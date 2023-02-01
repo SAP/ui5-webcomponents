@@ -132,6 +132,22 @@ interface IOption extends UI5Element {
 		selectedOption: { type: HTMLElement },
 	},
 })
+/**
+ * Fired after the component's dropdown menu opens.
+ *
+ * @event sap.ui.webc.main.Select#open
+ * @public
+ * @native
+ */
+@event("open")
+/**
+ * Fired after the component's dropdown menu closes.
+ *
+ * @event sap.ui.webc.main.Select#close
+ * @public
+ * @native
+ */
+@event("close")
 class Select extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
 
@@ -669,6 +685,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_afterOpen() {
 		this.opened = true;
+		this.fireEvent("open");
 	}
 
 	_afterClose() {
@@ -683,6 +700,7 @@ class Select extends UI5Element implements IFormElement {
 			this._fireChangeEvent(this._filteredItems[this._selectedIndex]);
 			this._lastSelectedOption = this._filteredItems[this._selectedIndex];
 		}
+		this.fireEvent("close");
 	}
 
 	_fireChangeEvent(selectedOption: Option) {
