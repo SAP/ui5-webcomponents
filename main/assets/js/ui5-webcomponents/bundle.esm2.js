@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 4,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675277225
+  buildTime: 1675278818
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";

@@ -1,5 +1,5 @@
-commit 7266f089e33548468ea07418564d04a1c3a9b9e6
+commit 0a34c87a3118e2dee5b6e5379752a8faa64e9a97
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 1 20:46:07 2023 +0200
+Date:   Wed Feb 1 21:12:49 2023 +0200
 
-    chore: test deploy to netlify
+    chore: test deploy on netlify
