@@ -1,7 +1,5 @@
-commit 4d3c546e54bea0238a423c9514aa471ffa4aa52b
-Author: Georgieva <lidiya.georgieva@sap.com>
-Date:   Wed Feb 1 11:35:46 2023 +0200
+commit dcc0eb4f1cb718176a876b14e025eb74d00896df
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Feb 1 12:53:43 2023 +0200
 
-     fix(ui5-dialog, ui5-popover): added tests for initial focus when elements are not provided in the order: header, content, footer (#6373)
-    
-    Issues: #6066
+    chore: update release-custom-tag workflow
