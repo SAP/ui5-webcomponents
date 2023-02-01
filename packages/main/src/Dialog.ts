@@ -51,7 +51,8 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
  * <br><br>
- * The <code>ui5-dialog</code> is modal, which means that user action is required before returning to the parent window is possible.
+ * The <code>ui5-dialog</code> is modal, which means that an user action is required before it is possible to return to the parent window.
+ * To open multiple dialogs, each dialog element should be separate in the markup. This will ensure the correct modal behavior. Avoid nesting dialogs within each other.
  * The content of the <code>ui5-dialog</code> is fully customizable.
  *
  * <h3>Structure</h3>
