@@ -906,6 +906,40 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
 	});
 
+	it("Chave event calling after clear icon is pressed", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#clear-input");
+		const innerInput = await input.shadow$("input");
+		const changeCounter = await $("#clear-input-change-event-count");
+		const inputCounter = await $("#clear-input-input-event-count");
+
+		// type
+		await innerInput.click();
+		await innerInput.keys("a");
+		await changeCounter.click();
+
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
+
+		// press clear icon
+		await clearIcon.click();
+		await changeCounter.click();
+
+		assert.strictEqual(await changeCounter.getText(), "2", "Change event called second time");
+		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
+
+		await innerInput.click();
+		await innerInput.keys("a");
+		await changeCounter.click();
+		await clearIcon.click();
+		await innerInput.keys("a");
+		await changeCounter.click();
+
+
+		assert.strictEqual(await changeCounter.getText(), "3", "Change event called three times");
+		assert.strictEqual(await inputCounter.getText(), "5", "Input event called when value is cleared by clear icon or typed in");
+	});
+
 	it("Setting readonly or disabled hides clear icon", async () => {
 		await browser.url(`test/pages/Input.html`);
 

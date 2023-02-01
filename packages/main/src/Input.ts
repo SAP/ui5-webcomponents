@@ -618,6 +618,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	FormSupport?: typeof FormSupportT;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
+	_focusedAfterClear?: boolean;
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 
@@ -681,6 +682,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._handleResizeBound = this._handleResize.bind(this);
 
 		this._keepInnerValue = false;
+		this._focusedAfterClear = false;
 	}
 
 	onEnterDOM() {
@@ -945,10 +947,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		await this.getInputDOMRef();
 
 		this.focused = true; // invalidating property
-		this.previousValue = this.value;
-		this.valueBeforeItemPreview = this.value;
 
+		if (!this._focusedAfterClear) {
+			this.previousValue = this.value;
+		}
+
+		this.valueBeforeItemPreview = this.value;
 		this._inputIconFocused = !!e.target && e.target === this.querySelector<Icon>("[ui5-icon]");
+		this._focusedAfterClear = false;
 	}
 
 	_onfocusout(e: FocusEvent) {
@@ -977,7 +983,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.open = false;
 		this._clearPopoverFocusAndSelection();
 
-		this.previousValue = "";
+		if (!this._clearIconClicked) {
+			this.previousValue = "";
+		}
+
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
 		this.isTyping = false;
@@ -1020,6 +1029,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
 		if (!this._isPhone) {
 			this.focus();
+			this._focusedAfterClear = true;
 		}
 	}
 
