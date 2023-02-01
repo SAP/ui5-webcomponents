@@ -98,7 +98,7 @@
 
 :host([disabled]) {
 	opacity: var(--sapContent_DisabledOpacity);
-	pointer-events: unset;
+	pointer-events: none;
 	cursor: default;
 }
 
