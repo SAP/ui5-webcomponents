@@ -374,7 +374,7 @@ class Button extends UI5Element implements IFormElement {
 		this.hasIcon = !!this.icon;
 	}
 
-	_onIconClick(e: MouseEvent){
+	_onIconClick(e: MouseEvent) {
 		if (this.disabled) {
 			return e.stopPropagation();
 		}
