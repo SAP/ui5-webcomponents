@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 4,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675248870
+  buildTime: 1675258526
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -14434,7 +14434,7 @@ let Input = Input_1 = class Input2 extends UI5Element {
         this.open = false;
       }
     }
-    if (this._isPhone && !this.suggestionItems.length) {
+    if (this._isPhone && !this.suggestionItems.length && !this.isTypeNumber) {
       innerInput.setSelectionRange(this.value.length, this.value.length);
     }
     if (!itemPressed) {
