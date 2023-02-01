@@ -181,7 +181,7 @@ class AvatarGroup extends UI5Element {
 	 * @public
 	 */
 	@property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
-	type!: AvatarGroupType
+	type!: AvatarGroupType;
 
 	/**
 	 * Defines the aria-haspopup value of the component on:
@@ -197,13 +197,13 @@ class AvatarGroup extends UI5Element {
 	 * @protected
 	 */
 	@property()
-	ariaHaspopup!: string
+	ariaHaspopup!: string;
 
 	/**
 	 * @private
 	 */
 	@property({ noAttribute: true })
-	_overflowButtonText!: string
+	_overflowButtonText!: string;
 
 	/**
 	 * Defines the items of the component. Use the <code>ui5-avatar</code> component as an item.
@@ -236,7 +236,6 @@ class AvatarGroup extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	_onResizeHandler: () => void;
-	// _itemNavigation: ItemNavigation;
 	_colorIndex: number;
 	_hiddenItems: number;
 	_itemNavigation: ItemNavigation;
@@ -245,7 +244,9 @@ class AvatarGroup extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.items,
+			getItemsCallback: () => {
+				return this._isGroup ? [] : this.items.slice(0, this._hiddenStartIndex);
+			},
 		});
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
@@ -391,7 +392,7 @@ class AvatarGroup extends UI5Element {
 			return this.effectiveDir === "rtl" ? this._getWidthToItem(item) : ltrEffectiveWidth;
 		}
 
-		return button ? button.offsetWidth : 0;
+		return button.offsetWidth;
 	}
 
 	get firstAvatarSize() {
@@ -483,7 +484,7 @@ class AvatarGroup extends UI5Element {
 		e.stopPropagation();
 
 		if (isAvatar) {
-			this._fireGroupEvent(target as HTMLAnchorElement);
+			this._fireGroupEvent(target);
 		}
 	}
 
@@ -493,7 +494,6 @@ class AvatarGroup extends UI5Element {
 	 * @private
 	 */
 	_prepareAvatars() {
-		const RTL = this.effectiveDir === "rtl";
 		this._colorIndex = 0;
 
 		this.items.forEach((avatar, index) => {
@@ -507,12 +507,8 @@ class AvatarGroup extends UI5Element {
 
 			// last avatar should not be offset as it breaks the container width and focus styles are no set correctly
 			if (index !== this._itemsCount - 1 || this._customOverflowButton) {
-				// based on RTL margin left or right is set to avatars
-				if (RTL) {
-					avatar.style.marginLeft = offsets[avatar._effectiveSize][this.type];
-				} else {
-					avatar.style.marginRight = offsets[avatar._effectiveSize][this.type];
-				}
+				// based on RTL the browser automatically sets left or right margin to avatars
+				avatar.style.marginInlineEnd = offsets[avatar._effectiveSize][this.type];
 			}
 		});
 	}
@@ -560,7 +556,7 @@ class AvatarGroup extends UI5Element {
 		let hiddenItems = 0;
 
 		for (let index = 0; index < this._itemsCount; index++) {
-			const item: HTMLElement = this.items[index];
+			const item: Avatar = this.items[index];
 
 			// show item to determine if it will fit the new container size
 			item.hidden = false;
