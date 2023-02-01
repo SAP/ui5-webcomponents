@@ -18,7 +18,6 @@ jobs:
       run: |
         yarn install
         yarn build:playground:main_as_admin
-
     - name: Write version.md
       run: git log -1 &>> packages/playground/dist/version.md
 
@@ -35,9 +34,19 @@ jobs:
     needs: deploy
     name: 'Deploy to Netlify'
     steps:
-      - uses: jsmrcaga/action-netlify-deploy@v1.1.0
-        with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NELIFY_ACCESS_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_TO_PROD: true
-          build_directory: "./packages/playground/dist/main"
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+
+    - name: Install and Build
+      run: |
+        yarn install
+        yarn build:playground:main_as_admin
+    - uses: jsmrcaga/action-netlify-deploy@v1.1.0
+      with:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NELIFY_ACCESS_TOKEN }}
+        NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        NETLIFY_DEPLOY_TO_PROD: true
+        build_directory: "./packages/playground/dist/main"
