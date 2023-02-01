@@ -507,6 +507,19 @@
 		<ui5-button id="dialogOverDialog3Btn">Close</ui5-button>
 	</ui5-dialog>
 	<br>
+	<!-- Sample when Dialog is created in order different than "header, content, footer" sequence -->
+	<ui5-button id="dialogFocus">Dialog Focus</ui5-button>
+	<ui5-dialog id="dialogFocus1">
+		<span>Some message</span>
+		<ui5-button id="fistButtonInDialog">Confirm</ui5-button>
+
+		<div slot="header">Header text</div>
+	
+		<div slot="footer" class="dialog-footer">
+			<div style="flex: 1"></div>
+			<ui5-button id="closeDialogFocusButton" design="Emphasized">Close</ui5-button>
+		</div>
+	</ui5-dialog>
 	<br>
 	<div>
 		<ui5-title level="H3">Open Dialog from list</ui5-title>
@@ -696,6 +709,14 @@
 
 		window["dialogOverDialog3Btn"].addEventListener("click", function () {
 			window["dialogOverDialog3"].open = false;
+		});
+
+		window["dialogFocus"].addEventListener("click", function () {
+			window["dialogFocus1"].open = true;
+		});
+
+		window["closeDialogFocusButton"].addEventListener("click", function () {
+			window["dialogFocus1"].close();
 		});
 
 	</script>
