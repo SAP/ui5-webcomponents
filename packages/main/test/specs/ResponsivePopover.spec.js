@@ -69,11 +69,19 @@ describe("Acc", () => {
 	});
 
 	it("tests accessible-role", async () => {
-		const btnOpenPopover = await browser.$("#btnOpenAccRole");
+		const respPopover = await browser.$("#respPopover");
 
-		await btnOpenPopover.click();
+		assert.strictEqual(await respPopover.shadow$(".ui5-popup-root").getAttribute("role"), "dialog","The default role is applied.");
+		assert.strictEqual(await respPopover.shadow$(".ui5-popup-root").getAttribute("aria-modal"), "true", "aria-modal=true is applied.");
 
-		const popover = await browser.$("#respPopoverRole");
-		assert.ok(await popover.shadow$("[role=testRole]"), "The correct custom role is applied.");
+		const respPopoverAlertRole = await browser.$("#rPAlertRole");
+
+		assert.strictEqual(await respPopoverAlertRole.shadow$(".ui5-popup-root").getAttribute("role"), "alertdialog", "role='alertdialog' is applied.");
+		assert.strictEqual(await respPopoverAlertRole.shadow$(".ui5-popup-root").getAttribute("aria-modal"), "true", "aria-modal=true is applied.");
+
+		const respPopoverNoneRole = await browser.$("#rPNoneRole");
+
+		assert.notOk(await respPopoverNoneRole.shadow$(".ui5-popup-root").getAttribute("role"), "role is not set.");
+		assert.notOk(await respPopoverNoneRole.shadow$(".ui5-popup-root").getAttribute("aria-modal"), "aria-modal not set.");
 	});
 });

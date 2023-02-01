@@ -394,87 +394,87 @@ describe("Acc", () => {
 	});
 });
 
-// describe("Page scrolling", () => {
-// 	before(async () => {
-// 		await browser.url(`test/pages/Dialog.html`);
-// 	});
-//
-// 	it("tests that page scrolling is blocked and restored", async () => {
-// 		await browser.$("#btnOpenDialog").click();
-// 		let pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
-//
-// 		assert.strictEqual(pageOverflow, "hidden", "Page scrolling is blocked");
-//
-// 		await browser.$("#btnCloseDialog").click();
-// 		pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
-//
-// 		assert.strictEqual(pageOverflow, "visible", "Page scrolling is restored");
-// 	});
-//
-// 	it("tests that page scrolling position is preserved", async () => {
-// 		// scroll position might change slightly when the scrollbars hide and then appear again
-// 		const SCROLLBAR_DELTA = 20;
-// 		await browser.$("#cbScrollable").click();
-// 		const scrolledButton = await $("#scrolledBtn");
-// 		await scrolledButton.scrollIntoView();
-// 		const scrollLeftBefore = await browser.$("html").getProperty("scrollLeft");
-// 		const scrollTopBefore = await browser.$("html").getProperty("scrollTop");
-// 		await scrolledButton.click();
-//
-// 		assert.strictEqual(await browser.$("html").getProperty("scrollLeft"), scrollLeftBefore, "Horizontal page scroll position is preserved");
-// 		assert.approximately(await browser.$("html").getProperty("scrollTop"), scrollTopBefore, SCROLLBAR_DELTA, "Vertical page scroll position is preserved");
-//
-// 		await browser.keys("Escape");
-//
-// 		assert.strictEqual(await browser.$("html").getProperty("scrollLeft"), scrollLeftBefore, "Horizontal page scroll position is preserved");
-// 		assert.approximately(await browser.$("html").getProperty("scrollTop"), scrollTopBefore, SCROLLBAR_DELTA, "Vertical page scroll position is preserved");
-//
-// 		await browser.$("#cbScrollable").click();
-// 	});
-//
-// 	it("tests that page scrolling is blocked and restored after multiple show() of same dialog", async () => {
-// 		await browser.$("#multiple-show").click();
-// 		let pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
-//
-// 		assert.strictEqual(pageOverflow, "hidden", "Page scrolling is blocked");
-//
-// 		await browser.$("#btnCloseDialog").click();
-// 		pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
-//
-// 		assert.strictEqual(pageOverflow, "visible", "Page scrolling is restored");
-// 	});
-//
-// 	it("test page scrolling is restored after close with ESC", async () => {
-// 		await browser.$("#cbScrollable").click();
-// 		const scrollHeightBefore = await browser.$("html").getProperty("scrollHeight");
-//
-// 		await browser.$("#btnOpenDialog").click();
-// 		await browser.keys("Escape");
-// 		assert.strictEqual(await browser.$("html").getProperty("scrollHeight"), scrollHeightBefore, "Body scrolling is restored");
-//
-// 		await browser.$("#cbScrollable").click();
-// 	});
-//
-// 	it("tests multiple dialogs page scrolling", async () => {
-// 		const preventButtonBefore = await browser.$("#prevent");
-//
-// 		await browser.setWindowSize(400, 400);
-// 		await preventButtonBefore.scrollIntoView();
-//
-// 		const offsetBefore = await preventButtonBefore.getLocation('y');
-//
-// 		await preventButtonBefore.click();
-//
-// 		await browser.keys("Escape");
-// 		const confirmButton = await browser.$("#yes");
-// 		await confirmButton.click();
-//
-// 		await browser.setTimeout({ script: 5000 });
-// 		const offsetAfter = await preventButtonBefore.getLocation('y');
-//
-// 		assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
-// 	});
-// });
+describe("Page scrolling", () => {
+	before(async () => {
+		await browser.url(`test/pages/Dialog.html`);
+	});
+
+	it("tests that page scrolling is blocked and restored", async () => {
+		await browser.$("#btnOpenDialog").click();
+		let pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
+
+		assert.strictEqual(pageOverflow, "hidden", "Page scrolling is blocked");
+
+		await browser.$("#btnCloseDialog").click();
+		pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
+
+		assert.strictEqual(pageOverflow, "visible", "Page scrolling is restored");
+	});
+
+	it("tests that page scrolling position is preserved", async () => {
+		// scroll position might change slightly when the scrollbars hide and then appear again
+		const SCROLLBAR_DELTA = 20;
+		await browser.$("#cbScrollable").click();
+		const scrolledButton = await $("#scrolledBtn");
+		await scrolledButton.scrollIntoView();
+		const scrollLeftBefore = await browser.$("html").getProperty("scrollLeft");
+		const scrollTopBefore = await browser.$("html").getProperty("scrollTop");
+		await scrolledButton.click();
+
+		assert.strictEqual(await browser.$("html").getProperty("scrollLeft"), scrollLeftBefore, "Horizontal page scroll position is preserved");
+		assert.approximately(await browser.$("html").getProperty("scrollTop"), scrollTopBefore, SCROLLBAR_DELTA, "Vertical page scroll position is preserved");
+
+		await browser.keys("Escape");
+
+		assert.strictEqual(await browser.$("html").getProperty("scrollLeft"), scrollLeftBefore, "Horizontal page scroll position is preserved");
+		assert.approximately(await browser.$("html").getProperty("scrollTop"), scrollTopBefore, SCROLLBAR_DELTA, "Vertical page scroll position is preserved");
+
+		await browser.$("#cbScrollable").click();
+	});
+
+	it("tests that page scrolling is blocked and restored after multiple show() of same dialog", async () => {
+		await browser.$("#multiple-show").click();
+		let pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
+
+		assert.strictEqual(pageOverflow, "hidden", "Page scrolling is blocked");
+
+		await browser.$("#btnCloseDialog").click();
+		pageOverflow = await browser.execute("return window.getComputedStyle(document.documentElement).overflow;");
+
+		assert.strictEqual(pageOverflow, "visible", "Page scrolling is restored");
+	});
+
+	it("test page scrolling is restored after close with ESC", async () => {
+		await browser.$("#cbScrollable").click();
+		const scrollHeightBefore = await browser.$("html").getProperty("scrollHeight");
+
+		await browser.$("#btnOpenDialog").click();
+		await browser.keys("Escape");
+		assert.strictEqual(await browser.$("html").getProperty("scrollHeight"), scrollHeightBefore, "Body scrolling is restored");
+
+		await browser.$("#cbScrollable").click();
+	});
+
+	it("tests multiple dialogs page scrolling", async () => {
+		const preventButtonBefore = await browser.$("#prevent");
+
+		await browser.setWindowSize(400, 400);
+		await preventButtonBefore.scrollIntoView();
+
+		const offsetBefore = await preventButtonBefore.getLocation('y');
+
+		await preventButtonBefore.click();
+
+		await browser.keys("Escape");
+		const confirmButton = await browser.$("#yes");
+		await confirmButton.click();
+
+		await browser.setTimeout({ script: 5000 });
+		const offsetAfter = await preventButtonBefore.getLocation('y');
+
+		assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
+	});
+});
 
 describe("Responsive paddings", () => {
 	before(async () => {
