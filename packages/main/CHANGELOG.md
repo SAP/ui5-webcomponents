@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.4](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.9.4) (2023-02-01)
+
+
+### Bug Fixes
+
+* **ui5-avatar-group:** fix chrome offsetParent precise calculation ([8cdc819](https://github.com/SAP/ui5-webcomponents/commit/8cdc819baa878a257285fb71accd5b3273a7d2f1))
+
+
+
+
+
 ## [1.9.3](https://github.com/SAP/ui5-webcomponents/compare/v1.9.2...v1.9.3) (2022-12-16)
 
 **Note:** Version bump only for package @ui5/webcomponents

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.4](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.9.4) (2023-02-01)
+
+
+### Bug Fixes
+
+* **ui5-avatar-group:** fix chrome offsetParent precise calculation ([8cdc819](https://github.com/SAP/ui5-webcomponents/commit/8cdc819baa878a257285fb71accd5b3273a7d2f1))
+
+
+
+
+
 ## [1.9.3](https://github.com/SAP/ui5-webcomponents/compare/v1.9.2...v1.9.3) (2022-12-16)
 
 * **docs**:** fix JS Doc generation for Tree, TabContainer([e932f7d](https://github.com/SAP/ui5-webcomponents/commit/764cce8ae08e2ae9b6900cd7f693dff8a44bf764#diff-6266293e8701207e2b7467774e4e5c6ffdb45f6f8669bed6ae220df0513c9704))
