@@ -1,5 +1,7 @@
-commit c2e9525f1bfa4d8ca0c24eeb7f642567f5573634
+commit 80bd2270291b1bda76e8e811a1fe9385408eecda
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Jan 31 21:28:45 2023 +0200
+Date:   Wed Feb 1 09:15:15 2023 +0200
 
-    chore: update workflow for release custom tag
+    chore: change extension from .yml to .yaml
+    
+    to align with the rest of the workflows
