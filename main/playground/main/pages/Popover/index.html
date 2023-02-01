@@ -22,7 +22,7 @@
 	<script>
 		// delete Document.prototype.adoptedStyleSheets
 	</script>
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.369eaf5a.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.563ec354.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Popover.html.6d4f19ad.css'>
 </head>
 
@@ -416,6 +416,20 @@
 		<ui5-button id="closeChainedPopover2">Close chained popover 2</ui5-button>
 	</ui5-popover>
 
+	<!-- Sample when Popover is created in order different than "header, content, footer" sequence -->
+	<ui5-button id="popoverFocusButton">Dialog Focus</ui5-button>
+	<ui5-popover id="popoverFocus">
+		<div slot="header">Header text</div>
+	
+		<div slot="footer" class="dialog-footer">
+			<div style="flex: 1"></div>
+			<ui5-button id="closeButton" design="Emphasized">Close</ui5-button>
+		</div>
+
+		<span>Some message</span>
+		<ui5-button id="fistButtonInPopover">Confirm</ui5-button>
+	</ui5-popover>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
@@ -580,6 +594,11 @@
 			document.body.appendChild(toast);
 			toast.show();
 		});
+
+		popoverFocusButton.addEventListener("click", function () {
+			popoverFocus.showAt(popoverFocusButton);
+		});
+
 	</script>
 </body>
 
