@@ -87,6 +87,11 @@ interface ITab extends UI5Element {
 	_style?: Record<string, any>;
 }
 
+type TabContainerTabSelectEventDetail = {
+	tab: Tab;
+	tabIndex: number;
+}
+
 interface TabContainerExpandButton extends Button {
 	tab: Tab;
 }
@@ -769,7 +774,7 @@ class TabContainer extends UI5Element {
 	 * @returns {boolean} true if the tab selection is successful, false if it was prevented
 	 */
 	selectTab(selectedTab: Tab, selectedTabIndex: number) {
-		if (!this.fireEvent("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
+		if (!this.fireEvent<TabContainerTabSelectEventDetail>("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
 			return false;
 		}
 
@@ -1313,4 +1318,5 @@ TabContainer.define();
 export default TabContainer;
 export type {
 	ITab,
+	TabContainerTabSelectEventDetail,
 };
