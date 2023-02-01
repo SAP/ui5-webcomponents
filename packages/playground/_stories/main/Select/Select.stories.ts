@@ -1,27 +1,23 @@
-import { action } from "@storybook/addon-actions";
-import { Story, Meta } from "@storybook/web-components";
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import type { Story, Meta } from "@storybook/web-components";
 
 // @ts-ignore
 import type Select from "@ui5/webcomponents/dist/Select.js";
 
 import argTypes from "./argTypes.js";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
 
 export default {
   title: "Components/Select",
   component: "ui5-select",
+  subcomponents: { Option: "ui5-option" },
   argTypes,
 } as Meta<Select>;
 
-type SelectEventMap = {
-  "ui5-change": (event: CustomEvent) => void;
-};
-
-type SelectStoryArgs = Select & SelectEventMap;
-
-const Template: Story<SelectStoryArgs> = (args) => {
+const Template: UI5StoryArgs<Select, StoryArgsSlots> = (args) => {
   return html`<ui5-select
     name="${ifDefined(args.name)}"
     ?disabled="${ifDefined(args.disabled)}"
@@ -31,9 +27,8 @@ const Template: Story<SelectStoryArgs> = (args) => {
     selected-option="${ifDefined(args.selectedOption)}"
     accessible-name="${ifDefined(args.accessibleName)}"
     accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
-    @ui5-change="${ifDefined(args["change"])}"
   >
-    ${unsafeHTML(args.innerHTML)}
+    ${unsafeHTML(args.default)}
   </ui5-select> `;
 };
 
@@ -41,15 +36,14 @@ const Template: Story<SelectStoryArgs> = (args) => {
 export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
-  "ui5-change": (e: CustomEvent) => action("ui5-change")(e.detail),
-  innerHTML: `<ui5-option icon="iphone">Phone</ui5-option>
+  default: `<ui5-option icon="iphone">Phone</ui5-option>
 	<ui5-option icon="ipad">Tablet</ui5-option>
 	<ui5-option icon="laptop" selected="">Desktop</ui5-option>`,
 };
 
 // Value State and Value State Message
 
-export const ValueStateAndValueStateMessage = () =>
+export const ValueStateAndValueStateMessage: Story = () =>
   html`<ui5-select value-state="Success" class="select">
       <ui5-option icon="meal" selected="">Apple</ui5-option>
       <ui5-option icon="meal">Avocado</ui5-option>
@@ -104,7 +98,7 @@ export const ValueStateAndValueStateMessage = () =>
 ValueStateAndValueStateMessage.storyName = "Value State";
 
 // Two-column layout
-export const TwoColumnLayout = () =>
+export const TwoColumnLayout: Story = () =>
   html` <ui5-select class="select">
     <ui5-option additional-text="AT">Austria</ui5-option>
     <ui5-option additional-text="BE">Belgium</ui5-option>

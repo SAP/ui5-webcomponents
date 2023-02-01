@@ -32,21 +32,27 @@ const main = async () => {
 	async function generateStoryDoc(componentPath, component, api) {
 		console.log(`Generating argTypes for story ${component}`);
 		const apiData = getAPIData(api, component);
+		const { storyArgsTypes, slotNames } = apiData;
 
-		await fs.writeFile(componentPath + '/argTypes.ts', `export default ` + apiData.storyArgsTypes);
+		await fs.writeFile(componentPath + '/argTypes.ts', `export default ${storyArgsTypes};
+export type StoryArgsSlots = {
+	${slotNames.map(slotName => `${slotName}: string;`).join('\n	')}
+}`);
 	};
 
 	function getAPIData(api, module) {
 		const moduleAPI = api.symbols.find(s => s.module === module);
-		const args = getArgsTypes(api, moduleAPI);
+		const data = getArgsTypes(api, moduleAPI);
 
 		return {
-			storyArgsTypes: JSON.stringify(args, null, "\t")
+			slotNames: data.slotNames,
+			storyArgsTypes: JSON.stringify(data.args, null, "\t")
 		};
 	}
 
 	function getArgsTypes(api, moduleAPI) {
 		let args = {};
+		let slotNames = [];
 		
 		moduleAPI?.properties?.forEach(prop => {
 			if (prop.visibility === 'public') {
@@ -62,12 +68,12 @@ const main = async () => {
 
 		moduleAPI?.slots?.forEach(prop => {
 			if (prop.visibility === 'public') {
-				const propName = prop.name === 'default' ? 'innerHTML' : prop.name;
-				args[propName] = {
-					name: prop.name,
-					control: "text",
-					description: `${prop.description} \n\n Type: \`${prop.type}\``,
+				args[prop.name] = {
+					control: {
+						type: "text"
+					}
 				};
+				slotNames.push(prop.name);
 			}
 		});
 
@@ -86,10 +92,15 @@ const main = async () => {
 		// recursively merging the args from the parent/parents
 		const moduleAPIBeingExtended = api.symbols.find(s => s.name === moduleAPI.extends) || baseAPI.symbols.find(s => s.module === moduleAPI.extends);
 		if (moduleAPIBeingExtended) {
-			args = {...args, ...getArgsTypes(api, moduleAPIBeingExtended)};
+			const { args: nextArgs, slotNames: nextSlotNames } = getArgsTypes(api, moduleAPIBeingExtended);
+			args = { ...args, ...nextArgs };
+			slotNames = [...slotNames, ...nextSlotNames].filter((v, i, a) => a.indexOf(v) === i);
 		}
 
-		return args;
+		return {
+			args,
+			slotNames
+		};
 	}
 };
 

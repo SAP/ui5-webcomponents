@@ -1,30 +1,28 @@
 import { html } from "lit-html";
-import { action } from "@storybook/addon-actions";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import { Meta, Story } from "@storybook/web-components";
+import type { Meta, Story } from "@storybook/web-components";
 
 import type List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import ListSeparators from "@ui5/webcomponents/dist/types/ListSeparators.js";
 
 import argTypes from "./argTypes.js";
-
-type ListEventMap = {
-  "item-click": (event: CustomEvent) => void;
-  "item-delete": (event: CustomEvent) => void;
-  "selection-change": (event: CustomEvent) => void;
-};
-
-type ListStoryArgs = List & ListEventMap;
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
 
 export default {
   title: "Components/List",
   component: "ui5-list",
+  subcomponents: {
+    StandardListItem: "ui5-li",
+    CustomListItem: "ui5-li-custom",
+    GroupHeaderListItem: "ui5-li-groupheader",
+  },
   argTypes,
 } as Meta<List>;
 
-const Template: Story<ListStoryArgs> = (args) => {
+const Template: UI5StoryArgs<List, StoryArgsSlots> = (args) => {
   return html` <ui5-list
     mode="${ifDefined(args.mode)}"
     ?busy="${ifDefined(args.busy)}"
@@ -37,21 +35,16 @@ const Template: Story<ListStoryArgs> = (args) => {
     no-data-text="${ifDefined(args.noDataText)}"
     accessible-name="${ifDefined(args.accessibleName)}"
     accessible-role="${ifDefined(args.accessibleRole)}"
-    @item-click="${ifDefined(args["item-click"])}"
-    @item-delete="${ifDefined(args["item-delete"])}"
-    @selection-change="${ifDefined(args["selection-change"])}"
   >
-    ${unsafeHTML(args.innerHTML)}
+    ${unsafeHTML(args.default)}
   </ui5-list>`;
 };
 
 // Basic
 export const Basic = Template.bind({});
-
 Basic.storyName = "Basic";
 Basic.args = {
-  "item-click": (event: CustomEvent) => action("ui5-item-click")(event.detail),
-  innerHTML: `<ui5-li
+  default: `<ui5-li
 		icon="nutrition-activity"
 		description="Tropical plant with an edible fruit"
 		additional-text="In-stock"
@@ -78,7 +71,7 @@ Basic.args = {
 };
 
 // Growing
-export const Growing = () =>
+export const Growing: Story = () =>
   html`<ui5-list id="infiniteScrollEx" style="height: 200px" growing="Scroll">
       <ui5-li
         icon="nutrition-activity"
@@ -140,7 +133,7 @@ SingleSelection.storyName = "Single Selection";
 SingleSelection.args = {
   mode: ListMode.SingleSelect,
   headerText: "Select a country:",
-  innerHTML: `
+  default: `
 	<ui5-li selected icon="map" icon-end>Argentina</ui5-li>
 	<ui5-li icon="map" icon-end>Bulgaria</ui5-li>
 	<ui5-li icon="map" icon-end>China</ui5-li>
@@ -153,7 +146,7 @@ MultiSelection.storyName = "Multi Selection";
 MultiSelection.args = {
   mode: ListMode.MultiSelect,
   headerText: "Multiple selection is possible",
-  innerHTML: `
+  default: `
 	<ui5-li>Pineapple</ui5-li>
 	<ui5-li selected="">Orange</ui5-li>
 	<ui5-li>Banana</ui5-li>
@@ -165,7 +158,7 @@ export const GroupHeaders = Template.bind({});
 GroupHeaders.storyName = "Group Headers";
 GroupHeaders.args = {
   mode: ListMode.MultiSelect,
-  innerHTML: `<ui5-li-groupheader
+  default: `<ui5-li-groupheader
 	>Front End Developers</ui5-li-groupheader
 	>
 	<ui5-li
@@ -213,7 +206,7 @@ Delete.storyName = "Delete Mode";
 Delete.args = {
   mode: ListMode.Delete,
   headerText: "Note: The list items removal is up to application developers",
-  innerHTML: `
+  default: `
 	<ui5-li>Argentina</ui5-li>
 	<ui5-li>Bulgaria</ui5-li>
 	<ui5-li>China</ui5-li>`,
@@ -229,7 +222,7 @@ NoData.args = {
 };
 
 // Separation Types
-export const SeparationTypes = () =>
+export const SeparationTypes: Story = () =>
   html` <ui5-list
       header-text="No separators"
       separators="None"

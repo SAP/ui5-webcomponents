@@ -1,14 +1,15 @@
-import { Story, Meta } from "@storybook/web-components";
-import { action } from "@storybook/addon-actions";
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import type { Story, Meta } from "@storybook/web-components";
 
 // @ts-ignore
 import type AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
 import AvatarGroupType from "@ui5/webcomponents/dist/types/AvatarGroupType.js";
 
 import argTypes from "./argTypes.js";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
 
 import TemplateGroupWithPopover from "./TemplateGroupWithPopover.js";
 import TemplateIndividualWithPopover from "./TemplateIndividualWithPopover.js";
@@ -20,27 +21,19 @@ export default {
   argTypes,
 } as Meta<AvatarGroup>;
 
-type AvatarGroupEventMap = {
-  "ui5-click": (event: CustomEvent) => void;
-};
-
-type AvatarGroupStoryArgs = AvatarGroup & AvatarGroupEventMap;
-
-const Template: Story<AvatarGroupStoryArgs> = (args) =>
+const Template: UI5StoryArgs<AvatarGroup, StoryArgsSlots> = (args) =>
   html`<ui5-avatar-group
     .type="${ifDefined(args.type)}"
     .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
-    @click="${ifDefined(args["click"])}"
   >
-    ${unsafeHTML(args.innerHTML)}
+    ${unsafeHTML(args.default)}
   </ui5-avatar-group> `;
 
 // Basic
 export const TypeGroup = Template.bind({});
 TypeGroup.storyName = "Type Group";
 TypeGroup.args = {
-  "ui5-click": (e: CustomEvent) => action("ui5-click")(e.detail),
-  innerHTML: `
+  default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
@@ -56,8 +49,7 @@ export const TypeIndividual = Template.bind({});
 TypeIndividual.storyName = "Type Individual";
 TypeIndividual.args = {
   type: AvatarGroupType.Individual,
-  "ui5-click": (e: CustomEvent) => action("ui5-click")(e.detail),
-  innerHTML: `
+  default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
   <ui5-avatar size="M" initials="JD"></ui5-avatar>
   <ui5-avatar size="M">
