@@ -4,13 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       release_type:
-        description: 'Release Type: patch | minor | major'     
-        required: true
-        default: 'patch'
-      tag:
-        description: 'Tag'     
-        required: true
-        default: latest
+        description: 'Release Type: use patch | minor | major or leave empty for auto'     
+        required: false
+        default: ''
+      prerelease:
+        type: boolean
+        description: 'pre-release'
+        required: false
+        default: false
 
 jobs:
   build-and-release:
@@ -18,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
         fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
@@ -36,10 +37,12 @@ jobs:
         NPM_USERNAME: ${{ secrets.NPM_USER }}
         NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
       run: |
         npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
-        git config user.name ${{ secrets.UI5_WEBCOMP_BOT_NAME }}
-        git config user.email ${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}
-        yarn lerna version ${{ github.event.inputs.release_type }} --conventional-commits --yes --create-release github 
+        git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
+        git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
+        yarn lerna version ${{ github.event.inputs.release_type }}\
+            ${{ (github.event.inputs.prerelease == 'true' && '--conventional-prerelease') || '--conventional-graduate' }} \
+            --force-publish --yes --exact --create-release github 
         yarn lerna publish from-git --yes

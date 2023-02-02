@@ -7,7 +7,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isFirefox } from "@ui5/webcomponents-base/dist/Device.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -17,7 +16,6 @@ import {
 	AVATAR_TOOLTIP,
 	ARIA_ROLEDESCRIPTION_CARD_HEADER,
 	ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -173,7 +171,7 @@ class CardHeader extends UI5Element {
 	}
 
 	get ariaRoleDescription() {
-		return this.interactive ? CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER as I18nText) : CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER as I18nText);
+		return this.interactive ? CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_INTERACTIVE_CARD_HEADER) : CardHeader.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD_HEADER);
 	}
 
 	get ariaRoleFocusableElement() {
@@ -181,7 +179,7 @@ class CardHeader extends UI5Element {
 	}
 
 	get ariaCardAvatarLabel() {
-		return CardHeader.i18nBundle.getText(AVATAR_TOOLTIP as I18nText);
+		return CardHeader.i18nBundle.getText(AVATAR_TOOLTIP);
 	}
 
 	get ariaLabelledBy() {

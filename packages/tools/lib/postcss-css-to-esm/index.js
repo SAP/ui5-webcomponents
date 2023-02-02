@@ -4,15 +4,17 @@ const mkdirp = require('mkdirp');
 const assets = require("../../assets-meta.js");
 
 const DEFAULT_THEME = assets.themes.default;
+const requiredImports = "import type { StyleData } from \"@ui5/webcomponents-base/dist/types.js\";";
 
 const getDefaultThemeCode = packageName => {
 	return `import { registerThemePropertiesLoader } from "@ui5/webcomponents-base/dist/asset-registries/Themes.js";
+${requiredImports}
 
 import defaultThemeBase from "@ui5/webcomponents-theming/dist/generated/themes/${DEFAULT_THEME}/parameters-bundle.css.js";
 import defaultTheme from "./${DEFAULT_THEME}/parameters-bundle.css.js";
 
-registerThemePropertiesLoader("@ui5/webcomponents-theming", "${DEFAULT_THEME}", () => defaultThemeBase);
-registerThemePropertiesLoader("${packageName}", "${DEFAULT_THEME}", () => defaultTheme);
+registerThemePropertiesLoader("@ui5/webcomponents-theming", "${DEFAULT_THEME}", async () => defaultThemeBase);
+registerThemePropertiesLoader("${packageName}", "${DEFAULT_THEME}", async () => defaultTheme);
 `;
 };
 
@@ -33,12 +35,12 @@ module.exports = function (opts) {
 			let css = root.toString();
 			css = proccessCSS(css);
 
-			const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/dist/generated/").replace(`\\${opts.toReplace}\\`, "\\dist\\generated\\");
+			const targetFile = root.source.input.from.replace(`/${opts.toReplace}/`, "/src/generated/").replace(`\\${opts.toReplace}\\`, "\\src\\generated\\");
 			mkdirp.sync(path.dirname(targetFile));
 
-			const filePath = `${targetFile}.js`;
-			const defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : ``;
-			
+			const filePath = `${targetFile}.ts`;
+			const defaultTheme = opts.includeDefaultTheme ? getDefaultThemeCode(opts.packageName) : requiredImports;
+
 			// it seems slower to read the old content, but writing the same content with no real changes
 			// (as in initial build and then watch mode) will cause an unnecessary dev server refresh
 			let oldContent = "";
@@ -47,7 +49,11 @@ module.exports = function (opts) {
 			} catch (e) {
 				// file not found
 			}
-			const content = `${defaultTheme}export default {packageName:"${opts.packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}}`
+
+			const content = `${defaultTheme}
+const styleData: StyleData = {packageName:"${opts.packageName}",fileName:"${targetFile.substr(targetFile.lastIndexOf("themes"))}",content:${css}};
+export default styleData;
+`;
 			if (content !== oldContent) {
 				fs.writeFileSync(filePath, content);
 			}

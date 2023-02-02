@@ -764,15 +764,16 @@ abstract class UI5Element extends HTMLElement {
 
 	/**
 	 * Set the focus to the element, returned by "getFocusDomRef()" (marked by "data-sap-focus-ref")
+	 * @param {FocusOptions} focusOptions additional options for the focus
 	 * @public
 	 */
-	async focus() {
+	async focus(focusOptions?: FocusOptions) {
 		await this._waitForDomRef();
 
 		const focusDomRef = this.getFocusDomRef();
 
 		if (focusDomRef && typeof focusDomRef.focus === "function") {
-			focusDomRef.focus();
+			focusDomRef.focus(focusOptions);
 		}
 	}
 
