@@ -73,60 +73,8 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-// Main function
-const createWebcomponentsPackage = async () => {
-	let response;
-	let typescript = false;
 
-	// Get the name
-	let name = argv.name;
-	// Get the port
-	const port = argv || 8080;
-	// Get the tag
-	let tag = argv.tag;
-	// Get the TypeScript support
-	let typescriptSupport = argv.enableTypescript;
-
-	if (!isNameValid(name)) {
-		response = await prompts({
-			type: "text",
-			name: "name",
-			message: "Package name:",
-			validate: isNameValid,
-		});
-		name = response.name;
-	}
-
-	if (!typescriptSupport) {
-		response = await prompts({
-			type: "select",
-			name: "language",
-			message: "Support TypeScript:",
-			choices: [
-				{
-					title: "JavaScript",
-					value: "js",
-				},
-				{
-					title: "TypeScript",
-					value: "ts",
-				},
-			]
-		});
-		typescript = response.language === "ts";
-	}
-
-	if (!isTagValid(tag)) {
-		response = await prompts({
-			type: "text",
-			name: "tag",
-			message: "Demo component name:",
-			initial: "my-first-component",
-			validate: isTagValid,
-		});
-		tag = response.tag;
-	}
-
+const generateFilesContent = (name, port, tag, typescript) => {
 	const className = capitalizeFirst(kebabToCamelCase(tag));
 
 	// All variables that will be replaced in the content of the resources/
@@ -196,6 +144,74 @@ const createWebcomponentsPackage = async () => {
 	}
 
 	console.log("\n");
+}
+
+// Main function
+const createWebcomponentsPackage = async () => {
+	let response;
+	if (argv.name && !isNameValid(argv.name)) {
+		throw new Error("The package name should be a string (a-z, A-Z, 0-9).");
+	}
+
+	console.log("Asdads")
+	if (argv.port && !isPortValid(argv.port) ) {
+		throw new Error("The port should be only digits.");
+	}
+
+	if (argv.tag && !isTagValid(argv.tag) ) {
+		throw new Error("The tag should be in kebab-case (my-first-component f.e) and it can't be a single word.");
+	}
+
+	let name = argv.name || "my-package";
+	let port = argv.port || 8080;
+	let tag = argv.tag || "my-first-component";
+	let typescriptSupport = !!argv.enableTypescript;
+
+	if (!!argv.skip) {
+		return generateFilesContent(name, port, tag, typescriptSupport);
+	}
+
+	if (!argv.name) {
+		response = await prompts({
+			type: "text",
+			name: "name",
+			message: "Package name:",
+			validate: isNameValid,
+		});
+		name = response.name;
+	}
+
+	if (!typescriptSupport) {
+		response = await prompts({
+			type: "select",
+			name: "language",
+			message: "Project type:",
+			choices: [
+				{
+					title: "JavaScript",
+					value: false,
+				},
+				{
+					title: "TypeScript",
+					value: true,
+				},
+			]
+		});
+		typescript = response.language;
+	}
+
+	if (!argv.tag) {
+		response = await prompts({
+			type: "text",
+			name: "tag",
+			message: "Component name:",
+			initial: "my-first-component",
+			validate: isTagValid,
+		});
+		tag = response.tag;
+	}
+
+	return generateFilesContent(name, port, tag, typescript);
 };
 
 createWebcomponentsPackage();

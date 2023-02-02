@@ -16,6 +16,7 @@ Options:
     --port <number>     - defines default package server port
     --tag <string>      - defines predefined custom element tag name
     --enable-typescript - enables TypeScript support to the package
+    --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
@@ -23,7 +24,16 @@ components package.
 
 ## Usage with yarn
 
-- `yarn create @ui5/webcomponents-package`
+```
+Usage:
+    yarn create @ui5/webcomponents-package [OPTIONS]
+Options:
+    --name <string>     - defines package name
+    --port <number>     - defines default package server port
+    --tag <string>      - defines predefined custom element tag name
+    --enable-typescript - enables TypeScript support to the package
+    --skip              - skips all configurations and generates package with default configurations
+```
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
 components package.
