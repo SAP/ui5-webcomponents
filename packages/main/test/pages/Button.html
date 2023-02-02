@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
 	<title>Button</title>
@@ -13,7 +13,7 @@
 	<script src="../../bundle.esm.js" type="module"></script>
 
 
-    <link rel="stylesheet" type="text/css" href="./styles/Button.css">
+	<link rel="stylesheet" type="text/css" href="./styles/Button.css">
 
 </head>
 
@@ -116,6 +116,7 @@
 	<br/>
 
 	<ui5-button icon-end icon="employee">Icon last</ui5-button>
+	<ui5-button icon="employee" id="disabled-button-icon-only" disabled></ui5-button>
 
 
 
@@ -172,11 +173,11 @@
 	<ui5-toggle-button design="Emphasized" icon="employee">Emphasized</ui5-toggle-button>
 	<ui5-toggle-button disabled design="Emphasized" icon="employee">Emphasized</ui5-toggle-button>
 
-    <br/>
-    <br/>
-    <ui5-button class="long-button long-button-begin" icon="download">Download</ui5-button>
-    <ui5-button class="long-button" icon="download">Download</ui5-button>
-    <ui5-button class="long-button long-button-end" icon="download">Download</ui5-button>
+	<br/>
+	<br/>
+	<ui5-button class="long-button long-button-begin" icon="download">Download</ui5-button>
+	<ui5-button class="long-button" icon="download">Download</ui5-button>
+	<ui5-button class="long-button long-button-end" icon="download">Download</ui5-button>
 
 	<br/>
 	<br/>
@@ -221,13 +222,14 @@
 				<ui5-button id="closeDialogButton" design="Emphasized">Register</ui5-button>
 			</div>
 		</ui5-dialog>
-    <script>
+	<script>
 		var clickCounter = document.querySelector("#click-counter");
 		var button = document.querySelector("#button1");
 		var disabledButton = document.querySelector("#button-disabled");
+		var disabledButtonIconOnly = document.querySelector("#disabled-button-icon-only")
 		var clickCount = 0;
 
-		[button, disabledButton].forEach(function (el) {
+		[button, disabledButton, disabledButtonIconOnly].forEach(function (el) {
 			el.addEventListener("click", function(event) {
 				clickCount += 1;
 				clickCounter.value = clickCount;

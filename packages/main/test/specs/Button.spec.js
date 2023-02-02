@@ -57,6 +57,17 @@ describe("Button general interaction", () => {
 		assert.strictEqual(await field.getProperty("value"), "3", "Click should be called 3 times");
 	});
 
+	it("tests clicking on icon in disabled button", async () => {
+		const buttonIcon = await browser.$("#disabled-button-icon-only").shadow$("ui5-icon");
+
+		// don't test space and enter, as wdio always fires a click but the browser not.
+		// await button.keys("Space");
+		// await button.keys("Enter");
+		await buttonIcon.click();
+		const field = await browser.$("#click-counter");
+		assert.strictEqual(await field.getProperty("value"), "3", "Click should be called 3 times");
+	});
+
 	it("click should call handler", async () => {
 
 		const button = await browser.$("#button1");
