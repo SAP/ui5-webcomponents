@@ -102,6 +102,10 @@
 	cursor: default;
 }
 
+:host([disabled]) .ui5-button-icon {
+	pointer-events: none;
+}
+
 :host([has-icon]:not([icon-only])) .ui5-button-text{
 	/* calculating the minimum width by removing the icon size  */
 	min-width: calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem);
