@@ -3,6 +3,49 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4-rc.0...v1.11.0-rc.0) (2023-02-02)
+
+
+### Features
+
+* **ui5-barcode-scanner-dialog:** migrated to Typescript ([#6338](https://github.com/SAP/ui5-webcomponents/issues/6338)) ([10b4417](https://github.com/SAP/ui5-webcomponents/commit/10b4417e8ea4229b6bd2ef5b4957bbf00d155d39))
+
+
+
+
+
+## [1.10.4-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.3...v1.10.4-rc.0) (2023-01-26)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.10.3](https://github.com/SAP/ui5-webcomponents/compare/v1.10.2...v1.10.3) (2023-01-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.10.2](https://github.com/SAP/ui5-webcomponents/compare/v1.10.1...v1.10.2) (2023-01-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+## [1.10.1](https://github.com/SAP/ui5-webcomponents/compare/v0.0.0-7b49a7ff1...v1.10.1) (2023-01-24)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 # [1.10.0](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0) (2023-01-20)
 
 

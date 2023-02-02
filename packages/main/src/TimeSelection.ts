@@ -8,7 +8,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -34,7 +33,6 @@ import {
 	TIMEPICKER_HOURS_LABEL,
 	TIMEPICKER_MINUTES_LABEL,
 	TIMEPICKER_SECONDS_LABEL,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -489,15 +487,15 @@ class TimeSelection extends UI5Element {
 	}
 
 	get hoursSliderTitle() {
-		return TimeSelection.i18nBundle.getText(TIMEPICKER_HOURS_LABEL as I18nText);
+		return TimeSelection.i18nBundle.getText(TIMEPICKER_HOURS_LABEL);
 	}
 
 	get minutesSliderTitle() {
-		return TimeSelection.i18nBundle.getText(TIMEPICKER_MINUTES_LABEL as I18nText);
+		return TimeSelection.i18nBundle.getText(TIMEPICKER_MINUTES_LABEL);
 	}
 
 	get secondsSliderTitle() {
-		return TimeSelection.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL as I18nText);
+		return TimeSelection.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL);
 	}
 
 	get periodSliderTitle() {

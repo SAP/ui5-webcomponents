@@ -34,21 +34,11 @@
 	color: var(--sapLinkColor);
 }
 
-[inner-input] {
-	padding-left: var(--_ui5_input_inner_padding_left_no_tokens);
-}
-
 [inner-input][inner-input-with-icon] {
 	padding: var(--_ui5_input_inner_padding_with_icon);
-	padding-left: var(--_ui5_input_inner_padding_left_no_tokens);
 }
 
 :host([tokenizer-available]) [inner-input] {
-	padding-left: var(--_ui5_input_inner_padding_left_tokens);
-}
-
-:host([tokenizer-available]) [inner-input][inner-input-with-icon] {
-	padding: var(--_ui5_input_inner_padding_with_icon);
 	padding-left: var(--_ui5_input_inner_padding_left_tokens);
 }
 

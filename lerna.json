@@ -12,18 +12,21 @@
 		"packages/playground",
 		"packages/create-package"
 	],
-	"version": "1.10.0",
+	"version": "1.11.0-rc.0",
 	"command": {
 		"publish": {
 			"allowBranch": "*",
 			"conventionalCommits": true,
-			"verifyAccess": false
+			"verifyAccess": false,
+			"preid": "rc",
+			"preDistTag": "next"
 		},
 		"version": {
 			"allowBranch": "*",
 			"message": "chore(release): publish %s",
 			"conventionalCommits": true,
-			"verifyAccess": false
+			"verifyAccess": false,
+			"preid": "rc"
 		}
 	},
 	"npmClient": "yarn",

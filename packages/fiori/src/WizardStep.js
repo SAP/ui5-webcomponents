@@ -139,6 +139,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webc.fiori.WizardStep
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-wizard-step
  * @since 1.0.0-rc.10
  * @implements sap.ui.webc.fiori.IWizardStep

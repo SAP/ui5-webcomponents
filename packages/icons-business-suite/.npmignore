@@ -1,6 +1,7 @@
 *.css
 dist/resources
 dist/test-resources
+src/generated
 lib/
 node_modules/
 src/
