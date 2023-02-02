@@ -31,5 +31,5 @@ const getThemePostCSSConfig = (options) => {
 	};
 }
 
-module.exports.getThemePostCSSConfig = getThemePostCSSConfig;
 module.exports = getThemePostCSSConfig(options);
+module.exports.getThemePostCSSConfig = getThemePostCSSConfig;

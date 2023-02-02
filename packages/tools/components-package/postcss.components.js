@@ -26,5 +26,5 @@ const getComponentPostCSSConfig = options => {
 	}
 };
 
-module.exports.getComponentPostCSSConfig = getComponentPostCSSConfig;
 module.exports = getComponentPostCSSConfig(options);
+module.exports.getComponentPostCSSConfig = getComponentPostCSSConfig;
