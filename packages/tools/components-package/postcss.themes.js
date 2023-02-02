@@ -7,20 +7,29 @@ const fs = require("fs");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
-module.exports = {
-	plugins: [
-		postcssImport(),
-		combineSelectors({
-			removeDuplicatedProperties: true
-		}),
-		cssnano({
-			preset: [
-				'default', {
-					mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
-				},
-			]
-		},),
-		postcssCSStoJSON({toReplace: 'src', packageName}),
-		postcssCSStoESM({toReplace: 'src', packageName}),
-	]
+const options = {
+	typescript: true,
 };
+
+const getThemePostCSSConfig = (options) => {
+	return {
+		plugins: [
+			postcssImport(),
+			combineSelectors({
+				removeDuplicatedProperties: true
+			}),
+			cssnano({
+				preset: [
+					'default', {
+						mergeLonghand: false, // https://github.com/cssnano/cssnano/issues/675
+					},
+				]
+			},),
+			postcssCSStoJSON({ toReplace: 'src', packageName }),
+			postcssCSStoESM({ toReplace: 'src', packageName, tsMode: options.typescript }),
+		]
+	};
+}
+
+module.exports.getThemePostCSSConfig = getThemePostCSSConfig;
+module.exports = getThemePostCSSConfig(options);

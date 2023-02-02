@@ -61,7 +61,7 @@ const getScripts = (options) => {
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
+				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n  ${options.typescript}`,
 				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
