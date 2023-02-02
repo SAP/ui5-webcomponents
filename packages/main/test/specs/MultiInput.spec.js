@@ -476,4 +476,26 @@ describe("Keyboard handling", () => {
 
 		assert.ok(await mi.getProperty("focused"), "input field should be focused");
 	});
+
+	it("should trigger change event on enter", async () => {
+		const mi = await $("#token-unique");
+		const inner = await mi.shadow$("input");
+		const valueState = await $("#value-state-wrapper");
+
+		await mi.scrollIntoView();
+
+		// populate new token
+		await inner.click();
+		await inner.keys("a");
+		await inner.keys("Enter");
+
+		await inner.click();
+		await inner.keys("a");
+		await inner.keys("Enter");
+
+		assert.strictEqual(await mi.getProperty("valueState"), "Error", "Value state is Error");
+
+		await browser.pause(2500);
+		assert.strictEqual(await mi.getProperty("valueState"), "None", "Value state is None");
+	});
 });

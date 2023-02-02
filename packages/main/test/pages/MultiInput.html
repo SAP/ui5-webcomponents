@@ -258,6 +258,13 @@
 	</div>
 
 	<div class="sample-container">
+		<ui5-multi-input show-suggestions id="token-unique" style="width: 50%">
+			<div slot="valueStateMessage" id="value-state-wrapper">Token is already in the list</div>
+			<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
+		</ui5-multi-input>
+	</div>
+
+	<div class="sample-container">
 		<h1>Test value-help-trigger with F4 and Alt + ArrowUp/Down</h1>
 
 		<ui5-multi-input id="multi-with-value-help-icon" show-value-help-icon>
@@ -401,6 +408,35 @@
 			}
 		}
 		document.getElementById("mi-event").addEventListener("ui5-token-delete", handleTokenDelete2);
+
+		document.getElementById("token-unique").addEventListener("ui5-token-delete", function (event) {
+				const token = event.detail?.token;
+				token && token.remove();
+			});
+		
+			document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
+				if (!event.target.value) {
+					return;
+				}
+		
+				var isDuplicate = event.target.tokens.some(function(token) {
+					return token.text === event.target.value
+				});
+		
+				if (isDuplicate) {
+					event.target.valueState = "Error";
+		
+					setTimeout(function () {
+						event.target.valueState = "None";
+					}, 2000);
+		
+					return;
+				}
+		
+				event.target.appendChild(createTokenFromText(event.target.value));
+		
+				event.target.value = "";
+			});
 	</script>
 </body>
 
