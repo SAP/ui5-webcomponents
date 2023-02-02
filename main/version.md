@@ -1,18 +1,13 @@
-commit c385a72f1c3319d359e4c4923e846abcb5be69a7
-Author: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
-Date:   Thu Feb 2 15:00:19 2023 +0200
+commit 68ad562e15cf678af675c855b33af21ed56faad7
+Author: Martin <martin.r.hristov@gmail.com>
+Date:   Thu Feb 2 15:52:12 2023 +0200
 
-    build(deps): bump http-cache-semantics from 4.1.0 to 4.1.1 (#6403)
+    fix(ui5-input): fire change event on enter (#6390)
     
-    Bumps [http-cache-semantics](https://github.com/kornelski/http-cache-semantics) from 4.1.0 to 4.1.1.
-    - [Release notes](https://github.com/kornelski/http-cache-semantics/releases)
-    - [Commits](https://github.com/kornelski/http-cache-semantics/commits)
+    when the user types something then hits enter the value is
+    set to the input field value. If the user change the value
+    in the change handler, internals used to be not updated
+    correctly and prevented correct future firing of the change
+    event.
     
-    ---
-    updated-dependencies:
-    - dependency-name: http-cache-semantics
-      dependency-type: indirect
-    ...
-    
-    Signed-off-by: dependabot[bot] <support@github.com>
-    Co-authored-by: dependabot[bot] <49699333+dependabot[bot]@users.noreply.github.com>
+    FIXES: #6262

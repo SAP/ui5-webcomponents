@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675342894
+  buildTime: 1675345980
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -14559,8 +14559,8 @@ let Input = Input_1 = class Input2 extends UI5Element {
       return;
     }
     if (this.previousValue !== this.getInputDOMRefSync().value) {
-      this.previousValue = this.getInputDOMRefSync().value;
       this.fireEvent(INPUT_EVENTS.CHANGE);
+      this.previousValue = this.value;
     }
   }
   _clear() {
