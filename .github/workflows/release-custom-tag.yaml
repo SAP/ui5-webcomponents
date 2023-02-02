@@ -1,8 +1,12 @@
-name: Release-auto-weekly
+name: Release-custom-tag
 
 on:
-  schedule:
-  - cron: "00 08 * * THU"
+  workflow_dispatch:
+    inputs:
+      npm_tag:
+        description: 'npm dist tag'
+        required: true
+        default: 'sf'
 
 jobs:
   build-and-release:
@@ -33,5 +37,5 @@ jobs:
         npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
         git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
         git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
-        yarn lerna version --conventional-prerelease --force-publish --yes --exact --create-release github 
-        yarn lerna publish from-git --yes
+        yarn lerna version patch --force-publish --yes --exact --create-release github 
+        yarn lerna publish from-git --yes --dist-tag ${{ github.event.inputs.npm_tag }}

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4-rc.0...v1.11.0-rc.0) (2023-02-02)
+
+
+### Bug Fixes
+
+* **framework:** find correct focusable element ([#6388](https://github.com/SAP/ui5-webcomponents/issues/6388)) ([cf56f13](https://github.com/SAP/ui5-webcomponents/commit/cf56f1308160b0c10a0f366ef5e4df90036c4161))
+
+
+
+
+
 ## [1.10.4-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.3...v1.10.4-rc.0) (2023-01-26)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

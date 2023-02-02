@@ -18,7 +18,6 @@ jobs:
       run: |
         yarn install
         yarn build:playground:main_as_admin
-
     - name: Write version.md
       run: git log -1 &>> packages/playground/dist/version.md
 

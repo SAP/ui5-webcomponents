@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4-rc.0...v1.11.0-rc.0) (2023-02-02)
+
+
+### Bug Fixes
+
+* **framework:** find correct focusable element ([#6388](https://github.com/SAP/ui5-webcomponents/issues/6388)) ([cf56f13](https://github.com/SAP/ui5-webcomponents/commit/cf56f1308160b0c10a0f366ef5e4df90036c4161))
+* **ui5-input:** prevent setSelectionRange on number input ([#6395](https://github.com/SAP/ui5-webcomponents/issues/6395)) ([e5a61c7](https://github.com/SAP/ui5-webcomponents/commit/e5a61c72e07f2936e378882a4254f758d8a43dd7))
+
+
+### Features
+
+* **ui5-barcode-scanner-dialog:** migrated to Typescript ([#6338](https://github.com/SAP/ui5-webcomponents/issues/6338)) ([10b4417](https://github.com/SAP/ui5-webcomponents/commit/10b4417e8ea4229b6bd2ef5b4957bbf00d155d39))
+
+
+
+
+
 ## [1.10.4-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.3...v1.10.4-rc.0) (2023-01-26)
 
 

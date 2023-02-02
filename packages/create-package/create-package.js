@@ -24,7 +24,7 @@ const toCamelCase = parts => {
 	}).join("");
 };
 const isTypescriptRelatedFile = sourcePath => {
-	return ["MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
+	return ["Аssets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
 }
 
 // Validation of user input
