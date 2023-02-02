@@ -704,7 +704,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
-		registerUI5Element(this, this._updateAssosiatedLabelsTexts.bind(this), ["accessibleNameRef"]);
+		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this), ["accessibleNameRef"]);
 	}
 
 	onExitDOM() {
@@ -1174,7 +1174,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._inputWidth = this.offsetWidth;
 	}
 
-	_updateAssosiatedLabelsTexts() {
+	_updateAssociatedLabelsTexts() {
 		this._associatedLabelsTexts = getAssociatedLabelForTexts(this) ?? "";
 		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this) ?? "";
 	}

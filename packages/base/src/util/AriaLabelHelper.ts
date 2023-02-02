@@ -1,16 +1,16 @@
-import UI5Element from "../UI5Element.js";
+import UI5Element, { ChangeInfo } from "../UI5Element.js";
 
-type InvalidateCallback = (param: any) => void;
+type InvalidateCallback = (changeInfo: ChangeInfo) => void;
 type MutationCallback = () => void;
-type AssociatedElement = { observer: MutationObserver|null, callbacks: MutationCallback[] };
-type RegistedElement = { elementId: string, trackedElements: HTMLElement[], trackedProperties: string[], callback: MutationCallback, invalidationCallback: InvalidateCallback };
+type AssociatedElement = { observer: MutationObserver|null, callbacks: Array<MutationCallback> };
+type RegisteredElement = { host: UI5Element, observedElements: Array<HTMLElement>, trackedProperties: Array<string>, callback: MutationCallback, invalidationCallback: InvalidateCallback };
 
 const associatedElements = new WeakMap<HTMLElement, AssociatedElement>();
-const registredElements = new WeakMap<UI5Element, RegistedElement>();
+const registeredElements = new WeakMap<UI5Element, RegisteredElement>();
 
 type AccessibleElement = HTMLElement & {
-  accessibleNameRef: string;
-  accessibleName: string;
+	accessibleNameRef: string;
+	accessibleName: string;
 };
 
 const observerOptions = {
@@ -38,7 +38,7 @@ const getEffectiveAriaLabelText = (el: HTMLElement) => {
  * @param {HTMLElement} el Defines the HTMLElement, for which you need to get all related texts
  */
 const getAllAccessibleNameRefTexts = (el: HTMLElement) => {
-	const ids = (el as AccessibleElement).accessibleNameRef.split(" ");
+	const ids = (el as AccessibleElement).accessibleNameRef?.split(" ") ?? [];
 	const owner = el.getRootNode() as HTMLElement;
 	let result = "";
 
@@ -54,19 +54,19 @@ const getAllAccessibleNameRefTexts = (el: HTMLElement) => {
 	return result;
 };
 
-const _getAllAssociatedElementsFromDOM = (el: UI5Element, trackedProperties: string[]): HTMLElement[] => {
+const _getAllAssociatedElementsFromDOM = (el: UI5Element, trackedProperties: Array<string>): Array<HTMLElement> => {
 	const set = new Set<HTMLElement>();
 	// adding labels with attribute for matching the el.id
-	const labelsForAssociated = (el.getRootNode() as HTMLElement).querySelectorAll<HTMLElement>(`[ui5-label][for="${el.id}"],label[for="${el.id}"]`);
-	Array.from(labelsForAssociated).forEach(itm => {
+	const labelsForAssociated = _getAssociatedLabels(el);
+	labelsForAssociated.forEach(itm => {
 		set.add(itm);
 	});
 	// adding other elements that id is the same as any of the tracked properties value
 	trackedProperties.forEach(name => {
 		const value = el[name as keyof typeof el] as string;
-		const ids = value.split(" ");
+		const ids = value?.split(" ") ?? [];
 		ids.forEach(id => {
-			const refEl = _getRefferencedElementById(el, id);
+			const refEl = _getReferencedElementById(el, id);
 			if (refEl) {
 				set.add(refEl);
 			}
@@ -75,12 +75,12 @@ const _getAllAssociatedElementsFromDOM = (el: UI5Element, trackedProperties: str
 	return Array.from(set);
 };
 
-const _getAssociatedLabels = (el: HTMLElement): HTMLElement[] => {
+const _getAssociatedLabels = (el: HTMLElement): Array<HTMLElement> => {
 	const labels = (el.getRootNode() as HTMLElement).querySelectorAll<HTMLElement>(`[ui5-label][for="${el.id}"],label[for="${el.id}"]`);
 	return Array.from(labels);
 };
 
-const _getRefferencedElementById = (el: HTMLElement, elementId: string): HTMLElement | null => {
+const _getReferencedElementById = (el: HTMLElement, elementId: string): HTMLElement | null => {
 	return (el.getRootNode() as HTMLElement).querySelector<HTMLElement>(`[id='${elementId}']`);
 };
 
@@ -103,57 +103,57 @@ const getAssociatedLabelForTexts = (el: HTMLElement) => {
 	return undefined;
 };
 
-const _createInvalidationCallback = (el: UI5Element, trackedProperties: string[]) => {
-	const invalidationCallback = (param: any) => {
-		if (!(param && param.type === "property" && trackedProperties.includes(param.name as string))) {
+const _createInvalidationCallback = (el: UI5Element, trackedProperties: Array<string>) => {
+	const invalidationCallback = (changeInfo: ChangeInfo) => {
+		if (!(changeInfo && changeInfo.type === "property" && trackedProperties.includes(changeInfo.name))) {
 			return;
 		}
-		const registry = registredElements.get(el);
-		if (!registry) {
+		const registeredElement = registeredElements.get(el);
+		if (!registeredElement) {
 			return;
 		}
-		const oldAssociatedElements = registry.trackedElements;
+		const oldAssociatedElements = registeredElement.observedElements;
 		const newAssociatedElements = _getAllAssociatedElementsFromDOM(el, trackedProperties);
 		oldAssociatedElements.forEach(oldElement => {
 			if (!newAssociatedElements.includes(oldElement)) {
-				_removeRegistryTrackedElement(registry, oldElement);
+				_removeObservedElementFromRegisteredElement(registeredElement, oldElement);
 			}
 		});
 		newAssociatedElements.forEach(newElement => {
 			if (!oldAssociatedElements.includes(newElement)) {
-				_addRegistryTrackedElement(registry, newElement);
-				registry.trackedElements.push(newElement);
+				_addObservedElementToRegisteredElement(registeredElement, newElement);
+				registeredElement.observedElements.push(newElement);
 			}
 		});
-		registry?.callback();
+		registeredElement?.callback();
 	};
 	return invalidationCallback;
 };
 
-const registerUI5Element = (el: UI5Element, callback: () => void, trackedProperties: string[]) => {
-	if (registredElements.has(el)) {
+const registerUI5Element = (el: UI5Element, callback: () => void, trackedProperties: Array<string>) => {
+	if (registeredElements.has(el)) {
 		return;
 	}
 	const allAssociatedElements = _getAllAssociatedElementsFromDOM(el, trackedProperties);
 	const invalidationCallback = _createInvalidationCallback(el, trackedProperties);
-	const registry = {
-		elementId: el.id,
-		trackedElements: allAssociatedElements,
+	const registeredElement = {
+		host: el,
+		observedElements: allAssociatedElements,
 		trackedProperties,
 		callback,
 		invalidationCallback,
 	};
-	registredElements.set(el, registry);
+	registeredElements.set(el, registeredElement);
 	el.attachInvalidate(invalidationCallback);
 
 	allAssociatedElements.forEach((element: HTMLElement) => {
-		_addRegistryTrackedElement(registry, element);
+		_addObservedElementToRegisteredElement(registeredElement, element);
 	});
 	callback();
 };
 
-const _addRegistryTrackedElement = (registry:RegistedElement, trackedElement: HTMLElement) => {
-	let associatedElement = associatedElements.get(trackedElement);
+const _addObservedElementToRegisteredElement = (registeredElement:RegisteredElement, element: HTMLElement) => {
+	let associatedElement = associatedElements.get(element);
 	if (!associatedElement) {
 		associatedElement = { observer: null, callbacks: [] };
 		const observer = new MutationObserver(() => {
@@ -161,40 +161,41 @@ const _addRegistryTrackedElement = (registry:RegistedElement, trackedElement: HT
 			callbacks.forEach(callback => {
 				callback();
 			});
-			const domEl = document.getElementById(trackedElement.id);
-			// if no longer should be tracked from this registry, remove it
-			if (!domEl || registry.elementId !== trackedElement.getAttribute("for")) {
-				_removeRegistryTrackedElement(registry, trackedElement);
+			const domEl = document.getElementById(element.id);
+			// if no longer should be tracked from this registeredElement, remove it
+			if (!domEl || registeredElement.host.id !== element.getAttribute("for")) {
+				_removeObservedElementFromRegisteredElement(registeredElement, element);
 			}
 		});
 		associatedElement.observer = observer;
-		observer.observe(trackedElement, observerOptions);
-		associatedElements.set(trackedElement, associatedElement);
+		observer.observe(element, observerOptions);
+		associatedElements.set(element, associatedElement);
 	}
-	if (!associatedElement.callbacks.includes(registry.callback)) {
-		associatedElement.callbacks.push(registry.callback);
+	if (!associatedElement.callbacks.includes(registeredElement.callback)) {
+		associatedElement.callbacks.push(registeredElement.callback);
 	}
 };
 
-const _removeRegistryTrackedElement = (registry:RegistedElement, trackedElement: HTMLElement) => {
-	const associatedElement = associatedElements.get(trackedElement);
+const _removeObservedElementFromRegisteredElement = (registeredElement:RegisteredElement, element: HTMLElement) => {
+	const associatedElement = associatedElements.get(element);
 	if (associatedElement) {
-		associatedElement.callbacks = associatedElement.callbacks.filter(itm => itm !== registry.callback);
+		associatedElement.callbacks = associatedElement.callbacks.filter(itm => itm !== registeredElement.callback);
 		if (!associatedElement.callbacks.length) {
 			associatedElement.observer?.disconnect();
-			associatedElements.delete(trackedElement);
+			associatedElements.delete(element);
 		}
 	}
-	registry.trackedElements = registry.trackedElements.filter(itm => itm !== trackedElement);
+	registeredElement.observedElements = registeredElement.observedElements.filter(itm => itm !== element);
 };
 
 const unregisterUI5Element = (el: UI5Element) => {
-	const registry = registredElements.get(el);
-	if (!registry) {
+	const registeredElement = registeredElements.get(el);
+	if (!registeredElement) {
 		return;
 	}
-	[...registry.trackedElements].forEach(trackedElement => {
-		_removeRegistryTrackedElement(registry, trackedElement);
+	const oldObservedElements = [...registeredElement.observedElements];
+	oldObservedElements.forEach(observedElement => {
+		_removeObservedElementFromRegisteredElement(registeredElement, observedElement);
 	});
 };
 
