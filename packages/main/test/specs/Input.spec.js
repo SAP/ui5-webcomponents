@@ -906,7 +906,7 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
 	});
 
-	it("Chave event calling after clear icon is pressed", async () => {
+	it("Change event calling after clear icon is pressed", async () => {
 		await browser.url(`test/pages/Input.html`);
 
 		const input = await $("#clear-input");

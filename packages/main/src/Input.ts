@@ -618,7 +618,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	FormSupport?: typeof FormSupportT;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
-	_focusedAfterClear?: boolean;
+	_focusedAfterClear: boolean;
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 
