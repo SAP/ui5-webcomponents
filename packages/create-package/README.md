@@ -10,10 +10,14 @@ Provides an `npm init` script for creating new "UI5 Web Components" packages.
 
 ```
 Usage:
+
+# npm 6.x
     npm init @ui5/webcomponents-package [OPTIONS]
+# npm 7+, extra double-dash is needed:
+    npm init @ui5/webcomponents-package -- [OPTIONS]
+
 Options:
     --name <string>     - defines package name
-    --port <number>     - defines default package server port
     --tag <string>      - defines predefined custom element tag name
     --enable-typescript - enables TypeScript support to the package
     --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
@@ -29,7 +33,6 @@ Usage:
     yarn create @ui5/webcomponents-package [OPTIONS]
 Options:
     --name <string>     - defines package name
-    --port <number>     - defines default package server port
     --tag <string>      - defines predefined custom element tag name
     --enable-typescript - enables TypeScript support to the package
     --skip              - skips all configurations and generates package with default configurations

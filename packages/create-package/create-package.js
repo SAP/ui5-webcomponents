@@ -29,7 +29,6 @@ const isTypescriptRelatedFile = sourcePath => {
 
 // Validation of user input
 const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z0-9\-_]+$/);
-const isPortValid = port => typeof port === "string" && port.match(/^[0-9]+$/);
 const isTagValid = tag => typeof tag === "string" && tag.match(/^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/);
 
 // Utils for building the file structure
@@ -74,13 +73,12 @@ const copyFiles = (vars, sourcePath, destPath) => {
 };
 
 
-const generateFilesContent = (name, port, tag, typescript) => {
+const generateFilesContent = (name, tag, typescript) => {
 	const className = capitalizeFirst(kebabToCamelCase(tag));
 
 	// All variables that will be replaced in the content of the resources/
 	const vars = {
 		INIT_PACKAGE_VAR_NAME: name,
-		INIT_PACKAGE_VAR_PORT: port,
 		INIT_PACKAGE_VAR_TAG: tag,
 		INIT_PACKAGE_VAR_CLASS_NAME: className,
 		INIT_PACKAGE_VAR_TYPESCRIPT: typescript
@@ -103,7 +101,6 @@ const generateFilesContent = (name, port, tag, typescript) => {
 			"prepublishOnly": "npm run build",
 		},
 		exports: {
-			"./.port": "./.port",
 			"./src/*": "./src/*",
 			"./dist/*": "./dist/*",
 			"./package.json": "./package.json",
@@ -153,22 +150,16 @@ const createWebcomponentsPackage = async () => {
 		throw new Error("The package name should be a string (a-z, A-Z, 0-9).");
 	}
 
-	console.log("Asdads")
-	if (argv.port && !isPortValid(argv.port) ) {
-		throw new Error("The port should be only digits.");
-	}
-
 	if (argv.tag && !isTagValid(argv.tag) ) {
 		throw new Error("The tag should be in kebab-case (my-first-component f.e) and it can't be a single word.");
 	}
 
 	let name = argv.name || "my-package";
-	let port = argv.port || 8080;
 	let tag = argv.tag || "my-first-component";
 	let typescriptSupport = !!argv.enableTypescript;
 
 	if (!!argv.skip) {
-		return generateFilesContent(name, port, tag, typescriptSupport);
+		return generateFilesContent(name, tag, typescriptSupport);
 	}
 
 	if (!argv.name) {
@@ -211,7 +202,7 @@ const createWebcomponentsPackage = async () => {
 		tag = response.tag;
 	}
 
-	return generateFilesContent(name, port, tag, typescript);
+	return generateFilesContent(name, tag, typescript);
 };
 
 createWebcomponentsPackage();
