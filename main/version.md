@@ -1,5 +1,7 @@
-commit 0a34c87a3118e2dee5b6e5379752a8faa64e9a97
+commit df0a59345efc3b2eb1770a3bc37a0695f79248ad
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 1 21:12:49 2023 +0200
+Date:   Thu Feb 2 08:32:40 2023 +0200
 
-    chore: test deploy on netlify
+    chore: migrate files to TS in main, create-package (#6392)
+    
+    Several Assets files has been left in JS in the main package. In addition, Assets.ts has been added to the create-package "typescript" template.
