@@ -1,7 +1,5 @@
-commit df0a59345efc3b2eb1770a3bc37a0695f79248ad
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Thu Feb 2 08:32:40 2023 +0200
+commit 6464abd79265425ce65232ebeee53cf6585e6ec6
+Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
+Date:   Thu Feb 2 08:09:35 2023 +0000
 
-    chore: migrate files to TS in main, create-package (#6392)
-    
-    Several Assets files has been left in JS in the main package. In addition, Assets.ts has been added to the create-package "typescript" template.
+    chore(release): publish v1.11.0-rc.0
