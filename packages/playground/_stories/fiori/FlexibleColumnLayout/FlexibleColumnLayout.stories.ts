@@ -46,10 +46,9 @@ const Template: UI5StoryArgs<FlexibleColumnLayout, StoryArgsSlots> = (args) => {
       id="fcl"
       style="height: 600px;"
       layout=${ifDefined(args.layout)}
-      ?hideArrows=${ifDefined(args.hideArrows)}
+      ?hide-arrows=${ifDefined(args.hideArrows)}
       .accessibility-texts=${ifDefined(args.accessibilityTexts)}
       .accessibility-roles=${ifDefined(args.accessibilityRoles)}
-      style="${ifDefined(args.style)}"
     >
       ${unsafeHTML(args.startColumn)} ${unsafeHTML(args.midColumn)}
       ${unsafeHTML(args.endColumn)}
@@ -196,7 +195,6 @@ const Template: UI5StoryArgs<FlexibleColumnLayout, StoryArgsSlots> = (args) => {
 
 export const Basic = Template.bind({});
 Basic.args = {
-  style: 'height: "600px";',
   startColumn: `
       <div class="col" slot="startColumn">
         <ui5-shellbar

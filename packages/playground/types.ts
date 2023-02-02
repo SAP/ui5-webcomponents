@@ -10,7 +10,7 @@ type Override<T, S> = {
   [P in keyof S]: S[P];
 } & {
   // make style properties optional
-  style?: Partial<CSSStyleDeclaration>;
+  style?: string;
 };
 
 export type UI5StoryArgs<T, S> = Story<Override<T, S>>;

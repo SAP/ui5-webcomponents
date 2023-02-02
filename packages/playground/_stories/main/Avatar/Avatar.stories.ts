@@ -63,11 +63,7 @@ Styles.storyName = "Avatar Styles";
 Styles.args = {
   size: AvatarSize.XL,
   shape: AvatarShape.Square,
-  style: {
-    width: "250px",
-    height: "250px",
-    border: "1px solid var(--sapField_BorderColor)",
-  },
+  style: "width: 250px; height:250px; border: 1px solid var(--sapField_BorderColor)",
   default: `<img
 	src="../assets/images/avatars/Lamp_avatar_01.jpg"
 	alt="Lamp"

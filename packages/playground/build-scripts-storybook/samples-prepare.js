@@ -57,7 +57,13 @@ export type StoryArgsSlots = {
 		moduleAPI?.properties?.forEach(prop => {
 			if (prop.visibility === 'public') {
 				const typeEnum = api.symbols.find(s => s.name === prop.type) || baseAPI.symbols.find(s => s.name === prop.type);
-				if (Array.isArray(typeEnum?.properties)) {
+				if (prop.readonly) { 
+					args[prop.name] = {
+						control: {
+							type: false
+						},
+					};
+				} else if (Array.isArray(typeEnum?.properties)) {
 					args[prop.name] = {
 						control: "select",
 						options: typeEnum.properties.map(a => a.type),
