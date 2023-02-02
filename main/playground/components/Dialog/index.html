@@ -6417,7 +6417,7 @@
                         <div class="cell api-table-content-cell">ValueState</div>
                         <div class="cell api-table-content-cell">&quot;None&quot;</div>
                         <div class="cell api-table-content-cell api-table-content-cell-description">
-                            Defines the state of the <code>Dialog</code>. <br> Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+                            Defines the state of the <code>Dialog</code>. <br><br> Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>. <br><br> <b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.0.0-rc.15</div>
                         </div>
                       </div>
@@ -6460,6 +6460,19 @@
                       </div>
                       <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
+                          accessibleRole
+                            <br>
+                                 <code>accessible-role</code>
+                        </div>
+                        <div class="cell api-table-content-cell">PopupAccessibleRole</div>
+                        <div class="cell api-table-content-cell">&quot;Dialog&quot;</div>
+                        <div class="cell api-table-content-cell api-table-content-cell-description">
+                            Allows setting a custom role. Available options are: <ul> <li><code>Dialog</code></li> <li><code>None</code></li> <li><code>AlertDialog</code></li> </ul>
+                                <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.10.0</div>
+                        </div>
+                      </div>
+                      <div class="row api-table-roll-even">
+                        <div class="cell api-table-content-cell api-table-content-cell-bold">
                           initialFocus
                             <br>
                                  <code>initial-focus</code>
@@ -6470,7 +6483,7 @@
                             Defines the ID of the HTML Element, which will get the initial focus.
                         </div>
                       </div>
-                      <div class="row api-table-roll-even">
+                      <div class="row api-table-roll-odd">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           open
                             <br>
@@ -6482,7 +6495,7 @@
                                 <div class="api-table-content-cell-bold api-table-content-cell-since">since v1.2.0</div>
                         </div>
                       </div>
-                      <div class="row api-table-roll-odd">
+                      <div class="row api-table-roll-even">
                         <div class="cell api-table-content-cell api-table-content-cell-bold">
                           preventFocusRestore
                             <br>

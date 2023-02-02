@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675340631
+  buildTime: 1675342635
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -9664,7 +9664,7 @@ List = List_1 = __decorate$1f([
 List.define();
 var List$1 = List;
 const block0$1K = (context, tags, suffix) => effectiveHtml`${context._isPhone ? block1$1p(context, tags, suffix) : block7$u(context)}`;
-const block1$1p = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-dialog", tags, suffix)} accessible-name=${l(context.accessibleName)} accessible-name-ref=${l(context.accessibleNameRef)} stretch _disable-initial-focus @ui5-before-open="${l(context._beforeDialogOpen)}" @ui5-after-open="${l(context._propagateDialogEvent)}" @ui5-before-close="${l(context._propagateDialogEvent)}" @ui5-after-close="${l(context._afterDialogClose)}" exportparts="content, header, footer">${!context._hideHeader ? block2$1c(context, tags, suffix) : void 0}<slot></slot><slot slot="footer" name="footer"></slot></${scopeTag("ui5-dialog", tags, suffix)}>` : effectiveHtml`<ui5-dialog accessible-name=${l(context.accessibleName)} accessible-name-ref=${l(context.accessibleNameRef)} stretch _disable-initial-focus @ui5-before-open="${l(context._beforeDialogOpen)}" @ui5-after-open="${l(context._propagateDialogEvent)}" @ui5-before-close="${l(context._propagateDialogEvent)}" @ui5-after-close="${l(context._afterDialogClose)}" exportparts="content, header, footer">${!context._hideHeader ? block2$1c(context, tags, suffix) : void 0}<slot></slot><slot slot="footer" name="footer"></slot></ui5-dialog>`;
+const block1$1p = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-dialog", tags, suffix)} accessible-name=${l(context.accessibleName)} accessible-name-ref=${l(context.accessibleNameRef)} accessible-role=${l(context.accessibleRole)} stretch _disable-initial-focus @ui5-before-open="${l(context._beforeDialogOpen)}" @ui5-after-open="${l(context._propagateDialogEvent)}" @ui5-before-close="${l(context._propagateDialogEvent)}" @ui5-after-close="${l(context._afterDialogClose)}" exportparts="content, header, footer">${!context._hideHeader ? block2$1c(context, tags, suffix) : void 0}<slot></slot><slot slot="footer" name="footer"></slot></${scopeTag("ui5-dialog", tags, suffix)}>` : effectiveHtml`<ui5-dialog accessible-name=${l(context.accessibleName)} accessible-name-ref=${l(context.accessibleNameRef)} accessible-role=${l(context.accessibleRole)} stretch _disable-initial-focus @ui5-before-open="${l(context._beforeDialogOpen)}" @ui5-after-open="${l(context._propagateDialogEvent)}" @ui5-before-close="${l(context._propagateDialogEvent)}" @ui5-after-close="${l(context._afterDialogClose)}" exportparts="content, header, footer">${!context._hideHeader ? block2$1c(context, tags, suffix) : void 0}<slot></slot><slot slot="footer" name="footer"></slot></ui5-dialog>`;
 const block2$1c = (context, tags, suffix) => effectiveHtml`${context.header.length ? block3$_() : block4$P(context, tags, suffix)}`;
 const block3$_ = (context, tags, suffix) => effectiveHtml`<slot slot="header" name="header"></slot>`;
 const block4$P = (context, tags, suffix) => effectiveHtml`<div class="${o$1(context.classes.header)}" slot="header">${context.headerText ? block5$I(context, tags, suffix) : void 0}${!context._hideCloseButton ? block6$z(context, tags, suffix) : void 0}</div>`;
@@ -9725,6 +9725,13 @@ const MediaRange = {
 MediaRange.initRangeSet(MediaRange.RANGESETS.RANGE_4STEPS, DEAFULT_RANGE_SET);
 const block0$1J = (context, tags, suffix) => effectiveHtml`<section style="${styleMap(context.styles.root)}" class="${o$1(context.classes.root)}" role="${l(context._role)}" aria-modal="${l(context._ariaModal)}" aria-label="${l(context._ariaLabel)}" aria-labelledby="${l(context._ariaLabelledBy)}" @keydown=${context._onkeydown} @focusout=${context._onfocusout} @mouseup=${context._onmouseup} @mousedown=${context._onmousedown}><span class="first-fe" data-ui5-focus-trap tabindex="0" @focusin=${context.forwardToLast}></span><div style="${styleMap(context.styles.content)}" class="${o$1(context.classes.content)}"  @scroll="${context._scroll}" part="content"><slot></slot></div><span class="last-fe" data-ui5-focus-trap tabindex="0" @focusin=${context.forwardToFirst}></span></section> `;
 const block0$1I = (context, tags, suffix) => effectiveHtml`<div class="ui5-block-layer" ?hidden=${context._blockLayerHidden} tabindex="0" style="${styleMap(context.styles.blockLayer)}" @keydown="${context._preventBlockLayerFocus}" @mousedown="${context._preventBlockLayerFocus}"></div>`;
+var PopupAccessibleRole;
+(function(PopupAccessibleRole2) {
+  PopupAccessibleRole2["None"] = "None";
+  PopupAccessibleRole2["Dialog"] = "Dialog";
+  PopupAccessibleRole2["AlertDialog"] = "AlertDialog";
+})(PopupAccessibleRole || (PopupAccessibleRole = {}));
+var PopupAccessibleRole$1 = PopupAccessibleRole;
 let openedRegistry$1 = [];
 const addOpenedPopup = (instance, parentPopovers = []) => {
   if (!openedRegistry$1.some((popup) => popup.instance === instance)) {
@@ -10003,7 +10010,10 @@ let Popup = Popup_1 = class Popup2 extends UI5Element {
     return this.shadowRoot.querySelector(".ui5-popup-root");
   }
   get _role() {
-    return "dialog";
+    return this.accessibleRole === PopupAccessibleRole$1.None ? void 0 : this.accessibleRole.toLowerCase();
+  }
+  get _ariaModal() {
+    return this.accessibleRole === PopupAccessibleRole$1.None ? void 0 : "true";
   }
   get contentDOM() {
     return this.shadowRoot.querySelector(".ui5-popup-content");
@@ -10047,6 +10057,9 @@ __decorate$1e([
 __decorate$1e([
   property({ defaultValue: "" })
 ], Popup.prototype, "accessibleNameRef", void 0);
+__decorate$1e([
+  property({ type: PopupAccessibleRole$1, defaultValue: PopupAccessibleRole$1.Dialog })
+], Popup.prototype, "accessibleRole", void 0);
 __decorate$1e([
   property()
 ], Popup.prototype, "mediaRange", void 0);
@@ -10581,9 +10594,6 @@ let Popover = Popover_1 = class Popover2 extends Popup$1 {
     }
     return void 0;
   }
-  get _ariaModal() {
-    return "true";
-  }
   get styles() {
     return {
       ...super.styles,
@@ -11019,9 +11029,6 @@ let Dialog = Dialog_1 = class Dialog2 extends Popup$1 {
     }
     return ariaLabelledById;
   }
-  get _ariaModal() {
-    return "true";
-  }
   get _displayProp() {
     return "flex";
   }
@@ -11056,7 +11063,13 @@ let Dialog = Dialog_1 = class Dialog2 extends Popup$1 {
     return ICON_PER_STATE[this.state];
   }
   get _role() {
-    return this.state === ValueState$1.Error || this.state === ValueState$1.Warning ? "alertdialog" : "dialog";
+    if (this.accessibleRole === PopupAccessibleRole$1.None) {
+      return void 0;
+    }
+    if (this.state === ValueState$1.Error || this.state === ValueState$1.Warning) {
+      return PopupAccessibleRole$1.AlertDialog.toLowerCase();
+    }
+    return this.accessibleRole.toLowerCase();
   }
   _show() {
     super._show();
