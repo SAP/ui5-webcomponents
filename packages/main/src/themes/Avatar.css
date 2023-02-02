@@ -131,77 +131,77 @@
 :host(:not([color-scheme])),
 :host(:not([_has-image])),
 :host([_color-scheme="Accent6"]),
-:host([color-scheme="Accent6"]) {
+:host([ui5-avatar][color-scheme="Accent6"]) {
 	background-color: var(--ui5-avatar-accent6);
 	color: var(--ui5-avatar-accent6-color);
 	border-color: var(--ui5-avatar-accent6-border-color);
 }
 
 :host([_color-scheme="Accent1"]),
-:host([color-scheme="Accent1"]) {
+:host([ui5-avatar][color-scheme="Accent1"]) {
 	background-color: var(--ui5-avatar-accent1);
 	color: var(--ui5-avatar-accent1-color);
 	border-color: var(--ui5-avatar-accent1-border-color);
 }
 
 :host([_color-scheme="Accent2"]),
-:host([color-scheme="Accent2"]) {
+:host([ui5-avatar][color-scheme="Accent2"]) {
 	background-color: var(--ui5-avatar-accent2);
 	color: var(--ui5-avatar-accent2-color);
 	border-color: var(--ui5-avatar-accent2-border-color);
 }
 
 :host([_color-scheme="Accent3"]),
-:host([color-scheme="Accent3"]) {
+:host([ui5-avatar][color-scheme="Accent3"]) {
 	background-color: var(--ui5-avatar-accent3);
 	color: var(--ui5-avatar-accent3-color);
 	border-color: var(--ui5-avatar-accent3-border-color);
 }
 
 :host([_color-scheme="Accent4"]),
-:host([color-scheme="Accent4"]) {
+:host([ui5-avatar][color-scheme="Accent4"]) {
 	background-color: var(--ui5-avatar-accent4);
 	color: var(--ui5-avatar-accent4-color);
 	border-color: var(--ui5-avatar-accent4-border-color);
 }
 
 :host([_color-scheme="Accent5"]),
-:host([color-scheme="Accent5"]) {
+:host([ui5-avatar][color-scheme="Accent5"]) {
 	background-color: var(--ui5-avatar-accent5);
 	color: var(--ui5-avatar-accent5-color);
 	border-color: var(--ui5-avatar-accent5-border-color);
 }
 
 :host([_color-scheme="Accent7"]),
-:host([color-scheme="Accent7"]) {
+:host([ui5-avatar][color-scheme="Accent7"]) {
 	background-color: var(--ui5-avatar-accent7);
 	color: var(--ui5-avatar-accent7-color);
 	border-color: var(--ui5-avatar-accent7-border-color);
 }
 
 :host([_color-scheme="Accent8"]),
-:host([color-scheme="Accent8"]) {
+:host([ui5-avatar][color-scheme="Accent8"]) {
 	background-color: var(--ui5-avatar-accent8);
 	color: var(--ui5-avatar-accent8-color);
 	border-color: var(--ui5-avatar-accent8-border-color);
 }
 
 :host([_color-scheme="Accent9"]),
-:host([color-scheme="Accent9"]) {
+:host([ui5-avatar][color-scheme="Accent9"]) {
 	background-color: var(--ui5-avatar-accent9);
 	color: var(--ui5-avatar-accent9-color);
 	border-color: var(--ui5-avatar-accent9-border-color);
 }
 
 :host([_color-scheme="Accent10"]),
-:host([color-scheme="Accent10"]) {
+:host([ui5-avatar][color-scheme="Accent10"]) {
 	background-color: var(--ui5-avatar-accent10);
 	color: var(--ui5-avatar-accent10-color);
 	border-color: var(--ui5-avatar-accent10-border-color);
 }
 
 :host([_color-scheme="Placeholder"]),
-:host([color-scheme="Placeholder"]) {
+:host([ui5-avatar][color-scheme="Placeholder"]) {
 	background-color: var(--ui5-avatar-placeholder);
 	color: var(--ui5-avatar-placeholder-color);
 	border-color: var(--ui5-avatar-placeholder-border-color);
