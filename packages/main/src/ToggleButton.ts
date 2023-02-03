@@ -60,7 +60,7 @@ class ToggleButton extends Button {
 		this.pressed = !this.pressed;
 
 		if (isSafari()) {
-			this.getDomRef()?.focus();
+			this.getDomRef()!.focus();
 		}
 	}
 

@@ -57,7 +57,7 @@ class SegmentedButtonItem extends ToggleButton implements ITabbable {
 	 * @public
 	 */
 	@property({ type: Boolean })
-	iconEnd!: boolean
+	iconEnd!: boolean;
 
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
@@ -78,7 +78,7 @@ class SegmentedButtonItem extends ToggleButton implements ITabbable {
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
-	posInSet?: number;
+	posInSet!: number;
 
 	/**
 	 * Defines how many items are inside of the SegmentedButton.
@@ -88,7 +88,7 @@ class SegmentedButtonItem extends ToggleButton implements ITabbable {
 	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
-	sizeOfSet?: number
+	sizeOfSet!: number;
 
 	static get template() {
 		return SegmentedButtonItemTemplate;
