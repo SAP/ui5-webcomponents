@@ -255,6 +255,8 @@ The `accessible-role` property is currently supported in:
 * [Panel](https://sap.github.io/ui5-webcomponents/playground/components/Panel)
 * [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
 * [Icon](https://sap.github.io/ui5-webcomponents/playground/components/Icon) 
+* [Popover](https://sap.github.io/ui5-webcomponents/playground/components/Popover/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/playground/components/Dialog/)
 
 ---
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4-rc.0...v1.11.0-rc.0) (2023-02-02)
+
+
+### Bug Fixes
+
+* **ui5-input:** prevent setSelectionRange on number input ([#6395](https://github.com/SAP/ui5-webcomponents/issues/6395)) ([e5a61c7](https://github.com/SAP/ui5-webcomponents/commit/e5a61c72e07f2936e378882a4254f758d8a43dd7))
+
+
+
+
+
 ## [1.10.4-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.3...v1.10.4-rc.0) (2023-01-26)
 
 

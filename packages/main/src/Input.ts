@@ -861,7 +861,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			}
 		}
 
-		if (this._isPhone && !this.suggestionItems.length) {
+		if (this._isPhone && !this.suggestionItems.length && !this.isTypeNumber) {
 			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
 
@@ -1010,8 +1010,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		if (this.previousValue !== this.getInputDOMRefSync()!.value) {
-			this.previousValue = this.getInputDOMRefSync()!.value;
 			this.fireEvent(INPUT_EVENTS.CHANGE);
+			this.previousValue = this.value;
 		}
 	}
 

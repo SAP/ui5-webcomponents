@@ -22,6 +22,7 @@ import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
 import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 import PopupsCommonCss from "./generated/themes/PopupsCommon.css.js";
 import dialogCSS from "./generated/themes/Dialog.css.js";
+import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 
 /**
  * Defines the step size at which this component would change by when being dragged or resized with the keyboard.
@@ -50,7 +51,8 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * The dialog combines concepts known from other technologies where the windows have
  * names such as dialog box, dialog window, pop-up, pop-up window, alert box, or message box.
  * <br><br>
- * The <code>ui5-dialog</code> is modal, which means that user action is required before returning to the parent window is possible.
+ * The <code>ui5-dialog</code> is modal, which means that an user action is required before it is possible to return to the parent window.
+ * To open multiple dialogs, each dialog element should be separate in the markup. This will ensure the correct modal behavior. Avoid nesting dialogs within each other.
  * The content of the <code>ui5-dialog</code> is fully customizable.
  *
  * <h3>Structure</h3>
@@ -157,8 +159,11 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the state of the <code>Dialog</code>.
-	 * <br>
+	 * <br><br>
 	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+	 * <br><br>
+	 * <b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
+	 * accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.Dialog.prototype.state
 	 * @defaultvalue "None"
@@ -288,10 +293,6 @@ class Dialog extends Popup {
 		return ariaLabelledById;
 	}
 
-	get _ariaModal() {
-		return "true";
-	}
-
 	get _displayProp() {
 		return "flex";
 	}
@@ -339,8 +340,16 @@ class Dialog extends Popup {
 		return ICON_PER_STATE[this.state as ValueStateWithIcon];
 	}
 
-	get _role() {
-		return (this.state === ValueState.Error || this.state === ValueState.Warning) ? "alertdialog" : "dialog";
+	get _role(): string | undefined {
+		if (this.accessibleRole === PopupAccessibleRole.None) {
+			return undefined;
+		}
+
+		if (this.state === ValueState.Error || this.state === ValueState.Warning) {
+			return PopupAccessibleRole.AlertDialog.toLowerCase();
+		}
+
+		return this.accessibleRole.toLowerCase();
 	}
 
 	_show() {

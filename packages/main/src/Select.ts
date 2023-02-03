@@ -1,4 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isSpace,
@@ -13,7 +18,6 @@ import {
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -23,8 +27,14 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
+import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import List from "./List.js";
+import type { SelectionChangeEventDetail } from "./List.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
@@ -42,7 +52,6 @@ import Option from "./Option.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Popover from "./Popover.js";
-import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -56,202 +65,25 @@ import selectCss from "./generated/themes/Select.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
+import type FormSupport from "./features/InputElementsFormSupport.js";
+import { IFormElement } from "./features/InputElementsFormSupport.js";
+import type ListItemBase from "./ListItemBase.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-select",
-	languageAware: true,
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.main.Select.prototype */ {
+type SelectChangeEventDetail = {
+	selectedOption: Option,
+}
 
-		/**
-		 * Defines the component options.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> Only one selected option is allowed.
-		 * If more than one option is defined as selected, the last one would be considered as the selected one.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
-		 * @type {sap.ui.webc.main.ISelectOption[]}
-		 * @slot options
-		 * @public
-		 */
-		"default": {
-			propertyName: "options",
-			type: HTMLElement,
-			invalidateOnChildChange: true,
-		},
-
-		/**
-		 * Defines the value state message that will be displayed as pop up under the component.
-		 * <br><br>
-		 *
-		 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
-		 * <br>
-		 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
-		 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
-		 * @type {HTMLElement[]}
-		 * @since 1.0.0-rc.9
-		 * @slot
-		 * @public
-		 */
-		valueStateMessage: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
-		 * when <code>name</code> property is set.
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @private
-		 */
-		formSupport: {
-			type: HTMLElement,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.Select.prototype */  {
-
-		/**
-		 * Defines whether the component is in disabled state.
-		 * <br><br>
-		 * <b>Note:</b> A disabled component is noninteractive.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines the name with which the component will be submitted in an HTML form.
-		 * The value of the component will be the value of the currently selected <code>ui5-option</code>.
-		 *
-		 * <br><br>
-		 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
-		 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
-		 *
-		 * <br><br>
-		 * <b>Note:</b> When set, a native <code>input</code> HTML element
-		 * will be created inside the <code>ui5-select</code> so that it can be submitted as
-		 * part of an HTML form. Do not use this property unless you need to submit a form.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		name: {
-			type: String,
-		},
-
-		/**
-		 * Defines the value state of the component.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>None</code></li>
-		 * <li><code>Error</code></li>
-		 * <li><code>Warning</code></li>
-		 * <li><code>Success</code></li>
-		 * <li><code>Information</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.base.types.ValueState}
-		 * @defaultvalue "None"
-		 * @public
-		 */
-		valueState: {
-			type: ValueState,
-			defaultValue: ValueState.None,
-		},
-
-		/**
-		 * Defines whether the component is required.
-		 *
-		 * @since 1.0.0-rc.9
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		required: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the accessible ARIA name of the component.
-		 *
-		 * @type {string}
-		 * @since 1.0.0-rc.9
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-		},
-
-		/**
-		 * Receives id(or many ids) of the elements that label the select.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleNameRef: {
-			type: String,
-			defaultValue: "",
-		},
-
-		_text: {
-			type: String,
-			noAttribute: true,
-		},
-
-		_iconPressed: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		/**
-		 * @private
-		 */
-		opened: {
-			type: Boolean,
-		},
-
-		_listWidth: {
-			type: Integer,
-			defaultValue: 0,
-			noAttribute: true,
-		},
-
-		/**
-		 * @private
-		 */
-		focused: {
-			type: Boolean,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.Select.prototype */ {
-		/**
-		 * Fired when the selected option changes.
-		 *
-		 * @event
-		 * @param {HTMLElement} selectedOption the selected option.
-		 * @public
-		 */
-		change: {
-			detail: {
-				selectedOption: {},
-			},
-		},
-	},
-};
+interface IOption extends UI5Element {
+	selected: boolean,
+	_focused: boolean,
+	icon?: string | undefined,
+	value: string,
+	textContent: string | null,
+	title: string,
+	additionalText: string,
+	id: string,
+	stableDomRef: string,
+}
 
 /**
  * @class
@@ -286,10 +118,202 @@ const metadata = {
  * @public
  * @since 0.8.0
  */
-class Select extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+@customElement("ui5-select")
+@languageAware
+/**
+ * Fired when the selected option changes.
+ *
+ * @event sap.ui.webc.main.Select#change
+ * @param {HTMLElement} selectedOption the selected option.
+ * @public
+ */
+@event("change", {
+	detail: {
+		selectedOption: { type: HTMLElement },
+	},
+})
+class Select extends UI5Element implements IFormElement {
+	static i18nBundle: I18nBundle;
+
+	/**
+	 * Defines whether the component is in disabled state.
+	 * <br><br>
+	 * <b>Note:</b> A disabled component is noninteractive.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.Select.disabled
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Determines the name with which the component will be submitted in an HTML form.
+	 * The value of the component will be the value of the currently selected <code>ui5-option</code>.
+	 *
+	 * <br><br>
+	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 *
+	 * <br><br>
+	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * will be created inside the <code>ui5-select</code> so that it can be submitted as
+	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.Select.name
+	 * @public
+	 */
+	@property()
+	name!: string;
+
+	/**
+	 * Defines the value state of the component.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>None</code></li>
+	 * <li><code>Error</code></li>
+	 * <li><code>Warning</code></li>
+	 * <li><code>Success</code></li>
+	 * <li><code>Information</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @defaultvalue "None"
+	 * @name sap.ui.webc.main.Select.valueState
+	 * @public
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	valueState!: ValueState;
+
+	/**
+	 * Defines whether the component is required.
+	 *
+	 * @since 1.0.0-rc.9
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.Select.required
+	 * @public
+	 */
+	@property({ type: Boolean })
+	required!: boolean;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @since 1.0.0-rc.9
+	 * @public
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.Select.accessibleName
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the select.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.Select.accessibleNameRef
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleNameRef!: string;
+
+	/**
+	 * @private
+	 */
+	@property({ type: String, noAttribute: true })
+	_text?: string | null;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean, noAttribute: true })
+	_iconPressed!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	opened!: boolean;
+
+	/**
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
+	_listWidth!: number;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
+
+	_syncedOptions: Array<IOption>;
+	_selectedIndex: number;
+	_selectedIndexBeforeOpen: number;
+	_escapePressed: boolean;
+	_lastSelectedOption: Option | null;
+	_typedChars: string;
+	_typingTimeoutID?: Timeout | number;
+	responsivePopover!: ResponsivePopover;
+	selectedItem?: string | null;
+	popover?: Popover;
+	value!: string;
+
+	/**
+	 * Defines the component options.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Only one selected option is allowed.
+	 * If more than one option is defined as selected, the last one would be considered as the selected one.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
+	 * @type {sap.ui.webc.main.ISelectOption[]}
+	 * @slot options
+	 * @name sap.ui.webc.main.Select.prototype.default
+	 * @public
+	 */
+	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	options!: Array<Option>;
+
+	/**
+	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit,
+	 * when <code>name</code> property is set.
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @private
+	 */
+	@slot()
+	formSupport!: Array<HTMLElement>;
+
+	/**
+	 * Defines the value state message that will be displayed as pop up under the component.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> If not specified, a default text (in the respective language) will be displayed.
+	 * <br><br>
+	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
+	 * when the component is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
+	 * <br><br>
+	 * <b>Note:</b> If the component has <code>suggestionItems</code>,
+	 * the <code>valueStateMessage</code> would be displayed as part of the same popover, if used on desktop, or dialog - on phone.
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Select.prototype.valueStateMessage
+	 * @slot
+	 * @public
+	*/
+	@slot()
+	valueStateMessage!: Array<HTMLElement>;
 
 	static get render() {
 		return litRender;
@@ -320,7 +344,6 @@ class Select extends UI5Element {
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
 		this._typedChars = "";
-		this._typingTimeoutID = -1;
 	}
 
 	onBeforeRendering() {
@@ -354,7 +377,7 @@ class Select extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("[ui5-responsive-popover]");
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	/**
@@ -385,7 +408,7 @@ class Select extends UI5Element {
 		this.responsivePopover = await this._respPopover();
 
 		this.options.forEach(option => {
-			option._getRealDomRef = () => this.responsivePopover.querySelector(`*[data-ui5-stable=${option.stableDomRef}]`);
+			option._getRealDomRef = () => this.responsivePopover.querySelector<HTMLElement>(`*[data-ui5-stable=${option.stableDomRef}]`)!;
 		});
 	}
 
@@ -418,7 +441,7 @@ class Select extends UI5Element {
 			};
 		});
 
-		if (lastSelectedOptionIndex > -1 && !syncOpts[lastSelectedOptionIndex].disabled) {
+		if (lastSelectedOptionIndex > -1) {
 			syncOpts[lastSelectedOptionIndex].selected = true;
 			syncOpts[lastSelectedOptionIndex]._focused = true;
 			options[lastSelectedOptionIndex].selected = true;
@@ -438,52 +461,53 @@ class Select extends UI5Element {
 			}
 		}
 
-		this._syncedOptions = syncOpts;
+		this._syncedOptions = syncOpts as Array<IOption>;
 	}
 
 	_enableFormSupport() {
-		const FormSupport = getFeature("FormSupport");
-		if (FormSupport) {
-			FormSupport.syncNativeHiddenInput(this, (element, nativeInput) => {
-				nativeInput.disabled = element.disabled;
-				nativeInput.value = element._currentlySelectedOption ? element._currentlySelectedOption.value : "";
+		const formSupport = getFeature<typeof FormSupport>("FormSupport");
+		if (formSupport) {
+			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
+				const selectElement = (element as Select);
+				nativeInput.disabled = !!element.disabled;
+				nativeInput.value = selectElement._currentlySelectedOption ? selectElement._currentlySelectedOption.value : "";
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 	}
 
-	_onkeydown(event) {
-		const isTab = (isTabNext(event) || isTabPrevious(event));
+	_onkeydown(e: KeyboardEvent) {
+		const isTab = (isTabNext(e) || isTabPrevious(e));
 
 		if (isTab && this.responsivePopover && this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		}
 
-		if (isShow(event)) {
-			event.preventDefault();
+		if (isShow(e)) {
+			e.preventDefault();
 			this._toggleRespPopover();
-		} else if (isSpace(event)) {
-			event.preventDefault();
-		} else if (isEscape(event) && this._isPickerOpen) {
+		} else if (isSpace(e)) {
+			e.preventDefault();
+		} else if (isEscape(e) && this._isPickerOpen) {
 			this._escapePressed = true;
-		} else if (isHome(event)) {
-			this._handleHomeKey(event);
-		} else if (isEnd(event)) {
-			this._handleEndKey(event);
-		} else if (isEnter(event)) {
+		} else if (isHome(e)) {
+			this._handleHomeKey(e);
+		} else if (isEnd(e)) {
+			this._handleEndKey(e);
+		} else if (isEnter(e)) {
 			this._handleSelectionChange();
-		} else if (isUp(event) || isDown(event)) {
-			this._handleArrowNavigation(event);
+		} else if (isUp(e) || isDown(e)) {
+			this._handleArrowNavigation(e);
 		}
 	}
 
-	_handleKeyboardNavigation(event) {
-		if (isEnter(event)) {
+	_handleKeyboardNavigation(e: KeyboardEvent) {
+		if (isEnter(e)) {
 			return;
 		}
 
-		const typedCharacter = event.key.toLowerCase();
+		const typedCharacter = e.key.toLowerCase();
 
 		this._typedChars += typedCharacter;
 
@@ -503,7 +527,7 @@ class Select extends UI5Element {
 		this._selectTypedItem(text);
 	}
 
-	_selectTypedItem(text) {
+	_selectTypedItem(text: string) {
 		const currentIndex = this._selectedIndex;
 		const itemToSelect = this._searchNextItemByText(text);
 
@@ -518,30 +542,30 @@ class Select extends UI5Element {
 		}
 	}
 
-	_searchNextItemByText(text) {
+	_searchNextItemByText(text: string) {
 		let orderedOptions = this._filteredItems.slice(0);
 		const optionsAfterSelected = orderedOptions.splice(this._selectedIndex + 1, orderedOptions.length - this._selectedIndex);
 		const optionsBeforeSelected = orderedOptions.splice(0, orderedOptions.length - 1);
 
 		orderedOptions = optionsAfterSelected.concat(optionsBeforeSelected);
 
-		return orderedOptions.find(option => option.textContent.toLowerCase().startsWith(text));
+		return orderedOptions.find(option => (option.textContent || "").toLowerCase().startsWith(text));
 	}
 
-	_handleHomeKey(event) {
-		event.preventDefault();
+	_handleHomeKey(e: KeyboardEvent) {
+		e.preventDefault();
 		this._changeSelectedItem(this._selectedIndex, 0);
 	}
 
-	_handleEndKey(event) {
+	_handleEndKey(e: KeyboardEvent) {
 		const lastIndex = this._filteredItems.length - 1;
 
-		event.preventDefault();
+		e.preventDefault();
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
 	}
 
-	_onkeyup(event) {
-		if (isSpace(event)) {
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
 			if (this._isPickerOpen) {
 				this._handleSelectionChange();
 			} else {
@@ -550,11 +574,11 @@ class Select extends UI5Element {
 		}
 	}
 
-	_getSelectedItemIndex(item) {
+	_getSelectedItemIndex(item: ListItemBase) {
 		return this._filteredItems.findIndex(option => `${option._id}-li` === item.id);
 	}
 
-	_select(index) {
+	_select(index: number) {
 		this._filteredItems[this._selectedIndex].selected = false;
 		this._selectedIndex = index;
 		this._filteredItems[index].selected = true;
@@ -564,20 +588,20 @@ class Select extends UI5Element {
 	 * The user clicked on an item from the list
 	 * @private
 	 */
-	_handleItemPress(event) {
-		const item = event.detail.selectedItems[0];
+	_handleItemPress(e: CustomEvent<SelectionChangeEventDetail>) {
+		const item = e.detail.selectedItems[0];
 		const selectedItemIndex = this._getSelectedItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
 	}
 
-	_itemMousedown(event) {
+	_itemMousedown(e: MouseEvent) {
 		// prevent actual focus of items
-		event.preventDefault();
+		e.preventDefault();
 	}
 
-	_onclick(event) {
-		this.getFocusDomRef().focus();
+	_onclick() {
+		this.getFocusDomRef()!.focus();
 		this._toggleRespPopover();
 	}
 
@@ -591,12 +615,12 @@ class Select extends UI5Element {
 		this._toggleRespPopover();
 	}
 
-	_handleArrowNavigation(event) {
+	_handleArrowNavigation(e: KeyboardEvent) {
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
-		const isDownKey = isDown(event);
+		const isDownKey = isDown(e);
 
-		event.preventDefault();
+		e.preventDefault();
 		if (isDownKey) {
 			nextIndex = this._getNextOptionIndex();
 		} else {
@@ -613,7 +637,7 @@ class Select extends UI5Element {
 		}
 	}
 
-	_changeSelectedItem(oldIndex, newIndex) {
+	_changeSelectedItem(oldIndex: number, newIndex: number) {
 		const options = this._filteredItems;
 
 		options[oldIndex].selected = false;
@@ -661,8 +685,8 @@ class Select extends UI5Element {
 		}
 	}
 
-	_fireChangeEvent(selectedOption) {
-		this.fireEvent("change", { selectedOption });
+	_fireChangeEvent(selectedOption: Option) {
+		this.fireEvent<SelectChangeEventDetail>("change", { selectedOption });
 
 		//  Angular two way data binding
 		this.selectedItem = selectedOption.textContent;
@@ -700,11 +724,11 @@ class Select extends UI5Element {
 	}
 
 	get valueStateDefaultText() {
-		return this.valueStateTextMappings[this.valueState];
+		return this.valueState !== ValueState.None ? this.valueStateTextMappings[this.valueState] : "";
 	}
 
 	get valueStateTypeText() {
-		return this.valueStateTypeMappings[this.valueState];
+		return this.valueState !== ValueState.None ? this.valueStateTypeMappings[this.valueState] : "";
 	}
 
 	get hasValueState() {
@@ -723,15 +747,11 @@ class Select extends UI5Element {
 		return Select.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
-	get _currentSelectedItem() {
-		return this.shadowRoot.querySelector(`#${this._filteredItems[this._selectedIndex]._id}-li`);
-	}
-
 	get _currentlySelectedOption() {
 		return this._filteredItems[this._selectedIndex];
 	}
 
-	get tabIndex() {
+	get _effectiveTabIndex() {
 		return this.disabled
 		|| (this.responsivePopover // Handles focus on Tab/Shift + Tab when the popover is opened
 		&& this.responsivePopover.opened) ? "-1" : "0";
@@ -790,7 +810,7 @@ class Select extends UI5Element {
 	}
 
 	get shouldDisplayDefaultValueStateMessage() {
-		return !this.valueStateMessage.length && this.hasValueStateText;
+		return !this.valueStateMessageText.length && this.hasValueStateText;
 	}
 
 	get hasValueStateText() {
@@ -820,14 +840,14 @@ class Select extends UI5Element {
 		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
-			text = `${this._currentlySelectedOption.textContent} ${this._isPickerOpen ? itemPositionText : ""}`;
+			text = `${this._currentlySelectedOption.textContent as string} ${this._isPickerOpen ? itemPositionText : ""}`;
 
-			announce(text, "Polite");
+			announce(text, InvisibleMessageMode.Polite);
 		}
 	}
 
 	async openValueStatePopover() {
-		this.popover = await this._getPopover();
+		this.popover = await this._getPopover() as Popover;
 		if (this.popover) {
 			this.popover.showAt(this);
 		}
@@ -837,7 +857,7 @@ class Select extends UI5Element {
 		this.popover && this.popover.close();
 	}
 
-	toggleValueStatePopover(open) {
+	toggleValueStatePopover(open: boolean) {
 		if (open) {
 			this.openValueStatePopover();
 		} else {
@@ -851,7 +871,7 @@ class Select extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("[ui5-popover]");
+		return staticAreaItem!.querySelector<Popover>("[ui5-popover]");
 	}
 
 	static get dependencies() {
@@ -875,3 +895,7 @@ class Select extends UI5Element {
 Select.define();
 
 export default Select;
+export type {
+	SelectChangeEventDetail,
+	IOption,
+};

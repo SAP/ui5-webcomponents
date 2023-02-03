@@ -805,10 +805,6 @@ class Popover extends Popup {
 		return undefined;
 	}
 
-	get _ariaModal() {
-		return "true";
-	}
-
 	get styles() {
 		return {
 			...super.styles,
