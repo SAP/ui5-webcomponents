@@ -31,7 +31,7 @@ let autoId = 0;
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
-export type ChangeInfo = {
+type ChangeInfo = {
 	type: "property" | "slot",
 	name: string,
 	reason?: string,
