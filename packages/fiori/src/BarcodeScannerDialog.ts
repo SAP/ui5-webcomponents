@@ -10,7 +10,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import type { BrowserMultiFormatReader as BrowserMultiFormatReaderT, Result, Exception } from "@zxing/library/esm5/index";
+import type { Result, Exception } from "@zxing/library/esm5/index";
 
 // Texts
 import {
@@ -118,7 +118,7 @@ class BarcodeScannerDialog extends UI5Element {
 	@property({ type: Boolean })
 	loading!: boolean;
 
-	_codeReader: BrowserMultiFormatReaderT;
+	_codeReader: InstanceType<typeof BrowserMultiFormatReader>;
 	dialog?: Dialog;
 	static i18nBundle: I18nBundle;
 
