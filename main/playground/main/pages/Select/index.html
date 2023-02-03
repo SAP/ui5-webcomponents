@@ -14,7 +14,7 @@
 
 
 
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.7275e2af.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.60988352.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/Select.html.9c98a470.css'>
 </head>
 
@@ -95,6 +95,12 @@
 	<h2> Change event counter holder</h2>
 	<ui5-input id="inputResult"></ui5-input>
 
+	<h2> Open event counter holder</h2>
+	<ui5-input id="inputResultOpen"></ui5-input>
+
+	<h2> Close event counter holder</h2>
+	<ui5-input id="inputResultClose"></ui5-input>
+	
 	<section>
 		<h3>Select aria-label and aria-labelledby</h3>
 		<span id="infoText">info text</span>
@@ -152,11 +158,15 @@
 	var restoreItemsBtn = document.getElementById('restore-items-btn');
 	var input = document.getElementById('myInput');
 	var inputResult = document.getElementById('inputResult');
+	var inputResultOpen = document.getElementById('inputResultOpen');
+	var inputResultClose = document.getElementById('inputResultClose');
 	var select = document.getElementById('mySelect');
 	var select2 = document.getElementById('errorSelect');
 	var select3 = document.getElementById('warningSelect');
 	var lbl = document.getElementById('lblResult');
 	var counter = 0;
+	var counterOpen = 0;
+	var counterClose = 0;
 
 	// Select
 	select.addEventListener("ui5-change", function(e) {
@@ -166,6 +176,16 @@
 
 	select.addEventListener("change", function(e) {
 		console.log("Select change event fired", e);
+	});
+
+	select.addEventListener("ui5-open", function(e) {
+		++counterOpen;
+		inputResultOpen.value = counterOpen;
+	});
+
+	select.addEventListener("ui5-close", function(e) {
+		++counterClose;
+		inputResultClose.value = counterClose
 	});
 
 	select2.addEventListener("ui5-change", function(e) {

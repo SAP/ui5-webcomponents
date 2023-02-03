@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675412153
+  buildTime: 1675415210
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -27820,6 +27820,7 @@ let Select = Select_1 = class Select2 extends UI5Element {
   }
   _afterOpen() {
     this.opened = true;
+    this.fireEvent("open");
   }
   _afterClose() {
     this.opened = false;
@@ -27832,6 +27833,7 @@ let Select = Select_1 = class Select2 extends UI5Element {
       this._fireChangeEvent(this._filteredItems[this._selectedIndex]);
       this._lastSelectedOption = this._filteredItems[this._selectedIndex];
     }
+    this.fireEvent("close");
   }
   _fireChangeEvent(selectedOption) {
     this.fireEvent("change", { selectedOption });
@@ -28045,7 +28047,9 @@ Select = Select_1 = __decorate$s([
     detail: {
       selectedOption: { type: HTMLElement }
     }
-  })
+  }),
+  event("open"),
+  event("close")
 ], Select);
 Select.define();
 const block0$R = (context, tags, suffix) => suffix ? effectiveHtml`<div class="ui5-split-button-root" role="group" tabindex=${l(context._tabIndex)} aria-labelledby="${l(context._id)}-invisibleTextDefault ${l(context._id)}-invisibleText" @focusout=${context._onFocusOut} @focusin=${context._onFocusIn} @keydown=${context._onKeyDown} @keyup=${context._onKeyUp}><${scopeTag("ui5-button", tags, suffix)} class="ui5-split-text-button" design="${l(context.design)}" dir=${l(context.effectiveDir)} icon="${l(context._textButtonIcon)}" tabindex="-1" ?disabled="${context.disabled}" ?active="${context._textButtonActive}" @click="${context._fireClick}" @touchstart=${context._textButtonPress} @mousedown=${context._textButtonPress} @mouseup=${context._textButtonRelease} @focusin=${context._setTabIndexValue} @focusout=${context._onFocusOut}><slot></slot></${scopeTag("ui5-button", tags, suffix)}><div class="ui5-split-arrow-button-wrapper" dir=${l(context.effectiveDir)}><${scopeTag("ui5-button", tags, suffix)} class="ui5-split-arrow-button" design="${l(context.design)}" icon="slim-arrow-down" tabindex="-1" ?disabled="${context.disabled}" ?active="${context._arrowButtonActive}" aria-expanded="${l(context.accessibilityInfo.ariaExpanded)}" aria-haspopup="${l(context.accessibilityInfo.ariaHaspopup)}" @click="${context._fireArrowClick}" @focusin=${context._setTabIndexValue} @focusout=${context._onFocusOut}></${scopeTag("ui5-button", tags, suffix)}></div><span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context.accessibilityInfo.description)}${l(context.accessibilityInfo.keyboardHint)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleTextDefault" class="ui5-hidden-text">${l(context.textButtonAccText)}</span></div>` : effectiveHtml`<div class="ui5-split-button-root" role="group" tabindex=${l(context._tabIndex)} aria-labelledby="${l(context._id)}-invisibleTextDefault ${l(context._id)}-invisibleText" @focusout=${context._onFocusOut} @focusin=${context._onFocusIn} @keydown=${context._onKeyDown} @keyup=${context._onKeyUp}><ui5-button class="ui5-split-text-button" design="${l(context.design)}" dir=${l(context.effectiveDir)} icon="${l(context._textButtonIcon)}" tabindex="-1" ?disabled="${context.disabled}" ?active="${context._textButtonActive}" @click="${context._fireClick}" @touchstart=${context._textButtonPress} @mousedown=${context._textButtonPress} @mouseup=${context._textButtonRelease} @focusin=${context._setTabIndexValue} @focusout=${context._onFocusOut}><slot></slot></ui5-button><div class="ui5-split-arrow-button-wrapper" dir=${l(context.effectiveDir)}><ui5-button class="ui5-split-arrow-button" design="${l(context.design)}" icon="slim-arrow-down" tabindex="-1" ?disabled="${context.disabled}" ?active="${context._arrowButtonActive}" aria-expanded="${l(context.accessibilityInfo.ariaExpanded)}" aria-haspopup="${l(context.accessibilityInfo.ariaHaspopup)}" @click="${context._fireArrowClick}" @focusin=${context._setTabIndexValue} @focusout=${context._onFocusOut}></ui5-button></div><span id="${l(context._id)}-invisibleText" class="ui5-hidden-text">${l(context.accessibilityInfo.description)}${l(context.accessibilityInfo.keyboardHint)}${l(context.accessibleName)}</span><span id="${l(context._id)}-invisibleTextDefault" class="ui5-hidden-text">${l(context.textButtonAccText)}</span></div>`;

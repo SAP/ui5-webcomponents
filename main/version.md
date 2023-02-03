@@ -1,9 +1,11 @@
-commit 7307d3ddd544b20990978185e123c1d35bcbf99b
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Fri Feb 3 00:15:07 2023 -0800
+commit a0b114dfeee9265ada632d34df1b6e2e3de8c3fd
+Author: Plamen Ivanov <plamen.ivanov01@sap.com>
+Date:   Fri Feb 3 11:06:03 2023 +0200
 
-    Translation Delivery (#6410)
+    feat(ui5-select): new events introduced (#6398)
     
-    chore: translation delivery
+    * feat(ui5-select): new events introduced
+    There are two new events 'open' and 'close' which are fired after
+    the dropdown's opening and closure respectively.
     
-    Change-Id: If7c95009251cd61ec86a2448a41f70bdc4f7f745
+    FIXES: #5836
