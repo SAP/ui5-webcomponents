@@ -333,7 +333,7 @@ class SliderBase extends UI5Element {
 	 * Prevent focus out when inner element within the component is currently being in process of focusing in.
 	 *
 	 * @private
-	 */
+	 */ 
 	_preventFocusOut() {
 		this.focusInnerElement();
 	}
