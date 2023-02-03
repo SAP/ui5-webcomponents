@@ -530,15 +530,15 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * Constantly updated value of texts collected from the associated labels
 	 * @private
 	 */
-	@property({ type: String, noAttribute: true })
-	_associatedLabelsTexts!: string;
+	@property({ type: String, noAttribute: true, defaultValue: undefined })
+	_associatedLabelsTexts?: string;
 
 	/**
 	 * Constantly updated value of texts collected from the accessibleNameRef elements
 	 * @private
 	 */
-	@property({ type: String, noAttribute: true })
-	_accessibleLabelsRefTexts!: string;
+	@property({ type: String, noAttribute: true, defaultValue: undefined })
+	_accessibleLabelsRefTexts?: string;
 
 	/**
 	 * Defines the suggestion items.
@@ -704,7 +704,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
-		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this), ["accessibleNameRef"]);
+		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 	}
 
 	onExitDOM() {
@@ -1175,8 +1175,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_updateAssociatedLabelsTexts() {
-		this._associatedLabelsTexts = getAssociatedLabelForTexts(this) ?? "";
-		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this) ?? "";
+		this._associatedLabelsTexts = getAssociatedLabelForTexts(this);
+		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this);
 	}
 
 	_closeRespPopover() {
