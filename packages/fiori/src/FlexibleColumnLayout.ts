@@ -502,8 +502,8 @@ class FlexibleColumnLayout extends UI5Element {
 		return this._effectiveLayoutsByMedia[this.media][layout].layout;
 	}
 
-	calcVisibleColumns(colLayot: ColumnLayout) {
-		return colLayot.filter(col => col !== "0px" && col !== 0).length;
+	calcVisibleColumns(colLayout: ColumnLayout) {
+		return colLayout.filter(colWidth => this._isColumnHidden(colWidth)).length;
 	}
 
 	fireLayoutChange(arrowUsed: boolean, resize: boolean) {
@@ -551,7 +551,7 @@ class FlexibleColumnLayout extends UI5Element {
 	*/
 	get startColumnVisible(): boolean {
 		if (this._columnLayout) {
-			return this._columnLayout[0] !== "0px" && this._columnLayout[0] !== 0;
+			return !this._isColumnHidden(this._columnLayout[0]);
 		}
 
 		return false;
@@ -567,7 +567,7 @@ class FlexibleColumnLayout extends UI5Element {
 	*/
 	get midColumnVisible(): boolean {
 		if (this._columnLayout) {
-			return this._columnLayout[1] !== "0px" && this._columnLayout[1] !== 0;
+			return !this._isColumnHidden(this._columnLayout[1]);
 		}
 
 		return false;
@@ -583,7 +583,7 @@ class FlexibleColumnLayout extends UI5Element {
 	*/
 	get endColumnVisible(): boolean {
 		if (this._columnLayout) {
-			return this._columnLayout[2] !== "0px" && this._columnLayout[2] !== 0;
+			return !this._isColumnHidden(this._columnLayout[2]);
 		}
 
 		return false;

@@ -4,7 +4,7 @@ import FCLLayout from "../types/FCLLayout.js";
 type LayoutConfiguration = {
 	[device in MEDIA]: {
 		[layoutName in FCLLayout]: {
-			layout: Array<string | number>;
+			layout: Array<string>;
 			arrows: Array<{
 				visible: boolean;
 				dir: null | string;
@@ -18,21 +18,21 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 	return {
 		desktop: {
 			"OneColumn": {
-				layout: ["100%", 0, 0],
+				layout: ["100%", "0px", "0px"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"TwoColumnsStartExpanded": {
-				layout: ["67%", "33%", 0],
+				layout: ["67%", "33%", "0px"],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"TwoColumnsMidExpanded": {
-				layout: ["33%", "67%", 0],
+				layout: ["33%", "67%", "0px"],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: false, dir: null },
@@ -53,28 +53,28 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 				],
 			},
 			"ThreeColumnsStartExpandedEndHidden": {
-				layout: ["67%", "33%", 0],
+				layout: ["67%", "33%", "0px"],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
-				layout: ["33%", "67%", 0],
+				layout: ["33%", "67%", "0px"],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: true, dir: null },
 				],
 			},
 			"MidColumnFullScreen": {
-				layout: [0, "100%", 0],
+				layout: ["0px", "100%", "0px"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"EndColumnFullScreen": {
-				layout: [0, 0, "100%"],
+				layout: ["0px", "0px", "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
@@ -83,63 +83,63 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 		},
 		tablet: {
 			"OneColumn": {
-				layout: ["100%", 0, 0],
+				layout: ["100%", "0px", "0px"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"TwoColumnsStartExpanded": {
-				layout: ["67%", "33%", 0],
+				layout: ["67%", "33%", "0px"],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"TwoColumnsMidExpanded": {
-				layout: ["33%", "67%", 0],
+				layout: ["33%", "67%", "0px"],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpanded": {
-				layout: [0, "67%", "33%"],
+				layout: ["0px", "67%", "33%"],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: true, dir: null },
 				],
 			},
 			"ThreeColumnsEndExpanded": {
-				layout: [0, "33%", "67%"],
+				layout: ["0px", "33%", "67%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: true, dir: "mirror" },
 				],
 			},
 			"ThreeColumnsStartExpandedEndHidden": {
-				layout: ["67%", "33%", 0],
+				layout: ["67%", "33%", "0px"],
 				arrows: [
 					{ visible: true, dir: "mirror" },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
-				layout: ["33%", "67%", 0],
+				layout: ["33%", "67%", "0px"],
 				arrows: [
 					{ visible: true, dir: null },
 					{ visible: true, dir: null },
 				],
 			},
 			"MidColumnFullScreen": {
-				layout: [0, "100%", 0],
+				layout: ["0px", "100%", "0px"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"EndColumnFullScreen": {
-				layout: [0, 0, "100%"],
+				layout: ["0px", "0px", "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
@@ -148,63 +148,63 @@ const getLayoutsByMedia = (): LayoutConfiguration => {
 		},
 		phone: {
 			"OneColumn": {
-				layout: ["100%", 0, 0],
+				layout: ["100%", "0px", "0px"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"TwoColumnsStartExpanded": {
-				layout: [0, "100%", 0],
+				layout: ["0px", "100%", "0px"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"TwoColumnsMidExpanded": {
-				layout: [0, "100%", 0],
+				layout: ["0px", "100%", "0px"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpanded": {
-				layout: [0, 0, "100%"],
+				layout: ["0px", "0px", "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsEndExpanded": {
-				layout: [0, 0, "100%"],
+				layout: ["0px", "0px", "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsStartExpandedEndHidden": {
-				layout: [0, 0, "100%"],
+				layout: ["0px", "0px", "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"ThreeColumnsMidExpandedEndHidden": {
-				layout: [0, 0, "100%"],
+				layout: ["0px", "0px", "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"MidColumnFullScreen": {
-				layout: [0, "100%", 0],
+				layout: ["0px", "100%", "0px"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
 				],
 			},
 			"EndColumnFullScreen": {
-				layout: [0, 0, "100%"],
+				layout: ["0px", "0px", "100%"],
 				arrows: [
 					{ visible: false, dir: null },
 					{ visible: false, dir: null },
