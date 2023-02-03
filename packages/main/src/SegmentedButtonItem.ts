@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
@@ -10,7 +9,6 @@ import ToggleButton from "./ToggleButton.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 import Icon from "./Icon.js";
 
-// @ts-ignore
 import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -101,7 +99,7 @@ class SegmentedButtonItem extends ToggleButton implements ITabbable {
 	}
 
 	get ariaDescription() {
-		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION as I18nText);
+		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);
 	}
 }
 
