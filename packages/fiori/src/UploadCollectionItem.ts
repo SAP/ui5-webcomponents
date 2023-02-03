@@ -5,7 +5,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
@@ -31,7 +30,6 @@ import {
 	UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT,
 	UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -436,11 +434,11 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _renameBtnText() {
-		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT as I18nText);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RENAMEBUTTON_TEXT);
 	}
 
 	get _cancelRenameBtnText() {
-		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT as I18nText);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_CANCELBUTTON_TEXT);
 	}
 
 	get _showProgressIndicator() {
@@ -449,14 +447,14 @@ class UploadCollectionItem extends ListItem {
 
 	get _progressText() {
 		if (this.uploadState === UploadState.Uploading) {
-			return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE as I18nText);
+			return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_UPLOADING_STATE);
 		}
 
 		if (this.uploadState === UploadState.Error) {
-			return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE as I18nText);
+			return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_ERROR_STATE);
 		}
 
-		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE as I18nText);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_READY_STATE);
 	}
 
 	get _showRetry() {
@@ -468,15 +466,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	get _retryButtonTooltip() {
-		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT as I18nText);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_RETRY_BUTTON_TEXT);
 	}
 
 	get _terminateButtonTooltip() {
-		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT as I18nText);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_TERMINATE_BUTTON_TEXT);
 	}
 
 	get _editButtonTooltip() {
-		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT as I18nText);
+		return UploadCollectionItem.i18nFioriBundle.getText(UPLOADCOLLECTIONITEM_EDIT_BUTTON_TEXT);
 	}
 
 	get valueStateName(): ValueState {

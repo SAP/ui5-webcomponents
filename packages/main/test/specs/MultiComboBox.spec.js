@@ -95,12 +95,12 @@ describe("MultiComboBox general interaction", () => {
 		it("Checks if tokenizer is expanded when adding items dynamically", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
-	
+
 			const btn = await $("#add");
 			const mcb = await $("#mcb-dynamic-selection");
-	
+
 			await btn.click();
-	
+
 			const inlinedTokens = await mcb.shadow$$("ui5-token:not([overflows])");
 
 			assert.ok(inlinedTokens.length > 0, "Token is displayed");
@@ -1178,6 +1178,24 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
 		});
 
+		it ("should not be able to paste tokenwith CTRL+V in read only multi combo box", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#multi1");
+			const mcb2 = await browser.$("#readonly-value-state-mcb");
+			const input = await mcb2.shadow$("input");
+			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await tokens[1].click();
+			await tokens[1].keys(["Control", "c"]);
+			await input.click();
+			await input.keys(["Control", "v"]);
+
+			const mcb2Tokens = await mcb2.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await mcb2.getProperty("value"), "", "Token is not pasted into the second control");
+			assert.equal(mcb2Tokens.length, 0, "No token was created.");
+		});
+
 		it ("should cut a token with CTRL+X and paste it with CTRL+V", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
@@ -1234,7 +1252,7 @@ describe("MultiComboBox general interaction", () => {
 			assert.equal(await mcb2.getProperty("value"), "Condensed", "Token is pasted into the second control");
 		});
 
-		it ("should select а token with CTRL+SPACE", async () => {
+		it ("should select a token with CTRL+SPACE", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
 			const mcb = await browser.$("#mcb-error");

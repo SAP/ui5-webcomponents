@@ -6,7 +6,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ItemNavigationBehavior from "@ui5/webcomponents-base/dist/types/ItemNavigationBehavior.js";
@@ -30,7 +29,6 @@ import type ColorPicker from "./ColorPicker.js";
 import {
 	COLORPALETTE_CONTAINER_LABEL,
 	COLOR_PALETTE_MORE_COLORS_TEXT,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -64,7 +62,7 @@ type ColorPaletteItemClickEventDetail = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-color-palette
  * @since 1.0.0-rc.12
- * @appenddocs ColorPaletteItem
+ * @appenddocs sap.ui.webc.main.ColorPaletteItem
  * @public
  */
 @customElement("ui5-color-palette")
@@ -426,11 +424,11 @@ class ColorPalette extends UI5Element {
 	}
 
 	get colorContainerLabel() {
-		return ColorPalette.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL as I18nText);
+		return ColorPalette.i18nBundle.getText(COLORPALETTE_CONTAINER_LABEL);
 	}
 
 	get colorPaleteMoreColorsText() {
-		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT as I18nText);
+		return ColorPalette.i18nBundle.getText(COLOR_PALETTE_MORE_COLORS_TEXT);
 	}
 
 	get _showMoreColors() {

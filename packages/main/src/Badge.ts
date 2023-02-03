@@ -5,14 +5,12 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
-// @ts-ignore
 import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -90,7 +88,7 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the icon to be displayed in the component.
 	 *
-	 * @type {sap.ui.webc.main.IIcon}
+	 * @type {sap.ui.webc.main.IIcon[]}
 	 * @name sap.ui.webc.main.Badge.prototype.icon
 	 * @slot
 	 * @public
@@ -134,7 +132,7 @@ class Badge extends UI5Element {
 	}
 
 	get badgeDescription() {
-		return Badge.i18nBundle.getText(BADGE_DESCRIPTION as I18nText);
+		return Badge.i18nBundle.getText(BADGE_DESCRIPTION);
 	}
 }
 

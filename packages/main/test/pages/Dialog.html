@@ -487,6 +487,44 @@
 		</ui5-dialog>
 	</div>
 	<br>
+	<div>
+		<div>
+			<ui5-label>Dialog roles</ui5-label>
+		</div>
+		<ui5-button id="btn-role-default">Error State, no role set</ui5-button>
+		<ui5-dialog id="dialog-error-no-role" state="Error">
+			<div slot="header">
+				<ui5-title level="H1">Error</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-role-alert">No State, 'AlertDialog' role set</ui5-button>
+		<ui5-dialog id="dialog-no-state-alert-role" accessible-role="AlertDialog">
+			<div slot="header">
+				<ui5-title level="H1">No state</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-role-none">Role 'None' set</ui5-button>
+		<ui5-dialog id="dialog-none-role" accessible-role="None">
+			<div slot="header">
+				<ui5-title level="H1">Role 'None'</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+		<ui5-button id="btn-role-alert-success-state">Success State, 'AlertDialog' role set</ui5-button>
+		<ui5-dialog id="dialog-success-state-alert-role" state="Success" accessible-role="AlertDialog">
+			<div slot="header">
+				<ui5-title level="H1">Success</ui5-title>
+			</div>
+			<span>Hello World!</span>
+		</ui5-dialog>
+
+	</div>
+	<br>
 	<ui5-button id="dialogOverDialogBtn">Dialog over a Dialog</ui5-button>
 	<ui5-dialog id="dialogOverDialog1">
 		<div slot="header">
@@ -507,6 +545,19 @@
 		<ui5-button id="dialogOverDialog3Btn">Close</ui5-button>
 	</ui5-dialog>
 	<br>
+	<!-- Sample when Dialog is created in order different than "header, content, footer" sequence -->
+	<ui5-button id="dialogFocus">Dialog Focus</ui5-button>
+	<ui5-dialog id="dialogFocus1">
+		<span>Some message</span>
+		<ui5-button id="fistButtonInDialog">Confirm</ui5-button>
+
+		<div slot="header">Header text</div>
+	
+		<div slot="footer" class="dialog-footer">
+			<div style="flex: 1"></div>
+			<ui5-button id="closeDialogFocusButton" design="Emphasized">Close</ui5-button>
+		</div>
+	</ui5-dialog>
 	<br>
 	<div>
 		<ui5-title level="H3">Open Dialog from list</ui5-title>
@@ -682,6 +733,22 @@
 			window["dialog-warn-state"].show();
 		});
 
+		window["btn-role-default"].addEventListener("click", function () {
+			window["dialog-error-no-role"].show();
+		});
+
+		window["btn-role-alert"].addEventListener("click", function () {
+			window["dialog-no-state-alert-role"].show();
+		});
+
+		window["btn-role-none"].addEventListener("click", function () {
+			window["dialog-none-role"].show();
+		});
+
+		window["btn-role-alert-success-state"].addEventListener("click", function () {
+			window["dialog-success-state-alert-role"].show();
+		});
+
 		window["dialogOverDialogBtn"].addEventListener("click", function () {
 			window["dialogOverDialog1"].open = true;
 		});
@@ -696,6 +763,14 @@
 
 		window["dialogOverDialog3Btn"].addEventListener("click", function () {
 			window["dialogOverDialog3"].open = false;
+		});
+
+		window["dialogFocus"].addEventListener("click", function () {
+			window["dialogFocus1"].open = true;
+		});
+
+		window["closeDialogFocusButton"].addEventListener("click", function () {
+			window["dialogFocus1"].close();
 		});
 
 	</script>

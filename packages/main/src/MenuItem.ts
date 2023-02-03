@@ -26,6 +26,7 @@ import type Menu from "./Menu.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.MenuItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-menu-item
  * @implements sap.ui.webc.main.IMenuItem
  * @since 1.3.0

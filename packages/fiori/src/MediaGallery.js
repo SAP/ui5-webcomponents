@@ -256,7 +256,7 @@ const metadata = {
  * @alias sap.ui.webc.fiori.MediaGallery
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-media-gallery
- * @appenddocs MediaGalleryItem
+ * @appenddocs sap.ui.webc.fiori.MediaGalleryItem
  * @public
  * @since 1.1.0
  */

@@ -16,6 +16,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
+import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
@@ -187,6 +188,22 @@ abstract class Popup extends UI5Element {
 	 */
 	@property({ defaultValue: "" })
 	accessibleNameRef!: string;
+
+	/**
+	 * Allows setting a custom role. Available options are:
+	 * <ul>
+	 * <li><code>Dialog</code></li>
+	 * <li><code>None</code></li>
+	 * <li><code>AlertDialog</code></li>
+	 * </ul>
+	 * @type {sap.ui.webc.main.types.PopupAccessibleRole}
+	 * @name sap.ui.webc.main.Popup.prototype.accessibleRole
+	 * @defaultvalue "Dialog"
+	 * @public
+	 * @since 1.10.0
+	 */
+	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
+	accessibleRole!: PopupAccessibleRole;
 
 	/**
 	 * Defines the current media query size.
@@ -588,17 +605,8 @@ abstract class Popup extends UI5Element {
 	abstract get _ariaLabelledBy(): string | undefined
 
 	/**
-	 * Return the value for aria-modal for this popup
-	 *
-	 * @protected
-	 * @abstract
-	 * @returns {string}
-	 */
-	abstract get _ariaModal(): string
-
-	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {string|undefined}
+	 * @returns {string | undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {
@@ -609,8 +617,12 @@ abstract class Popup extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-popup-root")!;
 	}
 
-	get _role() {
-		return "dialog";
+	get _role(): string | undefined {
+		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : this.accessibleRole.toLowerCase();
+	}
+
+	get _ariaModal(): string | undefined {
+		return this.accessibleRole === PopupAccessibleRole.None ? undefined : "true";
 	}
 
 	get contentDOM(): HTMLElement {

@@ -9,7 +9,6 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	getRGBColor,
 	HSLToRGB,
@@ -33,7 +32,6 @@ import {
 	COLORPICKER_GREEN,
 	COLORPICKER_BLUE,
 	COLORPICKER_ALPHA,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -480,31 +478,31 @@ class ColorPicker extends UI5Element {
 	}
 
 	get hueSliderLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_HUE_SLIDER as I18nText);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_HUE_SLIDER);
 	}
 
 	get alphaSliderLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA_SLIDER as I18nText);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA_SLIDER);
 	}
 
 	get hexInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_HEX as I18nText);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_HEX);
 	}
 
 	get redInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_RED as I18nText);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_RED);
 	}
 
 	get greenInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_GREEN as I18nText);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_GREEN);
 	}
 
 	get blueInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_BLUE as I18nText);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_BLUE);
 	}
 
 	get alphaInputLabel() {
-		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA as I18nText);
+		return ColorPicker.i18nBundle.getText(COLORPICKER_ALPHA);
 	}
 
 	get inputsDisabled() {

@@ -1,8 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isTabNext } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import BusyIndicatorSize from "./types/BusyIndicatorSize.js";
 import Label from "./Label.js";
 
@@ -13,92 +18,6 @@ import { BUSY_INDICATOR_TITLE } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-busy-indicator",
-	languageAware: true,
-	slots: /** @lends sap.ui.webc.main.BusyIndicator.prototype */ {
-
-		/**
-		 * Determines the content over which the component will appear.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.BusyIndicator.prototype */ {
-
-		/**
-		 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
-		 * @type {string}
-		 * @public
-		 * @defaultvalue ""
-		 * @since 1.0.0-rc.7
-		 */
-		text: {
-			type: String,
-		},
-
-		/**
-		 * Defines the size of the component.
-		 *
-		 * <br><br>
-		 * <b>Note:</b>
-		 *
-		 * <ul>
-		 * <li><code>Small</code></li>
-		 * <li><code>Medium</code></li>
-		 * <li><code>Large</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.BusyIndicatorSize}
-		 * @defaultvalue "Medium"
-		 * @public
-		 */
-		size: {
-			type: BusyIndicatorSize,
-			defaultValue: BusyIndicatorSize.Medium,
-		},
-
-		/**
-		 * Defines if the busy indicator is visible on the screen. By default it is not.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		active: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
-		 *
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultValue 1000
-		 * @public
-		 */
-		delay: {
-			type: Integer,
-			defaultValue: 1000,
-		},
-
-		/**
-		 * Defines if the component is currently in busy state.
-		 * @private
-		 */
-		_isBusy: {
-			type: Boolean,
-		},
-	},
-};
 
 /**
  * @class
@@ -143,7 +62,85 @@ const metadata = {
  * @public
  * @since 0.12.0
  */
+@customElement("ui5-busy-indicator")
+@languageAware
 class BusyIndicator extends UI5Element {
+	/**
+	 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
+	 * @type {string}
+	 * @name sap.ui.webc.main.BusyIndicator.prototype.text
+	 * @public
+	 * @defaultvalue ""
+	 * @since 1.0.0-rc.7
+	 */
+	@property()
+	text!: string;
+
+	/**
+	 * Defines the size of the component.
+	 *
+	 * <br><br>
+	 * <b>Note:</b>
+	 *
+	 * <ul>
+	 * <li><code>Small</code></li>
+	 * <li><code>Medium</code></li>
+	 * <li><code>Large</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.BusyIndicatorSize}
+	 * @name sap.ui.webc.main.BusyIndicator.prototype.size
+	 * @defaultvalue "Medium"
+	 * @public
+	 */
+	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium })
+	size!: BusyIndicatorSize;
+
+	/**
+	 * Defines if the busy indicator is visible on the screen. By default it is not.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.BusyIndicator.prototype.active
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	active!: boolean;
+
+	/**
+	 * Defines the delay in milliseconds, after which the busy indicator will be visible on the screen.
+	 *
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.BusyIndicator.prototype.delay
+	 * @defaultValue 1000
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: 1000 })
+	delay!: number;
+
+	/**
+	 * Defines if the component is currently in busy state.
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_isBusy!: boolean;
+
+	/**
+	 * Determines the content over which the component will appear.
+	 *
+	 * @type {Node[]}
+	 * @name sap.ui.webc.main.BusyIndicator.prototype.default
+	 * @slot
+	 * @public
+	 */
+
+	_keydownHandler: (e: KeyboardEvent) => void;
+	_preventEventHandler: (e: KeyboardEvent) => void;
+	_busyTimeoutId?: Timeout;
+	focusForward?: boolean;
+
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 		this._keydownHandler = this._handleKeydown.bind(this);
@@ -167,10 +164,6 @@ class BusyIndicator extends UI5Element {
 
 		this.removeEventListener("keydown", this._keydownHandler, true);
 		this.removeEventListener("keyup", this._preventEventHandler, true);
-	}
-
-	static get metadata() {
-		return metadata;
 	}
 
 	static get styles() {
@@ -226,37 +219,37 @@ class BusyIndicator extends UI5Element {
 		}
 	}
 
-	_handleKeydown(event) {
+	_handleKeydown(e: KeyboardEvent) {
 		if (!this._isBusy) {
 			return;
 		}
 
-		event.stopImmediatePropagation();
+		e.stopImmediatePropagation();
 
 		// move the focus to the last element in this DOM and let TAB continue to the next focusable element
-		if (isTabNext(event)) {
+		if (isTabNext(e)) {
 			this.focusForward = true;
-			this.shadowRoot.querySelector("[data-ui5-focus-redirect]").focus();
+			this.shadowRoot!.querySelector<HTMLElement>("[data-ui5-focus-redirect]")!.focus();
 			this.focusForward = false;
 		}
 	}
 
-	_preventEvent(event) {
+	_preventEvent(e: KeyboardEvent) {
 		if (this._isBusy) {
-			event.stopImmediatePropagation();
+			e.stopImmediatePropagation();
 		}
 	}
 
 	/**
 	 * Moves the focus to busy area when coming with SHIFT + TAB
 	 */
-	_redirectFocus(event) {
+	_redirectFocus(e: FocusEvent) {
 		if (this.focusForward) {
 			return;
 		}
 
-		event.preventDefault();
-		this.shadowRoot.querySelector(".ui5-busy-indicator-busy-area").focus();
+		e.preventDefault();
+		this.shadowRoot!.querySelector<HTMLElement>(".ui5-busy-indicator-busy-area")!.focus();
 	}
 }
 

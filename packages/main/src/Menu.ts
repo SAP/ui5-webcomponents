@@ -16,7 +16,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
@@ -31,7 +30,6 @@ import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -79,7 +77,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @alias sap.ui.webc.main.Menu
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-menu
- * @appenddocs MenuItem
+ * @appenddocs sap.ui.webc.main.MenuItem
  * @since 1.3.0
  * @public
  */
@@ -299,11 +297,11 @@ class Menu extends UI5Element {
 	}
 
 	get labelBack() {
-		return Menu.i18nBundle.getText(MENU_BACK_BUTTON_ARIA_LABEL as I18nText);
+		return Menu.i18nBundle.getText(MENU_BACK_BUTTON_ARIA_LABEL);
 	}
 
 	get labelClose() {
-		return Menu.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL as I18nText);
+		return Menu.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
 	}
 
 	get isPhone() {

@@ -292,7 +292,7 @@ const metadata = {
 		/**
 		 * Defines the icon to be displayed in the input field.
 		 *
-		 * @type {sap.ui.webc.main.IIcon}
+		 * @type {sap.ui.webc.main.IIcon[]}
 		 * @slot
 		 * @public
 		 * @since 1.0.0-rc.9
@@ -379,7 +379,7 @@ const metadata = {
  * @alias sap.ui.webc.main.ComboBox
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-combobox
- * @appenddocs ComboBoxItem ComboBoxGroupItem
+ * @appenddocs sap.ui.webc.main.ComboBoxItem sap.ui.webc.main.ComboBoxGroupItem
  * @public
  * @since 1.0.0-rc.6
  */

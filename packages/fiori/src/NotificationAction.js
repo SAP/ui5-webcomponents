@@ -84,6 +84,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webc.fiori.NotificationAction
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-notification-action
  * @implements sap.ui.webc.fiori.INotificationAction
  * @public
