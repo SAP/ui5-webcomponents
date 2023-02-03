@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675416390
+  buildTime: 1675432394
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -14310,6 +14310,7 @@ let Input = Input_1 = class Input2 extends UI5Element {
     this.suggestionsTexts = [];
     this._handleResizeBound = this._handleResize.bind(this);
     this._keepInnerValue = false;
+    this._focusedAfterClear = false;
   }
   onEnterDOM() {
     ResizeHandler.register(this, this._handleResizeBound);
@@ -14510,9 +14511,12 @@ let Input = Input_1 = class Input2 extends UI5Element {
   async _onfocusin(e2) {
     await this.getInputDOMRef();
     this.focused = true;
-    this.previousValue = this.value;
+    if (!this._focusedAfterClear) {
+      this.previousValue = this.value;
+    }
     this.valueBeforeItemPreview = this.value;
     this._inputIconFocused = !!e2.target && e2.target === this.querySelector("[ui5-icon]");
+    this._focusedAfterClear = false;
   }
   _onfocusout(e2) {
     const toBeFocused = e2.relatedTarget;
@@ -14532,7 +14536,9 @@ let Input = Input_1 = class Input2 extends UI5Element {
     }
     this.open = false;
     this._clearPopoverFocusAndSelection();
-    this.previousValue = "";
+    if (!this._clearIconClicked) {
+      this.previousValue = "";
+    }
     this.lastConfirmedValue = "";
     this.focused = false;
     this.isTyping = false;
@@ -14568,6 +14574,7 @@ let Input = Input_1 = class Input2 extends UI5Element {
     this.fireEvent(INPUT_EVENTS.INPUT);
     if (!this._isPhone) {
       this.focus();
+      this._focusedAfterClear = true;
     }
   }
   _iconMouseDown() {
