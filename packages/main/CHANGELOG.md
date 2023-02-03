@@ -3,6 +3,52 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4-rc.0...v1.11.0-rc.0) (2023-02-02)
+
+
+### Bug Fixes
+
+* **ui5-input:** prevent setSelectionRange on number input ([#6395](https://github.com/SAP/ui5-webcomponents/issues/6395)) ([e5a61c7](https://github.com/SAP/ui5-webcomponents/commit/e5a61c72e07f2936e378882a4254f758d8a43dd7))
+
+
+
+
+
+## [1.10.4-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.3...v1.10.4-rc.0) (2023-01-26)
+
+
+### Bug Fixes
+
+* **ui5-segmented-button:** ignore scoping suffix when checking tag name ([#6353](https://github.com/SAP/ui5-webcomponents/issues/6353)) ([594fee4](https://github.com/SAP/ui5-webcomponents/commit/594fee4b521053b79fa7a84bfd30a85f18ababfd))
+
+
+
+
+
+## [1.10.3](https://github.com/SAP/ui5-webcomponents/compare/v1.10.2...v1.10.3) (2023-01-25)
+
+**Note:** Version bump only for package @ui5/webcomponents
+
+
+
+
+
+## [1.10.2](https://github.com/SAP/ui5-webcomponents/compare/v1.10.1...v1.10.2) (2023-01-25)
+
+**Note:** Version bump only for package ui5-webcomponents
+
+## [1.10.1](https://github.com/SAP/ui5-webcomponents/compare/v0.0.0-7b49a7ff1...v1.10.1) (2023-01-24)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** correct types ([#6347](https://github.com/SAP/ui5-webcomponents/issues/6347)) ([620bf8d](https://github.com/SAP/ui5-webcomponents/commit/620bf8dd72f71e93dcdebeac2b6d452a1f3406c7))
+* **ui5-multi-combobox:** paste in readonly component prevented ([#6325](https://github.com/SAP/ui5-webcomponents/issues/6325)) ([9141e5a](https://github.com/SAP/ui5-webcomponents/commit/9141e5a2663df5c3c4e6a4fdf3c59dfa863340a9)), closes [#6175](https://github.com/SAP/ui5-webcomponents/issues/6175)
+
+
+
+
+
 # [1.10.0](https://github.com/SAP/ui5-webcomponents/compare/v1.9.3...v1.10.0) (2023-01-20)
 
 

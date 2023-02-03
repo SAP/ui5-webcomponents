@@ -93,7 +93,7 @@ const metadata = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-segmented-button
  * @since 1.0.0-rc.6
- * @appenddocs SegmentedButtonItem
+ * @appenddocs sap.ui.webc.main.SegmentedButtonItem
  * @public
  */
 class SegmentedButton extends UI5Element {
@@ -189,7 +189,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	_selectItem(event) {
-		const isTargetSegmentedButtonItem = event.target.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+		const isTargetSegmentedButtonItem = event.target.hasAttribute("ui5-segmented-button-item");
 
 		if (event.target.disabled || event.target === this.getDomRef() || !isTargetSegmentedButtonItem) {
 			return;
@@ -233,7 +233,7 @@ class SegmentedButton extends UI5Element {
 
 	_onmousedown(event) {
 		const eventTarget = event.target;
-		const isTargetSegmentedButtonItem = eventTarget.tagName === "UI5-SEGMENTED-BUTTON-ITEM";
+		const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
 
 		if (isTargetSegmentedButtonItem) {
 			eventTarget.focus();

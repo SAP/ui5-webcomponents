@@ -6,7 +6,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -14,7 +13,6 @@ import Icon from "./Icon.js";
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
 	ARIA_LABEL_CARD_CONTENT,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -47,7 +45,7 @@ import cardCss from "./generated/themes/Card.css.js";
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-card
  * @public
- * @appenddocs CardHeader
+ * @appenddocs sap.ui.webc.main.CardHeader
  */
 @customElement("ui5-card")
 @languageAware
@@ -131,11 +129,11 @@ class Card extends UI5Element {
 	get _getAriaLabel() {
 		const effectiveAriaLabelText = getEffectiveAriaLabelText(this),
 			effectiveAriaLabel = effectiveAriaLabelText ? ` ${effectiveAriaLabelText}` : "";
-		return Card.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD as I18nText) + effectiveAriaLabel;
+		return Card.i18nBundle.getText(ARIA_ROLEDESCRIPTION_CARD) + effectiveAriaLabel;
 	}
 
 	get _ariaCardContentLabel() {
-		return Card.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT as I18nText);
+		return Card.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
 	}
 
 	static get dependencies() {

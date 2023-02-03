@@ -15,7 +15,6 @@ import {
 	isShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -26,7 +25,6 @@ import Button from "./Button.js";
 import {
 	SPLIT_BUTTON_DESCRIPTION,
 	SPLIT_BUTTON_KEYBOARD_HINT,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -407,13 +405,13 @@ class SplitButton extends UI5Element {
 			ariaExpanded: this._splitButtonAccInfo && this._splitButtonAccInfo.ariaExpanded,
 			ariaHaspopup: this._splitButtonAccInfo && this._splitButtonAccInfo.ariaHaspopup,
 			// affects root element
-			description: SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION as I18nText),
-			keyboardHint: SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT as I18nText),
+			description: SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION),
+			keyboardHint: SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT),
 		};
 	}
 
 	get ariaLabelText() {
-		return [SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION as I18nText), SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT as I18nText)].join(" ");
+		return [SplitButton.i18nBundle.getText(SPLIT_BUTTON_DESCRIPTION), SplitButton.i18nBundle.getText(SPLIT_BUTTON_KEYBOARD_HINT)].join(" ");
 	}
 }
 

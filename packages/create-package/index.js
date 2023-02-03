@@ -19,6 +19,9 @@ const toCamelCase = parts => {
 		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 	}).join("");
 };
+const isTypescriptRelatedFile = sourcePath => {
+	return ["Аssets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
+}
 
 // Validation of user input
 const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z0-9\-_]+$/);
@@ -39,6 +42,13 @@ const replaceVarsInFileName = (vars, fileName) => {
 };
 
 const copyFile = (vars, sourcePath, destPath) => {
+	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && sourcePath.includes("MyFirstComponent.js")
+	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTypescriptRelatedFile(sourcePath)
+
+	if (ignoreJsRelated || ignoreTsRelated) {
+		return;
+	}
+
 	let content = fs.readFileSync(sourcePath, {encoding: "UTF-8"});
 	content = replaceVarsInFileContent(vars, content);
 	destPath = replaceVarsInFileName(vars, destPath);
@@ -76,6 +86,24 @@ const createWebcomponentsPackage = async () => {
 		name = response.name;
 	}
 
+	// Add TypeScript support
+	response = await prompts({
+		type: "select",
+		name: "language",
+		message: "Support TypeScript:",
+		choices: [
+			{
+				title: "JavaScript",
+				value: "js",
+			},
+			{
+				title: "TypeScript",
+				value: "ts",
+			},
+		]
+	});
+	const typescript = response.language === "ts";
+
 	// Get the port
 	response = await prompts({
 		type: "text",
@@ -104,6 +132,7 @@ const createWebcomponentsPackage = async () => {
 		INIT_PACKAGE_VAR_PORT: port,
 		INIT_PACKAGE_VAR_TAG: tag,
 		INIT_PACKAGE_VAR_CLASS_NAME: className,
+		INIT_PACKAGE_VAR_TYPESCRIPT: typescript
 	};
 
 	const packageContent = {

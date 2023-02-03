@@ -1,25 +1,32 @@
+import type RadioButton from "./RadioButton.js";
+
 class RadioButtonGroup {
-	static hasGroup(groupName) {
+	static _groups: Map<string, Array<RadioButton>>;
+	static _checkedRadios: Map<string, RadioButton | null>;
+
+	static hasGroup(groupName: string) {
 		return this.groups.has(groupName);
 	}
 
-	static getGroup(groupName) {
+	static getGroup(groupName: string) {
 		return this.groups.get(groupName);
 	}
 
-	static getCheckedRadioFromGroup(groupName) {
+	static getCheckedRadioFromGroup(groupName: string) {
 		return this.checkedRadios.get(groupName);
 	}
 
-	static removeGroup(groupName) {
+	static removeGroup(groupName: string) {
 		this.checkedRadios.delete(groupName);
 		return this.groups.delete(groupName);
 	}
 
-	static addToGroup(radioBtn, groupName) {
+	static addToGroup(radioBtn: RadioButton, groupName: string) {
 		if (this.hasGroup(groupName)) {
 			this.enforceSingleSelection(radioBtn, groupName);
-			this.getGroup(groupName).push(radioBtn);
+			if (this.getGroup(groupName)) {
+				this.getGroup(groupName)!.push(radioBtn);
+			}
 		} else {
 			this.createGroup(radioBtn, groupName);
 		}
@@ -27,12 +34,13 @@ class RadioButtonGroup {
 		this.updateTabOrder(groupName);
 	}
 
-	static removeFromGroup(radioBtn, groupName) {
-		if (!this.hasGroup(groupName)) {
+	static removeFromGroup(radioBtn: RadioButton, groupName: string) {
+		const group = this.getGroup(groupName);
+
+		if (!group) {
 			return;
 		}
 
-		const group = this.getGroup(groupName);
 		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
 
 		// Remove the radio button from the given group
@@ -54,7 +62,7 @@ class RadioButtonGroup {
 		this.updateTabOrder(groupName);
 	}
 
-	static createGroup(radioBtn, groupName) {
+	static createGroup(radioBtn: RadioButton, groupName: string) {
 		if (radioBtn.checked) {
 			this.checkedRadios.set(groupName, radioBtn);
 		}
@@ -62,9 +70,13 @@ class RadioButtonGroup {
 		this.groups.set(groupName, [radioBtn]);
 	}
 
-	static selectNextItem(item, groupName) {
-		const group = this.getGroup(groupName),
-			groupLength = group.length,
+	static selectNextItem(item: RadioButton, groupName: string) {
+		const group = this.getGroup(groupName);
+		if (!group) {
+			return;
+		}
+
+		const groupLength = group.length,
 			currentItemPosition = group.indexOf(item);
 
 		if (groupLength <= 1) {
@@ -72,16 +84,20 @@ class RadioButtonGroup {
 		}
 
 		const nextItemToSelect = this._nextSelectable(currentItemPosition, group);
+		if (!nextItemToSelect) {
+			return;
+		}
 
 		this.updateSelectionInGroup(nextItemToSelect, groupName);
 	}
 
-	static updateTabOrder(groupName) {
-		if (!this.hasGroup(groupName)) {
+	static updateTabOrder(groupName: string) {
+		const group = this.getGroup(groupName);
+
+		if (!group) {
 			return;
 		}
 
-		const group = this.getGroup(groupName);
 		const hasCheckedRadio = group.some(radioBtn => radioBtn.checked);
 
 		group.filter(radioBtn => !radioBtn.disabled).forEach((radioBtn, idx) => {
@@ -93,9 +109,14 @@ class RadioButtonGroup {
 		});
 	}
 
-	static selectPreviousItem(item, groupName) {
-		const group = this.getGroup(groupName),
-			groupLength = group.length,
+	static selectPreviousItem(item: RadioButton, groupName: string) {
+		const group = this.getGroup(groupName);
+
+		if (!group) {
+			return;
+		}
+
+		const groupLength = group.length,
 			currentItemPosition = group.indexOf(item);
 
 		if (groupLength <= 1) {
@@ -103,39 +124,49 @@ class RadioButtonGroup {
 		}
 
 		const previousItemToSelect = this._previousSelectable(currentItemPosition, group);
+		if (!previousItemToSelect) {
+			return;
+		}
 
 		this.updateSelectionInGroup(previousItemToSelect, groupName);
 	}
 
-	static selectItem(item, groupName) {
+	static selectItem(item: RadioButton, groupName: string) {
 		this.updateSelectionInGroup(item, groupName);
 		this.updateTabOrder(groupName);
 	}
 
-	static updateSelectionInGroup(radioBtnToSelect, groupName) {
+	static updateSelectionInGroup(radioBtnToSelect: RadioButton, groupName: string) {
 		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
 
-		this._deselectRadio(checkedRadio);
+		if (checkedRadio) {
+			this._deselectRadio(checkedRadio);
+		}
+
 		this._selectRadio(radioBtnToSelect);
 		this.checkedRadios.set(groupName, radioBtnToSelect);
 	}
 
-	static _deselectRadio(radioBtn) {
+	static _deselectRadio(radioBtn: RadioButton) {
 		if (radioBtn) {
 			radioBtn.checked = false;
 		}
 	}
 
-	static _selectRadio(radioBtn) {
+	static _selectRadio(radioBtn: RadioButton) {
 		if (radioBtn) {
-			radioBtn.focus({ focusVisible: true });
+			radioBtn.focus({ focusVisible: true } as FocusOptions);
 			radioBtn.checked = true;
 			radioBtn._checked = true;
 			radioBtn.fireEvent("change");
 		}
 	}
 
-	static _nextSelectable(pos, group) {
+	static _nextSelectable(pos: number, group: RadioButton[]): RadioButton | null {
+		if (!group) {
+			return null;
+		}
+
 		const groupLength = group.length;
 		let nextRadioToSelect = null;
 
@@ -153,7 +184,7 @@ class RadioButtonGroup {
 		return nextRadioToSelect;
 	}
 
-	static _previousSelectable(pos, group) {
+	static _previousSelectable(pos: number, group: RadioButton[]): RadioButton | null {
 		const groupLength = group.length;
 		let previousRadioToSelect = null;
 		if (pos === 0) {
@@ -170,7 +201,7 @@ class RadioButtonGroup {
 		return previousRadioToSelect;
 	}
 
-	static enforceSingleSelection(radioBtn, groupName) {
+	static enforceSingleSelection(radioBtn: RadioButton, groupName: string) {
 		const checkedRadio = this.getCheckedRadioFromGroup(groupName);
 
 		if (radioBtn.checked) {

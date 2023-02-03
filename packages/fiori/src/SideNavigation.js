@@ -152,7 +152,7 @@ const metadata = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-side-navigation
  * @since 1.0.0-rc.8
- * @appenddocs SideNavigationItem SideNavigationSubItem
+ * @appenddocs sap.ui.webc.fiori.SideNavigationItem sap.ui.webc.fiori.SideNavigationSubItem
  * @public
  */
 class SideNavigation extends UI5Element {

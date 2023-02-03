@@ -1,21 +1,28 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Dialog from "@ui5/webcomponents/dist/Dialog.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import * as ZXing from "@zxing/library/umd/index.min.js";
-// Template
-import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDialogTemplate.lit.js";
-
-// Styles
-import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type { BrowserMultiFormatReader as BrowserMultiFormatReaderT, Result, Exception } from "@zxing/library/esm5/index";
 
 // Texts
 import {
 	BARCODE_SCANNER_DIALOG_CANCEL_BUTTON_TXT,
 	BARCODE_SCANNER_DIALOG_LOADING_TXT,
 } from "./generated/i18n/i18n-defaults.js";
+
+// Template
+import BarcodeScannerDialogTemplate from "./generated/templates/BarcodeScannerDialogTemplate.lit.js";
+
+// Styles
+import BarcodeScannerDialogCss from "./generated/themes/BarcodeScannerDialog.css.js";
 
 // some tools handle named exports from UMD files and the window object is not assigned but the imports work (vitejs)
 // other tools do not handle named exports (they are undefined after the import), but the window global is assigned and can be used (web dev server)
@@ -35,55 +42,13 @@ const defaultMediaConstraints = {
 	},
 };
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-barcode-scanner-dialog",
-	languageAware: true,
-	slots: /** @lends sap.ui.webc.fiori.BarcodeScannerDialog.prototype */ {
-	},
-	properties: /** @lends sap.ui.webc.fiori.BarcodeScannerDialog.prototype */ {
-		/**
-		 * Indicates whether a loading indicator should be displayed in the dialog.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @private
-		 */
-		loading: {
-			type: Boolean,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.BarcodeScannerDialog.prototype */ {
-		/**
-		 * Fires when the scan is completed successfuuly.
-		 *
-		 * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-success
-		 * @param {string} text the scan result as string
-		 * @param {Object} rawBytes the scan result as a Uint8Array
-		 * @public
-		 */
-		 "scan-success": {
-			detail: {
-				text: { type: String },
-				rawBytes: { type: Object },
-			},
-		},
+type BarcodeScannerDialogScanSuccessEventDetail = {
+	text: string,
+	rawBytes: Uint8Array,
+};
 
-		/**
-		 * Fires when the scan fails with error.
-		 *
-		 * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-error
-		 * @param {string} message the error message
-		 * @public
-		 */
-		 "scan-error": {
-			detail: {
-				message: { type: String },
-			},
-		},
-	},
+type BarcodeScannerDialogScanErrorEventDetail = {
+	message: string,
 };
 
 /**
@@ -111,30 +76,63 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.15
  */
+@customElement("ui5-barcode-scanner-dialog")
+@languageAware
+/**
+ * Fires when the scan is completed successfuuly.
+ *
+ * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-success
+ * @param {string} text the scan result as string
+ * @param {Object} rawBytes the scan result as a Uint8Array
+ * @public
+ */
+@event("scan-success", {
+	detail: {
+		text: { type: String },
+		rawBytes: { type: Object },
+	},
+})
+
+/**
+ * Fires when the scan fails with error.
+ *
+ * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-error
+ * @param {string} message the error message
+ * @public
+ */
+@event("scan-error", {
+	detail: {
+		message: { type: String },
+	},
+})
+
 class BarcodeScannerDialog extends UI5Element {
+	/**
+	 * Indicates whether a loading indicator should be displayed in the dialog.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.BarcodeScannerDialog.prototype.loading
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	loading!: boolean;
+
+	_codeReader: BrowserMultiFormatReaderT;
+	dialog?: Dialog;
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 		this._codeReader = new BrowserMultiFormatReader();
-	}
-
-	static get metadata() {
-		return metadata;
 	}
 
 	static get render() {
 		return litRender;
 	}
 
-	static get template() {
-		return null;
-	}
-
 	static get staticAreaTemplate() {
 		return BarcodeScannerDialogTemplate;
-	}
-
-	static get styles() {
-		return null;
 	}
 
 	static get staticAreaStyles() {
@@ -147,6 +145,9 @@ class BarcodeScannerDialog extends UI5Element {
 
 	/**
 	 * Shows a dialog with the camera videostream. Starts a scan session.
+	 * @method
+	 * @name sap.ui.webc.fiori.BarcodeScannerDialog#show
+	 * @returns {void}
 	 * @public
 	 */
 	show() {
@@ -156,7 +157,7 @@ class BarcodeScannerDialog extends UI5Element {
 		}
 
 		if (!this._hasGetUserMedia()) {
-			this.fireEvent("scan-error", { message: "getUserMedia() is not supported by your browser" });
+			this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
 			return;
 		}
 
@@ -165,13 +166,16 @@ class BarcodeScannerDialog extends UI5Element {
 		this._getUserPermission()
 			.then(() => this._showDialog())
 			.catch(err => {
-				this.fireEvent("scan-error", { message: err });
+				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
 				this.loading = false;
 			});
 	}
 
 	/**
 	 * Closes the dialog and the scan session.
+	 * @method
+	 * @name sap.ui.webc.fiori.BarcodeScannerDialog#close
+	 * @returns {void}
 	 * @public
 	 */
 	close() {
@@ -193,12 +197,12 @@ class BarcodeScannerDialog extends UI5Element {
 
 	async _getDialog() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector("[ui5-dialog]");
+		return staticAreaItem!.querySelector<Dialog>("[ui5-dialog]")!;
 	}
 
 	async _getVideoElement() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(".ui5-barcode-scanner-dialog-video");
+		return staticAreaItem!.querySelector<HTMLVideoElement>(".ui5-barcode-scanner-dialog-video")!;
 	}
 
 	async _showDialog() {
@@ -207,13 +211,13 @@ class BarcodeScannerDialog extends UI5Element {
 	}
 
 	_closeDialog() {
-		if (this._isOpen) {
+		if (this.dialog && this.dialog.opened) {
 			this.dialog.close();
 		}
 	}
 
 	_startReader() {
-		this._decodeFromCamera(null);
+		this._decodeFromCamera();
 	}
 
 	async _resetReader() {
@@ -222,26 +226,21 @@ class BarcodeScannerDialog extends UI5Element {
 		this._codeReader.reset();
 	}
 
-	async _decodeFromCamera(cameraId) {
+	async _decodeFromCamera() {
 		const videoElement = await this._getVideoElement();
-
-		this._codeReader.decodeFromVideoDevice(cameraId, videoElement, (result, err) => {
+		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
 			this.loading = false;
 			if (result) {
-				this.fireEvent("scan-success",
+				this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
 					{
 						text: result.getText(),
 						rawBytes: result.getRawBytes(),
 					});
 			}
 			if (err && !(err instanceof NotFoundException)) {
-				this.fireEvent("scan-error", { message: err });
+				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message });
 			}
-		}).catch(err => this.fireEvent("scan-error", { message: err }));
-	}
-
-	get _isOpen() {
-		return !!this.dialog && this.dialog.opened;
+		}).catch((err: Error) => this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message }));
 	}
 
 	get _cancelButtonText() {
@@ -264,3 +263,7 @@ class BarcodeScannerDialog extends UI5Element {
 BarcodeScannerDialog.define();
 
 export default BarcodeScannerDialog;
+export type {
+	BarcodeScannerDialogScanErrorEventDetail,
+	BarcodeScannerDialogScanSuccessEventDetail,
+};

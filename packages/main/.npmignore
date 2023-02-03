@@ -1,5 +1,7 @@
 dist/resources
 dist/test-resources
+jsdoc-dist
+src/generated
 lib/
 node_modules/
 test/

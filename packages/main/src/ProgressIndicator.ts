@@ -8,14 +8,12 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "./Icon.js";
 import {
 	VALUE_STATE_ERROR,
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -153,10 +151,10 @@ class ProgressIndicator extends UI5Element {
 
 	valueStateTextMappings(): Record<string, string> {
 		return {
-			"Error": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR as I18nText),
-			"Warning": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING as I18nText),
-			"Success": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS as I18nText),
-			"Information": ProgressIndicator.i18nBundle.getText(VALUE_STATE_INFORMATION as I18nText),
+			"Error": ProgressIndicator.i18nBundle.getText(VALUE_STATE_ERROR),
+			"Warning": ProgressIndicator.i18nBundle.getText(VALUE_STATE_WARNING),
+			"Success": ProgressIndicator.i18nBundle.getText(VALUE_STATE_SUCCESS),
+			"Information": ProgressIndicator.i18nBundle.getText(VALUE_STATE_INFORMATION),
 		};
 	}
 
