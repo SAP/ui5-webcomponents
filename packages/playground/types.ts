@@ -2,15 +2,20 @@ import type { Story } from "@storybook/web-components";
 
 type OmitAttributes = "style";
 
-type Override<T, S> = {
-  // remove all keys from T that are present in S and OmitAttributes
-  [P in Exclude<keyof T, keyof S | OmitAttributes>]?: T[P];
+type Override<ComponentClass, StoryArgs> = {
+  // remove all keys from ComponentClass that are present in StoryArgs and OmitAttributes
+  [ComponentKey in Exclude<
+    keyof ComponentClass,
+    keyof StoryArgs | OmitAttributes
+  >]?: ComponentClass[ComponentKey];
 } & {
-  // add all keys from S to T
-  [P in keyof S]: S[P];
+  // add all keys from StoryArgs to ComponentClass
+  [ComponentKey in keyof StoryArgs]: StoryArgs[ComponentKey];
 } & {
   // make style properties optional
   style?: string;
 };
 
-export type UI5StoryArgs<T, S> = Story<Override<T, S>>;
+export type UI5StoryArgs<ComponentClass, StoryArgs> = Story<
+  Override<ComponentClass, StoryArgs>
+>;
