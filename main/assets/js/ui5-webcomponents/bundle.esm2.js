@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675433209
+  buildTime: 1675433223
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -8698,7 +8698,7 @@ const DELETE = { key: "DELETE", defaultText: "Delete" };
 const FILEUPLOAD_BROWSE = { key: "FILEUPLOAD_BROWSE", defaultText: "Browse..." };
 const FILEUPLOADER_TITLE = { key: "FILEUPLOADER_TITLE", defaultText: "Upload File" };
 const GROUP_HEADER_TEXT = { key: "GROUP_HEADER_TEXT", defaultText: "Group Header" };
-const SELECT_ROLE_DESCRIPTION = { key: "SELECT_ROLE_DESCRIPTION", defaultText: "Select Combo Box" };
+const SELECT_ROLE_DESCRIPTION = { key: "SELECT_ROLE_DESCRIPTION", defaultText: "Listbox" };
 const SELECT_OPTIONS = { key: "SELECT_OPTIONS", defaultText: "Select Options" };
 const INPUT_SUGGESTIONS = { key: "INPUT_SUGGESTIONS", defaultText: "Suggestions available" };
 const INPUT_SUGGESTIONS_TITLE = { key: "INPUT_SUGGESTIONS_TITLE", defaultText: "Select" };
