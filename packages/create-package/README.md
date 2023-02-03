@@ -13,13 +13,13 @@ Usage:
 
 # npm 6.x
     npm init @ui5/webcomponents-package [OPTIONS]
-# npm 7+, extra double-dash is needed:
+# npm 7+, an extra double-dash is needed:
     npm init @ui5/webcomponents-package -- [OPTIONS]
 
 Options:
-    --name <string>     - defines package name
-    --tag <string>      - defines predefined custom element tag name
-    --enable-typescript - enables TypeScript support to the package
+    --name <string>     - defines the package name
+    --tag <string>      - defines the tag name of the sample web component that will be created in your new package
+    --enable-typescript - enables TypeScript support for the package
     --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
@@ -32,10 +32,10 @@ components package.
 Usage:
     yarn create @ui5/webcomponents-package [OPTIONS]
 Options:
-    --name <string>     - defines package name
-    --tag <string>      - defines predefined custom element tag name
-    --enable-typescript - enables TypeScript support to the package
-    --skip              - skips all configurations and generates package with default configurations
+    --name <string>     - defines the package name
+    --tag <string>      - defines the tag name of the sample web component that will be created in your new package
+    --enable-typescript - enables TypeScript support for the package
+    --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
