@@ -12,6 +12,7 @@ import GroupHeaderListItem from "./GroupHeaderListItem.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.SuggestionGroupItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-suggestion-group-item
  * @implements sap.ui.webc.main.IInputSuggestionItem
  * @public

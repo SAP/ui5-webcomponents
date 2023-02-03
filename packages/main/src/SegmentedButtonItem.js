@@ -87,6 +87,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webc.main.SegmentedButtonItem
  * @extends sap.ui.webc.main.ToggleButton
+ * @abstract
  * @tagname ui5-segmented-button-item
  * @implements sap.ui.webc.main.ISegmentedButtonItem
  * @public

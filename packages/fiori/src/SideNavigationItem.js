@@ -129,6 +129,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webc.fiori.SideNavigationItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-side-navigation-item
  * @public
  * @since 1.0.0-rc.8

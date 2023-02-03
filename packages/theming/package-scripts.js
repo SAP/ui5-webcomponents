@@ -17,9 +17,9 @@ allThemes.forEach(theme => {
 
 module.exports = {
 	scripts: {
-		clean: "rimraf dist",
+		clean: "rimraf dist && rimraf src/generated",
 		build: {
-			default: `nps clean build.src build.typescript build.themes build.postcss build.jsonImports generateReport`,
+			default: `nps clean build.src build.themes build.postcss build.jsonImports build.typescript generateReport`,
 			src: `copy-and-watch "src/**/*.js" dist/`,
 			typescript: "tsc",
 			themes: {

@@ -14,6 +14,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.BreadcrumbsItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-breadcrumbs-item
  * @implements sap.ui.webc.main.IBreadcrumbsItem
  * @public

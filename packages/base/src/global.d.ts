@@ -1,5 +1,3 @@
-import { StyleData } from "./types.js";
-
 export {};
 
 declare global {
@@ -18,10 +16,6 @@ declare global {
 		sap: any;
 		chrome: any;
 		v8: any;
-	}
-	module "*.css.js" {
-		const content: StyleData;
-		export default content;
 	}
 
 	module "*generated/AssetParameters.js" {

@@ -14,9 +14,9 @@ const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-p
 const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}`;
 
 const scripts = {
-	clean: "rimraf jsdoc-dist && rimraf dist && rimraf .port",
+	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
 	lint: `eslint . ${eslintConfig}`,
-	prepare: "nps clean integrate copy typescript generateAssetParameters generateVersionInfo generateStyles generateTemplates generateAPI",
+	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
 	typescript: "tsc",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
@@ -31,7 +31,7 @@ const scripts = {
 		},
 	},
 	build: {
-		default: `nps lint prepare build.bundle`,
+		default: `nps prepare lint build.bundle`,
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {

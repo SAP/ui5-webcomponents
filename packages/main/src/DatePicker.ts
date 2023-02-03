@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
@@ -33,7 +32,6 @@ import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
-// @ts-ignore
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
@@ -680,7 +678,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	get _headerTitleText() {
-		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE as I18nText);
+		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get phone() {
@@ -706,7 +704,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	get openIconTitle() {
-		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE as I18nText);
+		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}
 
 	get openIconName() {
@@ -714,7 +712,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	get dateAriaDescription() {
-		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION as I18nText);
+		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
 	}
 
 	/**

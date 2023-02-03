@@ -6,7 +6,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
@@ -38,7 +37,6 @@ import type { TimeSelectionChangeEventDetail } from "./TimeSelection.js";
 import {
 	TIMEPICKER_SUBMIT_BUTTON,
 	TIMEPICKER_CANCEL_BUTTON,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -473,11 +471,11 @@ class TimePickerBase extends UI5Element {
 	}
 
 	get submitButtonLabel() {
-		return TimePickerBase.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON as I18nText);
+		return TimePickerBase.i18nBundle.getText(TIMEPICKER_SUBMIT_BUTTON);
 	}
 
 	get cancelButtonLabel() {
-		return TimePickerBase.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON as I18nText);
+		return TimePickerBase.i18nBundle.getText(TIMEPICKER_CANCEL_BUTTON);
 	}
 
 	/**
