@@ -503,7 +503,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	calcVisibleColumns(colLayout: ColumnLayout) {
-		return colLayout.filter(colWidth => this._isColumnHidden(colWidth)).length;
+		return colLayout.filter(colWidth => colWidth !== 0 && colWidth !== "0px").length;
 	}
 
 	fireLayoutChange(arrowUsed: boolean, resize: boolean) {
