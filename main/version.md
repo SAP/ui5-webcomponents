@@ -1,11 +1,9 @@
-commit a0b114dfeee9265ada632d34df1b6e2e3de8c3fd
-Author: Plamen Ivanov <plamen.ivanov01@sap.com>
-Date:   Fri Feb 3 11:06:03 2023 +0200
+commit c14667c938adbe69c1e373c3f0762d25d97b1bce
+Author: Peter Skelin <petar.skelin@sap.com>
+Date:   Fri Feb 3 11:25:40 2023 +0200
 
-    feat(ui5-select): new events introduced (#6398)
+    chore: improve typing (#6414)
     
-    * feat(ui5-select): new events introduced
-    There are two new events 'open' and 'close' which are fired after
-    the dropdown's opening and closure respectively.
-    
-    FIXES: #5836
+    instead of importing the instance type, use the typescript
+    utility helper InstanceType to descirbe an instance of a class is
+    expected
