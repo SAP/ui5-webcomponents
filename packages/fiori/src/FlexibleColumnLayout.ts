@@ -33,7 +33,6 @@ import {
 	FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP,
 	FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP,
 	FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -53,7 +52,7 @@ enum BREAKPOINTS {
 	"TABLET" = 1023,
 }
 
-type ColumnLayout = Array<string>;
+type ColumnLayout = Array<string | number>;
 
 type FCLLayoutChangeEventDetail = {
 	layout: FCLLayout,
@@ -448,8 +447,8 @@ class FlexibleColumnLayout extends UI5Element {
 			columnDOM = this.endColumnDOM;
 		}
 
-		const currentlyHidden = columnWidth === "0px";
-		const previouslyHidden = columnDOM.style.width === "0px";
+		const currentlyHidden = this._isColumnHidden(columnWidth);
+		const previouslyHidden = this._isColumnHidden(columnDOM.style.width);
 
 		// no change
 		if (currentlyHidden && previouslyHidden) {
@@ -458,14 +457,14 @@ class FlexibleColumnLayout extends UI5Element {
 
 		// column resizing: from 33% to 67%, from 25% to 50%, etc.
 		if (!currentlyHidden && !previouslyHidden) {
-			columnDOM.style.width = columnWidth;
+			columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
 			return;
 		}
 
 		// hide column: 33% to 0, 25% to 0, etc .
 		if (currentlyHidden) {
 			// animate the width
-			columnDOM.style.width = columnWidth;
+			columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
 
 			// hide column with delay to allow the animation runs entirely
 			columnDOM.addEventListener("transitionend", this.columnResizeHandler);
@@ -477,7 +476,7 @@ class FlexibleColumnLayout extends UI5Element {
 		if (previouslyHidden) {
 			columnDOM.removeEventListener("transitionend", this.columnResizeHandler);
 			columnDOM.classList.remove("ui5-fcl-column--hidden");
-			columnDOM.style.width = columnWidth;
+			columnDOM.style.width = typeof columnWidth === "number" ? `${columnWidth}px` : columnWidth;
 		}
 	}
 
@@ -503,8 +502,8 @@ class FlexibleColumnLayout extends UI5Element {
 		return this._effectiveLayoutsByMedia[this.media][layout].layout;
 	}
 
-	calcVisibleColumns(colLayot: Array<string>) {
-		return colLayot.filter(col => col !== "0px").length;
+	calcVisibleColumns(colLayot: ColumnLayout) {
+		return colLayot.filter(col => col !== "0px" && col !== 0).length;
 	}
 
 	fireLayoutChange(arrowUsed: boolean, resize: boolean) {
@@ -518,6 +517,13 @@ class FlexibleColumnLayout extends UI5Element {
 			arrowsUsed: arrowUsed, // as documented
 			resize,
 		});
+	}
+
+	/**
+	 * Checks if a column is hidden based on its width.
+	 */
+	private _isColumnHidden(columnWidth: number | string): boolean {
+		return columnWidth === 0 || columnWidth === "0px";
 	}
 
 	/**
@@ -545,7 +551,7 @@ class FlexibleColumnLayout extends UI5Element {
 	*/
 	get startColumnVisible(): boolean {
 		if (this._columnLayout) {
-			return this._columnLayout[0] !== "0px";
+			return this._columnLayout[0] !== "0px" && this._columnLayout[0] !== 0;
 		}
 
 		return false;
@@ -561,7 +567,7 @@ class FlexibleColumnLayout extends UI5Element {
 	*/
 	get midColumnVisible(): boolean {
 		if (this._columnLayout) {
-			return this._columnLayout[1] !== "0px";
+			return this._columnLayout[1] !== "0px" && this._columnLayout[1] !== 0;
 		}
 
 		return false;
@@ -577,7 +583,7 @@ class FlexibleColumnLayout extends UI5Element {
 	*/
 	get endColumnVisible(): boolean {
 		if (this._columnLayout) {
-			return this._columnLayout[2] !== "0px";
+			return this._columnLayout[2] !== "0px" && this._columnLayout[2] !== 0;
 		}
 
 		return false;
@@ -722,15 +728,15 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	get accStartColumnText() {
-		return this.accessibilityTexts.startColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT as I18nText);
+		return this.accessibilityTexts.startColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_TXT);
 	}
 
 	get accMiddleColumnText() {
-		return this.accessibilityTexts.midColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT as I18nText);
+		return this.accessibilityTexts.midColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_MIDDLE_COLUMN_TXT);
 	}
 
 	get accEndColumnText() {
-		return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT as I18nText);
+		return this.accessibilityTexts.endColumnAccessibleName || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_TXT);
 	}
 
 	get accStartArrowContainerText() {
@@ -797,20 +803,20 @@ class FlexibleColumnLayout extends UI5Element {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.startArrowDirection === "mirror") {
-			return customTexts.startArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP as I18nText);
+			return customTexts.startArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
 		}
 
-		return customTexts.startArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP as I18nText);
+		return customTexts.startArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_START_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 
 	get accEndArrowText() {
 		const customTexts = this.accessibilityTexts;
 
 		if (this.endArrowDirection === "mirror") {
-			return customTexts.endArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP as I18nText);
+			return customTexts.endArrowRightText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_COLLAPSE_BUTTON_TOOLTIP);
 		}
 
-		return customTexts.endArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP as I18nText);
+		return customTexts.endArrowLeftText || FlexibleColumnLayout.i18nBundle.getText(FCL_END_COLUMN_EXPAND_BUTTON_TOOLTIP);
 	}
 }
 
