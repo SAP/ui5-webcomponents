@@ -8,7 +8,8 @@ const generate = async () => {
 
 	const messageBundle = path.normalize(`${process.argv[2]}/messagebundle.properties`);
 	const messageBundleDefaultLanguage = path.normalize(`${process.argv[2]}/messagebundle_${defaultLanguage}.properties`);
-	const tsMode = !!process.argv[3]; // In Typescript mode, we output .ts files and set the required types, otherwise - output pure .js files
+	const tsMode = process.env.UI5_TS === "true"; // In Typescript mode, we output .ts files and set the required types, otherwise - output pure .js files
+
 	const outputFile = path.normalize(`${process.argv[3]}/i18n-defaults.${tsMode ? "ts": "js"}`);
 
 	if (!messageBundle || !outputFile) {

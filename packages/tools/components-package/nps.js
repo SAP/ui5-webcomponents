@@ -46,7 +46,7 @@ const getScripts = (options) => {
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
-			default: "nps clean prepare.all typescript generateAPI",
+			default: `cross-env UI5_TS=${options.typescript} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
@@ -61,7 +61,7 @@ const getScripts = (options) => {
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n  ${options.typescript}`,
+				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
 				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {

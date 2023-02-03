@@ -5,12 +5,7 @@ const fs = require("fs");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
-const options = {
-	typescript: true,
-};
-
-const getComponentPostCSSConfig = options => {
-	return {
+module.exports = {
 		plugins: [
 			postcssImport(),
 			cssnano({
@@ -21,10 +16,6 @@ const getComponentPostCSSConfig = options => {
 					},
 				]
 			}),
-			postcssCSStoESM({ toReplace: 'src', includeDefaultTheme: true, packageName, tsMode: options.typescript }),
+			postcssCSStoESM({ toReplace: 'src', includeDefaultTheme: true, packageName }),
 		]
-	}
-};
-
-module.exports = getComponentPostCSSConfig(options);
-module.exports.getComponentPostCSSConfig = getComponentPostCSSConfig;
+}

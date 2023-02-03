@@ -54,7 +54,6 @@ const proccessCSS = css => {
 module.exports = function (opts) {
 	opts = opts || {};
 
-	const tsMode = opts.tsMode; // In Typescript mode, we output .ts files and set the required types, otherwise - output pure .js files
 	const packageName = opts.packageName;
 	const includeDefaultTheme = opts.includeDefaultTheme;
 	const toReplace = opts.toReplace;
@@ -62,6 +61,8 @@ module.exports = function (opts) {
 	return {
 		postcssPlugin: 'postcss-css-to-esm',
 		Once (root) {
+			const tsMode = process.env.UI5_TS === "true";
+
 			let css = root.toString();
 			css = proccessCSS(css);
 
@@ -70,7 +71,6 @@ module.exports = function (opts) {
 
 			const filePath = `${targetFile}.${tsMode ? "ts" : "js"}`;
 		
-
 			// it seems slower to read the old content, but writing the same content with no real changes
 			// (as in initial build and then watch mode) will cause an unnecessary dev server refresh
 			let oldContent = "";

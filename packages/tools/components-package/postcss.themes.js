@@ -7,12 +7,7 @@ const fs = require("fs");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
 
-const options = {
-	typescript: true,
-};
-
-const getThemePostCSSConfig = (options) => {
-	return {
+module.exports = {
 		plugins: [
 			postcssImport(),
 			combineSelectors({
@@ -26,10 +21,6 @@ const getThemePostCSSConfig = (options) => {
 				]
 			},),
 			postcssCSStoJSON({ toReplace: 'src', packageName }),
-			postcssCSStoESM({ toReplace: 'src', packageName, tsMode: options.typescript }),
+			postcssCSStoESM({ toReplace: 'src', packageName }),
 		]
-	};
-}
-
-module.exports = getThemePostCSSConfig(options);
-module.exports.getThemePostCSSConfig = getThemePostCSSConfig;
+};

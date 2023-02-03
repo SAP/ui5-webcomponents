@@ -46,7 +46,7 @@ const getScripts = (options) => {
 		clean: "rimraf dist && rimraf src/generated",
 		copy: copyAssetsCmd,
 		build: {
-			default: `nps clean copy build.i18n typescript build.icons build.jsonImports`,
+			default: `cross-env UI5_TS=${options.typescript} nps clean copy build.i18n typescript build.icons build.jsonImports`,
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
 				defaultsjs: `mkdirp dist/generated/i18n && node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
