@@ -320,6 +320,10 @@ class RangeSlider extends SliderBase {
 	_onkeyup() {
 		super._onkeyup();
 		this._setAffectedValue(undefined);
+
+		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
+			this.fireEvent("change");
+		}
 	}
 
 	_handleActionKeyPress(e: KeyboardEvent) {
@@ -417,7 +421,7 @@ class RangeSlider extends SliderBase {
 			this.updateStateStorageAndFireInputEvent("endValue");
 			this._updateHandlesAndRange(0);
 		} else {
-			const newValue = startValue;
+			const newValue = endValue && affectedValue === "endValue" ? endValue : startValue;
 			this._updateHandlesAndRange(newValue || 0);
 
 			if (affectedValue === "startValue") {
