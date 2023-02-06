@@ -1,5 +1,5 @@
-commit 3efdc6cf7d14b37e714a3979a16ea4cbe498f85e
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Mon Feb 6 09:11:53 2023 +0200
+commit 4a28ecb242186ab563e77ac962acb883031a2ab1
+Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
+Date:   Mon Feb 6 11:54:44 2023 +0200
 
-    fix(ui5-shellbar): i18n of cancel search button text (#6416)
+    chore: declare variables (#6423)
