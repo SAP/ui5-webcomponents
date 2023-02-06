@@ -1,5 +1,5 @@
-import { MEDIA } from "../FlexibleColumnLayout.js";
-import FCLLayout from "../types/FCLLayout.js";
+import type { MEDIA } from "../FlexibleColumnLayout.js";
+import type FCLLayout from "../types/FCLLayout.js";
 
 type LayoutConfiguration = {
 	[device in MEDIA]: {
@@ -242,4 +242,5 @@ export {
 
 export type {
 	LayoutConfiguration,
+	FCLLayout,
 };
