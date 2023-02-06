@@ -34,7 +34,7 @@ import {
 	getAssociatedLabelForTexts,
 	getAllAccessibleNameRefTexts,
 	registerUI5Element,
-	unregisterUI5Element,
+	deregisterUI5Element,
 } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
@@ -709,7 +709,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
-		unregisterUI5Element(this);
+		deregisterUI5Element(this);
 	}
 
 	onBeforeRendering() {
@@ -1520,7 +1520,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts,
+				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
 			},
 		};
 		return info;

@@ -131,7 +131,7 @@ const _createInvalidationCallback = (el: UI5Element) => {
 	return invalidationCallback;
 };
 
-const registerUI5Element = (el: UI5Element, callback: () => void) => {
+const registerUI5Element = (el: UI5Element, callback: MutationCallback) => {
 	if (registeredElements.has(el)) {
 		return;
 	}
@@ -188,7 +188,7 @@ const _removeObservedElementFromRegisteredElement = (registeredElement:Registere
 	registeredElement.observedElements = registeredElement.observedElements.filter(itm => itm !== element);
 };
 
-const unregisterUI5Element = (el: UI5Element) => {
+const deregisterUI5Element = (el: UI5Element) => {
 	const registeredElement = registeredElements.get(el);
 	if (!registeredElement) {
 		return;
@@ -197,12 +197,14 @@ const unregisterUI5Element = (el: UI5Element) => {
 	oldObservedElements.forEach(observedElement => {
 		_removeObservedElementFromRegisteredElement(registeredElement, observedElement);
 	});
+	el.detachInvalidate(registeredElement.invalidationCallback);
+	registeredElements.delete(el);
 };
 
 export {
 	getEffectiveAriaLabelText,
 	getAssociatedLabelForTexts,
 	registerUI5Element,
-	unregisterUI5Element,
+	deregisterUI5Element,
 	getAllAccessibleNameRefTexts,
 };
