@@ -1,5 +1,9 @@
-commit f49c5930f9a9d4e55a614c9b7125a951005335bd
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Mon Feb 6 13:06:17 2023 +0200
+commit b172b783441a0576f8bf5fe93bfaadf90758bc76
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Mon Feb 6 08:12:04 2023 -0800
 
-    fix(f6-navigation): skip empty groups (#6397)
+    Translation Delivery (#6418)
+    
+    chore: translation delivery
+    
+    Change-Id: Iab7799cc536a52a4a17d91f5650541aee02f5751
