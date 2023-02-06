@@ -1,11 +1,19 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
+// @ts-ignore when the Tree is migrated to TS, the comment can't be removed
 import Tree from "@ui5/webcomponents/dist/Tree.js";
+// @ts-ignore when the TreeItem is migrated to TS, the comment can't be removed
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 import {
@@ -20,97 +28,26 @@ import {
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-side-navigation",
-	managedSlots: true,
-	fastNavigation: true,
-	properties: /** @lends sap.ui.webc.fiori.SideNavigation.prototype */ {
-		/**
-		 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
-		 *
-		 * @public
-		 * @type {boolean}
-		 * @defaultvalue false
-		 */
-		collapsed: {
-			type: Boolean,
-		},
+interface ISideNavigationItem extends UI5Element {
+	items: Array<ISideNavigationItem>;
+	text: string;
+	icon: string;
+	expanded: boolean;
+	selected: boolean;
+	wholeItemToggleable: boolean;
+	title: string;
+	_fixed: boolean;
+	associatedItem?: ISideNavigationItem;
+}
 
-		/**
-		 * @private
-		 */
-		_popoverContent: {
-			type: Object,
-		},
-	},
-	slots: /** @lends sap.ui.webc.fiori.SideNavigation.prototype */ {
-		/**
-		 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-		 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
-		 * inside the items.
-		 *
-		 * @public
-		 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
-		 * @slot items
-		 */
-		"default": {
-			propertyName: "items",
-			invalidateOnChildChange: true,
-			type: HTMLElement,
-		},
+type SideNavigationSelectionChangeEventDetail = {
+	item: ISideNavigationItem;
+}
 
-		/**
-		 * Defines the header of the <code>ui5-side-navigation</code>.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
-		 *
-		 * @public
-		 * @type {HTMLElement[]}
-		 * @since 1.0.0-rc.11
-		 * @slot
-		 */
-		header: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the fixed items at the bottom of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
-		 * for the fixed items, and optionally the <code>ui5-side-navigation-sub-item</code> component to provide second-level items inside them.
-		 *
-		 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
-		 *
-		 * @public
-		 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
-		 * @slot
-		 */
-		fixedItems: {
-			type: HTMLElement,
-			invalidateOnChildChange: true,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.SideNavigation.prototype */ {
-		/**
-		 * Fired when the selection has changed via user interaction
-		 *
-		 * @event sap.ui.webc.fiori.SideNavigation#selection-change
-		 * @param {HTMLElement} item the clicked item.
-		 * @allowPreventDefault
-		 * @public
-		 */
-		"selection-change": {
-			detail: {
-				item: {
-					type: HTMLElement,
-				},
-			},
-		},
-	},
-};
-
+type TempTree = HTMLElement & {
+	focusItemByIndex: (index: number) => void,
+	_getListItemForTreeItem: (treeItem: UI5Element) => StandardListItem,
+}
 /**
  * @class
  *
@@ -155,10 +92,98 @@ const metadata = {
  * @appenddocs sap.ui.webc.fiori.SideNavigationItem sap.ui.webc.fiori.SideNavigationSubItem
  * @public
  */
+
+@customElement("ui5-side-navigation")
+@fastNavigation
+/**
+ * Fired when the selection has changed via user interaction
+ *
+ * @event sap.ui.webc.fiori.SideNavigation#selection-change
+ * @param {HTMLElement} item the clicked item.
+ * @allowPreventDefault
+ * @public
+ */
+@event("selection-change", {
+	detail: {
+		item: { type: HTMLElement },
+	},
+})
 class SideNavigation extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
+	 *
+	 * @public
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.fiori.SideNavigation.prototype.collapsed
+	 */
+	@property({ type: Boolean })
+	collapsed!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Object })
+	_popoverContent?: {
+		mainItem: ISideNavigationItem,
+		mainItemSelected: boolean,
+		selectedSubItemIndex: number,
+		subItems: Array<ISideNavigationItem>
+	};
+
+	/**
+	 * @private
+	 */
+	_items?: Array<{ item: ISideNavigationItem, selected: boolean }>;
+
+	/**
+	 * @private
+	 */
+	_fixedItems?: Array<{ item: ISideNavigationItem, selected: boolean }>;
+
+	/**
+	 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
+	 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
+	 * inside the items.
+	 *
+	 * @public
+	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
+	 * @slot items
+	 * @name sap.ui.webc.fiori.SideNavigation.prototype.default
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
+	items!: Array<ISideNavigationItem>;
+
+	/**
+	 * Defines the header of the <code>ui5-side-navigation</code>.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> The header is displayed when the component is expanded - the property <code>collapsed</code> is false;
+	 *
+	 * @public
+	 * @type {HTMLElement[]}
+	 * @since 1.0.0-rc.11
+	 * @slot header
+	 * @name sap.ui.webc.fiori.SideNavigation.prototype.header
+	 */
+	@slot()
+	header!: Array<HTMLElement>;
+
+	/**
+	 * Defines the fixed items at the bottom of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
+	 * for the fixed items, and optionally the <code>ui5-side-navigation-sub-item</code> component to provide second-level items inside them.
+	 *
+	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
+	 *
+	 * @public
+	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
+	 * @slot fixedItems
+	 * @name sap.ui.webc.fiori.SideNavigation.prototype.fixedItems
+	 */
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	fixedItems!: Array<ISideNavigationItem>;
+
+	static i18nBundle: I18nBundle;
 
 	static get staticAreaStyles() {
 		return [SideNavigationPopoverCss];
@@ -187,7 +212,7 @@ class SideNavigation extends UI5Element {
 			Tree,
 			TreeItem,
 			ResponsivePopover,
-		];
+		] as Array<typeof UI5Element>;
 	}
 
 	onBeforeRendering() {
@@ -206,18 +231,18 @@ class SideNavigation extends UI5Element {
 		});
 	}
 
-	_setSelectedItem(item) {
+	_setSelectedItem(item: ISideNavigationItem) {
 		if (!this.fireEvent("selection-change", { item }, true)) {
 			return;
 		}
 
-		this._walk(current => {
+		this._walk((current: ISideNavigationItem) => {
 			current.selected = false;
 		});
 		item.selected = true;
 	}
 
-	_buildPopoverContent(item) {
+	_buildPopoverContent(item: ISideNavigationItem) {
 		this._popoverContent = {
 			mainItem: item,
 			mainItemSelected: item.selected && !item.items.some(subItem => subItem.selected),
@@ -231,9 +256,9 @@ class SideNavigation extends UI5Element {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
-		const tree = await this.getPickerTree();
-		const index = this._popoverContent.selectedSubItemIndex;
-		tree.focusItemByIndex(index);
+		const tree = await this.getPickerTree() as TempTree;
+		const index = this._popoverContent?.selectedSubItemIndex;
+		tree.focusItemByIndex(index!);
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -248,9 +273,9 @@ class SideNavigation extends UI5Element {
 		return this.collapsed ? SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC) : SideNavigation.i18nBundle.getText(SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC);
 	}
 
-	handleTreeItemClick(event) {
-		const treeItem = event.detail.item;
-		const item = treeItem.associatedItem;
+	handleTreeItemClick(e: CustomEvent<SideNavigationSelectionChangeEventDetail>) {
+		const treeItem = e.detail.item;
+		const item = treeItem.associatedItem!;
 
 		if (!item.wholeItemToggleable) {
 			item.fireEvent("click");
@@ -264,16 +289,16 @@ class SideNavigation extends UI5Element {
 
 		if (this.collapsed && item.items.length) {
 			this._buildPopoverContent(item);
-			const currentTree = this._itemsTree === event.target ? this._itemsTree : this._fixedItemsTree;
-			this.openPicker(currentTree._getListItemForTreeItem(treeItem));
+			const currentTree = this._itemsTree === e.target ? this._itemsTree : this._fixedItemsTree;
+			this.openPicker(currentTree!._getListItemForTreeItem(treeItem));
 		} else {
 			this._setSelectedItem(item);
 		}
 	}
 
-	handlePopoverItemClick(event) {
-		const listItem = event.detail.item;
-		const item = listItem.associatedItem;
+	handlePopoverItemClick(e: CustomEvent<SideNavigationSelectionChangeEventDetail>) {
+		const listItem = e.detail.item;
+		const item = listItem.associatedItem!;
 
 		item.fireEvent("click");
 		if (item.selected) {
@@ -285,23 +310,23 @@ class SideNavigation extends UI5Element {
 	}
 
 	async getPicker() {
-		return (await this.getStaticAreaItemDomRef()).querySelector("[ui5-responsive-popover]");
+		return (await this.getStaticAreaItemDomRef())!.querySelector<ResponsivePopover>("[ui5-responsive-popover]");
 	}
 
-	async openPicker(opener) {
+	async openPicker(opener: HTMLElement) {
 		const responsivePopover = await this.getPicker();
-		responsivePopover.showAt(opener);
+		responsivePopover!.showAt(opener);
 	}
 
 	async closePicker() {
 		const responsivePopover = await this.getPicker();
-		responsivePopover.close();
+		responsivePopover!.close();
 	}
 
 	async getPickerTree() {
 		const picker = await this.getPicker();
-		const sideNav = picker.querySelector("[ui5-side-navigation]");
-		return sideNav._itemsTree;
+		const sideNav = picker!.querySelector<SideNavigation>("[ui5-side-navigation]");
+		return sideNav!._itemsTree;
 	}
 
 	get hasHeader() {
@@ -313,14 +338,14 @@ class SideNavigation extends UI5Element {
 	}
 
 	get _itemsTree() {
-		return this.getDomRef().querySelector("#ui5-sn-items-tree");
+		return this.getDomRef()!.querySelector<TempTree>("#ui5-sn-items-tree");
 	}
 
 	get _fixedItemsTree() {
-		return this.getDomRef().querySelector("#ui5-sn-fixed-items-tree");
+		return this.getDomRef()!.querySelector<TempTree>("#ui5-sn-fixed-items-tree");
 	}
 
-	_walk(callback) {
+	_walk(callback: (current:ISideNavigationItem) => void) {
 		this.items.forEach(current => {
 			callback(current);
 
@@ -349,3 +374,8 @@ class SideNavigation extends UI5Element {
 SideNavigation.define();
 
 export default SideNavigation;
+
+export type {
+	ISideNavigationItem,
+	SideNavigationSelectionChangeEventDetail,
+};
