@@ -1,3 +1,4 @@
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -12,8 +13,8 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
 // @ts-ignore when the TreeItem is migrated to TS, the comment can't be removed
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 import {
@@ -24,8 +25,16 @@ import {
 	SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC,
 } from "./generated/i18n/i18n-defaults.js";
 
+import "@ui5/webcomponents-icons/dist/menu.js";
+import "@ui5/webcomponents-icons/dist/home.js";
+import "@ui5/webcomponents-icons/dist/group.js";
+import "@ui5/webcomponents-icons/dist/history.js";
+import "@ui5/webcomponents-icons/dist/locate-me.js";
+import "@ui5/webcomponents-icons/dist/calendar.js";
+import "@ui5/webcomponents-icons/dist/chain-link.js";
+
 // Styles
-import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
+import SideNavigationCss from "./generated/themes/SideNavigation.css";
 import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
 
 interface ISideNavigationItem extends UI5Element {
@@ -186,15 +195,15 @@ class SideNavigation extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	static get staticAreaStyles() {
-		return [SideNavigationPopoverCss];
+		return [SideNavigationCss, SideNavigationPopoverCss];
+	}
+
+	static get styles(): ComponentStylesData {
+		return [SideNavigationCss, SideNavigationPopoverCss];
 	}
 
 	static get render() {
 		return litRender;
-	}
-
-	static get styles() {
-		return SideNavigationCss;
 	}
 
 	static get template() {

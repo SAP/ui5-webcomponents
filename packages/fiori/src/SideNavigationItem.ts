@@ -123,9 +123,9 @@ class SideNavigationItem extends UI5Element implements ISideNavigationItem {
 	 * @type {sap.ui.webc.fiori.ISideNavigationSubItem[]}
 	 * @public
 	 * @slot items
-	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.items
+	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.default
 	 */
-	@slot()
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<ISideNavigationItem>;
 
 	get _tooltip() {
