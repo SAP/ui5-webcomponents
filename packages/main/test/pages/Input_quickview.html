@@ -103,7 +103,7 @@
 		/*
 		 * Open quickviewCard on suggestion-item-preview
 		 */
-		inputPreview.addEventListener("suggestion-item-preview", function (event) {
+		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
 			const targetRef = event.detail.targetRef;
 
 			quickViewCard.close();
@@ -141,7 +141,7 @@
 		/*
 		 * Restore the focus to the input on ESC
 		 */
-		quickViewCard.addEventListener("before-close", async event => {
+		quickViewCard.addEventListener("ui5-before-close", async event => {
 			const esc = event.detail.escPressed;
 
 			if (esc) {

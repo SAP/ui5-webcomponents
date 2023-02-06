@@ -192,30 +192,30 @@
 			}
 		});
 
-		document.getElementById("tree").addEventListener("ui5-itemMouseover", function(event) {
+		document.getElementById("tree").addEventListener("ui5-item-mouseover", function(event) {
 			console.log("Item mouseover: ", event.detail.item);
 			mouseOverInput.value++;
 		});
-		document.getElementById("tree").addEventListener("ui5-itemMouseout", function(event) {
+		document.getElementById("tree").addEventListener("ui5-item-mouseout", function(event) {
 			console.log("Item mouseout: ", event.detail.item);
 			mouseOutInput.value++;
 		});
 
-		document.getElementById("tree").addEventListener("itemClick", function(event) {
+		document.getElementById("tree").addEventListener("ui5-item-click", function(event) {
 			console.log("Item clicked: ", event.detail.item);
 		});
 
-		document.getElementById("tree").addEventListener("itemToggle", function(event) {
+		document.getElementById("tree").addEventListener("ui5-item-toggle", function(event) {
 			console.log("Item toggled: ", event.detail.item);
 		});
 
-		document.getElementById("tree").addEventListener("itemDelete", function(event) {
+		document.getElementById("tree").addEventListener("ui5-item-delete", function(event) {
 			console.log("Item delete button pressed: ", event.detail.item);
 			var node = event.detail.item;
 			node.parentElement.removeChild(node);
 		});
 
-		document.getElementById("tree").addEventListener("selectionChange", function(event) {
+		document.getElementById("tree").addEventListener("selection-change", function(event) {
 			console.log("Selection changed from: ", event.detail.previouslySelectedItems, "to: ", event.detail.selectedItems);
 			console.log("Selection change target item is: ", event.detail.targetItem);
 		});
