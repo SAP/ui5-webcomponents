@@ -1,10 +1,5 @@
-commit 687c0f7a420a72f77f294ace2898223c48708ae2
-Author: Nayden Naydenov <31909318+nnaydenow@users.noreply.github.com>
-Date:   Fri Feb 3 18:12:48 2023 +0200
+commit 3efdc6cf7d14b37e714a3979a16ea4cbe498f85e
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Mon Feb 6 09:11:53 2023 +0200
 
-    feat(framework): add option to define package name, tag and typescript support from CLI (#6379)
-    
-    Add option to configure the new package package from command line in order to skip configuration wizard.
-    Pоrt configuration is removed.
-    
-    Fixes: #6382
+    fix(ui5-shellbar): i18n of cancel search button text (#6416)
