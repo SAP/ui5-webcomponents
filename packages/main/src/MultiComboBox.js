@@ -1311,11 +1311,8 @@ class MultiComboBox extends UI5Element {
 			item._getRealDomRef = () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 		});
 
-		const slottedIconsCount = this.icon ? this.icon.length : 0;
-		const arrowDownIconsCount = this.readonly ? 0 : 1;
-
 		this.tokenizerAvailable = this.items && this.items.length > 0;
-		this.style.setProperty("--_ui5-input-icons-count", slottedIconsCount + arrowDownIconsCount);
+		this.style.setProperty("--_ui5-input-icons-count", this.iconsCount);
 
 		if (!input || !value) {
 			return;
@@ -1611,6 +1608,12 @@ class MultiComboBox extends UI5Element {
 
 	get _valueStatePopoverHorizontalAlign() {
 		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
+
+	get iconsCount() {
+		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const arrowDownIconsCount = this.readonly ? 0 : 1;
+		return slottedIconsCount + arrowDownIconsCount;
 	}
 
 	get classes() {

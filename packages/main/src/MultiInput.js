@@ -330,14 +330,12 @@ class MultiInput extends Input {
 	onBeforeRendering(...params) {
 		super.onBeforeRendering(...params);
 
-		if (this.showValueHelpIcon) {
-			this.style.setProperty(
-				"--_ui5-input-icons-count",
-				(Number(this.style.getPropertyValue("--_ui5-input-icons-count")) || 0) + 1,
-			);
-		}
-
+		this.style.setProperty("--_ui5-input-icons-count", this.iconsCount);
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+	}
+
+	get iconsCount() {
+		return super.iconsCount + (this.showValueHelpIcon ? 1 : 0);
 	}
 
 	get tokenizer() {

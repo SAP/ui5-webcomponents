@@ -350,8 +350,7 @@ class Select extends UI5Element implements IFormElement {
 		this._syncSelection();
 		this._enableFormSupport();
 
-		const selectedIconCount = this.selectedOptionIcon ? 0 : 1;
-		this.style.setProperty("--_ui5-input-icons-count", `${selectedIconCount}`);
+		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 	}
 
 	onAfterRendering() {
@@ -772,6 +771,10 @@ class Select extends UI5Element implements IFormElement {
 		};
 
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
+	get iconsCount(): number {
+		return this.selectedOptionIcon ? 2 : 1;
 	}
 
 	get classes() {

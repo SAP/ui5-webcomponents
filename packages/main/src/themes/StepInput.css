@@ -150,8 +150,8 @@
 	vertical-align: top;
 	margin-top: var(--_ui5_step_input_input_margin_top);
 	min-width: var(--_ui5_step_input_min_width);
-	padding-left: var(--_ui5_step_input_padding_left);
-	padding-right: var(--_ui5_step_input_padding_right);
+	padding-inline-start: var(--_ui5_step_input_padding);
+	padding-inline-end: var(--_ui5_step_input_padding);
 	position: relative;
 	outline: none;
 	line-height: inherit;
