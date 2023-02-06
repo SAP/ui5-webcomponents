@@ -931,7 +931,7 @@ describe("Accessibility: Testing keyboard handling", async () => {
 
 		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
-		assert.strictEqual(await rangeSlider.getProperty("endValue"), 100, "The original start-value is set to min and switched as a start-value");
+		assert.strictEqual(await rangeSlider.getProperty("endValue"), 100, "The original start-value is set to min and switched as a end-value");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
 
 		await browser.keys("Home");

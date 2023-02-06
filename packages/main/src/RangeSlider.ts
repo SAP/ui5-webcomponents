@@ -480,7 +480,7 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_saveInteractionStartData(e: TouchEvent | MouseEvent | KeyboardEvent, newValue: number) {
+	_saveInteractionStartData(e: TouchEvent | MouseEvent, newValue: number) {
 		const progressBarDom = this.shadowRoot!.querySelector(".ui5-slider-progress")!.getBoundingClientRect();
 
 		// Save the state of the value properties on the start of the interaction
