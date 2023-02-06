@@ -161,7 +161,7 @@ type CalendarChangeEventDetail = {
  * @alias sap.ui.webc.main.Calendar
  * @extends sap.ui.webc.main.CalendarPart
  * @tagname ui5-calendar
- * @appenddocs CalendarDate
+ * @appenddocs sap.ui.webc.main.CalendarDate
  * @public
  * @since 1.0.0-rc.11
  */

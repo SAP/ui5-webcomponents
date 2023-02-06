@@ -6,7 +6,6 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import ColorPalettePopoverTemplate from "./generated/templates/ColorPalettePopoverTemplate.lit.js";
 
@@ -16,25 +15,14 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import {
 	COLORPALETTE_POPOVER_TITLE,
 	COLOR_PALETTE_DIALOG_CANCEL_BUTTON,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 import Button from "./Button.js";
 import Title from "./Title.js";
-// @ts-ignore
 import ResponsivePopover from "./ResponsivePopover.js";
 import ColorPalette from "./ColorPalette.js";
 import type { ColorPaletteItemClickEventDetail } from "./ColorPalette.js";
 import type ColorPaletteItem from "./ColorPaletteItem.js";
-
-type TempResponsivePopover = HTMLElement & {
-	initialFocus: string,
-	showAt: (opener: HTMLElement, focus: boolean) => Promise<void>,
-	close: () => void,
-	resetFocus: () => void,
-	content: Array<HTMLElement>,
-	opened: boolean,
-}
 
 type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 
@@ -137,7 +125,7 @@ class ColorPalettePopover extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	responsivePopover?: TempResponsivePopover;
+	responsivePopover?: ResponsivePopover;
 
 	static get render() {
 		return litRender;
@@ -169,7 +157,7 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	_respPopover() {
-		this.responsivePopover = this.shadowRoot!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		this.responsivePopover = this.shadowRoot!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this.responsivePopover;
 	}
 
@@ -181,6 +169,8 @@ class ColorPalettePopover extends UI5Element {
 	 * Shows the ColorPalettePopover.
 	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.ColorPalettePopover#showAt
 	 * @since 1.1.1
 	 */
 	showAt(opener: HTMLElement) {
@@ -192,6 +182,8 @@ class ColorPalettePopover extends UI5Element {
 	 * <b>Note:</b> The method is deprecated and will be removed in future, use <code>showAt</code> instead.
 	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.ColorPalettePopover#openPopover
 	 * @since 1.0.0-rc.16
 	 * @deprecated The method is deprecated in favour of <code>showAt</code>.
 	 */
@@ -238,11 +230,11 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	get _colorPaletteTitle() {
-		return ColorPalettePopover.i18nBundle.getText(COLORPALETTE_POPOVER_TITLE as I18nText);
+		return ColorPalettePopover.i18nBundle.getText(COLORPALETTE_POPOVER_TITLE);
 	}
 
 	get _cancelButtonLabel() {
-		return ColorPalettePopover.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON as I18nText);
+		return ColorPalettePopover.i18nBundle.getText(COLOR_PALETTE_DIALOG_CANCEL_BUTTON);
 	}
 }
 

@@ -8,12 +8,17 @@
 	--_ui5_textarea_error_warning_font_weight: bold;
 	--_ui5_textarea_error_warning_font_style: italic;
 	--_ui5_textarea_error_hover_background_color: var(--sapField_InvalidBackground);
-	--_ui5_textarea_information_border_width: var(--sapField_BorderWidth);
+	--_ui5_textarea_information_border_width: var(--sapField_InformationBorderWidth);
 	--_ui5_textarea_error_warning_border_style: dashed;
 	--_ui5_textarea_padding_top_information: 0.4375rem;
 	--_ui5_textarea_padding_bottom_information: 0.4375rem;
 	--_ui5_textarea_padding_top: 0.375rem;
 	--_ui5_textarea_padding_bottom: 0.375rem;
+	--_ui5_textarea_padding_top_readonly: 0.375rem;
+	--_ui5_textarea_padding_bottom_readonly: 0.375rem;
+	--_ui5_textarea_padding_right_and_left: 0.5rem;
+	--_ui5_textarea_padding_right_and_left_information: 0.5625rem;
+	--_ui5_textarea_padding_right_and_left_readonly: 0.5rem;
 }
 
 [data-ui5-compact-size],
@@ -21,8 +26,13 @@
 .sapUiSizeCompact {
 	--_ui5_textarea_padding_top: 0.0625rem;
 	--_ui5_textarea_padding_bottom: 0.0625rem;
+	--_ui5_textarea_padding_top_readonly: 0.0625rem;
+	--_ui5_textarea_padding_bottom_readonly: 0.0625rem;
 	--_ui5_textarea_padding_top_error_warning: 0.0625rem;
 	--_ui5_textarea_padding_bottom_error_warning: 0.0625rem;
-	--_ui5_textarea_padding_top_information: 0.0625rem;
-	--_ui5_textarea_padding_bottom_information: 0.0625rem;
+	--_ui5_textarea_padding_top_information: 0.125rem;
+	--_ui5_textarea_padding_bottom_information: 0.125rem;
+	--_ui5_textarea_padding_right_and_left: 0.375rem;
+	--_ui5_textarea_padding_right_and_left_information: 0.4375rem;
+	--_ui5_textarea_padding_right_and_left_readonly: 0.375rem;
 }

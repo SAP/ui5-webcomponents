@@ -15,7 +15,6 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
@@ -27,12 +26,10 @@ import {
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 import Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
 import Label from "./Label.js";
-// @ts-ignore
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
 import type { SelectionChangeEventDetail } from "./List.js";
@@ -54,12 +51,6 @@ type BreadcrumbsItemClickEventDetail = {
 	ctrlKey: boolean;
 	metaKey: boolean;
 	shiftKey: boolean;
-}
-
-type TempResponsivePopover = HTMLElement & {
-	opened: boolean;
-	showAt: (opener: HTMLElement) => Promise<void>;
-	close: () => void,
 }
 
 type FocusAdaptor = ITabbable & {
@@ -98,7 +89,7 @@ type FocusAdaptor = ITabbable & {
  * @alias sap.ui.webc.main.Breadcrumbs
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-breadcrumbs
- * @appenddocs BreadcrumbsItem
+ * @appenddocs sap.ui.webc.main.BreadcrumbsItem
  * @public
  * @since 1.0.0-rc.15
  */
@@ -195,7 +186,7 @@ class Breadcrumbs extends UI5Element {
 	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();
 	// the width of the interactive element that opens the overflow
 	_dropdownArrowLinkWidth = 0;
-	responsivePopover?: TempResponsivePopover;
+	responsivePopover?: ResponsivePopover;
 	_labelFocusAdaptor: FocusAdaptor;
 	static i18nBundle: I18nBundle;
 
@@ -470,7 +461,7 @@ class Breadcrumbs extends UI5Element {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	async _toggleRespPopover() {
@@ -509,7 +500,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_getItemPositionText(position: number, size: number) {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS as I18nText, position, size);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
 	}
 
 	_getItemAccessibleName(item: BreadcrumbsItem, position: number, size: number) {
@@ -656,15 +647,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _accessibleNameText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL as I18nText);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
 	}
 
 	get _dropdownArrowAccessibleNameText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL as I18nText);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
 	}
 
 	get _cancelButtonText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON as I18nText);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
 	}
 
 	static get dependencies() {

@@ -4,7 +4,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -39,7 +38,6 @@ import {
 	VSD_ORDER_ASCENDING,
 	VSD_ORDER_DESCENDING,
 	VSD_FILTER_BY,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -102,7 +100,7 @@ type VSDInternalSettings = {
  * @alias sap.ui.webc.fiori.ViewSettingsDialog
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-view-settings-dialog
- * @appenddocs SortItem FilterItem FilterItemOption
+ * @appenddocs sap.ui.webc.fiori.SortItem sap.ui.webc.fiori.FilterItem sap.ui.webc.fiori.FilterItemOption
  * @since 1.0.0-rc.16
  * @public
  */
@@ -240,6 +238,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * <b>Note:</b> If you want to use this slot, you need to import used item: <code>import "@ui5/webcomponents-fiori/dist/FilterItem";</code>
 	 *
 	 * @type {sap.ui.webc.fiori.IFilterItem[]}
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog.prototype.filterItems
 	 * @slot filterItems
 	 * @public
 	 */
@@ -338,43 +337,43 @@ class ViewSettingsDialog extends UI5Element {
 
 	get _filterByTitle() {
 		const selectedFilterText = this._selectedFilter ? this._selectedFilter.text : "";
-		return `${ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY as I18nText)}: ${selectedFilterText}`;
+		return `${ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY)}: ${selectedFilterText}`;
 	}
 
 	get _dialogTitle() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_DIALOG_TITLE_SORT);
 	}
 
 	get _okButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SUBMIT_BUTTON as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SUBMIT_BUTTON);
 	}
 
 	get _cancelButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_CANCEL_BUTTON as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_CANCEL_BUTTON);
 	}
 
 	get _resetButtonLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_RESET_BUTTON as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_RESET_BUTTON);
 	}
 
 	get _ascendingLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_ASCENDING as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_ASCENDING);
 	}
 
 	get _descendingLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_DESCENDING as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_ORDER_DESCENDING);
 	}
 
 	get _sortOrderLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_ORDER as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_ORDER);
 	}
 
 	get _filterByLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_FILTER_BY);
 	}
 
 	get _sortByLabel() {
-		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_BY as I18nText);
+		return ViewSettingsDialog.i18nBundle.getText(VSD_SORT_BY);
 	}
 
 	get _isPhone() {
@@ -500,6 +499,8 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Shows the dialog.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog#show
 	 */
 	show() {
 		if (!this._dialog) {
@@ -703,11 +704,13 @@ class ViewSettingsDialog extends UI5Element {
 	 * <code>
 	 *  {sortOrder: "Ascending", sortBy: "Name", filters: [{"Filter 1": ["Some filter 1", "Some filter 2"]}, {"Filter 2": ["Some filter 4"]}]}
 	 * </code>
-   * @param {Object} settings - predefined settings.
-   * @param {string} settings.sortOrder - sort order
-   * @param {string} settings.sortBy - sort by
-   * @param {Array.<Object>} settings.filters - filters
+	 * @param {Object} settings - predefined settings.
+	 * @param {string} settings.sortOrder - sort order
+	 * @param {string} settings.sortBy - sort by
+	 * @param {Array.<Object>} settings.filters - filters
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.fiori.ViewSettingsDialog#setConfirmedSettings
 	 */
 	setConfirmedSettings(settings: VSDSettings) {
 		if (settings && this._dialog && !this._dialog.isOpen()) {

@@ -1,11 +1,12 @@
 # Ignore .gitignore, target, dist and tmp folders
 .gitignore
-!packages/create-package/resources/.gitignore
+!packages/create-package/template/.gitignore
 tmp
 temp
 target
 dist
 jsdoc-dist
+**/src/generated
 .dev-server-port
 # TODO remove this as the tools no longer generate it, kept for clean up (in the clean task as well)
 .port

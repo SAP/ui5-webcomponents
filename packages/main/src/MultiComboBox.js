@@ -111,7 +111,7 @@ const metadata = {
 		/**
 		* Defines the icon to be displayed in the component.
 		*
-		* @type {sap.ui.webc.main.IIcon}
+		* @type {sap.ui.webc.main.IIcon[]}
 		* @slot
 		* @public
 		* @since 1.0.0-rc.9
@@ -434,7 +434,7 @@ const metadata = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-multi-combobox
  * @public
- * @appenddocs MultiComboBoxItem MultiComboBoxGroupItem
+ * @appenddocs sap.ui.webc.main.MultiComboBoxItem sap.ui.webc.main.MultiComboBoxGroupItem
  * @since 0.11.0
  */
 class MultiComboBox extends UI5Element {
@@ -681,6 +681,10 @@ class MultiComboBox extends UI5Element {
 	}
 
 	async _handlePaste(event) {
+		if (this.readonly) {
+			return;
+		}
+
 		const pastedText = await navigator.clipboard.readText();
 
 		if (!pastedText) {

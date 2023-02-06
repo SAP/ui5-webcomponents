@@ -2,12 +2,10 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import TimePickerBase from "./TimePickerBase.js";
 
 import {
 	TIMEPICKER_INPUT_DESCRIPTION,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 /**
@@ -132,6 +130,7 @@ class TimePicker extends TimePickerBase {
 	 * @readonly
 	 * @type {Date}
 	 * @public
+	 * @name sap.ui.webc.main.TimePicker.prototype.dateValue
 	 */
 	get dateValue() {
 		return this.getFormat().parse(this._effectiveValue as string, undefined as unknown as boolean, undefined as unknown as boolean);
@@ -147,7 +146,7 @@ class TimePicker extends TimePickerBase {
 	}
 
 	get dateAriaDescription() {
-		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION as I18nText);
+		return TimePicker.i18nBundle.getText(TIMEPICKER_INPUT_DESCRIPTION);
 	}
 }
 

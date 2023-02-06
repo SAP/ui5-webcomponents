@@ -19,7 +19,7 @@ const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
 
 	const getComponentByName = name => {
 		return entries.find(element => {
-			return element.basename === name;
+			return element.name === name;
 		})
 	};
 
@@ -51,7 +51,7 @@ const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
 	let entriesAPI = [];
 
 	const appendCSSVarsAPI = entry => {
-		entry.cssVariables = getCSSVarsByName(entry.basename);
+		entry.cssVariables = getCSSVarsByName(entry.name);
 		return entry;
 	}
 
@@ -61,7 +61,7 @@ const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
 	const removeEmpty = arr => arr.filter(x => x);
 
 	const calculateAPI = component => {
-		if (entriesAPI.indexOf(component.basename) !== -1) {
+		if (entriesAPI.indexOf(component.name) !== -1) {
 			return component;
 		}
 		const entities = ["properties", "slots", "events", "methods", "cssVariables"];
@@ -85,7 +85,7 @@ const enrichSampleWihAPI = async (name, api, rawSampleContent) => {
 			});
 		}
 
-		entriesAPI.push(component.basename);
+		entriesAPI.push(component.name);
 
 		return component;
 	};

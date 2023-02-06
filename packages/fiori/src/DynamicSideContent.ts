@@ -5,7 +5,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -20,7 +19,6 @@ import DynamicSideContentCss from "./generated/themes/DynamicSideContent.css.js"
 // Texts
 import {
 	DSC_SIDE_ARIA_LABEL,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Breakpoint-related constants
@@ -322,6 +320,8 @@ class DynamicSideContent extends UI5Element {
 	/**
 	 * Toggles visibility of main and side contents on S screen size (mobile device).
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.fiori.DynamicSideContent#toggleContents
 	 */
 	toggleContents() {
 		if (this.breakpoint === this.sizeS && this.sideContentVisibility !== SideContentVisibility.AlwaysShow) {
@@ -369,7 +369,7 @@ class DynamicSideContent extends UI5Element {
 
 	get accInfo() {
 		return {
-			"label": DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL as I18nText),
+			"label": DynamicSideContent.i18nBundle.getText(DSC_SIDE_ARIA_LABEL),
 		};
 	}
 

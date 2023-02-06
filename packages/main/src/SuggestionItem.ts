@@ -14,6 +14,7 @@ import ListItemType from "./types/ListItemType.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.SuggestionItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-suggestion-item
  * @implements sap.ui.webc.main.IInputSuggestionItem
  * @public
@@ -24,7 +25,7 @@ class SuggestionItem extends UI5Element {
 	 * Defines the text of the component.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.text
+	 * @name sap.ui.webc.main.SuggestionItem.prototype.text
 	 * @defaultvalue ""
 	 * @public
 	 */
@@ -39,7 +40,7 @@ class SuggestionItem extends UI5Element {
 	 * while when <code>Inactive</code> or <code>Detail</code> - will not.
 	 *
 	 * @type {sap.ui.webc.main.types.ListItemType}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.type
+	 * @name sap.ui.webc.main.SuggestionItem.prototype.type
 	 * @defaultvalue "Active"
 	 * @public
 	 * @since 1.0.0-rc.8
@@ -50,7 +51,7 @@ class SuggestionItem extends UI5Element {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.description
+	 * @name sap.ui.webc.main.SuggestionItem.prototype.description
 	 * @defaultvalue: ""
 	 * @public
 	 */
@@ -65,7 +66,7 @@ class SuggestionItem extends UI5Element {
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.icon
+	 * @name sap.ui.webc.main.SuggestionItem.prototype.icon
 	 * @public
 	 */
 	@property()
@@ -77,7 +78,7 @@ class SuggestionItem extends UI5Element {
 	 * <b>Note:</b> If <code>image</code> is set, the <code>icon</code> would be displayed after the <code>image</code>.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.iconEnd
+	 * @name sap.ui.webc.main.SuggestionItem.prototype.iconEnd
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -89,7 +90,7 @@ class SuggestionItem extends UI5Element {
 	 * <b>Note:</b> The <code>image</code> would be displayed in the beginning of the item.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.image
+	 * @name sap.ui.webc.main.SuggestionItem.prototype.image
 	 * @public
 	 */
 	@property()
@@ -98,7 +99,7 @@ class SuggestionItem extends UI5Element {
 	/**
 	 * Defines the <code>additionalText</code>, displayed in the end of the item.
 	 * @type {string}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.additionalText
+	 * @name sap.ui.webc.main.SuggestionItem.prototype.additionalText
 	 * @since 1.0.0-rc.15
 	 * @public
 	 */
@@ -110,7 +111,7 @@ class SuggestionItem extends UI5Element {
 	 * <br><br>
 	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Information"</code>, <code>"Warning"</code> and <code>"Error"</code>.
 	 * @type {sap.ui.webc.base.types.ValueState}
-	 * @name sap.ui.webc.main.SuggestionGroupItem.prototype.additionalTextState
+	 * @name sap.ui.webc.main.SuggestionItem.prototype.additionalTextState
 	 * @defaultvalue "None"
 	 * @since 1.0.0-rc.15
 	 * @public

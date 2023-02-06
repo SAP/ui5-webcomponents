@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
@@ -33,12 +32,10 @@ import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import HasPopup from "./types/HasPopup.js";
-// @ts-ignore
 import { DATEPICKER_OPEN_ICON_TITLE, DATEPICKER_DATE_DESCRIPTION, INPUT_SUGGESTIONS_TITLE } from "./generated/i18n/i18n-defaults.js";
 import DateComponentBase from "./DateComponentBase.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
-// @ts-ignore - when the ResponsivePopover is migrated to TS, the comment can't be removed
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import type { CalendarChangeEventDetail } from "./Calendar.js";
@@ -611,7 +608,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_click(e: MouseEvent) {
 		if (isPhone()) {
-			this.responsivePopover.showAt(this);
+			this.responsivePopover!.showAt(this);
 			e.preventDefault(); // prevent immediate selection of any item
 		}
 	}
@@ -621,7 +618,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.DatePicker#isValid
-	 * @param { string } value A value to be tested against the current date format
+	 * @param { string } [value=""] A value to be tested against the current date format
 	 * @returns { boolean }
 	 */
 	isValid(value = ""): boolean {
@@ -639,7 +636,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.DatePicker#isInValidRange
-	 * @param { string } value A value to be checked
+	 * @param { string } [value=""] A value to be checked
 	 * @returns { boolean }
 	 */
 	isInValidRange(value = ""): boolean {
@@ -681,7 +678,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	get _headerTitleText() {
-		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE as I18nText);
+		return DatePicker.i18nBundle.getText(INPUT_SUGGESTIONS_TITLE);
 	}
 
 	get phone() {
@@ -707,7 +704,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	get openIconTitle() {
-		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE as I18nText);
+		return DatePicker.i18nBundle.getText(DATEPICKER_OPEN_ICON_TITLE);
 	}
 
 	get openIconName() {
@@ -715,7 +712,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	get dateAriaDescription() {
-		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION as I18nText);
+		return DatePicker.i18nBundle.getText(DATEPICKER_DATE_DESCRIPTION);
 	}
 
 	/**
@@ -736,7 +733,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem?.querySelector("[ui5-responsive-popover]");
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	_canOpenPicker() {
@@ -790,7 +787,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @name sap.ui.webc.main.DatePicker#closePicker
 	 */
 	closePicker() {
-		this.responsivePopover.close();
+		this.responsivePopover!.close();
 	}
 
 	/**

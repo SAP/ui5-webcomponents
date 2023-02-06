@@ -149,6 +149,22 @@
 		<ui5-button id="rPOverRp3Btn">Close</ui5-button>
 	</ui5-responsive-popover>
 
+	<ui5-button id="btnRoleAlert">Role = 'AlertDialog'</ui5-button>
+	<ui5-responsive-popover id="rPAlertRole" accessible-role="AlertDialog">
+		<div slot="header">
+			<ui5-title level="H1">Role 'AlertDialog'</ui5-title>
+		</div>
+		<span>Hello World!</span>
+	</ui5-responsive-popover>
+
+	<ui5-button id="btnRoleNone">Role = 'None'</ui5-button>
+	<ui5-responsive-popover id="rPNoneRole" accessible-role="None">
+		<div slot="header">
+			<ui5-title level="H1">Role 'None'</ui5-title>
+		</div>
+		<span>Hello World!</span>
+	</ui5-responsive-popover>
+
 	<script>
 		btnOpen.addEventListener("click", function(event) {
 			respPopover.showAt(btnOpen);
@@ -199,7 +215,7 @@
 		});
 
 		btnRpWithPopover.addEventListener("click", function () {
-			btnRpWithPopoverRP.showAt(btnRpWithPopover)
+			btnRpWithPopoverRP.showAt(btnRpWithPopover);
 		});
 
 		btnRpWithPopoverOpener.addEventListener("click", function () {
@@ -218,7 +234,6 @@
 			popoverAttr.removeAttribute("open");
 		});
 
-
 		rPOverDialogBtn.addEventListener("click", function () {
 			rPOverDialog1.open = true;
 		});
@@ -235,6 +250,14 @@
 
 		rPOverRp3Btn.addEventListener("click", function () {
 			rPOverRp3.open = false;
+		});
+
+		btnRoleAlert.addEventListener("click", function () {
+			rPAlertRole.showAt(btnRoleAlert);
+		});
+
+		btnRoleNone.addEventListener("click", function () {
+			rPNoneRole.showAt(btnRoleNone);
 		});
 
 	</script>

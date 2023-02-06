@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isEscape,
@@ -20,7 +19,6 @@ import {
 	RANGE_SLIDER_ARIA_DESCRIPTION,
 	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
 	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -187,7 +185,7 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _ariaLabelledByText() {
-		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION as I18nText);
+		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
 	}
 
 	get _ariaHandlesText() {
@@ -196,11 +194,11 @@ class RangeSlider extends SliderBase {
 		const ariaHandlesText: AriaHandlesText = {};
 
 		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
-			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION as I18nText);
-			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION as I18nText);
+			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
 		} else {
-			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION as I18nText);
-			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION as I18nText);
+			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
 		}
 
 		return ariaHandlesText;

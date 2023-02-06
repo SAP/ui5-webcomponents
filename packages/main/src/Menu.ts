@@ -16,11 +16,10 @@ import {
 } from "@ui5/webcomponents-base/dist/Device.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-// @ts-ignore
 import ResponsivePopover from "./ResponsivePopover.js";
+import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
@@ -31,18 +30,10 @@ import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
 	MENU_CLOSE_BUTTON_ARIA_LABEL,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import staticAreaMenuCss from "./generated/themes/Menu.css.js";
-
-type TempResponsivePopover = HTMLElement & {
-	initialFocus: string,
-	showAt: (opener: HTMLElement) => Promise<void>,
-	close: () => void,
-	resetFocus: () => void,
-}
 
 type CurrentItem = {
 	item: MenuItem,
@@ -86,7 +77,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @alias sap.ui.webc.main.Menu
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-menu
- * @appenddocs MenuItem
+ * @appenddocs sap.ui.webc.main.MenuItem
  * @since 1.3.0
  * @public
  */
@@ -182,7 +173,7 @@ class Menu extends UI5Element {
 	 *
 	 * @name sap.ui.webc.main.Menu.prototype.opener
 	 * @public
-	 * @type {DOMReference}
+	 * @type {sap.ui.webc.base.types.DOMReference}
 	 * @defaultvalue ""
 	 * @since 1.10.0
 	 */
@@ -229,7 +220,7 @@ class Menu extends UI5Element {
 	 * Stores the ResponsivePopover instance
 	 */
 	@property({ type: Object, defaultValue: undefined })
-	_popover?: TempResponsivePopover;
+	_popover?: ResponsivePopover;
 
 	/**
 	 * Stores parent menu item (if there is such).
@@ -306,11 +297,11 @@ class Menu extends UI5Element {
 	}
 
 	get labelBack() {
-		return Menu.i18nBundle.getText(MENU_BACK_BUTTON_ARIA_LABEL as I18nText);
+		return Menu.i18nBundle.getText(MENU_BACK_BUTTON_ARIA_LABEL);
 	}
 
 	get labelClose() {
-		return Menu.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL as I18nText);
+		return Menu.i18nBundle.getText(MENU_CLOSE_BUTTON_ARIA_LABEL);
 	}
 
 	get isPhone() {
@@ -357,6 +348,8 @@ class Menu extends UI5Element {
 	 * Shows the Menu near the opener element.
 	 * @param {HTMLElement} opener the element that the popover is shown at
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.Menu#showAt
 	 */
 	async showAt(opener: HTMLElement) {
 		if (isPhone()) {
@@ -380,6 +373,8 @@ class Menu extends UI5Element {
 	/**
 	 * Closes the Menu.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.Menu#close
 	 */
 	close() {
 		if (this._popover) {
@@ -393,7 +388,7 @@ class Menu extends UI5Element {
 
 	async _createPopover() {
 		const staticAreaItemDomRef = await this.getStaticAreaItemDomRef();
-		this._popover = staticAreaItemDomRef!.querySelector<TempResponsivePopover>("[ui5-responsive-popover]")!;
+		this._popover = staticAreaItemDomRef!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 		return this._popover;
 	}
 
@@ -586,8 +581,8 @@ class Menu extends UI5Element {
 		this.fireEvent("after-open");
 	}
 
-	_beforePopoverClose(e: CustomEvent) { // Fix when Popover made TS
-		const prevented = !this.fireEvent("before-close", { escPressed: e.detail.escPressed	}, true, false);
+	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
+		const prevented = !this.fireEvent("before-close", { escPressed: e.detail.escPressed }, true, false);
 
 		if (prevented) {
 			this.open = true;

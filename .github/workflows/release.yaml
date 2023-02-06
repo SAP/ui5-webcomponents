@@ -3,19 +3,24 @@ name: Release
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: 'New version'     
-        required: true
-      tag:
-          description: 'Tag'     
-          required: true
-          default: latest
+      release_type:
+        description: 'Release Type: use patch | minor | major or leave empty for auto'     
+        required: false
+        default: ''
+      prerelease:
+        type: boolean
+        description: 'pre-release'
+        required: false
+        default: false
 
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+        fetch-depth: 0
     - uses: actions/setup-node@v3
       with:
         node-version: 16
@@ -29,6 +34,15 @@ jobs:
 
     - name: Publish
       env:
+        NPM_USERNAME: ${{ secrets.NPM_USER }}
+        NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_RELEASE_AUTH_TOKEN }}
+        GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
       run: |
-        node ./.github/actions/release.js --version=${{ github.event.inputs.version }} --tag=${{ github.event.inputs.tag }}
+        npm config set //registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}
+        git config user.name "${{ secrets.UI5_WEBCOMP_BOT_NAME }}"
+        git config user.email "${{ secrets.UI5_WEBCOMP_BOT_EMAIL }}"
+        yarn lerna version ${{ github.event.inputs.release_type }}\
+            ${{ (github.event.inputs.prerelease == 'true' && '--conventional-prerelease') || '--conventional-graduate' }} \
+            --force-publish --yes --exact --create-release github 
+        yarn lerna publish from-git --yes

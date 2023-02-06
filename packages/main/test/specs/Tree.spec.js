@@ -71,6 +71,9 @@ describe("Tree proxies properties to list", () => {
 		const tree = await browser.$("#tree");
 		const list = await tree.shadow$("ui5-tree-list");
 
+		const treeItem = await browser.$("#firstCollapsedItem");
+		assert.strictEqual(await treeItem.getAttribute("_mode"), "MultiSelect", "Mode applied to the tree item");
+
 		const modes = ["None", "SingleSelect", "SingleSelectBegin", "SingleSelectEnd", "MultiSelect", "Delete"];
 		modes.forEach(async mode => {
 			await tree.setAttribute("mode", mode);

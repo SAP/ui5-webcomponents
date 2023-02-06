@@ -16,6 +16,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
+import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
@@ -33,12 +34,12 @@ createBlockingStyle();
 
 const pageScrollingBlockers = new Set<Popup>();
 
-type ScrollEventDetail = {
+type PopupScrollEventDetail = {
 	scrollTop: number;
 	targetRef: HTMLElement;
 }
 
-type BeforeCloseEventDetail = {
+type PopupBeforeCloseEventDetail = {
 	escPressed: boolean;
 }
 
@@ -189,6 +190,22 @@ abstract class Popup extends UI5Element {
 	accessibleNameRef!: string;
 
 	/**
+	 * Allows setting a custom role. Available options are:
+	 * <ul>
+	 * <li><code>Dialog</code></li>
+	 * <li><code>None</code></li>
+	 * <li><code>AlertDialog</code></li>
+	 * </ul>
+	 * @type {sap.ui.webc.main.types.PopupAccessibleRole}
+	 * @name sap.ui.webc.main.Popup.prototype.accessibleRole
+	 * @defaultvalue "Dialog"
+	 * @public
+	 * @since 1.10.0
+	 */
+	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
+	accessibleRole!: PopupAccessibleRole;
+
+	/**
 	 * Defines the current media query size.
 	 *
 	 * @type {string}
@@ -320,7 +337,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireEvent<ScrollEventDetail>("scroll", {
+		this.fireEvent<PopupScrollEventDetail>("scroll", {
 			scrollTop: (e.target as HTMLElement).scrollTop,
 			targetRef: e.target as HTMLElement,
 		});
@@ -405,6 +422,7 @@ abstract class Popup extends UI5Element {
 	 * Focuses the element denoted by <code>initialFocus</code>, if provided,
 	 * or the first focusable element otherwise.
 	 * @public
+	 * @method
 	 * @name sap.ui.webc.main.Popup#applyFocus
 	 * @async
 	 * @returns {Promise} Promise that resolves when the focus is applied
@@ -428,6 +446,7 @@ abstract class Popup extends UI5Element {
 	/**
 	 * Tells if the component is opened
 	 * @public
+	 * @method
 	 * @name sap.ui.webc.main.Popup#isOpen
 	 * @returns {boolean}
 	 */
@@ -485,8 +504,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	/**
-	 * Hides the block layer (for modal popups only)
+	 * Closes the popup.
 	 * @public
+	 * @method
 	 * @name sap.ui.webc.main.Popup#close
 	 * @returns {void}
 	 */
@@ -495,7 +515,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent<BeforeCloseEventDetail>("before-close", { escPressed }, true, false);
+		const prevented = !this.fireEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed }, true, false);
 		if (prevented) {
 			return;
 		}
@@ -585,17 +605,8 @@ abstract class Popup extends UI5Element {
 	abstract get _ariaLabelledBy(): string | undefined
 
 	/**
-	 * Return the value for aria-modal for this popup
-	 *
-	 * @protected
-	 * @abstract
-	 * @returns {string}
-	 */
-	abstract get _ariaModal(): string
-
-	/**
 	 * Ensures ariaLabel is never null or empty string
-	 * @returns {string|undefined}
+	 * @returns {string | undefined}
 	 * @protected
 	 */
 	get _ariaLabel() {
@@ -606,8 +617,12 @@ abstract class Popup extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-popup-root")!;
 	}
 
-	get _role() {
-		return "dialog";
+	get _role(): string | undefined {
+		return (this.accessibleRole === PopupAccessibleRole.None) ? undefined : this.accessibleRole.toLowerCase();
+	}
+
+	get _ariaModal(): string | undefined {
+		return this.accessibleRole === PopupAccessibleRole.None ? undefined : "true";
 	}
 
 	get contentDOM(): HTMLElement {
@@ -640,6 +655,6 @@ abstract class Popup extends UI5Element {
 export default Popup;
 
 export type {
-	ScrollEventDetail,
-	BeforeCloseEventDetail,
+	PopupScrollEventDetail,
+	PopupBeforeCloseEventDetail,
 };

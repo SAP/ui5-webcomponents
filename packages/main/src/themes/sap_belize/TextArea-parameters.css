@@ -2,10 +2,18 @@
 
 :root {
 	--__ui5_textarea_min_height: 2.5rem;
+	--_ui5_textarea_padding_top: 0.5625rem;
+	--_ui5_textarea_padding_bottom:0.5625rem;
+	--_ui5_textarea_padding_top_readonly: 0.5625rem;
+	--_ui5_textarea_padding_bottom_readonly:0.5625rem;
 	--_ui5_textarea_padding_top_error_warning: 0.5rem;
 	--_ui5_textarea_padding_bottom_error_warning: 0.5rem;
 	--_ui5_textarea_padding_top_information: 0.5rem;
 	--_ui5_textarea_padding_bottom_information: 0.5rem;
+	--_ui5_textarea_padding_right_and_left: 0.6875rem;
+	--_ui5_textarea_padding_right_and_left_error_warning: 0.625rem;
+	--_ui5_textarea_padding_right_and_left_information: 0.625rem;
+	--_ui5_textarea_padding_right_and_left_readonly: 0.6875rem;
 }
 
 [data-ui5-compact-size],

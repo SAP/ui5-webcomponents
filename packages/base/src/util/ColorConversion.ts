@@ -189,7 +189,7 @@ const getRGBColor = (color: string): ColorRGB => {
 	}
 
 	// Css Color
-	if (Object.keys(CSSColors).includes(color)) {
+	if (color in CSSColors) {
 		color = CSSColors[color as keyof typeof CSSColors];
 	}
 

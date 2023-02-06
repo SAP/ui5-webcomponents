@@ -21,6 +21,7 @@ import type FilterItemOption from "./FilterItemOption.js";
  * @author SAP SE
  * @alias sap.ui.webc.fiori.FilterItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @since 1.0.0-rc.16
  * @tagname ui5-filter-item
  * @implements sap.ui.webc.fiori.IFilterItem
@@ -52,7 +53,7 @@ class FilterItem extends UI5Element {
 
 	/**
 	 * Defines the <code>values</code> list.
-	 * @name sap.ui.webc.fiori.FilterItem.prototype.value
+	 * @name sap.ui.webc.fiori.FilterItem.prototype.values
 	 * @type {sap.ui.webc.fiori.IFilterItemOption[]}
 	 * @slot values
 	 * @public

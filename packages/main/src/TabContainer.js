@@ -355,7 +355,7 @@ const metadata = {
  * @author SAP SE
  * @alias sap.ui.webc.main.TabContainer
  * @extends sap.ui.webc.base.UI5Element
- * @appenddocs Tab TabSeparator
+ * @appenddocs sap.ui.webc.main.Tab sap.ui.webc.main.TabSeparator
  * @tagname ui5-tabcontainer
  * @public
  */
@@ -655,7 +655,6 @@ class TabContainer extends UI5Element {
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
 	 * @readonly
-	 *
 	 * @returns {sap.ui.webc.main.ITab[]}
 	 */
 	get allItems() {

@@ -1,6 +1,5 @@
 const assert = require("chai").assert;
 
-
 describe("BarcodeScannerDialog Behavior", () => {
 	before(async () => {
 		await browser.url(`test/pages/BarcodeScannerDialog.html`);
