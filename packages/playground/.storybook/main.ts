@@ -1,4 +1,4 @@
-import { mergeConfig, type InlineConfig } from "vite";
+import { mergeConfig } from "vite";
 import type { StorybookViteConfig } from "@storybook/builder-vite";
 
 const config: StorybookViteConfig = {
