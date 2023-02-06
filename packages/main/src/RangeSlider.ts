@@ -322,9 +322,15 @@ class RangeSlider extends SliderBase {
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
 			this.fireEvent("change");
 		}
+
+		this._startValueAtBeginningOfAction = undefined;
+		this._endValueAtBeginningOfAction = undefined;
 	}
 
 	_handleActionKeyPress(e: KeyboardEvent) {
+		this._startValueAtBeginningOfAction = this.startValue;
+		this._endValueAtBeginningOfAction = this.endValue;
+
 		if (isEscape(e)) {
 			this.update(undefined, this._startValueInitial, this._endValueInitial);
 			return;
@@ -474,7 +480,7 @@ class RangeSlider extends SliderBase {
 	 *
 	 * @private
 	 */
-	_saveInteractionStartData(e: TouchEvent | MouseEvent, newValue: number) {
+	_saveInteractionStartData(e: TouchEvent | MouseEvent | KeyboardEvent, newValue: number) {
 		const progressBarDom = this.shadowRoot!.querySelector(".ui5-slider-progress")!.getBoundingClientRect();
 
 		// Save the state of the value properties on the start of the interaction
@@ -546,17 +552,16 @@ class RangeSlider extends SliderBase {
 		this._setAffectedValueByFocusedElement();
 		this._setAffectedValue(undefined);
 
-		this._startValueAtBeginningOfAction = undefined;
-		this._endValueAtBeginningOfAction = undefined;
-		this._setIsPressInCurrentRange(false);
-
-		this.handleUpBase();
-
-		this.rangePressed = false;
-
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
 			this.fireEvent("change");
 		}
+
+		this._setIsPressInCurrentRange(false);
+		this.handleUpBase();
+
+		this.rangePressed = false;
+		this._startValueAtBeginningOfAction = undefined;
+		this._endValueAtBeginningOfAction = undefined;
 	}
 
 	/**

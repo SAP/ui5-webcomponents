@@ -303,7 +303,6 @@ describe("Testing events", () => {
 		const rangeSlider = await browser.$("#test-slider");
 		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 
-
 		await firstHandle.click();
 		await firstHandle.keys("ArrowRight");
 		await firstHandle.keys("ArrowRight");
@@ -313,6 +312,21 @@ describe("Testing events", () => {
 
 		assert.strictEqual(changeEventStartValue, "2", "Values are swapped prior to the firing of change event");
 		assert.strictEqual(changeEventEndValue, "3", "Values are swapped prior to the firing of change event");
+	});
+
+	it("Should not fire change event if the values are the same after interaction", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
+		const rangeSlider = await browser.$("#test-slider");
+		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		await rangeSlider.setProperty("startValue", 0);
+		await firstHandle.click();
+		await firstHandle.keys("Home");
+
+		const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
+
+		assert.strictEqual(changeEventStartValue, "", "Change event is not fired if no value is changed");
 	});
 
 	it("Should fire input event with correctly swiped values", async () => {
@@ -911,16 +925,17 @@ describe("Accessibility: Testing keyboard handling", async () => {
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 
-		await rangeSlider.setProperty("endValue", 20);
 		await startHandle.click();
 		await browser.keys("End");
+		await browser.pause(300);
 
 		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
-		assert.strictEqual(await rangeSlider.getProperty("endValue"), 100, "The original end-value is set to min and switched as a start-value");
+		assert.strictEqual(await rangeSlider.getProperty("endValue"), 100, "The original start-value is set to min and switched as a start-value");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
 
 		await browser.keys("Home");
+		await browser.pause(300);
 
 		innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
