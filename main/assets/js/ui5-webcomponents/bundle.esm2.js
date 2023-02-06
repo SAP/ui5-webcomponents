@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675680438
+  buildTime: 1675681631
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -3728,57 +3728,91 @@ class F6Navigation {
   attachEventListeners() {
     document.addEventListener("keydown", this.keydownHandler);
   }
-  async _keydownHandler(event2) {
-    if (isF6Next(event2)) {
-      this.updateGroups();
-      if (this.groups.length < 1) {
-        return;
+  async groupElementToFocus(nextElement) {
+    const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
+    if (nextElementDomRef) {
+      if (isElementClickable(nextElementDomRef)) {
+        return nextElementDomRef;
       }
-      event2.preventDefault();
-      let nextIndex = -1;
+      const elementToFocus = await getFirstFocusableElement(nextElementDomRef);
+      if (elementToFocus) {
+        return elementToFocus;
+      }
+    }
+  }
+  async findNextFocusableGroupElement(currentIndex) {
+    let elementToFocus;
+    for (let index = 0; index < this.groups.length; index++) {
       let nextElement;
-      if (this.selectedGroup) {
-        nextIndex = this.groups.indexOf(this.selectedGroup);
-      }
-      if (nextIndex > -1) {
-        if (nextIndex + 1 >= this.groups.length) {
-          nextElement = this.groups[0];
+      if (currentIndex > -1) {
+        if (currentIndex + 1 >= this.groups.length) {
+          currentIndex = 0;
+          nextElement = this.groups[currentIndex];
         } else {
-          nextElement = this.groups[nextIndex + 1];
+          currentIndex += 1;
+          nextElement = this.groups[currentIndex];
         }
       } else {
-        nextElement = this.groups[0];
+        currentIndex = 0;
+        nextElement = this.groups[currentIndex];
       }
-      const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
-      if (nextElementDomRef) {
-        const elementToFocus = await getFirstFocusableElement(nextElementDomRef, true);
-        elementToFocus == null ? void 0 : elementToFocus.focus();
+      elementToFocus = await this.groupElementToFocus(nextElement);
+      if (elementToFocus) {
+        break;
       }
     }
-    if (isF6Previous(event2)) {
-      this.updateGroups();
-      if (this.groups.length < 1) {
-        return;
-      }
-      event2.preventDefault();
-      let nextIndex = -1;
+    return elementToFocus;
+  }
+  async findPreviousFocusableGroupElement(currentIndex) {
+    let elementToFocus;
+    for (let index = 0; index < this.groups.length; index++) {
       let nextElement;
-      if (this.selectedGroup) {
-        nextIndex = this.groups.indexOf(this.selectedGroup);
-      }
-      if (nextIndex > 0) {
-        const firstFocusable = await getFirstFocusableElement(this.groups[nextIndex - 1], true);
-        const shouldSkipParent = firstFocusable === await getFirstFocusableElement(this.groups[nextIndex], true);
-        nextElement = this.groups[shouldSkipParent ? nextIndex - 2 : nextIndex - 1];
+      if (currentIndex > 0) {
+        const firstFocusable = await this.groupElementToFocus(this.groups[currentIndex - 1]);
+        const shouldSkipParent = firstFocusable === await this.groupElementToFocus(this.groups[currentIndex]);
+        currentIndex = shouldSkipParent ? currentIndex - 2 : currentIndex - 1;
+        if (currentIndex < 0) {
+          currentIndex = this.groups.length - 1;
+        }
+        nextElement = this.groups[currentIndex];
       } else {
-        nextElement = this.groups[this.groups.length - 1];
+        currentIndex = this.groups.length - 1;
+        nextElement = this.groups[currentIndex];
       }
-      const nextElementDomRef = instanceOfUI5Element(nextElement) ? nextElement.getDomRef() : nextElement;
-      if (nextElementDomRef) {
-        const elementToFocus = await getFirstFocusableElement(nextElementDomRef, true);
-        elementToFocus == null ? void 0 : elementToFocus.focus();
+      elementToFocus = await this.groupElementToFocus(nextElement);
+      if (elementToFocus) {
+        break;
       }
     }
+    return elementToFocus;
+  }
+  async _keydownHandler(event2) {
+    const forward = isF6Next(event2);
+    const backward = isF6Previous(event2);
+    if (!(forward || backward)) {
+      return;
+    }
+    this.updateGroups();
+    if (this.groups.length < 1) {
+      return;
+    }
+    event2.preventDefault();
+    let elementToFocus;
+    if (this.groups.length === 0) {
+      elementToFocus = await this.groupElementToFocus(this.groups[0]);
+      return elementToFocus == null ? void 0 : elementToFocus.focus();
+    }
+    let currentIndex = -1;
+    if (this.selectedGroup) {
+      currentIndex = this.groups.indexOf(this.selectedGroup);
+    }
+    if (forward) {
+      elementToFocus = await this.findNextFocusableGroupElement(currentIndex);
+    }
+    if (backward) {
+      elementToFocus = await this.findPreviousFocusableGroupElement(currentIndex);
+    }
+    elementToFocus == null ? void 0 : elementToFocus.focus();
   }
   removeEventListeners() {
     document.removeEventListener("keydown", this.keydownHandler);
