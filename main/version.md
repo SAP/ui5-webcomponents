@@ -1,9 +1,7 @@
-commit fe142782d34459d5825f199a67dba4561e2525ce
-Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
-Date:   Tue Feb 7 11:28:46 2023 +0200
+commit c5bcfdeff9e70dd26df8982fd409590ceadcc606
+Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
+Date:   Tue Feb 7 14:12:36 2023 +0200
 
-    refactor(ui5-tabcontainer): migrate to TypeScript (#6375)
+    feat(ui5-avatar-group): migrated to Typescript (#6391)
     
-    Created common interface ITab, located in TabContainer.ts. It is implemented by the Tab and TabSeparator classes.
-    
-    Related to: #4337
+    Related to: https://github.com/SAP/ui5-webcomponents/issues/4337
