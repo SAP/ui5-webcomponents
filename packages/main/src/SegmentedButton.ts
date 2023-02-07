@@ -9,6 +9,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isSpace,
@@ -101,7 +102,7 @@ class SegmentedButton extends UI5Element {
 	percentageWidthSet: boolean; //  set to true whenever we set 100% width to the component
 	hasPreviouslyFocusedItem: boolean;
 
-	_handleResizeBound: () => Promise<void>;
+	_handleResizeBound: ResizeObserverCallback;
 
 	widths?: Array<number>;
 	_selectedItem?: SegmentedButtonItem;
@@ -265,7 +266,7 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
-	async _doLayout() {
+	async _doLayout(): Promise<void> {
 		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2); // 2 are the pixel's added for rounding & IE
 		if (!itemsHaveWidth) {
 			await this.measureItemsWidth();

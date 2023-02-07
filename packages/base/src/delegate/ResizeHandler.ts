@@ -1,6 +1,6 @@
 import { instanceOfUI5Element } from "../UI5Element.js";
 
-type ResizeObserverCallback = () => void;
+type ResizeObserverCallback = () => Promise<void> | void;
 
 let resizeObserver: ResizeObserver;
 const observedElements = new Map<HTMLElement, Array<ResizeObserverCallback>>();
@@ -10,7 +10,7 @@ const getResizeObserver = () => {
 		resizeObserver = new window.ResizeObserver(entries => {
 			entries.forEach(entry => {
 				const callbacks = observedElements.get(entry.target as HTMLElement);
-				callbacks?.forEach((callback: ResizeObserverCallback) => callback());
+				callbacks && Promise.all(callbacks.map((callback: ResizeObserverCallback) => callback()));
 			});
 		});
 	}
@@ -93,3 +93,6 @@ class ResizeHandler {
 }
 
 export default ResizeHandler;
+export type {
+	ResizeObserverCallback,
+};
