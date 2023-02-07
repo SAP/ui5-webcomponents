@@ -27,6 +27,10 @@ const boot = async (): Promise<void> => {
 	}
 
 	const bootExecutor = async (resolve: PromiseResolve) => {
+		if (typeof window === "undefined") {
+			resolve();
+			return;
+		}
 		registerCurrentRuntime();
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
