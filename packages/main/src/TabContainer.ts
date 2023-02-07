@@ -389,6 +389,7 @@ class TabContainer extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_allItemsAndSubItems?: Array<ITab>;
 	responsivePopover?: ResponsivePopover;
+	_handleResizeBound: () => void;
 
 	static get styles() {
 		return [tabStyles, tabContainerCss];
@@ -423,7 +424,7 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		this._handleResize = this._handleResize.bind(this);
+		this._handleResizeBound = this._handleResize.bind(this);
 
 		// Init ItemNavigation
 		this._itemNavigation = new ItemNavigation(this, {
@@ -473,11 +474,11 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this._getHeader(), this._handleResize);
+		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this._getHeader(), this._handleResize);
+		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
 	}
 
 	_handleResize() {
