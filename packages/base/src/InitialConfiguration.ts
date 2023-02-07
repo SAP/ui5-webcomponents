@@ -178,7 +178,7 @@ const applyOpenUI5Configuration = () => {
 };
 
 const initConfiguration = () => {
-	if (initialized) {
+	if (typeof window === "undefined" || initialized) {
 		return;
 	}
 
