@@ -486,12 +486,12 @@ class TabContainer extends UI5Element {
 			this.responsivePopover.close();
 		}
 
-		this._updateMediaRange();
 		this._width = this.offsetWidth;
+		this._updateMediaRange(this._width);
 	}
 
-	_updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
+	_updateMediaRange(width: number) {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	_setItemsPrivateProperties(items: Array<ITab>) {
