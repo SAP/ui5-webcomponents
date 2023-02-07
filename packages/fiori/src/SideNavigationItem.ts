@@ -3,8 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
-
-import type { ISideNavigationItem } from "./SideNavigation";
+import type { IItem } from "./SideNavigation";
 import type SideNavigation from "./SideNavigation";
 
 /**
@@ -27,11 +26,11 @@ import type SideNavigation from "./SideNavigation";
  * @tagname ui5-side-navigation-item
  * @public
  * @since 1.0.0-rc.8
- * @implements sap.ui.webc.fiori.ISideNavigationItem
+ * @implements sap.ui.webc.fiori.IItem
  */
 
 @customElement("ui5-side-navigation-item")
-class SideNavigationItem extends UI5Element implements ISideNavigationItem {
+class SideNavigationItem extends UI5Element implements IItem {
 	/**
 	 * Defines the text of the item.
 	 *
@@ -126,7 +125,7 @@ class SideNavigationItem extends UI5Element implements ISideNavigationItem {
 	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.default
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<ISideNavigationItem>;
+	items!: Array<IItem>;
 
 	get _tooltip() {
 		return this.title || this.text;
