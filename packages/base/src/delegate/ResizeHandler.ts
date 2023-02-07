@@ -10,6 +10,8 @@ const getResizeObserver = () => {
 		resizeObserver = new window.ResizeObserver(entries => {
 			entries.forEach(entry => {
 				const callbacks = observedElements.get(entry.target as HTMLElement);
+				// Callbacks could be async and we need to handle returned promises to comply with the eslint "no-misused-promises" rule.
+				// Although Promise.all awaits all, we don't additonal task after calling the callbacks and should not make any difference.
 				callbacks && Promise.all(callbacks.map((callback: ResizeObserverCallback) => callback()));
 			});
 		});
