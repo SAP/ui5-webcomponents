@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -79,20 +79,24 @@ type MonthPickerNavigateEventDetail = {
 	template: MonthPickerTemplate,
 	styles: monthPickerStyles,
 })
-/**
- * Fired when the user selects a month via "Space", "Enter" or click.
- * @public
- * @event sap.ui.webc.main.MonthPicker#change
- */
- @event("change")
-/**
- * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
- * @since 1.0.0-rc.9
- * @public
- * @event sap.ui.webc.main.MonthPicker#navigate
- */
-@event("navigate")
 class MonthPicker extends CalendarPart implements ICalendarPicker {
+	/**
+	 * Fired when the user selects a month via "Space", "Enter" or click.
+	 * @public
+	 * @event sap.ui.webc.main.MonthPicker#change
+	 */
+	@event("change")
+	onChange!: FireEventFn<MonthPickerChangeEventDetail>;
+
+	/**
+	 * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
+	 * @since 1.0.0-rc.9
+	 * @public
+	 * @event sap.ui.webc.main.MonthPicker#navigate
+	 */
+	@event("navigate")
+	onNavigate!: FireEventFn<MonthPickerNavigateEventDetail>;
+
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
@@ -248,7 +252,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.onNavigate({ timestamp: this.timestamp! });
 	}
 
 	/**
@@ -262,7 +266,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		this._safelyModifyTimestampBy(amount, "month");
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.onNavigate({ timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -284,7 +288,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		if (target.className.indexOf("ui5-mp-item") > -1) {
 			const timestamp = this._getTimestampFromDom(target);
 			this._safelySetTimestamp(timestamp);
-			this.fireEvent<MonthPickerChangeEventDetail>("change", { timestamp: this.timestamp! });
+			this.onChange({ timestamp: this.timestamp! });
 		}
 	}
 

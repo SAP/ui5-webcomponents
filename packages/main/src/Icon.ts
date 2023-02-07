@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -116,13 +116,15 @@ const PRESENTATION_ROLE = "presentation";
 	template: IconTemplate,
 	styles: iconCss,
 })
-/**
- * Fired on mouseup, space and enter if icon is interactive
- * @private
- * @since 1.0.0-rc.8
- */
-@event("click")
 class Icon extends UI5Element {
+	/**
+	 * Fired on mouseup, space and enter if icon is interactive
+	 * @private
+	 * @since 1.0.0-rc.8
+	 */
+	@event("click")
+	onClick!: FireEventFn<void>;
+
 	/**
 	 * Defines the component semantic design.
 	 *
@@ -302,7 +304,7 @@ class Icon extends UI5Element {
 		}
 
 		if (isEnter(e)) {
-			this.fireEvent("click");
+			this.onClick();
 		}
 
 		if (isSpace(e)) {
@@ -312,14 +314,14 @@ class Icon extends UI5Element {
 
 	_onkeyup(e: KeyboardEvent) {
 		if (this.interactive && isSpace(e)) {
-			this.fireEvent("click");
+			this.onClick();
 		}
 	}
 
 	_onClickHandler(e: MouseEvent) {
 		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
 		e.stopPropagation();
-		this.fireEvent("click");
+		this.onClick();
 	}
 
 	/**

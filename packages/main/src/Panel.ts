@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -101,14 +101,16 @@ import panelCss from "./generated/themes/Panel.css.js";
 	styles: panelCss,
 	dependencies: [Button, Icon],
 })
-/**
- * Fired when the component is expanded/collapsed by user interaction.
- *
- * @event sap.ui.webc.main.Panel#toggle
- * @public
- */
-@event("toggle")
 class Panel extends UI5Element {
+	/**
+	 * Fired when the component is expanded/collapsed by user interaction.
+	 *
+	 * @event sap.ui.webc.main.Panel#toggle
+	 * @public
+	 */
+	@event("toggle")
+	onToggle!: FireEventFn<void>;
+
 	/**
 	 * This property is used to set the header text of the component.
 	 * The text is visible in both expanded and collapsed states.
@@ -315,7 +317,7 @@ class Panel extends UI5Element {
 		this.collapsed = !this.collapsed;
 
 		if (this.shouldNotAnimate()) {
-			this.fireEvent("toggle");
+			this.onToggle();
 			return;
 		}
 
@@ -335,7 +337,7 @@ class Panel extends UI5Element {
 		Promise.all(animations).then(() => {
 			this._animationRunning = false;
 			this._contentExpanded = !this.collapsed;
-			this.fireEvent("toggle");
+			this.onToggle();
 		});
 	}
 

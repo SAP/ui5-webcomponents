@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -178,27 +179,31 @@ type CalendarChangeEventDetail = {
 		YearPicker,
 	],
 })
-/**
- * Fired when the selected dates change.
- * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
- * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
- *
- * @event sap.ui.webc.main.Calendar#selected-dates-change
- * @allowPreventDefault
- * @param {Array} values The selected dates
- * @param {Array} dates The selected dates as UTC timestamps
- * @public
- */
-@event("selected-dates-change", {
-	detail: {
-		dates: { type: Array },
-		values: { type: Array },
-	},
-})
-
-@event("show-month-press")
-@event("show-year-press")
+@fastNavigation
 class Calendar extends CalendarPart {
+	/**
+	 * Fired when the selected dates change.
+	 * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
+	 * create instances of <code>ui5-date</code> for the newly selected dates. In that case you should do this manually.
+	 *
+	 * @event sap.ui.webc.main.Calendar#selected-dates-change
+	 * @allowPreventDefault
+	 * @param {Array} values The selected dates
+	 * @param {Array} dates The selected dates as UTC timestamps
+	 * @public
+	 */
+	@event("selected-dates-change", {
+		detail: {
+			dates: { type: Array },
+			values: { type: Array },
+		},
+	})
+	onSelectedDatesChange!: FireEventFn<CalendarChangeEventDetail>;
+
+	@event("show-month-press")
+	onShowMonthPress!: FireEventFn<any>;
+
+	@event("show-year-press")
 	/**
 	 * Defines the type of selection used in the calendar component.
 	 * Accepted property values are:<br>
@@ -212,6 +217,8 @@ class Calendar extends CalendarPart {
 	 * @defaultvalue "Single"
 	 * @public
 	 */
+	onShowYearPress!: FireEventFn<any>;
+
 	@property({
 		type: CalendarSelectionMode,
 		defaultValue: CalendarSelectionMode.Single,
@@ -345,19 +352,19 @@ class Calendar extends CalendarPart {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	onHeaderShowMonthPress(e: CustomEvent) {
+	_onHeaderShowMonthPress(e: CustomEvent) {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "month";
-		this.fireEvent("show-month-press", e);
+		this.onShowMonthPress(e);
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	onHeaderShowYearPress(e: CustomEvent) {
+	_onHeaderShowYearPress(e: CustomEvent) {
 		this._currentPickerDOM._autoFocus = false;
 		this._currentPicker = "year";
-		this.fireEvent("show-year-press", e);
+		this.onShowYearPress(e);
 	}
 
 	get _currentPickerDOM() {
@@ -443,13 +450,13 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.onSelectedDatesChange({ timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
 	}
 
-	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
+    _onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 		this._fireEventAndUpdateSelectedDates(e.detail.dates);
 	}

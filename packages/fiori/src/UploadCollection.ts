@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -77,48 +77,52 @@ type ItemDeleteEventDetail = {
 		Title,
 	],
 })
-/**
- * Fired when an element is dropped inside the drag and drop overlay.
- * <br><br>
- * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
- *
- * @event sap.ui.webc.fiori.UploadCollection#drop
- * @readonly
- * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
- * @public
- * @native
- */
-@event("drop")
-
-/**
- * Fired when the Delete button of any item is pressed.
- * <br><br>
- * <b>Note:</b> A Delete button is displayed on each item,
- * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
- * @event sap.ui.webc.fiori.UploadCollection#item-delete
- * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
- * @public
- */
-@event("item-delete", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired when selection is changed by user interaction
- * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
- *
- * @event sap.ui.webc.fiori.UploadCollection#selection-change
- * @param {Array} selectedItems An array of the selected items.
- * @public
- */
-@event("selection-change", {
-	detail: {
-		selectedItems: { type: Array },
-	},
-})
 class UploadCollection extends UI5Element {
+	/**
+	 * Fired when an element is dropped inside the drag and drop overlay.
+	 * <br><br>
+	 * <b>Note:</b> The <code>drop</code> event is fired only when elements are dropped within the drag and drop overlay and ignored for the other parts of the <code>ui5-upload-collection</code>.
+	 *
+	 * @event sap.ui.webc.fiori.UploadCollection#drop
+	 * @readonly
+	 * @param {DataTransfer} dataTransfer The <code>drop</code> event operation data.
+	 * @public
+	 * @native
+	 */
+	@event("drop")
+	onDrop!: FireEventFn<void>;
+
+	/**
+	 * Fired when the Delete button of any item is pressed.
+	 * <br><br>
+	 * <b>Note:</b> A Delete button is displayed on each item,
+	 * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
+	 * @event sap.ui.webc.fiori.UploadCollection#item-delete
+	 * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
+	 * @public
+	 */
+	@event("item-delete", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onItemDelete!: FireEventFn<ItemDeleteEventDetail>;
+
+	/**
+	 * Fired when selection is changed by user interaction
+	 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+	 *
+	 * @event sap.ui.webc.fiori.UploadCollection#selection-change
+	 * @param {Array} selectedItems An array of the selected items.
+	 * @public
+	 */
+	@event("selection-change", {
+		detail: {
+			selectedItems: { type: Array },
+		},
+	})
+	onSelectionChange!: FireEventFn<SelectionChangeEventDetail>;
+
 	/**
 	 * Defines the mode of the <code>ui5-upload-collection</code>.
 	 *
@@ -301,11 +305,11 @@ class UploadCollection extends UI5Element {
 	}
 
 	_onItemDelete(e: CustomEvent<ItemDeleteEventDetail>) {
-		this.fireEvent("item-delete", { item: e.detail.item });
+		this.onItemDelete({ item: e.detail.item });
 	}
 
 	_onSelectionChange(e: CustomEvent<SelectionChangeEventDetail>) {
-		this.fireEvent("selection-change", { selectedItems: e.detail.selectedItems });
+		this.onSelectionChange({ selectedItems: e.detail.selectedItems });
 	}
 
 	get classes() {

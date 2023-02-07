@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -62,15 +62,17 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
 	template: CardHeaderTemplate,
 	styles: cardHeaderCss,
 })
-/**
- * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
- * <br><br>
- * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
- * @event sap.ui.webc.main.CardHeader#click
- * @public
- */
-@event("click")
 class CardHeader extends UI5Element {
+	/**
+	 * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
+	 * <br><br>
+	 * <b>Note:</b> The event would be fired only if the <code>interactive</code> property is set to true.
+	 * @event sap.ui.webc.main.CardHeader#click
+	 * @public
+	 */
+	@event("click")
+	onClick!: FireEventFn<void>;
+
 	/**
 	 * Defines the title text.
 	 * @type {string}
@@ -221,7 +223,7 @@ class CardHeader extends UI5Element {
 		e.stopImmediatePropagation();
 
 		if (this.interactive && this._root.contains(e.target as HTMLElement)) {
-			this.fireEvent("click");
+			this.onClick();
 		}
 	}
 
@@ -236,7 +238,7 @@ class CardHeader extends UI5Element {
 		this._headerActive = enter || space;
 
 		if (enter) {
-			this.fireEvent("click");
+			this.onClick();
 			return;
 		}
 
@@ -255,7 +257,7 @@ class CardHeader extends UI5Element {
 		this._headerActive = false;
 
 		if (space) {
-			this.fireEvent("click");
+			this.onClick();
 		}
 	}
 }

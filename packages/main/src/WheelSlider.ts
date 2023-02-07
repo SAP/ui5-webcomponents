@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import {
@@ -51,30 +51,34 @@ type WheelSliderSelectEventDetail = { value: string };
 	template: WheelSliderTemplate,
 	dependencies: [Button],
 })
-/**
- * Fires when new value is selected.
- * @event sap.ui.webc.main.WheelSlider#select
- */
-@event("select", {
-	detail: {
-		value: {
-			type: String,
-		},
-	},
-})
-
-/**
- * Fires when the wheel slider is expanded.
- * @event sap.ui.webc.main.WheelSlider#expand
- */
-@event("expand")
-
-/**
- * Fires when the wheel slider is collapsed.
- * @event sap.ui.webc.main.WheelSlider#collapse
- */
-@event("collapse")
 class WheelSlider extends UI5Element {
+    /**
+     * Fires when new value is selected.
+     * @event sap.ui.webc.main.WheelSlider#select
+     */
+    @event("select", {
+	  detail: {
+	    value: {
+		  type: String,
+	    },
+	  },
+    })
+	onSelect!: FireEventFn<{value: string}>;
+
+    /**
+     * Fires when the wheel slider is expanded.
+     * @event sap.ui.webc.main.WheelSlider#expand
+     */
+    @event("expand")
+	onExpand!: FireEventFn<void>;
+
+	/**
+	 * Fires when the wheel slider is collapsed.
+	 * @event sap.ui.webc.main.WheelSlider#collapse
+	 */
+	@event("collapse")
+	onCollapse!: FireEventFn<void>;
+
 	/**
 	 * Defines whether the component is disabled
 	 * (default is set to <code>false</code>).
@@ -199,12 +203,12 @@ class WheelSlider extends UI5Element {
 
 	expandSlider() {
 		this.expanded = true;
-		this.fireEvent("expand", {});
+		this.onExpand();
 	}
 
 	collapseSlider() {
 		this.expanded = false;
-		this.fireEvent("collapse", {});
+		this.onCollapse();
 	}
 
 	get _itemCellHeight() {
@@ -281,7 +285,7 @@ class WheelSlider extends UI5Element {
 			this._scroller.scrollTo(0, scrollBy, 5, 100); // sometimes the container isn't painted yet so retry 5 times (although it succeeds on the 1st)
 			this._currentElementIndex = index;
 			this.value = this._items[index - (this._getCurrentRepetition() * this._items.length)];
-			this.fireEvent<WheelSliderSelectEventDetail>("select", { value: this.value });
+			this.onSelect({ value: this.value });
 		}
 	}
 
@@ -367,7 +371,7 @@ class WheelSlider extends UI5Element {
 		if (this.expanded) {
 			this.value = target.textContent || "";
 			this._selectElement(target);
-			this.fireEvent<WheelSliderSelectEventDetail>("select", { value: this.value });
+			this.onSelect({ value: this.value });
 		} else {
 			this.expanded = true;
 		}

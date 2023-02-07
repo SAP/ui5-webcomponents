@@ -4,7 +4,7 @@ import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Key
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ProductSwitchItemTemplate from "./generated/templates/ProductSwitchItemTemplate.lit.js";
 
@@ -48,16 +48,20 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
 	template: ProductSwitchItemTemplate,
 	dependencies: [Icon],
 })
-/**
- * Fired when the <code>ui5-product-switch-item</code> is activated either with a
- * click/tap or by using the Enter or Space key.
- *
- * @event sap.ui.webc.fiori.ProductSwitchItem#click
- * @public
- */
-@event("click")
-@event("_focused")
 class ProductSwitchItem extends UI5Element implements ITabbable {
+	/**
+	 * Fired when the <code>ui5-product-switch-item</code> is activated either with a
+	 * click/tap or by using the Enter or Space key.
+	 *
+	 * @event sap.ui.webc.fiori.ProductSwitchItem#click
+	 * @public
+	 */
+	@event("click")
+	onClick!: FireEventFn<{ item: ProductSwitchItem }>;
+
+	@event("_focused")
+	onFocused!: FireEventFn<FocusEvent>;
+
 	constructor() {
 		super();
 
@@ -212,11 +216,11 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 	_onfocusin(e: FocusEvent) {
 		this.focused = true;
 
-		this.fireEvent("_focused", e);
+		this.onFocused(e);
 	}
 
 	_fireItemClick() {
-		this.fireEvent("click", { item: this });
+		this.onClick({ item: this });
 	}
 }
 

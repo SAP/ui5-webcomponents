@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -70,14 +70,15 @@ import switchCss from "./generated/themes/Switch.css.js";
 	template: SwitchTemplate,
 	dependencies: [Icon],
 })
-/**
- * Fired when the component checked state changes.
- *
- * @public
- * @event sap.ui.webc.main.Switch#change
- */
-@event("change")
 class Switch extends UI5Element {
+	/**
+	 * Fired when the component checked state changes.
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Switch#change
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
 	/**
 	 * Defines the component design.
 	 * <br><br>
@@ -217,11 +218,11 @@ class Switch extends UI5Element {
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.onChange(null, true);
 			// Angular two way data binding;
-			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
 
-			if (changePrevented || valueChagnePrevented) {
+			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;
 			}
 		}

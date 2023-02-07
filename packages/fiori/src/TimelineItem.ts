@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -39,18 +39,19 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
 		Link,
 	],
 })
-/**
- * Fired when the item name is pressed either with a
- * click/tap or by using the Enter or Space key.
- * <br><br>
- * <b>Note:</b> The event will not be fired if the <code>name-clickable</code>
- * attribute is not set.
- *
- * @event sap.ui.webc.fiori.TimelineItem#name-click
- * @public
- */
-@event("name-click")
 class TimelineItem extends UI5Element implements ITabbable {
+	/**
+	 * Fired when the item name is pressed either with a
+	 * click/tap or by using the Enter or Space key.
+	 * <br><br>
+	 * <b>Note:</b> The event will not be fired if the <code>name-clickable</code>
+	 * attribute is not set.
+	 *
+	 * @event sap.ui.webc.fiori.TimelineItem#name-click
+	 * @public
+	 */
+	@event("name-click")
+	onNameClick!: FireEventFn<void>;
 	/**
 	 * Defines the icon to be displayed as graphical element within the <code>ui5-timeline-item</code>.
 	 * SAP-icons font provides numerous options.
@@ -145,7 +146,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 	}
 
 	onNamePress() {
-		this.fireEvent("name-click", {});
+		this.onNameClick();
 	}
 
 	/**

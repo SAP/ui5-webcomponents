@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -67,26 +67,28 @@ type TimeSelectionSliderChangeEventDetail = {
 	template: timeSelectionTemplate,
 	dependencies: [WheelSlider],
 })
-
-/**
- * Fired when the value changes due to user interaction with the sliders
- */
-@event("change", {
-	detail: {
-		value: { type: String },
-		valid: { type: Boolean },
-	},
-})
-
-/**
- * Fired when the expanded/collapsed slider changes (a new slider is expanded or the expanded slider is collapsed)
- */
-@event("sliderChange", {
-	detail: {
-		slider: { type: String },
-	},
-})
 class TimeSelection extends UI5Element {
+	/**
+	 * Fired when the value changes due to user interaction with the sliders
+	 */
+	@event("change", {
+		detail: {
+			value: { type: String },
+			valid: { type: Boolean },
+		},
+	})
+	onChange!: FireEventFn<TimeSelectionChangeEventDetail>;
+
+	/**
+	 * Fired when the expanded/collapsed slider changes (a new slider is expanded or the expanded slider is collapsed)
+	 */
+	@event("sliderChange", {
+		detail: {
+			slider: { type: String },
+		},
+	})
+	onSliderChange!: FireEventFn<TimeSelectionSliderChangeEventDetail>;
+
 	/**
 	 * Defines a formatted time value.
 	 *
@@ -304,7 +306,7 @@ class TimeSelection extends UI5Element {
 		const value = this.formatValue(date);
 		if (this.isValid(value)) {
 			this.value = this.normalizeValue(value);
-			this.fireEvent<TimeSelectionChangeEventDetail>("change", { value: this.value, valid: true });
+			this.onChange({ value: this.value, valid: true });
 		}
 	}
 
@@ -391,7 +393,7 @@ class TimeSelection extends UI5Element {
 			return;
 		}
 		this._currentSlider = slider;
-		this.fireEvent<TimeSelectionSliderChangeEventDetail>("slider-change", { slider });
+		this.onSliderChange({ slider });
 	}
 
 	get _currentSliderDOM() {

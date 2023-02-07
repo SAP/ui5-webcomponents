@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -39,7 +39,7 @@ import type {
 	TableRowSelectionRequestedEventDetail,
 	TableRowF7PressEventDetail,
 	TableRowForwardBeforeEventDetail,
-	TableRowForwardAfterEventDetail,
+	TableRowForwardAfterEventDetail, TableRowClickEventDetail,
 } from "./TableRow.js";
 import type TableCell from "./TableCell.js";
 import type TableColumn from "./TableColumn.js";
@@ -185,62 +185,66 @@ enum TableFocusTargetElement {
 	template: TableTemplate,
 	dependencies: [BusyIndicator, CheckBox],
 })
-/** Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
-*
-* @event sap.ui.webc.main.Table#row-click
-* @param {HTMLElement} row the activated row.
-* @public
-*/
-@event("row-click", {
-	detail: {
-		row: { type: HTMLElement },
-	},
-})
-
-/**
-* Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
-*
-* @event sap.ui.webc.main.Table#popin-change
-* @param {Array} poppedColumns popped-in columns.
-* @since 1.0.0-rc.6
-* @public
-*/
-@event("popin-change", {
-	detail: {
-		poppedColumns: {
-			type: Array,
-		},
-	},
-})
-
-/**
-* Fired when the user presses the <code>More</code> button or scrolls to the table's end.
-* <br><br>
-*
-* <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
-* @event sap.ui.webc.main.Table#load-more
-* @public
-* @since 1.0.0-rc.11
-*/
-@event("load-more")
-
-/**
-* Fired when selection is changed by user interaction
-* in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
-*
-* @event sap.ui.webc.main.Table#selection-change
-* @param {Array} selectedRows An array of the selected rows.
-* @param {Array} previouslySelectedRows An array of the previously selected rows.
-* @public
-* @since 1.0.0-rc.15
-*/
-@event("selection-change", {
-	detail: {
-		selectedRows: { type: Array },
-		previouslySelectedRows: { type: Array },
-	},
-})
 class Table extends UI5Element {
+	/** Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
+	 *
+	 * @event sap.ui.webc.main.Table#row-click
+	 * @param {HTMLElement} row the activated row.
+	 * @public
+	 */
+	@event("row-click", {
+		detail: {
+			row: { type: HTMLElement },
+		},
+	})
+	onRowClick!: FireEventFn<TableRowClickEventDetail>;
+
+	/**
+	 * Fired when <code>ui5-table-column</code> is shown as a pop-in instead of hiding it.
+	 *
+	 * @event sap.ui.webc.main.Table#popin-change
+	 * @param {Array} poppedColumns popped-in columns.
+	 * @since 1.0.0-rc.6
+	 * @public
+	 */
+	@event("popin-change", {
+		detail: {
+			poppedColumns: {
+				type: Array,
+			},
+		},
+	})
+	onPopinChange!: FireEventFn<TablePopinChangeEvent>;
+
+	/**
+	 * Fired when the user presses the <code>More</code> button or scrolls to the table's end.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> The event will be fired if <code>growing</code> is set to <code>Button</code> or <code>Scroll</code>.
+	 * @event sap.ui.webc.main.Table#load-more
+	 * @public
+	 * @since 1.0.0-rc.11
+	 */
+	@event("load-more")
+	onLoadMore!: FireEventFn<void>;
+
+	/**
+	 * Fired when selection is changed by user interaction
+	 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+	 *
+	 * @event sap.ui.webc.main.Table#selection-change
+	 * @param {Array} selectedRows An array of the selected rows.
+	 * @param {Array} previouslySelectedRows An array of the previously selected rows.
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@event("selection-change", {
+		detail: {
+			selectedRows: { type: Array },
+			previouslySelectedRows: { type: Array },
+		},
+	})
+	onSelectionChange!: FireEventFn<TableSelectionChangeEvent>;
 	/**
 	 * Defines the text that will be displayed when there is no data and <code>hideNoData</code> is not present.
 	 *
@@ -733,7 +737,7 @@ class Table extends UI5Element {
 
 		const selectedRows = this.selectedRows;
 
-		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+		this.onSelectionChange({
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -765,7 +769,7 @@ class Table extends UI5Element {
 
 		const selectedRows: Array<ITableRow> = this.selectedRows;
 
-		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+		this.onSelectionChange({
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -984,7 +988,7 @@ class Table extends UI5Element {
 	}
 
 	_onLoadMoreClick() {
-		this.fireEvent("load-more");
+		this.onLoadMore();
 	}
 
 	observeTableEnd() {
@@ -1001,7 +1005,7 @@ class Table extends UI5Element {
 	}
 
 	loadMore() {
-		this.fireEvent("load-more");
+		this.onLoadMore();
 	}
 
 	_handleSingleSelect(e: CustomEvent<TableRowSelectionRequestedEventDetail>) {
@@ -1019,7 +1023,7 @@ class Table extends UI5Element {
 				}
 			});
 			row.selected = true;
-			this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+			this.onSelectionChange({
 				selectedRows: [row],
 				previouslySelectedRows,
 			});
@@ -1038,13 +1042,9 @@ class Table extends UI5Element {
 
 		const selectedRows = this.selectedRows;
 
-		if (selectedRows.length === this.rows.length) {
-			this._allRowsSelected = true;
-		} else {
-			this._allRowsSelected = false;
-		}
+		this._allRowsSelected = selectedRows.length === this.rows.length;
 
-		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+		this.onSelectionChange({
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1073,7 +1073,7 @@ class Table extends UI5Element {
 
 		const selectedRows = bAllSelected ? this.rows : [];
 
-		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+		this.onSelectionChange({
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1153,7 +1153,7 @@ class Table extends UI5Element {
 		if (hiddenColumnsChange) {
 			this._hiddenColumns = hiddenColumns;
 			if (hiddenColumns.length) {
-				this.fireEvent<TablePopinChangeEvent>("popin-change", {
+				this.onPopinChange({
 					poppedColumns: this._hiddenColumns,
 				});
 			}

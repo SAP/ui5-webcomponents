@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -71,56 +71,61 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
 	],
 })
 
-/**
- * Fired when the file name is clicked.
- * <br><br>
- * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
- *
- * @event sap.ui.webc.fiori.UploadCollectionItem#file-name-click
- * @public
- */
-@event("file-name-click")
-
-/**
- * Fired when the <code>fileName</code> property gets changed.
- * <br><br>
- * <b>Note:</b> An edit button is displayed on each item,
- * when the <code>ui5-upload-collection-item</code> <code>type</code> property is set to <code>Detail</code>.
- *
- * @event sap.ui.webc.fiori.UploadCollectionItem#rename
- * @public
- */
-@event("rename")
-
-/**
- * Fired when the terminate button is pressed.
- * <br><br>
- * <b>Note:</b> Terminate button is displayed when <code>uploadState</code> property is set to <code>Uploading</code>.
- *
- * @event sap.ui.webc.fiori.UploadCollectionItem#terminate
- * @public
- */
-@event("terminate")
-
-/**
- * Fired when the retry button is pressed.
- * <br><br>
- * <b>Note:</b> Retry button is displayed when <code>uploadState</code> property is set to <code>Error</code>.
- *
- * @event sap.ui.webc.fiori.UploadCollectionItem#retry
- * @public
- */
-@event("retry")
-
-/**
- * @since 1.0.0-rc.8
- *
- * @event
- * @private
- */
-@event("_focus-requested")
-
 class UploadCollectionItem extends ListItem {
+	/**
+	 * Fired when the file name is clicked.
+	 * <br><br>
+	 * <b>Note:</b> This event is only available when <code>fileNameClickable</code> property is <code>true</code>.
+	 *
+	 * @event sap.ui.webc.fiori.UploadCollectionItem#file-name-click
+	 * @public
+	 */
+	@event("file-name-click")
+	onFileNameClick!: FireEventFn<void>;
+
+	/**
+	 * Fired when the <code>fileName</code> property gets changed.
+	 * <br><br>
+	 * <b>Note:</b> An edit button is displayed on each item,
+	 * when the <code>ui5-upload-collection-item</code> <code>type</code> property is set to <code>Detail</code>.
+	 *
+	 * @event sap.ui.webc.fiori.UploadCollectionItem#rename
+	 * @public
+	 */
+	@event("rename")
+	onRename!: FireEventFn<void>;
+
+	/**
+	 * Fired when the terminate button is pressed.
+	 * <br><br>
+	 * <b>Note:</b> Terminate button is displayed when <code>uploadState</code> property is set to <code>Uploading</code>.
+	 *
+	 * @event sap.ui.webc.fiori.UploadCollectionItem#terminate
+	 * @public
+	 */
+	@event("terminate")
+	onTerminate!: FireEventFn<void>;
+
+	/**
+	 * Fired when the retry button is pressed.
+	 * <br><br>
+	 * <b>Note:</b> Retry button is displayed when <code>uploadState</code> property is set to <code>Error</code>.
+	 *
+	 * @event sap.ui.webc.fiori.UploadCollectionItem#retry
+	 * @public
+	 */
+	@event("retry")
+	onRetry!: FireEventFn<void>;
+
+	/**
+	 * @since 1.0.0-rc.8
+	 *
+	 * @event
+	 * @private
+	 */
+	@event("_focus-requested")
+	onFocusRequested!: FireEventFn<void>;
+
 	/**
 	 * Holds an instance of <code>File</code> associated with this item.
 	 *
@@ -273,7 +278,7 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	async onDetailClick() {
+	async _onDetailClick() {
 		super.onDetailClick();
 		this._editing = true;
 
@@ -319,7 +324,7 @@ class UploadCollectionItem extends ListItem {
 	_onRename() {
 		const inp = this.shadowRoot!.querySelector<Input>("#ui5-uci-edit-input")!;
 		this.fileName = inp.value + this._fileExtension;
-		this.fireEvent("rename");
+		this.onRename();
 
 		this._editing = false;
 		this._focus();
@@ -349,15 +354,15 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_focus() {
-		this.fireEvent("_focus-requested");
+		this.onFocusRequested();
 	}
 
 	_onFileNameClick() {
-		this.fireEvent("file-name-click");
+		this.onFileNameClick();
 	}
 
 	_onRetry() {
-		this.fireEvent("retry");
+		this.onRetry();
 	}
 
 	_onRetryKeyup(e: KeyboardEvent) {
@@ -367,7 +372,7 @@ class UploadCollectionItem extends ListItem {
 	}
 
 	_onTerminate() {
-		this.fireEvent("terminate");
+		this.onTerminate();
 	}
 
 	_onTerminateKeyup(e: KeyboardEvent) {

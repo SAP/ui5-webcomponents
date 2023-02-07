@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -77,23 +77,21 @@ type ColorPaletteItemClickEventDetail = {
 		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
 	},
 })
-
-/**
- * Fired when the user selects a color.
- *
- * @event sap.ui.webc.main.ColorPalette#item-click
- * @public
- * @since 1.0.0-rc.15
- * @param {string} color the selected color
- */
-@event("item-click", {
-	detail: {
+class ColorPalette extends UI5Element {
+  /**
+	 * Fired when the user selects a color.
+	 *
+	 * @event sap.ui.webc.main.ColorPalette#item-click
+	 * @public
+	 * @since 1.0.0-rc.15
+	 * @param {string} color the selected color
+	 */
+	@event("item-click", {
 		color: {
 			type: String,
 		},
-	},
-})
-class ColorPalette extends UI5Element {
+	})
+	onItemClick!: FireEventFn<ColorPaletteItemClickEventDetail>;
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
 	 * @type {boolean}
@@ -236,7 +234,7 @@ class ColorPalette extends UI5Element {
 			}
 		}
 
-		this.fireEvent<ColorPaletteItemClickEventDetail>("item-click", {
+		this.onItemClick({
 			color: this._selectedColor,
 		});
 	}

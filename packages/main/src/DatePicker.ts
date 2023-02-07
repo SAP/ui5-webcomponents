@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
@@ -167,45 +167,48 @@ type DatePickerChangeEventDetail = {
 		Button,
 	],
 })
-/**
- * Fired when the input operation has finished by pressing Enter or on focusout.
- *
- * @event sap.ui.webc.main.DatePicker#change
- * @allowPreventDefault
- * @public
- * @param {string} value The submitted value.
- * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
-@event("change", {
-	detail: {
-		value: {
-			type: String,
-		},
-		valid: {
-			type: Boolean,
-		},
-	},
-})
-/**
- * Fired when the value of the component is changed at each key stroke.
- *
- * @event sap.ui.webc.main.DatePicker#input
- * @allowPreventDefault
- * @public
- * @param {string} value The submitted value.
- * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
-*/
-@event("input", {
-	detail: {
-		value: {
-			type: String,
-		},
-		valid: {
-			type: Boolean,
-		},
-	},
-})
 class DatePicker extends DateComponentBase implements IFormElement {
+	/**
+	 * Fired when the input operation has finished by pressing Enter or on focusout.
+	 *
+	 * @event sap.ui.webc.main.DatePicker#change
+	 * @allowPreventDefault
+	 * @public
+	 * @param {string} value The submitted value.
+	 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+	 */
+	@event("change", {
+		detail: {
+			value: {
+				type: String,
+			},
+			valid: {
+				type: Boolean,
+			},
+		},
+	})
+	onChange!: FireEventFn<DatePickerChangeEventDetail>;
+
+	/**
+	 * Fired when the value of the component is changed at each key stroke.
+	 *
+	 * @event sap.ui.webc.main.DatePicker#input
+	 * @allowPreventDefault
+	 * @public
+	 * @param {string} value The submitted value.
+	 * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+	 */
+	@event("input", {
+		detail: {
+			value: {
+				type: String,
+			},
+			valid: {
+				type: Boolean,
+			},
+		},
+	})
+	onInput!: FireEventFn<DatePickerChangeEventDetail>;
 	/**
 	 * Defines a formatted date value.
 	 *
@@ -773,14 +776,14 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * The user clicked the "month" button in the header
 	 */
-	onHeaderShowMonthPress() {
+	_onHeaderShowMonthPress() {
 		this._calendarCurrentPicker = "month";
 	}
 
 	/**
 	 * The user clicked the "year" button in the header
 	 */
-	onHeaderShowYearPress() {
+	_onHeaderShowYearPress() {
 		this._calendarCurrentPicker = "year";
 	}
 

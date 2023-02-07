@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -66,15 +66,16 @@ import "@ui5/webcomponents-icons/dist/employee.js";
 	template: AvatarTemplate,
 	dependencies: [Icon],
 })
-/**
-* Fired on mouseup, space and enter if avatar is interactive
-*
-* @event
-* @private
-* @since 1.0.0-rc.11
-*/
-@event("click")
 class Avatar extends UI5Element implements ITabbable {
+	/**
+	 * Fired on mouseup, space and enter if avatar is interactive
+	 *
+	 * @event
+	 * @private
+	 * @since 1.0.0-rc.11
+	 */
+	@event("click")
+	onClick!: FireEventFn<void>;
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
 	 * @type {boolean}
@@ -375,7 +376,7 @@ class Avatar extends UI5Element implements ITabbable {
 	_onClickHandler(e: MouseEvent) {
 		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
 		e.stopPropagation();
-		this.fireEvent("click");
+		this.onClick();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -384,7 +385,7 @@ class Avatar extends UI5Element implements ITabbable {
 		}
 
 		if (isEnter(e)) {
-			this.fireEvent("click");
+			this.onClick();
 		}
 
 		if (isSpace(e)) {
@@ -394,7 +395,7 @@ class Avatar extends UI5Element implements ITabbable {
 
 	_onkeyup(e: KeyboardEvent) {
 		if (this.interactive && !e.shiftKey && isSpace(e)) {
-			this.fireEvent("click");
+			this.onClick();
 		}
 	}
 

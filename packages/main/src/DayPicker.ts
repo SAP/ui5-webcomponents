@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
@@ -107,19 +107,23 @@ type DayPickerNavigateEventDetail = {
 	styles: dayPickerCSS,
 	template: DayPickerTemplate,
 })
-/**
- * Fired when the selected date(s) change
- * @public
- * @event sap.ui.webc.main.DayPicker#change
- */
-@event("change")
-/**
- * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
- * @public
- * @event sap.ui.webc.main.DayPicker#navigate
- */
-@event("navigate")
 class DayPicker extends CalendarPart implements ICalendarPicker {
+	/**
+	 * Fired when the selected date(s) change
+	 * @public
+	 * @event sap.ui.webc.main.DayPicker#change
+	 */
+	@event("change")
+	onChange!: FireEventFn<DayPickerChangeEventDetail>;
+
+	/**
+	 * Fired when the timestamp changes (user navigates with the keyboard) or clicks with the mouse
+	 * @public
+	 * @event sap.ui.webc.main.DayPicker#navigate
+	 */
+	@event("navigate")
+	onNavigate!: FireEventFn<DayPickerNavigateEventDetail>;
+
 	/**
 	 * An array of UTC timestamps representing the selected date or dates depending on the capabilities of the picker component.
 	 * @type {array}
@@ -450,7 +454,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			this.selectedDates = (this.selectedDates.length === 1) ? [...this.selectedDates, timestamp]	as Array<number> : [timestamp] as Array<number>;
 		}
 
-		this.fireEvent<DayPickerChangeEventDetail>("change", {
+		this.onChange({
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -481,7 +485,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 			}
 		});
 
-		this.fireEvent<DayPickerChangeEventDetail>("change", {
+		this.onChange({
 			timestamp: this.timestamp,
 			dates: this.selectedDates,
 		});
@@ -692,7 +696,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.onNavigate({ timestamp: this.timestamp! });
 	}
 
 	/**
@@ -703,7 +707,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
 		this._updateSecondTimestamp();
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.onNavigate({ timestamp: this.timestamp! });
 	}
 
 	/**

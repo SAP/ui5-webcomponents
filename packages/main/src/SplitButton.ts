@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import {
@@ -91,20 +91,23 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
 	template: SplitButtonTemplate,
 	dependencies: [Button],
 })
-/**
- * Fired when the user clicks on the default action.
- * @event sap.ui.webc.main.SplitButton#click
- * @public
- */
-@event("click")
-
-/**
- * Fired when the user clicks on the arrow action.
- * @event sap.ui.webc.main.SplitButton#arrow-click
- * @public
- */
-@event("arrow-click")
 class SplitButton extends UI5Element {
+	/**
+	 * Fired when the user clicks on the default action.
+	 * @event sap.ui.webc.main.SplitButton#click
+	 * @public
+	 */
+	@event("click")
+	onClick!: FireEventFn<void>
+
+	/**
+	 * Fired when the user clicks on the arrow action.
+	 * @event sap.ui.webc.main.SplitButton#arrow-click
+	 * @public
+	 */
+	@event("arrow-click")
+	onArrowClick!: FireEventFn<void>
+
 	/**
 	 * Defines the icon to be displayed as graphical element within the component.
 	 * The SAP-icons font provides numerous options.
@@ -352,14 +355,14 @@ class SplitButton extends UI5Element {
 	_fireClick(e?: Event) {
 		e?.stopPropagation();
 		if (!this._shiftOrEscapePressed) {
-			this.fireEvent("click");
+			this.onClick();
 		}
 		this._shiftOrEscapePressed = false;
 	}
 
 	_fireArrowClick(e?: Event) {
 		e?.stopPropagation();
-		this.fireEvent("arrow-click");
+		this.onArrowClick();
 	}
 
 	_textButtonRelease() {

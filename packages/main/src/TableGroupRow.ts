@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -53,8 +53,10 @@ import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 		CheckBox,
 	],
 })
-@event("_focused")
 class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
+	@event("_focused")
+	onFocused!: FireEventFn<void>;
+
 	/**
 	 * Defines the mode of the row
 	 *
@@ -133,7 +135,7 @@ class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	}
 
 	_onfocusin(e: FocusEvent) {
-		this.fireEvent("_focused", e);
+		this.onFocused();
 	}
 
 	static async onDefine() {

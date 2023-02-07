@@ -3,7 +3,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -89,15 +89,16 @@ let activeCb: CheckBox;
 		Icon,
 	],
 })
-/**
- * Fired when the component checked state changes.
- *
- * @public
- * @event sap.ui.webc.main.CheckBox#change
- */
-@event("change")
-
 class CheckBox extends UI5Element implements IFormElement {
+	/**
+	 * Fired when the component checked state changes.
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.CheckBox#change
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
+
 	/**
 	 * Receives id(or many ids) of the elements that label the component
 	 * @type {string}
@@ -373,7 +374,7 @@ class CheckBox extends UI5Element implements IFormElement {
 				this.checked = !this.checked;
 			}
 
-			const changePrevented = !this.fireEvent("change", null, true);
+			const changePrevented = !this.onChange(null, true);
 			// Angular two way data binding
 			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
 

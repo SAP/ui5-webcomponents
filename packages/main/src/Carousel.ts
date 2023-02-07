@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -123,23 +123,23 @@ type CarouselNavigateEventDetail = {
 		Label,
 	],
 })
-/**
- * Fired whenever the page changes due to user interaction,
- * when the user clicks on the navigation arrows or while resizing,
- * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
- *
- * @event sap.ui.webc.main.Carousel#navigate
- * @param {Integer} selectedIndex the current selected index
- * @public
- * @since 1.0.0-rc.7
- */
-@event("navigate", {
-	detail: {
-		selectedIndex: { type: Integer },
-	},
-})
-
 class Carousel extends UI5Element {
+	/**
+	 * Fired whenever the page changes due to user interaction,
+	 * when the user clicks on the navigation arrows or while resizing,
+	 * based on the <code>items-per-page-l</code>, <code>items-per-page-m</code> and <code>items-per-page-s</code> properties.
+	 *
+	 * @event sap.ui.webc.main.Carousel#navigate
+	 * @param {Integer} selectedIndex the current selected index
+	 * @public
+	 * @since 1.0.0-rc.7
+	 */
+	@event("navigate", {
+		detail: {
+			selectedIndex: { type: Integer },
+		},
+	})
+	onNavigate!: FireEventFn<CarouselNavigateEventDetail>;
 	/**
 	 * Defines whether the carousel should loop, i.e show the first page after the last page is reached and vice versa.
 	 * @type {boolean}
@@ -356,7 +356,7 @@ class Carousel extends UI5Element {
 
 		if (this._selectedIndex > this.pagesCount - 1) {
 			this._selectedIndex = this.pagesCount - 1;
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.onNavigate({ selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -471,7 +471,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.onNavigate({ selectedIndex: this._selectedIndex });
 		}
 	}
 
@@ -491,7 +491,7 @@ class Carousel extends UI5Element {
 		}
 
 		if (previousSelectedIndex !== this._selectedIndex) {
-			this.fireEvent<CarouselNavigateEventDetail>("navigate", { selectedIndex: this._selectedIndex });
+			this.onNavigate({ selectedIndex: this._selectedIndex });
 		}
 	}
 

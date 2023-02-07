@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -110,32 +110,38 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
 	styles: DynamicSideContentCss,
 	template: DynamicSideContentTemplate,
 })
-/**
- * Fires when the current breakpoint has been changed.
- * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
- * @param {string} currentBreakpoint the current breakpoint.
- * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
- * @param {boolean} mainContentVisible visibility of the main content.
- * @param {boolean} sideContentVisible visibility of the side content.
- * @public
- */
-@event("layout-change", {
-	detail: {
-		currentBreakpoint: {
-			type: String,
-		},
-		previousBreakpoint: {
-			type: String,
-		},
-		mainContentVisible: {
-			type: Boolean,
-		},
-		sideContentVisible: {
-			type: Boolean,
-		},
-	},
-})
 class DynamicSideContent extends UI5Element {
+	/**
+	 * Fires when the current breakpoint has been changed.
+	 * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
+	 * @param {string} currentBreakpoint the current breakpoint.
+	 * @param {string} previousBreakpoint the breakpoint that was active before change to current breakpoint.
+	 * @param {boolean} mainContentVisible visibility of the main content.
+	 * @param {boolean} sideContentVisible visibility of the side content.
+	 * @public
+	 */
+	@event("layout-change", {
+		detail: {
+			currentBreakpoint: {
+				type: String,
+			},
+			previousBreakpoint: {
+				type: String,
+			},
+			mainContentVisible: {
+				type: Boolean,
+			},
+			sideContentVisible: {
+				type: Boolean,
+			},
+		},
+	})
+	onLayoutChange!: FireEventFn<{
+		currentBreakpoint: string,
+		previousBreakpoint: string
+		mainContentVisible: boolean,
+		sideContentVisible: boolean,
+	}>;
 	/**
 	 * Defines the visibility of the main content.
 	 *
@@ -509,13 +515,12 @@ class DynamicSideContent extends UI5Element {
 
 		// fire "layout-change" event
 		if (this._currentBreakpoint !== this.breakpoint) {
-			const eventParams = {
+			this.onLayoutChange({
 				currentBreakpoint: this.breakpoint,
 				previousBreakpoint: this._currentBreakpoint,
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
-			};
-			this.fireEvent("layout-change", eventParams);
+			});
 			this._currentBreakpoint = this.breakpoint;
 		}
 

@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -75,27 +75,28 @@ type LinkClickEventDetail = {
 	template: LinkTemplate,
 	styles: linkCss,
 })
-/**
- * Fired when the component is triggered either with a mouse/tap
- * or by using the Enter key.
- *
- * @event sap.ui.webc.main.Link#click
- * @public
- * @allowPreventDefault
- * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
- * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
- * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
- * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
- */
-@event("click", {
-	detail: {
-		altKey: { type: Boolean },
-		ctrlKey: { type: Boolean },
-		metaKey: { type: Boolean },
-		shiftKey: { type: Boolean },
-	},
-})
 class Link extends UI5Element implements ITabbable {
+	/**
+	 * Fired when the component is triggered either with a mouse/tap
+	 * or by using the Enter key.
+	 *
+	 * @event sap.ui.webc.main.Link#click
+	 * @public
+	 * @allowPreventDefault
+	 * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+	 * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+	 * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+	 * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
+	 */
+	@event("click", {
+		detail: {
+			altKey: { type: Boolean },
+			ctrlKey: { type: Boolean },
+			metaKey: { type: Boolean },
+			shiftKey: { type: Boolean },
+		},
+	})
+	onClick!: FireEventFn<LinkClickEventDetail>;
 	/**
 	 * Defines whether the component is disabled.
 	 * <br><br>
@@ -342,7 +343,7 @@ class Link extends UI5Element implements ITabbable {
 		e.stopImmediatePropagation();
 		markEvent(e, "link");
 
-		const executeEvent = this.fireEvent<LinkClickEventDetail>("click", {
+		const executeEvent = this.onClick({
 			altKey,
 			ctrlKey,
 			metaKey,

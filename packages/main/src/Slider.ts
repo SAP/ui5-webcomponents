@@ -255,7 +255,7 @@ class Slider extends SliderBase {
 	 */
 	_handleUp() {
 		if (this._valueOnInteractionStart !== this.value) {
-			this.fireEvent("change");
+			this.onChange();
 		}
 
 		this.handleUpBase();

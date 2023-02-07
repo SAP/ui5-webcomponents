@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -140,33 +140,37 @@ interface IOption extends UI5Element {
 		Button,
 	],
 })
-/**
- * Fired when the selected option changes.
- *
- * @event sap.ui.webc.main.Select#change
- * @param {HTMLElement} selectedOption the selected option.
- * @public
- */
-@event("change", {
-	detail: {
-		selectedOption: { type: HTMLElement },
-	},
-})
-/**
- * Fired after the component's dropdown menu opens.
- *
- * @event sap.ui.webc.main.Select#open
- * @public
- */
-@event("open")
-/**
- * Fired after the component's dropdown menu closes.
- *
- * @event sap.ui.webc.main.Select#close
- * @public
- */
-@event("close")
 class Select extends UI5Element implements IFormElement {
+	/**
+	 * Fired when the selected option changes.
+	 *
+	 * @event sap.ui.webc.main.Select#change
+	 * @param {HTMLElement} selectedOption the selected option.
+	 * @public
+	 */
+	@event("change", {
+		detail: {
+			selectedOption: { type: HTMLElement },
+		},
+	})
+	onChange!: FireEventFn<SelectChangeEventDetail>;
+	/**
+	 * Fired after the component's dropdown menu opens.
+	 *
+	 * @event sap.ui.webc.main.Select#open
+	 * @public
+	 */
+	@event("open")
+	onOpen!: FireEventFn<void>;
+	/**
+	 * Fired after the component's dropdown menu closes.
+	 *
+	 * @event sap.ui.webc.main.Select#close
+	 * @public
+	 */
+	@event("close")
+	onClose!: FireEventFn<void>;
+
 	static i18nBundle: I18nBundle;
 
 	/**
@@ -686,7 +690,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_afterOpen() {
 		this.opened = true;
-		this.fireEvent<CustomEvent>("open");
+		this.onOpen();
 	}
 
 	_afterClose() {
@@ -701,15 +705,12 @@ class Select extends UI5Element implements IFormElement {
 			this._fireChangeEvent(this._filteredItems[this._selectedIndex]);
 			this._lastSelectedOption = this._filteredItems[this._selectedIndex];
 		}
-		this.fireEvent<CustomEvent>("close");
+		this.onClose();
 	}
 
 	_fireChangeEvent(selectedOption: Option) {
-		this.fireEvent<SelectChangeEventDetail>("change", { selectedOption });
-
-		//  Angular two way data binding
+		this.onChange({ selectedOption });
 		this.selectedItem = selectedOption.textContent;
-		this.fireEvent("selected-item-changed");
 	}
 
 	get valueStateTextMappings() {

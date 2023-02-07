@@ -8,7 +8,7 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import * as ZXing from "@zxing/library/umd/index.min.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { Result, Exception } from "@zxing/library/esm5/index";
 
 // Texts
@@ -87,35 +87,37 @@ type BarcodeScannerDialogScanErrorEventDetail = {
 		Button,
 	],
 })
-/**
- * Fires when the scan is completed successfuuly.
- *
- * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-success
- * @param {string} text the scan result as string
- * @param {Object} rawBytes the scan result as a Uint8Array
- * @public
- */
-@event("scan-success", {
-	detail: {
-		text: { type: String },
-		rawBytes: { type: Object },
-	},
-})
-
-/**
- * Fires when the scan fails with error.
- *
- * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-error
- * @param {string} message the error message
- * @public
- */
-@event("scan-error", {
-	detail: {
-		message: { type: String },
-	},
-})
-
 class BarcodeScannerDialog extends UI5Element {
+	/**
+	 * Fires when the scan is completed successfuuly.
+	 *
+	 * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-success
+	 * @param {string} text the scan result as string
+	 * @param {Object} rawBytes the scan result as a Uint8Array
+	 * @public
+	 */
+	@event("scan-success", {
+		detail: {
+			text: { type: String },
+			rawBytes: { type: Object },
+		},
+	})
+	onScanSuccess!: FireEventFn<BarcodeScannerDialogScanSuccessEventDetail>;
+
+	/**
+	 * Fires when the scan fails with error.
+	 *
+	 * @event sap.ui.webc.fiori.BarcodeScannerDialog#scan-error
+	 * @param {string} message the error message
+	 * @public
+	 */
+	@event("scan-error", {
+		detail: {
+			message: { type: String },
+		},
+	})
+	onScanError!: FireEventFn<BarcodeScannerDialogScanErrorEventDetail>;
+
 	/**
 	 * Indicates whether a loading indicator should be displayed in the dialog.
 	 *
@@ -154,7 +156,7 @@ class BarcodeScannerDialog extends UI5Element {
 		}
 
 		if (!this._hasGetUserMedia()) {
-			this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: "getUserMedia() is not supported by your browser" });
+			this.onScanError({ message: "getUserMedia() is not supported by your browser" });
 			return;
 		}
 
@@ -163,7 +165,7 @@ class BarcodeScannerDialog extends UI5Element {
 		this._getUserPermission()
 			.then(() => this._showDialog())
 			.catch(err => {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err });
+				this.onScanError({ message: err });
 				this.loading = false;
 			});
 	}
@@ -228,16 +230,17 @@ class BarcodeScannerDialog extends UI5Element {
 		this._codeReader.decodeFromVideoDevice(null, videoElement, (result: Result, err?: Exception) => {
 			this.loading = false;
 			if (result) {
-				this.fireEvent<BarcodeScannerDialogScanSuccessEventDetail>("scan-success",
+				this.onScanSuccess(
 					{
 						text: result.getText(),
 						rawBytes: result.getRawBytes(),
-					});
+					},
+				);
 			}
 			if (err && !(err instanceof NotFoundException)) {
-				this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message });
+				this.onScanError({ message: err.message });
 			}
-		}).catch((err: Error) => this.fireEvent<BarcodeScannerDialogScanErrorEventDetail>("scan-error", { message: err.message }));
+		}).catch((err: Error) => this.onScanError({ message: err.message }));
 	}
 
 	get _cancelButtonText() {

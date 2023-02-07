@@ -3,7 +3,7 @@ import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -48,10 +48,10 @@ import breadcrumbsPopoverCss from "./generated/themes/BreadcrumbsPopover.css.js"
 
 type BreadcrumbsItemClickEventDetail = {
 	item: BreadcrumbsItem;
-	altKey: boolean;
-	ctrlKey: boolean;
-	metaKey: boolean;
-	shiftKey: boolean;
+	altKey?: boolean;
+	ctrlKey?: boolean;
+	metaKey?: boolean;
+	shiftKey?: boolean;
 }
 
 type FocusAdaptor = ITabbable & {
@@ -113,29 +113,30 @@ type FocusAdaptor = ITabbable & {
 		Button,
 	],
 })
-/**
- * Fires when a <code>BreadcrumbsItem</code> is clicked.
- * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
- *
- * @event sap.ui.webc.main.Breadcrumbs#item-click
- * @allowPreventDefault
- * @param {HTMLElement} item The clicked item.
- * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
- * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
- * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
- * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
- * @public
- */
-@event("item-click", {
-	detail: {
-		item: { type: HTMLElement },
-		altKey: { type: Boolean },
-		ctrlKey: { type: Boolean },
-		metaKey: { type: Boolean },
-		shiftKey: { type: Boolean },
-	},
-})
 class Breadcrumbs extends UI5Element {
+	/**
+	 * Fires when a <code>BreadcrumbsItem</code> is clicked.
+	 * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
+	 *
+	 * @event sap.ui.webc.main.Breadcrumbs#item-click
+	 * @allowPreventDefault
+	 * @param {HTMLElement} item The clicked item.
+	 * @param {Boolean} altKey Returns whether the "ALT" key was pressed when the event was triggered.
+	 * @param {Boolean} ctrlKey Returns whether the "CTRL" key was pressed when the event was triggered.
+	 * @param {Boolean} metaKey Returns whether the "META" key was pressed when the event was triggered.
+	 * @param {Boolean} shiftKey Returns whether the "SHIFT" key was pressed when the event was triggered.
+	 * @public
+	 */
+	@event("item-click", {
+		detail: {
+			item: { type: HTMLElement },
+			altKey: { type: Boolean },
+			ctrlKey: { type: Boolean },
+			metaKey: { type: Boolean },
+			shiftKey: { type: Boolean },
+		},
+	})
+	onItemClick!: FireEventFn<BreadcrumbsItemClickEventDetail>;
 	/**
 	 * Defines the visual indication and behavior of the breadcrumbs.
 	 * Available options are <code>Standard</code> (by default) and <code>NoCurrentPage</code>.
@@ -407,7 +408,7 @@ class Breadcrumbs extends UI5Element {
 	_onLinkPress(e: CustomEvent<LinkClickEventDetail>) {
 		const link = e.target as Link,
 			items = this._getItems(),
-			item = items.find(x => `${x._id}-link` === link.id),
+			item = items.find(x => `${x._id}-link` === link.id)!,
 			{
 				altKey,
 				ctrlKey,
@@ -415,7 +416,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e.detail;
 
-		if (!this.fireEvent("item-click", {
+		if (!this.onItemClick({
 			item,
 			altKey,
 			ctrlKey,
@@ -436,7 +437,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e;
 
-		this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
+		this.onItemClick({
 			item,
 			altKey,
 			ctrlKey,
@@ -450,7 +451,7 @@ class Breadcrumbs extends UI5Element {
 			items = this._getItems(),
 			item = items.find(x => `${x._id}-li` === listItem.id)!;
 
-		if (this.fireEvent("item-click", { item }, true)) {
+		if (this.onItemClick({ item }, true)) {
 			window.open(item.href, item.target || "_self", "noopener,noreferrer");
 			this.responsivePopover!.close();
 		}

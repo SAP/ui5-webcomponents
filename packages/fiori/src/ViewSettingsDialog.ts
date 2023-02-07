@@ -1,7 +1,7 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -120,57 +120,60 @@ type VSDInternalSettings = {
 		SegmentedButtonItem,
 	],
 })
-
-/**
- * Fired when confirmation button is activated.
- *
- * @event sap.ui.webc.fiori.ViewSettingsDialog#confirm
- * @param {String} sortOrder The current sort order selected.
- * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
- * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
- * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
- * @param {Array} filterItems The selected filters items.
- * @public
- */
-@event("confirm", {
-	detail: {
-		sortOrder: { type: String },
-		sortBy: { type: String },
-		sortByItem: { type: HTMLElement },
-		sortDescending: { type: Boolean },
-		filters: { type: Array },
-	},
-})
-
-/**
- * Fired when cancel button is activated.
- *
- * @event sap.ui.webc.fiori.ViewSettingsDialog#cancel
- * @param {String} sortOrder The current sort order selected.
- * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
- * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
- * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
- * @param {Array} filterItems The selected filters items.
- * @public
- */
-@event("cancel", {
-	detail: {
-		sortOrder: { type: String },
-		sortBy: { type: String },
-		sortByItem: { type: HTMLElement },
-		sortDescending: { type: Boolean },
-		filters: { type: Array },
-	},
-})
-
-/**
- * Fired before the component is opened. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.fiori.ViewSettingsDialog#before-open
- */
-@event("before-open")
 class ViewSettingsDialog extends UI5Element {
+	/**
+	 * Fired when confirmation button is activated.
+	 *
+	 * @event sap.ui.webc.fiori.ViewSettingsDialog#confirm
+	 * @param {String} sortOrder The current sort order selected.
+	 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+	 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+	 * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
+	 * @param {Array} filterItems The selected filters items.
+	 * @public
+	 */
+	@event("confirm", {
+		detail: {
+			sortOrder: { type: String },
+			sortBy: { type: String },
+			sortByItem: { type: HTMLElement },
+			sortDescending: { type: Boolean },
+			filters: { type: Array },
+		},
+	})
+	onConfirm!: FireEventFn<VSDEventDetail>;
+
+	/**
+	 * Fired when cancel button is activated.
+	 *
+	 * @event sap.ui.webc.fiori.ViewSettingsDialog#cancel
+	 * @param {String} sortOrder The current sort order selected.
+	 * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
+	 * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
+	 * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
+	 * @param {Array} filterItems The selected filters items.
+	 * @public
+	 */
+	@event("cancel", {
+		detail: {
+			sortOrder: { type: String },
+			sortBy: { type: String },
+			sortByItem: { type: HTMLElement },
+			sortDescending: { type: Boolean },
+			filters: { type: Array },
+		},
+	})
+	onCancel!: FireEventFn<VSDEventDetail>;
+
+	/**
+	 * Fired before the component is opened. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.fiori.ViewSettingsDialog#before-open
+	 */
+	@event("before-open")
+	onBeforeOpen!: FireEventFn<void>;
+
 	/**
 	 * Defines the initial sort order.
 	 *
@@ -505,7 +508,7 @@ class ViewSettingsDialog extends UI5Element {
 			this._restoreSettings(this._confirmedSettings);
 		}
 
-		this.fireEvent("before-open", {}, true, false);
+		this.onBeforeOpen(undefined, true, false);
 		this._dialog.show(true);
 
 		this._dialog.querySelector<List>("[ui5-list]")?.focusFirstItem();
@@ -572,7 +575,7 @@ class ViewSettingsDialog extends UI5Element {
 		this.close();
 		this._confirmedSettings = this._currentSettings;
 
-		this.fireEvent<VSDEventDetail>("confirm", this.eventsParams);
+		this.onConfirm(this.eventsParams);
 	}
 
 	/**
@@ -581,7 +584,7 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
 
-		this.fireEvent<VSDEventDetail>("cancel", this.eventsParams);
+		this.onCancel(this.eventsParams);
 		this.close();
 	}
 
@@ -705,21 +708,13 @@ class ViewSettingsDialog extends UI5Element {
 			const tempSettings: VSDInternalSettings = JSON.parse(JSON.stringify(this._confirmedSettings));
 			if (settings.sortOrder) {
 				for (let i = 0; i < tempSettings.sortOrder.length; i++) {
-					if (tempSettings.sortOrder[i].text === settings.sortOrder) {
-						tempSettings.sortOrder[i].selected = true;
-					} else {
-						tempSettings.sortOrder[i].selected = false;
-					}
+					tempSettings.sortOrder[i].selected = tempSettings.sortOrder[i].text === settings.sortOrder;
 				}
 			}
 
 			if (settings.sortBy) {
 				for (let i = 0; i < tempSettings.sortBy.length; i++) {
-					if (tempSettings.sortBy[i].text === settings.sortBy) {
-						tempSettings.sortBy[i].selected = true;
-					} else {
-						tempSettings.sortBy[i].selected = false;
-					}
+					tempSettings.sortBy[i].selected = tempSettings.sortBy[i].text === settings.sortBy;
 				}
 			}
 
@@ -731,11 +726,7 @@ class ViewSettingsDialog extends UI5Element {
 
 				for (let i = 0; i < tempSettings.filters.length; i++) {
 					for (let j = 0; j < tempSettings.filters[i].filterOptions.length; j++) {
-						if (inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1) {
-							tempSettings.filters[i].filterOptions[j].selected = true;
-						} else {
-							tempSettings.filters[i].filterOptions[j].selected = false;
-						}
+						tempSettings.filters[i].filterOptions[j].selected = inputFilters[tempSettings.filters[i].text] && inputFilters[tempSettings.filters[i].text].indexOf(tempSettings.filters[i].filterOptions[j].text) > -1;
 					}
 				}
 			}

@@ -2,7 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
@@ -140,33 +141,34 @@ type AccessibilityRoles = {
 	template: FlexibleColumnLayoutTemplate,
 	dependencies: [Button],
 })
-
-/**
- * Fired when the layout changes via user interaction by clicking the arrows
- * or by changing the component size due to resizing.
- *
- * @param {sap.ui.webc.fiori.types.FCLLayout} layout The current layout
- * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
- * @param {boolean} startColumnVisible Indicates if the start column is currently visible
- * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
- * @param {boolean} endColumnVisible Indicates if the end column is currently visible
- * @param {boolean} arrowsUsed Indicates if the layout is changed via the arrows
- * @param {boolean} resize Indicates if the layout is changed via resizing
- * @event sap.ui.webc.fiori.FlexibleColumnLayout#layout-change
- * @public
- */
-@event("layout-change", {
-	detail: {
-		layout: { type: FCLLayout },
-		columnLayout: { type: Array },
-		startColumnVisible: { type: Boolean },
-		midColumnVisible: { type: Boolean },
-		endColumnVisible: { type: Boolean },
-		arrowsUsed: { type: Boolean },
-		resize: { type: Boolean },
-	},
-})
 class FlexibleColumnLayout extends UI5Element {
+	/**
+	 * Fired when the layout changes via user interaction by clicking the arrows
+	 * or by changing the component size due to resizing.
+	 *
+	 * @param {sap.ui.webc.fiori.types.FCLLayout} layout The current layout
+	 * @param {array} columnLayout The effective column layout, f.e [67%, 33%, 0]
+	 * @param {boolean} startColumnVisible Indicates if the start column is currently visible
+	 * @param {boolean} midColumnVisible Indicates if the middle column is currently visible
+	 * @param {boolean} endColumnVisible Indicates if the end column is currently visible
+	 * @param {boolean} arrowsUsed Indicates if the layout is changed via the arrows
+	 * @param {boolean} resize Indicates if the layout is changed via resizing
+	 * @event sap.ui.webc.fiori.FlexibleColumnLayout#layout-change
+	 * @public
+	 */
+	@event("layout-change", {
+		detail: {
+			layout: { type: FCLLayout },
+			columnLayout: { type: Array },
+			startColumnVisible: { type: Boolean },
+			midColumnVisible: { type: Boolean },
+			endColumnVisible: { type: Boolean },
+			arrowsUsed: { type: Boolean },
+			resize: { type: Boolean },
+		},
+	})
+	onLayoutChange!: FireEventFn<FCLLayoutChangeEventDetail>;
+
 	/**
 	* Defines the columns layout and their proportion.
 	* <br><br>
@@ -496,7 +498,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(arrowUsed: boolean, resize: boolean) {
-		this.fireEvent<FCLLayoutChangeEventDetail>("layout-change", {
+		this.onLayoutChange({
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,

@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type LocaleT from "sap/ui/core/Locale";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import {
@@ -73,20 +73,23 @@ type YearPickerNavigateEventDetail = {
 	styles: yearPickerStyles,
 	template: YearPickerTemplate,
 })
-/**
- * Fired when the user selects a year via "Space", "Enter" or click.
- * @public
- * @event sap.ui.webc.main.YearPicker#change
- */
-@event("change")
-/**
- * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
- * @since 1.0.0-rc.9
- * @public
- * @event sap.ui.webc.main.YearPicker#navigate
- */
-@event("navigate")
 class YearPicker extends CalendarPart implements ICalendarPicker {
+	/**
+	 * Fired when the user selects a year via "Space", "Enter" or click.
+	 * @public
+	 * @event sap.ui.webc.main.YearPicker#change
+	 */
+	@event("change")
+	onChange!: FireEventFn<YearPickerChangeEventDetail>;
+
+	/**
+	 * Fired when the timestamp changes - the user navigates with the keyboard or clicks with the mouse.
+	 * @since 1.0.0-rc.9
+	 * @public
+	 * @event sap.ui.webc.main.YearPicker#navigate
+	 */
+	@event("navigate")
+	onNavigate!: FireEventFn<YearPickerNavigateEventDetail>;
 	/**
 	 * An array of UTC timestamps representing the selected date
 	 * or dates depending on the capabilities of the picker component.
@@ -302,7 +305,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	 */
 	_setTimestamp(value: number) {
 		this._safelySetTimestamp(value);
-		this.fireEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.onNavigate({ timestamp: this.timestamp! });
 	}
 
 	/**
@@ -315,7 +318,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		this._safelyModifyTimestampBy(amount, "year");
 
 		// Notify the calendar to update its timestamp
-		this.fireEvent<YearPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+		this.onNavigate({ timestamp: this.timestamp! });
 	}
 
 	_onkeyup(e: KeyboardEvent) {
@@ -335,7 +338,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 		if (target.className.indexOf("ui5-yp-item") > -1) {
 			const timestamp = this._getTimestampFromDom(target);
 			this._safelySetTimestamp(timestamp);
-			this.fireEvent<YearPickerChangeEventDetail>("change", { timestamp: this.timestamp! });
+			this.onChange({ timestamp: this.timestamp! });
 		}
 	}
 

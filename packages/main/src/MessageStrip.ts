@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -88,16 +88,16 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 	styles: messageStripCss,
 	dependencies: [Icon, Button],
 })
-/**
- * Fired when the close button is pressed either with a
- * click/tap or by using the Enter or Space key.
- *
- * @event sap.ui.webc.main.MessageStrip#close
- * @public
- */
-@event("close")
-
 class MessageStrip extends UI5Element {
+	/**
+	 * Fired when the close button is pressed either with a
+	 * click/tap or by using the Enter or Space key.
+	 *
+	 * @event sap.ui.webc.main.MessageStrip#close
+	 * @public
+	 */
+	@event("close")
+	onClose!: FireEventFn<void>;
 	/**
 	 * Defines the component type.
 	 * <br><br>
@@ -171,7 +171,7 @@ class MessageStrip extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	_closeClick() {
-		this.fireEvent("close");
+		this.onClose();
 	}
 
 	static async onDefine() {

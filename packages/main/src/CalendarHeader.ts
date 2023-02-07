@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -34,11 +34,19 @@ type SecondaryCalendarButtonTexts = {
 	styles: calendarHeaderStyles,
 	dependencies: [Icon],
 })
-@event("next-press")
-@event("previous-press")
-@event("show-month-press")
-@event("show-year-press")
 class CalendarHeader extends UI5Element {
+	@event("next-press")
+	onNextPress!: FireEventFn<void>;
+
+	@event("previous-press")
+	onPreviousPress!: FireEventFn<void>;
+
+	@event("show-month-press")
+	onShowMonthPress!: FireEventFn<void>;
+
+	@event("show-year-press")
+	onShowYearPress!: FireEventFn<void>;
+
 	/**
 	 * Defines component's timestamp.
 	 * <b>Note:</b> set by the Calendar component
@@ -125,16 +133,19 @@ class CalendarHeader extends UI5Element {
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onPrevButtonClick(e: MouseEvent) {
-		this.fireEvent("previous-press", e);
+		this.onPreviousPress();
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onNextButtonClick(e: MouseEvent) {
-		this.fireEvent("next-press", e);
+		this.onNextPress();
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onMonthButtonClick(e: MouseEvent) {
-		this.fireEvent("show-month-press", e);
+		this.onShowMonthPress();
 	}
 
 	onMonthButtonKeyDown(e: KeyboardEvent) {
@@ -143,19 +154,20 @@ class CalendarHeader extends UI5Element {
 		}
 
 		if (isEnter(e)) {
-			this.fireEvent("show-month-press", e);
+			this.onShowMonthPress();
 		}
 	}
 
 	onMonthButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
-			this.fireEvent("show-month-press", e);
+			this.onShowMonthPress();
 		}
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onYearButtonClick(e: MouseEvent) {
-		this.fireEvent("show-year-press", e);
+		this.onShowYearPress();
 	}
 
 	onYearButtonKeyDown(e: KeyboardEvent) {
@@ -164,14 +176,14 @@ class CalendarHeader extends UI5Element {
 		}
 
 		if (isEnter(e)) {
-			this.fireEvent("show-year-press", e);
+			this.onShowYearPress();
 		}
 	}
 
 	onYearButtonKeyUp(e: KeyboardEvent) {
 		if (isSpace(e)) {
 			e.preventDefault();
-			this.fireEvent("show-year-press", e);
+			this.onShowYearPress();
 		}
 	}
 

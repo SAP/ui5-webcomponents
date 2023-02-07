@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -87,19 +87,20 @@ let activeButton: Button | null = null;
 	styles: buttonCss,
 	dependencies: [Icon],
 })
-/**
- * Fired when the component is activated either with a
- * mouse/tap or by using the Enter or Space key.
- * <br><br>
- * <b>Note:</b> The event will not be fired if the <code>disabled</code>
- * property is set to <code>true</code>.
- *
- * @event sap.ui.webc.main.Button#click
- * @public
- * @native
- */
-@event("click")
 class Button extends UI5Element implements IFormElement {
+	/**
+	 * Fired when the component is activated either with a
+	 * mouse/tap or by using the Enter or Space key.
+	 * <br><br>
+	 * <b>Note:</b> The event will not be fired if the <code>disabled</code>
+	 * property is set to <code>true</code>.
+	 *
+	 * @event sap.ui.webc.main.Button#click
+	 * @public
+	 * @native
+	 */
+	@event("click")
+	onClick!: FireEventFn<void>;
 	/**
 	 * Defines the component design.
 	 *

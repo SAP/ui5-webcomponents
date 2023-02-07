@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -67,22 +67,22 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
 		ColorPalette,
 	],
 })
-
-/**
- * Fired when the user selects a color.
- *
- * @event sap.ui.webc.main.ColorPalettePopover#item-click
- * @public
- * @param {string} color the selected color
- */
-@event("item-click", {
-	detail: {
-		color: {
-			type: String,
-		},
-	},
-})
 class ColorPalettePopover extends UI5Element {
+	/**
+	 * Fired when the user selects a color.
+	 *
+	 * @event sap.ui.webc.main.ColorPalettePopover#item-click
+	 * @public
+	 * @param {string} color the selected color
+	 */
+	@event("item-click", {
+		detail: {
+			color: {
+				type: String,
+			},
+		},
+	})
+	onItemClick!: FireEventFn<ColorPalettePopoverItemClickEventDetail>
 	/**
 	 * Defines whether the user can see the last used colors in the bottom of the component
 	 * @type {boolean}
@@ -200,7 +200,7 @@ class ColorPalettePopover extends UI5Element {
 
 	onSelectedColor(e: CustomEvent<ColorPaletteItemClickEventDetail>) {
 		this.closePopover();
-		this.fireEvent<ColorPalettePopoverItemClickEventDetail>("item-click", e.detail);
+		this.onItemClick(e.detail);
 	}
 
 	/**

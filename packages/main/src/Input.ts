@@ -2,41 +2,38 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import event, {FireEventFn} from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type {ClassMap} from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type {ResizeObserverCallback} from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import {
-	isPhone,
-	isAndroid,
-} from "@ui5/webcomponents-base/dist/Device.js";
+import {isAndroid, isPhone,} from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import {getFeature} from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
-	isUp,
-	isDown,
-	isSpace,
-	isEnter,
-	isBackSpace,
-	isDelete,
-	isEscape,
-	isTabNext,
-	isPageUp,
-	isPageDown,
-	isHome,
-	isEnd,
+  isBackSpace,
+  isDelete,
+  isDown,
+  isEnd,
+  isEnter,
+  isEscape,
+  isHome,
+  isPageDown,
+  isPageUp,
+  isSpace,
+  isTabNext,
+  isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import {getI18nBundle} from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
-	getAssociatedLabelForTexts,
-	getAllAccessibleNameRefTexts,
-	registerUI5Element,
-	deregisterUI5Element,
+  deregisterUI5Element,
+  getAllAccessibleNameRefTexts,
+  getAssociatedLabelForTexts,
+  registerUI5Element,
 } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
+import {getCaretPosition, setCaretPosition} from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -45,34 +42,32 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
-import type { InputSuggestionText, SuggestionComponent } from "./features/InputSuggestions.js";
-import type InputSuggestions from "./features/InputSuggestions.js";
-import type FormSupportT from "./features/InputElementsFormSupport.js";
-import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type InputSuggestions, {InputSuggestionText, SuggestionComponent} from "./features/InputSuggestions.js";
+import type FormSupportT, {IFormElement} from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
-import type { PopupScrollEventDetail } from "./Popup.js";
+import type {PopupScrollEventDetail} from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
-import { StartsWith } from "./Filters.js";
+import {StartsWith} from "./Filters.js";
 
 import {
-	VALUE_STATE_SUCCESS,
-	VALUE_STATE_INFORMATION,
-	VALUE_STATE_ERROR,
-	VALUE_STATE_WARNING,
-	VALUE_STATE_TYPE_SUCCESS,
-	VALUE_STATE_TYPE_INFORMATION,
-	VALUE_STATE_TYPE_ERROR,
-	VALUE_STATE_TYPE_WARNING,
-	INPUT_SUGGESTIONS,
-	INPUT_SUGGESTIONS_TITLE,
-	INPUT_SUGGESTIONS_ONE_HIT,
-	INPUT_SUGGESTIONS_MORE_HITS,
-	INPUT_SUGGESTIONS_NO_HIT,
+  INPUT_SUGGESTIONS,
+  INPUT_SUGGESTIONS_MORE_HITS,
+  INPUT_SUGGESTIONS_NO_HIT,
+  INPUT_SUGGESTIONS_ONE_HIT,
+  INPUT_SUGGESTIONS_TITLE,
+  VALUE_STATE_ERROR,
+  VALUE_STATE_INFORMATION,
+  VALUE_STATE_SUCCESS,
+  VALUE_STATE_TYPE_ERROR,
+  VALUE_STATE_TYPE_INFORMATION,
+  VALUE_STATE_TYPE_SUCCESS,
+  VALUE_STATE_TYPE_WARNING,
+  VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -193,70 +188,75 @@ type SuggestionScrollEventDetail = {
 		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
 	},
 })
-
-/**
- * Fired when the input operation has finished by pressing Enter or on focusout.
- *
- * @event sap.ui.webc.main.Input#change
- * @public
- */
-@event("change")
-
-/**
- * Fired when the value of the component changes at each keystroke,
- * and when a suggestion item has been selected.
- *
- * @event sap.ui.webc.main.Input#input
- * @public
- */
-@event("input")
-
-/**
- * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
- *
- * @event sap.ui.webc.main.Input#suggestion-item-select
- * @param {HTMLElement} item The selected item.
- * @public
- */
-@event("suggestion-item-select", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired when the user navigates to a suggestion item via the ARROW keys,
- * as a preview, before the final selection.
- *
- * @event sap.ui.webc.main.Input#suggestion-item-preview
- * @param {HTMLElement} item The previewed suggestion item.
- * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
- * @public
- * @since 1.0.0-rc.8
- */
-@event("suggestion-item-preview", {
-	detail: {
-		item: { type: HTMLElement },
-		targetRef: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired when the user scrolls the suggestion popover.
- *
- * @event sap.ui.webc.main.Input#suggestion-scroll
- * @param {Integer} scrollTop The current scroll position.
- * @param {HTMLElement} scrollContainer The scroll container.
- * @protected
- * @since 1.0.0-rc.8
- */
-@event("suggestion-scroll", {
-	detail: {
-		scrollTop: { type: Integer },
-		scrollContainer: { type: HTMLElement },
-	},
-})
 class Input extends UI5Element implements SuggestionComponent, IFormElement {
+	/**
+	 * Fired when the input operation has finished by pressing Enter or on focusout.
+	 *
+	 * @event sap.ui.webc.main.Input#change
+	 * @public
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
+
+	/**
+	 * Fired when the value of the component changes at each keystroke,
+	 * and when a suggestion item has been selected.
+	 *
+	 * @event sap.ui.webc.main.Input#input
+	 * @public
+	 */
+	@event("input")
+	onInput!: FireEventFn<{ inputType?: string }>;
+
+	/**
+	 * Fired when a suggestion item, that is displayed in the suggestion popup, is selected.
+	 *
+	 * @event sap.ui.webc.main.Input#suggestion-item-select
+	 * @param {HTMLElement} item The selected item.
+	 * @public
+	 */
+	@event("suggestion-item-select", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onSuggestionItemSelect!: FireEventFn<SuggestionItemSelectEventDetail>;
+
+	/**
+	 * Fired when the user navigates to a suggestion item via the ARROW keys,
+	 * as a preview, before the final selection.
+	 *
+	 * @event sap.ui.webc.main.Input#suggestion-item-preview
+	 * @param {HTMLElement} item The previewed suggestion item.
+	 * @param {HTMLElement} targetRef The DOM ref of the suggestion item.
+	 * @public
+	 * @since 1.0.0-rc.8
+	 */
+	@event("suggestion-item-preview", {
+		detail: {
+			item: { type: HTMLElement },
+			targetRef: { type: HTMLElement },
+		},
+	})
+	onSuggestionItemPreview!: FireEventFn<SuggestionItemPreviewEventDetail>;
+
+	/**
+	 * Fired when the user scrolls the suggestion popover.
+	 *
+	 * @event sap.ui.webc.main.Input#suggestion-scroll
+	 * @param {Integer} scrollTop The current scroll position.
+	 * @param {HTMLElement} scrollContainer The scroll container.
+	 * @protected
+	 * @since 1.0.0-rc.8
+	 */
+	@event("suggestion-scroll", {
+		detail: {
+			scrollTop: { type: Integer },
+			scrollContainer: { type: HTMLElement },
+		},
+	})
+	onSuggestionScroll!: FireEventFn<SuggestionScrollEventDetail>;
+
 	/**
 	 * Defines whether the component is in disabled state.
 	 * <br><br>
@@ -1031,14 +1031,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		if (this.previousValue !== this.getInputDOMRefSync()!.value) {
-			this.fireEvent(INPUT_EVENTS.CHANGE);
+			this.onChange();
 			this.previousValue = this.value;
 		}
 	}
 
 	_clear() {
 		this.value = "";
-		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
+		this.onInput();
 		if (!this._isPhone) {
 			this.focus();
 			this._focusedAfterClear = true;
@@ -1050,7 +1050,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_scroll(e: CustomEvent<PopupScrollEventDetail>) {
-		this.fireEvent<SuggestionScrollEventDetail>("suggestion-scroll", {
+		this.onSuggestionScroll({
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
 		});
@@ -1281,7 +1281,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
 			innerInput.value = itemText;
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
+			this.onInput();
 			this._handleChange();
 			innerInput.setSelectionRange(this.value.length, this.value.length);
 		}
@@ -1289,7 +1289,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = "";
 		this.suggestionSelectionCanceled = false;
 
-		this.fireEvent<SuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item });
+		this.onSuggestionItemSelect({ item });
 
 		this.isTyping = false;
 		this.openOnMobile = false;
@@ -1345,9 +1345,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = inputValue;
 
 		if (isUserInput) { // input
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT, { inputType: e.inputType });
-			// Angular two way data binding
-			this.fireEvent("value-changed");
+			this.onInput({ inputType: e.inputType });
 		}
 	}
 
@@ -1447,7 +1445,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onItemPreviewed(item: SuggestionListItem) {
 		this.previewSuggestion(item);
-		this.fireEvent<SuggestionItemPreviewEventDetail>("suggestion-item-preview", {
+		this.onSuggestionItemPreview({
 			item: this.getSuggestionByListItem(item),
 			targetRef: item,
 		});
@@ -1510,21 +1508,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
 		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
-		const info = {
-			"input": {
-				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
-				"ariaDescribedBy": ariaDescribedBy || undefined,
-				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
-				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
-				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
-				"role": this._inputAccInfo && this._inputAccInfo.role,
-				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
-				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
-				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
-			},
+	  return {
+		  "input": {
+			"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
+			"ariaDescribedBy": ariaDescribedBy || undefined,
+			"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
+			"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+			"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+			"role": this._inputAccInfo && this._inputAccInfo.role,
+			"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
+			"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+			"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+			"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
+		  },
 		};
-		return info;
 	}
 
 	get nativeInputAttributes() {

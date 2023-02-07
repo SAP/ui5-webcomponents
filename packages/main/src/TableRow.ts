@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
@@ -87,32 +87,40 @@ type TableRowF7PressEventDetail = {
 	template: TableRowTemplate,
 	dependencies: [CheckBox],
 })
-/**
- * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
- *
- * @event sap.ui.webc.main.TableRow#row-click
- * @since 1.0.0-rc.15
- * @private
- */
-@event("row-click")
-@event("_focused")
-/**
- * Fired on selection change of an active row.
- *
- * @event sap.ui.webc.main.TableRow#selection-requested
- * @since 1.0.0-rc.15
- * @private
- */
-@event("selection-requested")
-/**
- * Fired when F7 is pressed.
- *
- * @event sap.ui.webc.main.TableRow#f7-pressed
- * @since 1.2.0
- * @private
- */
-@event("f7-pressed")
 class TableRow extends UI5Element implements ITableRow, ITabbable {
+	/**
+	 * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
+	 *
+	 * @event sap.ui.webc.main.TableRow#row-click
+	 * @since 1.0.0-rc.15
+	 * @private
+	 */
+	@event("row-click")
+	onRowClick!: FireEventFn<TableRowClickEventDetail>;
+
+	@event("_focused")
+	onFocused!: FireEventFn<void>;
+
+	/**
+	 * Fired on selection change of an active row.
+	 *
+	 * @event sap.ui.webc.main.TableRow#selection-requested
+	 * @since 1.0.0-rc.15
+	 * @private
+	 */
+	@event("selection-requested")
+	onSelectionRequested!: FireEventFn<TableRowSelectionRequestedEventDetail>;
+
+	/**
+	 * Fired when F7 is pressed.
+	 *
+	 * @event sap.ui.webc.main.TableRow#f7-pressed
+	 * @since 1.2.0
+	 * @private
+	 */
+	@event("f7-pressed")
+	onF7Pressed!: FireEventFn<TableRowF7PressEventDetail>;
+
 	/**
 	 * Defines the visual indication and behavior of the component.
 	 * <br><br>
@@ -258,11 +266,11 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 
 		if (isRowFocused && !checkboxPressed) {
 			if ((isSpace(e) && itemSelectable) || (isEnter(e) && isSingleSelect)) {
-				this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
+				this.onSelectionRequested({ row: this });
 			}
 
 			if (isEnter(e) && itemActive) {
-				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
+				this.onRowClick({ row: this });
 				if (!isSingleSelect) {
 					this.activate();
 				}
@@ -271,7 +279,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 
 		if (isF7(e)) {
 			e.preventDefault();
-			this.fireEvent<TableRowF7PressEventDetail>("f7-pressed", { row: this });
+			this.onF7Pressed({ row: this });
 		}
 	}
 
@@ -295,7 +303,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 			this.activate();
 		}
 
-		this.fireEvent("_focused");
+		this.onFocused();
 	}
 
 	_onrowclick(e: MouseEvent) {
@@ -323,13 +331,13 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 			}
 
 			if (this.type === TableRowType.Active && !checkboxPressed) {
-				this.fireEvent<TableRowClickEventDetail>("row-click", { row: this });
+				this.onRowClick({ row: this });
 			}
 		}
 	}
 
 	_handleSelection() {
-		this.fireEvent<TableRowSelectionRequestedEventDetail>("selection-requested", { row: this });
+		this.onSelectionRequested({ row: this });
 	}
 
 	_activeElementHasAttribute(attr: string) {

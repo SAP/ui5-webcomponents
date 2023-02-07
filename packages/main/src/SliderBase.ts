@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -40,22 +40,25 @@ type DirectionStart = "left" | "right";
 	renderer: litRender,
 	styles: sliderBaseStyles,
 })
-/**
- * Fired when the value changes and the user has finished interacting with the slider.
- *
- * @event sap.ui.webc.main.SliderBase#change
- * @public
- */
-@event("change")
-
-/**
- * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
- *
- * @event sap.ui.webc.main.SliderBase#input
- * @public
- */
-@event("input")
 class SliderBase extends UI5Element {
+	/**
+	 * Fired when the value changes and the user has finished interacting with the slider.
+	 *
+	 * @event sap.ui.webc.main.SliderBase#change
+	 * @public
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
+
+	/**
+	 * Fired when the value changes due to user interaction that is not yet finished - during mouse/touch dragging.
+	 *
+	 * @event sap.ui.webc.main.SliderBase#input
+	 * @public
+	 */
+	@event("input")
+	onInput!: FireEventFn<void>;
+
 	/**
 	 * Defines the minimum value of the slider.
 	 *
@@ -450,7 +453,7 @@ class SliderBase extends UI5Element {
 	updateStateStorageAndFireInputEvent(valueType: string) {
 		this.storePropertyState(valueType);
 		if (this._isUserInteraction) {
-			this.fireEvent("input");
+			this.onInput();
 		}
 	}
 

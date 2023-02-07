@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import {
 	isUp,
 	isDown,
@@ -103,14 +103,15 @@ const INITIAL_SPEED = 120; // milliseconds
 		Input,
 	],
 })
-/**
- * Fired when the input operation has finished by pressing Enter or on focusout.
- *
- * @event sap.ui.webc.main.StepInput#change
- * @public
- */
-@event("change")
 class StepInput extends UI5Element implements IFormElement {
+	/**
+	 * Fired when the input operation has finished by pressing Enter or on focusout.
+	 *
+	 * @event sap.ui.webc.main.StepInput#change
+	 * @public
+	 */
+	@event("change")
+	onChange!: FireEventFn<{value: number}>;
 	/**
 	 * Defines a value of the component.
 	 *
@@ -459,7 +460,7 @@ class StepInput extends UI5Element implements IFormElement {
 	_fireChangeEvent() {
 		if (this._previousValue !== this.value) {
 			this._previousValue = this.value;
-			this.fireEvent("change", { value: this.value });
+			this.onChange({ value: this.value });
 		}
 	}
 

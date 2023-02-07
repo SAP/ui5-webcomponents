@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import {
 	isLeft,
@@ -94,69 +94,72 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 		Icon,
 	],
 })
-
-/**
- * Fired when an item is being clicked.
- *
- * @event sap.ui.webc.main.Menu#item-click
- * @param {object} item The currently clicked menu item.
- * @param {string} text The text of the currently clicked menu item.
- * @public
- */
-@event("item-click", {
-	detail: {
-		item: {
-			type: Object,
-		},
-		text: {
-			type: String,
-		},
-	},
-})
-
-/**
- * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.main.Menu#before-open
- * @allowPreventDefault
- * @since 1.10.0
- */
-@event("before-open")
-
-/**
- * Fired after the menu is opened. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.main.Menu#after-open
- * @since 1.10.0
- */
-@event("after-open")
-
-/**
- * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.main.Menu#before-close
- * @allowPreventDefault
- * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
- * @since 1.10.0
- */
-@event("before-close", {
-	detail: {
-		escPressed: { type: Boolean },
-	},
-})
-
-/**
- * Fired after the menu is closed. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.main.Menu#after-close
- * @since 1.10.0
- */
-@event("after-close")
 class Menu extends UI5Element {
+	/**
+	 * Fired when an item is being clicked.
+	 *
+	 * @event sap.ui.webc.main.Menu#item-click
+	 * @param {object} item The currently clicked menu item.
+	 * @param {string} text The text of the currently clicked menu item.
+	 * @public
+	 */
+	@event("item-click", {
+		detail: {
+			item: {
+				type: Object,
+			},
+			text: {
+				type: String,
+			},
+		},
+	})
+	onItemClick!: FireEventFn<{item: any, text: string}>;
+
+	/**
+	 * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Menu#before-open
+	 * @allowPreventDefault
+	 * @since 1.10.0
+	 */
+	@event("before-open")
+	onBeforeOpen!: FireEventFn<void>;
+
+	/**
+	 * Fired after the menu is opened. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Menu#after-open
+	 * @since 1.10.0
+	 */
+	@event("after-open")
+	onAfterOpen!: FireEventFn<void>;
+
+	/**
+	 * Fired before the menu is closed. This event can be cancelled, which will prevent the menu from closing. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Menu#before-close
+	 * @allowPreventDefault
+	 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+	 * @since 1.10.0
+	 */
+	@event("before-close", {
+		escPressed: { type: Boolean },
+	})
+	onBeforeClose!: FireEventFn<{escPressed: boolean}>;
+
+	/**
+	 * Fired after the menu is closed. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Menu#after-close
+	 * @since 1.10.0
+	 */
+	@event("after-close")
+	onAfterClose!: FireEventFn<void>;
+
 	/**
 	 * Defines the header text of the menu (displayed on mobile).
 	 *
@@ -533,9 +536,9 @@ class Menu extends UI5Element {
 					this._parentMenuItem = undefined;
 				}
 				// fire event if the click is on top-level menu item
-				this.fireEvent("item-click", {
-					"item": item,
-					"text": item.text,
+				this.onItemClick({
+					item,
+					text: item.text,
 				});
 				this._popover!.close();
 			} else {
@@ -558,7 +561,7 @@ class Menu extends UI5Element {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent("before-open", {}, true, false);
+		const prevented = !this.onBeforeOpen(undefined, true, false);
 
 		if (prevented) {
 			this.open = false;
@@ -568,11 +571,11 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
-		this.fireEvent("after-open");
+		this.onAfterOpen();
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const prevented = !this.fireEvent("before-close", { escPressed: e.detail.escPressed }, true, false);
+		const prevented = !this.onBeforeClose({ escPressed: e.detail.escPressed }, true, false);
 
 		if (prevented) {
 			this.open = true;
@@ -588,7 +591,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverClose() {
 		this.open = false;
-		this.fireEvent("after-close");
+		this.onAfterClose();
 	}
 }
 

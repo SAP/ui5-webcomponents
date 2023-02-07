@@ -548,7 +548,7 @@ class RangeSlider extends SliderBase {
 		this._setAffectedValue(undefined);
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
-			this.fireEvent("change");
+			this.onChange();
 		}
 
 		this._setIsPressInCurrentRange(false);

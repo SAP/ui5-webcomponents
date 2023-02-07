@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -76,20 +76,22 @@ import type { IFormElement } from "./features/InputElementsFormSupport.js";
 		Icon,
 	],
 })
-/**
- * Event is fired when the value of the file path has been changed.
- * <b>Note:</b> Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
- *
- * @event sap.ui.webc.main.FileUploader#change
- * @param {FileList} files The current files.
- * @public
- */
-@event("change", {
-	detail: {
-		files: { type: FileList },
-	},
-})
 class FileUploader extends UI5Element implements IFormElement {
+	/**
+	 * Event is fired when the value of the file path has been changed.
+	 * <b>Note:</b> Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
+	 *
+	 * @event sap.ui.webc.main.FileUploader#change
+	 * @param {FileList} files The current files.
+	 * @public
+	 */
+	@event("change", {
+		detail: {
+			files: { type: FileList },
+		},
+	})
+	onChange!: FireEventFn<{ files: FileList | null }>;
+
 	/**
 	 * Comma-separated list of file types that the component should accept.
 	 * <br><br>
@@ -342,12 +344,10 @@ class FileUploader extends UI5Element implements IFormElement {
 	}
 
 	_onChange(e: Event) {
-		const changedFiles = (e.target as HTMLInputElement).files;
+		const files = (e.target as HTMLInputElement).files;
 
-		this._updateValue(changedFiles);
-		this.fireEvent("change", {
-			files: changedFiles,
-		});
+		this._updateValue(files);
+		this.onChange({ files });
 	}
 
 	_updateValue(files: FileList | null) {

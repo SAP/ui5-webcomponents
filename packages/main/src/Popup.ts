@@ -1,6 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -85,51 +85,55 @@ type PopupBeforeCloseEventDetail = {
 	staticAreaTemplate: PopupBlockLayer,
 	staticAreaStyles: popupStaticAreaStyles,
 })
-/**
- * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.main.Popup#before-open
- * @allowPreventDefault
- */
-@event("before-open")
-
-/**
- * Fired after the component is opened. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.main.Popup#after-open
- */
-@event("after-open")
-
-/**
- * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.main.Popup#before-close
- * @allowPreventDefault
- * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
- */
-@event("before-close", {
-	escPressed: { type: Boolean },
-})
-
-/**
- * Fired after the component is closed. <b>This event does not bubble.</b>
- *
- * @public
- * @event sap.ui.webc.main.Popup#after-close
- */
-@event("after-close")
-
-/**
- * Fired whenever the popup content area is scrolled
- *
- * @private
- * @event sap.ui.webc.main.Popup#scroll
- */
-@event("scroll")
 abstract class Popup extends UI5Element {
+	/**
+	 * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Popup#before-open
+	 * @allowPreventDefault
+	 */
+	@event("before-open")
+	onBeforeOpen!: FireEventFn<void>;
+	/**
+	 * Fired after the component is opened. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Popup#after-open
+	 */
+	@event("after-open")
+	onAfterOpen!: FireEventFn<void>;
+
+	/**
+	 * Fired before the component is closed. This event can be cancelled, which will prevent the popup from closing. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Popup#before-close
+	 * @allowPreventDefault
+	 * @param {boolean} escPressed Indicates that <code>ESC</code> key has triggered the event.
+	 */
+	@event("before-close", {
+		escPressed: { type: Boolean },
+	})
+	onBeforeClose!: FireEventFn<PopupBeforeCloseEventDetail>;
+
+	/**
+	 * Fired after the component is closed. <b>This event does not bubble.</b>
+	 *
+	 * @public
+	 * @event sap.ui.webc.main.Popup#after-close
+	 */
+	@event("after-close")
+	onAfterClose!: FireEventFn<void>;
+
+	/**
+	 * Fired whenever the popup content area is scrolled
+	 *
+	 * @private
+	 * @event sap.ui.webc.main.Popup#scroll
+	 */
+	@event("scroll")
+	onScroll!: FireEventFn<PopupScrollEventDetail>;
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
 	 *
@@ -325,7 +329,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_scroll(e: Event) {
-		this.fireEvent<PopupScrollEventDetail>("scroll", {
+		this.onScroll({
 			scrollTop: (e.target as HTMLElement).scrollTop,
 			targetRef: e.target as HTMLElement,
 		});
@@ -451,7 +455,7 @@ abstract class Popup extends UI5Element {
 	 * @protected
 	 */
 	async _open(preventInitialFocus: boolean) {
-		const prevented = !this.fireEvent("before-open", {}, true, false);
+		const prevented = !this.onBeforeOpen(undefined, true, false);
 		if (prevented) {
 			return;
 		}
@@ -480,7 +484,7 @@ abstract class Popup extends UI5Element {
 		this.open = true;
 
 		await renderFinished();
-		this.fireEvent("after-open", {}, false, false);
+		this.onAfterOpen(undefined, false, false);
 	}
 
 	/**
@@ -503,7 +507,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		const prevented = !this.fireEvent<PopupBeforeCloseEventDetail>("before-close", { escPressed }, true, false);
+		const prevented = !this.onBeforeClose({ escPressed }, true);
 		if (prevented) {
 			return;
 		}
@@ -525,7 +529,7 @@ abstract class Popup extends UI5Element {
 			this.resetFocus();
 		}
 
-		this.fireEvent("after-close", {}, false, false);
+		this.onAfterClose();
 	}
 
 	/**

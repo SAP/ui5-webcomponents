@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import CSSColor from "@ui5/webcomponents-base/dist/types/CSSColor.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -87,14 +87,16 @@ type ColorCoordinates = {
 		Label,
 	],
 })
-/**
- * Fired when the the selected color is changed
- *
- * @event sap.ui.webc.main.ColorPicker#change
- * @public
- */
-@event("change")
 class ColorPicker extends UI5Element {
+	/**
+	 * Fired when the the selected color is changed
+	 *
+	 * @event sap.ui.webc.main.ColorPicker#change
+	 * @public
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
+
 	/**
 	 * Defines the currently selected color of the component.
 	 * <br><br>
@@ -427,7 +429,7 @@ class ColorPicker extends UI5Element {
 	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
 		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
 
-		this.fireEvent("change");
+		this.onChange();
 	}
 
 	_setHex() {
