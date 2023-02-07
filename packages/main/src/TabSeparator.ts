@@ -1,8 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
-
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TabContainer from "./TabContainer.js";
+import type { ITab } from "./TabContainer.js";
 
 // Templates
 import TabSeparatorInStripTemplate from "./generated/templates/TabSeparatorInStripTemplate.lit.js";
@@ -11,13 +12,6 @@ import TabSeparatorInOverflowTemplate from "./generated/templates/TabSeparatorIn
 // Styles
 import stripCss from "./generated/themes/TabSeparatorInStrip.css.js";
 import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-tab-separator",
-};
 
 /**
  * @class
@@ -31,10 +25,9 @@ const metadata = {
  * @implements sap.ui.webc.main.ITab
  * @public
  */
-class TabSeparator extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+@customElement("ui5-tab-separator")
+class TabSeparator extends UI5Element implements ITab {
+	_getElementInStrip?: () => ITab | null;
 
 	static get render() {
 		return litRender;
@@ -50,7 +43,9 @@ class TabSeparator extends UI5Element {
 
 	get classes() {
 		return {
-			"ui5-tc__separator": true,
+			root: {
+				"ui5-tc__separator": true,
+			},
 		};
 	}
 
@@ -66,7 +61,11 @@ class TabSeparator extends UI5Element {
 	 * @public
 	 */
 	getTabInStripDomRef() {
-		return this._getElementInStrip();
+		if (this._getElementInStrip) {
+			return this._getElementInStrip();
+		}
+
+		return null;
 	}
 
 	get stableDomRef() {
@@ -74,11 +73,11 @@ class TabSeparator extends UI5Element {
 	}
 
 	get stripPresentation() {
-		return executeTemplate(this.constructor.stripTemplate, this);
+		return executeTemplate(TabSeparator.stripTemplate, this);
 	}
 
 	get overflowPresentation() {
-		return executeTemplate(this.constructor.overflowTemplate, this);
+		return executeTemplate(TabSeparator.overflowTemplate, this);
 	}
 }
 
