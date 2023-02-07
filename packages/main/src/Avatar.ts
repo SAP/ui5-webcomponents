@@ -7,6 +7,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 // Template
@@ -69,7 +70,7 @@ import "@ui5/webcomponents-icons/dist/employee.js";
 * @since 1.0.0-rc.11
 */
 @event("click")
-class Avatar extends UI5Element {
+class Avatar extends UI5Element implements ITabbable {
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
 	 * @type {boolean}
@@ -303,9 +304,9 @@ class Avatar extends UI5Element {
 	 * @defaultValue "S"
 	 * @private
 	 */
-	get _effectiveSize() {
+	get _effectiveSize(): AvatarSize {
 		// we read the attribute, because the "size" property will always have a default value
-		return this.getAttribute("size") || this._size;
+		return this.getAttribute("size") as AvatarSize || this._size;
 	}
 
 	/**
