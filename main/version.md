@@ -1,9 +1,9 @@
-commit b172b783441a0576f8bf5fe93bfaadf90758bc76
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Mon Feb 6 08:12:04 2023 -0800
+commit fe142782d34459d5825f199a67dba4561e2525ce
+Author: Petar Dimov <32839090+dimovpetar@users.noreply.github.com>
+Date:   Tue Feb 7 11:28:46 2023 +0200
 
-    Translation Delivery (#6418)
+    refactor(ui5-tabcontainer): migrate to TypeScript (#6375)
     
-    chore: translation delivery
+    Created common interface ITab, located in TabContainer.ts. It is implemented by the Tab and TabSeparator classes.
     
-    Change-Id: Iab7799cc536a52a4a17d91f5650541aee02f5751
+    Related to: #4337
