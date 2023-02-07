@@ -61,7 +61,7 @@ const PAGE_UP_DOWN_SIZE = 5;
 
 interface ITab extends UI5Element {
 	isSeparator: boolean;
-	getTabInStripDomRef: () => HTMLElement | null;
+	getTabInStripDomRef: () => ITab | null;
 	stableDomRef: string;
 	additionalText?: string;
 	design?: SemanticColor;
@@ -77,7 +77,7 @@ interface ITab extends UI5Element {
 	_hasOwnContent?: boolean;
 	_level?: number;
 	_selected?: boolean;
-	_getElementInStrip?: () => HTMLElement | null;
+	_getElementInStrip?: () => ITab | null;
 	_isInline?: boolean;
 	_mixedMode?: boolean;
 	_posinset?: number;
@@ -469,12 +469,14 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		// TO DO: handleResize is promise, it shouldn't be
+		// eslint-disable-next-line
+		// TODO: handleResize is promise, it shouldn't be
 		ResizeHandler.register(this._getHeader(), this._handleResize); /* eslint-disable-line */
 	}
 
 	onExitDOM() {
-		// TO DO: handleResize is promise, it shouldn't be
+		// eslint-disable-next-line
+		// TODO: handleResize is promise, it shouldn't be
 		ResizeHandler.deregister(this._getHeader(), this._handleResize); /* eslint-disable-line */
 	}
 
@@ -570,7 +572,7 @@ class TabContainer extends UI5Element {
 
 		// if clicked between the expand button and the tab
 		if (!tabInstance) {
-			this._onHeaderItemSelect(<HTMLElement>button.parentElement);
+			this._onHeaderItemSelect(button.parentElement as HTMLElement);
 			return;
 		}
 
@@ -797,7 +799,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const overflow = <HTMLElement>e.currentTarget;
+		const overflow = e.currentTarget as HTMLElement;
 		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
 		const overflowAttr = isEndOverflow ? "end-overflow" : "start-overflow";
 
@@ -906,7 +908,7 @@ class TabContainer extends UI5Element {
 		return tab;
 	}
 
-	_updateEndOverflow(itemsDomRefs: Array<HTMLElement>) {
+	_updateEndOverflow(itemsDomRefs: Array<ITab>) {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 		const selectedTab = this._getRootTab(this._selectedTab);
@@ -924,7 +926,7 @@ class TabContainer extends UI5Element {
 		this._endOverflowText = this.overflowButtonText;
 	}
 
-	_updateStartAndEndOverflow(itemsDomRefs: Array<HTMLElement>) {
+	_updateStartAndEndOverflow(itemsDomRefs: Array<ITab>) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
 		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
@@ -989,7 +991,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<HTMLElement>, selectedItemIndexAndWidth: { width: number; index: number}) {
+	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number}) {
 		if (selectedItemIndexAndWidth.index === 0) {
 			return false;
 		}
@@ -1014,7 +1016,7 @@ class TabContainer extends UI5Element {
 		return hasStartOverflow;
 	}
 
-	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<HTMLElement>, selectedItemIndexAndWidth: { width: number; index: number}) {
+	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number}) {
 		if (selectedItemIndexAndWidth.index >= itemsDomRefs.length) {
 			return false;
 		}
@@ -1046,12 +1048,12 @@ class TabContainer extends UI5Element {
 		return itemDomRef.offsetWidth + margins;
 	}
 
-	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<HTMLElement>, selectedTabDomRef: HTMLElement) {
+	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<ITab>, selectedTabDomRef: ITab) {
 		let index = itemsDomRefs.indexOf(selectedTabDomRef);
 		let width = selectedTabDomRef.offsetWidth;
 		let selectedSeparator;
 
-		if (itemsDomRefs[index - 1] && (<ITab>itemsDomRefs[index - 1]).isSeparator) {
+		if (itemsDomRefs[index - 1] && itemsDomRefs[index - 1].isSeparator) {
 			selectedSeparator = itemsDomRefs[index - 1];
 			width += this._getItemWidth(selectedSeparator);
 		}
@@ -1070,7 +1072,7 @@ class TabContainer extends UI5Element {
 		};
 	}
 
-	_findFirstVisibleItem(itemsDomRefs: Array<HTMLElement>, containerWidth: number, selectedItemWidth: number, startIndex?: number) {
+	_findFirstVisibleItem(itemsDomRefs: Array<ITab>, containerWidth: number, selectedItemWidth: number, startIndex?: number) {
 		if (startIndex === undefined) {
 			startIndex = itemsDomRefs.length - 1;
 		}
@@ -1091,7 +1093,7 @@ class TabContainer extends UI5Element {
 		return lastVisible;
 	}
 
-	_findLastVisibleItem(itemsDomRefs: Array<HTMLElement>, containerWidth: number, selectedItemWidth: number, startIndex = 0) {
+	_findLastVisibleItem(itemsDomRefs: Array<ITab>, containerWidth: number, selectedItemWidth: number, startIndex = 0) {
 		let lastVisibleIndex = startIndex - 1;
 		let index = startIndex;
 
@@ -1108,7 +1110,7 @@ class TabContainer extends UI5Element {
 
 		// if prev item is separator - hide it
 		const prevItem = itemsDomRefs[index - 1];
-		if (prevItem && (<ITab>prevItem).isSeparator) {
+		if (prevItem && prevItem.isSeparator) {
 			lastVisibleIndex -= 1;
 		}
 

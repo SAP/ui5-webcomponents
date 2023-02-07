@@ -7,6 +7,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
+import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	TAB_ARIA_DESIGN_POSITIVE,
@@ -72,7 +73,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	text!: string;
 
 	/**
-	 * Enabled items can be selected.
+	 * Disabled tabs can't be selected.
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
@@ -187,7 +188,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	_isInline?: boolean;
 	_mixedMode?: boolean;
-	_getElementInStrip?: () => HTMLElement | null;
+	_getElementInStrip?: () => ITab | null;
 	_individualSlot!: string;
 
 	static get render() {
@@ -275,8 +276,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	}
 
 	get _hasOwnContent() {
-		return this.content.some(node => (node.nodeType !== Node.COMMENT_NODE
-				&& (node.nodeType !== Node.TEXT_NODE || node.nodeValue!.trim().length !== 0)));
+		return willShowContent(this.content);
 	}
 
 	/**
