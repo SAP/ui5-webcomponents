@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675779058
+  buildTime: 1675783092
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -8049,7 +8049,7 @@ const getResizeObserver = () => {
     resizeObserver = new window.ResizeObserver((entries) => {
       entries.forEach((entry) => {
         const callbacks = observedElements.get(entry.target);
-        callbacks == null ? void 0 : callbacks.forEach((callback) => callback());
+        callbacks && Promise.all(callbacks.map((callback) => callback()));
       });
     });
   }
