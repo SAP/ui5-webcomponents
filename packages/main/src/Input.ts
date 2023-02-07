@@ -1284,6 +1284,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 			this.fireEvent(INPUT_EVENTS.CHANGE);
 
+			if (isPhone()) {
+				this.fireEvent(INPUT_EVENTS.INPUT);
+			}
+
 			// value might change in the change event handler
 			this.typedInValue = this.value;
 			this.previousValue = this.value;
