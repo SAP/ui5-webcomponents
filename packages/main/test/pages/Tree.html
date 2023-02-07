@@ -215,7 +215,7 @@
 			node.parentElement.removeChild(node);
 		});
 
-		document.getElementById("tree").addEventListener("selection-change", function(event) {
+		document.getElementById("tree").addEventListener("ui5-selection-change", function(event) {
 			console.log("Selection changed from: ", event.detail.previouslySelectedItems, "to: ", event.detail.selectedItems);
 			console.log("Selection change target item is: ", event.detail.targetItem);
 		});
