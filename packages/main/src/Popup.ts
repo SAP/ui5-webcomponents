@@ -13,6 +13,7 @@ import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyle
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
@@ -245,7 +246,7 @@ abstract class Popup extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	content!: Array<HTMLElement>
 
-	_resizeHandler: () => void;
+	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;

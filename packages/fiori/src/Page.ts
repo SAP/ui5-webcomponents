@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
@@ -147,7 +148,7 @@ class Page extends UI5Element {
 	@slot()
 	footer!: Array<HTMLElement>;
 
-	_updateMediaRange: () => void;
+	_updateMediaRange: ResizeObserverCallback;
 
 	static get render() {
 		return litRender;

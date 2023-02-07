@@ -17,6 +17,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
@@ -180,7 +181,7 @@ class Breadcrumbs extends UI5Element {
 	items!: Array<BreadcrumbsItem>;
 
 	_itemNavigation: ItemNavigation
-	_onResizeHandler: () => void;
+	_onResizeHandler: ResizeObserverCallback;
 
 	// maps items to their widths
 	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();

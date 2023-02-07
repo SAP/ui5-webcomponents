@@ -6,6 +6,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
@@ -160,7 +161,7 @@ class SliderBase extends UI5Element {
 	@property({ type: Boolean })
 	_hiddenTickmarks!: boolean;
 
-	_resizeHandler: () => void;
+	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: () => void;
 	_stateStorage: StateStorage;
