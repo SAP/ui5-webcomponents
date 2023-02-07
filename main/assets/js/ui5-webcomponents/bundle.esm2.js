@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675772001
+  buildTime: 1675779058
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -30904,7 +30904,7 @@ let TabContainer = TabContainer_1 = class TabContainer2 extends UI5Element {
   }
   constructor() {
     super();
-    this._handleResize = this._handleResize.bind(this);
+    this._handleResizeBound = this._handleResize.bind(this);
     this._itemNavigation = new ItemNavigation(this, {
       getItemsCallback: () => this._getFocusableRefs(),
       skipItemsSize: PAGE_UP_DOWN_SIZE$1
@@ -30942,21 +30942,20 @@ let TabContainer = TabContainer_1 = class TabContainer2 extends UI5Element {
     }
   }
   onEnterDOM() {
-    ResizeHandler.register(this._getHeader(), this._handleResize);
+    ResizeHandler.register(this._getHeader(), this._handleResizeBound);
   }
   onExitDOM() {
-    ResizeHandler.deregister(this._getHeader(), this._handleResize);
+    ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
   }
-  async _handleResize() {
+  _handleResize() {
     if (this.responsivePopover && this.responsivePopover.opened) {
       this.responsivePopover.close();
     }
-    this._updateMediaRange();
-    await renderFinished();
-    this._setItemsForStrip();
+    this._width = this.offsetWidth;
+    this._updateMediaRange(this._width);
   }
-  _updateMediaRange() {
-    this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
+  _updateMediaRange(width) {
+    this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
   }
   _setItemsPrivateProperties(items) {
     const allTabs = items.filter((item) => {
@@ -31583,6 +31582,9 @@ __decorate$p([
 __decorate$p([
   property({ type: Object, multiple: true })
 ], TabContainer.prototype, "_overflowItems", void 0);
+__decorate$p([
+  property({ validator: Integer, noAttribute: true })
+], TabContainer.prototype, "_width", void 0);
 __decorate$p([
   slot({
     "default": true,
