@@ -9,6 +9,7 @@ import TreeItem from "./TreeItem.js";
 import TreeItemCustom from "./TreeItemCustom.js";
 import TreeList from "./TreeList.js";
 import ListMode from "./types/ListMode.js";
+import type TreeItemBase from "./TreeItemBase.js";
 import type {
 	TreeItemBaseToggleEventDetail,
 	TreeItemBaseStepInEventDetail,
@@ -25,7 +26,6 @@ import TreeTemplate from "./generated/templates/TreeTemplate.lit.js";
 
 // Styles
 import TreeCss from "./generated/themes/Tree.css.js";
-import TreeItemBase from "./TreeItemBase.js";
 
 type TreeItemEventDetail = {
 	item: TreeItemBase,
@@ -400,12 +400,9 @@ class Tree extends UI5Element {
 	}
 
 	_onListItemMouseOver(e: MouseEvent) {
-		const target = e.target,
-			isInstanceOfTreeItemBase = (object: any): object is TreeItemBase => {
-				return "isTreeItem" in object;
-			};
+		const target = e.target;
 
-		if (isInstanceOfTreeItemBase(target)) {
+		if (this._isInstanceOfTreeItemBase(target)) {
 			this.fireEvent<TreeItemMouseoverEventDetail>("item-mouseover", { item: target });
 		}
 	}
@@ -413,8 +410,8 @@ class Tree extends UI5Element {
 	_onListItemMouseOut(e: MouseEvent) {
 		const target = e.target;
 
-		if ((target as any).isTreeItem) {
-			this.fireEvent<TreeItemMouseoutEventDetail>("item-mouseout", { item: target as TreeItemBase });
+		if (this._isInstanceOfTreeItemBase(target)) {
+			this.fireEvent<TreeItemMouseoutEventDetail>("item-mouseout", { item: target });
 		}
 	}
 
@@ -489,6 +486,10 @@ class Tree extends UI5Element {
 	 */
 	walk(callback: WalkCallback) {
 		walkTree(this, 1, callback);
+	}
+
+	_isInstanceOfTreeItemBase(object: any): object is TreeItemBase {
+		return "isTreeItem" in object;
 	}
 }
 

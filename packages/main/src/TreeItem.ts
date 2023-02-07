@@ -56,11 +56,12 @@ class TreeItem extends TreeItemBase {
 	 * Defines the <code>additionalText</code>, displayed in the end of the tree item.
 	 * @type {string}
 	 * @name sap.ui.webc.main.TreeItem.prototype.additionalText
+	 * @defaultvalue ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	additionalText?: string;
+	additionalText!: string;
 
 	/**
 	 * Defines the state of the <code>additionalText</code>.
