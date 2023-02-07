@@ -57,9 +57,7 @@
         border-bottom: 1px solid #2f2f2f;
     }
 
-    .actual-html {
-        color: cadetblue;
-    }
+
 </style>
 
 <body>
@@ -82,8 +80,6 @@
             <p><ui5-button id="btnChange">Change Desc</ui5-button></p>
             <p><ui5-button id="btnChange11">Remove for attr from Another Description</ui5-button></p>
             <p><ui5-button id="btnRemoveInput">Remove input</ui5-button></p>
-            <p id="actualLabel1">Actual Desc from myInput:</p>
-            <p class="actual-html" id="actualInput1"></p>
         </div>
         <div class="fields">
             <h4>Input accessibleNameRef Tests</h4>
@@ -103,8 +99,6 @@
             <p><ui5-button id="btnChange2">Change Desc lblEnterName1</ui5-button>&nbsp;<ui5-button id="btnChange22">Change Desc lblEnterName2</ui5-button></p>
             <p><ui5-button id="btnChange3">Swap Accessible Name Ref 1 and 2</ui5-button></p>
             <p><ui5-button id="btnChange35">Remove lblEnterName3 from accessible-name-ref</ui5-button></p>
-            <p class="actual-desc" id="actualLabel2">Actual Desc from inputEnterName:</p>
-            <p class="actual-html" id="actualInput2"></p>
         </div>
         <div class="fields">
             <h4>Input accessibleName and accessibleNameRef Tests</h4>
@@ -121,8 +115,7 @@
             <p><ui5-button id="btnChange4">Toggle AccessibleName Value</ui5-button></p>
             <p><ui5-button id="btnChange5">Remove AccessibleName Attribute</ui5-button></p>
             <p><ui5-button id="btnChange6">Add Accessible Name Ref</ui5-button></p>
-            <p class="actual-desc" id="actualLabel3">Actual Desc from inputEnterDesc:</p>
-            <p class="actual-html" id="actualInput3"></p>
+            <p><ui5-button id="btnChange65">Remove lblEnterDesc1 for Attribute</ui5-button></p>
         </div>
         <div class="fields">
             <h4>Three inputs with same label accessibleNameRef Tests</h4>
@@ -137,13 +130,7 @@
             <p><ui5-button id="btnChange71">Remove For Attribute On Label</ui5-button></p>
             <p><ui5-button id="btnChange72">Remove AccessibleNameRef Attribute For Input 2</ui5-button></p>
             <p><ui5-button id="btnChange73">Remove AccessibleNameRef Attribute For Input 3</ui5-button></p>
-            <p><ui5-button id="btnChange74">Change Desc</ui5-button></p>
-            <p class="actual-desc" id="actualLabel41">Actual Desc from testInput1:</p>
-            <p class="actual-desc" id="actualLabel42">Actual Desc from testInput2:</p>
-            <p class="actual-desc" id="actualLabel43">Actual Desc from testInput3:</p>
-            <p class="actual-html" id="actualInput41"></p>
-            <p class="actual-html" id="actualInput42"></p>
-            <p class="actual-html" id="actualInput43"></p>
+            <p><ui5-button id="btnChange74">Change Label Desc</ui5-button></p>
         </div>
     </div>
 
@@ -254,7 +241,7 @@
         const btnChange71 = document.getElementById("btnChange71");
         btnChange71.addEventListener("click", () => {
             if(document.getElementById("lblTestDesc").for === "testInput1") {
-                document.getElementById("lblTestDesc").for = "";
+                document.getElementById("lblTestDesc").for = undefined;
                 btnChange71.innerHTML = btnChange71.innerHTML.replace('Remove','Add');
             } else {
                 document.getElementById("lblTestDesc").for = "testInput1";
@@ -297,7 +284,16 @@
             document.getElementById("myInput").remove();
         });
 
+        const btnChange65 = document.getElementById("btnChange65");
+        btnChange65.addEventListener("click", () => {
+            document.getElementById("lblEnterDesc1").for = "";
+        });
 
+        const btnChange74 = document.getElementById("btnChange74");
+        btnChange74.addEventListener("click", () => {
+            const lblDesc1 = document.getElementById("lblTestDesc");
+            lblDesc1.innerHTML = "Another description for testing";
+        });
 
 
     </script>

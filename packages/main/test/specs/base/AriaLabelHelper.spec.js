@@ -6,35 +6,73 @@ describe("AriaLabelHelper", () => {
     });
 
     const getErrorMessageAriaLabelNotAsExpected = (actual, expected) => {
-        return `aria-label ${actual} is not as expected ${expected}.`
-    }
+        return `aria-label ${actual} is not as expected ${expected}.`;
+    };
+
+    const testInputAriaLabelMatchesLabels = async (inputId, labelIds) => {
+        const input = await browser.$(`#${inputId}`);
+        const innerInput = await input.shadow$("input");
+        const actualAriaLabel = await innerInput.getAttribute("aria-label");
+
+        const promises = labelIds.map(async (labelId) => {
+            const label = await browser.$(`#${labelId}`);
+            return await label.getText();
+        });
+        const texts = await Promise.all(promises);
+        const expectedAriaLabel = texts.join(" ");
+
+        assert.equal(
+            actualAriaLabel,
+            expectedAriaLabel,
+            getErrorMessageAriaLabelNotAsExpected(
+                actualAriaLabel,
+                expectedAriaLabel
+            )
+        );
+    };
+
+    const testInputAriaLabelMatchesAccessibleName = async (inputId) => {
+        const input = await browser.$(`#${inputId}`);
+        const innerInput = await input.shadow$("input");
+        const accessibleNameValue = await input.getAttribute("accessible-name");
+        const actualAriaLabel = await innerInput.getAttribute("aria-label");
+        assert.equal(
+            actualAriaLabel,
+            accessibleNameValue,
+            getErrorMessageAriaLabelNotAsExpected(
+                actualAriaLabel,
+                accessibleNameValue
+            )
+        );
+    };
+
+    const testInputAriaLabelIsUndefined = async (inputId) => {
+        const input = await browser.$(`#${inputId}`);
+        const innerInput = await input.shadow$("input");
+        const actualAriaLabel = await innerInput.getAttribute("aria-label");
+        assert.equal(
+            !!actualAriaLabel,
+            false,
+            `${inputId} : ${getErrorMessageAriaLabelNotAsExpected(
+                !!actualAriaLabel,
+                false
+            )}`
+        );
+    };
 
     it("Label-for tests", async () => {
         const btn = await browser.$("#btnChange");
-        const input = await browser.$("#myInput");
-        const innerInput = await input.shadow$("input");
-        const l1 = await browser.$("#lblDesc1");
-        const l2 = await browser.$("#lblDesc2");
-        const l3 = await browser.$("#lblDesc3");
-        const l4 = await browser.$("#lblDesc4");
-
-        const arrTextsBefore = await Promise.all([l1.getText(), l2.getText(), l3.getText(), l4.getText()]);
-        const textBefore = arrTextsBefore.join(" ");
-
-        assert.equal(
-            await innerInput.getAttribute("aria-label"),
-            textBefore,
-            getErrorMessageAriaLabelNotAsExpected(await innerInput.getAttribute("aria-label"), textBefore)
-        );
+        await testInputAriaLabelMatchesLabels("myInput", [
+            "lblDesc1",
+            "lblDesc2",
+            "lblDesc3",
+            "lblDesc4",
+        ]);
         await btn.click();
-
-        const arrTextsAfter = await Promise.all([l1.getText(), l4.getText()]);
-        const textAfter = arrTextsAfter.join(" ");
-        assert.equal(
-            await innerInput.getAttribute("aria-label"),
-            textAfter,
-            getErrorMessageAriaLabelNotAsExpected(await innerInput.getAttribute("aria-label"), textAfter)
-        );
+        await testInputAriaLabelMatchesLabels("myInput", [
+            "lblDesc1",
+            "lblDesc4",
+        ]);
     });
 
     it("Input accessibleNameRef Tests", async () => {
@@ -43,51 +81,86 @@ describe("AriaLabelHelper", () => {
         const btnSwap = await browser.$("#btnChange3"); // Swap Accessible Name Ref 1 and 2
         const btnRemove = await browser.$("#btnChange35"); // Remove lblEnterName3 from accessible-name-ref
 
-
-        const input = await browser.$("#inputEnterName");
-        const innerInput = await input.shadow$("input");
-        const l1 = await browser.$("#lblEnterName1");
-        const l2 = await browser.$("#lblEnterName2");
-        const l3 = await browser.$("#lblEnterName3");
-
-        const arrTextsBefore = await Promise.all([l1.getText(), l3.getText()]);
-        const textBefore = arrTextsBefore.join(" ");
-
-        assert.equal(
-            await innerInput.getAttribute("aria-label"),
-            textBefore,
-            getErrorMessageAriaLabelNotAsExpected(await innerInput.getAttribute("aria-label"), textBefore)
-        );
-
+        await testInputAriaLabelMatchesLabels("inputEnterName", [
+            "lblEnterName1",
+            "lblEnterName3",
+        ]);
         await btnChangeDesc1.click();
-
-        const arrTextsAfter = await Promise.all([l1.getText(), l3.getText()]);
-        const textAfter = arrTextsAfter.join(" ");
-        assert.equal(
-            await innerInput.getAttribute("aria-label"),
-            textAfter,
-            getErrorMessageAriaLabelNotAsExpected(await innerInput.getAttribute("aria-label"), textAfter)
-        );
-        assert.notEqual(textBefore, textAfter, "Description is not changing.");
-
+        await testInputAriaLabelMatchesLabels("inputEnterName", [
+            "lblEnterName1",
+            "lblEnterName3",
+        ]);
         await btnSwap.click();
         await btnChangeDesc2.click();
-        const arrTextsAfter2 = await Promise.all([l2.getText(), l3.getText()]);
-        const textAfter2 = arrTextsAfter2.join(" ");
-        assert.equal(
-            await innerInput.getAttribute("aria-label"),
-            textAfter2,
-            getErrorMessageAriaLabelNotAsExpected(await innerInput.getAttribute("aria-label"), textAfter2)
-        );
-        assert.notEqual(textAfter, textAfter2, "Description is not changing.");
-
+        await testInputAriaLabelMatchesLabels("inputEnterName", [
+            "lblEnterName2",
+            "lblEnterName3",
+        ]);
         await btnRemove.click();
-        const textAfter3 = arrTextsAfter2[0];
-        assert.equal(
-            await innerInput.getAttribute("aria-label"),
-            textAfter3,
-            getErrorMessageAriaLabelNotAsExpected(await innerInput.getAttribute("aria-label"), textAfter3)
-        );
+        await testInputAriaLabelMatchesLabels("inputEnterName", [
+            "lblEnterName2",
+        ]);
+    });
 
+    it("Input accessibleName and accessibleNameRef Tests", async () => {
+        const toggleAccessibleName = await browser.$("#btnChange4"); // Toggle AccessibleName Value
+        const addRemoveAccessibleName = await browser.$("#btnChange5"); // Add/Remove AccessibleName Attribute
+        const addRemoveAccessibleNameRef = await browser.$("#btnChange6"); // Add/Remove Accessible Name Ref
+        const removeLabelForAttr = await browser.$("#btnChange65"); // Removes the for-attribute for the associated label
+
+        await testInputAriaLabelMatchesAccessibleName("inputEnterDesc");
+        await toggleAccessibleName.click(); // toggle the accessible-name
+        await testInputAriaLabelMatchesAccessibleName("inputEnterDesc");
+        await addRemoveAccessibleName.click(); // remove accessible name
+        await testInputAriaLabelMatchesLabels("inputEnterDesc", [
+            "lblEnterDesc1",
+        ]);
+        await addRemoveAccessibleNameRef.click(); // add accessible-name-ref
+        await testInputAriaLabelMatchesLabels("inputEnterDesc", [
+            "lblEnterDesc3",
+        ]);
+        await addRemoveAccessibleName.click(); // add accessible-name
+        await testInputAriaLabelMatchesLabels("inputEnterDesc", [
+            "lblEnterDesc3",
+        ]);
+        await addRemoveAccessibleNameRef.click(); // remove accessible-name-ref
+        await testInputAriaLabelMatchesAccessibleName("inputEnterDesc");
+        await addRemoveAccessibleName.click(); // remove accessible-name
+        await testInputAriaLabelMatchesLabels("inputEnterDesc", [
+            "lblEnterDesc1",
+        ]);
+        await removeLabelForAttr.click(); // remove label-for from DOM
+        await testInputAriaLabelIsUndefined("inputEnterDesc");
+    });
+
+    it("Three inputs with same label accessibleNameRef Tests", async () => {
+        const addRemoveForAttribute = await browser.$("#btnChange71"); // Add/Remove For Attribute On Label
+        const removeAccessibleNameRef2 = await browser.$("#btnChange72"); // Remove AccessibleNameRef Attribute For Input 2
+        const removeAccessibleNameRef3 = await browser.$("#btnChange73"); // Remove AccessibleNameRef Attribute For Input 3
+        const btnChangeDesc = await browser.$("#btnChange74"); // Change Description
+
+        await testInputAriaLabelMatchesLabels("testInput1", ["lblTestDesc"]);
+        await testInputAriaLabelMatchesLabels("testInput2", ["lblTestDesc"]);
+        await testInputAriaLabelMatchesLabels("testInput3", ["lblTestDesc"]);
+
+        await btnChangeDesc.click();
+        await testInputAriaLabelMatchesLabels("testInput1", ["lblTestDesc"]);
+        await testInputAriaLabelMatchesLabels("testInput2", ["lblTestDesc"]);
+        await testInputAriaLabelMatchesLabels("testInput3", ["lblTestDesc"]);
+
+        await addRemoveForAttribute.click();
+        await testInputAriaLabelIsUndefined("testInput1");
+        await testInputAriaLabelMatchesLabels("testInput2", ["lblTestDesc"]);
+        await testInputAriaLabelMatchesLabels("testInput3", ["lblTestDesc"]);
+
+        await removeAccessibleNameRef2.click();
+        await testInputAriaLabelIsUndefined("testInput1");
+        await testInputAriaLabelMatchesAccessibleName("testInput2");
+        await testInputAriaLabelMatchesLabels("testInput3", ["lblTestDesc"]);
+
+        await removeAccessibleNameRef3.click();
+        await testInputAriaLabelIsUndefined("testInput1");
+        await testInputAriaLabelMatchesAccessibleName("testInput2");
+        await testInputAriaLabelIsUndefined("testInput3");
     });
 });
