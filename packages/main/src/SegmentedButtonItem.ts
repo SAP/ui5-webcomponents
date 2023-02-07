@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
 
@@ -31,12 +30,13 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  * @author SAP SE
  * @alias sap.ui.webc.main.SegmentedButtonItem
  * @extends sap.ui.webc.main.ToggleButton
+ * @abstract
  * @tagname ui5-segmented-button-item
  * @implements sap.ui.webc.main.ISegmentedButtonItem
  * @public
  */
 @customElement("ui5-segmented-button-item")
-class SegmentedButtonItem extends ToggleButton implements ITabbable {
+class SegmentedButtonItem extends ToggleButton {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
 	 *

@@ -238,7 +238,7 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
-	_onmousedown(e: KeyboardEvent) {
+	_onmousedown(e: MouseEvent) {
 		const eventTarget = e.target as SegmentedButtonItem;
 		const isTargetSegmentedButtonItem = eventTarget.hasAttribute("ui5-segmented-button-item");
 
