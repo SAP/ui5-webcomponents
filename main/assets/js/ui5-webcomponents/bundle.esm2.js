@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675841721
+  buildTime: 1675847497
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -28728,6 +28728,12 @@ let RangeSlider = RangeSlider_1 = class RangeSlider2 extends SliderBase$1 {
     return ariaHandlesText;
   }
   onBeforeRendering() {
+    if (this.startValue > this.endValue) {
+      const affectedValue = this._valueAffected === "startValue" ? "endValue" : "startValue";
+      this._swapValues();
+      this._setAffectedValue(affectedValue);
+      this.update(affectedValue, this.startValue, this.endValue);
+    }
     if (!this.isCurrentStateOutdated()) {
       return;
     }
@@ -28781,10 +28787,16 @@ let RangeSlider = RangeSlider_1 = class RangeSlider2 extends SliderBase$1 {
   }
   _onkeyup() {
     super._onkeyup();
-    this._swapValues();
     this._setAffectedValue(void 0);
+    if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
+      this.fireEvent("change");
+    }
+    this._startValueAtBeginningOfAction = void 0;
+    this._endValueAtBeginningOfAction = void 0;
   }
   _handleActionKeyPress(e2) {
+    this._startValueAtBeginningOfAction = this.startValue;
+    this._endValueAtBeginningOfAction = this.endValue;
     if (isEscape(e2)) {
       this.update(void 0, this._startValueInitial, this._endValueInitial);
       return;
@@ -28839,7 +28851,7 @@ let RangeSlider = RangeSlider_1 = class RangeSlider2 extends SliderBase$1 {
       this.updateStateStorageAndFireInputEvent("endValue");
       this._updateHandlesAndRange(0);
     } else {
-      const newValue = startValue;
+      const newValue = endValue && affectedValue === "endValue" ? endValue : startValue;
       this._updateHandlesAndRange(newValue || 0);
       if (affectedValue === "startValue") {
         this.startValue = newValue;
@@ -28897,17 +28909,16 @@ let RangeSlider = RangeSlider_1 = class RangeSlider2 extends SliderBase$1 {
     this.update(void 0, newValues[0], newValues[1]);
   }
   _handleUp() {
-    this._swapValues();
     this._setAffectedValueByFocusedElement();
     this._setAffectedValue(void 0);
-    this._startValueAtBeginningOfAction = void 0;
-    this._endValueAtBeginningOfAction = void 0;
-    this._setIsPressInCurrentRange(false);
-    this.handleUpBase();
-    this.rangePressed = false;
     if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
       this.fireEvent("change");
     }
+    this._setIsPressInCurrentRange(false);
+    this.handleUpBase();
+    this.rangePressed = false;
+    this._startValueAtBeginningOfAction = void 0;
+    this._endValueAtBeginningOfAction = void 0;
   }
   _pressTargetAndAffectedValue(clientX, value) {
     const startHandle = this.shadowRoot.querySelector(".ui5-slider-handle--start");
@@ -29004,20 +29015,23 @@ let RangeSlider = RangeSlider_1 = class RangeSlider2 extends SliderBase$1 {
   }
   _swapValues() {
     const affectedValue = this._valueAffected;
+    if (!affectedValue) {
+      return;
+    }
     if (affectedValue === "startValue" && this.startValue > this.endValue) {
       const prevEndValue = this.endValue;
       this.endValue = this.startValue;
       this.startValue = prevEndValue;
-      this._setValuesAreReversed();
-      this.focusInnerElement();
     }
     if (affectedValue === "endValue" && this.endValue < this.startValue) {
       const prevStartValue = this.startValue;
       this.startValue = this.endValue;
       this.endValue = prevStartValue;
-      this._setValuesAreReversed();
-      this.focusInnerElement();
     }
+    this._setValuesAreReversed();
+    this._updateHandlesAndRange(this[affectedValue]);
+    this.focusInnerElement();
+    this.syncUIAndState();
   }
   _setValuesAreReversed() {
     this._reversedValues = !this._reversedValues;

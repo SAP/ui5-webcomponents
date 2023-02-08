@@ -21,7 +21,7 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.6816461c.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.0f1463d8.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/RangeSlider.html.437a9174.css'>
 </head>
 
@@ -58,7 +58,14 @@
 				<span>endValue in the change event: </span>
 				<span id="change-event-endValue"></span>
 			</div>
-			
+			<div>
+				<span>startValue in the input event: </span>
+				<span id="input-event-startValue"></span>
+			</div>
+			<div>
+				<span>endValue in the input event: </span>
+				<span id="input-event-endValue"></span>
+			</div>
 			<h2>Event Testing Result Slider</h2>
 			<ui5-range-slider id="test-result-slider" start-value="1" end-value="2"></ui5-range-slider>
 		</section>
@@ -78,7 +85,11 @@
 			eventTargetSlider.addEventListener("ui5-change", (e) => {
 				document.getElementById("change-event-startValue").innerText = e.target.startValue;
 				document.getElementById("change-event-endValue").innerText = e.target.endValue;
+			});
 
+			eventTargetSlider.addEventListener("ui5-input", (e) => {
+				document.getElementById("input-event-startValue").innerText = e.target.startValue;
+				document.getElementById("input-event-endValue").innerText = e.target.endValue;
 			});
 		</script>
 	</body>
