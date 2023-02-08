@@ -594,6 +594,14 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	/**
+	 * The ui5-input "focusout" event handler
+	 * @protected
+	 */
+	 _onInputFocusOut(e: Event) {
+		this._updateValueAndFireEvents((e.target as DatePicker).value, true, ["change", "value-changed"]);
+	}
+
+	/**
 	 * Checks if the provided value is valid and within valid range.
 	 * @protected
 	 * @param { string } value
