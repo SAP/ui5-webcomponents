@@ -5,8 +5,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
@@ -424,7 +424,7 @@ class SliderBase extends UI5Element {
 		window.addEventListener("mouseup", this._upHandler);
 		window.addEventListener("touchend", this._upHandler);
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
-		if (e instanceof TouchEvent) {
+		if (supportsTouch() && e instanceof TouchEvent) {
 			window.addEventListener("touchmove", this._moveHandler);
 		} else {
 			window.addEventListener("mousemove", this._moveHandler);
@@ -536,14 +536,14 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	static getPageXValueFromEvent(e: TouchEvent | MouseEvent): number {
-		if (e instanceof TouchEvent) {
+		if (supportsTouch() && e instanceof TouchEvent) {
 			if (e.targetTouches && e.targetTouches.length > 0) {
 				return e.targetTouches[0].pageX;
 			}
 			return 0;
 		}
 
-		return e.pageX; // MouseEvent
+		return (e as MouseEvent).pageX; // MouseEvent
 	}
 
 	/**
