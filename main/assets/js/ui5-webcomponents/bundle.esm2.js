@@ -233,7 +233,7 @@ const applyOpenUI5Configuration = () => {
   initialConfig = fnMerge$1(initialConfig, OpenUI5Config);
 };
 const initConfiguration = () => {
-  if (initialized) {
+  if (typeof document === "undefined" || initialized) {
     return;
   }
   parseConfigurationScript();
@@ -351,10 +351,18 @@ const getSingletonElementInstance = (tag, parentElement = document.body) => {
   el = document.createElement(tag);
   return parentElement.insertBefore(el, parentElement.firstChild);
 };
-const getSharedResourcesInstance = () => getSingletonElementInstance("ui5-shared-resources", document.head);
+const getSharedResourcesInstance = () => {
+  if (typeof document === "undefined") {
+    return null;
+  }
+  return getSingletonElementInstance("ui5-shared-resources", document.head);
+};
 const getSharedResource = (namespace, initialValue) => {
   const parts = namespace.split(".");
   let current = getSharedResourcesInstance();
+  if (!current) {
+    return initialValue;
+  }
   for (let i2 = 0; i2 < parts.length; i2++) {
     const part = parts[i2];
     const lastPart = i2 === parts.length - 1;
@@ -372,7 +380,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675868163
+  buildTime: 1675869767
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -514,7 +522,7 @@ const isRtlAware = (klass) => {
   return rtlAwareSet.has(klass);
 };
 const registeredElements = /* @__PURE__ */ new Set();
-const eventProvider$5 = new EventProvider();
+const eventProvider$4 = new EventProvider();
 const invalidatedWebComponents = new RenderQueue();
 let renderTaskPromise, renderTaskPromiseResolve;
 let mutationObserverTimer;
@@ -524,7 +532,7 @@ const renderDeferred = async (webComponent) => {
   await scheduleRenderTask();
 };
 const renderImmediately = (webComponent) => {
-  eventProvider$5.fireEvent("beforeComponentRender", webComponent);
+  eventProvider$4.fireEvent("beforeComponentRender", webComponent);
   registeredElements.add(webComponent);
   webComponent._render();
 };
@@ -828,16 +836,16 @@ const getThemeDesignerTheme = () => {
     return processThemeMetadata(metadata2);
   }
 };
-const eventProvider$4 = new EventProvider();
+const eventProvider$3 = new EventProvider();
 const THEME_LOADED = "themeLoaded";
 const attachThemeLoaded = (listener) => {
-  eventProvider$4.attachEvent(THEME_LOADED, listener);
+  eventProvider$3.attachEvent(THEME_LOADED, listener);
 };
 const detachThemeLoaded = (listener) => {
-  eventProvider$4.detachEvent(THEME_LOADED, listener);
+  eventProvider$3.detachEvent(THEME_LOADED, listener);
 };
 const fireThemeLoaded = (theme) => {
-  return eventProvider$4.fireEvent(THEME_LOADED, theme);
+  return eventProvider$3.fireEvent(THEME_LOADED, theme);
 };
 let themeRoot;
 const getThemeRoot = () => {
@@ -982,9 +990,9 @@ const isClickInRect = (e2, rect) => {
     x2 = e2.clientX;
     y2 = e2.clientY;
   } else {
-    const touch2 = e2.touches[0];
-    x2 = touch2.clientX;
-    y2 = touch2.clientY;
+    const touch = e2.touches[0];
+    x2 = touch.clientX;
+    y2 = touch.clientY;
   }
   return isPointInRect(x2, y2, rect);
 };
@@ -1102,13 +1110,13 @@ class OpenUI5Support {
   }
 }
 registerFeature("OpenUI5Support", OpenUI5Support);
-const eventProvider$3 = new EventProvider();
+const eventProvider$2 = new EventProvider();
 const LANG_CHANGE = "languageChange";
 const attachLanguageChange = (listener) => {
-  eventProvider$3.attachEvent(LANG_CHANGE, listener);
+  eventProvider$2.attachEvent(LANG_CHANGE, listener);
 };
 const fireLanguageChange = (lang) => {
-  return eventProvider$3.fireEventAsync(LANG_CHANGE, lang);
+  return eventProvider$2.fireEventAsync(LANG_CHANGE, lang);
 };
 var detectNavigatorLanguage = () => {
   const browserLanguages = navigator.languages;
@@ -2397,6 +2405,10 @@ const boot = async () => {
     return bootPromise;
   }
   const bootExecutor = async (resolve) => {
+    if (typeof document === "undefined") {
+      resolve();
+      return;
+    }
     registerCurrentRuntime();
     const openUI5Support = getFeature("OpenUI5Support");
     const isOpenUI5Loaded = openUI5Support ? openUI5Support.isLoaded() : false;
@@ -2675,15 +2687,15 @@ const getTagsToScope = (component) => {
   }
   return tagsToScope;
 };
-const eventProvider$2 = getSharedResource("CustomStyle.eventProvider", new EventProvider());
+const getEventProvider = () => getSharedResource("CustomStyle.eventProvider", new EventProvider());
 const CUSTOM_CSS_CHANGE = "CustomCSSChange";
 const attachCustomCSSChange = (listener) => {
-  eventProvider$2.attachEvent(CUSTOM_CSS_CHANGE, listener);
+  getEventProvider().attachEvent(CUSTOM_CSS_CHANGE, listener);
 };
 const fireCustomCSSChange = (tag) => {
-  return eventProvider$2.fireEvent(CUSTOM_CSS_CHANGE, tag);
+  return getEventProvider().fireEvent(CUSTOM_CSS_CHANGE, tag);
 };
-const customCSSFor = getSharedResource("CustomStyle.customCSSFor", {});
+const getCustomCSSFor = () => getSharedResource("CustomStyle.customCSSFor", {});
 let skipRerender;
 attachCustomCSSChange((tag) => {
   if (!skipRerender) {
@@ -2691,6 +2703,7 @@ attachCustomCSSChange((tag) => {
   }
 });
 const addCustomCSS = (tag, css) => {
+  const customCSSFor = getCustomCSSFor();
   if (!customCSSFor[tag]) {
     customCSSFor[tag] = [];
   }
@@ -2704,6 +2717,7 @@ const addCustomCSS = (tag, css) => {
   return reRenderAllUI5Elements({ tag });
 };
 const getCustomCSS = (tag) => {
+  const customCSSFor = getCustomCSSFor();
   return customCSSFor[tag] ? customCSSFor[tag].join("") : "";
 };
 const MAX_DEPTH_INHERITED_CLASSES$1 = 10;
@@ -8531,90 +8545,165 @@ var BusyIndicatorSize;
   BusyIndicatorSize2["Large"] = "Large";
 })(BusyIndicatorSize || (BusyIndicatorSize = {}));
 var BusyIndicatorSize$1 = BusyIndicatorSize;
-const ua = navigator.userAgent;
-const touch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-const ie = /(msie|trident)/i.test(ua);
-const chrome = !ie && /(Chrome|CriOS)/.test(ua);
-const firefox = /Firefox/.test(ua);
-const safari = !ie && !chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(ua);
-const webkit = !ie && /webkit/.test(ua);
-const windows = navigator.platform.indexOf("Win") !== -1;
-const iOS = !!navigator.platform.match(/iPhone|iPad|iPod/) || !!(navigator.userAgent.match(/Mac/) && "ontouchend" in document);
-const android = !windows && /Android/.test(ua);
-const androidPhone = android && /(?=android)(?=.*mobile)/i.test(ua);
-const ipad = /ipad/i.test(ua) || /Macintosh/i.test(ua) && "ontouchend" in document;
+const isSSR = typeof document === "undefined";
+const internals = {
+  get userAgent() {
+    if (isSSR) {
+      return "";
+    }
+    return navigator.userAgent;
+  },
+  get touch() {
+    if (isSSR) {
+      return false;
+    }
+    return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+  },
+  get ie() {
+    if (isSSR) {
+      return false;
+    }
+    return /(msie|trident)/i.test(internals.userAgent);
+  },
+  get chrome() {
+    if (isSSR) {
+      return false;
+    }
+    return !internals.ie && /(Chrome|CriOS)/.test(internals.userAgent);
+  },
+  get firefox() {
+    if (isSSR) {
+      return false;
+    }
+    return /Firefox/.test(internals.userAgent);
+  },
+  get safari() {
+    if (isSSR) {
+      return false;
+    }
+    return !internals.ie && !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
+  },
+  get webkit() {
+    if (isSSR) {
+      return false;
+    }
+    return !internals.ie && /webkit/.test(internals.userAgent);
+  },
+  get windows() {
+    if (isSSR) {
+      return false;
+    }
+    return navigator.platform.indexOf("Win") !== -1;
+  },
+  get iOS() {
+    if (isSSR) {
+      return false;
+    }
+    return !!navigator.platform.match(/iPhone|iPad|iPod/) || !!(internals.userAgent.match(/Mac/) && "ontouchend" in document);
+  },
+  get android() {
+    if (isSSR) {
+      return false;
+    }
+    return !internals.windows && /Android/.test(internals.userAgent);
+  },
+  get androidPhone() {
+    if (isSSR) {
+      return false;
+    }
+    return internals.android && /(?=android)(?=.*mobile)/i.test(internals.userAgent);
+  },
+  get ipad() {
+    if (isSSR) {
+      return false;
+    }
+    return /ipad/i.test(internals.userAgent) || /Macintosh/i.test(internals.userAgent) && "ontouchend" in document;
+  }
+};
 let windowsVersion;
 let webkitVersion;
 let tablet;
 const isWindows8OrAbove = () => {
-  if (!windows) {
+  if (isSSR) {
+    return false;
+  }
+  if (!internals.windows) {
     return false;
   }
   if (windowsVersion === void 0) {
-    const matches = ua.match(/Windows NT (\d+).(\d)/);
+    const matches = internals.userAgent.match(/Windows NT (\d+).(\d)/);
     windowsVersion = matches ? parseFloat(matches[1]) : 0;
   }
   return windowsVersion >= 8;
 };
 const isWebkit537OrAbove = () => {
-  if (!webkit) {
+  if (isSSR) {
+    return false;
+  }
+  if (!internals.webkit) {
     return false;
   }
   if (webkitVersion === void 0) {
-    const matches = ua.match(/(webkit)[ /]([\w.]+)/);
+    const matches = internals.userAgent.match(/(webkit)[ /]([\w.]+)/);
     webkitVersion = matches ? parseFloat(matches[1]) : 0;
   }
   return webkitVersion >= 537.1;
 };
 const detectTablet = () => {
+  if (isSSR) {
+    return false;
+  }
   if (tablet !== void 0) {
     return;
   }
-  if (ipad) {
+  if (internals.ipad) {
     tablet = true;
     return;
   }
-  if (touch) {
+  if (internals.touch) {
     if (isWindows8OrAbove()) {
       tablet = true;
       return;
     }
-    if (chrome && android) {
-      tablet = !/Mobile Safari\/[.0-9]+/.test(ua);
+    if (internals.chrome && internals.android) {
+      tablet = !/Mobile Safari\/[.0-9]+/.test(internals.userAgent);
       return;
     }
     let densityFactor = window.devicePixelRatio ? window.devicePixelRatio : 1;
-    if (android && isWebkit537OrAbove()) {
+    if (internals.android && isWebkit537OrAbove()) {
       densityFactor = 1;
     }
     tablet = Math.min(window.screen.width / densityFactor, window.screen.height / densityFactor) >= 600;
     return;
   }
-  tablet = ie && ua.indexOf("Touch") !== -1 || android && !androidPhone;
+  tablet = internals.ie && internals.userAgent.indexOf("Touch") !== -1 || internals.android && !internals.androidPhone;
 };
-const supportsTouch = () => touch;
-const isSafari = () => safari;
-const isChrome = () => chrome;
-const isFirefox = () => firefox;
+const supportsTouch = () => internals.touch;
+const isSafari = () => internals.safari;
+const isChrome = () => internals.chrome;
+const isFirefox = () => internals.firefox;
 const isTablet = () => {
   detectTablet();
-  return (touch || isWindows8OrAbove()) && tablet;
+  return (internals.touch || isWindows8OrAbove()) && tablet;
 };
 const isPhone = () => {
   detectTablet();
-  return touch && !tablet;
+  return internals.touch && !tablet;
 };
 const isDesktop = () => {
+  if (isSSR) {
+    return false;
+  }
   return !isTablet() && !isPhone() || isWindows8OrAbove();
 };
 const isCombi = () => {
   return isTablet() && isDesktop();
 };
 const isIOS = () => {
-  return iOS;
+  return internals.iOS;
 };
 const isAndroid = () => {
-  return android || androidPhone;
+  return internals.android || internals.androidPhone;
 };
 var WrappingType;
 (function(WrappingType2) {
@@ -17503,30 +17592,30 @@ class ScrollEnablement extends EventProvider {
     return this._container.scrollTop;
   }
   _isTouchInside(event2) {
-    let touch2 = null;
+    let touch = null;
     if (this.supportsTouch && event2 instanceof TouchEvent) {
-      touch2 = event2.touches[0];
+      touch = event2.touches[0];
     }
     const rect = this._container.getBoundingClientRect();
-    const x2 = this.supportsTouch ? touch2.clientX : event2.x;
-    const y2 = this.supportsTouch ? touch2.clientY : event2.y;
+    const x2 = this.supportsTouch ? touch.clientX : event2.x;
+    const y2 = this.supportsTouch ? touch.clientY : event2.y;
     return x2 >= rect.left && x2 <= rect.right && y2 >= rect.top && y2 <= rect.bottom;
   }
   ontouchstart(event2) {
-    let touch2 = null;
+    let touch = null;
     if (this.supportsTouch && event2 instanceof TouchEvent) {
-      touch2 = event2.touches[0];
+      touch = event2.touches[0];
     }
     if (!this.supportsTouch) {
       document.addEventListener("mouseup", this.mouseUp, { passive: true });
       document.addEventListener("mousemove", this.mouseMove, { passive: true });
     } else {
-      this.startX = touch2.pageX;
-      this.startY = touch2.pageY;
+      this.startX = touch.pageX;
+      this.startY = touch.pageY;
     }
     if (this.supportsTouch && event2 instanceof TouchEvent) {
-      this._prevDragX = touch2.pageX;
-      this._prevDragY = touch2.pageY;
+      this._prevDragX = touch.pageX;
+      this._prevDragY = touch.pageY;
     }
     if (event2 instanceof MouseEvent) {
       this._prevDragX = event2.x;
@@ -17539,9 +17628,9 @@ class ScrollEnablement extends EventProvider {
       return;
     }
     const container = this._container;
-    const touch2 = this.supportsTouch ? event2.touches[0] : null;
-    const dragX = this.supportsTouch ? touch2.pageX : event2.x;
-    const dragY = this.supportsTouch ? touch2.pageY : event2.y;
+    const touch = this.supportsTouch ? event2.touches[0] : null;
+    const dragX = this.supportsTouch ? touch.pageX : event2.x;
+    const dragY = this.supportsTouch ? touch.pageY : event2.y;
     container.scrollLeft += this._prevDragX - dragX;
     container.scrollTop += this._prevDragY - dragY;
     this.fireEvent(scrollEventName, {

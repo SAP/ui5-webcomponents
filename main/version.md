@@ -1,5 +1,5 @@
-commit 78bd23781013b878799c556af3ddc0e9224ae916
-Author: Vladislav Tasev <vladitasev@users.noreply.github.com>
-Date:   Wed Feb 8 16:55:11 2023 +0200
+commit 2830c67034ff0af7bd65e78e4bdd065bb2ca7954
+Author: Marcus Notheis <marcus.notheis@sap.com>
+Date:   Wed Feb 8 16:21:47 2023 +0100
 
-    chore: comment out failing test (#6447)
+    refactor(Device): use internal getters to support SSR (#6421)
