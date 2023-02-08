@@ -1,4 +1,4 @@
-const isSSR = () => typeof window === "undefined";
+const isSSR = () => typeof document === "undefined";
 
 const internals = {
 	get userAgent() {
