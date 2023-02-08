@@ -99,7 +99,7 @@ class SegmentedButton extends UI5Element {
 	_itemNavigation: ItemNavigation;
 
 	absoluteWidthSet: boolean // set to true whenever we set absolute width to the component
-	percentageWidthSet: boolean; //  set to true whenever we set 100% width to the component
+	percentageWidthSet: boolean; // set to true whenever we set 100% width to the component
 	hasPreviouslyFocusedItem: boolean;
 
 	_handleResizeBound: ResizeObserverCallback;
@@ -134,8 +134,8 @@ class SegmentedButton extends UI5Element {
 			getItemsCallback: () => this.getSlottedNodes("items") as Array<SegmentedButtonItem>,
 		});
 
-		this.absoluteWidthSet = false; // set to true whenever we set absolute width to the component
-		this.percentageWidthSet = false; //  set to true whenever we set 100% width to the component
+		this.absoluteWidthSet = false; // true when component width is set to absolute
+		this.percentageWidthSet = false; // true when component width is set to 100%
 		this.hasPreviouslyFocusedItem = false;
 
 		this._handleResizeBound = this._doLayout.bind(this);
@@ -178,7 +178,7 @@ class SegmentedButton extends UI5Element {
 		this.prepareToMeasureItems();
 
 		this.widths = this.items.map(item => {
-			// +1 is added because for width 100.44px the offsetWidth property returns 100px and not 101px
+			// 1 is added because for width 100.44px the offsetWidth property is 100px and not 101px
 			return item.offsetWidth + 1;
 		});
 	}
@@ -251,14 +251,14 @@ class SegmentedButton extends UI5Element {
 
 	_onfocusin(e: FocusEvent) {
 		// If the component was previously focused,
-		// update the ItemNavigation to sync butons` tabindex values
+		// update the ItemNavigation to sync the button's tabindex values
 		if (this.hasPreviouslyFocusedItem) {
 			this._itemNavigation.setCurrentItem(e.target as SegmentedButtonItem);
 			return;
 		}
 
 		// If the component is focused for the first time
-		// focus the selected item if such present
+		// focus the selected item if such is present
 		if (this.selectedItem) {
 			this.selectedItem.focus();
 			this._itemNavigation.setCurrentItem(this._selectedItem!);
@@ -267,7 +267,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	async _doLayout(): Promise<void> {
-		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2); // 2 are the pixel's added for rounding & IE
+		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2); // 2 pixels added for rounding
 		if (!itemsHaveWidth) {
 			await this.measureItemsWidth();
 		}
