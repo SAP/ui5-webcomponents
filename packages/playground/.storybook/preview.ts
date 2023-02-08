@@ -3,7 +3,7 @@ import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEff
 import customElements from "./custom-elements.json";
 import { setCustomElementsManifest } from "@storybook/web-components";
 import { Parameters, DecoratorFunction } from "@storybook/addons";
-import { useOptions } from "./useOptions";
+import { useOptions, themes } from "./useOptions";
 
 if (customElements?.modules) {
   setCustomElementsManifest(customElements);
@@ -49,20 +49,10 @@ export const globalTypes = {
   theme: {
     name: "Toggle theme",
     description: "Global theme for components",
-    defaultValue:
-      window["sap-ui-webcomponents-bundle"].configuration.getTheme(),
+    defaultValue: "Morning Horizon",
     toolbar: {
       icon: "",
-      items: [
-        "Quartz Light",
-        "Quartz Dark",
-        "Quartz High Contrast Black",
-        "Quartz High Contrast White",
-        "Morning Horizon",
-        "Evening Horizon",
-        "Horizon High Contrast Black",
-        "Horizon High Contrast White",
-      ],
+      items: Object.keys(themes),
       showName: true,
       dynamicTitle: true,
     },

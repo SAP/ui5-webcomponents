@@ -5,24 +5,23 @@ type Themes = {
   [name: string]: string;
 };
 
+export const themes: Themes = {
+  "Morning Horizon": "sap_horizon",
+  "Evening Horizon": "sap_horizon_dark",
+  "Horizon High Contrast Black": "sap_horizon_hcb",
+  "Horizon High Contrast White": "sap_horizon_hcw",
+  "Quartz Light": "sap_fiori_3",
+  "Quartz Dark": "sap_fiori_3_dark",
+  "Quartz High Contrast Black": "sap_fiori_3_hcb",
+  "Quartz High Contrast White": "sap_fiori_3_hcw",
+};
+
 export const useOptions: DecoratorFunction = (StoryFn) => {
   const [{ theme, rtl, density }] = useGlobals();
 
-  const themes: Themes = {
-    MorningHorizon: "sap_horizon",
-    EveningHorizon: "sap_horizon_dark",
-    QuartzLight: "sap_fiori_3",
-    QuartzDark: "sap_fiori_3_dark",
-    HorizonHighContrastBlack: "sap_horizon_hcb",
-    HorizonHighContrastWhite: "sap_horizon_hcw",
-    QuartzHighContrastBlack: "sap_fiori_3_hcb",
-    QuartzHighContrastWhite: "sap_fiori_3_hcw",
-  };
-
   useEffect(() => {
     const Conf = window["sap-ui-webcomponents-bundle"].configuration;
-    const currentTheme: string =
-      themes[theme.replace(/ /g, "") as keyof Themes];
+    const currentTheme = themes[theme];
 
     Conf.setTheme(currentTheme);
 
