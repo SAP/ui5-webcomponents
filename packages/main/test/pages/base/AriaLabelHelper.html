@@ -132,9 +132,40 @@
             <p><ui5-button id="btnChange73">Remove AccessibleNameRef Attribute For Input 3</ui5-button></p>
             <p><ui5-button id="btnChange74">Change Label Desc</ui5-button></p>
         </div>
+        <div class="fields">
+            <h4>Tests for html elements used with for</h4>
+            <p>
+                <label id="elId1" for="myInput2">Desc1</label>
+            </p>
+            <p>
+                <label id="elId2" for="myInput2">Desc2</label>
+            </p>
+            <p>
+                <ui5-input id="myInput2" placeholder="input placeholder" class="field"></ui5-input>
+            </p>
+            <p>
+                <p id="elId3" for="myInput2">Desc3</p>
+            </p>
+            <p>
+                <span id="elId4" for="myInput2">Desc4</span>
+            </p>
+            <p>
+                <span id="elId5" for="myInput2">Desc5</span>
+            </p>
+            <p><ui5-button id="btnChange8">Change el1, Remove el2, Change for of el3, Change el4 </ui5-button></p>
+        </div>
     </div>
 
     <script>
+
+        const btnChange8 = document.getElementById("btnChange8");
+        btnChange8.addEventListener("click", () => {
+            document.getElementById("elId1").innerHTML += "X";
+            document.getElementById("elId2").remove();
+            document.getElementById("elId3").setAttribute("for", "other");
+            document.getElementById("elId4").innerHTML += "X";
+            document.getElementById("elId5").removeAttribute("for");
+        });
 
         let counterMyInput = 0;
 
