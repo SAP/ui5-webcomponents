@@ -2,8 +2,16 @@ import UI5Element, { ChangeInfo } from "../UI5Element.js";
 
 type InvalidateCallback = (changeInfo: ChangeInfo) => void;
 type MutationCallback = () => void;
-type AssociatedElement = { observer: MutationObserver|null, callbacks: Array<MutationCallback> };
-type RegisteredElement = { host: UI5Element, observedElements: Array<HTMLElement>, callback: MutationCallback, invalidationCallback: InvalidateCallback };
+type AssociatedElement = {
+	observer: MutationObserver | null;
+	callbacks: Array<MutationCallback>;
+};
+type RegisteredElement = {
+	host: UI5Element;
+	observedElements: Array<HTMLElement>;
+	callback: MutationCallback;
+	invalidationCallback: InvalidateCallback;
+};
 
 const associatedElements = new WeakMap<HTMLElement, AssociatedElement>();
 const registeredElements = new WeakMap<UI5Element, RegisteredElement>();
@@ -77,7 +85,8 @@ const _getAllAssociatedElementsFromDOM = (el: UI5Element): Array<HTMLElement> =>
 };
 
 const _getAssociatedLabels = (el: HTMLElement): Array<HTMLElement> => {
-	const labels = (el.getRootNode() as HTMLElement).querySelectorAll<HTMLElement>(`[ui5-label][for="${el.id}"],label[for="${el.id}"]`);
+	// const labels = (el.getRootNode() as HTMLElement).querySelectorAll<HTMLElement>(`[ui5-label][for="${el.id}"],label[for="${el.id}"]`);
+	const labels = (el.getRootNode() as HTMLElement).querySelectorAll<HTMLElement>(`[for="${el.id}"]`);
 	return Array.from(labels);
 };
 
@@ -152,7 +161,7 @@ const registerUI5Element = (el: UI5Element, callback: MutationCallback) => {
 	callback();
 };
 
-const _addObservedElementToRegisteredElement = (registeredElement:RegisteredElement, element: HTMLElement) => {
+const _addObservedElementToRegisteredElement = (registeredElement: RegisteredElement, element: HTMLElement) => {
 	let associatedElement = associatedElements.get(element);
 	if (!associatedElement) {
 		associatedElement = { observer: null, callbacks: [] };
@@ -176,7 +185,7 @@ const _addObservedElementToRegisteredElement = (registeredElement:RegisteredElem
 	}
 };
 
-const _removeObservedElementFromRegisteredElement = (registeredElement:RegisteredElement, element: HTMLElement) => {
+const _removeObservedElementFromRegisteredElement = (registeredElement: RegisteredElement, element: HTMLElement) => {
 	const associatedElement = associatedElements.get(element);
 	if (associatedElement) {
 		associatedElement.callbacks = associatedElement.callbacks.filter(itm => itm !== registeredElement.callback);
