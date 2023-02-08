@@ -1,74 +1,74 @@
-const isSSR = () => typeof document === "undefined";
+const isSSR = typeof document === "undefined";
 
 const internals = {
 	get userAgent() {
-		if (isSSR()) {
+		if (isSSR) {
 			return "";
 		}
 		return navigator.userAgent;
 	},
 	get touch() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return "ontouchstart" in window || navigator.maxTouchPoints > 0;
 	},
 	get ie() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return /(msie|trident)/i.test(internals.userAgent);
 	},
 	get chrome() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return !internals.ie && /(Chrome|CriOS)/.test(internals.userAgent);
 	},
 	get firefox() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return /Firefox/.test(internals.userAgent);
 	},
 	get safari() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return !internals.ie && !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
 	},
 	get webkit() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return !internals.ie && /webkit/.test(internals.userAgent);
 	},
 	get windows() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return navigator.platform.indexOf("Win") !== -1;
 	},
 	get iOS() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return !!(navigator.platform.match(/iPhone|iPad|iPod/)) || !!(internals.userAgent.match(/Mac/) && "ontouchend" in document);
 	},
 	get android() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return !internals.windows && /Android/.test(internals.userAgent);
 	},
 	get androidPhone() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		return internals.android && /(?=android)(?=.*mobile)/i.test(internals.userAgent);
 	},
 	get ipad() {
-		if (isSSR()) {
+		if (isSSR) {
 			return false;
 		}
 		// With iOS 13 the string 'iPad' was removed from the user agent string through a browser setting, which is applied on all sites by default:
@@ -83,7 +83,7 @@ let webkitVersion: number;
 let tablet: boolean;
 
 const isWindows8OrAbove = () => {
-	if (isSSR()) {
+	if (isSSR) {
 		return false;
 	}
 
@@ -100,7 +100,7 @@ const isWindows8OrAbove = () => {
 };
 
 const isWebkit537OrAbove = () => {
-	if (isSSR()) {
+	if (isSSR) {
 		return false;
 	}
 
@@ -117,7 +117,7 @@ const isWebkit537OrAbove = () => {
 };
 
 const detectTablet = () => {
-	if (isSSR()) {
+	if (isSSR) {
 		return false;
 	}
 
