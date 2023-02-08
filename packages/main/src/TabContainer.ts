@@ -11,6 +11,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -335,6 +336,9 @@ class TabContainer extends UI5Element {
 	@property({ type: Object, multiple: true })
 	_overflowItems!: Array<ITab>;
 
+	@property({ validator: Integer, noAttribute: true })
+	_width?: number;
+
 	/**
 	 * Defines the tabs.
 	 * <br><br>
@@ -385,6 +389,7 @@ class TabContainer extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_allItemsAndSubItems?: Array<ITab>;
 	responsivePopover?: ResponsivePopover;
+	_handleResizeBound: () => void;
 
 	static get styles() {
 		return [tabStyles, tabContainerCss];
@@ -419,7 +424,7 @@ class TabContainer extends UI5Element {
 	constructor() {
 		super();
 
-		this._handleResize = this._handleResize.bind(this);
+		this._handleResizeBound = this._handleResize.bind(this);
 
 		// Init ItemNavigation
 		this._itemNavigation = new ItemNavigation(this, {
@@ -469,29 +474,24 @@ class TabContainer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		// eslint-disable-next-line
-		// TODO: handleResize is promise, it shouldn't be
-		ResizeHandler.register(this._getHeader(), this._handleResize); /* eslint-disable-line */
+		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		// eslint-disable-next-line
-		// TODO: handleResize is promise, it shouldn't be
-		ResizeHandler.deregister(this._getHeader(), this._handleResize); /* eslint-disable-line */
+		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
 	}
 
-	async _handleResize() {
+	_handleResize() {
 		if (this.responsivePopover && this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		}
-		this._updateMediaRange();
 
-		await renderFinished(); // await the tab container to have rendered its representation of tabs
-		this._setItemsForStrip();
+		this._width = this.offsetWidth;
+		this._updateMediaRange(this._width);
 	}
 
-	_updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
+	_updateMediaRange(width: number) {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	_setItemsPrivateProperties(items: Array<ITab>) {
