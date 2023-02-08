@@ -372,7 +372,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.0",
   isNext: false,
-  buildTime: 1675783092
+  buildTime: 1675841721
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -15400,7 +15400,7 @@ let SliderBase = SliderBase_1 = class SliderBase2 extends UI5Element {
     this._isUserInteraction = true;
     window.addEventListener("mouseup", this._upHandler);
     window.addEventListener("touchend", this._upHandler);
-    if (e2 instanceof TouchEvent) {
+    if (supportsTouch() && e2 instanceof TouchEvent) {
       window.addEventListener("touchmove", this._moveHandler);
     } else {
       window.addEventListener("mousemove", this._moveHandler);
@@ -15452,7 +15452,7 @@ let SliderBase = SliderBase_1 = class SliderBase2 extends UI5Element {
     return Number(value.toFixed(stepPrecision));
   }
   static getPageXValueFromEvent(e2) {
-    if (e2 instanceof TouchEvent) {
+    if (supportsTouch() && e2 instanceof TouchEvent) {
       if (e2.targetTouches && e2.targetTouches.length > 0) {
         return e2.targetTouches[0].pageX;
       }

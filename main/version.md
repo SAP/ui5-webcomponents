@@ -1,9 +1,10 @@
-commit e6dde745def7b2e9e51e1a9c94fa7d250679a5d2
+commit 8c84608cdf5cbc463adc0cc1670eaa337c0c49e8
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Tue Feb 7 17:17:26 2023 +0200
+Date:   Wed Feb 8 09:34:29 2023 +0200
 
-    chore(ResizeHandler): accept async resize handlers (#6437)
+    fix(ui5-slider): fix runtime error on Safari (#6426)
     
-    There are use-cases to register an async resize handler in several components (SegmentedButton, TabContainer) and currently the ResizeHandler.register accepts only sync ones. In order to allow registration of async functions:
-    - change **ResizeObserverCallback** type to accept async functions
-    - export the **ResizeObserverCallback** type and adopt ResizeObserverCallback in all components using the ResizeHandler
+    The **TouchEvent**  class is not available on Safari, and we use it in several places ("e instanceof TouchEvent"), leading to a runtime error on Safari, thrown when the handle is dragged via the mouse.
+    Using  the "supportsTouch" ensures the "**instanceof** "check will be executed on devices supporting touch - Safari IOS will work fine. No errors are thrown anymore.
+    
+    Fixes: https://github.com/SAP/ui5-webcomponents/issues/6424
