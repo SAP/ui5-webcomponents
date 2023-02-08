@@ -1,7 +1,7 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -25,7 +25,7 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
 
 import HasPopup from "./types/HasPopup.js";
 
-type TreeItemBaseEventDetail = {
+export type TreeItemBaseEventDetail = {
 	item: TreeItemBase,
 }
 type TreeItemBaseToggleEventDetail = TreeItemBaseEventDetail;
@@ -55,44 +55,47 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 		Icon,
 	],
 })
-/**
- * Fired when the user interacts with the expand/collapse button of the tree list item.
- * @event
- * @param {HTMLElement} item the toggled item.
- * @protected
- */
-@event("toggle", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
- *
- * @event sap.ui.webc.main.TreeItemBase#step-in
- * @param {HTMLElement} item the item on which right arrow was pressed.
- * @protected
- */
-@event("step-in", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
- *
- * @event sap.ui.webc.main.TreeItemBase#step-out
- * @param {HTMLElement} item the item on which left arrow was pressed.
- * @protected
- */
-@event("step-out", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
 class TreeItemBase extends ListItem {
+	/**
+	 * Fired when the user interacts with the expand/collapse button of the tree list item.
+	 * @event
+	 * @param {HTMLElement} item the toggled item.
+	 * @protected
+	 */
+	@event("toggle", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onToggle!: FireEventFn<TreeItemBaseToggleEventDetail>;
+
+	/**
+	 * Fired when the user drills down into the tree hierarchy by pressing the right arrow on the tree node.
+	 *
+	 * @event sap.ui.webc.main.TreeItemBase#step-in
+	 * @param {HTMLElement} item the item on which right arrow was pressed.
+	 * @protected
+	 */
+	@event("step-in", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onStepIn!: FireEventFn<TreeItemBaseStepInEventDetail>;
+
+	/**
+	 * Fired when the user goes up the tree hierarchy by pressing the left arrow on the tree node.
+	 *
+	 * @event sap.ui.webc.main.TreeItemBase#step-out
+	 * @param {HTMLElement} item the item on which left arrow was pressed.
+	 * @protected
+	 */
+	@event("step-out", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onStepOut!: FireEventFn<TreeItemBaseStepOutEventDetail>;
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
 	 *
@@ -367,7 +370,7 @@ class TreeItemBase extends ListItem {
 
 	_toggleClick(e: MouseEvent | KeyboardEvent) {
 		e.stopPropagation();
-		this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+		this.onToggle({ item: this });
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -375,17 +378,17 @@ class TreeItemBase extends ListItem {
 
 		if (!this._fixed && this.showToggleButton && isRight(e)) {
 			if (!this.expanded) {
-				this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+				this.onToggle({ item: this });
 			} else {
-				this.fireEvent<TreeItemBaseStepInEventDetail>("step-in", { item: this });
+				this.onStepIn({ item: this });
 			}
 		}
 
 		if (!this._fixed && isLeft(e)) {
 			if (this.expanded) {
-				this.fireEvent<TreeItemBaseToggleEventDetail>("toggle", { item: this });
+				this.onToggle({ item: this });
 			} else if (this.hasParent) {
-				this.fireEvent<TreeItemBaseStepOutEventDetail>("step-out", { item: this });
+				this.onStepOut({ item: this });
 			}
 		}
 	}

@@ -7,7 +7,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 
 import {
 	isEnter,
@@ -146,32 +146,33 @@ type AvatarGroupClickEventDetail = {
 	styles: AvatarGroupCss,
 	dependencies: [Button],
 })
-/**
-* Fired when the component is activated either with a
-* click/tap or by using the Enter or Space key.
-* @param {HTMLElement} targetRef The DOM ref of the clicked item.
-* @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
-* @event sap.ui.webc.main.AvatarGroup#click
-* @public
-* @since 1.0.0-rc.11
-*/
-@event("click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-		overflowButtonClicked: { type: Boolean },
-	},
-})
-
-/**
-* Fired when the count of visible <code>ui5-avatar</code> elements in the
-* component has changed
-* @event sap.ui.webc.main.AvatarGroup#overflow
-* @public
-* @since 1.0.0-rc.13
-*/
-@event("overflow")
-
 class AvatarGroup extends UI5Element {
+	/**
+	 * Fired when the component is activated either with a
+	 * click/tap or by using the Enter or Space key.
+	 * @param {HTMLElement} targetRef The DOM ref of the clicked item.
+	 * @param {boolean} overflowButtonClicked indicates if the overflow button is clicked
+	 * @event sap.ui.webc.main.AvatarGroup#click
+	 * @public
+	 * @since 1.0.0-rc.11
+	 */
+	@event("click", {
+		detail: {
+			targetRef: { type: HTMLElement },
+			overflowButtonClicked: { type: Boolean },
+		},
+	})
+	onClick!: FireEventFn<AvatarGroupClickEventDetail>;
+	/**
+	 * Fired when the count of visible <code>ui5-avatar</code> elements in the
+	 * component has changed
+	 * @event sap.ui.webc.main.AvatarGroup#overflow
+	 * @public
+	 * @since 1.0.0-rc.13
+	 */
+	@event("overflow")
+	onOverflow!: FireEventFn<void>;
+
 	/**
 	 * Defines the mode of the <code>AvatarGroup</code>.
 	 * <br><br>
@@ -449,7 +450,7 @@ class AvatarGroup extends UI5Element {
 	_fireGroupEvent(targetRef: HTMLElement) {
 		const isOverflowButtonClicked = targetRef.classList.contains(OVERFLOW_BTN_CLASS) || targetRef === this._customOverflowButton;
 
-		this.fireEvent<AvatarGroupClickEventDetail>("click", {
+		this.onClick({
 			targetRef,
 			overflowButtonClicked: isOverflowButtonClicked,
 		});
@@ -588,7 +589,7 @@ class AvatarGroup extends UI5Element {
 		this._overflowButtonText = `+${hiddenItems > 99 ? 99 : hiddenItems}`;
 
 		if (shouldFireEvent) {
-			this.fireEvent("overflow");
+			this.onOverflow();
 		}
 	}
 

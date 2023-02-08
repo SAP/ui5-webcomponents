@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { StyleData } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -171,22 +171,23 @@ interface TabContainerTabInOverflow extends CustomListItem {
 		ResponsivePopover,
 	],
 })
-/**
- * Fired when a tab is selected.
- *
- * @event sap.ui.webc.main.TabContainer#tab-select
- * @param {HTMLElement} tab The selected <code>tab</code>.
- * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
- * @public
- * @allowPreventDefault
- */
-@event("tab-select", {
-	detail: {
-		tab: { type: HTMLElement },
-		tabIndex: { type: Number },
-	},
-})
 class TabContainer extends UI5Element {
+	/**
+	 * Fired when a tab is selected.
+	 *
+	 * @event sap.ui.webc.main.TabContainer#tab-select
+	 * @param {HTMLElement} tab The selected <code>tab</code>.
+	 * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
+	 * @public
+	 * @allowPreventDefault
+	 */
+	@event("tab-select", {
+		detail: {
+			tab: { type: HTMLElement },
+			tabIndex: { type: Number },
+		},
+	})
+	onTabSelect!: FireEventFn<TabContainerTabSelectEventDetail>;
 	/**
 	 * Defines whether the tabs are in a fixed state that is not
 	 * expandable/collapsible by user interaction.
@@ -769,7 +770,7 @@ class TabContainer extends UI5Element {
 	 * @returns {boolean} true if the tab selection is successful, false if it was prevented
 	 */
 	selectTab(selectedTab: Tab, selectedTabIndex: number) {
-		if (!this.fireEvent<TabContainerTabSelectEventDetail>("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
+		if (!this.onTabSelect({ tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
 			return false;
 		}
 

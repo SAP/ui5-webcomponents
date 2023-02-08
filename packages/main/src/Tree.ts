@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import TreeItem from "./TreeItem.js";
@@ -106,94 +106,104 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
 		TreeItemCustom,
 	],
 })
-/**
- * Fired when a tree item is expanded or collapsed.
- * <i>Note:</i> You can call <code>preventDefault()</code> on the event object to suppress the event, if needed.
- * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
- * Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
- *
- * @event sap.ui.webc.main.Tree#item-toggle
- * @param {HTMLElement} item the toggled item.
- * @allowPreventDefault
- * @public
- */
-@event("item-toggle", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-/**
- * Fired when the mouse cursor enters the tree item borders.
- * @event sap.ui.webc.main.Tree#item-mouseover
- * @param {HTMLElement} item the hovered item.
- * @since 1.0.0-rc.16
- * @public
- */
-@event("item-mouseover", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-/**
- * Fired when the mouse cursor leaves the tree item borders.
- * @event sap.ui.webc.main.Tree#item-mouseout
- * @param {HTMLElement} item the hovered item.
- * @since 1.0.0-rc.16
- * @public
- */
-@event("item-mouseout", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-/**
- * Fired when a tree item is activated.
- *
- * @event sap.ui.webc.main.Tree#item-click
- * @allowPreventDefault
- * @param {HTMLElement} item The clicked item.
- * @public
- */
-@event("item-click", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired when the Delete button of any tree item is pressed.
- * <br><br>
- * <b>Note:</b> A Delete button is displayed on each item,
- * when the component <code>mode</code> property is set to <code>Delete</code>.
- *
- * @event sap.ui.webc.main.Tree#item-delete
- * @param {HTMLElement} item the deleted item.
- * @public
- */
-@event("item-delete", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired when selection is changed by user interaction
- * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
- *
- * @event sap.ui.webc.main.Tree#selection-change
- * @param {Array} selectedItems An array of the selected items.
- * @param {Array} previouslySelectedItems An array of the previously selected items.
- * @param {HTMLElement} targetItem The item triggering the event.
- * @public
- */
-@event("selection-change", {
-	detail: {
-		selectedItems: { type: Array },
-		previouslySelectedItems: { type: Array },
-		targetItem: { type: HTMLElement },
-	},
-})
 class Tree extends UI5Element {
+	/**
+	 * Fired when a tree item is expanded or collapsed.
+	 * <i>Note:</i> You can call <code>preventDefault()</code> on the event object to suppress the event, if needed.
+	 * This may be handy for example if you want to dynamically load tree items upon the user expanding a node.
+	 * Even if you prevented the event's default behavior, you can always manually call <code>toggle()</code> on a tree item.
+	 *
+	 * @event sap.ui.webc.main.Tree#item-toggle
+	 * @param {HTMLElement} item the toggled item.
+	 * @allowPreventDefault
+	 * @public
+	 */
+	@event("item-toggle", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onItemToggle!: FireEventFn<TreeItemToggleEventDetail>;
+
+	/**
+	 * Fired when the mouse cursor enters the tree item borders.
+	 * @event sap.ui.webc.main.Tree#item-mouseover
+	 * @param {HTMLElement} item the hovered item.
+	 * @since 1.0.0-rc.16
+	 * @public
+	 */
+	@event("item-mouseover", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onItemMouseover!: FireEventFn<TreeItemMouseoverEventDetail>;
+
+	/**
+	 * Fired when the mouse cursor leaves the tree item borders.
+	 * @event sap.ui.webc.main.Tree#item-mouseout
+	 * @param {HTMLElement} item the hovered item.
+	 * @since 1.0.0-rc.16
+	 * @public
+	 */
+	@event("item-mouseout", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onItemMouseout!: FireEventFn<TreeItemMouseoutEventDetail>;
+
+	/**
+	 * Fired when a tree item is activated.
+	 *
+	 * @event sap.ui.webc.main.Tree#item-click
+	 * @allowPreventDefault
+	 * @param {HTMLElement} item The clicked item.
+	 * @public
+	 */
+	@event("item-click", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onItemClick!: FireEventFn<TreeItemClickEventDetail>;
+
+	/**
+	 * Fired when the Delete button of any tree item is pressed.
+	 * <br><br>
+	 * <b>Note:</b> A Delete button is displayed on each item,
+	 * when the component <code>mode</code> property is set to <code>Delete</code>.
+	 *
+	 * @event sap.ui.webc.main.Tree#item-delete
+	 * @param {HTMLElement} item the deleted item.
+	 * @public
+	 */
+	@event("item-delete", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onItemDelete!: FireEventFn<TreeItemDeleteEventDetail>;
+
+	/**
+	 * Fired when selection is changed by user interaction
+	 * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
+	 *
+	 * @event sap.ui.webc.main.Tree#selection-change
+	 * @param {Array} selectedItems An array of the selected items.
+	 * @param {Array} previouslySelectedItems An array of the previously selected items.
+	 * @param {HTMLElement} targetItem The item triggering the event.
+	 * @public
+	 */
+	@event("selection-change", {
+		detail: {
+			selectedItems: { type: Array },
+			previouslySelectedItems: { type: Array },
+			targetItem: { type: HTMLElement },
+		},
+	})
+	onSelectionChange!: FireEventFn<TreeItemSelectionChangeEventDetail>;
+
 	/**
 	 * Defines the mode of the component. Since the tree uses a <code>ui5-list</code> to display its structure,
 	 * the tree modes are exactly the same as the list modes, and are all applicable.
@@ -373,7 +383,7 @@ class Tree extends UI5Element {
 
 	_onListItemToggle(e: CustomEvent<TreeItemBaseToggleEventDetail>) {
 		const treeItem = e.detail.item;
-		const defaultPrevented = !this.fireEvent<TreeItemToggleEventDetail>("item-toggle", { item: treeItem }, true);
+		const defaultPrevented = !this.onItemToggle({ item: treeItem }, true);
 		if (!defaultPrevented) {
 			treeItem.toggle();
 		}
@@ -382,21 +392,21 @@ class Tree extends UI5Element {
 	_onListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
 
-		if (!this.fireEvent<TreeItemClickEventDetail>("item-click", { item: treeItem }, true)) {
+		if (!this.onItemClick({ item: treeItem }, true)) {
 			e.preventDefault();
 		}
 	}
 
 	_onListItemDelete(e: CustomEvent<ListItemDeleteEventDetail>) {
 		const treeItem = e.detail.item as TreeItemBase;
-		this.fireEvent<TreeItemDeleteEventDetail>("item-delete", { item: treeItem });
+		this.onItemDelete({ item: treeItem });
 	}
 
 	_onListItemMouseOver(e: MouseEvent) {
 		const target = e.target;
 
 		if (this._isInstanceOfTreeItemBase(target)) {
-			this.fireEvent<TreeItemMouseoverEventDetail>("item-mouseover", { item: target });
+			this.onItemMouseover({ item: target });
 		}
 	}
 
@@ -404,7 +414,7 @@ class Tree extends UI5Element {
 		const target = e.target;
 
 		if (this._isInstanceOfTreeItemBase(target)) {
-			this.fireEvent<TreeItemMouseoutEventDetail>("item-mouseout", { item: target });
+			this.onItemMouseout({ item: target });
 		}
 	}
 
@@ -420,7 +430,7 @@ class Tree extends UI5Element {
 			item.selected = true;
 		});
 
-		this.fireEvent<TreeItemSelectionChangeEventDetail>("selection-change", {
+		this.onSelectionChange({
 			previouslySelectedItems,
 			selectedItems,
 			targetItem,

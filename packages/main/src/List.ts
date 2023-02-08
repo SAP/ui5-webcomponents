@@ -479,7 +479,7 @@ class List extends UI5Element {
   _forwardingFocus: boolean;
   resizeListenerAttached: boolean;
   listEndObserved: boolean;
-  _handleResize: ResizeObserverCallback;
+  _handleResize: ResizeObserverCallback = this.checkListInViewport.bind(this);
   initialIntersection: boolean;
   _selectionRequested?: boolean;
   growingIntersectionObserver?: IntersectionObserver | null;
@@ -487,9 +487,11 @@ class List extends UI5Element {
   _beforeElement?: HTMLElement | null;
   _afterElement?: HTMLElement | null;
 
+
   static async onDefine() {
 	List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
   }
+
 
   constructor() {
 	super();
@@ -511,10 +513,6 @@ class List extends UI5Element {
 	  getItemsCallback: () => this.getEnabledItems(),
 	});
 
-	this._handleResize = this.checkListInViewport.bind(this);
-
-	this._handleResize = this.checkListInViewport.bind(this);
-
 	// Indicates the List bottom most part has been detected by the IntersectionObserver
 	// for the first time.
 	this.initialIntersection = true;
@@ -523,6 +521,7 @@ class List extends UI5Element {
   onExitDOM() {
 	this.unobserveListEnd();
 	this.resizeListenerAttached = false;
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 	ResizeHandler.deregister(this.getDomRef()!, this._handleResize);
   }
 
@@ -546,6 +545,7 @@ class List extends UI5Element {
   attachForResize() {
 	if (!this.resizeListenerAttached) {
 	  this.resizeListenerAttached = true;
+	  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 	  ResizeHandler.register(this.getDomRef()!, this._handleResize);
 	}
   }
@@ -711,26 +711,26 @@ class List extends UI5Element {
   }
 
   /*
-  * ITEM SELECTION BASED ON THE CURRENT MODE
-  */
+* ITEM SELECTION BASED ON THE CURRENT MODE
+*/
   onSelectionRequested(e: CustomEvent<SelectionRequestEventDetail>) {
-    const previouslySelectedItems = this.getSelectedItems();
-    let selectionChange = false;
-    this._selectionRequested = true;
+	const previouslySelectedItems = this.getSelectedItems();
+	let selectionChange = false;
+	this._selectionRequested = true;
 
-    if (this.mode !== ListMode.None && this[`handle${this.mode}`]) {
+	if (this.mode !== ListMode.None && this[`handle${this.mode}`]) {
 	  selectionChange = this[`handle${this.mode}`](e.detail.item, !!e.detail.selected);
-    }
+	}
 
-    if (selectionChange) {
+	if (selectionChange) {
 	  this.onSelectionChange({
-	    selectedItems: this.getSelectedItems(),
-	    previouslySelectedItems,
-	    selectionComponentPressed: e.detail.selectionComponentPressed,
-	    targetItem: e.detail.item,
-	    key: e.detail.key,
+		selectedItems: this.getSelectedItems(),
+		previouslySelectedItems,
+		selectionComponentPressed: e.detail.selectionComponentPressed,
+		targetItem: e.detail.item,
+		key: e.detail.key,
 	  });
-    }
+	}
   }
 
   handleSingleSelect(item: ListItemBase): boolean {
@@ -844,12 +844,12 @@ class List extends UI5Element {
   }
 
   loadMore() {
-    this.onLoadMore();
+	this.onLoadMore();
   }
 
   /*
-  * KEYBOARD SUPPORT
-  */
+* KEYBOARD SUPPORT
+*/
   _handleTabNext(e: KeyboardEvent) {
 	let lastTabbableEl;
 	const target = getNormalizedTarget(e.target as HTMLElement);
@@ -932,7 +932,7 @@ class List extends UI5Element {
 	e.stopPropagation();
 
 	this._itemNavigation.setCurrentItem(target);
-    this.onItemFocused({ item: target });
+	this.onItemFocused({item: target});
 
 	if (this.mode === ListMode.SingleSelectAuto) {
 	  const detail: SelectionRequestEventDetail = {
@@ -949,7 +949,7 @@ class List extends UI5Element {
   onItemPress(e: CustomEvent<PressEventDetail>) {
 	const pressedItem = e.detail.item;
 
-	if (!this.onItemClick({ item: pressedItem }, true)) {
+	if (!this.onItemClick({item: pressedItem}, true)) {
 	  return;
 	}
 

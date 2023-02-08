@@ -75,6 +75,10 @@ const isClass = text => {
 	return text.includes("@abstract") || text.includes("@class");
 };
 
+const isEvent = text => {
+	return text.includes("@event");
+};
+
 const isAnnotationComment = (comment) =>  {
 	return comment.includes("@name");
 }
@@ -105,7 +109,7 @@ const processComponentFile = async (fileName) => {
 	// Gather all JSDocs that are before the class definition (except for the @class one)
 	const JSDocsToAppend = [];
 	allJSDocs.forEach(JSDoc => {
-		if (!isClass(JSDoc) && (tsFileContent.indexOf(JSDoc) < tsClassDefinitionIndex || isAnnotationComment(JSDoc, tsFileContent))) {
+		if (isEvent(JSDoc) || !isClass(JSDoc) && (tsFileContent.indexOf(JSDoc) < tsClassDefinitionIndex || isAnnotationComment(JSDoc, tsFileContent))) {
 			JSDocsToAppend.push(JSDoc);
 		}
 	});

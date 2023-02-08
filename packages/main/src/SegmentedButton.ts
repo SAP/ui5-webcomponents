@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -59,19 +59,20 @@ type SegmentedButtonSelectionChangeEventDetail = {
 	styles: SegmentedButtonCss,
 	dependencies: [SegmentedButtonItem],
 })
-/**
- * Fired when the selected item changes.
- *
- * @event sap.ui.webc.main.SegmentedButton#selection-change
- * @param {HTMLElement} selectedItem the pressed item.
- * @public
- */
-@event("selection-change", {
-	detail: {
-		selectedItem: { type: HTMLElement },
-	},
-})
 class SegmentedButton extends UI5Element {
+	/**
+	 * Fired when the selected item changes.
+	 *
+	 * @event sap.ui.webc.main.SegmentedButton#selection-change
+	 * @param {HTMLElement} selectedItem the pressed item.
+	 * @public
+	 */
+	@event("selection-change", {
+		detail: {
+			selectedItem: { type: HTMLElement },
+		},
+	})
+	onSelectionChange!: FireEventFn<SegmentedButtonSelectionChangeEventDetail>;
 	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
@@ -201,7 +202,7 @@ class SegmentedButton extends UI5Element {
 				this._selectedItem.pressed = false;
 			}
 			this._selectedItem = target;
-			this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
+			this.onSelectionChange({
 				selectedItem: this._selectedItem,
 			});
 		}
