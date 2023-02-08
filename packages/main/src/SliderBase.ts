@@ -332,26 +332,6 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Prevent focus out when inner element within the component is currently being in process of focusing in.
-	 * In theory this can be achieved either if the shadow root is focusable and 'delegatesFocus' attribute of
-	 * the .attachShadow() customElement method is set to true, or if we forward it manually.
-
-	 * As we use lit-element as base of our core UI5 element class that 'delegatesFocus' property is not set to 'true' and
-	 * we have to manage the focus here. If at some point in the future this changes, the focus delegating logic could be
-	 * removed as it will become redundant.
-	 *
-	 * When we manually set the focus on mouseDown to the first focusable element inside the shadowDom,
-	 * that inner focus (shadowRoot.activeElement) is set a moment before the global document.activeElement
-	 * is set to the customElement (ui5-slider) causing a 'race condition'.
-	 *
-	 * In order for a element within the shadowRoot to be focused, the global document.activeElement MUST be the parent
-	 * customElement of the shadow root, in our case the ui5-slider component. Because of that after our focusin of the handle,
-	 * a focusout event fired by the browser immidiatly after, resetting the focus. Focus out must be manually prevented
-	 * in both initial focusing and switching the focus between inner elements of the component cases.
-
-	 * Note: If we set the focus to the handle with a timeout or a bit later in time, on a mouseup or click event it will
-	 * work fine and we will avoid the described race condition as our host customElement will be already finished focusing.
-	 * However, that does not work for us as we need the focus to be set to the handle exactly on mousedown,
-	 * because of the nature of the component and its available drag interactions.
 	 *
 	 * @private
 	 */
