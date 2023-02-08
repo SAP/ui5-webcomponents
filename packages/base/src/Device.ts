@@ -170,6 +170,9 @@ const isPhone = (): boolean => {
 };
 
 const isDesktop = (): boolean => {
+	if (isSSR) {
+		return false;
+	}
 	return (!isTablet() && !isPhone()) || isWindows8OrAbove();
 };
 
