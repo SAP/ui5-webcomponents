@@ -1,5 +1,7 @@
-commit 2830c67034ff0af7bd65e78e4bdd065bb2ca7954
-Author: Marcus Notheis <marcus.notheis@sap.com>
-Date:   Wed Feb 8 16:21:47 2023 +0100
+commit 80dc34ce0dec7a4e015e01d2904862d6a8f7011d
+Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
+Date:   Thu Feb 9 09:49:12 2023 +0200
 
-    refactor(Device): use internal getters to support SSR (#6421)
+    docs: add typescript conventions and guidelines section (#6433)
+    
+    * docs: add typescript conventions and guidelines section

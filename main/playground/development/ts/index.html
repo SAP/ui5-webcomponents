@@ -6226,14 +6226,14 @@
 
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">@</span><span class="nd">customElement</span><span class="p">(</span><span class="dl">"</span><span class="s2">ui5-menu</span><span class="dl">"</span><span class="p">)</span>
 <span class="p">@</span><span class="nd">event</span><span class="p">(</span><span class="dl">"</span><span class="s2">item-click</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
-    <span class="na">detail</span><span class="p">:</span> <span class="p">{</span>
-        <span class="na">item</span><span class="p">:</span> <span class="p">{</span>
-            <span class="na">type</span><span class="p">:</span> <span class="nb">Object</span><span class="p">,</span>
-        <span class="p">},</span>
-        <span class="na">text</span><span class="p">:</span> <span class="p">{</span>
-            <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
-        <span class="p">},</span>
-    <span class="p">},</span>
+	<span class="na">detail</span><span class="p">:</span> <span class="p">{</span>
+		<span class="na">item</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nb">Object</span><span class="p">,</span>
+		<span class="p">},</span>
+		<span class="na">text</span><span class="p">:</span> <span class="p">{</span>
+			<span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+		<span class="p">},</span>
+	<span class="p">},</span>
 <span class="p">})</span>
 <span class="kd">class</span> <span class="nx">MyClass</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
 
@@ -6252,8 +6252,8 @@ Such decorators are used for properties and slots:</p>
 <p>Example:</p>
 
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">MyClass</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-    <span class="p">@</span><span class="nd">property</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="nb">Boolean</span> <span class="p">})</span>
-    <span class="nx">open</span><span class="o">!</span><span class="p">:</span><span class="nx">boolean</span><span class="p">;</span>
+	<span class="p">@</span><span class="nd">property</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="nb">Boolean</span> <span class="p">})</span>
+	<span class="nx">open</span><span class="o">!</span><span class="p">:</span><span class="nx">boolean</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -6365,29 +6365,29 @@ always have a default value of <code class="language-plaintext highlighter-rouge
 
 <p>Wrong:</p>
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Button</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-    <span class="p">@</span><span class="nd">property</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="nx">ButtonDesign</span> <span class="p">})</span>
-    <span class="nx">design</span><span class="p">:</span> <span class="nx">ButtonDesign</span> <span class="o">=</span> <span class="nx">ButtonDesign</span><span class="p">.</span><span class="nx">Default</span><span class="p">;</span>
+	<span class="p">@</span><span class="nd">property</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="nx">ButtonDesign</span> <span class="p">})</span>
+	<span class="nx">design</span><span class="p">:</span> <span class="nx">ButtonDesign</span> <span class="o">=</span> <span class="nx">ButtonDesign</span><span class="p">.</span><span class="nx">Default</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <p>Also Wrong:</p>
 
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Button</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-    <span class="p">@</span><span class="nd">property</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="nx">ButtonDesign</span> <span class="p">})</span>
-    <span class="nx">design</span><span class="p">:</span> <span class="nx">ButtonDesign</span><span class="p">;</span>
+	<span class="p">@</span><span class="nd">property</span><span class="p">({</span> <span class="na">type</span><span class="p">:</span> <span class="nx">ButtonDesign</span> <span class="p">})</span>
+	<span class="nx">design</span><span class="p">:</span> <span class="nx">ButtonDesign</span><span class="p">;</span>
 
-    <span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">super</span><span class="p">();</span>
-        <span class="k">this</span><span class="p">.</span><span class="nx">design</span> <span class="o">=</span> <span class="nx">ButtonDesign</span><span class="p">.</span><span class="nx">Default</span><span class="p">;</span>
-    <span class="p">}</span>
+	<span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">super</span><span class="p">();</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">design</span> <span class="o">=</span> <span class="nx">ButtonDesign</span><span class="p">.</span><span class="nx">Default</span><span class="p">;</span>
+	<span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
 <p>Correct:</p>
 
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">Button</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
-    <span class="p">@</span><span class="nd">property</span><span class="p">({</span><span class="na">type</span><span class="p">:</span> <span class="nx">ButtonDesign</span><span class="p">,</span> <span class="na">defaultValue</span><span class="p">:</span> <span class="nx">ButtonDesign</span><span class="p">.</span><span class="nx">Default</span> <span class="p">})</span>
-    <span class="nx">design</span><span class="o">!</span><span class="p">:</span> <span class="nx">ButtonDesign</span><span class="p">;</span>    
+	<span class="p">@</span><span class="nd">property</span><span class="p">({</span><span class="na">type</span><span class="p">:</span> <span class="nx">ButtonDesign</span><span class="p">,</span> <span class="na">defaultValue</span><span class="p">:</span> <span class="nx">ButtonDesign</span><span class="p">.</span><span class="nx">Default</span> <span class="p">})</span>
+	<span class="nx">design</span><span class="o">!</span><span class="p">:</span> <span class="nx">ButtonDesign</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -6405,8 +6405,8 @@ since Typescript does not know that the framework will create a special getter f
  * @type {HTMLElement[]}
  */</span>
 <span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-  <span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
-  <span class="nx">propertyName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">items</span><span class="dl">"</span><span class="p">,</span>
+	<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
+	<span class="nx">propertyName</span><span class="p">:</span> <span class="dl">"</span><span class="s2">items</span><span class="dl">"</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -6429,8 +6429,8 @@ decorator definition, and use <code class="language-plaintext highlighter-rouge"
  * @type {HTMLElement[]}
  */</span>
 <span class="nx">content</span><span class="p">:</span> <span class="p">{</span>
-  <span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
-  <span class="nx">invalidateOnChildChange</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+	<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
+	<span class="nx">invalidateOnChildChange</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -6452,7 +6452,7 @@ decorator definition, and use <code class="language-plaintext highlighter-rouge"
  * @type {HTMLElement[]}
  */</span>
 <span class="dl">"</span><span class="s2">default</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-  <span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
+	<span class="nl">type</span><span class="p">:</span> <span class="nx">HTMLElement</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -6528,7 +6528,7 @@ Therefore, whenever you use <code class="language-plaintext highlighter-rouge">@
 </ol>
 
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">ListItemClickEventDetail</span> <span class="p">{</span>
-    <span class="nl">item</span><span class="p">:</span> <span class="nx">ListItemBase</span><span class="p">,</span>
+	<span class="nl">item</span><span class="p">:</span> <span class="nx">ListItemBase</span><span class="p">,</span>
 <span class="p">}</span>
 </code></pre></div></div>
 
@@ -6549,8 +6549,340 @@ Therefore, whenever you use <code class="language-plaintext highlighter-rouge">@
 <p>Then, the users of your component can import the detail type and pass it to <code class="language-plaintext highlighter-rouge">CustomEvent</code>, for example:</p>
 
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">onItemClick</span><span class="p">(</span><span class="nx">e</span><span class="p">:</span> <span class="nx">CustomEvent</span><span class="o">&lt;</span><span class="nx">ListItemClickEventDetail</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">{</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">item</span><span class="p">);</span>
+	<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">detail</span><span class="p">.</span><span class="nx">item</span><span class="p">);</span>
 <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="conventions-and-guidelines">Conventions and guidelines</h2>
+
+<h3 id="conventions">Conventions</h3>
+<p><br /></p>
+
+<p><strong>1. Rename <code class="language-plaintext highlighter-rouge">"event"</code> to <code class="language-plaintext highlighter-rouge">"e"</code> in the <code class="language-plaintext highlighter-rouge">.ts</code> files as it collides with the <code class="language-plaintext highlighter-rouge">@event</code> decorator</strong>.</p>
+
+<p>Since the event decorator is being imported with the <code class="language-plaintext highlighter-rouge">event</code> keyword</p>
+
+<p>Example:</p>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">event</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/decorators/event.js</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+<p>Using the keyword <code class="language-plaintext highlighter-rouge">"event"</code> as a paramater for our handlers leads to a collision between the parameter and the <code class="language-plaintext highlighter-rouge">@event</code> decorator. <br /></p>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Before ( which would lead to a name collision now )</span>
+
+<span class="nx">_onfocusin</span><span class="p">(</span><span class="nx">event</span><span class="p">:</span> <span class="nx">FocusEvent</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">const</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span> <span class="k">as</span> <span class="nx">ProductSwitchItem</span><span class="p">;</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">_itemNavigation</span><span class="p">.</span><span class="nx">setCurrentItem</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">_currentIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>In order to avoid this and keep consistency, we made a decision to name the parameters in our handlers <code class="language-plaintext highlighter-rouge">"e"</code> instead.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// After</span>
+
+<span class="nx">_onfocusin</span><span class="p">(</span><span class="nx">e</span><span class="p">:</span> <span class="nx">FocusEvent</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kd">const</span> <span class="nx">target</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">target</span> <span class="k">as</span> <span class="nx">ProductSwitchItem</span><span class="p">;</span>
+
+	<span class="k">this</span><span class="p">.</span><span class="nx">_itemNavigation</span><span class="p">.</span><span class="nx">setCurrentItem</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+	<span class="k">this</span><span class="p">.</span><span class="nx">_currentIndex</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">items</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">target</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>2. Initialize all class members directly in the constructor.</strong></p>
+
+<p>When creating classes, initialize <strong>all</strong> class members directly in the constructor, and not in another method, called in the constructor. This is to ensure that TypeScript understands that a class member will be always initialized, therefore is not optional. <br /></p>
+
+<p>Example:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Before </span>
+
+<span class="kd">class</span> <span class="nx">UI5Element</span> <span class="kd">extends</span> <span class="nx">HTMLElement</span> <span class="p">{</span>
+	<span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">super</span><span class="p">();</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">_initializeState</span><span class="p">();</span>
+	<span class="p">}</span>
+
+	<span class="nx">_initializeState</span><span class="p">()</span> <span class="p">{</span>
+		<span class="kd">const</span> <span class="nx">ctor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="kd">constructor</span><span class="p">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">_state</span> <span class="o">=</span> <span class="p">{</span> <span class="p">...</span><span class="nx">ctor</span><span class="p">.</span><span class="nx">getMetadata</span><span class="p">().</span><span class="nx">getInitialState</span><span class="p">()</span> <span class="p">};</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Before the change, we used to initialize <code class="language-plaintext highlighter-rouge">_state</code> in the <code class="language-plaintext highlighter-rouge">_initializeState</code> function. However, after the refactoring to TypeScript, we must do it directly in the constructor, otherwise it is not recognized as <strong>always</strong> initialized.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// After</span>
+
+<span class="kd">class</span> <span class="nx">UI5Element</span> <span class="kd">extends</span> <span class="nx">HTMLElement</span> <span class="p">{</span>
+	<span class="nl">_state</span><span class="p">:</span> <span class="nx">State</span><span class="p">,</span>
+
+	<span class="kd">constructor</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">super</span><span class="p">();</span>
+		<span class="kd">const</span> <span class="nx">ctor</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="kd">constructor</span> <span class="k">as</span> <span class="k">typeof</span> <span class="nx">UI5Element</span><span class="p">;</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">_state</span> <span class="o">=</span> <span class="p">{</span> <span class="p">...</span><span class="nx">ctor</span><span class="p">.</span><span class="nx">getMetadata</span><span class="p">().</span><span class="nx">getInitialState</span><span class="p">()</span> <span class="p">};</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>3. Create types for the Event Details.</strong></p>
+
+<p>To enhance the quality and readability of our code, we should establish specific types for the <code class="language-plaintext highlighter-rouge">Event Details</code>. This approach will clearly define the required <strong><code class="language-plaintext highlighter-rouge">data</code></strong> for an event and optimize its usage. Without well-defined <code class="language-plaintext highlighter-rouge">EventDetail</code> types, we may also encounter naming conflicts between similar event names in various components, leading to potential errors. Implementing <code class="language-plaintext highlighter-rouge">EventDetail</code> types will effectively resolve this issue.</p>
+
+<ul>
+  <li>
+    <p><strong><em>3.1 How should we structure the name of our EventDetail type ?</em></strong></p>
+  </li>
+  <li>
+    <ul>
+      <li>In order to be consistent within our project, the latest convention about how we name our EventDetail types is by using the following pattern: <br /></li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// File: DayPicker.ts</span>
+
+<span class="c1">// The pattern is </span>
+<span class="c1">// &lt;&lt;WebComponentName&gt;&lt;EventName&gt;&lt;EventDetail&gt;&gt;</span>
+
+<span class="kd">type</span> <span class="nx">DayPickerChangeEventDetail</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">dates</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="kr">number</span><span class="o">&gt;</span><span class="p">,</span>
+	<span class="nx">timestamp</span><span class="p">?:</span> <span class="kr">number</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="nx">DayPicker</span> <span class="kd">extends</span> <span class="nx">CalendarPart</span> <span class="k">implements</span> <span class="nx">ICalendarPicker</span> <span class="p">{</span>
+	<span class="p">...</span>
+	<span class="nx">_selectDate</span><span class="p">(</span><span class="nx">e</span><span class="p">:</span> <span class="nx">Event</span><span class="p">,</span> <span class="nx">isShift</span><span class="p">:</span> <span class="nx">boolean</span><span class="p">)</span> <span class="p">{</span>
+		<span class="p">...</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">fireEvent</span><span class="o">&lt;</span><span class="nx">DayPickerChangeEventDetail</span><span class="o">&gt;</span><span class="p">(</span><span class="dl">"</span><span class="s2">change</span><span class="dl">"</span><span class="p">,</span> <span class="p">{</span>
+			<span class="na">timestamp</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">timestamp</span><span class="p">,</span>
+			<span class="na">dates</span><span class="p">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">selectedDates</span><span class="p">,</span>
+		<span class="p">});</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>4. Use the syntax of <code class="language-plaintext highlighter-rouge">Array&lt;T&gt;</code> instead of <code class="language-plaintext highlighter-rouge">T[]</code>.</strong></p>
+
+<p>While both notations work the same way, we have chosen to utilize the <code class="language-plaintext highlighter-rouge">Array&lt;T&gt;</code> notation, as opposed to <code class="language-plaintext highlighter-rouge">T[]</code>, to maintain consistency with the notations for <code class="language-plaintext highlighter-rouge">Map&lt;&gt;</code> and <code class="language-plaintext highlighter-rouge">Record&lt;&gt;</code>.</p>
+
+<p>For example:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Instead of</span>
+<span class="kd">let</span> <span class="nx">openedRegistry</span><span class="p">:</span> <span class="nx">RegisteredPopUpT</span><span class="p">[]</span> <span class="o">=</span> <span class="p">[];</span>
+
+<span class="c1">// We’ll use</span>
+<span class="kd">let</span> <span class="nx">openedRegistry</span><span class="p">:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">RegisteredPopupT</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">[];</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>5. Use enums over object literals.</strong></p>
+
+<p>Instead of using object literals, we have opted for <code class="language-plaintext highlighter-rouge">enums</code> to enhance <strong>type safety and maintainability</strong>. The use of enums provides compile-time type safety, reducing the potential for errors and making the code easier to manage. It is also important to note that all types in our “types” folder are already represented as <code class="language-plaintext highlighter-rouge">enums</code>.</p>
+
+<p>Example:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// File: ColorConvension.ts</span>
+
+<span class="c1">// Instead of </span>
+
+<span class="kd">const</span> <span class="nx">CSSColors</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">aliceblue</span><span class="p">:</span> <span class="dl">"</span><span class="s2">f0f8ff</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">antiquewhite</span><span class="p">:</span> <span class="dl">"</span><span class="s2">faebd7</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">aqua</span><span class="p">:</span> <span class="dl">"</span><span class="s2">00ffff</span><span class="dl">"</span><span class="p">,</span>
+	<span class="na">aquamarine</span><span class="p">:</span> <span class="dl">"</span><span class="s2">7fffd4</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="c1">// We’ll use </span>
+
+<span class="kr">enum</span> <span class="nx">CSSColors</span> <span class="p">{</span>
+	<span class="nx">aliceblue</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">f0f8ff</span><span class="dl">"</span><span class="p">,</span>
+	<span class="nx">antiquewhite</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">faebd7</span><span class="dl">"</span><span class="p">,</span>
+	<span class="nx">aqua</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">00ffff</span><span class="dl">"</span><span class="p">,</span>
+	<span class="nx">aquamarine</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">7fffd4</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>6. Use the <code class="language-plaintext highlighter-rouge">"keyof typeof"</code> syntax when accessing dynamically objects with known keys.</strong></p>
+
+<p>When accessing dynamically objects with <strong>known</strong> keys, always use the <code class="language-plaintext highlighter-rouge">"keyof typeof"</code> syntax for improved accuracy.</p>
+
+<p>Example:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// File: ColorConvension.ts</span>
+
+<span class="kr">enum</span> <span class="nx">CSSColors</span> <span class="p">{</span>
+	<span class="nx">aliceblue</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">f0f8ff</span><span class="dl">"</span><span class="p">,</span>
+	<span class="nx">antiquewhite</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">faebd7</span><span class="dl">"</span><span class="p">,</span>
+	<span class="nx">aqua</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">00ffff</span><span class="dl">"</span><span class="p">,</span>
+	<span class="nx">aquamarine</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">7fffd4</span><span class="dl">"</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="err">…</span>
+
+<span class="kd">const</span> <span class="nx">getRGBColor</span> <span class="o">=</span> <span class="p">(</span><span class="nx">color</span><span class="p">:</span> <span class="kr">string</span><span class="p">):</span> <span class="nx">ColorRGB</span> <span class="o">=&gt;</span> <span class="p">{</span>
+	<span class="p">...</span>
+	<span class="k">if</span> <span class="p">(</span><span class="nx">color</span> <span class="k">in</span> <span class="nx">CSSColors</span><span class="p">)</span> <span class="p">{</span>
+		<span class="nx">color</span> <span class="o">=</span> <span class="nx">CSSColors</span><span class="p">[</span><span class="nx">color</span> <span class="k">as</span> <span class="kr">keyof</span> <span class="k">typeof</span> <span class="nx">CSSColors</span><span class="p">];</span>
+	<span class="p">}</span>
+
+	<span class="k">return</span> <span class="nx">HEXToRGB</span><span class="p">(</span><span class="nx">color</span><span class="p">);</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
+<p>#
+In the cases where the keys are unknown or uncertain we use the <code class="language-plaintext highlighter-rouge">Record&lt;K, T&gt;</code> notation instead of the <code class="language-plaintext highlighter-rouge">{[key]}</code> notation.<br />
+In short, <code class="language-plaintext highlighter-rouge">Record&lt;K, T&gt;</code> is a TypeScript notation for describing an object with keys of <code class="language-plaintext highlighter-rouge">type K</code> and values of <code class="language-plaintext highlighter-rouge">type T</code>.</p>
+
+<p>Example:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// File: UI5ElementMetadata.ts</span>
+<span class="p">...</span>
+<span class="kd">type</span> <span class="nx">Metadata</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">tag</span><span class="p">:</span> <span class="kr">string</span><span class="p">,</span>
+	<span class="nx">managedSlots</span><span class="p">?:</span> <span class="nx">boolean</span><span class="p">,</span>
+	<span class="nx">properties</span><span class="p">?:</span> <span class="nb">Record</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">Property</span><span class="o">&gt;</span><span class="p">,</span>
+	<span class="nx">slots</span><span class="p">?:</span> <span class="nb">Record</span><span class="o">&lt;</span><span class="kr">string</span><span class="p">,</span> <span class="nx">Slot</span><span class="o">&gt;</span><span class="p">,</span>
+	<span class="nx">events</span><span class="p">?:</span> <span class="nb">Array</span><span class="o">&lt;</span><span class="nx">object</span><span class="o">&gt;</span><span class="p">,</span>
+	<span class="nx">fastNavigation</span><span class="p">?:</span> <span class="nx">boolean</span><span class="p">,</span>
+	<span class="nx">themeAware</span><span class="p">?:</span> <span class="nx">boolean</span><span class="p">,</span>
+	<span class="nx">languageAware</span><span class="p">?:</span> <span class="nx">boolean</span><span class="p">,</span>
+<span class="p">};</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>7. Do not use “any”, unless absolutely necessary.</strong></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">"any"</code> type, while powerful, can be a <strong>dangerous</strong> feature as it instructs the TypeScript compiler to ignore type checking for a specific variable or expression. This can result in errors and make the code more complex to understand and maintain. Our <code class="language-plaintext highlighter-rouge">ESLint</code> usually takes care of this by enforcing best practices and avoiding its usage.</p>
+
+<p><br /></p>
+
+<h3 id="typescript-specific-guidelines">TypeScript specific guidelines</h3>
+<p><br /></p>
+
+<p><strong>1. When to use “import type” ?</strong></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">import</code> keyword is used to import values from a module, while <code class="language-plaintext highlighter-rouge">import type</code> is used to import only the type information of a module without its values. This type information can be used in type annotations and declarations.
+<br /></p>
+
+<p>For clarity, it is recommended to keep <strong><em>type</em></strong> and <strong><em>non-type</em></strong> imports on separate lines and explicitly mark types with the <code class="language-plaintext highlighter-rouge">type</code> keyword, as in the following example:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// This line</span>
+
+<span class="k">import</span> <span class="nx">I18nBundle</span><span class="p">,</span> <span class="p">{</span> <span class="nx">getI18nBundle</span><span class="p">,</span> <span class="nx">I18nText</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// Should be split into </span>
+
+<span class="c1">// Named export (function) used into the the component class</span>
+<span class="k">import</span> <span class="p">{</span> <span class="nx">getI18nBundle</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// Default export used into the the component class.</span>
+<span class="c1">// I18nBundle is a class constructor, but in the current example it's used </span>
+<span class="c1">// as a type for a variable to which the class will be assinged.</span>
+<span class="k">import</span> <span class="kd">type</span> <span class="nx">I18nBundle</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="c1">// named type export</span>
+<span class="k">import</span> <span class="kd">type</span> <span class="p">{</span> <span class="nx">I18nText</span> <span class="p">}</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/i18nBundle.js</span><span class="dl">"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><strong>2. When should we use the <code class="language-plaintext highlighter-rouge">"!"</code> operator in component’s file ?</strong></p>
+
+<p>The <code class="language-plaintext highlighter-rouge">!</code> operator in TypeScript is used to indicate that a value is not <code class="language-plaintext highlighter-rouge">null</code> or <code class="language-plaintext highlighter-rouge">undefined</code> in situations where the type checker cannot determine it.</p>
+
+<p>It is commonly used when working with the <code class="language-plaintext highlighter-rouge">this.getDomRef()</code> and <code class="language-plaintext highlighter-rouge">this.shadowRoot</code> properties in our web components. The return types of these properties, <code class="language-plaintext highlighter-rouge">HTMLElement | null</code> and <code class="language-plaintext highlighter-rouge">ShadowRoot | null</code>, respectively, are marked with <code class="language-plaintext highlighter-rouge">null</code> because there may be instances when these values are not yet available.</p>
+
+<p>This operator can also be used in other situations where TypeScript does not understand the framework’s lifecycle, for example, when working with custom elements.</p>
+
+<p>In short, the <code class="language-plaintext highlighter-rouge">!</code> operator is a useful tool for ensuring that a value is not <code class="language-plaintext highlighter-rouge">null</code> or <code class="language-plaintext highlighter-rouge">undefined</code> in cases where the type checker cannot determine this on its own.</p>
+
+<p>For example:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">UI5Element</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">sap/ui/core/Element</span><span class="dl">"</span><span class="p">;</span>
+
+<span class="kd">class</span> <span class="nx">Example</span> <span class="kd">extends</span> <span class="nx">UI5Element</span> <span class="p">{</span>
+	<span class="nl">testProperty</span><span class="p">?:</span> <span class="kr">string</span><span class="p">;</span>
+
+	<span class="nx">onBeforeRendering</span><span class="p">()</span> <span class="p">{</span>
+		<span class="k">this</span><span class="p">.</span><span class="nx">testProperty</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Some text</span><span class="dl">"</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="nx">onAfterRendering</span><span class="p">()</span> <span class="p">{</span>
+		<span class="c1">// here TypeScript will complain about that the testProperty may be undefined</span>
+		<span class="c1">// in order of its definition and because it doesn't understand the framework's lifecycle</span>
+		<span class="kd">const</span> <span class="nx">varName</span><span class="p">:</span> <span class="kr">string</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">testProperty</span><span class="o">!</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>3. Usage of Generics.</strong></p>
+
+<p>Generics in TypeScript help us with the creation of classes, functions, and other entities that can work with multiple types, instead of just a single one. This allows users to use their own types when consuming these entities.</p>
+
+<p>In the migration to TypeScript, generic functions have been added to the <code class="language-plaintext highlighter-rouge">UI5Element</code>, and a common approach for using built-in generics has been established.</p>
+
+<p>Our first generic function is the <code class="language-plaintext highlighter-rouge">fireEvent</code> function, which uses generics to describe the event details and to check that all necessary details have been provided. The types used to describe the details provide helpful information to consumers of the event as explained above.</p>
+
+<p>For example:</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">fireEvent</span><span class="o">&lt;</span><span class="nx">EventDetail</span><span class="o">&gt;</span><span class="p">(</span><span class="dl">"</span><span class="s2">click</span><span class="dl">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<p>The use of custom events as the type for the first argument of an event handler can result in TypeScript complaining about unknown properties in the details. By using generics and introducing a type for event details, we can tell Typescript which parameters are included in the details, and thus avoid these complaints.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">handleClick</span><span class="p">(</span><span class="nx">e</span><span class="p">:</span> <span class="nx">CustomEvent</span><span class="o">&lt;</span><span class="nx">EventDetail</span><span class="o">&gt;</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>The second use of generics is in the <code class="language-plaintext highlighter-rouge">querySelector</code> function. It allows us to specify a custom element return type, such as “List,” while retaining the default return type of <code class="language-plaintext highlighter-rouge">T | null.</code> This allows for more precise type checking and better understanding of the expected return value.</p>
+
+<p>It’s important to note that casting the returned result will exclude “<code class="language-plaintext highlighter-rouge">null</code>.” Additionally, if the result is always in the template and not surrounded by expressions, the “!” operator can be used.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">async</span> <span class="nx">_getDialog</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">const</span> <span class="nx">staticAreaItem</span> <span class="o">=</span> <span class="k">await</span> <span class="k">this</span><span class="p">.</span><span class="nx">getStaticAreaItemDomRef</span><span class="p">();</span>
+	<span class="k">return</span> <span class="nx">staticAreaItem</span><span class="o">!</span><span class="p">.</span><span class="nx">querySelector</span><span class="o">&lt;</span><span class="nx">Dialog</span><span class="o">&gt;</span><span class="p">(</span><span class="dl">"</span><span class="s2">[ui5-dialog]</span><span class="dl">"</span><span class="p">)</span><span class="o">!</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The third use case for generics is with the <code class="language-plaintext highlighter-rouge">getFeature</code> function. This function enables us to retrieve a feature, if it is <strong>registered</strong>. It is important to note that <code class="language-plaintext highlighter-rouge">getFeature</code> returns the class definition, rather than an instance of the class. To use it effectively, the <code class="language-plaintext highlighter-rouge">typeof</code> keyword should be utilized to obtain the class type, which will then be set as the return type of the function.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code>	<span class="nx">getFeature</span><span class="o">&lt;</span><span class="k">typeof</span> <span class="nx">FormSupportT</span><span class="o">&gt;</span><span class="p">(</span><span class="dl">"</span><span class="s2">FormSupport</span><span class="dl">"</span><span class="p">)</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>4. Managing Component Styles with <code class="language-plaintext highlighter-rouge">CSSMap</code> and <code class="language-plaintext highlighter-rouge">ComponentStylesData</code> in the Inheritance Chain</strong></p>
+
+<p>To resolve inheritance chain issues, we introduced two types that can be used in the components. All components have implemented a static <code class="language-plaintext highlighter-rouge">get styles</code> function that returns either an array with required styles or just the component styles without an array. However, depending on the inheritance chain, TypeScript may complain about wrong return types, without considering that they will be merged into a flat array in the end.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// File: ListItem.ts</span>
+
+<span class="k">static</span> <span class="kd">get</span> <span class="nx">styles</span><span class="p">():</span> <span class="nx">ComponentStylesData</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="p">[</span><span class="nx">ListItemBase</span><span class="p">.</span><span class="nx">styles</span><span class="p">,</span> <span class="nx">styles</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><br /></p>
+
+<p><strong>5. Resolving the <code class="language-plaintext highlighter-rouge">this</code> type error with TypeScript.</strong></p>
+
+<p>By default in Strict Mode, the type of <code class="language-plaintext highlighter-rouge">this</code> is explicitly <code class="language-plaintext highlighter-rouge">any</code>. When used in a global context function, as in the example, TypeScript will raise an error that <code class="language-plaintext highlighter-rouge">this</code> has an explicit type of <code class="language-plaintext highlighter-rouge">any</code>. To resolve this, you can add <code class="language-plaintext highlighter-rouge">this</code> as the first argument to the function and provide its type, usually the context in which the function will be used.</p>
+
+<div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">type</span> <span class="nx">MyType</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">base</span><span class="p">:</span> <span class="kr">number</span><span class="p">;</span>
+	<span class="nl">pow</span><span class="p">:</span> <span class="p">(</span><span class="na">exponent</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="kr">number</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">function</span> <span class="nx">pow</span><span class="p">(</span><span class="k">this</span><span class="p">:</span> <span class="nx">MyType</span><span class="p">,</span> <span class="nx">exponent</span><span class="p">:</span> <span class="kr">number</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">base</span><span class="p">,</span> <span class="nx">exponent</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">const</span> <span class="nx">basePow</span><span class="p">:</span> <span class="nx">MyType</span> <span class="o">=</span> <span class="p">{</span>
+	<span class="na">base</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+	<span class="nx">pow</span><span class="p">,</span>
+<span class="p">};</span>
 </code></pre></div></div>
 
 
