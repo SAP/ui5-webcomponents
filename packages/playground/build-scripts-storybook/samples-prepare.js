@@ -23,28 +23,33 @@ const main = async () => {
 				const componentPath = path.join(packagePath, component);
 				const componentStats = await fs.stat(componentPath);
 				if (componentStats.isDirectory()) {
-					generateStoryDoc(componentPath, component, api);
+					generateStoryDoc(componentPath, component, api, package);
 				}
 			}
 		}
 	}
 
-	async function generateStoryDoc(componentPath, component, api) {
+	async function generateStoryDoc(componentPath, component, api, package) {
 		console.log(`Generating argTypes for story ${component}`);
-		const apiData = getAPIData(api, component);
-		const { storyArgsTypes, slotNames } = apiData;
+		const apiData = getAPIData(api, component, package);
+		const { storyArgsTypes, slotNames, info } = apiData;
 
 		await fs.writeFile(componentPath + '/argTypes.ts', `export default ${storyArgsTypes};
+export const componentInfo = ${JSON.stringify(info, null, 4)};
 export type StoryArgsSlots = {
 	${slotNames.map(slotName => `${slotName}: string;`).join('\n	')}
 }`);
 	};
 
-	function getAPIData(api, module) {
+	function getAPIData(api, module, package) {
 		const moduleAPI = api.symbols.find(s => s.module === module);
 		const data = getArgsTypes(api, moduleAPI);
 
 		return {
+			info: {
+				package: `@ui5/webcomponents${package !== 'main' ? `-${package}` : ''}`,
+				since: moduleAPI.since
+			},
 			slotNames: data.slotNames,
 			storyArgsTypes: JSON.stringify(data.args, null, "\t")
 		};

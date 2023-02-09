@@ -6,15 +6,24 @@ import type { Story, Meta } from "@storybook/web-components";
 // @ts-ignore
 import type Select from "@ui5/webcomponents/dist/Select.js";
 
-import argTypes from "./argTypes.js";
+import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
+import { DocsPage } from "../../../.storybook/docs";
+
+const component = "ui5-select";
+
 export default {
   title: "Components/Select",
-  component: "ui5-select",
+  component,
   subcomponents: { Option: "ui5-option" },
   argTypes,
+  parameters: {
+    docs: {
+      page: DocsPage({ ...componentInfo, component })
+    },
+  },
 } as Meta<Select>;
 
 const Template: UI5StoryArgs<Select, StoryArgsSlots> = (args) => {

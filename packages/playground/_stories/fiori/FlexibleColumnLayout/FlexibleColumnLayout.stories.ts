@@ -3,16 +3,25 @@ import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 
-import argTypes from "./argTypes.js";
+import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
+
+import { DocsPage } from "../../../.storybook/docs";
 
 // @ts-ignore
 import type FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";
 
+const component = "ui5-flexible-column-layout";
+
 export default {
   title: "Components/FlexibleColumnLayout",
-  component: "ui5-flexible-column-layout",
+  component,
+  parameters: {
+    docs: {
+      page: DocsPage({ ...componentInfo, component })
+    },
+  },
   argTypes,
 } as Meta<FlexibleColumnLayout>;
 

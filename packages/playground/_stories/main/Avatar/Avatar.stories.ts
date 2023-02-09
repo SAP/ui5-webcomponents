@@ -7,7 +7,7 @@ import type Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
 import AvatarShape from "@ui5/webcomponents/dist/types/AvatarShape.js";
 
-import argTypes from "./argTypes.js";
+import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
@@ -21,7 +21,7 @@ export default {
   argTypes,
   parameters: {
     docs: {
-      page: DocsPage({ component, since: "v1.110.3" })
+      page: DocsPage({ ...componentInfo, component })
     },
   },
 } as Meta<Avatar>;

@@ -7,7 +7,7 @@ import type { Story, Meta } from "@storybook/web-components";
 import type AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
 import AvatarGroupType from "@ui5/webcomponents/dist/types/AvatarGroupType.js";
 
-import argTypes from "./argTypes.js";
+import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
@@ -25,7 +25,7 @@ export default {
   argTypes,
   parameters: {
     docs: {
-      page: DocsPage({ component, since: "v1.110.3" })
+      page: DocsPage({ ...componentInfo, component })
     },
   },
 } as Meta<AvatarGroup>;
