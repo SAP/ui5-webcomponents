@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import type { Story, Meta } from "@storybook/web-components";
+import type { StoryFn, Meta } from "@storybook/web-components";
 
 // @ts-ignore
 import type AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
@@ -71,14 +71,14 @@ TypeIndividual.args = {
 };
 
 // Type Individual with Popover
-export const TypeIndividualWithPopover: Story =
+export const TypeIndividualWithPopover: StoryFn =
   TemplateIndividualWithPopover.bind({});
 TypeIndividualWithPopover.storyName = "Type Individual with Popover";
 
 // Type Group with Popover
-export const TypeGroupWithPopover: Story = TemplateGroupWithPopover.bind({});
+export const TypeGroupWithPopover: StoryFn = TemplateGroupWithPopover.bind({});
 TypeGroupWithPopover.storyName = "Type Group with Popover";
 
 // Sizes
-export const Sizes: Story = TemplateAvatarGroupSizes.bind({});
+export const Sizes: StoryFn = TemplateAvatarGroupSizes.bind({});
 Sizes.storyName = "Sizes";

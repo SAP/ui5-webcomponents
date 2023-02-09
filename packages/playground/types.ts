@@ -1,4 +1,4 @@
-import type { Story } from "@storybook/web-components";
+import type { StoryFn } from "@storybook/web-components";
 
 type OmitAttributes = "style";
 
@@ -16,6 +16,6 @@ type Override<ComponentClass, StoryArgs> = {
   style?: string;
 };
 
-export type UI5StoryArgs<ComponentClass, StoryArgs> = Story<
+export type UI5StoryArgs<ComponentClass, StoryArgs> = StoryFn<
   Override<ComponentClass, StoryArgs>
 >;

@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import type { Story, Meta } from "@storybook/web-components";
+import type { StoryFn, Meta } from "@storybook/web-components";
 
 // @ts-ignore
 import type Select from "@ui5/webcomponents/dist/Select.js";
@@ -52,7 +52,7 @@ Basic.args = {
 
 // Value State and Value State Message
 
-export const ValueStateAndValueStateMessage: Story = () =>
+export const ValueStateAndValueStateMessage: StoryFn = () =>
   html`<ui5-select value-state="Success" class="select">
       <ui5-option icon="meal" selected="">Apple</ui5-option>
       <ui5-option icon="meal">Avocado</ui5-option>
@@ -107,7 +107,7 @@ export const ValueStateAndValueStateMessage: Story = () =>
 ValueStateAndValueStateMessage.storyName = "Value State";
 
 // Two-column layout
-export const TwoColumnLayout: Story = () =>
+export const TwoColumnLayout: StoryFn = () =>
   html` <ui5-select class="select">
     <ui5-option additional-text="AT">Austria</ui5-option>
     <ui5-option additional-text="BE">Belgium</ui5-option>

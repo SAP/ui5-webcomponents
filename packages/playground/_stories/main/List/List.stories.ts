@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import type { Meta, Story } from "@storybook/web-components";
+import type { Meta, StoryFn } from "@storybook/web-components";
 
 import type List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
@@ -80,7 +80,7 @@ Basic.args = {
 };
 
 // Growing
-export const Growing: Story = () =>
+export const Growing: StoryFn = () =>
   html`<ui5-list id="infiniteScrollEx" style="height: 200px" growing="Scroll">
       <ui5-li
         icon="nutrition-activity"
@@ -233,7 +233,7 @@ NoData.args = {
 };
 
 // Separation Types
-export const SeparationTypes: Story = () =>
+export const SeparationTypes: StoryFn = () =>
   html` <ui5-list
       header-text="No separators"
       separators="None"

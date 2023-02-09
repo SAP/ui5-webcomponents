@@ -1,7 +1,7 @@
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import type { Meta, Story } from "@storybook/web-components";
+import type { Meta, StoryFn } from "@storybook/web-components";
 
 import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
 
@@ -146,7 +146,7 @@ FioriDialog.parameters = {
   },
 };
 
-export const StateProperties: Story = () => html`
+export const StateProperties: StoryFn = () => html`
   <h3>Dialogs with various state properties</h3>
   <ui5-button id="error-state">Open error state dialog</ui5-button>
   <ui5-button id="information-state">Open information state dialog</ui5-button>
