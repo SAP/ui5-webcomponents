@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta charset="utf-8" />
 
-    <title>Button</title>
+		<title>Button</title>
 
+		<script src="../../bundle.esm.js" type="module"></script>
 
+		<link rel="stylesheet" type="text/css" href="./styles/Simple.css" />
+	</head>
 
-
-	<script src="../../bundle.esm.js" type="module"></script>
-
-
-<link rel="stylesheet" type="text/css" href="./styles/Simple.css">
-</head>
-
-<body class="simple1auto">
-
-<ui5-icon name="add"></ui5-icon>
-
-</body>
+	<body class="simple1auto">
+		<ui5-icon name="add"></ui5-icon>
+		<ui5-date-picker id="dp1" format-pattern="yyyy, dd/MM"></ui5-date-picker>
+		<ui5-date-picker id="dp2" format-pattern="yyyy, MM"></ui5-date-picker>
+		<ui5-date-picker id="dp3" format-pattern="MMM"></ui5-date-picker>
+		<ui5-date-picker id="dp4" format-pattern="yyyy"></ui5-date-picker>
+	</body>
 </html>
