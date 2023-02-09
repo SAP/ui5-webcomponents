@@ -305,6 +305,7 @@ describe("Testing events", () => {
 
 		await firstHandle.click();
 		await browser.keys("ArrowRight");
+		await browser.pause(100);
 		await browser.keys("ArrowRight");
 
 		const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
@@ -337,6 +338,7 @@ describe("Testing events", () => {
 
 		await firstHandle.click();
 		await browser.keys("ArrowRight");
+		await browser.pause(100);
 		await browser.keys("ArrowRight");
 
 		const inputEventStartValue = await browser.execute(() => document.querySelector("#input-event-startValue").innerText);
