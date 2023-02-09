@@ -339,6 +339,8 @@ describe("Testing events", () => {
 		await firstHandle.keys("ArrowRight");
 		await firstHandle.keys("ArrowRight");
 
+		browser.pause(100);
+
 		const inputEventStartValue = await browser.execute(() => document.querySelector("#input-event-startValue").innerText);
 		const inputEventEndValue = await browser.execute(() => document.querySelector("#input-event-endValue").innerText);
 
@@ -550,7 +552,6 @@ describe("Accessibility", async () => {
 		assert.notOk(await rangeSlider.isFocused(), "First RangeSlider component is now not focused");
 	});
 
-	/*
 	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", async () => {
 		const rangeSlider = await browser.$("#basic-range-slider");
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
@@ -561,7 +562,6 @@ describe("Accessibility", async () => {
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
 	});
-	 */
 });
 
 
@@ -920,7 +920,6 @@ describe("Accessibility: Testing keyboard handling", async () => {
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 0, "start-value is decreased");
 	});
 
-	/*
 	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", async () => {
 		await browser.url(`test/pages/RangeSlider.html`);
 
@@ -928,7 +927,8 @@ describe("Accessibility: Testing keyboard handling", async () => {
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 
-		await startHandle.click();
+		await browser.keys("Tab");
+		await browser.keys("Tab");
 		await browser.keys("End");
 		await browser.pause(300);
 
@@ -936,16 +936,29 @@ describe("Accessibility: Testing keyboard handling", async () => {
 
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 100, "The original start-value is set to min and switched as a end-value");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
+	});
+
+	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
+		const rangeSlider = await browser.$("#basic-range-slider");
+		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		rangeSlider.setProperty("startValue", 10);
+
+		await browser.keys("Tab");
+		await browser.keys("Tab");
+		await browser.keys("Tab");
 
 		await browser.keys("Home");
 		await browser.pause(300);
 
-		innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
+		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 0, "The original end-value is set to min and switched as a start-value");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await startHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
 	});
-	 */
 });
 
 describe("Testing resize handling and RTL support", () => {
