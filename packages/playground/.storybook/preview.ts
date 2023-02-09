@@ -2,7 +2,7 @@ import "@ui5/webcomponents-fiori/bundle.esm.js";
 import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
 import customElements from "./custom-elements.json";
 import { setCustomElementsManifest } from "@storybook/web-components";
-import { Parameters, DecoratorFunction } from "@storybook/addons";
+import { Parameters, DecoratorFunction } from '@storybook/types';
 import { useOptions, themes } from "./useOptions";
 
 if (customElements?.modules) {

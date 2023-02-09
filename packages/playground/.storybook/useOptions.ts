@@ -1,5 +1,5 @@
-import { DecoratorFunction } from "@storybook/addons";
-import { useEffect, useGlobals } from "@storybook/addons";
+import { DecoratorFunction } from '@storybook/types';
+import { useEffect, useGlobals } from "@storybook/preview-api";
 
 type Themes = {
   [name: string]: string;
