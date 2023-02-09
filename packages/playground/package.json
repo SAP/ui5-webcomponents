@@ -15,19 +15,22 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.5.9",
-    "@storybook/addon-essentials": "^6.5.9",
-    "@storybook/addon-links": "^6.5.9",
-    "@storybook/builder-vite": "^0.2.2",
-    "@storybook/web-components": "^6.5.9",
+    "@storybook/addon-actions": "^7.0.0-beta.45",
+    "@storybook/addon-essentials": "^7.0.0-beta.45",
+    "@storybook/addon-links": "^7.0.0-beta.45",
+    "@storybook/web-components": "^7.0.0-beta.45",
+    "@storybook/web-components-vite": "^7.0.0-beta.45",
     "@types/react": "^18.0.27",
     "@whitespace/storybook-addon-html": "^5.1.0",
     "copy-and-watch": "^0.1.5",
     "lit-html": "^2.2.7",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-syntax-highlighter": "^15.5.0",
     "rimraf": "^3.0.2",
+    "storybook": "^7.0.0-beta.45",
     "typescript": "^4.9.4"
   },
   "scripts": {
@@ -57,7 +60,7 @@
     "prepare:next:samples": "node ./build-scripts-storybook/samples-prepare.js",
     "prepare:next:manifest": "node ./build-scripts-storybook/parse-manifest.js",
     "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js \"../../docs/\" \"./docs/\"",
-    "storybook": "npm-run-all --parallel prepare:next:* && start-storybook -p 6006",
-    "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && build-storybook -o ./dist/_playground"
+    "storybook": "npm-run-all --parallel prepare:next:* && storybook dev -p 6006",
+    "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && storybook build -o ./dist/_playground"
   }
 }

@@ -29,25 +29,25 @@ files.forEach((file, fileIndex) => {
 
             const articleHumanReadableName = capitalizeFirst(article.replace(/^[0-9\-\.]+/, "").replace(/\.md$/, "").replace(/-/g, " "));
             articleContent = `
-import { Meta } from '@storybook/addon-docs';
+import { Meta } from '@storybook/blocks';
 
 <Meta title="Docs/${humanReadableName}/${articleHumanReadableName}" />
 
 ${articleContent}`;
-            fs.writeFileSync(path.join(sectionDir, article.replace(/\.md$/, ".stories.mdx")), articleContent);
+            fs.writeFileSync(path.join(sectionDir, article.replace(/\.md$/, ".mdx")), articleContent);
         });
     } else {
         // create a standalone article outside the directory structure (f.e. FAQ)
         let articleContent = `${fs.readFileSync(srcFilePath)}`;
         const cleanName = file.replace(/^[0-9\-\.]+/, "");
         articleContent = `
-import { Meta } from '@storybook/addon-docs';
+import { Meta } from '@storybook/blocks';
 
 <Meta title="${cleanName.replace(/\.md$/, "")}" />
 
 ${articleContent}`;
         fs.writeFileSync(
-            path.join(destPath, cleanName.replace(/\.md$/, ".stories.mdx")),
+            path.join(destPath, cleanName.replace(/\.md$/, ".mdx")),
             articleContent
         );
     }
