@@ -15,7 +15,7 @@ import {
 	TAB_ARIA_DESIGN_CRITICAL,
 	TAB_ARIA_DESIGN_NEUTRAL,
 	TABCONTAINER_END_OVERFLOW,
-    TAB_SPLIT_ROLE_DESCRIPTION,
+	TAB_SPLIT_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 import "@ui5/webcomponents-icons/dist/error.js";
