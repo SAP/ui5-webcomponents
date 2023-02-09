@@ -1,7 +1,5 @@
-commit 80dc34ce0dec7a4e015e01d2904862d6a8f7011d
-Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
-Date:   Thu Feb 9 09:49:12 2023 +0200
+commit a76323e09b0190bbb72cbff141bb8093b8d0f4ff
+Author: ui5-webcomponents-bot <ui5-webcomponents-bot@sap.com>
+Date:   Thu Feb 9 08:11:41 2023 +0000
 
-    docs: add typescript conventions and guidelines section (#6433)
-    
-    * docs: add typescript conventions and guidelines section
+    chore(release): publish v1.11.0-rc.1
