@@ -15,7 +15,7 @@ import { DocsPage } from "../../../.storybook/docs";
 const component = "ui5-select";
 
 export default {
-  title: "Components/Select",
+  title: "Main/Select",
   component,
   subcomponents: { Option: "ui5-option" },
   argTypes,

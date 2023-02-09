@@ -16,7 +16,7 @@ import { DocsPage } from "../../../.storybook/docs";
 const component = "ui5-list";
 
 export default {
-  title: "Components/List",
+  title: "Main/List",
   component,
   subcomponents: {
     StandardListItem: "ui5-li",

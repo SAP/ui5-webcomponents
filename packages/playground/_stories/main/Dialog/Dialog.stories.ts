@@ -5,14 +5,23 @@ import type { Meta, Story } from "@storybook/web-components";
 
 import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
 
-import argTypes from "./argTypes.js";
+import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
+import { DocsPage } from "../../../.storybook/docs";
+
+const component = "ui5-list";
+
 export default {
-  title: "Components/Dialog",
-  component: "ui5-dialog",
+  title: "Main/Dialog",
+  component,
   argTypes,
+  parameters: {
+    docs: {
+      page: DocsPage({ ...componentInfo, component }),
+    },
+  },
 } as Meta<Dialog>;
 
 const Template: UI5StoryArgs<Dialog, StoryArgsSlots> = (args) => {

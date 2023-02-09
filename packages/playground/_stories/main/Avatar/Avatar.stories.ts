@@ -16,7 +16,7 @@ import { DocsPage } from "../../../.storybook/docs";
 const component = "ui5-avatar";
 
 export default {
-  title: "Components/Avatar",
+  title: "Main/Avatar",
   component,
   argTypes,
   parameters: {
