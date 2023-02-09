@@ -380,7 +380,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.1",
   isNext: false,
-  buildTime: 1675950188
+  buildTime: 1675952704
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -2821,6 +2821,9 @@ const impliesRTL = (language) => {
   return A_RTL_LOCALES$1.indexOf(language) >= 0;
 };
 const getRTL = () => {
+  if (typeof document === "undefined") {
+    return false;
+  }
   const configurationRTL = getRTL$1();
   if (configurationRTL !== void 0) {
     return !!configurationRTL;
