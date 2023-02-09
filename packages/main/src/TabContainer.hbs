@@ -21,7 +21,7 @@
 					data-ui5-stable="overflow-start"
 					tabindex="-1"
 					tooltip="{{overflowMenuTitle}}"
-					aria-haspopup="true"
+					aria-haspopup="menu"
 					icon-end>{{this._startOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
@@ -30,6 +30,7 @@
 			id="{{_id}}-tabStrip"
 			class="{{classes.tabStrip}}"
 			role="tablist"
+			aria-describedby="{{tablistAriaDescribedById}}"
 			@click="{{_onTabStripClick}}"
 			@keydown="{{_onTabStripKeyDown}}"
 			@keyup="{{_onTabStripKeyUp}}"
@@ -53,7 +54,7 @@
 					data-ui5-stable="overflow-end"
 					tabindex="-1"
 					tooltip="{{overflowMenuTitle}}"
-					aria-haspopup="true"
+					aria-haspopup="menu"
 					icon-end>{{this._endOverflowText}}</ui5-button>
 			{{/if}}
 		</div>
@@ -62,6 +63,10 @@
 	{{#unless tabsAtTheBottom}}
 		{{> contentArea}}
 	{{/unless}}
+
+	{{#if hasSubTabs}}
+		<span id="{{_id}}-invisibleText" class="ui5-hidden-text">{{accInvisibleText}}</span>
+	{{/if}}
 
 </div>
 
