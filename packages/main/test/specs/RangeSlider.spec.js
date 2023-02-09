@@ -304,8 +304,8 @@ describe("Testing events", () => {
 		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 
 		await firstHandle.click();
-		await firstHandle.keys("ArrowRight");
-		await firstHandle.keys("ArrowRight");
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
 		const changeEventEndValue = await browser.execute(() => document.querySelector("#change-event-endValue").innerText);
@@ -336,10 +336,8 @@ describe("Testing events", () => {
 		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 
 		await firstHandle.click();
-		await firstHandle.keys("ArrowRight");
-		await firstHandle.keys("ArrowRight");
-
-		browser.pause(100);
+		await browser.keys("ArrowRight");
+		await browser.keys("ArrowRight");
 
 		const inputEventStartValue = await browser.execute(() => document.querySelector("#input-event-startValue").innerText);
 		const inputEventEndValue = await browser.execute(() => document.querySelector("#input-event-endValue").innerText);
@@ -930,8 +928,7 @@ describe("Accessibility: Testing keyboard handling", async () => {
 		await browser.keys("Tab");
 		await browser.keys("Tab");
 		await browser.keys("End");
-		await browser.pause(300);
-
+		await browser.pause(600);
 		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 100, "The original start-value is set to min and switched as a end-value");
@@ -952,7 +949,7 @@ describe("Accessibility: Testing keyboard handling", async () => {
 		await browser.keys("Tab");
 
 		await browser.keys("Home");
-		await browser.pause(300);
+		await browser.pause(600);
 
 		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
