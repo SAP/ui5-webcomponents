@@ -131,8 +131,10 @@ export const Growing: Story = () =>
 Growing.storyName = "Growing";
 Growing.parameters = {
   docs: {
-    // Opt-out of inline rendering
-    inlineStories: false,
+    story: {
+      // Opt-out of inline rendering
+      inline: false,
+    },
   },
 };
 

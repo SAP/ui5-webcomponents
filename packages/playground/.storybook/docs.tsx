@@ -21,7 +21,7 @@ export const DocsPage = (args: DocsPageArgs) => {
             <Title />
             {args.since && (
                 <div className='component-heading-since'>
-                    <span>{args.since}</span>
+                    <span>v{args.since}</span>
                 </div>
             )}
             <div className='component-package'>{args.package}</div>

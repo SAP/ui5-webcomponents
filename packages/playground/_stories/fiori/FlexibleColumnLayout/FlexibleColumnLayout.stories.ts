@@ -520,7 +520,10 @@ Basic.args = {
 };
 Basic.parameters = {
   docs: {
-    inlineStories: false,
-    iframeHeight: 600,
+    story: {
+      // Opt-out of inline rendering
+      inline: false,
+      iframeHeight: 600,
+    }
   },
 };

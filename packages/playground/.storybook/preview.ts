@@ -39,7 +39,8 @@ export const parameters: Parameters = {
           "FAQ",
           "Changelog",
         ],
-        "Components",
+        "Main",
+        "Fiori"
       ],
     },
   },

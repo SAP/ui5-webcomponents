@@ -74,22 +74,10 @@ TypeIndividual.args = {
 export const TypeIndividualWithPopover: Story =
   TemplateIndividualWithPopover.bind({});
 TypeIndividualWithPopover.storyName = "Type Individual with Popover";
-TypeIndividualWithPopover.parameters = {
-  docs: {
-    // Opt-out of inline rendering
-    inlineStories: false,
-  },
-};
 
 // Type Group with Popover
 export const TypeGroupWithPopover: Story = TemplateGroupWithPopover.bind({});
 TypeGroupWithPopover.storyName = "Type Group with Popover";
-TypeGroupWithPopover.parameters = {
-  docs: {
-    // Opt-out of inline rendering
-    inlineStories: false,
-  },
-};
 
 // Sizes
 export const Sizes: Story = TemplateAvatarGroupSizes.bind({});

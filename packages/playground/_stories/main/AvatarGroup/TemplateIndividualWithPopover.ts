@@ -1,6 +1,6 @@
 import { html } from "lit-html";
 
-export default () => html`<div class="snippet individual">
+export default () => html`<div class="individual">
     <ui5-popover
         header-text="Person Card"
         class="personPopover"

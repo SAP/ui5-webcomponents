@@ -67,8 +67,10 @@ const Template: UI5StoryArgs<Dialog, StoryArgsSlots> = (args) => {
 export const Basic = Template.bind({});
 Basic.parameters = {
   docs: {
-    // Opt-out of inline rendering
-    inlineStories: false,
+    story: {
+      // Opt-out of inline rendering
+      inline: false,
+    },
   },
 };
 
@@ -117,8 +119,10 @@ DraggableAndResizable.args = {
     };
 DraggableAndResizable.parameters = {
   docs: {
-    // Opt-out of inline rendering
-    inlineStories: false,
+    story: {
+      // Opt-out of inline rendering
+      inline: false,
+    },
   },
 };
 
@@ -135,8 +139,10 @@ FioriDialog.args = {
 };
 FioriDialog.parameters = {
   docs: {
-    // Opt-out of inline rendering
-    inlineStories: false,
+    story: {
+      // Opt-out of inline rendering
+      inline: false,
+    },
   },
 };
 
@@ -227,7 +233,9 @@ export const StateProperties: Story = () => html`
 `;
 StateProperties.parameters = {
   docs: {
-    // Opt-out of inline rendering
-    inlineStories: false,
+    story: {
+      // Opt-out of inline rendering
+      inline: false,
+    },
   },
 };
