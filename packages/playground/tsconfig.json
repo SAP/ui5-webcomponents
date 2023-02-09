@@ -11,5 +11,6 @@
         "moduleResolution": "node",
     		"resolveJsonModule": true,
         "esModuleInterop": true,
+        "jsx": "react-jsx",
     }
 }

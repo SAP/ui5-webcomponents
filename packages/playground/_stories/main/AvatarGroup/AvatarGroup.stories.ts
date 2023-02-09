@@ -15,10 +15,19 @@ import TemplateGroupWithPopover from "./TemplateGroupWithPopover.js";
 import TemplateIndividualWithPopover from "./TemplateIndividualWithPopover.js";
 import TemplateAvatarGroupSizes from "./TemplateAvatarGroupSizes.js";
 
+import { DocsPage } from "../../../.storybook/docs";
+
+const component = "ui5-avatar-group";
+
 export default {
   title: "Components/AvatarGroup",
-  component: "ui5-avatar-group",
+  component,
   argTypes,
+  parameters: {
+    docs: {
+      page: DocsPage({ component, since: "v1.110.3" })
+    },
+  },
 } as Meta<AvatarGroup>;
 
 const Template: UI5StoryArgs<AvatarGroup, StoryArgsSlots> = (args) =>
@@ -27,6 +36,7 @@ const Template: UI5StoryArgs<AvatarGroup, StoryArgsSlots> = (args) =>
     .aria-haspopup="${ifDefined(args.ariaHaspopup)}"
   >
     ${unsafeHTML(args.default)}
+    ${unsafeHTML(args.overflowButton)}
   </ui5-avatar-group> `;
 
 // Basic

@@ -20,6 +20,7 @@
     "@storybook/addon-links": "^6.5.9",
     "@storybook/builder-vite": "^0.2.2",
     "@storybook/web-components": "^6.5.9",
+    "@types/react": "^18.0.27",
     "@whitespace/storybook-addon-html": "^5.1.0",
     "copy-and-watch": "^0.1.5",
     "lit-html": "^2.2.7",

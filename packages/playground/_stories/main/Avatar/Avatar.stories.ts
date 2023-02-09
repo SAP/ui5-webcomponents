@@ -11,10 +11,19 @@ import argTypes from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
+import { DocsPage } from "../../../.storybook/docs";
+
+const component = "ui5-avatar";
+
 export default {
   title: "Components/Avatar",
-  component: "ui5-avatar",
+  component,
   argTypes,
+  parameters: {
+    docs: {
+      page: DocsPage({ component, since: "v1.110.3" })
+    },
+  },
 } as Meta<Avatar>;
 
 const Template: UI5StoryArgs<Avatar, StoryArgsSlots> = (args) =>
