@@ -380,7 +380,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.1",
   isNext: false,
-  buildTime: 1675930350
+  buildTime: 1675950188
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -40453,6 +40453,80 @@ ProductSwitchItem = __decorate$8([
   event("_focused")
 ], ProductSwitchItem);
 ProductSwitchItem.define();
+const metadata$b = {
+  tag: "ui5-side-navigation-sub-item",
+  properties: {
+    text: {
+      type: String
+    },
+    selected: {
+      type: Boolean
+    },
+    icon: {
+      type: String
+    },
+    title: {
+      type: String
+    }
+  },
+  events: {}
+};
+class SideNavigationSubItem extends UI5Element {
+  static get metadata() {
+    return metadata$b;
+  }
+  get _tooltip() {
+    return this.title || this.text;
+  }
+}
+SideNavigationSubItem.define();
+const metadata$a = {
+  tag: "ui5-side-navigation-item",
+  managedSlots: true,
+  properties: {
+    text: {
+      type: String
+    },
+    icon: {
+      type: String
+    },
+    expanded: {
+      type: Boolean
+    },
+    selected: {
+      type: Boolean
+    },
+    wholeItemToggleable: {
+      type: Boolean
+    },
+    title: {
+      type: String
+    },
+    _fixed: {
+      type: Boolean
+    }
+  },
+  events: {},
+  slots: {
+    "default": {
+      propertyName: "items",
+      invalidateOnChildChange: true,
+      type: HTMLElement
+    }
+  }
+};
+class SideNavigationItem extends UI5Element {
+  static get metadata() {
+    return metadata$a;
+  }
+  get _tooltip() {
+    return this.title || this.text;
+  }
+  get _ariaHasPopup() {
+    return this.parentNode.collapsed && this.items.length ? HasPopup$1.Tree : void 0;
+  }
+}
+SideNavigationItem.define();
 const block0$g = (context, tags, suffix) => effectiveHtml`<div class="ui5-sn-root" role="navigation">${context.showHeader ? block1$e() : void 0}${context.items.length ? block2$a(context, tags, suffix) : void 0}<div class="ui5-sn-spacer"></div>${context.fixedItems.length ? block6$6(context, tags, suffix) : void 0}</div> `;
 const block1$e = (context, tags, suffix) => effectiveHtml`<slot name="header"></slot>`;
 const block2$a = (context, tags, suffix) => suffix ? effectiveHtml`<${scopeTag("ui5-tree", tags, suffix)} id="ui5-sn-items-tree" class="ui5-sn-items-tree" mode="None" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationList)}" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}">${c(context._items, (item, index) => item._id || index, (item, index) => block3$7(item, index, context, tags, suffix))}</${scopeTag("ui5-tree", tags, suffix)}>` : effectiveHtml`<ui5-tree id="ui5-sn-items-tree" class="ui5-sn-items-tree" mode="None" .accessibleRoleDescription="${l(context.ariaRoleDescNavigationList)}" ?_minimal="${l(context.collapsed)}" _toggle-button-end @ui5-item-click="${l(context.handleTreeItemClick)}">${c(context._items, (item, index) => item._id || index, (item, index) => block3$7(item, index, context, tags, suffix))}</ui5-tree>`;
@@ -40471,7 +40545,7 @@ const styleData$g = { packageName: "@ui5/webcomponents-fiori", fileName: "themes
 registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", async () => styleData$1R);
 registerThemePropertiesLoader("@ui5/webcomponents-fiori", "sap_fiori_3", async () => styleData$p);
 const styleData$f = { packageName: "@ui5/webcomponents-fiori", fileName: "themes/SideNavigationPopover.css", content: ".ui5-side-navigation-popover::part(content){padding:0}.ui5-hidden-text{position:absolute;clip:rect(1px,1px,1px,1px);user-select:none;left:-1000px;top:-1000px;pointer-events:none;font-size:0}.ui5-side-navigation-in-popover{--_ui5-tree-toggle-box-width:1rem;--_ui5-tree-indent-step:0;width:auto}" };
-const metadata$b = {
+const metadata$9 = {
   tag: "ui5-side-navigation",
   managedSlots: true,
   fastNavigation: true,
@@ -40509,7 +40583,7 @@ const metadata$b = {
 };
 class SideNavigation extends UI5Element {
   static get metadata() {
-    return metadata$b;
+    return metadata$9;
   }
   static get staticAreaStyles() {
     return [styleData$f];
@@ -40532,7 +40606,9 @@ class SideNavigation extends UI5Element {
       StandardListItem$1,
       Tree$1,
       TreeItem$1,
-      ResponsivePopover$1
+      ResponsivePopover$1,
+      SideNavigationItem,
+      SideNavigationSubItem
     ];
   }
   onBeforeRendering() {
@@ -40659,80 +40735,6 @@ class SideNavigation extends UI5Element {
   }
 }
 SideNavigation.define();
-const metadata$a = {
-  tag: "ui5-side-navigation-item",
-  managedSlots: true,
-  properties: {
-    text: {
-      type: String
-    },
-    icon: {
-      type: String
-    },
-    expanded: {
-      type: Boolean
-    },
-    selected: {
-      type: Boolean
-    },
-    wholeItemToggleable: {
-      type: Boolean
-    },
-    title: {
-      type: String
-    },
-    _fixed: {
-      type: Boolean
-    }
-  },
-  events: {},
-  slots: {
-    "default": {
-      propertyName: "items",
-      invalidateOnChildChange: true,
-      type: HTMLElement
-    }
-  }
-};
-class SideNavigationItem extends UI5Element {
-  static get metadata() {
-    return metadata$a;
-  }
-  get _tooltip() {
-    return this.title || this.text;
-  }
-  get _ariaHasPopup() {
-    return this.parentNode.collapsed && this.items.length ? HasPopup$1.Tree : void 0;
-  }
-}
-SideNavigationItem.define();
-const metadata$9 = {
-  tag: "ui5-side-navigation-sub-item",
-  properties: {
-    text: {
-      type: String
-    },
-    selected: {
-      type: Boolean
-    },
-    icon: {
-      type: String
-    },
-    title: {
-      type: String
-    }
-  },
-  events: {}
-};
-class SideNavigationSubItem extends UI5Element {
-  static get metadata() {
-    return metadata$9;
-  }
-  get _tooltip() {
-    return this.title || this.text;
-  }
-}
-SideNavigationSubItem.define();
 var PageBackgroundDesign;
 (function(PageBackgroundDesign2) {
   PageBackgroundDesign2["List"] = "List";
