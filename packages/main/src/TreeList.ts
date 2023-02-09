@@ -1,27 +1,23 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import List from "./List.js";
+import type TreeItemBase from "./TreeItemBase.js";
 
-const metadata = {
-	tag: "ui5-tree-list",
-};
+@customElement("ui5-tree-list")
 
 class TreeList extends List {
-	static get metadata() {
-		return metadata;
-	}
-
 	/*
 	 * @override
 	 */
-	getItems(includeCollapsed = false) {
-		const slottedItems = this.getSlottedNodes("items");
-		const flatItems = [];
+	getItems(includeCollapsed = false): Array<TreeItemBase> {
+		const slottedItems = this.getSlottedNodes("items") as Array<TreeItemBase>;
+		const flatItems: Array<TreeItemBase> = [];
 
 		flattenTree(slottedItems, flatItems, includeCollapsed);
 
 		return flatItems;
 	}
 
-	getItemsForProcessing() {
+	getItemsForProcessing(): Array<TreeItemBase> {
 		return this.getItems(true);
 	}
 }
@@ -33,7 +29,7 @@ class TreeList extends List {
  * @param {Array} result
  * @param {Boolean} includeCollapsed
  */
-const flattenTree = (items, result, includeCollapsed) => {
+const flattenTree = (items: Array<TreeItemBase>, result: Array<TreeItemBase>, includeCollapsed = false) => {
 	items.forEach(item => {
 		result.push(item);
 
