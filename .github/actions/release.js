@@ -13,7 +13,7 @@ const options = commandLineArgs([
 	{ name: 'otp', alias: 'p', type: String },
 ]);
 
-const DEFAULT_TAG = "next";
+const DEFAULT_TAG = "experimental";
 const TAG = options.tag || DEFAULT_TAG;
 const NEW_VERSION = options.version;
 const OTP = options.otp;
@@ -72,5 +72,5 @@ const publishPackage = pkg => {
 };
 
 run().catch(error => {
-	console.error("Release of @next version failed", error); // eslint-disable-line
+	console.error("Release of @experimental version failed", error); // eslint-disable-line
 });
