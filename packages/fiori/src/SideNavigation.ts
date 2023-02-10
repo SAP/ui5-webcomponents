@@ -49,8 +49,12 @@ type SubItemsPopoverList = {
 	subItems?: Array<ISideNavigationItem>
 };
 
+interface ISideNavigationTreeItem extends TreeItem {
+	associatedItem: ISideNavigationItem
+}
+
 type SideNavigationSelectionChangeEventDetail = {
-	item: ISideNavigationItem;
+	item: ISideNavigationTreeItem;
 }
 
 /**
@@ -277,7 +281,7 @@ class SideNavigation extends UI5Element {
 
 	handleTreeItemClick(e: CustomEvent<SideNavigationSelectionChangeEventDetail>) {
 		const treeItem = e.detail.item;
-		const item = treeItem.associatedItem!;
+		const item = treeItem.associatedItem;
 
 		if (!item.wholeItemToggleable) {
 			item.fireEvent("click");
@@ -292,7 +296,7 @@ class SideNavigation extends UI5Element {
 		if (this.collapsed && item.items!.length) {
 			this._buildPopoverContent(item);
 			const currentTree = this._itemsTree === e.target ? this._itemsTree : this._fixedItemsTree;
-			this.openPicker(currentTree!._getListItemForTreeItem(treeItem));
+			this.openPicker(currentTree!._getListItemForTreeItem(treeItem)!);
 		} else {
 			this._setSelectedItem(item);
 		}
@@ -300,7 +304,7 @@ class SideNavigation extends UI5Element {
 
 	handlePopoverItemClick(e: CustomEvent<SideNavigationSelectionChangeEventDetail>) {
 		const listItem = e.detail.item;
-		const item = listItem.associatedItem!;
+		const item = listItem.associatedItem;
 
 		item.fireEvent("click");
 		if (item.selected) {
