@@ -18,6 +18,7 @@ const getScripts = (options) => {
 	const tsCommand = tsOption ? "tsc" : "";
 	const tsWatchCommand = tsOption ? "tsc --watch" : "";
 	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
+	const copySrcGenerated = tsOption ? "" : "copy.srcGenerated";
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -57,7 +58,7 @@ const getScripts = (options) => {
 			default: "nps prepare lint build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
-				default: "nps build.styles.themes build.styles.components",
+				default: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
@@ -81,6 +82,7 @@ const getScripts = (options) => {
 		copy: {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
+			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.js" dist/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
