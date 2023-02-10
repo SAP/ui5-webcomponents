@@ -2,6 +2,7 @@ import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 import { getCurrentZIndex } from "../util/PopupUtils.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
+import type { LegacyDateCalendarCustomizing, LegacyDateFormat } from "../config/FormatSettings.js";
 
 type OpenUI5Popup = {
 	setInitialZIndex: (zIndex: number) => void,
@@ -22,6 +23,10 @@ type OpenUI5CoreConfiguration = {
 	getRTL: () => string,
 	getCalendarType: () => string,
 	getLocale: () => string,
+	getFormatSettings: () => {
+		getLegacyDateCalendarCustomizing: () => LegacyDateCalendarCustomizing;
+		getLegacyDateFormat: () => LegacyDateFormat;
+	}
 };
 
 type LocaleData = {
@@ -76,6 +81,8 @@ class OpenUI5Support {
 			calendarType: config.getCalendarType(),
 			formatSettings: {
 				firstDayOfWeek: LocaleData ? LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek() : undefined,
+				legacyDateCalendarCustomizing: config.getFormatSettings().getLegacyDateCalendarCustomizing(),
+				legacyDateFormat: config.getFormatSettings().getLegacyDateFormat(),
 			},
 		};
 	}
