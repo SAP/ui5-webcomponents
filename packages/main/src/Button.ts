@@ -384,7 +384,6 @@ class Button extends UI5Element implements IFormElement {
 	_preventEvent(e: MouseEvent) {
 		if (this.disabled) {
 			e.stopImmediatePropagation();
-			return;
 		}
 	}
 
