@@ -56,7 +56,14 @@
 				<span>endValue in the change event: </span>
 				<span id="change-event-endValue"></span>
 			</div>
-			
+			<div>
+				<span>startValue in the input event: </span>
+				<span id="input-event-startValue"></span>
+			</div>
+			<div>
+				<span>endValue in the input event: </span>
+				<span id="input-event-endValue"></span>
+			</div>
 			<h2>Event Testing Result Slider</h2>
 			<ui5-range-slider id="test-result-slider" start-value="1" end-value="2"></ui5-range-slider>
 		</section>
@@ -76,7 +83,11 @@
 			eventTargetSlider.addEventListener("ui5-change", (e) => {
 				document.getElementById("change-event-startValue").innerText = e.target.startValue;
 				document.getElementById("change-event-endValue").innerText = e.target.endValue;
+			});
 
+			eventTargetSlider.addEventListener("ui5-input", (e) => {
+				document.getElementById("input-event-startValue").innerText = e.target.startValue;
+				document.getElementById("input-event-endValue").innerText = e.target.endValue;
 			});
 		</script>
 	</body>

@@ -1,3 +1,5 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import TreeItemBase from "./TreeItemBase.js";
 // Template
@@ -5,50 +7,6 @@ import TreeItemTemplate from "./generated/templates/TreeItemTemplate.lit.js";
 
 // Styles
 import treeItemCss from "./generated/themes/TreeItem.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-tree-item",
-	properties: /** @lends sap.ui.webc.main.TreeItem.prototype */ {
-
-		/**
-		 * Defines the text of the tree item.
-		 *
-		 * @public
-		 * @type {string}
-		 * @defaultValue ""
-		 */
-		text: {
-			type: String,
-		},
-
-		/**
-		 * Defines the <code>additionalText</code>, displayed in the end of the tree item.
-		 * @type {string}
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		additionalText: {
-			type: String,
-		},
-
-		/**
-		 * Defines the state of the <code>additionalText</code>.
-		 * <br>
-		 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-		 * @type {sap.ui.webc.base.types.ValueState}
-		 * @defaultvalue "None"
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		additionalTextState: {
-			type: ValueState,
-			defaultValue: ValueState.None,
-		},
-	},
-};
 
 /**
  * @class
@@ -81,17 +39,49 @@ const metadata = {
  * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
+@customElement("ui5-tree-item")
 class TreeItem extends TreeItemBase {
+	/**
+	 * Defines the text of the tree item.
+	 *
+	 * @public
+	 * @type {string}
+	 * @name sap.ui.webc.main.TreeItem.prototype.text
+	 * @defaultValue ""
+	 */
+	@property()
+	text!: string;
+
+	/**
+	 * Defines the <code>additionalText</code>, displayed in the end of the tree item.
+	 * @type {string}
+	 * @name sap.ui.webc.main.TreeItem.prototype.additionalText
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	additionalText!: string;
+
+	/**
+	 * Defines the state of the <code>additionalText</code>.
+	 * <br>
+	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
+	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @name sap.ui.webc.main.TreeItem.prototype.additionalTextState
+	 * @defaultvalue "None"
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	additionalTextState!: ValueState;
+
 	static get template() {
 		return TreeItemTemplate;
 	}
 
 	static get styles() {
-		return [...super.styles, treeItemCss];
-	}
-
-	static get metadata() {
-		return metadata;
+		return [super.styles, treeItemCss];
 	}
 
 	get _showTitle() {

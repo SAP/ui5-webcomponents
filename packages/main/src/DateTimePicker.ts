@@ -1,6 +1,7 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -154,7 +155,7 @@ class DateTimePicker extends DatePicker {
 	@property({ defaultValue: "hours" })
 	_currentTimeSlider!: string;
 
-	_handleResizeBound: () => void;
+	_handleResizeBound: ResizeObserverCallback;
 
 	static get staticAreaTemplate() {
 		return DateTimePickerPopoverTemplate;

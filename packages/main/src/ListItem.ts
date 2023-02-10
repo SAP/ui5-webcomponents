@@ -50,6 +50,16 @@ type PressEventDetail = {
 	key: string,
 }
 
+type AccInfo = {
+	role: string;
+	ariaExpanded?: boolean;
+	ariaLevel?: number;
+	ariaLabel: string;
+	ariaLabelRadioButton: string;
+	ariaSelectedText?: string;
+	ariaHaspopup?: HasPopup;
+}
+
 /**
  * @class
  * A class to serve as a base
@@ -464,7 +474,7 @@ abstract class ListItem extends ListItemBase {
 		return `${this._id}-content ${this._id}-invisibleText`;
 	}
 
-	get _accInfo() {
+	get _accInfo(): AccInfo {
 		return {
 			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
