@@ -9,9 +9,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
-// @ts-ignore when the Tree is migrated to TS, the comment can be removed
 import Tree from "@ui5/webcomponents/dist/Tree.js";
-// @ts-ignore when the TreeItem is migrated to TS, the comment can be removed
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -32,8 +30,8 @@ import {
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
 
-interface IItem extends UI5Element {
-	items?: Array<IItem>;
+interface ISideNavigationItem extends UI5Element {
+	items?: Array<ISideNavigationItem>;
 	text: string;
 	icon: string;
 	expanded?: boolean;
@@ -41,24 +39,20 @@ interface IItem extends UI5Element {
 	wholeItemToggleable?: boolean;
 	title: string;
 	_fixed?: boolean;
-	associatedItem?: IItem;
+	associatedItem?: ISideNavigationItem;
 }
 
 type SubItemsPopoverList = {
-	mainItem: IItem,
+	mainItem: ISideNavigationItem,
 	mainItemSelected: boolean,
 	selectedSubItemIndex: number,
-	subItems?: Array<IItem>
+	subItems?: Array<ISideNavigationItem>
 };
 
 type SideNavigationSelectionChangeEventDetail = {
-	item: IItem;
+	item: ISideNavigationItem;
 }
 
-type TempTree = HTMLElement & {
-	focusItemByIndex: (index: number) => void,
-	_getListItemForTreeItem: (treeItem: UI5Element) => StandardListItem,
-}
 /**
  * @class
  *
@@ -140,12 +134,12 @@ class SideNavigation extends UI5Element {
 	/**
 	 * @private
 	 */
-	_items?: Array<{ item: IItem, selected: boolean }>;
+	_items?: Array<{ item: ISideNavigationItem, selected: boolean }>;
 
 	/**
 	 * @private
 	 */
-	_fixedItems?: Array<{ item: IItem, selected: boolean }>;
+	_fixedItems?: Array<{ item: ISideNavigationItem, selected: boolean }>;
 
 	/**
 	 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
@@ -153,12 +147,12 @@ class SideNavigation extends UI5Element {
 	 * inside the items.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.IItem[]}
+	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
 	 * @slot items
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.default
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<IItem>;
+	items!: Array<ISideNavigationItem>;
 
 	/**
 	 * Defines the header of the <code>ui5-side-navigation</code>.
@@ -182,12 +176,12 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.IItem[]}
+	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
 	 * @slot fixedItems
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.fixedItems
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
-	fixedItems!: Array<IItem>;
+	fixedItems!: Array<ISideNavigationItem>;
 
 	static i18nBundle: I18nBundle;
 
@@ -239,18 +233,18 @@ class SideNavigation extends UI5Element {
 		});
 	}
 
-	_setSelectedItem(item: IItem) {
+	_setSelectedItem(item: ISideNavigationItem) {
 		if (!this.fireEvent("selection-change", { item }, true)) {
 			return;
 		}
 
-		this._walk((current: IItem) => {
+		this._walk((current: ISideNavigationItem) => {
 			current.selected = false;
 		});
 		item.selected = true;
 	}
 
-	_buildPopoverContent(item: IItem) {
+	_buildPopoverContent(item: ISideNavigationItem) {
 		this._popoverContent = {
 			mainItem: item,
 			mainItemSelected: item.selected && !item.items!.some(subItem => subItem.selected),
@@ -264,7 +258,7 @@ class SideNavigation extends UI5Element {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
-		const tree = await this.getPickerTree() as TempTree;
+		const tree = await this.getPickerTree() as Tree;
 		const index = this._popoverContent?.selectedSubItemIndex;
 		tree.focusItemByIndex(index!);
 	}
@@ -346,14 +340,14 @@ class SideNavigation extends UI5Element {
 	}
 
 	get _itemsTree() {
-		return this.getDomRef()!.querySelector<TempTree>("#ui5-sn-items-tree");
+		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-items-tree");
 	}
 
 	get _fixedItemsTree() {
-		return this.getDomRef()!.querySelector<TempTree>("#ui5-sn-fixed-items-tree");
+		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-fixed-items-tree");
 	}
 
-	_walk(callback: (current: IItem) => void) {
+	_walk(callback: (current: ISideNavigationItem) => void) {
 		this.items.forEach(current => {
 			callback(current);
 
@@ -384,6 +378,6 @@ SideNavigation.define();
 export default SideNavigation;
 
 export type {
-	IItem,
+	ISideNavigationItem,
 	SideNavigationSelectionChangeEventDetail,
 };
