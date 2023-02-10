@@ -1,8 +1,13 @@
-commit 25cca0fe37dbe369a8d14b6aedacb120cbbe73fd
-Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Fri Feb 10 10:58:47 2023 +0200
+commit 72f1cce96c9c0de9dda7e48859a2de10f0908504
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Fri Feb 10 01:33:42 2023 -0800
 
-    chore: change snapshot npm tag to @experimental (#6430)
+    Translation Delivery (#6443)
     
-    Prior to this change the snapshot releases (0.0.0-{commit_id}), triggered via the Release Snapshot action used to be published as "@next" tag. Recently we setup weekly auto releases - RC versions, such as 1.10.3-rc.0, 1.11.0-rc.0, etc. to also be published as "@next" versions, the versions look weird and mixed up.
-    Now, we start publishing those types of versions as two different tags - 1.11.0-rc.0 as "@next" and "0.0.0-dae342da" as "@experimental"
+    * chore: translation delivery
+    
+    Change-Id: I3d5bd10dab607eef28465dc064618676080f20b3
+    
+    * chore: translation delivery
+    
+    Change-Id: Iae84ab9e2402d387f1257a7f96d64043e477429b
