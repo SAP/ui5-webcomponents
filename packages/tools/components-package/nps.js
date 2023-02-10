@@ -8,14 +8,16 @@ const getScripts = (options) => {
 
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
 	const illustrationsData = options.illustrationsData || [];
-	illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
+	const illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
 	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
 	const createIllustrationsLoadersScript = options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "";
-	const tsCommand = options.typescript ? "tsc" : "";
-	const tsWatchCommand = options.typescript ? "tsc --watch" : "";
+	const tsOption = options.typescript;
+	const tsCommand = tsOption ? "tsc" : "";
+	const tsWatchCommand = tsOption ? "tsc --watch" : "";
+	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -46,7 +48,7 @@ const getScripts = (options) => {
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
-			default: `cross-env UI5_TS=${options.typescript} nps clean prepare.all typescript generateAPI`,
+			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
