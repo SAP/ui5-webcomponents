@@ -1,3 +1,6 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import TreeItemBase from "./TreeItemBase.js";
 
 // Template
@@ -5,37 +8,6 @@ import TreeItemCustomTemplate from "./generated/templates/TreeItemCustomTemplate
 
 // Styles
 import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-tree-item-custom",
-	properties: /** @lends sap.ui.webc.main.TreeItemCustom.prototype */ {
-		/**
-		 * Defines whether the tree list item should display the selection element.
-		 *
-		 * @type {Boolean}
-		 * @public
-		 * @defaultValue false
-		 */
-		hideSelectionElement: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.TreeItemCustom.prototype */ {
-		/**
-		 * Defines the content of the <code>ui5-tree-item</code>.
-		 *
-		 * @type {HTMLElement[]}
-		 * @slot content
-		 * @public
-		 */
-		content: {
-			type: HTMLElement,
-		},
-	},
-};
 
 /**
  * @class
@@ -69,17 +41,36 @@ const metadata = {
  * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
+@customElement("ui5-tree-item-custom")
 class TreeItemCustom extends TreeItemBase {
+	/**
+	 * Defines whether the tree list item should display the selection element.
+	 *
+	 * @type {Boolean}
+	 * @name sap.ui.webc.main.TreeItemCustom.prototype.hideSelectionElement
+	 * @public
+	 * @defaultValue false
+	 */
+	@property({ type: Boolean })
+	hideSelectionElement!: boolean;
+
+	/**
+	 * Defines the content of the <code>ui5-tree-item</code>.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.TreeItemCustom.prototype.content
+	 * @slot content
+	 * @public
+	 */
+	@slot()
+	content!: Array<HTMLElement>
+
 	static get template() {
 		return TreeItemCustomTemplate;
 	}
 
 	static get styles() {
-		return [...super.styles, treeItemCustomCss];
-	}
-
-	static get metadata() {
-		return metadata;
+		return [super.styles, treeItemCustomCss];
 	}
 
 	/**

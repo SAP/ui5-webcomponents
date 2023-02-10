@@ -58,7 +58,11 @@ const scripts = {
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
 	start: "nps prepare watch.withBundle",
-	test: `node "${LIB}/test-runner/test-runner.js"`,
+	test: {
+		default: 'concurrently "nps test.wdio"',
+		ssr: `mocha test/ssr`,
+		wdio: `node "${LIB}/test-runner/test-runner.js"`
+	},
 };
 
 

@@ -6,6 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
@@ -95,7 +96,7 @@ class ProductSwitch extends UI5Element {
 	_itemNavigation: ItemNavigation;
 	_currentIndex: number;
 	_rowSize: number;
-	_handleResizeBound: () => void;
+	_handleResizeBound: ResizeObserverCallback;
 
 	static i18nBundle: I18nBundle;
 

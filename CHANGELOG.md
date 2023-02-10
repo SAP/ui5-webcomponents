@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.0...v1.11.0-rc.1) (2023-02-09)
+
+
+### Bug Fixes
+
+* **f6-navigation:** skip empty groups ([#6397](https://github.com/SAP/ui5-webcomponents/issues/6397)) ([f49c593](https://github.com/SAP/ui5-webcomponents/commit/f49c5930f9a9d4e55a614c9b7125a951005335bd))
+* **ui5-avatar:** make color-scheme attribute css selector stronger ([#6408](https://github.com/SAP/ui5-webcomponents/issues/6408)) ([1253929](https://github.com/SAP/ui5-webcomponents/commit/1253929ceb66cebddf9ff844d452f3645c4a6472))
+* **ui5-input:** fire change after clear icon pressed and focus out ([#6399](https://github.com/SAP/ui5-webcomponents/issues/6399)) ([ef4ba22](https://github.com/SAP/ui5-webcomponents/commit/ef4ba22ad53573b9e9a3436643b89f6b88e3d257)), closes [#6365](https://github.com/SAP/ui5-webcomponents/issues/6365)
+* **ui5-input:** fire change event on enter ([#6390](https://github.com/SAP/ui5-webcomponents/issues/6390)) ([68ad562](https://github.com/SAP/ui5-webcomponents/commit/68ad562e15cf678af675c855b33af21ed56faad7)), closes [#6262](https://github.com/SAP/ui5-webcomponents/issues/6262)
+* **ui5-range-slider:** fire input event with correct values after swapping ([#6385](https://github.com/SAP/ui5-webcomponents/issues/6385)) ([18df557](https://github.com/SAP/ui5-webcomponents/commit/18df557d80e49a85847b67a6ed5c6c6e0e96ec37)), closes [#6377](https://github.com/SAP/ui5-webcomponents/issues/6377)
+* **ui5-select:** change roledescription to Listbox ([#6199](https://github.com/SAP/ui5-webcomponents/issues/6199)) ([698a0d0](https://github.com/SAP/ui5-webcomponents/commit/698a0d046d3baf1e06373135e79686352ba0cada))
+* **ui5-shellbar:** i18n of cancel search button text ([#6416](https://github.com/SAP/ui5-webcomponents/issues/6416)) ([3efdc6c](https://github.com/SAP/ui5-webcomponents/commit/3efdc6cf7d14b37e714a3979a16ea4cbe498f85e))
+* **ui5-slider:** fix runtime error on Safari ([#6426](https://github.com/SAP/ui5-webcomponents/issues/6426)) ([8c84608](https://github.com/SAP/ui5-webcomponents/commit/8c84608cdf5cbc463adc0cc1670eaa337c0c49e8))
+
+
+### Features
+
+* **framework:** add option to define package name, tag and typescript support from CLI ([#6379](https://github.com/SAP/ui5-webcomponents/issues/6379)) ([687c0f7](https://github.com/SAP/ui5-webcomponents/commit/687c0f7a420a72f77f294ace2898223c48708ae2)), closes [#6382](https://github.com/SAP/ui5-webcomponents/issues/6382)
+* **icons-tnt:** add/update SAP-icons-TNT collection ([#6441](https://github.com/SAP/ui5-webcomponents/issues/6441)) ([07b2908](https://github.com/SAP/ui5-webcomponents/commit/07b2908b2b2748bdefa6d07221e92c6b7d22c8d9)), closes [#6376](https://github.com/SAP/ui5-webcomponents/issues/6376)
+* **icons:** add new icons to SAP-icons (4.16 and 5.04) ([#6442](https://github.com/SAP/ui5-webcomponents/issues/6442)) ([2e1d29f](https://github.com/SAP/ui5-webcomponents/commit/2e1d29f6250f66c209ca81eb7510abbf66872e65))
+* **ui5-avatar-group:** migrated to Typescript ([#6391](https://github.com/SAP/ui5-webcomponents/issues/6391)) ([c5bcfde](https://github.com/SAP/ui5-webcomponents/commit/c5bcfdeff9e70dd26df8982fd409590ceadcc606))
+* **ui5-popover,ui5-dialog:** add accessibleRole property ([#6221](https://github.com/SAP/ui5-webcomponents/issues/6221)) ([b88d214](https://github.com/SAP/ui5-webcomponents/commit/b88d2148e99e73ab96da1fd32bc3bbc3d4eec123)), closes [#6090](https://github.com/SAP/ui5-webcomponents/issues/6090) [#5796](https://github.com/SAP/ui5-webcomponents/issues/5796)
+* **ui5-select:** new events introduced ([#6398](https://github.com/SAP/ui5-webcomponents/issues/6398)) ([a0b114d](https://github.com/SAP/ui5-webcomponents/commit/a0b114dfeee9265ada632d34df1b6e2e3de8c3fd)), closes [#5836](https://github.com/SAP/ui5-webcomponents/issues/5836)
+* **ui5-tree:** migrate to Typescript ([#6401](https://github.com/SAP/ui5-webcomponents/issues/6401)) ([1762b16](https://github.com/SAP/ui5-webcomponents/commit/1762b166167680b6d6eb17f300a9e9f43c5ddd78))
+
+
+
+
+
 # [1.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4-rc.0...v1.11.0-rc.0) (2023-02-02)
 
 

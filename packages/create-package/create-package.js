@@ -5,8 +5,8 @@ const path = require("path");
 const mkdirp = require("mkdirp");
 const prompts = require("prompts");
 const parser = require("npm-config-user-agent-parser");
-const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
+const yargs = require("yargs/yargs");
+const { hideBin } = require("yargs/helpers");
 
 const argv = yargs(hideBin(process.argv)).argv;
 
@@ -24,8 +24,8 @@ const toCamelCase = parts => {
 	}).join("");
 };
 const isTypescriptRelatedFile = sourcePath => {
-	return ["Аssets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
-}
+	return ["Assets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
+};
 
 // Validation of user input
 const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z0-9\-_]+$/);
@@ -45,14 +45,14 @@ const replaceVarsInFileName = (vars, fileName) => {
 };
 
 const copyFile = (vars, sourcePath, destPath) => {
-	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && sourcePath.includes("MyFirstComponent.js")
-	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTypescriptRelatedFile(sourcePath)
+	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && sourcePath.includes("MyFirstComponent.js");
+	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTypescriptRelatedFile(sourcePath);
 
 	if (ignoreJsRelated || ignoreTsRelated) {
 		return;
 	}
 
-	let content = fs.readFileSync(sourcePath, {encoding: "UTF-8"});
+	let content = fs.readFileSync(sourcePath, { encoding: "UTF-8" });
 	content = replaceVarsInFileContent(vars, content);
 	destPath = replaceVarsInFileName(vars, destPath);
 	fs.writeFileSync(destPath, content);
@@ -72,7 +72,6 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-
 const generateFilesContent = (name, tag, typescript) => {
 	const className = capitalizeFirst(kebabToCamelCase(tag));
 
@@ -81,7 +80,7 @@ const generateFilesContent = (name, tag, typescript) => {
 		INIT_PACKAGE_VAR_NAME: name,
 		INIT_PACKAGE_VAR_TAG: tag,
 		INIT_PACKAGE_VAR_CLASS_NAME: className,
-		INIT_PACKAGE_VAR_TYPESCRIPT: typescript
+		INIT_PACKAGE_VAR_TYPESCRIPT: typescript,
 	};
 
 	const packageContent = {
@@ -141,7 +140,7 @@ const generateFilesContent = (name, tag, typescript) => {
 	}
 
 	console.log("\n");
-}
+};
 
 // Main function
 const createWebcomponentsPackage = async () => {
@@ -158,7 +157,7 @@ const createWebcomponentsPackage = async () => {
 	let tag = argv.tag || "my-first-component";
 	let typescriptSupport = !!argv.enableTypescript;
 
-	if (!!argv.skip) {
+	if (argv.skip) {
 		return generateFilesContent(name, tag, typescriptSupport);
 	}
 
@@ -186,9 +185,9 @@ const createWebcomponentsPackage = async () => {
 					title: "TypeScript",
 					value: true,
 				},
-			]
+			],
 		});
-		typescript = response.language;
+		typescriptSupport = response.language;
 	}
 
 	if (!argv.tag) {
@@ -202,7 +201,7 @@ const createWebcomponentsPackage = async () => {
 		tag = response.tag;
 	}
 
-	return generateFilesContent(name, tag, typescript);
+	return generateFilesContent(name, tag, typescriptSupport);
 };
 
 createWebcomponentsPackage();
