@@ -40,7 +40,7 @@ import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import type { CalendarChangeEventDetail } from "./Calendar.js";
-import * as CalendarDateComponent from "./CalendarDate.js";
+import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
@@ -858,15 +858,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return InputType.Text;
 	}
 
-	static get dependencies() {
+	static get dependencies(): Array<typeof UI5Element> {
 		return [
 			Icon,
 			ResponsivePopover,
 			Calendar,
-			CalendarDateComponent.default,
+			CalendarDateComponent,
 			Input,
 			Button,
-		] as Array<typeof UI5Element>;
+		];
 	}
 }
 

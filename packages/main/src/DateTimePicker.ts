@@ -168,7 +168,7 @@ class DateTimePicker extends DatePicker {
 		return [super.staticAreaStyles, DateTimePickerPopoverCss];
 	}
 
-	static get dependencies() {
+	static get dependencies(): Array<typeof UI5Element> {
 		return [
 			...DatePicker.dependencies,
 			Calendar,
@@ -176,7 +176,7 @@ class DateTimePicker extends DatePicker {
 			ToggleButton,
 			SegmentedButton,
 			TimeSelection,
-		] as Array<typeof UI5Element>;
+		];
 	}
 
 	constructor() {

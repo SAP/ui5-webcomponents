@@ -72,7 +72,7 @@ class SegmentedButton extends UI5Element {
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @type {string}
-	 * @defaultvalue: ""
+	 * @defaultvalue undefined
 	 * @public
 	 * @name sap.ui.webc.main.SegmentedButton.prototype.accessibleName
 	 * @since 1.0.3
