@@ -117,6 +117,7 @@
 
 	<ui5-button icon-end icon="employee">Icon last</ui5-button>
 	<ui5-button icon="employee" id="disabled-button-icon-only" disabled></ui5-button>
+	<ui5-button id="disabled-button-without-icon" disabled>Disabled Buton</ui5-button>
 
 
 
@@ -226,10 +227,11 @@
 		var clickCounter = document.querySelector("#click-counter");
 		var button = document.querySelector("#button1");
 		var disabledButton = document.querySelector("#button-disabled");
-		var disabledButtonIconOnly = document.querySelector("#disabled-button-icon-only")
+		var disabledButtonIconOnly = document.querySelector("#disabled-button-icon-only");
+		var disabledButtonWithoutIcon = document.querySelector("#disabled-button-without-icon")
 		var clickCount = 0;
 
-		[button, disabledButton, disabledButtonIconOnly].forEach(function (el) {
+		[button, disabledButton, disabledButtonIconOnly, disabledButtonWithoutIcon].forEach(function (el) {
 			el.addEventListener("click", function(event) {
 				clickCount += 1;
 				clickCounter.value = clickCount;

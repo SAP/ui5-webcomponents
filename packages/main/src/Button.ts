@@ -308,6 +308,7 @@ class Button extends UI5Element implements IFormElement {
 	text!: Array<Node>;
 
 	_deactivate: () => void;
+	_preventEventHandler: (e: MouseEvent) => void;
 
 	_ontouchstart: PassiveEventListenerObject;
 
@@ -358,10 +359,16 @@ class Button extends UI5Element implements IFormElement {
 			handleEvent: handleTouchStartEvent,
 			passive: true,
 		};
+		this._preventEventHandler = this._preventEvent.bind(this);
 	}
 
 	onEnterDOM() {
 		this._isTouch = (isPhone() || isTablet()) && !isCombi();
+		this.addEventListener("click", this._preventEventHandler, { capture: true });
+	}
+
+	onExitDOM() {
+		this.removeEventListener("click", this._preventEventHandler, true);
 	}
 
 	onBeforeRendering() {
@@ -372,6 +379,13 @@ class Button extends UI5Element implements IFormElement {
 
 		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
+	}
+
+	_preventEvent(e: MouseEvent) {
+		if (this.disabled) {
+			e.stopImmediatePropagation();
+			return;
+		}
 	}
 
 	_onclick(e: MouseEvent) {
