@@ -205,7 +205,7 @@ class MediaGalleryItem extends UI5Element {
 		return !this._useThumbnail && this._isContentAvailable;
 	}
 
-	get _effectiveTabIndex() {
+	get effectiveTabIndex() {
 		return this.disabled ? undefined : this._tabIndex;
 	}
 
