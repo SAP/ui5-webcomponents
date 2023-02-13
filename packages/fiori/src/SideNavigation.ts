@@ -38,22 +38,19 @@ type SideNavigationPopoverContents = {
 
 type TSideNavigationItem = SideNavigationItem | SideNavigationSubItem;
 
-type SideNavigationTreeClickEventDetail = TreeItemClickEventDetail & {
-	item: {
-		associatedItem: TSideNavigationItem
-	}
-}
-
 type SideNavigationSelectionChangeEventDetail = {
 	item: TSideNavigationItem;
-}
+};
 
-// used for the inner side navigation used in the SideNavigationPopoverTemplate
-type SideNavigationInnerSelectionChangeEventDetail = SideNavigationSelectionChangeEventDetail & {
+type ItemHasAssociatedItemField = {
 	item: {
 		associatedItem: TSideNavigationItem
 	}
-}
+};
+
+// used for the inner side navigation used in the SideNavigationPopoverTemplate
+type InnerSideNavigationSelectionChangeEventDetail = SideNavigationSelectionChangeEventDetail & ItemHasAssociatedItemField;
+type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedItemField;
 
 /**
  * @class
@@ -134,16 +131,6 @@ class SideNavigation extends UI5Element {
 	_popoverContents!: SideNavigationPopoverContents;
 
 	/**
-	 * @private
-	 */
-	_items?: Array<{ item: SideNavigationItem, selected: boolean }>;
-
-	/**
-	 * @private
-	 */
-	_fixedItems?: Array<{ item: SideNavigationItem, selected: boolean }>;
-
-	/**
 	 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
 	 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
 	 * inside the items.
@@ -219,16 +206,19 @@ class SideNavigation extends UI5Element {
 		];
 	}
 
-	onBeforeRendering() {
-		this._items = this.items.map(item => ({
-			item,
-			selected: ((item.items.some(subItem => subItem.selected) && this.collapsed) || item.selected),
-		}));
+	get _items() {
+		return this.items.map(this._createTreeItem);
+	}
 
-		this._fixedItems = this.fixedItems.map(item => ({
+	get _fixedItems() {
+		return this.fixedItems.map(this._createTreeItem);
+	}
+
+	_createTreeItem = (item: SideNavigationItem): { item: SideNavigationItem, selected: boolean } => {
+		return {
 			item,
-			selected: ((item.items.some(subItem => subItem.selected) && this.collapsed) || item.selected),
-		}));
+			selected: (item.items.some(subItem => subItem.selected) && this.collapsed) || item.selected,
+		};
 	}
 
 	_setSelectedItem(item: TSideNavigationItem) {
@@ -283,7 +273,7 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(key);
 	}
 
-	handleTreeItemClick(e: CustomEvent<SideNavigationTreeClickEventDetail>) {
+	handleTreeItemClick(e: CustomEvent<InnerTreeClickEventDetail>) {
 		const treeItem = e.detail.item;
 		const item = treeItem.associatedItem;
 
@@ -313,7 +303,7 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	handleInnerSelectionChange(e: CustomEvent<SideNavigationInnerSelectionChangeEventDetail>) {
+	handleInnerSelectionChange(e: CustomEvent<InnerSideNavigationSelectionChangeEventDetail>) {
 		const item = e.detail.item;
 		const { associatedItem } = item;
 
