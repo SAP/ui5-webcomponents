@@ -6,12 +6,13 @@ import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigati
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { TreeItemClickEventDetail } from "@ui5/webcomponents/dist/Tree.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
@@ -37,12 +38,21 @@ type SideNavigationPopoverContents = {
 
 type TSideNavigationItem = SideNavigationItem | SideNavigationSubItem;
 
-type SideNavigationTreeItem = TreeItem & {
-	associatedItem: TSideNavigationItem
+type SideNavigationTreeClickEventDetail = TreeItemClickEventDetail & {
+	item: {
+		associatedItem: TSideNavigationItem
+	}
 }
 
 type SideNavigationSelectionChangeEventDetail = {
-	item: SideNavigationTreeItem;
+	item: TSideNavigationItem;
+}
+
+// used for the inner side navigation used in the SideNavigationPopoverTemplate
+type SideNavigationInnerSelectionChangeEventDetail = SideNavigationSelectionChangeEventDetail & {
+	item: {
+		associatedItem: TSideNavigationItem
+	}
 }
 
 /**
@@ -96,7 +106,7 @@ type SideNavigationSelectionChangeEventDetail = {
  * Fired when the selection has changed via user interaction
  *
  * @event sap.ui.webc.fiori.SideNavigation#selection-change
- * @param {HTMLElement} item the clicked item.
+ * @param {sap.ui.webc.fiori.SideNavigationItem|sap.ui.webc.fiori.SideNavigationSubItem} item the clicked item.
  * @allowPreventDefault
  * @public
  */
@@ -222,7 +232,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	_setSelectedItem(item: TSideNavigationItem) {
-		if (!this.fireEvent("selection-change", { item }, true)) {
+		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
 			return;
 		}
 
@@ -273,16 +283,16 @@ class SideNavigation extends UI5Element {
 		return SideNavigation.i18nBundle.getText(key);
 	}
 
-	handleTreeItemClick(e: CustomEvent<SideNavigationSelectionChangeEventDetail>) {
+	handleTreeItemClick(e: CustomEvent<SideNavigationTreeClickEventDetail>) {
 		const treeItem = e.detail.item;
 		const item = treeItem.associatedItem;
 
-		if (item instanceof SideNavigationItem) {
-			if (!item.wholeItemToggleable) {
-				item.fireEvent("click");
-			} else {
-				item.expanded = !item.expanded;
-			}
+		if (item instanceof SideNavigationItem && !item.wholeItemToggleable) {
+			item.fireEvent("click");
+		} else if (item instanceof SideNavigationSubItem) {
+			item.fireEvent("click");
+		} else {
+			item.expanded = !item.expanded;
 		}
 
 		if (item.selected && !this.collapsed) {
@@ -303,16 +313,16 @@ class SideNavigation extends UI5Element {
 		}
 	}
 
-	handlePopoverItemClick(e: CustomEvent<SideNavigationSelectionChangeEventDetail>) {
-		const listItem = e.detail.item;
-		const item = listItem.associatedItem;
+	handleInnerSelectionChange(e: CustomEvent<SideNavigationInnerSelectionChangeEventDetail>) {
+		const item = e.detail.item;
+		const { associatedItem } = item;
 
-		item.fireEvent("click");
-		if (item.selected) {
+		associatedItem.fireEvent("click");
+		if (associatedItem.selected) {
 			return;
 		}
 
-		this._setSelectedItem(item);
+		this._setSelectedItem(associatedItem);
 		this.closePicker();
 	}
 
