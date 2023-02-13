@@ -1162,34 +1162,32 @@ describe("Date Picker Tests", () => {
 		assert.equal(await input.getProperty("value"), "Invalid value", "the value isn't changed");
 	});
 
-	it("Maximum or minimum date changes value state to none", async () => {
+	it("Invalid state is refreshed after a value is picked by Calendar and set again", async () => {
 		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
 		datepicker.id = "#dp33";
 
 		const input = await datepicker.getInput();
 		const innerInput = await datepicker.getInnerInput();
 		await input.click();
-		while(await innerInput.getValue() !== ""){
-			await innerInput.keys("Backspace");
-		}
 
-		await innerInput.keys("asd");
-		const root = await datepicker.getRoot();
-		await root.keys("Enter");
+		await innerInput.keys("asd")
+		await innerInput.keys("Enter");
 
 		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (1)");
 
 		await datepicker.openPicker();
 
 		const displayedDay = await datepicker.getDisplayedDay(15);
-		displayedDay.click();
-
+		await displayedDay.click();
 
 		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (2)");
 
 		await input.click();
+		while(await innerInput.getValue() !== ""){
+			await innerInput.keys("Backspace");
+		}
 		await innerInput.keys("asd");
-		await root.keys("Enter");
+		await innerInput.keys("Enter");
 
 
 		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (3)");
