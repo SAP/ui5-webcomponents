@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
@@ -27,7 +28,7 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * @public
  * @since 1.0.0-rc.8
  */
-
+@event("click")
 @customElement("ui5-side-navigation-item")
 class SideNavigationItem extends UI5Element {
 	/**

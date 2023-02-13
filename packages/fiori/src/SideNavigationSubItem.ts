@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 @customElement("ui5-side-navigation-sub-item")
@@ -23,6 +24,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @abstract
  * @since 1.0.0-rc.8
  */
+@event("click")
 class SideNavigationSubItem extends UI5Element {
 	/**
 	 * Defines the text of the item.
