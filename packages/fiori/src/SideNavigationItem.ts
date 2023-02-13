@@ -3,8 +3,8 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
-import type { ISideNavigationItem } from "./SideNavigation";
-import type SideNavigation from "./SideNavigation";
+import type SideNavigation from "./SideNavigation.js";
+import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 
 /**
  * @class
@@ -26,11 +26,10 @@ import type SideNavigation from "./SideNavigation";
  * @tagname ui5-side-navigation-item
  * @public
  * @since 1.0.0-rc.8
- * @implements sap.ui.webc.fiori.ISideNavigationItem
  */
 
 @customElement("ui5-side-navigation-item")
-class SideNavigationItem extends UI5Element implements ISideNavigationItem {
+class SideNavigationItem extends UI5Element {
 	/**
 	 * Defines the text of the item.
 	 *
@@ -119,20 +118,24 @@ class SideNavigationItem extends UI5Element implements ISideNavigationItem {
 	/**
 	 * If you wish to nest menus, you can pass inner menu items to the default slot.
 	 *
-	 * @type {sap.ui.webc.fiori.ISideNavigationSubItem[]}
+	 * @type {sap.ui.webc.fiori.SideNavigationSubItem[]}
 	 * @public
 	 * @slot items
 	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.default
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
-	items!: Array<ISideNavigationItem>;
+	items!: Array<SideNavigationSubItem>;
 
 	get _tooltip() {
 		return this.title || this.text;
 	}
 
 	get _ariaHasPopup() {
-		return ((this.parentNode as SideNavigation).collapsed && this.items.length) ? HasPopup.Tree : undefined;
+		if ((this.parentNode as SideNavigation).collapsed && this.items.length) {
+			return HasPopup.Tree;
+		}
+
+		return undefined;
 	}
 }
 

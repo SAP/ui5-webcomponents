@@ -12,15 +12,15 @@
 		@ui5-selection-change="{{handlePopoverItemClick}}"
 	>
 		<ui5-side-navigation-item
-			title="{{_popoverContent.mainItem._tooltip}}"
-			text="{{_popoverContent.mainItem.text}}"
+			title="{{_popoverContents.mainItem._tooltip}}"
+			text="{{_popoverContents.mainItem.text}}"
 			expanded="true"
 			_fixed="true"
-			?selected="{{_popoverContent.mainItem.selected}}"
-			.associatedItem="{{_popoverContent.mainItem}}"
+			?selected="{{_popoverContents.mainItem.selected}}"
+			.associatedItem="{{_popoverContents.mainItem}}"
 		>
 
-		{{#each _popoverContent.subItems}}
+		{{#each _popoverContents.subItems}}
 			<ui5-side-navigation-sub-item
 				title="{{this._tooltip}}"
 				text="{{this.text}}"
