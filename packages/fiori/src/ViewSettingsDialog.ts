@@ -15,9 +15,7 @@ import List from "@ui5/webcomponents/dist/List.js";
 import type { ClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
-// @ts-ignore
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
-// @ts-ignore
 import SegmentedButtonItem from "@ui5/webcomponents/dist/SegmentedButtonItem.js";
 
 import Bar from "./Bar.js";
