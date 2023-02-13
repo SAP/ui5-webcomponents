@@ -705,6 +705,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
+		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		const hasItems = !!this.suggestionItems.length;
@@ -1536,6 +1537,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : "";
 	}
 
+	get iconsCount(): number {
+		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const clearIconCount = Number(this.effectiveShowClearIcon) ?? 0;
+		return slottedIconsCount + clearIconCount;
+	}
+
 	get classes(): ClassMap {
 		return {
 			popover: {
@@ -1572,10 +1579,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				"padding": "",
 			},
 		};
-
-		if (this.nativeInputWidth < 48) {
-			stylesObject.innerInput.padding = "0";
-		}
 
 		return stylesObject;
 	}
