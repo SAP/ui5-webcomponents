@@ -52,6 +52,7 @@ const DESIGN_DESCRIPTIONS = {
  * It defines both the item in the tab strip (top part of the <code>ui5-tabcontainer</code>) and the
  * content that is presented to the user once the tab is selected.
  *
+ * @abstract
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.Tab
