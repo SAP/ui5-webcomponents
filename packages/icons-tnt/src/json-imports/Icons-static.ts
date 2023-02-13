@@ -9,7 +9,7 @@ const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
 		throw new Error("[icons-tnt] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs");
 	}
 
-	const iconsUrl: string = collection === "tnt-v5" ? SAPIconsTNTUrlV3 : SAPIconsTNTUrlV2;
+	const iconsUrl: string = collection === "tnt-v3" ? SAPIconsTNTUrlV3 : SAPIconsTNTUrlV2;
 	return (await fetch(iconsUrl)).json();
 }
 
