@@ -12,7 +12,7 @@ const ADDON_ID = 'github-button';
 
 addons.register(ADDON_ID, (api) => {
   addons.add(ADDON_ID, {
-    title: "My button title",
+    title: "Github",
     type: types.TOOL,
     match: ({ viewMode }) => !!(viewMode && viewMode.match(/^(story|docs)$/)),
     render: ({ active }) => {
