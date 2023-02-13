@@ -2,7 +2,7 @@ import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
 import { getCurrentZIndex } from "../util/PopupUtils.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
-import type { LegacyDateCalendarCustomizing, LegacyDateFormat } from "../config/FormatSettings.js";
+import type { LegacyDateCalendarCustomizing, LegacyDateFormat } from "../features/LegacyDateFormats.js";
 
 type OpenUI5Popup = {
 	setInitialZIndex: (zIndex: number) => void,
