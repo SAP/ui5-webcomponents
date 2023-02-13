@@ -225,7 +225,7 @@ class MediaGallery extends UI5Element {
 	 *
 	 * @private
 	 */
-	@property({ type: Integer, noAttribute: true, defaultValue: 0 })
+	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
 	_overflowSize!: number;
 
 	/**

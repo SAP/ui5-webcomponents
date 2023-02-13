@@ -142,7 +142,7 @@ class MediaGalleryItem extends UI5Element {
 	 * @slot content
 	 * @public
 	 */
-	@slot()
+	@slot({ type: HTMLElement, "default": true })
 	content!: Array<HTMLElement>;
 
 	/**
