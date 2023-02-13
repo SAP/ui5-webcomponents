@@ -24,26 +24,26 @@ class LegacyDateFormats {
 	 * @return {object[]} Returns an array that contains the customizing data.
 	 * @public
 	 */
-	static getLegacyDateCalendarCustomizing(): LegacyDateCalendarCustomizing {
+	static getLegacyDateCalendarCustomizing(this: void): LegacyDateCalendarCustomizing {
 		if (formatSettings === undefined) {
 			formatSettings = getFormatSettings();
 		}
 
 		return formatSettings.legacyDateCalendarCustomizing || [];
-	};
+	}
 
 	/**
 	 * Returns the currently set legacy ABAP date format (its id).
 	 * @return {"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|"A"|"B"|"C"|undefined} ID of the ABAP date format
 	 * @public
 	 */
-	static getLegacyDateFormat(): LegacyDateFormat | undefined {
+	static getLegacyDateFormat(this: void): LegacyDateFormat | undefined {
 		if (formatSettings === undefined) {
 			formatSettings = getFormatSettings();
 		}
 
 		return formatSettings.legacyDateFormat;
-	};
+	}
 }
 
 registerFeature("LegacyDateFormats", LegacyDateFormats);

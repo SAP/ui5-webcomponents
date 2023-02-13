@@ -26,7 +26,7 @@ const getFirstDayOfWeek = (): number | undefined => {
 
 const legacyDateFormats = getFeature<typeof LegacyDateFormats>("LegacyDateFormats");
 
-const getLegacyDateCalendarCustomizing = legacyDateFormats ? LegacyDateFormats.getLegacyDateCalendarCustomizing : () => { return [] };
+const getLegacyDateCalendarCustomizing = legacyDateFormats ? LegacyDateFormats.getLegacyDateCalendarCustomizing : () => { return []; };
 const getLegacyDateFormat = legacyDateFormats ? legacyDateFormats.getLegacyDateFormat : () => {};
 
 export {
