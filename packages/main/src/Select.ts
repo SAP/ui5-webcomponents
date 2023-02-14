@@ -4,6 +4,8 @@ import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
+import staticAreaTemplate from "@ui5/webcomponents-base/dist/decorators/staticAreaTemplate.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isSpace,
@@ -146,6 +148,8 @@ interface IOption extends UI5Element {
  * @public
  */
 @event("close")
+@template(SelectTemplate)
+@staticAreaTemplate(SelectPopoverTemplate)
 class Select extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
 
@@ -331,14 +335,6 @@ class Select extends UI5Element implements IFormElement {
 
 	static get render() {
 		return litRender;
-	}
-
-	static get template() {
-		return SelectTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return SelectPopoverTemplate;
 	}
 
 	static get styles() {

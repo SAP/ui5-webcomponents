@@ -2,6 +2,7 @@ import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
@@ -88,6 +89,7 @@ type CalculatedPlacement = {
  * @public
  */
 @customElement("ui5-popover")
+@template(PopoverTemplate)
 class Popover extends Popup {
 	/**
 	 * Defines the header text.
@@ -294,10 +296,6 @@ class Popover extends Popup {
 
 	static get styles(): ComponentStylesData {
 		return [browserScrollbarCSS, PopupsCommonCss, PopoverCss];
-	}
-
-	static get template() {
-		return PopoverTemplate;
 	}
 
 	static get VIEWPORT_MARGIN() {

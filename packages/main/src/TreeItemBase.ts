@@ -2,6 +2,7 @@ import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -81,7 +82,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 		item: { type: HTMLElement },
 	},
 })
-
+@template(TreeItemBaseTemplate)
 class TreeItemBase extends ListItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
@@ -264,10 +265,6 @@ class TreeItemBase extends ListItem {
 	 */
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<TreeItemBase>;
-
-	static get template() {
-		return TreeItemBaseTemplate;
-	}
 
 	static get styles(): ComponentStylesData {
 		return [super.styles, treeItemCss];

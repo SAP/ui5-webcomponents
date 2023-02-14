@@ -28,15 +28,17 @@ if (!String.prototype.replaceAll) {
 	};
 }
 
-function HTMLLitVisitor(debug) {
+function HTMLLitVisitor(componentName, debug) {
 	this.blockCounter = 0;
 	this.keys = [];
 	this.blocks = {};
 	this.result = "";
 	this.mainBlock = "";
 	this.blockLevel = 0;
-	this.blockParameters = ["context", "tags", "suffix"];
+	this.blockParameters = ["context: UI5Element", "tags: string[]", "suffix: string | undefined"];
+	this.blockParametersNested = ["context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
+	this.componentName = componentName
 	this.debug = debug;
 	if (this.debug) {
 		this.blockByNumber = [];
@@ -51,17 +53,18 @@ HTMLLitVisitor.prototype.Program = function(program) {
 	this.keys.push(key);
 	this.debug && this.blockByNumber.push(key);
 
-	this.blocks[this.currentKey()] = "const " + this.currentKey() + " = (" + this.blockParameters.join(", ") + ") => ";
+	// this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: any, ` + this.blockParameters.join(", ") + ") { ";
+	this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: ${this.componentName}, ` + this.blockParameters.join(", ") + ") { ";
 
 	if (this.keys.length > 1) { //it's a nested block
-		this.blocks[this.prevKey()] += this.currentKey() + "(" + this.blockParameters.join(", ") + ")";
+		this.blocks[this.prevKey()] += this.currentKey() + ".call(this, " + this.blockParametersNested.join(", ") + ")";
 	} else {
 		this.mainBlock = this.currentKey();
 	}
 
-	this.blocks[this.currentKey()] += "html`";
+	this.blocks[this.currentKey()] += "return html`";
 	Visitor.prototype.Program.call(this, program);
-	this.blocks[this.currentKey()] += "`;";
+	this.blocks[this.currentKey()] += "`;}";
 
 	this.keys.pop(key);
 };
@@ -98,14 +101,14 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		this.blocks[this.currentKey()] += "${index}";
 	} else {
 		const path = normalizePath.call(this, mustache.path.original);
-		const hasCalculatingClasses = path.includes("context.classes");
+		const hasCalculatingClasses = path.includes("this.classes");
 
 		let parsedCode = "";
 
 		if (isNodeValue && !mustache.escaped) {
 			parsedCode = `\${unsafeHTML(${path})}`;
 		} else if (hasCalculatingClasses) {
-			parsedCode = `\${classMap(${path})}`;
+			parsedCode = `\${classMap(${path} as ClassMapValue)}`;
 		} else if (isStyleAttribute) {
 			parsedCode = `\${styleMap(${path})}`;
 		} else if (skipIfDefined){
@@ -170,19 +173,24 @@ function visitEachBlock(block) {
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
 
-	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item, index) => item._id || index, (item, index) => ";
+	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item: any, index: number) => item._id || index, (item: any, index: number) => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
 	this.blockLevel++;
 
-	if (this.blockParameters.indexOf("item") === -1) {
+	console.log("blockParameters", this.blockParameters)
+	if (this.blockParameters.indexOf("item: any") === -1) {
 		bParamAdded = true;
-		this.blockParameters.unshift("index");
-		this.blockParameters.unshift("item");
+		this.blockParameters.unshift("index: number");
+		this.blockParameters.unshift("item: any");
+		this.blockParametersNested.unshift("index");
+		this.blockParametersNested.unshift("item");
 	}
 	this.acceptKey(block, "program");
 	if (bParamAdded) {
-		this.blockParameters.shift("item");
-		this.blockParameters.shift("index");
+		this.blockParameters.shift("item: any");
+		this.blockParameters.shift("index: number");
+		this.blockParametersNested.shift("item");
+		this.blockParametersNested.shift("index");
 	}
 	this.blockLevel--;
 	this.blocks[this.currentKey()] += ") }";
@@ -197,7 +205,7 @@ function normalizePath(sPath) {
 	if (result.indexOf("@root") === 0) {
 		// Trying to access root context via the HBS "@root" variable.
 		// Example: {{@root.property}} compiles to "context.property" - called from anywhere within the template.
-		result = result.replace("@root", "context");
+		result = result.replace("@root", "this");
 
 	} else if (result.indexOf("../") === 0) {
 		let absolutePath;
@@ -207,7 +215,7 @@ function normalizePath(sPath) {
 			// Trying to access root context from nested loops.
 			// Example: {{../../property}} compiles to "context.property" - when currently in a nested level loop.
 			// Example: {{../../../property}} compile to "context.property" - when requested levels are not present. fallback to root context.
-			absolutePath = `context.${replaceAll(result,"../", "")}`;
+			absolutePath = `this.${replaceAll(result,"../", "")}`;
 		} else {
 			// Trying to access upper context (one-level-up) and based on the current lelev, that could be "context" or "item".
 			// Example: {{../property}} compiles to "context.property" - when called in a top level loop.
@@ -235,7 +243,7 @@ function normalizePath(sPath) {
 		// {{/each}}
 		// {{text}} -> compiles to "context.text"
 
-		const blockPath = this.blockLevel > 0 ? "item" : "context";
+		const blockPath = this.blockLevel > 0 ? "item" : "this";
 		result = result ? replaceAll(blockPath + "/" + result, "/", ".") : blockPath;
 	}
 

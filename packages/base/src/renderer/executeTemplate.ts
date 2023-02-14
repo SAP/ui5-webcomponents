@@ -14,7 +14,7 @@ type TemplateFunction = (component: UI5Element, tagsToScope: Array<string>, scop
 const executeTemplate = (template: TemplateFunction, component: UI5Element): TemplateFunctionResult => {
 	const tagsToScope = getTagsToScope(component);
 	const scope = getCustomElementsScopingSuffix();
-	return template(component, tagsToScope, scope);
+	return template.call(component, component, tagsToScope, scope);
 };
 
 /**

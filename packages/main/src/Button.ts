@@ -4,6 +4,7 @@ import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -94,6 +95,7 @@ let activeButton: Button | null = null;
  * @native
  */
 @event("click")
+@template(ButtonTemplate)
 class Button extends UI5Element implements IFormElement {
 	/**
 	 * Defines the component design.
@@ -240,7 +242,7 @@ class Button extends UI5Element implements IFormElement {
 	 * @since 1.2.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: object;
+	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree", controls: string};
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
@@ -317,10 +319,6 @@ class Button extends UI5Element implements IFormElement {
 
 	static get render() {
 		return litRender;
-	}
-
-	static get template() {
-		return ButtonTemplate;
 	}
 
 	static get dependencies() {

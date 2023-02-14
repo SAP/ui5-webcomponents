@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import StandardListItem from "./StandardListItem.js";
 import SuggestionListItemTemplate from "./generated/templates/SuggestionListItemTemplate.lit.js";
 
@@ -26,6 +27,7 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
  * @tagname ui5-li-suggestion-item
  */
 @customElement("ui5-li-suggestion-item")
+@template(SuggestionListItemTemplate)
 class SuggestionListItem extends StandardListItem {
 	/**
 	 * Defines a description that can contain HTML.
@@ -47,9 +49,9 @@ class SuggestionListItem extends StandardListItem {
 	@slot({ type: Node, "default": true })
 	titleText!: Array<Node>
 
-	static get template() {
-		return SuggestionListItemTemplate;
-	}
+	// static get template() {
+	// 	return SuggestionListItemTemplate;
+	// }
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

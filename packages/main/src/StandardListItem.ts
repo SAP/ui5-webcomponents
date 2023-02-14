@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import ListItem from "./ListItem.js";
 import type { IAccessibleListItem } from "./ListItem.js";
@@ -38,6 +39,7 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  * @public
  */
 @customElement("ui5-li")
+@template(StandardListItemTemplate)
 class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
@@ -175,10 +177,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 */
 	@slot()
 	imageContent!: Array<HTMLElement>;
-
-	static get template() {
-		return StandardListItemTemplate;
-	}
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

@@ -518,7 +518,7 @@ class Table extends UI5Element {
 
 	moreDataText?: string;
 	tableEndObserved: boolean;
-	visibleColumns?: Array<TableColumn>
+	visibleColumns!: Array<TableColumn>
 	visibleColumnsCount?: number;
 	lastFocusedElement: HTMLElement | null;
 	growingIntersectionObserver?: IntersectionObserver | null;

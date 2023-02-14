@@ -51,7 +51,7 @@ type DirectionStart = "left" | "right";
  * @public
  */
 @event("input")
-class SliderBase extends UI5Element {
+abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the minimum value of the slider.
 	 *
@@ -211,6 +211,15 @@ class SliderBase extends UI5Element {
 	static get styles(): ComponentStylesData {
 		return styles;
 	}
+
+	// used in base template, but implemented in subclasses
+	abstract styles: {
+		label: object,
+		labelContainer: object,
+	};
+
+	abstract tickmarksObject: any;
+	abstract _ariaLabelledByText: string;
 
 	static get ACTION_KEYS() {
 		return [

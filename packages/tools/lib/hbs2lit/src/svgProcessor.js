@@ -46,8 +46,10 @@ function getSVGMatches(template) {
 
 function getSVGBlock(input, blockCounter) {
 	return {
-		usage: `\${blockSVG${blockCounter}(context, tags, suffix)}`,
-		definition: `\nconst blockSVG${blockCounter} = (context, tags, suffix) => svg\`${input}\`;`,
+		usage: `\${blockSVG${blockCounter}.call(this, context, tags, suffix)}`,
+		definition: `\nfunction blockSVG${blockCounter} (this: any, context: UI5Element, tags: string[], suffix: string | undefined) {
+			return svg\`${input}\`;
+		};`,
 	};
 }
 
@@ -55,7 +57,7 @@ function replaceInternalBlocks(template, svgContent) {
 	const internalBlocks = svgContent.match(blockrx) || [];
 
 	internalBlocks.forEach(blockName => {
-		const rx = new RegExp(`const ${blockName}.*(html\`).*;`);
+		const rx = new RegExp(`function ${blockName}.*(html\`).*;`);
 		template = template.replace(rx, (match, p1) => {
 			return match.replace(p1, "svg\`");
 		});

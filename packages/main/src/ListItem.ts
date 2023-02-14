@@ -58,6 +58,12 @@ type AccInfo = {
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
 	ariaHaspopup?: HasPopup;
+	posinset?: number;
+	setsize?: number;
+	ariaSelected?: boolean;
+	ariaChecked?: boolean;
+	listItemAriaLabel?: string;
+	ariaOwns?: string;
 }
 
 /**

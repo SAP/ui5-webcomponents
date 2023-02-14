@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import TreeItemBase from "./TreeItemBase.js";
 
 // Template
@@ -42,6 +43,7 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-tree-item-custom")
+@template(TreeItemCustomTemplate)
 class TreeItemCustom extends TreeItemBase {
 	/**
 	 * Defines whether the tree list item should display the selection element.
@@ -65,9 +67,9 @@ class TreeItemCustom extends TreeItemBase {
 	@slot()
 	content!: Array<HTMLElement>
 
-	static get template() {
-		return TreeItemCustomTemplate;
-	}
+	// static get template() {
+	// 	return TreeItemCustomTemplate;
+	// }
 
 	static get styles() {
 		return [super.styles, treeItemCustomCss];

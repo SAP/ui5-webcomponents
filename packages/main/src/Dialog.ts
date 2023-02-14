@@ -2,6 +2,7 @@ import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import {
 	isUp, isDown, isLeft, isRight,
@@ -94,6 +95,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * @public
  */
 @customElement("ui5-dialog")
+@template(DialogTemplate)
 class Dialog extends Popup {
 	/**
 	 * Defines the header text.
@@ -247,10 +249,6 @@ class Dialog extends Popup {
 		return [
 			Icon,
 		];
-	}
-
-	static get template() {
-		return DialogTemplate;
 	}
 
 	static get styles() {

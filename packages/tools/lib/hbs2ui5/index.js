@@ -24,10 +24,10 @@ const onError = (place) => {
 const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
 
 const processFile = async (file, outputDir) => {
-	const litCode = await hbs2lit(file);
-	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
 	const componentNameMatcher = /(\w+)(\.hbs)/gim;
 	const componentName = componentNameMatcher.exec(file)[1];
+	const litCode = await hbs2lit(file, componentName);
+	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
 
 	return writeRenderers(absoluteOutputDir, componentName, litRenderer.generateTemplate(componentName, litCode));
 };
@@ -70,7 +70,7 @@ const writeRenderers = async (outputDir, controlName, fileContent) => {
 
 		await fs.mkdir(outputDir, { recursive: true });
 
-		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.js`;
+		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.ts`;
 
 		// strip DOS line endings because the break the source maps
 		let fileContentUnix = fileContent.replace(/\r\n/g, "\n");

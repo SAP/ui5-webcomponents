@@ -2,6 +2,8 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
+import staticAreaTemplate from "@ui5/webcomponents-base/dist/decorators/staticAreaTemplate.js";
 import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -122,6 +124,8 @@ type PopupBeforeCloseEventDetail = {
  * @event sap.ui.webc.main.Popup#scroll
  */
 @event("scroll")
+@template(PopupTemplate)
+@staticAreaTemplate(PopupBlockLayer)
 abstract class Popup extends UI5Element {
 	/**
 	 * Defines the ID of the HTML Element, which will get the initial focus.
@@ -263,14 +267,6 @@ abstract class Popup extends UI5Element {
 
 	static get styles(): ComponentStylesData {
 		return styles;
-	}
-
-	static get template() {
-		return PopupTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return PopupBlockLayer;
 	}
 
 	static get staticAreaStyles() {
