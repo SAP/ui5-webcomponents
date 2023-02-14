@@ -372,7 +372,7 @@
 			dialog.show();
 		});
 
-		setting.addEventListener("step-change", function (event) {
+		setting.addEventListener("ui5-step-change", function (event) {
 			wiz.setAttribute("step-switch-threshold", event.detail.selectedButton.getAttribute("threshold"));
 		});
 	</script>

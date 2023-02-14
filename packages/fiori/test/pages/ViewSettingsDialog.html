@@ -109,13 +109,13 @@
 		btnOpenDialogSort.addEventListener("click", function () {
 			vsdSort.show();
 		});
-		vsdSort.addEventListener("confirm", function(evt) {
+		vsdSort.addEventListener("ui5-confirm", function(evt) {
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 		btnOpenDialogFilter.addEventListener("click", function () {
 			vsdFilter.show();
 		});
-		vsdFilter.addEventListener("confirm", function(evt) {
+		vsdFilter.addEventListener("ui5-confirm", function(evt) {
 			alert("OK button clicked, returned info is: " + JSON.stringify(evt.detail));
 		});
 	</script>
