@@ -5,7 +5,12 @@ const config = {
   stories: ["../docs/**/*.mdx", "../_stories/**/*.stories.@(ts)"],
   addons: [
     "@storybook/addon-links",
-    "@storybook/addon-essentials",
+    {
+      name: "@storybook/addon-essentials",
+      options: {
+        docs: false,
+      },
+    },
     "@whitespace/storybook-addon-html",
     {
       name: '@storybook/addon-docs',
@@ -28,8 +33,8 @@ const config = {
   features: {
     storyStoreV7: true
   },
-  typescript: { 
-    reactDocgen: 'react-docgen' 
+  typescript: {
+    reactDocgen: 'react-docgen'
   },
   env: (config: any) => ({
     ...config,
