@@ -17,9 +17,10 @@ enum RegisteredIconCollection {
 
 /**
  * Sets the default icon collection for a given theme.
- * SAP Icons is the default icon collection (resolves to SAP-icons version 5.x in Horizon theme family and SAP-icons version 4.x in all other themes)
- * and to display icons from other collections, we have to specify the icon collection in addition to the icon name - "tne/actor", "business-suite/1x2-grid-layout", etc.
- * This method allows setting another (built-in or custom) icon collection as default.
+ *
+ * SAP Icons is the default icon collection (that resolves to SAP-icons version 5.x in Horizon theme family and SAP-icons version 4.x in all other themes)
+ * and to display icons from other collections, you have to specify the icon collection in addition to the icon name, for example: "tnt/actor", "business-suite/1x2-grid-layout", etc.
+ * This method allows setting another (built-in or custom) icon collection as default per theme.
  *
  * <b>Usage</b>
  * <b>For example</b>, to make "SAP-icons version 5.x" the default icon collection in "sap_fiori_3":
