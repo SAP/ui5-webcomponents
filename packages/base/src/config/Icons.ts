@@ -4,10 +4,10 @@ import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js
 const IconCollectionConfiguration = new Map<string, string>();
 
 // All supported icon collections + uknown custom ones
-type IconCollections = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite" | string;
+type IconCollection = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite" | string;
 
 // All registered icon collections
-enum RegisteredIconCollections {
+enum RegisteredIconCollection {
 	SAPIconsV4 = "SAP-icons-v4",
 	SAPIconsV5 = "SAP-icons-v5",
 	SAPIconsTNTV2 = "tnt-v2",
@@ -42,7 +42,7 @@ enum RegisteredIconCollections {
  * @param { string } theme
  * @param { string } collectionName
  */
-const setDefaultIconCollection = (theme: string, collectionName: IconCollections) => {
+const setDefaultIconCollection = (theme: string, collectionName: IconCollection) => {
 	IconCollectionConfiguration.set(theme, collectionName);
 };
 
@@ -60,10 +60,10 @@ const getDefaultIconCollection = (theme: string): string | undefined => {
 /**
  * Returns the effective icon collection,
  * based on the default icon collection configuration and the current theme:
- * @param { string } collectionName
- * @returns { string } the effective collection name
+ * @param { IconCollection } collectionName
+ * @returns { IconCollection } the effective collection name
  */
-const getEffectiveIconCollection = (collectionName?: string): string => {
+const getEffectiveIconCollection = (collectionName?: IconCollection): IconCollection => {
 	const currentTheme = getTheme();
 	const currentThemeConfiguration = IconCollectionConfiguration.get(currentTheme);
 
@@ -74,7 +74,7 @@ const getEffectiveIconCollection = (collectionName?: string): string => {
 
 	// when collection is set - return the theme dependant icon collection
 	// when collection is not set and there is no default icon collection configured - return theme dependant icon collection
-	return getIconCollectionVersionByTheme(collectionName);
+	return getIconCollectionByTheme(collectionName);
 };
 
 /**
@@ -89,26 +89,26 @@ const getEffectiveIconCollection = (collectionName?: string): string => {
  * - "business-suite" (and its alias "BusinessSuiteInAppSymbols") has no versioning and resolves to "business-suite"
  *
  * <b>Note:</b> "SAP-icons-v4", "SAP-icons-v5", "tnt-v2", "tnt-v3" and "business-suite" are just returned
- * @param { IconCollections } collectionName
- * @returns { RegisteredIconCollections } the registered collection name
+ * @param { IconCollection } collectionName
+ * @returns { RegisteredIconCollection } the registered collection name
  */
-const getIconCollectionVersionByTheme = (collectionName?: IconCollections): RegisteredIconCollections => {
+const getIconCollectionByTheme = (collectionName?: IconCollection): RegisteredIconCollection => {
 	const horizonThemeFamily = isThemeFamily("sap_horizon");
 
 	if (!collectionName) {
-		return horizonThemeFamily ? RegisteredIconCollections.SAPIconsV5 : RegisteredIconCollections.SAPIconsV4;
+		return horizonThemeFamily ? RegisteredIconCollection.SAPIconsV5 : RegisteredIconCollection.SAPIconsV4;
 	}
 
 	if (collectionName === "tnt") {
-		return horizonThemeFamily ? RegisteredIconCollections.SAPIconsTNTV3 : RegisteredIconCollections.SAPIconsTNTV2;
+		return horizonThemeFamily ? RegisteredIconCollection.SAPIconsTNTV3 : RegisteredIconCollection.SAPIconsTNTV2;
 	}
 
-	return collectionName as RegisteredIconCollections;
+	return collectionName as RegisteredIconCollection;
 };
 
 export {
 	setDefaultIconCollection,
 	getDefaultIconCollection,
 	getEffectiveIconCollection,
-	RegisteredIconCollections,
+	RegisteredIconCollection,
 };
