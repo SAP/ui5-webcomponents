@@ -20,7 +20,7 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.bd732a03.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.9c7f2f87.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/Wizard.220f7df3.css'>
 </head>
 
@@ -678,15 +678,15 @@
 	<script>
 		var wiz = document.getElementById("wiz");
 
-		wiz.addEventListener("step-change", function () {
+		wiz.addEventListener("ui5-step-change", function () {
 			console.log(event.detail.step);
 		});
 
-		sw.addEventListener("change", function () {
+		sw.addEventListener("ui5-change", function () {
 			toStep3.removeAttribute("hidden");
 		});
 
-		sb.addEventListener("step-change", function () {
+		sb.addEventListener("ui5-step-change", function () {
 			toStep4.removeAttribute("hidden");
 		});
 
@@ -719,15 +719,15 @@
 			dialog.show();
 		});
 
-		wiz2.addEventListener("step-change", function () {
+		wiz2.addEventListener("ui5-step-change", function () {
 			console.log(event.detail.step);
 		});
 
-		sw2.addEventListener("change", function () {
+		sw2.addEventListener("ui5-change", function () {
 			toStep32.removeAttribute("hidden");
 		});
 
-		sb2.addEventListener("step-change", function () {
+		sb2.addEventListener("ui5-step-change", function () {
 			toStep42.removeAttribute("hidden");
 		});
 

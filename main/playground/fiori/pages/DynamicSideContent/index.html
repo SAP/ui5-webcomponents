@@ -14,7 +14,7 @@
 
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.bd732a03.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.9c7f2f87.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/DynamicSideContent.html.9b81aa24.css'>
 </head>
 
@@ -87,27 +87,27 @@
 			dynamnicSideContent.toggleContents();
 		});
 
-		hideMainContent.addEventListener("change", function() {
+		hideMainContent.addEventListener("ui5-change", function() {
 			dynamnicSideContent.hideMainContent = !hideMainContent.checked;
 		});
 
-		hideSideContent.addEventListener("change", function() {
+		hideSideContent.addEventListener("ui5-change", function() {
 			dynamnicSideContent.hideSideContent = !hideSideContent.checked;
 		});
 
-		equalSplit.addEventListener("change", function() {
+		equalSplit.addEventListener("ui5-change", function() {
 			dynamnicSideContent.equalSplit = equalSplit.checked;
 		});
 
-		sideContentPosition.addEventListener("change", function() {
+		sideContentPosition.addEventListener("ui5-change", function() {
 			dynamnicSideContent.sideContentPosition = sideContentPosition.checked ? "End" : "Start";
 		});
 
-		sideContentVisibility.addEventListener("change", function(event) {
+		sideContentVisibility.addEventListener("ui5-change", function(event) {
 			dynamnicSideContent.sideContentVisibility = event.detail.selectedOption.innerText;
 		});
 
-		sideContentFallDown.addEventListener("change", function(event) {
+		sideContentFallDown.addEventListener("ui5-change", function(event) {
 			dynamnicSideContent.sideContentFallDown = event.detail.selectedOption.innerText;
 		});
 

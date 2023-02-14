@@ -13,7 +13,7 @@
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.f0c51ca3.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.1cf325f8.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/MultiInput_Suggestions.html.79cd0348.css'>
 </head>
 
@@ -118,7 +118,7 @@
 			mi.removeChild(event.detail.token);
 		});
 
-		document.getElementById("token-creation").addEventListener("change", function (event) {
+		document.getElementById("token-creation").addEventListener("ui5-change", function (event) {
 			event.target.appendChild(createTokenFromText(event.target.value));
 
 			event.target.value = "";
@@ -128,7 +128,7 @@
 			event.target.removeChild(event.detail.token);
 		});
 
-		document.getElementById("token-unique").addEventListener("change", function (event) {
+		document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
 			if (!event.target.value) {
 				return;
 			};

@@ -12,7 +12,7 @@
 
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.bd732a03.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.9c7f2f87.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/FCLApp.html.4d2da1a7.css'>
 </head>
 
@@ -158,7 +158,7 @@
 		setTimeout(function() {
 			var companies = $("companiesTemplate").content.cloneNode(true);
 			$("startColumn").appendChild(companies);
-			$("startColumn").querySelector("ui5-list").addEventListener("item-click", function(e) {
+			$("startColumn").querySelector("ui5-list").addEventListener("ui5-item-click", function(e) {
 				window.location = "#" + e.detail.item.getAttribute("data-cid");
 			});
 			$("startBusy").active = false;
@@ -174,7 +174,7 @@
 				$("midColumn").removeChild(child);
 			});
 			$("midColumn").appendChild(products);
-			$("midColumn").querySelector("ui5-list").addEventListener("item-click", function(e) {
+			$("midColumn").querySelector("ui5-list").addEventListener("ui5-item-click", function(e) {
 				window.location = "#" + cid + "-" + e.detail.item.getAttribute("data-pid");
 			});
 			$("midColumn").querySelector("ui5-button").addEventListener("click", function(e) {

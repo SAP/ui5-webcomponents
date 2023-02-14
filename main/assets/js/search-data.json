@@ -1570,7 +1570,7 @@
   "225": {
     "id": "225",
     "title": "Table Growing With Scroll",
-    "content": "&lt;!DOCTYPE html&gt; Table &amp;ltui5-table growing=&quot;Scroll&quot;&gt;&amp;lt/ui5-table&gt; table.addEventListener(&quot;load-more&quot;, () =&gt; { table.busy = true; // set busy state setTimeout(function() { // load items - make take some time loadMoreRows(); table.busy = false; // remove busy state }, 1500); }); SrollToBottom Product Supplier Dimensions Weight Price",
+    "content": "&lt;!DOCTYPE html&gt; Table &amp;ltui5-table growing=&quot;Scroll&quot;&gt;&amp;lt/ui5-table&gt; table.addEventListener(&quot;ui5-load-more&quot;, () =&gt; { table.busy = true; // set busy state setTimeout(function() { // load items - make take some time loadMoreRows(); table.busy = false; // remove busy state }, 1500); }); SrollToBottom Product Supplier Dimensions Weight Price",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/TableGrowingWithScroll/",
     "relUrl": "/playground/main/pages/TableGrowingWithScroll/"
   },

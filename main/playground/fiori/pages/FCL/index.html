@@ -12,7 +12,7 @@
 
 
 	
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.bd732a03.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.esm.9c7f2f87.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/FCL.html.6763e066.css'>
 </head>
 
@@ -882,12 +882,12 @@
 		}
 
 		// Event handlers
-		col1list.addEventListener("item-click", function (e) {
+		col1list.addEventListener("ui5-item-click", function (e) {
 			updateProductInfo(e.detail.item);
 			fclApp.layout = nextLayout("col1");
 		});
 
-		col2list.addEventListener("item-click", function (e) {
+		col2list.addEventListener("ui5-item-click", function (e) {
 			updateDetailInfo(e.detail.item);
 			fclApp.layout = nextLayout("col2");
 		});
@@ -911,15 +911,15 @@
 		// Wizard
 		var wiz = document.getElementById("wiz");
 
-		wiz.addEventListener("selection-change", function () {
+		wiz.addEventListener("ui5-selection-change", function () {
 			console.log(event.detail.selectedStep);
 		});
 
-		sw.addEventListener("change", function () {
+		sw.addEventListener("ui5-change", function () {
 			toStep3.removeAttribute("hidden");
 		});
 
-		sb.addEventListener("selection-change", function () {
+		sb.addEventListener("ui5-selection-change", function () {
 			toStep4.removeAttribute("hidden");
 		});
 

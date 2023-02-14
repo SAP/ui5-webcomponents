@@ -10,7 +10,7 @@
 
 
 
-  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.f0c51ca3.js'></script>
+  <script type="module" crossorigin src='https://sap.github.io/ui5-webcomponents/main/assets/bundle.common.1cf325f8.js'></script>
   <link rel="stylesheet" href='https://sap.github.io/ui5-webcomponents/main/assets/test/pages/List_test_page.html.356d4e16.css'>
 </head>
 
@@ -274,34 +274,34 @@
 			document.querySelector("#lblResult").innerHTML = e.detail.item.innerHTML + ": " + ++itemDeleteCounter;
 		}
 
-		list1.addEventListener("ui5-itemDelete", deleteItemHandler);
+		list1.addEventListener("ui5-item-delete", deleteItemHandler);
 
-		listEvents.addEventListener("ui5-itemClick", function (event) {
+		listEvents.addEventListener("ui5-item-click", function (event) {
 			itemClickCounter += 1;
 			itemClickResultField.value = itemClickCounter;
 		});
 
-		listEvents.addEventListener("ui5-selectionChange", function (event) {
+		listEvents.addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
 			selectionChangeResultField.value = selectionChangeCounter;
 		});
 
-		listEvents.addEventListener("ui5-selectionChange", function(event) {
+		listEvents.addEventListener("ui5-selection-change", function(event) {
 			selectionChangeResultPreviousItemsParameter.value = event.detail.previouslySelectedItems[0].id;
 		})
 
-		listEvents2.addEventListener("ui5-itemClick", function (event) {
+		listEvents2.addEventListener("ui5-item-click", function (event) {
 			itemClickCounter2 += 1;
 			itemClickResultField2.value = itemClickCounter2;
 		});
 
-		listEvents2.addEventListener("ui5-selectionChange", function (event) {
+		listEvents2.addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter2 += 1;
 			selectionChangeResultField2.value = selectionChangeCounter2;
 		});
 
 
-		listMultiSel.addEventListener("ui5-selectionChange", function(event) {
+		listMultiSel.addEventListener("ui5-selection-change", function(event) {
 			fieldMultiSelResult.value = event.detail.selectionComponentPressed;
 		})
 
@@ -314,7 +314,7 @@
 			emptyItem.textContent = "updated";
 		});
 
-		listPreventClickEvent.addEventListener("ui5-itemClick", function (event) {
+		listPreventClickEvent.addEventListener("ui5-item-click", function (event) {
 			event.preventDefault();
 			itemClickPreventedResultField.value = event.detail.item.id;
 		});
@@ -329,7 +329,7 @@
 			loadMoreResult.value= ++loadMoreCounter;
 		});
 
-		detailListItem.addEventListener("ui5-detailClick", function(e) {
+		detailListItem.addEventListener("ui5-detail-click", function(e) {
 			detailPressCounter.innerHTML = parseInt(detailPressCounter.innerHTML) + 1;
 		});
 
