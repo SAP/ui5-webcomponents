@@ -1,7 +1,23 @@
+import remarkGfm from 'remark-gfm';
+
 const isProd = process.env.NODE_ENV === "production";
 const config = {
   stories: ["../docs/**/*.mdx", "../_stories/**/*.stories.@(ts)"],
-  addons: ["@storybook/addon-links", "@storybook/addon-essentials", "@whitespace/storybook-addon-html"],
+  addons: [
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@whitespace/storybook-addon-html",
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm]
+          }
+        }
+      }
+    }
+  ],
   framework: {
     name: "@storybook/web-components-vite",
     options: {}
@@ -11,6 +27,9 @@ const config = {
   },
   features: {
     storyStoreV7: true
+  },
+  typescript: { 
+    reactDocgen: 'react-docgen' 
   },
   env: (config: any) => ({
     ...config,

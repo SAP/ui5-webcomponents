@@ -8,17 +8,20 @@ const removeMetadata = (buffer) => {
     return buffer.toString().replace(/^---[\s\S]+?---/g, "");
 };
 
+// parseNameNoNumbers: removes numbers and dots, dashes from the name
+const parseNameNoNumbers = (name) =>
+    capitalize(
+        name
+            .replace(/\.md$/, "")
+            .replace(/[-0-9\.]/g, " ")
+            .replace(/^\s+|\s+$/g, "")
+    );
+
 const directories = [
     {
         src: "../../../docs",
         exclude: ["README.md", "images"],
-        parseName: (name) =>
-            capitalize(
-                name
-                    .replace(/\.md$/, "")
-                    .replace(/[-0-9\.]/g, " ")
-                    .replace(/^\s+|\s+$/g, "")
-            ),
+        parseName: parseNameNoNumbers,
     },
     {
         src: "../docs/changelog",
@@ -39,10 +42,8 @@ const parseMdxTitle = (filePath, parseName) => {
     const folderName = filePath.split("/").slice(-2, -1).pop();
     let articleGroup = null;
     if (folderName) {
-        articleGroup = parseName(folderName);
+        articleGroup = parseNameNoNumbers(folderName);
     }
-
-    // console.log("articleName", articleName);
 
     const articleTitle = `Docs/${
         articleGroup ? `${articleGroup}/` : ""
@@ -82,15 +83,16 @@ const onFile = ({ exclude, parseName, subDir, filePath, srcPath }) => {
     }
 
     const pathRelative = filePath.replace(srcPath, "");
-    const mdxTitle = parseMdxTitle(pathRelative, parseName);
-
-    let fileLocation = pathRelative
-        // remove last directory from path
-        .replace(/\/[^/]*$/, "");
 
     // create sub directory structure described in subDir
-    fileLocation =
-        fileLocation + (typeof subDir === "function" ? `/${subDir()}` : "");
+    let fileLocation =
+        (typeof subDir === "function" ? `/${subDir()}` : "") + pathRelative;
+
+    const mdxTitle = parseMdxTitle(fileLocation, parseName);
+
+    fileLocation = fileLocation
+        // remove last directory from path
+        .replace(/\/[^/]*$/, "");
 
     const destPath = path.join(__dirname, "../docs/storybook", fileLocation);
 
