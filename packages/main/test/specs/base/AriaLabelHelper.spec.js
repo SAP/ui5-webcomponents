@@ -5,8 +5,8 @@ describe('AriaLabelHelper', () => {
     await browser.url(`test/pages/base/AriaLabelHelper.html`);
   });
 
-  const getErrorMessageAriaLabelNotAsExpected = (actual, expected) => {
-    return `aria-label ${actual} is not as expected ${expected}.`;
+  const getMessageAriaLabelAsExpected = (actual, expected) => {
+    return `aria-label ${actual} is as expected ${expected}.`;
   };
 
   const testInputAriaLabelMatchesLabels = async (inputId, labelIds) => {
@@ -24,7 +24,7 @@ describe('AriaLabelHelper', () => {
     assert.equal(
       actualAriaLabel,
       expectedAriaLabel,
-      getErrorMessageAriaLabelNotAsExpected(actualAriaLabel, expectedAriaLabel)
+      getMessageAriaLabelAsExpected(actualAriaLabel, expectedAriaLabel)
     );
   };
 
@@ -36,7 +36,7 @@ describe('AriaLabelHelper', () => {
     assert.equal(
       actualAriaLabel,
       accessibleNameValue,
-      getErrorMessageAriaLabelNotAsExpected(actualAriaLabel, accessibleNameValue)
+      getMessageAriaLabelAsExpected(actualAriaLabel, accessibleNameValue)
     );
   };
 
@@ -44,10 +44,10 @@ describe('AriaLabelHelper', () => {
     const input = await browser.$(`#${inputId}`);
     const innerInput = await input.shadow$('input');
     const actualAriaLabel = await innerInput.getAttribute('aria-label');
-    assert.equal(
-      !!actualAriaLabel,
-      false,
-      `${inputId} : ${getErrorMessageAriaLabelNotAsExpected(!!actualAriaLabel, false)}`
+    assert.strictEqual(
+      typeof actualAriaLabel,
+      undefined,
+      `Aria Label is undefined.`
     );
   };
 
