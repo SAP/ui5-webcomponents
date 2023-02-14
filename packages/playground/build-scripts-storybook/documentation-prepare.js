@@ -1,54 +1,200 @@
-const fs = require('fs');
-const path = require('path');
-const rimraf = require('rimraf');
-const capitalizeFirst = str => str.substr(0, 1).toUpperCase() + str.substr(1);
+const fs = require("fs");
+const fsPromises = fs.promises;
+const path = require("path");
+const rimraf = require("rimraf");
+const capitalize = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
-const srcPath = path.resolve(process.argv[2]); // where to find the .mds
-const destPath = path.resolve(process.argv[3]); // where to create the output
+const removeMetadata = (buffer) => {
+    return buffer.toString().replace(/^---[\s\S]+?---/g, "");
+};
 
-const files = fs.readdirSync(srcPath).filter(file => !["README.md", "images"].includes(file)); // skip the top-level readme
+const directories = [
+    {
+        src: "../../../docs",
+        exclude: ["README.md", "images"],
+        parseName: (name) =>
+            capitalize(
+                name
+                    .replace(/\.md$/, "")
+                    .replace(/[-0-9\.]/g, " ")
+                    .replace(/^\s+|\s+$/g, "")
+            ),
+    },
+    {
+        src: "../docs/changelog",
+        exclude: ["changelog.md"],
+        subDir: () => "99-changelog",
+        parseName: (name) => capitalize(name),
+    },
+];
 
-files.forEach((file, fileIndex) => {
-    const srcFilePath = path.join(srcPath, file); // f.e. "../../docs/4. Usage with Frameworks"
-    const isDir = fs.lstatSync(srcFilePath).isDirectory();
+const parseMdxTitle = (filePath, parseName) => {
+    // returns mdx title in the following formats:
+    // - Docs/Changelog/{articleName}
+    // - Docs/{{articleGroup}}/{articleName}
+    // - Docs/{articleName}
+    const fileName = filePath.split("/").pop();
+    const articleName = parseName(fileName);
 
-    // Directory with articles
-    if (isDir) {
-        const humanReadableName = capitalizeFirst(file.replace(/^[0-9\-\.]+/, "").replace(/-/g, " "));
-		const technicalName = file.replace(/^[0-9\-\.]+/, "").toLowerCase(); // becomes "usage-with-frameworks"
-        const sectionDir = path.join(destPath, technicalName);
-        rimraf.sync(sectionDir);
-        fs.mkdirSync(sectionDir);
-
-        // Get all articles in that directory
-        const articles = fs.readdirSync(srcFilePath);
-        articles.forEach(article => {
-            if (article.endsWith("README.md")) return; // skip the top-level readme
-            const articlePath = path.join(srcFilePath, article);
-            let articleContent = `${fs.readFileSync(articlePath)}`;
-
-            const articleHumanReadableName = capitalizeFirst(article.replace(/^[0-9\-\.]+/, "").replace(/\.md$/, "").replace(/-/g, " "));
-            articleContent = `
-import { Meta } from '@storybook/blocks';
-
-<Meta title="Docs/${humanReadableName}/${articleHumanReadableName}" />
-
-${articleContent}`;
-            fs.writeFileSync(path.join(sectionDir, article.replace(/\.md$/, ".mdx")), articleContent);
-        });
-    } else {
-        // create a standalone article outside the directory structure (f.e. FAQ)
-        let articleContent = `${fs.readFileSync(srcFilePath)}`;
-        const cleanName = file.replace(/^[0-9\-\.]+/, "");
-        articleContent = `
-import { Meta } from '@storybook/blocks';
-
-<Meta title="${cleanName.replace(/\.md$/, "")}" />
-
-${articleContent}`;
-        fs.writeFileSync(
-            path.join(destPath, cleanName.replace(/\.md$/, ".mdx")),
-            articleContent
-        );
+    const folderName = filePath.split("/").slice(-2, -1).pop();
+    let articleGroup = null;
+    if (folderName) {
+        articleGroup = parseName(folderName);
     }
-});
+
+    // console.log("articleName", articleName);
+
+    const articleTitle = `Docs/${
+        articleGroup ? `${articleGroup}/` : ""
+    }${articleName}`;
+
+    return articleTitle;
+};
+
+const writeMDXFile = ({ destPath, articleName, articleContent }) => {
+    fsPromises.writeFile(
+        path.join(destPath.replace("md", "mdx")),
+        `import { Meta } from '@storybook/blocks';
+
+<Meta title="${articleName}" />
+
+${articleContent}`
+    );
+};
+
+const getFiles = async (dir) => {
+    const subdirs = await fsPromises.readdir(dir);
+    const files = await Promise.all(
+        subdirs.map(async (subdir) => {
+            const res = path.join(dir, subdir);
+            return (await fsPromises.stat(res)).isDirectory()
+                ? getFiles(res)
+                : res;
+        })
+    );
+    return files.reduce((a, f) => a.concat(f), []);
+};
+
+const onFile = ({ exclude, parseName, subDir, filePath, srcPath }) => {
+    // handle excluded files
+    if (exclude && filePath.match(new RegExp(exclude.join("|")))) {
+        return;
+    }
+
+    const pathRelative = filePath.replace(srcPath, "");
+    const mdxTitle = parseMdxTitle(pathRelative, parseName);
+
+    let fileLocation = pathRelative
+        // remove last directory from path
+        .replace(/\/[^/]*$/, "");
+
+    // create sub directory structure described in subDir
+    fileLocation =
+        fileLocation + (typeof subDir === "function" ? `/${subDir()}` : "");
+
+    const destPath = path.join(__dirname, "../docs/storybook", fileLocation);
+
+    // create directory if it doesn't exist
+    if (!fs.existsSync(destPath)) {
+        fs.mkdirSync(destPath);
+    }
+
+    const mdxFileDest = path.join(
+        __dirname,
+        "../docs/storybook",
+        (typeof subDir === "function" ? `${subDir()}/` : "") +
+            filePath.replace(srcPath, "")
+    );
+
+    // write mdx file
+    writeMDXFile({
+        destPath: mdxFileDest,
+        articleName: mdxTitle,
+        articleContent: removeMetadata(fs.readFileSync(filePath)),
+    });
+};
+
+const prepareDocs = async () => {
+    rimraf.sync(path.join(__dirname, "../docs/storybook/*"));
+    const promises = directories.map(async (data) => {
+        const srcPath = path.join(__dirname, data.src);
+        const files = await getFiles(srcPath);
+
+        console.log(`Process ${files.length} files inside ${srcPath}`);
+
+        const filesPromises = files.map((filePath) =>
+            onFile({
+                ...data,
+                filePath,
+                srcPath,
+            })
+        );
+
+        return Promise.all(filesPromises);
+    });
+
+    return Promise.all(promises);
+};
+
+// sort files in ../docs/storybook/99-changelog by version number
+// e.g 1.3.2, 1.2.3-rc.3 1.2.3-rc.2 1.2.3-rc.1, 1.2.1, 1.2.0, rc16, rc15
+
+const sortChangelog = () => {
+    console.log("Start sorting changelog files");
+    const changelogDir = path.join(__dirname, "../docs/storybook/99-changelog");
+    const changelogFiles = fs.readdirSync(changelogDir);
+
+    const changelogFilesSorted = changelogFiles.sort((a, b) => {
+        const aVersion = a.replace(/\.mdx$/, "");
+        const bVersion = b.replace(/\.mdx$/, "");
+
+        const aVersionSplit = aVersion.split(".");
+        const bVersionSplit = bVersion.split(".");
+
+        const aVersionMajor = parseInt(aVersionSplit[0]);
+        const bVersionMajor = parseInt(bVersionSplit[0]);
+
+        const aVersionMinor = parseInt(aVersionSplit[1]);
+        const bVersionMinor = parseInt(bVersionSplit[1]);
+
+        const aVersionPatch = parseInt(aVersionSplit[2]);
+        const bVersionPatch = parseInt(bVersionSplit[2]);
+
+        if (aVersionMajor > bVersionMajor) {
+            return -1;
+        } else if (aVersionMajor < bVersionMajor) {
+            return 1;
+        } else {
+            if (aVersionMinor > bVersionMinor) {
+                return -1;
+            } else if (aVersionMinor < bVersionMinor) {
+                return 1;
+            } else {
+                if (aVersionPatch > bVersionPatch) {
+                    return -1;
+                } else if (aVersionPatch < bVersionPatch) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        }
+    });
+
+    changelogFilesSorted.forEach((file, index) => {
+        const fileDest = path.join(changelogDir, `${index + 1}-${file}`);
+        const fileSrc = path.join(changelogDir, file);
+        fs.renameSync(fileSrc, fileDest);
+    });
+
+    console.log("Done sorting changelog files");
+};
+
+const main = async () => {
+    await prepareDocs();
+    sortChangelog();
+
+    console.log("Done processing!");
+};
+
+main();

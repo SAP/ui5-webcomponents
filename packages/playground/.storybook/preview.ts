@@ -35,16 +35,6 @@ export const parameters: Parameters = {
     storySort: {
       order: [
         "Docs",
-        [
-          "Getting started",
-          "Advanced",
-          "Customizing",
-          "Frameworks",
-          "Development",
-          "Contributing",
-          "FAQ",
-          "Changelog",
-        ],
         "Main",
         "Fiori"
       ],
