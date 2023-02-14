@@ -40,7 +40,7 @@ const config = {
     ...config,
     // static assets loaded inside preview-head.html are located in the root
     // of the gh-pages branch and not in the _playground folder
-    STORYBOOK_ASSETS_BASE: isProd ? "/ui5-webcomponents/" : "/"
+    STORYBOOK_ASSETS_BASE: isProd ? "/ui5-webcomponents/" : "./"
   }),
   docs: {
     autodocs: true
