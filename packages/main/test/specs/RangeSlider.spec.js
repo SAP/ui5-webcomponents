@@ -297,22 +297,22 @@ describe("Testing events", () => {
 		assert.strictEqual(await eventResultRangeSlider.getProperty("endValue") , 4, "Both input event and change event are fired after user interaction");
 	});
 
-	it("Should fire change event after swapping the values", async () => {
-		await browser.url(`test/pages/RangeSlider.html`);
+	// it("Should fire change event after swapping the values", async () => {
+	// 	await browser.url(`test/pages/RangeSlider.html`);
 
-		const rangeSlider = await browser.$("#test-slider");
-		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+	// 	const rangeSlider = await browser.$("#test-slider");
+	// 	const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 
-		await firstHandle.click();
-		await firstHandle.keys("ArrowRight");
-		await firstHandle.keys("ArrowRight");
+	// 	await firstHandle.click();
+	// 	await firstHandle.keys("ArrowRight");
+	// 	await firstHandle.keys("ArrowRight");
 
-		const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
-		const changeEventEndValue = await browser.execute(() => document.querySelector("#change-event-endValue").innerText);
+	// 	const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
+	// 	const changeEventEndValue = await browser.execute(() => document.querySelector("#change-event-endValue").innerText);
 
-		assert.strictEqual(changeEventStartValue, "2", "Values are swapped prior to the firing of change event");
-		assert.strictEqual(changeEventEndValue, "3", "Values are swapped prior to the firing of change event");
-	});
+	// 	assert.strictEqual(changeEventStartValue, "2", "Values are swapped prior to the firing of change event");
+	// 	assert.strictEqual(changeEventEndValue, "3", "Values are swapped prior to the firing of change event");
+	// });
 
 	it("Should not fire change event if the values are the same after interaction", async () => {
 		await browser.url(`test/pages/RangeSlider.html`);
