@@ -332,32 +332,32 @@ class Calendar extends CalendarPart {
 		this.secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
 	}
 
-	extractDateParts(format: string) {
+	extractDateModes():string[] {
+		const format = (this.getFormat() as any);
 		if (!format) {
 			return ["day", "month", "year"];
 		}
-		const dateParts = [];
-		if (format.includes("dd")) {
-			dateParts.push("day");
-		}
-		if (format.includes("MM")) {
-			dateParts.push("month");
-		}
-		if (format.includes("yyyy")) {
-			dateParts.push("year");
-		}
-		return dateParts;
-	}
+		const aPatternSymbolTypes = format.aFormatArray.map((oPatternSymbolSettings:{type:string}) => {
+			return oPatternSymbolSettings.type.toLowerCase();
+		});
+		const bDay = aPatternSymbolTypes.indexOf("day") >= 0;
+		const bMonth = aPatternSymbolTypes.indexOf("month") >= 0 || aPatternSymbolTypes.indexOf("monthstandalone") >= 0;
+		const bYear = aPatternSymbolTypes.indexOf("year") >= 0;
 
-	getFirstDateOfMonth(timestamp: number) {
-		const date = new Date(timestamp);
-		date.setDate(1);
-		date.setHours(0, 0, 0, 0);
-		return date.getTime();
+		if (bDay && bMonth && bYear) {
+			return ["day", "month", "year"];
+		}
+		if (bMonth && bYear) {
+			return ["month", "year"];
+		}
+		if (bYear) {
+			return ["year"];
+		}
+		return ["day", "month", "year"];
 	}
 
 	onBeforeRendering() {
-		this.pickerModes = this.extractDateParts(this.formatPattern);
+		this.pickerModes = this.extractDateModes();
 		if (!this.pickerModes.includes(this._currentPicker)) {
 			const nextPicker = this.pickerModes.find(mode => mode >= this._currentPicker);
 			this._currentPicker = nextPicker || this.pickerModes[0];
@@ -484,9 +484,9 @@ class Calendar extends CalendarPart {
 		if (this.pickerModes.includes("day")) {
 			this._currentPicker = "day";
 		} else {
-			const selectedDates = [this.getFirstDateOfMonth(this.timestamp)];
+			const selectedDates = [this.timestamp * 1000];
 			const datesValues = selectedDates.map(ts => {
-				const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
+				const calendarDate = CalendarDate.fromTimestamp(ts, this._primaryCalendarType);
 				return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 			});
 			const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>(
@@ -503,7 +503,26 @@ class Calendar extends CalendarPart {
 
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		this._currentPicker = "day";
+		if (this.pickerModes.includes("day")) {
+			this._currentPicker = "day";
+		} else if (this.pickerModes.includes("month")) {
+			this._currentPicker = "month";
+		} else {
+			const selectedDates = [this.timestamp * 1000];
+			const datesValues = selectedDates.map(ts => {
+				const calendarDate = CalendarDate.fromTimestamp(ts, this._primaryCalendarType);
+				return this.getFormat().format(calendarDate.toUTCJSDate(), true);
+			});
+			const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>(
+				"selected-dates-change",
+				{ timestamp: this.timestamp, dates: selectedDates, values: datesValues },
+				true,
+			);
+			if (!defaultPrevented) {
+				this._setSelectedDates(selectedDates);
+			}
+		}
+
 		this._currentPickerDOM._autoFocus = true;
 	}
 
