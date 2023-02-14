@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
-@customElement("ui5-side-navigation-sub-item")
 /**
  * @class
  *
@@ -23,6 +22,14 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @public
  * @abstract
  * @since 1.0.0-rc.8
+ */
+@customElement("ui5-side-navigation-sub-item")
+/**
+ * Fired when the component is activated either with a
+ * click/tap or by using the Enter or Space key.
+ *
+ * @event sap.ui.webc.fiori.SideNavigationSubItem#click
+ * @public
  */
 @event("click")
 class SideNavigationSubItem extends UI5Element {

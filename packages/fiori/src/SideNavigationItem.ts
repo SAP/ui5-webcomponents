@@ -28,8 +28,15 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * @public
  * @since 1.0.0-rc.8
  */
-@event("click")
 @customElement("ui5-side-navigation-item")
+/**
+ * Fired when the component is activated either with a
+ * click/tap or by using the Enter or Space key.
+ *
+ * @event sap.ui.webc.fiori.SideNavigationItem#click
+ * @public
+ */
+@event("click")
 class SideNavigationItem extends UI5Element {
 	/**
 	 * Defines the text of the item.
