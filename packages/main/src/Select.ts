@@ -132,6 +132,20 @@ interface IOption extends UI5Element {
 		selectedOption: { type: HTMLElement },
 	},
 })
+/**
+ * Fired after the component's dropdown menu opens.
+ *
+ * @event sap.ui.webc.main.Select#open
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the component's dropdown menu closes.
+ *
+ * @event sap.ui.webc.main.Select#close
+ * @public
+ */
+@event("close")
 class Select extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
 
@@ -349,6 +363,8 @@ class Select extends UI5Element implements IFormElement {
 	onBeforeRendering() {
 		this._syncSelection();
 		this._enableFormSupport();
+
+		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 	}
 
 	onAfterRendering() {
@@ -669,6 +685,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_afterOpen() {
 		this.opened = true;
+		this.fireEvent<CustomEvent>("open");
 	}
 
 	_afterClose() {
@@ -683,6 +700,7 @@ class Select extends UI5Element implements IFormElement {
 			this._fireChangeEvent(this._filteredItems[this._selectedIndex]);
 			this._lastSelectedOption = this._filteredItems[this._selectedIndex];
 		}
+		this.fireEvent<CustomEvent>("close");
 	}
 
 	_fireChangeEvent(selectedOption: Option) {
@@ -769,6 +787,10 @@ class Select extends UI5Element implements IFormElement {
 		};
 
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
+	get iconsCount(): number {
+		return this.selectedOptionIcon ? 2 : 1;
 	}
 
 	get classes() {

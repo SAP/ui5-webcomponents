@@ -1,9 +1,17 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import type { StyleData } from "@ui5/webcomponents-base/dist/types.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -17,6 +25,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import {
@@ -25,14 +34,20 @@ import {
 	TABCONTAINER_OVERFLOW_MENU_TITLE,
 	TABCONTAINER_END_OVERFLOW,
 	TABCONTAINER_POPOVER_CANCEL_BUTTON,
+	TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
+import type Tab from "./Tab.js";
+import type { ClickEventDetail } from "./List.js";
+import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
 import SemanticColor from "./types/SemanticColor.js";
 import TabContainerBackgroundDesign from "./types/TabContainerBackgroundDesign.js";
+import TabLayout from "./types/TabLayout.js";
+import TabsOverflowMode from "./types/TabsOverflowMode.js";
 
 // Templates
 import TabContainerTemplate from "./generated/templates/TabContainerTemplate.lit.js";
@@ -41,268 +56,51 @@ import TabContainerPopoverTemplate from "./generated/templates/TabContainerPopov
 // Styles
 import tabContainerCss from "./generated/themes/TabContainer.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import TabLayout from "./types/TabLayout.js";
-import TabsOverflowMode from "./types/TabsOverflowMode.js";
 
-const tabStyles = [];
-const staticAreaTabStyles = [];
-
+const tabStyles: Array<StyleData> = [];
+const staticAreaTabStyles: Array<StyleData> = [];
 const PAGE_UP_DOWN_SIZE = 5;
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-tabcontainer",
-	languageAware: true,
-	managedSlots: true,
-	fastNavigation: true,
-	slots: /** @lends sap.ui.webc.main.TabContainer.prototype */ {
-		/**
-		 * Defines the tabs.
-		 * <br><br>
-		 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
-		 *
-		 * @type {sap.ui.webc.main.ITab[]}
-		 * @public
-		 * @slot items
-		 */
-		"default": {
-			propertyName: "items",
-			type: HTMLElement,
-			individualSlots: true,
-			invalidateOnChildChange: {
-				properties: true,
-				slots: false,
-			},
-		},
+interface ITab extends UI5Element {
+	isSeparator: boolean;
+	getTabInStripDomRef: () => ITab | null;
+	stableDomRef: string;
+	additionalText?: string;
+	design?: SemanticColor;
+	disabled?: boolean;
+	icon?: string;
+	isSingleClickArea?: boolean;
+	requiresExpandButton?: boolean;
+	selected?: boolean;
+	subTabs?: Array<ITab>;
+	tabs?: Array<ITab>
+	text?: string;
+	_tabIndex?: string;
+	_hasOwnContent?: boolean;
+	_level?: number;
+	_selected?: boolean;
+	_getElementInStrip?: () => ITab | null;
+	_isInline?: boolean;
+	_mixedMode?: boolean;
+	_posinset?: number;
+	_setsize?: number;
+	_realTab?: Tab;
+	_isTopLevelTab?: boolean;
+	_style?: Record<string, any>;
+}
 
-		/**
-		 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
-		 * the default button will be used.
-		 *
-		 * @type {sap.ui.webc.main.IButton}
-		 * @public
-		 * @slot
-		 * @since 1.0.0-rc.9
-		 */
-		overflowButton: {
-			type: HTMLElement,
-		},
+type TabContainerTabSelectEventDetail = {
+	tab: Tab;
+	tabIndex: number;
+}
 
-		/**
-		 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
-		 * the default button will be used.
-		 *
-		 * @type {sap.ui.webc.main.IButton}
-		 * @public
-		 * @slot
-		 * @since 1.1.0
-		 */
-		startOverflowButton: {
-			type: HTMLElement,
-		},
-	},
-	properties: /** @lends sap.ui.webc.main.TabContainer.prototype */ {
-		/**
-		 * Defines whether the tabs are in a fixed state that is not
-		 * expandable/collapsible by user interaction.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		fixed: {
-			type: Boolean,
-		},
+interface TabContainerExpandButton extends Button {
+	tab: Tab;
+}
 
-		/**
-		 * Defines whether the tab content is collapsed.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		collapsed: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the placement of the tab strip relative to the actual tabs' content.
-		 * <br><br>
-		 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
-		 * layout for most scenarios. Set to <code>Bottom</code> only when the component is at the
-		 * bottom of the page and you want the tab strip to act as a menu.
-		 *
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Top</code></li>
-		 * <li><code>Bottom</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.TabContainerTabsPlacement}
-		 * @defaultvalue "Top"
-		 * @since 1.0.0-rc.7
-		 * @private
-		 */
-		tabsPlacement: {
-			type: TabContainerTabsPlacement,
-			defaultValue: TabContainerTabsPlacement.Top,
-		},
-
-		/**
-		 * Defines whether the overflow select list is displayed.
-		 * <br><br>
-		 * The overflow select list represents a list, where all tabs are displayed
-		 * so that it's easier for the user to select a specific tab.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 * @deprecated Since the introduction of TabsOverflowMode, overflows will always be visible if there is not enough space for all tabs,
-		 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the <code>overflowButton</code> and / or <code>startOverflowButton</code> slots.
-		 */
-		showOverflow: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
-		 *
-		 * <br><br>
-		 * <b>Note:</b>
-		 * The content and the <code>additionalText</code> would be displayed vertically by defualt,
-		 * but when set to <code>Inline</code>, they would be displayed horizontally.
-		 *
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Standard</code></li>
-		 * <li><code>Inline</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.TabLayout}
-		 * @defaultvalue "Standard"
-		 * @public
-		 */
-		tabLayout: {
-			type: String,
-			defaultValue: TabLayout.Standard,
-		},
-
-		/**
-		 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
-		 * All other tabs that can 't fit on the screen are available in an overflow tab "More".
-		 *
-		 * <br><br>
-		 * <b>Note:</b>
-		 * Only one overflow at the end would be displayed by default,
-		 * but when set to <code>StartAndEnd</code>, there will be two overflows on both ends, and tab order will not change on tab selection.
-		 *
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>End</code></li>
-		 * <li><code>StartAndEnd</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.TabsOverflowMode}
-		 * @defaultvalue "End"
-		 * @since 1.1.0
-		 * @public
-		 */
-		tabsOverflowMode: {
-			type: TabsOverflowMode,
-			defaultValue: TabsOverflowMode.End,
-		},
-
-		/**
-		 * Defines the current media query size.
-		 *
-		 * @type {string}
-		 * @private
-		 */
-		mediaRange: {
-			type: String,
-		},
-
-		/**
-		 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
-		 *
-		 * @type {sap.ui.webc.main.types.TabContainerBackgroundDesign}
-		 * @defaultvalue "Solid"
-		 * @since 1.10.0
-		 * @public
-		 */
-		headerBackgroundDesign: {
-			type: TabContainerBackgroundDesign,
-			defaultValue: TabContainerBackgroundDesign.Solid,
-		},
-
-		/**
-		 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
-		 *
-		 * @type {sap.ui.webc.main.types.TabContainerBackgroundDesign}
-		 * @defaultvalue "Solid"
-		 * @since 1.10.0
-		 * @public
-		 */
-		contentBackgroundDesign: {
-			type: TabContainerBackgroundDesign,
-			defaultValue: TabContainerBackgroundDesign.Solid,
-		},
-
-		_selectedTab: {
-			type: Object,
-		},
-
-		_animationRunning: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_contentCollapsed: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_startOverflowText: {
-			type: String,
-			noAttribute: true,
-			defaultValue: "0",
-		},
-
-		_endOverflowText: {
-			type: String,
-			noAttribute: true,
-			defaultValue: "More",
-		},
-
-		_overflowItems: {
-			type: Object,
-			multiple: true,
-		},
-	},
-	events: /** @lends sap.ui.webc.main.TabContainer.prototype */ {
-
-		/**
-		 * Fired when a tab is selected.
-		 *
-		 * @event sap.ui.webc.main.TabContainer#tab-select
-		 * @param {HTMLElement} tab The selected <code>tab</code>.
-		 * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
-		 * @public
-		 * @allowPreventDefault
-		 */
-		"tab-select": {
-			detail: {
-				tab: { type: HTMLElement },
-				tabIndex: { type: Number },
-			},
-		},
-	},
-};
+interface TabContainerTabInOverflow extends CustomListItem {
+	_realTab: Tab;
+}
 
 /**
  * @class
@@ -359,10 +157,240 @@ const metadata = {
  * @tagname ui5-tabcontainer
  * @public
  */
+@customElement("ui5-tabcontainer")
+@languageAware
+@fastNavigation
+/**
+ * Fired when a tab is selected.
+ *
+ * @event sap.ui.webc.main.TabContainer#tab-select
+ * @param {HTMLElement} tab The selected <code>tab</code>.
+ * @param {Integer} tabIndex The selected <code>tab</code> index in the flattened array of all tabs and their subTabs, provided by the <code>allItems</code> getter.
+ * @public
+ * @allowPreventDefault
+ */
+@event("tab-select", {
+	detail: {
+		tab: { type: HTMLElement },
+		tabIndex: { type: Number },
+	},
+})
 class TabContainer extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines whether the tabs are in a fixed state that is not
+	 * expandable/collapsible by user interaction.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.TabContainer.prototype.fixed
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	fixed!: boolean;
+
+	/**
+	 * Defines whether the tab content is collapsed.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.TabContainer.prototype.collapsed
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	collapsed!: boolean;
+
+	/**
+	 * Defines whether the overflow select list is displayed.
+	 * <br><br>
+	 * The overflow select list represents a list, where all tabs are displayed
+	 * so that it's easier for the user to select a specific tab.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.TabContainer.prototype.showOverflow
+	 * @defaultvalue false
+	 * @public
+	 * @deprecated Since the introduction of TabsOverflowMode, overflows will always be visible if there is not enough space for all tabs,
+	 * all hidden tabs are moved to a select list in the respective overflows and are accessible via the <code>overflowButton</code> and / or <code>startOverflowButton</code> slots.
+	 */
+	@property({ type: Boolean })
+	showOverflow!: boolean;
+
+	/**
+	 * Defines the alignment of the content and the <code>additionalText</code> of a tab.
+	 *
+	 * <br><br>
+	 * <b>Note:</b>
+	 * The content and the <code>additionalText</code> would be displayed vertically by default,
+	 * but when set to <code>Inline</code>, they would be displayed horizontally.
+	 *
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Standard</code></li>
+	 * <li><code>Inline</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.TabLayout}
+	 * @name sap.ui.webc.main.TabContainer.prototype.tabLayout
+	 * @defaultvalue "Standard"
+	 * @public
+	 */
+	@property({ type: TabLayout, defaultValue: TabLayout.Standard })
+	tabLayout!: TabLayout;
+
+	/**
+	 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
+	 * All other tabs that can 't fit on the screen are available in an overflow tab "More".
+	 *
+	 * <br><br>
+	 * <b>Note:</b>
+	 * Only one overflow at the end would be displayed by default,
+	 * but when set to <code>StartAndEnd</code>, there will be two overflows on both ends, and tab order will not change on tab selection.
+	 *
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>End</code></li>
+	 * <li><code>StartAndEnd</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.TabsOverflowMode}
+	 * @name sap.ui.webc.main.TabContainer.prototype.tabsOverflowMode
+	 * @defaultvalue "End"
+	 * @since 1.1.0
+	 * @public
+	 */
+	@property({ type: TabsOverflowMode, defaultValue: TabsOverflowMode.End })
+	tabsOverflowMode!: TabsOverflowMode;
+
+	/**
+	 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+	 *
+	 * @type {sap.ui.webc.main.types.TabContainerBackgroundDesign}
+	 * @name sap.ui.webc.main.TabContainer.prototype.headerBackgroundDesign
+	 * @defaultvalue "Solid"
+	 * @since 1.10.0
+	 * @public
+	 */
+	@property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
+	headerBackgroundDesign!: TabContainerBackgroundDesign;
+
+	/**
+	 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
+	 *
+	 * @type {sap.ui.webc.main.types.TabContainerBackgroundDesign}
+	 * @name sap.ui.webc.main.TabContainer.prototype.contentBackgroundDesign
+	 * @defaultvalue "Solid"
+	 * @since 1.10.0
+	 * @public
+	 */
+	@property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
+	contentBackgroundDesign!: TabContainerBackgroundDesign;
+
+	/**
+	 * Defines the placement of the tab strip relative to the actual tabs' content.
+	 * <br><br>
+	 * <b>Note:</b> By default the tab strip is displayed above the tabs' content area and this is the recommended
+	 * layout for most scenarios. Set to <code>Bottom</code> only when the component is at the
+	 * bottom of the page and you want the tab strip to act as a menu.
+	 *
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Top</code></li>
+	 * <li><code>Bottom</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.TabContainerTabsPlacement}
+	 * @name sap.ui.webc.main.TabContainer.prototype.tabsPlacement
+	 * @defaultvalue "Top"
+	 * @since 1.0.0-rc.7
+	 * @private
+	 */
+	@property({ type: TabContainerTabsPlacement, defaultValue: TabContainerTabsPlacement.Top })
+	tabsPlacement!: TabContainerTabsPlacement;
+
+	/**
+	 * Defines the current media query size.
+	 *
+	 * @type {string}
+	 * @private
+	 */
+	@property()
+	mediaRange!: string;
+
+	@property({ type: Object })
+	_selectedTab!: Tab;
+
+	@property({ type: Boolean, noAttribute: true })
+	_animationRunning!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_contentCollapsed!: boolean;
+
+	@property({ noAttribute: true, defaultValue: "0" })
+	_startOverflowText!: string;
+
+	@property({ noAttribute: true, defaultValue: "More" })
+	_endOverflowText!: string;
+
+	@property({ type: Object, multiple: true })
+	_overflowItems!: Array<ITab>;
+
+	@property({ validator: Integer, noAttribute: true })
+	_width?: number;
+
+	/**
+	 * Defines the tabs.
+	 * <br><br>
+	 * <b>Note:</b> Use <code>ui5-tab</code> and <code>ui5-tab-separator</code> for the intended design.
+	 *
+	 * @type {sap.ui.webc.main.ITab[]}
+	 * @public
+	 * @slot items
+	 * @name sap.ui.webc.main.TabContainer.prototype.default
+	 */
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		individualSlots: true,
+		invalidateOnChildChange: {
+			properties: true,
+			slots: false,
+		},
+	})
+	items!: Array<ITab>;
+
+	/**
+	 * Defines the button which will open the overflow menu. If nothing is provided to this slot,
+	 * the default button will be used.
+	 *
+	 * @type {sap.ui.webc.main.IButton}
+	 * @public
+	 * @slot
+	 * @since 1.0.0-rc.9
+	 * @name sap.ui.webc.main.TabContainer.prototype.overflowButton
+	 */
+	@slot()
+	overflowButton!: Array<Button>;
+
+	/**
+	 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
+	 * the default button will be used.
+	 *
+	 * @type {sap.ui.webc.main.IButton}
+	 * @public
+	 * @slot
+	 * @since 1.1.0
+	 * @name sap.ui.webc.main.TabContainer.prototype.startOverflowButton
+	 */
+	@slot()
+	startOverflowButton!: Array<Button>;
+
+	_itemNavigation: ItemNavigation;
+	_allItemsAndSubItems?: Array<ITab>;
+	responsivePopover?: ResponsivePopover;
+	_handleResizeBound: () => void;
 
 	static get styles() {
 		return [tabStyles, tabContainerCss];
@@ -384,18 +412,20 @@ class TabContainer extends UI5Element {
 		return TabContainerPopoverTemplate;
 	}
 
-	static registerTabStyles(styles) {
+	static registerTabStyles(styles: StyleData) {
 		tabStyles.push(styles);
 	}
 
-	static registerStaticAreaTabStyles(styles) {
+	static registerStaticAreaTabStyles(styles: StyleData) {
 		staticAreaTabStyles.push(styles);
 	}
+
+	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
 
-		this._handleResize = this._handleResize.bind(this);
+		this._handleResizeBound = this._handleResize.bind(this);
 
 		// Init ItemNavigation
 		this._itemNavigation = new ItemNavigation(this, {
@@ -411,12 +441,12 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected tab
-		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected);
+		const selectedTabs = this._allItemsAndSubItems.filter(tab => tab.selected) as Array<Tab>;
 		if (selectedTabs.length) {
 			this._selectedTab._selected = false;
 			this._selectedTab = selectedTabs[0];
 		} else {
-			this._selectedTab = this._allItemsAndSubItems[0];
+			this._selectedTab = this._allItemsAndSubItems[0] as Tab;
 			this._selectedTab._selected = true;
 		}
 
@@ -438,38 +468,37 @@ class TabContainer extends UI5Element {
 
 		this._setItemsForStrip();
 
-		if (!this.shadowRoot.contains(document.activeElement)) {
+		if (!this.shadowRoot!.contains(document.activeElement)) {
 			const focusStart = this._getRootTab(this._selectedTab);
 			this._itemNavigation.setCurrentItem(focusStart);
 		}
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this._getHeader(), this._handleResize);
+		ResizeHandler.register(this._getHeader(), this._handleResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this._getHeader(), this._handleResize);
+		ResizeHandler.deregister(this._getHeader(), this._handleResizeBound);
 	}
 
-	async _handleResize() {
+	_handleResize() {
 		if (this.responsivePopover && this.responsivePopover.opened) {
 			this.responsivePopover.close();
 		}
-		this._updateMediaRange();
 
-		await renderFinished(); // await the tab container to have rendered its representation of tabs
-		this._setItemsForStrip();
+		this._width = this.offsetWidth;
+		this._updateMediaRange(this._width);
 	}
 
-	_updateMediaRange() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef().offsetWidth);
+	_updateMediaRange(width: number) {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
-	_setItemsPrivateProperties(items) {
+	_setItemsPrivateProperties(items: Array<ITab>) {
 		// set real dom ref to all items, then return only the tabs for further processing
 		const allTabs = items.filter(item => {
-			item._getElementInStrip = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+			item._getElementInStrip = () => this.getDomRef()!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 			return !item.isSeparator;
 		});
 
@@ -486,27 +515,25 @@ class TabContainer extends UI5Element {
 		});
 	}
 
-	_onHeaderFocusin(event) {
-		let target = event.target;
+	_onHeaderFocusin(e: FocusEvent) {
+		const tab = getTab(e.target as HTMLElement);
 
-		const tab = getTab(target);
 		if (tab) {
-			target = tab._realTab;
+			this._itemNavigation.setCurrentItem(tab._realTab);
 		}
-
-		this._itemNavigation.setCurrentItem(target);
 	}
 
-	async _onTabStripClick(event) {
-		const tab = getTab(event.target);
+	async _onTabStripClick(e: Event) {
+		const tab = getTab(e.target as HTMLElement);
 		if (!tab || tab._realTab.disabled) {
 			return;
 		}
 
-		event.stopPropagation();
-		event.preventDefault();
-		if (event.target.hasAttribute("ui5-button")) {
-			this._onTabExpandButtonClick(event);
+		e.stopPropagation();
+		e.preventDefault();
+
+		if ((e.target as HTMLElement).hasAttribute("ui5-button")) {
+			this._onTabExpandButtonClick(e);
 			return;
 		}
 
@@ -521,30 +548,32 @@ class TabContainer extends UI5Element {
 				this._setPopoverInitialFocus();
 			}
 
-			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef());
+			this.responsivePopover.showAt(tab._realTab.getTabInStripDomRef()!);
 			return;
 		}
+
 		this._onHeaderItemSelect(tab);
 	}
 
-	async _onTabExpandButtonClick(event) {
-		event.stopPropagation();
-		event.preventDefault();
-		let button = event.target;
-		let tabInstance = button.tab;
+	async _onTabExpandButtonClick(e: Event) {
+		e.stopPropagation();
+		e.preventDefault();
+
+		let button = e.target as HTMLElement;
+		let tabInstance = (button as TabContainerExpandButton).tab;
 
 		if (tabInstance) {
-			tabInstance.focus({ focusVisible: true });
+			tabInstance.focus({ focusVisible: true } as FocusOptions);
 		}
 
-		if ((event.type === "keydown") && !event.target._realTab.isSingleClickArea) {
-			button = event.target.querySelectorAll(".ui5-tab-expand-button")[0];
-			tabInstance = event.target._realTab;
+		if (e.type === "keydown" && !(e.target as Tab)._realTab.isSingleClickArea) {
+			button = (e.target as Tab).querySelectorAll<HTMLElement>(".ui5-tab-expand-button")[0];
+			tabInstance = (e.target as Tab)._realTab;
 		}
 
 		// if clicked between the expand button and the tab
 		if (!tabInstance) {
-			this._onHeaderItemSelect(button.parentElement);
+			this._onHeaderItemSelect(button.parentElement as HTMLElement);
 			return;
 		}
 
@@ -560,81 +589,83 @@ class TabContainer extends UI5Element {
 		this.responsivePopover.showAt(button);
 	}
 
-	async _setPopoverInitialFocus() {
+	_setPopoverInitialFocus() {
 		const selectedTabInOverflow = this._getSelectedTabInOverflow();
 		const tab = selectedTabInOverflow || this._getFirstFocusableItemInOverflow();
 
-		this.responsivePopover.initialFocus = `${tab._realTab._id}-li`;
+		this.responsivePopover!.initialFocus = `${tab._realTab._id}-li`;
 	}
 
 	_getSelectedTabInOverflow() {
-		return this.responsivePopover.content[0].items.find(item => (item._realTab && item._realTab.selected));
+		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => {
+			return (<TabContainerTabInOverflow>item)._realTab && (<TabContainerTabInOverflow>item)._realTab.selected;
+		});
 	}
 
 	_getFirstFocusableItemInOverflow() {
-		return this.responsivePopover.content[0].items.find(item => item.classList.contains("ui5-tab-overflow-item"));
+		return <TabContainerTabInOverflow>(<List> this.responsivePopover!.content[0]).items.find(item => item.classList.contains("ui5-tab-overflow-item"));
 	}
 
-	_onTabStripKeyDown(event) {
-		const tab = getTab(event.target);
+	_onTabStripKeyDown(e: KeyboardEvent) {
+		const tab = getTab(e.target as HTMLElement);
 		if (!tab || tab._realTab.disabled) {
 			return;
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			if (tab._realTab.isSingleClickArea) {
-				this._onTabStripClick(event);
+				this._onTabStripClick(e);
 			} else {
 				this._onHeaderItemSelect(tab);
 			}
 		}
 
-		if (isSpace(event)) {
-			event.preventDefault(); // prevent scrolling
+		if (isSpace(e)) {
+			e.preventDefault(); // prevent scrolling
 		}
 
-		if (isDown(event) || isUp(event)) {
+		if (isDown(e) || isUp(e)) {
 			if (tab._realTab.requiresExpandButton) {
-				this._onTabExpandButtonClick(event);
+				this._onTabExpandButtonClick(e);
 			}
 			if (tab._realTab.isSingleClickArea) {
-				this._onTabStripClick(event);
+				this._onTabStripClick(e);
 			}
 		}
 	}
 
-	_onTabStripKeyUp(event) {
-		const tab = getTab(event.target);
+	_onTabStripKeyUp(e: KeyboardEvent) {
+		const tab = getTab(e.target as HTMLElement);
 		if (!tab || tab._realTab.disabled) {
 			return;
 		}
 
-		if (isSpace(event)) {
-			event.preventDefault();
+		if (isSpace(e)) {
+			e.preventDefault();
 			if (tab._realTab.isSingleClickArea) {
-				this._onTabStripClick(event);
+				this._onTabStripClick(e);
 			} else {
 				this._onHeaderItemSelect(tab);
 			}
 		}
 	}
 
-	_onHeaderItemSelect(tab) {
+	_onHeaderItemSelect(tab: HTMLElement) {
 		if (!tab.hasAttribute("disabled")) {
 			this._onItemSelect(tab.id);
 		}
 	}
 
-	async _onOverflowListItemClick(event) {
-		event.preventDefault(); // cancel the item selection
+	async _onOverflowListItemClick(e: CustomEvent<ClickEventDetail>) {
+		e.preventDefault(); // cancel the item selection
 
-		this._onItemSelect(event.detail.item.id.slice(0, -3)); // strip "-li" from end of id
+		this._onItemSelect(e.detail.item.id.slice(0, -3)); // strip "-li" from end of id
 
-		this.responsivePopover.close();
+		this.responsivePopover!.close();
 		await renderFinished();
 
 		const selectedTopLevel = this._getRootTab(this._selectedTab);
-		selectedTopLevel.getTabInStripDomRef().focus({ focusVisible: true });
+		selectedTopLevel.getTabInStripDomRef()!.focus({ focusVisible: true } as FocusOptions);
 	}
 
 	/**
@@ -661,23 +692,25 @@ class TabContainer extends UI5Element {
 		return this._getAllSubItems(this.items);
 	}
 
-	_getAllSubItems(items, result = [], level = 1) {
+	_getAllSubItems(items: Array<ITab>, result: Array<ITab> = [], level = 1) {
 		items.forEach(item => {
 			if (item.hasAttribute("ui5-tab") || item.hasAttribute("ui5-tab-separator")) {
 				item._level = level;
 				result.push(item);
+
 				if (item.subTabs) {
 					this._getAllSubItems(item.subTabs, result, level + 1);
 				}
 			}
 		});
+
 		return result;
 	}
 
-	_onItemSelect(selectedTabId) {
+	_onItemSelect(selectedTabId: string) {
 		const previousTab = this._selectedTab;
-		const selectedTabIndex = this._allItemsAndSubItems.findIndex(item => item.__id === selectedTabId);
-		const selectedTab = this._allItemsAndSubItems[selectedTabIndex];
+		const selectedTabIndex = this._allItemsAndSubItems!.findIndex(item => item.__id === selectedTabId);
+		const selectedTab = this._allItemsAndSubItems![selectedTabIndex] as Tab;
 
 		const selectionSuccessful = this.selectTab(selectedTab, selectedTabIndex);
 		if (!selectionSuccessful) {
@@ -685,7 +718,7 @@ class TabContainer extends UI5Element {
 		}
 
 		// update selected property on all items
-		this._allItemsAndSubItems.forEach((item, index) => {
+		this._allItemsAndSubItems!.forEach((item, index) => {
 			const selected = selectedTabIndex === index;
 			item.selected = selected;
 
@@ -698,15 +731,15 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		if (!this.animate) {
+		if (!this.shouldAnimate) {
 			this.toggle(selectedTab, previousTab);
 		} else {
 			this.toggleAnimated(selectedTab, previousTab);
 		}
 	}
 
-	async toggleAnimated(selectedTab, previousTab) {
-		const content = this.shadowRoot.querySelector(".ui5-tc__content");
+	async toggleAnimated(selectedTab: Tab, previousTab: Tab) {
+		const content = this.shadowRoot!.querySelector<HTMLElement>(".ui5-tc__content")!;
 		let animationPromise = null;
 
 		this._animationRunning = true;
@@ -726,7 +759,7 @@ class TabContainer extends UI5Element {
 		this._animationRunning = false;
 	}
 
-	toggle(selectedTab, previousTab) {
+	toggle(selectedTab: Tab, previousTab: Tab) {
 		if (selectedTab === previousTab) {
 			this.collapsed = !this.collapsed;
 		} else {
@@ -739,12 +772,12 @@ class TabContainer extends UI5Element {
 	 * If the event is prevented, the current tab is not changed.
 	 * @private
 	 *
-	 * @param {object} selectedTab selected tab instance
+	 * @param {sap.ui.webc.main.ITab} selectedTab selected tab instance
 	 * @param {number} selectedTabIndex selected tab index for an array containing all tabs and sub tabs. <b>Note:</b> Use the method <code>allTabs</code> to get this array.
 	 * @returns {boolean} true if the tab selection is successful, false if it was prevented
 	 */
-	selectTab(selectedTab, selectedTabIndex) {
-		if (!this.fireEvent("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
+	selectTab(selectedTab: Tab, selectedTabIndex: number) {
+		if (!this.fireEvent<TabContainerTabSelectEventDetail>("tab-select", { tab: selectedTab, tabIndex: selectedTabIndex }, true)) {
 			return false;
 		}
 
@@ -753,23 +786,22 @@ class TabContainer extends UI5Element {
 		return true;
 	}
 
-	slideContentDown(element) {
+	slideContentDown(element: HTMLElement) {
 		return slideDown(element).promise();
 	}
 
-	slideContentUp(element) {
+	slideContentUp(element: HTMLElement) {
 		return slideUp(element).promise();
 	}
 
-	async _onOverflowClick(event) {
-		if (event.target.classList.contains("ui5-tc__overflow")) {
+	async _onOverflowClick(e: Event) {
+		if ((e.target as HTMLElement).classList.contains("ui5-tc__overflow")) {
 			// the empty area in the overflow was clicked
 			return;
 		}
 
-		const overflow = event.currentTarget;
+		const overflow = e.currentTarget as HTMLElement;
 		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
-		const isStartOverflow = overflow.classList.contains("ui5-tc__overflow--start");
 		const overflowAttr = isEndOverflow ? "end-overflow" : "start-overflow";
 
 		this._overflowItems = this.items.filter(item => {
@@ -783,9 +815,7 @@ class TabContainer extends UI5Element {
 		let opener;
 		if (isEndOverflow) {
 			opener = this.overflowButton[0] || this._getEndOverflowBtnDOM();
-		}
-
-		if (isStartOverflow) {
+		} else {
 			opener = this.startOverflowButton[0] || this._getStartOverflowBtnDOM();
 		}
 
@@ -798,13 +828,13 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_addStyleIndent(tabs) {
+	_addStyleIndent(tabs: Array<ITab>) {
 		const extraIndent = this._getAllSubItems(tabs)
 			.filter(tab => !tab.isSeparator)
 			.some(tab => tab.design !== SemanticColor.Default && tab.design !== SemanticColor.Neutral);
 
 		walk(tabs, tab => {
-			let level = tab._level - 1;
+			let level = tab._level! - 1;
 
 			if (tab.isSeparator) {
 				level += 1;
@@ -817,15 +847,15 @@ class TabContainer extends UI5Element {
 		});
 	}
 
-	async _onOverflowKeyDown(event) {
-		const overflow = event.currentTarget;
+	async _onOverflowKeyDown(e: KeyboardEvent) {
+		const overflow = e.currentTarget as HTMLElement;
 		const isEndOverflow = overflow.classList.contains("ui5-tc__overflow--end");
 		const isStartOverflow = overflow.classList.contains("ui5-tc__overflow--start");
 
-		if (isDown(event) || (isStartOverflow && isLeft(event)) || (isEndOverflow && isRight(event))) {
-			event.stopPropagation();
-			event.preventDefault();
-			await this._onOverflowClick(event);
+		if (isDown(e) || (isStartOverflow && isLeft(e)) || (isEndOverflow && isRight(e))) {
+			e.stopPropagation();
+			e.preventDefault();
+			await this._onOverflowClick(e);
 		}
 	}
 
@@ -837,7 +867,7 @@ class TabContainer extends UI5Element {
 			return;
 		}
 
-		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef());
+		const itemsDomRefs = this.items.map(item => item.getTabInStripDomRef()!);
 
 		// make sure the overflows are hidden
 		this._getStartOverflow().setAttribute("hidden", "");
@@ -867,21 +897,23 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_getRootTab(tab) {
+	_getRootTab(tab: Tab) {
 		while (tab.hasAttribute("ui5-tab")) {
-			if (tab.parentElement.hasAttribute("ui5-tabcontainer")) {
+			if (tab.parentElement!.hasAttribute("ui5-tabcontainer")) {
 				break;
 			}
-			tab = tab.parentElement;
+
+			tab = tab.parentElement as Tab;
 		}
+
 		return tab;
 	}
 
-	_updateEndOverflow(itemsDomRefs) {
+	_updateEndOverflow(itemsDomRefs: Array<ITab>) {
 		// show end overflow
 		this._getEndOverflow().removeAttribute("hidden");
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
 		const containerWidth = this._getTabStrip().offsetWidth;
 
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
@@ -895,10 +927,10 @@ class TabContainer extends UI5Element {
 		this._endOverflowText = this.overflowButtonText;
 	}
 
-	_updateStartAndEndOverflow(itemsDomRefs) {
+	_updateStartAndEndOverflow(itemsDomRefs: Array<ITab>) {
 		let containerWidth = this._getTabStrip().offsetWidth;
 		const selectedTab = this._getRootTab(this._selectedTab);
-		const selectedTabDomRef = selectedTab.getTabInStripDomRef();
+		const selectedTabDomRef = selectedTab.getTabInStripDomRef()!;
 		const selectedItemIndexAndWidth = this._getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef);
 		const hasStartOverflow = this._hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
 		const hasEndOverflow = this._hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth);
@@ -960,7 +992,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	_hasStartOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth) {
+	_hasStartOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number}) {
 		if (selectedItemIndexAndWidth.index === 0) {
 			return false;
 		}
@@ -985,7 +1017,7 @@ class TabContainer extends UI5Element {
 		return hasStartOverflow;
 	}
 
-	_hasEndOverflow(containerWidth, itemsDomRefs, selectedItemIndexAndWidth) {
+	_hasEndOverflow(containerWidth: number, itemsDomRefs: Array<ITab>, selectedItemIndexAndWidth: { width: number; index: number}) {
 		if (selectedItemIndexAndWidth.index >= itemsDomRefs.length) {
 			return false;
 		}
@@ -1010,14 +1042,14 @@ class TabContainer extends UI5Element {
 		return hasEndOverflow;
 	}
 
-	_getItemWidth(itemDomRef) {
+	_getItemWidth(itemDomRef: HTMLElement) {
 		const styles = window.getComputedStyle(itemDomRef);
 		const margins = Number.parseInt(styles.marginLeft) + Number.parseInt(styles.marginRight);
 
 		return itemDomRef.offsetWidth + margins;
 	}
 
-	_getSelectedItemIndexAndWidth(itemsDomRefs, selectedTabDomRef) {
+	_getSelectedItemIndexAndWidth(itemsDomRefs: Array<ITab>, selectedTabDomRef: ITab) {
 		let index = itemsDomRefs.indexOf(selectedTabDomRef);
 		let width = selectedTabDomRef.offsetWidth;
 		let selectedSeparator;
@@ -1041,7 +1073,7 @@ class TabContainer extends UI5Element {
 		};
 	}
 
-	_findFirstVisibleItem(itemsDomRefs, containerWidth, selectedItemWidth, startIndex) {
+	_findFirstVisibleItem(itemsDomRefs: Array<ITab>, containerWidth: number, selectedItemWidth: number, startIndex?: number) {
 		if (startIndex === undefined) {
 			startIndex = itemsDomRefs.length - 1;
 		}
@@ -1062,9 +1094,7 @@ class TabContainer extends UI5Element {
 		return lastVisible;
 	}
 
-	_findLastVisibleItem(itemsDomRefs, containerWidth, selectedItemWidth, startIndex) {
-		startIndex = startIndex || 0;
-
+	_findLastVisibleItem(itemsDomRefs: Array<ITab>, containerWidth: number, selectedItemWidth: number, startIndex = 0) {
 		let lastVisibleIndex = startIndex - 1;
 		let index = startIndex;
 
@@ -1097,7 +1127,7 @@ class TabContainer extends UI5Element {
 		let endOverflowItemsCount = 0;
 
 		this._getTabs()
-			.map(tab => tab.getTabInStripDomRef())
+			.map(tab => tab.getTabInStripDomRef()!)
 			.forEach(tab => {
 				if (tab.hasAttribute("start-overflow")) {
 					startOverflowItemsCount++;
@@ -1140,36 +1170,48 @@ class TabContainer extends UI5Element {
 	}
 
 	_getHeader() {
-		return this.shadowRoot.querySelector(`#${this._id}-header`);
+		return this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-header`)!;
 	}
 
-	_getTabs() {
-		return this.items.filter(item => !item.isSeparator);
+	_getTabs(): Array<Tab> {
+		return this.items.filter((item): item is Tab => !item.isSeparator);
+	}
+
+	get hasSubTabs(): boolean {
+		const tabs = this._getTabs();
+
+		for (let i = 0; i < tabs.length; i++) {
+			if (tabs[i].subTabs.length > 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	_getTabStrip() {
-		return this.shadowRoot.querySelector(`#${this._id}-tabStrip`);
+		return this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-tabStrip`)!;
 	}
 
 	_getStartOverflow() {
-		return this.shadowRoot.querySelector(".ui5-tc__overflow--start");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tc__overflow--start")!;
 	}
 
 	_getEndOverflow() {
-		return this.shadowRoot.querySelector(".ui5-tc__overflow--end");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tc__overflow--end")!;
 	}
 
 	_getStartOverflowBtnDOM() {
-		return this._getStartOverflow().querySelector("[ui5-button]");
+		return this._getStartOverflow().querySelector<Button>("[ui5-button]");
 	}
 
 	_getEndOverflowBtnDOM() {
-		return this._getEndOverflow().querySelector("[ui5-button]");
+		return this._getEndOverflow().querySelector<Button>("[ui5-button]");
 	}
 
 	async _respPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(`#${this._id}-overflowMenu`);
+		return staticAreaItem!.querySelector<ResponsivePopover>(`#${this._id}-overflowMenu`)!;
 	}
 
 	async _closeRespPopover() {
@@ -1245,7 +1287,15 @@ class TabContainer extends UI5Element {
 		return TabContainer.i18nBundle.getText(TABCONTAINER_POPOVER_CANCEL_BUTTON);
 	}
 
-	get animate() {
+	get accInvisibleText() {
+		return TabContainer.i18nBundle.getText(TABCONTAINER_SUBTABS_DESCRIPTION);
+	}
+
+	get tablistAriaDescribedById() {
+		return this.hasSubTabs ? `${this._id}-invisibleText` : undefined;
+	}
+
+	get shouldAnimate() {
 		return getAnimationMode() !== AnimationMode.None;
 	}
 
@@ -1263,12 +1313,12 @@ class TabContainer extends UI5Element {
 	}
 }
 
-const isTabDiv = el => el.localName === "div" && el.getAttribute("role") === "tab";
+const isTabDiv = (el: HTMLElement) => el.localName === "div" && el.getAttribute("role") === "tab";
 
-const getTab = el => {
+const getTab = (el: HTMLElement | null) => {
 	while (el) {
 		if (isTabDiv(el)) {
-			return el;
+			return el as Tab;
 		}
 
 		el = el.parentElement;
@@ -1277,7 +1327,7 @@ const getTab = el => {
 	return false;
 };
 
-const walk = (tabs, callback) => {
+const walk = (tabs: Array<ITab>, callback: (_: ITab) => void) => {
 	[...tabs].forEach(tab => {
 		callback(tab);
 		if (tab.subTabs) {
@@ -1289,3 +1339,7 @@ const walk = (tabs, callback) => {
 TabContainer.define();
 
 export default TabContainer;
+export type {
+	ITab,
+	TabContainerTabSelectEventDetail,
+};

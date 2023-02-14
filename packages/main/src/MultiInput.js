@@ -42,6 +42,15 @@ const metadata = {
 		expandedTokenizer: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates whether the tokenizer has tokens
+		 * @private
+		 */
+		tokenizerAvailable: {
+			type: Boolean,
+		},
+
 	},
 	slots: /** @lends sap.ui.webc.main.MultiInput.prototype */ {
 		/**
@@ -316,6 +325,17 @@ class MultiInput extends Input {
 		setTimeout(() => {
 			this.focus();
 		}, 0);
+	}
+
+	onBeforeRendering(...params) {
+		super.onBeforeRendering(...params);
+
+		this.style.setProperty("--_ui5-input-icons-count", this.iconsCount);
+		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+	}
+
+	get iconsCount() {
+		return super.iconsCount + (this.showValueHelpIcon ? 1 : 0);
 	}
 
 	get tokenizer() {

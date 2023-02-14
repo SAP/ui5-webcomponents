@@ -1,6 +1,8 @@
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -9,9 +11,7 @@ import "@ui5/webcomponents-icons/dist/date-time.js";
 import { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-// @ts-ignore
 import ToggleButton from "./ToggleButton.js";
-// @ts-ignore
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
 import type { CalendarChangeEventDetail } from "./Calendar.js";
@@ -154,7 +154,7 @@ class DateTimePicker extends DatePicker {
 	@property({ defaultValue: "hours" })
 	_currentTimeSlider!: string;
 
-	_handleResizeBound: () => void;
+	_handleResizeBound: ResizeObserverCallback;
 
 	static get staticAreaTemplate() {
 		return DateTimePickerPopoverTemplate;
@@ -168,7 +168,7 @@ class DateTimePicker extends DatePicker {
 		return [super.staticAreaStyles, DateTimePickerPopoverCss];
 	}
 
-	static get dependencies() {
+	static get dependencies(): Array<typeof UI5Element> {
 		return [
 			...DatePicker.dependencies,
 			Calendar,

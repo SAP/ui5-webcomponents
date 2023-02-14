@@ -7,7 +7,8 @@
 
 :host {
 	width: var(--_ui5_input_width);
-	min-width: var(--_ui5_input_width);
+	min-width: calc(var(--_ui5_input_min_width) + (var(--_ui5-input-icons-count)*var(--_ui5_input_icon_width)));
+	margin: var(--_ui5_input_margin_top_bottom) 0;
 	height: var(--_ui5_input_height);
 	color: var(--sapField_TextColor);
 	font-size: var(--sapFontSize);
@@ -99,7 +100,7 @@
 	-moz-appearance: textfield;
 	padding: var(--_ui5_input_inner_padding);
 	box-sizing: border-box;
-	min-width: inherit;
+	min-width: var(--_ui5_input_min_width);
 	width: 100%;
 	text-align: inherit;
 	text-overflow: ellipsis;
@@ -437,6 +438,7 @@
 	height: var(--_ui5_input_icon_wrapper_height);
 	padding: 0;
 	width: var(--_ui5_input_icon_width);
+	min-width: var(--_ui5_input_icon_width);
 	display: flex;
 	justify-content: center;
 	align-items: center;

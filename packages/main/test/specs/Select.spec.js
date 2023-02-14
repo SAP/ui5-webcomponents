@@ -50,6 +50,29 @@ describe("Select general interaction", () => {
 		assert.strictEqual(await inputResult.getProperty("value"), "", "Event not fired when already selected item is selected");
 	});
 
+	it("fire open, when clicking on selected item", async () => {
+		await browser.url(`test/pages/Select.html`);
+
+		const select = await browser.$("#mySelect");
+		const inputResultOpen = await browser.$("#inputResultOpen");
+
+		await select.click(); // open
+
+		assert.strictEqual(await inputResultOpen.getValue(), "1", "Open event fired when the popover gets expanded/opened.");
+	});
+
+	it("fire close, when clicking on selected item", async () => {
+		await browser.url(`test/pages/Select.html`);
+
+		const select = await browser.$("#mySelect");
+		const inputResultClose = await browser.$("#inputResultClose");
+		
+		await select.click(); // open
+		await select.click(); // close
+
+		assert.strictEqual(await inputResultClose.getValue(), "1", "Close event fired when the popover gets collapsed/closed.");
+	});
+
 	it("fires change on selection with keyboard handling", async () => {
 		await browser.url(`test/pages/Select.html`);
 
@@ -417,7 +440,7 @@ describe("Select general interaction", () => {
 		const select2 = await browser.$("#textAreaAriaLabelledBy").shadow$(".ui5-select-label-root");
 		const EXPECTED_ARIA_LABEL1 = "Hello World";
 		const EXPECTED_ARIA_LABEL2 = "info text";
-		const EXPECTER_ARIA_ROLEDESCRIPTION = "Select Combo Box";
+		const EXPECTER_ARIA_ROLEDESCRIPTION = "Listbox";
 
 		assert.strictEqual(await select1.getAttribute("aria-label"), EXPECTED_ARIA_LABEL1,
 			"The aria-label is correctly set internally.");

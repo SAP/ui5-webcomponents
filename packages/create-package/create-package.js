@@ -5,6 +5,10 @@ const path = require("path");
 const mkdirp = require("mkdirp");
 const prompts = require("prompts");
 const parser = require("npm-config-user-agent-parser");
+const yargs = require("yargs/yargs");
+const { hideBin } = require("yargs/helpers");
+
+const argv = yargs(hideBin(process.argv)).argv;
 
 const version = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))).version;
 
@@ -20,12 +24,11 @@ const toCamelCase = parts => {
 	}).join("");
 };
 const isTypescriptRelatedFile = sourcePath => {
-	return ["Аssets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
-}
+	return ["Assets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
+};
 
 // Validation of user input
 const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z0-9\-_]+$/);
-const isPortValid = port => typeof port === "string" && port.match(/^[0-9]+$/);
 const isTagValid = tag => typeof tag === "string" && tag.match(/^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/);
 
 // Utils for building the file structure
@@ -42,14 +45,14 @@ const replaceVarsInFileName = (vars, fileName) => {
 };
 
 const copyFile = (vars, sourcePath, destPath) => {
-	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && sourcePath.includes("MyFirstComponent.js")
-	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTypescriptRelatedFile(sourcePath)
+	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && sourcePath.includes("MyFirstComponent.js");
+	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTypescriptRelatedFile(sourcePath);
 
 	if (ignoreJsRelated || ignoreTsRelated) {
 		return;
 	}
 
-	let content = fs.readFileSync(sourcePath, {encoding: "UTF-8"});
+	let content = fs.readFileSync(sourcePath, { encoding: "UTF-8" });
 	content = replaceVarsInFileContent(vars, content);
 	destPath = replaceVarsInFileName(vars, destPath);
 	fs.writeFileSync(destPath, content);
@@ -69,70 +72,15 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-// Main function
-const createWebcomponentsPackage = async () => {
-	let response;
-
-	// Get the name
-	let name = process.argv[2];
-
-	if (!isNameValid(name)) {
-		response = await prompts({
-			type: "text",
-			name: "name",
-			message: "Package name:",
-			validate: isNameValid,
-		});
-		name = response.name;
-	}
-
-	// Add TypeScript support
-	response = await prompts({
-		type: "select",
-		name: "language",
-		message: "Support TypeScript:",
-		choices: [
-			{
-				title: "JavaScript",
-				value: "js",
-			},
-			{
-				title: "TypeScript",
-				value: "ts",
-			},
-		]
-	});
-	const typescript = response.language === "ts";
-
-	// Get the port
-	response = await prompts({
-		type: "text",
-		name: "port",
-		message: "Dev server port:",
-		validate: isPortValid,
-		initial: "8080",
-	});
-	const port = response.port;
-
-	// Get the tag
-	response = await prompts({
-		type: "text",
-		name: "tag",
-		message: "Demo component name:",
-		initial: "my-first-component",
-		validate: isTagValid,
-	});
-	const tag = response.tag;
-
+const generateFilesContent = (name, tag, typescript) => {
 	const className = capitalizeFirst(kebabToCamelCase(tag));
 
 	// All variables that will be replaced in the content of the resources/
 	const vars = {
 		INIT_PACKAGE_VAR_NAME: name,
-		INIT_PACKAGE_VAR_PORT: port,
 		INIT_PACKAGE_VAR_TAG: tag,
 		INIT_PACKAGE_VAR_CLASS_NAME: className,
-		INIT_PACKAGE_VAR_TYPESCRIPT: typescript
+		INIT_PACKAGE_VAR_TYPESCRIPT: typescript,
 	};
 
 	const packageContent = {
@@ -152,7 +100,6 @@ const createWebcomponentsPackage = async () => {
 			"prepublishOnly": "npm run build",
 		},
 		exports: {
-			"./.port": "./.port",
 			"./src/*": "./src/*",
 			"./dist/*": "./dist/*",
 			"./package.json": "./package.json",
@@ -193,6 +140,68 @@ const createWebcomponentsPackage = async () => {
 	}
 
 	console.log("\n");
+};
+
+// Main function
+const createWebcomponentsPackage = async () => {
+	let response;
+	if (argv.name && !isNameValid(argv.name)) {
+		throw new Error("The package name should be a string (a-z, A-Z, 0-9).");
+	}
+
+	if (argv.tag && !isTagValid(argv.tag) ) {
+		throw new Error("The tag should be in kebab-case (my-first-component f.e) and it can't be a single word.");
+	}
+
+	let name = argv.name || "my-package";
+	let tag = argv.tag || "my-first-component";
+	let typescriptSupport = !!argv.enableTypescript;
+
+	if (argv.skip) {
+		return generateFilesContent(name, tag, typescriptSupport);
+	}
+
+	if (!argv.name) {
+		response = await prompts({
+			type: "text",
+			name: "name",
+			message: "Package name:",
+			validate: isNameValid,
+		});
+		name = response.name;
+	}
+
+	if (!typescriptSupport) {
+		response = await prompts({
+			type: "select",
+			name: "language",
+			message: "Project type:",
+			choices: [
+				{
+					title: "JavaScript",
+					value: false,
+				},
+				{
+					title: "TypeScript",
+					value: true,
+				},
+			],
+		});
+		typescriptSupport = response.language;
+	}
+
+	if (!argv.tag) {
+		response = await prompts({
+			type: "text",
+			name: "tag",
+			message: "Component name:",
+			initial: "my-first-component",
+			validate: isTagValid,
+		});
+		tag = response.tag;
+	}
+
+	return generateFilesContent(name, tag, typescriptSupport);
 };
 
 createWebcomponentsPackage();

@@ -7,6 +7,7 @@ import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import {
 	isPhone,
 	isAndroid,
@@ -628,7 +629,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	lastConfirmedValue: string
 	isTyping: boolean
 	suggestionsTexts: Array<InputSuggestionText>;
-	_handleResizeBound: () => void;
+	_handleResizeBound: ResizeObserverCallback;
 	_keepInnerValue: boolean;
 	_shouldAutocomplete?: boolean;
 	_keyDown?: boolean;
@@ -637,6 +638,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	FormSupport?: typeof FormSupportT;
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
+	_focusedAfterClear: boolean;
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 
@@ -700,6 +702,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._handleResizeBound = this._handleResize.bind(this);
 
 		this._keepInnerValue = false;
+		this._focusedAfterClear = false;
 	}
 
 	onEnterDOM() {
@@ -723,6 +726,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
+		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		const hasItems = !!this.suggestionItems.length;
@@ -966,10 +970,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		await this.getInputDOMRef();
 
 		this.focused = true; // invalidating property
-		this.previousValue = this.value;
-		this.valueBeforeItemPreview = this.value;
 
+		if (!this._focusedAfterClear) {
+			this.previousValue = this.value;
+		}
+
+		this.valueBeforeItemPreview = this.value;
 		this._inputIconFocused = !!e.target && e.target === this.querySelector<Icon>("[ui5-icon]");
+		this._focusedAfterClear = false;
 	}
 
 	_onfocusout(e: FocusEvent) {
@@ -998,7 +1006,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.open = false;
 		this._clearPopoverFocusAndSelection();
 
-		this.previousValue = "";
+		if (!this._clearIconClicked) {
+			this.previousValue = "";
+		}
+
 		this.lastConfirmedValue = "";
 		this.focused = false; // invalidating property
 		this.isTyping = false;
@@ -1031,8 +1042,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		if (this.previousValue !== this.getInputDOMRefSync()!.value) {
-			this.previousValue = this.getInputDOMRefSync()!.value;
 			this.fireEvent(INPUT_EVENTS.CHANGE);
+			this.previousValue = this.value;
 		}
 	}
 
@@ -1041,6 +1052,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
 		if (!this._isPhone) {
 			this.focus();
+			this._focusedAfterClear = true;
 		}
 	}
 
@@ -1552,6 +1564,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : "";
 	}
 
+	get iconsCount(): number {
+		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const clearIconCount = Number(this.effectiveShowClearIcon) ?? 0;
+		return slottedIconsCount + clearIconCount;
+	}
+
 	get classes(): ClassMap {
 		return {
 			popover: {
@@ -1588,10 +1606,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				"padding": "",
 			},
 		};
-
-		if (this.nativeInputWidth < 48) {
-			stylesObject.innerInput.padding = "0";
-		}
 
 		return stylesObject;
 	}
