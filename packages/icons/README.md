@@ -34,22 +34,24 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 ## Usage
 
 ### No Collection 
-The package provides two versions of each icon (SAP Icons v4 and SAP Icons v5). If you don't specify a collection name, for example:
+As SAP Icons is the default icon collection, you can skip the collection name and just set the name of the icon:
+
 ```html
 <ui5-icon name="accept"></ui5-icon>
 ```
 
+The package provides two versions of each icon (SAP Icons version 4.x and SAP Icons version 5.x). If you don't specify a collection name like in the example above,
 the framework will detect the current theme and render the corresponding icon - `SAP Icons v5` for SAP Horizon theme family  (sap_horizon, sap_horizon_darl, etc.), and `SAP Icons v4` for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.).
 
 ### Collections `SAP-icon-v4` and `SAP-icon-v5`
 
-In case you want to always display the `SAP Icons v5` icons, no matter what theme is set, you need to set it explicitly via the `SAP-icon-v5` collection name:
+In case you want to always display the `SAP Icons v5` icons in all themes, you can set it explicitly via the `SAP-icon-v5` collection name:
 
 ```html
 <ui5-icon name="SAP-icon-v5/accept"></ui5-icon>
 ```
-The same applies in case you want to always display the `SAP Icons v4 icons`.
-You can set it explicitly via the `SAP-icon-v4` collection name:
+
+The same applies if you want to always display the `SAP Icons v4` icons. You can set it explicitly via the `SAP-icon-v4` collection name:
 ```html
 <ui5-icon name="SAP-icon-v4/accept"></ui5-icon>
 ```

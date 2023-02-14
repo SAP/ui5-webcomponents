@@ -1,5 +1,5 @@
 import getSharedResource from "../getSharedResource.js";
-import IconCollectionsAlias from "../assets-meta/IconCollectionsAlias.js";
+import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js";
 import { getEffectiveIconCollection } from "../config/Icons.js";
 import { I18nText } from "../i18nBundle.js";
 import { TemplateFunction } from "../renderer/executeTemplate.js";
@@ -103,7 +103,7 @@ const processName = (name: string) => {
 	name = name.replace("icon-", "");
 
 	if (collection) {
-		collection = getCollectionByAlias(collection);
+		collection = getIconCollectionByAlias(collection);
 	}
 	collection = getEffectiveIconCollection(collection);
 
@@ -147,33 +147,12 @@ const _getRegisteredNames = async () => {
 	return Array.from(registry.keys());
 };
 
-/**
- * Returns the registered collection for the given alias.
- *
- * <b>For example</b>:
- * - resolves "SAP-icons-TNT" to "tnt"
- * - resolves "BusinessSuiteInAppSymbols" to "business-suite"
- * - resolves "horizon" to "SAP-icons-v5"
- * - resolves tunspecified collection to  "SAP-icons"
- *
- * @param { string } collectionName
- * @return { string } the normalized collection name
- */
-const getCollectionByAlias = (collectionName: string) => {
-	if (IconCollectionsAlias[collectionName as keyof typeof IconCollectionsAlias]) {
-		return IconCollectionsAlias[collectionName as keyof typeof IconCollectionsAlias];
-	}
-
-	return collectionName;
-};
-
 export {
 	registerIconLoader,
 	getIconData,
 	getIconDataSync,
 	registerIcon,
 	_getRegisteredNames,
-	getCollectionByAlias,
 };
 
 export type {

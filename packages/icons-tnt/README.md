@@ -24,7 +24,7 @@ just the ones that your app will actually use.
 
 ## Usage
 ### Collection `tnt` 
-Since this is a non-default icon collection, all icon names have to be prefixed with the collection name `tnt` and a `/` separator when used by web components.
+All icon names from the collection have to be prefixed with `tnt` and a `/` separator when used by web components.
 
 Example usage with `<ui5-icon>` web component:
 
@@ -32,26 +32,27 @@ Example usage with `<ui5-icon>` web component:
 <ui5-icon name="tnt/actor"></ui5-icon>
 ```
 
-The package provides two versions of each icon (TNT Icons v2 and TNT Icons v3). If you don't use the versioned collection name, like in the example above:
+The package provides two versions of each icon (TNT Icons verson 2.x and TNT Icons version 3.x).
+If you don't specify the versioned collection name, like in the example above:
 
 ```html
 <ui5-icon name="tnt/actor"></ui5-icon>
 ```
 
-the framework will detect the current theme and render the corresponding icon - from `TNT Icons v3` (collection name `tnt-v3`) for SAP Horizon theme family  (sap_horizon, sap_horizon_darl, etc.), and from `TNT Icons v2` (collection name `tnt-v2`) for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.)
+the framework will detect the current theme and render the corresponding icon - from `TNT Icons v3` (collection name `tnt-v3`) for SAP Horizon theme family  (sap_horizon, sap_horizon_darl, etc.), and from `TNT Icons v2` (collection name `tnt-v2`) for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.).
 
 ### Collections `tnt-v2` and `tnt-v3 `
 
-In case you want to always display the `TNT Icons v3` icons, no matter what theme is set, you need to set it explicitly via the `tnt-v3` collection name:
+In case you want to always display the `TNT Icons v3` icons in all themes, you can set it explicitly via the `tnt-v3` collection name:
 
 ```html
 <ui5-icon name="tnt-v3/actor"></ui5-icon>
 ```
-The same applies in case you want to always display the `TNT Icons v2` icons. You can set it explicitly via the `tnt-v2` collection name:
+
+The same applies if you want to always display the `TNT Icons v2` icons. You can set it explicitly via the `tnt-v2` collection name:
 ```html
 <ui5-icon name="tnt-v2/actor"></ui5-icon>
 ```
-
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)

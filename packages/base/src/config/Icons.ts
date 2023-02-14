@@ -1,23 +1,28 @@
 import { getTheme, isThemeFamily } from "./Theme.js";
-import { getCollectionByAlias } from "../asset-registries/Icons.js";
+import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js";
 
 const IconCollectionConfiguration = new Map<string, string>();
 
-enum IconCollectionVersions {
+// All supported icon collections + uknown custom ones
+type IconCollections = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite" | string;
+
+// All registered icon collections
+enum RegisteredIconCollections {
 	SAPIconsV4 = "SAP-icons-v4",
 	SAPIconsV5 = "SAP-icons-v5",
 	SAPIconsTNTV2 = "tnt-v2",
 	SAPIconsTNTV3 = "tnt-v3",
+	SAPBSIcons = "business-suite",
 }
 
 /**
  * Sets the default icon collection for a given theme.
- * By default when no collection is specified "SAP-icons-v5" is used in all SAP Horizon themes
- * and "SAP-icons-v4" - for all the rest.
+ * SAP Icons is the default icon collection (resolves to SAP-icons version 5.x in Horizon theme family and SAP-icons version 4.x in all other themes)
+ * and to display icons from other collections, we have to specify the icon collection in addition to the icon name - "tne/actor", "business-suite/1x2-grid-layout", etc.
+ * This method allows setting another (built-in or custom) icon collection as default.
  *
  * <b>Usage</b>
- * <br>
- * <b>For example</b> to force "SAP-icons" version 5.x in "sap_fiori_3":
+ * <b>For example</b>, to make "SAP-icons version 5.x" the default icon collection in "sap_fiori_3":
  *
  * <pre>
  * setDefaultIconCollection("sap_fiori_3", "SAP-icons-v5");
@@ -25,23 +30,19 @@ enum IconCollectionVersions {
  * <ui5-icon name="home"></ui5-icon>
  * </pre>
  *
- * <b>For example</b> to set custom icon collection "my-custom-icons" as default in "sap_fiori_3":
+ * <b>For example</b>, to make a custom icon collection (with name "my-custom-collection") the default icon collection in "sap_fiori_3":
  *
  * <pre>
- * setDefaultIconCollection("sap_fiori_3", "SAP-icons-v5");
+ * setDefaultIconCollection("sap_fiori_3", "my-custom-collection");
  *
- * <ui5-icon name="my-custom-icon-name"></ui5-icon>
+ * <ui5-icon name="custom-icon-name"></ui5-icon>
  * </pre>
  *
  * @public
  * @param { string } theme
  * @param { string } collectionName
  */
-const setDefaultIconCollection = (theme: string, collectionName: IconCollectionVersions | string) => {
-	if (collectionName === "horizon") {
-		collectionName = IconCollectionVersions.SAPIconsV5;
-	}
-
+const setDefaultIconCollection = (theme: string, collectionName: IconCollections) => {
 	IconCollectionConfiguration.set(theme, collectionName);
 };
 
@@ -57,16 +58,8 @@ const getDefaultIconCollection = (theme: string): string | undefined => {
 };
 
 /**
- * Returns the effective icon collection, based on the collection and current theme as follows:
- *
- * - "SAP-icons" resolves to "SAP-icons-v4" in "Quartz" and "Belize", and to "SAP-icons-v5" in "Horizon"
- * - "SAP-icons-v3" forces "v3" of "SAP-icons" in any theme and resolves to itself "SAP-icons-v3"
- * - "SAP-icons-v4" forces "v4" of "SAP-icons" in any theme and resolves to itself "SAP-icons-v4"
- * - "tnt" resolves to "tnt-v2" in "Quartz", "Belize", and resolves to "tnt-v3" in "Horizon"
- * - "tnt-v2" forces "v2" of TNT icons in any theme and resolves to itself "tnt-v2"
- * - "tnt-v3" forces "v3" of TNT icons in any theme and resolves to itself "tnt-v3"
- * - "business-suite" has no versioning and resolves to "business-suite"
- *
+ * Returns the effective icon collection,
+ * based on the default icon collection configuration and the current theme:
  * @param { string } collectionName
  * @returns { string } the effective collection name
  */
@@ -74,43 +67,48 @@ const getEffectiveIconCollection = (collectionName?: string): string => {
 	const currentTheme = getTheme();
 	const currentThemeConfiguration = IconCollectionConfiguration.get(currentTheme);
 
-	// no collection - return default collection if configured
+	// when no collection is set and default collection is configured - return the configured icon collection
 	if (!collectionName && currentThemeConfiguration) {
-		return getCollectionByAlias(currentThemeConfiguration);
+		return getIconCollectionByAlias(currentThemeConfiguration);
 	}
 
-	// collection exists - return theme dependant collection
+	// when collection is set - return the theme dependant icon collection
+	// when collection is not set and there is no default icon collection configured - return theme dependant icon collection
 	return getIconCollectionVersionByTheme(collectionName);
 };
 
 /**
- * Returns the icon theme dependant version collection, based on the collection and current theme as follows:
+ * Returns the icon theme dependant collection, based on the collection name and current theme as follows:
  *
- * - "SAP-icons" resolves to "SAP-icons-v4" in "Quartz" and "Belize", and to "SAP-icons-v5" in "Horizon"
- * - "no collection" resolves to "SAP-icons-v4" in "Quartz" and "Belize", and to "SAP-icons-v5" in "Horizon"
- * - "tnt" resolves to "tnt-v2" in "Quartz", "Belize", and resolves to "tnt-v3" in "Horizon"
+ * - "no collection" resolves to "SAP-icons-v4" in "Quartz" and "Belize", and to "SAP-icons-v5" in "Horizon" (or as confugred via setDefaultIconCollection)
+ * - "SAP-icons-v4" (and its alias "SAP-icons") forces "SAP-icons v4" in any theme and resolves to itself "SAP-icons-v4"
+ * - "SAP-icons-v5" (and its alias "horizon") forces  "SAP-icons v5" in any theme and resolves to itself "SAP-icons-v5"
+ * - "tnt" (and its alias "SAP-icons-TNT") resolves to "tnt-v2" in "Quartz", "Belize", and resolves to "tnt-v3" in "Horizon"
+ * - "tnt-v2" forces "TNT icons v2" in any theme and resolves to itself "tnt-v2"
+ * - "tnt-v3" forces "TNT icons v3" in any theme and resolves to itself "tnt-v3"
+ * - "business-suite" (and its alias "BusinessSuiteInAppSymbols") has no versioning and resolves to "business-suite"
  *
- * <b>Note:</b> "SAP-icons-v4", "SAP-icons-v5", "business-suite" are just returned
- * @param { string } collectionName
- * @returns { string } the effective collection name
+ * <b>Note:</b> "SAP-icons-v4", "SAP-icons-v5", "tnt-v2", "tnt-v3" and "business-suite" are just returned
+ * @param { IconCollections } collectionName
+ * @returns { RegisteredIconCollections } the registered collection name
  */
-const getIconCollectionVersionByTheme = (collectionName?: string): string => {
+const getIconCollectionVersionByTheme = (collectionName?: IconCollections): RegisteredIconCollections => {
 	const horizonThemeFamily = isThemeFamily("sap_horizon");
 
 	if (!collectionName) {
-		return horizonThemeFamily ? IconCollectionVersions.SAPIconsV5 : IconCollectionVersions.SAPIconsV4;
+		return horizonThemeFamily ? RegisteredIconCollections.SAPIconsV5 : RegisteredIconCollections.SAPIconsV4;
 	}
 
 	if (collectionName === "tnt") {
-		return horizonThemeFamily ? IconCollectionVersions.SAPIconsTNTV3 : IconCollectionVersions.SAPIconsTNTV2;
+		return horizonThemeFamily ? RegisteredIconCollections.SAPIconsTNTV3 : RegisteredIconCollections.SAPIconsTNTV2;
 	}
 
-	return collectionName;
+	return collectionName as RegisteredIconCollections;
 };
 
 export {
 	setDefaultIconCollection,
 	getDefaultIconCollection,
 	getEffectiveIconCollection,
-	IconCollectionVersions,
+	RegisteredIconCollections,
 };
