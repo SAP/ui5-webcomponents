@@ -3,28 +3,26 @@
 The preferred way to write the renderers for UI5 Web Components (and supported directly by the build tools) is to use standard Handlebars templates with some additional custom syntax.
 
 ## Table of contents
-- [Understanding the Handlebars (`.hbs`) templates](#understanding-the-handlebars-hbs-templates)
-	- [Table of contents](#table-of-contents)
-	- [1. Handlebars compilation ](#1-handlebars-compilation-)
-	- [2. Design goals of the Handlebars templates ](#2-design-goals-of-the-handlebars-templates-)
-	- [3. The context in `.hbs` files ](#3-the-context-in-hbs-files-)
-		- [3.1 Global context ](#31-global-context-)
-		- [3.2 Context in loops  ](#32-context-in-loops--)
-		- [3.3 Accessing the global context from loops  ](#33-accessing-the-global-context-from-loops--)
-	- [4. The `.hbs` syntax ](#4-the-hbs-syntax-)
-		- [Bindings ](#bindings-)
-		- [Conditions ](#conditions-)
-		- [Loops ](#loops-)
-		- [Property assignment (the `.` prefix) ](#property-assignment-the--prefix-)
-		- [Boolean attribute assignment (the `?` prefix) ](#boolean-attribute-assignment-the--prefix-)
-		- [Event handlers assignment (the `@` prefix) ](#event-handlers-assignment-the--prefix-)
-		- [Style maps ](#style-maps-)
-		- [Class maps ](#class-maps-)
-		- [Partials ](#partials-)
-		- [Include ](#include-)
-	- [5. Using the `slot` element ](#5-using-the-slot-element-)
-		- [Rendering slots ](#rendering-slots-)
-		- [Individual slots ](#individual-slots-)
+1. [Handlebars compilation](#compilation)
+2. [Design goals](#design_goals)
+3. [The context in `.hbs` files](#context)
+	- [Global context](#context_global)
+	- [Context in loops](#context_loops)
+	- [Accessing the global context from loops](#context_loops_accessing)
+4. [The `.hbs` syntax](#syntax)
+	- [Bindings](#syntax_bindings)
+	- [Conditions](#syntax_conditional)
+	- [Loops](#syntax_loops)
+	- [Property assignment (the `.` prefix)](#syntax_dot)
+	- [Boolean attribute assignment (the `?` prefix)](#syntax_question_mark)
+	- [Event handlers assignment (the `@` prefix)](#syntax_at)
+	- [Style maps](#syntax_style_maps)
+	- [Class maps](#syntax_class_maps)
+	- [Partials](#syntax_partials)
+	- [Include](#syntax_include)
+5. [Using the `slot` element](#slots)
+	- [Rendering slots](#slots_rendering)
+	- [Individual slots](#slots_individual)
 
 
 ## 1. Handlebars compilation <a name="compilation"></a>
@@ -35,7 +33,7 @@ Example:
 
 The following `src/Demo.hbs` template
 
-```html
+```handlebars
 <button>{{text}}</button>
 ```
 
@@ -75,14 +73,14 @@ this.fullName = `${this.name} ${this.lastName}`;
 
 In the `Demo.hbs` file you can just use them directly:
 
-```html
+```handlebars
 <p>{{fullName}}</p>
 <p>{{age}}</p>
 ```
 
 The following code will have exactly the same result:
 
-```html
+```handlebars
 <p>{{this.fullName}}</p>
 <p>{{this.age}}</p>
 ```
@@ -116,7 +114,7 @@ this.items = [
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 {{#each items}}
 	<div id="{{id}}"
 		 role="option"
@@ -127,7 +125,7 @@ In the `Demo.hbs` file:
 ```
 
 Again, you can use the `this` keyword, but it's not necessary. The following code will be the same as the one above:
-```html
+```handlebars
 {{#each items}}
 	<div id="{{this.id}}"
 		 role="option"
@@ -141,7 +139,7 @@ The only use case where you must use the `this` keyword is when you want to refe
 
 Example:
 
-```html
+```handlebars
 {{#each items}}
 	<div id="{{id}}"
 		 .item="{{this}}"
@@ -164,7 +162,7 @@ this.numbers = [
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 {{#each numbers}}
 	<div>
 		{{#each this}}
@@ -205,7 +203,7 @@ this.items = [
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 {{#each items}}
 	<div id="{{id}}">{{../name}}</div>
 {{/each}}
@@ -231,7 +229,7 @@ this.txt = "Some text";
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 <button title="{{tooltip}}">{{txt}}<button/>
 ```
 
@@ -239,7 +237,7 @@ In the `Demo.hbs` file:
 
 For example, the following is **not allowed**:
 
-```html
+```handlebars
 <{{tag}} {{attr}}="Hello">This will not compile</{{tag}}>
 ```
 
@@ -256,13 +254,13 @@ this.person = {
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 <p>{{person.name}} {{person.lastName}}</p>
 ```
 
 but you cannot use expressions inside `.hbs` templates. The following is **not allowed**:
 
-```html
+```handlebars
 <p>{{person.name + " " + person.lastName}}</p>
 ```
 
@@ -278,7 +276,7 @@ get fullName() {
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 <p>{{fullName}}</p>
 ```
 
@@ -293,7 +291,7 @@ this.unsafeMessage = `<span>This is unsafe content</span>`;
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 <p>{{{unsafeMessage}}}</p>
 ```
 
@@ -315,7 +313,7 @@ this.userInput = `<strong>Arg</strong>entina`;
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 <div>{{{userInput}}}</div>
 ```
 
@@ -332,7 +330,7 @@ this.messageDiv.textContent = "Hello";
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 <p>{{messageDiv}}</p>
 ```
 
@@ -354,7 +352,7 @@ You can use `if`, `else` and `unless` to create conditions.
 
 Examples:
 
-```html
+```handlebars
 {{#if hasText}}
 	<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
 {{/if}}
@@ -362,7 +360,7 @@ Examples:
 
 or
 
-```html
+```handlebars
 {{#if hasText}}
 	<label class="has-text"><span>{{text}}</span></label>
 {{else}}
@@ -372,7 +370,7 @@ or
 
 or
 
-```html
+```handlebars
 {{#unless _isPhone}}
 	<p>Some content</p>
 {{/unless}}
@@ -380,7 +378,7 @@ or
 
 You can chain if-else-if, as follows:
 
-```html
+```handlebars
 {{#if hasImage}}
 	<slot></slot>
 {{else if icon}}
@@ -392,7 +390,7 @@ You can chain if-else-if, as follows:
 
 Again, you cannot use expressions, so the following is **not allowed**:
 
-```html
+```handlebars
 {{#if person.access === "admin" }}
 	<p>Show admin functionality</p>
 {{/if}}
@@ -410,7 +408,7 @@ get isAdmin() {
 
 and then use this value in `Demo.hbs`:
 
-```html
+```handlebars
 {{#if isAdmin }}
 	<p>Show admin functionality</p>
 {{/if}}
@@ -441,7 +439,7 @@ this.items = [
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 {{#each items}}
 	<div id="{{id}}"
 		 role="option"
@@ -457,7 +455,7 @@ You can access the index of the currently looped item with the special `{{@index
 
 For example, the following template:
 
-```html
+```handlebars
 {{#each items}}
 	<div id="{{id}}"
 		 part="item-{{@index}}"
@@ -491,7 +489,7 @@ this.item = {
 this.text = "Some text";
 ```
 
-```html
+```handlebars
 <div
 		id="{{id}}"
 		data-info="{{someString}}"
@@ -529,7 +527,7 @@ this.readonly = false;
 this.disabled = false;
 ```
 
-```html
+```handlebars
 <input
 	id="{{_id}}-CB"
 	type='checkbox'
@@ -560,7 +558,7 @@ All attributes that had the `?` prefix and were bound to a falsy value are gone 
 
 However, if you did not use the `?` prefix:
 
-```html
+```handlebars
 <input
 	id="{{_id}}-CB"
 	type='checkbox'
@@ -603,7 +601,7 @@ this.onClick = event => {};
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 <button @click="{{onClick}}"></button>
 ```
 
@@ -633,7 +631,7 @@ get styles() {
 
 In the `Demo.hbs` file:
 
-```html
+```handlebars
 <div style="{{styles.root}}">
 	Some content
 	<footer style="{{styles.footer}}"></footer>
@@ -652,7 +650,7 @@ this.display = "block";
 this.styles = "display: none; visibility: hidden";
 ```
 
-```html
+```handlebars
 <div style="display: {{display}}"></div>
 <div style="{{styles}}"></div>
 ```
@@ -685,7 +683,7 @@ get classes() {
 }
 ```
 
-```html
+```handlebars
 <article class="{{classes.main}}">
 	<div class="{{classes.content}}"></div>
 	<section class="{{classes.section}}"></section>
@@ -703,7 +701,7 @@ You can define a partial with `{{#*inline "NAME"}}` and use it with `{{>NAME}}` 
 
 Consider the following example:
 
-```html
+```handlebars
 <div>
 	{{>valueStateMessage}}
 </div>
@@ -727,7 +725,7 @@ Example:
 
 In `Demo.hbs`:
 
-```html
+```handlebars
 <section>
 	<span class="first-fe" data-ui5-focus-trap tabindex="0" @focusin={{forwardToLast}}></span>
 
@@ -759,7 +757,7 @@ You can include other `.hbs` files with `{{>include "PATH_TO_FILE"}}` where `PAT
 
 Example:
 
-```html
+```handlebars
 {{>include "./Demo.hbs"}}
 ```
 
@@ -767,7 +765,7 @@ Paths to `.hbs` files from other `node_modules/` libraries are also supported.
 
 Example:
 
-```html
+```handlebars
 {{>include "@ui5/webcomponents/src/Popup.hbs"}}
 ```
 
@@ -775,7 +773,7 @@ The most common use case for `{{>include}}` is to include an `.hbs` file that ha
 
 In `Demo2.hbs`:
 
-```html
+```handlebars
 {{>include "./Demo.hbs"}}
 
 {{#*inline "beforeContent"}}
@@ -829,7 +827,7 @@ slots: {
 
 In `Page.hbs`:
 
-```html
+```handlebars
 <div class="ui5-page-root">
 	<header class="ui5-page-header-root" id="ui5-page-header">
 		<slot name="header"></slot>
@@ -884,7 +882,7 @@ and since `individualSlots` is set to `true`, every child in `this.items` (every
 
 In `Demo.hbs` you must render a slot for each child with `name` equal to the `_individualSlot` property value for this child:
 
-```html
+```handlebars
 {{#each items}}
 	 <div class="item-wrapper">
 		<slot name="{{_individualSlot}}"></slot>
