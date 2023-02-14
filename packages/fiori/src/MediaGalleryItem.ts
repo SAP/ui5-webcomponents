@@ -15,6 +15,11 @@ import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
 // Template
 import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
 
+interface ITabbable {
+	id: string,
+	_tabIndex: string,
+}
+
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
@@ -46,7 +51,7 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
  * @since 1.1.0
  */
 @customElement("ui5-media-gallery-item")
-class MediaGalleryItem extends UI5Element {
+class MediaGalleryItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the selected state of the component.
 	 *
@@ -102,13 +107,13 @@ class MediaGalleryItem extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_contentImageNotFound?: boolean;
+	_contentImageNotFound!: boolean;
 
 	/**
 	 * @private
 	 */
 	@property({ type: Boolean })
-	_thumbnailNotFound?: boolean;
+	_thumbnailNotFound!: boolean;
 
 	/**
 	 * @private
@@ -119,7 +124,7 @@ class MediaGalleryItem extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property({ defaultValue: undefined })
+	@property({ type: Boolean, defaultValue: undefined })
 	focused!: boolean;
 
 	/**
@@ -131,7 +136,7 @@ class MediaGalleryItem extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property({ noAttribute: true, defaultValue: "" })
+	@property({ noAttribute: true })
 	contentHeight!: string;
 
 	/**
@@ -156,8 +161,8 @@ class MediaGalleryItem extends UI5Element {
 	@slot()
 	thumbnail!: Array<HTMLElement>;
 
-	_monitoredThumbnail!: number | HTMLElement;
-	_monitoredContent!: number | HTMLElement;
+	_monitoredThumbnail?: HTMLElement | null;
+	_monitoredContent?: HTMLElement | null;
 
 	constructor() {
 		super();
@@ -182,11 +187,11 @@ class MediaGalleryItem extends UI5Element {
 	}
 
 	get _thumbnail() {
-		return this.thumbnail.length && this.thumbnail[0];
+		return this.thumbnail.length ? this.thumbnail[0] : null;
 	}
 
 	get _content() {
-		return this.content.length && this.content[0];
+		return this.content.length ? this.content[0] : null;
 	}
 
 	get _isThubmnailAvailable() {
@@ -233,32 +238,32 @@ class MediaGalleryItem extends UI5Element {
 		let callback,
 			success;
 		if (this._thumbnailDesign && this.thumbnail.length && (this._monitoredThumbnail !== this._thumbnail)) {
-			this._thumbnailNotFound = undefined; // reset flag
+			this._thumbnailNotFound = false; // reset flag
 			callback = this._updateThumbnailLoaded.bind(this);
-			success = this._attachListeners(this._thumbnail as HTMLElement, callback);
+			success = this._attachListeners(this._thumbnail as HTMLImageElement, callback);
 			success && (this._monitoredThumbnail = this._thumbnail);
 		}
 		if (!this._useThumbnail && this.content.length && (this._monitoredContent !== this._content)) {
-			this._contentImageNotFound = undefined; // reset flag
+			this._contentImageNotFound = false; // reset flag
 			callback = this._updateContentImageLoaded.bind(this);
-			success = this._attachListeners(this._content as HTMLElement, callback);
+			success = this._attachListeners(this._content as HTMLImageElement, callback);
 			success && (this._monitoredContent = this._content);
 		}
 	}
 
-	_attachListeners(element: HTMLElement, callback: (image: HTMLImageElement) => void) {
+	_attachListeners(element: HTMLImageElement, callback: (image: HTMLImageElement) => void) {
 		const isImg = element.tagName === "IMG",
 			img = isImg ? element : element.querySelector("img");
 		if (img) {
-			callback.call(this, img as HTMLImageElement);
+			callback.call(this, img);
 			img.addEventListener("error", () => {
 				if (this.contains(img)) { // img still belongs to us
-					callback.call(this, img as HTMLImageElement);
+					callback.call(this, img);
 				}
 			});
 			img.addEventListener("load", () => {
 				if (this.contains(img)) { // img still belongs to us
-					callback.call(this, img as HTMLImageElement);
+					callback.call(this, img);
 				}
 			});
 			return true;
