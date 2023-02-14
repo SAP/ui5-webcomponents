@@ -7,7 +7,10 @@ import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/d
 import convertMonthNumbersToMonthNames from "@ui5/webcomponents-localization/dist/dates/convertMonthNumbersToMonthNames.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
-import { isF4, isF4Shift } from "@ui5/webcomponents-base/dist/Keys.js";
+import {
+	isF4,
+	isF4Shift,
+} from "@ui5/webcomponents-base/dist/Keys.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
@@ -33,20 +36,20 @@ import CalendarTemplate from "./generated/templates/CalendarTemplate.lit.js";
 import calendarCSS from "./generated/themes/Calendar.css.js";
 
 interface ICalendarPicker {
-	_showPreviousPage: () => void;
-	_showNextPage: () => void;
-	_hasPreviousPage: () => boolean;
-	_hasNextPage: () => boolean;
-	_autoFocus?: boolean;
-	_firstYear?: number;
-	_lastYear?: number;
+	_showPreviousPage: () => void,
+	_showNextPage: () => void,
+	_hasPreviousPage: () => boolean,
+	_hasNextPage: () => boolean,
+	_autoFocus?: boolean,
+	_firstYear?: number,
+	_lastYear?: number,
 }
 
 type CalendarChangeEventDetail = {
-	values: Array<string>;
-	dates: Array<number>;
-	timestamp: number | undefined;
-};
+	values: Array<string>,
+	dates: Array<number>,
+	timestamp: number | undefined,
+}
 
 /**
  * @class
@@ -274,15 +277,13 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	get _selectedDatesTimestamps(): Array<number> {
-		return this.dates
-			.map(date => {
-				const value = date.value;
-				// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-				// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-				const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
-				return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
-			})
-			.filter((date): date is number => !!date);
+		return this.dates.map(date => {
+			const value = date.value;
+			// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
+			// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
+			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
+			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
+		}).filter((date): date is number => !!date);
 	}
 
 	/**
@@ -293,20 +294,16 @@ class Calendar extends CalendarPart {
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
-		this.dates
-			.filter(dateElement => !selectedValues.includes(dateElement.value))
-			.forEach(dateElement => {
-				this.removeChild(dateElement);
-			});
+		this.dates.filter(dateElement => !selectedValues.includes(dateElement.value)).forEach(dateElement => {
+			this.removeChild(dateElement);
+		});
 
 		// Create tags for the selected dates that don't already exist in DOM
-		selectedValues
-			.filter(value => !valuesInDOM.includes(value))
-			.forEach(value => {
-				const dateElement = document.createElement(CalendarDateComponent.default.getMetadata().getTag()) as CalendarDateComponentT;
-				dateElement.value = value;
-				this.appendChild(dateElement);
-			});
+		selectedValues.filter(value => !valuesInDOM.includes(value)).forEach(value => {
+			const dateElement = document.createElement(CalendarDateComponent.default.getMetadata().getTag()) as CalendarDateComponentT;
+			dateElement.value = value;
+			this.appendChild(dateElement);
+		});
 	}
 
 	async onAfterRendering() {
@@ -410,12 +407,11 @@ class Calendar extends CalendarPart {
 			rangeStart.setYear(this._currentPickerDOM._firstYear!);
 			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
 
-			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeStart.valueOf() / 1000, true).firstDate;
-			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeEnd.valueOf() / 1000, true).lastDate;
-			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(
-				rangeEndSecType.toLocalJSDate(),
-				true,
-			)}`;
+			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeStart.valueOf() / 1000, true)
+				.firstDate;
+			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
+				.lastDate;
+			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
 		} else {
 			this._headerYearButtonTextSecType = String(yearFormatSecType.format(this._localDate, true));
 		}
@@ -469,11 +465,7 @@ class Calendar extends CalendarPart {
 		});
 
 		this.timestamp = timestamp;
-		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>(
-			"selected-dates-change",
-			{ timestamp, dates: [...selectedDates], values: datesValues },
-			true,
-		);
+		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp, dates: [...selectedDates], values: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -560,11 +552,20 @@ class Calendar extends CalendarPart {
 	}
 
 	static get dependencies() {
-		return [CalendarDateComponent.default, CalendarHeader, DayPicker, MonthPicker, YearPicker];
+		return [
+			CalendarDateComponent.default,
+			CalendarHeader,
+			DayPicker,
+			MonthPicker,
+			YearPicker,
+		];
 	}
 }
 
 Calendar.define();
 
 export default Calendar;
-export type { ICalendarPicker, CalendarChangeEventDetail };
+export type {
+	ICalendarPicker,
+	CalendarChangeEventDetail,
+};
