@@ -6,6 +6,8 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import SideNavigationSubItem from "./SideNavigationSubItem.js";
+import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
 import SideNavigationItemPopoverContentTemplate from "./generated/templates/SideNavigationItemPopoverContentTemplate.lit.js";
 import {
@@ -187,6 +189,8 @@ class SideNavigation extends UI5Element {
 			Tree,
 			TreeItem,
 			ResponsivePopover,
+			SideNavigationItem,
+			SideNavigationSubItem,
 		];
 	}
 

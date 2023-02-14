@@ -15,6 +15,7 @@ import {
 	TAB_ARIA_DESIGN_CRITICAL,
 	TAB_ARIA_DESIGN_NEUTRAL,
 	TABCONTAINER_END_OVERFLOW,
+	TAB_SPLIT_ROLE_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 
 import "@ui5/webcomponents-icons/dist/error.js";
@@ -51,6 +52,7 @@ const DESIGN_DESCRIPTIONS = {
  * It defines both the item in the tab strip (top part of the <code>ui5-tabcontainer</code>) and the
  * content that is presented to the user once the tab is selected.
  *
+ * @abstract
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.Tab
@@ -401,6 +403,14 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	get expandButtonTitle() {
 		return Tab.i18nBundle.getText(TABCONTAINER_END_OVERFLOW);
+	}
+
+	get _roleDescription() {
+		return this.subTabs.length > 0 ? Tab.i18nBundle.getText(TAB_SPLIT_ROLE_DESCRIPTION) : undefined;
+	}
+
+	get _ariaHasPopup() {
+		return this.isSingleClickArea ? "menu" : undefined;
 	}
 
 	get semanticIconName() {

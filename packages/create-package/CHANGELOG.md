@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.0...v1.11.0-rc.1) (2023-02-09)
+
+
+### Features
+
+* **framework:** add option to define package name, tag and typescript support from CLI ([#6379](https://github.com/SAP/ui5-webcomponents/issues/6379)) ([687c0f7](https://github.com/SAP/ui5-webcomponents/commit/687c0f7a420a72f77f294ace2898223c48708ae2)), closes [#6382](https://github.com/SAP/ui5-webcomponents/issues/6382)
+
+
+
+
+
 # [1.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4-rc.0...v1.11.0-rc.0) (2023-02-02)
 
 **Note:** Version bump only for package @ui5/create-webcomponents-package

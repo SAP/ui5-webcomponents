@@ -1,30 +1,98 @@
-const ua = navigator.userAgent;
-const touch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
-const ie = /(msie|trident)/i.test(ua);
-const chrome = !ie && /(Chrome|CriOS)/.test(ua);
-const firefox = /Firefox/.test(ua);
-const safari = !ie && !chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(ua);
-const webkit = !ie && /webkit/.test(ua);
-const windows = navigator.platform.indexOf("Win") !== -1;
-const iOS = !!(navigator.platform.match(/iPhone|iPad|iPod/)) || !!(navigator.userAgent.match(/Mac/) && "ontouchend" in document);
-const android = !windows && /Android/.test(ua);
-const androidPhone = android && /(?=android)(?=.*mobile)/i.test(ua);
-const ipad = /ipad/i.test(ua) || (/Macintosh/i.test(ua) && "ontouchend" in document);
-// With iOS 13 the string 'iPad' was removed from the user agent string through a browser setting, which is applied on all sites by default:
-// "Request Desktop Website -> All websites" (for more infos see: https://forums.developer.apple.com/thread/119186).
-// Therefore the OS is detected as MACINTOSH instead of iOS and the device is a tablet if the Device.support.touch is true.
+const isSSR = typeof document === "undefined";
+
+const internals = {
+	get userAgent() {
+		if (isSSR) {
+			return "";
+		}
+		return navigator.userAgent;
+	},
+	get touch() {
+		if (isSSR) {
+			return false;
+		}
+		return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+	},
+	get ie() {
+		if (isSSR) {
+			return false;
+		}
+		return /(msie|trident)/i.test(internals.userAgent);
+	},
+	get chrome() {
+		if (isSSR) {
+			return false;
+		}
+		return !internals.ie && /(Chrome|CriOS)/.test(internals.userAgent);
+	},
+	get firefox() {
+		if (isSSR) {
+			return false;
+		}
+		return /Firefox/.test(internals.userAgent);
+	},
+	get safari() {
+		if (isSSR) {
+			return false;
+		}
+		return !internals.ie && !internals.chrome && /(Version|PhantomJS)\/(\d+\.\d+).*Safari/.test(internals.userAgent);
+	},
+	get webkit() {
+		if (isSSR) {
+			return false;
+		}
+		return !internals.ie && /webkit/.test(internals.userAgent);
+	},
+	get windows() {
+		if (isSSR) {
+			return false;
+		}
+		return navigator.platform.indexOf("Win") !== -1;
+	},
+	get iOS() {
+		if (isSSR) {
+			return false;
+		}
+		return !!(navigator.platform.match(/iPhone|iPad|iPod/)) || !!(internals.userAgent.match(/Mac/) && "ontouchend" in document);
+	},
+	get android() {
+		if (isSSR) {
+			return false;
+		}
+		return !internals.windows && /Android/.test(internals.userAgent);
+	},
+	get androidPhone() {
+		if (isSSR) {
+			return false;
+		}
+		return internals.android && /(?=android)(?=.*mobile)/i.test(internals.userAgent);
+	},
+	get ipad() {
+		if (isSSR) {
+			return false;
+		}
+		// With iOS 13 the string 'iPad' was removed from the user agent string through a browser setting, which is applied on all sites by default:
+		// "Request Desktop Website -> All websites" (for more infos see: https://forums.developer.apple.com/thread/119186).
+		// Therefore the OS is detected as MACINTOSH instead of iOS and the device is a tablet if the Device.support.touch is true.
+		return /ipad/i.test(internals.userAgent) || (/Macintosh/i.test(internals.userAgent) && "ontouchend" in document);
+	},
+};
 
 let windowsVersion: number;
 let webkitVersion: number;
 let tablet: boolean;
 
 const isWindows8OrAbove = () => {
-	if (!windows) {
+	if (isSSR) {
+		return false;
+	}
+
+	if (!internals.windows) {
 		return false;
 	}
 
 	if (windowsVersion === undefined) {
-		const matches = ua.match(/Windows NT (\d+).(\d)/);
+		const matches = internals.userAgent.match(/Windows NT (\d+).(\d)/);
 		windowsVersion = matches ? parseFloat(matches[1]) : 0;
 	}
 
@@ -32,12 +100,16 @@ const isWindows8OrAbove = () => {
 };
 
 const isWebkit537OrAbove = () => {
-	if (!webkit) {
+	if (isSSR) {
+		return false;
+	}
+
+	if (!internals.webkit) {
 		return false;
 	}
 
 	if (webkitVersion === undefined) {
-		const matches = ua.match(/(webkit)[ /]([\w.]+)/);
+		const matches = internals.userAgent.match(/(webkit)[ /]([\w.]+)/);
 		webkitVersion = matches ? parseFloat(matches[1]) : 0;
 	}
 
@@ -45,28 +117,32 @@ const isWebkit537OrAbove = () => {
 };
 
 const detectTablet = () => {
+	if (isSSR) {
+		return false;
+	}
+
 	if (tablet !== undefined) {
 		return;
 	}
 
-	if (ipad) {
+	if (internals.ipad) {
 		tablet = true;
 		return;
 	}
 
-	if (touch) {
+	if (internals.touch) {
 		if (isWindows8OrAbove()) {
 			tablet = true;
 			return;
 		}
 
-		if (chrome && android) {
-			tablet = !/Mobile Safari\/[.0-9]+/.test(ua);
+		if (internals.chrome && internals.android) {
+			tablet = !/Mobile Safari\/[.0-9]+/.test(internals.userAgent);
 			return;
 		}
 
 		let densityFactor = window.devicePixelRatio ? window.devicePixelRatio : 1; // may be undefined in Windows Phone devices
-		if (android && isWebkit537OrAbove()) {
+		if (internals.android && isWebkit537OrAbove()) {
 			densityFactor = 1;
 		}
 
@@ -74,26 +150,29 @@ const detectTablet = () => {
 		return;
 	}
 
-	tablet = (ie && ua.indexOf("Touch") !== -1) || (android && !androidPhone);
+	tablet = (internals.ie && internals.userAgent.indexOf("Touch") !== -1) || (internals.android && !internals.androidPhone);
 };
 
-const supportsTouch = (): boolean => touch;
-const isIE = (): boolean => ie;
-const isSafari = (): boolean => safari;
-const isChrome = (): boolean => chrome;
-const isFirefox = (): boolean => firefox;
+const supportsTouch = (): boolean => internals.touch;
+const isIE = (): boolean => internals.ie;
+const isSafari = (): boolean => internals.safari;
+const isChrome = (): boolean => internals.chrome;
+const isFirefox = (): boolean => internals.firefox;
 
 const isTablet = (): boolean => {
 	detectTablet();
-	return (touch || isWindows8OrAbove()) && tablet;
+	return (internals.touch || isWindows8OrAbove()) && tablet;
 };
 
 const isPhone = (): boolean => {
 	detectTablet();
-	return touch && !tablet;
+	return internals.touch && !tablet;
 };
 
 const isDesktop = (): boolean => {
+	if (isSSR) {
+		return false;
+	}
 	return (!isTablet() && !isPhone()) || isWindows8OrAbove();
 };
 
@@ -102,11 +181,11 @@ const isCombi = (): boolean => {
 };
 
 const isIOS = (): boolean => {
-	return iOS;
+	return internals.iOS;
 };
 
 const isAndroid = (): boolean => {
-	return android || androidPhone;
+	return internals.android || internals.androidPhone;
 };
 
 export {
