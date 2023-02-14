@@ -6,7 +6,7 @@ const IconCollectionConfiguration = new Map<string, string>();
 // All supported icon collections + uknown custom ones
 type IconCollection = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite" | string;
 
-// All registered icon collections
+// All registered icon collections - all icon collections resolves to these options at the end
 enum RegisteredIconCollection {
 	SAPIconsV4 = "SAP-icons-v4",
 	SAPIconsV5 = "SAP-icons-v5",
@@ -112,4 +112,8 @@ export {
 	getDefaultIconCollection,
 	getEffectiveIconCollection,
 	RegisteredIconCollection,
+};
+
+export type {
+	IconCollection,
 };
