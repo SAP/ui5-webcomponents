@@ -521,6 +521,10 @@ class TextArea extends UI5Element {
 	}
 
 	_tokenizeText(value) {
+		if (!value) {
+			value = "";
+		}
+
 		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
 			.replace(/>/gm, "&gt;")
 			.split("\n");
