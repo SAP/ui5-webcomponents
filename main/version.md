@@ -1,9 +1,7 @@
-commit efaba61644184d1ab528b2c206ae09224541082a
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Feb 14 00:06:49 2023 -0800
+commit fa475767817cc7e6f141dfd386934e530b04784a
+Author: Todor Stoyanov <t.stoyanov@sap.com>
+Date:   Tue Feb 14 11:59:36 2023 +0200
 
-    Translation Delivery (#6485)
+    fix(ui5-button): disabled button not execute click event (#6400)
     
-    chore: translation delivery
-    
-    Change-Id: Icec46eea816a619c0c1eb410cc3a96c97ef0b09b
+    fixes: #6372
