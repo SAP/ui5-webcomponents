@@ -277,12 +277,12 @@
 			wcToastBS.show();
 		});
 
-		acceptBtnInPopover.addEventListener("click", function(event) {
+		acceptBtnInPopover.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Accept btn In popover btn clicked";
 			wcToastBS.show();
 		});
 
-		rejectBtnInPopover.addEventListener("click", function(event) {
+		rejectBtnInPopover.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Reject btn In popover btn clicked";
 			wcToastBS.show();
 		});
@@ -304,7 +304,7 @@
 			notificationsPopover.showAt(event.detail.targetRef);
 		});
 
-		notificationListTop.addEventListener("item-close", function (event) {
+		notificationListTop.addEventListener("ui5-item-close", function (event) {
 				wcToastBS.textContent = event.detail.item.titleText;
 				wcToastBS.show();
 		});

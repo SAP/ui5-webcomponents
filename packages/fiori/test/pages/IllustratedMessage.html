@@ -168,11 +168,11 @@
 
 		illustratedMessage.style.width = `${sizes.scene}px`;
 
-		illustrationSelect.addEventListener("change", (event) => {
+		illustrationSelect.addEventListener("ui5-change", (event) => {
 			illustratedMessage.setAttribute("name", event.detail.selectedOption.textContent);
 		});
 
-		sizeSelect.addEventListener("change", (event) => {
+		sizeSelect.addEventListener("ui5-change", (event) => {
 			illustratedMessage.style.width = `${sizes[event.detail.selectedOption.textContent]}px`;
 		});
 

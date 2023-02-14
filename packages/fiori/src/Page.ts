@@ -34,6 +34,7 @@ import PageCss from "./generated/themes/Page.css.js";
  *
  * <b>Note:</b> <code>ui5-page</code> occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
  * that there is enough space for the <code>ui5-page</code> to be rendered.
+ * <b>Note:</b> In order for the <code>ui5-page</code> to be displayed, the parent element should have fixed height.
  *
  *
  * <h3>ES6 Module Import</h3>
