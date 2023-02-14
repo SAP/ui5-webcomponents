@@ -85,7 +85,6 @@ const _getAllAssociatedElementsFromDOM = (el: UI5Element): Array<HTMLElement> =>
 };
 
 const _getAssociatedLabels = (el: HTMLElement): Array<HTMLElement> => {
-	// const labels = (el.getRootNode() as HTMLElement).querySelectorAll<HTMLElement>(`[ui5-label][for="${el.id}"],label[for="${el.id}"]`);
 	const labels = (el.getRootNode() as HTMLElement).querySelectorAll<HTMLElement>(`[for="${el.id}"]`);
 	return Array.from(labels);
 };
