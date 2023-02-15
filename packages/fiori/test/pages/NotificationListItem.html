@@ -214,17 +214,17 @@
 	</div>
 
 	<script>
-		notificationList.addEventListener("item-click", function(event) {
+		notificationList.addEventListener("ui5-item-click", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList.addEventListener("item-close", function(event) {
+		notificationList.addEventListener("ui5-item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		notificationList2.addEventListener("item-click", function(event) {
+		notificationList2.addEventListener("ui5-item-click", function(event) {
 			var item = event.detail.item;
 
 			setTimeout(function() {
@@ -237,27 +237,27 @@
 			wcToastBS.show();
 		});
 
-		notificationList2.addEventListener("item-close", function(event) {
+		notificationList2.addEventListener("ui5-item-close", function(event) {
 			wcToastBS.textContent = event.detail.item.titleText;
 			wcToastBS.show();
 		});
 
-		acceptBtn.addEventListener("click", function(event) {
+		acceptBtn.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Accept btn clicked";
 			wcToastBS.show();
 		});
 
-		acceptBtnInPopover.addEventListener("click", function(event) {
+		acceptBtnInPopover.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Accept btn In popover btn clicked";
 			wcToastBS.show();
 		});
 
-		rejectBtn.addEventListener("click", function(event) {
+		rejectBtn.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Reject btn clicked";
 			wcToastBS.show();
 		});
 
-		rejectBtnInPopover.addEventListener("click", function(event) {
+		rejectBtnInPopover.addEventListener("ui5-click", function(event) {
 			wcToastBS.textContent = "Reject btn In popover btn clicked";
 			wcToastBS.show();
 		});

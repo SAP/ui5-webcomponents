@@ -198,9 +198,7 @@
 	<script>
 		const fields = document.querySelectorAll(".field");
 
-
-
-		document.getElementById("slider").addEventListener("input", event => {
+		document.getElementById("slider").addEventListener("ui5-input", event => {
 			Array.from(fields).forEach(el => {
 				el.style.width = `${event.target.value}px`;
 				document.getElementById("label-width").textContent = `Field width: ${event.target.value}px`;
@@ -208,7 +206,7 @@
 			})
 		});
 
-		document.getElementById("slider2").addEventListener("input", event => {
+		document.getElementById("slider2").addEventListener("ui5-input", event => {
 			Array.from(fields).forEach(el => {
 				el.style.width = `${event.target.value}px`;
 				document.getElementById("label-width").textContent = `Field width: ${event.target.value}px`;
@@ -217,7 +215,7 @@
 		});
 
 		const cbCompact = document.getElementById('cbCompact');
-		cbCompact.addEventListener('change', ()=> {
+		cbCompact.addEventListener('ui5-change', ()=> {
 			var el = document.getElementById('wrapper');
 			el.classList.remove('sapUiSizeCompact');
 			if(cbCompact.checked) {
