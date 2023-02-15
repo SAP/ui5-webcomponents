@@ -1,13 +1,10 @@
-commit 8498384430c662833500a6b19ee8c8f4a496f9dc
+commit 0648d22ca1ddf4855d7bf8f6cbf1d4b5f7d3635d
 Author: ilhan orhan <ilhan.myumyun@sap.com>
-Date:   Wed Feb 15 15:13:33 2023 +0200
+Date:   Wed Feb 15 17:47:47 2023 +0200
 
-    build: output generated files as js|ts selectively (#6409)
+     feat: support TNT Icons v3 font (Horizon) (#6456)
     
-    Keep generating build files (i18n, styles) in src/generated, either as pure .js or in .ts files, based on env variable: UI5_TS.
-    When set to "true", typescript mode is enabled and TS compiler runs
-    When set to false - typescript mode is disabled and TS compiler does not run.
-    While for some packages, such as "base", "localization", "theming" the env variable is pre-set to "true", for component packages (such as "main" and "fiori") it can be configured via the "typescript" option in the package-script.js.
-    Exactly the package-script.js is the entry point for custom component packages to configure the ui5webc build and the "typescript" option is already available and will switch on off the TS compiler and force the build to generate .ts ot .js files accordingly.
+    Prior to this PR, we used to have a single version for SAP TNT Icons (version 2.x) and now we're adding support for new one (version 3.x), based on demand and questions from SAP Design team. Also, to keep in sync with OpenUI5, where this is also in progress. There are also changes related to the SAP Icons, explained below.
     
-    Fixes: #6412
+    Fixes: #6497
+    Fixes: #6438

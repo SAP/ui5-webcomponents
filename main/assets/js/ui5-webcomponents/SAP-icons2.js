@@ -1,6 +1,10 @@
-const collection = "SAP-icons";
+const collection = "SAP-icons-v4";
 const packageName = "@ui5/webcomponents-icons";
 const version = "v4";
+const versions = [
+  "v4",
+  "v5"
+];
 const data = {
   "Chart-Tree-Map": {
     path: "M32 472V40q0-8 8-8h176q8 0 8 8v432q0 8-8 8H40q-8 0-8-8zm224-256V40q0-8 8-8h208q8 0 8 8v176q0 8-8 8H264q-8 0-8-8zm0 48q0-8 8-8h80q8 0 8 8v208q0 8-8 8h-80q-8 0-8-8V264zm128 0q0-8 8-8h80q8 0 8 8v80q0 8-8 8h-80q-8 0-8-8v-80zm0 128q0-8 8-8h80q8 0 8 8v80q0 8-8 8h-80q-8 0-8-8v-80z"
@@ -2435,6 +2439,7 @@ var SAPIcons = {
   collection,
   packageName,
   version,
+  versions,
   data
 };
-export { collection, data, SAPIcons as default, packageName, version };
+export { collection, data, SAPIcons as default, packageName, version, versions };
