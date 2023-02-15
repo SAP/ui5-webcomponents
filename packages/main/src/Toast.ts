@@ -130,7 +130,7 @@ class Toast extends UI5Element {
 	 * @name sap.ui.webc.main.Toast.prototype.default
 	 */
 
-	_reopen!: boolean;
+	_reopen: boolean;
 
 	static get render() {
 		return litRender;
