@@ -1,13 +1,43 @@
-commit bfcf7ded4c4a70204f5723ade2c5b2f0a6635446
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Tue Feb 14 23:33:56 2023 -0800
+commit b75e958fdc651b60913310bf1645f05e6df726ec
+Author: Dimitar Dimitrov <dimitar.nenov.dimitrov@abv.bg>
+Date:   Wed Feb 15 11:30:24 2023 +0200
 
-    Translation Delivery (#6500)
+    feat(ui5-input): reflect dynamic changes of labels (#6364)
     
-    * chore: translation delivery
+    * feat(ui5-input): reflect dynamic changes of labels
     
-    Change-Id: Ibe08c45bbd7a36704905b728c0ba4c0eda7e0ce5
+    * feat(ui5-input): reflect dynamic changes of labels
     
-    * chore: translation delivery
+    * feat(ui5-input): reflect dynamic changes of labels
     
-    Change-Id: Id60a0c7d81c1be5be0d4b0ffb058828bc76372b6
+    * feat(ui5-input): reflect dynamic changes of labels
+    
+    * feat(ui5-input): reflect dynamic changes of labels
+    
+    * feat(ui5-input): reflect dynamic changes of labels merge
+    
+    * feat(ui5-input): reflect dynamic changes of labels
+    
+    * feat(ui5-input): reflect dynamic changes of labels
+    
+    * feat(ui5-input): fix code review
+    
+    * feat(ui5-input): reflect dynamic changes of labels, adding tests and code review changes
+    
+    * feat(ui5-input): adding more unit tests
+    
+    * feat(ui5-input): reflect dynamic changes of all associated elements and adding tests for this
+    
+    * feat(ui5-input): reflect dynamic changes of all associated elements and adding tests for this part 2
+    
+    * feat(ui5-input): code review fixes
+    
+    * feat(ui5-input): code review fixes
+    
+    * feat(ui5-input): fixing build errors
+    
+    * feat(ui5-input): fix unit test
+    
+    ---------
+    
+    Co-authored-by: Dimitar Dimitrov <dimitar.dimitrov11@sap.com>

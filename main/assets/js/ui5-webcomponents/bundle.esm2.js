@@ -380,7 +380,7 @@ const VersionInfo = {
   patch: 0,
   suffix: "-rc.1",
   isNext: false,
-  buildTime: 1676446483
+  buildTime: 1676453475
 };
 let currentRuntimeIndex;
 let currentRuntimeAlias = "";
@@ -521,7 +521,7 @@ const markAsRtlAware = (klass) => {
 const isRtlAware = (klass) => {
   return rtlAwareSet.has(klass);
 };
-const registeredElements = /* @__PURE__ */ new Set();
+const registeredElements$1 = /* @__PURE__ */ new Set();
 const eventProvider$4 = new EventProvider();
 const invalidatedWebComponents = new RenderQueue();
 let renderTaskPromise, renderTaskPromiseResolve;
@@ -533,12 +533,12 @@ const renderDeferred = async (webComponent) => {
 };
 const renderImmediately = (webComponent) => {
   eventProvider$4.fireEvent("beforeComponentRender", webComponent);
-  registeredElements.add(webComponent);
+  registeredElements$1.add(webComponent);
   webComponent._render();
 };
 const cancelRender = (webComponent) => {
   invalidatedWebComponents.remove(webComponent);
-  registeredElements.delete(webComponent);
+  registeredElements$1.delete(webComponent);
 };
 const scheduleRenderTask = async () => {
   if (!queuePromise) {
@@ -594,7 +594,7 @@ const _resolveTaskPromise = () => {
   }
 };
 const reRenderAllUI5Elements = async (filters) => {
-  registeredElements.forEach((element) => {
+  registeredElements$1.forEach((element) => {
     const ctor = element.constructor;
     const tag = ctor.getMetadata().getTag();
     const rtlAware = isRtlAware(ctor);
@@ -8454,6 +8454,14 @@ class Integer extends DataType {
     return parseInt(attributeValue);
   }
 }
+const associatedElements = /* @__PURE__ */ new WeakMap();
+const registeredElements = /* @__PURE__ */ new WeakMap();
+const observerOptions = {
+  attributes: true,
+  childList: true,
+  characterData: true,
+  subtree: true
+};
 const getEffectiveAriaLabelText = (el) => {
   const accessibleEl = el;
   if (!accessibleEl.accessibleNameRef) {
@@ -8462,24 +8470,52 @@ const getEffectiveAriaLabelText = (el) => {
     }
     return void 0;
   }
-  return _getAriaLabelledByTexts(el);
+  return getAllAccessibleNameRefTexts(el);
 };
-const _getAriaLabelledByTexts = (el) => {
-  const ids = el.accessibleNameRef.split(" ");
+const getAllAccessibleNameRefTexts = (el) => {
+  var _a, _b;
+  const ids = (_b = (_a = el.accessibleNameRef) == null ? void 0 : _a.split(" ")) != null ? _b : [];
   const owner = el.getRootNode();
   let result = "";
   ids.forEach((elementId, index) => {
     const element = owner.querySelector(`[id='${elementId}']`);
-    result += `${element && element.textContent ? element.textContent : ""}`;
-    if (index < ids.length - 1) {
-      result += " ";
+    const text = `${element && element.textContent ? element.textContent : ""}`;
+    if (text) {
+      result += text;
+      if (index < ids.length - 1) {
+        result += " ";
+      }
     }
   });
   return result;
 };
+const _getAllAssociatedElementsFromDOM = (el) => {
+  var _a;
+  const set2 = /* @__PURE__ */ new Set();
+  const labelsForAssociated = _getAssociatedLabels(el);
+  labelsForAssociated.forEach((itm) => {
+    set2.add(itm);
+  });
+  const value = el["accessibleNameRef"];
+  const ids = (_a = value == null ? void 0 : value.split(" ")) != null ? _a : [];
+  ids.forEach((id) => {
+    const refEl = _getReferencedElementById(el, id);
+    if (refEl) {
+      set2.add(refEl);
+    }
+  });
+  return Array.from(set2);
+};
+const _getAssociatedLabels = (el) => {
+  const labels = el.getRootNode().querySelectorAll(`[for="${el.id}"]`);
+  return Array.from(labels);
+};
+const _getReferencedElementById = (el, elementId) => {
+  return el.getRootNode().querySelector(`[id='${elementId}']`);
+};
 const getAssociatedLabelForTexts = (el) => {
   const results = [];
-  const labels = el.getRootNode().querySelectorAll(`[ui5-label][for="${el.id}"],label[for="${el.id}"]`);
+  const labels = _getAssociatedLabels(el);
   labels.forEach((label) => {
     const labelText = label.textContent;
     labelText && results.push(labelText);
@@ -8488,6 +8524,97 @@ const getAssociatedLabelForTexts = (el) => {
     return results.join(" ");
   }
   return void 0;
+};
+const _createInvalidationCallback = (el) => {
+  const invalidationCallback = (changeInfo) => {
+    if (!(changeInfo && changeInfo.type === "property" && changeInfo.name === "accessibleNameRef")) {
+      return;
+    }
+    const registeredElement = registeredElements.get(el);
+    if (!registeredElement) {
+      return;
+    }
+    const oldAssociatedElements = registeredElement.observedElements;
+    const newAssociatedElements = _getAllAssociatedElementsFromDOM(el);
+    oldAssociatedElements.forEach((oldElement) => {
+      if (!newAssociatedElements.includes(oldElement)) {
+        _removeObservedElementFromRegisteredElement(registeredElement, oldElement);
+      }
+    });
+    newAssociatedElements.forEach((newElement) => {
+      if (!oldAssociatedElements.includes(newElement)) {
+        _addObservedElementToRegisteredElement(registeredElement, newElement);
+        registeredElement.observedElements.push(newElement);
+      }
+    });
+    registeredElement == null ? void 0 : registeredElement.callback();
+  };
+  return invalidationCallback;
+};
+const registerUI5Element = (el, callback) => {
+  if (registeredElements.has(el)) {
+    return;
+  }
+  const allAssociatedElements = _getAllAssociatedElementsFromDOM(el);
+  const invalidationCallback = _createInvalidationCallback(el);
+  const registeredElement = {
+    host: el,
+    observedElements: allAssociatedElements,
+    callback,
+    invalidationCallback
+  };
+  registeredElements.set(el, registeredElement);
+  el.attachInvalidate(invalidationCallback);
+  allAssociatedElements.forEach((element) => {
+    _addObservedElementToRegisteredElement(registeredElement, element);
+  });
+  callback();
+};
+const _addObservedElementToRegisteredElement = (registeredElement, element) => {
+  let associatedElement = associatedElements.get(element);
+  if (!associatedElement) {
+    associatedElement = { observer: null, callbacks: [] };
+    const observer = new MutationObserver(() => {
+      const callbacks = associatedElement.callbacks;
+      callbacks.forEach((callback) => {
+        callback();
+      });
+      const domEl = document.getElementById(element.id);
+      if (!(registeredElement.host.id === element.getAttribute("for") || domEl)) {
+        _removeObservedElementFromRegisteredElement(registeredElement, element);
+      }
+    });
+    associatedElement.observer = observer;
+    observer.observe(element, observerOptions);
+    associatedElements.set(element, associatedElement);
+  }
+  if (!associatedElement.callbacks.includes(registeredElement.callback)) {
+    associatedElement.callbacks.push(registeredElement.callback);
+  }
+};
+const _removeObservedElementFromRegisteredElement = (registeredElement, element) => {
+  var _a;
+  const associatedElement = associatedElements.get(element);
+  if (associatedElement) {
+    associatedElement.callbacks = associatedElement.callbacks.filter((itm) => itm !== registeredElement.callback);
+    if (!associatedElement.callbacks.length) {
+      (_a = associatedElement.observer) == null ? void 0 : _a.disconnect();
+      associatedElements.delete(element);
+    }
+  }
+  registeredElement.observedElements = registeredElement.observedElements.filter((itm) => itm !== element);
+};
+const deregisterUI5Element = (el) => {
+  const registeredElement = registeredElements.get(el);
+  if (!registeredElement) {
+    return;
+  }
+  const oldObservedElements = [...registeredElement.observedElements];
+  oldObservedElements.forEach((observedElement) => {
+    _removeObservedElementFromRegisteredElement(registeredElement, observedElement);
+  });
+  el.detachInvalidate(registeredElement.invalidationCallback);
+  registeredElements.delete(el);
 };
 const getNormalizedTarget = (target) => {
   let element = target;
@@ -14444,9 +14571,11 @@ let Input = Input_1 = class Input2 extends UI5Element {
   }
   onEnterDOM() {
     ResizeHandler.register(this, this._handleResizeBound);
+    registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
   }
   onExitDOM() {
     ResizeHandler.deregister(this, this._handleResizeBound);
+    deregisterUI5Element(this);
   }
   onBeforeRendering() {
     if (!this._keepInnerValue) {
@@ -14788,6 +14917,10 @@ let Input = Input_1 = class Input2 extends UI5Element {
   _handleResize() {
     this._inputWidth = this.offsetWidth;
   }
+  _updateAssociatedLabelsTexts() {
+    this._associatedLabelsTexts = getAssociatedLabelForTexts(this);
+    this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this);
+  }
   _closeRespPopover() {
     this.Suggestions.close(true);
   }
@@ -15018,7 +15151,7 @@ let Input = Input_1 = class Input2 extends UI5Element {
     const ariaHasPopupDefault = this.showSuggestions ? "true" : void 0;
     const ariaAutoCompleteDefault = this.showSuggestions ? "list" : void 0;
     const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
-    return {
+    const info = {
       "input": {
         "ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || void 0),
         "ariaDescribedBy": ariaDescribedBy || void 0,
@@ -15029,9 +15162,10 @@ let Input = Input_1 = class Input2 extends UI5Element {
         "ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
         "ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
         "ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-        "ariaLabel": this._inputAccInfo && this._inputAccInfo.ariaLabel || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this)
+        "ariaLabel": this._inputAccInfo && this._inputAccInfo.ariaLabel || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || void 0
       }
     };
+    return info;
   }
   get nativeInputAttributes() {
     return {
@@ -15283,6 +15417,12 @@ __decorate$1a([
 __decorate$1a([
   property({ type: Boolean, noAttribute: true })
 ], Input.prototype, "_inputIconFocused", void 0);
+__decorate$1a([
+  property({ type: String, noAttribute: true, defaultValue: void 0 })
+], Input.prototype, "_associatedLabelsTexts", void 0);
+__decorate$1a([
+  property({ type: String, noAttribute: true, defaultValue: void 0 })
+], Input.prototype, "_accessibleLabelsRefTexts", void 0);
 __decorate$1a([
   slot({ type: HTMLElement, "default": true })
 ], Input.prototype, "suggestionItems", void 0);
