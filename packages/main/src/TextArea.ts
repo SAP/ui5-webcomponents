@@ -24,6 +24,7 @@ import "@ui5/webcomponents-icons/dist/information.js";
 import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -42,19 +43,15 @@ import {
 import styles from "./generated/themes/TextArea.css.js";
 import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js";
 import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
-import { IFormElement } from "./features/InputElementsFormSupport.js";
 
-type TokenizedText = string[]
-type IndexedTokenizedText = {
-	text: string,
-	last: boolean
-}[]
+type TokenizedText = Array<string>;
+type IndexedTokenizedText = Array<{ text: string; last: boolean; }>;
 
 type ExceededText = {
-	exceededText: string | undefined,
-	leftCharactersCount: number | undefined,
-	calcedMaxLength: number | undefined
-}
+	exceededText: string | undefined;
+	leftCharactersCount: number | undefined;
+	calcedMaxLength: number | undefined;
+};
 
 /**
  * @class
@@ -205,7 +202,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @defaultvalue 0
 	 * @public
 	 */
-	@property({ type: Integer, defaultValue: 0 })
+	@property({ validator: Integer, defaultValue: 0 })
 	rows!: number;
 
 	/**
@@ -216,7 +213,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @defaultValue null
 	 * @public
 	 */
-	@property({ type: Integer, defaultValue: null })
+	@property({ validator: Integer, defaultValue: null })
 	maxlength!: number;
 
 	/**
@@ -256,7 +253,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @defaultvalue 0
 	 * @public
 	 */
-	@property({ type: Integer, defaultValue: 0 })
+	@property({ validator: Integer, defaultValue: 0 })
 	growingMaxLines!: number;
 
 	/**
@@ -329,7 +326,7 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * @private
 	 */
-	@property({ type: Integer })
+	@property({ validator: Integer })
 	_width!: number;
 
 	/**
@@ -409,7 +406,7 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this as HTMLElement, this._fnOnResize);
+		ResizeHandler.deregister(this, this._fnOnResize);
 	}
 
 	onBeforeRendering() {
@@ -468,7 +465,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = eTarget && eTarget.shadowRoot && eTarget.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToValueStateMessage = eTarget?.querySelector(".ui5-valuestatemessage-root");
 
 		this.focused = false;
 
@@ -516,22 +513,22 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	async openPopover() {
-		this.popover = await this._getPopover() as Popover;
+		this.popover = await this._getPopover();
 		this.popover && await this.popover.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
 	}
 
 	async closePopover() {
-		this.popover = await this._getPopover() as Popover;
+		this.popover = await this._getPopover();
 		this.popover && this.popover.close();
 	}
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Element>("[ui5-popover]")!;
+		return staticAreaItem!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
 	_tokenizeText(value: string) {
-		const tokenizedText: TokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
+		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
 			.replace(/>/gm, "&gt;")
 			.split("\n");
 
@@ -700,7 +697,7 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	static get dependencies() {
-		return [Popover, Icon] as Array<typeof UI5Element>;
+		return [Popover, Icon];
 	}
 }
 
