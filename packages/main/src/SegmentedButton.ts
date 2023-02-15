@@ -184,7 +184,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
-		let selectedItems = this.items.filter(item => item.pressed);
+		const selectedItems = this.items.filter(item => item.pressed);
 		const selectedIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
 
 		if (this._selectedItem && selectedItems.length > 1) {
