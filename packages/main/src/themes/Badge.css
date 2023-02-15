@@ -2,6 +2,7 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+	vertical-align: top;
 	height: 1rem;
 	min-width: 1.125em;
 	max-width: 100%;
