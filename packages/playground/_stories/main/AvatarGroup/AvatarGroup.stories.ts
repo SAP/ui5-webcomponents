@@ -3,7 +3,6 @@ import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import type { StoryFn, Meta } from "@storybook/web-components";
 
-// @ts-ignore
 import type AvatarGroup from "@ui5/webcomponents/dist/AvatarGroup.js";
 import AvatarGroupType from "@ui5/webcomponents/dist/types/AvatarGroupType.js";
 
@@ -39,7 +38,6 @@ const Template: UI5StoryArgs<AvatarGroup, StoryArgsSlots> = (args) =>
     ${unsafeHTML(args.overflowButton)}
   </ui5-avatar-group> `;
 
-// Basic
 export const TypeGroup = Template.bind({});
 TypeGroup.storyName = "Type Group";
 TypeGroup.args = {
@@ -54,7 +52,6 @@ TypeGroup.args = {
   </ui5-avatar>`,
 };
 
-// Type Individual
 export const TypeIndividual = Template.bind({});
 TypeIndividual.storyName = "Type Individual";
 TypeIndividual.args = {
@@ -70,7 +67,6 @@ TypeIndividual.args = {
   </ui5-avatar>`,
 };
 
-// Type Individual with Popover
 export const TypeIndividualWithPopover: StoryFn =
   TemplateIndividualWithPopover.bind({});
 TypeIndividualWithPopover.storyName = "Type Individual with Popover";

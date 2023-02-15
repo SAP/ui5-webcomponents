@@ -49,7 +49,6 @@ const Template: UI5StoryArgs<List, StoryArgsSlots> = (args) => {
   </ui5-list>`;
 };
 
-// Basic
 export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
@@ -79,7 +78,6 @@ Basic.args = {
 		>Mango</ui5-li>`,
 };
 
-// Growing
 export const Growing: StoryFn = () =>
   html`<ui5-list id="infiniteScrollEx" style="height: 200px" growing="Scroll">
       <ui5-li
@@ -138,7 +136,6 @@ Growing.parameters = {
   },
 };
 
-// Single Selection
 export const SingleSelection = Template.bind({});
 SingleSelection.storyName = "Single Selection";
 SingleSelection.args = {
@@ -151,7 +148,6 @@ SingleSelection.args = {
 	<ui5-li type="Inactive" icon="map" icon-end>Denmark (ui5-li type='Inactive')</ui5-li>`,
 };
 
-// Multi Selection
 export const MultiSelection = Template.bind({});
 MultiSelection.storyName = "Multi Selection";
 MultiSelection.args = {
@@ -164,7 +160,6 @@ MultiSelection.args = {
 	<ui5-li>Mango</ui5-li>`,
 };
 
-// Group Headers
 export const GroupHeaders = Template.bind({});
 GroupHeaders.storyName = "Group Headers";
 GroupHeaders.args = {
@@ -211,7 +206,6 @@ GroupHeaders.args = {
 	>`,
 };
 
-// Delete
 export const Delete = Template.bind({});
 Delete.storyName = "Delete Mode";
 Delete.args = {
@@ -223,7 +217,6 @@ Delete.args = {
 	<ui5-li>China</ui5-li>`,
 };
 
-// No Data
 export const NoData = Template.bind({});
 NoData.storyName = "No Data";
 NoData.args = {
@@ -232,7 +225,6 @@ NoData.args = {
   separators: ListSeparators.None,
 };
 
-// Separation Types
 export const SeparationTypes: StoryFn = () =>
   html` <ui5-list
       header-text="No separators"

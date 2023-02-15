@@ -40,7 +40,6 @@ const Template: UI5StoryArgs<Avatar, StoryArgsSlots> = (args) =>
     ${unsafeHTML(args.default)}
   </ui5-avatar>`;
 
-// Basic
 export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
@@ -48,7 +47,6 @@ Basic.args = {
   interactive: true,
 };
 
-// With Image
 export const WithImage = Template.bind({});
 WithImage.storyName = "Avatar with image";
 WithImage.args = {
@@ -58,7 +56,6 @@ WithImage.args = {
 />`,
 };
 
-// Sizes
 export const Size = Template.bind({});
 Size.storyName = "Avatar Size";
 Size.args = {
@@ -66,7 +63,6 @@ Size.args = {
   icon: "home",
 };
 
-// Styles
 export const Styles = Template.bind({});
 Styles.storyName = "Avatar Styles";
 Styles.args = {

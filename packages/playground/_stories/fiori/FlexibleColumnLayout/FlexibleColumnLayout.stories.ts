@@ -9,7 +9,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleColumnLayout.js";
 
 const component = "ui5-flexible-column-layout";

@@ -4,5 +4,4 @@ import './addons/github/Github';
 
 addons.setConfig({
   theme: wcTheme,
-  panelPosition: 'right',
 });

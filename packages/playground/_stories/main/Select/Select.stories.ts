@@ -3,7 +3,6 @@ import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import type { StoryFn, Meta } from "@storybook/web-components";
 
-// @ts-ignore
 import type Select from "@ui5/webcomponents/dist/Select.js";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -41,7 +40,6 @@ const Template: UI5StoryArgs<Select, StoryArgsSlots> = (args) => {
   </ui5-select> `;
 };
 
-// Basic
 export const Basic = Template.bind({});
 Basic.storyName = "Basic";
 Basic.args = {
@@ -49,8 +47,6 @@ Basic.args = {
 	<ui5-option icon="ipad">Tablet</ui5-option>
 	<ui5-option icon="laptop" selected="">Desktop</ui5-option>`,
 };
-
-// Value State and Value State Message
 
 export const ValueStateAndValueStateMessage: StoryFn = () =>
   html`<ui5-select value-state="Success" class="select">
@@ -106,7 +102,6 @@ export const ValueStateAndValueStateMessage: StoryFn = () =>
 
 ValueStateAndValueStateMessage.storyName = "Value State";
 
-// Two-column layout
 export const TwoColumnLayout: StoryFn = () =>
   html` <ui5-select class="select">
     <ui5-option additional-text="AT">Austria</ui5-option>
