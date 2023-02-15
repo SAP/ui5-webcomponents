@@ -358,17 +358,16 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	 @slot()
+	 formSupport!: Array<HTMLElement>;
 
-	formSupport!: Array<HTMLElement>;
-
+	_fnOnResize: () => void;
 	_firstRendering: boolean;
 	_openValueStateMsgPopover: boolean;
 	_exceededTextProps!: ExceededText;
-	FormSupport?: typeof FormSupportT;
 	_keyDown?: boolean;
+	FormSupport?: typeof FormSupportT;
 	previousValue: string;
 	popover?:Popover;
-	_fnOnResize: () => void;
 
 	static get styles() {
 		return [browserScrollbarCSS, styles];
@@ -419,6 +418,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 		this.exceeding = !!this._exceededTextProps.leftCharactersCount && this._exceededTextProps.leftCharactersCount < 0;
 		this._setCSSParams();
+
 		const FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		if (FormSupport) {
 			FormSupport.syncNativeHiddenInput(this);
@@ -468,7 +468,8 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = eTarget.shadowRoot && eTarget.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToValueStateMessage = eTarget && eTarget.shadowRoot && eTarget.querySelector(".ui5-valuestatemessage-root");
+
 		this.focused = false;
 
 		if (!focusedOutToValueStateMessage) {
@@ -502,7 +503,7 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	_setCSSParams() {
-		this.style.setProperty("--_textarea_rows", String(this.rows) || "2");
+		this.style.setProperty("--_textarea_rows", this.rows ? String(this.rows) : "2");
 		this.style.setProperty("--_textarea_growing_max_lines", String(this.growingMaxLines));
 	}
 
@@ -607,7 +608,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 		if (this.showExceededText) {
 			if (effectiveAriaLabelText) {
-				return [effectiveAriaLabelText, this._exceededTextProps.exceededText];
+				return effectiveAriaLabelText.concat(" ", this._exceededTextProps.exceededText);
 			}
 
 			return this._exceededTextProps.exceededText;
@@ -699,7 +700,7 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	static get dependencies() {
-		return [Popover, Icon];
+		return [Popover, Icon] as Array<typeof UI5Element>;
 	}
 }
 
