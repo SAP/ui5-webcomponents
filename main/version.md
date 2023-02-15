@@ -1,5 +1,7 @@
-commit 28d6da5a284bb5bed4f43d5419cee65904ae7ede
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Tue Feb 14 13:50:42 2023 +0200
+commit 1e72a3c8d833fe2476378316a3016ba6f5a22380
+Author: gmkv <georgi.minkov@sap.com>
+Date:   Wed Feb 15 09:27:04 2023 +0200
 
-    fix(ui5-table): remove unnecessary border-top if no-data (#6495)
+    fix(ui5-badge): align multiple badges when used in one line (#6481)
+    
+    Fixes #6467
