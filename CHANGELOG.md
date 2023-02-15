@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.4](https://github.com/SAP/ui5-webcomponents/compare/v1.10.3...v1.10.4) (2023-02-15)
+
+
+### Bug Fixes
+
+* **ui5-button:** disabled button not execute click event ([#6400](https://github.com/SAP/ui5-webcomponents/issues/6400)) ([473565e](https://github.com/SAP/ui5-webcomponents/commit/473565eb90740827618c851e4ce1d4692852b304)), closes [#6372](https://github.com/SAP/ui5-webcomponents/issues/6372)
+* **ui5-range-slider:** fire input event with correct values after swapping ([#6385](https://github.com/SAP/ui5-webcomponents/issues/6385)) ([61c9230](https://github.com/SAP/ui5-webcomponents/commit/61c9230b18647968dfb7a35d9cc89bb832cea559)), closes [#6377](https://github.com/SAP/ui5-webcomponents/issues/6377)
+* **ui5-segmented-button:** ignore scoping suffix when checking tag name ([#6353](https://github.com/SAP/ui5-webcomponents/issues/6353)) ([a7073b1](https://github.com/SAP/ui5-webcomponents/commit/a7073b19ac1b99505d12bfb99e92bc6957031b26))
+* **ui5-side-navigation:** scope components in static area ([#6453](https://github.com/SAP/ui5-webcomponents/issues/6453)) ([183bf2f](https://github.com/SAP/ui5-webcomponents/commit/183bf2f1eef3dafa2294e611288e488180fc18d9))
+
+
+
+
+
 ## [1.10.3](https://github.com/SAP/ui5-webcomponents/compare/v1.10.2...v1.10.3) (2023-01-25)
 
 
