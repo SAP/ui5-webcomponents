@@ -45,9 +45,9 @@ describe('AriaLabelHelper', () => {
     const innerInput = await input.shadow$('input');
     const actualAriaLabel = await innerInput.getAttribute('aria-label');
     assert.strictEqual(
-      typeof actualAriaLabel,
-      "undefined",
-      `Aria Label is undefined.`
+      actualAriaLabel,
+      null,
+      `Aria Label is null. attr=${actualAriaLabel}`
     );
   };
 
