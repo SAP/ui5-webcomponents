@@ -7,7 +7,7 @@ In this tutorial you will learn how to add UI5 Web Components to your applicatio
 
 ### Step 1. Setup a Vue project with Vite.
 
-To initialize a Vue project using Vite, please follow the instructions provided in the [official Vite documentation.](https://vitejs.dev/guide/#scaffolding-your-first-vite-project)
+To initialize a Vue project based on Vite, please follow the instructions provided in the [official Vue documentation.](https://vuejs.org/guide/quick-start.html)
 
 ### Step 2. Add UI5 Web Components
 ```bash
