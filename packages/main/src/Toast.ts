@@ -2,6 +2,8 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ToastPlacement from "./types/ToastPlacement.js";
 
 // Template
@@ -13,97 +15,6 @@ import ToastCss from "./generated/themes/Toast.css.js";
 // Constants
 const MIN_DURATION = 500;
 const MAX_DURATION = 1000;
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-toast",
-	properties: /** @lends sap.ui.webc.main.Toast.prototype */ {
-
-		/**
-		 * Defines the duration in milliseconds for which component
-		 * remains on the screen before it's automatically closed.
-		 * <br><br>
-		 * <b>Note:</b> The minimum supported value is <code>500</code> ms
-		 * and even if a lower value is set, the duration would remain <code>500</code> ms.
-		 *
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 3000
-		 * @public
-		 */
-		duration: {
-			type: Integer,
-			defaultValue: 3000,
-		},
-
-		/**
-		 * Defines the placement of the component.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>TopStart</code></li>
-		 * <li><code>TopCenter</code></li>
-		 * <li><code>TopEnd</code></li>
-		 * <li><code>MiddleStart</code></li>
-		 * <li><code>MiddleCenter</code></li>
-		 * <li><code>MiddleEnd</code></li>
-		 * <li><code>BottomStart</code></li>
-		 * <li><code>BottomCenter</code></li>
-		 * <li><code>BottomEnd</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.main.types.ToastPlacement}
-		 * @defaultvalue "BottomCenter"
-		 * @public
-		 */
-		placement: {
-			type: ToastPlacement,
-			defaultValue: ToastPlacement.BottomCenter,
-		},
-
-		/**
-		 * Indicates whether the component is open (visible).
-		 * @type {boolean}
-		 * @private
-		 */
-		open: {
-			type: Boolean,
-		},
-
-		/**
-		 * Indicates whether the component is hovered.
-		 * @type {boolean}
-		 * @private
-		 */
-		hover: {
-			type: Boolean,
-		},
-
-		/**
-		 * Indicates whether the component DOM is rendered.
-		 * @type {boolean}
-		 * @private
-		 */
-		domRendered: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.Toast.prototype */ {
-		/**
-		 * Defines the text of the component.
-		 * <br><br>
-		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot
-		 * @public
-		 */
-		"default": {
-			type: Node,
-		},
-	},
-};
 
 /**
  * @class
@@ -142,10 +53,84 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.6
  */
+
+@customElement("ui5-toast")
 class Toast extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the duration in milliseconds for which component
+	 * remains on the screen before it's automatically closed.
+	 * <br><br>
+	 * <b>Note:</b> The minimum supported value is <code>500</code> ms
+	 * and even if a lower value is set, the duration would remain <code>500</code> ms.
+	 *
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.Toast.prototype.duration
+	 * @defaultvalue 3000
+	 * @public
+	 */
+	@property({ validator: Integer, defaultValue: 3000 })
+	duration!: number;
+
+	/**
+	 * Defines the placement of the component.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>TopStart</code></li>
+	 * <li><code>TopCenter</code></li>
+	 * <li><code>TopEnd</code></li>
+	 * <li><code>MiddleStart</code></li>
+	 * <li><code>MiddleCenter</code></li>
+	 * <li><code>MiddleEnd</code></li>
+	 * <li><code>BottomStart</code></li>
+	 * <li><code>BottomCenter</code></li>
+	 * <li><code>BottomEnd</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.ToastPlacement}
+	 * @name sap.ui.webc.main.Toast.prototype.placement
+	 * @defaultvalue "BottomCenter"
+	 * @public
+	 */
+	@property({ type: ToastPlacement, defaultValue: ToastPlacement.BottomCenter })
+	placement!: ToastPlacement;
+
+	/**
+	 * Indicates whether the component is open (visible).
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	open!: boolean;
+
+	/**
+	 * Indicates whether the component is hovered.
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	hover!: boolean;
+
+	/**
+	 * Indicates whether the component DOM is rendered.
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	domRendered!: boolean;
+
+	/**
+	 * Defines the text of the component.
+	 * <br><br>
+	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 *
+	 * @type {Node[]}
+	 * @slot
+	 * @public
+	 * @name sap.ui.webc.main.Toast.prototype.default
+	 */
+
+	_reopen!: boolean;
 
 	static get render() {
 		return litRender;
@@ -157,6 +142,12 @@ class Toast extends UI5Element {
 
 	static get template() {
 		return ToastTemplate;
+	}
+
+	constructor() {
+		super();
+
+		this._reopen = false;
 	}
 
 	onAfterRendering() {
