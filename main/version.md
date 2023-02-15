@@ -1,7 +1,13 @@
-commit 1e72a3c8d833fe2476378316a3016ba6f5a22380
-Author: gmkv <georgi.minkov@sap.com>
-Date:   Wed Feb 15 09:27:04 2023 +0200
+commit bfcf7ded4c4a70204f5723ade2c5b2f0a6635446
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Tue Feb 14 23:33:56 2023 -0800
 
-    fix(ui5-badge): align multiple badges when used in one line (#6481)
+    Translation Delivery (#6500)
     
-    Fixes #6467
+    * chore: translation delivery
+    
+    Change-Id: Ibe08c45bbd7a36704905b728c0ba4c0eda7e0ce5
+    
+    * chore: translation delivery
+    
+    Change-Id: Id60a0c7d81c1be5be0d4b0ffb058828bc76372b6
