@@ -265,7 +265,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @private
-	 * @sicne 1.0.0-rc.8
+	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
 	highlight!: boolean;
