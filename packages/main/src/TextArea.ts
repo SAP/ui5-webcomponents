@@ -608,7 +608,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 		if (this.showExceededText) {
 			if (effectiveAriaLabelText) {
-				return effectiveAriaLabelText.concat(" ", this._exceededTextProps.exceededText);
+				return effectiveAriaLabelText.concat(" ", this._exceededTextProps.exceededText!);
 			}
 
 			return this._exceededTextProps.exceededText;
