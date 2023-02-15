@@ -85,27 +85,27 @@
 			dynamnicSideContent.toggleContents();
 		});
 
-		hideMainContent.addEventListener("change", function() {
+		hideMainContent.addEventListener("ui5-change", function() {
 			dynamnicSideContent.hideMainContent = !hideMainContent.checked;
 		});
 
-		hideSideContent.addEventListener("change", function() {
+		hideSideContent.addEventListener("ui5-change", function() {
 			dynamnicSideContent.hideSideContent = !hideSideContent.checked;
 		});
 
-		equalSplit.addEventListener("change", function() {
+		equalSplit.addEventListener("ui5-change", function() {
 			dynamnicSideContent.equalSplit = equalSplit.checked;
 		});
 
-		sideContentPosition.addEventListener("change", function() {
+		sideContentPosition.addEventListener("ui5-change", function() {
 			dynamnicSideContent.sideContentPosition = sideContentPosition.checked ? "End" : "Start";
 		});
 
-		sideContentVisibility.addEventListener("change", function(event) {
+		sideContentVisibility.addEventListener("ui5-change", function(event) {
 			dynamnicSideContent.sideContentVisibility = event.detail.selectedOption.innerText;
 		});
 
-		sideContentFallDown.addEventListener("change", function(event) {
+		sideContentFallDown.addEventListener("ui5-change", function(event) {
 			dynamnicSideContent.sideContentFallDown = event.detail.selectedOption.innerText;
 		});
 
