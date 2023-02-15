@@ -1,43 +1,13 @@
-commit b75e958fdc651b60913310bf1645f05e6df726ec
-Author: Dimitar Dimitrov <dimitar.nenov.dimitrov@abv.bg>
-Date:   Wed Feb 15 11:30:24 2023 +0200
+commit 8498384430c662833500a6b19ee8c8f4a496f9dc
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Wed Feb 15 15:13:33 2023 +0200
 
-    feat(ui5-input): reflect dynamic changes of labels (#6364)
+    build: output generated files as js|ts selectively (#6409)
     
-    * feat(ui5-input): reflect dynamic changes of labels
+    Keep generating build files (i18n, styles) in src/generated, either as pure .js or in .ts files, based on env variable: UI5_TS.
+    When set to "true", typescript mode is enabled and TS compiler runs
+    When set to false - typescript mode is disabled and TS compiler does not run.
+    While for some packages, such as "base", "localization", "theming" the env variable is pre-set to "true", for component packages (such as "main" and "fiori") it can be configured via the "typescript" option in the package-script.js.
+    Exactly the package-script.js is the entry point for custom component packages to configure the ui5webc build and the "typescript" option is already available and will switch on off the TS compiler and force the build to generate .ts ot .js files accordingly.
     
-    * feat(ui5-input): reflect dynamic changes of labels
-    
-    * feat(ui5-input): reflect dynamic changes of labels
-    
-    * feat(ui5-input): reflect dynamic changes of labels
-    
-    * feat(ui5-input): reflect dynamic changes of labels
-    
-    * feat(ui5-input): reflect dynamic changes of labels merge
-    
-    * feat(ui5-input): reflect dynamic changes of labels
-    
-    * feat(ui5-input): reflect dynamic changes of labels
-    
-    * feat(ui5-input): fix code review
-    
-    * feat(ui5-input): reflect dynamic changes of labels, adding tests and code review changes
-    
-    * feat(ui5-input): adding more unit tests
-    
-    * feat(ui5-input): reflect dynamic changes of all associated elements and adding tests for this
-    
-    * feat(ui5-input): reflect dynamic changes of all associated elements and adding tests for this part 2
-    
-    * feat(ui5-input): code review fixes
-    
-    * feat(ui5-input): code review fixes
-    
-    * feat(ui5-input): fixing build errors
-    
-    * feat(ui5-input): fix unit test
-    
-    ---------
-    
-    Co-authored-by: Dimitar Dimitrov <dimitar.dimitrov11@sap.com>
+    Fixes: #6412
