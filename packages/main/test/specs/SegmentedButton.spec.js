@@ -81,24 +81,35 @@ describe("SegmentedButton general interaction", () => {
 		const button1 =  await browser.$("#progSetButton1");
 		const button2 =  await browser.$("#progSetButton2");
 		const button3 =  await browser.$("#progSetButton3");
+		const button4 =  await browser.$("#progSetButton4");
 		const segmentedButtonItem1 =  await browser.$("#sbpItem1");
 		const segmentedButtonItem2 =  await browser.$("#sbpItem2");
 		const segmentedButtonItem3 =  await browser.$("#sbpItem3");
 
 		await button1.click();
-		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "The first SegmentedButtonItem should not be pressed.");
-		assert.ok(await segmentedButtonItem2.getProperty("pressed"), "The first SegmentedButtonItem should be pressed.");
-		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "The first SegmentedButtonItem should not be pressed.");
+		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "[step 1] The first SegmentedButtonItem should not be pressed.");
+		assert.ok(await segmentedButtonItem2.getProperty("pressed"), "[step 1] The first SegmentedButtonItem should be pressed.");
+		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 1] The first SegmentedButtonItem should not be pressed.");
 
 		await button2.click();
-		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "The first SegmentedButtonItem should not be pressed.");
-		assert.notOk(await segmentedButtonItem2.getProperty("pressed"), "The first SegmentedButtonItem should not be pressed.");
-		assert.ok(await segmentedButtonItem3.getProperty("pressed"), "The first SegmentedButtonItem should be pressed.");
+		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "[step 2] The first SegmentedButtonItem should not be pressed.");
+		assert.notOk(await segmentedButtonItem2.getProperty("pressed"), "[step 2] The first SegmentedButtonItem should not be pressed.");
+		assert.ok(await segmentedButtonItem3.getProperty("pressed"), "[step 2] The first SegmentedButtonItem should be pressed.");
+
+		await button4.click();
+		assert.ok(await segmentedButtonItem1.getProperty("pressed"), "[step 3] The first SegmentedButtonItem should be pressed.");
+		assert.notOk(await segmentedButtonItem2.getProperty("pressed"), "[step 3] The first SegmentedButtonItem should not be pressed.");
+		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 3] The first SegmentedButtonItem should not be pressed.");
+
+		await button1.click();
+		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "[step 4] The first SegmentedButtonItem should not be pressed.");
+		assert.ok(await segmentedButtonItem2.getProperty("pressed"), "[step 4] The first SegmentedButtonItem should be pressed.");
+		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 4] The first SegmentedButtonItem should not be pressed.");
 
 		await button3.click();
-		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "The first SegmentedButtonItem should not be pressed.");
-		assert.notOk(await segmentedButtonItem2.getProperty("pressed"), "The first SegmentedButtonItem should not be pressed.");
-		assert.ok(await segmentedButtonItem3.getProperty("pressed"), "The first SegmentedButtonItem should be pressed.");
+		assert.notOk(await segmentedButtonItem1.getProperty("pressed"), "[step 5] The first SegmentedButtonItem should not be pressed.");
+		assert.ok(await segmentedButtonItem2.getProperty("pressed"), "[step 5] The first SegmentedButtonItem should not be pressed.");
+		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 5] The first SegmentedButtonItem should be pressed.");
 	});
 
 
