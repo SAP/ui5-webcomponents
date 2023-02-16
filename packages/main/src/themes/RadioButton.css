@@ -267,7 +267,7 @@
 
 :host([wrapping-type="Normal"][text]) [ui5-label].ui5-radio-label {
 	padding: var(--_ui5_radio_button_label_side_padding) 0;
-	word-break: break-all;
+	overflow-wrap: break-word;
 }
 
 /* SVG */
