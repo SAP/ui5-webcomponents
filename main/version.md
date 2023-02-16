@@ -1,32 +1,7 @@
-commit 02edfc44c182af19b47667a05161d841edf254db
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Feb 16 10:46:26 2023 +0200
+commit 78cd73b2f6940e62dcd297b4a2c5c63ea7a295e1
+Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
+Date:   Thu Feb 16 12:13:02 2023 +0200
 
-    feat(ui5-textarea): migrate to Typescript (#6499)
+    fix(ui5-select, ui5-suggestion-item, ui5-shellbar): color of icon inside options is according to spec (#6415)
     
-    * feat(ui5-textarea): migrate to Typescript
-    Related to: #4337
-    
-    * feat(ui5-textarea): migrate to Typescript
-    
-    Related to: #4337
-    
-    * feat(ui5-textarea): migrate to Typescript
-    
-    Related to: #4337
-    
-    * refactor(ui5-textarea): migrate to Typescript
-    
-    fix code review comments
-    
-    * refactor(ui5-textarea): migrate to Typescript
-    
-    fix code review comments
-    
-    * refactor(ui5-textarea): migrate to Typescript
-    
-    lint
-    
-    * feat(ui5-textarea): migrate to Typescript
-    
-    fix code review comments
+    fix(ui5-select, ui5-suggestion-item, ui5-shellbar): color of icon inside options according to spec
