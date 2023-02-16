@@ -34,7 +34,7 @@
 		<ui5-step-input id="stepInputCozy"
 			placeholder="Enter number"
 			class="stepinput2auto"
-		/>
+		></ui5-step-input>
 	</div>
 
 	<div class="sapUiSizeCompact">
@@ -42,7 +42,7 @@
 		<ui5-step-input id="stepInputCompact"
 			placeholder="Enter number"
 			class="stepinput2auto"
-		/>
+		></ui5-step-input>
 	</div>
 
 	<div>
@@ -78,7 +78,7 @@
 			placeholder="Enter number"
 			class="stepinput2auto"
 			disabled
-		/>
+		></ui5-step-input>
 	</div>
 
 	<div>
@@ -87,7 +87,7 @@
 			placeholder="Enter number"
 			class="stepinput2auto"
 			readonly
-		/>
+		></ui5-step-input>
 	</div>
 
 	<div>
@@ -96,7 +96,7 @@
 			placeholder="Enter number"
 			value-state="None"
 			class="stepinput2auto"
-		/>
+		></ui5-step-input>
 	</div>
 
 	<div>
@@ -105,7 +105,7 @@
 			placeholder="Enter number"
 			value-state="Success"
 			class="stepinput2auto"
-		/>
+		></ui5-step-input>
 	</div>
 
 	<div>
@@ -114,7 +114,7 @@
 			placeholder="Enter number"
 			value-state="Information"
 			class="stepinput2auto"
-		/>
+		></ui5-step-input>
 	</div>
 
 	<div>
@@ -123,7 +123,7 @@
 			placeholder="Enter number"
 			value-state="Warning"
 			class="stepinput2auto"
-		/>
+		></ui5-step-input>
 	</div>
 
 	<div>
@@ -132,7 +132,23 @@
 			placeholder="Enter number"
 			value-state="Error"
 			class="stepinput2auto"
-		/>
+		></ui5-step-input>
+	</div>
+
+	<div>
+		<h3>StepInput change event test</h3>
+		<ui5-step-input id="stepInputChange1"
+			class="stepinput2auto"
+			value="1"
+			min="1"
+			step="1000"
+		></ui5-step-input>
+		<ui5-step-input id="stepInputChange2"
+			class="stepinput2auto"
+			value="1000"
+			min="1"
+			step="1000"
+		></ui5-step-input>
 	</div>
 
 	<h3> 'change' event result</h3>
@@ -156,6 +172,15 @@
 		siCompact.addEventListener('ui5-change', displayChange);
 		siMinMax.addEventListener('ui5-change', displayChange);
 		siPrecision.addEventListener('ui5-change', displayChange);
+
+		stepInputChange1.addEventListener('ui5-change', function(e) {
+			const val = Number.parseInt(e.target.value, 10);
+			stepInputChange2.value = val + 999;
+			displayChange(e);
+		});
+
+		stepInputChange2.addEventListener('ui5-change', displayChange);
+
 	</script>
 
 </body>
