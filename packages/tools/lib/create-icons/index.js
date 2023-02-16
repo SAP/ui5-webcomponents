@@ -1,7 +1,7 @@
 const fs = require("fs").promises;
 const path = require("path");
 
-const collectionName = process.argv[2] || "SAP-icons";
+const collectionName = process.argv[2] || "SAP-icons-v4";
 const collectionVersion = process.argv[3];
 const srcFile = collectionVersion ? path.normalize(`src/${collectionVersion}/${collectionName}.json`) : path.normalize(`src/${collectionName}.json`);
 const destDir = collectionVersion ? path.normalize(`dist/${collectionVersion}/`) : path.normalize("dist/");
@@ -38,11 +38,11 @@ export { pathData, ltr, accData };`;
 
 
 
-const collectionTemplate = (name) => `import { isThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import {pathData as pathDataV5, ltr, accData} from "./v5/${name}.js";
-import {pathData as pathDataV4} from "./v4/${name}.js";
+const collectionTemplate = (name, versions) => `import { isThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { pathData as pathData${versions[0]}, ltr, accData } from "./${versions[0]}/${name}.js";
+import { pathData as pathData${versions[1]} } from "./${versions[1]}/${name}.js";
 
-const pathData = isThemeFamily("sap_horizon") ? pathDataV5 : pathDataV4;
+const pathData = isThemeFamily("sap_horizon") ? pathData${versions[1]} : pathData${versions[0]};
 
 export default "${name}";
 export { pathData, ltr, accData };`;
@@ -88,7 +88,7 @@ const createIcons = async (file) => {
 		promises.push(fs.writeFile(path.join(destDir, `${name}.d.ts`), typeDefinitionTemplate(name, acc, json.collection)));
 
 		if (json.version) {
-			promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name)));
+			promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name, json.versions)));
             promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.d.ts`), collectionTypeDefinitionTemplate(name, acc)));
 		}
 	}
