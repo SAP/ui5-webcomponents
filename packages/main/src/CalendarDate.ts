@@ -13,6 +13,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.CalendarDate
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-date
  * @implements sap.ui.webc.main.ICalendarDate
  * @public

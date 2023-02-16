@@ -8,7 +8,9 @@ const generate = async () => {
 
 	const messageBundle = path.normalize(`${process.argv[2]}/messagebundle.properties`);
 	const messageBundleDefaultLanguage = path.normalize(`${process.argv[2]}/messagebundle_${defaultLanguage}.properties`);
-	const outputFile = path.normalize(`${process.argv[3]}/i18n-defaults.js`);
+	const tsMode = process.env.UI5_TS === "true"; // In Typescript mode, we output .ts files and set the required types, otherwise - output pure .js files
+
+	const outputFile = path.normalize(`${process.argv[3]}/i18n-defaults.${tsMode ? "ts": "js"}`);
 
 	if (!messageBundle || !outputFile) {
 		return;
@@ -45,6 +47,9 @@ const generate = async () => {
 		let effectiveValue = defaultLanguageValue || value;
 		effectiveValue = effectiveValue.replace(/\"/g, "\\\""); // escape double quotes in translations
 
+		if (tsMode) {
+			return `const ${key}: I18nText = {key: "${key}", defaultText: "${effectiveValue}"};`;
+		}
 		return `const ${key} = {key: "${key}", defaultText: "${effectiveValue}"};`;
 	};
 
@@ -62,7 +67,9 @@ const generate = async () => {
 		const textKeys = Object.keys(properties);
 		const texts = textKeys.map(prop => getTextInfo(prop, properties[prop], defaultLanguageProperties && defaultLanguageProperties[prop])).join('');
 
-		return `${texts}
+		// tabs are intentionally mixed to have proper identation in the produced file
+		return `${tsMode ? `import { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";` : ""}
+${texts}
 export {${textKeys.join()}};`;
 	};
 

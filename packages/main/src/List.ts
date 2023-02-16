@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
@@ -22,7 +23,6 @@ import getNormalizedTarget from "@ui5/webcomponents-base/dist/util/getNormalized
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import ListMode from "./types/ListMode.js";
@@ -34,7 +34,6 @@ import type {
 	PressEventDetail,
 } from "./ListItem.js";
 import ListSeparators from "./types/ListSeparators.js";
-// @ts-ignore
 import BusyIndicator from "./BusyIndicator.js";
 
 // Template
@@ -49,7 +48,6 @@ import {
 	LOAD_MORE_TEXT, ARIA_LABEL_LIST_SELECTABLE,
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
@@ -469,7 +467,7 @@ class List extends UI5Element {
 	_forwardingFocus: boolean;
 	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
-	_handleResize: () => void;
+	_handleResize: ResizeObserverCallback;
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	growingIntersectionObserver?: IntersectionObserver | null;
@@ -620,13 +618,13 @@ class List extends UI5Element {
 
 	get ariaLabelModeText(): string {
 		if (this.isMultiSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE as I18nText);
+			return List.i18nBundle.getText(ARIA_LABEL_LIST_MULTISELECTABLE);
 		}
 		if (this.isSingleSelect) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE as I18nText);
+			return List.i18nBundle.getText(ARIA_LABEL_LIST_SELECTABLE);
 		}
 		if (this.isDelete) {
-			return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE as I18nText);
+			return List.i18nBundle.getText(ARIA_LABEL_LIST_DELETABLE);
 		}
 
 		return "";
@@ -645,7 +643,7 @@ class List extends UI5Element {
 	}
 
 	get _growingButtonText(): string {
-		return List.i18nBundle.getText(LOAD_MORE_TEXT as I18nText);
+		return List.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get busyIndPosition() {

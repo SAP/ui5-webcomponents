@@ -676,15 +676,15 @@
 	<script>
 		var wiz = document.getElementById("wiz");
 
-		wiz.addEventListener("step-change", function () {
+		wiz.addEventListener("ui5-step-change", function () {
 			console.log(event.detail.step);
 		});
 
-		sw.addEventListener("change", function () {
+		sw.addEventListener("ui5-change", function () {
 			toStep3.removeAttribute("hidden");
 		});
 
-		sb.addEventListener("step-change", function () {
+		sb.addEventListener("ui5-step-change", function () {
 			toStep4.removeAttribute("hidden");
 		});
 
@@ -717,15 +717,15 @@
 			dialog.show();
 		});
 
-		wiz2.addEventListener("step-change", function () {
+		wiz2.addEventListener("ui5-step-change", function () {
 			console.log(event.detail.step);
 		});
 
-		sw2.addEventListener("change", function () {
+		sw2.addEventListener("ui5-change", function () {
 			toStep32.removeAttribute("hidden");
 		});
 
-		sb2.addEventListener("step-change", function () {
+		sb2.addEventListener("ui5-step-change", function () {
 			toStep42.removeAttribute("hidden");
 		});
 

@@ -25,7 +25,6 @@ import {
 	MESSAGE_STRIP_WARNING,
 	MESSAGE_STRIP_SUCCESS,
 	MESSAGE_STRIP_INFORMATION,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -197,10 +196,10 @@ class MessageStrip extends UI5Element {
 		};
 
 		return {
-			Information: getTranslation(MESSAGE_STRIP_INFORMATION as I18nText),
-			Positive: getTranslation(MESSAGE_STRIP_SUCCESS as I18nText),
-			Negative: getTranslation(MESSAGE_STRIP_ERROR as I18nText),
-			Warning: getTranslation(MESSAGE_STRIP_WARNING as I18nText),
+			Information: getTranslation(MESSAGE_STRIP_INFORMATION),
+			Positive: getTranslation(MESSAGE_STRIP_SUCCESS),
+			Negative: getTranslation(MESSAGE_STRIP_ERROR),
+			Warning: getTranslation(MESSAGE_STRIP_WARNING),
 		};
 	}
 
@@ -209,11 +208,11 @@ class MessageStrip extends UI5Element {
 	}
 
 	get _closeButtonText() {
-		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON as I18nText);
+		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSE_BUTTON);
 	}
 
 	get _closableText() {
-		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSABLE as I18nText);
+		return MessageStrip.i18nBundle.getText(MESSAGE_STRIP_CLOSABLE);
 	}
 
 	get classes(): ClassMap {

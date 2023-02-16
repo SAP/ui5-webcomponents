@@ -42,6 +42,15 @@ const metadata = {
 		expandedTokenizer: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates whether the tokenizer has tokens
+		 * @private
+		 */
+		tokenizerAvailable: {
+			type: Boolean,
+		},
+
 	},
 	slots: /** @lends sap.ui.webc.main.MultiInput.prototype */ {
 		/**
@@ -88,8 +97,8 @@ const metadata = {
  * User can choose interaction for creating tokens.
  * Fiori Guidelines say that user should create tokens when:
  * <ul>
- * <li>Type a value in the input and press enter or focus out the input field (<code>change</code> event is fired)
- * <li>Select a value from the suggestion list</li> (<code>suggestion-item-select</code> event is fired)
+ * <li>Type a value in the input and press enter or focus out the input field (<code>change</code> event is fired)</li>
+ * <li>Select a value from the suggestion list (<code>suggestion-item-select</code> event is fired)</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
@@ -316,6 +325,17 @@ class MultiInput extends Input {
 		setTimeout(() => {
 			this.focus();
 		}, 0);
+	}
+
+	onBeforeRendering(...params) {
+		super.onBeforeRendering(...params);
+
+		this.style.setProperty("--_ui5-input-icons-count", this.iconsCount);
+		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+	}
+
+	get iconsCount() {
+		return super.iconsCount + (this.showValueHelpIcon ? 1 : 0);
 	}
 
 	get tokenizer() {

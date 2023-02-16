@@ -65,7 +65,7 @@ const COLUMNS_COUNT: Record<string, number> = {
  * <li>[UP/DOWN] - Navigates up and down the items</li>
  * <li>[HOME] - Navigates to first item</li>
  * <li>[END] - Navigates to the last item</li>
- * <li>[SPACE/ENTER] - Select an item
+ * <li>[SPACE/ENTER] - Select an item</li>
  * </ul>
  * <br>
  *

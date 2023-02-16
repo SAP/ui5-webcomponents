@@ -15,9 +15,9 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
@@ -27,7 +27,6 @@ import {
 	BREADCRUMBS_ARIA_LABEL,
 	BREADCRUMBS_OVERFLOW_ARIA_LABEL,
 	BREADCRUMBS_CANCEL_BUTTON,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 import Link from "./Link.js";
 import type { LinkClickEventDetail } from "./Link.js";
@@ -182,7 +181,7 @@ class Breadcrumbs extends UI5Element {
 	items!: Array<BreadcrumbsItem>;
 
 	_itemNavigation: ItemNavigation
-	_onResizeHandler: () => void;
+	_onResizeHandler: ResizeObserverCallback;
 
 	// maps items to their widths
 	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();
@@ -502,7 +501,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_getItemPositionText(position: number, size: number) {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS as I18nText, position, size);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMB_ITEM_POS, position, size);
 	}
 
 	_getItemAccessibleName(item: BreadcrumbsItem, position: number, size: number) {
@@ -649,15 +648,15 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	get _accessibleNameText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL as I18nText);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_ARIA_LABEL);
 	}
 
 	get _dropdownArrowAccessibleNameText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL as I18nText);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_OVERFLOW_ARIA_LABEL);
 	}
 
 	get _cancelButtonText() {
-		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON as I18nText);
+		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
 	}
 
 	static get dependencies() {

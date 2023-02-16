@@ -8,14 +8,17 @@ const getScripts = (options) => {
 
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
 	const illustrationsData = options.illustrationsData || [];
-	illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
+	const illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
 	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
 	const createIllustrationsLoadersScript = options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "";
-	const tsCommand = options.typescript ? "tsc" : "";
-	const tsWatchCommand = options.typescript ? "tsc --watch" : "";
+	const tsOption = options.typescript;
+	const tsCommand = tsOption ? "tsc" : "";
+	const tsWatchCommand = tsOption ? "tsc --watch" : "";
+	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
+	const copySrcGenerated = tsOption ? "" : "copy.srcGenerated";
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -42,26 +45,26 @@ const getScripts = (options) => {
 	}
 
 	const scripts = {
-		clean: 'rimraf jsdoc-dist && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
+		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig}`,
 		prepare: {
-			default: "nps clean prepare.all generateAPI",
-			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps typescript" "nps build.illustrations"',
+			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
+			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		typescript: tsCommand,
 		build: {
-			default: "nps lint prepare build.bundle",
+			default: "nps prepare lint build.bundle",
 			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
 			styles: {
-				default: "nps build.styles.themes build.styles.components",
+				default: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
 			i18n: {
 				default: "nps build.i18n.defaultsjs build.i18n.json",
-				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n dist/generated/i18n`,
+				defaultsjs: `node "${LIB}/i18n/defaults.js" src/i18n src/generated/i18n`,
 				json: `node "${LIB}/i18n/toJSON.js" src/i18n dist/generated/assets/i18n`,
 			},
 			jsonImports: {
@@ -79,10 +82,11 @@ const getScripts = (options) => {
 		copy: {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
+			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.js" dist/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommand,

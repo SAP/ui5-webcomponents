@@ -4,7 +4,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isEscape,
@@ -20,7 +19,6 @@ import {
 	RANGE_SLIDER_ARIA_DESCRIPTION,
 	RANGE_SLIDER_START_HANDLE_DESCRIPTION,
 	RANGE_SLIDER_END_HANDLE_DESCRIPTION,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -187,7 +185,7 @@ class RangeSlider extends SliderBase {
 	}
 
 	get _ariaLabelledByText() {
-		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION as I18nText);
+		return RangeSlider.i18nBundle.getText(RANGE_SLIDER_ARIA_DESCRIPTION);
 	}
 
 	get _ariaHandlesText() {
@@ -196,11 +194,11 @@ class RangeSlider extends SliderBase {
 		const ariaHandlesText: AriaHandlesText = {};
 
 		if ((isRTL && !isReversed) || (!isRTL && isReversed)) {
-			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION as I18nText);
-			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION as I18nText);
+			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
 		} else {
-			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION as I18nText);
-			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION as I18nText);
+			ariaHandlesText.startHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_START_HANDLE_DESCRIPTION);
+			ariaHandlesText.endHandleText = RangeSlider.i18nBundle.getText(RANGE_SLIDER_END_HANDLE_DESCRIPTION);
 		}
 
 		return ariaHandlesText;
@@ -217,6 +215,14 @@ class RangeSlider extends SliderBase {
 	 *
 	 */
 	onBeforeRendering() {
+		if (this.startValue > this.endValue) {
+			const affectedValue = this._valueAffected === "startValue" ? "endValue" : "startValue";
+
+			this._swapValues();
+			this._setAffectedValue(affectedValue);
+			this.update(affectedValue, this.startValue, this.endValue);
+		}
+
 		if (!this.isCurrentStateOutdated()) {
 			return;
 		}
@@ -311,12 +317,20 @@ class RangeSlider extends SliderBase {
 	*/
 	_onkeyup() {
 		super._onkeyup();
-
-		this._swapValues();
 		this._setAffectedValue(undefined);
+
+		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
+			this.fireEvent("change");
+		}
+
+		this._startValueAtBeginningOfAction = undefined;
+		this._endValueAtBeginningOfAction = undefined;
 	}
 
 	_handleActionKeyPress(e: KeyboardEvent) {
+		this._startValueAtBeginningOfAction = this.startValue;
+		this._endValueAtBeginningOfAction = this.endValue;
+
 		if (isEscape(e)) {
 			this.update(undefined, this._startValueInitial, this._endValueInitial);
 			return;
@@ -411,7 +425,7 @@ class RangeSlider extends SliderBase {
 			this.updateStateStorageAndFireInputEvent("endValue");
 			this._updateHandlesAndRange(0);
 		} else {
-			const newValue = startValue;
+			const newValue = endValue && affectedValue === "endValue" ? endValue : startValue;
 			this._updateHandlesAndRange(newValue || 0);
 
 			if (affectedValue === "startValue") {
@@ -535,21 +549,19 @@ class RangeSlider extends SliderBase {
 	}
 
 	_handleUp() {
-		this._swapValues();
 		this._setAffectedValueByFocusedElement();
 		this._setAffectedValue(undefined);
-
-		this._startValueAtBeginningOfAction = undefined;
-		this._endValueAtBeginningOfAction = undefined;
-		this._setIsPressInCurrentRange(false);
-
-		this.handleUpBase();
-
-		this.rangePressed = false;
 
 		if (this.startValue !== this._startValueAtBeginningOfAction || this.endValue !== this._endValueAtBeginningOfAction) {
 			this.fireEvent("change");
 		}
+
+		this._setIsPressInCurrentRange(false);
+		this.handleUpBase();
+
+		this.rangePressed = false;
+		this._startValueAtBeginningOfAction = undefined;
+		this._endValueAtBeginningOfAction = undefined;
 	}
 
 	/**
@@ -784,24 +796,26 @@ class RangeSlider extends SliderBase {
 	 */
 	_swapValues() {
 		const affectedValue = this._valueAffected;
+		if (!affectedValue) {
+			return;
+		}
 
 		if (affectedValue === "startValue" && this.startValue > this.endValue) {
 			const prevEndValue = this.endValue;
 			this.endValue = this.startValue;
 			this.startValue = prevEndValue;
-
-			this._setValuesAreReversed();
-			this.focusInnerElement();
 		}
 
 		if (affectedValue === "endValue" && this.endValue < this.startValue) {
 			const prevStartValue = this.startValue;
 			this.startValue = this.endValue;
 			this.endValue = prevStartValue;
-
-			this._setValuesAreReversed();
-			this.focusInnerElement();
 		}
+
+		this._setValuesAreReversed();
+		this._updateHandlesAndRange(this[affectedValue]);
+		this.focusInnerElement();
+		this.syncUIAndState();
 	}
 
 	/**

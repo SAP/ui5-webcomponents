@@ -8,8 +8,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -27,7 +27,6 @@ import ButtonDesign from "./types/ButtonDesign.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
-// @ts-ignore
 import { BUTTON_ARIA_TYPE_ACCEPT, BUTTON_ARIA_TYPE_REJECT, BUTTON_ARIA_TYPE_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -312,7 +311,7 @@ class Button extends UI5Element implements IFormElement {
 
 	_ontouchstart: PassiveEventListenerObject;
 
-	static get styles() {
+	static get styles(): ComponentStylesData {
 		return buttonCss;
 	}
 
@@ -465,9 +464,9 @@ class Button extends UI5Element implements IFormElement {
 
 	static typeTextMappings(): Record<string, I18nText> {
 		return {
-			"Positive": BUTTON_ARIA_TYPE_ACCEPT as I18nText,
-			"Negative": BUTTON_ARIA_TYPE_REJECT as I18nText,
-			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED as I18nText,
+			"Positive": BUTTON_ARIA_TYPE_ACCEPT,
+			"Negative": BUTTON_ARIA_TYPE_REJECT,
+			"Emphasized": BUTTON_ARIA_TYPE_EMPHASIZED,
 		};
 	}
 

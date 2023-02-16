@@ -19,6 +19,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  * @author SAP SE
  * @alias sap.ui.webc.fiori.SortItem
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @since 1.0.0-rc.16
  * @tagname ui5-sort-item
  * @implements sap.ui.webc.fiori.ISortItem

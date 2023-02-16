@@ -16,10 +16,10 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type { ScrollEnablementEventListenerParam } from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -29,7 +29,6 @@ import {
 	CAROUSEL_DOT_TEXT,
 	CAROUSEL_PREVIOUS_ARROW_TEXT,
 	CAROUSEL_NEXT_ARROW_TEXT,
-	// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
@@ -272,7 +271,7 @@ class Carousel extends UI5Element {
 	_visibleNavigationArrows!: boolean;
 
 	_scrollEnablement: ScrollEnablement;
-	_onResizeBound: () => void;
+	_onResizeBound: ResizeObserverCallback;
 	_resizing: boolean;
 	_lastFocusedElements: Array<HTMLElement>;
 	_orderOfLastFocusedPages: Array<number>;
@@ -649,7 +648,7 @@ class Carousel extends UI5Element {
 		for (let index = 0; index < pages; index++) {
 			dots.push({
 				active: index === this._selectedIndex,
-				ariaLabel: Carousel.i18nBundle.getText(CAROUSEL_DOT_TEXT as I18nText, index + 1, pages),
+				ariaLabel: Carousel.i18nBundle.getText(CAROUSEL_DOT_TEXT, index + 1, pages),
 			});
 		}
 
@@ -686,7 +685,7 @@ class Carousel extends UI5Element {
 	}
 
 	get ofText() {
-		return Carousel.i18nBundle.getText(CAROUSEL_OF_TEXT as I18nText);
+		return Carousel.i18nBundle.getText(CAROUSEL_OF_TEXT);
 	}
 
 	get ariaActiveDescendant() {
@@ -694,11 +693,11 @@ class Carousel extends UI5Element {
 	}
 
 	get nextPageText() {
-		return Carousel.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT as I18nText);
+		return Carousel.i18nBundle.getText(CAROUSEL_NEXT_ARROW_TEXT);
 	}
 
 	get previousPageText() {
-		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT as I18nText);
+		return Carousel.i18nBundle.getText(CAROUSEL_PREVIOUS_ARROW_TEXT);
 	}
 
 	/**

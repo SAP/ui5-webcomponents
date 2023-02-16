@@ -6,11 +6,11 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import {
 	isTabNext,
@@ -35,7 +35,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.js";
 import TableGrowingMode from "./types/TableGrowingMode.js";
-// @ts-ignore
 import BusyIndicator from "./BusyIndicator.js";
 import type {
 	TableRowSelectionRequestedEventDetail,
@@ -47,7 +46,6 @@ import type TableCell from "./TableCell.js";
 import type TableColumn from "./TableColumn.js";
 import type TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 import TableMode from "./types/TableMode.js";
-// @ts-ignore
 import CheckBox from "./CheckBox.js"; // Ensure the dependency as it is being used in the renderer
 
 // Texts
@@ -56,7 +54,6 @@ import {
 	ARIA_LABEL_SELECT_ALL_CHECKBOX,
 	TABLE_HEADER_ROW_INFORMATION,
 	TABLE_ROW_POSITION,
-// @ts-ignore
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -517,7 +514,7 @@ class Table extends UI5Element {
 
 	fnHandleF7: (e: CustomEvent) => void;
 	fnOnRowFocused: (e: CustomEvent) => void;
-	_handleResize: () => void;
+	_handleResize: ResizeObserverCallback;
 
 	moreDataText?: string;
 	tableEndObserved: boolean;
@@ -578,7 +575,7 @@ class Table extends UI5Element {
 				row._columnsInfoString = JSON.stringify(row._columnsInfo);
 			}
 
-			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION as I18nText, index + 2, rowsCount);
+			row._ariaPosition = Table.i18nBundle.getText(TABLE_ROW_POSITION, index + 2, rowsCount);
 			row._busy = this.busy;
 			row.removeEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
 			row.addEventListener("ui5-_focused", this.fnOnRowFocused as EventListener);
@@ -1223,12 +1220,12 @@ class Table extends UI5Element {
 	}
 
 	get _growingButtonText(): string {
-		return this.growingButtonText || Table.i18nBundle.getText(LOAD_MORE_TEXT as I18nText);
+		return this.growingButtonText || Table.i18nBundle.getText(LOAD_MORE_TEXT);
 	}
 
 	get ariaLabelText(): string {
 		const rowsCount = this.rows.length + 1;
-		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_INFORMATION as I18nText, rowsCount);
+		const headerRowText = Table.i18nBundle.getText(TABLE_HEADER_ROW_INFORMATION, rowsCount);
 		const columnsTitle = this.columns.map(column => {
 			return column.textContent!.trim();
 		}).join(" ");
@@ -1241,7 +1238,7 @@ class Table extends UI5Element {
 	}
 
 	get ariaLabelSelectAllText(): string {
-		return Table.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX as I18nText);
+		return Table.i18nBundle.getText(ARIA_LABEL_SELECT_ALL_CHECKBOX);
 	}
 
 	get loadMoreAriaLabelledBy(): string {

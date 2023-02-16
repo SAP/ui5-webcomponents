@@ -5,7 +5,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
@@ -160,7 +161,7 @@ class SliderBase extends UI5Element {
 	@property({ type: Boolean })
 	_hiddenTickmarks!: boolean;
 
-	_resizeHandler: () => void;
+	_resizeHandler: ResizeObserverCallback;
 	_moveHandler: (e: TouchEvent | MouseEvent) => void;
 	_upHandler: () => void;
 	_stateStorage: StateStorage;
@@ -331,26 +332,6 @@ class SliderBase extends UI5Element {
 
 	/**
 	 * Prevent focus out when inner element within the component is currently being in process of focusing in.
-	 * In theory this can be achieved either if the shadow root is focusable and 'delegatesFocus' attribute of
-	 * the .attachShadow() customElement method is set to true, or if we forward it manually.
-
-	 * As we use lit-element as base of our core UI5 element class that 'delegatesFocus' property is not set to 'true' and
-	 * we have to manage the focus here. If at some point in the future this changes, the focus delegating logic could be
-	 * removed as it will become redundant.
-	 *
-	 * When we manually set the focus on mouseDown to the first focusable element inside the shadowDom,
-	 * that inner focus (shadowRoot.activeElement) is set a moment before the global document.activeElement
-	 * is set to the customElement (ui5-slider) causing a 'race condition'.
-	 *
-	 * In order for a element within the shadowRoot to be focused, the global document.activeElement MUST be the parent
-	 * customElement of the shadow root, in our case the ui5-slider component. Because of that after our focusin of the handle,
-	 * a focusout event fired by the browser immidiatly after, resetting the focus. Focus out must be manually prevented
-	 * in both initial focusing and switching the focus between inner elements of the component cases.
-
-	 * Note: If we set the focus to the handle with a timeout or a bit later in time, on a mouseup or click event it will
-	 * work fine and we will avoid the described race condition as our host customElement will be already finished focusing.
-	 * However, that does not work for us as we need the focus to be set to the handle exactly on mousedown,
-	 * because of the nature of the component and its available drag interactions.
 	 *
 	 * @private
 	 */
@@ -423,7 +404,7 @@ class SliderBase extends UI5Element {
 		window.addEventListener("mouseup", this._upHandler);
 		window.addEventListener("touchend", this._upHandler);
 		// Only allow one type of move event to be listened to (the first one registered after the down event)
-		if (e instanceof TouchEvent) {
+		if (supportsTouch() && e instanceof TouchEvent) {
 			window.addEventListener("touchmove", this._moveHandler);
 		} else {
 			window.addEventListener("mousemove", this._moveHandler);
@@ -535,14 +516,14 @@ class SliderBase extends UI5Element {
 	 * @protected
 	 */
 	static getPageXValueFromEvent(e: TouchEvent | MouseEvent): number {
-		if (e instanceof TouchEvent) {
+		if (supportsTouch() && e instanceof TouchEvent) {
 			if (e.targetTouches && e.targetTouches.length > 0) {
 				return e.targetTouches[0].pageX;
 			}
 			return 0;
 		}
 
-		return e.pageX; // MouseEvent
+		return (e as MouseEvent).pageX; // MouseEvent
 	}
 
 	/**

@@ -345,8 +345,9 @@ const metadata = {
  *
  * <h3>Structure</h3>
  * The <code>ui5-combobox</code> consists of the following elements:
+ *
  * <ul>
- * <li> Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value.
+ * <li> Input field - displays the selected option or a custom user entry. Users can type to narrow down the list or enter their own value.</li>
  * <li> Drop-down arrow - expands\collapses the option list.</li>
  * <li> Option list - the list of available options.</li>
  * </ul>
@@ -431,6 +432,10 @@ class ComboBox extends UI5Element {
 
 		this._selectMatchingItem();
 		this._initialRendering = false;
+
+		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const arrowDownIconsCount = this.readonly ? 0 : 1;
+		this.style.setProperty("--_ui5-input-icons-count", slottedIconsCount + arrowDownIconsCount);
 	}
 
 	async onAfterRendering() {
