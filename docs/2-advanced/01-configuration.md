@@ -178,9 +178,8 @@ Setting                       |             Values              |    Default Val
 ------------------------------| ------------------------------- | ------------------- | ----------------------------------------------
 firstDayOfWeek                | 0 (Sunday) through 6 (Saturday) | *Depends on locale* | When set, overrides the locale's default value
 legacyDateCalendarCustomizing | {<br />dateFormat: string,<br />islamicMonthStart: string,<br />gregDate: string<br />} | []                  | When set, adds customizing data for Islamic calendar support
-legacyDateFormat              | 1\|2\|3\|4\|5\|6\|7\|8\|9\|A\|B\|C         | undefined           | When set, specifies legacy ABAP date format
 
-**Note:** legacyDateCalendarCustomizing and legacyDateFormat takes affect only if following features are imported:
+**Note:** legacyDateCalendarCustomizing takes affect only if following features are imported:
 ```js
 @ui5/webcomponents-base/dist/features/LegacyDateFormats.js
 ``` 

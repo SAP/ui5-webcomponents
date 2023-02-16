@@ -2,18 +2,16 @@ import { getFormatSettings } from "../InitialConfiguration.js";
 import type { FormatSettings } from "../config/FormatSettings.js";
 import { registerFeature } from "../FeaturesRegistry.js";
 
-// legacy ABAP date formats
-type LegacyDateFormat = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "A" | "B" | "C" | undefined;
 // Allows specifying the customizing data for Islamic calendar support
-// dateFormat - The date format // check LegacyDateFormat type for supported values
+// dateFormat - The date format
 // islamicMonthStart - The Islamic date in string format // 14360101
 // gregDate - Corresponding Gregorian date to the Islamic one in string format // 20141024
-type CalendarFormat = {
+type IslamicToGregorianMapping = {
 	dateFormat: string,
 	islamicMonthStart: string,
 	gregDate: string,
 };
-type LegacyDateCalendarCustomizing = Array<CalendarFormat>;
+type LegacyDateCalendarCustomizing = Array<IslamicToGregorianMapping>;
 
 let formatSettings: FormatSettings;
 
@@ -31,19 +29,6 @@ class LegacyDateFormats {
 
 		return formatSettings.legacyDateCalendarCustomizing || [];
 	}
-
-	/**
-	 * Returns the currently set legacy ABAP date format (its id).
-	 * @return {"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"|"A"|"B"|"C"|undefined} ID of the ABAP date format
-	 * @public
-	 */
-	static getLegacyDateFormat(this: void): LegacyDateFormat | undefined {
-		if (formatSettings === undefined) {
-			formatSettings = getFormatSettings();
-		}
-
-		return formatSettings.legacyDateFormat;
-	}
 }
 
 registerFeature("LegacyDateFormats", LegacyDateFormats);
@@ -52,5 +37,4 @@ export default LegacyDateFormats;
 export type {
 	FormatSettings,
 	LegacyDateCalendarCustomizing,
-	LegacyDateFormat,
 };

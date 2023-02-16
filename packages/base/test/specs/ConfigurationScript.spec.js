@@ -78,15 +78,6 @@ describe("Configuration script has effect", () => {
 		assert.deepEqual(res, expectedResult, "legacyDateCalendarCustomizing are applied");
 	});
 
-	it("Tests that legacyDateFormat is applied", async () => {
-		const res = await browser.executeAsync(done => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			done(config.getLegacyDateFormat());
-		});
-
-		assert.deepEqual(res, "A", "legacyDateFormat are applied");
-	});
-
 	it("Tests that animationMode is applied", async () => {
 		const res = await browser.executeAsync(done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
