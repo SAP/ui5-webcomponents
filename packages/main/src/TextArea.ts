@@ -46,7 +46,10 @@ import valueStateMessageStyles from "./generated/themes/ValueStateMessage.css.js
 import browserScrollbarCSS from "./generated/themes/BrowserScrollbar.css.js";
 
 type TokenizedText = Array<string>;
-type IndexedTokenizedText = Array<{ text: string; last: boolean; }>;
+type IndexedTokenizedText = Array<{
+	text: string;
+	last: boolean;
+}>;
 
 type ExceededText = {
 	exceededText: string | undefined;
@@ -310,7 +313,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	 @property({ type: Boolean })
-		exceeding!: boolean;
+	exceeding!: boolean;
 
 	/**
 	 * @private
@@ -328,7 +331,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	@property({ validator: Integer })
-	_width: number | undefined;
+	_width?: number;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -439,14 +442,14 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	getInputDomRef() {
-		return this.getDomRef()!.querySelector("textarea");
+		return this.getDomRef()!.querySelector<HTMLTextAreaElement>("textarea")!;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
 		this._keyDown = true;
 
 		if (isEscape(e)) {
-			const nativeTextArea = this.getInputDomRef()!;
+			const nativeTextArea = this.getInputDomRef();
 
 			this.value = this.previousValue;
 			nativeTextArea.value = this.value;
@@ -461,7 +464,7 @@ class TextArea extends UI5Element implements IFormElement {
 	_onfocusin() {
 		this.focused = true;
 		this._openValueStateMsgPopover = true;
-		this.previousValue = this.getInputDomRef()!.value;
+		this.previousValue = this.getInputDomRef().value;
 	}
 
 	_onfocusout(e: FocusEvent) {
