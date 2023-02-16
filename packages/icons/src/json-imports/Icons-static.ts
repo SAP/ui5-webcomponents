@@ -8,19 +8,13 @@ const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
 		throw new Error("[icons] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs");
 	}
 
-	let iconsUrl: string = "";
-
-	if (collection === "SAP-icons-v5") {
-		iconsUrl = SAPIconsV5Url;
-	} else if (collection === "SAP-icons") {
-		iconsUrl = SAPIconsV4Url;
-	}
+	const iconsUrl: string = collection === "SAP-icons-v5" ?  SAPIconsV5Url : SAPIconsV4Url;
 
 	return (await fetch(iconsUrl)).json();
 }
 
 const registerLoaders = () => {
-	registerIconLoader("SAP-icons", loadIconsBundle);
+	registerIconLoader("SAP-icons-v4", loadIconsBundle);
 	registerIconLoader("SAP-icons-v5", loadIconsBundle);
 };
 
