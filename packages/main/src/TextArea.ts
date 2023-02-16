@@ -52,9 +52,9 @@ type IndexedTokenizedText = Array<{
 }>;
 
 type ExceededText = {
-	exceededText: string | undefined;
-	leftCharactersCount: number | undefined;
-	calcedMaxLength: number | undefined;
+	exceededText?: string;
+	leftCharactersCount?: number;
+	calcedMaxLength: number;
 };
 
 /**
@@ -469,7 +469,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = eTarget?.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToValueStateMessage = eTarget?.shadowRoot!.querySelector(".ui5-valuestatemessage-root");
 
 		this.focused = false;
 
@@ -627,15 +627,21 @@ class TextArea extends UI5Element implements IFormElement {
 			return;
 		}
 
+		if (this.valueState === ValueState.None) {
+			return;
+		}
+
 		if (this.hasCustomValueState) {
 			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
 		}
 
-		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
+		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText!}`;
 	}
 
 	get valueStateDefaultText() {
-		return this.valueStateTextMappings[this.valueState];
+		if (this.valueState !== ValueState.None) {
+			return this.valueStateTextMappings[this.valueState];
+		}
 	}
 
 	get ariaInvalid() {
@@ -686,7 +692,6 @@ class TextArea extends UI5Element implements IFormElement {
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_INFORMATION),
 			"Error": TextArea.i18nBundle.getText(VALUE_STATE_ERROR),
 			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_WARNING),
-			"None": "",
 		};
 	}
 
@@ -696,7 +701,6 @@ class TextArea extends UI5Element implements IFormElement {
 			"Information": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
 			"Error": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
 			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
-			"None": "",
 		};
 	}
 
