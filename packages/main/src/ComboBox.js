@@ -190,7 +190,7 @@ const metadata = {
 
 		/**
 		 * Defines the filter type of the component.
-		 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code> and <code>Contains</code>.
+		 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 		 *
 		 * @type {string}
 		 * @defaultvalue "StartsWithPerTerm"
@@ -422,7 +422,7 @@ class ComboBox extends UI5Element {
 	onBeforeRendering() {
 		this.FormSupport = getFeature("FormSupport");
 
-		if (this._initialRendering) {
+		if (this._initialRendering || this.filter === 'None') {
 			this._filteredItems = this.items;
 		}
 
