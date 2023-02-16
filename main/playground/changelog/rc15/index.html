@@ -6358,20 +6358,17 @@ fix(ui5-table-cell):</li>
 <ul>
   <li><strong>a11y:</strong> deprecate “aria-label” support in favour of “accessible-name” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3449">#3449</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/f4f5864">f4f5864</a>)</li>
   <li>The support of “aria-label”  has been deprecated in favor of new property “accessibleName” for the following components: Button, Wizard, WizardStep, ComboBox, DatePicker, Dialog, Input, List, Panel, Popover, Popup, RatingIndicator, Select, StepInput and TextArea.</li>
-  <li>The support of “aria-label”  has been removed  for the following components: Card, CheckBox and Link.</li>
+  <li>The support of “aria-label”  has been removed  for the following components: Card, CheckBox and Link.
+```html</li>
 </ul>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-date-picker</span> <span class="na">accessible-name=</span><span class="s">"Hello World"</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span></code></pre></figure>
-
-<ul>
-  <li><strong>a11y:</strong> deprecate “aria-labelledby” support in favour of “accessible-name-ref” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3442">#3442</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/42d3ed5">42d3ed5</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a></li>
-  <li>The support for “aria-labelledby” have been deprecated in favour of  new property “accessibleNameRef” for the following components: ComboBox, DatePicker, Input, List, Rating Indicator, Select, StepInput, TextArea, WizardStep.</li>
-  <li>The support for “aria-labelledby” has been removed for the following component: Button, Card and CheckBox.</li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-label</span> <span class="na">id=</span><span class="s">"infoText"</span><span class="nt">&gt;</span>info text<span class="nt">&lt;/ui5-label&gt;</span>
-<span class="nt">&lt;ui5-date-picker</span>  <span class="na">accessible-name-ref=</span><span class="s">"infoText"</span><span class="nt">&gt;&lt;/ui5-date-picker&gt;</span></code></pre></figure>
-
+<ui5-date-picker accessible-name="Hello World"></ui5-date-picker>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* **a11y:** deprecate "aria-labelledby" support in favour of "accessible-name-ref" ([#3442](https://github.com/SAP/ui5-webcomponents/issues/3442)) ([42d3ed5](https://github.com/SAP/ui5-webcomponents/commit/42d3ed5)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107) 
+* The support for "aria-labelledby" have been deprecated in favour of  new property "accessibleNameRef" for the following components: ComboBox, DatePicker, Input, List, Rating Indicator, Select, StepInput, TextArea, WizardStep.
+* The support for "aria-labelledby" has been removed for the following component: Button, Card and CheckBox.
+```html
+&lt;ui5-label id="infoText"&gt;info text&lt;/ui5-label&gt;
+&lt;ui5-date-picker  accessible-name-ref="infoText"&gt;&lt;/ui5-date-picker&gt;
+</code></pre></div></div>
 <ul>
   <li><strong>all list items:</strong> rename “info” and “infoState” properties (<a href="https://github.com/SAP/ui5-webcomponents/issues/3259">#3259</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/ca42531">ca42531</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>
 StandardListItem’s “info” and “infoState” properties have been renamed to “additionalText” and “additionalTextState”.
@@ -6380,36 +6377,33 @@ TreeItem’s: “info” and “infoState” properties have been renamed to “
   <li><strong>ui5-avatar:</strong> rename “backgroundColor” property to “colorScheme” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3237">#3237</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/a3a3a11">a3a3a11</a>)
 The property “backgroundColor” has been renamed to “colorScheme”.</li>
   <li><strong>ui5-avatar:</strong> implement default slot for image (<a href="https://github.com/SAP/ui5-webcomponents/issues/3237">#3237</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/9646c3e">9646c3e</a>)
-The properties “image” and “imageFitType” have been deprecated in favour of default slot:</li>
+The properties “image” and “imageFitType” have been deprecated in favour of default slot:
+```html</li>
 </ul>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-avatar&gt;</span>
-	<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">"./avatar.jpg"</span> <span class="na">style=</span><span class="s">"object-fit: cover;"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;/ui5-avatar&gt;</span></code></pre></figure>
-
-<ul>
-  <li><strong>ui5-avatar-group:</strong> deprecate “avatarSize” property (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/fd60e90">fd60e90</a>)
-The property “avatarSize” property has been deprecated. You can set the “size” property to every avatar that you pass in the default slot.</li>
-  <li><strong>ui5-bar:</strong> replace “middleContent” slot with the default slot (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/e235d7d">e235d7d</a>)
-The middleContent slot is deprecated in favour of default slot.</li>
-  <li><strong>ui5-busy-indicator:</strong> change tag name (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/d43de85">d43de85</a>)
-The component tag name is renamed from “ui5-busyindicator” to “ui5-busy-indicator”.</li>
-  <li><strong>ui5-button:</strong> remove “iconSize” property (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/ff9d7dd">ff9d7dd</a>)
-The “iconSize” property has been removed.</li>
-  <li><strong>ui5-card:</strong> refactor API (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/86f0333">86f0333</a>)
-The Card’s “header”, “subheading”, “status”, “headerInteractive” properties, “action” and “avatar” slots, and “header-click” events are not available anymore. Instead, use the newly created “CardHeader” component,
-which provides the same API with a bit of change in the names as follows: the “headerInteractive”, “heading” and “subheading” properties have been renamed to “interactive, “titleText” and “subtitleText”, the “header-click” event has been renamed to “click”. In addition, the Card now has a “header” slot, for which you can use the CardHeader:</li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-card&gt;</span>
-	<span class="nt">&lt;ui5-card-header</span>
-		<span class="na">slot=</span><span class="s">"header"</span>
-		<span class="na">status=</span><span class="s">"4 of 10"</span>
-		<span class="na">title-text=</span><span class="s">"Quick Links"</span>
-		<span class="na">subtitle-text=</span><span class="s">"quick links"</span><span class="nt">&gt;</span>
-	<span class="nt">&lt;/ui5-card-header&gt;</span>
-<span class="nt">&lt;/ui5-card&gt;</span></code></pre></figure>
-
+<ui5-avatar>
+	<img src="./avatar.jpg" style="object-fit: cover;" />
+</ui5-avatar>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* **ui5-avatar-group:** deprecate "avatarSize" property ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([fd60e90](https://github.com/SAP/ui5-webcomponents/commit/fd60e90))
+The property "avatarSize" property has been deprecated. You can set the "size" property to every avatar that you pass in the default slot.
+* **ui5-bar:** replace "middleContent" slot with the default slot ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([e235d7d](https://github.com/SAP/ui5-webcomponents/commit/e235d7d))
+The middleContent slot is deprecated in favour of default slot.
+* **ui5-busy-indicator:** change tag name ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([d43de85](https://github.com/SAP/ui5-webcomponents/commit/d43de85))
+The component tag name is renamed from "ui5-busyindicator" to "ui5-busy-indicator".
+* **ui5-button:** remove "iconSize" property ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([ff9d7dd](https://github.com/SAP/ui5-webcomponents/commit/ff9d7dd))
+The "iconSize" property has been removed.
+* **ui5-card:** refactor API ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([86f0333](https://github.com/SAP/ui5-webcomponents/commit/86f0333))
+The Card's "header", "subheading", "status", "headerInteractive" properties, "action" and "avatar" slots, and "header-click" events are not available anymore. Instead, use the newly created "CardHeader" component,
+which provides the same API with a bit of change in the names as follows: the "headerInteractive", "heading" and "subheading" properties have been renamed to "interactive, "titleText" and "subtitleText", the "header-click" event has been renamed to "click". In addition, the Card now has a "header" slot, for which you can use the CardHeader:
+```html
+&lt;ui5-card&gt;
+	&lt;ui5-card-header
+		slot="header"
+		status="4 of 10"
+		title-text="Quick Links"
+		subtitle-text="quick links"&gt;
+	&lt;/ui5-card-header&gt;
+&lt;/ui5-card&gt;
+</code></pre></div></div>
 <ul>
   <li><strong>ui5-carousel:</strong> refactor API (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/351d289">351d289</a>)
 The “selectedIndex” property is deprecated. The “infiniteScrollOffset” property and “load-more” event are  deprecated, use the “navigate” event to load more items.</li>
@@ -6438,60 +6432,57 @@ The “highlight” property has been removed and the feature is enabled by defa
   <li><strong>ui5-input:</strong> remove public method (<a href="https://github.com/SAP/ui5-webcomponents/issues/3224">#3224</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/1166fb4">1166fb4</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>
 The “isOpen method” (that used to return if the value state popover is open or closed) has been removed.</li>
   <li><strong>ui5-input:</strong> introduce new “SuggestionGroupItem” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3248">#3248</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/39ccf7b">39ccf7b</a>)
-The “group” property of the SuggestionItem is removed, use the SuggestionGroupItem component to create grouping as follows:</li>
+The “group” property of the SuggestionItem is removed, use the SuggestionGroupItem component to create grouping as follows:
+```html</li>
 </ul>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-input</span> <span class="na">show-suggestions</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;ui5-suggestion-group-item</span> <span class="na">text=</span><span class="s">"Group #1"</span><span class="nt">&gt;&lt;/ui5-suggestion-group-item&gt;</span>
-  <span class="nt">&lt;ui5-suggestion-item</span> <span class="na">text=</span><span class="s">"Item #1"</span><span class="nt">&gt;&lt;/ui5-suggestion-item&gt;</span>
-  <span class="nt">&lt;ui5-suggestion-item</span> <span class="na">text=</span><span class="s">"Item #2"</span><span class="nt">&gt;&lt;/ui5-suggestion-item&gt;</span>
-<span class="nt">&lt;/ui5-input&gt;</span></code></pre></figure>
-
-<ul>
-  <li><strong>ui5-label:</strong> replace “wrap” with “wrappingType” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/e591e04">e591e04</a>)
-The boolean property “wrap” has been removed in favour of string prop “wrappingType”. If you previously used “wrap”, now set wrappingType=”Normal” instead.</li>
-  <li><strong>ui5-link:</strong> replace “wrap” with “wrappingType” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/cff8fd4">cff8fd4</a>)
-The boolean property “wrap” has been removed in favour of string prop “wrappingType”. If you previously used “wrap”, now set wrappingType=”Normal” instead.</li>
-  <li><strong>ui5-li-notification:</strong> replace “wrap” with “wrappingType” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3565">#3565</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/6701ab5">6701ab5</a>)
-The boolean property “wrap” has been removed in favour of string prop “wrappingType”. If you previously used “wrap”, now set wrappingType=”Normal” instead.</li>
-  <li><strong>ui5-list:</strong> rename “inset” property to “indent” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/eba1e64">eba1e64</a>)
-The property “inset” has been renamed to “indent”.</li>
-  <li><strong>ui5-li-notification:</strong> rename “heading” property to “titleText” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3586">#3586</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/4f17a31">4f17a31</a>)
-The property “heading” property has been renamed to “titleText”.</li>
-  <li><strong>ui5-li-notification-group:</strong> rename “heading” property to “titleText” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3586">#3586</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/4f17a31">4f17a31</a>)
-The property “heading” property has been renamed to “titleText”.</li>
-  <li><strong>ui5-messagestrip:</strong> refactor API (<a href="https://github.com/SAP/ui5-webcomponents/issues/3237">#3237</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/1cb43f2">1cb43f2</a>)
-The properties “noIcon” and “noCloseButton” have been renamed to “hideIcon” and “hideCloseButton”.</li>
-  <li><strong>ui5-messagestrip:</strong> rename property “type” to “design” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3237">#3237</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/4208d19">4208d19</a>)
-The property “type” has been renamed to “design”.</li>
-  <li><strong>ui5-popover:</strong> rename “noArrow” property to “hideArrow” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/39cc473">39cc473</a>)
-The property “noArrow” has been renamed to “hideArrow”.</li>
-  <li><strong>ui5-popover:</strong> rename “openBy” method to “showAt” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/59f5354">59f5354</a>)
-The public method “openBy” has been renamed to “showAt”.</li>
-  <li><strong>ui5-product-switch-item:</strong> rename “heading” and “subtitle” properties (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/2461b73">2461b73</a>)
-The properties “heading” and “subtitle” have been renamed to “titleText” and “subtitleText”.</li>
-  <li><strong>ui5-radio-button:</strong> change tag name <a href="https://github.com/SAP/ui5-webcomponents/commit/bca726e">bca726e</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>
-The component’s tag name has been renamed from “ui5-radiobutton” to “ui5-radio-button”.</li>
-  <li><strong>ui5-radio-button:</strong> replace “wrap” with “wrappingType” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/724025b">724025b</a>)
-The boolean property “wrap” has been removed in favour of string prop “wrappingType”. If you previously used “wrap”, now set wrappingType=”Normal” instead.</li>
-  <li><strong>ui5-radio-button:</strong> change “selected” proerty to “checked” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/677d5be">677d5be</a>)
-The “selected” property has been renamed to “checked” and the “select” event to “change”.</li>
-  <li><strong>ui5-rating-indicator:</strong> rename “maxValue” property to “max”	 (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/8aaf99b">8aaf99b</a>)
-The “maxValue” property has been deprecated in favour of “max” property.</li>
-  <li><strong>ui5-responsive-popover:</strong> rename “openBy” method to “showAt” (<a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/59f5354">59f5354</a>)
-The public method “open” has been renamed to “showAt”.</li>
-  <li><strong>ui5-segmented-button:</strong> change tag name (<a href="https://github.com/SAP/ui5-webcomponents/commit/b3b42f6">b3b42f6</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>
-The component’s tag name has been renamed from “ui5-segmentedbutton” to “ui5-segmented-button”.</li>
-  <li><strong>ui5-segmented-button-item:</strong> introduce new component (<a href="https://github.com/SAP/ui5-webcomponents/issues/3258">#3258</a>) (<a href="https://github.com/SAP/ui5-webcomponents/commit/9bd9ce4">9bd9ce4</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/3191">#3191</a> <a href="https://github.com/SAP/ui5-webcomponents/issues/3191">#3191</a>
-SegmentedButton no longer accepts ToggleButton, you have to use the newly created component, called SegmentedButtonItem as follows:</li>
-</ul>
-
-<figure class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;ui5-segmentedbutton&gt;</span>
-   <span class="nt">&lt;ui5-segmentedbutton-item</span> <span class="na">pressed</span><span class="nt">&gt;</span>One<span class="nt">&lt;/ui5-segmentedbutton-item&gt;</span>
-   <span class="nt">&lt;ui5-segmentedbutton-item&gt;</span>Two<span class="nt">&lt;/ui5-segmentedbutton-item&gt;</span>
-   <span class="nt">&lt;ui5-segmentedbutton-item&gt;</span>Three<span class="nt">&lt;/ui5-segmentedbutton-item&gt;</span>
-<span class="nt">&lt;/ui5-segmentedbutton&gt;</span></code></pre></figure>
-
+<ui5-input show-suggestions="">
+  <ui5-suggestion-group-item text="Group #1"></ui5-suggestion-group-item>
+  <ui5-suggestion-item text="Item #1"></ui5-suggestion-item>
+  <ui5-suggestion-item text="Item #2"></ui5-suggestion-item>
+</ui5-input>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>* **ui5-label:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([e591e04](https://github.com/SAP/ui5-webcomponents/commit/e591e04))
+The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
+* **ui5-link:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([cff8fd4](https://github.com/SAP/ui5-webcomponents/commit/cff8fd4))
+The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
+* **ui5-li-notification:** replace "wrap" with "wrappingType" ([#3565](https://github.com/SAP/ui5-webcomponents/issues/3565)) ([6701ab5](https://github.com/SAP/ui5-webcomponents/commit/6701ab5))
+The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
+* **ui5-list:** rename "inset" property to "indent" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([eba1e64](https://github.com/SAP/ui5-webcomponents/commit/eba1e64))
+The property "inset" has been renamed to "indent".
+* **ui5-li-notification:** rename "heading" property to "titleText" ([#3586](https://github.com/SAP/ui5-webcomponents/issues/3586)) ([4f17a31](https://github.com/SAP/ui5-webcomponents/commit/4f17a31))
+The property "heading" property has been renamed to "titleText".
+* **ui5-li-notification-group:** rename "heading" property to "titleText" ([#3586](https://github.com/SAP/ui5-webcomponents/issues/3586)) ([4f17a31](https://github.com/SAP/ui5-webcomponents/commit/4f17a31))
+The property "heading" property has been renamed to "titleText".
+* **ui5-messagestrip:** refactor API ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([1cb43f2](https://github.com/SAP/ui5-webcomponents/commit/1cb43f2))
+The properties "noIcon" and "noCloseButton" have been renamed to "hideIcon" and "hideCloseButton".
+* **ui5-messagestrip:** rename property "type" to "design" ([#3237](https://github.com/SAP/ui5-webcomponents/issues/3237)) ([4208d19](https://github.com/SAP/ui5-webcomponents/commit/4208d19))
+The property "type" has been renamed to "design".
+* **ui5-popover:** rename "noArrow" property to "hideArrow" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([39cc473](https://github.com/SAP/ui5-webcomponents/commit/39cc473))
+The property "noArrow" has been renamed to "hideArrow".
+* **ui5-popover:** rename "openBy" method to "showAt" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([59f5354](https://github.com/SAP/ui5-webcomponents/commit/59f5354))
+The public method "openBy" has been renamed to "showAt".
+* **ui5-product-switch-item:** rename "heading" and "subtitle" properties ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([2461b73](https://github.com/SAP/ui5-webcomponents/commit/2461b73))
+The properties "heading" and "subtitle" have been renamed to "titleText" and "subtitleText".
+* **ui5-radio-button:** change tag name [bca726e](https://github.com/SAP/ui5-webcomponents/commit/bca726e)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
+The component's tag name has been renamed from "ui5-radiobutton" to "ui5-radio-button".
+* **ui5-radio-button:** replace "wrap" with "wrappingType" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([724025b](https://github.com/SAP/ui5-webcomponents/commit/724025b))
+The boolean property "wrap" has been removed in favour of string prop "wrappingType". If you previously used "wrap", now set wrappingType="Normal" instead.
+* **ui5-radio-button:** change "selected" proerty to "checked" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([677d5be](https://github.com/SAP/ui5-webcomponents/commit/677d5be))
+The "selected" property has been renamed to "checked" and the "select" event to "change".
+* **ui5-rating-indicator:** rename "maxValue" property to "max"	 ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([8aaf99b](https://github.com/SAP/ui5-webcomponents/commit/8aaf99b))
+The "maxValue" property has been deprecated in favour of "max" property.
+* **ui5-responsive-popover:** rename "openBy" method to "showAt" ([#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)) ([59f5354](https://github.com/SAP/ui5-webcomponents/commit/59f5354))
+The public method "open" has been renamed to "showAt".
+* **ui5-segmented-button:** change tag name ([b3b42f6](https://github.com/SAP/ui5-webcomponents/commit/b3b42f6)), closes [#3107](https://github.com/SAP/ui5-webcomponents/issues/3107)
+The component's tag name has been renamed from "ui5-segmentedbutton" to "ui5-segmented-button".
+* **ui5-segmented-button-item:** introduce new component ([#3258](https://github.com/SAP/ui5-webcomponents/issues/3258)) ([9bd9ce4](https://github.com/SAP/ui5-webcomponents/commit/9bd9ce4)), closes [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191) [#3191](https://github.com/SAP/ui5-webcomponents/issues/3191)
+SegmentedButton no longer accepts ToggleButton, you have to use the newly created component, called SegmentedButtonItem as follows:
+```html
+&lt;ui5-segmentedbutton&gt;
+   &lt;ui5-segmentedbutton-item pressed&gt;One&lt;/ui5-segmentedbutton-item&gt;
+   &lt;ui5-segmentedbutton-item&gt;Two&lt;/ui5-segmentedbutton-item&gt;
+   &lt;ui5-segmentedbutton-item&gt;Three&lt;/ui5-segmentedbutton-item&gt;
+&lt;/ui5-segmentedbutton&gt;
+</code></pre></div></div>
 <ul>
   <li><strong>ui5-shellbar:</strong> rename “notificationCount” property to “notificationsCount” (<a href="https://github.com/SAP/ui5-webcomponents/commit/6495028">6495028</a>), closes <a href="https://github.com/SAP/ui5-webcomponents/issues/3107">#3107</a>
 The property “notificationCount” has been renamed to “notificationsCount”.</li>

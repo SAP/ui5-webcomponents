@@ -6333,7 +6333,7 @@ Such decorators are used for properties and slots:</p>
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
  * Defines the component design.
  *
- * &lt;br&gt;&lt;br&gt;
+ * &lt;br/&gt;&lt;br/&gt;
  * &lt;b&gt;The available values are:&lt;/b&gt;
  *
  * &lt;ul&gt;
@@ -6601,7 +6601,8 @@ Therefore, whenever you use <code class="language-plaintext highlighter-rouge">@
 <p>Example:</p>
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="nx">event</span> <span class="k">from</span> <span class="dl">"</span><span class="s2">@ui5/webcomponents-base/dist/decorators/event.js</span><span class="dl">"</span><span class="p">;</span>
 </code></pre></div></div>
-<p>Using the keyword <code class="language-plaintext highlighter-rouge">"event"</code> as a paramater for our handlers leads to a collision between the parameter and the <code class="language-plaintext highlighter-rouge">@event</code> decorator. <br /></p>
+<p>Using the keyword <code class="language-plaintext highlighter-rouge">"event"</code> as a paramater for our handlers leads to a collision between the parameter and the <code class="language-plaintext highlighter-rouge">@event</code> decorator. 
+<br /></p>
 <div class="language-ts highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Before ( which would lead to a name collision now )</span>
 
 <span class="nx">_onfocusin</span><span class="p">(</span><span class="nx">event</span><span class="p">:</span> <span class="nx">FocusEvent</span><span class="p">)</span> <span class="p">{</span>
