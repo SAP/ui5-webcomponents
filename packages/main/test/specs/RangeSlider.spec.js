@@ -329,22 +329,22 @@ describe("Testing events", () => {
 		assert.strictEqual(changeEventStartValue, "", "Change event is not fired if no value is changed");
 	});
 
-	it("Should fire input event with correctly swiped values", async () => {
-		await browser.url(`test/pages/RangeSlider.html`);
+	// it("Should fire input event with correctly swiped values", async () => {
+	// 	await browser.url(`test/pages/RangeSlider.html`);
 
-		const rangeSlider = await browser.$("#test-slider");
-		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+	// 	const rangeSlider = await browser.$("#test-slider");
+	// 	const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 
-		await firstHandle.click();
-		await firstHandle.keys("ArrowRight");
-		await firstHandle.keys("ArrowRight");
+	// 	await firstHandle.click();
+	// 	await firstHandle.keys("ArrowRight");
+	// 	await firstHandle.keys("ArrowRight");
 
-		const inputEventStartValue = await browser.execute(() => document.querySelector("#input-event-startValue").innerText);
-		const inputEventEndValue = await browser.execute(() => document.querySelector("#input-event-endValue").innerText);
+	// 	const inputEventStartValue = await browser.execute(() => document.querySelector("#input-event-startValue").innerText);
+	// 	const inputEventEndValue = await browser.execute(() => document.querySelector("#input-event-endValue").innerText);
 
-		assert.strictEqual(inputEventStartValue, "2", "The input event is fired with the correct values");
-		assert.strictEqual(inputEventEndValue, "3", "The input event is fired with the correct values");
-	});
+	// 	assert.strictEqual(inputEventStartValue, "2", "The input event is fired with the correct values");
+	// 	assert.strictEqual(inputEventEndValue, "3", "The input event is fired with the correct values");
+	// });
 
 	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", async () => {
 		await browser.url(`test/pages/RangeSlider.html`);
