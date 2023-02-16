@@ -25,6 +25,7 @@ import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -214,7 +215,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: null })
-	maxlength!: number;
+	maxlength?: number;
 
 	/**
 	 * Determines whether the characters exceeding the maximum allowed character count are visible
@@ -314,7 +315,7 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * @private
 	 */
-	@property({ type: Object, multiple: true, defaultValue: "" })
+	@property({ type: Object, multiple: true })
 	_mirrorText!: IndexedTokenizedText;
 
 	/**
@@ -327,7 +328,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @private
 	 */
 	@property({ validator: Integer })
-	_width!: number;
+	_width: number | undefined;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -357,7 +358,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 @slot()
 	 formSupport!: Array<HTMLElement>;
 
-	_fnOnResize: () => void;
+	_fnOnResize: ResizeObserverCallback;
 	_firstRendering: boolean;
 	_openValueStateMsgPopover: boolean;
 	_exceededTextProps!: ExceededText;
@@ -556,7 +557,7 @@ class TextArea extends UI5Element implements IFormElement {
 		if (this.showExceededText) {
 			const maxLength = this.maxlength;
 
-			if (maxLength !== null) {
+			if (maxLength !== null && maxLength !== undefined) {
 				leftCharactersCount = maxLength - this.value.length;
 
 				if (leftCharactersCount >= 0) {
