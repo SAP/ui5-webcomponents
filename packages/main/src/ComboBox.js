@@ -422,7 +422,7 @@ class ComboBox extends UI5Element {
 	onBeforeRendering() {
 		this.FormSupport = getFeature("FormSupport");
 
-		if (this._initialRendering || this.filter === 'None') {
+		if (this._initialRendering || this.filter === "None") {
 			this._filteredItems = this.items;
 		}
 
