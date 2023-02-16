@@ -880,12 +880,12 @@
 		}
 
 		// Event handlers
-		col1list.addEventListener("item-click", function (e) {
+		col1list.addEventListener("ui5-item-click", function (e) {
 			updateProductInfo(e.detail.item);
 			fclApp.layout = nextLayout("col1");
 		});
 
-		col2list.addEventListener("item-click", function (e) {
+		col2list.addEventListener("ui5-item-click", function (e) {
 			updateDetailInfo(e.detail.item);
 			fclApp.layout = nextLayout("col2");
 		});
@@ -909,15 +909,15 @@
 		// Wizard
 		var wiz = document.getElementById("wiz");
 
-		wiz.addEventListener("selection-change", function () {
+		wiz.addEventListener("ui5-selection-change", function () {
 			console.log(event.detail.selectedStep);
 		});
 
-		sw.addEventListener("change", function () {
+		sw.addEventListener("ui5-change", function () {
 			toStep3.removeAttribute("hidden");
 		});
 
-		sb.addEventListener("selection-change", function () {
+		sb.addEventListener("ui5-selection-change", function () {
 			toStep4.removeAttribute("hidden");
 		});
 

@@ -54,7 +54,6 @@ tr {
 	color: var(--sapTextColor);
 	min-height: 3rem;
 	background-color: var(--sapList_Background);
-	border-top: 1px solid var(--sapList_BorderColor);
 }
 
 .ui5-table-end-row {
