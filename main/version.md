@@ -1,8 +1,7 @@
-commit 50de9d521933c5d02e4ceb294400e85ca8acc909
-Author: Nikolay Deshev <nikolay.deshev@sap.com>
-Date:   Thu Feb 16 07:48:47 2023 +0200
+commit 30a668ad862790cc6777f68703d38cd48150792d
+Author: Stoyan <88034608+hinzzx@users.noreply.github.com>
+Date:   Thu Feb 16 09:41:01 2023 +0200
 
-    chore(ui5-range-slider): disable unstable test temporarily (#6508)
+    docs: update Vue and UI5 Web Components development docs (#6494)
     
-    comment out a test related to the value-swapping functionality of the RangeSlider
-    until we find a solution for it
+    * docs: update Vue and UI5 Web Components development documentation
