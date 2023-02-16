@@ -7,6 +7,7 @@ import "@ui5/webcomponents-icons/dist/background.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 
 // Styles
@@ -14,11 +15,6 @@ import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
 
 // Template
 import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
-
-interface ITabbable {
-	id: string,
-	_tabIndex: string,
-}
 
 /**
  * @class
@@ -124,7 +120,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	/**
 	 * @private
 	 */
-	@property({ type: Boolean, defaultValue: undefined })
+	@property({ type: Boolean })
 	focused!: boolean;
 
 	/**
@@ -255,15 +251,15 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 		const isImg = element.tagName === "IMG",
 			img = isImg ? element : element.querySelector("img");
 		if (img) {
-			callback.call(this, img);
+			callback(img);
 			img.addEventListener("error", () => {
 				if (this.contains(img)) { // img still belongs to us
-					callback.call(this, img);
+					callback(img);
 				}
 			});
 			img.addEventListener("load", () => {
 				if (this.contains(img)) { // img still belongs to us
-					callback.call(this, img);
+					callback(img);
 				}
 			});
 			return true;

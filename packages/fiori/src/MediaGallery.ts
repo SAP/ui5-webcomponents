@@ -327,7 +327,7 @@ class MediaGallery extends UI5Element {
 		this._overflowSize = this._calculateOverflowSize(width, height);
 
 		this._toggleDisplaySquareSize(this._shouldHaveSquareDisplay);
-		this._toggleMainItem9x16size(this._shouldHaveWideDisplay as boolean);
+		this._toggleMainItem9x16size(this._shouldHaveWideDisplay);
 	}
 
 	_calculateOverflowSize(width: number, height: number) {
@@ -544,7 +544,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _shouldHaveWideDisplay() {
-		return this._mainItemHasWideLayout
+		return !!this._mainItemHasWideLayout
 			&& this.showAllThumbnails
 			&& (this.effectiveLayout === MediaGalleryLayout.Horizontal);
 	}
