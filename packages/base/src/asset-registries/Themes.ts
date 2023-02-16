@@ -65,3 +65,8 @@ export {
 	getRegisteredPackages,
 	isThemeRegistered,
 };
+
+export type {
+	ThemeData,
+	ThemeLoader,
+};
