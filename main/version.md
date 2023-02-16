@@ -1,7 +1,11 @@
-commit 78cd73b2f6940e62dcd297b4a2c5c63ea7a295e1
-Author: Dobrin Dimchev <dobrin.dimchev@sap.com>
-Date:   Thu Feb 16 12:13:02 2023 +0200
+commit 1b7ded17de307372053007aaeeadc91af13f77e6
+Author: Nikolay Hristov <n.hristov@sap.com>
+Date:   Thu Feb 16 14:13:36 2023 +0200
 
-    fix(ui5-select, ui5-suggestion-item, ui5-shellbar): color of icon inside options is according to spec (#6415)
+    fix(ui5-segmented-button): press item programatically works properly (#6502)
     
-    fix(ui5-select, ui5-suggestion-item, ui5-shellbar): color of icon inside options according to spec
+    * fix(ui5-segmented-button): press item programatically works properly
+    
+    * fix lint error
+    
+    * fix(ui5-segmented-button): fine tune the test

@@ -1388,7 +1388,7 @@
   "199": {
     "id": "199",
     "title": "Segmented Button",
-    "content": "&lt;!DOCTYPE html&gt; ui5-segmented-button ui5-segmented-button Segmentedbutton example Item SegmentedButtonItem Item Example with 4 items Item Item Click Pressed SegmentedButtonItem Example with 5 items Word Pressed SegmentedButtonItem With Bigger Text Item Pressed SegmentedButtonItem A Example with Icons and custom width SegmentedButton with 100% width Pressed SegmentedButtonItem SegmentedButtonItem SegmentedButtonItem SegmentedButton wrapped in a container with set width Initial focus test the focus should go to the first item Press Press",
+    "content": "&lt;!DOCTYPE html&gt; ui5-segmented-button ui5-segmented-button Segmentedbutton example Item SegmentedButtonItem Item Example with 4 items Item Item Click Pressed SegmentedButtonItem Example with 5 items Word Pressed SegmentedButtonItem With Bigger Text Item Pressed SegmentedButtonItem A Example with Icons and custom width SegmentedButton with 100% width Pressed SegmentedButtonItem SegmentedButtonItem SegmentedButtonItem SegmentedButton wrapped in a container with set width Initial focus test the focus should go to the first item Press Press Programatical change test First Second Third Press second item Press multiple items Press pressed item Press first item",
     "url": "https://sap.github.io/ui5-webcomponents/main/playground/main/pages/SegmentedButton/",
     "relUrl": "/playground/main/pages/SegmentedButton/"
   },
