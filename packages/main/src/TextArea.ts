@@ -54,7 +54,7 @@ type IndexedTokenizedText = Array<{
 type ExceededText = {
 	exceededText?: string;
 	leftCharactersCount?: number;
-	calcedMaxLength: number;
+	calcedMaxLength?: number;
 };
 
 /**
