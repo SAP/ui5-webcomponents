@@ -1,11 +1,9 @@
-commit 1b7ded17de307372053007aaeeadc91af13f77e6
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Thu Feb 16 14:13:36 2023 +0200
+commit 3f3bab5af970e19d04292aaf9ec7e7998d02536c
+Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
+Date:   Thu Feb 16 04:38:39 2023 -0800
 
-    fix(ui5-segmented-button): press item programatically works properly (#6502)
+    Translation Delivery (#6510)
     
-    * fix(ui5-segmented-button): press item programatically works properly
+    chore: translation delivery
     
-    * fix lint error
-    
-    * fix(ui5-segmented-button): fine tune the test
+    Change-Id: I62bc099b36b5e6dd960e9620286577e2ad6a1058
