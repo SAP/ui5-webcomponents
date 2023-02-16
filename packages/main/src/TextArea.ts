@@ -7,6 +7,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -25,7 +26,6 @@ import TextAreaTemplate from "./generated/templates/TextAreaTemplate.lit.js";
 import TextAreaPopoverTemplate from "./generated/templates/TextAreaPopoverTemplate.lit.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 
 import {
 	VALUE_STATE_SUCCESS,
@@ -592,7 +592,7 @@ class TextArea extends UI5Element implements IFormElement {
 	get styles() {
 		return {
 			valueStateMsgPopover: {
-				"max-width": `${this._width}px`,
+				"max-width": `${this._width!}px`,
 			},
 		};
 	}
