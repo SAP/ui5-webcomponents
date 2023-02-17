@@ -2,7 +2,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { IComboBoxItem } from "./ComboBox.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
 
 /**
  * @class
@@ -38,17 +37,6 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		 */
 		@property({ type: Boolean })
 		focused!: boolean;
-
-		/**
-		 * Indicates whether the item is selected
-		 * @protected
-		 */
-		@property({ type: Boolean })
-		selected!: boolean;
-
-		static get dependencies() {
-			return [GroupHeaderListItem];
-		}
 
 		/**
 		 * Used to avoid tag name checks

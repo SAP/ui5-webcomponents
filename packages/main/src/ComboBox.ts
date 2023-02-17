@@ -82,8 +82,8 @@ import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
 
 const SKIP_ITEMS_SIZE = 10;
 
-type ValueStateAnnouncement = Record<ValueState, string | undefined>;
-type ValueStateTypeAnnouncement = Record<ValueState, string>;
+type ValueStateAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
+type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, string>;
 
 type ComboBoxListItem = StandardListItem & {
 	mappedItem: ComboBoxItem
@@ -103,8 +103,9 @@ type ComboBoxSelectionChangeEventDetail = {
 interface IComboBoxItem extends UI5Element {
 	text: string,
 	focused: boolean,
-	selected: boolean
-	isGroupItem: boolean
+	isGroupItem: boolean,
+	selected?: boolean,
+	additionalText?: string,
 }
 
 /**
@@ -344,7 +345,7 @@ class ComboBox extends UI5Element {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	@property({ defaultValue: "" })
+	@property()
 	accessibleNameRef!: string;
 
 	@property({ type: Boolean, noAttribute: true })
@@ -354,7 +355,7 @@ class ComboBox extends UI5Element {
 	_filteredItems!: Array<IComboBoxItem>;
 
 	@property({ validator: Integer, noAttribute: true })
-	_listWidth?: number | undefined;
+	_listWidth!: number;
 
 	/**
 	 * Defines the component items.
@@ -462,7 +463,7 @@ class ComboBox extends UI5Element {
 		this._selectMatchingItem();
 		this._initialRendering = false;
 
-		const slottedIconsCount: number = this.icon?.length || 0;
+		const slottedIconsCount: number = this.icon.length || 0;
 		const arrowDownIconsCount: number = this.readonly ? 0 : 1;
 		this.style.setProperty("--_ui5-input-icons-count", `${slottedIconsCount + arrowDownIconsCount}`);
 	}
@@ -689,9 +690,10 @@ class ComboBox extends UI5Element {
 
 		const isOpen = this.open;
 		const currentItem = this._filteredItems.find(item => {
-			return isOpen ? item.focused : (item as ComboBoxItem).selected;
-		})!;
-		const indexOfItem = this._filteredItems.indexOf(currentItem);
+			return isOpen ? item.focused : item.selected;
+		});
+
+		const indexOfItem = currentItem ? this._filteredItems.indexOf(currentItem) : -1;
 
 		e.preventDefault();
 
@@ -1056,8 +1058,8 @@ class ComboBox extends UI5Element {
 	}
 
 	_announceSelectedItem(indexOfItem: number) {
-		const currentItem = this._filteredItems[indexOfItem] as ComboBoxItem;
-		const currentItemAdditionalText = currentItem.additionalText;
+		const currentItem = this._filteredItems[indexOfItem];
+		const currentItemAdditionalText = currentItem.additionalText || "";
 		const isGroupItem = currentItem?.isGroupItem;
 		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
@@ -1100,19 +1102,29 @@ class ComboBox extends UI5Element {
 		return this.hasValueState && this.valueState !== ValueState.Success;
 	}
 
-	get ariaValueStateHiddenText(): string | undefined {
+	get ariaValueStateHiddenText(): string {
 		if (!this.hasValueState) {
-			return;
+			return "";
+		}
+
+		let text = "";
+
+		if (this.valueState !== ValueState.None) {
+			text = this.valueStateTypeMappings[this.valueState];
 		}
 
 		if (this.shouldDisplayDefaultValueStateMessage) {
-			return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText || ""}`;
+			return `${text} ${this.valueStateDefaultText || ""}`;
 		}
 
-		return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
+		return `${text}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
 	}
 
 	get valueStateDefaultText(): string | undefined {
+		if (this.valueState === ValueState.None) {
+			return;
+		}
+
 		return this.valueStateTextMappings[this.valueState];
 	}
 
@@ -1126,7 +1138,6 @@ class ComboBox extends UI5Element {
 			[ValueState.Error]: ComboBox.i18nBundle.getText(VALUE_STATE_ERROR),
 			[ValueState.Warning]: ComboBox.i18nBundle.getText(VALUE_STATE_WARNING),
 			[ValueState.Information]: ComboBox.i18nBundle.getText(VALUE_STATE_INFORMATION),
-			[ValueState.None]: undefined,
 		};
 	}
 
@@ -1136,7 +1147,6 @@ class ComboBox extends UI5Element {
 			[ValueState.Information]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_INFORMATION),
 			[ValueState.Error]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
 			[ValueState.Warning]: ComboBox.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
-			[ValueState.None]: "",
 		};
 	}
 
