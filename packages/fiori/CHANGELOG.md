@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.1...v1.11.0-rc.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* **ui5-page:** update documentation on page height ([#6476](https://github.com/SAP/ui5-webcomponents/issues/6476)) ([4c4bb37](https://github.com/SAP/ui5-webcomponents/commit/4c4bb3749561ec0c07390bb53500c9b0ad5bd836))
+* **ui5-side-navigation:** scope components in static area ([#6453](https://github.com/SAP/ui5-webcomponents/issues/6453)) ([76307cb](https://github.com/SAP/ui5-webcomponents/commit/76307cb2e249a0ccf0719366e6b29f3c8a77ae15))
+
+
+### Features
+
+* **ui5-segmented-button, ui5-toggle-button:** migrated to TypeScript ([#6374](https://github.com/SAP/ui5-webcomponents/issues/6374)) ([26064db](https://github.com/SAP/ui5-webcomponents/commit/26064dbb5ab842712bb304aca619cd10bac38d2b))
+
+
+
+
+
 # [1.11.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.0...v1.11.0-rc.1) (2023-02-09)
 
 

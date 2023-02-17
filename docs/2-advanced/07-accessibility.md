@@ -331,9 +331,9 @@ In order to process the issues correctly, we would like to have the following in
 
 •	UI5 Web Components version
 
-•	OS/Platform: {...}
+•	OS/Platform: \{...\}
 
-•	Browser: {...}
+•	Browser: \{...\}
 
 •	Testing Tool
 

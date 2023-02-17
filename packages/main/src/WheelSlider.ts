@@ -352,6 +352,10 @@ class WheelSlider extends UI5Element {
 			return;
 		}
 
+		if (this._prevWheelTimestamp && (e.timeStamp < this._prevWheelTimestamp + 250 || !this.expanded)) {
+			return;
+		}
+
 		if (e.deltaY > 0) {
 			this._itemUp();
 		} else if (e.deltaY < 0) {

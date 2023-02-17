@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.1...v1.11.0-rc.2) (2023-02-16)
+
+
+### Bug Fixes
+
+* **ui5-badge:** align multiple badges when used in one line ([#6481](https://github.com/SAP/ui5-webcomponents/issues/6481)) ([1e72a3c](https://github.com/SAP/ui5-webcomponents/commit/1e72a3c8d833fe2476378316a3016ba6f5a22380)), closes [#6467](https://github.com/SAP/ui5-webcomponents/issues/6467)
+* **ui5-button:** disabled button not execute click event ([#6400](https://github.com/SAP/ui5-webcomponents/issues/6400)) ([fa47576](https://github.com/SAP/ui5-webcomponents/commit/fa475767817cc7e6f141dfd386934e530b04784a)), closes [#6372](https://github.com/SAP/ui5-webcomponents/issues/6372)
+* **ui5-input/ui5-multi-input/ui5-combobox/ui5-multi-combobox:** min-width and margin ([#6044](https://github.com/SAP/ui5-webcomponents/issues/6044)) ([ba805c6](https://github.com/SAP/ui5-webcomponents/commit/ba805c62b301ad0eb88ac4b4ebf82c524925c0d6))
+* **ui5-tabcontainer:** improve sub tabs accessibility ([#6452](https://github.com/SAP/ui5-webcomponents/issues/6452)) ([08cd361](https://github.com/SAP/ui5-webcomponents/commit/08cd3610d20abd0e956e0487b217f954cb78120f))
+* **ui5-table:** remove unnecessary border-top if no-data ([#6495](https://github.com/SAP/ui5-webcomponents/issues/6495)) ([28d6da5](https://github.com/SAP/ui5-webcomponents/commit/28d6da5a284bb5bed4f43d5419cee65904ae7ede))
+* **ui5-tab:** mark the component as "abstract" ([#6458](https://github.com/SAP/ui5-webcomponents/issues/6458)) ([3380125](https://github.com/SAP/ui5-webcomponents/commit/338012559658ad572e68dd1156f05ad827af09c2))
+
+
+### Features
+
+* **ui5-input:** reflect dynamic changes of labels ([#6364](https://github.com/SAP/ui5-webcomponents/issues/6364)) ([b75e958](https://github.com/SAP/ui5-webcomponents/commit/b75e958fdc651b60913310bf1645f05e6df726ec))
+* **ui5-segmented-button, ui5-toggle-button:** migrated to TypeScript ([#6374](https://github.com/SAP/ui5-webcomponents/issues/6374)) ([26064db](https://github.com/SAP/ui5-webcomponents/commit/26064dbb5ab842712bb304aca619cd10bac38d2b))
+* **ui5-toast:** migrate to Typescript ([#6506](https://github.com/SAP/ui5-webcomponents/issues/6506)) ([402e1f7](https://github.com/SAP/ui5-webcomponents/commit/402e1f7b0b0624bfed78bb7ea5a73abead1fcad3))
+
+
+
+
+
 # [1.11.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.0...v1.11.0-rc.1) (2023-02-09)
 
 

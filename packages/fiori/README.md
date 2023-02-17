@@ -48,7 +48,7 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 
 | Assets           | Module                                    | Notes                                                                                                                                  |
 |------------------|-------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| `i18n`, `themes` | `@ui5/webcomponents-fiori/dist/Assets.js` | Theming parameters and translations for the components  <br><br> *Automatically imports also:<br> `@ui5/webcomponents/dist/Assets.js`* |
+| `i18n`, `themes` | `@ui5/webcomponents-fiori/dist/Assets.js` | Theming parameters and translations for the components  <br/><br/> *Automatically imports also:<br/> `@ui5/webcomponents/dist/Assets.js`* |
 
 ## Provided features
 
