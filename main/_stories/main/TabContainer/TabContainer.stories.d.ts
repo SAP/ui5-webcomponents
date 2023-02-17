@@ -1,0 +1,11 @@
+import type { Meta, StoryFn } from "@storybook/web-components";
+import type TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
+declare const _default: Meta<TabContainer>;
+export default _default;
+export declare const Template0: StoryFn;
+export declare const Template1: StoryFn;
+export declare const Template2: StoryFn;
+export declare const Template3: StoryFn;
+export declare const Template4: StoryFn;
+export declare const Template5: StoryFn;
+export declare const Template6: StoryFn;

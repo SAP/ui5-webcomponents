@@ -1,0 +1,4 @@
+Bundled license information:
+
+@whitespace/storybook-addon-html/dist/esm/components/SyntaxHighlighter.js:
+  /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */

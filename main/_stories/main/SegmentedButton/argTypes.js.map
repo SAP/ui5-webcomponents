@@ -1,0 +1,1 @@
+{"version":3,"file":"argTypes.js","sourceRoot":"","sources":["../../../../_stories/main/SegmentedButton/argTypes.ts"],"names":[],"mappings":"AAAA,eAAe;IACd,SAAS,EAAE;QACV,SAAS,EAAE;YACV,MAAM,EAAE,MAAM;SACd;KACD;CACD,CAAC;AACF,MAAM,CAAC,MAAM,aAAa,GAAG;IACzB,SAAS,EAAE,oBAAoB;IAC/B,OAAO,EAAE,YAAY;CACxB,CAAC"}

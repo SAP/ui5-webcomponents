@@ -1,0 +1,1 @@
+{"version":3,"file":"argTypes.js","sourceRoot":"","sources":["../../../../_stories/main/Switch/argTypes.ts"],"names":[],"mappings":"AAAA,eAAe;IACd,QAAQ,EAAE;QACT,SAAS,EAAE,QAAQ;QACnB,SAAS,EAAE;YACV,WAAW;YACX,SAAS;SACT;KACD;CACD,CAAC;AACF,MAAM,CAAC,MAAM,aAAa,GAAG;IACzB,SAAS,EAAE,oBAAoB;IAC/B,OAAO,EAAE,OAAO;CACnB,CAAC"}

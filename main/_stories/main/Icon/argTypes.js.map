@@ -1,0 +1,1 @@
+{"version":3,"file":"argTypes.js","sourceRoot":"","sources":["../../../../_stories/main/Icon/argTypes.ts"],"names":[],"mappings":"AAAA,eAAe;IACd,QAAQ,EAAE;QACT,SAAS,EAAE,QAAQ;QACnB,SAAS,EAAE;YACV,UAAU;YACV,UAAU;YACV,SAAS;YACT,aAAa;YACb,UAAU;YACV,SAAS;YACT,gBAAgB;YAChB,UAAU;SACV;KACD;CACD,CAAC;AACF,MAAM,CAAC,MAAM,aAAa,GAAG;IACzB,SAAS,EAAE,oBAAoB;CAClC,CAAC"}

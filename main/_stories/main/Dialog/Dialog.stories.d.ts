@@ -1,0 +1,10 @@
+import type { Meta, StoryFn } from "@storybook/web-components";
+import type Dialog from "@ui5/webcomponents/dist/Dialog.js";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+declare const _default: Meta<Dialog>;
+export default _default;
+export declare const Basic: UI5StoryArgs<Dialog, StoryArgsSlots>;
+export declare const DraggableAndResizable: UI5StoryArgs<Dialog, StoryArgsSlots>;
+export declare const FioriDialog: UI5StoryArgs<Dialog, StoryArgsSlots>;
+export declare const StateProperties: StoryFn;

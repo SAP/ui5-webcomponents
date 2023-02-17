@@ -1,0 +1,1 @@
+{"version":3,"file":"argTypes.js","sourceRoot":"","sources":["../../../../_stories/main/TextArea/argTypes.ts"],"names":[],"mappings":"AAAA,eAAe;IACd,YAAY,EAAE;QACb,SAAS,EAAE,QAAQ;QACnB,SAAS,EAAE;YACV,OAAO;YACP,aAAa;YACb,MAAM;YACN,SAAS;YACT,SAAS;SACT;KACD;CACD,CAAC;AACF,MAAM,CAAC,MAAM,aAAa,GAAG;IACzB,SAAS,EAAE,oBAAoB;CAClC,CAAC"}

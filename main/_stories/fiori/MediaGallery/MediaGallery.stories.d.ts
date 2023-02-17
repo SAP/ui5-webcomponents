@@ -1,0 +1,13 @@
+import type { Meta, StoryFn } from "@storybook/web-components";
+import type { StoryArgsSlots } from "./argTypes.js";
+import type { UI5StoryArgs } from "../../../types.js";
+declare const _default: Meta<MediaGallery>;
+export default _default;
+export declare const Basic: UI5StoryArgs<MediaGallery, StoryArgsSlots>;
+export declare const Template1: StoryFn;
+export declare const Template2: StoryFn;
+export declare const Template3: StoryFn;
+export declare const Template4: StoryFn;
+export declare const Template5: StoryFn;
+export declare const Template6: StoryFn;
+export declare const Template7: StoryFn;

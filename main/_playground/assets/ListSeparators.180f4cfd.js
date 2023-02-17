@@ -1,0 +1,2 @@
+var l;(function(e){e.None="None",e.SingleSelect="SingleSelect",e.SingleSelectBegin="SingleSelectBegin",e.SingleSelectEnd="SingleSelectEnd",e.SingleSelectAuto="SingleSelectAuto",e.MultiSelect="MultiSelect",e.Delete="Delete"})(l||(l={}));const S=l;var n;(function(e){e.All="All",e.Inner="Inner",e.None="None"})(n||(n={}));const t=n;export{S as L,t as a};
+//# sourceMappingURL=ListSeparators.180f4cfd.js.map
