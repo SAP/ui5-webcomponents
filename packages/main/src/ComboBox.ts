@@ -11,7 +11,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -19,7 +19,8 @@ import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
 	isBackSpace,
@@ -68,7 +69,8 @@ import ComboBoxItem from "./ComboBoxItem.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import List, { ClickEventDetail } from "./List.js";
+import List from "./List.js";
+import type { ClickEventDetail } from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
@@ -94,9 +96,16 @@ enum ValueStateIconMapping {
 	Information = "information",
 }
 
-type SelectionChangEventType = {
+type ComboBoxSelectionChangeEventDetail = {
 	item: ComboBoxItem,
 };
+
+interface IComboBoxItem extends UI5Element {
+	text: string,
+	focused: boolean,
+	selected: boolean
+	isGroupItem: boolean
+}
 
 /**
  * @class
@@ -342,7 +351,7 @@ class ComboBox extends UI5Element {
 	_iconPressed!: boolean;
 
 	@property({ type: Object, noAttribute: true, multiple: true })
-	_filteredItems!: Array<ComboBoxItem | ComboBoxGroupItem>;
+	_filteredItems!: Array<IComboBoxItem>;
 
 	@property({ validator: Integer, noAttribute: true })
 	_listWidth?: number | undefined;
@@ -356,7 +365,7 @@ class ComboBox extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
-	items!: Array<ComboBoxItem | ComboBoxGroupItem>;
+	items!: Array<IComboBoxItem>;
 
 	/**
 	 * Defines the value state message that will be displayed as pop up under the component.
@@ -367,6 +376,7 @@ class ComboBox extends UI5Element {
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed,
 	 * when the <code>ui5-combobox</code> is in <code>Information</code>, <code>Warning</code> or <code>Error</code> value state.
 	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.ComboBox.prototype.valueStateMessage
 	 * @since 1.0.0-rc.9
 	 * @slot
 	 * @public
@@ -378,6 +388,7 @@ class ComboBox extends UI5Element {
 	 * Defines the icon to be displayed in the input field.
 	 *
 	 * @type {sap.ui.webc.main.IIcon[]}
+	 * @name sap.ui.webc.main.ComboBox.prototype.icon
 	 * @slot
 	 * @public
 	 * @since 1.0.0-rc.9
@@ -618,7 +629,7 @@ class ComboBox extends UI5Element {
 			item && this._applyAtomicValueAndSelection(item, value, true);
 
 			if (value !== "" && !this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
-				this.fireEvent<SelectionChangEventType>("selection-change", {
+				this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 					item,
 				});
 
@@ -659,7 +670,7 @@ class ComboBox extends UI5Element {
 		return !allowedEventTypes.includes(eventType);
 	}
 
-	_startsWithMatchingItems(str: string): Array<ComboBoxItem | ComboBoxGroupItem> {
+	_startsWithMatchingItems(str: string): Array<IComboBoxItem> {
 		return Filters.StartsWith(str, this._filteredItems, "text");
 	}
 
@@ -694,13 +705,22 @@ class ComboBox extends UI5Element {
 
 		this._isKeyNavigation = true;
 
-		(this as any)[`_handle${e.key}`](event, indexOfItem);
+		if (
+				 e.key === "ArrowDown"
+			|| e.key === "ArrowUp"
+			|| e.key === "PageUp"
+			|| e.key === "PageDown"
+			|| e.key === "Home"
+			|| e.key === "End"
+		) {
+			this[`_handle${e.key}`](e, indexOfItem);
+		}
 	}
 
 	_handleItemNavigation(e: KeyboardEvent, indexOfItem: number, isForward: boolean) {
 		const isOpen: boolean = this.open;
-		const currentItem: ComboBoxItem | ComboBoxGroupItem = this._filteredItems[indexOfItem];
-		const nextItem: ComboBoxItem | ComboBoxGroupItem = isForward ? this._filteredItems[indexOfItem + 1] : this._filteredItems[indexOfItem - 1];
+		const currentItem: IComboBoxItem = this._filteredItems[indexOfItem];
+		const nextItem: IComboBoxItem = isForward ? this._filteredItems[indexOfItem + 1] : this._filteredItems[indexOfItem - 1];
 		const isGroupItem: boolean = currentItem && currentItem.isGroupItem;
 
 		if ((!isOpen) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
@@ -734,7 +754,7 @@ class ComboBox extends UI5Element {
 		item && this._applyAtomicValueAndSelection(item, (this.open ? this._userTypedValue : ""), true);
 
 		if ((item && !item.selected)) {
-			this.fireEvent<SelectionChangEventType>("selection-change", {
+			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 				item,
 			});
 		}
@@ -932,7 +952,7 @@ class ComboBox extends UI5Element {
 	 *
 	 * @private
 	 */
-	static _groupItemFilter(item: ComboBoxItem | ComboBoxGroupItem, idx: number, allItems: Array<ComboBoxItem | ComboBoxGroupItem>, filteredItems: Array<ComboBoxItem | ComboBoxGroupItem>) {
+	static _groupItemFilter(item: IComboBoxItem, idx: number, allItems: Array<IComboBoxItem>, filteredItems: Array<IComboBoxItem>) {
 		if (item.isGroupItem) {
 			let groupHasFilteredItems;
 
@@ -1012,7 +1032,7 @@ class ComboBox extends UI5Element {
 		this.value = this._selectedItemText;
 
 		if (!listItem.mappedItem.selected) {
-			this.fireEvent<SelectionChangEventType>("selection-change", {
+			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 				item: listItem.mappedItem,
 			});
 
@@ -1215,5 +1235,6 @@ ComboBox.define();
 export default ComboBox;
 
 export type {
-	SelectionChangEventType,
+	ComboBoxSelectionChangeEventDetail,
+	IComboBoxItem,
 };
