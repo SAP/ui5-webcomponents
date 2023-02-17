@@ -30,7 +30,7 @@ import "./dist/features/InputElementsFormSupport.js";
 import "./dist/features/InputSuggestions.js";
 import "./dist/features/ColorPaletteMoreColors.js";
 
-// import Avatar from "./dist/Avatar.js";
+import Avatar from "./dist/Avatar.js";
 // import AvatarGroup from "./dist/AvatarGroup.js";
 // import Badge from "./dist/Badge.js";
 // import Breadcrumbs from "./dist/Breadcrumbs.js";
@@ -47,12 +47,12 @@ import Button from "./dist/Button.js";
 // import ComboBox from "./dist/ComboBox.js";
 // import DatePicker from "./dist/DatePicker.js";
 // import DateRangePicker from "./dist/DateRangePicker.js";
-// import DateTimePicker from "./dist/DateTimePicker.js";
+import DateTimePicker from "./dist/DateTimePicker.js";
 // import DurationPicker from "./dist/DurationPicker.js";
 // import Dialog from "./dist/Dialog.js";
 // import FileUploader from "./dist/FileUploader.js";
 // import Icon from "./dist/Icon.js";
-// import Input from "./dist/Input.js";
+import Input from "./dist/Input.js";
 // import MultiInput from "./dist/MultiInput.js";
 // import Label from "./dist/Label.js";
 // import Link from "./dist/Link.js";
@@ -88,9 +88,9 @@ import Button from "./dist/Button.js";
 // import Title from "./dist/Title.js";
 // import Toast from "./dist/Toast.js";
 // import ToggleButton from "./dist/ToggleButton.js";
-// import Tree from "./dist/Tree.js";
+import Tree from "./dist/Tree.js";
 // import TreeList from "./dist/TreeList.js";
-// import TreeItem from "./dist/TreeItem.js";
+import TreeItem from "./dist/TreeItem.js";
 // import TreeItemCustom from "./dist/TreeItemCustom.js";
 
 // import List from "./dist/List.js";
@@ -207,6 +207,3 @@ registerIconLoader("my-custom-icons", () => {
 window["sap-ui-webcomponents-bundle"] = testAssets;
 
 export default testAssets;
-
-// TODO: Move this line in order to keep the file sorted alphabetically
-import my-new-comp from "./dist/my-new-comp.js";

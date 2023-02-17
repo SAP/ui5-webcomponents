@@ -1,5 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
+import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -77,7 +79,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/Input.css.js";
+import inputStyles from "./generated/themes/Input.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
@@ -131,6 +133,8 @@ type SuggestionScrollEventDetail = {
 	scrollContainer: HTMLElement;
 }
 
+const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
+
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
@@ -182,6 +186,8 @@ type SuggestionScrollEventDetail = {
  * @public
  */
 @customElement("ui5-input")
+@dependencies(([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []))
+@styles(inputStyles)
 @languageAware
 
 /**
@@ -246,7 +252,6 @@ type SuggestionScrollEventDetail = {
 		scrollContainer: { type: HTMLElement },
 	},
 })
-
 class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	/**
 	 * Defines whether the component is in disabled state.
@@ -652,10 +657,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	static get staticAreaTemplate() {
 		return InputPopoverTemplate;
-	}
-
-	static get styles() {
-		return styles;
 	}
 
 	static get staticAreaStyles() {
@@ -1265,8 +1266,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
-
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
 		} else {
@@ -1753,15 +1752,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		return value;
 	}
 
-	static get dependencies() {
-		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
-
-		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
-	}
-
 	static async onDefine() {
-		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
-
 		[Input.i18nBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents"),
 			Suggestions ? Suggestions.init() : Promise.resolve(),

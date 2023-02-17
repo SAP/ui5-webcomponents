@@ -7,7 +7,9 @@ import type UI5Element from "../UI5Element.js";
  */
 const dependencies = (deps: Array<typeof UI5Element>): ClassDecorator => {
 	return (target: any) => {
-		target.dependencies = () => deps;
+		Object.defineProperty(target, "dependencies", {
+			get: () => deps,
+		});
 	};
 };
 

@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
 import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -9,7 +10,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -83,6 +84,7 @@ let activeButton: Button | null = null;
  */
 @customElement("ui5-button")
 @dependencies([Icon])
+@styles([buttonCss])
 @languageAware
 /**
  * Fired when the component is activated either with a
@@ -312,10 +314,6 @@ class Button extends UI5Element implements IFormElement {
 	_deactivate: () => void;
 
 	_ontouchstart: PassiveEventListenerObject;
-
-	static get styles(): ComponentStylesData {
-		return buttonCss;
-	}
 
 	static get render() {
 		return litRender;

@@ -1059,7 +1059,6 @@ abstract class UI5Element extends HTMLElement {
 	 * @public
 	 */
 	static getUniqueDependencies(this: typeof UI5Element) {
-		debugger; // eslint-disable-line
 		if (!uniqueDependenciesCache.has(this)) {
 			const filtered = this.dependencies.filter((dep, index, deps) => deps.indexOf(dep) === index);
 			uniqueDependenciesCache.set(this, filtered);

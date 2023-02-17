@@ -18,6 +18,22 @@
 </head>
 
 <body class="button1auto">
-	<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
+	<div>
+		<ui5-button icon="home" id="icon-only-comment"><!----><!----></ui5-button>
+		<ui5-avatar initials="sd"></ui5-avatar>
+	</div>
+
+	<div>
+		<ui5-input></ui5-input>
+		<ui5-datetime-picker></ui5-datetime-picker>
+	</div>
+
+	<ui5-tree id="treeDynamic" class="full-width">
+		<ui5-tree-item text="Has preloaded children">
+			<ui5-tree-item text="Child 1"></ui5-tree-item>
+			<ui5-tree-item text="Child 2"></ui5-tree-item>
+		</ui5-tree-item>
+
+	</ui5-tree>
 </body>
 </html>
