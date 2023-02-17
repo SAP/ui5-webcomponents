@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -81,6 +82,7 @@ let activeButton: Button | null = null;
  * @public
  */
 @customElement("ui5-button")
+@dependencies([Icon])
 @languageAware
 /**
  * Fired when the component is activated either with a
@@ -321,10 +323,6 @@ class Button extends UI5Element implements IFormElement {
 
 	static get template() {
 		return ButtonTemplate;
-	}
-
-	static get dependencies() {
-		return [Icon];
 	}
 
 	static i18nBundle: I18nBundle;
