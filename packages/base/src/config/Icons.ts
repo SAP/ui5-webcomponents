@@ -106,12 +106,8 @@ const getIconCollectionByTheme = (collectionName?: IconCollection): RegisteredIc
 		return horizonThemeFamily ? RegisteredIconCollection.SAPIconsTNTV3 : RegisteredIconCollection.SAPIconsTNTV2;
 	}
 
-	if (collectionName === "business-suite-v1") {
-		return RegisteredIconCollection.SAPBSIconsV1;
-	}
-
-	if (collectionName === "business-suite-v2") {
-		return RegisteredIconCollection.SAPBSIconsV2;
+	if (collectionName === "business-suite") {
+		return horizonThemeFamily ? RegisteredIconCollection.SAPBSIconsV2 : RegisteredIconCollection.SAPBSIconsV1;
 	}
 
 	return collectionName as RegisteredIconCollection;
