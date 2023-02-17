@@ -1,7 +1,7 @@
-commit f3e88f78a8595907357151d526ba31782885e53e
-Author: Nikolay Hristov <n.hristov@sap.com>
-Date:   Fri Feb 17 15:44:17 2023 +0200
+commit 83b4b264a5b8c73a26520e48f9f061f0ab1b9167
+Author: ilhan orhan <ilhan.myumyun@sap.com>
+Date:   Fri Feb 17 17:12:54 2023 +0200
 
-    docs(ui5-color-palette-popover): fix tag in Playground page (#6532)
+    chore: prefer import type when importing types (#6533)
     
-    docs(ui5-color-palette-popover): fixed tag in Playground page
+    There are some imports left that don't follow the conventions to use import type when something is needed, used as a type or it's exported as a type. The PR addresses this.
