@@ -1,9 +1,5 @@
-commit 3f3bab5af970e19d04292aaf9ec7e7998d02536c
-Author: SAP LX Lab Service Account <tmsatsls+github.com_service-tip-git@sap.com>
-Date:   Thu Feb 16 04:38:39 2023 -0800
+commit 43dd5caac91009415ddd82d6595562ecf63080ef
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Fri Feb 17 10:10:28 2023 +0200
 
-    Translation Delivery (#6510)
-    
-    chore: translation delivery
-    
-    Change-Id: I62bc099b36b5e6dd960e9620286577e2ad6a1058
+    fix(ui5-table): update samples with required styles (#6504)
