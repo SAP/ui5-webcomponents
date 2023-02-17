@@ -331,17 +331,15 @@ class Calendar extends CalendarPart {
 		this.secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
 	}
 
-
-
 	onBeforeRendering() {
-		if(!this._currentPicker) {
+		if (!this._currentPicker) {
 			return;
 		}
 		let nextPicker = this._currentPicker;
-		if(nextPicker === "day" && this.calendarMode != CalendarMode.DAY_MONTH_YEAR) {
+		if (nextPicker === "day" && +this.calendarMode !== +CalendarMode.DAY_MONTH_YEAR) {
 			nextPicker="month";
 		}
-		if(nextPicker === "month" && this.calendarMode > CalendarMode.MONTH_YEAR) {
+		if (nextPicker === "month" && this.calendarMode > CalendarMode.MONTH_YEAR) {
 			nextPicker="year";
 		}
 		this._currentPicker = nextPicker;
@@ -459,7 +457,7 @@ class Calendar extends CalendarPart {
 
 	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		if (this.calendarMode == CalendarMode.DAY_MONTH_YEAR) {
+		if (+this.calendarMode === CalendarMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
 		} else {
 			const selectedDates = [this.timestamp];
@@ -481,9 +479,9 @@ class Calendar extends CalendarPart {
 
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		if (this.calendarMode == CalendarMode.DAY_MONTH_YEAR) {
+		if (+this.calendarMode === CalendarMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
-		} else if (this.calendarMode == CalendarMode.MONTH_YEAR) {
+		} else if (this.calendarMode <= CalendarMode.MONTH_YEAR) {
 			this._currentPicker = "month";
 		} else {
 			const selectedDates = [this.timestamp];
