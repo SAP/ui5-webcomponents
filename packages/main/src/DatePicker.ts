@@ -28,6 +28,7 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import CalendarMode from "./types/CalendarMode.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -54,7 +55,6 @@ import datePickerCss from "./generated/themes/DatePicker.css.js";
 import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
-import CalendarMode from "./types/CalendarMode.js";
 
 type DatePickerChangeEventDetail = {
 	dates: Array<number>;

@@ -12,6 +12,6 @@ enum CalendarMode {
 	DAY_MONTH_YEAR,
 	MONTH_YEAR,
 	YEAR
-};
+}
 
 export default CalendarMode;

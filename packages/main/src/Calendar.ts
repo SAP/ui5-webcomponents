@@ -337,10 +337,10 @@ class Calendar extends CalendarPart {
 		}
 		let nextPicker = this._currentPicker;
 		if (nextPicker === "day" && +this.calendarMode !== +CalendarMode.DAY_MONTH_YEAR) {
-			nextPicker="month";
+			nextPicker = "month";
 		}
 		if (nextPicker === "month" && this.calendarMode > CalendarMode.MONTH_YEAR) {
-			nextPicker="year";
+			nextPicker = "year";
 		}
 		this._currentPicker = nextPicker;
 	}
