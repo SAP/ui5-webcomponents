@@ -91,7 +91,7 @@ class SegmentedButton extends UI5Element {
 	 * @slot items
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SegmentedButtonItem>;
 
 	static i18nBundle: I18nBundle;
@@ -184,7 +184,13 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
-		this._selectedItem = this.items.filter(item => item.pressed).pop();
+		const selectedItems = this.items.filter(item => item.pressed);
+		const selectedIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
+
+		if (this._selectedItem && selectedItems.length > 1) {
+			selectedItems.splice(selectedIndex, 1);
+		}
+		this._selectedItem = selectedItems.pop();
 
 		if (this._selectedItem) {
 			this.items.forEach(item => {
