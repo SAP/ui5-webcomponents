@@ -1,7 +1,7 @@
-commit 7484cd4a2b39ab37f050090029aec074f91f7260
+commit 13f2feb3f157345cccd6bb67063c89d523df4f0c
 Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
-Date:   Fri Feb 17 12:06:43 2023 +0200
+Date:   Fri Feb 17 12:08:21 2023 +0200
 
-    fix(ui5-li-custom): fixed visual glitches (#6451)
+    fix(ui5-avatar): supporting accented characters (#6518)
     
-    Fixes: #5955
+    Fixes: #6457
