@@ -46,6 +46,14 @@ describe("Avatar", () => {
 		assert.ok(await initials.isExisting(), "initials are rendered");
 	});
 
+	it("tests rendering of accented characters", async () => {
+		const avatar = await browser.$("#myAvatar6");
+		const initials = await avatar.shadow$(".ui5-avatar-initials");
+
+		// initials are rendered
+		assert.ok(await initials.isExisting(), "initials are rendered");
+	});
+
 	it("tests rendering of icon when initials are overflowing ", async () => {
 		const avatar = await browser.$("#myAvatar5");
 		const icon = await avatar.shadow$(".ui5-avatar-icon");

@@ -414,6 +414,11 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	onBeforeRendering() {
+		if (!this.value) {
+			// fallback to default value
+			this.value = "";
+		}
+
 		this._exceededTextProps = this._calcExceededText();
 		this._mirrorText = this._tokenizeText(this.value);
 
