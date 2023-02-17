@@ -414,6 +414,11 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	onBeforeRendering() {
+		if (!this.value) {
+			// fallback to default value
+			this.value = "";
+		}
+
 		this._exceededTextProps = this._calcExceededText();
 		this._mirrorText = this._tokenizeText(this.value);
 
@@ -532,10 +537,6 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	_tokenizeText(value: string) {
-		if (!value) {
-			value = "";
-		}
-
 		const tokenizedText = value.replace(/&/gm, "&amp;").replace(/"/gm, "&quot;").replace(/'/gm, "&apos;").replace(/</gm, "&lt;")
 			.replace(/>/gm, "&gt;")
 			.split("\n");
