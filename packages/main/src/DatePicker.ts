@@ -53,6 +53,8 @@ import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
 import datePickerCss from "./generated/themes/DatePicker.css.js";
 import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
+import CalendarMode from "./types/CalendarMode.js";
 
 type DatePickerChangeEventDetail = {
 	dates: Array<number>;
@@ -338,6 +340,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	@property({ defaultValue: "day" })
 	_calendarCurrentPicker!: string;
+
+	@property({ type: CalendarMode, noAttribute: true })
+	_calendarMode!: CalendarMode;
 
 	liveValue?: string;
 
@@ -800,6 +805,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
+		this._calendarMode = this.extractCalendarMode();
 		this._isPickerOpen = true;
 		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
@@ -824,6 +830,31 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 */
 	isOpen() {
 		return !!this._isPickerOpen;
+	}
+
+	/**
+	 * Extracts the picker's calendar mode according to the format
+	 *
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.DatePicker#extractCalendarModes
+	 * @returns {CalendarMode} The mode to open the calendar
+	 */
+	extractCalendarMode():CalendarMode {
+		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
+		const types = format.aFormatArray.map((settings:{type:string}) => {
+			return settings.type.toLowerCase();
+		});
+		if (types.includes("day")) {
+			return CalendarMode.DAY_MONTH_YEAR;
+		}
+		if (types.includes("month")) {
+			return CalendarMode.MONTH_YEAR;
+		}
+		if (types.includes("year")) {
+			return CalendarMode.YEAR;
+		}
+		return CalendarMode.DAY_MONTH_YEAR;
 	}
 
 	/**

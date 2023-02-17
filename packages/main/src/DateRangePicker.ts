@@ -11,6 +11,7 @@ import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
 import type { DatePickerChangeEventDetail } from "./DatePicker.js";
+import CalendarMode from "./types/CalendarMode.js";
 
 /**
  * @class
@@ -356,6 +357,10 @@ class DateRangePicker extends DatePicker {
 		}
 
 		return "";
+	}
+
+	extractCalendarMode():CalendarMode {
+		return CalendarMode.DAY_MONTH_YEAR;
 	}
 }
 

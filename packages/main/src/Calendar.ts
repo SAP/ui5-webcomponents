@@ -25,6 +25,7 @@ import type { MonthPickerChangeEventDetail } from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import type { YearPickerChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import CalendarMode from "./types/CalendarMode.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -247,12 +248,12 @@ class Calendar extends CalendarPart {
 	 * Defines the available picker modes
 	 * <br><br>
 	 *
-	 * @type {string[]}
-	 * @name sap.ui.webc.main.Calendar.prototype.pickerModes
+	 * @type {CalendarMode}
+	 * @name sap.ui.webc.main.Calendar.prototype.calendarMode
 	 * @private
 	 */
-	@property({ type: String, multiple: true })
-	pickerModes!: Array<string>;
+	@property({ type: CalendarMode })
+	calendarMode!: CalendarMode;
 
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
@@ -330,30 +331,20 @@ class Calendar extends CalendarPart {
 		this.secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
 	}
 
-	extractDateModes():string[] {
-		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
-		const types = format.aFormatArray.map((settings:{type:string}) => {
-			return settings.type.toLowerCase();
-		});
-		const result = [];
-		if (types.includes("day")) {
-			result.push("day");
-		}
-		if (types.includes("month")) {
-			 result.push("month");
-		}
-		if (types.includes("year")) {
-			 result.push("year");
-		}
-		return result.length ? result : ["day", "month", "year"];
-	}
+
 
 	onBeforeRendering() {
-		this.pickerModes = this.extractDateModes();
-		if (!this.pickerModes.includes(this._currentPicker)) {
-			const nextPicker = this.pickerModes.find(mode => mode >= this._currentPicker);
-			this._currentPicker = nextPicker || this.pickerModes[0];
+		if(!this._currentPicker) {
+			return;
 		}
+		let nextPicker = this._currentPicker;
+		if(nextPicker === "day" && this.calendarMode != CalendarMode.DAY_MONTH_YEAR) {
+			nextPicker="month";
+		}
+		if(nextPicker === "month" && this.calendarMode > CalendarMode.MONTH_YEAR) {
+			nextPicker="year";
+		}
+		this._currentPicker = nextPicker;
 	}
 
 	/**
@@ -468,7 +459,7 @@ class Calendar extends CalendarPart {
 
 	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		if (this.pickerModes.includes("day")) {
+		if (this.calendarMode == CalendarMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
 		} else {
 			const selectedDates = [this.timestamp];
@@ -490,9 +481,9 @@ class Calendar extends CalendarPart {
 
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		if (this.pickerModes.includes("day")) {
+		if (this.calendarMode == CalendarMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
-		} else if (this.pickerModes.includes("month")) {
+		} else if (this.calendarMode == CalendarMode.MONTH_YEAR) {
 			this._currentPicker = "month";
 		} else {
 			const selectedDates = [this.timestamp];

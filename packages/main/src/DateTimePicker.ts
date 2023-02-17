@@ -34,6 +34,7 @@ import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerP
 // Styles
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
+import CalendarMode from "./types/CalendarMode.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -421,6 +422,10 @@ class DateTimePicker extends DatePicker {
 		}
 
 		return selectedDate;
+	}
+
+	extractCalendarMode():CalendarMode {
+		return CalendarMode.DAY_MONTH_YEAR;
 	}
 }
 
