@@ -1,11 +1,7 @@
-commit 7d34fe94d2830fa1caf61f34f27b2e80b9541da7
-Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
-Date:   Fri Feb 17 11:51:37 2023 +0200
+commit 7484cd4a2b39ab37f050090029aec074f91f7260
+Author: yanaminkova <32466553+yanaminkova@users.noreply.github.com>
+Date:   Fri Feb 17 12:06:43 2023 +0200
 
-    fix(ui5-textarea): prevent exception if value is set to null (#6493)
+    fix(ui5-li-custom): fixed visual glitches (#6451)
     
-    * fix(ui5-textarea): prevent exception if value is set to null
-    
-    * fix(ui5-textarea): resole conflict
-    
-    * fix(ui5-textarea): apply comment
+    Fixes: #5955
