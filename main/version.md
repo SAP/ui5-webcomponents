@@ -1,7 +1,11 @@
-commit 89c88b8ff5a5a55bc0f1ea0650806b690a980f77
-Author: Tsanislav Gatev <tsanislav.gatev@sap.com>
-Date:   Fri Feb 17 11:20:07 2023 +0200
+commit 7d34fe94d2830fa1caf61f34f27b2e80b9541da7
+Author: Ivaylo Plashkov <ivaylo.plashkov@sap.com>
+Date:   Fri Feb 17 11:51:37 2023 +0200
 
-    fix(ui5-wheel-slider): reduce the wheel speed when using pad (#6503)
+    fix(ui5-textarea): prevent exception if value is set to null (#6493)
     
-    fixes: #6459
+    * fix(ui5-textarea): prevent exception if value is set to null
+    
+    * fix(ui5-textarea): resole conflict
+    
+    * fix(ui5-textarea): apply comment
