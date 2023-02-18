@@ -4,7 +4,7 @@ import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js
 const IconCollectionConfiguration = new Map<string, string>();
 
 // All supported icon collections + unknown custom ones
-type IconCollection = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite-v1" | "business-suite-v2" | string;
+type IconCollection = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite" | "business-suite-v1" | "business-suite-v2" | string;
 
 // All registered icon collections - all icon collections resolves to these options at the end
 enum RegisteredIconCollection {
@@ -88,6 +88,7 @@ const getEffectiveIconCollection = (collectionName?: IconCollection): IconCollec
  * - "tnt" (and its alias "SAP-icons-TNT") resolves to "tnt-v2" in "Quartz", "Belize", and resolves to "tnt-v3" in "Horizon"
  * - "tnt-v2" forces "TNT icons v2" in any theme and resolves to itself "tnt-v2"
  * - "tnt-v3" forces "TNT icons v3" in any theme and resolves to itself "tnt-v3"
+ * - "business-suite" (and its alias "SAP-icons-business-suite") resolves to "business-suite-v1" in "Quartz", "Belize", and resolves to "business-suite-v2" in "Horizon"
  * - "business-suite-v1" forces "Business Suite icons v1" in any theme and resolves to itself "business-suite-v1"
  * - "business-suite-v2" forces "Business Suite icons v2" in any theme and resolves to itself "business-suite-v2"
  *

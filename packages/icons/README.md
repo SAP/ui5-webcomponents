@@ -41,7 +41,7 @@ As SAP Icons is the default icon collection, you can skip the collection name an
 ```
 
 The package provides two versions of each icon (SAP Icons version 4.x and SAP Icons version 5.x). If you don't specify a collection name like in the example above,
-the framework will detect the current theme and render the corresponding icon - `SAP Icons v5` for SAP Horizon theme family  (sap_horizon, sap_horizon_darl, etc.), and `SAP Icons v4` for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.).
+the framework will detect the current theme and render the corresponding icon - `SAP Icons v5` for SAP Horizon theme family  (sap_horizon, sap_horizon_dark, etc.), and `SAP Icons v4` for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.).
 
 ### Collections `SAP-icon-v4` and `SAP-icon-v5`
 
