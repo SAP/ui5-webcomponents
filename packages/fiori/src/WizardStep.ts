@@ -49,7 +49,7 @@ class WizardStep extends UI5Element {
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
-	title!: string
+	titleText!: string
 
 	/**
 	 * Defines the <code>subtitleText</code> of the step.
@@ -143,7 +143,6 @@ class WizardStep extends UI5Element {
 
 	stretch?: boolean;
 	stepContentAriaLabel?: string;
-	titleText?: string;
 }
 
 WizardStep.define();

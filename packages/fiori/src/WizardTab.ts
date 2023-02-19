@@ -8,6 +8,10 @@ import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
 import WizardTabCss from "./generated/themes/WizardTab.css.js";
 
+type WizardTabInfo = {
+	[key: string]: string,
+}
+
 /**
  * @class
  *
@@ -135,6 +139,8 @@ class WizardTab extends UI5Element implements ITabbable {
 	@property({ defaultValue: "-1" })
 	_tabIndex!: string
 
+	_wizardTabAccInfo? : WizardTabInfo
+
 	static get render() {
 		return litRender;
 	}
@@ -182,6 +188,9 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	get accInfo() {
 		return {
+			"ariaSetsize": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaSetsize,
+			"ariaPosinset": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaPosinset,
+			"ariaLabel": this._wizardTabAccInfo && this._wizardTabAccInfo.ariaLabel,
 			"ariaCurrent": this.selected ? "true" : undefined,
 			"ariaDisabled": this.disabled ? "true" : undefined,
 		};
