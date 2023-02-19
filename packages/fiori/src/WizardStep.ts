@@ -63,8 +63,8 @@ class WizardStep extends UI5Element {
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
-	 @property()
-	 subtitleText!: string
+	@property()
+	subtitleText!: string
 
 	/**
 	 * Defines the <code>icon</code> of the step.
@@ -80,8 +80,8 @@ class WizardStep extends UI5Element {
 	 * @defaultvalue ""
 	 * @public
 	 */
-	 @property()
-	 icon!: string
+	@property()
+	icon!: string
 
 	/**
 	 * Defines if the step is <code>disabled</code>. When disabled the step is displayed,
@@ -140,6 +140,10 @@ class WizardStep extends UI5Element {
 
 	@slot({ type: HTMLElement, "default": true })
 	default!: Array<HTMLElement>
+
+	stretch?: boolean;
+	stepContentAriaLabel?: string;
+	titleText?: string;
 }
 
 WizardStep.define();

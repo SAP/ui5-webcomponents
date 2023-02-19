@@ -1,10 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
-
+import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
 import WizardTabCss from "./generated/themes/WizardTab.css.js";
@@ -31,7 +30,7 @@ import WizardTabCss from "./generated/themes/WizardTab.css.js";
  */
 
 @customElement("ui5-wizard-tab")
-class WizardTab extends UI5Element {
+class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the <code>icon</code> of the step.
 	 * @type {string}
@@ -130,11 +129,11 @@ class WizardTab extends UI5Element {
 	/**
 	 * Defines the tabindex of the step.
 	 * @type {string}
-	 * @defaultvalue -1
+	 * @defaultvalue "-1"
 	 * @private
 	 */
-	@property( { validator: Integer, defaultValue: -1 })
-	_tabIndex!: number
+	@property({ defaultValue: "-1" })
+	_tabIndex!: string
 
 	static get render() {
 		return litRender;
@@ -174,7 +173,7 @@ class WizardTab extends UI5Element {
 	}
 
 	get tabIndex() {
-		return this._tabIndex;
+		return Number(this._tabIndex);
 	}
 
 	get hasTexts() {
