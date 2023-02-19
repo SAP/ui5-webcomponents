@@ -100,7 +100,7 @@ const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
  * The top most area of the <code>ui5-wizard</code> is occupied by the navigation area.
  * It shows the sequence of steps, where the recommended number of steps is between 3 and 8 steps.
  * <ul>
- * <li> Steps can have different visual representations - numbers or icons.
+ * <li> Steps can have different visual representations - numbers or icons.</li>
  * <li> Steps might have labels for better readability - titleText and subTitleText.</li>
  * <li> Steps are defined by using the <code>ui5-wizard-step</code> as slotted element within the <code>ui5-wizard</code>.</li>
  * </ul>
@@ -177,7 +177,7 @@ const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
  * Tapping on them will show a popover to select the step to navigate to. On mobile device, the grouped steps are presented within a dialog.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step>)
+ * <code>import "@ui5/webcomponents-fiori/dist/Wizard.js";</code> (includes <ui5-wizard-step/>)
  *
  * @constructor
  * @author SAP SE
