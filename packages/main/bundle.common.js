@@ -126,9 +126,11 @@ import actor from "@ui5/webcomponents-icons-tnt/dist/actor.js";
 import actorv2 from "@ui5/webcomponents-icons-tnt/dist/v2/actor.js";
 import actorv3 from "@ui5/webcomponents-icons-tnt/dist/v3/actor.js";
 // SAP BS Icons
-import polygone from "@ui5/webcomponents-icons-business-suite/dist/add-polygone.js";
+import icon_3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
+import icon_3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
+import icon_3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
 
-const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, polygone];
+const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon_3d, icon_3dv1, icon_3dv2];
 
 const testAssets = {
 	configuration : {
