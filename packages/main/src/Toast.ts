@@ -207,7 +207,7 @@ class Toast extends UI5Element {
 
 	_initiateOpening() {
 		this.domRendered = true;
-		requestAnimationFrame(_ => {
+		requestAnimationFrame(() => {
 			this.open = true;
 		});
 	}

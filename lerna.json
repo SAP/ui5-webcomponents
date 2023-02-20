@@ -23,7 +23,7 @@
 		},
 		"version": {
 			"allowBranch": "*",
-			"message": "chore(release): publish %s",
+			"message": "chore(release): publish %s [ci skip]",
 			"conventionalCommits": true,
 			"verifyAccess": false,
 			"preid": "rc"

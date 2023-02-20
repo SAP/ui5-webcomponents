@@ -10,8 +10,8 @@
 }
 
 .ui5-li-root.ui5-custom-li-root {
-	padding: 0;
 	pointer-events: inherit;
+	min-height: inherit;
 }
 
 .ui5-li-root.ui5-custom-li-root .ui5-li-content {
