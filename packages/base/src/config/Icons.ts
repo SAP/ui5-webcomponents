@@ -88,7 +88,7 @@ const getEffectiveIconCollection = (collectionName?: IconCollection): IconCollec
  * - "tnt" (and its alias "SAP-icons-TNT") resolves to "tnt-v2" in "Quartz", "Belize", and resolves to "tnt-v3" in "Horizon"
  * - "tnt-v2" forces "TNT icons v2" in any theme and resolves to itself "tnt-v2"
  * - "tnt-v3" forces "TNT icons v3" in any theme and resolves to itself "tnt-v3"
- * - "business-suite" (and its alias "SAP-icons-business-suite") resolves to "business-suite-v1" in "Quartz", "Belize", and resolves to "business-suite-v2" in "Horizon"
+ * - "business-suite" (and its alias "BusinessSuiteInAppSymbols") resolves to "business-suite-v1" in "Quartz", "Belize", and resolves to "business-suite-v2" in "Horizon"
  * - "business-suite-v1" forces "Business Suite icons v1" in any theme and resolves to itself "business-suite-v1"
  * - "business-suite-v2" forces "Business Suite icons v2" in any theme and resolves to itself "business-suite-v2"
  *
