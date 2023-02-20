@@ -151,7 +151,6 @@ class RatingIndicator extends UI5Element {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleName
-	 * @defaultvalue: undefined
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
