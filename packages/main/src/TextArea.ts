@@ -635,13 +635,15 @@ class TextArea extends UI5Element implements IFormElement {
 			return `${this.valueStateTypeMappings[this.valueState]}`.concat(" ", this.valueStateMessageText.map(el => el.textContent).join(" "));
 		}
 
-		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText!}`;
+		return `${this.valueStateTypeMappings[this.valueState]} ${this.valueStateDefaultText}`;
 	}
 
 	get valueStateDefaultText() {
 		if (this.valueState !== ValueState.None) {
 			return this.valueStateTextMappings[this.valueState];
 		}
+
+		return "";
 	}
 
 	get ariaInvalid() {
