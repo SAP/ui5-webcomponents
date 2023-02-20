@@ -56,6 +56,9 @@
 	<br />
 	<ui5-checkbox id="checkboxChecked" checked></ui5-checkbox>
 
+	<br>
+	<ui5-checkbox id="defaultPreventedCb"></ui5-checkbox>
+
 	<script>
 		var hcb = false;
 		var input = document.querySelector("#field");
@@ -68,6 +71,12 @@
 				counter += 1;
 				input.value = counter;
 			});
+		});
+
+		var defaultPreventedCb = document.querySelector("#defaultPreventedCb");
+
+		defaultPreventedCb.addEventListener("ui5-change", function(event) {
+			event.preventDefault();
 		});
 </script>
 </body>

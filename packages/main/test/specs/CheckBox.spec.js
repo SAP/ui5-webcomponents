@@ -63,4 +63,22 @@ describe("CheckBox general interaction", () => {
 
 		assert.strictEqual(await checkboxChecked.getAttribute("aria-hidden"), "true", "aria-hidden is set");
 	});
+
+	it("tests change event - value is changed", async () => {
+		const defaultCb = await browser.$("#cb1");
+		const currentChecked = await defaultCb.getProperty("checked");
+
+		await defaultCb.click();
+
+		assert.strictEqual(await defaultCb.getProperty("checked"), !currentChecked, "The checkbox is checked");
+	});
+
+	it("tests change event preventDefault - value is not changed", async () => {
+		const defaultPreventedCb = await browser.$("#defaultPreventedCb");
+		const currentChecked = await defaultPreventedCb.getProperty("checked");
+
+		await defaultPreventedCb.click();
+
+		assert.strictEqual(await defaultPreventedCb.getProperty("checked"), currentChecked, "The checkbox is not checked");
+	});
 });

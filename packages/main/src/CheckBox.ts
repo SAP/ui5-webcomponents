@@ -373,9 +373,13 @@ class CheckBox extends UI5Element implements IFormElement {
 				this.checked = !this.checked;
 			}
 
-			this.fireEvent("change");
+			const changePrevented = !this.fireEvent("change", null, true);
 			// Angular two way data binding
-			this.fireEvent("value-changed");
+			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+
+			if (changePrevented || valueChagnePrevented) {
+				this.checked = !this.checked;
+			}
 		}
 		return this;
 	}
