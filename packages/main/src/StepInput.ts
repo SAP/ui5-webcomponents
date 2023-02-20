@@ -436,6 +436,9 @@ class StepInput extends UI5Element implements IFormElement {
 
 	_onInputFocusIn() {
 		this._inputFocused = true;
+		if (this.value !== this._previousValue) {
+			this._previousValue = this.value;
+		}
 	}
 
 	_onInputFocusOut() {
