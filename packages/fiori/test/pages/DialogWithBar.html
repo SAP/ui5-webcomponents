@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Dialog test page</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script src="../../bundle.esm.js" type="module"></script>
+</head>
+
+<body class="bar1auto">
+	<ui5-button id="dialog-bar-open">Dialog with Bar in Footer</ui5-button>
+	<ui5-dialog open id="dialog-bar" header-text="Using bar with design=Footer as footer">
+		<ui5-bar slot="footer" design="Footer">
+			<ui5-button id="dialog-bar-close" design="Emphasized">Close</ui5-button>
+		</ui5-bar>
+	</ui5-dialog>
+
+	<script>
+		window["dialog-bar-open"].addEventListener("click", function () {
+			window["dialog-bar"].open = true;
+		});
+
+		window["dialog-bar-close"].addEventListener("click", function () {
+			window["dialog-bar"].removeAttribute("open");
+		});
+	</script>
+</body>
+
+</html>
