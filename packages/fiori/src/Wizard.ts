@@ -452,7 +452,7 @@ class Wizard extends UI5Element {
 	/**
 	 * Handles user click on steps' tabs within the header.
 	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {Event} event
+	 * @param {MouseEvent} e
 	 * @private
 	 */
 	onSelectionChangeRequested(e: MouseEvent) {
@@ -463,7 +463,7 @@ class Wizard extends UI5Element {
 	/**
 	 * Handles user scrolling with debouncing.
 	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {Event} event
+	 * @param {MouseEvent} e
 	 * @private
 	 */
 	onScroll(e: MouseEvent) {
@@ -478,7 +478,7 @@ class Wizard extends UI5Element {
 	/**
 	 * Handles when a step in the header is focused in order to update the <code>ItemNavigation</code>.
 	 * <b>Note:</b> the handler is bound in the template.
-	 * @param {Event} event
+	 * @param {FocusEvent} e
 	 * @private
 	 */
 	onStepInHeaderFocused(e: FocusEvent) {
@@ -538,13 +538,13 @@ class Wizard extends UI5Element {
 		const iStepsToShow = this.steps.length ? Math.floor(iWidth / MIN_STEP_WIDTH_WITH_TITLE) : Math.floor(iWidth / MIN_STEP_WIDTH_NO_TITLE);
 
 		[...tabs].forEach((step, index) => {
-			step.removeAttribute(EXPANDED_STEP);
-			step.removeAttribute(BEFORE_EXPANDED_STEP);
-			step.removeAttribute(AFTER_EXPANDED_STEP);
+			step.setAttribute(EXPANDED_STEP, "false");
+			step.setAttribute(BEFORE_EXPANDED_STEP, "false");
+			step.setAttribute(AFTER_EXPANDED_STEP, "false");
 
 			// Add "data-ui5-wizard-after-current-tab" to all tabs after the current one
 			if (index > iCurrStep) {
-				tabs[index].setAttribute(AFTER_CURRENT_STEP, "");
+				tabs[index].setAttribute(AFTER_CURRENT_STEP, "true");
 			} else {
 				tabs[index].removeAttribute(AFTER_CURRENT_STEP);
 			}
@@ -552,7 +552,7 @@ class Wizard extends UI5Element {
 
 		// Add "data-ui5-wizard-expanded-tab" to the current step
 		if (tabs[iCurrStep]) {
-			tabs[iCurrStep].setAttribute(EXPANDED_STEP, "");
+			tabs[iCurrStep].setAttribute(EXPANDED_STEP, "true");
 		}
 
 		// Set the "data-ui5-wizard-expanded-tab" to the steps that are expanded
@@ -567,17 +567,17 @@ class Wizard extends UI5Element {
 			}
 
 			if (isForward && tabs[iCurrStep + counter]) {
-				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP, "");
+				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP, "true");
 				isForward = !isForward;
 			} else if (!isForward && tabs[iCurrStep - counter]) {
-				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP, "");
+				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP, "true");
 				isForward = !isForward;
 			} else if (tabs[iCurrStep + counter + 1]) {
 				counter += 1;
-				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP, "");
+				tabs[iCurrStep + counter].setAttribute(EXPANDED_STEP, "true");
 				isForward = true;
 			} else if (tabs[iCurrStep - counter]) {
-				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP, "");
+				tabs[iCurrStep - counter].setAttribute(EXPANDED_STEP, "true");
 				counter += 1;
 				isForward = false;
 			}
@@ -587,11 +587,11 @@ class Wizard extends UI5Element {
 		// using the "data-ui5-wizard-after-current-tab" and "data-ui5-wizard-expanded-tab-prev" attributes
 		for (let i = 0; i < tabs.length; i++) {
 			if (tabs[i].getAttribute(EXPANDED_STEP) === "true" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP) === "false") {
-				tabs[i - 1].setAttribute(BEFORE_EXPANDED_STEP, "");
+				tabs[i - 1].setAttribute(BEFORE_EXPANDED_STEP, "true");
 			}
 
 			if (tabs[i].getAttribute(EXPANDED_STEP) === "false" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP) === "true") {
-				tabs[i].setAttribute(AFTER_EXPANDED_STEP, "");
+				tabs[i - 1].setAttribute(BEFORE_EXPANDED_STEP, "true");
 				break;
 			}
 		}
