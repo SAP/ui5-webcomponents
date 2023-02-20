@@ -66,7 +66,6 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 // reuse suggestions focus styling for NMore popup
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
-
 /**
  * @class
  *
@@ -180,7 +179,7 @@ class Tokenizer extends UI5Element {
 		this._scrollEnablement = new ScrollEnablement(this);
 	}
 
-	async onBeforeRendering() {
+	onBeforeRendering() {
 		this._nMoreCount = this.overflownTokens.length;
 	}
 
@@ -230,7 +229,7 @@ class Tokenizer extends UI5Element {
 			popover.close();
 		}
 
-		this._scrollEnablement.scrollContainer = (this.expanded || !this.narrowContentDom) ? this.expandedContentDom! : this.narrowContentDom!;
+		this._scrollEnablement.scrollContainer = (this.expanded || !this.narrowContentDom) ? this.expandedContentDom! : this.narrowContentDom;
 
 		if (this.expanded) {
 			this._expandedScrollWidth = this.expandedContentDom!.scrollWidth;
@@ -428,7 +427,9 @@ class Tokenizer extends UI5Element {
 			return;
 		}
 
-		setTimeout(() => tokens[nextIndex].focus(), 0);
+		setTimeout(() => {
+			tokens[nextIndex].focus();
+		}, 0);
 
 		this._scrollToToken(tokens[nextIndex]);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
@@ -444,7 +445,9 @@ class Tokenizer extends UI5Element {
 
 		focusedToken.selected = true;
 		tokens[nextIndex].selected = true;
-		setTimeout(() => tokens[nextIndex].focus(), 0);
+		setTimeout(() => {
+			tokens[nextIndex].focus();
+		}, 0);
 
 		this._scrollToToken(tokens[nextIndex]);
 		this._itemNav.setCurrentItem(tokens[nextIndex]);
@@ -498,10 +501,9 @@ class Tokenizer extends UI5Element {
 			e.preventDefault();
 		};
 
-
 		document.addEventListener(shortcutName as keyof DocumentEventMap, cutToClipboard as EventListenerOrEventListenerObject);
 		document.execCommand(shortcutName);
-		document.removeEventListener(shortcutName as keyof DocumentEventMap,cutToClipboard as EventListenerOrEventListenerObject);
+		document.removeEventListener(shortcutName as keyof DocumentEventMap, cutToClipboard as EventListenerOrEventListenerObject);
 	}
 
 	/**
