@@ -840,7 +840,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @name sap.ui.webc.main.DatePicker#extractCalendarModes
 	 * @returns {CalendarMode} The mode to open the calendar
 	 */
-	extractCalendarMode():CalendarMode {
+	extractCalendarMode(): CalendarMode {
 		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
 		const types = format.aFormatArray.map((settings:{type:string}) => {
 			return settings.type.toLowerCase();
@@ -848,7 +848,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		if (types.includes("day")) {
 			return CalendarMode.DAY_MONTH_YEAR;
 		}
-		if (types.includes("month")) {
+		if (types.includes("month") || types.includes("monthstandalone")) {
 			return CalendarMode.MONTH_YEAR;
 		}
 		if (types.includes("year")) {

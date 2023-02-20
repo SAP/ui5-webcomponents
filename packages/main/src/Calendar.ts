@@ -252,7 +252,7 @@ class Calendar extends CalendarPart {
 	 * @name sap.ui.webc.main.Calendar.prototype.calendarMode
 	 * @private
 	 */
-	@property({ type: CalendarMode })
+	@property({ type: CalendarMode, defaultValue: CalendarMode.DAY_MONTH_YEAR, noAttribute: true })
 	calendarMode!: CalendarMode;
 
 	/**
@@ -336,10 +336,10 @@ class Calendar extends CalendarPart {
 			return;
 		}
 		let nextPicker = this._currentPicker;
-		if (nextPicker === "day" && +this.calendarMode !== +CalendarMode.DAY_MONTH_YEAR) {
+		if (nextPicker === "day" && this.calendarMode !== CalendarMode.DAY_MONTH_YEAR) {
 			nextPicker = "month";
 		}
-		if (nextPicker === "month" && this.calendarMode > CalendarMode.MONTH_YEAR) {
+		if (nextPicker === "month" && this.calendarMode === CalendarMode.YEAR) {
 			nextPicker = "year";
 		}
 		this._currentPicker = nextPicker;
@@ -457,7 +457,7 @@ class Calendar extends CalendarPart {
 
 	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		if (+this.calendarMode === CalendarMode.DAY_MONTH_YEAR) {
+		if (this.calendarMode === CalendarMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
 		} else {
 			const selectedDates = [this.timestamp];
@@ -479,9 +479,9 @@ class Calendar extends CalendarPart {
 
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		if (+this.calendarMode === CalendarMode.DAY_MONTH_YEAR) {
+		if (this.calendarMode === CalendarMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
-		} else if (this.calendarMode <= CalendarMode.MONTH_YEAR) {
+		} else if (this.calendarMode === CalendarMode.MONTH_YEAR) {
 			this._currentPicker = "month";
 		} else {
 			const selectedDates = [this.timestamp];

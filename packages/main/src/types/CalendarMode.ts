@@ -9,9 +9,9 @@
  */
 
 enum CalendarMode {
-	DAY_MONTH_YEAR,
-	MONTH_YEAR,
-	YEAR
+	DAY_MONTH_YEAR = "DAY_MONTH_YEAR",
+	MONTH_YEAR = "MONTH_YEAR",
+	YEAR = "YEAR"
 }
 
 export default CalendarMode;
