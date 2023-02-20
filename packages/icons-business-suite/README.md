@@ -28,6 +28,28 @@ Example usage with `<ui5-icon>` web component:
 <ui5-icon name="business-suite/1x2-grid-layout"></ui5-icon>
 ```
 
+The package provides two versions of each icon (SAP Business Suite Icons v1 and SAP Business Suite Icons v2).
+If you don't specify the versioned collection name, like in the example above:
+
+```html
+<ui5-icon name="business-suite/1x2-grid-layout"></ui5-icon>
+```
+
+the framework will detect the current theme and render the corresponding icon - from `SAP Icons Business suite V2` (collection name `business-suite-v2`) for SAP Horizon theme family  (sap_horizon, sap_horizon_dark, etc.), and from `SAP Icons Business suite V1` (collection name `business-suite-v1`) for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.).
+
+### Collections `business-suite-v1` and `business-suite-v2 `
+
+In case you want to always display the `SAP Icons Business suite V1` icons in all themes, you can set it explicitly via the `business-suite-v1` collection name:
+
+```html
+<ui5-icon name="business-suite-v1/answered"></ui5-icon>
+```
+
+The same applies if you want to always display the `SAP Icons Business suite V2` icons. You can set it explicitly via the `business-suite-v2` collection name:
+```html
+<ui5-icon name="business-suite-v2/answered"></ui5-icon>
+```
+
 For a full list of the icons in the `business-suite` collection, click [here](https://ui5.sap.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols).
 
 ## Resources

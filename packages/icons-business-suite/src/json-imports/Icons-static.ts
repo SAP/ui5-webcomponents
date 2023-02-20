@@ -1,13 +1,21 @@
 import { registerIconLoader, CollectionData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
-import SAPIconsBusinessSuiteUrl from "../generated/assets/SAP-icons-business-suite.json";
+import SAPIconsBusinessSuiteUrlV1 from "../generated/assets/v1/SAP-icons-business-suite.json";
+import SAPIconsBusinessSuiteUrlV2 from "../generated/assets/v2/SAP-icons-business-suite.json";
 
-const loadIconsBundle = async (): Promise<CollectionData> => {
-	if (typeof SAPIconsBusinessSuiteUrl === "object") {
+const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
+	if (typeof SAPIconsBusinessSuiteUrlV1 === "object" || typeof SAPIconsBusinessSuiteUrlV2 === "object") {
 		// inlined from build
 		throw new Error("[icons-business-suite] Inlined JSON not supported with static imports of assets. Use dynamic imports of assets or configure JSON imports as URLs");
 	}
-	return (await fetch(SAPIconsBusinessSuiteUrl)).json();
+
+	const iconsUrl: string = collection === "business-suite-v1" ? SAPIconsBusinessSuiteUrlV1 : SAPIconsBusinessSuiteUrlV2;
+	return (await fetch(iconsUrl)).json();
 }
 
-registerIconLoader("business-suite", loadIconsBundle);
+const registerLoaders = () => {
+	registerIconLoader("business-suite-v1", loadIconsBundle);
+	registerIconLoader("business-suite-v2", loadIconsBundle);
+};
+
+registerLoaders();
