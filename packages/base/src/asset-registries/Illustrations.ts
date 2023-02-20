@@ -1,5 +1,5 @@
 import getSharedResource from "../getSharedResource.js";
-import { I18nText } from "../i18nBundle.js";
+import type { I18nText } from "../i18nBundle.js";
 
 type IllustrationLoader = (illustrationName: string) => Promise<IllustrationData>;
 
