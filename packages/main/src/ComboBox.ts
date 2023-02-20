@@ -448,7 +448,7 @@ class ComboBox extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const popover: Popover = this.valueStatePopover!;
+		const popover: Popover | undefined = this.valueStatePopover;
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 
@@ -456,8 +456,8 @@ class ComboBox extends UI5Element {
 			this._filteredItems = this.items;
 		}
 
-		if (!this._initialRendering && popover && document.activeElement === this && !this._filteredItems.length) {
-			popover.close();
+		if (!this._initialRendering && document.activeElement === this && !this._filteredItems.length) {
+			popover?.close();
 		}
 
 		this._selectMatchingItem();
@@ -651,8 +651,8 @@ class ComboBox extends UI5Element {
 		}
 	}
 	shouldAutocomplete(e: InputEvent): boolean {
-		const eventType: string = e.inputType;
-		const allowedEventTypes: Array<string> = [
+		const eventType = e.inputType;
+		const allowedEventTypes = [
 			"deleteWordBackward",
 			"deleteWordForward",
 			"deleteSoftLineBackward",
@@ -720,10 +720,10 @@ class ComboBox extends UI5Element {
 	}
 
 	_handleItemNavigation(e: KeyboardEvent, indexOfItem: number, isForward: boolean) {
-		const isOpen: boolean = this.open;
-		const currentItem: IComboBoxItem = this._filteredItems[indexOfItem];
-		const nextItem: IComboBoxItem = isForward ? this._filteredItems[indexOfItem + 1] : this._filteredItems[indexOfItem - 1];
-		const isGroupItem: boolean = currentItem && currentItem.isGroupItem;
+		const isOpen = this.open;
+		const currentItem = this._filteredItems[indexOfItem];
+		const nextItem = isForward ? this._filteredItems[indexOfItem + 1] : this._filteredItems[indexOfItem - 1];
+		const isGroupItem = currentItem && currentItem.isGroupItem;
 
 		if ((!isOpen) && ((isGroupItem && !nextItem) || (!isGroupItem && !currentItem))) {
 			return;
@@ -766,7 +766,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_handleArrowDown(e: KeyboardEvent, indexOfItem: number) {
-		const isOpen: boolean = this.open;
+		const isOpen = this.open;
 
 		if (this.focused && indexOfItem === -1 && this.hasValueStateText && isOpen) {
 			this._isValueStateFocused = true;
@@ -808,9 +808,9 @@ class ComboBox extends UI5Element {
 	}
 
 	_handlePageUp(e: KeyboardEvent, indexOfItem: number) {
-		const isProposedIndexValid: boolean = indexOfItem - SKIP_ITEMS_SIZE > -1;
+		const isProposedIndexValid = indexOfItem - SKIP_ITEMS_SIZE > -1;
 		indexOfItem = isProposedIndexValid ? indexOfItem - SKIP_ITEMS_SIZE : 0;
-		const shouldMoveForward: boolean = this._filteredItems[indexOfItem].isGroupItem && !this.open;
+		const shouldMoveForward = this._filteredItems[indexOfItem].isGroupItem && !this.open;
 
 		if (!isProposedIndexValid && this.hasValueStateText && this.open) {
 			this._clearFocus();
@@ -823,11 +823,11 @@ class ComboBox extends UI5Element {
 	}
 
 	_handlePageDown(e: KeyboardEvent, indexOfItem: number) {
-		const itemsLength: number = this._filteredItems.length;
-		const isProposedIndexValid: boolean = indexOfItem + SKIP_ITEMS_SIZE < itemsLength;
+		const itemsLength = this._filteredItems.length;
+		const isProposedIndexValid = indexOfItem + SKIP_ITEMS_SIZE < itemsLength;
 
 		indexOfItem = isProposedIndexValid ? indexOfItem + SKIP_ITEMS_SIZE : itemsLength - 1;
-		const shouldMoveForward: boolean = this._filteredItems[indexOfItem].isGroupItem && !this.open;
+		const shouldMoveForward = this._filteredItems[indexOfItem].isGroupItem && !this.open;
 
 		this._handleItemNavigation(e, indexOfItem, shouldMoveForward);
 	}
@@ -854,7 +854,7 @@ class ComboBox extends UI5Element {
 	}
 
 	_keydown(e: KeyboardEvent) {
-		const isNavKey: boolean = isDown(e) || isUp(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e);
+		const isNavKey = isDown(e) || isUp(e) || isPageUp(e) || isPageDown(e) || isHome(e) || isEnd(e);
 		const picker = this.responsivePopover;
 
 		this._autocomplete = !(isBackSpace(e) || isDelete(e));
