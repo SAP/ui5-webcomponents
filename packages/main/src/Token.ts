@@ -14,7 +14,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/sys-cancel.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { TOKEN_ARIA_DELETABLE } from "./generated/i18n/i18n-defaults.js";
@@ -24,6 +24,11 @@ import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 
 // Styles
 import styles from "./generated/themes/Token.css.js";
+
+type TokenDeleteEventDetails = {
+	"backSpace": boolean;
+	"delete": boolean;
+}
 
 /**
  * @class
@@ -97,15 +102,6 @@ class Token extends UI5Element implements ITabbable {
 	readonly!: boolean;
 
 	/**
-	 * Set by the tokenizer when a token is in the "more" area (overflowing)
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	overflows!: boolean;
-
-	/**
 	 * Defines whether the component is selected or not.
 	 *
 	 * @type {boolean}
@@ -115,6 +111,15 @@ class Token extends UI5Element implements ITabbable {
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
+
+	/**
+	 * Set by the tokenizer when a token is in the "more" area (overflowing)
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	overflows!: boolean;
 
 	/**
 	 * Defines whether the component is focused or not.
@@ -194,15 +199,15 @@ class Token extends UI5Element implements ITabbable {
 	}
 
 	_keydown(e: KeyboardEvent) {
-		const isBS = isBackSpace(e);
-		const isD = isDelete(e);
+		const isBackSpacePressed = isBackSpace(e);
+		const isDeletePressed = isDelete(e);
 
-		if (!this.readonly && (isBS || isD)) {
+		if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
 			e.preventDefault();
 
-			this.fireEvent("delete", {
-				backSpace: isBS,
-				"delete": isD,
+			this.fireEvent<TokenDeleteEventDetails>("delete", {
+				backSpace: isBackSpacePressed,
+				"delete": isDeletePressed,
 			});
 		}
 
@@ -241,3 +246,4 @@ class Token extends UI5Element implements ITabbable {
 Token.define();
 
 export default Token;
+export type { TokenDeleteEventDetails };

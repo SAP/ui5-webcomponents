@@ -46,6 +46,7 @@ import Title from "./Title.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import type Token from "./Token.js";
+import type { TokenDeleteEventDetails } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
 import {
@@ -66,6 +67,14 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 // reuse suggestions focus styling for NMore popup
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
+type TokenizerTokenDeleteEventDetails = {
+	ref: HTMLElement;
+}
+
+enum ClipboardDataOperation {
+	cut = "cut",
+	copy = "copy",
+}
 /**
  * @class
  *
@@ -115,7 +124,7 @@ class Tokenizer extends UI5Element {
 	morePopoverOpener!: Tokenizer;
 
 	@property({ validator: Integer })
-	popoverMinWidth!: number;
+	popoverMinWidth?: number;
 
 	/**
 	 * Indicates the value state of the related input component.
@@ -184,11 +193,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer--content")!, this._resizeHandler);
+		ResizeHandler.register(this.contentDom, this._resizeHandler);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer--content")!, this._resizeHandler);
+		ResizeHandler.deregister(this.contentDom, this._resizeHandler);
 	}
 
 	async _openOverflowPopover() {
@@ -241,7 +250,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_delete(e: CustomEvent) {
+	_delete(e: CustomEvent<TokenDeleteEventDetails>) {
 		const target = e.target as Token;
 		if (!e.detail) { // if there are no details, the event is triggered by a click
 			this._tokenClickDelete(e, target);
@@ -264,7 +273,7 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
-		this.fireEvent("token-delete", { ref: token || target });
+		this.fireEvent<TokenizerTokenDeleteEventDetails>("token-delete", { ref: token || target });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
@@ -277,7 +286,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_tokenKeyboardDelete(e: CustomEvent, token: Token) {
+	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetails>, token: Token) {
 		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
 		const target = e.target as Token;
 		const tokens = this._getVisibleTokens();
@@ -479,17 +488,17 @@ class Tokenizer extends UI5Element {
 	_handleTokenSelection(e: KeyboardEvent | MouseEvent, deselectAll = true) {
 		const target = e.target as Token;
 		if (target.hasAttribute("ui5-token")) {
-			const deselectTokens = deselectAll ? this._tokens : [e.target];
+			const deselectTokens = deselectAll ? this._tokens : [];
 
 			deselectTokens.forEach(token => {
 				if (token !== target) {
-					(token as Token).selected = false;
+					token.selected = false;
 				}
 			});
 		}
 	}
 
-	_fillClipboard(shortcutName: string, tokens: Array<Token>) {
+	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<Token>) {
 		const tokensTexts = tokens.filter(token => token.selected).map(token => token.text).join("\r\n");
 
 		/* fill clipboard with tokens' texts so parent can handle creation */
@@ -501,9 +510,9 @@ class Tokenizer extends UI5Element {
 			e.preventDefault();
 		};
 
-		document.addEventListener(shortcutName as keyof DocumentEventMap, cutToClipboard as EventListenerOrEventListenerObject);
+		document.addEventListener(shortcutName, cutToClipboard as EventListenerOrEventListenerObject);
 		document.execCommand(shortcutName);
-		document.removeEventListener(shortcutName as keyof DocumentEventMap, cutToClipboard as EventListenerOrEventListenerObject);
+		document.removeEventListener(shortcutName, cutToClipboard as EventListenerOrEventListenerObject);
 	}
 
 	/**
@@ -560,11 +569,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showNMore() {
-		return !this.expanded && this.showMore && this.overflownTokens.length;
+		return !!(!this.expanded && this.showMore && this.overflownTokens.length);
 	}
 
 	get contentDom() {
-		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer--content");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer--content")!;
 	}
 
 	get expandedContentDom() {
@@ -596,12 +605,12 @@ class Tokenizer extends UI5Element {
 		});
 
 		return this._getTokens().filter(token => {
-			const parentRect = this.contentDom!.getBoundingClientRect();
+			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = parseInt(String(tokenRect.right));
-			const parentEnd = parseInt(String(parentRect.right));
-			const tokenStart = parseInt(String(tokenRect.left));
-			const parentStart = parseInt(String(parentRect.left));
+			const tokenEnd = tokenRect.right;
+			const parentEnd = parentRect.right;
+			const tokenStart = tokenRect.left;
+			const parentStart = parentRect.left;
 
 			token.overflows = !this.expanded && ((tokenStart < parentStart) || (tokenEnd > parentEnd));
 
@@ -649,7 +658,7 @@ class Tokenizer extends UI5Element {
 			content: {
 				"ui5-tokenizer--content": true,
 				"ui5-tokenizer-expanded--content": !this.showNMore,
-				"ui5-tokenizer-nmore--content": !!this.showNMore,
+				"ui5-tokenizer-nmore--content": this.showNMore,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
@@ -665,10 +674,10 @@ class Tokenizer extends UI5Element {
 	get styles() {
 		return {
 			popover: {
-				"min-width": `${this.popoverMinWidth}px`,
+				"min-width": this.popoverMinWidth ? `${this.popoverMinWidth}px` : "",
 			},
 			popoverValueStateMessage: {
-				"width": isPhone() ? "100%" : `${this.popoverMinWidth}px`,
+				"width": this.popoverMinWidth && !isPhone() ? `${this.popoverMinWidth}px` : "100%",
 				"min-height": "2rem",
 			},
 			popoverHeader: {
