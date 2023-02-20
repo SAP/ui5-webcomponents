@@ -145,7 +145,9 @@ describe("General interaction", () => {
 		// assert.strictEqual(listItems.length, 2, "Items should be 2");
 
 		// act
-		await input.keys("zzz");
+		await input.keys("z");
+		await input.keys("z");
+		await input.keys("z");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// assert
@@ -711,7 +713,7 @@ describe("Accessibility", async () => {
 
 		await cbWarning.click();
 
-		let ariaHiddenText = await cbWarning.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+		let ariaHiddenText = await cbWarning.shadow$(`#value-state-description`).getHTML(false);
 		let valueStateText = await popover.$("div").getHTML(false);
 
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
@@ -745,7 +747,7 @@ describe("Accessibility", async () => {
 
 		const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
 		const valueStateText = await popoverHeader.$("div").getHTML(false);
-		const ariaHiddenText = await cbError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+		const ariaHiddenText = await cbError.shadow$(`#value-state-description`).getHTML(false);
 
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Custom error"), true, "Displayed value state message text is correct");

@@ -3,7 +3,7 @@
 In this tutorial you will learn how to add UI5 Web Components to your application. You can add UI5 Web Components both to new Vue.js applications and to already existing ones.
 
 ## Setting up a Vite and Vue.js project with UI5 Web Components
-<br>
+<br/>
 
 ### Step 1. Setup a Vue project with Vite.
 
