@@ -28,7 +28,7 @@ Example usage with `<ui5-icon>` web component:
 <ui5-icon name="business-suite/1x2-grid-layout"></ui5-icon>
 ```
 
-The package provides two versions of each icon (Business Suite Icons verson 1.x and Business Suite Icons version 2.x).
+The package provides two versions of each icon (SAP Business Suite Icons v1 and SAP Business Suite Icons v2).
 If you don't specify the versioned collection name, like in the example above:
 
 ```html

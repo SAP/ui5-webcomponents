@@ -32,7 +32,7 @@ Example usage with `<ui5-icon>` web component:
 <ui5-icon name="tnt/actor"></ui5-icon>
 ```
 
-The package provides two versions of each icon (TNT Icons verson 2.x and TNT Icons version 3.x).
+The package provides two versions of each icon (TNT Icons version 2.x and TNT Icons version 3.x).
 If you don't specify the versioned collection name, like in the example above:
 
 ```html
