@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -11,6 +12,14 @@ import WizardTabCss from "./generated/themes/WizardTab.css.js";
 type WizardTabInfo = {
 	[key: string]: string,
 }
+
+/**
+ * Fired when clicking on none disabled step.
+ *
+ * @event sap.ui.webc.fiori.WizardTab#selection-change-requested
+ * @private
+ */
+@event("selection-change-requested")
 
 /**
  * @class
