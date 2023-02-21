@@ -99,11 +99,7 @@ abstract class UI5Element extends HTMLElement {
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
-	/**
-	 * @deprecated use UI5Element#renderer instead
-	 */
 	static render: (templateFunctionResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: { host: HTMLElement }) => void;
-	static renderer: (templateFunctionResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: { host: HTMLElement }) => void;
 
 	constructor() {
 		super();
