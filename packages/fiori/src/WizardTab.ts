@@ -4,7 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
-import { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import WizardTabTemplate from "./generated/templates/WizardTabTemplate.lit.js";
 import WizardTabCss from "./generated/themes/WizardTab.css.js";
@@ -12,14 +12,6 @@ import WizardTabCss from "./generated/themes/WizardTab.css.js";
 type WizardTabInfo = {
 	[key: string]: string,
 }
-
-/**
- * Fired when clicking on none disabled step.
- *
- * @event sap.ui.webc.fiori.WizardTab#selection-change-requested
- * @private
- */
-@event("selection-change-requested")
 
 /**
  * @class
@@ -43,6 +35,15 @@ type WizardTabInfo = {
  */
 
 @customElement("ui5-wizard-tab")
+
+/**
+ * Fired when clicking on none disabled step.
+ *
+ * @event sap.ui.webc.fiori.WizardTab#selection-change-requested
+ * @private
+ */
+@event("selection-change-requested")
+
 class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the <code>icon</code> of the step.
@@ -132,7 +133,7 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines if the step's separator is dashed or not.
 	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.activeSeparator
+	 * @name sap.ui.webc.fiori.WizardTab.prototype.branchingSeparator
 	 * @defaultvalue false
 	 * @private
 	 */

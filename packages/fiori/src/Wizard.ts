@@ -62,30 +62,18 @@ type ResponsiveBreakpoints = {
 	[key: string]: string,
 }
 
+type WizardChangeEventDetails  = {
+	step: WizardStep,
+	previousStep: WizardStep,
+	changeWithClick: Boolean,
+}
+
 const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
 	"0": "S",
 	"599": "M",
 	"1023": "L",
 	"1439": "XL",
 };
-
-/**
- * Fired when the step is changed by user interaction - either with scrolling,
- * or by clicking on the steps within the component header.
- *
- * @event sap.ui.webc.fiori.Wizard#step-change
- * @param {WizardStep} step The new step.
- * @param {WizardStep} previousStep The previous step.
- * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
- * @public
- */
-@event("change", {
-	detail: {
-		step: { type: WizardStep },
-		previousStep: { type: WizardStep },
-		changeWithClick: { Boolean },
-	},
-})
 
 /**
  * @class
@@ -192,6 +180,24 @@ const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
 @languageAware
 @fastNavigation
 
+/**
+ * Fired when the step is changed by user interaction - either with scrolling,
+ * or by clicking on the steps within the component header.
+ *
+ * @event sap.ui.webc.fiori.Wizard#step-change
+ * @param {WizardStep} step The new step.
+ * @param {WizardStep} previousStep The previous step.
+ * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
+ * @public
+ */
+ @event("step-change", {
+	detail: {
+		step: { type: WizardStep },
+		previousStep: { type: WizardStep },
+		changeWithClick: { Boolean },
+	},
+})
+
 class Wizard extends UI5Element {
 	/**
 	 * Defines the width of the <code>ui5-wizard</code>.
@@ -225,7 +231,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	@property({ validator: Float })
-	contentHeight!: number;
+	contentHeight?: number;
 
 	@property({ multiple: true })
 	_groupedTabs!: Array<WizardTab>
@@ -239,7 +245,7 @@ class Wizard extends UI5Element {
 	 * <b>Note:</b> Use the available <code>ui5-wizard-step</code> component.
 	 *
 	 * @type {sap.ui.webc.fiori.IWizardStep[]}
-	 * @name sap.ui.webc.fiori.Wizard.steps
+	 * @name sap.ui.webc.fiori.Wizard.prototype.default
 	 * @public
 	 * @slot steps
 	 */
@@ -296,7 +302,7 @@ class Wizard extends UI5Element {
 
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Auto,
-			getItemsCallback: () => this.enabledStepsInHeaderDOM as WizardTab[],
+			getItemsCallback: () => this.enabledStepsInHeaderDOM as Array<WizardTab>,
 		});
 
 		this._onStepResize = this.onStepResize.bind(this);
@@ -527,7 +533,7 @@ class Wizard extends UI5Element {
 	_adjustHeaderOverflow() {
 		let counter = 0;
 		let isForward = true;
-		const tabs: NodeListOf<Element> = this.shadowRoot!.querySelectorAll("[ui5-wizard-tab]");
+		const tabs = this.shadowRoot!.querySelectorAll("[ui5-wizard-tab]");
 
 		if (!tabs.length) {
 			return;
@@ -608,7 +614,7 @@ class Wizard extends UI5Element {
 	}
 
 	async _showPopover(oDomTarget: WizardTab, isAtStart: boolean) {
-		const tabs: Array<WizardTab> = Array.from(this.shadowRoot!.querySelectorAll("[ui5-wizard-tab]"));
+		const tabs = Array.from(this.shadowRoot!.querySelectorAll<WizardTab>("[ui5-wizard-tab]"));
 		this._groupedTabs = [];
 
 		const iFromStep = isAtStart ? 0 : this.stepsInHeaderDOM.indexOf(oDomTarget);
@@ -635,7 +641,7 @@ class Wizard extends UI5Element {
 	}
 
 	_onOverflowStepButtonClick(e: MouseEvent) {
-		const tabs: Array<WizardTab> = Array.from(this.shadowRoot!.querySelectorAll("[ui5-wizard-tab]"));
+		const tabs = Array.from(this.shadowRoot!.querySelectorAll<WizardTab>("[ui5-wizard-tab]"));
 		const eTarget = e.target as HTMLElement;
 		const stepRefId = eTarget.getAttribute("data-ui5-header-tab-ref-id");
 		const stepToSelect = this.slottedSteps[Number(stepRefId) - 1];
@@ -776,7 +782,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledSteps() {
-		return this.slottedSteps.filter(step => !step.disabled);
+		return this.slottedSteps.filter(step => step.disabled);
 	}
 
 	get selectedStepsCount() {
@@ -784,7 +790,7 @@ class Wizard extends UI5Element {
 	}
 
 	get slottedSteps() {
-		return this.getSlottedNodes("steps") as Array<WizardStep>;
+		return this.getSlottedNodes("steps")! as Array<WizardStep>;
 	}
 
 	get contentDOM() {
@@ -926,7 +932,7 @@ class Wizard extends UI5Element {
 	}
 
 	getStepByRefId(refId: string) {
-		return this.slottedSteps.find<WizardStep>((step => step._id === refId) as (step:WizardStep) => step is WizardStep)!;
+		return this.slottedSteps.find((step => step._id === refId))!;
 	}
 
 	getStepWrapperByRefId(refId: string) {
@@ -1022,7 +1028,7 @@ class Wizard extends UI5Element {
 				stepToSelect.selected = true;
 			}
 
-			this.fireEvent("step-change", {
+			this.fireEvent<WizardChangeEventDetails>("step-change", {
 				step: stepToSelect,
 				previousStep: selectedStep,
 				changeWithClick,

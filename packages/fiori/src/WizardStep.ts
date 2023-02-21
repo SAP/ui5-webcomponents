@@ -43,7 +43,7 @@ class WizardStep extends UI5Element {
 	 * <b>Note:</b> The text is displayed in the <code>ui5-wizard</code> navigation header.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.WizardStep.prototype.title
+	 * @name sap.ui.webc.fiori.WizardStep.prototype.titleText
 	 * @defaultvalue ""
 	 * @public
 	 * @since 1.0.0-rc.15
@@ -134,12 +134,10 @@ class WizardStep extends UI5Element {
 	/**
 	 * Defines the step content.
 	 * @type {Node[]}
+	 * @name sap.ui.webc.fiori.WizardStep.prototype.default
 	 * @slot
 	 * @public
 	 */
-
-	@slot({ type: HTMLElement, "default": true })
-	default!: Array<HTMLElement>
 
 	stretch?: boolean;
 	stepContentAriaLabel?: string;
