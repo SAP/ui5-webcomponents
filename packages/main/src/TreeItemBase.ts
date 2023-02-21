@@ -83,8 +83,8 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 		item: { type: HTMLElement },
 	},
 })
-@dependencies([...TreeItemBase.dependencies, Icon])
-@styles([TreeItemBase.styles, treeItemCss])
+@dependencies([...ListItem.dependencies, Icon])
+@styles([ListItem.styles, treeItemCss])
 class TreeItemBase extends ListItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
