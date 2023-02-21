@@ -286,14 +286,14 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetail>, token: Token) {
+	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetail> | { detail?: { backSpace: boolean }, target: EventTarget }, token: Token) {
 		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
 		const target = e.target as Token;
 		const tokens = this._getVisibleTokens();
 		const deletedTokenIndex = token ? tokens.indexOf(token) : tokens.indexOf(target); // The index of the token that just got deleted
 		const notSelectedTokens = tokens.filter(t => !t.selected);
 
-		if (e.detail && e.detail.backSpace) { // on backspace key select the previous item (unless deleting the first)
+		if (e.detail?.backSpace) { // on backspace key select the previous item (unless deleting the first)
 			nextTokenIndex = deletedTokenIndex === 0 ? deletedTokenIndex + 1 : deletedTokenIndex - 1;
 		} else { // on delete key or mouse click on the "x" select the next item (unless deleting the last)
 			nextTokenIndex = deletedTokenIndex === tokens.length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
@@ -303,7 +303,7 @@ class Tokenizer extends UI5Element {
 
 		if (notSelectedTokens.length > 1) {
 			while (nextToken && nextToken.selected) {
-				nextToken = e.detail.backSpace ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
+				nextToken = e.detail?.backSpace ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
 			}
 		} else {
 			nextToken = notSelectedTokens[0];
@@ -739,4 +739,5 @@ class Tokenizer extends UI5Element {
 Tokenizer.define();
 
 export default Tokenizer;
+export { ClipboardDataOperation };
 export type { TokenizerTokenDeleteEventDetail };
