@@ -231,7 +231,7 @@
 			input.value = ++inputValue;
 		});
 
-		myInteractiveAvatar.addEventListener("click", function() {
+		myInteractiveAvatar.addEventListener("ui5-click", function() {
 			input2.value = ++inputValue2;
 		});
 	</script>
@@ -248,9 +248,8 @@
 
 	<section>
 		<h3>Avatar with three initials</h3>
-		<ui5-avatar initials="ABC" color-scheme="Accent1"></ui5-avatar>
+		<ui5-avatar id="myAvatar6" initials="ÌÒÙ" color-scheme="Accent1"></ui5-avatar>
 		<ui5-avatar initials="ABC" color-scheme="Accent2" size="XL"></ui5-avatar>
-
 
 		<h3>Avatar with three overflowing initials - icon should be shown</h3>
 		<ui5-avatar initials="WWW" color-scheme="Accent1" size="XS"></ui5-avatar>

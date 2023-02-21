@@ -3,7 +3,12 @@ import { ColectionData } from "@ui5/webcomponents-base/dist/asset-registries/Ico
 export {};
 
 declare global {
-	module "*/generated/assets/SAP-icons-business-suite.json" {
+	module "*/generated/assets/v1/SAP-icons-business-suite.json" {
+		const content: ColectionData;
+		export default content;
+	}
+
+	module "*/generated/assets/v2/SAP-icons-business-suite.json" {
 		const content: ColectionData;
 		export default content;
 	}

@@ -15,3 +15,8 @@
 .ui5-suggestions-popover [ui5-li-suggestion-item] {
 	height: var(--_ui5_list_item_dropdown_base_height);
 }
+
+.ui5-suggestions-popover [ui5-li]::part(icon),
+.ui5-suggestions-popover [ui5-li-suggestion-item]::part(icon) {
+	color: var(--sapList_TextColor);
+}

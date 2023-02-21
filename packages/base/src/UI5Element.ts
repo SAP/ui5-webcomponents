@@ -25,7 +25,7 @@ import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
+import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
 let autoId = 0;
 
