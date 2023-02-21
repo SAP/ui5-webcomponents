@@ -46,7 +46,7 @@ import Title from "./Title.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
 import type Token from "./Token.js";
-import type { TokenDeleteEventDetails } from "./Token.js";
+import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
 import {
@@ -67,8 +67,8 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 // reuse suggestions focus styling for NMore popup
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
 
-type TokenizerTokenDeleteEventDetails = {
-	ref: HTMLElement;
+type TokenizerTokenDeleteEventDetail = {
+	ref: Token;
 }
 
 enum ClipboardDataOperation {
@@ -250,7 +250,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_delete(e: CustomEvent<TokenDeleteEventDetails>) {
+	_delete(e: CustomEvent<TokenDeleteEventDetail>) {
 		const target = e.target as Token;
 		if (!e.detail) { // if there are no details, the event is triggered by a click
 			this._tokenClickDelete(e, target);
@@ -264,7 +264,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_tokenClickDelete(e: CustomEvent, token: Token) {
+	_tokenClickDelete(e: CustomEvent<TokenDeleteEventDetail>, token: Token) {
 		const tokens = this._getVisibleTokens();
 		const target = e.target as Token;
 		const deletedTokenIndex = token ? tokens.indexOf(token) : tokens.indexOf(target); // The index of the token that just got deleted
@@ -273,7 +273,7 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
-		this.fireEvent<TokenizerTokenDeleteEventDetails>("token-delete", { ref: token || target });
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token || target });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
@@ -286,7 +286,7 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetails>, token: Token) {
+	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetail>, token: Token) {
 		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
 		const target = e.target as Token;
 		const tokens = this._getVisibleTokens();
@@ -510,9 +510,9 @@ class Tokenizer extends UI5Element {
 			e.preventDefault();
 		};
 
-		document.addEventListener(shortcutName, cutToClipboard as EventListenerOrEventListenerObject);
+		document.addEventListener(shortcutName, cutToClipboard);
 		document.execCommand(shortcutName);
-		document.removeEventListener(shortcutName, cutToClipboard as EventListenerOrEventListenerObject);
+		document.removeEventListener(shortcutName, cutToClipboard);
 	}
 
 	/**
@@ -739,3 +739,4 @@ class Tokenizer extends UI5Element {
 Tokenizer.define();
 
 export default Tokenizer;
+export type { TokenizerTokenDeleteEventDetail };

@@ -25,7 +25,7 @@ import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 // Styles
 import styles from "./generated/themes/Token.css.js";
 
-type TokenDeleteEventDetails = {
+type TokenDeleteEventDetail = {
 	backSpace: boolean;
 	delete: boolean;
 }
@@ -205,7 +205,7 @@ class Token extends UI5Element implements ITabbable {
 		if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
 			e.preventDefault();
 
-			this.fireEvent<TokenDeleteEventDetails>("delete", {
+			this.fireEvent<TokenDeleteEventDetail>("delete", {
 				backSpace: isBackSpacePressed,
 				"delete": isDeletePressed,
 			});
@@ -246,4 +246,4 @@ class Token extends UI5Element implements ITabbable {
 Token.define();
 
 export default Token;
-export type { TokenDeleteEventDetails };
+export type { TokenDeleteEventDetail };
