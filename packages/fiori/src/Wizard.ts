@@ -62,10 +62,10 @@ type ResponsiveBreakpoints = {
 	[key: string]: string,
 }
 
-type WizardChangeEventDetails  = {
+type WizardChangeEventDetails = {
 	step: WizardStep,
 	previousStep: WizardStep,
-	changeWithClick: Boolean,
+	changeWithClick: boolean,
 }
 
 const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
@@ -190,7 +190,7 @@ const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
  * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
  * @public
  */
- @event("step-change", {
+@event("step-change", {
 	detail: {
 		step: { type: WizardStep },
 		previousStep: { type: WizardStep },
@@ -932,7 +932,7 @@ class Wizard extends UI5Element {
 	}
 
 	getStepByRefId(refId: string) {
-		return this.slottedSteps.find((step => step._id === refId))!;
+		return this.slottedSteps.find(step => step._id === refId)!;
 	}
 
 	getStepWrapperByRefId(refId: string) {
