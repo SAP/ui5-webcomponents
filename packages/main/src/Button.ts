@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
 import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
 import renderer from "@ui5/webcomponents-base/dist/decorators/renderer.js";
+import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -86,6 +87,7 @@ let activeButton: Button | null = null;
 @customElement("ui5-button")
 @dependencies([Icon])
 @renderer(litRender)
+@template(ButtonTemplate)
 @styles([buttonCss])
 @languageAware
 /**
@@ -316,10 +318,6 @@ class Button extends UI5Element implements IFormElement {
 	_deactivate: () => void;
 
 	_ontouchstart: PassiveEventListenerObject;
-
-	static get template() {
-		return ButtonTemplate;
-	}
 
 	static i18nBundle: I18nBundle;
 
