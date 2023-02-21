@@ -14,6 +14,9 @@ const renderer = (componentRenderer: Renderer): ClassDecorator => {
 		Object.defineProperty(target, "render", {
 			get: () => componentRenderer,
 		});
+		Object.defineProperty(target, "renderer", {
+			get: () => componentRenderer,
+		});
 	};
 };
 
