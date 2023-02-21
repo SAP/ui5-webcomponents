@@ -569,7 +569,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	get showNMore() {
-		return !!(!this.expanded && this.showMore && this.overflownTokens.length);
+		return !this.expanded && this.showMore && !!this.overflownTokens.length;
 	}
 
 	get contentDom() {
