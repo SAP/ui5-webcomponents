@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
 import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
+import renderer from "@ui5/webcomponents-base/dist/decorators/renderer.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -187,6 +188,7 @@ const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
  */
 @customElement("ui5-input")
 @dependencies(([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []))
+@renderer(litRender)
 @styles(inputStyles)
 @languageAware
 
@@ -646,10 +648,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_focusedAfterClear: boolean;
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
 
 	static get template() {
 		return InputTemplate;
