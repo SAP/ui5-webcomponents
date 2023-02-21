@@ -52,7 +52,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	word-wrap: normal;
+	overflow-wrap: normal;
 	outline: none;
 	text-decoration: inherit;
 	color: inherit;
