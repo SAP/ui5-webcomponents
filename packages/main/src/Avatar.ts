@@ -427,38 +427,6 @@ class Avatar extends UI5Element implements ITabbable {
 
 		return this.ariaHaspopup;
 	}
-
-	// static get template() {
-	// 	const block0 = function (this: Avatar) { return html`<div class="ui5-avatar-root" tabindex="${ifDefined(this.tabindex)}" data-sap-focus-ref @keyup=${this._onkeyup} @keydown=${this._onkeydown} @focusout=${this._onfocusout} @focusin=${this._onfocusin} @click=${this._onclick} role="${ifDefined(this._role)}" aria-haspopup="${ifDefined(this._ariaHasPopup)}">${ this.hasImage ? block1.call(this) : block2.call(this) }<slot name="badge"></slot></div>`; }
-	// 	const block1 = function (this: Avatar) { return html`<slot></slot>`; }
-	// 	const block2 = function (this: Avatar) { return html`${ this.icon ? block3.call(this) : block4.call(this) }`; }
-	// 	const block3 = function (this: Avatar) { return html`<ui5-icon class="ui5-avatar-icon" name="${ifDefined(this.icon)}" accessible-name="${ifDefined(this.accessibleNameText)}"></ui5-icon>`; }
-	// 	const block4 = function (this: Avatar) { return html`${ this.initials ? block5.call(this) : undefined }`; }
-	// 	const block5 = function (this: Avatar) { return html`<span class="ui5-avatar-initials">${ifDefined(this.validInitials)}</span>`; }
-
-	// 	return block0;
-	// }
-	// render3() {
-	// 	/* eslint no-unused-vars: 0 */
-	// 	/* eslint-disable @typescript-eslint/no-unused-vars */
-	// 	/* eslint-disable @typescript-eslint/unbound-method */
-	// 	const block0 = () => html`<div class="ui5-avatar-root" tabindex="${ifDefined(this.tabindex)}" data-sap-focus-ref @keyup=${this._onkeyup} @keydown=${this._onkeydown} @focusout=${this._onfocusout} @focusin=${this._onfocusin} @click=${this._onclick} role="${ifDefined(this._role)}" aria-haspopup="${ifDefined(this._ariaHasPopup)}">${ this.hasImage ? block1() : block2() }<slot name="badge"></slot></div>`;
-	// 	const block1 = () => html`<slot></slot>`;
-	// 	const block2 = () => html`${ this.icon ? block3() : block4() }`;
-	// 	const block3 = () => html`<ui5-icon class="ui5-avatar-icon" name="${ifDefined(this.icon)}" accessible-name="${ifDefined(this.accessibleNameText)}"></ui5-icon>`;
-	// 	const block4 = () => html`${ this.initials ? block5() : undefined }`;
-	// 	const block5 = () => html`<span class="ui5-avatar-initials">${ifDefined(this.validInitials)}</span>`;
-
-	// 	return block0();
-	// }
-	// render2() {
-	// 	/* eslint no-unused-vars: 0 */
-	// 	/* eslint-disable @typescript-eslint/no-unused-vars */
-	// 	/* eslint-disable @typescript-eslint/unbound-method */
-	// 	return html`albl${this._onkeydown}`;
-	// }
-
-	// static _needsShadowDOM() { return true };
 }
 
 Avatar.define();
