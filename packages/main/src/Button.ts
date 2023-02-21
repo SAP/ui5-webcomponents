@@ -1,11 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
-import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
-import renderer from "@ui5/webcomponents-base/dist/decorators/renderer.js";
-import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -84,12 +79,14 @@ let activeButton: Button | null = null;
  * @implements sap.ui.webc.main.IButton
  * @public
  */
-@customElement("ui5-button")
-@dependencies([Icon])
-@renderer(litRender)
-@template(ButtonTemplate)
-@styles([buttonCss])
-@languageAware
+@customElement2({
+	tag: "ui5-button",
+	dependencies: [Icon],
+	renderer: litRender,
+	template: ButtonTemplate,
+	styles: buttonCss,
+	languageAware: true,
+})
 /**
  * Fired when the component is activated either with a
  * mouse/tap or by using the Enter or Space key.

@@ -1,7 +1,6 @@
 import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
-import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
+import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -45,7 +44,12 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @extends sap.ui.webc.main.ListItem
  * @public
  */
-@languageAware
+@customElement2({
+	template: TreeItemBaseTemplate,
+	dependencies: [...ListItem.dependencies, Icon],
+	styles: [ListItem.styles, treeItemCss],
+	languageAware: true,
+})
 /**
  * Fired when the user interacts with the expand/collapse button of the tree list item.
  * @event
@@ -83,8 +87,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 		item: { type: HTMLElement },
 	},
 })
-@dependencies([...ListItem.dependencies, Icon])
-@styles([ListItem.styles, treeItemCss])
 class TreeItemBase extends ListItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
@@ -267,10 +269,6 @@ class TreeItemBase extends ListItem {
 	 */
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<TreeItemBase>;
-
-	static get template() {
-		return TreeItemBaseTemplate;
-	}
 
 	onBeforeRendering() {
 		this.actionable = false;

@@ -27,7 +27,6 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // });
 
 import "./dist/features/InputElementsFormSupport.js";
-import "./dist/features/InputSuggestions.js";
 import "./dist/features/ColorPaletteMoreColors.js";
 
 import Avatar from "./dist/Avatar.js";
@@ -53,6 +52,7 @@ import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
 import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
+import "./dist/features/InputSuggestions.js";
 import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";

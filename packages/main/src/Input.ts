@@ -1,12 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
-import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
-import renderer from "@ui5/webcomponents-base/dist/decorators/renderer.js";
+import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -186,12 +182,16 @@ const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
  * @implements sap.ui.webc.main.IInput
  * @public
  */
-@customElement("ui5-input")
-@dependencies(([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []))
-@renderer(litRender)
-@styles(inputStyles)
-@languageAware
-
+@customElement2({
+	tag: "ui5-input",
+	renderer: litRender,
+	styles:inputStyles,
+	template: InputTemplate,
+	dependencies: ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []),
+	languageAware: true,
+	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss],
+	staticAreaTemplate: InputPopoverTemplate,
+})
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -648,18 +648,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_focusedAfterClear: boolean;
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
-
-	static get template() {
-		return InputTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return InputPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss];
-	}
 
 	constructor() {
 		super();

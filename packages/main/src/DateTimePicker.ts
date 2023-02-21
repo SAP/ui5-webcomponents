@@ -1,8 +1,6 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
-import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
@@ -115,16 +113,20 @@ type PreviewValues = {
  * @since 1.0.0-rc.7
  * @public
  */
-@customElement("ui5-datetime-picker")
-@dependencies([
-	...DatePicker.dependencies,
-	Calendar,
-	Button,
-	ToggleButton,
-	SegmentedButton,
-	TimeSelection,
-])
-@styles([DateTimePicker.styles, DateTimePickerCss])
+@customElement2({
+	tag: "ui5-datetime-picker",
+	styles: [DateTimePicker.styles, DateTimePickerCss],
+	staticAreaStyles: [DatePicker.staticAreaStyles, DateTimePickerPopoverCss],
+	staticAreaTemplate: DateTimePickerPopoverTemplate,
+	dependencies: [
+		...DatePicker.dependencies,
+		Calendar,
+		Button,
+		ToggleButton,
+		SegmentedButton,
+		TimeSelection,
+	],
+})
 class DateTimePicker extends DatePicker {
 	/**
 	 * Defines the visibility of the time view in <code>phoneMode</code>.
@@ -165,18 +167,6 @@ class DateTimePicker extends DatePicker {
 	_currentTimeSlider!: string;
 
 	_handleResizeBound: ResizeObserverCallback;
-
-	static get staticAreaTemplate() {
-		return DateTimePickerPopoverTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [super.styles, DateTimePickerCss];
-	}
-
-	static get staticAreaStyles(): ComponentStylesData {
-		return [super.staticAreaStyles, DateTimePickerPopoverCss];
-	}
 
 	constructor() {
 		super();

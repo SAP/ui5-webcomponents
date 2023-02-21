@@ -1,7 +1,5 @@
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import dependencies from "@ui5/webcomponents-base/dist/decorators/dependencies.js";
-import styles from "@ui5/webcomponents-base/dist/decorators/styles.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -148,16 +146,23 @@ type DatePickerChangeEventDetail = {
  * @tagname ui5-date-picker
  * @public
  */
-@customElement("ui5-date-picker")
-@dependencies([
-	Icon,
-	ResponsivePopover,
-	Calendar,
-	CalendarDateComponent,
-	Input,
-	Button,
-])
-@styles(datePickerCss)
+
+ @customElement2({
+	tag: "ui5-date-picker",
+	styles: datePickerCss,
+	staticAreaStyles: [ResponsivePopoverCommonCss, datePickerPopoverCss],
+	template: DatePickerTemplate,
+	staticAreaTemplate: DatePickerPopoverTemplate,
+	dependencies: [
+		Icon,
+		ResponsivePopover,
+		Calendar,
+		CalendarDateComponent,
+		Input,
+		Button,
+	],
+	languageAware: true,
+})
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -383,18 +388,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	FormSupport?: typeof FormSupportT;
 
 	static i18nBundle: I18nBundle;
-
-	static get template() {
-		return DatePickerTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return DatePickerPopoverTemplate;
-	}
-
-	static get staticAreaStyles(): ComponentStylesData {
-		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
-	}
 
 	/**
 	 * @protected
