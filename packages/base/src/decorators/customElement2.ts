@@ -6,7 +6,7 @@ import type { Renderer } from "../renderer/LitRenderer.js";
 /**
  * Returns a custom element class decorator.
  *
- * @param { CustomElementOptions } options
+ * @param { CustomElementOptions } options the custom element options (tag, template, styles, etc..)
  * @returns { ClassDecorator }
  */
 type CustomElementOptions = {
