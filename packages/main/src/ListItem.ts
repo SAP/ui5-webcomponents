@@ -224,6 +224,8 @@ abstract class ListItem extends ListItemBase {
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
+	// used in template, implemented in TreeItemBase
+	accessibleName?: string;
 
 	static i18nBundle: I18nBundle;
 
