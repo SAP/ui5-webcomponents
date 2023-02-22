@@ -3,8 +3,8 @@ import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js
 
 const IconCollectionConfiguration = new Map<string, string>();
 
-// All supported icon collections + uknown custom ones
-type IconCollection = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite" | string;
+// All supported icon collections + unknown custom ones
+type IconCollection = "SAP-icons" | "SAP-icons-v4" | "SAP-icons-v5" | "horizon" | "tnt" | "tnt-v2" | "tnt-v3" | "business-suite" | "business-suite-v1" | "business-suite-v2" | string;
 
 // All registered icon collections - all icon collections resolves to these options at the end
 enum RegisteredIconCollection {
@@ -12,7 +12,8 @@ enum RegisteredIconCollection {
 	SAPIconsV5 = "SAP-icons-v5",
 	SAPIconsTNTV2 = "tnt-v2",
 	SAPIconsTNTV3 = "tnt-v3",
-	SAPBSIcons = "business-suite",
+	SAPBSIconsV1 = "business-suite-v1",
+	SAPBSIconsV2 = "business-suite-v2",
 }
 
 /**
@@ -87,9 +88,11 @@ const getEffectiveIconCollection = (collectionName?: IconCollection): IconCollec
  * - "tnt" (and its alias "SAP-icons-TNT") resolves to "tnt-v2" in "Quartz", "Belize", and resolves to "tnt-v3" in "Horizon"
  * - "tnt-v2" forces "TNT icons v2" in any theme and resolves to itself "tnt-v2"
  * - "tnt-v3" forces "TNT icons v3" in any theme and resolves to itself "tnt-v3"
- * - "business-suite" (and its alias "BusinessSuiteInAppSymbols") has no versioning and resolves to "business-suite"
+ * - "business-suite" (and its alias "BusinessSuiteInAppSymbols") resolves to "business-suite-v1" in "Quartz", "Belize", and resolves to "business-suite-v2" in "Horizon"
+ * - "business-suite-v1" forces "Business Suite icons v1" in any theme and resolves to itself "business-suite-v1"
+ * - "business-suite-v2" forces "Business Suite icons v2" in any theme and resolves to itself "business-suite-v2"
  *
- * <b>Note:</b> "SAP-icons-v4", "SAP-icons-v5", "tnt-v2", "tnt-v3" and "business-suite" are just returned
+ * <b>Note:</b> "SAP-icons-v4", "SAP-icons-v5", "tnt-v2", "tnt-v3", "business-suite-v1" and "business-suite-v2" are just returned
  * @param { IconCollection } collectionName
  * @returns { RegisteredIconCollection } the registered collection name
  */
@@ -102,6 +105,10 @@ const getIconCollectionByTheme = (collectionName?: IconCollection): RegisteredIc
 
 	if (collectionName === "tnt") {
 		return horizonThemeFamily ? RegisteredIconCollection.SAPIconsTNTV3 : RegisteredIconCollection.SAPIconsTNTV2;
+	}
+
+	if (collectionName === "business-suite") {
+		return horizonThemeFamily ? RegisteredIconCollection.SAPBSIconsV2 : RegisteredIconCollection.SAPBSIconsV1;
 	}
 
 	return collectionName as RegisteredIconCollection;
