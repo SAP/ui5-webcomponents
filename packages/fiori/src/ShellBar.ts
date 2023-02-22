@@ -1,4 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -8,14 +14,28 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
+import type { SelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import type Input from "@ui5/webcomponents/dist/Input.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
+import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import type ShellBarItem from "./ShellBarItem.js";
+
+// Templates
+import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
+import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTemplate.lit.js";
+
+// Styles
+import styles from "./generated/themes/ShellBar.css.js";
+import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
 
 import {
 	SHELLBAR_LABEL,
@@ -29,386 +49,48 @@ import {
 	SHELLBAR_OVERFLOW,
 } from "./generated/i18n/i18n-defaults.js";
 
-// Templates
-import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
-import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTemplate.lit.js";
+type AccessibilityRoles = {
+	logoRole?: string;
+};
 
-// Styles
-import styles from "./generated/themes/ShellBar.css.js";
-import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
+type AccessibilityTexts = {
+	logoTitle?: string;
+	profileButtonTitle?: string;
+};
+
+type AccessibilityAttributesProperties= {
+	ariaHasPopup?: string;
+	expanded?: boolean;
+}
+
+type AccessibilityAttributes = {
+	notifications?: AccessibilityAttributesProperties;
+	profile?: AccessibilityAttributesProperties;
+	product?: AccessibilityAttributesProperties;
+	search?: AccessibilityAttributesProperties;
+	overflow?: AccessibilityAttributesProperties;
+};
+
+interface IItem {
+	id: string,
+	icon?: string,
+	text: string,
+	priority: number,
+	show: boolean,
+	count?: number,
+	custom?: boolean,
+	title?: string,
+	stableDomRef?: string,
+	refItemid?: string,
+	press: () => void,
+	styles: object,
+	domOrder: number,
+	classes: string,
+	order?: number,
+	profile?: boolean,
+}
 
 const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-shellbar",
-	languageAware: true,
-	fastNavigation: true,
-	properties: /** @lends sap.ui.webc.fiori.ShellBar.prototype */ {
-
-		/**
-		 * Defines the <code>primaryTitle</code>.
-		 * <br><br>
-		 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		primaryTitle: {
-			type: String,
-		},
-
-		/**
-		 * Defines the <code>secondaryTitle</code>.
-		 * <br><br>
-		 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		secondaryTitle: {
-			type: String,
-		},
-
-		/**
-		 * Defines the <code>notificationsCount</code>,
-		 * displayed in the notification icon top-right corner.
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		notificationsCount: {
-			type: String,
-		},
-
-		/**
-		 * Defines, if the notification icon would be displayed.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showNotifications: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines, if the product switch icon would be displayed.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showProductSwitch: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines, if the product CoPilot icon would be displayed.
-		 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
-		 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showCoPilot: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines, if the Search Field would be displayed when there is a valid <code>searchField</code> slot.
-		 * <br><b>Note:</b> By default the Search Field is not displayed.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showSearchField: {
-			type: Boolean,
-		},
-
-		/**
-		 * An object of strings that defines additional accessibility roles for further customization.
-		 *
-		 * It supports the following fields:
-		 *  - <code>logoRole</code>: the accessibility role for the <code>logo</code>
-		 *
-		 * @type {object}
-		 * @public
-		 * @since 1.6.0
-		 */
-		accessibilityRoles: {
-			type: Object,
-		},
-
-		/**
-		 * An object of strings that defines several additional accessibility texts
-		 * for even further customization.
-		 *
-		 * It supports the following fields:
-		 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
-		 * - <code>logoTitle</code>: defines the tooltip for the logo
-		 *
-		 * @type {object}
-		 * @public
-		 * @since 1.1.0
-		 */
-		accessibilityTexts: {
-			type: Object,
-		},
-
-		/**
-		 * An object of strings that defines several additional accessibility attribute values
-		 * for customization depending on the use case.
-		 *
-		 * It supports the following fields:
-		 *
-		 * <ul>
-		 * 		<li><code>expanded</code>: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
-		 *			<ul>
-		 *				<li><code>true</code></li>
-		 *				<li><code>false</code></li>
-		 *			</ul>
-		 * 		</li>
-		 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
-		 * 			<ul>
-		 *				<li><code>Dialog</code></li>
-		 *				<li><code>Grid</code></li>
-		 *				<li><code>ListBox</code></li>
-		 *				<li><code>Menu</code></li>
-		 *				<li><code>Tree</code></li>
-		 * 			</ul>
-		 * 		</li>
-		 * </ul>
-		 * @type {object}
-		 * @public
-		 * @since 1.10.0
-		 */
-
-		accessibilityAttributes: {
-			type: Object,
-		},
-
-		/**
-		 * @private
-		 */
-		breakpointSize: {
-			type: String,
-		},
-
-		/**
-		 * @private
-		 */
-		coPilotActive: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		withLogo: {
-			type: Boolean,
-		},
-
-		_itemsInfo: {
-			type: Object,
-		},
-
-		_header: {
-			type: Object,
-		},
-
-		_menuPopoverItems: {
-			type: String,
-			multiple: true,
-		},
-
-		_menuPopoverExpanded: {
-			type: Boolean,
-			noAttribute: true,
-		},
-		_overflowPopoverExpanded: {
-			type: Boolean,
-			noAttribute: true,
-		},
-
-		_fullWidthSearch: {
-			type: Boolean,
-			noAttribute: true,
-		},
-	},
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.fiori.ShellBar.prototype */ {
-		/**
-		 * Defines the <code>ui5-shellbar</code> aditional items.
-		 * <br><br>
-		 * <b>Note:</b>
-		 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
-		 *
-		 * @type {sap.ui.webc.fiori.IShellBarItem[]}
-		 * @slot items
-		 * @public
-		 */
-		"default": {
-			propertyName: "items",
-			type: HTMLElement,
-			invalidateOnChildChange: true,
-		},
-
-		/**
-		 * You can pass <code>ui5-avatar</code> to set the profile image/icon.
-		 * If no profile slot is set - profile will be excluded from actions.
-		 *
-		 * Note: We recommend not using the <code>size</code> attribute of <code>ui5-avatar</code> because
-		 * it should have specific size by design in the context of <code>ui5-shellbar</code> profile.
-		 * @type {sap.ui.webc.main.IAvatar}
-		 * @slot
-		 * @since 1.0.0-rc.6
-		 * @public
-		 */
-		profile: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the logo of the <code>ui5-shellbar</code>.
-		 * For example, you can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
-		 * @type {sap.ui.webc.main.IAvatar}
-		 * @slot
-		 * @since 1.0.0-rc.8
-		 * @public
-		 */
-		logo: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the items displayed in menu after a click on the primary title.
-		 * <br><br>
-		 * <b>Note:</b>
-		 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
-		 *
-		 * @type {sap.ui.webc.main.IListItem[]}
-		 * @slot
-		 * @since 0.10
-		 * @public
-		 */
-		menuItems: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the <code>ui5-input</code>, that will be used as a search field.
-		 *
-		 * @type {sap.ui.webc.main.IInput}
-		 * @slot
-		 * @public
-		 */
-		searchField: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines a <code>ui5-button</code> in the bar that will be placed in the beginning.
-		 * We encourage this slot to be used for a back or home button.
-		 * It gets overstyled to match ShellBar's styling.
-		 *
-		 * @type {sap.ui.webc.main.IButton}
-		 * @slot
-		 * @public
-		 */
-		startButton: {
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.ShellBar.prototype */ {
-		/**
-		 *
-		 * Fired, when the notification icon is activated.
-		 *
-		 *
-		 * @event sap.ui.webc.fiori.ShellBar#notifications-click
-		 * @allowPreventDefault
-		 * @param {HTMLElement} targetRef dom ref of the activated element
-		 * @public
-		 */
-		"notifications-click": {
-			detail: {
-				targetRef: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired, when the profile slot is present.
-		 *
-		 * @event sap.ui.webc.fiori.ShellBar#profile-click
-		 * @param {HTMLElement} targetRef dom ref of the activated element
-		 * @public
-		 */
-		"profile-click": {
-			detail: {
-				targetRef: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired, when the product switch icon is activated.
-		 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
-		 *
-		 * @event sap.ui.webc.fiori.ShellBar#product-switch-click
-		 * @allowPreventDefault
-		 * @param {HTMLElement} targetRef dom ref of the activated element
-		 * @public
-		 */
-		"product-switch-click": {
-			detail: {
-				targetRef: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired, when the logo is activated.
-		 *
-		 * @event sap.ui.webc.fiori.ShellBar#logo-click
-		 * @param {HTMLElement} targetRef dom ref of the activated element
-		 * @since 0.10
-		 * @public
-		 */
-		"logo-click": {
-			detail: {
-				targetRef: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired, when the co pilot is activated.
-		 *
-		 * @event sap.ui.webc.fiori.ShellBar#co-pilot-click
-		 * @param {HTMLElement} targetRef dom ref of the activated element
-		 * @since 0.10
-		 * @public
-		 */
-		"co-pilot-click": {
-			detail: {
-				targetRef: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired, when a menu item is activated
-		 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
-		 *
-		 * @event sap.ui.webc.fiori.ShellBar#menu-item-click
-		 * @param {HTMLElement} item DOM ref of the activated list item
-		 * @since 0.10
-		 * @public
-		 */
-		"menu-item-click": {
-			detail: {
-				item: { type: HTMLElement },
-			},
-		},
-	},
-};
 
 /**
  * @class
@@ -459,10 +141,364 @@ const metadata = {
  * @public
  * @since 0.8.0
  */
+
+@customElement("ui5-shellbar")
+@languageAware
+@fastNavigation
+
+/**
+ *
+ * Fired, when the notification icon is activated.
+ *
+ * @event sap.ui.webc.fiori.ShellBar#notifications-click
+ * @allowPreventDefault
+ * @param {HTMLElement} targetRef dom ref of the activated element
+ * @public
+ */
+@event("notifications-click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired, when the profile slot is present.
+ *
+ * @event sap.ui.webc.fiori.ShellBar#profile-click
+ * @param {HTMLElement} targetRef dom ref of the activated element
+ * @public
+ */
+@event("profile-click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired, when the product switch icon is activated.
+ * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
+ *
+ * @event sap.ui.webc.fiori.ShellBar#product-switch-click
+ * @allowPreventDefault
+ * @param {HTMLElement} targetRef dom ref of the activated element
+ * @public
+ */
+@event("product-switch-click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired, when the logo is activated.
+ *
+ * @event sap.ui.webc.fiori.ShellBar#logo-click
+ * @param {HTMLElement} targetRef dom ref of the activated element
+ * @since 0.10
+ * @public
+ */
+@event("logo-click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired, when the co pilot is activated.
+ *
+ * @event sap.ui.webc.fiori.ShellBar#co-pilot-click
+ * @param {HTMLElement} targetRef dom ref of the activated element
+ * @since 0.10
+ * @public
+ */
+@event("co-pilot-click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired, when a menu item is activated
+ * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
+ *
+ * @event sap.ui.webc.fiori.ShellBar#menu-item-click
+ * @param {HTMLElement} item DOM ref of the activated list item
+ * @since 0.10
+ * @public
+ */
+@event("menu-item-click", {
+	detail: {
+		item: { type: HTMLElement },
+	},
+})
+
 class ShellBar extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines the <code>primaryTitle</code>.
+	 * <br><br>
+	 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.ShellBar.prototype.primaryTitle
+	 * @public
+	 */
+	@property()
+	primaryTitle!: string;
+
+	/**
+	 * Defines the <code>secondaryTitle</code>.
+	 * <br><br>
+	 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.ShellBar.prototype.secondaryTitle
+	 * @public
+	 */
+	@property()
+	secondaryTitle!: string;
+
+	/**
+	 * Defines the <code>notificationsCount</code>,
+	 * displayed in the notification icon top-right corner.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.ShellBar.prototype.notificationsCount
+	 * @public
+	 */
+	@property()
+	notificationsCount!: string;
+
+	/**
+	 * Defines, if the notification icon would be displayed.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.ShellBar.prototype.showNotifications
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showNotifications!: boolean;
+
+	/**
+	 * Defines, if the product switch icon would be displayed.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.ShellBar.prototype.showProductSwitch
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showProductSwitch!: boolean;
+
+	/**
+	 * Defines, if the product CoPilot icon would be displayed.
+	 * <br><b>Note:</b> By default the co-pilot is displayed as static SVG.
+	 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.ShellBar.prototype.showCoPilot
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showCoPilot!: boolean;
+
+	/**
+	 * Defines, if the Search Field would be displayed when there is a valid <code>searchField</code> slot.
+	 * <br><b>Note:</b> By default the Search Field is not displayed.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.ShellBar.prototype.showSearchField
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showSearchField!: boolean;
+
+	/**
+	 * An object of strings that defines additional accessibility roles for further customization.
+	 *
+	 * It supports the following fields:
+	 *  - <code>logoRole</code>: the accessibility role for the <code>logo</code>
+	 *
+	 * @type {object}
+	 * @name sap.ui.webc.main.ShellBar.prototype.accessibilityRoles
+	 * @public
+	 * @since 1.6.0
+	 */
+	@property({ type: Object })
+	accessibilityRoles!: AccessibilityRoles;
+
+	/**
+	 * An object of strings that defines several additional accessibility texts
+	 * for even further customization.
+	 *
+	 * It supports the following fields:
+	 * - <code>profileButtonTitle</code>: defines the tooltip for the profile button
+	 * - <code>logoTitle</code>: defines the tooltip for the logo
+	 *
+	 * @type {object}
+	 * @name sap.ui.webc.main.ShellBar.prototype.accessibilityTexts
+	 * @public
+	 * @since 1.1.0
+	 */
+	@property({ type: Object })
+	accessibilityTexts!: AccessibilityTexts;
+
+	/**
+	 * An object of strings that defines several additional accessibility attribute values
+	 * for customization depending on the use case.
+	 *
+	 * It supports the following fields:
+	 *
+	 * <ul>
+	 * 		<li><code>expanded</code>: Indicates whether the anchor element, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+	 *			<ul>
+	 *				<li><code>true</code></li>
+	 *				<li><code>false</code></li>
+	 *			</ul>
+	 * 		</li>
+	 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the anchor element. Accepts the following string values:
+	 * 			<ul>
+	 *				<li><code>Dialog</code></li>
+	 *				<li><code>Grid</code></li>
+	 *				<li><code>ListBox</code></li>
+	 *				<li><code>Menu</code></li>
+	 *				<li><code>Tree</code></li>
+	 * 			</ul>
+	 * 		</li>
+	 * </ul>
+	 * @type {object}
+	 * @name sap.ui.webc.main.ShellBar.prototype.accessibilityAttributes
+	 * @public
+	 * @since 1.10.0
+	 */
+	 @property({ type: Object })
+	 accessibilityAttributes!: AccessibilityAttributes;
+
+	/**
+	 * @private
+	 */
+	@property()
+	breakpointSize!: string;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	coPilotActive!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	withLogo!: boolean;
+
+	@property({ type: Object })
+	_itemsInfo!: Array<IItem>;
+
+	@property({ type: Object })
+	_header!: object;
+
+	@property({ type: Object, multiple: true })
+	_menuPopoverItems!: Array<HTMLElement>;
+
+	@property({ type: Boolean, noAttribute: true })
+	_menuPopoverExpanded!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_overflowPopoverExpanded!: boolean;
+
+	@property({ type: Boolean, noAttribute: true })
+	_fullWidthSearch!: boolean;
+
+	/**
+	 * Defines the <code>ui5-shellbar</code> aditional items.
+	 * <br><br>
+	 * <b>Note:</b>
+	 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
+	 *
+	 * @type {sap.ui.webc.fiori.IShellBarItem[]}
+	 * @name sap.ui.webc.main.ShellBar.prototype.default
+	 * @slot items
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true, invalidateOnChildChange: true })
+	items!: Array<ShellBarItem>;
+
+	/**
+	 * You can pass <code>ui5-avatar</code> to set the profile image/icon.
+	 * If no profile slot is set - profile will be excluded from actions.
+	 *
+	 * Note: We recommend not using the <code>size</code> attribute of <code>ui5-avatar</code> because
+	 * it should have specific size by design in the context of <code>ui5-shellbar</code> profile.
+	 * @type {sap.ui.webc.main.IAvatar}
+	 * @name sap.ui.webc.main.ShellBar.prototype.profile
+	 * @slot profile
+	 * @since 1.0.0-rc.6
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	profile!: Array<HTMLElement>;
+
+	/**
+	 * Defines the logo of the <code>ui5-shellbar</code>.
+	 * For example, you can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
+	 * @type {sap.ui.webc.main.IAvatar}
+	 * @name sap.ui.webc.main.ShellBar.prototype.logo
+	 * @slot
+	 * @since 1.0.0-rc.8
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	logo!: Array<HTMLElement>;
+
+	/**
+	 * Defines the items displayed in menu after a click on the primary title.
+	 * <br><br>
+	 * <b>Note:</b>
+	 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
+	 *
+	 * @type {sap.ui.webc.main.IListItem[]}
+	 * @name sap.ui.webc.main.ShellBar.prototype.menuItems
+	 * @slot
+	 * @since 0.10
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	menuItems!: Array<HTMLElement>;
+
+	/**
+	 * Defines the <code>ui5-input</code>, that will be used as a search field.
+	 *
+	 * @type {sap.ui.webc.main.IInput}
+	 * name sap.ui.webc.main.ShellBar.prototype.searchField
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	searchField!: Array<HTMLElement>;
+
+	/**
+	 * Defines a <code>ui5-button</code> in the bar that will be placed in the beginning.
+	 * We encourage this slot to be used for a back or home button.
+	 * It gets overstyled to match ShellBar's styling.
+	 *
+	 * @type {sap.ui.webc.main.IButton}
+	 * name sap.ui.webc.main.ShellBar.prototype.startButton
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: HTMLElement })
+	startButton!: Array<HTMLElement>;
+
+	static i18nBundle: I18nBundle;
+	overflowPopover!: Popover | null;
+	menuPopover!: Popover | null;
+	_isInitialRendering: boolean;
+	_focusedItem?: null;
+	_defaultItemPressPrevented: boolean;
+	menuItemsObserver: MutationObserver;
+	coPilot!: object;
+	_debounceInterval!: Timeout | null;
+	_hiddenIcons!: Array<IItem>;
+	_handleResize: ResizeObserverCallback;
 
 	static get render() {
 		return litRender;
@@ -494,7 +530,7 @@ class ShellBar extends UI5Element {
 		];
 	}
 
-	static get FIORI_3_BREAKPOINTS_MAP() {
+	static get FIORI_3_BREAKPOINTS_MAP(): Record<string, string> {
 		return {
 			"599": "S",
 			"1023": "M",
@@ -524,45 +560,45 @@ class ShellBar extends UI5Element {
 
 				if (this.hasMenuItems) {
 					const menuPopover = await this._getMenuPopover();
-					menuPopover.showAt(this.shadowRoot.querySelector(".ui5-shellbar-menu-button"), true);
+					menuPopover!.showAt(this.shadowRoot!.querySelector(".ui5-shellbar-menu-button") as Button, true);
 				}
 			},
 		};
 
-		this._handleResize = async event => {
+		this._handleResize = () => {
 			this._debounce(async () => {
 				await this._getResponsivePopover();
-				this.overflowPopover.close();
+				this.overflowPopover!.close();
 				this._overflowActions();
 			}, HANDLE_RESIZE_DEBOUNCE_RATE);
 		};
 	}
 
-	_debounce(fn, delay) {
-		clearTimeout(this._debounceInterval);
+	_debounce(fn: () => Promise<void>, delay: number) {
+		clearTimeout(this._debounceInterval!);
 		this._debounceInterval = setTimeout(() => {
 			this._debounceInterval = null;
 			fn();
 		}, delay);
 	}
 
-	_menuItemPress(event) {
-		this.menuPopover.close();
+	_menuItemPress(e: CustomEvent<SelectionChangeEventDetail>) {
+		this.menuPopover!.close();
 		this.fireEvent("menu-item-click", {
-			item: event.detail.selectedItems[0],
+			item: e.detail.selectedItems[0],
 		}, true);
 	}
 
 	_logoPress() {
 		this.fireEvent("logo-click", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-logo"),
+			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-logo"),
 		});
 	}
 
 	_menuPopoverBeforeOpen() {
 		this._menuPopoverExpanded = true;
-		if (this.menuPopover.content && this.menuPopover.content.length) {
-			this.menuPopover.content[0].focusFirstItem();
+		if (this.menuPopover!.content && this.menuPopover!.content.length) {
+			(<List> this.menuPopover!.content[0]).focusFirstItem();
 		}
 	}
 
@@ -572,8 +608,8 @@ class ShellBar extends UI5Element {
 
 	_overflowPopoverBeforeOpen() {
 		this._overflowPopoverExpanded = true;
-		if (this.overflowPopover.content && this.overflowPopover.content.length) {
-			this.overflowPopover.content[0].focusFirstItem();
+		if (this.overflowPopover!.content && this.overflowPopover!.content.length) {
+			(<List> this.overflowPopover!.content[0]).focusFirstItem();
 		}
 	}
 
@@ -581,26 +617,26 @@ class ShellBar extends UI5Element {
 		this._overflowPopoverExpanded = false;
 	}
 
-	_logoKeyup(event) {
-		if (isSpace(event)) {
+	_logoKeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
 			this._logoPress();
 		}
 	}
 
-	_logoKeydown(event) {
-		if (isSpace(event)) {
-			event.preventDefault();
+	_logoKeydown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
 			return;
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			this._logoPress();
 		}
 	}
 
 	_fireCoPilotClick() {
 		this.fireEvent("co-pilot-click", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-coPilot"),
+			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-coPilot"),
 		});
 	}
 
@@ -608,21 +644,21 @@ class ShellBar extends UI5Element {
 		this._fireCoPilotClick();
 	}
 
-	_coPilotKeydown(event) {
-		if (isSpace(event)) {
+	_coPilotKeydown(e: KeyboardEvent) {
+		if (isSpace(e)) {
 			this.coPilotActive = true;
-			event.preventDefault();
+			e.preventDefault();
 			return;
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			this.coPilotActive = true;
 			this._fireCoPilotClick();
 		}
 	}
 
-	_coPilotKeyup(event) {
-		if (isSpace(event)) {
+	_coPilotKeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
 			this._fireCoPilotClick();
 		}
 		this.coPilotActive = false;
@@ -681,7 +717,7 @@ class ShellBar extends UI5Element {
 	_handleSizeS() {
 		const hasIcons = this.showNotifications || this.showProductSwitch || this.searchField.length || this.items.length;
 
-		const newItems = this._getAllItems(hasIcons).map(info => {
+		const newItems = this._getAllItems(!!hasIcons).map(info => {
 			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
 			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.hasProfile);
@@ -693,24 +729,24 @@ class ShellBar extends UI5Element {
 					order: shouldStayOnScreen ? 1 : -1,
 				},
 			};
-		});
+		}) as Array<IItem>;
 
 		this._updateItemsInfo(newItems);
 	}
 
 	_handleActionsOverflow() {
-		const rightContainerRect = this.shadowRoot.querySelector(".ui5-shellbar-overflow-container-right").getBoundingClientRect();
+		const rightContainerRect = this.shadowRoot!.querySelector(".ui5-shellbar-overflow-container-right")!.getBoundingClientRect();
 		let overflowSelector = ".ui5-shellbar-button:not(.ui5-shellbar-overflow-button):not(.ui5-shellbar-invisible-button)";
 
 		if (this.showSearchField) {
 			overflowSelector += ",.ui5-shellbar-search-field";
 		}
 
-		const elementsToOverflow = this.shadowRoot.querySelectorAll(overflowSelector);
+		const elementsToOverflow = this.shadowRoot!.querySelectorAll(overflowSelector);
 		const isRTL = this.effectiveDir === "rtl";
 
-		let overflowCount = [].filter.call(elementsToOverflow, icon => {
-			const iconRect = icon.getBoundingClientRect();
+		const overflowCount = [].filter.call(elementsToOverflow, icon => {
+			const iconRect = (icon as Button).getBoundingClientRect();
 
 			if (isRTL) {
 				return (iconRect.left + iconRect.width) > (rightContainerRect.left + rightContainerRect.width);
@@ -718,10 +754,9 @@ class ShellBar extends UI5Element {
 
 			return iconRect.left < rightContainerRect.left;
 		});
+		const overFlowCountLength = !!overflowCount.length;
 
-		overflowCount = overflowCount.length;
-
-		const items = this._getAllItems(!!overflowCount).filter(item => item.show);
+		const items = this._getAllItems(overFlowCountLength).filter(item => item.show);
 
 		const itemsByPriority = items.sort((item1, item2) => {
 			if (item1.priority > item2.priority) {
@@ -736,7 +771,7 @@ class ShellBar extends UI5Element {
 		});
 
 		for (let i = 0; i < itemsByPriority.length; i++) {
-			if (i < overflowCount) {
+			if (i < overflowCount.length) {
 				itemsByPriority[i].classes = `${itemsByPriority[i].classes} ui5-shellbar-hidden-button`;
 				itemsByPriority[i].styles = {
 					order: -1,
@@ -759,9 +794,9 @@ class ShellBar extends UI5Element {
 	}
 
 	async _toggleActionPopover() {
-		const overflowButton = this.shadowRoot.querySelector(".ui5-shellbar-overflow-button");
+		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button");
 		const overflowPopover = await this._getOverflowPopover();
-		overflowPopover.showAt(overflowButton, true);
+		overflowPopover!.showAt(overflowButton as Button, true);
 	}
 
 	onEnterDOM() {
@@ -771,18 +806,18 @@ class ShellBar extends UI5Element {
 	onExitDOM() {
 		this.menuItemsObserver.disconnect();
 		ResizeHandler.deregister(this, this._handleResize);
-		clearTimeout(this._debounceInterval);
+		clearTimeout(this._debounceInterval!);
 		this._debounceInterval = null;
 	}
 
-	_handleSearchIconPress(event) {
+	_handleSearchIconPress(e: MouseEvent) {
 		this.showSearchField = !this.showSearchField;
 
 		if (!this.showSearchField) {
 			return;
 		}
 
-		const input = this.searchField[0];
+		const input = this.searchField[0] as Input;
 
 		// update the state immediately
 		if (input) {
@@ -797,7 +832,7 @@ class ShellBar extends UI5Element {
 		}, 100);
 	}
 
-	async _handleActionListClick(event) {
+	async _handleActionListClick(e: MouseEvent) {
 		if (!this._defaultItemPressPrevented) {
 			this.closeOverflow();
 			// wait for DOM to be updated when ui5-popover is closed, otherwise if Enter key is hold
@@ -808,35 +843,36 @@ class ShellBar extends UI5Element {
 		this._defaultItemPressPrevented = false;
 	}
 
-	_handleCustomActionPress(event) {
-		const refItemId = event.target.getAttribute("data-ui5-external-action-item-id");
+	_handleCustomActionPress(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const refItemId = target.getAttribute("data-ui5-external-action-item-id");
 
 		if (refItemId) {
 			const shellbarItem = this.items.find(item => {
 				return item._id === refItemId;
 			});
 
-			const prevented = !shellbarItem.fireEvent("click", { targetRef: event.target }, true);
+			const prevented = shellbarItem!.fireEvent("click", { targetRef: e.target }, true);
 
 			this._defaultItemPressPrevented = prevented;
 		}
 	}
 
-	_handleOverflowPress(event) {
+	_handleOverflowPress(e: MouseEvent) {
 		this._toggleActionPopover();
 	}
 
-	_handleNotificationsPress(event) {
-		const notificationIconRef = this.shadowRoot.querySelector(".ui5-shellbar-bell-button");
+	_handleNotificationsPress(e: MouseEvent) {
+		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button");
 
 		this._defaultItemPressPrevented = !this.fireEvent("notifications-click", {
-			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? event.target : notificationIconRef,
+			targetRef: notificationIconRef!.classList.contains("ui5-shellbar-hidden-button") ? e.target : notificationIconRef,
 		}, true);
 	}
 
-	_handleProfilePress(event) {
+	_handleProfilePress(e: MouseEvent) {
 		this.fireEvent("profile-click", {
-			targetRef: this.shadowRoot.querySelector(".ui5-shellbar-image-button"),
+			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button"),
 		});
 	}
 
@@ -844,11 +880,11 @@ class ShellBar extends UI5Element {
 		this.showSearchField = false;
 	}
 
-	_handleProductSwitchPress(event) {
-		const buttonRef = this.shadowRoot.querySelector(".ui5-shellbar-button-product-switch");
+	_handleProductSwitchPress(e: MouseEvent) {
+		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch");
 
 		this._defaultItemPressPrevented = !this.fireEvent("product-switch-click", {
-			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? event.target : buttonRef,
+			targetRef: buttonRef!.classList.contains("ui5-shellbar-hidden-button") ? e.target : buttonRef,
 		}, true);
 	}
 
@@ -860,7 +896,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get logoDomRef() {
-		return this.shadowRoot.querySelector(`*[data-ui5-stable="logo"]`);
+		return this.shadowRoot!.querySelector(`*[data-ui5-stable="logo"]`);
 	}
 
 	/**
@@ -871,7 +907,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get copilotDomRef() {
-		return this.shadowRoot.querySelector(`*[data-ui5-stable="copilot"]`);
+		return this.shadowRoot!.querySelector(`*[data-ui5-stable="copilot"]`);
 	}
 
 	/**
@@ -882,7 +918,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get notificationsDomRef() {
-		return this.shadowRoot.querySelector(`*[data-ui5-stable="notifications"]`);
+		return this.shadowRoot!.querySelector(`*[data-ui5-stable="notifications"]`);
 	}
 
 	/**
@@ -893,7 +929,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get overflowDomRef() {
-		return this.shadowRoot.querySelector(`*[data-ui5-stable="overflow"]`);
+		return this.shadowRoot!.querySelector(`*[data-ui5-stable="overflow"]`);
 	}
 
 	/**
@@ -904,7 +940,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get profileDomRef() {
-		return this.shadowRoot.querySelector(`*[data-ui5-stable="profile"]`);
+		return this.shadowRoot!.querySelector(`*[data-ui5-stable="profile"]`);
 	}
 
 	/**
@@ -915,14 +951,14 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get productSwitchDomRef() {
-		return this.shadowRoot.querySelector(`*[data-ui5-stable="product-switch"]`);
+		return this.shadowRoot!.querySelector(`*[data-ui5-stable="product-switch"]`);
 	}
 
 	/**
 	 * Returns all items that will be placed in the right of the bar as icons / dom elements.
 	 * @param {boolean} showOverflowButton Determines if overflow button should be visible (not overflowing)
 	 */
-	_getAllItems(showOverflowButton) {
+	_getAllItems(showOverflowButton: boolean) {
 		let domOrder = -1;
 
 		const items = [
@@ -939,8 +975,8 @@ class ShellBar extends UI5Element {
 				press: this._handleSearchIconPress.bind(this),
 				show: !!this.searchField.length,
 			},
-			...this.items.map((item, index) => {
-				item._getRealDomRef = () => this.getDomRef().querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+			...this.items.map((item: ShellBarItem, index: number) => {
+				item._getRealDomRef = () => this.getDomRef()!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
 				return {
 					icon: item.icon,
 					id: item._id,
@@ -1013,11 +1049,11 @@ class ShellBar extends UI5Element {
 				domOrder: this.showProductSwitch ? (++domOrder) : -1,
 				press: this._handleProductSwitchPress.bind(this),
 			},
-		];
+		] as Array<IItem>;
 		return items;
 	}
 
-	_updateItemsInfo(newItems) {
+	_updateItemsInfo(newItems: Array<IItem>) {
 		const isDifferent = JSON.stringify(this._itemsInfo) !== JSON.stringify(newItems);
 		if (isDifferent) {
 			this._itemsInfo = newItems;
@@ -1030,7 +1066,7 @@ class ShellBar extends UI5Element {
 		this.menuItems.forEach(item => {
 			// clone the menuItem and remove the slot="menuItems",
 			// otherwise would not be slotted in the internal ui5-li
-			const clonedItem = item.cloneNode(true);
+			const clonedItem = item.cloneNode(true) as HTMLElement;
 			clonedItem.removeAttribute("slot");
 
 			this._menuPopoverItems.push(clonedItem);
@@ -1050,21 +1086,21 @@ class ShellBar extends UI5Element {
 
 	async _getResponsivePopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		this.overflowPopover = staticAreaItem.querySelector(".ui5-shellbar-overflow-popover");
-		this.menuPopover = staticAreaItem.querySelector(".ui5-shellbar-menu-popover");
+		this.overflowPopover = staticAreaItem!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
+		this.menuPopover = staticAreaItem!.querySelector<Popover>(".ui5-shellbar-menu-popover");
 	}
 
 	async _getOverflowPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(".ui5-shellbar-overflow-popover");
+		return staticAreaItem!.querySelector<Popover>(".ui5-shellbar-overflow-popover");
 	}
 
 	async _getMenuPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem.querySelector(".ui5-shellbar-menu-popover");
+		return staticAreaItem!.querySelector<Popover>(".ui5-shellbar-menu-popover");
 	}
 
-	isIconHidden(name) {
+	isIconHidden(name: string) {
 		const itemInfo = this._itemsInfo.find(item => item.icon === name);
 
 		if (!itemInfo) {
@@ -1074,11 +1110,11 @@ class ShellBar extends UI5Element {
 		return itemInfo.classes.indexOf("ui5-shellbar-hidden-button") !== -1;
 	}
 
-	get classes() {
+	get classes(): ClassMap {
 		return {
 			wrapper: {
 				"ui5-shellbar-root": true,
-				"ui5-shellbar-with-searchfield": this.searchField.length,
+				"ui5-shellbar-with-searchfield": this.hasSearchField,
 			},
 			button: {
 				"ui5-shellbar-menu-button--interactive": this.hasMenuItems,
@@ -1189,7 +1225,7 @@ class ShellBar extends UI5Element {
 
 	get _showFullWidthSearch() {
 		const size = this._handleBarBreakpoints();
-		const searchBtnHidden = !!this.shadowRoot.querySelector(".ui5-shellbar-search-button.ui5-shellbar-hidden-button");
+		const searchBtnHidden = !!this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button.ui5-shellbar-hidden-button");
 
 		return ((size === "S") || searchBtnHidden);
 	}
