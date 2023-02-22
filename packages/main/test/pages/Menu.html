@@ -133,7 +133,7 @@
 			eventLogger.value += "* [after-close]";
 		});
 
-		direction.addEventListener("change", function() {
+		direction.addEventListener("ui5-change", function() {
 			document.body.setAttribute("dir", direction.checked ? "rtl" : "ltr");
 			window["sap-ui-webcomponents-bundle"].applyDirection();
 		});

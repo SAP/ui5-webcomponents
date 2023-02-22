@@ -1,6 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
@@ -466,7 +467,7 @@ class List extends UI5Element {
 	_forwardingFocus: boolean;
 	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
-	_handleResize: () => void;
+	_handleResize: ResizeObserverCallback;
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	growingIntersectionObserver?: IntersectionObserver | null;

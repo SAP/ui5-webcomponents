@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
@@ -33,6 +34,7 @@ import PageCss from "./generated/themes/Page.css.js";
  *
  * <b>Note:</b> <code>ui5-page</code> occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
  * that there is enough space for the <code>ui5-page</code> to be rendered.
+ * <b>Note:</b> In order for the <code>ui5-page</code> to be displayed, the parent element should have fixed height.
  *
  *
  * <h3>ES6 Module Import</h3>
@@ -147,7 +149,7 @@ class Page extends UI5Element {
 	@slot()
 	footer!: Array<HTMLElement>;
 
-	_updateMediaRange: () => void;
+	_updateMediaRange: ResizeObserverCallback;
 
 	static get render() {
 		return litRender;

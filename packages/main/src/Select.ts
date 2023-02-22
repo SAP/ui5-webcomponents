@@ -66,7 +66,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
-import { IFormElement } from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 
 type SelectChangeEventDetail = {
@@ -363,6 +363,8 @@ class Select extends UI5Element implements IFormElement {
 	onBeforeRendering() {
 		this._syncSelection();
 		this._enableFormSupport();
+
+		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 	}
 
 	onAfterRendering() {
@@ -785,6 +787,10 @@ class Select extends UI5Element implements IFormElement {
 		};
 
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
+	get iconsCount(): number {
+		return this.selectedOptionIcon ? 2 : 1;
 	}
 
 	get classes() {

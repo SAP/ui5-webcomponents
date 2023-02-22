@@ -221,7 +221,7 @@
 	</ui5-shellbar>
 
 	<ui5-shellbar primary-title="UI5 Web Components" id="test-invalidation">
-		<ui5-shellbar-item icon="discussion" count="2" id="test-invalidation-item"/>
+		<ui5-shellbar-item icon="discussion" count="2" id="test-invalidation-item"></ui5-shellbar-item>
 	</ui5-shellbar>
 
 	<ui5-toast id="wcToastTC">Custom Action Fired</ui5-toast>
@@ -236,55 +236,55 @@
 	</ui5-shellbar>
 
 	<script>
-		mySearch.addEventListener("suggestionItemSelect", function (event) {
+		mySearch.addEventListener("ui5-suggestion-item-select", function (event) {
 			console.log(event);
 		});
 
-		shellbar.addEventListener("ui5-profileClick", function(event) {
+		shellbar.addEventListener("ui5-profile-click", function(event) {
 			popover.showAt(event.detail.targetRef);
 			window["press-input"].value = "Profile";
 		});
 
-		shellbar.addEventListener("ui5-notificationsClick", function(event) {
+		shellbar.addEventListener("ui5-notifications-click", function(event) {
 			window["press-input"].value = "Notifications";
 			event.preventDefault();
 			popover.showAt(event.detail.targetRef);
 		});
 
-		shellbar.addEventListener("ui5-productSwitchClick", function(event) {
+		shellbar.addEventListener("ui5-product-switch-click", function(event) {
 			event.preventDefault();
 			window["press-input"].value = "Product Switch";
 		});
 
-		shellbar.addEventListener("ui5-logoClick", function(event) {
+		shellbar.addEventListener("ui5-logo-click", function(event) {
 			window["press-input"].value = "Logo";
 		});
 
-		shellbarWithLogoClick.addEventListener("ui5-logoClick", function(event) {
+		shellbarWithLogoClick.addEventListener("ui5-logo-click", function(event) {
 			window["press-input2"].value = shellbarWithLogoClick.primaryTitle.replace(/\s/g, "");
 		});
 
-		shellbar.addEventListener("ui5-coPilotClick", function(event) {
+		shellbar.addEventListener("ui5-co-pilot-click", function(event) {
 			window["press-input"].value = "CoPilot";
 		});
 
-		shellbar.addEventListener("ui5-menuItemClick", function(event) {
+		shellbar.addEventListener("ui5-menu-item-click", function(event) {
 			var item = event.detail.item;
 			window["press-input"].value = item.textContent;
 			window["press-data"].value = item.getAttribute("data-key");
 		});
 
-		shelbarCompact.addEventListener("ui5-notificationsClick", function(event) {
+		shelbarCompact.addEventListener("ui5-notifications-click", function(event) {
 			event.preventDefault();
 			popover.showAt(event.detail.targetRef);
 		});
 
-		shelbarCompact.addEventListener("ui5-productSwitchClick", function(event) {
+		shelbarCompact.addEventListener("ui5-product-switch-click", function(event) {
 			event.preventDefault();
 			popover.showAt(event.detail.targetRef);
 		});
 
-		menuItemsSB.addEventListener("ui5-menuItemClick", function(event) {
+		menuItemsSB.addEventListener("ui5-menu-item-click", function(event) {
 			var item = event.detail.item;
 			window["result-value"].value = item.textContent;
 			window["result-key"].value = item.getAttribute("data-key");

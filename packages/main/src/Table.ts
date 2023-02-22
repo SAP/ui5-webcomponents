@@ -6,6 +6,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -513,7 +514,7 @@ class Table extends UI5Element {
 
 	fnHandleF7: (e: CustomEvent) => void;
 	fnOnRowFocused: (e: CustomEvent) => void;
-	_handleResize: () => void;
+	_handleResize: ResizeObserverCallback;
 
 	moreDataText?: string;
 	tableEndObserved: boolean;

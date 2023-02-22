@@ -103,7 +103,7 @@
 		/*
 		 * Open quickviewCard on suggestion-item-preview
 		 */
-		inputPreview.addEventListener("suggestion-item-preview", function (event) {
+		inputPreview.addEventListener("ui5-suggestion-item-preview", function (event) {
 			const targetRef = event.detail.targetRef;
 
 			quickViewCard.close();
@@ -114,14 +114,14 @@
 		 * Toggle quickviewCard on mouseover/mouseout
 		 */
 		 [].slice.call(document.querySelectorAll("#inputPreview .suggestionItem")).forEach(function(el) {
-			el.addEventListener("mouseover", function (event) {
+			el.addEventListener("ui5-mouseover", function (event) {
 				const targetRef = event.detail.targetRef;
 
 				quickViewCard.close();
 				quickViewCard.showAt(targetRef, true /* preventInitialFocus */);
 			});
 
-			el.addEventListener("mouseout", function (event) {
+			el.addEventListener("ui5-mouseout", function (event) {
 			});
 		});
 
@@ -141,7 +141,7 @@
 		/*
 		 * Restore the focus to the input on ESC
 		 */
-		quickViewCard.addEventListener("before-close", async event => {
+		quickViewCard.addEventListener("ui5-before-close", async event => {
 			const esc = event.detail.escPressed;
 
 			if (esc) {

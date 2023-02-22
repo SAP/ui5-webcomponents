@@ -1,4 +1,4 @@
-import { ComponentStylesData, StyleData } from "../types.js";
+import type { ComponentStylesData, StyleData } from "../types.js";
 
 const MAX_DEPTH_INHERITED_CLASSES = 10; // TypeScript complains about Infinity and big numbers
 

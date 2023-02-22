@@ -209,7 +209,7 @@
 		var input = document.getElementById("tree-input");
 		var inputValue = 0;
 
-		dynamicTree.addEventListener("ui5-itemToggle", function(event) {
+		dynamicTree.addEventListener("ui5-item-toggle", function(event) {
 			var item = event.detail.item; // get the node that is toggled
 			console.log(item);
 			// Only for the dynamic node, only when it's empty
@@ -226,7 +226,7 @@
 			}
 		});
 
-		dynamicTree.addEventListener("ui5-itemClick", function(event) {
+		dynamicTree.addEventListener("ui5-item-click", function(event) {
 			var item = event.detail.item; // get the node that is toggled
 
 			// Only for the dynamic node, only when it's empty

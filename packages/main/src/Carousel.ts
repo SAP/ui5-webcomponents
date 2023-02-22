@@ -19,6 +19,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type { ScrollEnablementEventListenerParam } from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -270,7 +271,7 @@ class Carousel extends UI5Element {
 	_visibleNavigationArrows!: boolean;
 
 	_scrollEnablement: ScrollEnablement;
-	_onResizeBound: () => void;
+	_onResizeBound: ResizeObserverCallback;
 	_resizing: boolean;
 	_lastFocusedElements: Array<HTMLElement>;
 	_orderOfLastFocusedPages: Array<number>;

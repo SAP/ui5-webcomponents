@@ -214,9 +214,9 @@ In addition, you can define your own CSS Vars and provide different values for t
 | `src/themes/sap_fiori_3_hcb/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_fiori_3_hcb` theme                     |
 | `src/themes/sap_fiori_3_hcw/parameters-bundle.css`  | Values for the component-specific CSS Vars for the `sap_fiori_3_hcw` theme                     |
 
-**Note:** It's up to you whether to put the CSS Vars directly in the `parameters-bundle.css` files for the different themes or to
-import them from separate `.css` files. You could have, for example, a `MyFirstComponent-params.css` file for each theme and
-import it into the `parameters-bundle.css` file: `@import "MyFirstComponent-params.css";`.
+**Note:** It's up to you whether to put the CSS Vars directly in the `parameters-bundle.css` files for the different themes or 
+to import them from separate `.css` files. You could have, for example, a `MyFirstComponent-params.css` file for each theme 
+and import it into the `parameters-bundle.css` file: `@import "MyFirstComponent-params.css";`.
 
 Again, to know more about how these files work, you could have a look at the [Developing Web Components](../custom-ui5-web-components#css) section of the documentation.
 

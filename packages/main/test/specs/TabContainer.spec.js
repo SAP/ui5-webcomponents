@@ -96,11 +96,35 @@ describe("TabContainer general interaction", () => {
 		const tabContainer = await browser.$("#tabContainer1");
 		const tab4 = await tabContainer.shadow$(".ui5-tab-strip-item:nth-child(4)");
 
+		assert.notOk(await tabContainer.shadow$(".ui5-tc__tabStrip").getAttribute("aria-describedby"),"aria-describedby is not set");
+		assert.notOk(await tabContainer.shadow$(".ui5-hidden-text").isExisting(),"hidden text is not created");
+
 		// assert: The TabContainer has 8 children, 7 tabs and 1 separator (at position 2)
 		// and the separator should be skipped in terms of aria-posinset and aria-setsize,
 		// so for child number 4 ("Monitors") we expect the following attributes aria-posinset="3" and aria-setsize="7".
 		assert.strictEqual(await tab4.getAttribute("aria-posinset"), "3", "The aria-posinset is correct.");
 		assert.strictEqual(await tab4.getAttribute("aria-setsize"), "7", "The aria-setsize is correct.");
+		assert.strictEqual(await tab4.getAttribute("role"), "tab", "Tab role is correct");
+		assert.notOk(await tab4.getAttribute("aria-roledescription"),"aria-roledescription is not set");
+	});
+
+	it("tests aria attrs when sub tabs", async () => {
+		const tabContainer = await browser.$("#tabContainerNestedTabs");
+
+		const tab1 = await tabContainer.shadow$(".ui5-tab-strip-item:nth-child(1)");
+		const tab2 = await tabContainer.shadow$(".ui5-tab-strip-item:nth-child(3)");
+		const tab3 = await tabContainer.shadow$(".ui5-tab-strip-item:nth-child(4)");
+
+		const tablistAriaDescribedBy = await tabContainer.shadow$(".ui5-tc__tabStrip").getAttribute("aria-describedby");
+		const hiddenTextId = await tabContainer.shadow$(".ui5-hidden-text").getAttribute("id");
+
+		assert.ok(tablistAriaDescribedBy,"aria-describedby is set");
+		assert.ok(hiddenTextId,"hidden text is created");
+		assert.strictEqual(tablistAriaDescribedBy, hiddenTextId, "aria-describedby equals to hidden text id");
+
+		assert.notOk(await tab1.getAttribute("aria-haspopup"),"The aria-haspopup is not set.");
+		assert.notOk(await tab2.getAttribute("aria-haspopup"),"The aria-haspopup is not set.");
+		assert.ok(await tab3.getAttribute("aria-haspopup"),"The aria-haspopup is set.");
 	});
 
 	it("tests start and end overflow behavior", async () => {

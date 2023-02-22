@@ -29,6 +29,10 @@ const impliesRTL = (language: string) => {
  * @returns {boolean} whether RTL should be used
  */
 const getRTL = (): boolean => {
+	if (typeof document === "undefined") {
+		return false;
+	}
+
 	const configurationRTL = getConfiguredRTL();
 
 	if (configurationRTL !== undefined) {

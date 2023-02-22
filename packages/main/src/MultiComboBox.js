@@ -336,6 +336,14 @@ const metadata = {
 		_performingSelectionTwice: {
 			type: Boolean,
 		},
+
+		/**
+		 * Indicates whether the tokenizer has tokens
+		 * @private
+		 */
+		tokenizerAvailable: {
+			type: Boolean,
+		},
 	},
 	events: /** @lends sap.ui.webc.main.MultiComboBox.prototype */ {
 		/**
@@ -391,8 +399,8 @@ const metadata = {
  * <h3>Structure</h3>
  * The <code>ui5-multi-combobox</code> consists of the following elements:
  * <ul>
- * <li> Tokenizer - a list of tokens with selected options.
- * <li> Input field - displays the selected option/s as token/s. Users can type to filter the list.
+ * <li> Tokenizer - a list of tokens with selected options.</li>
+ * <li> Input field - displays the selected option/s as token/s. Users can type to filter the list.</li>
  * <li> Drop-down arrow - expands\collapses the option list.</li>
  * <li> Option list - the list of available options.</li>
  * </ul>
@@ -1303,6 +1311,9 @@ class MultiComboBox extends UI5Element {
 			item._getRealDomRef = () => this.allItemsPopover.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
 		});
 
+		this.tokenizerAvailable = this.items && this.items.length > 0;
+		this.style.setProperty("--_ui5-input-icons-count", this.iconsCount);
+
 		if (!input || !value) {
 			return;
 		}
@@ -1597,6 +1608,12 @@ class MultiComboBox extends UI5Element {
 
 	get _valueStatePopoverHorizontalAlign() {
 		return this.effectiveDir !== "rtl" ? "Left" : "Right";
+	}
+
+	get iconsCount() {
+		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const arrowDownIconsCount = this.readonly ? 0 : 1;
+		return slottedIconsCount + arrowDownIconsCount;
 	}
 
 	get classes() {

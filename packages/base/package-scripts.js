@@ -16,7 +16,7 @@ const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/compo
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
 	lint: `eslint . ${eslintConfig}`,
-	prepare: "nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
+	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
 	typescript: "tsc",
 	integrate: {
 		default: "nps integrate.copy-used-modules integrate.replace-amd integrate.amd-to-es6 integrate.esm-abs-to-rel integrate.third-party",
@@ -58,7 +58,11 @@ const scripts = {
 		styles: 'chokidar "src/css/*.css" -c "nps generateStyles"'
 	},
 	start: "nps prepare watch.withBundle",
-	test: `node "${LIB}/test-runner/test-runner.js"`,
+	test: {
+		default: 'concurrently "nps test.wdio"',
+		ssr: `mocha test/ssr`,
+		wdio: `node "${LIB}/test-runner/test-runner.js"`
+	},
 };
 
 

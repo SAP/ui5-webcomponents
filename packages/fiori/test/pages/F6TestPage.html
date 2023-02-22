@@ -434,12 +434,12 @@
 			}
 
 			// Event handlers
-			col1list.addEventListener("item-click", function (e) {
+			col1list.addEventListener("ui5-item-click", function (e) {
 				updateProductInfo(e.detail.item);
 				fcl.layout = nextLayout("col1");
 			});
 
-			col2list.addEventListener("item-click", function (e) {
+			col2list.addEventListener("ui5-item-click", function (e) {
 				updateDetailInfo(e.detail.item);
 				fcl.layout = nextLayout("col2");
 			});

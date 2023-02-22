@@ -4,22 +4,22 @@ import EventProvider from "../EventProvider.js";
 
 type CustomCSSChangeCallback = (tag: string) => void;
 
-const eventProvider = getSharedResource("CustomStyle.eventProvider", new EventProvider<string, void>());
+const getEventProvider = () => getSharedResource("CustomStyle.eventProvider", new EventProvider<string, void>());
 const CUSTOM_CSS_CHANGE = "CustomCSSChange";
 
 const attachCustomCSSChange = (listener: CustomCSSChangeCallback) => {
-	eventProvider.attachEvent(CUSTOM_CSS_CHANGE, listener);
+	getEventProvider().attachEvent(CUSTOM_CSS_CHANGE, listener);
 };
 
 const detachCustomCSSChange = (listener: CustomCSSChangeCallback) => {
-	eventProvider.detachEvent(CUSTOM_CSS_CHANGE, listener);
+	getEventProvider().detachEvent(CUSTOM_CSS_CHANGE, listener);
 };
 
 const fireCustomCSSChange = (tag: string) => {
-	return eventProvider.fireEvent(CUSTOM_CSS_CHANGE, tag);
+	return getEventProvider().fireEvent(CUSTOM_CSS_CHANGE, tag);
 };
 
-const customCSSFor = getSharedResource<Record<string, Array<string>>>("CustomStyle.customCSSFor", {});
+const getCustomCSSFor = () => getSharedResource<Record<string, Array<string>>>("CustomStyle.customCSSFor", {});
 
 // Listen to the eventProvider, in case other copies of this CustomStyle module fire this
 // event, and this copy would therefore need to reRender the ui5 webcomponents; but
@@ -32,6 +32,7 @@ attachCustomCSSChange((tag: string) => {
 });
 
 const addCustomCSS = (tag: string, css: string) => {
+	const customCSSFor = getCustomCSSFor();
 	if (!customCSSFor[tag]) {
 		customCSSFor[tag] = [];
 	}
@@ -51,6 +52,7 @@ const addCustomCSS = (tag: string, css: string) => {
 };
 
 const getCustomCSS = (tag: string) => {
+	const customCSSFor = getCustomCSSFor();
 	return customCSSFor[tag] ? customCSSFor[tag].join("") : "";
 };
 
