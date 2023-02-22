@@ -739,4 +739,5 @@ class Tokenizer extends UI5Element {
 Tokenizer.define();
 
 export default Tokenizer;
+export { ClipboardDataOperation };
 export type { TokenizerTokenDeleteEventDetail };
