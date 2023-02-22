@@ -1,4 +1,3 @@
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -45,10 +44,16 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @public
  */
 @customElement2({
-	template: TreeItemBaseTemplate,
-	dependencies: [...ListItem.dependencies, Icon],
-	styles: [ListItem.styles, treeItemCss],
 	languageAware: true,
+	template: TreeItemBaseTemplate,
+	styles: [
+		ListItem.styles,
+		treeItemCss,
+	],
+	dependencies: [
+		...ListItem.dependencies,
+		Icon,
+	],
 })
 /**
  * Fired when the user interacts with the expand/collapse button of the tree list item.

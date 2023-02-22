@@ -3,7 +3,6 @@ import {
 	html,
 	svg,
 	TemplateResult,
-	RenderOptions,
 } from "lit-html";
 
 import { getFeature } from "../FeaturesRegistry.js";
@@ -11,6 +10,40 @@ import type { LitStatic } from "../CustomElementsScope.js";
 import type OpenUI5Enablement from "../features/OpenUI5Enablement.js";
 import type UI5Element from "../UI5Element.js";
 import { TemplateFunctionResult } from "./executeTemplate.js";
+
+type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RenderOptions) => void;
+
+type RenderOptions = {
+	/**
+	 * An object to use as the `this` value for event listeners. It's often
+	 * useful to set this to the host component rendering a template.
+	 */
+	host?: object,
+
+	/**
+	 * A DOM node before which to render content in the container.
+	 */
+	renderBefore?: ChildNode | null,
+
+	/**
+	 * Node used for cloning the template (`importNode` will be called on this
+	 * node). This controls the `ownerDocument` of the rendered DOM, along with
+	 * any inherited context. Defaults to the global `document`.
+	 */
+	creationScope?: {
+		importNode(node: Node, deep?: boolean): Node,
+	},
+
+	/**
+	 * The initial connected state for the top-level part being rendered. If no
+	 * `isConnected` option is set, `AsyncDirective`s will be connected by
+	 * default. Set to `false` if the initial render occurs in a disconnected tree
+	 * and `AsyncDirective`s should see `isConnected === false` for their initial
+	 * render. The `part.setConnected()` method must be used subsequent to initial
+	 * render to change the connected state of the part.
+	 */
+	isConnected?: boolean,
+}
 
 const effectiveHtml = (strings: TemplateStringsArray, ...values: Array<unknown>) => {
 	const litStatic = getFeature<typeof LitStatic>("LitStatic");
@@ -24,7 +57,7 @@ const effectiveSvg = (strings: TemplateStringsArray, ...values: Array<unknown>) 
 	return fn(strings, ...values);
 };
 
-const litRender = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RenderOptions) => {
+const litRender: Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RenderOptions) => {
 	const openUI5Enablement = getFeature<typeof OpenUI5Enablement>("OpenUI5Enablement");
 	if (openUI5Enablement && !forStaticArea) {
 		templateResult = openUI5Enablement.wrapTemplateResultInBusyMarkup(effectiveHtml, options.host as UI5Element, templateResult as TemplateResult);
@@ -58,3 +91,8 @@ export { ifDefined } from "lit-html/directives/if-defined.js";
 export { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 export default litRender;
+
+export type {
+	Renderer,
+	RenderOptions,
+};

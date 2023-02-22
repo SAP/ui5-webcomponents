@@ -26,9 +26,6 @@ import getLocaleData from "@ui5/webcomponents-localization/dist/locale/getLocale
 // 	return await (await fetch("fr")).json();
 // });
 
-import "./dist/features/InputElementsFormSupport.js";
-import "./dist/features/ColorPaletteMoreColors.js";
-
 import Avatar from "./dist/Avatar.js";
 import AvatarGroup from "./dist/AvatarGroup.js";
 import Badge from "./dist/Badge.js";
@@ -52,7 +49,6 @@ import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
 import Icon from "./dist/Icon.js";
 import Input from "./dist/Input.js";
-import "./dist/features/InputSuggestions.js";
 import MultiInput from "./dist/MultiInput.js";
 import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
@@ -92,11 +88,16 @@ import Tree from "./dist/Tree.js";
 import TreeList from "./dist/TreeList.js";
 import TreeItem from "./dist/TreeItem.js";
 import TreeItemCustom from "./dist/TreeItemCustom.js";
-
 import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
+
+// Features
+import "./dist/features/InputElementsFormSupport.js";
+import "./dist/features/ColorPaletteMoreColors.js";
+import "./dist/features/InputSuggestions.js";
+
 // used in test pages
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 

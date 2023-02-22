@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -65,7 +65,18 @@ type ColorPaletteItemClickEventDetail = {
  * @appenddocs sap.ui.webc.main.ColorPaletteItem
  * @public
  */
-@customElement("ui5-color-palette")
+@customElement2({
+	tag: "ui5-color-palette",
+	renderer: litRender,
+	template: ColorPaletteTemplate,
+	staticAreaTemplate: ColorPaletteDialogTemplate,
+	styles: ColorPaletteCss,
+	staticAreaStyles: ColorPaletteStaticAreaCss,
+	get dependencies() {
+		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
+		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
+	},
+})
 
 /**
  * Fired when the user selects a color.
@@ -159,36 +170,6 @@ class ColorPalette extends UI5Element {
 	moreColorsFeature?: ColorPaletteMoreColors;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ColorPaletteCss;
-	}
-
-	static get staticAreaStyles() {
-		return ColorPaletteStaticAreaCss;
-	}
-
-	static get template() {
-		return ColorPaletteTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return ColorPaletteDialogTemplate;
-	}
-
-	static get dependencies() {
-		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-
-		if (colorPaletteMoreColors) {
-			return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors.dependencies);
-		}
-
-		return [ColorPaletteItem, Button];
-	}
 
 	static async onDefine() {
 		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");

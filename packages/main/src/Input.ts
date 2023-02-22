@@ -130,8 +130,6 @@ type SuggestionScrollEventDetail = {
 	scrollContainer: HTMLElement;
 }
 
-const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
-
 /**
  * @class
  * <h3 class="comment-api-title">Overview</h3>
@@ -184,14 +182,18 @@ const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
  */
 @customElement2({
 	tag: "ui5-input",
-	renderer: litRender,
-	styles:inputStyles,
-	template: InputTemplate,
-	dependencies: ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []),
 	languageAware: true,
-	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss],
+	renderer: litRender,
+	template: InputTemplate,
 	staticAreaTemplate: InputPopoverTemplate,
+	styles: inputStyles,
+	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss],
+	get dependencies() {
+		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
+		return ([Popover, Icon] as Array<typeof UI5Element>).concat(Suggestions ? Suggestions.dependencies : []);
+	},
 })
+
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -1252,6 +1254,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
+		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
+
 		if (Suggestions) {
 			this.Suggestions = new Suggestions(this, "suggestionItems", true, false);
 		} else {
@@ -1739,6 +1743,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	static async onDefine() {
+		const Suggestions = getFeature<typeof InputSuggestions>("InputSuggestions");
+
 		[Input.i18nBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents"),
 			Suggestions ? Suggestions.init() : Promise.resolve(),

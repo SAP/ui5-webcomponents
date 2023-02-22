@@ -1,9 +1,7 @@
-import type { RenderOptions } from "lit-html";
 import type UI5Element from "../UI5Element.js";
-import type { TemplateFunction as Template, TemplateFunctionResult } from "../renderer/executeTemplate.js";
+import type { TemplateFunction as Template } from "../renderer/executeTemplate.js";
 import type { ComponentStylesData as Styles } from "../types.js";
-
-type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RenderOptions) => void;
+import type { Renderer } from "../renderer/LitRenderer.js";
 
 /**
  * Returns a custom element class decorator.
@@ -12,53 +10,74 @@ type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement 
  * @returns { ClassDecorator }
  */
 type CustomElementOptions = {
-	tag?: string;
-	languageAware?: boolean;
-	fastNavigation?: boolean;
-	dependencies?: Array<typeof UI5Element>;
-	template?: Template;
-	staticAreaTemplate?: Template;
-	styles?: Styles;
-	staticAreaStyles?: Styles;
-	renderer?: Renderer;
+	tag?: string,
+	languageAware?: boolean,
+	fastNavigation?: boolean,
+	dependencies?: Array<typeof UI5Element>,
+	template?: Template,
+	staticAreaTemplate?: Template,
+	styles?: Styles,
+	staticAreaStyles?: Styles,
+	renderer?: Renderer,
 }
 
-const customElement2 = (options: CustomElementOptions): ClassDecorator => {
+const customElement2 = ({
+	tag,
+	languageAware = false,
+	fastNavigation = false,
+	renderer,
+	template,
+	staticAreaTemplate,
+	styles,
+	staticAreaStyles,
+	dependencies = [],
+} : CustomElementOptions): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
 			target.decoratorMetadata = {};
 		}
 
-		target.decoratorMetadata.tag = options.tag;
-		target.decoratorMetadata.languageAware = !!options.languageAware;
-		target.decoratorMetadata.fastNavigation = !!options.fastNavigation;
+		target.decoratorMetadata.tag = tag;
+		target.decoratorMetadata.languageAware = !!languageAware;
+		target.decoratorMetadata.fastNavigation = !!fastNavigation;
 
-		if (options.template) {
+		if (template) {
 			Object.defineProperty(target, "template", {
-				get: () => options.template,
+				get: () => template,
 			});
 		}
 
-		if (options.staticAreaTemplate) {
+		if (dependencies.length) {
+			Object.defineProperty(target, "dependencies", {
+				get: () => {
+					return dependencies;
+				},
+			});
+		}
+
+		if (staticAreaTemplate) {
 			Object.defineProperty(target, "staticAreaTemplate", {
-				get: () => options.staticAreaTemplate,
+				get: () => staticAreaTemplate,
 			});
 		}
 
-		if (options.renderer) {
+		if (renderer) {
 			Object.defineProperty(target, "render", {
-				get: () => options.renderer,
+				get: () => renderer,
+			});
+			Object.defineProperty(target, "renderer", {
+				get: () => renderer,
 			});
 		}
 
-		if (options.styles) {
+		if (styles) {
 			Object.defineProperty(target, "styles", {
-				get: () => options.styles,
+				get: () => styles,
 			});
 		}
-		if (options.staticAreaStyles) {
+		if (staticAreaStyles) {
 			Object.defineProperty(target, "staticAreaStyles", {
-				get: () => options.staticAreaStyles,
+				get: () => staticAreaStyles,
 			});
 		}
 	};

@@ -4,7 +4,6 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -147,12 +146,16 @@ type DatePickerChangeEventDetail = {
  * @public
  */
 
- @customElement2({
+@customElement2({
 	tag: "ui5-date-picker",
-	styles: datePickerCss,
-	staticAreaStyles: [ResponsivePopoverCommonCss, datePickerPopoverCss],
+	languageAware: true,
 	template: DatePickerTemplate,
 	staticAreaTemplate: DatePickerPopoverTemplate,
+	styles: datePickerCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		datePickerPopoverCss,
+	],
 	dependencies: [
 		Icon,
 		ResponsivePopover,
@@ -161,7 +164,6 @@ type DatePickerChangeEventDetail = {
 		Input,
 		Button,
 	],
-	languageAware: true,
 })
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
