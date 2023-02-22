@@ -78,10 +78,6 @@ class TreeItem extends TreeItemBase {
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	additionalTextState!: ValueState;
 
-	// static get template() {
-	// 	return TreeItemTemplate;
-	// }
-
 	static get styles() {
 		return [super.styles, treeItemCss];
 	}

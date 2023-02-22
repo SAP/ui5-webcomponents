@@ -226,6 +226,8 @@ abstract class ListItem extends ListItemBase {
 	_ontouchstart: PassiveEventListenerObject;
 	// used in template, implemented in TreeItemBase
 	accessibleName?: string;
+	// used in ListItem template but implemented in TreeItemBase
+	indeterminate?: boolean;
 
 	static i18nBundle: I18nBundle;
 

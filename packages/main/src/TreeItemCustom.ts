@@ -67,10 +67,6 @@ class TreeItemCustom extends TreeItemBase {
 	@slot()
 	content!: Array<HTMLElement>
 
-	// static get template() {
-	// 	return TreeItemCustomTemplate;
-	// }
-
 	static get styles() {
 		return [super.styles, treeItemCustomCss];
 	}

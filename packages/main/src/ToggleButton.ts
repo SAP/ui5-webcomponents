@@ -50,10 +50,6 @@ class ToggleButton extends Button {
 	@property({ type: Boolean })
 	pressed!: boolean;
 
-	// static get template() {
-	// 	return ToggleButtonTemplate;
-	// }
-
 	static get styles(): ComponentStylesData {
 		return [Button.styles, toggleBtnCss];
 	}

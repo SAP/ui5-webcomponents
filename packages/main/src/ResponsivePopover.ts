@@ -102,10 +102,6 @@ class ResponsivePopover extends Popover {
 		return allClasses;
 	}
 
-	// static get template() {
-	// 	return ResponsivePopoverTemplate;
-	// }
-
 	static get dependencies() {
 		return [
 			...Popover.dependencies,

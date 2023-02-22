@@ -49,10 +49,6 @@ class SuggestionListItem extends StandardListItem {
 	@slot({ type: Node, "default": true })
 	titleText!: Array<Node>
 
-	// static get template() {
-	// 	return SuggestionListItemTemplate;
-	// }
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.titleText.length;

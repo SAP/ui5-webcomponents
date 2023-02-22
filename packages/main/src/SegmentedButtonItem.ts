@@ -92,10 +92,6 @@ class SegmentedButtonItem extends ToggleButton {
 	@property({ validator: Integer, defaultValue: 0 })
 	sizeOfSet!: number;
 
-	// static get template() {
-	// 	return SegmentedButtonItemTemplate;
-	// }
-
 	static get dependencies() {
 		return [Icon];
 	}
