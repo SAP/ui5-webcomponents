@@ -9,7 +9,7 @@ class TreeList extends List {
 	 * @override
 	 */
 	getItems(includeCollapsed = false): Array<TreeItemBase> {
-		const slottedItems = this.getSlottedNodes("items") as Array<TreeItemBase>;
+		const slottedItems = this.getSlottedNodes<TreeItemBase>("items");
 		const flatItems: Array<TreeItemBase> = [];
 
 		flattenTree(slottedItems, flatItems, includeCollapsed);

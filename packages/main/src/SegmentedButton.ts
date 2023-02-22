@@ -131,7 +131,7 @@ class SegmentedButton extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.getSlottedNodes("items") as Array<SegmentedButtonItem>,
+			getItemsCallback: () => this.getSlottedNodes<SegmentedButtonItem>("items"),
 		});
 
 		this.absoluteWidthSet = false; // true when component width is set to absolute
