@@ -169,11 +169,6 @@ class RatingIndicator extends UI5Element {
 	@property({ type: Boolean })
 	_focused!: boolean;
 
-	/**
-	 * Indicates when to fire change event
-	 * @private
-	 */
-	@property({ validator: Float, defaultValue: null })
 	_liveValue?: number;
 
 	static i18nBundle: I18nBundle;
@@ -301,8 +296,9 @@ class RatingIndicator extends UI5Element {
 		this._focused = false;
 	}
 
-	get tabIndex() {
-		return this.disabled ? -1 : 0;
+	get effectiveTabIndex() {
+		const tabindex = this.getAttribute("tabindex");
+		return this.disabled ? "-1" : tabindex || "0";
 	}
 
 	get tooltip() {
