@@ -3,15 +3,10 @@ import type { TemplateFunction as Template } from "../renderer/executeTemplate.j
 import type { ComponentStylesData as Styles } from "../types.js";
 import type { Renderer } from "../renderer/LitRenderer.js";
 
-/**
- * Returns a custom element class decorator.
- *
- * @param { CustomElementOptions } options the custom element options (tag, template, styles, etc..)
- * @returns { ClassDecorator }
- */
 type CustomElementOptions = {
 	tag?: string,
 	languageAware?: boolean,
+	themeAware?: boolean,
 	fastNavigation?: boolean,
 	dependencies?: Array<typeof UI5Element>,
 	template?: Template,
@@ -21,9 +16,16 @@ type CustomElementOptions = {
 	renderer?: Renderer,
 }
 
+/**
+ * Returns a custom element class decorator.
+ *
+ * @param { CustomElementOptions } options
+ * @returns { ClassDecorator }
+ */
 const customElement2 = ({
 	tag,
 	languageAware = false,
+	themeAware = false,
 	fastNavigation = false,
 	renderer,
 	template,
@@ -38,29 +40,11 @@ const customElement2 = ({
 		}
 
 		target.decoratorMetadata.tag = tag;
-		target.decoratorMetadata.languageAware = !!languageAware;
-		target.decoratorMetadata.fastNavigation = !!fastNavigation;
+		target.decoratorMetadata.languageAware = languageAware;
+		target.decoratorMetadata.languageAware = themeAware;
+		target.decoratorMetadata.fastNavigation = fastNavigation;
 
-		if (template) {
-			Object.defineProperty(target, "template", {
-				get: () => template,
-			});
-		}
-
-		if (dependencies.length) {
-			Object.defineProperty(target, "dependencies", {
-				get: () => {
-					return dependencies;
-				},
-			});
-		}
-
-		if (staticAreaTemplate) {
-			Object.defineProperty(target, "staticAreaTemplate", {
-				get: () => staticAreaTemplate,
-			});
-		}
-
+		// Renderer
 		if (renderer) {
 			Object.defineProperty(target, "render", {
 				get: () => renderer,
@@ -70,16 +54,41 @@ const customElement2 = ({
 			});
 		}
 
+		// Templates
+		if (template) {
+			Object.defineProperty(target, "template", {
+				get: () => template,
+			});
+		}
+
+		if (staticAreaTemplate) {
+			Object.defineProperty(target, "staticAreaTemplate", {
+				get: () => staticAreaTemplate,
+			});
+		}
+
+		// Styles
 		if (styles) {
 			Object.defineProperty(target, "styles", {
 				get: () => styles,
 			});
 		}
+
 		if (staticAreaStyles) {
 			Object.defineProperty(target, "staticAreaStyles", {
 				get: () => staticAreaStyles,
 			});
 		}
+
+		// Dependencies
+		if (dependencies.length) {
+			Object.defineProperty(target, "dependencies", {
+				get: () => {
+					return dependencies;
+				},
+			});
+		}
+
 	};
 };
 
