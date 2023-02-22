@@ -88,7 +88,6 @@ const customElement2 = ({
 				},
 			});
 		}
-
 	};
 };
 
