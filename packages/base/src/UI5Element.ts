@@ -23,8 +23,8 @@ import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
-import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
+import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
+import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
 let autoId = 0;
 

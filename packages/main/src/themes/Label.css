@@ -56,7 +56,7 @@ bdi {
 }
 
 :host([show-colon]) .ui5-label-required-colon {
-	margin-left: -0.05rem; /*0.8px - fix for last letter clipping issue when style is italic*/
+	margin-inline-start: -0.05rem; /*0.8px - fix for last letter clipping issue when style is italic*/
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {

@@ -118,6 +118,21 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 
+// SAP Icons
+import accept from "@ui5/webcomponents-icons/dist/accept.js";
+import acceptv4 from "@ui5/webcomponents-icons/dist/v4/accept.js";
+import acceptv5 from "@ui5/webcomponents-icons/dist/v5/accept.js";
+// SAP TNT Icons
+import actor from "@ui5/webcomponents-icons-tnt/dist/actor.js";
+import actorv2 from "@ui5/webcomponents-icons-tnt/dist/v2/actor.js";
+import actorv3 from "@ui5/webcomponents-icons-tnt/dist/v3/actor.js";
+// SAP BS Icons
+import icon_3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
+import icon_3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
+import icon_3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
+
+const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon_3d, icon_3dv1, icon_3dv2];
+
 const testAssets = {
 	configuration : {
 		getAnimationMode,
@@ -143,6 +158,7 @@ const testAssets = {
 	getIconNames,
 	renderFinished,
 	defaultTexts,
+	getExportedIconsValues: () => icons,
 };
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,

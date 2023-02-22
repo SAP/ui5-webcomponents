@@ -16,6 +16,7 @@ jobs:
 
     - name: Install and Build
       run: |
+        export NODE_OPTIONS="--max_old_space_size=4096"
         yarn install
         yarn build:playground_as_admin
 

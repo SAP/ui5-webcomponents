@@ -44,7 +44,6 @@
 	position: relative;
 }
 
-
 :host([state="Error"]) .ui5-popup-header-root {
 	box-shadow: var(--_ui5_dialog_header_error_state_box_shadow);
 }
@@ -114,5 +113,9 @@
 }
 
 :host ::slotted([slot="footer"]) {
-    height: var(--_ui5_dialog_footer_height);
+	height: var(--_ui5_dialog_footer_height);
+}
+
+:host ::slotted([slot="footer"][ui5-bar][design="Footer"]) {
+	border-top: none;
 }
