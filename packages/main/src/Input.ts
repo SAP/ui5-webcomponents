@@ -642,6 +642,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 
+	// implmented in MultiInput, but used in Input template
+	innerFocusIn?: ((event: FocusEvent) => void) | undefined;
+
 	static get render() {
 		return litRender;
 	}
