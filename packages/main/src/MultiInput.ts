@@ -18,12 +18,12 @@ import Input from "./Input.js";
 import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js";
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
-import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
+import Tokenizer, { ClipboardDataOperation, TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
-type MultiInputTokenDeleteEventDetails = {
-	token: HTMLElement;
+type MultiInputTokenDeleteEventDetail = {
+	token: Token;
 }
 
 /**
@@ -80,7 +80,7 @@ class MultiInput extends Input {
 	 * Pressing the icon will fire <code>value-help-trigger</code> event.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Input.prototype.showValueHelpIcon
+	 * @name sap.ui.webc.main.MultiInput.prototype.showValueHelpIcon
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -107,7 +107,7 @@ class MultiInput extends Input {
 	 * Defines the component tokens.
 	 *
 	 * @type {sap.ui.webc.main.IToken[]}
-	 * @name sap.ui.webc.main.Input.prototype.tokens
+	 * @name sap.ui.webc.main.MultiInput.prototype.tokens
 	 * @slot tokens
 	 * @public
 	 */
@@ -139,7 +139,7 @@ class MultiInput extends Input {
 
 	valueHelpPress() {
 		this.closePopover();
-		this.fireEvent("value-help-trigger", {});
+		this.fireEvent("value-help-trigger");
 	}
 
 	showMorePress() {
@@ -147,8 +147,8 @@ class MultiInput extends Input {
 		this.focus();
 	}
 
-	tokenDelete(e: CustomEvent) {
-		const focusedToken = e.detail.ref as Token;
+	tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
+		const focusedToken = e.detail.ref;
 		const selectedTokens = this.tokens.filter(token => token.selected);
 		const shouldFocusInput = this.tokens.length - 1 === 0 || this.tokens.length === selectedTokens.length;
 
@@ -157,7 +157,7 @@ class MultiInput extends Input {
 		}
 
 		if (focusedToken) {
-			this.fireEvent<MultiInputTokenDeleteEventDetails>("token-delete", { token: focusedToken });
+			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token: focusedToken });
 			if (shouldFocusInput) {
 				this.focus();
 			}
@@ -253,7 +253,7 @@ class MultiInput extends Input {
 				const cutResult = this.tokenizer._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
 
 				selectedTokens.forEach(token => {
-					this.fireEvent("token-delete", { token });
+					this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
 				});
 
 				this.focus();
@@ -386,3 +386,4 @@ class MultiInput extends Input {
 MultiInput.define();
 
 export default MultiInput;
+export { MultiInputTokenDeleteEventDetail };
