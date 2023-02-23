@@ -38,7 +38,7 @@ const flattenTree = (items, result, includeCollapsed) => {
 		result.push(item);
 
 		if ((item.expanded || includeCollapsed) && item.items) {
-			flattenTree(item.items, result);
+			flattenTree(item.items, result, includeCollapsed);
 		}
 	});
 };
