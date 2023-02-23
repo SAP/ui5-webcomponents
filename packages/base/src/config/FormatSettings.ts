@@ -1,6 +1,12 @@
+import LegacyDateFormats from "../features/LegacyDateFormats.js";
+import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
 import { getFormatSettings } from "../InitialConfiguration.js";
+import { getFeature } from "../FeaturesRegistry.js";
 
-type FormatSettings = { firstDayOfWeek?: number };
+type FormatSettings = {
+	firstDayOfWeek?: number,
+	legacyDateCalendarCustomizing?: LegacyDateCalendarCustomizing,
+};
 
 let formatSettings: FormatSettings;
 
@@ -17,5 +23,13 @@ const getFirstDayOfWeek = (): number | undefined => {
 	return formatSettings.firstDayOfWeek;
 };
 
-export { getFirstDayOfWeek }; // eslint-disable-line
+const legacyDateFormats = getFeature<typeof LegacyDateFormats>("LegacyDateFormats");
+
+const getLegacyDateCalendarCustomizing = legacyDateFormats ? LegacyDateFormats.getLegacyDateCalendarCustomizing : () => { return []; };
+
+export {
+	getFirstDayOfWeek,
+	getLegacyDateCalendarCustomizing,
+};
+
 export type { FormatSettings };

@@ -95,7 +95,7 @@
 			return window['sap-ui-webcomponents-bundle'].configuration.setLanguage(lang);
 		}
 
-		document.getElementById("sw").addEventListener("click", function(e) {
+		document.getElementById("sw").addEventListener("ui5-click", function(e) {
 			if (e.target.checked) {
 				setDir("rtl");
 			} else {
@@ -103,7 +103,7 @@
 			}
 		});
 
-		document.getElementById("tb").addEventListener("selection-change", function(e) {
+		document.getElementById("tb").addEventListener("ui5-selection-change", function(e) {
 			var lang = e.detail.selectedButton.textContent.toLowerCase();
 
 			setLanguage(lang).then(function() {

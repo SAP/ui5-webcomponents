@@ -16,7 +16,7 @@ const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
 }
 
 const registerLoaders = () => {
-	registerIconLoader("SAP-icons", loadIconsBundle);
+	registerIconLoader("SAP-icons-v4", loadIconsBundle);
 	registerIconLoader("SAP-icons-v5", loadIconsBundle);
 };
 

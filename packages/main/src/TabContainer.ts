@@ -34,6 +34,7 @@ import {
 	TABCONTAINER_OVERFLOW_MENU_TITLE,
 	TABCONTAINER_END_OVERFLOW,
 	TABCONTAINER_POPOVER_CANCEL_BUTTON,
+	TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
 import Icon from "./Icon.js";
@@ -672,13 +673,13 @@ class TabContainer extends UI5Element {
 	 * The order of tabs is depth-first. For example, given the following slotted elements:
 	 * <code>
 	 * 	<ui5-tabcontainer>
-	 * 		<ui5-tab id="First">
+	 * 		<ui5-tab id="First" text="First">
 	 * 			...
-	 * 			<ui5-tab slot="subTabs" id="Nested">...</ui5-tab>
+	 * 			<ui5-tab slot="subTabs" id="Nested" text="Nested">...</ui5-tab>
 	 * 		</ui5-tab>
-	 * 		<ui5-tab id="Second">...</ui5-tab>
+	 * 		<ui5-tab id="Second" text="Second">...</ui5-tab>
 	 * 		<ui5-tab-separator id="sep"></ui5-tab-separator>
-	 * 		<ui5-tab id="Third">...</ui5-tab>
+	 * 		<ui5-tab id="Third" text="Third">...</ui5-tab>
 	 * 	</ui5-tabcontainer>
 	 * </code>
 	 * Calling <code>allItems</code> on this TabContainer will return the instances in the following order:
@@ -1176,6 +1177,18 @@ class TabContainer extends UI5Element {
 		return this.items.filter((item): item is Tab => !item.isSeparator);
 	}
 
+	get hasSubTabs(): boolean {
+		const tabs = this._getTabs();
+
+		for (let i = 0; i < tabs.length; i++) {
+			if (tabs[i].subTabs.length > 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	_getTabStrip() {
 		return this.shadowRoot!.querySelector<HTMLElement>(`#${this._id}-tabStrip`)!;
 	}
@@ -1272,6 +1285,14 @@ class TabContainer extends UI5Element {
 
 	get popoverCancelButtonText() {
 		return TabContainer.i18nBundle.getText(TABCONTAINER_POPOVER_CANCEL_BUTTON);
+	}
+
+	get accInvisibleText() {
+		return TabContainer.i18nBundle.getText(TABCONTAINER_SUBTABS_DESCRIPTION);
+	}
+
+	get tablistAriaDescribedById() {
+		return this.hasSubTabs ? `${this._id}-invisibleText` : undefined;
 	}
 
 	get shouldAnimate() {

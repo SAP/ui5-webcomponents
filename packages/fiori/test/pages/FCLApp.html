@@ -156,7 +156,7 @@
 		setTimeout(function() {
 			var companies = $("companiesTemplate").content.cloneNode(true);
 			$("startColumn").appendChild(companies);
-			$("startColumn").querySelector("ui5-list").addEventListener("item-click", function(e) {
+			$("startColumn").querySelector("ui5-list").addEventListener("ui5-item-click", function(e) {
 				window.location = "#" + e.detail.item.getAttribute("data-cid");
 			});
 			$("startBusy").active = false;
@@ -172,7 +172,7 @@
 				$("midColumn").removeChild(child);
 			});
 			$("midColumn").appendChild(products);
-			$("midColumn").querySelector("ui5-list").addEventListener("item-click", function(e) {
+			$("midColumn").querySelector("ui5-list").addEventListener("ui5-item-click", function(e) {
 				window.location = "#" + cid + "-" + e.detail.item.getAttribute("data-pid");
 			});
 			$("midColumn").querySelector("ui5-button").addEventListener("click", function(e) {

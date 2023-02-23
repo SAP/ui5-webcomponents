@@ -110,5 +110,40 @@
 			<ui5-segmented-button-item icon="accept"></ui5-segmented-button-item>
 		</ui5-segmented-button>
 	</section>
+
+	<section>
+		<h3>Programatical change test</h3>
+		<ui5-segmented-button id="segButtonProg">
+			<ui5-segmented-button-item id="sbpItem1" pressed>First</ui5-segmented-button-item>
+			<ui5-segmented-button-item id="sbpItem2">Second</ui5-segmented-button-item>
+			<ui5-segmented-button-item id="sbpItem3">Third</ui5-segmented-button-item>
+		</ui5-segmented-button>
+		<ui5-button id="progSetButton1">Press second item</ui5-button>
+		<ui5-button id="progSetButton2">Press multiple items</ui5-button>
+		<ui5-button id="progSetButton3">Press pressed item</ui5-button>
+		<ui5-button id="progSetButton4">Press first item</ui5-button>
+	</section>
+
+	<script>
+
+		progSetButton1.addEventListener("click", function() {
+			segButtonProg.items[1].pressed = true;
+		});
+
+		progSetButton2.addEventListener("click", function() {
+			segButtonProg.items[0].pressed = true;
+			segButtonProg.items[2].pressed = true;
+		});
+
+		progSetButton3.addEventListener("click", function() {
+			segButtonProg.selectedItem.pressed = true;
+		});
+
+		progSetButton4.addEventListener("click", function() {
+			segButtonProg.items[0].pressed = true;
+		});
+
+	</script>
+
 </body>
 </html>

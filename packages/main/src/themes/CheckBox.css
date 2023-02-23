@@ -53,7 +53,7 @@
 }
 
 :host([wrapping-type="Normal"][text]) .ui5-checkbox-root .ui5-checkbox-label {
-	word-break: break-all;
+	overflow-wrap: break-word;
 	align-self: center;
 }
 

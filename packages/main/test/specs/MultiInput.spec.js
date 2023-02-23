@@ -98,20 +98,24 @@ describe("MultiInput general interaction", () => {
 		$("#suggestion-token").scrollIntoView();
 
 		let allTokens = await mi.$$("ui5-token");
-		assert.notOk(await allTokens[0].getProperty("overflows"), "Token should not overflow");
 
-		for (let i = 1; i <= 4; i++) {
-			assert.ok(await allTokens[i].getProperty("overflows"), "Token should overflow");
-		}
+		assert.notOk(await allTokens[0].getProperty("overflows"), `Token 0 should not overflow`);
+		assert.notOk(await allTokens[1].getProperty("overflows"), `Token 1 should not overflow`);
+		assert.ok(await allTokens[2].getProperty("overflows"), `Token 2 should not overflow`);
+		assert.ok(await allTokens[3].getProperty("overflows"), `Token 3 should not overflow`);
+		assert.ok(await allTokens[4].getProperty("overflows"), `Token 4 should not overflow`);
 
 		await btn.click();
 
 		allTokens = await mi.$$("ui5-token");
 		assert.strictEqual(allTokens.length, 6, "should have 6 tokens");
 
-		for (let i = 1; i <= 5; i++) {
-			assert.ok(await allTokens[i].getProperty("overflows"), "Token should overflow");
-		}
+		assert.notOk(await allTokens[0].getProperty("overflows"), `Token 0 should not overflow`);
+		assert.notOk(await allTokens[1].getProperty("overflows"), `Token 1 should not overflow`);
+		assert.ok(await allTokens[2].getProperty("overflows"), `Token 2 should not overflow`);
+		assert.ok(await allTokens[3].getProperty("overflows"), `Token 3 should not overflow`);
+		assert.ok(await allTokens[4].getProperty("overflows"), `Token 4 should not overflow`);
+		assert.ok(await allTokens[5].getProperty("overflows"), `Token 5 should not overflow`);
 	});
 
 	it ("adds a token after selection change", async () => {
@@ -154,6 +158,7 @@ describe("MultiInput general interaction", () => {
 		let tokenizerScrollContainerScrollLeft = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 		let tokenizerScrollContainerScrollWidth = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollWidth);
 		let tokenizerScrollContainerClientWidth = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").getBoundingClientRect().width);
+
 
 		assert.strictEqual(Math.floor(tokenizerScrollContainerScrollLeft), Math.floor(tokenizerScrollContainerScrollWidth - tokenizerScrollContainerClientWidth), "tokenizer is scrolled to end");
 
@@ -418,6 +423,7 @@ describe("Keyboard handling", () => {
 	});
 
 	it("tests if tokenizer is scrolled on keyboard navigation through the tokens", async () => {
+		await browser.url(`test/pages/MultiInput.html`);
 		const minput = await $("#basic-overflow");
 		const input = minput.shadow$("input");
 
@@ -429,17 +435,19 @@ describe("Keyboard handling", () => {
 
 		await input.keys('ArrowLeft');
 		await input.keys('ArrowLeft');
+		await input.keys('ArrowLeft');
 
-		let scrollLeftThirdToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
+		let scrollLeftForthToken = await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-		assert.notEqual(scrollLeftFirstToken, scrollLeftThirdToken, "tokenizer is scrolled when navigating through the tokens");
+		assert.notEqual(scrollLeftFirstToken, scrollLeftForthToken, "tokenizer is scrolled when navigating through the tokens");
 
+		await input.keys('ArrowRight');
 		await input.keys('ArrowRight');
 		await input.keys('ArrowRight');
 
 		let newScrollLeft =  await browser.execute(() => document.querySelector("#basic-overflow").shadowRoot.querySelector("ui5-tokenizer").shadowRoot.querySelector(".ui5-tokenizer--content").scrollLeft);
 
-		assert.notEqual(newScrollLeft, scrollLeftThirdToken, "tokenizer is scrolled when navigating through the tokens");
+		assert.notEqual(newScrollLeft, scrollLeftForthToken, "tokenizer is scrolled again when navigating through the tokens");
 	})
 
 	it("should change input's value when set in selection change event", async () => {

@@ -31,7 +31,12 @@ import {
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getEffectiveAriaLabelText, getAssociatedLabelForTexts } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import {
+	getAssociatedLabelForTexts,
+	getAllAccessibleNameRefTexts,
+	registerUI5Element,
+	deregisterUI5Element,
+} from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -265,7 +270,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @private
-	 * @sicne 1.0.0-rc.8
+	 * @since 1.0.0-rc.8
 	 */
 	@property({ type: Boolean })
 	highlight!: boolean;
@@ -523,6 +528,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_inputIconFocused!: boolean;
 
 	/**
+	 * Constantly updated value of texts collected from the associated labels
+	 * @private
+	 */
+	@property({ type: String, noAttribute: true, defaultValue: undefined })
+	_associatedLabelsTexts?: string;
+
+	/**
+	 * Constantly updated value of texts collected from the accessibleNameRef elements
+	 * @private
+	 */
+	@property({ type: String, noAttribute: true, defaultValue: undefined })
+	_accessibleLabelsRefTexts?: string;
+
+	/**
 	 * Defines the suggestion items.
 	 * <br><br>
 	 * Example:
@@ -688,10 +707,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
+		registerUI5Element(this, this._updateAssociatedLabelsTexts.bind(this));
 	}
 
 	onExitDOM() {
 		ResizeHandler.deregister(this, this._handleResizeBound);
+		deregisterUI5Element(this);
 	}
 
 	onBeforeRendering() {
@@ -705,6 +726,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
+		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 		const hasItems = !!this.suggestionItems.length;
@@ -1164,6 +1186,11 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._inputWidth = this.offsetWidth;
 	}
 
+	_updateAssociatedLabelsTexts() {
+		this._associatedLabelsTexts = getAssociatedLabelForTexts(this);
+		this._accessibleLabelsRefTexts = getAllAccessibleNameRefTexts(this);
+	}
+
 	_closeRespPopover() {
 		this.Suggestions!.close(true);
 	}
@@ -1494,7 +1521,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		const ariaAutoCompleteDefault = this.showSuggestions ? "list" : undefined;
 		const ariaDescribedBy = this._inputAccInfo.ariaDescribedBy ? `${this.suggestionsTextId} ${this.valueStateTextId} ${this._inputAccInfo.ariaDescribedBy}`.trim() : `${this.suggestionsTextId} ${this.valueStateTextId}`.trim();
 
-		return {
+		const info = {
 			"input": {
 				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
 				"ariaDescribedBy": ariaDescribedBy || undefined,
@@ -1505,9 +1532,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
 				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
 				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || getEffectiveAriaLabelText(this) || getAssociatedLabelForTexts(this),
+				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
 			},
 		};
+		return info;
 	}
 
 	get nativeInputAttributes() {
@@ -1534,6 +1562,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get itemSelectionAnnounce() {
 		return this.Suggestions ? this.Suggestions.itemSelectionAnnounce : "";
+	}
+
+	get iconsCount(): number {
+		const slottedIconsCount = this.icon ? this.icon.length : 0;
+		const clearIconCount = Number(this.effectiveShowClearIcon) ?? 0;
+		return slottedIconsCount + clearIconCount;
 	}
 
 	get classes(): ClassMap {
@@ -1572,10 +1606,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				"padding": "",
 			},
 		};
-
-		if (this.nativeInputWidth < 48) {
-			stylesObject.innerInput.padding = "0";
-		}
 
 		return stylesObject;
 	}

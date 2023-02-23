@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.2...v1.11.0-rc.3) (2023-02-23)
+
+
+### Features
+
+* support SAPBusinessSuite icons v1 and v2 font ( Horizon ) ([#6535](https://github.com/SAP/ui5-webcomponents/issues/6535)) ([38233b9](https://github.com/SAP/ui5-webcomponents/commit/38233b94543a94c9915cf1d8c8937a834cd6c87d))
+
+
+
+
+
+# [1.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.1...v1.11.0-rc.2) (2023-02-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons-tnt
+
+
+
+
+
+# [1.11.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.0...v1.11.0-rc.1) (2023-02-09)
+
+
+### Features
+
+* **icons-tnt:** add/update SAP-icons-TNT collection ([#6441](https://github.com/SAP/ui5-webcomponents/issues/6441)) ([07b2908](https://github.com/SAP/ui5-webcomponents/commit/07b2908b2b2748bdefa6d07221e92c6b7d22c8d9)), closes [#6376](https://github.com/SAP/ui5-webcomponents/issues/6376)
+
+
+
+
+
 # [1.11.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4-rc.0...v1.11.0-rc.0) (2023-02-02)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-tnt

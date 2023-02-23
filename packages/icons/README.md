@@ -20,7 +20,7 @@ Provides assets for the rich `SAP-icons` icon collection.
 usable by other web components such as `ui5-icon`. You could import all icons, but it's recommended to import 
 just the ones that your app will actually use.
 
-For a full list of the icons in the `SAP-icons` collection, click [here](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
+*Note:* For a full list of the icons in the `SAP-icons` collection, click [here](https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons).
 
 ## Provided assets
 
@@ -31,25 +31,35 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 | Assets           | Module                                           | Notes                                                                                                                                                                                                            |
 |------------------|--------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `i18n`           | `@ui5/webcomponents-icons/dist/Assets.js`        | Translations for the tooltips / "aria labels" of several icons                                                                                                                                                   |
-## SAP-icons4.0 and SAP-icons5.0
-The package provides two versions of each icon. If you don't specify a collection name, for example:
+## Usage
+
+### No Collection 
+As SAP Icons is the default icon collection, you can skip the collection name and just set the name of the icon:
+
 ```html
 <ui5-icon name="accept"></ui5-icon>
 ```
 
-the framework will detect the current theme and render the corresponding icon - SAP-icons5.0 for Fiori Next (sap_horizon) theme, and SAP-icons4.0 for all the rest (sap_fiori_3, sap_fiori_3_hcb...).
+The package provides two versions of each icon (SAP Icons v4 and SAP Icons v5). If you don't specify a collection name like in the example above,
+the framework will detect the current theme and render the corresponding icon - `SAP Icons v5` for SAP Horizon theme family  (sap_horizon, sap_horizon_dark, etc.), and `SAP Icons v4` for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.).
 
-In case you want to display the SAP-icons5.0 icons, no matter what theme is set,
-you need to use the "horizon" collection name:
+### Collections `SAP-icon-v4` and `SAP-icon-v5`
+
+In case you want to always display the `SAP Icons v5` icons in all themes, you can set it explicitly via the `SAP-icon-v5` collection name:
 
 ```html
-<ui5-icon name="horizon/accept"></ui5-icon>
+<ui5-icon name="SAP-icon-v5/accept"></ui5-icon>
+```
+
+The same applies if you want to always display the `SAP Icons v4` icons. You can set it explicitly via the `SAP-icon-v4` collection name:
+```html
+<ui5-icon name="SAP-icon-v4/accept"></ui5-icon>
 ```
 
 ## Resources
 - [UI5 Web Components - README.md](https://github.com/SAP/ui5-webcomponents/blob/main/README.md)
 - [UI5 Web Components - Home Page](https://sap.github.io/ui5-webcomponents)
-- [UI5 Web Components - Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
+- [UI5 Web Components - Using Icons](https://sap.github.io/ui5-webcomponents/playground/getting-started/using-icons/)
 
 ## Support
 We welcome all comments, suggestions, questions, and bug reports. Please follow our [Support Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/SUPPORT.md#-content) on how to report an issue, or chat with us in the `#webcomponents` channel of the [OpenUI5 Community Slack](https://join-ui5-slack.herokuapp.com/).

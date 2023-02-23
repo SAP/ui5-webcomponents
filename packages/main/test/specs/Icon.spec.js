@@ -88,4 +88,13 @@ describe("Icon general interaction", () => {
 		const iconPathValueAfter = await iconPathAfter.getAttribute("d");
 		assert.ok(iconPathValueAfter.startsWith(V5_PATH_START), "Icon's path changed in sap_horizon.");
 	});
+
+	it("Tests icon modules' exported values", async () => {
+		const expectedExportedValues = "accept|SAP-icons-v4/accept|SAP-icons-v5/accept|tnt/actor|tnt-v2/actor|tnt-v3/actor|business-suite/3d|business-suite-v1/3d|business-suite-v2/3d";
+		const actualExportedValues = await browser.executeAsync(done => {
+			const exportedIconValues = window["sap-ui-webcomponents-bundle"].getExportedIconsValues();
+			done(exportedIconValues.join("|"));
+		});
+		assert.strictEqual(actualExportedValues, expectedExportedValues, "Exported values are correct.");
+	});
 });

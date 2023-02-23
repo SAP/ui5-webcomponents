@@ -1,3 +1,4 @@
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -39,7 +40,7 @@ import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
 import type { CalendarChangeEventDetail } from "./Calendar.js";
-import * as CalendarDateComponent from "./CalendarDate.js";
+import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
@@ -543,11 +544,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		if (updateValue) {
-			this._getInput().getInputDOMRef().then((innerInput: Input | HTMLInputElement | null) => {
-				if (innerInput) {
-					innerInput.value = value;
-				}
-			});
+			this._getInput().value = value;
 			this.value = value;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
@@ -857,12 +854,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return InputType.Text;
 	}
 
-	static get dependencies() {
+	static get dependencies(): Array<typeof UI5Element> {
 		return [
 			Icon,
 			ResponsivePopover,
 			Calendar,
-			CalendarDateComponent.default,
+			CalendarDateComponent,
 			Input,
 			Button,
 		];

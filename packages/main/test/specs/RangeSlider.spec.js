@@ -303,6 +303,7 @@ describe("Testing events", () => {
 		const rangeSlider = await browser.$("#test-slider");
 		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 
+
 		await firstHandle.click();
 		await firstHandle.dragAndDrop({ x: 200, y: 0 });
 		await browser.pause(100);
