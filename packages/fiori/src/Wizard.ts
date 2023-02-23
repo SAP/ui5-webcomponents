@@ -794,7 +794,7 @@ class Wizard extends UI5Element {
 	}
 
 	get slottedSteps() {
-		return this.getSlottedNodes("steps")! as Array<WizardStep>;
+		return this.getSlottedNodes("steps")!;
 	}
 
 	get contentDOM() {
