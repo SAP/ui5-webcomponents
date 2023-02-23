@@ -258,9 +258,9 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (this._selectedTokens.length) {
-			this._selectedTokens.forEach(token => this.deleteToken(token));
+			this._selectedTokens.forEach(token => this.deleteToken(token, e.detail.backSpace));
 		} else {
-			this.deleteToken(target);
+			this.deleteToken(target, e.detail.backSpace);
 		}
 	}
 
@@ -284,10 +284,6 @@ class Tokenizer extends UI5Element {
 				nextToken.focus();
 			}, 0);
 		}
-	}
-
-	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetail>) {
-		this.deleteToken(e.target as Token, e.detail?.backSpace);
 	}
 
 	/**
