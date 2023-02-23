@@ -62,7 +62,7 @@ type ResponsiveBreakpoints = {
 	[key: string]: string,
 }
 
-type WizardChangeEventDetails = {
+type WizardStepChangeEventDetail = {
 	step: WizardStep,
 	previousStep: WizardStep,
 	changeWithClick: boolean,
@@ -204,7 +204,7 @@ class Wizard extends UI5Element {
 	 * @private
 	 */
 	@property({ validator: Float })
-	width!: number
+	width?: number
 
 	/**
 	 * Defines the threshold to switch between steps upon user scrolling.
@@ -508,9 +508,7 @@ class Wizard extends UI5Element {
 		this._prevWidth = this.width;
 		this._prevContentHeight = this.contentHeight;
 
-		const breakpointDimensions = Object.keys(RESPONSIVE_BREAKPOINTS).reverse();
-		const breakpoint = breakpointDimensions.find((size: string) => Number(size) < this.width);
-		this._breakpoint = breakpoint ? RESPONSIVE_BREAKPOINTS[breakpoint] : RESPONSIVE_BREAKPOINTS["0"];
+		this._calcCurrentBreakpoint();
 	}
 
 	attachStepsResizeObserver() {
@@ -526,6 +524,12 @@ class Wizard extends UI5Element {
 		});
 	}
 
+	_calcCurrentBreakpoint() {
+		const breakpointDimensions = Object.keys(RESPONSIVE_BREAKPOINTS).reverse();
+		const breakpoint = breakpointDimensions.find((size: string) => Number(size) < this.width!);
+		this._breakpoint = breakpoint ? RESPONSIVE_BREAKPOINTS[breakpoint] : RESPONSIVE_BREAKPOINTS["0"];
+	}
+
 	/**
 	 * Updates the expanded attribute for each ui5-wizard-tab based on the ui5-wizard width
 	 * @private
@@ -533,7 +537,7 @@ class Wizard extends UI5Element {
 	_adjustHeaderOverflow() {
 		let counter = 0;
 		let isForward = true;
-		const tabs = this.shadowRoot!.querySelectorAll("[ui5-wizard-tab]");
+		const tabs = this.stepsInHeaderDOM;
 
 		if (!tabs.length) {
 			return;
@@ -614,7 +618,7 @@ class Wizard extends UI5Element {
 	}
 
 	async _showPopover(oDomTarget: WizardTab, isAtStart: boolean) {
-		const tabs = Array.from(this.shadowRoot!.querySelectorAll<WizardTab>("[ui5-wizard-tab]"));
+		const tabs = Array.from(this.stepsInHeaderDOM);
 		this._groupedTabs = [];
 
 		const iFromStep = isAtStart ? 0 : this.stepsInHeaderDOM.indexOf(oDomTarget);
@@ -641,7 +645,7 @@ class Wizard extends UI5Element {
 	}
 
 	_onOverflowStepButtonClick(e: MouseEvent) {
-		const tabs = Array.from(this.shadowRoot!.querySelectorAll<WizardTab>("[ui5-wizard-tab]"));
+		const tabs = Array.from(this.stepsInHeaderDOM);
 		const eTarget = e.target as HTMLElement;
 		const stepRefId = eTarget.getAttribute("data-ui5-header-tab-ref-id");
 		const stepToSelect = this.slottedSteps[Number(stepRefId) - 1];
@@ -798,7 +802,7 @@ class Wizard extends UI5Element {
 	}
 
 	get stepsInHeaderDOM() {
-		return Array.from(this.shadowRoot!.querySelectorAll("[ui5-wizard-tab]"));
+		return Array.from(this.shadowRoot!.querySelectorAll<WizardTab>("[ui5-wizard-tab]"));
 	}
 
 	get enabledStepsInHeaderDOM() {
@@ -1028,7 +1032,7 @@ class Wizard extends UI5Element {
 				stepToSelect.selected = true;
 			}
 
-			this.fireEvent<WizardChangeEventDetails>("step-change", {
+			this.fireEvent<WizardStepChangeEventDetail>("step-change", {
 				step: stepToSelect,
 				previousStep: selectedStep,
 				changeWithClick,
@@ -1054,5 +1058,9 @@ class Wizard extends UI5Element {
 }
 
 Wizard.define();
+
+export type {
+	WizardStepChangeEventDetail,
+ };
 
 export default Wizard;
