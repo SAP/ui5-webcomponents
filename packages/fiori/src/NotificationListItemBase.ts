@@ -1,8 +1,8 @@
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
@@ -34,17 +34,9 @@ const ICON_PER_PRIORITY = {
 	[Priority.None]: "",
 };
 
-type NotificationListItemBaseEventDetail = {
+type NotificationListItemBaseCloseEventDetail = {
 	item: HTMLElement,
 };
-
-// type NotificationActionInfo = {
-// 	icon: string;
-// 	text: string;
-// 	_id: string;
-// 	disabled?: boolean;
-// 	design?: string;
-// };
 
 /**
  * @class
@@ -223,7 +215,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * Event handlers
 	 */
 	_onBtnCloseClick() {
-		this.fireEvent<NotificationListItemBaseEventDetail>("close", { item: this });
+		this.fireEvent<NotificationListItemBaseCloseEventDetail>("close", { item: this });
 	}
 
 	_onBtnOverflowClick() {
@@ -234,10 +226,7 @@ class NotificationListItemBase extends ListItemBase {
 		const refItemId = (e.target as Element).getAttribute("data-ui5-external-action-item-id");
 
 		if (refItemId) {
-			this.getActionByID(refItemId)!.fireEvent("click", {
-				targetRef: e.target,
-			}, true);
-
+			this.getActionByID(refItemId)!.fireClickEvent(e);
 			this.closeOverflow();
 		}
 	}

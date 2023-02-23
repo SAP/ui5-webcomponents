@@ -38,6 +38,10 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
 
+type NotificationListGroupItemToggleEventDetail = {
+	item: NotificationListGroupItem,
+};
+
 /**
  * @class
  *
@@ -88,7 +92,6 @@ import NotificationListGroupItemCss from "./generated/themes/NotificationListGro
 /**
  * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
  *
- * @event
  * @public
  * @event sap.ui.webc.fiori.NotificationListGroupItem#toggle
  */
@@ -146,7 +149,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	clearChildBusyIndicator() {
 		this.items.forEach(item => {
-		  item.busy = false;
+			item.busy = false;
 		});
 	}
 
@@ -239,7 +242,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	_onBtnToggleClick() {
 		this.collapsed = !this.collapsed;
-		this.fireEvent("toggle", { item: this });
+		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
 	}
 }
 

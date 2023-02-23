@@ -40,6 +40,12 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
 
+type NotificationListItemPressEventDetail = {
+	item: NotificationListItem;
+};
+
+type Footnote = Record<string, any>
+
 /**
  * @class
  *
@@ -166,7 +172,6 @@ class NotificationListItem extends NotificationListItemBase {
 	description!: Array<Node>;
 
 	_titleTextOverflowHeight: number;
-	// _individualSlot!: string;
 	_descOverflowHeight: number;
 	_onResizeBind: ResizeObserverCallback;
 
@@ -280,7 +285,7 @@ class NotificationListItem extends NotificationListItemBase {
 	get footerItems() {
 		return this.footnotes.map((el, idx, arr) => {
 			return {
-				slotName: (el as Record<string, any>)._individualSlot,
+				slotName: (el as Footnote)._individualSlot,
 				showDivider: idx !== arr.length - 1,
 			};
 		});
@@ -373,7 +378,7 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		this.fireEvent("_press", { item: this });
+		this.fireEvent<NotificationListItemPressEventDetail>("_press", { item: this });
 	}
 
 	onResize() {

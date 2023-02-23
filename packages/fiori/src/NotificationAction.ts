@@ -4,6 +4,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
+type NotificationActionClickEventDetail = {
+	targetRef: NotificationAction | null,
+};
+
 /**
  * @class
  * The <code>ui5-notification-action</code> represents an abstract action,
@@ -80,6 +84,12 @@ class NotificationAction extends UI5Element {
 	 */
 	@property()
 	icon!: string;
+
+	fireClickEvent(e: MouseEvent) {
+		this.fireEvent<NotificationActionClickEventDetail>("click", {
+			targetRef: (e.target as NotificationAction),
+		}, true);
+	}
 }
 
 NotificationAction.define();
