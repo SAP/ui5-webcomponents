@@ -360,6 +360,10 @@ class Tree extends UI5Element {
 		return getEffectiveAriaLabelText(this);
 	}
 
+	get _hasHeader() {
+		return !!this.header.length;
+	}
+
 	_onListItemStepIn(e: CustomEvent<TreeItemBaseStepInEventDetail>) {
 		const treeItem = e.detail.item;
 		if (treeItem.items.length > 0) {
