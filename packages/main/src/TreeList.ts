@@ -34,7 +34,7 @@ const flattenTree = (items: Array<TreeItemBase>, result: Array<TreeItemBase>, in
 		result.push(item);
 
 		if ((item.expanded || includeCollapsed) && item.items) {
-			flattenTree(item.items, result);
+			flattenTree(item.items, result, includeCollapsed);
 		}
 	});
 };
