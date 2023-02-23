@@ -226,7 +226,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	_onclick(e: MouseEvent) {
-		const target = e.target as HTMLElement | UI5Element;
+		const target = e.target as UI5Element;
 
 		if (!(target instanceof HTMLElement) || this.disabled || this.readonly) {
 			return;
