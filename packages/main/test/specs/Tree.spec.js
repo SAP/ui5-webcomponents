@@ -81,7 +81,7 @@ describe("Tree proxies properties to list", () => {
 		});
 	});
 
-	it.only("Mode works recursively", async () => {
+	it("Mode works recursively", async () => {
 		const lastItem = await browser.$(">>>#allItemsMultiSelect .lastItem");
 		assert.strictEqual(await lastItem.getAttribute("_mode"), "MultiSelect", "Mode applied to the last tree item");
 	});
