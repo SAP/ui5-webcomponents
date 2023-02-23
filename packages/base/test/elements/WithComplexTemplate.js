@@ -1,6 +1,6 @@
 import UI5Element from "../../dist/UI5Element.js";
 import litRender from "../../dist/renderer/LitRenderer.js";
-// import WithComplexTemplateTemplate from "../../dist/generated/templates/elements/WithComplexTemplateTemplate.lit.js";
+import WithComplexTemplateTemplate from "../../dist/generated/templates/elements/WithComplexTemplateTemplate.lit.js";
 
 class WithComplexTemplate extends UI5Element {
 	static get metadata() {
@@ -13,9 +13,9 @@ class WithComplexTemplate extends UI5Element {
 		return litRender;
 	}
 
-	// static get template() {
-	// 	return WithComplexTemplateTemplate;
-	// }
+	static get template() {
+		return WithComplexTemplateTemplate;
+	}
 
     get text() {
 		return "root";

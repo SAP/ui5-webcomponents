@@ -890,7 +890,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	static _needsStaticArea() {
-		return !!this.staticAreaTemplate;
+		return !!this.staticAreaTemplate || Object.prototype.hasOwnProperty.call(this.prototype, "renderStatic");
 	}
 
 	/**

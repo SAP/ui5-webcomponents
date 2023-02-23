@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import UI5Element from "./dist/UI5Element.js";
 
 export default UI5Element;
