@@ -5,6 +5,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -165,9 +166,9 @@ class NotificationListItem extends NotificationListItemBase {
 	description!: Array<Node>;
 
 	_titleTextOverflowHeight: number;
-	_individualSlot!: string;
+	// _individualSlot!: string;
 	_descOverflowHeight: number;
-	onResizeBind: () => void;
+	_onResizeBind: ResizeObserverCallback;
 
 	constructor() {
 		super();
@@ -179,7 +180,7 @@ class NotificationListItem extends NotificationListItemBase {
 		this._descOverflowHeight = 0;
 
 		// the resize handler
-		this.onResizeBind = this.onResize.bind(this);
+		this._onResizeBind = this.onResize.bind(this);
 	}
 
 	static get styles() {
@@ -201,11 +202,11 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this, this.onResizeBind);
+		ResizeHandler.register(this, this._onResizeBind.bind(this));
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this.onResizeBind);
+		ResizeHandler.deregister(this, this._onResizeBind.bind(this));
 	}
 
 	get hasDesc() {
@@ -279,7 +280,7 @@ class NotificationListItem extends NotificationListItemBase {
 	get footerItems() {
 		return this.footnotes.map((el, idx, arr) => {
 			return {
-				slotName: (el as typeof this)._individualSlot,
+				slotName: (el as Record<string, any>)._individualSlot,
 				showDivider: idx !== arr.length - 1,
 			};
 		});

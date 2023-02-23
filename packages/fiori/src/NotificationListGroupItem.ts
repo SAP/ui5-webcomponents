@@ -10,6 +10,7 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
+import NotificationListItem from "./NotificationListItem.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -89,6 +90,7 @@ import NotificationListGroupItemCss from "./generated/themes/NotificationListGro
  *
  * @event
  * @public
+ * @event sap.ui.webc.fiori.NotificationListGroupItem#toggle
  */
 @event("toggle")
 class NotificationListGroupItem extends NotificationListItemBase {
@@ -122,7 +124,7 @@ showCounter!: boolean;
  * @public
  */
 @slot({ type: HTMLElement, "default": true })
-items!: Array<HTMLElement>
+items!: Array<NotificationListItem>
 
 static get styles() {
 	return NotificationListGroupItemCss;
@@ -144,7 +146,7 @@ onBeforeRendering() {
  */
 clearChildBusyIndicator() {
 	this.items.forEach(item => {
-	  (item as unknown as { busy: boolean }).busy = false;
+	  item.busy = false;
 	});
 }
 
@@ -227,7 +229,7 @@ get ariaLabelledBy() {
 	return ids.join(" ");
 }
 
-get isAriaExpanded(): boolean {
+get _ariaExpanded() {
 	return !this.collapsed;
 }
 

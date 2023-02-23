@@ -849,3 +849,7 @@ Popover.define();
 export default Popover;
 
 export { instanceOfPopover };
+
+export type {
+	Popover,
+}

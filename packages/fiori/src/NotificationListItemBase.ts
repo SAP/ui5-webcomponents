@@ -9,7 +9,8 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-import Popover from "@ui5/webcomponents/dist/Popover.js";
+import type { Popover } from "@ui5/webcomponents/dist/Popover.js";
+import NotificationAction from "./NotificationAction.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -34,13 +35,17 @@ const ICON_PER_PRIORITY = {
 	[Priority.None]: "",
 };
 
-type NotificationActionInfo = {
-	icon: string;
-	text: string;
-	_id: string;
-	disabled?: boolean;
-	design?: string;
+type NotificationListItemBaseEventDetail = {
+	item: HTMLElement,
 };
+
+// type NotificationActionInfo = {
+// 	icon: string;
+// 	text: string;
+// 	_id: string;
+// 	disabled?: boolean;
+// 	design?: string;
+// };
 
 /**
  * @class
@@ -106,7 +111,7 @@ priority!: Priority;
  * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.showClose
  */
 @property({ type: Boolean })
-showClose?: boolean;
+showClose!: boolean;
 
 /**
  * Defines if the <code>notification</code> is new or has been already read.
@@ -154,7 +159,7 @@ busyDelay!: number;
  * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.actions
  */
 @slot()
-actions!: Array<HTMLElement & NotificationActionInfo>
+actions!: Array<NotificationAction>
 
 	static i18nFioriBundle: I18nBundle;
 
@@ -179,7 +184,7 @@ actions!: Array<HTMLElement & NotificationActionInfo>
 	}
 
 	get overflowButtonDOM() {
-		return this.shadowRoot!.querySelector(".ui5-nli-overflow-btn")! as HTMLElement; // eslint-disable-line
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-overflow-btn")!;
 	}
 
 	get showOverflow() {
@@ -219,7 +224,7 @@ actions!: Array<HTMLElement & NotificationActionInfo>
 	 * Event handlers
 	 */
 	_onBtnCloseClick() {
-		this.fireEvent("close", { item: this });
+		this.fireEvent<NotificationListItemBaseEventDetail>("close", { item: this });
 	}
 
 	_onBtnOverflowClick() {
@@ -230,7 +235,7 @@ actions!: Array<HTMLElement & NotificationActionInfo>
 		const refItemId = (e.target as Element).getAttribute("data-ui5-external-action-item-id");
 
 		if (refItemId) {
-			(this.getActionByID(refItemId)! as unknown as UI5Element).fireEvent("click", {
+			this.getActionByID(refItemId)!.fireEvent("click", {
 				targetRef: e.target,
 			}, true);
 
@@ -256,17 +261,17 @@ actions!: Array<HTMLElement & NotificationActionInfo>
 
 	async openOverflow() {
 		const overflowPopover = await this.getOverflowPopover();
-		(overflowPopover as Popover)!.showAt(this.overflowButtonDOM);
+		overflowPopover.showAt(this.overflowButtonDOM);
 	}
 
 	async closeOverflow() {
 		const overflowPopover = await this.getOverflowPopover();
-		(overflowPopover! as Popover).close();
+		overflowPopover.close();
 	}
 
-	async getOverflowPopover() {
+	async getOverflowPopover(): Promise<Popover> {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector(".ui5-notification-overflow-popover");
+		return staticAreaItem!.querySelector<Popover>(".ui5-notification-overflow-popover")!;
 	}
 
 	static async onDefine() {
