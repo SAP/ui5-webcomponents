@@ -366,6 +366,10 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	toggle() {
 		if (this.canToggle()) {
+			const lastState = {
+				checked: this.checked,
+				indeterminate: this.indeterminate,
+			};
 			if (this.indeterminate) {
 				this.indeterminate = false;
 				this.checked = true;
@@ -378,7 +382,8 @@ class CheckBox extends UI5Element implements IFormElement {
 			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
 
 			if (changePrevented || valueChagnePrevented) {
-				this.checked = !this.checked;
+				this.checked = lastState.checked;
+				this.indeterminate = lastState.indeterminate;
 			}
 		}
 		return this;

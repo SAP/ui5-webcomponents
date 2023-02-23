@@ -73,12 +73,18 @@ describe("CheckBox general interaction", () => {
 		assert.strictEqual(await defaultCb.getProperty("checked"), !currentChecked, "The checkbox is checked");
 	});
 
-	it("tests change event preventDefault - value is not changed", async () => {
-		const defaultPreventedCb = await browser.$("#defaultPreventedCb");
-		const currentChecked = await defaultPreventedCb.getProperty("checked");
+	it.only("tests change event preventDefault - value is not changed", async () => {
+		const defaultPreventedCbs = await browser.$$(".defaultPreventedCb");
+		for(const defaultPreventedCb of defaultPreventedCbs) {
+			const state = {
+				checked: await defaultPreventedCb.getProperty("checked"),
+				indeterminate: await defaultPreventedCb.getProperty("indeterminate"),
+			}
 
-		await defaultPreventedCb.click();
+			await defaultPreventedCb.click();
 
-		assert.strictEqual(await defaultPreventedCb.getProperty("checked"), currentChecked, "The checkbox is not checked");
+			assert.strictEqual(await defaultPreventedCb.getProperty("checked"), state.checked, "The checkbox checked is not changed");
+			assert.strictEqual(await defaultPreventedCb.getProperty("indeterminate"), state.indeterminate, "The checkbox indeterminate is not changed");
+		}
 	});
 });
