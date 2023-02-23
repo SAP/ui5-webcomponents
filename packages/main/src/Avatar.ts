@@ -331,7 +331,7 @@ class Avatar extends UI5Element implements ITabbable {
 
 	get validInitials() {
 		// initials should consist of only 1,2 or 3 latin letters
-		const validInitials = /^[a-zA-Z]{1,3}$/,
+		const validInitials = /^[a-zA-Zà-üÀ-Ü]{1,3}$/,
 			areInitialsValid = this.initials && validInitials.test(this.initials);
 
 		if (areInitialsValid) {

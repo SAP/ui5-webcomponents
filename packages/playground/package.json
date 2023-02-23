@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-playground",
   "private": true,
-  "version": "1.11.0-rc.2",
+  "version": "1.11.0-rc.3",
   "description": "UI5 Web Components Playground",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -39,7 +39,7 @@
     "build:next": "npm run build-storybook",
     "build_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist && npm run build:next",
     "build:main": "yarn install:dependencies && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
-    "build:main_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
+    "build:main_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml && npm run build:next",
     "build:bundle": "vite build",
     "clean": "npm-run-all --parallel clean:*",
     "clean:samples": "rimraf ./docs/components/*sample.html",

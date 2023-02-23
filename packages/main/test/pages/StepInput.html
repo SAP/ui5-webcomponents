@@ -135,6 +135,22 @@
 		></ui5-step-input>
 	</div>
 
+	<div>
+		<h3>StepInput change event test</h3>
+		<ui5-step-input id="stepInputChange1"
+			class="stepinput2auto"
+			value="1"
+			min="1"
+			step="1000"
+		></ui5-step-input>
+		<ui5-step-input id="stepInputChange2"
+			class="stepinput2auto"
+			value="1000"
+			min="1"
+			step="1000"
+		></ui5-step-input>
+	</div>
+
 	<h3> 'change' event result</h3>
 	<ui5-input id="changeResult"></ui5-input>
 
@@ -156,6 +172,15 @@
 		siCompact.addEventListener('ui5-change', displayChange);
 		siMinMax.addEventListener('ui5-change', displayChange);
 		siPrecision.addEventListener('ui5-change', displayChange);
+
+		stepInputChange1.addEventListener('ui5-change', function(e) {
+			const val = Number.parseInt(e.target.value, 10);
+			stepInputChange2.value = val + 999;
+			displayChange(e);
+		});
+
+		stepInputChange2.addEventListener('ui5-change', displayChange);
+
 	</script>
 
 </body>

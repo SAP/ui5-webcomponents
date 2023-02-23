@@ -32,14 +32,14 @@ Example usage with `<ui5-icon>` web component:
 <ui5-icon name="tnt/actor"></ui5-icon>
 ```
 
-The package provides two versions of each icon (TNT Icons verson 2.x and TNT Icons version 3.x).
+The package provides two versions of each icon (TNT Icons v2 and TNT Icons v3).
 If you don't specify the versioned collection name, like in the example above:
 
 ```html
 <ui5-icon name="tnt/actor"></ui5-icon>
 ```
 
-the framework will detect the current theme and render the corresponding icon - from `TNT Icons v3` (collection name `tnt-v3`) for SAP Horizon theme family  (sap_horizon, sap_horizon_darl, etc.), and from `TNT Icons v2` (collection name `tnt-v2`) for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.).
+the framework will detect the current theme and render the corresponding icon - from `TNT Icons v3` (collection name `tnt-v3`) for SAP Horizon theme family  (sap_horizon, sap_horizon_dark, etc.), and from `TNT Icons v2` (collection name `tnt-v2`) for all the rest (sap_fiori_3, sap_fiori_3_dark, etc.).
 
 ### Collections `tnt-v2` and `tnt-v3 `
 

@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.2...v1.11.0-rc.3) (2023-02-23)
+
+
+### Bug Fixes
+
+* **playground:** use relative path for storybook assets ([#6537](https://github.com/SAP/ui5-webcomponents/issues/6537)) ([795ec1f](https://github.com/SAP/ui5-webcomponents/commit/795ec1fd033227ffb8a7414aa1fa67a0173737bb))
+
+
+### Features
+
+* **playground:** auto generate stories from samples ([#6509](https://github.com/SAP/ui5-webcomponents/issues/6509)) ([bc0b1a3](https://github.com/SAP/ui5-webcomponents/commit/bc0b1a37f88a03aef4361648b924a9d4fd771416))
+* **playground:** next playground with storybook ([#5831](https://github.com/SAP/ui5-webcomponents/issues/5831)) ([79274c8](https://github.com/SAP/ui5-webcomponents/commit/79274c8e442cf5854a7fe6327f25aaed04312103)), closes [#5898](https://github.com/SAP/ui5-webcomponents/issues/5898)
+
+
+
+
+
 # [1.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.1...v1.11.0-rc.2) (2023-02-16)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

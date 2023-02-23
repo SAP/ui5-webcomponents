@@ -33,9 +33,10 @@ import { getCalendarType } from "./dist/config/CalendarType.js";
 import { getTheme, setTheme } from "./dist/config/Theme.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getRTL } from "./dist/config/RTL.js";
-import { getFirstDayOfWeek } from "./dist/config/FormatSettings.js";
+import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "./dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
 import applyDirection from "./dist/locale/applyDirection.js";
+import LegacyDateFormats from "./dist/features/LegacyDateFormats.js";
 
 window["sap-ui-webcomponents-bundle"] = {
 	configuration : {
@@ -49,6 +50,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		getCalendarType,
 		getRTL,
 		getFirstDayOfWeek,
+		getLegacyDateCalendarCustomizing,
 	},
 	getIconNames,
 	parseProperties,
