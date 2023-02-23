@@ -41,10 +41,10 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
 
 type NotificationListItemPressEventDetail = {
-	item: NotificationListItem;
+	item: NotificationListItem,
 };
 
-type Footnote = Record<string, any>
+type Footnote = Record<string, any>;
 
 /**
  * @class

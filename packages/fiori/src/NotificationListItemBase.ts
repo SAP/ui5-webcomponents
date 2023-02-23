@@ -257,7 +257,7 @@ class NotificationListItemBase extends ListItemBase {
 		overflowPopover.close();
 	}
 
-	async getOverflowPopover(): Promise<Popover> {
+	async getOverflowPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem!.querySelector<Popover>(".ui5-notification-overflow-popover")!;
 	}

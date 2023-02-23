@@ -3,9 +3,10 @@ import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import Button from "@ui5/webcomponents/dist/Button.js";
 
 type NotificationActionClickEventDetail = {
-	targetRef: NotificationAction | null,
+	targetRef: Button,
 };
 
 /**
@@ -87,7 +88,7 @@ class NotificationAction extends UI5Element {
 
 	fireClickEvent(e: MouseEvent) {
 		this.fireEvent<NotificationActionClickEventDetail>("click", {
-			targetRef: (e.target as NotificationAction),
+			targetRef: (e.target as Button),
 		}, true);
 	}
 }
@@ -95,3 +96,7 @@ class NotificationAction extends UI5Element {
 NotificationAction.define();
 
 export default NotificationAction;
+
+export type {
+	NotificationActionClickEventDetail,
+};
