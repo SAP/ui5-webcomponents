@@ -6,7 +6,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ClassMap, ComponentStylesData, Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ResizeHandler, { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import {
 	isShow,
@@ -44,7 +45,8 @@ import {
 	isPhone,
 	isAndroid,
 } from "@ui5/webcomponents-base/dist/Device.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/multiselect-all.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -58,11 +60,13 @@ import MultiComboBoxItem from "./MultiComboBoxItem.js";
 import MultiComboBoxGroupItem from "./MultiComboBoxGroupItem.js";
 import GroupHeaderListItem from "./GroupHeaderListItem.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
+import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Token from "./Token.js";
 import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
-import List, { SelectionChangeEventDetail } from "./List.js";
+import List from "./List.js";
+import type { SelectionChangeEventDetail } from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
 import * as Filters from "./Filters.js";
@@ -108,6 +112,11 @@ type ValueStateTypeAnnouncement = Record<Exclude<ValueState, ValueState.None>, s
 
 type MultiComboBoxSelectionChangeEventDetail = {
 	items: Array<MultiComboBoxItem>,
+};
+
+type MultiComboboxItemWithSelection = {
+	ref: IMultiComboBoxItem,
+	selected: boolean,
 };
 
 /**
@@ -365,7 +374,7 @@ class MultiComboBox extends UI5Element {
 	 * @public
 	 * @since 1.4.0
 	 */
-	@property({ defaultValue: "" })
+	@property()
 	accessibleNameRef!: string;
 
 	@property({ type: Object, noAttribute: true, multiple: true })
@@ -377,19 +386,19 @@ class MultiComboBox extends UI5Element {
 	@property({ type: Boolean })
 	focused!: boolean;
 
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_tokenizerFocused!: boolean;
 
-	@property({ type: Boolean })
-	_iconPressed!: boolean;
+	@property({ type: Boolean, noAttribute: true })
+	_iconPressed?: boolean;
 
 	@property({ validator: Integer, noAttribute: true })
 	_inputWidth!: number;
 
 	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
-	_listWidth?: number | undefined;
+	_listWidth!: number;
 
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_performingSelectionTwice!: boolean;
 
 	/**
@@ -457,7 +466,7 @@ class MultiComboBox extends UI5Element {
 	_preventTokenizerToggle?: boolean;
 	_isOpenedByKeyboard?: boolean;
 	_itemToFocus?: IMultiComboBoxItem;
-	_itemsBeforeOpen: Array<{ref: IMultiComboBoxItem, selected: boolean}>;
+	_itemsBeforeOpen: Array<MultiComboboxItemWithSelection>;
 	selectedItems?: Array<IMultiComboBoxItem>;
 	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
@@ -604,11 +613,11 @@ class MultiComboBox extends UI5Element {
 		this.fireEvent("input");
 	}
 
-	_tokenDelete(e: CustomEvent) {
+	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
 		const token: Token = e.detail.ref;
 		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"))!;
 
-		(deletingItem as MultiComboBoxItem).selected = false;
+		deletingItem.selected = false;
 		this._deleting = true;
 
 		this.fireSelectionChange();
@@ -1099,7 +1108,7 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	_resetValueState(valueState: ValueState, callback?: () => any) {
+	_resetValueState(valueState: ValueState, callback?: () => void) {
 		this._validationTimeout = setTimeout(() => {
 			this.valueState = valueState;
 			this._validationTimeout = null;
@@ -1130,7 +1139,7 @@ class MultiComboBox extends UI5Element {
 			if (isCut) {
 				const cutResult = this._tokenizer._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
 				selectedTokens.forEach(token => {
-					this._tokenizer._tokenKeyboardDelete({ target: e.target! }, token);
+					this._tokenizer.deleteToken(token);
 				});
 
 				this.focus();
@@ -1439,12 +1448,12 @@ class MultiComboBox extends UI5Element {
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return (staticAreaItem!.querySelector("[ui5-popover]") as Popover);
+		return (staticAreaItem!.querySelector<Popover>("[ui5-popover]"))!;
 	}
 
 	async _getResponsivePopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return (staticAreaItem!.querySelector("[ui5-responsive-popover]") as ResponsivePopover);
+		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
 	}
 
 	async _setValueStateHeader() {

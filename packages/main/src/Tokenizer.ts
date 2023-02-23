@@ -258,9 +258,9 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (this._selectedTokens.length) {
-			this._selectedTokens.forEach(token => this._tokenKeyboardDelete(e, token));
+			this._selectedTokens.forEach(token => this.deleteToken(token));
 		} else {
-			this._tokenKeyboardDelete(e, target);
+			this.deleteToken(target);
 		}
 	}
 
@@ -286,24 +286,35 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetail> | { detail?: { backSpace: boolean }, target: EventTarget }, token: Token) {
-		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
-		const target = e.target as Token;
+	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetail>) {
+		this.deleteToken(e.target as Token, e.detail?.backSpace);
+	}
+
+	/**
+	 * Removes a token from the Tokenizer.
+	 * This method should only be used by ui5-multi-combobox and ui5-multi-input
+	 *
+	 * @protected
+	 * @param token Token to be focused.
+	 * @param forwardFocusToPrevious Indicates whether the focus will be forwarded to previous or next token after deletion.
+	 */
+	deleteToken(token: Token, forwardFocusToPrevious?: boolean) {
 		const tokens = this._getVisibleTokens();
-		const deletedTokenIndex = token ? tokens.indexOf(token) : tokens.indexOf(target); // The index of the token that just got deleted
+		const deletedTokenIndex = tokens.indexOf(token);
+		let nextTokenIndex = (deletedTokenIndex === tokens.length - 1) ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		const notSelectedTokens = tokens.filter(t => !t.selected);
 
-		if (e.detail?.backSpace) { // on backspace key select the previous item (unless deleting the first)
+		if (forwardFocusToPrevious) { // on backspace key select the previous item (unless deleting the first)
 			nextTokenIndex = deletedTokenIndex === 0 ? deletedTokenIndex + 1 : deletedTokenIndex - 1;
 		} else { // on delete key or mouse click on the "x" select the next item (unless deleting the last)
 			nextTokenIndex = deletedTokenIndex === tokens.length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
 
-		let nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
+		let nextToken = tokens[nextTokenIndex];
 
 		if (notSelectedTokens.length > 1) {
 			while (nextToken && nextToken.selected) {
-				nextToken = e.detail?.backSpace ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
+				nextToken = forwardFocusToPrevious ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
 			}
 		} else {
 			nextToken = notSelectedTokens[0];
@@ -311,7 +322,7 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
-		this.fireEvent("token-delete", { ref: token || e.target });
+		this.fireEvent("token-delete", { ref: token });
 	}
 
 	itemDelete(e: CustomEvent) {
