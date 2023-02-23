@@ -2,6 +2,10 @@
 	display: inline-block;
 }
 
+:host([design="Emphasized"]:not([pressed])) {
+	text-shadow: var(--_ui5_toggle_button_emphasized_text_shadow);
+}
+
 :host([pressed]),
 :host([design="Default"][pressed]),
 :host([design="Transparent"][pressed]),
@@ -9,6 +13,7 @@
 	background: var(--sapButton_Selected_Background);
 	border-color: var(--sapButton_Selected_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
+	text-shadow: none;
 }
 
 :host([pressed]:hover),
