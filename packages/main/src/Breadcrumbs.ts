@@ -249,7 +249,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_getItems() {
-		return this.getSlottedNodes("items") as Array<BreadcrumbsItem>;
+		return this.getSlottedNodes<BreadcrumbsItem>("items");
 	}
 
 	onBeforeRendering() {
