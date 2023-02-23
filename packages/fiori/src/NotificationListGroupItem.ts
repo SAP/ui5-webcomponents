@@ -10,7 +10,7 @@ import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
-import NotificationListItem from "./NotificationListItem.js";
+import type NotificationListItem from "./NotificationListItem.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -94,153 +94,153 @@ import NotificationListGroupItemCss from "./generated/themes/NotificationListGro
  */
 @event("toggle")
 class NotificationListGroupItem extends NotificationListItemBase {
-/**
- * Defines if the group is collapsed or expanded.
- * @type {boolean}
- * @defaultvalue false
- * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.collapsed
- * @public
- */
-@property({ type: Boolean })
-collapsed!: boolean;
+	/**
+	 * Defines if the group is collapsed or expanded.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.collapsed
+	 * @public
+	 */
+	@property({ type: Boolean })
+	collapsed!: boolean;
 
-/**
- * Defines if the items <code>counter</code> would be displayed.
- * @type {boolean}
- * @defaultvalue false
- * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.showCounter
- * @public
- */
-@property({ type: Boolean })
-showCounter!: boolean;
+	/**
+	 * Defines if the items <code>counter</code> would be displayed.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.showCounter
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showCounter!: boolean;
 
-/**
- * Defines the items of the <code>ui5-li-notification-group</code>,
- * usually <code>ui5-li-notification</code> items.
- *
- * @type {sap.ui.webc.fiori.INotificationListItem[]}
- * @slot items
- * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.default
- * @public
- */
-@slot({ type: HTMLElement, "default": true })
-items!: Array<NotificationListItem>
+	/**
+	 * Defines the items of the <code>ui5-li-notification-group</code>,
+	 * usually <code>ui5-li-notification</code> items.
+	 *
+	 * @type {sap.ui.webc.fiori.INotificationListItem[]}
+	 * @slot items
+	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.default
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	items!: Array<NotificationListItem>
 
-static get styles() {
-	return NotificationListGroupItemCss;
-}
-
-static get template() {
-	return NotificationListGroupItemTemplate;
-}
-
-onBeforeRendering() {
-	if (this.busy) {
-		this.clearChildBusyIndicator();
-	}
-}
-
-/**
- * Clears child items busy state to show a single busy over the entire group,
- * instead of multiple BusyIndicator instances
- */
-clearChildBusyIndicator() {
-	this.items.forEach(item => {
-	  item.busy = false;
-	});
-}
-
-static get dependencies() {
-	return [
-		List,
-		Button,
-		Icon,
-		BusyIndicator,
-		Popover,
-	];
-}
-
-get itemsCount() {
-	return this.items.length;
-}
-
-get overflowBtnAccessibleName() {
-	return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
-}
-
-get closeBtnAccessibleName() {
-	return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE);
-}
-
-get toggleBtnAccessibleName() {
-	if (this.collapsed) {
-		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
+	static get styles() {
+		return NotificationListGroupItemCss;
 	}
 
-	return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
-}
-
-get priorityText() {
-	if (this.priority === Priority.High) {
-		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+	static get template() {
+		return NotificationListGroupItemTemplate;
 	}
 
-	if (this.priority === Priority.Medium) {
-		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+	onBeforeRendering() {
+		if (this.busy) {
+			this.clearChildBusyIndicator();
+		}
 	}
 
-	if (this.priority === Priority.Low) {
-		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+	/**
+	 * Clears child items busy state to show a single busy over the entire group,
+	 * instead of multiple BusyIndicator instances
+	 */
+	clearChildBusyIndicator() {
+		this.items.forEach(item => {
+		  item.busy = false;
+		});
 	}
 
-	return "";
-}
-
-get accInvisibleText() {
-	return `${this.groupText} ${this.readText} ${this.priorityText} ${this.counterText}`;
-}
-
-get readText() {
-	if (this.read) {
-		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ);
+	static get dependencies() {
+		return [
+			List,
+			Button,
+			Icon,
+			BusyIndicator,
+			Popover,
+		];
 	}
 
-	return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
-}
-
-get groupText() {
-	return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
-}
-
-get counterText() {
-	const text = NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
-	return this.showCounter ? `${text} ${this.itemsCount}` : "";
-}
-
-get ariaLabelledBy() {
-	const id = this._id;
-	const ids = [];
-
-	if (this.hasTitleText) {
-		ids.push(`${id}-title-text`);
+	get itemsCount() {
+		return this.items.length;
 	}
 
-	ids.push(`${id}-invisibleText`);
-	return ids.join(" ");
-}
+	get overflowBtnAccessibleName() {
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_OVERLOW_BTN_TITLE);
+	}
 
-get _ariaExpanded() {
-	return !this.collapsed;
-}
+	get closeBtnAccessibleName() {
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_CLOSE_BTN_TITLE);
+	}
 
-/**
- * Event handlers
- *
- */
-_onBtnToggleClick() {
-	this.collapsed = !this.collapsed;
-	this.fireEvent("toggle", { item: this });
-}
+	get toggleBtnAccessibleName() {
+		if (this.collapsed) {
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_EXPAND_TITLE);
+		}
+
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TOGGLE_BTN_COLLAPSE_TITLE);
+	}
+
+	get priorityText() {
+		if (this.priority === Priority.High) {
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_HIGH_PRIORITY_TXT);
+		}
+
+		if (this.priority === Priority.Medium) {
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_MEDIUM_PRIORITY_TXT);
+		}
+
+		if (this.priority === Priority.Low) {
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_LOW_PRIORITY_TXT);
+		}
+
+		return "";
+	}
+
+	get accInvisibleText() {
+		return `${this.groupText} ${this.readText} ${this.priorityText} ${this.counterText}`;
+	}
+
+	get readText() {
+		if (this.read) {
+			return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_READ);
+		}
+
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_ITEM_UNREAD);
+	}
+
+	get groupText() {
+		return NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_TXT);
+	}
+
+	get counterText() {
+		const text = NotificationListGroupItem.i18nFioriBundle.getText(NOTIFICATION_LIST_GROUP_ITEM_COUNTER_TXT);
+		return this.showCounter ? `${text} ${this.itemsCount}` : "";
+	}
+
+	get ariaLabelledBy() {
+		const id = this._id;
+		const ids = [];
+
+		if (this.hasTitleText) {
+			ids.push(`${id}-title-text`);
+		}
+
+		ids.push(`${id}-invisibleText`);
+		return ids.join(" ");
+	}
+
+	get _ariaExpanded() {
+		return !this.collapsed;
+	}
+
+	/**
+	 * Event handlers
+	 *
+	 */
+	_onBtnToggleClick() {
+		this.collapsed = !this.collapsed;
+		this.fireEvent("toggle", { item: this });
+	}
 }
 
 NotificationListGroupItem.define();

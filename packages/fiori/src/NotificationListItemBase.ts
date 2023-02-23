@@ -8,8 +8,8 @@ import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import ListItemBase from "@ui5/webcomponents/dist/ListItemBase.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
-import type { Popover } from "@ui5/webcomponents/dist/Popover.js";
-import NotificationAction from "./NotificationAction.js";
+import type Popover from "@ui5/webcomponents/dist/Popover.js";
+import type NotificationAction from "./NotificationAction.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/decline.js";
@@ -75,90 +75,90 @@ type NotificationListItemBaseEventDetail = {
 	},
 })
 class NotificationListItemBase extends ListItemBase {
-/**
- * Defines the <code>titleText</code> of the item.
- * @type {string}
- * @defaultvalue ""
- * @public
- * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.titleText
- */
-@property()
-titleText!: string;
+	/**
+	 * Defines the <code>titleText</code> of the item.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.titleText
+	 */
+	@property()
+	titleText!: string;
 
-/**
- * Defines the <code>priority</code> of the item.
- * Available options are:
- * <ul>
- * <li><code>None</code></li>
- * <li><code>Low</code></li>
- * <li><code>Medium</code></li>
- * <li><code>High</code></li>
- * </ul>
- * @type {sap.ui.webc.main.types.Priority}
- * @defaultvalue "None"
- * @public
- * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.priority
- */
-@property({ type: Priority, defaultValue: Priority.None })
-priority!: Priority;
+	/**
+	 * Defines the <code>priority</code> of the item.
+	 * Available options are:
+	 * <ul>
+	 * <li><code>None</code></li>
+	 * <li><code>Low</code></li>
+	 * <li><code>Medium</code></li>
+	 * <li><code>High</code></li>
+	 * </ul>
+	 * @type {sap.ui.webc.main.types.Priority}
+	 * @defaultvalue "None"
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.priority
+	 */
+	@property({ type: Priority, defaultValue: Priority.None })
+	priority!: Priority;
 
-/**
- * Defines if the <code>close</code> button would be displayed.
- * @type {boolean}
- * @defaultvalue false
- * @public
- * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.showClose
- */
-@property({ type: Boolean })
-showClose!: boolean;
+	/**
+	 * Defines if the <code>close</code> button would be displayed.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.showClose
+	 */
+	@property({ type: Boolean })
+	showClose!: boolean;
 
-/**
- * Defines if the <code>notification</code> is new or has been already read.
- * <br><br>
- * <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font,
- * if set to true - it has a normal font.
- * @type {boolean}
- * @defaultvalue false
- * @public
- * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.read
- */
-@property({ type: Boolean })
-read!: boolean;
+	/**
+	 * Defines if the <code>notification</code> is new or has been already read.
+	 * <br><br>
+	 * <b>Note:</b> if set to <code>false</code> the <code>titleText</code> has bold font,
+	 * if set to true - it has a normal font.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.read
+	 */
+	@property({ type: Boolean })
+	read!: boolean;
 
-/**
- * Defines if a busy indicator would be displayed over the item.
- * @type {boolean}
- * @defaultvalue false
- * @public
- * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.busy
- * @since 1.0.0-rc.8
- */
-@property({ type: Boolean })
-busy!: boolean;
+	/**
+	 * Defines if a busy indicator would be displayed over the item.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.busy
+	 * @since 1.0.0-rc.8
+	 */
+	@property({ type: Boolean })
+	busy!: boolean;
 
-/**
- * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
- *
- * @type {sap.ui.webc.base.types.Integer}
- * @defaultValue 1000
- * @public
- * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.busyDelay
- */
-@property({ validator: Integer, defaultValue: 1000 })
-busyDelay!: number;
+	/**
+	 * Defines the delay in milliseconds, after which the busy indicator will show up for this component.
+	 *
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultValue 1000
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.busyDelay
+	 */
+	@property({ validator: Integer, defaultValue: 1000 })
+	busyDelay!: number;
 
-/**
- * Defines the actions, displayed in the top-right area.
- * <br><br>
- * <b>Note:</b> use the <code>ui5-notification-action</code> component.
- *
- * @type {sap.ui.webc.fiori.INotificationAction[]}
- * @slot
- * @public
- * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.actions
- */
-@slot()
-actions!: Array<NotificationAction>
+	/**
+	 * Defines the actions, displayed in the top-right area.
+	 * <br><br>
+	 * <b>Note:</b> use the <code>ui5-notification-action</code> component.
+	 *
+	 * @type {sap.ui.webc.fiori.INotificationAction[]}
+	 * @slot
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.actions
+	 */
+	@slot()
+	actions!: Array<NotificationAction>
 
 	static i18nFioriBundle: I18nBundle;
 

@@ -21,65 +21,65 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 @event("click")
 @customElement("ui5-notification-action")
 class NotificationAction extends UI5Element {
-/**
- * Defines the text of the <code>ui5-notification-action</code>.
- *
- * @type {string}
- * @defaultvalue ""
- * @public
- * @name sap.ui.webc.fiori.NotificationAction.prototype.text
- */
-@property()
-text!: string;
+	/**
+	 * Defines the text of the <code>ui5-notification-action</code>.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationAction.prototype.text
+	 */
+	@property()
+	text!: string;
 
-/**
- * Defines if the action is disabled.
- * <br><br>
- * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
- *
- * @type {boolean}
- * @defaultvalue false
- * @public
- * @name sap.ui.webc.fiori.NotificationAction.prototype.disabled
- */
-@property({ type: Boolean })
-disabled!: boolean;
+	/**
+	 * Defines if the action is disabled.
+	 * <br><br>
+	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationAction.prototype.disabled
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
 
-/**
- * Defines the action design.
- *
- * <br><br>
- * <b>Note:</b>
- * <ul>
- * <li><code>Default</code></li>
- * <li><code>Emphasized</code></li>
- * <li><code>Positive</code></li>
- * <li><code>Negative</code></li>
- * <li><code>Transparent</code></li>
- * </ul>
- *
- * @type {sap.ui.webc.main.types.ButtonDesign}
- * @defaultvalue "Transparent"
- * @public
- * @name sap.ui.webc.fiori.NotificationAction.prototype.design
- */
-@property({ type: ButtonDesign, defaultValue: ButtonDesign.Transparent })
-design!: ButtonDesign;
+	/**
+	 * Defines the action design.
+	 *
+	 * <br><br>
+	 * <b>Note:</b>
+	 * <ul>
+	 * <li><code>Default</code></li>
+	 * <li><code>Emphasized</code></li>
+	 * <li><code>Positive</code></li>
+	 * <li><code>Negative</code></li>
+	 * <li><code>Transparent</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.ButtonDesign}
+	 * @defaultvalue "Transparent"
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationAction.prototype.design
+	 */
+	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Transparent })
+	design!: ButtonDesign;
 
-/**
- * Defines the <code>icon</code> source URI.
- * <br><br>
- * <b>Note:</b>
- * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
- * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
- *
- * @type {string}
- * @defaultvalue ""
- * @public
- * @name sap.ui.webc.fiori.NotificationAction.prototype.icon
- */
-@property()
-icon!: string;
+	/**
+	 * Defines the <code>icon</code> source URI.
+	 * <br><br>
+	 * <b>Note:</b>
+	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationAction.prototype.icon
+	 */
+	@property()
+	icon!: string;
 }
 
 NotificationAction.define();
