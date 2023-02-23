@@ -302,7 +302,7 @@ class Wizard extends UI5Element {
 
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Auto,
-			getItemsCallback: () => this.enabledStepsInHeaderDOM,
+			getItemsCallback: () => this.enabledStepsInHeaderDOM as Array<WizardTab>,
 		});
 
 		this._onStepResize = this.onStepResize.bind(this);
@@ -794,7 +794,7 @@ class Wizard extends UI5Element {
 	}
 
 	get slottedSteps() {
-		return this.getSlottedNodes("steps")! as Array<WizardStep>;
+		return this.getSlottedNodes("steps") as Array<WizardStep>;
 	}
 
 	get contentDOM() {
