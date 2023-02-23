@@ -302,7 +302,7 @@ class Wizard extends UI5Element {
 
 		this._itemNavigation = new ItemNavigation(this, {
 			navigationMode: NavigationMode.Auto,
-			getItemsCallback: () => this.enabledStepsInHeaderDOM as Array<WizardTab>,
+			getItemsCallback: () => this.enabledStepsInHeaderDOM,
 		});
 
 		this._onStepResize = this.onStepResize.bind(this);
@@ -1061,6 +1061,6 @@ Wizard.define();
 
 export type {
 	WizardStepChangeEventDetail,
- };
+};
 
 export default Wizard;
