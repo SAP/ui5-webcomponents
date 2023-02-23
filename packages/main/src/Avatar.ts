@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -59,9 +58,10 @@ import "@ui5/webcomponents-icons/dist/employee.js";
  * @implements sap.ui.webc.main.IAvatar
  * @public
  */
-@customElement("ui5-avatar")
-@languageAware
-
+@customElement2({
+	tag: "ui5-avatar",
+	languageAware: true,
+})
 /**
 * Fired on mouseup, space and enter if avatar is interactive
 *

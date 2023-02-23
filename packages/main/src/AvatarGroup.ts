@@ -4,7 +4,7 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -139,8 +139,7 @@ type AvatarGroupClickEventDetail = {
  * @public
  */
 
-@customElement("ui5-avatar-group")
-
+@customElement2({ tag: "ui5-avatar-group" })
 /**
 * Fired when the component is activated either with a
 * click/tap or by using the Enter or Space key.
