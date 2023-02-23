@@ -1,4 +1,3 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";

@@ -852,4 +852,4 @@ export { instanceOfPopover };
 
 export type {
 	Popover,
-}
+};
