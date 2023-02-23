@@ -19,7 +19,7 @@ import MultiInputTemplate from "./generated/templates/MultiInputTemplate.lit.js"
 import styles from "./generated/themes/MultiInput.css.js";
 import Token from "./Token.js";
 import Tokenizer, { ClipboardDataOperation } from "./Tokenizer.js";
-import type TokenizerTokenDeleteEventDetail from "./Tokenizer.js";
+import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
