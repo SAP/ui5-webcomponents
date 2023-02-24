@@ -143,7 +143,7 @@ The `main.js` file is used to configure the storybook app in terms of the storie
 The Manager configured in `manager.tsx` file is the UI responsible for rendering the search, the toolbar, registering custom addons, as well as theming the UI.
 
 ### Build scripts
-Several build scripts are used to generate the stories documentation. They are located in the `packages/playground/build-scripts-storybook` folder. Ran before every build of the storybook, they are responsible for generating the `argTypes.ts` file, to merge the `custom-elements.json` files and parse the content of the `docs` folder to mdx format.
+Several build scripts are used to generate the stories documentation. They are located in the `packages/playground/build-scripts-storybook` folder. Ran before every build of the storybook, they are responsible for generating the `argTypes.ts` file, to merge the `custom-elements.json` files and parse the content of the `docs` folder to `mdx` format.
 
 ## Troubleshooting
 If you encounter an error when running yarn storybook, try the following:
