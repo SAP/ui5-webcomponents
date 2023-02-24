@@ -97,4 +97,24 @@ describe("Icon general interaction", () => {
 		});
 		assert.strictEqual(actualExportedValues, expectedExportedValues, "Exported values are correct.");
 	});
+	it("Icon svg aria-label cleaned after name change", async () => {
+
+		// assert - initial SVG aria-label
+		const iconEl = await browser.$("#iconError");
+		const iconSVG = await browser.$("#iconError").shadow$(".ui5-icon-root");
+		assert.equal(iconSVG.getAttribute("aria-label"), "Error");
+
+		// act
+		iconEl.setAttribute("name", "sap-icon://add");
+
+		// assert - new aria-label is added to SVG element
+		assert.ok(await iconSVG.getAttribute("aria-label"), "Add");
+
+		// act
+		iconEl.setAttribute("name", "sap-icon://less");
+
+		// assert - new aria-label is added to SVG element
+		assert.ok(await iconSVG.getAttribute("aria-label"), "");
+
+	});
 });
