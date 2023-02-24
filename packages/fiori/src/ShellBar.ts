@@ -106,7 +106,7 @@ interface IShelBarItemInfo {
 	text: string,
 	priority: number,
 	show: boolean,
-	count?: number,
+	count?: string,
 	custom?: boolean,
 	title?: string,
 	stableDomRef?: string,
@@ -742,9 +742,9 @@ class ShellBar extends UI5Element {
 	}
 
 	_handleSizeS() {
-		const hasIcons = this.showNotifications || this.showProductSwitch || this.searchField.length || this.items.length;
+		const hasIcons = this.showNotifications || this.showProductSwitch || !!this.searchField.length || !!this.items.length;
 
-		const newItems = this._getAllItems(!!hasIcons).map(info => {
+		const newItems = this._getAllItems(hasIcons).map((info): IShelBarItemInfo => {
 			const isOverflowIcon = info.classes.indexOf("ui5-shellbar-overflow-button") !== -1;
 			const isImageIcon = info.classes.indexOf("ui5-shellbar-image-button") !== -1;
 			const shouldStayOnScreen = isOverflowIcon || (isImageIcon && this.hasProfile);
@@ -756,7 +756,7 @@ class ShellBar extends UI5Element {
 					order: shouldStayOnScreen ? 1 : -1,
 				},
 			};
-		}) as Array<IShelBarItemInfo>;
+		});
 
 		this._updateItemsInfo(newItems);
 	}
@@ -769,11 +769,11 @@ class ShellBar extends UI5Element {
 			overflowSelector += ",.ui5-shellbar-search-field";
 		}
 
-		const elementsToOverflow = this.shadowRoot!.querySelectorAll(overflowSelector);
+		const elementsToOverflow = this.shadowRoot!.querySelectorAll<Button>(overflowSelector);
 		const isRTL = this.effectiveDir === "rtl";
 
-		const overflowCount = [].filter.call(elementsToOverflow, icon => {
-			const iconRect = (icon as Button).getBoundingClientRect();
+		const overflowCount = [...elementsToOverflow].filter(icon => {
+			const iconRect = (icon).getBoundingClientRect();
 
 			if (isRTL) {
 				return (iconRect.left + iconRect.width) > (rightContainerRect.left + rightContainerRect.width);
@@ -821,9 +821,9 @@ class ShellBar extends UI5Element {
 	}
 
 	async _toggleActionPopover() {
-		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button");
+		const overflowButton = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-overflow-button")!;
 		const overflowPopover = await this._getOverflowPopover();
-		overflowPopover!.showAt(overflowButton as Button, true);
+		overflowPopover!.showAt(overflowButton, true);
 	}
 
 	onEnterDOM() {
@@ -1009,7 +1009,7 @@ class ShellBar extends UI5Element {
 				return {
 					icon: item.icon,
 					id: item._id,
-					count: item.count as unknown as number || undefined,
+					count: item.count || undefined,
 					refItemid: item._id,
 					text: item.text,
 					classes: "ui5-shellbar-custom-item ui5-shellbar-button",

@@ -30,6 +30,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  * @event sap.ui.webc.fiori.ShellBarItem#click
  * @allowPreventDefault
  * @param {HTMLElement} targetRef DOM ref of the clicked element
+ * @event sap.ui.webc.fiori.ShellBarItem#clic
  * @public
  * @native
  */
@@ -70,7 +71,6 @@ class ShellBarItem extends UI5Element {
 	 */
 	@property()
 	count!: string;
-	custom: any;
 
 	static get render() {
 		return litRender;
