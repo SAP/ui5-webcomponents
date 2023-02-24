@@ -24,7 +24,11 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
-@customElement("ui5-li-custom")
+@customElement({
+	tag: "ui5-li-custom",
+	template: CustomListItemTemplate,
+	styles: [ListItem.styles, customListItemCss],
+})
 class CustomListItem extends ListItem {
 	/**
 	 * Defines the text alternative of the component.
@@ -46,14 +50,6 @@ class CustomListItem extends ListItem {
 	 * @slot
 	 * @public
 	 */
-
-	static get template() {
-		return CustomListItemTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [ListItem.styles, customListItemCss];
-	}
 
 	_onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);

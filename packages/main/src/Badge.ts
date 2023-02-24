@@ -44,6 +44,9 @@ import badgeCss from "./generated/themes/Badge.css.js";
 @customElement({
 	tag: "ui5-badge",
 	languageAware: true,
+	renderer: litRender,
+	template: BadgeTemplate,
+	styles: badgeCss,
 })
 class Badge extends UI5Element {
 	/**
@@ -98,18 +101,6 @@ class Badge extends UI5Element {
 	icon!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return BadgeTemplate;
-	}
-
-	static get styles() {
-		return badgeCss;
-	}
 
 	static async onDefine() {
 		Badge.i18nBundle = await getI18nBundle("@ui5/webcomponents");

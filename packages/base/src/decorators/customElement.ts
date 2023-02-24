@@ -14,12 +14,12 @@ const customElement = (tagName: string | {
 	languageAware?: boolean,
 	themeAware?: boolean,
 	fastNavigation?: boolean,
-	dependencies?: Array<typeof UI5Element>,
-	template?: Template,
-	staticAreaTemplate?: Template,
-	styles?: Styles,
-	staticAreaStyles?: Styles,
 	renderer?: Renderer,
+	styles?: Styles,
+	template?: Template,
+	dependencies?: Array<typeof UI5Element>,
+	staticAreaStyles?: Styles,
+	staticAreaTemplate?: Template,
 }): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {

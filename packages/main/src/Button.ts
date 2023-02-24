@@ -81,11 +81,11 @@ let activeButton: Button | null = null;
  */
 @customElement({
 	tag: "ui5-button",
-	dependencies: [Icon],
+	languageAware: true,
 	renderer: litRender,
 	template: ButtonTemplate,
 	styles: buttonCss,
-	languageAware: true,
+	dependencies: [Icon],
 })
 /**
  * Fired when the component is activated either with a

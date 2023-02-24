@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -11,7 +10,6 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -158,8 +156,20 @@ interface IComboBoxItem extends UI5Element {
  * @public
  * @since 1.0.0-rc.6
  */
-@customElement("ui5-combobox")
-@languageAware
+@customElement({
+	tag: "ui5-combobox",
+	languageAware: true,
+	renderer: litRender,
+	styles: ComboBoxCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+		ComboBoxPopoverCss,
+		SuggestionsCss,
+	],
+	template: ComboBoxTemplate,
+	staticAreaTemplate: ComboBoxPopoverTemplate,
+})
 
 /**
  * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
@@ -411,26 +421,6 @@ class ComboBox extends UI5Element {
 	valueStatePopover?: Popover;
 	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles(): ComponentStylesData {
-		return ComboBoxCss;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, ComboBoxPopoverCss, SuggestionsCss];
-	}
-
-	static get template() {
-		return ComboBoxTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return ComboBoxPopoverTemplate;
-	}
 
 	constructor() {
 		super();

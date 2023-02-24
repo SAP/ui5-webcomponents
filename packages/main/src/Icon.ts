@@ -112,6 +112,9 @@ const PRESENTATION_ROLE = "presentation";
 	tag: "ui5-icon",
 	languageAware: true,
 	themeAware: true,
+	renderer: litRender,
+	template: IconTemplate,
+	styles: iconCss,
 })
 /**
  * Fired on mouseup, space and enter if icon is interactive
@@ -282,18 +285,6 @@ class Icon extends UI5Element {
 	_onclick?: ((event: MouseEvent) => void) | undefined;
 	_onfocusout?: ((event: FocusEvent) => void) | undefined;
 	_onfocusin?: ((event: FocusEvent) => void) | undefined;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return IconTemplate;
-	}
-
-	static get styles() {
-		return iconCss;
-	}
 
 	_onFocusInHandler() {
 		if (this.interactive) {
