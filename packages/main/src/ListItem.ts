@@ -339,15 +339,8 @@ abstract class ListItem extends ListItemBase {
 
 	/*
 	 * Called when selection components in Single (ui5-radio-button)
-	 * and Multi (ui5-checkbox) selection modes are used.
+	 * selection mode is used.
 	 */
-	onMultiSelectionComponentPress(e: MouseEvent) {
-		if (this.isInactive) {
-			return;
-		}
-
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as HTMLInputElement).checked, selectionComponentPressed: true }); // Switch HTMLInputElement to CheckBox when ui5-check is migrated to TypeScript
-	}
 
 	onSingleSelectionComponentPress(e: MouseEvent) {
 		if (this.isInactive) {
