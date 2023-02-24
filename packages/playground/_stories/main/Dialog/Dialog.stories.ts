@@ -11,7 +11,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-const component = "ui5-list";
+const component = "ui5-dialog";
 
 export default {
   title: "Main/Dialog",
