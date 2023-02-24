@@ -111,7 +111,7 @@ BasicCheckBox.parameters = {
 
 Or globally in the `.storybook/preview.ts` file.
 
-The above example will include only the `indeterminate`, `checked` properties in the playground for users to edit.
+The above example includes only the `indeterminate`, `checked` properties in the playground for users to edit.
 
 
 ## Documentation
