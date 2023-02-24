@@ -13,6 +13,10 @@
 	opacity: .7;
 }
 
+:host(:not([interactive]):active) {
+	pointer-events: none;
+}
+
 :host {
 	display: inline-block;
 	width: 1rem;
