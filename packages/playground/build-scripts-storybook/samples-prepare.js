@@ -97,6 +97,27 @@ export type StoryArgsSlots = {
                         category: "Methods",
                     },
                 };
+
+				// methods can have custom descriptions with parameters and return value
+				if (prop.parameters || prop.returnValue) {
+					args[prop.name].customDescription = {
+						description: prop.description,
+						parameters: prop.parameters,
+						returnValue: prop.returnValue,
+					}
+				}
+            }
+        });
+
+        // events also have custom descriptions with parameters of their detail object
+        moduleAPI?.events?.forEach((prop) => {
+            if (prop.visibility === "public" && prop.parameters) {
+                args[prop.name] = {
+                    customDescription: {
+                        description: prop.description,
+                        parameters: prop.parameters,
+                    },
+                };
             }
         });
 
