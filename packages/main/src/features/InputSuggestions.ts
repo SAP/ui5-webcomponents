@@ -569,7 +569,7 @@ class Suggestions {
 	}
 
 	_getRealItems() {
-		return this._getComponent().getSlottedNodes(this.slotName) as Array<SuggestionItem>;
+		return this._getComponent().getSlottedNodes<SuggestionItem>(this.slotName);
 	}
 
 	async _getSuggestionPopover() {

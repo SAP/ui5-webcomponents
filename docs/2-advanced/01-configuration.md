@@ -174,10 +174,10 @@ For example, to force the first day of week to Sunday, no matter the locale:
 }
 ```
 
-Setting                       |             Values              |    Default Value    |                  Description
-------------------------------| ------------------------------- | ------------------- | ----------------------------------------------
-firstDayOfWeek                | 0 (Sunday) through 6 (Saturday) | *Depends on locale* | When set, overrides the locale's default value
-legacyDateCalendarCustomizing | {<br />dateFormat: string,<br />islamicMonthStart: string,<br />gregDate: string<br />} | []                  | When set, adds customizing data for Islamic calendar support
+| Setting                       | Values                                                                   | Default Value       | Description                                                  |
+| ----------------------------- | ------------------------------------------------------------------------ | ------------------- | ------------------------------------------------------------ |
+| firstDayOfWeek                | 0 (Sunday) through 6 (Saturday)                                          | *Depends on locale* | When set, overrides the locale's default value               |
+| legacyDateCalendarCustomizing | ```{dateFormat: string, islamicMonthStart: string, gregDate: string }``` | []                  | When set, adds customizing data for Islamic calendar support |
 
 **Note:** legacyDateCalendarCustomizing takes affect only if following features are imported:
 ```js

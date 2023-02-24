@@ -1,10 +1,16 @@
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import NotificationListItemBase from "./NotificationListItemBase.js";
+import type NotificationListItem from "./NotificationListItem.js";
 
 // Icons
 import "@ui5/webcomponents-icons/dist/navigation-right-arrow.js";
@@ -32,60 +38,8 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-li-notification-group",
-	languageAware: true,
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.fiori.NotificationListGroupItem.prototype */ {
-
-		/**
-		 * Defines if the group is collapsed or expanded.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		collapsed: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines if the items <code>counter</code> would be displayed.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showCounter: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.fiori.NotificationListGroupItem.prototype */ {
-
-		/**
-		 * Defines the items of the <code>ui5-li-notification-group</code>,
-		 * usually <code>ui5-li-notification</code> items.
-		 *
-		 * @type {sap.ui.webc.fiori.INotificationListItem[]}
-		 * @slot items
-		 * @public
-		 */
-		"default": {
-			propertyName: "items",
-			type: HTMLElement,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.NotificationListGroupItem.prototype */ {
-
-		/**
-		 * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
-		 *
-		 * @event
-		 * @public
-		 */
-		toggle: {},
-	},
+type NotificationListGroupItemToggleEventDetail = {
+	item: NotificationListGroupItem,
 };
 
 /**
@@ -132,10 +86,48 @@ const metadata = {
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
+@customElement("ui5-li-notification-group")
+@languageAware
+
+/**
+ * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
+ *
+ * @public
+ * @event sap.ui.webc.fiori.NotificationListGroupItem#toggle
+ */
+@event("toggle")
 class NotificationListGroupItem extends NotificationListItemBase {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines if the group is collapsed or expanded.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.collapsed
+	 * @public
+	 */
+	@property({ type: Boolean })
+	collapsed!: boolean;
+
+	/**
+	 * Defines if the items <code>counter</code> would be displayed.
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.showCounter
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showCounter!: boolean;
+
+	/**
+	 * Defines the items of the <code>ui5-li-notification-group</code>,
+	 * usually <code>ui5-li-notification</code> items.
+	 *
+	 * @type {sap.ui.webc.fiori.INotificationListItem[]}
+	 * @slot items
+	 * @name sap.ui.webc.fiori.NotificationListGroupItem.prototype.default
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	items!: Array<NotificationListItem>
 
 	static get styles() {
 		return NotificationListGroupItemCss;
@@ -237,11 +229,10 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		}
 
 		ids.push(`${id}-invisibleText`);
-
 		return ids.join(" ");
 	}
 
-	get ariaExpanded() {
+	get _ariaExpanded() {
 		return !this.collapsed;
 	}
 
@@ -251,7 +242,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	_onBtnToggleClick() {
 		this.collapsed = !this.collapsed;
-		this.fireEvent("toggle", { item: this });
+		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
 	}
 }
 

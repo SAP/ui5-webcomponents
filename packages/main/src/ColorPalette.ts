@@ -400,7 +400,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get displayedColors() {
-		const colors = this.getSlottedNodes("colors") as Array<ColorPaletteItem>;
+		const colors = this.getSlottedNodes<ColorPaletteItem>("colors");
 		return colors.filter(item => item.value).slice(0, 15);
 	}
 
