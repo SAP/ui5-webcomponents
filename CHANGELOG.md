@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.5](https://github.com/SAP/ui5-webcomponents/compare/v1.10.4...v1.10.5) (2023-02-24)
+
+
+### Bug Fixes
+
+* **ui5-tree:** correctly pass mode to sub items ([#6574](https://github.com/SAP/ui5-webcomponents/issues/6574)) ([d0a9762](https://github.com/SAP/ui5-webcomponents/commit/d0a97624599eb447d2e95dd5ad94f873e6d4c03e))
+
+
+
+
+
 ## [1.10.4](https://github.com/SAP/ui5-webcomponents/compare/v1.10.3...v1.10.4) (2023-02-15)
 
 
