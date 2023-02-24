@@ -138,7 +138,7 @@ Storybook configuration is located in the `.storybook` folder.
 
 The `preview.ts` file is the main configuration file. It is used to configure the storybook app in terms of UI features, global parameters and decorators. 
 
-The `main.js` file is used to configure the storybook app in terms of the stories that should be loaded as well as the addons that should be used. Build time configuration is also done here.
+The `main.js` file is used to configure the storybook app in terms of the stories that should be loaded, as well as the addons that should be used. Build time configuration is also done here.
 
 The Manager configured in `manager.tsx` file is the UI responsible for rendering the the search, the toolbar, registering custom addons as well as theming the UI.
 
