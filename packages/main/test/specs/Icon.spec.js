@@ -108,13 +108,13 @@ describe("Icon general interaction", () => {
 		iconEl.setAttribute("name", "sap-icon://add");
 
 		// assert - new aria-label is added to SVG element
-		assert.ok(await iconSVG.getAttribute("aria-label"), "Add");
+		assert.equal(await iconSVG.getAttribute("aria-label"), "Add");
 
 		// act
 		iconEl.setAttribute("name", "sap-icon://less");
 
 		// assert - new aria-label is added to SVG element
-		assert.ok(await iconSVG.getAttribute("aria-label"), "");
+		assert.equal(await iconSVG.getAttribute("aria-label"), "");
 
 	});
 });
