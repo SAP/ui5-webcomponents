@@ -47,10 +47,6 @@ type ChildChangeListener = (param: InvalidationInfo) => void;
 
 type SlotChangeListener = (this: HTMLSlotElement, ev: Event) => void;
 
-type SlottedChild = Node & {
-	_individualSlot?: string,
-}
-
 /**
  * Triggers re-rendering of a UI5Element instance due to state change.
  * @param {ChangeInfo} changeInfo An object with information about the change that caused invalidation.
@@ -277,7 +273,7 @@ abstract class UI5Element extends HTMLElement {
 		const ctor = this.constructor as typeof UI5Element;
 		const slotsMap = ctor.getMetadata().getSlots();
 		const canSlotText = ctor.getMetadata().canSlotText();
-		const domChildren = Array.from(canSlotText ? this.childNodes : this.children) as Array<SlottedChild>;
+		const domChildren = Array.from(canSlotText ? this.childNodes : this.children) as Array<Node>;
 
 		const slotsCachedContentMap = new Map<string, Array<SlotValue>>(); // Store here the content of each slot before the mutation occurred
 		const propertyNameToSlotMap = new Map<string, string>(); // Used for reverse lookup to determine to which slot the property name corresponds
