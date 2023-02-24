@@ -95,6 +95,11 @@ type ShellbarMenuItemClickEventDetail = {
 	item: HTMLElement;
 };
 
+type ShellbarCoPilot = {
+	animated?: boolean,
+	animationValues?: string,
+};
+
 interface IShelBarItemInfo {
 	id: string,
 	icon?: string,
@@ -518,9 +523,9 @@ class ShellBar extends UI5Element {
 	_isInitialRendering: boolean;
 	_defaultItemPressPrevented: boolean;
 	menuItemsObserver: MutationObserver;
-	coPilot!: object;
+	coPilot?: ShellbarCoPilot;
 	_debounceInterval?: Timeout | null;
-	_hiddenIcons!: Array<IShelBarItemInfo>;
+	_hiddenIcons?: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 
 	static get render() {
@@ -832,7 +837,7 @@ class ShellBar extends UI5Element {
 		this._debounceInterval = null;
 	}
 
-	_handleSearchIconPress(e: MouseEvent) {
+	_handleSearchIconPress() {
 		this.showSearchField = !this.showSearchField;
 
 		if (!this.showSearchField) {
@@ -854,7 +859,7 @@ class ShellBar extends UI5Element {
 		}, 100);
 	}
 
-	async _handleActionListClick(e: MouseEvent) {
+	async _handleActionListClick() {
 		if (!this._defaultItemPressPrevented) {
 			this.closeOverflow();
 			// wait for DOM to be updated when ui5-popover is closed, otherwise if Enter key is hold
@@ -880,7 +885,7 @@ class ShellBar extends UI5Element {
 		}
 	}
 
-	_handleOverflowPress(e: MouseEvent) {
+	_handleOverflowPress() {
 		this._toggleActionPopover();
 	}
 
@@ -893,7 +898,7 @@ class ShellBar extends UI5Element {
 		}, true);
 	}
 
-	_handleProfilePress(e: MouseEvent) {
+	_handleProfilePress() {
 		this.fireEvent<ShellbarProfileClickEventDetail>("profile-click", {
 			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button")!,
 		});
