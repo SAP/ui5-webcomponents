@@ -39,7 +39,6 @@ const Template: UI5StoryArgs<AvatarGroup, StoryArgsSlots> = (args) =>
   </ui5-avatar-group> `;
 
 export const TypeGroup = Template.bind({});
-TypeGroup.storyName = "Type Group";
 TypeGroup.args = {
   default: `
   <ui5-avatar size="M" icon="employee"></ui5-avatar>
@@ -53,7 +52,6 @@ TypeGroup.args = {
 };
 
 export const TypeIndividual = Template.bind({});
-TypeIndividual.storyName = "Type Individual";
 TypeIndividual.args = {
   type: AvatarGroupType.Individual,
   default: `
@@ -69,12 +67,7 @@ TypeIndividual.args = {
 
 export const TypeIndividualWithPopover: StoryFn =
   TemplateIndividualWithPopover.bind({});
-TypeIndividualWithPopover.storyName = "Type Individual with Popover";
 
-// Type Group with Popover
 export const TypeGroupWithPopover: StoryFn = TemplateGroupWithPopover.bind({});
-TypeGroupWithPopover.storyName = "Type Group with Popover";
 
-// Sizes
 export const Sizes: StoryFn = TemplateAvatarGroupSizes.bind({});
-Sizes.storyName = "Sizes";

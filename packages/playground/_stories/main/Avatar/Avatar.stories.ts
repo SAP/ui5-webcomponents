@@ -41,14 +41,12 @@ const Template: UI5StoryArgs<Avatar, StoryArgsSlots> = (args) =>
   </ui5-avatar>`;
 
 export const Basic = Template.bind({});
-Basic.storyName = "Basic";
 Basic.args = {
   initials: "FJ",
   interactive: true,
 };
 
 export const WithImage = Template.bind({});
-WithImage.storyName = "Avatar with image";
 WithImage.args = {
   default: `<img
 	alt="Woman 1"
@@ -57,14 +55,12 @@ WithImage.args = {
 };
 
 export const Size = Template.bind({});
-Size.storyName = "Avatar Size";
 Size.args = {
   size: AvatarSize.L,
   icon: "home",
 };
 
 export const Styles = Template.bind({});
-Styles.storyName = "Avatar Styles";
 Styles.args = {
   size: AvatarSize.XL,
   shape: AvatarShape.Square,

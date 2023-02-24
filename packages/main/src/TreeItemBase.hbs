@@ -8,6 +8,7 @@
 	<div
 		class="ui5-li-tree-toggle-box"
 		style="{{styles.preContent}}"
+		@click="{{_toggleClick}}"
 	>
 		{{#if _showToggleButtonBeginning}}
 			<ui5-icon
@@ -16,7 +17,6 @@
 				name="{{_toggleIconName}}"
 				show-tooltip
 				accessible-name="{{iconAccessibleName}}"
-				@click="{{_toggleClick}}"
 			></ui5-icon>
 		{{/if}}
 	</div>
@@ -35,12 +35,13 @@
 
 {{#*inline "iconEnd"}}
 	{{#if _showToggleButtonEnd}}
+	<div @click="{{_toggleClick}}">
 		<ui5-icon
 			part="toggle-icon"
 			class="ui5-li-tree-toggle-icon"
 			name="{{_toggleIconName}}"
-			@click="{{_toggleClick}}"
 		></ui5-icon>
+	</div>
 	{{/if}}
 {{/inline}}
 
