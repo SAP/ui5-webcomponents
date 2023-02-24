@@ -3,7 +3,7 @@ import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import Button from "@ui5/webcomponents/dist/Button.js";
+import type Button from "@ui5/webcomponents/dist/Button.js";
 
 type NotificationActionClickEventDetail = {
 	targetRef: Button,
@@ -23,8 +23,20 @@ type NotificationActionClickEventDetail = {
  * @implements sap.ui.webc.fiori.INotificationAction
  * @public
  */
-@event("click")
 @customElement("ui5-notification-action")
+
+/**
+ * Fired, when the action is pressed.
+ *
+ * @event sap.ui.webc.fiori.NotificationAction#click
+ * @param {HTMLElement} targetRef DOM ref of the clicked element
+ * @public
+ */
+@event("click", {
+	detail: {
+		targetRef: { type: HTMLElement },
+	},
+})
 class NotificationAction extends UI5Element {
 	/**
 	 * Defines the text of the <code>ui5-notification-action</code>.
