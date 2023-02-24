@@ -417,6 +417,8 @@ class Icon extends UI5Element {
 		} else if (this.accData) {
 			const i18nBundle = await getI18nBundle(this.packageName);
 			this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
+		} else {
+			this.effectiveAccessibleName = undefined;
 		}
 	}
 
