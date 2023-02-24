@@ -1,4 +1,4 @@
-import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -146,7 +146,7 @@ type DatePickerChangeEventDetail = {
  * @public
  */
 
-@customElement2({
+@customElement({
 	tag: "ui5-date-picker",
 	languageAware: true,
 	template: DatePickerTemplate,

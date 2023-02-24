@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -65,7 +65,7 @@ type ColorPaletteItemClickEventDetail = {
  * @appenddocs sap.ui.webc.main.ColorPaletteItem
  * @public
  */
-@customElement2({
+@customElement({
 	tag: "ui5-color-palette",
 	renderer: litRender,
 	template: ColorPaletteTemplate,

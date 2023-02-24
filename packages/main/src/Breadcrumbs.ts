@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -93,11 +93,15 @@ type FocusAdaptor = ITabbable & {
  * @public
  * @since 1.0.0-rc.15
  */
-@customElement2({
+@customElement({
 	tag: "ui5-breadcrumbs",
 	languageAware: true,
+	renderer: litRender,
+	template: BreadcrumbsTemplate,
+	staticAreaTemplate: BreadcrumbsPopoverTemplate,
+	styles: breadcrumbsCss,
+	staticAreaStyles: breadcrumbsPopoverCss,
 })
-
 /**
  * Fires when a <code>BreadcrumbsItem</code> is clicked.
  * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
@@ -191,26 +195,6 @@ class Breadcrumbs extends UI5Element {
 	responsivePopover?: ResponsivePopover;
 	_labelFocusAdaptor: FocusAdaptor;
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return BreadcrumbsTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return BreadcrumbsPopoverTemplate;
-	}
-
-	static get styles() {
-		return breadcrumbsCss;
-	}
-
-	static get staticAreaStyles() {
-		return breadcrumbsPopoverCss;
-	}
 
 	constructor() {
 		super();

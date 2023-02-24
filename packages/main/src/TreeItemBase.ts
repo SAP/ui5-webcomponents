@@ -1,5 +1,5 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -43,7 +43,7 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @extends sap.ui.webc.main.ListItem
  * @public
  */
-@customElement2({
+@customElement({
 	languageAware: true,
 	template: TreeItemBaseTemplate,
 	styles: [

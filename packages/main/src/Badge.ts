@@ -1,5 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -41,7 +41,7 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * @since 0.12.0
  * @public
  */
-@customElement2({
+@customElement({
 	tag: "ui5-badge",
 	languageAware: true,
 })

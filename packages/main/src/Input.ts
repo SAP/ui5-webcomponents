@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
@@ -180,7 +180,7 @@ type SuggestionScrollEventDetail = {
  * @implements sap.ui.webc.main.IInput
  * @public
  */
-@customElement2({
+@customElement({
 	tag: "ui5-input",
 	languageAware: true,
 	renderer: litRender,

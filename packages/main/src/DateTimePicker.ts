@@ -1,5 +1,5 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement2 from "@ui5/webcomponents-base/dist/decorators/customElement2.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
@@ -112,7 +112,7 @@ type PreviewValues = {
  * @since 1.0.0-rc.7
  * @public
  */
-@customElement2({
+@customElement({
 	tag: "ui5-datetime-picker",
 	staticAreaTemplate: DateTimePickerPopoverTemplate,
 	styles: [

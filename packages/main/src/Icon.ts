@@ -3,8 +3,6 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
-import themeAware from "@ui5/webcomponents-base/dist/decorators/themeAware.js";
 import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -110,9 +108,11 @@ const PRESENTATION_ROLE = "presentation";
  * @implements sap.ui.webc.main.IIcon
  * @public
  */
-@customElement("ui5-icon")
-@languageAware
-@themeAware
+@customElement({
+	tag: "ui5-icon",
+	languageAware: true,
+	themeAware: true,
+})
 /**
  * Fired on mouseup, space and enter if icon is interactive
  * @private
