@@ -20,16 +20,17 @@
 	{{/if}}
 
 	{{#unless readonly}}
-		<ui5-icon
-			slot="icon"
-			name="{{openIconName}}"
-			tabindex="-1"
-			show-tooltip
-			@click="{{togglePicker}}"
-			input-icon
-			?pressed="{{_isPickerOpen}}"
-			class="ui5-time-picker-input-icon-button"
-		></ui5-icon>
+		<div slot="icon" @click="{{togglePicker}}">
+			<ui5-icon
+				name="{{openIconName}}"
+				tabindex="-1"
+				show-tooltip
+				@ui5-click="{{togglePicker}}"
+				input-icon
+				?pressed="{{_isPickerOpen}}"
+				class="ui5-time-picker-input-icon-button"
+			></ui5-icon>
+		</div>
 	{{/unless}}
 	</ui5-input>
 </div>
