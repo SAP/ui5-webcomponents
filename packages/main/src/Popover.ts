@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import { isIOS } from "@ui5/webcomponents-base/dist/Device.js";
 import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
@@ -87,7 +86,15 @@ type CalculatedPlacement = {
  * @since 1.0.0-rc.6
  * @public
  */
-@customElement("ui5-popover")
+@customElement({
+	tag: "ui5-popover",
+	styles: [
+		browserScrollbarCSS,
+		PopupsCommonCss,
+		PopoverCss,
+	],
+	template: PopoverTemplate,
+})
 class Popover extends Popup {
 	/**
 	 * Defines the header text.
@@ -288,20 +295,12 @@ class Popover extends Popup {
 	_oldPlacement?: CalculatedPlacement;
 	_width?: string;
 
-	constructor() {
-		super();
-	}
-
-	static get styles(): ComponentStylesData {
-		return [browserScrollbarCSS, PopupsCommonCss, PopoverCss];
-	}
-
-	static get template() {
-		return PopoverTemplate;
-	}
-
 	static get VIEWPORT_MARGIN() {
 		return 10; // px
+	}
+
+	constructor() {
+		super();
 	}
 
 	onAfterRendering() {

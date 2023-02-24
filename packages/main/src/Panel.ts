@@ -3,8 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
@@ -94,9 +92,15 @@ import panelCss from "./generated/themes/Panel.css.js";
  * @tagname ui5-panel
  * @public
  */
-@customElement("ui5-panel")
-@fastNavigation
-@languageAware
+@customElement({
+	tag: "ui5-panel",
+	fastNavigation: true,
+	languageAware: true,
+	renderer: litRender,
+	template: PanelTemplate,
+	styles: panelCss,
+	dependencies: [Button, Icon],
+})
 /**
  * Fired when the component is expanded/collapsed by user interaction.
  *
@@ -239,18 +243,6 @@ class Panel extends UI5Element {
 	 */
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return PanelTemplate;
-	}
-
-	static get styles() {
-		return panelCss;
-	}
 
 	onBeforeRendering() {
 		// If the animation is running, it will set the content expanded state at the end
@@ -433,10 +425,6 @@ class Panel extends UI5Element {
 				display: this._contentExpanded ? "block" : "none",
 			},
 		};
-	}
-
-	static get dependencies() {
-		return [Button, Icon];
 	}
 
 	static async onDefine() {
