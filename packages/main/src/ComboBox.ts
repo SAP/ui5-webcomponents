@@ -169,8 +169,19 @@ interface IComboBoxItem extends UI5Element {
 	],
 	template: ComboBoxTemplate,
 	staticAreaTemplate: ComboBoxPopoverTemplate,
+	dependencies: [
+		ComboBoxItem,
+		Icon,
+		ResponsivePopover,
+		List,
+		BusyIndicator,
+		Button,
+		StandardListItem,
+		GroupHeaderListItem,
+		Popover,
+		ComboBoxGroupItem,
+	],
 })
-
 /**
  * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
  *
@@ -1174,21 +1185,6 @@ class ComboBox extends UI5Element {
 
 	get ariaLabelText(): string | undefined {
 		return getEffectiveAriaLabelText(this);
-	}
-
-	static get dependencies() {
-		return [
-			ComboBoxItem,
-			Icon,
-			ResponsivePopover,
-			List,
-			BusyIndicator,
-			Button,
-			StandardListItem,
-			GroupHeaderListItem,
-			Popover,
-			ComboBoxGroupItem,
-		];
 	}
 
 	static async onDefine() {

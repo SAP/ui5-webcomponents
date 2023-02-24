@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
@@ -79,9 +78,14 @@ type Star = {
  * @since 1.0.0-rc.8
  */
 
-@customElement("ui5-rating-indicator")
-@languageAware
-
+@customElement({
+	tag: "ui5-rating-indicator",
+	languageAware: true,
+	renderer: litRender,
+	styles: RatingIndicatorCss,
+	template: RatingIndicatorTemplate,
+	dependencies: [Icon],
+})
 /**
  * The event is fired when the value changes.
  *
@@ -173,24 +177,8 @@ class RatingIndicator extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return RatingIndicatorCss;
-	}
-
-	static get template() {
-		return RatingIndicatorTemplate;
-	}
-
 	static async onDefine() {
 		RatingIndicator.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
-	static get dependencies() {
-		return [Icon];
 	}
 
 	constructor() {

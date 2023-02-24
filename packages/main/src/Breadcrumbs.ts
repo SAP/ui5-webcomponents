@@ -101,6 +101,16 @@ type FocusAdaptor = ITabbable & {
 	staticAreaTemplate: BreadcrumbsPopoverTemplate,
 	styles: breadcrumbsCss,
 	staticAreaStyles: breadcrumbsPopoverCss,
+	dependencies: [
+		BreadcrumbsItem,
+		Link,
+		Label,
+		ResponsivePopover,
+		List,
+		StandardListItem,
+		Icon,
+		Button,
+	],
 })
 /**
  * Fires when a <code>BreadcrumbsItem</code> is clicked.
@@ -642,19 +652,6 @@ class Breadcrumbs extends UI5Element {
 
 	get _cancelButtonText() {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
-	}
-
-	static get dependencies() {
-		return [
-			BreadcrumbsItem,
-			Link,
-			Label,
-			ResponsivePopover,
-			List,
-			StandardListItem,
-			Icon,
-			Button,
-		];
 	}
 
 	static async onDefine() {

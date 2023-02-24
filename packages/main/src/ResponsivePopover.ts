@@ -1,4 +1,3 @@
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -50,7 +49,17 @@ type ResponsivePopoverBeforeCloseEventDetail = PopupBeforeCloseEventDetail;
  * @since 1.0.0-rc.6
  * @public
  */
-@customElement("ui5-responsive-popover")
+@customElement({
+	tag: "ui5-responsive-popover",
+	styles: [Popover.styles, ResponsivePopoverCss],
+	template: ResponsivePopoverTemplate,
+	dependencies: [
+		...Popover.dependencies,
+		Button,
+		Dialog,
+		Title,
+	],
+})
 class ResponsivePopover extends Popover {
 	/**
 	 * Defines if only the content would be displayed (without header and footer) in the popover on Desktop.
@@ -83,34 +92,6 @@ class ResponsivePopover extends Popover {
 
 	constructor() {
 		super();
-	}
-
-	static get styles(): ComponentStylesData {
-		return [Popover.styles, ResponsivePopoverCss];
-	}
-
-	get classes() {
-		const allClasses = super.classes;
-
-		allClasses.header = {
-			"ui5-responsive-popover-header": true,
-			"ui5-responsive-popover-header-no-title": !this.headerText,
-		};
-
-		return allClasses;
-	}
-
-	static get template() {
-		return ResponsivePopoverTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			...Popover.dependencies,
-			Button,
-			Dialog,
-			Title,
-		];
 	}
 
 	/**
@@ -170,6 +151,17 @@ class ResponsivePopover extends Popover {
 	 */
 	isOpen() {
 		return (isPhone() && this._dialog) ? this._dialog.isOpen() : super.isOpen();
+	}
+
+	get classes() {
+		const allClasses = super.classes;
+
+		allClasses.header = {
+			"ui5-responsive-popover-header": true,
+			"ui5-responsive-popover-header-no-title": !this.headerText,
+		};
+
+		return allClasses;
 	}
 
 	get _dialog() {

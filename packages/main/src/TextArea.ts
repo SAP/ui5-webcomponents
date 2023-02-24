@@ -4,7 +4,6 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -87,9 +86,16 @@ type ExceededText = {
  * @tagname ui5-textarea
  * @public
  */
-@customElement("ui5-textarea")
-@languageAware
-
+@customElement({
+	tag: "ui5-textarea",
+	languageAware: true,
+	styles: [browserScrollbarCSS, styles],
+	renderer: litRender,
+	template: TextAreaTemplate,
+	staticAreaTemplate: TextAreaPopoverTemplate,
+	staticAreaStyles: valueStateMessageStyles,
+	dependencies: [Popover, Icon],
+})
 /**
  * Fired when the text has changed and the focus leaves the component.
  *
@@ -368,27 +374,7 @@ class TextArea extends UI5Element implements IFormElement {
 	_keyDown?: boolean;
 	FormSupport?: typeof FormSupportT;
 	previousValue: string;
-	popover?:Popover;
-
-	static get styles() {
-		return [browserScrollbarCSS, styles];
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TextAreaTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return TextAreaPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return valueStateMessageStyles;
-	}
+	popover?: Popover;
 
 	static i18nBundle: I18nBundle;
 
@@ -709,10 +695,6 @@ class TextArea extends UI5Element implements IFormElement {
 			"Error": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_ERROR),
 			"Warning": TextArea.i18nBundle.getText(VALUE_STATE_TYPE_WARNING),
 		};
-	}
-
-	static get dependencies() {
-		return [Popover, Icon];
 	}
 }
 

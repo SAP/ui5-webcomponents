@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import {
@@ -23,7 +22,7 @@ import Icon from "./Icon.js";
 import TokenTemplate from "./generated/templates/TokenTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/Token.css.js";
+import tokenStyles from "./generated/themes/Token.css.js";
 
 type TokenDeleteEventDetail = {
 	backSpace: boolean;
@@ -49,9 +48,14 @@ type TokenDeleteEventDetail = {
  * @implements sap.ui.webc.main.IToken
  * @public
  */
-@customElement("ui5-token")
-@languageAware
-
+@customElement({
+	tag: "ui5-token",
+	languageAware: true,
+	renderer: litRender,
+	template: TokenTemplate,
+	styles: tokenStyles,
+	dependencies: [Icon],
+})
 /**
  * Fired when the the component is selected by user interaction with mouse or by clicking space.
  *
@@ -165,18 +169,6 @@ class Token extends UI5Element implements ITabbable {
 
 	static i18nBundle: I18nBundle;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TokenTemplate;
-	}
-
-	static get styles() {
-		return styles;
-	}
-
 	_handleSelect() {
 		this.selected = !this.selected;
 		this.fireEvent("select");
@@ -232,10 +224,6 @@ class Token extends UI5Element implements ITabbable {
 		}
 
 		return "decline";
-	}
-
-	static get dependencies() {
-		return [Icon];
 	}
 
 	static async onDefine() {

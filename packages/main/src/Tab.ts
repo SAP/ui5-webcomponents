@@ -61,7 +61,17 @@ const DESIGN_DESCRIPTIONS = {
  * @implements sap.ui.webc.main.ITab
  * @public
  */
-@customElement("ui5-tab")
+@customElement({
+	tag: "ui5-tab",
+	renderer: litRender,
+	template: TabTemplate,
+	styles: css,
+	dependencies: [
+		Icon,
+		Button,
+		CustomListItem,
+	],
+})
 @languageAware
 class Tab extends UI5Element implements ITab, ITabbable {
 	/**
@@ -193,26 +203,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	_getElementInStrip?: () => ITab | null;
 	_individualSlot!: string;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TabTemplate;
-	}
-
-	static get stripTemplate() {
-		return TabInStripTemplate;
-	}
-
-	static get overflowTemplate() {
-		return TabInOverflowTemplate;
-	}
-
-	static get styles() {
-		return css;
-	}
-
 	static i18nBundle: I18nBundle;
 
 	set _tabIndex(val: string) {
@@ -221,14 +211,6 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	get _tabIndex() {
 		return this.getTabInStripDomRef()!.getAttribute("tabindex")!;
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			Button,
-			CustomListItem,
-		];
 	}
 
 	get displayText() {
@@ -464,6 +446,14 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 	get overflowState() {
 		return (this.disabled || this.isSingleClickArea) ? ListItemType.Inactive : ListItemType.Active;
+	}
+
+	static get stripTemplate() {
+		return TabInStripTemplate;
+	}
+
+	static get overflowTemplate() {
+		return TabInOverflowTemplate;
 	}
 
 	static async onDefine() {
