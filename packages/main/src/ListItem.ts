@@ -337,19 +337,6 @@ abstract class ListItem extends ListItemBase {
 		this.fireItemPress(e);
 	}
 
-	/*
-	 * Called when selection components in Single (ui5-radio-button)
-	 * selection mode is used.
-	 */
-
-	onSingleSelectionComponentPress(e: MouseEvent) {
-		if (this.isInactive) {
-			return;
-		}
-
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as ListItemBase).selected, selectionComponentPressed: true });
-	}
-
 	activate() {
 		if (this.type === ListItemType.Active || this.type === ListItemType.Navigation) {
 			this.active = true;
