@@ -318,13 +318,13 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
-		this.fireEvent("token-delete", { ref: token });
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 	}
 
 	itemDelete(e: CustomEvent) {
 		const token = e.detail.item.tokenRef;
 
-		this.fireEvent("token-delete", { ref: token });
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 	}
 
 	_onkeydown(e: KeyboardEvent) {

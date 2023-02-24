@@ -344,7 +344,7 @@ class MultiComboBox extends UI5Element {
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.MultiComboBox.prototype.filter
+	 * @name sap.ui.webc.main.MultiComboBox.prototype.open
 	 * @defaultvalue false
 	 * @readonly
 	 * @since 1.0.0-rc.5
@@ -390,7 +390,7 @@ class MultiComboBox extends UI5Element {
 	_tokenizerFocused!: boolean;
 
 	@property({ type: Boolean, noAttribute: true })
-	_iconPressed?: boolean;
+	_iconPressed!: boolean;
 
 	@property({ validator: Integer, noAttribute: true })
 	_inputWidth!: number;
@@ -1461,8 +1461,8 @@ class MultiComboBox extends UI5Element {
 		this.valueStateHeader = responsivePopover.querySelector("div.ui5-responsive-popover-header.ui5-valuestatemessage-root")!;
 	}
 
-	get _tokenizer(): Tokenizer {
-		return this.shadowRoot!.querySelector("[ui5-tokenizer]")!;
+	get _tokenizer() {
+		return this.shadowRoot!.querySelector<Tokenizer>("[ui5-tokenizer]")!;
 	}
 
 	inputFocusIn(e: FocusEvent) {
