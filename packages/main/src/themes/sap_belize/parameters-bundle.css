@@ -33,6 +33,7 @@
 @import "../base/SegmentedButtton-parameters.css";
 @import "../base/Select-parameters.css";
 @import "./SplitButton-parameters.css";
+@import "./ToggleButton-parameters.css";
 @import "../base/Switch-parameters.css";
 @import "./TabContainer-parameters.css";
 @import "./Table-parameters.css";

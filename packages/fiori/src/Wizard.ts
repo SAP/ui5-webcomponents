@@ -75,6 +75,29 @@ const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
 	"1439": "XL",
 };
 
+type AccessibilityInformation = {
+	ariaSetsize: number,
+	ariaPosinset: number,
+	ariaLabel: string,
+}
+
+type StepInfo = {
+	icon: string,
+	titleText: string,
+	subtitleText: string,
+	number: number,
+	selected: boolean,
+	disabled: boolean,
+	hideSeparator: boolean,
+	activeSeparator: boolean,
+	branchingSeparator: boolean,
+	pos: number,
+	accInfo: AccessibilityInformation,
+	refStepId: string,
+	tabIndex: string,
+	styles: object,
+}
+
 /**
  * @class
  *
@@ -527,7 +550,7 @@ class Wizard extends UI5Element {
 	_calcCurrentBreakpoint() {
 		const breakpointDimensions = Object.keys(RESPONSIVE_BREAKPOINTS).reverse();
 		const breakpoint = breakpointDimensions.find((size: string) => Number(size) < this.width!);
-		this._breakpoint = breakpoint ? RESPONSIVE_BREAKPOINTS[breakpoint] : RESPONSIVE_BREAKPOINTS["0"];
+		this._breakpoint = RESPONSIVE_BREAKPOINTS[breakpoint!];
 	}
 
 	/**
@@ -601,7 +624,7 @@ class Wizard extends UI5Element {
 			}
 
 			if (tabs[i].getAttribute(EXPANDED_STEP) === "false" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP) === "true") {
-				tabs[i - 1].setAttribute(BEFORE_EXPANDED_STEP, "true");
+				tabs[i - 1].setAttribute(AFTER_EXPANDED_STEP, "true");
 				break;
 			}
 		}
@@ -856,7 +879,7 @@ class Wizard extends UI5Element {
 	/**
 	 * Returns an array of data objects, based on the user defined steps
 	 * to later build the steps (tabs) within the header.
-	 * @returns {Array<Object>}
+	 * @returns {Array<StepInfo>}
 	 * @private
 	 */
 	getStepsInfo() {
@@ -885,7 +908,7 @@ class Wizard extends UI5Element {
 				"ariaLabel": this.getStepAriaLabelText(step, ariaLabel),
 			};
 
-			return {
+			const stepInfo: StepInfo = {
 				icon: step.icon,
 				titleText: step.titleText,
 				subtitleText: step.subtitleText,
@@ -903,6 +926,8 @@ class Wizard extends UI5Element {
 					zIndex: isAfterCurrent ? --inintialZIndex : 1,
 				},
 			};
+
+			return stepInfo;
 		});
 	}
 

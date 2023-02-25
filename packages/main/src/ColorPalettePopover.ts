@@ -226,7 +226,7 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	get colorPaletteColors() {
-		return this.getSlottedNodes("colors");
+		return this.getSlottedNodes<ColorPaletteItem>("colors");
 	}
 
 	get _colorPaletteTitle() {

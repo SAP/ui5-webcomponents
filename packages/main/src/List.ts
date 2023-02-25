@@ -784,7 +784,7 @@ class List extends UI5Element {
 	}
 
 	getItems(): Array<ListItemBase> {
-		return this.getSlottedNodes("items") as Array<ListItemBase>;
+		return this.getSlottedNodes<ListItemBase>("items");
 	}
 
 	getItemsForProcessing(): Array<ListItemBase> {
