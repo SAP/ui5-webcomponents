@@ -48,7 +48,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the <code>icon</code> of the step.
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.icon
 	 * @defaultvalue ""
 	 * @private
 	 */
@@ -58,7 +57,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the <code>titleText</code> of the step.
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.titleText
 	 * @defaultvalue ""
 	 * @private
 	 * @since 1.0.0-rc.15
@@ -69,7 +67,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the <code>subtitleText</code> of the step.
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.subtitleText
 	 * @defaultvalue ""
 	 * @private
 	 * @since 1.0.0-rc.15
@@ -80,7 +77,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines the number that will be displayed in place of the <code>icon</code>, when it's missing.
 	 * @type {string}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.number
 	 * @defaultvalue ""
 	 * @private
 	 */
@@ -90,8 +86,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines if the step is <code>disabled</code> - the step is not responding to user interaction.
 	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.disabled
-
 	 * @defaultvalue false
 	 * @private
 	 */
@@ -103,7 +97,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	 * <br><br>
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.selected
 	 * @defaultvalue false
 	 * @private
 	 */
@@ -113,7 +106,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines if the step's separator is hidden or not.
 	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.hideSeparator
 	 * @defaultvalue false
 	 * @private
 	 */
@@ -123,7 +115,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines if the step's separator is active or not.
 	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.activeSeparator
 	 * @defaultvalue false
 	 * @private
 	 */
@@ -133,7 +124,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	/**
 	 * Defines if the step's separator is dashed or not.
 	 * @type {boolean}
-	 * @name sap.ui.webc.fiori.WizardTab.prototype.branchingSeparator
 	 * @defaultvalue false
 	 * @private
 	 */

@@ -192,8 +192,8 @@ const RESPONSIVE_BREAKPOINTS: ResponsiveBreakpoints = {
  */
 @event("step-change", {
 	detail: {
-		step: { type: WizardStep },
-		previousStep: { type: WizardStep },
+		step: { type: HTMLElement },
+		previousStep: { type: HTMLElement },
 		changeWithClick: { Boolean },
 	},
 })
@@ -233,7 +233,7 @@ class Wizard extends UI5Element {
 	@property({ validator: Float })
 	contentHeight?: number;
 
-	@property({ multiple: true })
+	@property({ type: Object, multiple: true })
 	_groupedTabs!: Array<WizardTab>
 
 	@property()
@@ -251,7 +251,7 @@ class Wizard extends UI5Element {
 	 */
 	@slot({
 		"default": true,
-		type: WizardStep,
+		type: HTMLElement,
 		"individualSlots": true,
 		invalidateOnChildChange: true,
 	})
@@ -633,7 +633,7 @@ class Wizard extends UI5Element {
 	}
 
 	async _onGroupedTabClick(e: MouseEvent) {
-		const eTarget: WizardTab = e.target as WizardTab;
+		const eTarget = e.target as WizardTab;
 
 		if (this._isGroupAtStart(eTarget)) {
 			return this._showPopover(eTarget, true);
@@ -703,8 +703,8 @@ class Wizard extends UI5Element {
 		const stepToSelect = this.getStepByRefId(stepRefId);
 		const bExpanded = stepInHeader.getAttribute(EXPANDED_STEP) === "true";
 		const newlySelectedIndex = this.slottedSteps.indexOf(stepToSelect);
-		const firstElementChild = stepToSelect.firstElementChild;
-		const firstFocusableElement = await getFirstFocusableElement(firstElementChild as HTMLElement);
+		const firstElementChild = stepToSelect.firstElementChild as HTMLElement;
+		const firstFocusableElement = await getFirstFocusableElement(firstElementChild);
 
 		if (firstFocusableElement) {
 			// Focus the first focusable element within the step content corresponding to the currently focused tab
@@ -786,7 +786,7 @@ class Wizard extends UI5Element {
 	}
 
 	get enabledSteps() {
-		return this.slottedSteps.filter(step => step.disabled);
+		return this.slottedSteps.filter(step => !step.disabled);
 	}
 
 	get selectedStepsCount() {
@@ -794,11 +794,11 @@ class Wizard extends UI5Element {
 	}
 
 	get slottedSteps() {
-		return this.getSlottedNodes("steps") as Array<WizardStep>;
+		return this.getSlottedNodes<WizardStep>("steps");
 	}
 
 	get contentDOM() {
-		return this.shadowRoot!.querySelector(`.ui5-wiz-content`);
+		return this.shadowRoot!.querySelector(`.ui5-wiz-content`)!;
 	}
 
 	get stepsInHeaderDOM() {
@@ -887,7 +887,7 @@ class Wizard extends UI5Element {
 
 			return {
 				icon: step.icon,
-				titleText: step.titleText ? step.titleText : "",
+				titleText: step.titleText,
 				subtitleText: step.subtitleText,
 				number: pos,
 				selected: step.selected,
@@ -966,7 +966,7 @@ class Wizard extends UI5Element {
 	 * @param {Integer} stepIndex the index of a step
 	 */
 	scrollToContentItem(stepIndex: number) {
-		this.contentDOM!.scrollTop = this.getClosestScrollPosByStepIndex(stepIndex);
+		this.contentDOM.scrollTop = this.getClosestScrollPosByStepIndex(stepIndex);
 	}
 
 	/**
