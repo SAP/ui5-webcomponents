@@ -550,7 +550,7 @@ class Wizard extends UI5Element {
 	_calcCurrentBreakpoint() {
 		const breakpointDimensions = Object.keys(RESPONSIVE_BREAKPOINTS).reverse();
 		const breakpoint = breakpointDimensions.find((size: string) => Number(size) < this.width!);
-		this._breakpoint = RESPONSIVE_BREAKPOINTS[breakpoint!];
+		this._breakpoint = breakpoint ? RESPONSIVE_BREAKPOINTS[breakpoint] : RESPONSIVE_BREAKPOINTS["0"];
 	}
 
 	/**
