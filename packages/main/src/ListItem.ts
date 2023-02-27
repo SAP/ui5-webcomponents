@@ -346,7 +346,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as HTMLInputElement).checked, selectionComponentPressed: true }); // Switch HTMLInputElement to CheckBox when ui5-check is migrated to TypeScript
+		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(e: MouseEvent) {
@@ -354,7 +354,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as ListItemBase).selected, selectionComponentPressed: true });
+		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
