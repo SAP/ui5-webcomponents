@@ -37,7 +37,7 @@ describe("List Tests", () => {
 		const itemClickResultField = await browser.$("#itemClickResultField");
 		const selectionChangeResultField = await browser.$("#selectionChangeResultField");
 		const firstItem = await browser.$("#listEvents #country1");
-		const secondItemRadio = await browser.$("#listEvents #country2").shadow$("ui5-radio-buttom");
+		const secondItemRadio = await browser.$("#listEvents #country2").shadow$("ui5-radio-button");
 
 		await firstItem.click();
 
