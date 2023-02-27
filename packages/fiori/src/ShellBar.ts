@@ -71,31 +71,31 @@ type AccessibilityAttributes = {
 	overflow?: AccessibilityAttributesValue;
 };
 
-type ShellbarNotificationsClickEventDetail = {
+type ShellBarNotificationsClickEventDetail = {
 	targetRef: HTMLElement;
 };
 
-type ShellbarProfileClickEventDetail = {
+type ShellBarProfileClickEventDetail = {
 	targetRef: HTMLElement;
 };
 
-type ShellbarProductSwitchClickEventDetail = {
+type ShellBarProductSwitchClickEventDetail = {
 	targetRef: HTMLElement;
 };
 
-type ShellbarLogoClickEventDetail = {
+type ShellBarLogoClickEventDetail = {
 	targetRef: HTMLElement;
 };
 
-type ShellbarCoPilotClickEventDetail = {
+type ShellBarCoPilotClickEventDetail = {
 	targetRef: HTMLElement;
 };
 
-type ShellbarMenuItemClickEventDetail = {
+type ShellBarMenuItemClickEventDetail = {
 	item: HTMLElement;
 };
 
-type ShellbarCoPilot = {
+type ShellBarCoPilot = {
 	animated?: boolean,
 	animationValues?: string,
 };
@@ -523,7 +523,7 @@ class ShellBar extends UI5Element {
 	_isInitialRendering: boolean;
 	_defaultItemPressPrevented: boolean;
 	menuItemsObserver: MutationObserver;
-	coPilot?: ShellbarCoPilot;
+	coPilot?: ShellBarCoPilot;
 	_debounceInterval?: Timeout | null;
 	_hiddenIcons?: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
@@ -611,13 +611,13 @@ class ShellBar extends UI5Element {
 
 	_menuItemPress(e: CustomEvent<SelectionChangeEventDetail>) {
 		this.menuPopover!.close();
-		this.fireEvent<ShellbarMenuItemClickEventDetail>("menu-item-click", {
+		this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
 			item: e.detail.selectedItems[0],
 		}, true);
 	}
 
 	_logoPress() {
-		this.fireEvent<ShellbarLogoClickEventDetail>("logo-click", {
+		this.fireEvent<ShellBarLogoClickEventDetail>("logo-click", {
 			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-logo")!,
 		});
 	}
@@ -662,7 +662,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_fireCoPilotClick() {
-		this.fireEvent<ShellbarCoPilotClickEventDetail>("co-pilot-click", {
+		this.fireEvent<ShellBarCoPilotClickEventDetail>("co-pilot-click", {
 			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-coPilot")!,
 		});
 	}
@@ -893,13 +893,13 @@ class ShellBar extends UI5Element {
 		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellbarNotificationsClickEventDetail>("notifications-click", {
+		this._defaultItemPressPrevented = !this.fireEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
 			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? target : notificationIconRef,
 		}, true);
 	}
 
 	_handleProfilePress() {
-		this.fireEvent<ShellbarProfileClickEventDetail>("profile-click", {
+		this.fireEvent<ShellBarProfileClickEventDetail>("profile-click", {
 			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button")!,
 		});
 	}
@@ -912,7 +912,7 @@ class ShellBar extends UI5Element {
 		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellbarProductSwitchClickEventDetail>("product-switch-click", {
+		this._defaultItemPressPrevented = !this.fireEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? target : buttonRef,
 		}, true);
 	}
@@ -925,7 +925,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get logoDomRef() {
-		return this.shadowRoot!.querySelector(`*[data-ui5-stable="logo"]`);
+		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="logo"]`);
 	}
 
 	/**
@@ -936,7 +936,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get copilotDomRef() {
-		return this.shadowRoot!.querySelector(`*[data-ui5-stable="copilot"]`);
+		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="copilot"]`);
 	}
 
 	/**
@@ -947,7 +947,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get notificationsDomRef() {
-		return this.shadowRoot!.querySelector(`*[data-ui5-stable="notifications"]`);
+		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="notifications"]`);
 	}
 
 	/**
@@ -958,7 +958,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get overflowDomRef() {
-		return this.shadowRoot!.querySelector(`*[data-ui5-stable="overflow"]`);
+		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="overflow"]`);
 	}
 
 	/**
@@ -969,7 +969,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get profileDomRef() {
-		return this.shadowRoot!.querySelector(`*[data-ui5-stable="profile"]`);
+		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="profile"]`);
 	}
 
 	/**
@@ -980,7 +980,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.16
 	 */
 	get productSwitchDomRef() {
-		return this.shadowRoot!.querySelector(`*[data-ui5-stable="product-switch"]`);
+		return this.shadowRoot!.querySelector<Button>(`*[data-ui5-stable="product-switch"]`);
 	}
 
 	/**
@@ -1360,10 +1360,10 @@ ShellBar.define();
 export default ShellBar;
 
 export type {
-	ShellbarNotificationsClickEventDetail,
-	ShellbarProfileClickEventDetail,
-	ShellbarProductSwitchClickEventDetail,
-	ShellbarLogoClickEventDetail,
-	ShellbarCoPilotClickEventDetail,
-	ShellbarMenuItemClickEventDetail,
+	ShellBarNotificationsClickEventDetail,
+	ShellBarProfileClickEventDetail,
+	ShellBarProductSwitchClickEventDetail,
+	ShellBarLogoClickEventDetail,
+	ShellBarCoPilotClickEventDetail,
+	ShellBarMenuItemClickEventDetail,
 };

@@ -4,6 +4,10 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
+type ShellBarItemClickEventDetail = {
+	targetRef: HTMLElement,
+};
+
 /**
  * @class
  * The <code>ui5-shellbar-item</code> represents a custom item, that
@@ -21,11 +25,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  * @implements sap.ui.webc.fiori.IShellBarItem
  * @public
  */
-
-type ShellBarClickEventDetail = {
-	targetRef: HTMLElement,
-};
-
  @customElement("ui5-shellbar-item")
 
 /**
@@ -84,11 +83,9 @@ class ShellBarItem extends UI5Element {
 	}
 
 	fireClickEvent(e: MouseEvent) {
-		this.fireEvent<ShellBarClickEventDetail>("click", {
+		return this.fireEvent<ShellBarItemClickEventDetail>("click", {
 			targetRef: (e.target as HTMLElement),
 		}, true);
-
-		return e.defaultPrevented;
 	}
  }
 
@@ -96,4 +93,4 @@ ShellBarItem.define();
 
 export default ShellBarItem;
 
-export type { ShellBarClickEventDetail };
+export type { ShellBarItemClickEventDetail };
