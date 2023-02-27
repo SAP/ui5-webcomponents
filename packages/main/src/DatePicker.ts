@@ -835,7 +835,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	/**
 	 * Extracts the picker's calendar mode according to the format
 	 *
-	 * @public
+	 * @private
 	 * @method
 	 * @name sap.ui.webc.main.DatePicker#extractCalendarModes
 	 * @returns {CalendarMode} The mode to open the calendar
