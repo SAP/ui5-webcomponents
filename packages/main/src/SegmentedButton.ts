@@ -91,7 +91,7 @@ class SegmentedButton extends UI5Element {
 	 * @slot items
 	 * @public
 	 */
-	@slot({ type: HTMLElement, "default": true })
+	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SegmentedButtonItem>;
 
 	static i18nBundle: I18nBundle;
@@ -131,7 +131,7 @@ class SegmentedButton extends UI5Element {
 		super();
 
 		this._itemNavigation = new ItemNavigation(this, {
-			getItemsCallback: () => this.getSlottedNodes("items") as Array<SegmentedButtonItem>,
+			getItemsCallback: () => this.getSlottedNodes<SegmentedButtonItem>("items"),
 		});
 
 		this.absoluteWidthSet = false; // true when component width is set to absolute
@@ -152,7 +152,7 @@ class SegmentedButton extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		const items = this.getSlottedNodes("items") as Array<SegmentedButtonItem>;
+		const items = this.getSlottedNodes<SegmentedButtonItem>("items");
 
 		items.forEach((item, index, arr) => {
 			item.posInSet = index + 1;
@@ -184,7 +184,13 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
-		this._selectedItem = this.items.filter(item => item.pressed).pop();
+		const selectedItems = this.items.filter(item => item.pressed);
+		const selectedIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
+
+		if (this._selectedItem && selectedItems.length > 1) {
+			selectedItems.splice(selectedIndex, 1);
+		}
+		this._selectedItem = selectedItems.pop();
 
 		if (this._selectedItem) {
 			this.items.forEach(item => {

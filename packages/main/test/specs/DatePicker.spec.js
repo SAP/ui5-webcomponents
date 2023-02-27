@@ -1162,6 +1162,37 @@ describe("Date Picker Tests", () => {
 		assert.equal(await input.getProperty("value"), "Invalid value", "the value isn't changed");
 	});
 
+	it("Invalid state is refreshed after a value is picked by Calendar and set again", async () => {
+		await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		datepicker.id = "#dp33";
+
+		const input = await datepicker.getInput();
+		const innerInput = await datepicker.getInnerInput();
+		await input.click();
+
+		await innerInput.keys("asd")
+		await innerInput.keys("Enter");
+
+		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (1)");
+
+		await datepicker.openPicker();
+
+		const displayedDay = await datepicker.getDisplayedDay(15);
+		await displayedDay.click();
+
+		assert.equal(await input.getProperty("valueState"), "None", "value state of the input is valid (2)");
+
+		await input.click();
+		while(await innerInput.getValue() !== ""){
+			await innerInput.keys("Backspace");
+		}
+		await innerInput.keys("asd");
+		await innerInput.keys("Enter");
+
+
+		assert.equal(await input.getProperty("valueState"), "Error", "value state of the input is valid (3)");
+	});
+
 	it("should open calendar picker in CalendarMode.DAY_MONTH_YEAR mode", async () => {
 		datepicker.id = "#dpCalendarModeDays";
 		const innerInput = await datepicker.getInnerInput();
@@ -1242,6 +1273,5 @@ describe("Date Picker Tests", () => {
 
 		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after year selection");
 	});
-
 
 });

@@ -1,0 +1,33 @@
+<ui5-responsive-popover
+	vertical-align="Top"
+	class="ui5-side-navigation-popover"
+	aria-labelledby="{{_id}}-sideNavigationPopoverText"
+	aria-modal="true"
+	@ui5-after-open="{{_onAfterOpen}}"
+>
+	<span id="{{_id}}-sideNavigationPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
+
+	<ui5-side-navigation
+		class="ui5-side-navigation-in-popover"
+		@ui5-selection-change="{{handleInnerSelectionChange}}"
+	>
+		<ui5-side-navigation-item
+			title="{{_popoverContents.mainItem._tooltip}}"
+			text="{{_popoverContents.mainItem.text}}"
+			expanded="true"
+			_fixed="true"
+			?selected="{{_popoverContents.mainItem.selected}}"
+			.associatedItem="{{_popoverContents.mainItem}}"
+		>
+
+		{{#each _popoverContents.subItems}}
+			<ui5-side-navigation-sub-item
+				title="{{this._tooltip}}"
+				text="{{this.text}}"
+				?selected="{{this.selected}}"
+				.associatedItem="{{this}}"
+			></ui5-side-navigation-sub-item>
+		{{/each}}
+		</ui5-side-navigation-item>
+	</ui5-side-navigation>
+</ui5-responsive-popover>

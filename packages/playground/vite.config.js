@@ -1,15 +1,15 @@
 // vite.config.js
-const { defineConfig } = require("vite");
+import { defineConfig } from "vite";
 
-module.exports = defineConfig(async () => {
-	return {
-		build: {
+export default defineConfig(async () => {
+    return {
+        build: {
             outDir: "assets/js/ui5-webcomponents",
-			lib: {
+            lib: {
                 entry: "bundle.esm.js",
                 formats: ["es"],
                 fileName: () => "bundle.esm.js",
-              },
-		},
-	}
+            },
+        },
+    };
 });

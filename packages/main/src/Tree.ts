@@ -91,7 +91,7 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @alias sap.ui.webc.main.Tree
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-tree
- * @appenddocs sap.ui.webc.main.TreeItem
+ * @appenddocs sap.ui.webc.main.TreeItem sap.ui.webc.main.TreeItemCustom
  * @public
  * @since 1.0.0-rc.8
  */
@@ -358,6 +358,10 @@ class Tree extends UI5Element {
 
 	get _label() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get _hasHeader() {
+		return !!this.header.length;
 	}
 
 	_onListItemStepIn(e: CustomEvent<TreeItemBaseStepInEventDetail>) {

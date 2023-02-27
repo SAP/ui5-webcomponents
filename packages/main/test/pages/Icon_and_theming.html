@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+	<title>Icon and Theming</title>
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+	<script src="../../bundle.esm.js" type="module"></script>
+</head>
+
+<body class="icon1auto">
+	<ui5-toggle-button id="themeToggle">Horizon</ui5-toggle-button>
+
+	<div>SAPIcons auto ("home")</div>
+	<ui5-icon name="home"></ui5-icon>
+	
+	<div>SAPIcons V4 (SAP-icons-v4/home, SAP-icons/home)</div>
+	<ui5-icon name="SAP-icons/home"></ui5-icon>
+	<ui5-icon name="SAP-icons-v4/home"></ui5-icon>
+
+	<div>SAPIcons V5 ("SAP-icons-v5/home" and "horizon/home")</div>
+	<ui5-icon name="SAP-icons-v5/home"></ui5-icon>
+	<ui5-icon name="horizon/home"></ui5-icon>
+
+	<br/><br/>
+	<div>TNTIcons auto ("tnt/actor" and "SAP-icons-TNT/actor")</div>
+	<ui5-icon name="tnt/actor"></ui5-icon>
+	<ui5-icon name="SAP-icons-TNT/actor"></ui5-icon>
+	
+	<div>TNTIcons V2 ("tnt-v2/actor")</div>
+	<ui5-icon name="tnt-v2/actor"></ui5-icon>
+
+	<div>TNTIcons V3 ("tnt-v3/actor")</div>
+	<ui5-icon name="tnt-v3/actor"></ui5-icon>
+
+	<br/><br/>
+	<div>BS Icons auto - single version ("business-suite/add-polygon")</div>
+	<ui5-icon class="samples-margin" name="business-suite/add-polygon"></ui5-icon>
+	
+	<div>BS Icons auto - multiple different icon examples </div>
+	<ui5-icon class="samples-margin" name="business-suite/ab-testing"></ui5-icon>
+	<ui5-icon class="samples-margin" name="business-suite/bank-account"></ui5-icon>
+	<ui5-icon class="samples-margin" name="business-suite/causes"></ui5-icon>
+	<ui5-icon class="samples-margin" name="business-suite/driver"></ui5-icon>
+	
+	<div>BS Icons - V1 ("business-suite-v1/add-polygon")</div>
+	<ui5-icon class="samples-margin" name="business-suite-v1/add-polygon"></ui5-icon>
+
+	<div>BS Icons - V2 ("business-suite-v2/add-polygon")</div>
+	<ui5-icon class="samples-margin" name="business-suite-v2/add-polygon"></ui5-icon>
+
+	<div>BS Icons - V1 and V2 ("business-suite-v1/answered" and ("business-suite-v2/answered"))</div>
+	<ui5-icon class="samples-margin" name="business-suite-v1/answered"></ui5-icon>
+	<ui5-icon class="samples-margin" name="business-suite-v2/answered"></ui5-icon>
+
+	
+	<script>
+		themeToggle.addEventListener("click", event => {
+			const pressed = event.target.pressed;
+
+			window["sap-ui-webcomponents-bundle"].configuration.setTheme(pressed ? "sap_horizon" : "sap_fiori_3");
+			event.target.innerHTML = pressed ? "Quartz" : "Horizon"
+		});
+	</script>
+</body>
+</html>

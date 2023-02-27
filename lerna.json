@@ -12,7 +12,7 @@
 		"packages/playground",
 		"packages/create-package"
 	],
-	"version": "1.11.0-rc.1",
+	"version": "1.11.0-rc.3",
 	"command": {
 		"publish": {
 			"allowBranch": "*",
@@ -23,7 +23,7 @@
 		},
 		"version": {
 			"allowBranch": "*",
-			"message": "chore(release): publish %s",
+			"message": "chore(release): publish %s [ci skip]",
 			"conventionalCommits": true,
 			"verifyAccess": false,
 			"preid": "rc"
