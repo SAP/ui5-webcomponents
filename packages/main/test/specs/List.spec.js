@@ -36,6 +36,7 @@ describe("List Tests", () => {
 	it("itemClick and selectionChange events are fired in Single selection", async () => {
 		const itemClickResultField = await browser.$("#itemClickResultField");
 		const selectionChangeResultField = await browser.$("#selectionChangeResultField");
+		const selectionChangeResultFieldRadio = await browser.$("#selectionChangeResultFieldRadio");
 		const firstItem = await browser.$("#listEvents #country1");
 		const secondItemRadio = await browser.$("#listEvents #country2").shadow$("ui5-radio-button");
 
@@ -47,7 +48,7 @@ describe("List Tests", () => {
 		await secondItemRadio.click();
 		assert.strictEqual(await itemClickResultField.getProperty("value"), "2", "itemClick event has been fired second time");
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "2", "selectionChange event has been fired second time.");
-		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "true", "selectionChange event correct detail - selectionComponentPressed.");
+		assert.strictEqual(await selectionChangeResultFieldRadio.getProperty("value"), "true", "selectionChange event correct detail - selectionComponentPressed.");
 
 	});
 
