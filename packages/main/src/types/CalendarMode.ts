@@ -21,7 +21,7 @@ enum CalendarMode {
 	 * @type {MONTH_YEAR}
 	 */
 	MONTH_YEAR = "MONTH_YEAR",
-		/**
+	/**
 	 * User can select years
 	 * @public
 	 * @type {MONTH_YEAR}
