@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.2...v1.11.0-rc.3) (2023-02-23)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** supporting accented characters ([#6518](https://github.com/SAP/ui5-webcomponents/issues/6518)) ([13f2feb](https://github.com/SAP/ui5-webcomponents/commit/13f2feb3f157345cccd6bb67063c89d523df4f0c)), closes [#6457](https://github.com/SAP/ui5-webcomponents/issues/6457)
+* **ui5-checkbox, ui5-radiobutton, ui5-link:** fix "Normal" text wrapping ([#6539](https://github.com/SAP/ui5-webcomponents/issues/6539)) ([c33cc30](https://github.com/SAP/ui5-webcomponents/commit/c33cc3098d7c8c53f55b1760e2510c5399c3114d)), closes [#6278](https://github.com/SAP/ui5-webcomponents/issues/6278)
+* **ui5-date-picker:** align value state ([#6482](https://github.com/SAP/ui5-webcomponents/issues/6482)) ([4b3431e](https://github.com/SAP/ui5-webcomponents/commit/4b3431ef8f039a7be0ad92a6a432760fcb3032f0)), closes [#6303](https://github.com/SAP/ui5-webcomponents/issues/6303) [#5963](https://github.com/SAP/ui5-webcomponents/issues/5963)
+* **ui5-dialog:** overstyle bar when slotted in footer ([#6543](https://github.com/SAP/ui5-webcomponents/issues/6543)) ([a13ae40](https://github.com/SAP/ui5-webcomponents/commit/a13ae407f1decb17648c4ab5dac382b11ec0bd9c)), closes [#5561](https://github.com/SAP/ui5-webcomponents/issues/5561)
+* **ui5-label:** use logical property in CSS to handle RTL usage ([#6542](https://github.com/SAP/ui5-webcomponents/issues/6542)) ([aa7c327](https://github.com/SAP/ui5-webcomponents/commit/aa7c32722e708fc3b9619777c848796336b1448a)), closes [#6524](https://github.com/SAP/ui5-webcomponents/issues/6524)
+* **ui5-li-custom:** fixed visual glitches ([#6451](https://github.com/SAP/ui5-webcomponents/issues/6451)) ([7484cd4](https://github.com/SAP/ui5-webcomponents/commit/7484cd4a2b39ab37f050090029aec074f91f7260)), closes [#5955](https://github.com/SAP/ui5-webcomponents/issues/5955)
+* **ui5-segmented-button:** press item programatically works properly ([#6502](https://github.com/SAP/ui5-webcomponents/issues/6502)) ([1b7ded1](https://github.com/SAP/ui5-webcomponents/commit/1b7ded17de307372053007aaeeadc91af13f77e6))
+* **ui5-select, ui5-suggestion-item, ui5-shellbar:** color of icon inside options is according to spec ([#6415](https://github.com/SAP/ui5-webcomponents/issues/6415)) ([78cd73b](https://github.com/SAP/ui5-webcomponents/commit/78cd73b2f6940e62dcd297b4a2c5c63ea7a295e1))
+* **ui5-step-input:** fix change event firing in some cases ([#6511](https://github.com/SAP/ui5-webcomponents/issues/6511)) ([3f275b8](https://github.com/SAP/ui5-webcomponents/commit/3f275b8dbcc96e36e9aa30d21b424d50937c90b4))
+* **ui5-table:** update samples with required styles ([#6504](https://github.com/SAP/ui5-webcomponents/issues/6504)) ([43dd5ca](https://github.com/SAP/ui5-webcomponents/commit/43dd5caac91009415ddd82d6595562ecf63080ef))
+* **ui5-textarea:** prevent exception if value is set to null ([#6493](https://github.com/SAP/ui5-webcomponents/issues/6493)) ([7d34fe9](https://github.com/SAP/ui5-webcomponents/commit/7d34fe94d2830fa1caf61f34f27b2e80b9541da7))
+* **ui5-wheel-slider:** reduce the wheel speed when using pad ([#6503](https://github.com/SAP/ui5-webcomponents/issues/6503)) ([89c88b8](https://github.com/SAP/ui5-webcomponents/commit/89c88b8ff5a5a55bc0f1ea0650806b690a980f77)), closes [#6459](https://github.com/SAP/ui5-webcomponents/issues/6459)
+
+
+### Features
+
+* **playground:** next playground with storybook ([#5831](https://github.com/SAP/ui5-webcomponents/issues/5831)) ([79274c8](https://github.com/SAP/ui5-webcomponents/commit/79274c8e442cf5854a7fe6327f25aaed04312103)), closes [#5898](https://github.com/SAP/ui5-webcomponents/issues/5898)
+* support SAPBusinessSuite icons v1 and v2 font ( Horizon ) ([#6535](https://github.com/SAP/ui5-webcomponents/issues/6535)) ([38233b9](https://github.com/SAP/ui5-webcomponents/commit/38233b94543a94c9915cf1d8c8937a834cd6c87d))
+* **ui5-combobox:** migrate to Typescript ([#6520](https://github.com/SAP/ui5-webcomponents/issues/6520)) ([c5e21de](https://github.com/SAP/ui5-webcomponents/commit/c5e21de8a91d6f9d800889c651cf1ff1a2bf0f17)), closes [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337)
+* **ui5-textarea:** migrate to Typescript ([#6499](https://github.com/SAP/ui5-webcomponents/issues/6499)) ([02edfc4](https://github.com/SAP/ui5-webcomponents/commit/02edfc44c182af19b47667a05161d841edf254db)), closes [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337) [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337) [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337)
+* **ui5-textarea:** migrate to Typescript ([#6522](https://github.com/SAP/ui5-webcomponents/issues/6522)) ([efdae14](https://github.com/SAP/ui5-webcomponents/commit/efdae14c4da0d57c1dfe11083f908902301bea3c)), closes [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337) [#6499](https://github.com/SAP/ui5-webcomponents/issues/6499)
+* **ui5-token, ui5-tokenizer:** migrate to Typescript ([#6546](https://github.com/SAP/ui5-webcomponents/issues/6546)) ([97927c7](https://github.com/SAP/ui5-webcomponents/commit/97927c76863ee304a6a98def7362cfe1872b6f46))
+
+
+
+
+
 # [1.11.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.1...v1.11.0-rc.2) (2023-02-16)
 
 

@@ -56,6 +56,12 @@
 	<br />
 	<ui5-checkbox id="checkboxChecked" checked></ui5-checkbox>
 
+	<br>
+	<ui5-checkbox class="defaultPreventedCb"></ui5-checkbox>
+	<ui5-checkbox class="defaultPreventedCb" checked></ui5-checkbox>
+	<ui5-checkbox class="defaultPreventedCb" indeterminate></ui5-checkbox>
+	<ui5-checkbox class="defaultPreventedCb" indeterminate checked></ui5-checkbox>
+
 	<script>
 		var hcb = false;
 		var input = document.querySelector("#field");
@@ -67,6 +73,14 @@
 			el.addEventListener("ui5-change", function(event) {
 				counter += 1;
 				input.value = counter;
+			});
+		});
+
+		var defaultPreventedCb = document.querySelectorAll(".defaultPreventedCb");
+
+		defaultPreventedCb.forEach(function(el) {
+			el.addEventListener("ui5-change", function(event) {
+				event.preventDefault();
 			});
 		});
 </script>

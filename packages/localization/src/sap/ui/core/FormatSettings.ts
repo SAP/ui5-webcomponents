@@ -1,4 +1,5 @@
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
+import { getLegacyDateCalendarCustomizing } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 
 const emptyFn = () => {};
 
@@ -8,8 +9,8 @@ const emptyFn = () => {};
 const FormatSettings = {
 	getFormatLocale: getLocale,
 	getLegacyDateFormat: emptyFn,
-	getLegacyDateCalendarCustomizing: emptyFn,
 	getCustomLocaleData: emptyFn,
+	getLegacyDateCalendarCustomizing,
 };
 
 export default FormatSettings;

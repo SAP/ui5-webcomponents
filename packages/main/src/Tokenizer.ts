@@ -211,11 +211,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	_getTokens() {
-		return this.getSlottedNodes("tokens") as Array<Token>;
+		return this.getSlottedNodes<Token>("tokens");
 	}
 
 	get _tokens() {
-		return this.getSlottedNodes("tokens") as Array<Token>;
+		return this.getSlottedNodes<Token>("tokens");
 	}
 
 	get showPopover() {

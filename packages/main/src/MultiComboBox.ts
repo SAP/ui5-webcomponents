@@ -1358,7 +1358,7 @@ class MultiComboBox extends UI5Element {
 			item._getRealDomRef = () => this.allItemsPopover!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`)!;
 		});
 
-		this.tokenizerAvailable = this.items && this.items.length > 0;
+		this.tokenizerAvailable = this._getSelectedItems().length > 0;
 		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 
 		if (!input || !value) {
