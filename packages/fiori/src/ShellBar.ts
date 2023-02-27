@@ -463,7 +463,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	profile!: Array<HTMLElement>;
 
 	/**
@@ -475,7 +475,7 @@ class ShellBar extends UI5Element {
 	 * @since 1.0.0-rc.8
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	logo!: Array<HTMLElement>;
 
 	/**
@@ -490,7 +490,7 @@ class ShellBar extends UI5Element {
 	 * @since 0.10
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	menuItems!: Array<HTMLElement>;
 
 	/**
@@ -501,7 +501,7 @@ class ShellBar extends UI5Element {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	searchField!: Array<Input>;
 
 	/**
@@ -514,7 +514,7 @@ class ShellBar extends UI5Element {
 	 * @slot
 	 * @public
 	 */
-	@slot({ type: HTMLElement })
+	@slot()
 	startButton!: Array<Button>;
 
 	static i18nBundle: I18nBundle;
@@ -772,7 +772,7 @@ class ShellBar extends UI5Element {
 		const elementsToOverflow = this.shadowRoot!.querySelectorAll<Button>(overflowSelector);
 		const isRTL = this.effectiveDir === "rtl";
 
-		const overflowCount = [...elementsToOverflow].filter(icon => {
+		const overflowButtons = [...elementsToOverflow].filter(icon => {
 			const iconRect = (icon).getBoundingClientRect();
 
 			if (isRTL) {
@@ -781,9 +781,9 @@ class ShellBar extends UI5Element {
 
 			return iconRect.left < rightContainerRect.left;
 		});
-		const overFlowCountLength = !!overflowCount.length;
+		const showOverflowButton = !!overflowButtons.length;
 
-		const items = this._getAllItems(overFlowCountLength).filter(item => item.show);
+		const items = this._getAllItems(showOverflowButton).filter(item => item.show);
 
 		const itemsByPriority = items.sort((item1, item2) => {
 			if (item1.priority > item2.priority) {
@@ -798,7 +798,7 @@ class ShellBar extends UI5Element {
 		});
 
 		for (let i = 0; i < itemsByPriority.length; i++) {
-			if (i < overflowCount.length) {
+			if (i < overflowButtons.length) {
 				itemsByPriority[i].classes = `${itemsByPriority[i].classes} ui5-shellbar-hidden-button`;
 				itemsByPriority[i].styles = {
 					order: -1,
@@ -879,7 +879,7 @@ class ShellBar extends UI5Element {
 				return item._id === refItemId;
 			});
 
-			const prevented = shellbarItem!.fireEvent("click", { targetRef: e.target }, true);
+			const prevented = shellbarItem!.fireClickEvent(e);
 
 			this._defaultItemPressPrevented = prevented;
 		}

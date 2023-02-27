@@ -22,6 +22,10 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  * @public
  */
 
+type ShellBarClickEventDetail = {
+	targetRef: HTMLElement,
+};
+
  @customElement("ui5-shellbar-item")
 
 /**
@@ -30,7 +34,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
  * @event sap.ui.webc.fiori.ShellBarItem#click
  * @allowPreventDefault
  * @param {HTMLElement} targetRef DOM ref of the clicked element
- * @event sap.ui.webc.fiori.ShellBarItem#click
  * @public
  * @native
  */
@@ -79,8 +82,18 @@ class ShellBarItem extends UI5Element {
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
+
+	fireClickEvent(e: MouseEvent) {
+		this.fireEvent<ShellBarClickEventDetail>("click", {
+			targetRef: (e.target as HTMLElement),
+		}, true);
+
+		return e.defaultPrevented;
+	}
  }
 
 ShellBarItem.define();
 
 export default ShellBarItem;
+
+export type { ShellBarClickEventDetail };
