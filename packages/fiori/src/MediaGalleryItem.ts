@@ -126,7 +126,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	/**
 	 * @private
 	 */
-	@property({ defaultValue: undefined })
+	@property({ defaultValue: "" })
 	_tabIndex!: string;
 
 	/**
@@ -157,11 +157,14 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	@slot()
 	thumbnail!: Array<HTMLElement>;
 
-	_monitoredThumbnail?: HTMLElement | null;
-	_monitoredContent?: HTMLElement | null;
+	_monitoredThumbnail: HTMLElement | null;
+	_monitoredContent: HTMLElement | null;
 
 	constructor() {
 		super();
+
+		this._monitoredContent = null;
+		this._monitoredThumbnail = null;
 	}
 
 	onEnterDOM() {

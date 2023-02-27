@@ -282,15 +282,6 @@ class MediaGallery extends UI5Element {
 		this._updateSelection();
 	}
 
-	_initItemNavigation() {
-		if (!this._itemNavigation) {
-			this._itemNavigation = new ItemNavigation(this, {
-				navigationMode: NavigationMode.Auto,
-				getItemsCallback: () => this._getFocusableItems(),
-			});
-		}
-	}
-
 	_updateSelection() {
 		let itemToSelect = this.items.find(item => item.selected);
 		if (!itemToSelect || !this._isSelectableItem(itemToSelect)) {
