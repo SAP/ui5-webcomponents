@@ -1,3 +1,8 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -11,6 +16,7 @@ import {
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
@@ -25,113 +31,11 @@ import "@ui5/webcomponents-icons/dist/unfavorite.js";
 // Styles
 import RatingIndicatorCss from "./generated/themes/RatingIndicator.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-rating-indicator",
-	languageAware: true,
-	properties: /** @lends sap.ui.webc.main.RatingIndicator.prototype */ {
-
-		/**
-		 * The indicated value of the rating.
-		 * <br><br>
-		 * <b>Note:</b> If you set a number which is not round, it would be shown as follows:
-		 * <ul>
-		 * <li>1.0 - 1.2 -> 1</li>
-		 * <li>1.3 - 1.7 -> 1.5</li>
-		 * <li>1.8 - 1.9 -> 2</li>
-		 * <ul>
-		 * @type {sap.ui.webc.base.types.Float}
-		 * @defaultvalue 0
-		 * @public
-		 */
-		value: {
-			type: Float,
-			defaultValue: 0,
-		},
-
-		/**
-		 * The number of displayed rating symbols.
-		 * @type {sap.ui.webc.base.types.Integer}
-		 * @defaultvalue 5
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		max: {
-			type: Integer,
-			defaultValue: 5,
-		},
-
-		/**
-		 * Defines whether the component is disabled.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> A disabled component is completely noninteractive.
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines whether the component is read-only.
-		 * <br><br>
-		 * <b>Note:</b> A read-only component is not editable,
-		 * but still provides visual feedback upon user interaction.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		readonly: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the accessible ARIA name of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue: undefined
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		accessibleName: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * @private
-		 */
-		_stars: {
-			type: Object,
-			multiple: true,
-		},
-
-		/**
-		 * @private
-		 */
-		_focused: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.RatingIndicator.prototype */ {
-		//
-	},
-	events: /** @lends sap.ui.webc.main.RatingIndicator.prototype */ {
-
-		/**
-		 * The event is fired when the value changes.
-		 *
-		 * @event
-		 * @public
-		 */
-		change: {},
-	},
-};
+type Star = {
+	selected: boolean,
+	index: number,
+	halfStar: boolean
+}
 
 /**
  * @class
@@ -174,10 +78,100 @@ const metadata = {
  * @public
  * @since 1.0.0-rc.8
  */
+
+@customElement("ui5-rating-indicator")
+@languageAware
+
+/**
+ * The event is fired when the value changes.
+ *
+ * @event sap.ui.webc.main.RatingIndicator#change
+ * @public
+ */
+@event("change")
+
 class RatingIndicator extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * The indicated value of the rating.
+	 * <br><br>
+	 * <b>Note:</b> If you set a number which is not round, it would be shown as follows:
+	 * <ul>
+	 * <li>1.0 - 1.2 -> 1</li>
+	 * <li>1.3 - 1.7 -> 1.5</li>
+	 * <li>1.8 - 1.9 -> 2</li>
+	 * <ul>
+	 * @type {sap.ui.webc.base.types.Float}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.value
+	 * @defaultvalue 0
+	 * @public
+	 */
+	@property({ validator: Float, defaultValue: 0 })
+	value!: number;
+
+	/**
+	 * The number of displayed rating symbols.
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.max
+	 * @defaultvalue 5
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property({ validator: Integer, defaultValue: 5 })
+	max!: number;
+
+	/**
+	 * Defines whether the component is disabled.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> A disabled component is completely noninteractive.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.disabled
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Defines whether the component is read-only.
+	 * <br><br>
+	 * <b>Note:</b> A read-only component is not editable,
+	 * but still provides visual feedback upon user interaction.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.readonly
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	readonly!: boolean;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleName
+	 * @public
+	 * @since 1.0.0-rc.15
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Object, multiple: true })
+	_stars!: Array<Star>;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_focused!: boolean;
+
+	_liveValue?: number;
+
+	static i18nBundle: I18nBundle;
 
 	static get render() {
 		return litRender;
@@ -201,8 +195,6 @@ class RatingIndicator extends UI5Element {
 
 	constructor() {
 		super();
-
-		this._liveValue = null; // stores the value to determine when to fire change
 	}
 
 	onBeforeRendering() {
@@ -233,37 +225,43 @@ class RatingIndicator extends UI5Element {
 		}
 	}
 
-	_onclick(event) {
-		if (this.disabled || this.readonly) {
+	_onclick(e: MouseEvent) {
+		const target = e.target as UI5Element;
+
+		if (!(target instanceof HTMLElement) || this.disabled || this.readonly) {
 			return;
 		}
 
-		this.value = parseInt(event.target.getAttribute("data-ui5-value"));
+		const targetValue = target.getAttribute("data-ui5-value");
 
-		if (this.value === 1 && this._liveValue === 1) {
-			this.value = 0;
-		}
+		if (targetValue !== null) {
+			this.value = parseInt(targetValue);
 
-		if (this._liveValue !== this.value) {
-			this.fireEvent("change");
-			this._liveValue = this.value;
+			if (this.value === 1 && this._liveValue === 1) {
+				this.value = 0;
+			}
+
+			if (this._liveValue !== this.value) {
+				this.fireEvent("change");
+				this._liveValue = this.value;
+			}
 		}
 	}
 
-	_onkeydown(event) {
+	_onkeydown(e: KeyboardEvent) {
 		if (this.disabled || this.readonly) {
 			return;
 		}
 
-		const isDecrease = isDown(event) || isLeft(event);
-		const isIncrease = isRight(event) || isUp(event);
-		const isIncreaseWithReset = isSpace(event) || isEnter(event);
-		const isMin = isHome(event);
-		const isMax = isEnd(event);
-		const isNumber = (event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105);
+		const isDecrease = isDown(e) || isLeft(e);
+		const isIncrease = isRight(e) || isUp(e);
+		const isIncreaseWithReset = isSpace(e) || isEnter(e);
+		const isMin = isHome(e);
+		const isMax = isEnd(e);
+		const isNumber = (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105);
 
 		if (isDecrease || isIncrease || isIncreaseWithReset || isMin || isMax || isNumber) {
-			event.preventDefault();
+			e.preventDefault();
 
 			if (isDecrease && this.value > 0) {
 				this.value = Math.round(this.value - 1);
@@ -277,7 +275,7 @@ class RatingIndicator extends UI5Element {
 			} else if (isMax) {
 				this.value = this.max;
 			} else if (isNumber) {
-				const pressedNumber = parseInt(event.key);
+				const pressedNumber = parseInt(e.key);
 				this.value = pressedNumber > this.max ? this.max : pressedNumber;
 			}
 
@@ -298,8 +296,9 @@ class RatingIndicator extends UI5Element {
 		this._focused = false;
 	}
 
-	get tabIndex() {
-		return this.disabled ? "-1" : "0";
+	get effectiveTabIndex() {
+		const tabindex = this.getAttribute("tabindex");
+		return this.disabled ? "-1" : tabindex || "0";
 	}
 
 	get tooltip() {

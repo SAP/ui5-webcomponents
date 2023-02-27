@@ -1,5 +1,11 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -34,100 +40,11 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-li-notification",
-	languageAware: true,
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.fiori.NotificationListItem.prototype */ {
-
-		/**
-		 * Defines if the <code>titleText</code> and <code>description</code> should wrap,
-		 * they truncate by default.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
-		 * and a <code>ShowMore/Less</code> button would be displayed.
-		 * @type {sap.ui.webc.main.types.WrappingType}
-		 * @defaultvalue "None"
-		 * @public
-		 * @since 1.0.0-rc.15
-		 */
-		wrappingType: {
-			type: WrappingType,
-			defaultValue: WrappingType.None,
-		},
-
-		/**
-		 * Defines the state of the <code>titleText</code> and <code>description</code>,
-		 * if less or more information is displayed.
-		 * @private
-		 */
-		_showMorePressed: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines the visibility of the <code>showMore</code> button.
-		 * @private
-		 */
-		_showMore: {
-			type: Boolean,
-		},
-	},
-	slots: /** @lends sap.ui.webc.fiori.NotificationListItem.prototype */ {
-
-		/**
-		 * Defines the avatar, displayed in the <code>ui5-li-notification</code>.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
-		 * <br>
-		 * <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
-		 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
-		 * you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
-		 *
-		 * @type {sap.ui.webc.main.IAvatar}
-		 * @slot
-		 * @public
-		 */
-		avatar: {
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the elements, displayed in the footer of the of the component.
-		 * @type {HTMLElement[]}
-		 * @slot
-		 * @public
-		 */
-		footnotes: {
-			type: HTMLElement,
-			individualSlots: true,
-		},
-
-		/**
-		 * Defines the content of the <code>ui5-li-notification</code>,
-		 * usually a description of the notification.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-		 *
-		 * @type {Node[]}
-		 * @slot description
-		 * @public
-		 */
-		"default": {
-			propertyName: "description",
-			type: Node,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.NotificationListItem.prototype */ {
-		_press: {},
-	},
+type NotificationListItemPressEventDetail = {
+	item: NotificationListItem,
 };
+
+type Footnote = Record<string, any>;
 
 /**
  * @class
@@ -175,7 +92,89 @@ const metadata = {
  * @implements sap.ui.webc.fiori.INotificationListItem, sap.ui.webc.main.IListItem
  * @public
  */
+@customElement("ui5-li-notification")
+@languageAware
+
+@event("_press")
 class NotificationListItem extends NotificationListItemBase {
+	/**
+	* Defines if the <code>titleText</code> and <code>description</code> should wrap,
+	* they truncate by default.
+	*
+	* <br><br>
+	* <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
+	* and a <code>ShowMore/Less</code> button would be displayed.
+	* @type {sap.ui.webc.main.types.WrappingType}
+	* @defaultvalue "None"
+	* @public
+	* @name sap.ui.webc.fiori.NotificationListItem.prototype.wrappingType
+	* @since 1.0.0-rc.15
+	*/
+	@property({ type: WrappingType, defaultValue: WrappingType.None })
+	wrappingType!: WrappingType;
+
+	/**
+	* Defines the state of the <code>titleText</code> and <code>description</code>,
+	* if less or more information is displayed.
+	* @private
+	*/
+	@property({ type: Boolean })
+	_showMorePressed!: boolean;
+
+	/**
+	* Defines the visibility of the <code>showMore</code> button.
+	* @private
+	*/
+	@property({ type: Boolean })
+	_showMore!: boolean;
+
+	/**
+	* Defines the avatar, displayed in the <code>ui5-li-notification</code>.
+	*
+	* <br><br>
+	* <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
+	* <br>
+	* <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
+	* we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
+	* you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
+	*
+	* @type {sap.ui.webc.main.IAvatar}
+	* @slot
+	* @public
+	* @name sap.ui.webc.fiori.NotificationListItem.prototype.avatar
+	*/
+	@slot()
+	avatar!: Array<HTMLElement>;
+
+	/**
+	* Defines the elements, displayed in the footer of the of the component.
+	* @type {HTMLElement[]}
+	* @slot
+	* @public
+	* @name sap.ui.webc.fiori.NotificationListItem.prototype.footnotes
+	*/
+	@slot({ type: HTMLElement, individualSlots: true })
+	footnotes!: Array<HTMLElement>;
+
+	/**
+	* Defines the content of the <code>ui5-li-notification</code>,
+	* usually a description of the notification.
+	*
+	* <br><br>
+	* <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	*
+	* @type {Node[]}
+	* @slot description
+	* @public
+	* @name sap.ui.webc.fiori.NotificationListItem.prototype.default
+	*/
+	@slot({ type: Node, "default": true })
+	description!: Array<Node>;
+
+	_titleTextOverflowHeight: number;
+	_descOverflowHeight: number;
+	_onResizeBind: ResizeObserverCallback;
+
 	constructor() {
 		super();
 
@@ -186,11 +185,7 @@ class NotificationListItem extends NotificationListItemBase {
 		this._descOverflowHeight = 0;
 
 		// the resize handler
-		this.onResizeBind = this.onResize.bind(this);
-	}
-
-	static get metadata() {
-		return metadata;
+		this._onResizeBind = this.onResize.bind(this);
 	}
 
 	static get styles() {
@@ -212,11 +207,11 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this, this.onResizeBind);
+		ResizeHandler.register(this, this._onResizeBind.bind(this));
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this.onResizeBind);
+		ResizeHandler.deregister(this, this._onResizeBind.bind(this));
 	}
 
 	get hasDesc() {
@@ -252,19 +247,19 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	get descriptionDOM() {
-		return this.shadowRoot.querySelector(".ui5-nli-description");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-description");
 	}
 
 	get titleTextDOM() {
-		return this.shadowRoot.querySelector(".ui5-nli-title-text");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-nli-title-text");
 	}
 
 	get titleTextHeight() {
-		return this.titleTextDOM.offsetHeight;
+		return (this.titleTextDOM as HTMLElement).offsetHeight;
 	}
 
 	get descriptionHeight() {
-		return this.descriptionDOM.offsetHeight;
+		return (this.descriptionDOM as HTMLElement).offsetHeight;
 	}
 
 	get titleTextOverflows() {
@@ -290,7 +285,7 @@ class NotificationListItem extends NotificationListItemBase {
 	get footerItems() {
 		return this.footnotes.map((el, idx, arr) => {
 			return {
-				slotName: el._individualSlot,
+				slotName: (el as Footnote)._individualSlot,
 				showDivider: idx !== arr.length - 1,
 			};
 		});
@@ -343,47 +338,47 @@ class NotificationListItem extends NotificationListItemBase {
 	/**
 	 * Event handlers
 	 */
-	_onclick(event) {
-		this.fireItemPress(event);
+	_onclick(e: MouseEvent) {
+		this.fireItemPress(e);
 	}
 
-	_onShowMoreClick(event) {
-		event.preventDefault();
+	_onShowMoreClick(e: MouseEvent) {
+		e.preventDefault();
 		this._showMorePressed = !this._showMorePressed;
 	}
 
-	_onkeydown(event) {
-		super._onkeydown(event);
+	_onkeydown(e: KeyboardEvent) {
+		super._onkeydown(e);
 
-		if (isEnter(event)) {
-			this.fireItemPress(event);
+		if (isEnter(e)) {
+			this.fireItemPress(e);
 		}
 	}
 
-	_onkeyup(event) {
-		super._onkeyup(event);
+	_onkeyup(e: KeyboardEvent) {
+		super._onkeyup(e);
 
-		const space = isSpace(event);
+		const space = isSpace(e);
 
-		if (space && getEventMark(event) === "link") {
-			this._onShowMoreClick(event);
+		if (space && getEventMark(e) === "link") {
+			this._onShowMoreClick(e as unknown as MouseEvent);
 			return;
 		}
 
 		if (space) {
-			this.fireItemPress(event);
+			this.fireItemPress(e);
 		}
 	}
 
 	/**
 	 * Private
 	 */
-	fireItemPress(event) {
-		if (getEventMark(event) === "button" || getEventMark(event) === "link") {
+	fireItemPress(e: Event) {
+		if (getEventMark(e) === "button" || getEventMark(e) === "link") {
 			return;
 		}
 
-		this.fireEvent("_press", { item: this });
+		this.fireEvent<NotificationListItemPressEventDetail>("_press", { item: this });
 	}
 
 	onResize() {

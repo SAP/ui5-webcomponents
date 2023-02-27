@@ -174,12 +174,15 @@ For example, to force the first day of week to Sunday, no matter the locale:
 }
 ```
 
-Setting     |             Values              |    Default Value    |                  Description
--------------- | ------------------------------- | ------------------- | ----------------------------------------------
-firstDayOfWeek | 0 (Sunday) through 6 (Saturday) | *Depends on locale* | When set, overrides the locale's default value
+| Setting                       | Values                                                                   | Default Value       | Description                                                  |
+| ----------------------------- | ------------------------------------------------------------------------ | ------------------- | ------------------------------------------------------------ |
+| firstDayOfWeek                | 0 (Sunday) through 6 (Saturday)                                          | *Depends on locale* | When set, overrides the locale's default value               |
+| legacyDateCalendarCustomizing | ```{dateFormat: string, islamicMonthStart: string, gregDate: string }``` | []                  | When set, adds customizing data for Islamic calendar support |
 
-**Note:** Currently, only `firstDayOfWeek` is supported. More settings may be added in the future.
-
+**Note:** legacyDateCalendarCustomizing takes affect only if following features are imported:
+```js
+@ui5/webcomponents-base/dist/features/LegacyDateFormats.js
+``` 
 ### fetchDefaultLanguage
 <a name="fetchDefaultLanguage"></a>
 

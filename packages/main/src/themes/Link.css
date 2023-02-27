@@ -42,7 +42,7 @@
 
 :host([wrapping-type="Normal"]) .ui5-link-root {
 	white-space: normal;
-	word-wrap: break-word;
+	overflow-wrap: break-word;
 }
 
 .ui5-link-root {
@@ -52,7 +52,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	word-wrap: normal;
+	overflow-wrap: normal;
 	outline: none;
 	text-decoration: inherit;
 	color: inherit;
