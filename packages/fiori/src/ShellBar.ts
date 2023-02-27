@@ -268,7 +268,7 @@ class ShellBar extends UI5Element {
 	 * <b>Note:</b> The <code>primaryTitle</code> would be hidden on S screen size (less than approx. 700px).
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ShellBar.prototype.primaryTitle
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.primaryTitle
 	 * @public
 	 */
 	@property()
@@ -280,7 +280,7 @@ class ShellBar extends UI5Element {
 	 * <b>Note:</b> The <code>secondaryTitle</code> would be hidden on S and M screen sizes (less than approx. 1300px).
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ShellBar.prototype.secondaryTitle
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.secondaryTitle
 	 * @public
 	 */
 	@property()
@@ -291,7 +291,7 @@ class ShellBar extends UI5Element {
 	 * displayed in the notification icon top-right corner.
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ShellBar.prototype.notificationsCount
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.notificationsCount
 	 * @public
 	 */
 	@property()
@@ -301,7 +301,7 @@ class ShellBar extends UI5Element {
 	 * Defines, if the notification icon would be displayed.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.ShellBar.prototype.showNotifications
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.showNotifications
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -311,7 +311,7 @@ class ShellBar extends UI5Element {
 	 * Defines, if the product switch icon would be displayed.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.ShellBar.prototype.showProductSwitch
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.showProductSwitch
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -323,7 +323,7 @@ class ShellBar extends UI5Element {
 	 * If you need an animated co-pilot, you can import the <code>"@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js"</code> module as add-on feature.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.ShellBar.prototype.showCoPilot
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.showCoPilot
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -334,7 +334,7 @@ class ShellBar extends UI5Element {
 	 * <br><b>Note:</b> By default the Search Field is not displayed.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.ShellBar.prototype.showSearchField
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.showSearchField
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -347,7 +347,7 @@ class ShellBar extends UI5Element {
 	 *  - <code>logoRole</code>: the accessibility role for the <code>logo</code>
 	 *
 	 * @type {object}
-	 * @name sap.ui.webc.main.ShellBar.prototype.accessibilityRoles
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.accessibilityRoles
 	 * @public
 	 * @since 1.6.0
 	 */
@@ -363,7 +363,7 @@ class ShellBar extends UI5Element {
 	 * - <code>logoTitle</code>: defines the tooltip for the logo
 	 *
 	 * @type {object}
-	 * @name sap.ui.webc.main.ShellBar.prototype.accessibilityTexts
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.accessibilityTexts
 	 * @public
 	 * @since 1.1.0
 	 */
@@ -394,7 +394,7 @@ class ShellBar extends UI5Element {
 	 * 		</li>
 	 * </ul>
 	 * @type {object}
-	 * @name sap.ui.webc.main.ShellBar.prototype.accessibilityAttributes
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.accessibilityAttributes
 	 * @public
 	 * @since 1.10.0
 	 */
@@ -444,7 +444,7 @@ class ShellBar extends UI5Element {
 	 * You can use the &nbsp;&lt;ui5-shellbar-item>&lt;/ui5-shellbar-item>.
 	 *
 	 * @type {sap.ui.webc.fiori.IShellBarItem[]}
-	 * @name sap.ui.webc.main.ShellBar.prototype.default
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.default
 	 * @slot items
 	 * @public
 	 */
@@ -458,7 +458,7 @@ class ShellBar extends UI5Element {
 	 * Note: We recommend not using the <code>size</code> attribute of <code>ui5-avatar</code> because
 	 * it should have specific size by design in the context of <code>ui5-shellbar</code> profile.
 	 * @type {sap.ui.webc.main.IAvatar}
-	 * @name sap.ui.webc.main.ShellBar.prototype.profile
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.profile
 	 * @slot profile
 	 * @since 1.0.0-rc.6
 	 * @public
@@ -470,7 +470,7 @@ class ShellBar extends UI5Element {
 	 * Defines the logo of the <code>ui5-shellbar</code>.
 	 * For example, you can use <code>ui5-avatar</code> or <code>img</code> elements as logo.
 	 * @type {sap.ui.webc.main.IAvatar}
-	 * @name sap.ui.webc.main.ShellBar.prototype.logo
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.logo
 	 * @slot
 	 * @since 1.0.0-rc.8
 	 * @public
@@ -485,7 +485,7 @@ class ShellBar extends UI5Element {
 	 * You can use the &nbsp;&lt;ui5-li>&lt;/ui5-li> and its ancestors.
 	 *
 	 * @type {sap.ui.webc.main.IListItem[]}
-	 * @name sap.ui.webc.main.ShellBar.prototype.menuItems
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.menuItems
 	 * @slot
 	 * @since 0.10
 	 * @public
@@ -497,7 +497,7 @@ class ShellBar extends UI5Element {
 	 * Defines the <code>ui5-input</code>, that will be used as a search field.
 	 *
 	 * @type {sap.ui.webc.main.IInput}
-	 * name sap.ui.webc.main.ShellBar.prototype.searchField
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.searchField
 	 * @slot
 	 * @public
 	 */
@@ -510,7 +510,7 @@ class ShellBar extends UI5Element {
 	 * It gets overstyled to match ShellBar's styling.
 	 *
 	 * @type {sap.ui.webc.main.IButton}
-	 * name sap.ui.webc.main.ShellBar.prototype.startButton
+	 * @name sap.ui.webc.fiori.ShellBar.prototype.startButton
 	 * @slot
 	 * @public
 	 */
