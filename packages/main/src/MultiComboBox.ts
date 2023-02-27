@@ -1670,8 +1670,8 @@ class MultiComboBox extends UI5Element {
 		return {
 			popover: {
 				"ui5-multi-combobox-all-items-responsive-popover": true,
-				"ui5-suggestions-popover": !isPhone(),
-				"ui5-suggestions-popover-with-value-state-header": !isPhone() && this.hasValueStateMessage,
+				"ui5-suggestions-popover": true,
+				"ui5-suggestions-popover-with-value-state-header": this.hasValueStateMessage,
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
