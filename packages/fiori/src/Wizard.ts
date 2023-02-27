@@ -624,7 +624,7 @@ class Wizard extends UI5Element {
 			}
 
 			if (tabs[i].getAttribute(EXPANDED_STEP) === "false" && tabs[i - 1] && tabs[i - 1].getAttribute(EXPANDED_STEP) === "true") {
-				tabs[i - 1].setAttribute(AFTER_EXPANDED_STEP, "true");
+				tabs[i].setAttribute(AFTER_EXPANDED_STEP, "true");
 				break;
 			}
 		}
