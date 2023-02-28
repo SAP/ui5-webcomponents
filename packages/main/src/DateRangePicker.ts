@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -51,7 +50,10 @@ import type { DatePickerChangeEventDetail } from "./DatePicker.js";
  * @since 1.0.0-rc.8
  * @public
  */
-@customElement("ui5-daterange-picker")
+@customElement({
+	tag: "ui5-daterange-picker",
+	styles: [DatePicker.styles, DateRangePickerCss],
+})
 class DateRangePicker extends DatePicker {
 	 /**
 	 * Determines the symbol which separates the dates.
@@ -74,10 +76,6 @@ class DateRangePicker extends DatePicker {
 	_tempValue!: string;
 
 	private _prevDelimiter: string | null;
-
-	static get styles(): ComponentStylesData {
-		return [DatePicker.styles, DateRangePickerCss];
-	}
 
 	constructor() {
 		super();

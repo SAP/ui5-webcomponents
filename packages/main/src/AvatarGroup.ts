@@ -139,8 +139,13 @@ type AvatarGroupClickEventDetail = {
  * @public
  */
 
-@customElement("ui5-avatar-group")
-
+@customElement({
+	tag: "ui5-avatar-group",
+	renderer: litRender,
+	template: AvatarGroupTemplate,
+	styles: AvatarGroupCss,
+	dependencies: [Button],
+})
 /**
 * Fired when the component is activated either with a
 * click/tap or by using the Enter or Space key.
@@ -251,24 +256,6 @@ class AvatarGroup extends UI5Element {
 		this._colorIndex = 0;
 		this._hiddenItems = 0;
 		this._onResizeHandler = this._onResize.bind(this);
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return AvatarGroupTemplate;
-	}
-
-	static get styles() {
-		return AvatarGroupCss;
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-		];
 	}
 
 	static async onDefine() {

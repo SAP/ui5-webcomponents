@@ -1,11 +1,9 @@
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -147,7 +145,26 @@ type DatePickerChangeEventDetail = {
  * @tagname ui5-date-picker
  * @public
  */
-@customElement("ui5-date-picker")
+
+@customElement({
+	tag: "ui5-date-picker",
+	languageAware: true,
+	template: DatePickerTemplate,
+	staticAreaTemplate: DatePickerPopoverTemplate,
+	styles: datePickerCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		datePickerPopoverCss,
+	],
+	dependencies: [
+		Icon,
+		ResponsivePopover,
+		Calendar,
+		CalendarDateComponent,
+		Input,
+		Button,
+	],
+})
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -373,22 +390,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	FormSupport?: typeof FormSupportT;
 
 	static i18nBundle: I18nBundle;
-
-	static get template() {
-		return DatePickerTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return DatePickerPopoverTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return datePickerCss;
-	}
-
-	static get staticAreaStyles(): ComponentStylesData {
-		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
-	}
 
 	/**
 	 * @protected
@@ -852,17 +853,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	get type() {
 		return InputType.Text;
-	}
-
-	static get dependencies(): Array<typeof UI5Element> {
-		return [
-			Icon,
-			ResponsivePopover,
-			Calendar,
-			CalendarDateComponent,
-			Input,
-			Button,
-		];
 	}
 }
 

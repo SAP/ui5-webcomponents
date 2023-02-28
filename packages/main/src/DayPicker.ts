@@ -102,7 +102,11 @@ type DayPickerNavigateEventDetail = {
  * @tagname ui5-daypicker
  * @public
  */
-@customElement("ui5-daypicker")
+@customElement({
+	tag: "ui5-daypicker",
+	styles: dayPickerCSS,
+	template: DayPickerTemplate,
+})
 /**
  * Fired when the selected date(s) change
  * @public
@@ -193,14 +197,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_secondTimestamp?: number;
 
 	_autoFocus?: boolean;
-
-	static get template() {
-		return DayPickerTemplate;
-	}
-
-	static get styles() {
-		return dayPickerCSS;
-	}
 
 	static i18nBundle: I18nBundle;
 

@@ -3,7 +3,6 @@ import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -75,9 +74,14 @@ let activeRadio: RadioButton;
  * @tagname ui5-radio-button
  * @public
  */
-@customElement("ui5-radio-button")
-@languageAware
-
+@customElement({
+	tag: "ui5-radio-button",
+	languageAware: true,
+	renderer: litRender,
+	template: RadioButtonTemplate,
+	styles: radioButtonCss,
+	dependencies: [Label],
+})
 /**
  * Fired when the component checked state changes.
  *
@@ -302,22 +306,6 @@ class RadioButton extends UI5Element implements IFormElement {
 			document.addEventListener("mouseup", this._deactivate);
 			isGlobalHandlerAttached = true;
 		}
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return RadioButtonTemplate;
-	}
-
-	static get styles() {
-		return radioButtonCss;
-	}
-
-	static get dependencies() {
-		return [Label];
 	}
 
 	static async onDefine() {

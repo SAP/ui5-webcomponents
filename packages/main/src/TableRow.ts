@@ -33,7 +33,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/TableRow.css.js";
+import tableRowStyles from "./generated/themes/TableRow.css.js";
 
 type TableRowClickEventDetail = {
 	row: TableRow,
@@ -80,7 +80,13 @@ type TableRowF7PressEventDetail = {
  * @implements sap.ui.webc.main.ITableRow
  * @public
  */
-@customElement("ui5-table-row")
+@customElement({
+	tag: "ui5-table-row",
+	styles: tableRowStyles,
+	renderer: litRender,
+	template: TableRowTemplate,
+	dependencies: [CheckBox],
+})
 /**
  * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
  *
@@ -197,22 +203,6 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 */
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
 	cells!: Array<TableCell>;
-
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TableRowTemplate;
-	}
-
-	static get dependencies() {
-		return [CheckBox];
-	}
 
 	static i18nBundle: I18nBundle;
 

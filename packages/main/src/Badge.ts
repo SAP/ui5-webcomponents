@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -42,8 +41,13 @@ import badgeCss from "./generated/themes/Badge.css.js";
  * @since 0.12.0
  * @public
  */
-@customElement("ui5-badge")
-@languageAware
+@customElement({
+	tag: "ui5-badge",
+	languageAware: true,
+	renderer: litRender,
+	template: BadgeTemplate,
+	styles: badgeCss,
+})
 class Badge extends UI5Element {
 	/**
 	 * Defines the color scheme of the component.
@@ -97,18 +101,6 @@ class Badge extends UI5Element {
 	icon!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return BadgeTemplate;
-	}
-
-	static get styles() {
-		return badgeCss;
-	}
 
 	static async onDefine() {
 		Badge.i18nBundle = await getI18nBundle("@ui5/webcomponents");

@@ -44,7 +44,13 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
  * @public
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-progress-indicator")
+@customElement({
+	tag: "ui5-progress-indicator",
+	renderer: litRender,
+	styles: ProgressIndicatorCss,
+	template: ProgressIndicatorTemplate,
+	dependencies: [Icon],
+})
 class ProgressIndicator extends UI5Element {
 	/**
 	 * Defines whether component is in disabled state.
@@ -120,22 +126,6 @@ class ProgressIndicator extends UI5Element {
 	static i18nBundle: I18nBundle;
 	_previousValue: number;
 	_transitionDuration: number;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ProgressIndicatorCss;
-	}
-
-	static get template() {
-		return ProgressIndicatorTemplate;
-	}
-
-	static get dependencies() {
-		return [Icon];
-	}
 
 	constructor() {
 		super();

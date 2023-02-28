@@ -35,7 +35,11 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  * @implements sap.ui.webc.main.ISegmentedButtonItem
  * @public
  */
-@customElement("ui5-segmented-button-item")
+@customElement({
+	tag: "ui5-segmented-button-item",
+	template: SegmentedButtonItemTemplate,
+	dependencies: [Icon],
+})
 class SegmentedButtonItem extends ToggleButton {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
@@ -89,14 +93,6 @@ class SegmentedButtonItem extends ToggleButton {
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
 	sizeOfSet!: number;
-
-	static get template() {
-		return SegmentedButtonItemTemplate;
-	}
-
-	static get dependencies() {
-		return [Icon];
-	}
 
 	get ariaDescription() {
 		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);

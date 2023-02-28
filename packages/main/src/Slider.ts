@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -86,8 +85,12 @@ import {
  * @since 1.0.0-rc.11
  * @public
  */
-@customElement("ui5-slider")
-@languageAware
+@customElement({
+	tag: "ui5-slider",
+	languageAware: true,
+	template: SliderTemplate,
+	dependencies: [Icon],
+})
 class Slider extends SliderBase {
 	/**
 	 * Current value of the slider
@@ -109,17 +112,9 @@ class Slider extends SliderBase {
 
 	static i18nBundle: I18nBundle;
 
-	static get template() {
-		return SliderTemplate;
-	}
-
 	constructor() {
 		super();
 		this._stateStorage.value = undefined;
-	}
-
-	static get dependencies() {
-		return [Icon];
 	}
 
 	/**

@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -19,7 +18,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/CalendarHeader.css.js";
+import calendarHeaderStyles from "./generated/themes/CalendarHeader.css.js";
 
 type SecondaryCalendarButtonTexts = {
 	monthButtonText: string,
@@ -27,8 +26,14 @@ type SecondaryCalendarButtonTexts = {
 	yearButtonText: string,
 }
 
-@customElement("ui5-calendar-header")
-@languageAware
+@customElement({
+	tag: "ui5-calendar-header",
+	languageAware: true,
+	renderer: litRender,
+	template: CalendarHeaderTemplate,
+	styles: calendarHeaderStyles,
+	dependencies: [Icon],
+})
 @event("next-press")
 @event("previous-press")
 @event("show-month-press")
@@ -101,22 +106,6 @@ class CalendarHeader extends UI5Element {
 	_secondYearButtonText?: string;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return CalendarHeaderTemplate;
-	}
-
-	static get styles() {
-		return styles;
-	}
-
-	static get dependencies() {
-		return [Icon];
-	}
 
 	static async onDefine() {
 		CalendarHeader.i18nBundle = await getI18nBundle("@ui5/webcomponents");

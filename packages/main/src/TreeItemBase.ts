@@ -1,9 +1,9 @@
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -43,7 +43,18 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
  * @extends sap.ui.webc.main.ListItem
  * @public
  */
-@languageAware
+@customElement({
+	languageAware: true,
+	template: TreeItemBaseTemplate,
+	styles: [
+		ListItem.styles,
+		treeItemCss,
+	],
+	dependencies: [
+		...ListItem.dependencies,
+		Icon,
+	],
+})
 /**
  * Fired when the user interacts with the expand/collapse button of the tree list item.
  * @event
@@ -81,7 +92,6 @@ type TreeItemBaseStepOutEventDetail = TreeItemBaseEventDetail;
 		item: { type: HTMLElement },
 	},
 })
-
 class TreeItemBase extends ListItem {
 	/**
 	 * Defines the indentation of the tree list item. Use level 1 for tree list items, representing top-level tree nodes.
@@ -264,21 +274,6 @@ class TreeItemBase extends ListItem {
 	 */
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<TreeItemBase>;
-
-	static get template() {
-		return TreeItemBaseTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [super.styles, treeItemCss];
-	}
-
-	static get dependencies() {
-		return [
-			...super.dependencies,
-			Icon,
-		];
-	}
 
 	onBeforeRendering() {
 		this.actionable = false;
