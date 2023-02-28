@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -25,8 +24,7 @@ type ShellBarItemClickEventDetail = {
  * @implements sap.ui.webc.fiori.IShellBarItem
  * @public
  */
- @customElement("ui5-shellbar-item")
-
+@customElement("ui5-shellbar-item")
 /**
  * Fired, when the item is pressed.
  *
@@ -74,10 +72,6 @@ class ShellBarItem extends UI5Element {
 	@property()
 	count!: string;
 
-	static get render() {
-		return litRender;
-	}
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
@@ -87,7 +81,7 @@ class ShellBarItem extends UI5Element {
 			targetRef: (e.target as HTMLElement),
 		}, true);
 	}
- }
+}
 
 ShellBarItem.define();
 

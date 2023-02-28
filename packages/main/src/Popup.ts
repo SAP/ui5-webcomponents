@@ -1,8 +1,9 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
@@ -21,8 +22,8 @@ import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
-import styles from "./generated/themes/Popup.css.js";
-import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import popupStlyes from "./generated/themes/Popup.css.js";
+import popupStaticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 const createBlockingStyle = (): void => {
@@ -77,7 +78,13 @@ type PopupBeforeCloseEventDetail = {
  * @extends sap.ui.webc.base.UI5Element
  * @public
  */
-
+@customElement({
+	renderer: litRender,
+	styles: popupStlyes,
+	template: PopupTemplate,
+	staticAreaTemplate: PopupBlockLayer,
+	staticAreaStyles: popupStaticAreaStyles,
+})
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
  *
@@ -255,26 +262,6 @@ abstract class Popup extends UI5Element {
 		super();
 
 		this._resizeHandler = this._resize.bind(this);
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles(): ComponentStylesData {
-		return styles;
-	}
-
-	static get template() {
-		return PopupTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return PopupBlockLayer;
-	}
-
-	static get staticAreaStyles() {
-		return staticAreaStyles;
 	}
 
 	onBeforeRendering() {

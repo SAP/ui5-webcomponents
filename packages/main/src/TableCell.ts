@@ -5,7 +5,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import TableCellTemplate from "./generated/templates/TableCellTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/TableCell.css.js";
+import tableCellStyles from "./generated/themes/TableCell.css.js";
 
 /**
  * @class
@@ -31,7 +31,12 @@ import styles from "./generated/themes/TableCell.css.js";
  * @implements sap.ui.webc.main.ITableCell
  * @public
  */
-@customElement("ui5-table-cell")
+@customElement({
+	tag: "ui5-table-cell",
+	renderer: litRender,
+	template: TableCellTemplate,
+	styles: tableCellStyles,
+})
 class TableCell extends UI5Element {
 	/**
 	 * @private
@@ -59,18 +64,6 @@ class TableCell extends UI5Element {
 	 * @name sap.ui.webc.main.TableCell.prototype.default
 	 * @public
 	 */
-
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TableCellTemplate;
-	}
 }
 
 TableCell.define();

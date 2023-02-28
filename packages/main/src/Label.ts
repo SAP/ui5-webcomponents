@@ -37,7 +37,12 @@ import labelCss from "./generated/themes/Label.css.js";
  * @tagname ui5-label
  * @public
  */
-@customElement("ui5-label")
+@customElement({
+	tag: "ui5-label",
+	renderer: litRender,
+	template: LabelTemplate,
+	styles: labelCss,
+})
 class Label extends UI5Element {
 	/**
 	 * Defines the labeled input by providing its ID.
@@ -104,18 +109,6 @@ class Label extends UI5Element {
 	 * @public
 	 * @name sap.ui.webc.main.Label.prototype.default
 	 */
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return LabelTemplate;
-	}
-
-	static get styles() {
-		return labelCss;
-	}
 
 	get classes() {
 		return {

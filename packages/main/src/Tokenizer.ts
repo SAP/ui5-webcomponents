@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -59,7 +58,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/Tokenizer.css.js";
+import TokenizerCss from "./generated/themes/Tokenizer.css.js";
 import TokenizerPopoverCss from "./generated/themes/TokenizerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
@@ -90,8 +89,27 @@ enum ClipboardDataOperation {
  * @usestextcontent
  * @private
  */
-@customElement("ui5-tokenizer")
-@languageAware
+@customElement({
+	tag: "ui5-tokenizer",
+	languageAware: true,
+	renderer: litRender,
+	template: TokenizerTemplate,
+	styles: TokenizerCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+		SuggestionsCss,
+		TokenizerPopoverCss,
+	],
+	staticAreaTemplate: TokenizerPopoverTemplate,
+	dependencies: [
+		ResponsivePopover,
+		List,
+		StandardListItem,
+		Title,
+		Button,
+	],
+})
 
 @event("token-delete", {
 	detail: {
@@ -104,7 +122,6 @@ enum ClipboardDataOperation {
 		ref: { type: HTMLElement },
 	},
 })
-
 class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	showMore!: boolean;
@@ -150,26 +167,6 @@ class Tokenizer extends UI5Element {
 	_itemNav: ItemNavigation;
 	_scrollEnablement: ScrollEnablement;
 	_expandedScrollWidth?: number;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TokenizerTemplate;
-	}
-
-	static get styles() {
-		return styles;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, TokenizerPopoverCss];
-	}
-
-	static get staticAreaTemplate() {
-		return TokenizerPopoverTemplate;
-	}
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -721,16 +718,6 @@ class Tokenizer extends UI5Element {
 		const lastToken = this.tokens[this.tokens.length - 1];
 		lastToken.focus();
 		this._itemNav.setCurrentItem(lastToken);
-	}
-
-	static get dependencies() {
-		return [
-			ResponsivePopover,
-			List,
-			StandardListItem,
-			Title,
-			Button,
-		];
 	}
 
 	static async onDefine() {

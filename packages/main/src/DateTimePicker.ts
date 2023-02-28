@@ -1,4 +1,3 @@
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -8,7 +7,6 @@ import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/ge
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
@@ -114,7 +112,26 @@ type PreviewValues = {
  * @since 1.0.0-rc.7
  * @public
  */
-@customElement("ui5-datetime-picker")
+@customElement({
+	tag: "ui5-datetime-picker",
+	staticAreaTemplate: DateTimePickerPopoverTemplate,
+	styles: [
+		DateTimePicker.styles,
+		DateTimePickerCss,
+	],
+	staticAreaStyles: [
+		DatePicker.staticAreaStyles,
+		DateTimePickerPopoverCss,
+	],
+	dependencies: [
+		...DatePicker.dependencies,
+		Calendar,
+		Button,
+		ToggleButton,
+		SegmentedButton,
+		TimeSelection,
+	],
+})
 class DateTimePicker extends DatePicker {
 	/**
 	 * Defines the visibility of the time view in <code>phoneMode</code>.
@@ -155,29 +172,6 @@ class DateTimePicker extends DatePicker {
 	_currentTimeSlider!: string;
 
 	_handleResizeBound: ResizeObserverCallback;
-
-	static get staticAreaTemplate() {
-		return DateTimePickerPopoverTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [super.styles, DateTimePickerCss];
-	}
-
-	static get staticAreaStyles(): ComponentStylesData {
-		return [super.staticAreaStyles, DateTimePickerPopoverCss];
-	}
-
-	static get dependencies(): Array<typeof UI5Element> {
-		return [
-			...DatePicker.dependencies,
-			Calendar,
-			Button,
-			ToggleButton,
-			SegmentedButton,
-			TimeSelection,
-		];
-	}
 
 	constructor() {
 		super();
