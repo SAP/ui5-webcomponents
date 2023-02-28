@@ -1,10 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
@@ -34,7 +32,7 @@ import ShellBarTemplate from "./generated/templates/ShellBarTemplate.lit.js";
 import ShellBarPopoverTemplate from "./generated/templates/ShellBarPopoverTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/ShellBar.css.js";
+import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
 
 import {
@@ -171,10 +169,22 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
  * @since 0.8.0
  */
 
-@customElement("ui5-shellbar")
-@languageAware
-@fastNavigation
-
+@customElement({
+	tag: "ui5-shellbar",
+	fastNavigation: true,
+	languageAware: true,
+	renderer: litRender,
+	template: ShellBarTemplate,
+	staticAreaTemplate: ShellBarPopoverTemplate,
+	styles: shellBarStyles,
+	staticAreaStyles: [ShellBarPopoverCss],
+	dependencies: [
+		Button,
+		List,
+		Popover,
+		StandardListItem,
+	],
+})
 /**
  *
  * Fired, when the notification icon is activated.
@@ -527,26 +537,6 @@ class ShellBar extends UI5Element {
 	_debounceInterval?: Timeout | null;
 	_hiddenIcons?: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return ShellBarTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return ShellBarPopoverTemplate;
-	}
-
-	static get styles() {
-		return styles;
-	}
-
-	static get staticAreaStyles() {
-		return [ShellBarPopoverCss];
-	}
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
@@ -1339,15 +1329,6 @@ class ShellBar extends UI5Element {
 
 	get accLogoRole() {
 		return this.accessibilityRoles.logoRole || "button";
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-			List,
-			Popover,
-			StandardListItem,
-		];
 	}
 
 	static async onDefine() {

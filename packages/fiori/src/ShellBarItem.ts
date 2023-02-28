@@ -25,8 +25,10 @@ type ShellBarItemClickEventDetail = {
  * @implements sap.ui.webc.fiori.IShellBarItem
  * @public
  */
- @customElement("ui5-shellbar-item")
-
+@customElement({
+	tag: "ui5-shellbar-item",
+	renderer: litRender,
+})
 /**
  * Fired, when the item is pressed.
  *
@@ -74,10 +76,6 @@ class ShellBarItem extends UI5Element {
 	@property()
 	count!: string;
 
-	static get render() {
-		return litRender;
-	}
-
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
@@ -87,7 +85,7 @@ class ShellBarItem extends UI5Element {
 			targetRef: (e.target as HTMLElement),
 		}, true);
 	}
- }
+}
 
 ShellBarItem.define();
 
