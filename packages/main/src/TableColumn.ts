@@ -7,7 +7,7 @@ import TableColumnTemplate from "./generated/templates/TableColumnTemplate.lit.j
 import TableColumnPopinDisplay from "./types/TableColumnPopinDisplay.js";
 
 // Styles
-import styles from "./generated/themes/TableColumn.css.js";
+import tableColumnStyles from "./generated/themes/TableColumn.css.js";
 
 /**
  * @class
@@ -34,7 +34,12 @@ import styles from "./generated/themes/TableColumn.css.js";
  * @implements sap.ui.webc.main.ITableColumn
  * @public
  */
-@customElement("ui5-table-column")
+@customElement({
+	tag: "ui5-table-column",
+	styles: tableColumnStyles,
+	renderer: litRender,
+	template: TableColumnTemplate,
+})
 class TableColumn extends UI5Element {
 	/**
 	 * Defines the minimum table width required to display this column. By default it is always displayed.
@@ -116,18 +121,6 @@ class TableColumn extends UI5Element {
 	 * @name sap.ui.webc.main.TableColumn.prototype.default
 	 * @public
 	 */
-
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TableColumnTemplate;
-	}
 }
 
 TableColumn.define();

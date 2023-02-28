@@ -19,7 +19,10 @@ import ListItemType from "./types/ListItemType.js";
  * @implements sap.ui.webc.main.IInputSuggestionItem
  * @public
  */
-@customElement("ui5-suggestion-item")
+@customElement({
+	tag: "ui5-suggestion-item",
+	dependencies: [SuggestionListItem],
+})
 class SuggestionItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
@@ -118,12 +121,6 @@ class SuggestionItem extends UI5Element {
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	additionalTextState!: ValueState
-
-	static get dependencies() {
-		return [
-			SuggestionListItem,
-		];
-	}
 
 	get groupItem() {
 		return false;

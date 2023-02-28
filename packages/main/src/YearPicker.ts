@@ -32,7 +32,7 @@ import { YEAR_PICKER_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import YearPickerTemplate from "./generated/templates/YearPickerTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/YearPicker.css.js";
+import yearPickerStyles from "./generated/themes/YearPicker.css.js";
 
 type Year = {
 	timestamp: string;
@@ -68,7 +68,11 @@ type YearPickerNavigateEventDetail = {
  * @tagname ui5-yearpicker
  * @public
  */
-@customElement("ui5-yearpicker")
+@customElement({
+	tag: "ui5-yearpicker",
+	styles: yearPickerStyles,
+	template: YearPickerTemplate,
+})
 /**
  * Fired when the user selects a year via "Space", "Enter" or click.
  * @public
@@ -107,14 +111,6 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 	_lastYear?: number;
 
 	static i18nBundle: I18nBundle;
-
-	static get styles() {
-		return styles;
-	}
-
-	static get template() {
-		return YearPickerTemplate;
-	}
 
 	static async onDefine() {
 		YearPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");

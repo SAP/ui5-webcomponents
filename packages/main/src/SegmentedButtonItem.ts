@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import SegmentedButtonItemTemplate from "./generated/templates/SegmentedButtonItemTemplate.lit.js";
@@ -36,8 +35,11 @@ import { SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defa
  * @implements sap.ui.webc.main.ISegmentedButtonItem
  * @public
  */
-@customElement("ui5-segmented-button-item")
-@template(SegmentedButtonItemTemplate)
+@customElement({
+	tag: "ui5-segmented-button-item",
+	template: SegmentedButtonItemTemplate,
+	dependencies: [Icon],
+})
 class SegmentedButtonItem extends ToggleButton {
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
@@ -91,10 +93,6 @@ class SegmentedButtonItem extends ToggleButton {
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
 	sizeOfSet!: number;
-
-	static get dependencies() {
-		return [Icon];
-	}
 
 	get ariaDescription() {
 		return SegmentedButtonItem.i18nBundle.getText(SEGMENTEDBUTTONITEM_ARIA_DESCRIPTION);

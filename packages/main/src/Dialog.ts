@@ -2,7 +2,6 @@ import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import {
 	isUp, isDown, isLeft, isRight,
@@ -94,8 +93,18 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * @tagname ui5-dialog
  * @public
  */
-@customElement("ui5-dialog")
-@template(DialogTemplate)
+@customElement({
+	tag: "ui5-dialog",
+	template: DialogTemplate,
+	styles: [
+		browserScrollbarCSS,
+		PopupsCommonCss,
+		dialogCSS,
+	],
+	dependencies: [
+		Icon,
+	],
+})
 class Dialog extends Popup {
 	/**
 	 * Defines the header text.
@@ -243,16 +252,6 @@ class Dialog extends Popup {
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
 
 		this._dragStartHandler = this._handleDragStart.bind(this);
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-		];
-	}
-
-	static get styles() {
-		return [browserScrollbarCSS, PopupsCommonCss, dialogCSS];
 	}
 
 	static _isHeader(element: HTMLElement) {

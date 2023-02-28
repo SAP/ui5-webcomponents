@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -63,9 +62,14 @@ import switchCss from "./generated/themes/Switch.css.js";
  * @public
  * @since 0.8.0
  */
-@customElement("ui5-switch")
-@languageAware
-
+@customElement({
+	tag: "ui5-switch",
+	languageAware: true,
+	styles: switchCss,
+	renderer: litRender,
+	template: SwitchTemplate,
+	dependencies: [Icon],
+})
 /**
  * Fired when the component checked state changes.
  *
@@ -186,18 +190,6 @@ class Switch extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	static get styles() {
-		return switchCss;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return SwitchTemplate;
-	}
-
 	get sapNextIcon() {
 		return this.checked ? "accept" : "less";
 	}
@@ -283,10 +275,6 @@ class Switch extends UI5Element {
 
 	get ariaLabelText() {
 		return [getEffectiveAriaLabelText(this), this.hiddenText].join(" ").trim();
-	}
-
-	static get dependencies() {
-		return [Icon];
 	}
 
 	static async onDefine() {

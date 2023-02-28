@@ -65,7 +65,18 @@ type ColorPaletteItemClickEventDetail = {
  * @appenddocs sap.ui.webc.main.ColorPaletteItem
  * @public
  */
-@customElement("ui5-color-palette")
+@customElement({
+	tag: "ui5-color-palette",
+	renderer: litRender,
+	template: ColorPaletteTemplate,
+	staticAreaTemplate: ColorPaletteDialogTemplate,
+	styles: ColorPaletteCss,
+	staticAreaStyles: ColorPaletteStaticAreaCss,
+	get dependencies() {
+		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
+		return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors ? colorPaletteMoreColors.dependencies : []);
+	},
+})
 
 /**
  * Fired when the user selects a color.
@@ -159,36 +170,6 @@ class ColorPalette extends UI5Element {
 	moreColorsFeature?: ColorPaletteMoreColors;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ColorPaletteCss;
-	}
-
-	static get staticAreaStyles() {
-		return ColorPaletteStaticAreaCss;
-	}
-
-	static get template() {
-		return ColorPaletteTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return ColorPaletteDialogTemplate;
-	}
-
-	static get dependencies() {
-		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
-
-		if (colorPaletteMoreColors) {
-			return ([ColorPaletteItem, Button] as Array<typeof UI5Element>).concat(colorPaletteMoreColors.dependencies);
-		}
-
-		return [ColorPaletteItem, Button];
-	}
 
 	static async onDefine() {
 		const colorPaletteMoreColors = getFeature<typeof ColorPaletteMoreColors>("ColorPaletteMoreColors");
@@ -419,7 +400,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	get displayedColors() {
-		const colors = this.getSlottedNodes("colors") as Array<ColorPaletteItem>;
+		const colors = this.getSlottedNodes<ColorPaletteItem>("colors");
 		return colors.filter(item => item.value).slice(0, 15);
 	}
 

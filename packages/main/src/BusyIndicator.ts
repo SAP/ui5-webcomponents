@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -62,8 +61,14 @@ import busyIndicatorCss from "./generated/themes/BusyIndicator.css.js";
  * @public
  * @since 0.12.0
  */
-@customElement("ui5-busy-indicator")
-@languageAware
+@customElement({
+	tag: "ui5-busy-indicator",
+	languageAware: true,
+	styles: busyIndicatorCss,
+	renderer: litRender,
+	template: BusyIndicatorTemplate,
+	dependencies: [Label],
+})
 class BusyIndicator extends UI5Element {
 	/**
 	 * Defines text to be displayed below the component. It can be used to inform the user of the current operation.
@@ -164,22 +169,6 @@ class BusyIndicator extends UI5Element {
 
 		this.removeEventListener("keydown", this._keydownHandler, true);
 		this.removeEventListener("keyup", this._preventEventHandler, true);
-	}
-
-	static get styles() {
-		return busyIndicatorCss;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return BusyIndicatorTemplate;
-	}
-
-	static get dependencies() {
-		return [Label];
 	}
 
 	static async onDefine() {

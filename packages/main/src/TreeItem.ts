@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import TreeItemBase from "./TreeItemBase.js";
 // Template
@@ -40,8 +39,11 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
  * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-tree-item")
-@template(TreeItemTemplate)
+@customElement({
+	tag: "ui5-tree-item",
+	template: TreeItemTemplate,
+	styles: [TreeItemBase.styles, treeItemCss],
+})
 class TreeItem extends TreeItemBase {
 	/**
 	 * Defines the text of the tree item.
@@ -77,10 +79,6 @@ class TreeItem extends TreeItemBase {
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	additionalTextState!: ValueState;
-
-	static get styles() {
-		return [super.styles, treeItemCss];
-	}
 
 	get _showTitle() {
 		return this.text.length && !this._minimal;

@@ -1,11 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import template from "@ui5/webcomponents-base/dist/decorators/template.js";
-import staticAreaTemplate from "@ui5/webcomponents-base/dist/decorators/staticAreaTemplate.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isSpace,
@@ -120,8 +117,29 @@ interface IOption extends UI5Element {
  * @public
  * @since 0.8.0
  */
-@customElement("ui5-select")
-@languageAware
+@customElement({
+	tag: "ui5-select",
+	languageAware: true,
+	renderer: litRender,
+	template: SelectTemplate,
+	staticAreaTemplate: SelectPopoverTemplate,
+	styles: selectCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+		SelectPopoverCss,
+	],
+	dependencies: [
+		Option,
+		Label,
+		ResponsivePopover,
+		Popover,
+		List,
+		StandardListItem,
+		Icon,
+		Button,
+	],
+})
 /**
  * Fired when the selected option changes.
  *
@@ -148,8 +166,6 @@ interface IOption extends UI5Element {
  * @public
  */
 @event("close")
-@template(SelectTemplate)
-@staticAreaTemplate(SelectPopoverTemplate)
 class Select extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
 
@@ -332,18 +348,6 @@ class Select extends UI5Element implements IFormElement {
 	*/
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return selectCss;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SelectPopoverCss];
-	}
 
 	constructor() {
 		super();
@@ -890,19 +894,6 @@ class Select extends UI5Element implements IFormElement {
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem!.querySelector<Popover>("[ui5-popover]");
-	}
-
-	static get dependencies() {
-		return [
-			Option,
-			Label,
-			ResponsivePopover,
-			Popover,
-			List,
-			StandardListItem,
-			Icon,
-			Button,
-		];
 	}
 
 	static async onDefine() {

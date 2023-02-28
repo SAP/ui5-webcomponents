@@ -4,11 +4,10 @@ import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.j
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isTabNext,
@@ -141,9 +140,14 @@ type ClickEventDetail = CloseEventDetail;
  * @appenddocs sap.ui.webc.main.StandardListItem sap.ui.webc.main.CustomListItem sap.ui.webc.main.GroupHeaderListItem
  * @public
  */
-@customElement("ui5-list")
-@fastNavigation
-
+@customElement({
+	tag: "ui5-list",
+	fastNavigation: true,
+	renderer: litRender,
+	template: ListTemplate,
+	styles: [browserScrollbarCSS, listCss],
+	dependencies: [BusyIndicator],
+})
 /**
  * Fired when an item is activated, unless the item's <code>type</code> property
  * is set to <code>Inactive</code>.
@@ -475,24 +479,8 @@ class List extends UI5Element {
 	_beforeElement?: HTMLElement | null;
 	_afterElement?: HTMLElement | null;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return ListTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [browserScrollbarCSS, listCss];
-	}
-
 	static async onDefine() {
 		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
-	static get dependencies() {
-		return [BusyIndicator];
 	}
 
 	constructor() {
@@ -784,7 +772,7 @@ class List extends UI5Element {
 	}
 
 	getItems(): Array<ListItemBase> {
-		return this.getSlottedNodes("items") as Array<ListItemBase>;
+		return this.getSlottedNodes<ListItemBase>("items");
 	}
 
 	getItemsForProcessing(): Array<ListItemBase> {

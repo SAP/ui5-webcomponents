@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -60,7 +59,7 @@ import {
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/Table.css.js";
+import tableStyles from "./generated/themes/Table.css.js";
 
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -178,8 +177,14 @@ enum TableFocusTargetElement {
  * @appenddocs sap.ui.webc.main.TableColumn sap.ui.webc.main.TableRow sap.ui.webc.main.TableGroupRow sap.ui.webc.main.TableCell
  * @public
  */
-@customElement("ui5-table")
-@fastNavigation
+@customElement({
+	tag: "ui5-table",
+	fastNavigation: true,
+	styles: tableStyles,
+	renderer: litRender,
+	template: TableTemplate,
+	dependencies: [BusyIndicator, CheckBox],
+})
 /** Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 *
 * @event sap.ui.webc.main.Table#row-click
@@ -489,22 +494,6 @@ class Table extends UI5Element {
 		},
 	})
 	columns!: Array<TableColumn>;
-
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TableTemplate;
-	}
-
-	static get dependencies() {
-		return [BusyIndicator, CheckBox];
-	}
 
 	static async onDefine() {
 		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");

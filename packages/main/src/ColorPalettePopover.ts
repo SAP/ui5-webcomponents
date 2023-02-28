@@ -55,7 +55,18 @@ type ColorPalettePopoverItemClickEventDetail = ColorPaletteItemClickEventDetail;
  * @public
  * @since 1.0.0-rc.16
  */
-@customElement("ui5-color-palette-popover")
+@customElement({
+	tag: "ui5-color-palette-popover",
+	renderer: litRender,
+	styles: [ResponsivePopoverCommonCss, ColorPalettePopoverCss],
+	template: ColorPalettePopoverTemplate,
+	dependencies: [
+		ResponsivePopover,
+		Button,
+		Title,
+		ColorPalette,
+	],
+})
 
 /**
  * Fired when the user selects a color.
@@ -126,27 +137,6 @@ class ColorPalettePopover extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	responsivePopover?: ResponsivePopover;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return [ResponsivePopoverCommonCss, ColorPalettePopoverCss];
-	}
-
-	static get template() {
-		return ColorPalettePopoverTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			ResponsivePopover,
-			Button,
-			Title,
-			ColorPalette,
-		];
-	}
 
 	static async onDefine() {
 		ColorPalettePopover.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -226,7 +216,7 @@ class ColorPalettePopover extends UI5Element {
 	}
 
 	get colorPaletteColors() {
-		return this.getSlottedNodes("colors");
+		return this.getSlottedNodes<ColorPaletteItem>("colors");
 	}
 
 	get _colorPaletteTitle() {

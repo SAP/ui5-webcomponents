@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
@@ -60,8 +59,14 @@ type TimeSelectionSliderChangeEventDetail = {
  * @private
  * @since 1.0.0-rc.12
  */
-@customElement("ui5-time-selection")
-@languageAware
+@customElement({
+	tag: "ui5-time-selection",
+	languageAware: true,
+	renderer: litRender,
+	styles: timeSelectionCss,
+	template: timeSelectionTemplate,
+	dependencies: [WheelSlider],
+})
 
 /**
  * Fired when the value changes due to user interaction with the sliders
@@ -179,22 +184,6 @@ class TimeSelection extends UI5Element {
 	_calendarType!: CalendarType;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return timeSelectionCss;
-	}
-
-	static get template() {
-		return timeSelectionTemplate;
-	}
-
-	static get dependencies() {
-		return [WheelSlider];
-	}
 
 	static async onDefine() {
 		[TimeSelection.i18nBundle] = await Promise.all([

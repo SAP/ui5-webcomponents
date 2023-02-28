@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -47,8 +46,14 @@ import cardCss from "./generated/themes/Card.css.js";
  * @public
  * @appenddocs sap.ui.webc.main.CardHeader
  */
-@customElement("ui5-card")
-@languageAware
+@customElement({
+	tag: "ui5-card",
+	languageAware: true,
+	renderer: litRender,
+	template: CardTemplate,
+	styles: cardCss,
+	dependencies: [Icon],
+})
 class Card extends UI5Element {
 	/**
 	 * Defines the accessible name of the component, which is used as the name of the card region and should be unique per card.
@@ -101,18 +106,6 @@ class Card extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return CardTemplate;
-	}
-
-	static get styles() {
-		return cardCss;
-	}
-
 	get classes() {
 		return {
 			root: {
@@ -134,10 +127,6 @@ class Card extends UI5Element {
 
 	get _ariaCardContentLabel() {
 		return Card.i18nBundle.getText(ARIA_LABEL_CARD_CONTENT);
-	}
-
-	static get dependencies() {
-		return [Icon];
 	}
 
 	static async onDefine() {

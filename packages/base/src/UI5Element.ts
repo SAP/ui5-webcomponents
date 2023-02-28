@@ -32,6 +32,16 @@ let autoId = 0;
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
 
+type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RendererOptions) => void;
+
+type RendererOptions = {
+	/**
+	 * An object to use as the `this` value for event listeners. It's often
+	 * useful to set this to the host component rendering a template.
+	 */
+	host?: object,
+}
+
 type ChangeInfo = {
 	type: "property" | "slot",
 	name: string,
@@ -100,7 +110,12 @@ abstract class UI5Element extends HTMLElement {
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
-	static render: (templateFunctionResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: { host: HTMLElement }) => void;
+
+	/**
+	 * @deprecated
+	 */
+	static render: Renderer;
+	static renderer?: Renderer;
 
 	constructor() {
 		super();
@@ -842,8 +857,8 @@ abstract class UI5Element extends HTMLElement {
 	 * Useful when there are transitive slots in nested component scenarios and you don't want to get a list of the slots, but rather of their content.
 	 * @public
 	 */
-	getSlottedNodes(slotName: string) {
-		return getSlottedNodesList((this as unknown as Record<string, Array<SlotValue>>)[slotName]);
+	getSlottedNodes<T = Node>(slotName: string) {
+		return getSlottedNodesList((this as unknown as Record<string, Array<SlotValue>>)[slotName]) as Array<T>;
 	}
 
 	/**
@@ -1164,4 +1179,8 @@ const instanceOfUI5Element = (object: any): object is UI5Element => {
 
 export default UI5Element;
 export { instanceOfUI5Element };
-export type { ChangeInfo };
+export type {
+	ChangeInfo,
+	Renderer,
+	RendererOptions,
+};

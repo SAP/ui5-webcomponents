@@ -1,10 +1,8 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import template from "@ui5/webcomponents-base/dist/decorators/template.js";
 
 import { isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import Button from "./Button.js";
 import ToggleButtonTemplate from "./generated/templates/ToggleButtonTemplate.lit.js";
 
@@ -36,8 +34,11 @@ import toggleBtnCss from "./generated/themes/ToggleButton.css.js";
  * @tagname ui5-toggle-button
  * @public
  */
-@customElement("ui5-toggle-button")
-@template(ToggleButtonTemplate)
+@customElement({
+	tag: "ui5-toggle-button",
+	template: ToggleButtonTemplate,
+	styles: [Button.styles, toggleBtnCss],
+})
 class ToggleButton extends Button {
 	/**
 	 * Determines whether the component is displayed as pressed.
@@ -49,10 +50,6 @@ class ToggleButton extends Button {
 	 */
 	@property({ type: Boolean })
 	pressed!: boolean;
-
-	static get styles(): ComponentStylesData {
-		return [Button.styles, toggleBtnCss];
-	}
 
 	_onclick() {
 		this.pressed = !this.pressed;

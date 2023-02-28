@@ -33,6 +33,11 @@ const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 		styleStrOrHrefsArr = getEffectiveStyle(ctor, forStaticArea);
 	}
 
+	if (ctor.renderer) {
+		ctor.renderer(renderResult, shadowRoot, styleStrOrHrefsArr, forStaticArea, { host: element });
+		return;
+	}
+
 	ctor.render(renderResult, shadowRoot, styleStrOrHrefsArr, forStaticArea, { host: element });
 };
 
