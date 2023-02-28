@@ -1,28 +1,7 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import GroupHeaderListItem from "./GroupHeaderListItem.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-mcb-group-item",
-	properties: /** @lends sap.ui.webc.main.MultiComboBoxGroupItem.prototype */ {
-		/**
-		 * Defines the text of the component.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		text: {
-			type: String,
-		},
-	},
-	slots: /** @lends sap.ui.webc.main.MultiComboBoxGroupItem.prototype */ {
-	},
-	events: /** @lends sap.ui.webc.main.MultiComboBoxGroupItem.prototype */ {
-	},
-};
+import type { IMultiComboBoxItem } from "./MultiComboBox.js";
 
 /**
  * @class
@@ -39,16 +18,18 @@ const metadata = {
  * @implements sap.ui.webc.main.IMultiComboBoxItem
  * @since 1.4.0
  */
-class MultiComboBoxGroupItem extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
-
-	static get dependencies() {
-		return [
-			GroupHeaderListItem,
-		];
-	}
+@customElement("ui5-mcb-group-item")
+class MultiComboBoxGroupItem extends UI5Element implements IMultiComboBoxItem {
+	/**
+	 * Defines the text of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.MultiComboBoxGroupItem.prototype.text
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	text!: string;
 
 	/**
 	 * Used to avoid tag name checks
@@ -56,6 +37,10 @@ class MultiComboBoxGroupItem extends UI5Element {
 	 */
 	get isGroupItem() {
 		return true;
+	}
+
+	get selected() {
+		return false;
 	}
 
 	get stableDomRef() {
