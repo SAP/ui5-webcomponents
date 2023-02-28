@@ -37,7 +37,15 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
-@customElement("ui5-li")
+@customElement({
+	tag: "ui5-li",
+	template: StandardListItemTemplate,
+	dependencies: [
+		...ListItem.dependencies,
+		Icon,
+		Avatar,
+	],
+})
 class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
@@ -176,10 +184,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	@slot()
 	imageContent!: Array<HTMLElement>;
 
-	static get template() {
-		return StandardListItemTemplate;
-	}
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.textContent;
@@ -200,14 +204,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 
 	get hasImageContent(): boolean {
 		return !!this.imageContent.length;
-	}
-
-	static get dependencies() {
-		return [
-			...ListItem.dependencies,
-			Icon,
-			Avatar,
-		];
 	}
 }
 

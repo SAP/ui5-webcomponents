@@ -25,7 +25,10 @@ import SuggestionListItemTemplate from "./generated/templates/SuggestionListItem
  * @extends sap.ui.webc.main.StandardListItem
  * @tagname ui5-li-suggestion-item
  */
-@customElement("ui5-li-suggestion-item")
+@customElement({
+	tag: "ui5-li-suggestion-item",
+	template: SuggestionListItemTemplate,
+})
 class SuggestionListItem extends StandardListItem {
 	/**
 	 * Defines a description that can contain HTML.
@@ -45,11 +48,7 @@ class SuggestionListItem extends StandardListItem {
 	 * @name sap.ui.webc.main.SuggestionListItem.prototype.default
 	 */
 	@slot({ type: Node, "default": true })
-	titleText!: Array<Node>
-
-	static get template() {
-		return SuggestionListItemTemplate;
-	}
+	titleText!: Array<Node>;
 
 	onBeforeRendering() {
 		super.onBeforeRendering();

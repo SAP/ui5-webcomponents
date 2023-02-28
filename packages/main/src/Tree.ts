@@ -95,8 +95,17 @@ type WalkCallback = (item: TreeItemBase, level: number, index: number) => void;
  * @public
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-tree")
-
+@customElement({
+	tag: "ui5-tree",
+	renderer: litRender,
+	styles: TreeCss,
+	template: TreeTemplate,
+	dependencies: [
+		TreeList,
+		TreeItem,
+		TreeItemCustom,
+	],
+})
 /**
  * Fired when a tree item is expanded or collapsed.
  * <i>Note:</i> You can call <code>preventDefault()</code> on the event object to suppress the event, if needed.
@@ -324,26 +333,6 @@ class Tree extends UI5Element {
 	@slot()
 	header!: Array<HTMLElement>;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return TreeCss;
-	}
-
-	static get template() {
-		return TreeTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			TreeList,
-			TreeItem,
-			TreeItemCustom,
-		];
-	}
-
 	onBeforeRendering() {
 		this._prepareTreeItems();
 	}
@@ -358,6 +347,10 @@ class Tree extends UI5Element {
 
 	get _label() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get _hasHeader() {
+		return !!this.header.length;
 	}
 
 	_onListItemStepIn(e: CustomEvent<TreeItemBaseStepInEventDetail>) {

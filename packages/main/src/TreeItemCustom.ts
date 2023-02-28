@@ -41,7 +41,11 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
  * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-tree-item-custom")
+@customElement({
+	tag: "ui5-tree-item-custom",
+	template: TreeItemCustomTemplate,
+	styles: [TreeItemBase.styles, treeItemCustomCss],
+})
 class TreeItemCustom extends TreeItemBase {
 	/**
 	 * Defines whether the tree list item should display the selection element.
@@ -63,15 +67,7 @@ class TreeItemCustom extends TreeItemBase {
 	 * @public
 	 */
 	@slot()
-	content!: Array<HTMLElement>
-
-	static get template() {
-		return TreeItemCustomTemplate;
-	}
-
-	static get styles() {
-		return [super.styles, treeItemCustomCss];
-	}
+	content!: Array<HTMLElement>;
 
 	/**
 	 * @override

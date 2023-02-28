@@ -1,10 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
@@ -114,10 +112,18 @@ type CarouselNavigateEventDetail = {
  * @since 1.0.0-rc.6
  * @public
  */
-@customElement("ui5-carousel")
-@languageAware
-@fastNavigation
-
+@customElement({
+	tag: "ui5-carousel",
+	languageAware: true,
+	fastNavigation: true,
+	renderer: litRender,
+	styles: CarouselCss,
+	template: CarouselTemplate,
+	dependencies: [
+		Button,
+		Label,
+	],
+})
 /**
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
@@ -287,18 +293,6 @@ class Carousel extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return CarouselCss;
-	}
-
-	static get template() {
-		return CarouselTemplate;
-	}
 
 	static get pageTypeLimit() {
 		return 9;
@@ -716,13 +710,6 @@ class Carousel extends UI5Element {
 		});
 
 		return visibleItemsIndices;
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-			Label,
-		];
 	}
 
 	static async onDefine() {
