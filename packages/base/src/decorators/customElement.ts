@@ -1,7 +1,7 @@
 import type UI5Element from "../UI5Element.js";
+import type { Renderer } from "../UI5Element.js";
 import type { TemplateFunction as Template } from "../renderer/executeTemplate.js";
 import type { ComponentStylesData as Styles } from "../types.js";
-import type { Renderer } from "../renderer/LitRenderer.js";
 
 /**
  * Returns a custom element class decorator.
@@ -11,15 +11,15 @@ import type { Renderer } from "../renderer/LitRenderer.js";
  */
 const customElement = (tagNameOrComponentSettings: string | {
 	tag?: string,
-	languageAware?: boolean,
-	themeAware?: boolean,
-	fastNavigation?: boolean,
 	renderer?: Renderer,
 	styles?: Styles,
 	template?: Template,
 	dependencies?: Array<typeof UI5Element>,
 	staticAreaStyles?: Styles,
 	staticAreaTemplate?: Template,
+	languageAware?: boolean,
+	themeAware?: boolean,
+	fastNavigation?: boolean,
 }): ClassDecorator => {
 	return (target: any) => {
 		if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {

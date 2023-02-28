@@ -25,10 +25,7 @@ type ShellBarItemClickEventDetail = {
  * @implements sap.ui.webc.fiori.IShellBarItem
  * @public
  */
-@customElement({
-	tag: "ui5-shellbar-item",
-	renderer: litRender,
-})
+@customElement("ui5-shellbar-item")
 /**
  * Fired, when the item is pressed.
  *
