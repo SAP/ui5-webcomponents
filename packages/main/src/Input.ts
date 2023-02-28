@@ -651,9 +651,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 
-	// implmented in MultiInput, but used in Input template
-	innerFocusIn?: ((event: FocusEvent) => void) | undefined;
-
 	constructor() {
 		super();
 		// Indicates if there is selected suggestionItem.
@@ -971,6 +968,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._inputIconFocused = !!e.target && e.target === this.querySelector<Icon>("[ui5-icon]");
 		this._focusedAfterClear = false;
 	}
+
+	// implmented in MultiInput, but used in Input template
+	innerFocusIn(): void | undefined {}
 
 	_onfocusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
