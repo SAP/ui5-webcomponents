@@ -208,6 +208,15 @@ abstract class SliderBase extends UI5Element {
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
 
+	// used in base template, but implemented in subclasses
+	abstract styles: {
+		label: object,
+		labelContainer: object,
+	};
+
+	abstract tickmarksObject: any;
+	abstract _ariaLabelledByText: string;
+
 	static get ACTION_KEYS() {
 		return [
 			isLeft,
