@@ -318,7 +318,7 @@ abstract class UI5Element extends HTMLElement {
 			if (slotData.individualSlots) {
 				const nextIndex = (autoIncrementMap.get(slotName) || 0) + 1;
 				autoIncrementMap.set(slotName, nextIndex);
-				(child as Record<string, any>)._individualSlot = `${slotName}-${nextIndex}`;
+				(child as Record<string, any>)._individualSlot = `${this._id}-${slotName}-${nextIndex}`;
 			}
 
 			// Await for not-yet-defined custom elements

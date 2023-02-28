@@ -28,9 +28,12 @@ describe("Slots work properly", () => {
 	});
 
 	it("Tests that individualSlots modifies the slot property of slotted children", async () => {
-		assert.strictEqual((await browser.$$("#withContent>[slot=individual]")).length, 0, "There are no children with slot=individual");
-		assert.strictEqual((await browser.$$("#withContent>[slot=individual-1]")).length, 1, "The slot of the first child became individual-1");
-		assert.strictEqual((await browser.$$("#withContent>[slot=individual-2]")).length, 1, "The slot of the second child became individual-2");
+		const parent = await browser.$("#withContent");
+		const internalId = await parent.getProperty("_id");
+
+		assert.strictEqual((await parent.$$(`[slot=${internalId}-individual]`)).length, 0, "There are no children with slot=individual");
+		assert.strictEqual((await parent.$$(`[slot=${internalId}-individual-1]`)).length, 1, `The slot of the first child became ${internalId}-individual-1`);
+		assert.strictEqual((await parent.$$(`[slot=${internalId}-individual-2]`)).length, 1, `The slot of the second child became ${internalId}-individual-2`);
 	});
 
 });
