@@ -89,6 +89,31 @@ describe("General interaction", () => {
 		assert.strictEqual(await combo.getProperty("value"), "Bahrain", "Value should be changed to Bahrain");
 	});
 
+	it ("Should filter items based on input with filter='None' and lazy loading", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#cb-filter-none");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#cb-filter-none");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		// act
+		await input.click();
+
+		// act
+		await input.keys("I");
+
+		setTimeout(async () => {
+			listItems = await popover.$("ui5-list").$$("ui5-li");
+			const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
+
+			// assert
+			assert.strictEqual(listItems.length, 5, "Items should be 5");
+			assert.strictEqual(firstListItemText, "I #1", "First item should have text.");
+		}, 1000)
+	});
+
 	it ("Should filter items based on input", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 

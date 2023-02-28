@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -71,7 +70,9 @@
 			<ui5-cb-item text="Belgium"></ui5-cb-item>
 			<ui5-cb-item text="Bosnia and Herzegovina"></ui5-cb-item>
 			<div slot="valueStateMessage">Custom error value state message with a <a href="#">Link</a>.</div>
-			<div slot="valueStateMessage">Additionl custom error value state message with a <a href="#">Link</a>. Extra long text used as an error message. Extra long text used as an error message - 2. Extra long text used as an error message - 3.</div>
+			<div slot="valueStateMessage">Additionl custom error value state message with a <a href="#">Link</a>. Extra
+				long text used as an error message. Extra long text used as an error message - 2. Extra long text used
+				as an error message - 3.</div>
 		</ui5-combobox>
 		<ui5-combobox id="vs-warning-default" class="combobox2auto" value-state="Warning">
 			<ui5-cb-item text="Algeria"></ui5-cb-item>
@@ -132,7 +133,8 @@
 
 	<div class="demo-section">
 		<ui5-label id="combo-additional-text">Items with additional text:</ui5-label>
-		<ui5-combobox id="combobox-two-column-layout" class="combobox2auto" value="Bulgaria" aria-labelledby="countryLabel">
+		<ui5-combobox id="combobox-two-column-layout" class="combobox2auto" value="Bulgaria"
+			aria-labelledby="countryLabel">
 			<ui5-cb-item text="Algeria" additional-text="DZ"></ui5-cb-item>
 			<ui5-cb-item text="Argentina" additional-text="AR"></ui5-cb-item>
 			<ui5-cb-item text="Australia" additional-text="AU"></ui5-cb-item>
@@ -160,6 +162,15 @@
 		<br />
 
 		<ui5-combobox id="lazy" class="combobox2auto"></ui5-combobox>
+	</div>
+
+	<div class="demo-section">
+		<span>Lazy Loading with filter='None'</span>
+
+		<br />
+		<br />
+
+		<ui5-combobox id="cb-filter-none" filter="None" />
 	</div>
 
 	<div class="demo-section">
@@ -208,14 +219,14 @@
 	</div>
 
 	<div class="demo-section">
-			<span>StartsWith filter</span>
+		<span>StartsWith filter</span>
 
-			<ui5-combobox class="combobox2auto" filter="StartsWith" id="startswith-cb">
-				<ui5-cb-item text="Argentina"></ui5-cb-item>
-				<ui5-cb-item text="United States of America"></ui5-cb-item>
-				<ui5-cb-item text="Canada"></ui5-cb-item>
-				<ui5-cb-item text="Germany"></ui5-cb-item>
-			</ui5-combobox>
+		<ui5-combobox class="combobox2auto" filter="StartsWith" id="startswith-cb">
+			<ui5-cb-item text="Argentina"></ui5-cb-item>
+			<ui5-cb-item text="United States of America"></ui5-cb-item>
+			<ui5-cb-item text="Canada"></ui5-cb-item>
+			<ui5-cb-item text="Germany"></ui5-cb-item>
+		</ui5-combobox>
 	</div>
 
 	<section class="ui5-content-density-compact">
@@ -241,7 +252,7 @@
 		</ui5-combobox>
 	</div>
 
-    <script type="module">
+	<script type="module">
 		document.getElementById("lazy").addEventListener("ui5-input", async event => {
 			const { value } = event.target;
 
@@ -253,7 +264,7 @@
 			}
 
 			// load data
-			const items = (await(await fetch(`https://restcountries.com/v3.1/name/${value}`)).json());
+			const items = (await (await fetch(`https://restcountries.com/v3.1/name/${value}`)).json());
 
 			// cleanup old items
 			while (document.getElementById("lazy").firstChild) {
@@ -271,23 +282,91 @@
 			// remove busy state
 			event.target.loading = false;
 		});
-    </script>
+	</script>
+
+	<script type="module">
+		const cb = document.getElementById("cb-filter-none");
+		let currentSearch,
+			debounce;
+
+		cb.addEventListener("input", (e) => {
+			// debounce by waiting till the user stops typing for more than 0.25 seconds
+			const debounceTime = 250;
+			if (debounce !== undefined) {
+				clearTimeout(debounce);
+			}
+			debounce = setTimeout(async () => {
+				debounce = undefined;
+				const value = e.target.value;
+
+				if (currentSearch !== undefined) {
+					// Cancel any current search that might already be happening
+					currentSearch.cancel();
+				}
+
+				if (value) {
+					currentSearch = fetchSearchResults(value);
+					const items = await currentSearch.items;
+					// if items is undefined it means canceled, so ignore
+					if (items) {
+						// do not reset until afterwards
+						currentSearch = undefined;
+						reset();
+						items.forEach((text) => {
+							const item = document.createElement("ui5-cb-item");
+							item.setAttribute("text", text);
+							cb.appendChild(item);
+						});
+					}
+				} else {
+					reset();
+				}
+			}, debounceTime);
+		});
+
+		// remove all the existing ui5-cb-items to reset the list
+		function reset() {
+			[...cb.children].forEach((c) => cb.removeChild(c));
+		}
+
+		// simulate a fetch call using a setTimeout
+		function fetchSearchResults(text) {
+			let cancel;
+			return {
+				cancel: () => cancel(),
+				items: new Promise((resolve) => {
+					const i = setTimeout(() => {
+						const items = [];
+						for (let i = 0; i < 5; i++) {
+							items.push(`${text} #${i + 1}`);
+						}
+						resolve(items);
+					}, 500);
+					cancel = () => {
+						clearTimeout(i);
+						resolve(undefined);
+					};
+				})
+			};
+		}
+
+	</script>
 
 	<script>
-		document.getElementById("combo").addEventListener("ui5-change", function(event) {
+		document.getElementById("combo").addEventListener("ui5-change", function (event) {
 			document.getElementById("change-event-result").innerHTML = event.target.value;
 		});
 
-		document.getElementById("combo").addEventListener("ui5-selection-change", function(event) {
+		document.getElementById("combo").addEventListener("ui5-selection-change", function (event) {
 			document.getElementById("selection-change-event-result").innerHTML = event.detail.item.text;
 		});
 
-		document.getElementById("change-cb").addEventListener("ui5-change", function(event) {
+		document.getElementById("change-cb").addEventListener("ui5-change", function (event) {
 			document.getElementById("change-placeholder").innerHTML = event.target.value;
 			document.getElementById("change-count").innerHTML = parseInt(document.getElementById("change-count").innerHTML) + 1;
 		});
 
-		document.getElementById("input-cb").addEventListener("ui5-input", function(event) {
+		document.getElementById("input-cb").addEventListener("ui5-input", function (event) {
 			document.getElementById("input-placeholder").innerHTML = event.target.value;
 			document.getElementById("input-count").innerHTML = parseInt(document.getElementById("input-count").innerHTML) + 1;
 		});
