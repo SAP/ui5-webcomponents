@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -63,6 +62,7 @@ const DESIGN_DESCRIPTIONS = {
  */
 @customElement({
 	tag: "ui5-tab",
+	languageAware: true,
 	renderer: litRender,
 	template: TabTemplate,
 	styles: css,
@@ -72,7 +72,6 @@ const DESIGN_DESCRIPTIONS = {
 		CustomListItem,
 	],
 })
-@languageAware
 class Tab extends UI5Element implements ITab, ITabbable {
 	/**
 	 * The text to be displayed for the item.

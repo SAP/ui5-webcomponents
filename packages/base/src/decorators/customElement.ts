@@ -6,10 +6,10 @@ import type { Renderer } from "../renderer/LitRenderer.js";
 /**
  * Returns a custom element class decorator.
  *
- * @param { string | object } tagName
+ * @param { string | object } tagNameOrComponentSettings
  * @returns { ClassDecorator }
  */
-const customElement = (tagName: string | {
+const customElement = (tagNameOrComponentSettings: string | {
 	tag?: string,
 	languageAware?: boolean,
 	themeAware?: boolean,
@@ -26,8 +26,8 @@ const customElement = (tagName: string | {
 			target.decoratorMetadata = {};
 		}
 
-		if (typeof tagName === "string") {
-			target.decoratorMetadata.tag = tagName;
+		if (typeof tagNameOrComponentSettings === "string") {
+			target.decoratorMetadata.tag = tagNameOrComponentSettings;
 			return;
 		}
 
@@ -36,7 +36,7 @@ const customElement = (tagName: string | {
 			languageAware = false,
 			themeAware = false,
 			fastNavigation = false,
-		 } = tagName;
+		 } = tagNameOrComponentSettings;
 
 		target.decoratorMetadata.tag = tag;
 		target.decoratorMetadata.languageAware = languageAware;
@@ -45,7 +45,7 @@ const customElement = (tagName: string | {
 
 		["render", "renderer", "template", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {
 			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;
-			const customElementEntityValue = tagName[_customElementEntity as keyof typeof tag];
+			const customElementEntityValue = tagNameOrComponentSettings[_customElementEntity as keyof typeof tag];
 
 			customElementEntityValue && Object.defineProperty(target, customElementEntity, {
 				get: () => customElementEntityValue,
