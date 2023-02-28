@@ -58,8 +58,3 @@ export { ifDefined } from "lit-html/directives/if-defined.js";
 export { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 export default litRender;
-
-export type {
-	Renderer,
-	RenderOptions,
-};
