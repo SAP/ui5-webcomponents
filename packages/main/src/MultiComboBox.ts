@@ -1,10 +1,9 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import type { ClassMap, ComponentStylesData, Timeout } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap, Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -91,7 +90,7 @@ import MultiComboBoxTemplate from "./generated/templates/MultiComboBoxTemplate.l
 import MultiComboBoxPopoverTemplate from "./generated/templates/MultiComboBoxPopoverTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/MultiComboBox.css.js";
+import multiCbxStyles from "./generated/themes/MultiComboBox.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import SuggestionsCss from "./generated/themes/Suggestions.css.js";
@@ -177,9 +176,29 @@ type MultiComboboxItemWithSelection = {
  * @appenddocs sap.ui.webc.main.MultiComboBoxItem sap.ui.webc.main.MultiComboBoxGroupItem
  * @since 0.11.0
  */
-@customElement("ui5-multi-combobox")
-@languageAware
-
+@customElement({
+	tag: "ui5-multi-combobox",
+	languageAware: true,
+	renderer: litRender,
+	template: MultiComboBoxTemplate,
+	staticAreaTemplate: MultiComboBoxPopoverTemplate,
+	styles: multiCbxStyles,
+	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, MultiComboBoxPopover],
+	dependencies: [
+		MultiComboBoxItem,
+		MultiComboBoxGroupItem,
+		Tokenizer,
+		Token,
+		Icon,
+		ResponsivePopover,
+		Popover,
+		List,
+		StandardListItem,
+		GroupHeaderListItem,
+		ToggleButton,
+		Button,
+	],
+})
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -470,43 +489,6 @@ class MultiComboBox extends UI5Element {
 	selectedItems?: Array<IMultiComboBoxItem>;
 	FormSupport?: typeof FormSupportT;
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return MultiComboBoxTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return MultiComboBoxPopoverTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return styles;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, MultiComboBoxPopover];
-	}
-
-	static get dependencies() {
-		return [
-			MultiComboBoxItem,
-			MultiComboBoxGroupItem,
-			Tokenizer,
-			Token,
-			Icon,
-			ResponsivePopover,
-			Popover,
-			List,
-			StandardListItem,
-			GroupHeaderListItem,
-			ToggleButton,
-			Button,
-		];
-	}
 
 	constructor() {
 		super();
