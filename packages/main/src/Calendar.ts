@@ -280,7 +280,7 @@ class Calendar extends CalendarPart {
 	 * @private
 	 */
 	_setSelectedDates(selectedDates: Array<number>) {
-		const selectedValues = selectedDates.map(timestamp => this.getFormat().format(new Date(timestamp * 1000), true)); // Format as UTC
+		const selectedValues = selectedDates.map(timestamp => this.formatValue(new Date(timestamp * 1000))); // Format as UTC
 		const valuesInDOM = [...this.dates].map(dateElement => dateElement.value);
 
 		// Remove all elements for dates that are no longer selected
@@ -419,7 +419,7 @@ class Calendar extends CalendarPart {
 		const selectedDates = e.detail.dates;
 		const datesValues = selectedDates.map(ts => {
 			const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
-			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
+			return this.formatValue(calendarDate.toUTCJSDate());
 		});
 
 		this.timestamp = timestamp;

@@ -765,19 +765,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	}
 
 	/**
-	 * Formats a Java Script date object into a string representing a locale date
-	 * according to the <code>formatPattern</code> property of the DatePicker instance
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.DatePicker#formatValue
-	 * @param {object} date A Java Script date object to be formatted as string
-	 * @returns {string} The date as string
-	 */
-	formatValue(date: Date) {
-		return this.getFormat().format(date);
-	}
-
-	/**
 	 * Closes the picker.
 	 * @public
 	 * @method

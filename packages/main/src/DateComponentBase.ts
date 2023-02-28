@@ -163,6 +163,19 @@ class DateComponentBase extends UI5Element {
 			});
 	}
 
+	/**
+	 * Formats a Java Script date object into a string representing a locale date
+	 * according to the <code>formatPattern</code> property
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.DatePicker#formatValue
+	 * @param {object} date A Java Script date object to be formatted as string
+	 * @returns {string} The date as string
+	 */
+	formatValue(date: Date) {
+		return this.getFormat().format(date);
+	}
+
 	static async onDefine() {
 		[DateComponentBase.i18nBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents"),
