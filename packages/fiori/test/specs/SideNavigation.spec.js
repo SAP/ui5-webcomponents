@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 async function getTreeItemsInPopover() {
 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");

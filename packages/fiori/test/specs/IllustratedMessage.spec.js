@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("IllustratedMessage 'size' property", () => {
 	before(async () => {
