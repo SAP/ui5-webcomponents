@@ -40,8 +40,7 @@ const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").to
 const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
 
 // Validation of user input
-const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z0-9\-_]+$/);
-const isNameStartingWithNumber = name => typeof name === "string" && name.match(/^[0-9]/);
+const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/);
 
 const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
 	const correctComponentName = capitalizeFirstLetter(componentName);
@@ -68,17 +67,10 @@ const generateFiles = (componentName, tagName, library, packageName, isTypeScrip
 	console.log(`Successfully generated ${correctComponentName}.css`);
 	console.log(`Successfully generated ${correctComponentName}.hbs`);
 
-	const bundleLogger = fs.createWriteStream("./bundle.common.js", {
-		flags: "a" // appending
-	});
-
-	bundleLogger.write(`
-	// TODO: Move this line in order to keep the file sorted alphabetically
-	import ${correctComponentName} from "./dist/${correctComponentName}.js";`);
-
 	// Change the color of the output
 		console.warn('\x1b[33m%s\x1b[0m', `
-	Component is imported in bundle.common.js.
+	Make sure to import the component in the bundle.common.js file by using:
+	Import ${correctComponentName} from "./dist/${correctComponentName}.js";
 	Do NOT forget to sort the file in alphabetical order.`);
 }
 
@@ -98,11 +90,6 @@ const createWebComponent = async () => {
 		componentName = response.componentName;
 	}
 
-	if (!isNameValid(componentName)) {
-		console.error(`The component name "${componentName}" is not valid. Please use only letters, numbers, dashes and underscores.`);
-		return;
-	}
-
 	if (consoleArguments.length === 2) {
 		let language = consoleArguments[1];
 		isTypeScript = language === "typescript";
@@ -113,15 +100,15 @@ const createWebComponent = async () => {
 		message: "Component type:",
 		choices: [
 			{
-			title: "TypeScript (recommended)",
-			value: true,
+				title: "TypeScript (recommended)",
+				value: true,
 			},
 			{
-			title: "JavaScript",
-			value: false,
+				title: "JavaScript",
+				value: false,
 			},
 		],
-		initial: 0,
+			initial: 0,
 		});
 		isTypeScript = response.language;
 	}
@@ -129,11 +116,11 @@ const createWebComponent = async () => {
 	const tagName = `ui5-${camelToKebabCase(componentName)}`;
 	const packageName = getPackageName();
 	const library = getLibraryName(packageName);
-	
-	if (!isNameStartingWithNumber(componentName)) {
+
+	if (componentName.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/)) {
 		generateFiles(componentName, tagName, library, packageName, isTypeScript);
 	} else {
-		console.error(`The component name "${componentName}" is not valid. Please use only letters, dashes and underscores.`);
+		console.warn('\x1b[33m%s\x1b[0m',"Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
 	}
 };
 
