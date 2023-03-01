@@ -1,4 +1,4 @@
-const getScripts = require("@ui5/webcomponents-tools/components-package/nps.js");
+const getScripts = require("@ui5/webcomponents-tools/components-package/nps.cjs");
 
 const options = {
 	port: 8080,

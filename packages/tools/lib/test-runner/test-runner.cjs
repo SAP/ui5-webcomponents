@@ -58,6 +58,6 @@ if (process.argv.length > 3) {
 }
 
 // run wdio with calculated parameters
-const cmd = `yarn cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js ${spec} ${baseUrl} ${restParams}`;
+const cmd = `yarn cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.cjs ${spec} ${baseUrl} ${restParams}`;
 console.log(`executing: ${cmd}`);
 child_process.execSync(cmd, {stdio: 'inherit'});

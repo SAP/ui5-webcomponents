@@ -1,5 +1,4 @@
-const assert = require("chai").assert;
-
+import { assert } from "chai";
 
 describe("Duration Picker general interaction", () => {
 	before(async () => {

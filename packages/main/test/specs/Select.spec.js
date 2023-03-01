@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 async function getResourceBundleTexts(keys) {
 	return browser.executeAsync((keys, done) => {

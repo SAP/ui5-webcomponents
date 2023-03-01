@@ -1,6 +1,6 @@
-const fs = require('fs').promises;
-const path = require('path');
-const CleanCSS = require('clean-css');
+import fs from 'fs/promises';
+import path from "path";
+import CleanCSS from "clean-css";
 
 const generate = async () => {
 	await fs.mkdir("src/generated/css/", {recursive: true});
