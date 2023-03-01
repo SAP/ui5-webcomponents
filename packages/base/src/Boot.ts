@@ -18,7 +18,11 @@ let booted = false;
  * @param { Function } listener
  */
 const attachBoot = (listener: () => void) => {
-	eventProvider.attachEvent("boot", listener);
+	if (!booted) {
+		eventProvider.attachEvent("boot", listener);
+	}
+
+	listener();
 };
 
 const boot = async (): Promise<void> => {
