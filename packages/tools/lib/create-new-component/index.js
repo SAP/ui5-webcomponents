@@ -1,11 +1,7 @@
 const fs = require("fs");
 const prompts = require("prompts");
-const yargs = require("yargs/yargs");
-const { hideBin } = require("yargs/helpers");
 const jsFileContentTemplate = require("./jsFileContentTemplate.js");
 const tsFileContentTemplate = require("./tsFileContentTemplate.js");
-
-const argv = yargs(hideBin(process.argv)).argv;
 
 const getPackageName = () => {
 	if (!fs.existsSync("./package.json")) {
@@ -90,7 +86,7 @@ const generateFiles = (componentName, tagName, library, packageName, isTypeScrip
 const createWebComponent = async () => {
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
-	let isTypeScript = !!argv.enableTypescript;
+	let isTypeScript = false;
 
 	if (!componentName) {
 		const response = await prompts({
@@ -107,24 +103,28 @@ const createWebComponent = async () => {
 		return;
 	}
 
-	let response = await prompts({
+	if (consoleArguments.length === 2) {
+		let language = consoleArguments[1];
+		isTypeScript = language === "typescript";
+	} else {
+		const response = await prompts({
 		type: "select",
 		name: "language",
 		message: "Component type:",
 		choices: [
 			{
-				title: "TypeScript (recommended)",
-				value: true,
+			title: "TypeScript (recommended)",
+			value: true,
 			},
 			{
-				title: "JavaScript",
-				value: false,
+			title: "JavaScript",
+			value: false,
 			},
 		],
-		initial: isTypeScript ? 1 : 0,
-	});
-
-	isTypeScript = response.language;
+		initial: 0,
+		});
+		isTypeScript = response.language;
+	}
 
 	const tagName = `ui5-${camelToKebabCase(componentName)}`;
 	const packageName = getPackageName();
