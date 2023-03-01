@@ -838,12 +838,9 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 */
 	extractCalendarMode(): CalendarMode {
 		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
-		const types = format.aFormatArray.map((settings:{type:string}) => {
+		const types = format.aFormatArray.map(settings => {
 			return settings.type.toLowerCase();
 		});
-		if (types.includes("day")) {
-			return CalendarMode.DAY_MONTH_YEAR;
-		}
 		if (types.includes("month") || types.includes("monthstandalone")) {
 			return CalendarMode.MONTH_YEAR;
 		}

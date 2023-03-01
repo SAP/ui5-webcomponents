@@ -335,10 +335,12 @@ class Calendar extends CalendarPart {
 		if (!this._currentPicker) {
 			return;
 		}
+
 		let nextPicker = this._currentPicker;
 		if (nextPicker === "day" && this.calendarMode !== CalendarMode.DAY_MONTH_YEAR) {
 			nextPicker = "month";
 		}
+
 		if (nextPicker === "month" && this.calendarMode === CalendarMode.YEAR) {
 			nextPicker = "year";
 		}
@@ -441,15 +443,15 @@ class Calendar extends CalendarPart {
 	}
 
 	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
-		const timestamp = e.detail.timestamp;
+		this.timestamp = e.detail.timestamp;
 		const selectedDates = e.detail.dates;
-		const datesValues = selectedDates.map(ts => {
-			const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
+		const datesValues = selectedDates.map(timestamp => {
+			const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
+
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		this.timestamp = timestamp;
-		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -461,8 +463,9 @@ class Calendar extends CalendarPart {
 			this._currentPicker = "day";
 		} else {
 			const selectedDates = [this.timestamp];
-			const datesValues = selectedDates.map(ts => {
-				const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
+			const datesValues = selectedDates.map(timestamp => {
+				const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
+
 				return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 			});
 			const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>(
@@ -485,8 +488,9 @@ class Calendar extends CalendarPart {
 			this._currentPicker = "month";
 		} else {
 			const selectedDates = [this.timestamp];
-			const datesValues = selectedDates.map(ts => {
-				const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
+			const datesValues = selectedDates.map(timestamp => {
+				const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
+
 				return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 			});
 			const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>(

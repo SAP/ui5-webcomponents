@@ -2,7 +2,7 @@
  * Different Calendar modes.
  *
  * @class
- * @enum {number}
+ * @enum {string}
  * @public
  * @author SAP SE
  * @alias sap.ui.webc.main.types.CalendarMode
