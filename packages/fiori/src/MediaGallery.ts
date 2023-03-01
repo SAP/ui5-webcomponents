@@ -7,213 +7,36 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
+import type { CarouselNavigateEventDetail } from "@ui5/webcomponents/dist/Carousel.js";
 import Carousel from "@ui5/webcomponents/dist/Carousel.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
 import MediaGalleryLayout from "./types/MediaGalleryLayout.js";
 import MediaGalleryMenuHorizontalAlign from "./types/MediaGalleryMenuHorizontalAlign.js";
 import MediaGalleryMenuVerticalAlign from "./types/MediaGalleryMenuVerticalAlign.js";
 
-// Template
-import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
-
 // Styles
 import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 
+// Template
+import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
+
+type MediaGallerySelectionChangeEventDetail = {
+	item: MediaGalleryItem;
+}
+
 // The allowed number of thumbnail columns on each size
 // (relevant when <code>showAllThumbnails</code> is enabled)
-const COLUMNS_COUNT = {
+const COLUMNS_COUNT: Record<string, number> = {
 	"S": 1,
 	"M": 2,
 	"L": 3,
 	"XL": 4,
-};
-
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-media-gallery",
-	managedSlots: true,
-	slots: /** @lends sap.ui.webc.fiori.MediaGallery.prototype */ {
-		/**
-		 * Defines the component items.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> Only one selected item is allowed.
-		 *
-		 * <br><br>
-		 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
-		 *
-		 * @type {sap.ui.webc.fiori.IMediaGalleryItem[]}
-		 * @slot items
-		 * @public
-		 */
-		"default": {
-			propertyName: "items",
-			type: HTMLElement,
-			individualSlots: true,
-			invalidateOnChildChange: true,
-		},
-	},
-	properties: /** @lends sap.ui.webc.fiori.MediaGallery.prototype */ {
-		/**
-		 * If set to <code>true</code>, all thumbnails are rendered in a scrollable container.
-		 * If <code>false</code>, only up to five thumbnails are rendered, followed by
-		 * an overflow button that shows the count of the remaining thumbnails.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		showAllThumbnails: {
-			type: Boolean,
-		},
-
-		/**
-		 * If enabled, a <code>display-area-click</code> event is fired
-		 * when the user clicks or taps on the display area.
-		 * <br>
-		 * The display area is the central area that contains
-		 * the enlarged content of the currently selected item.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		interactiveDisplayArea: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines the layout of the component.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Auto</code></li>
-		 * <li><code>Vertical</code></li>
-		 * <li><code>Horizontal</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
-		 * @defaultvalue "Auto"
-		 * @public
-		 */
-		layout: {
-			type: MediaGalleryLayout,
-			defaultValue: "Auto",
-		},
-
-		/**
-		 * Determines the horizontal alignment of the thumbnails menu
-		 * vs. the central display area.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Left</code></li>
-		 * <li><code>Right</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuHorizontalAlign}
-		 * @defaultvalue "Left"
-		 * @public
-		 */
-		menuHorizontalAlign: {
-			type: MediaGalleryMenuHorizontalAlign,
-			defaultValue: MediaGalleryMenuHorizontalAlign.Left,
-		},
-
-		/**
-		 * Determines the vertical alignment of the thumbnails menu
-		 * vs. the central display area.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Top</code></li>
-		 * <li><code>Bottom</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuVerticalAlign}
-		 * @defaultvalue "Bottom"
-		 * @public
-		 */
-		menuVerticalAlign: {
-			type: MediaGalleryMenuVerticalAlign,
-			defaultValue: MediaGalleryMenuVerticalAlign.Bottom,
-		},
-
-		/**
-		 * Determines the actual applied layout type
-		 * (esp. needed when the app did not specify a fixed layout type
-		 * but selected <code>Auto</code> layout type).
-		 * <br><br>
-		 * Possible values are:
-		 * <ul>
-		 * <li><code>Vertical</code></li>
-		 * <li><code>Horizontal</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
-		 * @defaultvalue "Vertical"
-		 * @private
-		 */
-		effectiveLayout: {
-			type: MediaGalleryLayout,
-			defaultValue: "Vertical",
-		},
-
-		/**
-		 * Defines the current media query size.
-		 *
-		 * @private
-		 */
-		mediaRange: {
-			type: String,
-		},
-
-		/**
-		 * The number of items in the overflow.
-		 *
-		 * @private
-		 */
-		_overflowSize: {
-			type: Integer,
-			noAttribute: true,
-			defaultValue: 0,
-		},
-	},
-	events: /** @lends sap.ui.webc.fiori.MediaGallery.prototype */ {
-		/**
-		 * Fired when selection is changed by user interaction.
-		 *
-		 * @event sap.ui.webc.fiori.MediaGallery#selection-change
-		 * @param {HTMLElement} item the selected item.
-		 * @public
-		 */
-		 "selection-change": {
-			detail: {
-				item: { type: HTMLElement },
-			},
-		},
-
-		/**
-		 * Fired when the thumbnails overflow button is clicked.
-		 *
-		 * @event sap.ui.webc.fiori.MediaGallery#overflow-click
-		 * @public
-		 */
-		"overflow-click": {},
-
-		/**
-		 * Fired when the display area is clicked.<br>
-		 * The display area is the central area that contains
-		 * the enlarged content of the currently selected item.
-		 *
-		 * @event sap.ui.webc.fiori.MediaGallery#display-area-click
-		 * @public
-		 */
-		"display-area-click": {},
-	},
 };
 
 /**
@@ -260,12 +83,190 @@ const metadata = {
  * @public
  * @since 1.1.0
  */
+@customElement("ui5-media-gallery")
+
+/**
+ * Fired when selection is changed by user interaction.
+ *
+ * @event sap.ui.webc.fiori.MediaGallery#selection-change
+ * @param {HTMLElement} item the selected item.
+ * @public
+ */
+@event("selection-change", {
+	detail: {
+		item: { type: HTMLElement },
+	},
+})
+
+/**
+ * Fired when the thumbnails overflow button is clicked.
+ *
+ * @event sap.ui.webc.fiori.MediaGallery#overflow-click
+ * @public
+ */
+@event("overflow-click")
+
+/**
+ * Fired when the display area is clicked.<br>
+ * The display area is the central area that contains
+ * the enlarged content of the currently selected item.
+ *
+ * @event sap.ui.webc.fiori.MediaGallery#display-area-click
+ * @public
+ */
+@event("display-area-click")
+
 class MediaGallery extends UI5Element {
+	/**
+	 * If set to <code>true</code>, all thumbnails are rendered in a scrollable container.
+	 * If <code>false</code>, only up to five thumbnails are rendered, followed by
+	 * an overflow button that shows the count of the remaining thumbnails.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.MediaGallery.prototype.showAllThumbnails
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showAllThumbnails!: boolean;
+
+	/**
+	 * If enabled, a <code>display-area-click</code> event is fired
+	 * when the user clicks or taps on the display area.
+	 * <br>
+	 * The display area is the central area that contains
+	 * the enlarged content of the currently selected item.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.MediaGallery.prototype.interactiveDisplayArea
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	interactiveDisplayArea!: boolean;
+
+	/**
+	 * Determines the layout of the component.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Auto</code></li>
+	 * <li><code>Vertical</code></li>
+	 * <li><code>Horizontal</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
+	 * @name sap.ui.webc.main.MediaGallery.prototype.layout
+	 * @defaultvalue "Auto"
+	 * @public
+	 */
+	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Auto })
+	layout!: MediaGalleryLayout;
+
+	/**
+	 * Determines the horizontal alignment of the thumbnails menu
+	 * vs. the central display area.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Left</code></li>
+	 * <li><code>Right</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuHorizontalAlign}
+	 * @name sap.ui.webc.main.MediaGallery.prototype.menuHorizontalAlign
+	 * @defaultvalue "Left"
+	 * @public
+	 */
+	@property({ type: MediaGalleryMenuHorizontalAlign, defaultValue: MediaGalleryMenuHorizontalAlign.Left })
+	menuHorizontalAlign!: MediaGalleryMenuHorizontalAlign;
+
+	/**
+	 * Determines the vertical alignment of the thumbnails menu
+	 * vs. the central display area.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Top</code></li>
+	 * <li><code>Bottom</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuVerticalAlign}
+	 * @name sap.ui.webc.main.MediaGallery.prototype.menuVerticalAlign
+	 * @defaultvalue "Bottom"
+	 * @public
+	 */
+	@property({ type: MediaGalleryMenuVerticalAlign, defaultValue: MediaGalleryMenuVerticalAlign.Bottom })
+	menuVerticalAlign!: MediaGalleryMenuVerticalAlign;
+
+	/**
+	 * Determines the actual applied layout type
+	 * (esp. needed when the app did not specify a fixed layout type
+	 * but selected <code>Auto</code> layout type).
+	 * <br><br>
+	 * Possible values are:
+	 * <ul>
+	 * <li><code>Vertical</code></li>
+	 * <li><code>Horizontal</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
+	 * @defaultvalue "Vertical"
+	 * @private
+	 */
+	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Vertical })
+	effectiveLayout!: MediaGalleryLayout;
+
+	/**
+	 * Defines the current media query size.
+	 *
+	 * @private
+	 */
+	@property()
+	mediaRange!: string;
+
+	/**
+	 * The number of items in the overflow.
+	 *
+	 * @private
+	 */
+	@property({ validator: Integer, noAttribute: true, defaultValue: 0 })
+	_overflowSize!: number;
+
+	/**
+	 * Defines the component items.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Only one selected item is allowed.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
+	 *
+	 * @type {sap.ui.webc.fiori.IMediaGalleryItem[]}
+	 * @name sap.ui.webc.main.MediaGallery.prototype.default
+	 * @slot items
+	 * @public
+	 */
+	@slot({
+		type: HTMLElement,
+		individualSlots: true,
+		invalidateOnChildChange: true,
+		"default": true,
+	})
+	items!: Array<MediaGalleryItem>;
+
+	_itemNavigation: ItemNavigation;
+	_onResize: () => void;
+	_selectedItem?: MediaGalleryItem;
+
 	constructor() {
 		super();
 		this._onResize = this._updateLayout.bind(this);
-		this._selectedItem = null;
-		this._initItemNavigation();
+
+		this._itemNavigation = new ItemNavigation(this, {
+			navigationMode: NavigationMode.Auto,
+			getItemsCallback: () => this._getFocusableItems(),
+		});
 	}
 
 	onEnterDOM() {
@@ -281,15 +282,6 @@ class MediaGallery extends UI5Element {
 		this._updateSelection();
 	}
 
-	_initItemNavigation() {
-		if (!this._itemNavigation) {
-			this._itemNavigation = new ItemNavigation(this, {
-				navigationMode: NavigationMode.Auto,
-				getItemsCallback: () => this._getFocusableItems(),
-			});
-		}
-	}
-
 	_updateSelection() {
 		let itemToSelect = this.items.find(item => item.selected);
 		if (!itemToSelect || !this._isSelectableItem(itemToSelect)) {
@@ -300,7 +292,7 @@ class MediaGallery extends UI5Element {
 		}
 	}
 
-	_isSelectableItem(item) {
+	_isSelectableItem(this: void, item: MediaGalleryItem) {
 		return !item.disabled && !item.hidden;
 	}
 
@@ -308,12 +300,12 @@ class MediaGallery extends UI5Element {
 		return this.items.find(this._isSelectableItem);
 	}
 
-	_updateMediaRange(width) {
+	_updateMediaRange(width: number) {
 		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, width);
 	}
 
 	_updateLayout() {
-		const rootNode = this.getDomRef(),
+		const rootNode = this.getDomRef()!,
 			height = rootNode.offsetHeight,
 			width = rootNode.offsetWidth;
 
@@ -329,7 +321,7 @@ class MediaGallery extends UI5Element {
 		this._toggleMainItem9x16size(this._shouldHaveWideDisplay);
 	}
 
-	_calculateOverflowSize(width, height) {
+	_calculateOverflowSize(width: number, height: number) {
 		const marginSize = MediaGallery.THUMBNAIL_MARGIN;
 		let columnHeight,
 			columnsCount;
@@ -348,26 +340,26 @@ class MediaGallery extends UI5Element {
 		return this._getOverflowSize(columnHeight, columnsCount);
 	}
 
-	_toggleDisplaySquareSize(enable) {
-		this._display.style.width = ""; // restore default width
+	_toggleDisplaySquareSize(enable: boolean) {
+		this._display!.style.width = ""; // restore default width
 
 		if (enable) {
 			const marginSize = MediaGallery.THUMBNAIL_MARGIN,
-				width = this._display.offsetWidth;
+				width = this._display!.offsetWidth;
 
-			let availableHeight = this.getDomRef().offsetHeight - (2 * marginSize);
+			let availableHeight = this.getDomRef()!.offsetHeight - (2 * marginSize);
 			if (this.effectiveLayout === MediaGalleryLayout.Vertical) {
 				availableHeight -= (MediaGallery.THUMBNAIL_HEIGHT + marginSize);
 			}
 
 			if (width > availableHeight) {
 				// set to square
-				this._display.style.width = `${availableHeight}px`;
+				this._display!.style.width = `${availableHeight}px`;
 			}
 		}
 	}
 
-	_toggleMainItem9x16size(enable) {
+	_toggleMainItem9x16size(enable: boolean) {
 		if (!this._mainItem) {
 			return;
 		}
@@ -385,7 +377,7 @@ class MediaGallery extends UI5Element {
 		return this.layout;
 	}
 
-	_getMaxAllowedThumbnailsInColumn(columnHeight) {
+	_getMaxAllowedThumbnailsInColumn(columnHeight: number) {
 		let maxAllowedItems = Math.floor(columnHeight / MediaGallery.THUMBNAIL_HEIGHT);
 		if (!this.showAllThumbnails) {
 			maxAllowedItems = Math.min(maxAllowedItems, 5);
@@ -393,7 +385,7 @@ class MediaGallery extends UI5Element {
 		return maxAllowedItems;
 	}
 
-	_getOverflowSize(columnHeight, columnsCount) {
+	_getOverflowSize(columnHeight: number, columnsCount: number) {
 		const maxAlowedThumbnailsInColumn = this._getMaxAllowedThumbnailsInColumn(columnHeight),
 			overflowSize = Math.max(0, this.items.length - maxAlowedThumbnailsInColumn * columnsCount);
 		if (overflowSize === this.items.length || overflowSize === 0) {
@@ -407,7 +399,7 @@ class MediaGallery extends UI5Element {
 			return [];
 		}
 
-		const items = this._visibleItems.filter(item => !item.disabled);
+		const items: Array<ITabbable> = this._visibleItems.filter(item => !item.disabled);
 
 		if (this._overflowBtn) {
 			items.push(this._overflowBtn);
@@ -415,7 +407,7 @@ class MediaGallery extends UI5Element {
 		return items;
 	}
 
-	_selectItem(item, userInteraction) {
+	_selectItem(item: MediaGalleryItem, userInteraction = false) {
 		if (item === this._selectedItem) {
 			return;
 		}
@@ -425,7 +417,7 @@ class MediaGallery extends UI5Element {
 		this._itemNavigation.setCurrentItem(item);
 
 		if (userInteraction) {
-			this.fireEvent("selection-change", { item });
+			this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
 		}
 
 		if (isPhone()) {
@@ -435,35 +427,36 @@ class MediaGallery extends UI5Element {
 		}
 	}
 
-	_updateSelectedFlag(itemToSelect) {
+	_updateSelectedFlag(itemToSelect: MediaGalleryItem) {
 		this.items.forEach(next => { next.selected = false; });
 		itemToSelect.selected = true;
 	}
 
-	_selectItemOnPhone(item) {
+	_selectItemOnPhone(item: MediaGalleryItem) {
 		const selectableItemIndex = this._selectableItems.indexOf(item),
 			carousel = this._carousel;
 		carousel && carousel.navigateTo(selectableItemIndex);
 	}
 
-	_displayContent(item) {
+	_displayContent(item: MediaGalleryItem) {
 		let clone;
 		const mainItem = this._mainItem,
-			oldContent = mainItem._content,
+			oldContent = mainItem!._content,
 			newContent = item._content;
 
-		mainItem._thumbnailDesign = false;
+		mainItem!._thumbnailDesign = false;
 		oldContent && oldContent.remove();
 
 		if (newContent) {
 			clone = newContent.cloneNode(true);
-			mainItem.layout = item.layout;
-			mainItem.appendChild(clone);
+			mainItem!.layout = item.layout;
+			mainItem!.appendChild(clone);
 		}
 	}
 
-	_onThumbnailClick(event) {
-		const item = event.target.closest("[ui5-media-gallery-item]");
+	_onThumbnailClick(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const item = target.closest<MediaGalleryItem>("[ui5-media-gallery-item]")!;
 
 		if (item.disabled) {
 			return;
@@ -477,7 +470,7 @@ class MediaGallery extends UI5Element {
 		this.fireEvent("overflow-click");
 	}
 
-	_onDisplayAreaClick(event) {
+	_onDisplayAreaClick() {
 		if (!this.interactiveDisplayArea) {
 			return;
 		}
@@ -485,11 +478,11 @@ class MediaGallery extends UI5Element {
 		this.fireEvent("display-area-click");
 	}
 
-	_onCarouselNavigate(event) {
-		const selectedIndex = event.detail.selectedIndex,
+	_onCarouselNavigate(e: CustomEvent<CarouselNavigateEventDetail>) {
+		const selectedIndex = e.detail.selectedIndex,
 			item = this._selectableItems[selectedIndex];
 
-		this.fireEvent("selection-change", { item });
+		this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
 	}
 
 	get _mainItemTabIndex() {
@@ -501,19 +494,19 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _carousel() {
-		return this.shadowRoot.querySelector("[ui5-carousel]");
+		return this.shadowRoot!.querySelector<Carousel>("[ui5-carousel]");
 	}
 
 	get _display() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-display");
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-media-gallery-display");
 	}
 
 	get _mainItem() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-display [ui5-media-gallery-item]");
+		return this.shadowRoot!.querySelector<MediaGalleryItem>(".ui5-media-gallery-display [ui5-media-gallery-item]");
 	}
 
 	get _overflowBtn() {
-		return this.shadowRoot.querySelector(".ui5-media-gallery-overflow [ui5-button]");
+		return this.shadowRoot!.querySelector<Button>(".ui5-media-gallery-overflow [ui5-button]");
 	}
 
 	get _visibleItems() {
@@ -542,7 +535,7 @@ class MediaGallery extends UI5Element {
 	}
 
 	get _shouldHaveWideDisplay() {
-		return this._mainItemHasWideLayout
+		return !!this._mainItemHasWideLayout
 			&& this.showAllThumbnails
 			&& (this.effectiveLayout === MediaGalleryLayout.Horizontal);
 	}
@@ -551,10 +544,6 @@ class MediaGallery extends UI5Element {
 		// by default it should be square
 		// with the only exception when a wide 9*16 item should be displayed
 		return !this._shouldHaveWideDisplay;
-	}
-
-	static get metadata() {
-		return metadata;
 	}
 
 	static get render() {
@@ -571,10 +560,6 @@ class MediaGallery extends UI5Element {
 
 	static get styles() {
 		return [MediaGalleryCss];
-	}
-
-	static get staticAreaStyles() {
-		return null;
 	}
 
 	static get dependencies() {
@@ -597,3 +582,5 @@ class MediaGallery extends UI5Element {
 MediaGallery.define();
 
 export default MediaGallery;
+
+export type { MediaGallerySelectionChangeEventDetail };
