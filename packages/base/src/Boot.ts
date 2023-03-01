@@ -1,4 +1,5 @@
 import whenDOMReady from "./util/whenDOMReady.js";
+import EventProvider from "./EventProvider.js";
 import insertFontFace from "./FontFace.js";
 import insertSystemCSSVars from "./SystemCSSVars.js";
 import { getTheme } from "./config/Theme.js";
@@ -7,56 +8,50 @@ import { registerCurrentRuntime } from "./Runtimes.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type F6Navigation from "./features/F6Navigation.js";
-import { PromiseResolve } from "./types.js";
 
-let bootPromise: Promise<void>;
+const eventProvider = new EventProvider<void, void>();
+let booted = false;
 
 /**
  * Attach  a callback that will be executed on boot
  * @public
- * @param listener
+ * @param { Function } listener
  */
-const attachBoot = async (listener: () => void) => {
-	await boot();
-	listener();
+const attachBoot = (listener: () => void) => {
+	eventProvider.attachEvent("boot", listener);
 };
 
 const boot = async (): Promise<void> => {
-	if (bootPromise !== undefined) {
-		return bootPromise;
+	if (booted) {
+		return;
 	}
 
-	const bootExecutor = async (resolve: PromiseResolve) => {
-		if (typeof document === "undefined") {
-			resolve();
-			return;
-		}
-		registerCurrentRuntime();
+	if (typeof document === "undefined") {
+		return;
+	}
 
-		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isLoaded() : false;
-		const f6Navigation = getFeature<typeof F6Navigation>("F6Navigation");
+	registerCurrentRuntime();
 
-		if (openUI5Support) {
-			await openUI5Support.init();
-		}
+	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
+	const isOpenUI5Loaded = openUI5Support ? openUI5Support.isLoaded() : false;
+	const f6Navigation = getFeature<typeof F6Navigation>("F6Navigation");
 
-		if (f6Navigation && !isOpenUI5Loaded) {
-			f6Navigation.init();
-		}
+	if (openUI5Support) {
+		await openUI5Support.init();
+	}
 
-		await whenDOMReady();
-		await applyTheme(getTheme());
-		openUI5Support && openUI5Support.attachListeners();
-		insertFontFace();
-		insertSystemCSSVars();
+	if (f6Navigation && !isOpenUI5Loaded) {
+		f6Navigation.init();
+	}
 
-		resolve();
-	};
+	await whenDOMReady();
+	await applyTheme(getTheme());
+	openUI5Support && openUI5Support.attachListeners();
+	insertFontFace();
+	insertSystemCSSVars();
 
-	bootPromise = new Promise(bootExecutor as (resolve: PromiseResolve) => void);
-
-	return bootPromise;
+	await eventProvider.fireEventAsync("boot");
+	booted = true;
 };
 
 export {
