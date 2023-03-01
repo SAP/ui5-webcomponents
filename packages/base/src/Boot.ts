@@ -20,6 +20,7 @@ let booted = false;
 const attachBoot = (listener: () => void) => {
 	if (!booted) {
 		eventProvider.attachEvent("boot", listener);
+		return;
 	}
 
 	listener();
