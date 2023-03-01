@@ -33,15 +33,15 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  */
 @customElement({
 	tag: "${tagName}",
-	renderer: litRender, /* optional */
-	styles: ${componentName}Css, /* optional */
-	template: ${componentName}Template, /* optional */
+	renderer: litRender,
+	styles: ${componentName}Css,
+	template: ${componentName}Template,
 	dependencies: [
-		// Add dependencies here if needed (e.g. Icon, Button, etc.)
+		
 	],
-	languageAware: true, /* optional */
-	themeAware: true, /* optional */
-	fastNavigation: true, /* optional */
+	languageAware: true,
+	themeAware: true,
+	fastNavigation: true,
 })
 
 /**
@@ -53,11 +53,27 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
  */
 @event("click", { detail: { /* event payload ( optional ) */ } })
 class ${componentName} extends UI5Element {
-	/** @lends sap.ui.webc.${library}.${componentName}.prototype */
+	/**
+	 * Defines the value of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.${library}.${componentName}.prototype.value
+	 * @defaultvalue ""
+	 * @public
+	 */
 	@property()
+	value!: string;
 
-	/** @lends sap.ui.webc.${library}.${componentName}.prototype */
-	@slot()
+	/**
+	 * Defines the text of the component.
+	 *
+	 * @type {Node[]}
+	 * @name sap.ui.webc.${library}.${componentName}.prototype.default
+	 * @slot
+	 * @public
+	 */
+	@slot({ type: Node, "default": true })
+	text!: Array<Node>;
 
 	static async onDefine() {
 

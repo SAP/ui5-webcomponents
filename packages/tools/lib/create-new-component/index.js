@@ -43,42 +43,37 @@ const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.
 const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/);
 
 const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
-	const correctComponentName = capitalizeFirstLetter(componentName);
+	componentName = capitalizeFirstLetter(componentName);
 	const filePaths = {
-		"extension": isTypeScript 
-			? `./src/${correctComponentName}.ts` 
-			: `./src/${correctComponentName}.js`,
-		"css": `./src/themes/${correctComponentName}.css`,
-		"hbs": `./src/${correctComponentName}.hbs`,
+		"main": isTypeScript 
+			? `./src/${componentName}.ts` 
+			: `./src/${componentName}.js`,
+		"css": `./src/themes/${componentName}.css`,
+		"template": `./src/${componentName}.hbs`,
 	};
 
 	const FileContentTemplate = isTypeScript 
-		? tsFileContentTemplate(correctComponentName, tagName, library, packageName) 
-		: jsFileContentTemplate(correctComponentName, tagName, library, packageName);
+		? tsFileContentTemplate(componentName, tagName, library, packageName) 
+		: jsFileContentTemplate(componentName, tagName, library, packageName);
 
-	// The .extension determines if the file is .js or .ts with the help of the isTypeScript check
-	fs.writeFileSync(filePaths.extension, FileContentTemplate, { flag: "wx+" });
+	fs.writeFileSync(filePaths.main, FileContentTemplate, { flag: "wx+" });
 	fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
-	fs.writeFileSync(filePaths.hbs, "<div>Hello World</div>", { flag: "wx+" });
+	fs.writeFileSync(filePaths.template, "<div>Hello World</div>", { flag: "wx+" });
 
-	console.log(isTypeScript 
-		? `Successfully generated ${correctComponentName}.ts` 
-		: `Successfully generated ${correctComponentName}.js`);
-	console.log(`Successfully generated ${correctComponentName}.css`);
-	console.log(`Successfully generated ${correctComponentName}.hbs`);
+	console.log(`Successfully generated ${filePaths.main}`);
+	console.log(`Successfully generated ${filePaths.css}`);
+	console.log(`Successfully generated ${filePaths.template}`);
 
 	// Change the color of the output
 		console.warn('\x1b[33m%s\x1b[0m', `
-	Make sure to import the component in the bundle.common.js file by using:
-	Import ${correctComponentName} from "./dist/${correctComponentName}.js";
-	Do NOT forget to sort the file in alphabetical order.`);
+	Make sure to import the component in your bundle by using:
+	import ${componentName} from "./dist/${componentName}.js";`);
 }
 
 // Main function
 const createWebComponent = async () => {
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
-	let isTypeScript = false;
 
 	if (!componentName) {
 		const response = await prompts({
@@ -117,7 +112,7 @@ const createWebComponent = async () => {
 	const packageName = getPackageName();
 	const library = getLibraryName(packageName);
 
-	if (componentName.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/)) {
+	if (isNameValid(componentName)) {
 		generateFiles(componentName, tagName, library, packageName, isTypeScript);
 	} else {
 		console.warn('\x1b[33m%s\x1b[0m',"Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
