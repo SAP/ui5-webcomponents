@@ -167,7 +167,7 @@ class DateComponentBase extends UI5Element {
 	 * according to the <code>formatPattern</code> property
 	 * @public
 	 * @method
-	 * @name sap.ui.webc.main.DatePicker#formatValue
+	 * @name sap.ui.webc.main.DateComponentBase#formatValue
 	 * @param {object} date A Java Script date object to be formatted as string
 	 * @returns {string} The date as string
 	 */
