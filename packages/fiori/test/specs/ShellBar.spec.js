@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 HANDLE_RESIZE_DEBOUNCE_RATE_WAIT = 250; // ms
 
 const getOverflowPopover = async id => {
