@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -81,9 +80,14 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * @public
  * @since 0.9.0
  */
-@customElement("ui5-message-strip")
-@languageAware
-
+@customElement({
+	tag: "ui5-message-strip",
+	languageAware: true,
+	renderer: litRender,
+	template: MessageStripTemplate,
+	styles: messageStripCss,
+	dependencies: [Icon, Button],
+})
 /**
  * Fired when the close button is pressed either with a
  * click/tap or by using the Enter or Space key.
@@ -166,24 +170,8 @@ class MessageStrip extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return MessageStripTemplate;
-	}
-
-	static get styles() {
-		return messageStripCss;
-	}
-
 	_closeClick() {
 		this.fireEvent("close");
-	}
-
-	static get dependencies() {
-		return [Icon, Button];
 	}
 
 	static async onDefine() {

@@ -76,7 +76,17 @@ type ColorCoordinates = {
  * @public
  */
 
-@customElement("ui5-color-picker")
+@customElement({
+	tag: "ui5-color-picker",
+	renderer: litRender,
+	styles: ColorPickerCss,
+	template: ColorPickerTemplate,
+	dependencies: [
+		Input,
+		Slider,
+		Label,
+	],
+})
 /**
  * Fired when the the selected color is changed
  *
@@ -163,26 +173,6 @@ class ColorPicker extends UI5Element {
 	mouseIn: boolean;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ColorPickerCss;
-	}
-
-	static get template() {
-		return ColorPickerTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			Input,
-			Slider,
-			Label,
-		];
-	}
 
 	static async onDefine() {
 		ColorPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");

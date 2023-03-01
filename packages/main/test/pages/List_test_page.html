@@ -48,6 +48,7 @@
 	</ui5-list>
 	<ui5-input id="itemClickResultField" placeholder="itemClick result"></ui5-input>
 	<ui5-input id="selectionChangeResultField" placeholder="selectionChange result"></ui5-input>
+	<ui5-input id="selectionChangeResultFieldRadio" placeholder="selectionComponentPressed result "></ui5-input>
 	<ui5-input id="selectionChangeResultPreviousItemsParameter" placeholder="selectionChange previousSelection result"></ui5-input>
 
 	<br><br><br>
@@ -282,6 +283,7 @@
 		listEvents.addEventListener("ui5-selection-change", function (event) {
 			selectionChangeCounter += 1;
 			selectionChangeResultField.value = selectionChangeCounter;
+			selectionChangeResultFieldRadio.value = event.detail.selectionComponentPressed;
 		});
 
 		listEvents.addEventListener("ui5-selection-change", function(event) {

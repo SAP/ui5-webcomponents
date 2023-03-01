@@ -21,7 +21,7 @@
 }
 
 .ui5-multi-input-tokenizer::part(n-more-text) {
-	padding-inline-end: 0.3125rem;
+	padding-inline-end: var(--_ui5_input_inner_space_to_n_more_text);
 }
 
 [inner-input][inner-input-with-icon] {
@@ -33,5 +33,6 @@
 }
 
 :host(:not([tokenizer-available])) .ui5-multi-input-tokenizer {
-	display: none;
+	--_ui5_input_tokenizer_min_width: 0px;
+	width: var(--_ui5_input_tokenizer_min_width);
 }

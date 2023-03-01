@@ -1,7 +1,6 @@
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -79,8 +78,17 @@ let activeCb: CheckBox;
  * @tagname ui5-checkbox
  * @public
  */
-@customElement("ui5-checkbox")
-@languageAware
+@customElement({
+	tag: "ui5-checkbox",
+	languageAware: true,
+	renderer: litRender,
+	template: CheckBoxTemplate,
+	styles: checkboxCss,
+	dependencies: [
+		Label,
+		Icon,
+	],
+})
 /**
  * Fired when the component checked state changes.
  *
@@ -280,18 +288,6 @@ class CheckBox extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
 	_deactivate: () => void;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return CheckBoxTemplate;
-	}
-
-	static get styles() {
-		return checkboxCss;
-	}
-
 	constructor() {
 		super();
 
@@ -454,13 +450,6 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	get isCompletelyChecked() {
 		return this.checked && !this.indeterminate;
-	}
-
-	static get dependencies() {
-		return [
-			Label,
-			Icon,
-		];
 	}
 
 	static async onDefine() {

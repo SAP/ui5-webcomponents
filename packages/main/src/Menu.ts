@@ -81,7 +81,19 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @since 1.3.0
  * @public
  */
-@customElement("ui5-menu")
+@customElement({
+	tag: "ui5-menu",
+	renderer: litRender,
+	staticAreaStyles: staticAreaMenuCss,
+	staticAreaTemplate: staticAreaMenuTemplate,
+	dependencies: [
+		ResponsivePopover,
+		Button,
+		List,
+		StandardListItem,
+		Icon,
+	],
+})
 
 /**
  * Fired when an item is being clicked.
@@ -248,28 +260,6 @@ class Menu extends UI5Element {
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get staticAreaStyles() {
-		return staticAreaMenuCss;
-	}
-
-	static get staticAreaTemplate() {
-		return staticAreaMenuTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			ResponsivePopover,
-			Button,
-			List,
-			StandardListItem,
-			Icon,
-		];
-	}
 
 	static async onDefine() {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");

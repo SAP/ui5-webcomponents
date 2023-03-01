@@ -18,14 +18,16 @@ interface DocsPageArgs {
 export const DocsPage = (args: DocsPageArgs) => {
     return () => (
         <>
-            <span className='sb-ui5-title'>
-                <Title />
-            </span>
-            {args.since && (
-                <span className='sb-ui5-component-heading-since'>
-                    <b>v{args.since}</b>
+            <header>
+                <span className='sb-ui5-title'>
+                    <Title />
                 </span>
-            )}
+                {args.since && (
+                    <span className='sb-ui5-component-heading-since'>
+                        <b>v{args.since}</b>
+                    </span>
+                )}
+            </header>
             <div className='sb-ui5-component-package'><b>{args.package}</b></div>
             <div className='sb-ui5-control-tag'>&lt;{args.component}&gt;</div>
             <Subtitle />

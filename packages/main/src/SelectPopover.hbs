@@ -12,7 +12,7 @@
 		style={{styles.responsivePopover}}
 	>
 		{{#if _isPhone}}
-			<div slot="header" class="ui5-responsive-popover-header">
+			<div class="ui5-responsive-popover-header">
 				<div class="row">
 					<span>{{_headerTitleText}}</span>
 					<ui5-button
@@ -32,7 +32,7 @@
 		{{/if}}
 		{{#unless _isPhone}}
 			{{#if hasValueStateText}}
-				<div slot="header" class="{{classes.popoverValueState}}" style={{styles.responsivePopoverHeader}}>
+				<div class="{{classes.popoverValueState}}" style={{styles.responsivePopoverHeader}}>
 					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 					{{> valueStateMessage}}
 				</div>
@@ -73,7 +73,7 @@
 		placement-type="Bottom"
 		horizontal-align="Left"
 	>
-		<div slot="header" class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
+		<div class="{{classes.popoverValueState}}" style="{{styles.popoverHeader}}">
 			<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
 			{{> valueStateMessage}}
 		</div>
