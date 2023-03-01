@@ -785,7 +785,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 
 		if (this._performTextSelection) {
-			// modify DOM directly due to some issues with lit rendering
+			// this is required to syncronize lit-html input's value and user's input
+			// lit-html does not sync its stored value for the value property when the user is typing
 			if (innerInput.value !== this._innerValue) {
 				innerInput.value = this._innerValue;
 			}
