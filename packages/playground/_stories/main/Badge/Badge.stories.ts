@@ -8,8 +8,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type Badge from "@ui5/webcomponents/dist/Badge.js";
 
-import { Basic as Icon } from "../Icon/Icon.stories.js";
-
 const component = "ui5-badge";
 
 export default {
@@ -29,7 +27,7 @@ const Template: UI5StoryArgs<Badge, StoryArgsSlots> = (args) => {
 	color-scheme="${ifDefined(args.colorScheme)}"
 	style="${ifDefined(args.style)}"
 >
-	${args.icon ? Icon({ name: args.icon, slot: "icon" }) : null}
+	${unsafeHTML(args.icon)}
 	${unsafeHTML(args.default)}
 </ui5-badge>`;
 };
@@ -37,7 +35,7 @@ const Template: UI5StoryArgs<Badge, StoryArgsSlots> = (args) => {
 export const Basic = Template.bind({});
 Basic.args = {
 	colorScheme: "6",
-	icon: "pending",
+	icon: `<ui5-icon name="pending" slot="icon"></ui5-icon>`,
 	default: "Pending"
 };
 
@@ -47,26 +45,25 @@ Truncating.args = {
 	style: "width: 200px",
 };
 
-export const AllColorSchemes = Template.bind({});
-AllColorSchemes.args = {}
-
-const AllColorSchemes_badges = [
-	{ icon: "accept", default: "" },
-	{ icon: "sap-ui5", default: "" },
-	{ icon: "add-equipment", default: "In progress" },
-	{ icon: "lab", default: "" },
-	{ icon: "email-read", default: "" },
+const getIconHTML = (name: string): string => `<ui5-icon name="${name}" slot="icon"></ui5-icon>`;
+const AllColorSchemesBadges = [
+	{ icon: getIconHTML("accept"), default: "" },
+	{ icon: getIconHTML("sap-ui5"), default: "" },
+	{ icon: getIconHTML("add-equipment"), default: "In progress" },
+	{ icon: getIconHTML("lab"), default: "" },
+	{ icon: getIconHTML("email-read"), default: "" },
 	{ icon: "", default: "Pending" },
-	{ icon: "lightbulb", default: "New idea" },
-	{ icon: "locked", default: "Locked" },
-	{ icon: "flight", default: "En route" },
+	{ icon: getIconHTML("lightbulb"), default: "New idea" },
+	{ icon: getIconHTML("locked"), default: "Locked" },
+	{ icon: getIconHTML("flight"), default: "En route" },
 	{ icon: "", default: "Archived" },
 ];
 
+export const AllColorSchemes = Template.bind({});
 AllColorSchemes.decorators = [
 	(story, ctx) => {
 		return html`
-			${AllColorSchemes_badges.map((badge, i) => {
+			${AllColorSchemesBadges.map((badge, i) => {
 			return story({
 				args: {
 					colorScheme: ctx.args.colorScheme || (i + 1).toString(),

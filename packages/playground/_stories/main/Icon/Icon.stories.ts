@@ -33,7 +33,6 @@ const Template: UI5StoryArgs<Icon, StoryArgsSlots> = (args) =>
 	accessible-role="${ifDefined(args.accessibleRole)}"
 	?show-tooltip="${ifDefined(args.showTooltip)}"
 	style="${ifDefined(args.style)}"
-	slot="${ifDefined(args.slot)}"
 ></ui5-icon>`;
 
 export const Basic = Template.bind({});
