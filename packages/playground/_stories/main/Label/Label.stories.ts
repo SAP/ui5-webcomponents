@@ -40,16 +40,11 @@ Basic.args = {
 	default: "The quick brown fox jumps over the lazy dog"
 };
 
-export const Required = Template.bind({});
-Required.args = {
-	default: "Required label",
-	required: true,
-}
-
-export const WithColon = Template.bind({});
-WithColon.args = {
+export const RequiredWithColon = Template.bind({});
+RequiredWithColon.args = {
 	default: "Required label with colon",
 	showColon: true,
+	required: true,
 };
 
 const SetWidth200Px = (story: () => unknown) => html`
