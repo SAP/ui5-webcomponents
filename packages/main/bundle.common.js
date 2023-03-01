@@ -90,7 +90,6 @@ import TreeItem from "./dist/TreeItem.js";
 import TreeItemCustom from "./dist/TreeItemCustom.js";
 import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
-import NewListItem from "./dist/NewListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
 
