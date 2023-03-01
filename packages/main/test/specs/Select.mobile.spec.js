@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Select mobile general interaction", () => {
 	before(async () => {

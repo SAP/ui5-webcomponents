@@ -60,7 +60,7 @@ const scripts = {
 	test: {
 		default: 'concurrently "nps test.wdio"',
 		ssr: `mocha test/ssr`,
-		wdio: `node "${LIB}/test-runner/test-runner.js"`
+		wdio: `node "${LIB}/test-runner/test-runner.cjs"`
 	},
 };
 

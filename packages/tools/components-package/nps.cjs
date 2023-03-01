@@ -30,15 +30,15 @@ const getScripts = (options) => {
 	}
 
 	let viteConfig;
-	if (fs.existsSync("config/vite.config.js")) {
+	if (fs.existsSync("config/vite.config.cjs")) {
 		// old project setup where config file is in separate folder
-		viteConfig = "-c config/vite.config.js";
-	} else if (fs.existsSync("vite.config.js")) {
+		viteConfig = "-c config/vite.config.cjs";
+	} else if (fs.existsSync("vite.config.cjs")) {
 		// preferred way of custom configuration in root project folder
 		viteConfig = "";
 	} else {
 		// no custom configuration - use default from tools project
-		viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
+		viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.cjs")}"`;
 	}
 
 	let eslintConfig;
@@ -115,9 +115,9 @@ const getScripts = (options) => {
 			i18n: 'chokidar "src/i18n/messagebundle.properties" -c "nps build.i18n.defaultsjs"'
 		},
 		start: "nps prepare watch.devServer",
-		test: `node "${LIB}/test-runner/test-runner.js"`,
-		"test-suite-1": `node "${LIB}/test-runner/test-runner.js" --suite suite1`,
-		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
+		test: `node "${LIB}/test-runner/test-runner.cjs"`,
+		"test-suite-1": `node "${LIB}/test-runner/test-runner.cjs" --suite suite1`,
+		"test-suite-2": `node "${LIB}/test-runner/test-runner.cjs" --suite suite2`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
 		scope: {
 			prepare: "nps scope.lint prepare scope.testPages",

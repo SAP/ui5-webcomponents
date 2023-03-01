@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 const KEYS = {
 	SHIFT: '\uE008',
 	ALT: '\uE00A',

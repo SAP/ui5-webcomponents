@@ -5,6 +5,7 @@
   "ui5": {
     "webComponentsPackage": true
   },
+  "type": "module",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
   "private": false,

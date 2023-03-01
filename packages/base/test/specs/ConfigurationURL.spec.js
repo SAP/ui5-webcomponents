@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Some settings can be set via SAP UI URL params", () => {
 	before(async () => {

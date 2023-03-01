@@ -1,4 +1,4 @@
-const wdio = require("@ui5/webcomponents-tools/components-package/wdio.js");
+const wdio = require("@ui5/webcomponents-tools/components-package/wdio.cjs");
 
 wdio.config.suites = {
 	"suite1": [

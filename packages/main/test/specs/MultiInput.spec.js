@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 const getTokenizerPopoverId = async (inputId) => {
 	return await browser.executeAsync(async (inputId, done) => {

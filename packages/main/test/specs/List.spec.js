@@ -1,5 +1,5 @@
-const list = require("../pageobjects/ListTestPage");
-const assert = require("chai").assert;
+import list from "../pageobjects/ListTestPage";
+import { assert } from "chai";
 
 /**
  *
