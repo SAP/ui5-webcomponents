@@ -13,7 +13,7 @@ const eventProvider = new EventProvider<void, void>();
 let booted = false;
 
 /**
- * Attach  a callback that will be executed on boot
+ * Attaches a callback that will be executed after boot finishes.
  * @public
  * @param { Function } listener
  */
