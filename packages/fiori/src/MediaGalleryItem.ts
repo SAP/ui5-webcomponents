@@ -126,7 +126,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	/**
 	 * @private
 	 */
-	@property({ defaultValue: "" })
+	@property()
 	_tabIndex!: string;
 
 	/**

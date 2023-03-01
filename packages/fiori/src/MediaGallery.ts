@@ -27,7 +27,7 @@ import MediaGalleryCss from "./generated/themes/MediaGallery.css.js";
 import MediaGalleryTemplate from "./generated/templates/MediaGalleryTemplate.lit.js";
 
 type MediaGallerySelectionChangeEventDetail = {
-	item: HTMLElement;
+	item: MediaGalleryItem;
 }
 
 // The allowed number of thumbnail columns on each size
