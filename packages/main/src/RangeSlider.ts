@@ -204,6 +204,10 @@ class RangeSlider extends SliderBase {
 		return ariaHandlesText;
 	}
 
+	get _ariaValueNow() {
+		return Math.abs(this.endValue - this.startValue);
+	}
+
 	/**
 	 * Check if the previously saved state is outdated. That would mean
 	 * either it is the initial rendering or that a property has been changed
