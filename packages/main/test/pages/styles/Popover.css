@@ -40,14 +40,10 @@ ui5-date-picker,
     height: 400px
 }
 
-.popover9auto {
-    height: 3rem;
-    background: red;
-}
-
 .popover10auto {
     height: 3rem;
     background: yellow;
+    margin: 0 1rem;
 }
 
 .popover11auto {

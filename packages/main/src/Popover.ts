@@ -450,8 +450,6 @@ class Popover extends Popup {
 			placement = this.calcPlacement(this._openerRect!, popoverSize);
 		}
 
-		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
-
 		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect!)) {
 			return this.close();
 		}
@@ -490,7 +488,7 @@ class Popover extends Popup {
 		});
 		super._show();
 
-		if (stretching && this._width) {
+		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
 			this.style.width = this._width;
 		}
 	}
@@ -751,9 +749,19 @@ class Popover extends Popup {
 	}
 
 	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
+		const isRTL = this.effectiveDir === "rtl";
+		let actualHAlign = this.horizontalAlign;
 		let left;
 
-		switch (this.horizontalAlign) {
+		if (isRTL) {
+			if (actualHAlign === PopoverHorizontalAlign.Left) {
+				actualHAlign = PopoverHorizontalAlign.Right;
+			} else if (actualHAlign === PopoverHorizontalAlign.Right) {
+				actualHAlign = PopoverHorizontalAlign.Left;
+			}
+		}
+
+		switch (actualHAlign) {
 		case PopoverHorizontalAlign.Center:
 		case PopoverHorizontalAlign.Stretch:
 			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
