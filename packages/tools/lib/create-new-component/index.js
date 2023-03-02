@@ -40,7 +40,7 @@ const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.
 
 // Validation of user input
 const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/);
-const isTagNameValid = tagName => tagName.match(/^[a-z]+-[a-z0-9]*(-[a-z0-9]+)*$/);
+const isTagNameValid = tagName => tagName.match(/^[a-z][a-z0-9]+-[a-z0-9]*(-[a-z0-9]+)*$/);
 
 const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
 	componentName = capitalizeFirstLetter(componentName);
@@ -74,8 +74,9 @@ const generateFiles = (componentName, tagName, library, packageName, isTypeScrip
 const createWebComponent = async () => {
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
-	let language = consoleArguments[1];
-	let tagName = consoleArguments[2];
+	let tagName = consoleArguments[1];
+	let language = consoleArguments[2];
+	let isTypeScript;
 
 	if (!componentName) {
 		const response = await prompts({
@@ -87,35 +88,7 @@ const createWebComponent = async () => {
 		componentName = response.componentName;
 	}
 
-	if (consoleArguments.length === 2) {
-		language = consoleArguments[1];
-		isTypeScript = language === "typescript" || language === "ts";
-	} else if (consoleArguments.length === 3 && (tagName && !isTagNameValid(tagName))) {
-		console.warn('\x1b[33m%s\x1b[0m',"Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
-		return;
-	} else {
-		const response = await prompts({
-		type: "select",
-		name: "language",
-		message: "Component type:",
-		choices: [
-			{
-				title: "TypeScript (recommended)",
-				value: true,
-			},
-			{
-				title: "JavaScript",
-				value: false,
-			},
-		],
-			initial: 0,
-		});
-		isTypeScript = response.language;
-	}
-
-	if (consoleArguments.length === 3 && tagName) {
-		tagName = consoleArguments[2];
-	} else {
+	if (!tagName) {
 		const response = await prompts({
 			type: "text",
 			name: "tagName",
@@ -123,6 +96,29 @@ const createWebComponent = async () => {
 			validate: (value) => isTagNameValid(value),
 		});
 		tagName = response.tagName;
+	}
+
+	if (!language && isTagNameValid(tagName)) {
+		const response = await prompts({
+			type: "select",
+			name: "language",
+			message: "Please select a language:",
+			choices: [
+				{
+					title: "TypeScript (recommended)",
+					value: "ts" 
+				},
+				{
+					title: "JavaScript",
+					value: "js" 
+				},
+			],
+		});
+		language = response.language;
+	} else if (language === "ts" || language === "typescript") {
+		isTypeScript = true;
+	} else {
+		isTypeScript = false;
 	}
 
 	const packageName = getPackageName();
