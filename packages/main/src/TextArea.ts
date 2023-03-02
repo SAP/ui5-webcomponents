@@ -219,7 +219,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * Defines the maximum number of characters that the <code>value</code> can have.
 	 *
 	 * @type {sap.ui.webc.base.types.Integer}
-	 * @name sap.ui.webc.main.TextArea.prototype.maxLength
+	 * @name sap.ui.webc.main.TextArea.prototype.maxlength
 	 * @defaultValue null
 	 * @public
 	 */
