@@ -416,7 +416,7 @@ describe("Component Behavior", () => {
 			it("tests if searchfield toggles when altering the showSearchField property", async () => {
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
 				const shellBar = await browser.$("#shellbar");
-				
+
 				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
 
 				await shellBar.setProperty('showSearchField', true);
@@ -517,12 +517,23 @@ describe("Component Behavior", () => {
 			it("tests if searchfield toggles when altering the showSearchField property", async () => {
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
 				const shellBar = await browser.$("#shellbar");
-				
+
 				assert.notOk(await searchField.isDisplayed(), "Search is hidden by default");
 
 				await shellBar.setProperty('showSearchField', true);
 				assert.ok(await searchField.isDisplayed(), "Search is visible after altering the showSearchField property of the ShellBar");
 				await shellBar.setProperty('showSearchField', false); // Clean Up
+			});
+
+			it("tests if Avatar initials check passses over loaded DOM elements", async () => {
+				const initials = await browser.$("#shellbarProfileInitials").shadow$(".avatar-initials");
+				const fallbackIcon = await browser.$("#shellbarProfileInitials").shadow$(".ui5-avatar-icon");
+				const shellBar = await browser.$("#shellbarProfileInitials");
+
+				//assert
+				assert.equal(typeof await initials, "object", "Initials are not shown, because they are taking too much space");
+				assert.ok(typeof await fallbackIcon, "undefined", "Fallback icon is shown instead");
+
 			});
 		});
 	});

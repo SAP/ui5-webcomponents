@@ -7,7 +7,8 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
@@ -276,6 +277,12 @@ class Avatar extends UI5Element implements ITabbable {
 
 	_onclick?: (e: MouseEvent) => void;
 	static i18nBundle: I18nBundle;
+	_handleResizeBound: ResizeObserverCallback;
+
+	constructor() {
+		super();
+		this._handleResizeBound = this.handleResize.bind(this);
+	}
 
 	static async onDefine() {
 		Avatar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -342,14 +349,27 @@ class Avatar extends UI5Element implements ITabbable {
 		return this._hasImage;
 	}
 
+	get initialsContainer(): HTMLObjectElement | null {
+		return this.getDomRef()!.querySelector(".ui5-avatar-initials");
+	 }
+
 	onBeforeRendering() {
 		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
 	}
 
-	onAfterRendering() {
+	handleResize() {
 		this._checkInitials();
 	}
 
+	onEnterDOM() {
+		this.initialsContainer && ResizeHandler.register(this.initialsContainer,
+			this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		this.initialsContainer && ResizeHandler.deregister(this.initialsContainer,
+			this._handleResizeBound);
+	}
 	_setFallbackIcon() {
 		// if there isn`t icon set in the avatar the default one is shown, when the initials are not valid or are missing
 		this.icon = this.icon || "employee";
