@@ -30,15 +30,15 @@ const getScripts = (options) => {
 	}
 
 	let viteConfig;
-	if (fs.existsSync("config/vite.config.cjs")) {
+	if (fs.existsSync("config/vite.config.js")) {
 		// old project setup where config file is in separate folder
-		viteConfig = "-c config/vite.config.cjs";
-	} else if (fs.existsSync("vite.config.cjs")) {
+		viteConfig = "-c config/vite.config.js";
+	} else if (fs.existsSync("vite.config.js")) {
 		// preferred way of custom configuration in root project folder
 		viteConfig = "";
 	} else {
 		// no custom configuration - use default from tools project
-		viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.cjs")}"`;
+		viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
 	}
 
 	let eslintConfig;
