@@ -1,5 +1,4 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -25,8 +24,12 @@ import groupheaderListItemCss from "./generated/themes/GroupHeaderListItem.css.j
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
-@customElement("ui5-li-groupheader")
-@languageAware
+@customElement({
+	tag: "ui5-li-groupheader",
+	languageAware: true,
+	template: GroupHeaderListItemTemplate,
+	styles: [ListItemBase.styles, groupheaderListItemCss],
+})
 class GroupHeaderListItem extends ListItemBase {
 	/**
 	 * Defines the text alternative of the component.
@@ -53,14 +56,6 @@ class GroupHeaderListItem extends ListItemBase {
 	 */
 
 	static i18nBundle: I18nBundle;
-
-	static get template() {
-		return GroupHeaderListItemTemplate;
-	}
-
-	static get styles() {
-		return [ListItemBase.styles, groupheaderListItemCss];
-	}
 
 	get groupItem() {
 		return true;

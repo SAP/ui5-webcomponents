@@ -33,7 +33,7 @@ import type { ICalendarPicker } from "./Calendar.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/MonthPicker.css.js";
+import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
 
 const PAGE_SIZE = 12; // total months on a single page
 const ROW_SIZE = 3; // months per row (4 rows of 3 months each)
@@ -74,7 +74,11 @@ type MonthPickerNavigateEventDetail = {
  * @tagname ui5-monthpicker
  * @public
  */
-@customElement("ui5-monthpicker")
+@customElement({
+	tag: "ui5-monthpicker",
+	template: MonthPickerTemplate,
+	styles: monthPickerStyles,
+})
 /**
  * Fired when the user selects a month via "Space", "Enter" or click.
  * @public
@@ -110,14 +114,6 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	_hidden!: boolean;
 
 	static i18nBundle: I18nBundle;
-
-	static get template() {
-		return MonthPickerTemplate;
-	}
-
-	static get styles() {
-		return styles;
-	}
 
 	static async onDefine() {
 		MonthPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");

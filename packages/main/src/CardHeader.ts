@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -56,8 +55,13 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * @public
  * @since 1.0.0-rc.15
  */
-@customElement("ui5-card-header")
-@languageAware
+@customElement({
+	tag: "ui5-card-header",
+	languageAware: true,
+	renderer: litRender,
+	template: CardHeaderTemplate,
+	styles: cardHeaderCss,
+})
 /**
  * Fired when the component is activated by mouse/tap or by using the Enter or Space key.
  * <br><br>
@@ -142,18 +146,6 @@ class CardHeader extends UI5Element {
 	action!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return CardHeaderTemplate;
-	}
-
-	static get styles() {
-		return cardHeaderCss;
-	}
 
 	get classes() {
 		return {

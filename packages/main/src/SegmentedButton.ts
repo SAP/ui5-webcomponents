@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -52,9 +51,14 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * @appenddocs sap.ui.webc.main.SegmentedButtonItem
  * @public
  */
-
-@customElement("ui5-segmented-button")
-@languageAware
+@customElement({
+	tag: "ui5-segmented-button",
+	languageAware: true,
+	renderer: litRender,
+	template: SegmentedButtonTemplate,
+	styles: SegmentedButtonCss,
+	dependencies: [SegmentedButtonItem],
+})
 /**
  * Fired when the selected item changes.
  *
@@ -106,22 +110,6 @@ class SegmentedButton extends UI5Element {
 
 	widths?: Array<number>;
 	_selectedItem?: SegmentedButtonItem;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return SegmentedButtonTemplate;
-	}
-
-	static get styles() {
-		return SegmentedButtonCss;
-	}
-
-	static get dependencies() {
-		return [SegmentedButtonItem];
-	}
 
 	static async onDefine() {
 		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");

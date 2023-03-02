@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import TitleLevel from "./types/TitleLevel.js";
 import WrappingType from "./types/WrappingType.js";
 
@@ -30,7 +30,12 @@ import titleCss from "./generated/themes/Title.css.js";
  * @tagname ui5-title
  * @public
  */
-@customElement("ui5-title")
+@customElement({
+	tag: "ui5-title",
+	renderer: litRender,
+	template: TitleTemplate,
+	styles: titleCss,
+})
 class Title extends UI5Element {
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -70,18 +75,6 @@ class Title extends UI5Element {
 	 * @name sap.ui.webc.main.Title.prototype.default
 	 * @public
 	 */
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TitleTemplate;
-	}
-
-	static get styles() {
-		return titleCss;
-	}
 
 	get normalizedLevel() {
 		return this.level.toLowerCase();

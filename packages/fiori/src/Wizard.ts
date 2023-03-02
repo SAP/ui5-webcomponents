@@ -208,8 +208,8 @@ type StepInfo = {
  * or by clicking on the steps within the component header.
  *
  * @event sap.ui.webc.fiori.Wizard#step-change
- * @param {WizardStep} step The new step.
- * @param {WizardStep} previousStep The previous step.
+ * @param {sap.ui.webc.fiori.IWizardStep} step The new step.
+ * @param {sap.ui.webc.fiori.IWizardStep} previousStep The previous step.
  * @param {boolean} changeWithClick The step change occurs due to user's click or 'Enter'/'Space' key press on step within the navigation.
  * @public
  */
