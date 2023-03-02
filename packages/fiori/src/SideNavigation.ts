@@ -103,7 +103,7 @@ type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedIte
  * Fired when the selection has changed via user interaction
  *
  * @event sap.ui.webc.fiori.SideNavigation#selection-change
- * @param {sap.ui.webc.fiori.SideNavigationItem|sap.ui.webc.fiori.SideNavigationSubItem} item the clicked item.
+ * @param {sap.ui.webc.fiori.ISideNavigationItem|sap.ui.webc.fiori.ISideNavigationSubItem} item the clicked item.
  * @allowPreventDefault
  * @public
  */
