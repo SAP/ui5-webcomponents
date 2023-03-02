@@ -136,7 +136,7 @@ class SideNavigation extends UI5Element {
 	 * inside the items.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
+	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
 	 * @slot items
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.default
 	 */
@@ -165,7 +165,7 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
+	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
 	 * @slot fixedItems
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.fixedItems
 	 */
