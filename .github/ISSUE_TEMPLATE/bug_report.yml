@@ -1,6 +1,6 @@
 name: Bug Report
 description: File a bug report
-title: '[component Name|framework|icons|localization|i18n|build|Typescript]:'
+title: '[component name | framework | build | icons | theming | localization | i18n | typescript]:'
 labels: ["bug"]
 assignees: []
 body:
@@ -28,7 +28,7 @@ body:
     id: example
     attributes:
       label: 'Isolated Example'
-      description: 'Please provide a link an isolated example if possible by forking [this codesandbox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html).'
+      description: 'Please provide a link to an isolated example if possible by forking [this codesandbox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html).'
     validations:
       required: false
   - type: textarea
@@ -72,7 +72,7 @@ body:
         - High
         - Very High
     validations:
-      required: true
+      required: false
 
   - type: markdown
     attributes:
@@ -123,5 +123,5 @@ body:
       label: Declaration
       description: By submitting this issue, I confirm to follow the recommendation not to disclose any internal or sensitive information.
       options:
-        - label: I don't disclose any internal or sensitive information.
+        - label: I’m not disclosing any internal or sensitive information.
           required: true
