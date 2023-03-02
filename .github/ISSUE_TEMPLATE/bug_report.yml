@@ -4,12 +4,6 @@ title: '[component Name|framework|icons|localization|i18n|build|Typescript]:'
 labels: ["bug"]
 assignees: []
 body:
-  - type: markdown
-    attributes:
-      value: |
-        ## Important
-        Please don't disclose any internal or sensitive information.
-        This is a public GitHub repository and all the information is publicly available.
   - type: textarea
     id: description
     attributes:
@@ -117,7 +111,14 @@ body:
       label: Additional Context
       description: Add business impact or any other context about the problem here.
 
+  - type: markdown
+    attributes:
+      value: |
+        ## Privacy Policy
+        Please don't disclose any internal or sensitive information.
+        This is a public GitHub repository and all the information is publicly available.
   - type: checkboxes
+    id: confirmation
     attributes:
       label: Declaration
       description: By submitting this issue, I confirm to follow the recommendation not to disclose any internal or sensitive information.
