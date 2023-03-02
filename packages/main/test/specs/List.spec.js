@@ -1,4 +1,4 @@
-import list from "../pageobjects/ListTestPage";
+import list from "../pageobjects/ListTestPage.js";
 import { assert } from "chai";
 
 /**
