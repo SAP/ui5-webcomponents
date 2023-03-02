@@ -207,11 +207,11 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this, this._onResizeBind.bind(this));
+		ResizeHandler.register(this, this._onResizeBind);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this._onResizeBind.bind(this));
+		ResizeHandler.deregister(this, this._onResizeBind);
 	}
 
 	get hasDesc() {
