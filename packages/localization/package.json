@@ -4,6 +4,7 @@
   "description": "Localization for UI5 Web Components",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
+  "type": "module",
   "keywords": [
     "openui5",
     "sapui5",
