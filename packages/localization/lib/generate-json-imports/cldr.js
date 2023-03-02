@@ -1,5 +1,5 @@
-const fs = require("fs").promises;
-const assets = require("@ui5/webcomponents-tools/assets-meta.js");
+import fs from "fs/promises";
+import assets from "@ui5/webcomponents-tools/assets-meta.js";
 
 const allLocales = assets.locales.all;
 
