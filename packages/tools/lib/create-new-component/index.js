@@ -106,16 +106,16 @@ const createWebComponent = async () => {
 			choices: [
 				{
 					title: "TypeScript (recommended)",
-					value: "ts" 
+					value: true,
 				},
 				{
 					title: "JavaScript",
-					value: "js" 
+					value: false,
 				},
 			],
 		});
-		language = response.language;
-	} else if (language === "ts" || language === "typescript") {
+		isTypeScript = response.language;
+	} else if (language === "typescript" || language === "ts") {
 		isTypeScript = true;
 	} else {
 		isTypeScript = false;
