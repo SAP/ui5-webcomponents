@@ -1,4 +1,4 @@
-import datepicker from "../pageobjects/DatePickerTestPage";
+import datepicker from "../pageobjects/DatePickerTestPage.js";
 import { assert } from "chai";
 
 describe("Date Picker Tests", () => {

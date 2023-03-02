@@ -1,4 +1,4 @@
-import daypicker from "../pageobjects/DayPickerTestPage";
+import daypicker from "../pageobjects/DayPickerTestPage.js";
 import { assert } from "chai";
 
 describe("Day Picker Tests", () => {
