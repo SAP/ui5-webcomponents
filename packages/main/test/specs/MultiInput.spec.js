@@ -178,7 +178,7 @@ describe("MultiInput general interaction", () => {
 		await browser.keys("Backspace");
 		await browser.keys("Backspace");
 		await browser.keys("Delete");
-		tokens = await input.$$("ui5-token");
+		const tokens = await input.$$("ui5-token");
 
 		// Assert
 		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");
