@@ -33,10 +33,10 @@ const getScripts = (options) => {
 	}
 
 	let eslintConfig;
-	if (fs.existsSync("config/.eslintrc.js")) {
+	if (fs.existsSync("config/.eslintrc.cjs")) {
 		// old project setup where config file is in separate folder
-		eslintConfig = "--config config/.eslintrc.js";
-	} else if (fs.existsSync(".eslintrc.js")) {
+		eslintConfig = "--config config/.eslintrc.cjs";
+	} else if (fs.existsSync(".eslintrc.cjs")) {
 		// preferred way of custom configuration in root project folder
 		eslintConfig = "";
 	} else {
