@@ -358,6 +358,8 @@ class TreeItemBase extends ListItem {
 	/**
 	 * Call this method to manually switch the <code>expanded</code> state of a tree item.
 	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TreeItemBase#toggle
 	 */
 	toggle() {
 		this.expanded = !this.expanded;
