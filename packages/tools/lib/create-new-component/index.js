@@ -36,11 +36,11 @@ const getLibraryName = packageName => {
 };
 
 // String manipulation
-const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
 
 // Validation of user input
 const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/);
+const isTagNameValid = tagName => tagName.match(/^[a-z]+-[a-z0-9]*(-[a-z0-9]+)*$/);
 
 const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
 	componentName = capitalizeFirstLetter(componentName);
@@ -74,6 +74,8 @@ const generateFiles = (componentName, tagName, library, packageName, isTypeScrip
 const createWebComponent = async () => {
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
+	let language = consoleArguments[1];
+	let tagName = consoleArguments[2];
 
 	if (!componentName) {
 		const response = await prompts({
@@ -86,8 +88,11 @@ const createWebComponent = async () => {
 	}
 
 	if (consoleArguments.length === 2) {
-		let language = consoleArguments[1];
-		isTypeScript = language === "typescript";
+		language = consoleArguments[1];
+		isTypeScript = language === "typescript" || language === "ts";
+	} else if (consoleArguments.length === 3 && (tagName && !isTagNameValid(tagName))) {
+		console.warn('\x1b[33m%s\x1b[0m',"Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
+		return;
 	} else {
 		const response = await prompts({
 		type: "select",
@@ -108,14 +113,27 @@ const createWebComponent = async () => {
 		isTypeScript = response.language;
 	}
 
-	const tagName = `ui5-${camelToKebabCase(componentName)}`;
+	if (consoleArguments.length === 3 && tagName) {
+		tagName = consoleArguments[2];
+	} else {
+		const response = await prompts({
+			type: "text",
+			name: "tagName",
+			message: "Please enter a tag name:",
+			validate: (value) => isTagNameValid(value),
+		});
+		tagName = response.tagName;
+	}
+
 	const packageName = getPackageName();
 	const library = getLibraryName(packageName);
 
-	if (isNameValid(componentName)) {
+	if (isNameValid(componentName) && isTagNameValid(tagName)) {
 		generateFiles(componentName, tagName, library, packageName, isTypeScript);
-	} else {
+	} else if (!isNameValid(componentName) && isTagNameValid(tagName)) {
 		console.warn('\x1b[33m%s\x1b[0m',"Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
+	} else {
+		console.warn('\x1b[33m%s\x1b[0m',"Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
 	}
 };
 
