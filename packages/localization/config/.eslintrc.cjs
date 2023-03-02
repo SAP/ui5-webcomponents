@@ -1,3 +1,3 @@
-const config = require("@ui5/webcomponents-tools/components-package/eslint.js");
+import eslintConfig from "@ui5/webcomponents-tools/components-package/eslint.js";
 
-module.exports = config;
+export default eslintConfig;
