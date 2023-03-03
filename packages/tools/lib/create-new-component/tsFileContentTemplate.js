@@ -36,9 +36,7 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
 	renderer: litRender,
 	styles: ${componentName}Css,
 	template: ${componentName}Template,
-	dependencies: [
-		
-	],
+	dependencies: [],
 	languageAware: true,
 	themeAware: true,
 	fastNavigation: true,
