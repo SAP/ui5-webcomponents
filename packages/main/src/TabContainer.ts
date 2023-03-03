@@ -677,6 +677,7 @@ class TabContainer extends UI5Element {
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
 	 * @readonly
+     * @name sap.ui.webc.main.TabContainer.prototype.allItems
 	 * @returns {sap.ui.webc.main.ITab[]}
 	 */
 	get allItems() {

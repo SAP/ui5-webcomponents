@@ -24,7 +24,7 @@ class Option extends UI5Element implements IOption {
 	 * Defines the selected state of the component.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Option.selected
+	 * @name sap.ui.webc.main.Option.prototype.selected
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -36,7 +36,7 @@ class Option extends UI5Element implements IOption {
 	 * <b>Note:</b> A disabled component is hidden.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Option.disabled
+	 * @name sap.ui.webc.main.Option.prototype.disabled
 	 * @public
 	 * @since 1.0.0-rc.12
 	 */
@@ -61,7 +61,7 @@ class Option extends UI5Element implements IOption {
 	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Option.icon
+	 * @name sap.ui.webc.main.Option.prototype.icon
 	 * @public
 	 */
 	@property({ defaultValue: null })
@@ -72,7 +72,7 @@ class Option extends UI5Element implements IOption {
 	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Option.value
+	 * @name sap.ui.webc.main.Option.prototype.value
 	 * @public
 	 */
 	@property()
@@ -81,7 +81,7 @@ class Option extends UI5Element implements IOption {
 	/**
 	 * Defines the additional text displayed at the end of the option element.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Option.additionalText
+	 * @name sap.ui.webc.main.Option.prototype.additionalText
 	 * @public
 	 * @since 1.3.0
 	 */
