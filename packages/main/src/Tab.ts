@@ -269,6 +269,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 *
 	 * @function
 	 * @public
+     * @name sap.ui.webc.main.Tab.prototype.getTabInStripDomRef
 	 * @since 1.0.0-rc.16
 	 */
 	getTabInStripDomRef() {

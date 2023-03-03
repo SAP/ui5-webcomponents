@@ -349,7 +349,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * <b>Note:</b> The <code>valueStateMessage</code> would be displayed if the component has
 	 * <code>valueState</code> of type <code>Information</code>, <code>Warning</code> or <code>Error</code>.
 	 * @type {HTMLElement[]}
-	 * @name sa.ui.webc.main.TextArea.prototype.valueStateMessage
+	 * @name sap.ui.webc.main.TextArea.prototype.valueStateMessage
 	 * @since 1.0.0-rc.7
 	 * @slot
 	 * @public
