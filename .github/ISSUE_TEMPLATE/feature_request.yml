@@ -12,7 +12,7 @@ body:
       required: true
 
   - type: textarea
-    id: proposal
+    id: solution
     attributes:
       label: Proposed Solution
       description: A clear and concise description of the solution you would like to have.
@@ -20,7 +20,7 @@ body:
       required: true
 
   - type: textarea
-    id: proposal
+    id: alternative
     attributes:
       label: Proposed Alternatives
       description: A clear and concise description of any alternative solutions or features you've considered.
@@ -28,7 +28,7 @@ body:
       required: false
 
   - type: textarea
-    id: proposal
+    id: context
     attributes:
       label: Additional Context
       description: Add other context (f.e business impact), related to the feature request.
