@@ -630,7 +630,7 @@ class ComboBox extends UI5Element {
 			const item = this._getFirstMatchingItem(value);
 			item && this._applyAtomicValueAndSelection(item, value, true);
 
-			if (value !== "" && !this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
+			if (value !== "" && (item && !item.selected && !item.isGroupItem)) {
 				this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 					item,
 				});
