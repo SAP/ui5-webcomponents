@@ -1,14 +1,14 @@
 /**
- * Different Calendar modes.
+ * Defines which pickers the calendar is allowed to show - day/month/year, only month/year, or only year.
  *
  * @class
  * @enum {string}
  * @private
  * @author SAP SE
- * @alias sap.ui.webc.main.types.CalendarPickerMode
+ * @alias sap.ui.webc.main.types.CalendarPickersMode
  */
 
-enum CalendarPickerMode {
+enum CalendarPickersMode {
 	/**
 	 * User can select days, months and years
 	 * @public
@@ -31,4 +31,4 @@ enum CalendarPickerMode {
 	YEAR = "YEAR"
 }
 
-export default CalendarPickerMode;
+export default CalendarPickersMode;

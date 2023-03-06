@@ -27,7 +27,7 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
-import CalendarPickerMode from "./types/CalendarPickerMode.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -740,21 +740,21 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return !this.disabled && !this.readonly;
 	}
 
-	get _calendarPickerMode() {
+	get _calendarPickersMode() {
 		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
 		const patternSymbolTypes = format.aFormatArray.map(patternSymbolSettings => {
 			return patternSymbolSettings.type.toLowerCase();
 		});
 
 		if (patternSymbolTypes.includes("day")) {
-			return CalendarPickerMode.DAY_MONTH_YEAR;
+			return CalendarPickersMode.DAY_MONTH_YEAR;
 		}
 
 		if (patternSymbolTypes.includes("month") || patternSymbolTypes.includes("monthstandalone")) {
-			return CalendarPickerMode.MONTH_YEAR;
+			return CalendarPickersMode.MONTH_YEAR;
 		}
 
-		return CalendarPickerMode.YEAR;
+		return CalendarPickersMode.YEAR;
 	}
 
 	/**

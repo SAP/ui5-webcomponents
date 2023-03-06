@@ -10,7 +10,7 @@ import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
 import type { DatePickerChangeEventDetail } from "./DatePicker.js";
-import CalendarPickerMode from "./types/CalendarPickerMode.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 
 /**
  * @class
@@ -360,8 +360,8 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	get _calendarPickerMode() {
-		return CalendarPickerMode.DAY_MONTH_YEAR;
+	get _calendarPickersMode() {
+		return CalendarPickersMode.DAY_MONTH_YEAR;
 	}
 }
 
