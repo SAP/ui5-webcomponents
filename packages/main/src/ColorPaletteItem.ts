@@ -33,7 +33,12 @@ import ColorPaletteItemCss from "./generated/themes/ColorPaletteItem.css.js";
  * @implements sap.ui.webc.main.IColorPaletteItem
  * @public
  */
-@customElement("ui5-color-palette-item")
+@customElement({
+	tag: "ui5-color-palette-item",
+	renderer: litRender,
+	styles: ColorPaletteItemCss,
+	template: ColorPaletteItemTemplate,
+})
 class ColorPaletteItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the colour of the component.
@@ -79,18 +84,6 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 	_disabled!: boolean;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ColorPaletteItemCss;
-	}
-
-	static get template() {
-		return ColorPaletteItemTemplate;
-	}
 
 	static async onDefine() {
 		ColorPaletteItem.i18nBundle = await getI18nBundle("@ui5/webcomponents");

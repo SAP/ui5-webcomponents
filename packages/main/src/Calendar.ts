@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -166,8 +165,19 @@ type CalendarChangeEventDetail = {
  * @public
  * @since 1.0.0-rc.11
  */
-@customElement("ui5-calendar")
-@fastNavigation
+@customElement({
+	tag: "ui5-calendar",
+	fastNavigation: true,
+	template: CalendarTemplate,
+	styles: calendarCSS,
+	dependencies: [
+		CalendarDateComponent.default,
+		CalendarHeader,
+		DayPicker,
+		MonthPicker,
+		YearPicker,
+	],
+})
 /**
  * Fired when the selected dates change.
  * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
@@ -258,14 +268,6 @@ class Calendar extends CalendarPart {
 	 */
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	dates!: Array<CalendarDateComponentT>;
-
-	static get template() {
-		return CalendarTemplate;
-	}
-
-	static get styles() {
-		return calendarCSS;
-	}
 
 	/**
 	 * @private
@@ -508,16 +510,6 @@ class Calendar extends CalendarPart {
 	 */
 	set selectedDates(selectedDates: Array<number>) {
 		this._setSelectedDates(selectedDates);
-	}
-
-	static get dependencies() {
-		return [
-			CalendarDateComponent.default,
-			CalendarHeader,
-			DayPicker,
-			MonthPicker,
-			YearPicker,
-		];
 	}
 }
 

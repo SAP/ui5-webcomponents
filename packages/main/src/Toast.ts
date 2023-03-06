@@ -53,8 +53,12 @@ const MAX_DURATION = 1000;
  * @public
  * @since 1.0.0-rc.6
  */
-
-@customElement("ui5-toast")
+@customElement({
+	tag: "ui5-toast",
+	renderer: litRender,
+	styles: ToastCss,
+	template: ToastTemplate,
+})
 class Toast extends UI5Element {
 	/**
 	 * Defines the duration in milliseconds for which component
@@ -131,18 +135,6 @@ class Toast extends UI5Element {
 	 */
 
 	_reopen: boolean;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ToastCss;
-	}
-
-	static get template() {
-		return ToastTemplate;
-	}
 
 	constructor() {
 		super();

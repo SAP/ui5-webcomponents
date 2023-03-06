@@ -98,8 +98,16 @@ class NotificationAction extends UI5Element {
 	@property()
 	icon!: string;
 
-	fireClickEvent(e: MouseEvent) {
-		this.fireEvent<NotificationActionClickEventDetail>("click", {
+	/**
+	 * Fires a custom event "click".
+	 * <b>Note:</b> Called by NotificationListItem and NotificationListGroupItem components.
+	 *
+	 * @param { MouseEvent } e
+	 * @protected
+	 * @returns { boolean } false, if the event was cancelled (preventDefault called), true otherwise
+	 */
+	fireClickEvent(e: MouseEvent): boolean {
+		return this.fireEvent<NotificationActionClickEventDetail>("click", {
 			targetRef: (e.target as Button),
 		}, true);
 	}

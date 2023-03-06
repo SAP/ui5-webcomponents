@@ -1,10 +1,8 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import {
 	isEscape,
 	isHome,
@@ -100,8 +98,13 @@ type AffectedValue = "startValue" | "endValue";
  * @since 1.0.0-rc.11
  * @public
  */
-@customElement("ui5-range-slider")
-@languageAware
+@customElement({
+	tag: "ui5-range-slider",
+	languageAware: true,
+	template: RangeSliderTemplate,
+	dependencies: [Icon],
+	styles: [SliderBase.styles, rangeSliderStyles],
+})
 class RangeSlider extends SliderBase {
 	/**
 	 * Defines start point of a selection - position of a first handle on the slider.
@@ -150,18 +153,6 @@ class RangeSlider extends SliderBase {
 
 	static i18nBundle: I18nBundle;
 
-	static get template() {
-		return RangeSliderTemplate;
-	}
-
-	static get dependencies() {
-		return [Icon];
-	}
-
-	static get styles(): ComponentStylesData {
-		return [SliderBase.styles, rangeSliderStyles];
-	}
-
 	constructor() {
 		super();
 		this._stateStorage.startValue = undefined;
@@ -202,6 +193,10 @@ class RangeSlider extends SliderBase {
 		}
 
 		return ariaHandlesText;
+	}
+
+	get _ariaValueNow() {
+		return Math.abs(this.endValue - this.startValue);
 	}
 
 	/**

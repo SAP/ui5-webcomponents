@@ -84,7 +84,13 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * @public
  * @since 1.1.0
  */
-@customElement("ui5-split-button")
+@customElement({
+	tag: "ui5-split-button",
+	renderer: litRender,
+	styles: SplitButtonCss,
+	template: SplitButtonTemplate,
+	dependencies: [Button],
+})
 /**
  * Fired when the user clicks on the default action.
  * @event sap.ui.webc.main.SplitButton#click
@@ -261,22 +267,6 @@ class SplitButton extends UI5Element {
 	_textButtonPress: { handleEvent: () => void, passive: boolean };
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return SplitButtonCss;
-	}
-
-	static get template() {
-		return SplitButtonTemplate;
-	}
-
-	static get dependencies() {
-		return [Button];
-	}
 
 	static async onDefine() {
 		SplitButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");

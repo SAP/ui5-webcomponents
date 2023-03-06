@@ -1468,8 +1468,8 @@ describe("MultiComboBox general interaction", () => {
 			const innerInput = await mcb.shadow$("input");
 			const invisibleText = await mcb.shadow$(".ui5-hidden-text");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-			const tokensCountITextId = `${await mcb.getProperty("_id")}-hiddenText-nMore`;
-			const valuestateITextId = `${await mcb.getProperty("_id")}-valueStateDesc`;
+			const tokensCountITextId = `ui5-multi-combobox-hiddenText-nMore`;
+			const valuestateITextId = `ui5-multi-combobox-valueStateDesc`;
 			const ariaDescribedBy = `${tokensCountITextId} ${valuestateITextId}`;
 
 			assert.strictEqual(tokens.length, 3, "should have three tokens");
@@ -1551,7 +1551,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await mCbWarning.click();
 
-			let ariaHiddenText = await mCbWarning.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			let ariaHiddenText = await mCbWarning.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			let valueStateText = await popover.$("div").getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
@@ -1563,7 +1563,7 @@ describe("MultiComboBox general interaction", () => {
 			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
 			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
 
-			ariaHiddenText = await mCbError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			ariaHiddenText = await mCbError.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			valueStateText = await popover.$("div").getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
@@ -1573,7 +1573,7 @@ describe("MultiComboBox general interaction", () => {
 			await mCbSuccess.click();
 
 			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-success");
-			ariaHiddenText = await mCbSuccess.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			ariaHiddenText = await mCbSuccess.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		});
@@ -1587,7 +1587,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
 			const valueStateText = await popoverHeader.$("div").getHTML(false);
-			const ariaHiddenText = await mCbInformation.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			const ariaHiddenText = await mCbInformation.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 			assert.strictEqual(valueStateText.includes("Extra long text used as an information message"), true, "Displayed value state message text is correct");

@@ -2,7 +2,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
 	isShow,
@@ -52,7 +51,18 @@ type MultiInputTokenDeleteEventDetail = {
  * @since 1.0.0-rc.9
  * @public
  */
-@customElement("ui5-multi-input")
+@customElement({
+	tag: "ui5-multi-input",
+	renderer: litRender,
+	template: MultiInputTemplate,
+	styles: [Input.styles, styles],
+	dependencies: [
+		...Input.dependencies,
+		Tokenizer,
+		Token,
+		Icon,
+	],
+})
 /**
  * Fired when the value help icon is pressed
  * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
@@ -117,18 +127,6 @@ class MultiInput extends Input {
 
 	_skipOpenSuggestions: boolean;
 	_valueHelpIconPressed: boolean;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return MultiInputTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [Input.styles, styles];
-	}
 
 	constructor() {
 		super();
@@ -372,15 +370,6 @@ class MultiInput extends Input {
 
 	get ariaRoleDescription() {
 		return MultiInput.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);
-	}
-
-	static get dependencies() {
-		return [
-			...Input.dependencies,
-			Tokenizer,
-			Token,
-			Icon,
-		];
 	}
 }
 

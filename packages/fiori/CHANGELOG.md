@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.11.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.3...v1.11.0-rc.4) (2023-03-02)
+
+
+### Features
+
+* **framework:** use decorators for all static getters to define a custom element ([#6538](https://github.com/SAP/ui5-webcomponents/issues/6538)) ([c90cf0c](https://github.com/SAP/ui5-webcomponents/commit/c90cf0c2521cdbf063ba55706c25006a9f13e68a))
+* **ui5-li-notification, ui5-li-notification-group:** migrate to TypeScript ([#6568](https://github.com/SAP/ui5-webcomponents/issues/6568)) ([15dfc6e](https://github.com/SAP/ui5-webcomponents/commit/15dfc6e0716802fa00251629b80d5dc56ebb3472))
+* **ui5-media-gallery:** migrate to Typescript ([#6484](https://github.com/SAP/ui5-webcomponents/issues/6484)) ([3e53ada](https://github.com/SAP/ui5-webcomponents/commit/3e53adac7f01e58a246ad2b68298c304b7a2e949))
+* **ui5-shellbar:** migrate to Typescript ([#6561](https://github.com/SAP/ui5-webcomponents/issues/6561)) ([8431c60](https://github.com/SAP/ui5-webcomponents/commit/8431c60f2a8cd58bc8cc5708faa02111f079ffa7))
+* **ui5-wizard:** migrate to Typescript  ([#6540](https://github.com/SAP/ui5-webcomponents/issues/6540)) ([57e2de7](https://github.com/SAP/ui5-webcomponents/commit/57e2de7973755909cde287f946e4a1b5f6f4a721)), closes [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337) [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337) [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337) [#4337](https://github.com/SAP/ui5-webcomponents/issues/4337)
+
+
+
+
+
 # [1.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.2...v1.11.0-rc.3) (2023-02-23)
 
 

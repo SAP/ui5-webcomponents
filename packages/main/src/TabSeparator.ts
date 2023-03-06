@@ -25,13 +25,12 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
  * @implements sap.ui.webc.main.ITab
  * @public
  */
-@customElement("ui5-tab-separator")
+@customElement({
+	tag: "ui5-tab-separator",
+	renderer: litRender,
+})
 class TabSeparator extends UI5Element implements ITab {
 	_getElementInStrip?: () => ITab | null;
-
-	static get render() {
-		return litRender;
-	}
 
 	static get stripTemplate() {
 		return TabSeparatorInStripTemplate;
@@ -59,6 +58,7 @@ class TabSeparator extends UI5Element implements ITab {
 	 *
 	 * @function
 	 * @public
+     * @name sap.ui.webc.main.TabSeparator.prototype.getTabInStripDomRef
 	 */
 	getTabInStripDomRef() {
 		if (this._getElementInStrip) {

@@ -39,7 +39,11 @@ import treeItemCss from "./generated/themes/TreeItem.css.js";
  * @implements sap.ui.webc.main.ITreeItem
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-tree-item")
+@customElement({
+	tag: "ui5-tree-item",
+	template: TreeItemTemplate,
+	styles: [TreeItemBase.styles, treeItemCss],
+})
 class TreeItem extends TreeItemBase {
 	/**
 	 * Defines the text of the tree item.
@@ -75,14 +79,6 @@ class TreeItem extends TreeItemBase {
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	additionalTextState!: ValueState;
-
-	static get template() {
-		return TreeItemTemplate;
-	}
-
-	static get styles() {
-		return [super.styles, treeItemCss];
-	}
 
 	get _showTitle() {
 		return this.text.length && !this._minimal;

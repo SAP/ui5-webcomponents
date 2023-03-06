@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -7,14 +8,14 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { isPhone, supportsTouch } from "@ui5/webcomponents-base/dist/Device.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import "@ui5/webcomponents-icons/dist/direction-arrows.js";
 import {
 	isEscape, isHome, isEnd, isUp, isDown, isRight, isLeft, isUpCtrl, isDownCtrl, isRightCtrl, isLeftCtrl, isPlus, isMinus, isPageUp, isPageDown,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 
 // Styles
-import styles from "./generated/themes/SliderBase.css.js";
+import sliderBaseStyles from "./generated/themes/SliderBase.css.js";
 
 type StateStorage = {
 	[key: string]: number | undefined,
@@ -35,7 +36,10 @@ type DirectionStart = "left" | "right";
  * @tagname ui5-slider
  * @public
  */
-
+@customElement({
+	renderer: litRender,
+	styles: sliderBaseStyles,
+})
 /**
  * Fired when the value changes and the user has finished interacting with the slider.
  *
@@ -203,14 +207,6 @@ class SliderBase extends UI5Element {
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles(): ComponentStylesData {
-		return styles;
-	}
 
 	static get ACTION_KEYS() {
 		return [

@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -59,7 +58,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/Tokenizer.css.js";
+import TokenizerCss from "./generated/themes/Tokenizer.css.js";
 import TokenizerPopoverCss from "./generated/themes/TokenizerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
@@ -90,8 +89,27 @@ enum ClipboardDataOperation {
  * @usestextcontent
  * @private
  */
-@customElement("ui5-tokenizer")
-@languageAware
+@customElement({
+	tag: "ui5-tokenizer",
+	languageAware: true,
+	renderer: litRender,
+	template: TokenizerTemplate,
+	styles: TokenizerCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+		SuggestionsCss,
+		TokenizerPopoverCss,
+	],
+	staticAreaTemplate: TokenizerPopoverTemplate,
+	dependencies: [
+		ResponsivePopover,
+		List,
+		StandardListItem,
+		Title,
+		Button,
+	],
+})
 
 @event("token-delete", {
 	detail: {
@@ -104,7 +122,6 @@ enum ClipboardDataOperation {
 		ref: { type: HTMLElement },
 	},
 })
-
 class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	showMore!: boolean;
@@ -150,26 +167,6 @@ class Tokenizer extends UI5Element {
 	_itemNav: ItemNavigation;
 	_scrollEnablement: ScrollEnablement;
 	_expandedScrollWidth?: number;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TokenizerTemplate;
-	}
-
-	static get styles() {
-		return styles;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SuggestionsCss, TokenizerPopoverCss];
-	}
-
-	static get staticAreaTemplate() {
-		return TokenizerPopoverTemplate;
-	}
 
 	_handleResize() {
 		this._nMoreCount = this.overflownTokens.length;
@@ -258,9 +255,9 @@ class Tokenizer extends UI5Element {
 		}
 
 		if (this._selectedTokens.length) {
-			this._selectedTokens.forEach(token => this._tokenKeyboardDelete(e, token));
+			this._selectedTokens.forEach(token => this.deleteToken(token, e.detail.backSpace));
 		} else {
-			this._tokenKeyboardDelete(e, target);
+			this.deleteToken(target, e.detail.backSpace);
 		}
 	}
 
@@ -286,24 +283,31 @@ class Tokenizer extends UI5Element {
 		}
 	}
 
-	_tokenKeyboardDelete(e: CustomEvent<TokenDeleteEventDetail>, token: Token) {
-		let nextTokenIndex; // The index of the next token that needs to be focused next due to the deletion
-		const target = e.target as Token;
+	/**
+	 * Removes a token from the Tokenizer.
+	 * This method should only be used by ui5-multi-combobox and ui5-multi-input
+	 *
+	 * @protected
+	 * @param token Token to be focused.
+	 * @param forwardFocusToPrevious Indicates whether the focus will be forwarded to previous or next token after deletion.
+	 */
+	deleteToken(token: Token, forwardFocusToPrevious?: boolean) {
 		const tokens = this._getVisibleTokens();
-		const deletedTokenIndex = token ? tokens.indexOf(token) : tokens.indexOf(target); // The index of the token that just got deleted
+		const deletedTokenIndex = tokens.indexOf(token);
+		let nextTokenIndex = (deletedTokenIndex === tokens.length - 1) ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		const notSelectedTokens = tokens.filter(t => !t.selected);
 
-		if (e.detail && e.detail.backSpace) { // on backspace key select the previous item (unless deleting the first)
+		if (forwardFocusToPrevious) { // on backspace key select the previous item (unless deleting the first)
 			nextTokenIndex = deletedTokenIndex === 0 ? deletedTokenIndex + 1 : deletedTokenIndex - 1;
 		} else { // on delete key or mouse click on the "x" select the next item (unless deleting the last)
 			nextTokenIndex = deletedTokenIndex === tokens.length - 1 ? deletedTokenIndex - 1 : deletedTokenIndex + 1;
 		}
 
-		let nextToken = tokens[nextTokenIndex]; // if the last item was deleted this will be undefined
+		let nextToken = tokens[nextTokenIndex];
 
 		if (notSelectedTokens.length > 1) {
 			while (nextToken && nextToken.selected) {
-				nextToken = e.detail.backSpace ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
+				nextToken = forwardFocusToPrevious ? tokens[--nextTokenIndex] : tokens[++nextTokenIndex];
 			}
 		} else {
 			nextToken = notSelectedTokens[0];
@@ -311,13 +315,13 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
-		this.fireEvent("token-delete", { ref: token || e.target });
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 	}
 
 	itemDelete(e: CustomEvent) {
 		const token = e.detail.item.tokenRef;
 
-		this.fireEvent("token-delete", { ref: token });
+		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -714,16 +718,6 @@ class Tokenizer extends UI5Element {
 		const lastToken = this.tokens[this.tokens.length - 1];
 		lastToken.focus();
 		this._itemNav.setCurrentItem(lastToken);
-	}
-
-	static get dependencies() {
-		return [
-			ResponsivePopover,
-			List,
-			StandardListItem,
-			Title,
-			Button,
-		];
 	}
 
 	static async onDefine() {
