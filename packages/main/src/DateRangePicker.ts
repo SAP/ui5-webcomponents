@@ -359,7 +359,10 @@ class DateRangePicker extends DatePicker {
 		return "";
 	}
 
-	extractCalendarMode(): CalendarMode {
+	/**
+	 * @override
+	 */
+	get _calendarMode() {
 		return CalendarMode.DAY_MONTH_YEAR;
 	}
 }

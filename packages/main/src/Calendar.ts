@@ -244,16 +244,8 @@ class Calendar extends CalendarPart {
 	@property()
 	_headerYearButtonTextSecType!: string;
 
-	/**
-	 * Defines the available picker modes
-	 * <br><br>
-	 *
-	 * @type {CalendarMode}
-	 * @name sap.ui.webc.main.Calendar.prototype.calendarMode
-	 * @private
-	 */
 	@property({ type: CalendarMode, defaultValue: CalendarMode.DAY_MONTH_YEAR, noAttribute: true })
-	calendarMode!: CalendarMode;
+	_calendarMode!: CalendarMode;
 
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
@@ -337,11 +329,11 @@ class Calendar extends CalendarPart {
 		}
 
 		let nextPicker = this._currentPicker;
-		if (nextPicker === "day" && this.calendarMode !== CalendarMode.DAY_MONTH_YEAR) {
+		if (nextPicker === "day" && this._calendarMode !== CalendarMode.DAY_MONTH_YEAR) {
 			nextPicker = "month";
 		}
 
-		if (nextPicker === "month" && this.calendarMode === CalendarMode.YEAR) {
+		if (nextPicker === "month" && this._calendarMode === CalendarMode.YEAR) {
 			nextPicker = "year";
 		}
 		this._currentPicker = nextPicker;
@@ -442,12 +434,9 @@ class Calendar extends CalendarPart {
 		return this._currentPicker !== "year";
 	}
 
-	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
-		this.timestamp = e.detail.timestamp;
-		const selectedDates = e.detail.dates;
+	_fireEventAndUpdateSelectedDates(selectedDates: Array<number>) {
 		const datesValues = selectedDates.map(timestamp => {
 			const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
-
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
@@ -457,50 +446,32 @@ class Calendar extends CalendarPart {
 		}
 	}
 
+	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
+		this.timestamp = e.detail.timestamp;
+		this._fireEventAndUpdateSelectedDates(e.detail.dates);
+	}
+
 	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		if (this.calendarMode === CalendarMode.DAY_MONTH_YEAR) {
+
+		if (this._calendarMode === CalendarMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
 		} else {
-			const selectedDates = [this.timestamp];
-			const datesValues = selectedDates.map(timestamp => {
-				const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
-
-				return this.getFormat().format(calendarDate.toUTCJSDate(), true);
-			});
-			const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>(
-				"selected-dates-change",
-				{ timestamp: this.timestamp, dates: selectedDates, values: datesValues },
-				true,
-			);
-			if (!defaultPrevented) {
-				this._setSelectedDates(selectedDates);
-			}
+			this._fireEventAndUpdateSelectedDates([this.timestamp]);
 		}
+
 		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		if (this.calendarMode === CalendarMode.DAY_MONTH_YEAR) {
+
+		if (this._calendarMode === CalendarMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
-		} else if (this.calendarMode === CalendarMode.MONTH_YEAR) {
+		} else if (this._calendarMode === CalendarMode.MONTH_YEAR) {
 			this._currentPicker = "month";
 		} else {
-			const selectedDates = [this.timestamp];
-			const datesValues = selectedDates.map(timestamp => {
-				const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
-
-				return this.getFormat().format(calendarDate.toUTCJSDate(), true);
-			});
-			const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>(
-				"selected-dates-change",
-				{ timestamp: this.timestamp, dates: selectedDates, values: datesValues },
-				true,
-			);
-			if (!defaultPrevented) {
-				this._setSelectedDates(selectedDates);
-			}
+			this._fireEventAndUpdateSelectedDates([this.timestamp]);
 		}
 
 		this._currentPickerDOM._autoFocus = true;

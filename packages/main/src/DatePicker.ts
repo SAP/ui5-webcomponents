@@ -341,9 +341,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	@property({ defaultValue: "day" })
 	_calendarCurrentPicker!: string;
 
-	@property({ type: CalendarMode, noAttribute: true })
-	_calendarMode!: CalendarMode;
-
 	liveValue?: string;
 
 	/**
@@ -742,6 +739,23 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return !this.disabled && !this.readonly;
 	}
 
+	get _calendarMode() {
+		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
+		const types = format.aFormatArray.map(settings => {
+			return settings.type.toLowerCase();
+		});
+
+		if (types.includes("month") || types.includes("monthstandalone")) {
+			return CalendarMode.MONTH_YEAR;
+		}
+
+		if (types.includes("year")) {
+			return CalendarMode.YEAR;
+		}
+
+		return CalendarMode.DAY_MONTH_YEAR;
+	}
+
 	/**
 	 * The user selected a new date in the calendar
 	 * @param event
@@ -801,7 +815,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @returns {Promise} Resolves when the picker is open
 	 */
 	async openPicker() {
-		this._calendarMode = this.extractCalendarMode();
 		this._isPickerOpen = true;
 		this._calendarCurrentPicker = "day";
 		this.responsivePopover = await this._respPopover();
@@ -826,28 +839,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 */
 	isOpen() {
 		return !!this._isPickerOpen;
-	}
-
-	/**
-	 * Extracts the picker's calendar mode according to the format
-	 *
-	 * @private
-	 * @method
-	 * @name sap.ui.webc.main.DatePicker#extractCalendarModes
-	 * @returns {CalendarMode} The mode to open the calendar
-	 */
-	extractCalendarMode(): CalendarMode {
-		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
-		const types = format.aFormatArray.map(settings => {
-			return settings.type.toLowerCase();
-		});
-		if (types.includes("month") || types.includes("monthstandalone")) {
-			return CalendarMode.MONTH_YEAR;
-		}
-		if (types.includes("year")) {
-			return CalendarMode.YEAR;
-		}
-		return CalendarMode.DAY_MONTH_YEAR;
 	}
 
 	/**

@@ -424,7 +424,10 @@ class DateTimePicker extends DatePicker {
 		return selectedDate;
 	}
 
-	extractCalendarMode(): CalendarMode {
+	/**
+	 * @override
+	 */
+	get _calendarMode() {
 		return CalendarMode.DAY_MONTH_YEAR;
 	}
 }

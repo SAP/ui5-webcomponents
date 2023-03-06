@@ -3,7 +3,7 @@
  *
  * @class
  * @enum {string}
- * @public
+ * @private
  * @author SAP SE
  * @alias sap.ui.webc.main.types.CalendarMode
  */
@@ -15,12 +15,14 @@ enum CalendarMode {
 	 * @type {DAY_MONTH_YEAR}
 	 */
 	DAY_MONTH_YEAR = "DAY_MONTH_YEAR",
+
 	/**
 	 * User can select months and years
 	 * @public
 	 * @type {MONTH_YEAR}
 	 */
 	MONTH_YEAR = "MONTH_YEAR",
+
 	/**
 	 * User can select years
 	 * @public
