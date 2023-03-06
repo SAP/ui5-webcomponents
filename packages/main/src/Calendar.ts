@@ -302,6 +302,23 @@ class Calendar extends CalendarPart {
 		});
 	}
 
+	/**
+	 * Makes sure that _currentPicker is always set to a value, allowed by _calendarMode
+	 */
+	_normalizeCurrentPicker() {
+		if (this._currentPicker === "day" && this._calendarMode !== CalendarMode.DAY_MONTH_YEAR) {
+			this._currentPicker = "month";
+		}
+
+		if (this._currentPicker === "month" && this._calendarMode === CalendarMode.YEAR) {
+			this._currentPicker = "year";
+		}
+	}
+
+	onBeforeRendering() {
+		this._normalizeCurrentPicker();
+	}
+
 	async onAfterRendering() {
 		await renderFinished(); // Await for the current picker to render and then ask if it has previous/next pages
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
@@ -323,22 +340,6 @@ class Calendar extends CalendarPart {
 		}
 
 		this.secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
-	}
-
-	onBeforeRendering() {
-		if (!this._currentPicker) {
-			return;
-		}
-
-		let nextPicker = this._currentPicker;
-		if (nextPicker === "day" && this._calendarMode !== CalendarMode.DAY_MONTH_YEAR) {
-			nextPicker = "month";
-		}
-
-		if (nextPicker === "month" && this._calendarMode === CalendarMode.YEAR) {
-			nextPicker = "year";
-		}
-		this._currentPicker = nextPicker;
 	}
 
 	/**

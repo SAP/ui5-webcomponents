@@ -746,15 +746,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			return settings.type.toLowerCase();
 		});
 
+		if (types.includes("day")) {
+			return CalendarMode.DAY_MONTH_YEAR;
+		}
+
 		if (types.includes("month") || types.includes("monthstandalone")) {
 			return CalendarMode.MONTH_YEAR;
 		}
 
-		if (types.includes("year")) {
-			return CalendarMode.YEAR;
-		}
-
-		return CalendarMode.DAY_MONTH_YEAR;
+		return CalendarMode.YEAR;
 	}
 
 	/**
