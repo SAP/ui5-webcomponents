@@ -45,7 +45,7 @@ class ShellBarItem extends UI5Element {
 	 * Defines the name of the item's icon.
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ShellBarItem.prototype.icon
+	 * @name sap.ui.webc.fiori.ShellBarItem.prototype.icon
 	 * @public
 	 */
 	@property()
@@ -55,7 +55,7 @@ class ShellBarItem extends UI5Element {
 	 * Defines the item text.
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.ShellBarItem.prototype.text
+	 * @name sap.ui.webc.fiori.ShellBarItem.prototype.text
 	 * @public
 	 */
 	@property()
@@ -65,7 +65,7 @@ class ShellBarItem extends UI5Element {
 	 * Defines the count displayed in the top-right corner.
 	 * @type {string}
 	 * @defaultValue ""
-	 * @name sap.ui.webc.main.ShellBarItem.prototype.count
+	 * @name sap.ui.webc.fiori.ShellBarItem.prototype.count
 	 * @since 1.0.0-rc.6
 	 * @public
 	 */

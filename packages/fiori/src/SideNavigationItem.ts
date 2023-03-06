@@ -126,7 +126,7 @@ class SideNavigationItem extends UI5Element {
 	/**
 	 * If you wish to nest menus, you can pass inner menu items to the default slot.
 	 *
-	 * @type {sap.ui.webc.fiori.SideNavigationSubItem[]}
+	 * @type {sap.ui.webc.fiori.ISideNavigationSubItem[]}
 	 * @public
 	 * @slot items
 	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.default

@@ -11,16 +11,16 @@ const property = (propData?: Property): PropertyDecorator => {
 	return (target: any, propertyKey: string | symbol) => {
 		const ctor = target.constructor as typeof UI5Element;
 
-		if (!Object.prototype.hasOwnProperty.call(ctor, "decoratorMetadata")) {
-			ctor.decoratorMetadata = {};
+		if (!Object.prototype.hasOwnProperty.call(ctor, "metadata")) {
+			ctor.metadata = {};
 		}
 
-		const decoratorMetadata = ctor.decoratorMetadata;
-		if (!decoratorMetadata.properties) {
-			decoratorMetadata.properties = {};
+		const metadata = ctor.metadata;
+		if (!metadata.properties) {
+			metadata.properties = {};
 		}
 
-		const propsMetadata = decoratorMetadata.properties;
+		const propsMetadata = metadata.properties;
 		if (!propsMetadata[propertyKey as string]) {
 			propsMetadata[propertyKey as string] = propData || { type: String };
 		}
