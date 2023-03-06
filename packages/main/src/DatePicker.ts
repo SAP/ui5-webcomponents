@@ -742,15 +742,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	get _calendarMode() {
 		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
-		const types = format.aFormatArray.map(settings => {
-			return settings.type.toLowerCase();
+		const patternSymbolTypes = format.aFormatArray.map(patternSymbolSettings => {
+			return patternSymbolSettings.type.toLowerCase();
 		});
 
-		if (types.includes("day")) {
+		if (patternSymbolTypes.includes("day")) {
 			return CalendarMode.DAY_MONTH_YEAR;
 		}
 
-		if (types.includes("month") || types.includes("monthstandalone")) {
+		if (patternSymbolTypes.includes("month") || patternSymbolTypes.includes("monthstandalone")) {
 			return CalendarMode.MONTH_YEAR;
 		}
 
