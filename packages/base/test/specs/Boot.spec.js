@@ -7,7 +7,7 @@ describe("Framework boot", async () => {
 
 	it("Tests theme loading, when attachBoot is called before theme is registered", async () => {
 		await browser.executeAsync(done => {
-			window['sap-ui-webcomponents-bundle'].registerThemePropsAndReboot();
+			window['sap-ui-webcomponents-bundle'].registerThemePropsAndBoot();
 			done();
 		});
 

@@ -16,7 +16,7 @@ attachBoot(() => {
 import { registerThemePropertiesLoader } from "../../dist/AssetRegistry.js";
 
 const testAssets = {
-    registerThemePropsAndReboot: () => {
+    registerThemePropsAndBoot: () => {
         registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => {
             return {
                 content: `:root{ --var1: red; }`,
@@ -33,10 +33,5 @@ const testAssets = {
         boot();
         boot();
     },
-    attachBootAfterBoot: () => {
-        attachBoot(() => {
-            console.log("Listener4: after framework booted!")
-        })
-    }
 }
 window["sap-ui-webcomponents-bundle"] = testAssets;
