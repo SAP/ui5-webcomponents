@@ -12,6 +12,7 @@ import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
+import IllustratedMessage from "./IllustratedMessage.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
@@ -237,6 +238,7 @@ class UploadCollection extends UI5Element {
 			Label,
 			List,
 			Title,
+			IllustratedMessage,
 		];
 	}
 
