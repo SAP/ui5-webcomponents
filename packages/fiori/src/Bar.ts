@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -61,8 +60,13 @@ import BarCss from "./generated/themes/Bar.css.js";
  * @public
  * @since 1.0.0-rc.11
  */
-@customElement("ui5-bar")
-@fastNavigation
+@customElement({
+	tag: "ui5-bar",
+	fastNavigation: true,
+	renderer: litRender,
+	styles: BarCss,
+	template: BarTemplate,
+})
 class Bar extends UI5Element {
 	/**
 	 * Defines the component's design.
@@ -116,18 +120,6 @@ class Bar extends UI5Element {
 	endContent!: Array<HTMLElement>
 
 	_handleResizeBound: () => void;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return BarCss;
-	}
-
-	static get template() {
-		return BarTemplate;
-	}
 
 	get accInfo() {
 		return {

@@ -41,7 +41,13 @@ import ProductSwitchItemCss from "./generated/themes/ProductSwitchItem.css.js";
  * @implements sap.ui.webc.fiori.IProductSwitchItem
  * @since 1.0.0-rc.5
  */
-@customElement("ui5-product-switch-item")
+@customElement({
+	tag: "ui5-product-switch-item",
+	renderer: litRender,
+	styles: ProductSwitchItemCss,
+	template: ProductSwitchItemTemplate,
+	dependencies: [Icon],
+})
 /**
  * Fired when the <code>ui5-product-switch-item</code> is activated either with a
  * click/tap or by using the Enter or Space key.
@@ -159,18 +165,6 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 
 	_deactivate: () => void;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ProductSwitchItemCss;
-	}
-
-	static get template() {
-		return ProductSwitchItemTemplate;
-	}
-
 	onEnterDOM() {
 		document.addEventListener("mouseup", this._deactivate);
 	}
@@ -223,10 +217,6 @@ class ProductSwitchItem extends UI5Element implements ITabbable {
 
 	_fireItemClick() {
 		this.fireEvent("click", { item: this });
-	}
-
-	static get dependencies() {
-		return [Icon];
 	}
 }
 

@@ -104,7 +104,12 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
  * @public
  * @since 1.1.0
  */
-@customElement("ui5-dynamic-side-content")
+@customElement({
+	tag: "ui5-dynamic-side-content",
+	renderer: litRender,
+	styles: DynamicSideContentCss,
+	template: DynamicSideContentTemplate,
+})
 /**
  * Fires when the current breakpoint has been changed.
  * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
@@ -288,18 +293,6 @@ class DynamicSideContent extends UI5Element {
 	_handleResizeBound: () => void;
 
 	static i18nBundle: I18nBundle;
-
-	static get styles() {
-		return DynamicSideContentCss;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return DynamicSideContentTemplate;
-	}
 
 	static async onDefine() {
 		DynamicSideContent.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");

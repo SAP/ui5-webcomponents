@@ -1,9 +1,8 @@
+import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
@@ -133,8 +132,14 @@ type AccessibilityRoles = {
  * @public
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-flexible-column-layout")
-@fastNavigation
+@customElement({
+	tag: "ui5-flexible-column-layout",
+	fastNavigation: true,
+	renderer: litRender,
+	styles: FlexibleColumnLayoutCss,
+	template: FlexibleColumnLayoutTemplate,
+	dependencies: [Button],
+})
 
 /**
  * Fired when the layout changes via user interaction by clicking the arrows
@@ -327,22 +332,6 @@ class FlexibleColumnLayout extends UI5Element {
 		this._prevLayout = null;
 		this.initialRendering = true;
 		this._handleResize = this.handleResize.bind(this);
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return FlexibleColumnLayoutCss;
-	}
-
-	static get template() {
-		return FlexibleColumnLayoutTemplate;
-	}
-
-	static get dependencies() {
-		return [Button];
 	}
 
 	static async onDefine() {

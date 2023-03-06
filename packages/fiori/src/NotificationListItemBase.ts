@@ -1,3 +1,4 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -65,6 +66,10 @@ type NotificationListItemBaseCloseEventDetail = {
 	 detail: {
 		item: HTMLElement,
 	},
+})
+@customElement({
+	staticAreaStyles: NotificationOverflowActionsPopoverCss,
+	staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
 })
 class NotificationListItemBase extends ListItemBase {
 	/**
@@ -153,14 +158,6 @@ class NotificationListItemBase extends ListItemBase {
 	actions!: Array<NotificationAction>
 
 	static i18nFioriBundle: I18nBundle;
-
-	static get staticAreaTemplate() {
-		return NotificationOverflowActionsPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return NotificationOverflowActionsPopoverCss;
-	}
 
 	get hasTitleText() {
 		return !!this.titleText.length;
