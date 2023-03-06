@@ -24,7 +24,7 @@ import type { MonthPickerChangeEventDetail } from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import type { YearPickerChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
-import CalendarMode from "./types/CalendarMode.js";
+import CalendarPickerMode from "./types/CalendarPickerMode.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -254,8 +254,8 @@ class Calendar extends CalendarPart {
 	@property()
 	_headerYearButtonTextSecType!: string;
 
-	@property({ type: CalendarMode, defaultValue: CalendarMode.DAY_MONTH_YEAR, noAttribute: true })
-	_calendarMode!: CalendarMode;
+	@property({ type: CalendarPickerMode, defaultValue: CalendarPickerMode.DAY_MONTH_YEAR, noAttribute: true })
+	_pickerMode!: CalendarPickerMode;
 
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
@@ -303,14 +303,14 @@ class Calendar extends CalendarPart {
 	}
 
 	/**
-	 * Makes sure that _currentPicker is always set to a value, allowed by _calendarMode
+	 * Makes sure that _currentPicker is always set to a value, allowed by _pickerMode
 	 */
 	_normalizeCurrentPicker() {
-		if (this._currentPicker === "day" && this._calendarMode !== CalendarMode.DAY_MONTH_YEAR) {
+		if (this._currentPicker === "day" && this._pickerMode !== CalendarPickerMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "month";
 		}
 
-		if (this._currentPicker === "month" && this._calendarMode === CalendarMode.YEAR) {
+		if (this._currentPicker === "month" && this._pickerMode === CalendarPickerMode.YEAR) {
 			this._currentPicker = "year";
 		}
 	}
@@ -457,7 +457,7 @@ class Calendar extends CalendarPart {
 	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 
-		if (this._calendarMode === CalendarMode.DAY_MONTH_YEAR) {
+		if (this._pickerMode === CalendarPickerMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
 		} else {
 			this._fireEventAndUpdateSelectedDates([this.timestamp]);
@@ -469,9 +469,9 @@ class Calendar extends CalendarPart {
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 
-		if (this._calendarMode === CalendarMode.DAY_MONTH_YEAR) {
+		if (this._pickerMode === CalendarPickerMode.DAY_MONTH_YEAR) {
 			this._currentPicker = "day";
-		} else if (this._calendarMode === CalendarMode.MONTH_YEAR) {
+		} else if (this._pickerMode === CalendarPickerMode.MONTH_YEAR) {
 			this._currentPicker = "month";
 		} else {
 			this._fireEventAndUpdateSelectedDates([this.timestamp]);

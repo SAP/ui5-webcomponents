@@ -5,10 +5,10 @@
  * @enum {string}
  * @private
  * @author SAP SE
- * @alias sap.ui.webc.main.types.CalendarMode
+ * @alias sap.ui.webc.main.types.CalendarPickerMode
  */
 
-enum CalendarMode {
+enum CalendarPickerMode {
 	/**
 	 * User can select days, months and years
 	 * @public
@@ -31,4 +31,4 @@ enum CalendarMode {
 	YEAR = "YEAR"
 }
 
-export default CalendarMode;
+export default CalendarPickerMode;
