@@ -52,10 +52,11 @@ const parseNameNoNumbers = (name) =>
  * @returns {string} mdx title
  */
 const parseMdxTitle = (filePath, parseName) => {
-    const fileName = filePath.split("/").pop();
+    const filePathSplit = filePath.split(path.sep);
+    const fileName = filePathSplit.pop();
     const articleName = parseName(fileName);
 
-    const folderName = filePath.split("/").slice(-2, -1).pop();
+    const folderName = filePathSplit.pop();
     let articleGroup = null;
     if (folderName) {
         articleGroup = parseNameNoNumbers(folderName);
@@ -116,12 +117,13 @@ const onFile = ({ exclude, parseName, subDir, filePath, srcPath }) => {
 
     // create sub directory structure described in subDir
     let fileLocation =
-        (typeof subDir === "function" ? path.join('/', subDir()) : "") + pathRelative;
+        (typeof subDir === "function" ? path.join("/", subDir()) : "") +
+        pathRelative;
 
     const mdxTitle = parseMdxTitle(fileLocation, parseName);
 
     const destPath = path.join(__dirname, "../docs/storybook", fileLocation);
-    const destPathFolder = path.join(destPath, '..'); // remove last directory from path
+    const destPathFolder = path.join(destPath, ".."); // remove last directory from path
 
     // create directory if it doesn't exist
     if (!fs.existsSync(destPathFolder)) {
@@ -131,7 +133,7 @@ const onFile = ({ exclude, parseName, subDir, filePath, srcPath }) => {
     const mdxFileDest = path.join(
         __dirname,
         "../docs/storybook",
-        (typeof subDir === "function" ? path.join(subDir(), '/') : "") +
+        (typeof subDir === "function" ? path.join(subDir(), "/") : "") +
             filePath.replace(srcPath, "")
     );
 
