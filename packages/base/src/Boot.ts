@@ -39,29 +39,29 @@ const boot = async (): Promise<void> => {
 			resolve();
 			return;
 		}
-	
+
 		registerCurrentRuntime();
-	
+
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isLoaded() : false;
 		const f6Navigation = getFeature<typeof F6Navigation>("F6Navigation");
-	
+
 		if (openUI5Support) {
 			await openUI5Support.init();
 		}
-	
+
 		if (f6Navigation && !isOpenUI5Loaded) {
 			f6Navigation.init();
 		}
-	
+
 		await whenDOMReady();
 		await applyTheme(getTheme());
 		openUI5Support && openUI5Support.attachListeners();
 		insertFontFace();
 		insertSystemCSSVars();
-	
+
 		resolve();
-	
+
 		booted = true;
 		await eventProvider.fireEventAsync("boot");
 	};
