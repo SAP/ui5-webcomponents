@@ -843,7 +843,7 @@ class Popover extends Popup {
 			if (this.horizontalAlign === PopoverHorizontalAlign.Left) {
 				return PopoverHorizontalAlign.Right;
 			}
-			
+
 			if (this.horizontalAlign === PopoverHorizontalAlign.Right) {
 				return PopoverHorizontalAlign.Left;
 			}
