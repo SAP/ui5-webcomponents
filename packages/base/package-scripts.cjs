@@ -11,7 +11,7 @@ const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/p
 const LIB = path.join(__dirname, `../tools/lib/`);
 
 const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.cjs")}"`;
-const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}`;
+const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.cjs")}`;
 
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
@@ -61,7 +61,7 @@ const scripts = {
 	test: {
 		default: 'concurrently "nps test.wdio"',
 		ssr: `mocha test/ssr`,
-		wdio: `node "${LIB}/test-runner/test-runner.cjs"`
+		wdio: `node "${LIB}/test-runner/test-runner.js"`
 	},
 };
 
