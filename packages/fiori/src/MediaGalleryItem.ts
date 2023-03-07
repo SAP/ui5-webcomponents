@@ -52,7 +52,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	 * Defines the selected state of the component.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.MediaGalleryItem.prototype.selected
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.selected
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -63,7 +63,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	 * Defines whether the component is in disabled state.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.MediaGalleryItem.prototype.disabled
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.disabled
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -80,7 +80,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.MediaGalleryItemLayout}
-	 * @name sap.ui.webc.main.MediaGalleryItem.prototype.layout
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.layout
 	 * @defaultvalue "Square"
 	 * @public
 	 */
@@ -139,7 +139,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	 * Defines the content of the component.
 	 *
 	 * @type {HTMLElement}
-	 * @name sap.ui.webc.main.MediaGalleryItem.prototype.default
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.default
 	 * @slot content
 	 * @public
 	 */
@@ -150,7 +150,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	 * Defines the content of the thumbnail.
 	 *
 	 * @type {HTMLElement}
-	 * @name sap.ui.webc.main.MediaGalleryItem.prototype.thumbnail
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.thumbnail
 	 * @slot thumbnail
 	 * @public
 	 */

@@ -176,7 +176,7 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Select.disabled
+	 * @name sap.ui.webc.main.Select.prototype.disabled
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -197,7 +197,7 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.name
+	 * @name sap.ui.webc.main.Select.prototype.name
 	 * @public
 	 */
 	@property()
@@ -217,7 +217,7 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @defaultvalue "None"
-	 * @name sap.ui.webc.main.Select.valueState
+	 * @name sap.ui.webc.main.Select.prototype.valueState
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -229,7 +229,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @since 1.0.0-rc.9
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Select.required
+	 * @name sap.ui.webc.main.Select.prototype.required
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -242,7 +242,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @since 1.0.0-rc.9
 	 * @public
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.accessibleName
+	 * @name sap.ui.webc.main.Select.prototype.accessibleName
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
@@ -253,7 +253,7 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.accessibleNameRef
+	 * @name sap.ui.webc.main.Select.prototype.accessibleNameRef
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -400,6 +400,7 @@ class Select extends UI5Element implements IFormElement {
 	 * Currently selected <code>ui5-option</code> element.
 	 * @readonly
 	 * @type {sap.ui.webc.main.ISelectOption}
+     * @name sap.ui.webc.main.Select.prototype.selectedOption
 	 * @public
 	 */
 	get selectedOption() {

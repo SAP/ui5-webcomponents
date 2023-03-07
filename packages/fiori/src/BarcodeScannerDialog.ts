@@ -111,7 +111,7 @@ class BarcodeScannerDialog extends UI5Element {
 	 * Indicates whether a loading indicator should be displayed in the dialog.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.BarcodeScannerDialog.prototype.loading
+	 * @name sap.ui.webc.fiori.BarcodeScannerDialog.prototype.loading
 	 * @defaultvalue false
 	 * @private
 	 */
