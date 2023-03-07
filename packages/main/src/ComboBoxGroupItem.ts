@@ -24,7 +24,7 @@ class ComboBoxGroupItem extends UI5Element implements IComboBoxItem {
 		 * Defines the text of the component.
 		 *
 		 * @type {string}
-		 * @name sap.ui.webc.main.ComboBoxItem.prototype.text
+		 * @name sap.ui.webc.main.ComboBoxGroupItem.prototype.text
 		 * @defaultvalue ""
 		 * @public
 		 */

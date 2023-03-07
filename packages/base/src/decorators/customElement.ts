@@ -22,12 +22,12 @@ const customElement = (tagNameOrComponentSettings: string | {
 	fastNavigation?: boolean,
 }): ClassDecorator => {
 	return (target: any) => {
-		if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
-			target.decoratorMetadata = {};
+		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
+			target.metadata = {};
 		}
 
 		if (typeof tagNameOrComponentSettings === "string") {
-			target.decoratorMetadata.tag = tagNameOrComponentSettings;
+			target.metadata.tag = tagNameOrComponentSettings;
 			return;
 		}
 
@@ -38,10 +38,10 @@ const customElement = (tagNameOrComponentSettings: string | {
 			fastNavigation = false,
 		 } = tagNameOrComponentSettings;
 
-		target.decoratorMetadata.tag = tag;
-		target.decoratorMetadata.languageAware = languageAware;
-		target.decoratorMetadata.themeAware = themeAware;
-		target.decoratorMetadata.fastNavigation = fastNavigation;
+		target.metadata.tag = tag;
+		target.metadata.languageAware = languageAware;
+		target.metadata.themeAware = themeAware;
+		target.metadata.fastNavigation = fastNavigation;
 
 		["render", "renderer", "template", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {
 			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;

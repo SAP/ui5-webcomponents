@@ -1,7 +1,7 @@
 /**
  * Different Calendar selection mode.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

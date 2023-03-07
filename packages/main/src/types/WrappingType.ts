@@ -1,7 +1,7 @@
 /**
  * Different types of wrapping.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

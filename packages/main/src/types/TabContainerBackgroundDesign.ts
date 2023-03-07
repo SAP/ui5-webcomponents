@@ -1,7 +1,7 @@
 /**
  * Background design for the header and content of TabContainer.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE
