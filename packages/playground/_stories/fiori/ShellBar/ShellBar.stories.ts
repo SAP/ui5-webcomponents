@@ -9,7 +9,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type ShellBar from "@ui5/webcomponents-fiori/dist/ShellBar.js";
 
 const component = "ui5-shellbar";

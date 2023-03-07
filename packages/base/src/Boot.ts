@@ -1,4 +1,5 @@
 import whenDOMReady from "./util/whenDOMReady.js";
+import EventProvider from "./EventProvider.js";
 import insertFontFace from "./FontFace.js";
 import insertSystemCSSVars from "./SystemCSSVars.js";
 import { getTheme } from "./config/Theme.js";
@@ -9,15 +10,22 @@ import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type F6Navigation from "./features/F6Navigation.js";
 import { PromiseResolve } from "./types.js";
 
+let booted = false;
 let bootPromise: Promise<void>;
+const eventProvider = new EventProvider<void, void>();
 
 /**
- * Attach  a callback that will be executed on boot
+ * Attaches a callback that will be executed after boot finishes.
+ * <b>Note:</b> If the framework already booted, the callback will be immediately executed.
  * @public
- * @param listener
+ * @param { Function } listener
  */
-const attachBoot = async (listener: () => void) => {
-	await boot();
+const attachBoot = (listener: () => void) => {
+	if (!booted) {
+		eventProvider.attachEvent("boot", listener);
+		return;
+	}
+
 	listener();
 };
 
@@ -31,6 +39,7 @@ const boot = async (): Promise<void> => {
 			resolve();
 			return;
 		}
+
 		registerCurrentRuntime();
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
@@ -52,10 +61,12 @@ const boot = async (): Promise<void> => {
 		insertSystemCSSVars();
 
 		resolve();
+
+		booted = true;
+		await eventProvider.fireEventAsync("boot");
 	};
 
 	bootPromise = new Promise(bootExecutor as (resolve: PromiseResolve) => void);
-
 	return bootPromise;
 };
 

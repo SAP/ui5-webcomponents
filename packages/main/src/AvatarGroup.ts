@@ -267,6 +267,7 @@ class AvatarGroup extends UI5Element {
 	 * @readonly
 	 * @type {HTMLElement[]}
 	 * @defaultValue []
+	 * @name sap.ui.webc.main.AvatarGroup.prototype.hiddenItems
 	 * @public
 	 */
 	get hiddenItems() {
@@ -277,6 +278,7 @@ class AvatarGroup extends UI5Element {
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
 	 * @type {sap.ui.webc.main.types.AvatarColorScheme[]}
+	 * @name sap.ui.webc.main.AvatarGroup.prototype.colorScheme
 	 * @defaultValue []
 	 * @public
 	 */
