@@ -173,7 +173,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 	_titleTextOverflowHeight: number;
 	_descOverflowHeight: number;
-	_onResizeBind: ResizeObserverCallback;
+	_onResizeBound: ResizeObserverCallback;
 
 	constructor() {
 		super();
@@ -185,7 +185,7 @@ class NotificationListItem extends NotificationListItemBase {
 		this._descOverflowHeight = 0;
 
 		// the resize handler
-		this._onResizeBind = this.onResize.bind(this);
+		this._onResizeBound = this.onResize.bind(this);
 	}
 
 	static get styles() {
@@ -207,11 +207,11 @@ class NotificationListItem extends NotificationListItemBase {
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this, this._onResizeBind);
+		ResizeHandler.register(this, this._onResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this._onResizeBind);
+		ResizeHandler.deregister(this, this._onResizeBound);
 	}
 
 	get hasDesc() {
