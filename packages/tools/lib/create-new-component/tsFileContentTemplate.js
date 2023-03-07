@@ -37,19 +37,16 @@ import ${componentName}Css from "./generated/themes/${componentName}.css.js";
 	styles: ${componentName}Css,
 	template: ${componentName}Template,
 	dependencies: [],
-	languageAware: true,
-	themeAware: true,
-	fastNavigation: true,
 })
 
 /**
  * Example custom event.
  * Please keep in mind that all public events should be documented in the API Reference as shown below.
  *
- * @event sap.ui.webc.${library}.${componentName}#click
+ * @event sap.ui.webc.${library}.${componentName}#interact
  * @public
  */
-@event("click", { detail: { /* event payload ( optional ) */ } })
+@event("interact", { detail: { /* event payload ( optional ) */ } })
 class ${componentName} extends UI5Element {
 	/**
 	 * Defines the value of the component.

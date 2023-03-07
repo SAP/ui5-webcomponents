@@ -40,7 +40,7 @@ const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.
 
 // Validation of user input
 const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/);
-const isTagNameValid = tagName => tagName.match(/^[a-z][a-z0-9]+-[a-z0-9]*(-[a-z0-9]+)*$/);
+const isTagNameValid = tagName => tagName.match(/^([a-z][a-z0-9]*-)([a-z0-9]+(-[a-z0-9]+)*)$/);
 
 const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
 	componentName = capitalizeFirstLetter(componentName);
@@ -72,11 +72,27 @@ const generateFiles = (componentName, tagName, library, packageName, isTypeScrip
 
 // Main function
 const createWebComponent = async () => {
+	const packageName = getPackageName();
+	const library = getLibraryName(packageName);
+	
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
 	let tagName = consoleArguments[1];
 	let language = consoleArguments[2];
 	let isTypeScript;
+
+
+	if (componentName && !isNameValid(componentName)) {
+		throw new Error("Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
+	}
+
+	if (tagName && !isTagNameValid(tagName)) {
+		throw new Error("Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
+	}
+
+	if (language && language !== "typescript" && language !== "ts" && language !== "javascript" && language !== "js") {
+		throw new Error("Invalid language. Please use 'typescript','javascript' or their respective 'ts','js'.");
+	}
 
 	if (!componentName) {
 		const response = await prompts({
@@ -86,6 +102,10 @@ const createWebComponent = async () => {
 			validate: (value) => isNameValid(value),
 		});
 		componentName = response.componentName;
+
+		if (!componentName) {
+			process.exit();
+		}
 	}
 
 	if (!tagName) {
@@ -96,12 +116,16 @@ const createWebComponent = async () => {
 			validate: (value) => isTagNameValid(value),
 		});
 		tagName = response.tagName;
+
+		if (!tagName) {
+			process.exit();
+		}
 	}
 
-	if (!language && isTagNameValid(tagName)) {
+	if (!language) {
 		const response = await prompts({
 			type: "select",
-			name: "language",
+			name: "isTypeScript",
 			message: "Please select a language:",
 			choices: [
 				{
@@ -114,23 +138,14 @@ const createWebComponent = async () => {
 				},
 			],
 		});
-		isTypeScript = response.language;
+		isTypeScript = response.isTypeScript;
 	} else if (language === "typescript" || language === "ts") {
 		isTypeScript = true;
 	} else {
 		isTypeScript = false;
 	}
 
-	const packageName = getPackageName();
-	const library = getLibraryName(packageName);
-
-	if (isNameValid(componentName) && isTagNameValid(tagName)) {
 		generateFiles(componentName, tagName, library, packageName, isTypeScript);
-	} else if (!isNameValid(componentName) && isTagNameValid(tagName)) {
-		console.warn('\x1b[33m%s\x1b[0m',"Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
-	} else {
-		console.warn('\x1b[33m%s\x1b[0m',"Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
-	}
 };
 
 createWebComponent();
