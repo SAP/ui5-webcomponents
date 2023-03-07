@@ -1,7 +1,7 @@
 /**
  * Different drag and drop overlay modes of UploadCollection.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

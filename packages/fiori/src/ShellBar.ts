@@ -710,6 +710,8 @@ class ShellBar extends UI5Element {
 	 * Closes the overflow area.
 	 * Useful to manually close the overflow after having suppressed automatic closing with preventDefault() of ShellbarItem's press event
 	 * @public
+     * @method
+     * @name sap.ui.webc.fiori.ShellBar#closeOverflow
 	 */
 	closeOverflow() {
 		if (this.overflowPopover) {
@@ -910,6 +912,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>logo</code> DOM ref.
 	 * @type {HTMLElement}
+     * @name sap.ui.webc.fiori.ShellBar.prototype.logoDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -921,6 +924,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>copilot</code> DOM ref.
 	 * @type {HTMLElement}
+     * @name sap.ui.webc.fiori.ShellBar.prototype.copilotDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -932,6 +936,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>notifications</code> icon DOM ref.
 	 * @type {HTMLElement}
+     * @name sap.ui.webc.fiori.ShellBar.prototype.notificationsDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -943,6 +948,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>overflow</code> icon DOM ref.
 	 * @type {HTMLElement}
+     * @name sap.ui.webc.fiori.ShellBar.prototype.overflowDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -954,6 +960,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>profile</code> icon DOM ref.
 	 * @type {HTMLElement}
+     * @name sap.ui.webc.fiori.ShellBar.prototype.profileDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16
@@ -965,6 +972,7 @@ class ShellBar extends UI5Element {
 	/**
 	 * Returns the <code>product-switch</code> icon DOM ref.
 	 * @type {HTMLElement}
+     * @name sap.ui.webc.fiori.ShellBar.prototype.productSwitchDomRef
 	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.16

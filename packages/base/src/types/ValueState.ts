@@ -1,7 +1,7 @@
 /**
  * Different types of ValueStates.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE
