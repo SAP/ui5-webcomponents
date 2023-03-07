@@ -1,8 +1,8 @@
 /**
  * Different types of Priority.
  *
- * @class
  * @enum {string}
+ * @readonly
  * @public
  * @author SAP SE
  * @alias sap.ui.webc.main.types.Priority
