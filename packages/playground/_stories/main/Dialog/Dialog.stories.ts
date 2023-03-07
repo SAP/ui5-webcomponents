@@ -9,7 +9,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-const component = "ui5-list";
+const component = "ui5-dialog";
 
 export default {
 	title: "Main/Dialog",
@@ -94,7 +94,6 @@ Basic.args = {
 
 export const DraggableAndResizable = Template.bind({});
 DraggableAndResizable.args = {
-	open: true,
 	resizable: true,
 	draggable: true,
 	headerText: "Draggable/Resizable dialog",
@@ -111,7 +110,6 @@ DraggableAndResizable.args = {
 export const FioriDialog = Template.bind({});
 FioriDialog.storyName = "SAP Fiori Styled Footer";
 FioriDialog.args = {
-	open: true,
 	headerText: "SAP Fiori Styled Footer",
 	default: "<p>Adding custom styles to achieve the look and feel of a SAP Fiori footer</p>",
 	footer: `
@@ -123,7 +121,6 @@ FioriDialog.args = {
 
 export const WithState = Template.bind({});
 WithState.args = {
-	open: true,
 	state: ValueState.Error,
 	default: "<p>Dialog with state</p>",
 	footer: `
