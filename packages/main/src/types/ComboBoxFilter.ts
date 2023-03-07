@@ -1,7 +1,7 @@
 /**
  * Different filtering types of the ComboBox.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

@@ -1,7 +1,7 @@
 /**
  * Available Timeline layout orientation
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

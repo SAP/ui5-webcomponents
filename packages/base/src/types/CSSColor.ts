@@ -9,7 +9,6 @@ import DataType from "./DataType.js";
  * @author SAP SE
  * @alias sap.ui.webc.base.types.CSSColor
  * @public
- * @enum {string}
  */
 class CSSColor extends DataType {
 	static override isValid(value: string) {
