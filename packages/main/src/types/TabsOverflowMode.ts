@@ -1,7 +1,7 @@
 /**
  * Tabs overflow mode in TabContainer.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE
