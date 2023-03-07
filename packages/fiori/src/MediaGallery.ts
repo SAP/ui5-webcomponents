@@ -123,7 +123,7 @@ class MediaGallery extends UI5Element {
 	 * an overflow button that shows the count of the remaining thumbnails.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.MediaGallery.prototype.showAllThumbnails
+	 * @name sap.ui.webc.fiori.MediaGallery.prototype.showAllThumbnails
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -138,7 +138,7 @@ class MediaGallery extends UI5Element {
 	 * the enlarged content of the currently selected item.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.MediaGallery.prototype.interactiveDisplayArea
+	 * @name sap.ui.webc.fiori.MediaGallery.prototype.interactiveDisplayArea
 	 * @defaultvalue false
 	 * @public
 	 */
@@ -156,7 +156,7 @@ class MediaGallery extends UI5Element {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.MediaGalleryLayout}
-	 * @name sap.ui.webc.main.MediaGallery.prototype.layout
+	 * @name sap.ui.webc.fiori.MediaGallery.prototype.layout
 	 * @defaultvalue "Auto"
 	 * @public
 	 */
@@ -174,7 +174,7 @@ class MediaGallery extends UI5Element {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuHorizontalAlign}
-	 * @name sap.ui.webc.main.MediaGallery.prototype.menuHorizontalAlign
+	 * @name sap.ui.webc.fiori.MediaGallery.prototype.menuHorizontalAlign
 	 * @defaultvalue "Left"
 	 * @public
 	 */
@@ -192,7 +192,7 @@ class MediaGallery extends UI5Element {
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.MediaGalleryMenuVerticalAlign}
-	 * @name sap.ui.webc.main.MediaGallery.prototype.menuVerticalAlign
+	 * @name sap.ui.webc.fiori.MediaGallery.prototype.menuVerticalAlign
 	 * @defaultvalue "Bottom"
 	 * @public
 	 */
@@ -243,7 +243,7 @@ class MediaGallery extends UI5Element {
 	 * <b>Note:</b> Use the <code>ui5-media-gallery-item</code> component to define the desired items.
 	 *
 	 * @type {sap.ui.webc.fiori.IMediaGalleryItem[]}
-	 * @name sap.ui.webc.main.MediaGallery.prototype.default
+	 * @name sap.ui.webc.fiori.MediaGallery.prototype.default
 	 * @slot items
 	 * @public
 	 */
