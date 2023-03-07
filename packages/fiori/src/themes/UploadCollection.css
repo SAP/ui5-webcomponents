@@ -42,6 +42,19 @@
 	justify-content: center;
 }
 
+
+.uc-dnd-overlay .dnd-overlay-title {
+	font-size: var(--sapFontHeader2Size);
+	color: var(--sapGroup_TitleTextColor);
+	margin: 1rem 0;
+}
+
+.uc-dnd-overlay .dnd-overlay-subtitle {
+	font-size: var(--sapFontHeader5Size);
+	color: var(--sapContent_LabelColor);
+    margin-bottom: 2rem;
+}
+
 .uc-drag-overlay {
 	border: var(--ui5_upload_collection_drag_overlay_border);
 }
@@ -74,30 +87,28 @@
 	opacity: 0.05;
 }
 
-.uc-dnd-overlay [ui5-icon] {
-	width: 4rem;
-	height: 4rem;
-	margin-bottom: 1rem;
-	color: var(--sapContent_NonInteractiveIconColor);
-}
-
-.uc-dnd-overlay .dnd-overlay-text {
-	font-family: "72override", var(--sapFontFamily);
-	font-size: var(--sapFontHeader4Size);
-	color: var(--sapContent_NonInteractiveIconColor);
-}
-
-.uc-dnd-overlay [ui5-icon],
-.uc-dnd-overlay .dnd-overlay-text {
+.uc-dnd-overlay [ui5-illustrated-message],
+.uc-dnd-overlay .dnd-overlay-title {
 	z-index: 1;
 	pointer-events: none;
 }
 
-.uc-drop-overlay [ui5-icon],
-.uc-drop-overlay .dnd-overlay-text {
+.uc-drop-overlay .dnd-overlay-title,
+.uc-drop-overlay .dnd-overlay-subtitle {
 	color: var(--sapContent_DragAndDropActiveColor);
 }
 
 .uc-no-files-dnd-overlay {
 	visibility: hidden;
+}
+
+/* Upload Error*/
+.uc-no-files-upload-error {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 1rem;
+	background-color: var(--sapGroup_ContentBackground);
 }

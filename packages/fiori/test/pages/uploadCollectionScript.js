@@ -36,7 +36,7 @@
 	}
 
 	function createUCI(file) {
-		var uci = document.createElement("ui5-upload-collection-item");
+		var uci = document.createElement("ui5-upload-collection-item"),
 			description = document.createTextNode("Last modified: " + file.lastModifiedDate + ", size: " + file.size);
 
 		uci.appendChild(createThumbnail(file.name));
@@ -92,6 +92,7 @@
 				oXHR.onreadystatechange  = function () {
 					if (this.status !== 200) {
 						item.uploadState = "Error";
+						uploadCollection.setAttribute("show-error-message", "");
 					}
 				};
 				oXHR.send(item.file);

@@ -107,6 +107,22 @@
 		</div>
 	</ui5-upload-collection>
 
+	<ui5-upload-collection id="uploadCollectionUploadError" show-error-message>
+		<div class="header" slot="header">
+			<ui5-title>Unable to upload files</ui5-title>
+		</div>
+		<ui5-upload-collection-item
+			id="errorState2"
+			file-name="latest.reports.pdf"
+			type="Detail"
+			upload-state="Error"
+			progress="59"
+		>
+			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
+			uploadState="Error"
+		</ui5-upload-collection-item>
+	</ui5-upload-collection>	
+
 	<div class="header">
 		<ui5-label id="uploadStateEvent"></ui5-label>
 	</div>

@@ -14,14 +14,20 @@ import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
 import "./illustrations/sapIllus-Scene-Tent.js";
+import "./illustrations/sapIllus-Scene-UploadCollection.js";
+import "./illustrations/sapIllus-Scene-ErrorScreen.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
 	UPLOADCOLLECTION_NO_DATA_TEXT,
 	UPLOADCOLLECTION_NO_DATA_DESCRIPTION,
 	UPLOADCOLLECTION_DRAG_FILE_INDICATOR,
+	UPLOADCOLLECTION_DRAG_FILE_DESCRIPTION,
 	UPLOADCOLLECTION_DROP_FILE_INDICATOR,
+	UPLOADCOLLECTION_DROP_FILE_DESCRIPTION,
 	UPLOADCOLLECTION_ARIA_ROLE_DESCRIPTION,
+	UPLOADCOLLECTION_UPLOAD_ERROR_TEXT,
+	UPLOADCOLLECTION_UPLOAD_ERROR_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import {
 	attachBodyDnDHandler,
@@ -181,6 +187,38 @@ class UploadCollection extends UI5Element {
 	 accessibleName!: string;
 
 	/**
+	  * Displays an IllustratedMessage for error, set when handling unsuccessful file upload in handling file requests
+	  * @type {boolean}
+	  * @name sap.ui.webc.fiori.UploadCollection.prototype.showErrorMessage
+	  * @defaultvalue false
+	  * @public
+	  */
+	@property({ type: Boolean})
+	showErrorMessage!: boolean;
+
+	/**
+	* Allows you to set your own text for the 'Unable to upload' error message text.
+	*
+	* @type {string}
+	* @name sap.ui.webc.fiori.UploadCollection.prototype.errorMessageText
+	* @defaultvalue ""
+	* @public
+	*/
+	@property()
+	errorMessageText!: string;
+
+   /**
+	* Allows you to set your own text for the 'Unable to upload' error message description.
+	*
+	* @type {string}
+	* @name sap.ui.webc.fiori.UploadCollection.prototype.errorMessageDescription
+	* @defaultvalue ""
+	* @public
+	*/
+	@property()
+	errorMessageDescription!: string;
+
+	/**
 	 * Indicates what overlay to show when files are being dragged.
 	 *
 	 * @type {sap.ui.webc.fiori.types.UploadCollectionDnDOverlayMode}
@@ -337,6 +375,9 @@ class UploadCollection extends UI5Element {
 				"uc-no-files": true,
 				"uc-no-files-dnd-overlay": this._showDndOverlay,
 			},
+			uploadError: {
+				"uc-no-files-upload-error": this.showErrorMessage,
+			},
 		};
 	}
 
@@ -374,6 +415,22 @@ class UploadCollection extends UI5Element {
 		}
 
 		return UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_DROP_FILE_INDICATOR);
+	}
+
+	get _dndOverlayDescription() {
+		if (this._dndOverlayMode === UploadCollectionDnDOverlayMode.Drag) {
+			return UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_DRAG_FILE_DESCRIPTION);
+		}
+
+		return UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_DROP_FILE_DESCRIPTION);
+	}
+
+	get _uploadErrorText() {
+		return this.errorMessageText || UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_UPLOAD_ERROR_TEXT);
+	}
+
+	get _uploadErrorDescription() {
+		return this.errorMessageDescription || UploadCollection.i18nBundle.getText(UPLOADCOLLECTION_UPLOAD_ERROR_DESCRIPTION);
 	}
 }
 
