@@ -649,13 +649,14 @@ class Popover extends Popup {
 	 * @returns {{x: number, y: number}} Arrow's coordinates
 	 */
 	getArrowPosition(targetRect: DOMRect, popoverSize: PopoverSize, left: number, top: number, isVertical: boolean, borderRadius: number): ArrowPosition {
-		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+		const horizontalAlign = this._actualHorizontalAlign;
+		let arrowXCentered = horizontalAlign === PopoverHorizontalAlign.Center || horizontalAlign === PopoverHorizontalAlign.Stretch;
 
-		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
+		if (horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
 			arrowXCentered = true;
 		}
 
-		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
+		if (horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
 			arrowXCentered = true;
 		}
 
@@ -749,19 +750,10 @@ class Popover extends Popup {
 	}
 
 	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
-		const isRTL = this.effectiveDir === "rtl";
-		let actualHAlign = this.horizontalAlign;
+		const horizontalAlign = this._actualHorizontalAlign;
 		let left;
 
-		if (isRTL) {
-			if (actualHAlign === PopoverHorizontalAlign.Left) {
-				actualHAlign = PopoverHorizontalAlign.Right;
-			} else if (actualHAlign === PopoverHorizontalAlign.Right) {
-				actualHAlign = PopoverHorizontalAlign.Left;
-			}
-		}
-
-		switch (actualHAlign) {
+		switch (horizontalAlign) {
 		case PopoverHorizontalAlign.Center:
 		case PopoverHorizontalAlign.Stretch:
 			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
@@ -844,6 +836,20 @@ class Popover extends Popup {
 	 */
 	get _displayFooter() {
 		return true;
+	}
+
+	get _actualHorizontalAlign() {
+		if (this.effectiveDir === "rtl") {
+			if (this.horizontalAlign === PopoverHorizontalAlign.Left) {
+				return PopoverHorizontalAlign.Right;
+			}
+			
+			if (this.horizontalAlign === PopoverHorizontalAlign.Right) {
+				return PopoverHorizontalAlign.Left;
+			}
+		}
+
+		return this.horizontalAlign;
 	}
 }
 
