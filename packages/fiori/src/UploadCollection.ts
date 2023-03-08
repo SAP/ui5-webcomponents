@@ -204,7 +204,7 @@ class UploadCollection extends UI5Element {
 	  * @defaultvalue false
 	  * @public
 	  */
-	@property({ type: Boolean})
+	@property({ type: Boolean })
 	showErrorMessage!: boolean;
 
 	/**
@@ -218,7 +218,7 @@ class UploadCollection extends UI5Element {
 	@property()
 	errorMessageText!: string;
 
-   /**
+	/**
 	* Allows you to set your own text for the 'Unable to upload' error message description.
 	*
 	* @type {string}
