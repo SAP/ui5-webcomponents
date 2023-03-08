@@ -17,6 +17,10 @@ export default {
 	argTypes,
 	parameters: {
 		docs: {
+			story: {
+				iframeHeight: "800px",
+				inline: false,
+			},
 			page: DocsPage({ ...componentInfo, component }),
 		},
 	},
@@ -48,18 +52,20 @@ const Template: UI5StoryArgs<Dialog, StoryArgsSlots> = (args) => {
 <script>
 	var dialogOpener = document.getElementById("dialogOpener");
 	var dialog = document.getElementById("dialog"); 
-	var dialogCloser = document.querySelector("#dialog .dialogCloser");
+	var dialogClosers = [...dialog.querySelectorAll(".dialogCloser")];
 
 	dialogOpener.accessibilityAttributes = {
 		hasPopup: "dialog",
 		controls: dialog.id,
 	};
-	dialogOpener.addEventListener("click", function () {
+	dialogOpener.addEventListener("click", () => {
 		dialog.open = true;
 	});
-	dialogCloser.addEventListener("click", function () {
-		dialog.open = false;
-	});
+	dialogClosers.forEach(btn => {
+		btn.addEventListener("click", () => {
+			dialog.open = false;
+		});
+	})
 </script>`;
 };
 
@@ -68,19 +74,19 @@ Basic.args = {
 	headerText: "Register Form",
 	default: `<section class="login-form">
 	<div>
-		<ui5-label for="username" required>Username: </ui5-label>
+		<ui5-label for="username" required show-colon>Username</ui5-label>
 		<ui5-input id="username"></ui5-input>
 	</div>
 	<div>
-		<ui5-label for="password" required>Password: </ui5-label>
+		<ui5-label for="password" required show-colon>Password</ui5-label>
 		<ui5-input id="password" type="Password" value-state="Error"></ui5-input>
 	</div>
 	<div>
-		<ui5-label for="email" type="Email" required>Email: </ui5-label>
+		<ui5-label for="email" type="Email" required show-colon>Email</ui5-label>
 		<ui5-input id="email"></ui5-input>
 	</div>
 	<div>
-		<ui5-label for="address">Address: </ui5-label>
+		<ui5-label for="address" show-colon>Address</ui5-label>
 		<ui5-input id="address"></ui5-input>
 	</div>
 </section>`,
@@ -109,7 +115,7 @@ FioriDialog.args = {
 	headerText: "SAP Fiori Styled Footer",
 	default: "<p>Adding custom styles to achieve the look and feel of a SAP Fiori footer</p>",
 	footer: `<div slot="footer" style="display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;">
-	<ui5-button design="Emphasized" style="min-width: 4rem;">OK</ui5-button>
+	<ui5-button class="dialogCloser" design="Emphasized" style="min-width: 4rem;">OK</ui5-button>
 	<ui5-button class="dialogCloser" style="margin: 0 0 0 0.5rem; min-width: 4rem;">Cancel</ui5-button>
 </div>`,
 };
