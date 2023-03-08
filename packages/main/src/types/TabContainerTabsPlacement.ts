@@ -3,7 +3,7 @@
  *
  * @readonly
  * @enum {string}
- * @public
+ * @private
  * @author SAP SE
  * @alias sap.ui.webc.main.types.TabContainerTabsPlacement
  */
