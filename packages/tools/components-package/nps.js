@@ -19,8 +19,6 @@ const getScripts = (options) => {
 	const tsWatchCommand = tsOption ? "tsc --watch" : "";
 	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
 	const copySrcGenerated = tsOption ? "" : "copy.srcGenerated";
-	const packageType = JSON.parse(fs.readFileSync("package.json")).type;
-	const configFileExtension = packageType === "module" ? "cjs" : "js";
 
 	if (tsOption) {
 		try {
@@ -32,27 +30,27 @@ const getScripts = (options) => {
 	}
 
 	let viteConfig;
-	if (fs.existsSync(`config/vite.config.${configFileExtension}`)) {
+	if (fs.existsSync("config/vite.config.js")) {
 		// old project setup where config file is in separate folder
-		viteConfig = `-c config/vite.config.${configFileExtension}`;
-	} else if (fs.existsSync(`vite.config.${configFileExtension}`)) {
+		viteConfig = "-c config/vite.config.js";
+	} else if (fs.existsSync("vite.config.js")) {
 		// preferred way of custom configuration in root project folder
 		viteConfig = "";
 	} else {
 		// no custom configuration - use default from tools project
-		viteConfig = `-c "${require.resolve(`@ui5/webcomponents-tools/components-package/vite.config.${configFileExtension}`)}"`;
+		viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
 	}
 
 	let eslintConfig;
-	if (fs.existsSync(`config/.eslintrc.${configFileExtension}`)) {
+	if (fs.existsSync("config/.eslintrc.js")) {
 		// old project setup where config file is in separate folder
-		eslintConfig = `--config config/.eslintrc.${configFileExtension}`;
-	} else if (fs.existsSync(`.eslintrc.${configFileExtension}`)) {
+		eslintConfig = "--config config/.eslintrc.js";
+	} else if (fs.existsSync(".eslintrc.js")) {
 		// preferred way of custom configuration in root project folder
 		eslintConfig = "";
 	} else {
 		// no custom configuration - use default from tools project
-		eslintConfig = `--config  "${require.resolve(`@ui5/webcomponents-tools/components-package/eslint.${configFileExtension}`)}"`;
+		eslintConfig = `--config  "${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}"`;
 	}
 
 	const scripts = {
