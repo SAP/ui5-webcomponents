@@ -65,7 +65,7 @@ const generateFiles = (componentName, tagName, library, packageName, isTypeScrip
 	console.log(`Successfully generated ${filePaths.template}`);
 
 	// Change the color of the output
-		console.warn('\x1b[33m%s\x1b[0m', `
+	console.warn('\x1b[33m%s\x1b[0m', `
 	Make sure to import the component in your bundle by using:
 	import ${componentName} from "./dist/${componentName}.js";`);
 }
@@ -74,7 +74,7 @@ const generateFiles = (componentName, tagName, library, packageName, isTypeScrip
 const createWebComponent = async () => {
 	const packageName = getPackageName();
 	const library = getLibraryName(packageName);
-	
+
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
 	let tagName = consoleArguments[1];
@@ -145,7 +145,7 @@ const createWebComponent = async () => {
 		isTypeScript = false;
 	}
 
-		generateFiles(componentName, tagName, library, packageName, isTypeScript);
+	generateFiles(componentName, tagName, library, packageName, isTypeScript);
 };
 
 createWebComponent();
