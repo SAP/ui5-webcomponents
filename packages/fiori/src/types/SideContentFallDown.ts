@@ -1,4 +1,6 @@
 /**
+ * SideContent FallDown options.
+ *
  * @readonly
  * @enum {string}
  * @public

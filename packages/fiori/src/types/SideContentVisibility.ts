@@ -1,4 +1,6 @@
 /**
+ * Side Content visibility options.
+ *
  * @readonly
  * @enum {string}
  * @public

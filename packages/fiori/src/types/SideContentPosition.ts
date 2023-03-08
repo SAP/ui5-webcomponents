@@ -1,4 +1,6 @@
 /**
+ * Side Content position options.
+ *
  * @readonly
  * @enum {string}
  * @public
