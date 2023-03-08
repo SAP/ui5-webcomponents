@@ -1,47 +1,94 @@
 import { html } from "lit-html";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { ifDefined } from "lit-html/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
-
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
 import { DocsPage } from "../../../.storybook/docs";
-
-// @ts-ignore
-import type BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
+import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
+import BusyIndicatorSize from "@ui5/webcomponents/dist/types/BusyIndicatorSize.js";
 
 const component = "ui5-busy-indicator";
 
 export default {
-    title: "Main/BusyIndicator",
-    component,
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
-    argTypes,
+	title: "Main/BusyIndicator",
+	component,
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component })
+		},
+	},
+	argTypes,
 } as Meta<BusyIndicator>;
 
-const Template: UI5StoryArgs<BusyIndicator, StoryArgsSlots> = (args) => html`<div></div>`;
+const Template: UI5StoryArgs<BusyIndicator, StoryArgsSlots> = (args) => {
+	return html`<ui5-busy-indicator
+	text="${ifDefined(args.text)}"
+	size="${ifDefined(args.size)}"
+	?active="${ifDefined(args.active)}"
+	delay="${ifDefined(args.delay)}"
+>
+	${unsafeHTML(args.default)}
+</ui5-busy-indicator>`;
+};
 
+export const Basic = Template.bind({});
+Basic.args = {
+	active: true,
+	size: BusyIndicatorSize.Medium,
+};
 
-export const Template0: StoryFn = () => html`
-<h3>Busy Indicator with different size</h3>
-		<div class="snippet flex center">
-			<ui5-busy-indicator active="" size="Small"></ui5-busy-indicator>
-			<ui5-busy-indicator active="" size="Medium"></ui5-busy-indicator>
-			<ui5-busy-indicator active="" size="Large"></ui5-busy-indicator>
-		</div>
-`;
+export const UsageWithComponents = Template.bind({});
+UsageWithComponents.args = {
+	size: BusyIndicatorSize.Medium,
+	default: `<ui5-list
+	no-data-text="No Data"
+	header-text="Available Items"
+	>
+</ui5-list>`,
+};
+UsageWithComponents.decorators = [
+	(story) => {
+		return html`<style>
+	.sample {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+</style>
 
+<div class="sample">
+	<ui5-button>Fetch List Data</ui5-button>
+	${story()}
+</div>
 
-export const Template1: StoryFn = () => html`
-<h3>Busy Indicator wrapping other elements</h3>
-	<div class="snippet flex">
-		<ui5-button id="fetch-btn" style="width: 120px;">Fetch List Data</ui5-button>
-		<ui5-busy-indicator id="busy-container" size="Medium">
-			<ui5-list id="fetch-list" no-data-text="No Data" header-text="Available Items"></ui5-list>
-		</ui5-busy-indicator>
-	</div>
-`;
+<script>
+	var busyIndicator = document.querySelector("ui5-busy-indicator");
+	var list = document.querySelector("ui5-list");
+	var fetchBtn = document.querySelector("ui5-button");
+
+	fetchBtn.addEventListener("click", event => {
+		busyIndicator.active = true;
+
+		setTimeout(() => {
+			["UI5", "Web", "Components"].forEach(title => {
+				const el = document.createElement("ui5-li");
+				el.textContent = title;
+				list.appendChild(el);
+			});
+
+			busyIndicator.active = false;
+		}, 3000);
+	});
+</script>`;
+	},
+];
+UsageWithComponents.parameters = {
+	docs: {
+		story: {
+			iframeHeight: "500px",
+			inline: false,
+		}
+	}
+}
