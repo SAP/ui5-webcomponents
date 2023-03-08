@@ -14,8 +14,6 @@
 	font-style: normal;
 	box-sizing: border-box;
 	line-height: var(--_ui5_textarea_line_height);
-	letter-spacing: normal;
-	word-spacing: normal;
 	margin: var(--_ui5_textarea_margin);
 }
 

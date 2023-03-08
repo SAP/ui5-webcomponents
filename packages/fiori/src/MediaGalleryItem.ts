@@ -46,7 +46,13 @@ import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemp
  * @implements sap.ui.webc.fiori.IMediaGalleryItem
  * @since 1.1.0
  */
-@customElement("ui5-media-gallery-item")
+@customElement({
+	tag: "ui5-media-gallery-item",
+	renderer: litRender,
+	styles: MediaGalleryItemCss,
+	template: MediaGalleryItemTemplate,
+	dependencies: [Icon],
+})
 class MediaGalleryItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the selected state of the component.
@@ -173,18 +179,6 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 		this._square = true;
 	}
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return MediaGalleryItemCss;
-	}
-
-	static get template() {
-		return MediaGalleryItemTemplate;
-	}
-
 	get _thumbnail() {
 		return this.thumbnail.length ? this.thumbnail[0] : null;
 	}
@@ -303,12 +297,6 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 
 	_fireItemClick() {
 		this.fireEvent("click", { item: this });
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-		];
 	}
 }
 

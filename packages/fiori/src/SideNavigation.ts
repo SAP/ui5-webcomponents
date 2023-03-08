@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -97,8 +96,24 @@ type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedIte
  * @public
  */
 
-@customElement("ui5-side-navigation")
-@fastNavigation
+@customElement({
+	tag: "ui5-side-navigation",
+	fastNavigation: true,
+	renderer: litRender,
+	template: SideNavigationTemplate,
+	staticAreaTemplate: SideNavigationPopoverTemplate,
+	styles: [SideNavigationCss, SideNavigationPopoverCss],
+	staticAreaStyles: [SideNavigationCss, SideNavigationPopoverCss],
+	dependencies: [
+		List,
+		StandardListItem,
+		Tree,
+		TreeItem,
+		ResponsivePopover,
+		SideNavigationItem,
+		SideNavigationSubItem,
+	],
+})
 /**
  * Fired when the selection has changed via user interaction
  *
@@ -173,38 +188,6 @@ class SideNavigation extends UI5Element {
 	fixedItems!: Array<SideNavigationItem>;
 
 	static i18nBundle: I18nBundle;
-
-	static get staticAreaStyles() {
-		return [SideNavigationCss, SideNavigationPopoverCss];
-	}
-
-	static get styles() {
-		return [SideNavigationCss, SideNavigationPopoverCss];
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return SideNavigationTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return SideNavigationPopoverTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			List,
-			StandardListItem,
-			Tree,
-			TreeItem,
-			ResponsivePopover,
-			SideNavigationItem,
-			SideNavigationSubItem,
-		];
-	}
 
 	get _items() {
 		return this.items.map(this._createTreeItem);

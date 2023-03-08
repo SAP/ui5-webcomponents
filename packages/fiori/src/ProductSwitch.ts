@@ -59,7 +59,12 @@ import type ProductSwitchItem from "./ProductSwitchItem.js";
  * @public
  * @since 1.0.0-rc.5
  */
-@customElement("ui5-product-switch")
+@customElement({
+	tag: "ui5-product-switch",
+	renderer: litRender,
+	styles: ProductSwitchCss,
+	template: ProductSwitchTemplate,
+})
 class ProductSwitch extends UI5Element {
 	constructor() {
 		super();
@@ -99,18 +104,6 @@ class ProductSwitch extends UI5Element {
 	_handleResizeBound: ResizeObserverCallback;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ProductSwitchCss;
-	}
-
-	static get template() {
-		return ProductSwitchTemplate;
-	}
 
 	static get ROW_MIN_WIDTH() {
 		return {
