@@ -204,22 +204,26 @@ class Switch extends UI5Element {
 		}
 
 		if (isEnter(e)) {
-			this.toggle();
+			this._onclick();
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
-			this.toggle();
+			this._onclick();
 		}
 	}
 
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			this.fireEvent("change");
+			const changePrevented = !this.fireEvent("change", null, true);
 			// Angular two way data binding;
-			this.fireEvent("value-changed");
+			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+
+			if (changePrevented || valueChagnePrevented) {
+				this.checked = !this.checked;
+			}
 		}
 	}
 

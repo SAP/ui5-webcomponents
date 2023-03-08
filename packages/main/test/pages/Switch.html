@@ -42,6 +42,11 @@
 	</div>
 	<ui5-label id="lbl"></ui5-label>
 
+	<h3>Change prevented Switch</h3>
+	<div class="switch2auto">
+		<ui5-switch id="switchprevented" text-on="On" text-off="Off"></ui5-switch>
+	</div>
+
 	<h3>Graphical Switch</h3>
 	<div class="switch2auto">
 		<ui5-switch design="Graphical" text-on="On" text-off="Off"></ui5-switch>
@@ -81,6 +86,10 @@
 	sw.addEventListener("ui5-change", function(e) {
 		lbl.innerHTML = e.target.checked + " : " + (++counter);
 		field.value = counter;
+	});
+
+	switchprevented.addEventListener("ui5-change", function(e) {
+		e.preventDefault();
 	});
 </script>
 </html>
