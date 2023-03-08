@@ -75,10 +75,14 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 *
 * @event sap.ui.webc.main.TimePickerBase#change
  * @public
+ * @param {string} value The submitted value.
  * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
 */
 @event("change", {
 	detail: {
+		value: {
+			type: String,
+		},
 		valid: {
 			type: Boolean,
 		},
