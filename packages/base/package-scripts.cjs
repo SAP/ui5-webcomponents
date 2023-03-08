@@ -10,8 +10,8 @@ const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/p
 
 const LIB = path.join(__dirname, `../tools/lib/`);
 
-const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.cjs")}"`;
-const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.cjs")}`;
+const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
+const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}`;
 
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",

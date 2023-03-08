@@ -1,4 +1,4 @@
-let path = require("path");
+import path from "path";
 
 const virtualIndexPlugin = async () => {
 	const { globby } = await import("globby");
