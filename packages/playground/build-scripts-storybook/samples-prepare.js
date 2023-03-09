@@ -93,15 +93,15 @@ export type StoryArgsSlots = {
 		moduleAPI?.methods?.forEach((prop) => {
             if (prop.visibility === "public") {
                 args[prop.name] = {
+					description: prop.description,
                     table: {
-                        category: "Methods",
+                        category: "methods",
                     },
                 };
 
 				// methods can have custom descriptions with parameters and return value
 				if (prop.parameters || prop.returnValue) {
-					args[prop.name].customDescription = {
-						description: prop.description,
+					args[prop.name].UI5CustomData = {
 						parameters: prop.parameters,
 						returnValue: prop.returnValue,
 					}
@@ -113,8 +113,11 @@ export type StoryArgsSlots = {
         moduleAPI?.events?.forEach((prop) => {
             if (prop.visibility === "public" && prop.parameters) {
                 args[prop.name] = {
-                    customDescription: {
-                        description: prop.description,
+					description: prop.description,
+					table: {
+						category: "events",
+					},
+                    UI5CustomData: {
                         parameters: prop.parameters,
                     },
                 };
