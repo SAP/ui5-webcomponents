@@ -1,13 +1,13 @@
-# Typescript development
+# Typescript Development
 
+Since 1.11.0 we migrated the framework and all components to Typescript.
+In addition to the pure code migration we introduced a new format of component metadata definition leveraging Typescript decorators.
 
-## Metadata
+## Component Metadata
 
 ### Decorators
 
-We use decorators to describe metadata.
-
-List of all available decorators:
+We use decorators to describe the components' metadata. Here is the list of all available decorators:
 
 ```ts
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -16,18 +16,22 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 ```
 
-### Types of decorators
+### Class decorators
+The class decorators are used just before component's class declaration and applied to the constructor of the class to describe the component:
 
-#### Class decorators
-
-These are used **outside** the class declaration and describe the class:
+- `@customElement` - to define class related metadata entities: `tag`, `renderer`, `template`, `styles`, `dependencies` and more.
 
 ```ts
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+```
+
+- `@event` - to define the events, fired by the component
+
+```ts
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 ```
 
-Example:
+**Example:**
 
 ```ts
 @customElement("ui5-menu")
@@ -46,32 +50,7 @@ class MyClass extends UI5Element {
 }
 ```
 
-#### Property decorators
-
-These are used **inside** the class and are associated with accessors (class members).
-Such decorators are used for properties and slots:
-
-```ts
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-```
-
-Example:
-
-```ts
-class MyClass extends UI5Element {
-	@property({ type: Boolean })
-	open!:boolean;
-}
-```
-
-### Defining the tag, static getters and other settings
-
-Use `@customElement` as a replacement for the metadata `tag` setting and all the `static get` methods.
-
-Use `themeAware`, `languageAware` and `fastNavigation` where needed.
-
-**Example**
+**Example:** `@customElement` can be used to define all class related metadata entities:
 
 ```ts
 @customElement({
@@ -82,25 +61,46 @@ Use `themeAware`, `languageAware` and `fastNavigation` where needed.
 	renderer: Renderer,
 	styles: MyElementStyles,
 	template: MyElementTemplate,
+	staticAreaStyles: MyStaticAreaStyles,
+ 	staticAreaTemplate: MyStaticAreaTemplate,
+	dependencies: [ComponentA, ComponentB],
 })
 class MyElement extends UI5Element {
-	...
+
 }
 ```
-And the pattern goes on for all the `static get` methods as well, such as :
- - `static get render()`;
-   - **Note!**: We now use it as **`renderer`** instead of `render` in the `@customElement` decorator as we can see from the example;
- - `static get dependencies()`;
- - `static get staticAreaStyles()`;
- - `static get staticAreaTemplate()`;
 
-<br />
+**Note**: the `static get render()` that we use when developing in JavaScript (still supported for beckward compatibility) is replaced with **`renderer`** in the `@customElement` decorator.
+
+### Property decorators
+
+These are used inside the class and are associated with accessors (class members).
+These decorators are used for properties and slots:
+
+- `@property`- to define components' properties
+```ts
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+```
+- `@slot` - to define components' slots
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+```
 
 ### Defining properties (`@property`)
 
-Pass an object with the settings (`type`, `defaultValue`, etc.), defining the property, as the only parameter to the `@property` decorator.
+The `@property` decorator has a single parameter of type object with the following fields to describe a component property:
 
- - `String` is the default type, no need to explicitly write it
+- type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
+- validator?: DataType,
+- defaultValue?: PropertyValue,
+- noAttribute?: boolean,
+- multiple?: boolean,
+- compareValues?: boolean,
+
+The fileds are explained in details in the [Deep dive and best practices](./06-deep-dive-and-best-practices.md) article.
+
+**Example:** "`String` properties with no specific default value" - we skip all settings as `String` is the default type and `empty string` is the default value.
 
 ```ts
 /**
@@ -115,23 +115,11 @@ Pass an object with the settings (`type`, `defaultValue`, etc.), defining the pr
 headerText!: string;
 ```
 
- - use Typescript `enum` for enums (do not extend `DataType`)
+**Example:** "Properties with enumarated values" - we use `enum` for both the Typescript class member and the proeprty metadata in the decorator
 
 ```ts
 /**
  * Defines the component design.
- *
- * <br/><br/>
- * <b>The available values are:</b>
- *
- * <ul>
- * <li><code>Default</code></li>
- * <li><code>Emphasized</code></li>
- * <li><code>Positive</code></li>
- * <li><code>Negative</code></li>
- * <li><code>Transparent</code></li>
- * <li><code>Attention</code></li>
- * </ul>
  *
  * @type {sap.ui.webc.main.types.ButtonDesign}
  * @name sap.ui.webc.main.Button.prototype.design
@@ -142,7 +130,7 @@ headerText!: string;
 design!: ButtonDesign;
 ```
 
- - use `validator` instead of `type` for `DataType` descendants (although `type` still works for compatibility) 
+**Example:** use `validator` instead of `type` for `DataType` descendants (although `type` still works for compatibility) 
 
 ```ts
 /**
@@ -156,27 +144,47 @@ design!: ButtonDesign;
 timestamp?: number;
 ```
 
-The `validator` setting is preferable to `type` as it avoids confusion with the actual Typescript type (i.e. `number` in this example)
+The `validator` setting is preferable to `type` as it avoids confusion with the actual Typescript type (i.e. `number` in this example).
 
-- Note the difference between Typescript types (`string`, `boolean`) and Javascript constructors (`String`, `Boolean`).
 
-The former are used for Typescript class members, and the latter (as before) for the metadata settings.
+**Example:** Typescript types (`string`, `boolean`) are used for Typescript class members, and  Javascript constructors (`String`, `Boolean`) for the metadata settings (as before)
 
 ```ts
 @property({ type: Boolean })
 hidden!: boolean;
 ```
 
-- **Important:** set the `@name` JSDoc annotation for all *public* properties as JSDoc cannot associate the JSDoc comment with the property in the code.
+### Usage of `@name` in properties' documentation
+Set the `@name` JSDoc annotation for all *public* properties as JSDoc cannot associate the JSDoc comment with the property in the code.
 This will not be necessary once we've switched to TypeDoc.
 
-- Use `?` for all metadata properties that may be `undefined`, and `!` for all other metadata properties.
+### Usage of `?` and `!`
+Use `?` for all metadata properties that may be `undefined` or `null`, and `!` for all other metadata properties. As a rule of thumb:
+- `Boolean` properties are always defined with `!` as they
+are always `false` by default
+```ts
+@property({ type: Boolean })
+interactive!: boolean;
+```
+- `String` properties are always defined with `!` as they
+are `empty string` by default, unless you specifically set `defaultValue: undefined` (then use `?`)
+```ts
+@property()
+text!: string;
+```
 
-As a rule of thumb, `String` properties are always defined with `!` unless you specifically set `defaultValue: undefined` and `validator`
-properties are always defined with `?` unless you specify a default value. `Boolean` properties are always defined with `!` as they
-always have a default value of `false`.
+```ts
+@property({ defaultValue: undefined })
+target?: string;
+```
 
-- **Important:** never initialize metadata properties. Use `defaultValue` instead.
+- properties with `validator` set, should be always defined with `?` as they are `undefined` by default, unless you specify a `truthy` default value.
+```ts
+@property({ validator: Float })
+width?: number
+```
+
+### Never initialize metadata properties. Use `defaultValue` instead.
 
 Wrong:
 ```ts
@@ -209,8 +217,7 @@ class Button extends UI5Element {
 }
 ```
 
-Note the usage of `!` to tell Typescript that this variable will always be defined,
-since Typescript does not know that the framework will create a special getter for it.
+**Note:** we use `!` to instruct the Typescript compiler that the variable will be initialized with a default value different than `null` and `undefined`, since the Typescript compiler does not know about the component lifecycle and the fact that the framework will initialize the `design` class member.
 
 ### Defining slots (`@slot`)
 
