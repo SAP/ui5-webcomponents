@@ -34,7 +34,13 @@ type WizardTabInfo = {
  * @private
  */
 
-@customElement("ui5-wizard-tab")
+@customElement({
+	tag: "ui5-wizard-tab",
+	renderer: litRender,
+	styles: WizardTabCss,
+	template: WizardTabTemplate,
+	dependencies: [Icon],
+})
 
 /**
  * Fired when clicking on none disabled step.
@@ -140,22 +146,6 @@ class WizardTab extends UI5Element implements ITabbable {
 	_tabIndex!: string
 
 	_wizardTabAccInfo? : WizardTabInfo
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return WizardTabCss;
-	}
-
-	static get template() {
-		return WizardTabTemplate;
-	}
-
-	static get dependencies() {
-		return [Icon];
-	}
 
 	_onclick() {
 		if (!this.disabled) {

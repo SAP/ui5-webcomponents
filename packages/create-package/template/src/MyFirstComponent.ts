@@ -25,21 +25,14 @@ import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
  * @tagname INIT_PACKAGE_VAR_TAG
  * @public
  */
-@customElement("INIT_PACKAGE_VAR_TAG")
+@customElement({
+	tag: "INIT_PACKAGE_VAR_TAG",
+	renderer: litRender,
+	styles: INIT_PACKAGE_VAR_CLASS_NAMECss,
+	template: INIT_PACKAGE_VAR_CLASS_NAMETemplate,
+})
 class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return INIT_PACKAGE_VAR_CLASS_NAMETemplate;
-	}
-
-	static get styles() {
-		return INIT_PACKAGE_VAR_CLASS_NAMECss;
-	}
 
 	static async onDefine() {
 		INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle = await getI18nBundle("INIT_PACKAGE_VAR_NAME");

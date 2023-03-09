@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
@@ -69,8 +68,14 @@ import IllustratedMessageTemplate from "./generated/templates/IllustratedMessage
  * @since 1.0.0-rc.15
  */
 
-@customElement("ui5-illustrated-message")
-@languageAware
+@customElement({
+	tag: "ui5-illustrated-message",
+	languageAware: true,
+	renderer: litRender,
+	styles: IllustratedMessageCss,
+	template: IllustratedMessageTemplate,
+	dependencies: [Title],
+})
 class IllustratedMessage extends UI5Element {
 	/**
 	* Defines the illustration name that will be displayed in the component.
@@ -341,18 +346,6 @@ class IllustratedMessage extends UI5Element {
 		this._lastKnownMedia = "base";
 	}
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return IllustratedMessageCss;
-	}
-
-	static get template() {
-		return IllustratedMessageTemplate;
-	}
-
 	static async onDefine() {
 		IllustratedMessage.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
 	}
@@ -372,10 +365,6 @@ class IllustratedMessage extends UI5Element {
 			DIALOG: "dialog",
 			SCENE: "scene",
 		};
-	}
-
-	static get dependencies() {
-		return [Title];
 	}
 
 	async onBeforeRendering() {

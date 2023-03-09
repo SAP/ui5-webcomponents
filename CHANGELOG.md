@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0...v1.12.0-rc.0) (2023-03-09)
+
+
+### Bug Fixes
+
+* **ui5-datetime-picker:** align styles in footer ([#6665](https://github.com/SAP/ui5-webcomponents/issues/6665)) ([d58da29](https://github.com/SAP/ui5-webcomponents/commit/d58da29f07ba46e476c1d54153521fabe6691ec5)), closes [#4852](https://github.com/SAP/ui5-webcomponents/issues/4852)
+* **ui5-input, ui5-textarea:** remove redundant styles ([#6662](https://github.com/SAP/ui5-webcomponents/issues/6662)) ([52ff41a](https://github.com/SAP/ui5-webcomponents/commit/52ff41a6ec114b6ee43ed3749750cb1449270a2b))
+
+
+### Features
+
+* enhance create-ui5-element command to create component in TS ([#6609](https://github.com/SAP/ui5-webcomponents/issues/6609)) ([d870065](https://github.com/SAP/ui5-webcomponents/commit/d8700650a4e5991862e2076cc2c93482011c4c90))
+* **ui5-switch:** make change event preventable ([#6603](https://github.com/SAP/ui5-webcomponents/issues/6603)) ([953a1d0](https://github.com/SAP/ui5-webcomponents/commit/953a1d0fe103c6a510325188832154adcd04502b)), closes [#5953](https://github.com/SAP/ui5-webcomponents/issues/5953)
+
+
+
+
+
 # [1.11.0](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.4...v1.11.0) (2023-03-06)
 
 

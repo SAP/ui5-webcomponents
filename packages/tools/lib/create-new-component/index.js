@@ -1,80 +1,7 @@
 const fs = require("fs");
-
-const jsFileContentTemplate = componentName => {
-	return `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ${componentName}Template from "./generated/templates/${componentName}Template.lit.js";
-
-// Styles
-import ${componentName}Css from "./generated/themes/${componentName}.css.js";
-
-/**
- * @public
- */
-const metadata = {
-	tag: "${tagName}",
-	properties: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
-		//
-	},
-	slots: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
-		//
-	},
-	events: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
-		//
-	},
-};
-
-/**
- * @class
- *
- * <h3 class="comment-api-title">Overview</h3>
- *
- *
- * <h3>Usage</h3>
- *
- * For the <code>${tagName}</code>
- * <h3>ES6 Module Import</h3>
- *
- * <code>import ${packageName}/dist/${componentName}.js";</code>
- *
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.${library}.${componentName}
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ${tagName}
- * @public
- */
-class ${componentName} extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ${componentName}Css;
-	}
-
-	static get template() {
-		return ${componentName}Template;
-	}
-
-	static get dependencies() {
-		return [];
-	}
-
-	static async onDefine() {
-
-	}
-}
-
-${componentName}.define();
-
-export default ${componentName};
-`;
-};
+const prompts = require("prompts");
+const jsFileContentTemplate = require("./jsFileContentTemplate.js");
+const tsFileContentTemplate = require("./tsFileContentTemplate.js");
 
 const getPackageName = () => {
 	if (!fs.existsSync("./package.json")) {
@@ -108,47 +35,117 @@ const getLibraryName = packageName => {
 	return packageName.substr("webcomponents-".length);
 };
 
-const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+// String manipulation
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
 
-const packageName = getPackageName();
-const library = getLibraryName(packageName);
+// Validation of user input
+const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/);
+const isTagNameValid = tagName => tagName.match(/^([a-z][a-z0-9]*-)([a-z0-9]+(-[a-z0-9]+)*)$/);
 
-const consoleArguments = process.argv.slice(2);
-const componentName = consoleArguments[0];
+const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
+	componentName = capitalizeFirstLetter(componentName);
+	const filePaths = {
+		"main": isTypeScript 
+			? `./src/${componentName}.ts` 
+			: `./src/${componentName}.js`,
+		"css": `./src/themes/${componentName}.css`,
+		"template": `./src/${componentName}.hbs`,
+	};
 
-if (!componentName){
-	console.error("Please enter component name.");
-	return;
+	const FileContentTemplate = isTypeScript 
+		? tsFileContentTemplate(componentName, tagName, library, packageName) 
+		: jsFileContentTemplate(componentName, tagName, library, packageName);
+
+	fs.writeFileSync(filePaths.main, FileContentTemplate, { flag: "wx+" });
+	fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
+	fs.writeFileSync(filePaths.template, "<div>Hello World</div>", { flag: "wx+" });
+
+	console.log(`Successfully generated ${filePaths.main}`);
+	console.log(`Successfully generated ${filePaths.css}`);
+	console.log(`Successfully generated ${filePaths.template}`);
+
+	// Change the color of the output
+	console.warn('\x1b[33m%s\x1b[0m', `
+	Make sure to import the component in your bundle by using:
+	import ${componentName} from "./dist/${componentName}.js";`);
 }
 
-const tagName = `ui5-${camelToKebabCase(componentName)}`;
+// Main function
+const createWebComponent = async () => {
+	const packageName = getPackageName();
+	const library = getLibraryName(packageName);
 
-const filePaths = {
-	"js": `./src/${componentName}.js`,
-	"css": `./src/themes/${componentName}.css`,
-	"hbs": `./src/${componentName}.hbs`,
+	const consoleArguments = process.argv.slice(2);
+	let componentName = consoleArguments[0];
+	let tagName = consoleArguments[1];
+	let language = consoleArguments[2];
+	let isTypeScript;
+
+
+	if (componentName && !isNameValid(componentName)) {
+		throw new Error("Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
+	}
+
+	if (tagName && !isTagNameValid(tagName)) {
+		throw new Error("Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
+	}
+
+	if (language && language !== "typescript" && language !== "ts" && language !== "javascript" && language !== "js") {
+		throw new Error("Invalid language. Please use 'typescript','javascript' or their respective 'ts','js'.");
+	}
+
+	if (!componentName) {
+		const response = await prompts({
+			type: "text",
+			name: "componentName",
+			message: "Please enter a component name:",
+			validate: (value) => isNameValid(value),
+		});
+		componentName = response.componentName;
+
+		if (!componentName) {
+			process.exit();
+		}
+	}
+
+	if (!tagName) {
+		const response = await prompts({
+			type: "text",
+			name: "tagName",
+			message: "Please enter a tag name:",
+			validate: (value) => isTagNameValid(value),
+		});
+		tagName = response.tagName;
+
+		if (!tagName) {
+			process.exit();
+		}
+	}
+
+	if (!language) {
+		const response = await prompts({
+			type: "select",
+			name: "isTypeScript",
+			message: "Please select a language:",
+			choices: [
+				{
+					title: "TypeScript (recommended)",
+					value: true,
+				},
+				{
+					title: "JavaScript",
+					value: false,
+				},
+			],
+		});
+		isTypeScript = response.isTypeScript;
+	} else if (language === "typescript" || language === "ts") {
+		isTypeScript = true;
+	} else {
+		isTypeScript = false;
+	}
+
+	generateFiles(componentName, tagName, library, packageName, isTypeScript);
 };
-const sJsFileContentTemplate = jsFileContentTemplate(componentName);
 
-fs.writeFileSync(filePaths.js, sJsFileContentTemplate, { flag: "wx+" });
-fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
-fs.writeFileSync(filePaths.hbs, "<div>Hello World</div>", { flag: "wx+" });
-
-
-console.log(`Successfully generated ${componentName}.js`);
-console.log(`Successfully generated ${componentName}.css`);
-console.log(`Successfully generated ${componentName}.hbs`);
-
-const bundleLogger = fs.createWriteStream("./bundle.common.js", {
-	flags: "a" // appending
-});
-
-bundleLogger.write(`
-// TODO: Move this line in order to keep the file sorted alphabetically
-import ${componentName} from "./dist/${componentName}.js";`);
-
-// Change the color of the output
-	console.warn('\x1b[33m%s\x1b[0m', `
-Component is imported in bundle.common.js.
-Do NOT forget to sort the file in alphabeticall order.
-`);
+createWebComponent();

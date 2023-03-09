@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -49,8 +48,13 @@ import PageCss from "./generated/themes/Page.css.js";
  * @since 1.0.0-rc.12
  * @public
  */
-@customElement("ui5-page")
-@languageAware
+@customElement({
+	tag: "ui5-page",
+	languageAware: true,
+	renderer: litRender,
+	styles: PageCss,
+	template: PageTemplate,
+})
 class Page extends UI5Element {
 	/**
 	 * Defines the background color of the <code>ui5-page</code>.
@@ -150,18 +154,6 @@ class Page extends UI5Element {
 	footer!: Array<HTMLElement>;
 
 	_updateMediaRange: ResizeObserverCallback;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return PageCss;
-	}
-
-	static get template() {
-		return PageTemplate;
-	}
 
 	constructor() {
 		super();

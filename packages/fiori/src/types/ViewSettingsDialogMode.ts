@@ -1,4 +1,6 @@
 /**
+ * Different types of Bar.
+ *
  * @readonly
  * @enum {string}
  * @public

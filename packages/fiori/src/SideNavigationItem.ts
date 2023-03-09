@@ -26,6 +26,7 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * @abstract
  * @tagname ui5-side-navigation-item
  * @public
+ * @implements sap.ui.webc.fiori.ISideNavigationItem
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-item")

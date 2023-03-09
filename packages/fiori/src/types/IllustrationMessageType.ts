@@ -1,4 +1,6 @@
 /**
+ * Different illustration types of Illustrated Message.
+ *
  * @readonly
  * @enum {string}
  * @public

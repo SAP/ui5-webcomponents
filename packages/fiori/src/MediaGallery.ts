@@ -83,7 +83,18 @@ const COLUMNS_COUNT: Record<string, number> = {
  * @public
  * @since 1.1.0
  */
-@customElement("ui5-media-gallery")
+@customElement({
+	tag: "ui5-media-gallery",
+	renderer: litRender,
+	styles: [MediaGalleryCss],
+	template: MediaGalleryTemplate,
+	staticAreaTemplate: MediaGalleryTemplate,
+	dependencies: [
+		MediaGalleryItem,
+		Button,
+		Carousel,
+	],
+})
 
 /**
  * Fired when selection is changed by user interaction.
@@ -544,30 +555,6 @@ class MediaGallery extends UI5Element {
 		// by default it should be square
 		// with the only exception when a wide 9*16 item should be displayed
 		return !this._shouldHaveWideDisplay;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return MediaGalleryTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return MediaGalleryTemplate;
-	}
-
-	static get styles() {
-		return [MediaGalleryCss];
-	}
-
-	static get dependencies() {
-		return [
-			MediaGalleryItem,
-			Button,
-			Carousel,
-		];
 	}
 
 	static get THUMBNAIL_HEIGHT() {

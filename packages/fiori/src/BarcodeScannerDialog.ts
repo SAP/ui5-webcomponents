@@ -7,7 +7,6 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
 import * as ZXing from "@zxing/library/umd/index.min.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { Result, Exception } from "@zxing/library/esm5/index";
@@ -76,8 +75,18 @@ type BarcodeScannerDialogScanErrorEventDetail = {
  * @public
  * @since 1.0.0-rc.15
  */
-@customElement("ui5-barcode-scanner-dialog")
-@languageAware
+@customElement({
+	tag: "ui5-barcode-scanner-dialog",
+	languageAware: true,
+	renderer: litRender,
+	staticAreaTemplate: BarcodeScannerDialogTemplate,
+	staticAreaStyles: [BarcodeScannerDialogCss],
+	dependencies: [
+		Dialog,
+		BusyIndicator,
+		Button,
+	],
+})
 /**
  * Fires when the scan is completed successfuuly.
  *
@@ -125,18 +134,6 @@ class BarcodeScannerDialog extends UI5Element {
 	constructor() {
 		super();
 		this._codeReader = new BrowserMultiFormatReader();
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get staticAreaTemplate() {
-		return BarcodeScannerDialogTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return [BarcodeScannerDialogCss];
 	}
 
 	static async onDefine() {
@@ -249,14 +246,6 @@ class BarcodeScannerDialog extends UI5Element {
 
 	get _busyIndicatorText() {
 		return BarcodeScannerDialog.i18nBundle.getText(BARCODE_SCANNER_DIALOG_LOADING_TXT);
-	}
-
-	static get dependencies() {
-		return [
-			Dialog,
-			BusyIndicator,
-			Button,
-		];
 	}
 }
 
