@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -94,9 +93,25 @@ type FocusAdaptor = ITabbable & {
  * @public
  * @since 1.0.0-rc.15
  */
-@customElement("ui5-breadcrumbs")
-@languageAware
-
+@customElement({
+	tag: "ui5-breadcrumbs",
+	languageAware: true,
+	renderer: litRender,
+	template: BreadcrumbsTemplate,
+	staticAreaTemplate: BreadcrumbsPopoverTemplate,
+	styles: breadcrumbsCss,
+	staticAreaStyles: breadcrumbsPopoverCss,
+	dependencies: [
+		BreadcrumbsItem,
+		Link,
+		Label,
+		ResponsivePopover,
+		List,
+		StandardListItem,
+		Icon,
+		Button,
+	],
+})
 /**
  * Fires when a <code>BreadcrumbsItem</code> is clicked.
  * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
@@ -190,26 +205,6 @@ class Breadcrumbs extends UI5Element {
 	responsivePopover?: ResponsivePopover;
 	_labelFocusAdaptor: FocusAdaptor;
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return BreadcrumbsTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return BreadcrumbsPopoverTemplate;
-	}
-
-	static get styles() {
-		return breadcrumbsCss;
-	}
-
-	static get staticAreaStyles() {
-		return breadcrumbsPopoverCss;
-	}
 
 	constructor() {
 		super();
@@ -657,19 +652,6 @@ class Breadcrumbs extends UI5Element {
 
 	get _cancelButtonText() {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
-	}
-
-	static get dependencies() {
-		return [
-			BreadcrumbsItem,
-			Link,
-			Label,
-			ResponsivePopover,
-			List,
-			StandardListItem,
-			Icon,
-			Button,
-		];
 	}
 
 	static async onDefine() {

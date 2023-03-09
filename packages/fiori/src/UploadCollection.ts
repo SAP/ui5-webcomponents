@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -26,6 +25,7 @@ import {
 	detachBodyDnDHandler,
 	draggingFiles,
 } from "./upload-utils/UploadCollectionBodyDnD.js";
+import type UploadCollectionItem from "./UploadCollectionItem.js";
 import type { DnDEventListener, DnDEventListenerParam } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
 
@@ -36,11 +36,11 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
 type SelectionChangeEventDetail = {
-	selectedItems: Array<HTMLElement>, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more precise.
+	selectedItems: Array<UploadCollectionItem>,
 };
 
 type ItemDeleteEventDetail = {
-	item: HTMLElement, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more precise.
+	item: UploadCollectionItem,
 };
 
 /**
@@ -64,8 +64,19 @@ type ItemDeleteEventDetail = {
  * @public
  * @since 1.0.0-rc.7
  */
-@customElement("ui5-upload-collection")
-@languageAware
+@customElement({
+	tag: "ui5-upload-collection",
+	languageAware: true,
+	renderer: litRender,
+	styles: UploadCollectionCss,
+	template: UploadCollectionTemplate,
+	dependencies: [
+		Icon,
+		Label,
+		List,
+		Title,
+	],
+})
 /**
  * Fired when an element is dropped inside the drag and drop overlay.
  * <br><br>
@@ -197,7 +208,7 @@ class UploadCollection extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<HTMLElement>;
+	items!: Array<UploadCollectionItem>;
 
 	/**
 	 * Defines the <code>ui5-upload-collection</code> header.
@@ -217,27 +228,6 @@ class UploadCollection extends UI5Element {
 	_bodyDnDHandler: DnDEventListener;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return UploadCollectionCss;
-	}
-
-	static get template() {
-		return UploadCollectionTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			Label,
-			List,
-			Title,
-		];
-	}
 
 	static async onDefine() {
 		UploadCollection.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");

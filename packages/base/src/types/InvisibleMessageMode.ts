@@ -1,7 +1,7 @@
 /**
  * Enumeration for different mode behaviors of the InvisibleMessage.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

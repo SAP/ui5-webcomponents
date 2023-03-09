@@ -1,11 +1,10 @@
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -28,6 +27,7 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -147,7 +147,26 @@ type DatePickerChangeEventDetail = {
  * @tagname ui5-date-picker
  * @public
  */
-@customElement("ui5-date-picker")
+
+@customElement({
+	tag: "ui5-date-picker",
+	languageAware: true,
+	template: DatePickerTemplate,
+	staticAreaTemplate: DatePickerPopoverTemplate,
+	styles: datePickerCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		datePickerPopoverCss,
+	],
+	dependencies: [
+		Icon,
+		ResponsivePopover,
+		Calendar,
+		CalendarDateComponent,
+		Input,
+		Button,
+	],
+})
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -373,22 +392,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	FormSupport?: typeof FormSupportT;
 
 	static i18nBundle: I18nBundle;
-
-	static get template() {
-		return DatePickerTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return DatePickerPopoverTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return datePickerCss;
-	}
-
-	static get staticAreaStyles(): ComponentStylesData {
-		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
-	}
 
 	/**
 	 * @protected
@@ -737,6 +740,23 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return !this.disabled && !this.readonly;
 	}
 
+	get _calendarPickersMode() {
+		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
+		const patternSymbolTypes = format.aFormatArray.map(patternSymbolSettings => {
+			return patternSymbolSettings.type.toLowerCase();
+		});
+
+		if (patternSymbolTypes.includes("day")) {
+			return CalendarPickersMode.DAY_MONTH_YEAR;
+		}
+
+		if (patternSymbolTypes.includes("month") || patternSymbolTypes.includes("monthstandalone")) {
+			return CalendarPickersMode.MONTH_YEAR;
+		}
+
+		return CalendarPickersMode.YEAR;
+	}
+
 	/**
 	 * The user selected a new date in the calendar
 	 * @param event
@@ -852,17 +872,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	get type() {
 		return InputType.Text;
-	}
-
-	static get dependencies(): Array<typeof UI5Element> {
-		return [
-			Icon,
-			ResponsivePopover,
-			Calendar,
-			CalendarDateComponent,
-			Input,
-			Button,
-		];
 	}
 }
 

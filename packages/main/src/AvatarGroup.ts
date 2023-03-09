@@ -139,8 +139,13 @@ type AvatarGroupClickEventDetail = {
  * @public
  */
 
-@customElement("ui5-avatar-group")
-
+@customElement({
+	tag: "ui5-avatar-group",
+	renderer: litRender,
+	template: AvatarGroupTemplate,
+	styles: AvatarGroupCss,
+	dependencies: [Button],
+})
 /**
 * Fired when the component is activated either with a
 * click/tap or by using the Enter or Space key.
@@ -253,24 +258,6 @@ class AvatarGroup extends UI5Element {
 		this._onResizeHandler = this._onResize.bind(this);
 	}
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return AvatarGroupTemplate;
-	}
-
-	static get styles() {
-		return AvatarGroupCss;
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-		];
-	}
-
 	static async onDefine() {
 		AvatarGroup.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -280,6 +267,7 @@ class AvatarGroup extends UI5Element {
 	 * @readonly
 	 * @type {HTMLElement[]}
 	 * @defaultValue []
+	 * @name sap.ui.webc.main.AvatarGroup.prototype.hiddenItems
 	 * @public
 	 */
 	get hiddenItems() {
@@ -290,6 +278,7 @@ class AvatarGroup extends UI5Element {
 	 * Returns an array containing the <code>AvatarColorScheme</code> values that correspond to the avatars in the component.
 	 * @readonly
 	 * @type {sap.ui.webc.main.types.AvatarColorScheme[]}
+	 * @name sap.ui.webc.main.AvatarGroup.prototype.colorScheme
 	 * @defaultValue []
 	 * @public
 	 */

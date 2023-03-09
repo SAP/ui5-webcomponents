@@ -1,6 +1,5 @@
 import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -86,8 +85,19 @@ type NotificationListGroupItemToggleEventDetail = {
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
-@customElement("ui5-li-notification-group")
-@languageAware
+@customElement({
+	tag: "ui5-li-notification-group",
+	languageAware: true,
+	styles: NotificationListGroupItemCss,
+	template: NotificationListGroupItemTemplate,
+	dependencies: [
+		List,
+		Button,
+		Icon,
+		BusyIndicator,
+		Popover,
+	],
+})
 
 /**
  * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
@@ -129,14 +139,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	@slot({ type: HTMLElement, "default": true })
 	items!: Array<NotificationListItem>
 
-	static get styles() {
-		return NotificationListGroupItemCss;
-	}
-
-	static get template() {
-		return NotificationListGroupItemTemplate;
-	}
-
 	onBeforeRendering() {
 		if (this.busy) {
 			this.clearChildBusyIndicator();
@@ -151,16 +153,6 @@ class NotificationListGroupItem extends NotificationListItemBase {
 		this.items.forEach(item => {
 			item.busy = false;
 		});
-	}
-
-	static get dependencies() {
-		return [
-			List,
-			Button,
-			Icon,
-			BusyIndicator,
-			Popover,
-		];
 	}
 
 	get itemsCount() {

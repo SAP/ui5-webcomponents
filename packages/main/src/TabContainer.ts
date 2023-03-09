@@ -1,9 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { StyleData } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -157,9 +155,22 @@ interface TabContainerTabInOverflow extends CustomListItem {
  * @tagname ui5-tabcontainer
  * @public
  */
-@customElement("ui5-tabcontainer")
-@languageAware
-@fastNavigation
+@customElement({
+	tag: "ui5-tabcontainer",
+	languageAware: true,
+	fastNavigation: true,
+	styles: [tabStyles, tabContainerCss],
+	staticAreaStyles: [ResponsivePopoverCommonCss, staticAreaTabStyles],
+	renderer: litRender,
+	template: TabContainerTemplate,
+	staticAreaTemplate: TabContainerPopoverTemplate,
+	dependencies: [
+		Button,
+		Icon,
+		List,
+		ResponsivePopover,
+	],
+})
 /**
  * Fired when a tab is selected.
  *
@@ -391,26 +402,6 @@ class TabContainer extends UI5Element {
 	_allItemsAndSubItems?: Array<ITab>;
 	responsivePopover?: ResponsivePopover;
 	_handleResizeBound: () => void;
-
-	static get styles() {
-		return [tabStyles, tabContainerCss];
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, staticAreaTabStyles];
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TabContainerTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return TabContainerPopoverTemplate;
-	}
 
 	static registerTabStyles(styles: StyleData) {
 		tabStyles.push(styles);
@@ -686,6 +677,7 @@ class TabContainer extends UI5Element {
 	 * <code>[ ui5-tab#First, ui5-tab#Nested, ui5-tab#Second, ui5-tab-separator#sep, ui5-tab#Third ]</code>
 	 * @public
 	 * @readonly
+     * @name sap.ui.webc.main.TabContainer.prototype.allItems
 	 * @returns {sap.ui.webc.main.ITab[]}
 	 */
 	get allItems() {
@@ -1297,15 +1289,6 @@ class TabContainer extends UI5Element {
 
 	get shouldAnimate() {
 		return getAnimationMode() !== AnimationMode.None;
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-			Icon,
-			List,
-			ResponsivePopover,
-		];
 	}
 
 	static async onDefine() {

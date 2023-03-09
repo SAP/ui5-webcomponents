@@ -1,0 +1,127 @@
+name: Bug Report
+description: File a bug report
+title: '[component name | framework | build | icons | theming | localization | i18n | typescript]:'
+labels: ["bug"]
+assignees: []
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: input
+    id: component
+    attributes:
+      label: Affected Component
+    validations:
+      required: false
+  - type: textarea
+    id: expectation
+    attributes:
+      label: Expected Behaviour
+      description: A clear and concise description of what you expect to happen.
+    validations:
+      required: false
+  - type: input
+    id: example
+    attributes:
+      label: Isolated Example
+      description: Please provide a link to an isolated example if possible by forking [this codesandbox](https://codesandbox.io/s/71r1x5o51q?fontsize=14&module=%2Findex.html).
+    validations:
+      required: false
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to Reproduce
+      description: How do you trigger this bug? Please walk us through it step by step.
+      value: |
+        1.
+        2.
+        3.
+        ...
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log Output, Stack Trace or Screenshots
+      description: |
+        If applicable, add log output, screenshots, or a video to help explain your problem.
+        For more information on the supported file image/file types and the file size limits, please refer
+        to the following link: https://docs.github.com/en/github/writing-on-github/working-with-advanced-formatting/attaching-files
+      placeholder: |
+        You can drag your video or image files inside of this editor ↓
+    validations:
+      required: false
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: |
+       The priority indicates the severity of the issue. To set the appropriate priority consider the following criteria:
+       - Breaks entire application or system - High or Very High
+       - Accessibility issue - Medium or High
+       - Functional issue - Medium or High
+       - Visual issue - Low or Medium
+      multiple: false
+      options:
+        - Low
+        - Medium
+        - High
+        - Very High
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: '## Environment Info'
+  - type: input
+    id: version
+    attributes:
+      label: UI5 Web Components Version
+    validations:
+      required: true
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      multiple: true
+      options:
+        - Chrome
+        - Edge
+        - Firefox
+        - Safari
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: '## Additional Info'
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Additional Context
+      description: Add business impact or any other context about the problem here.
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Privacy Policy
+        Please don't disclose any internal or sensitive information like: internal urls, login credentials, screenshots of applications or features in development.
+        This is a public GitHub repository and all the information is publicly available.
+  - type: checkboxes
+    id: confirmation
+    attributes:
+      label: Declaration
+      description: By submitting this issue, I confirm to follow the recommendation not to disclose any internal or sensitive information.
+      options:
+        - label: I’m not disclosing any internal or sensitive information.
+          required: true

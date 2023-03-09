@@ -4,146 +4,17 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import "@ui5/webcomponents-icons/dist/background.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
-// Template
-import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
+
 // Styles
 import MediaGalleryItemCss from "./generated/themes/MediaGalleryItem.css.js";
 
-/**
- * @public
- */
-const metadata = {
-	tag: "ui5-media-gallery-item",
-	managedSlots: true,
-	properties: /** @lends sap.ui.webc.fiori.MediaGalleryItem.prototype */ {
-
-		/**
-		 * Defines the selected state of the component.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		selected: {
-			type: Boolean,
-		},
-
-		/**
-		 * Defines whether the component is in disabled state.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
-
-		/**
-		 * Determines the layout of the item container.
-		 * <br><br>
-		 * Available options are:
-		 * <ul>
-		 * <li><code>Square</code></li>
-		 * <li><code>Wide</code></li>
-		 * </ul>
-		 *
-		 * @type {sap.ui.webc.fiori.types.MediaGalleryItemLayout}
-		 * @defaultvalue "Square"
-		 * @public
-		 */
-		layout: {
-			type: MediaGalleryItemLayout,
-			defaultValue: MediaGalleryItemLayout.Square,
-		},
-
-		/**
-		 * @private
-		 */
-		_interactive: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		_square: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		_contentImageNotFound: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		_thumbnailNotFound: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		_thumbnailDesign: {
-			type: Boolean,
-		},
-
-		/**
-		 * Indicates whether the element is focused.
-		 *
-		 * @private
-		 */
-		focused: {
-			type: Boolean,
-		},
-
-		/**
-		 * @private
-		 */
-		_tabIndex: {
-			type: String,
-			defaultValue: undefined,
-		},
-
-		/**
-		 * @private
-		 */
-		contentHeight: {
-			type: String,
-			noAttribute: true,
-			defaultValue: "",
-		},
-	},
-	slots: /** @lends sap.ui.webc.fiori.MediaGalleryItem.prototype */ {
-		/**
-		 * Defines the content of the component.
-		 *
-		 * @type {HTMLElement}
-		 * @slot content
-		 * @public
-		 */
-		 "default": {
-			propertyName: "content",
-			type: HTMLElement,
-		},
-
-		/**
-		 * Defines the content of the thumbnail.
-		 *
-		 * @type {HTMLElement}
-		 * @slot
-		 * @public
-		 */
-		 "thumbnail": {
-			type: HTMLElement,
-		},
-	},
-};
+// Template
+import MediaGalleryItemTemplate from "./generated/templates/MediaGalleryItemTemplate.lit.js";
 
 /**
  * @class
@@ -175,9 +46,129 @@ const metadata = {
  * @implements sap.ui.webc.fiori.IMediaGalleryItem
  * @since 1.1.0
  */
-class MediaGalleryItem extends UI5Element {
+@customElement({
+	tag: "ui5-media-gallery-item",
+	renderer: litRender,
+	styles: MediaGalleryItemCss,
+	template: MediaGalleryItemTemplate,
+	dependencies: [Icon],
+})
+class MediaGalleryItem extends UI5Element implements ITabbable {
+	/**
+	 * Defines the selected state of the component.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.selected
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	selected!: boolean;
+
+	/**
+	 * Defines whether the component is in disabled state.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.disabled
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Determines the layout of the item container.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>Square</code></li>
+	 * <li><code>Wide</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.fiori.types.MediaGalleryItemLayout}
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.layout
+	 * @defaultvalue "Square"
+	 * @public
+	 */
+	@property({ type: MediaGalleryItemLayout, defaultValue: MediaGalleryItemLayout.Square })
+	layout!: MediaGalleryItemLayout;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_interactive!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_square!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_contentImageNotFound!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_thumbnailNotFound!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_thumbnailDesign!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
+
+	/**
+	 * @private
+	 */
+	@property()
+	_tabIndex!: string;
+
+	/**
+	 * @private
+	 */
+	@property({ noAttribute: true })
+	contentHeight!: string;
+
+	/**
+	 * Defines the content of the component.
+	 *
+	 * @type {HTMLElement}
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.default
+	 * @slot content
+	 * @public
+	 */
+	@slot({ type: HTMLElement, "default": true })
+	content!: Array<HTMLElement>;
+
+	/**
+	 * Defines the content of the thumbnail.
+	 *
+	 * @type {HTMLElement}
+	 * @name sap.ui.webc.fiori.MediaGalleryItem.prototype.thumbnail
+	 * @slot thumbnail
+	 * @public
+	 */
+	@slot()
+	thumbnail!: Array<HTMLElement>;
+
+	_monitoredThumbnail: HTMLElement | null;
+	_monitoredContent: HTMLElement | null;
+
 	constructor() {
 		super();
+
 		this._monitoredContent = null;
 		this._monitoredThumbnail = null;
 	}
@@ -188,28 +179,12 @@ class MediaGalleryItem extends UI5Element {
 		this._square = true;
 	}
 
-	static get metadata() {
-		return metadata;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return MediaGalleryItemCss;
-	}
-
-	static get template() {
-		return MediaGalleryItemTemplate;
-	}
-
 	get _thumbnail() {
-		return this.thumbnail.length && this.thumbnail[0];
+		return this.thumbnail.length ? this.thumbnail[0] : null;
 	}
 
 	get _content() {
-		return this.content.length && this.content[0];
+		return this.content.length ? this.content[0] : null;
 	}
 
 	get _isThubmnailAvailable() {
@@ -228,7 +203,7 @@ class MediaGalleryItem extends UI5Element {
 		return !this._useThumbnail && this._isContentAvailable;
 	}
 
-	get tabIndex() {
+	get effectiveTabIndex() {
 		return this.disabled ? undefined : this._tabIndex;
 	}
 
@@ -256,58 +231,58 @@ class MediaGalleryItem extends UI5Element {
 		let callback,
 			success;
 		if (this._thumbnailDesign && this.thumbnail.length && (this._monitoredThumbnail !== this._thumbnail)) {
-			this._thumbnailNotFound = undefined; // reset flag
-			callback = this._updateThumbnailLoaded;
-			success = this._attachListeners(this._thumbnail, callback);
+			this._thumbnailNotFound = false; // reset flag
+			callback = this._updateThumbnailLoaded.bind(this);
+			success = this._attachListeners(this._thumbnail as HTMLImageElement, callback);
 			success && (this._monitoredThumbnail = this._thumbnail);
 		}
 		if (!this._useThumbnail && this.content.length && (this._monitoredContent !== this._content)) {
-			this._contentImageNotFound = undefined; // reset flag
-			callback = this._updateContentImageLoaded;
-			success = this._attachListeners(this._content, callback);
+			this._contentImageNotFound = false; // reset flag
+			callback = this._updateContentImageLoaded.bind(this);
+			success = this._attachListeners(this._content as HTMLImageElement, callback);
 			success && (this._monitoredContent = this._content);
 		}
 	}
 
-	_attachListeners(element, callback) {
+	_attachListeners(element: HTMLImageElement, callback: (image: HTMLImageElement) => void) {
 		const isImg = element.tagName === "IMG",
 			img = isImg ? element : element.querySelector("img");
 		if (img) {
-			callback.call(this, img);
+			callback(img);
 			img.addEventListener("error", () => {
 				if (this.contains(img)) { // img still belongs to us
-					callback.call(this, img);
+					callback(img);
 				}
 			});
 			img.addEventListener("load", () => {
 				if (this.contains(img)) { // img still belongs to us
-					callback.call(this, img);
+					callback(img);
 				}
 			});
 			return true;
 		}
 	}
 
-	_updateContentImageLoaded(image) {
+	_updateContentImageLoaded(image: HTMLImageElement) {
 		this._contentImageNotFound = image.naturalHeight === 0 && image.naturalWidth === 0;
 	}
 
-	_updateThumbnailLoaded(image) {
+	_updateThumbnailLoaded(image: HTMLImageElement) {
 		this._thumbnailNotFound = image.naturalHeight === 0 && image.naturalWidth === 0;
 	}
 
-	_onkeydown(event) {
-		if (isSpace(event)) {
-			event.preventDefault();
+	_onkeydown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
 		}
 
-		if (isEnter(event)) {
+		if (isEnter(e)) {
 			this._fireItemClick();
 		}
 	}
 
-	_onkeyup(event) {
-		if (isSpace(event)) {
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
 			this._fireItemClick();
 		}
 	}
@@ -322,12 +297,6 @@ class MediaGalleryItem extends UI5Element {
 
 	_fireItemClick() {
 		this.fireEvent("click", { item: this });
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-		];
 	}
 }
 

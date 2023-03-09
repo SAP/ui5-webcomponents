@@ -16,7 +16,9 @@
     @mouseout="{{_onListItemMouseOut}}"
     class="ui5-tree-root"
 >
-    <slot name="header" slot="header"></slot>
+	{{#if _hasHeader}}
+        <slot name="header" slot="header"></slot>
+	{{/if}}
 
     <slot></slot>
 </ui5-tree-list>

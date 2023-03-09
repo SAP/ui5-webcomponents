@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -54,24 +54,59 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  * @public
  * @since 1.0.0-rc.6
  */
-@languageAware
-
+@customElement({
+	languageAware: true,
+	renderer: litRender,
+	template: TimePickerTemplate,
+	styles: TimePickerCss,
+	staticAreaTemplate: TimePickerPopoverTemplate,
+	staticAreaStyles: [ResponsivePopoverCommonCss, TimePickerPopoverCss],
+	dependencies: [
+		Icon,
+		ResponsivePopover,
+		TimeSelection,
+		Input,
+		Button,
+	],
+})
 /**
  * Fired when the input operation has finished by clicking the "OK" button or
  * when the text in the input field has changed and the focus leaves the input field.
- *
- * @event sap.ui.webc.main.TimePickerBase#change
+*
+* @event sap.ui.webc.main.TimePickerBase#change
  * @public
- */
-@event("change")
+ * @param {string} value The submitted value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+*/
+@event("change", {
+	detail: {
+		value: {
+			type: String,
+		},
+		valid: {
+			type: Boolean,
+		},
+	},
+})
 
 /**
  * Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
  *
  * @event sap.ui.webc.main.TimePickerBase#input
  * @public
- */
-@event("input")
+ * @param {string} value The current value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+*/
+@event("input", {
+	detail: {
+		value: {
+			type: String,
+		},
+		valid: {
+			type: Boolean,
+		},
+	},
+})
 class TimePickerBase extends UI5Element {
 	/**
 	 * Defines a formatted time value.
@@ -152,41 +187,11 @@ class TimePickerBase extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return TimePickerCss;
-	}
-
-	static get staticAreaTemplate() {
-		return TimePickerPopoverTemplate;
-	}
-
-	static get template() {
-		return TimePickerTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			ResponsivePopover,
-			TimeSelection,
-			Input,
-			Button,
-		];
-	}
-
 	static async onDefine() {
 		[TimePickerBase.i18nBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents"),
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 		]);
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, TimePickerPopoverCss];
 	}
 
 	constructor() {

@@ -1,5 +1,7 @@
 /**
- * @class
+ * Different types of Bar.
+ *
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

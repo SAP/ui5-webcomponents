@@ -1,10 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
@@ -81,6 +79,16 @@ type CarouselNavigateEventDetail = {
  * When the <code>ui5-carousel</code> is focused the user can navigate between the items
  * with the following keyboard shortcuts:
  * <br>
+ * <ul>
+ * <li>[UP/DOWN] - Navigates to previous and next item</li>
+ * <li>[LEFT/RIGHT] - Navigates to previous and next item</li>
+ * </ul>
+ *
+ * <h3>Fast Navigation</h3>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <h3>CSS Shadow Parts</h3>
  *
@@ -89,17 +97,6 @@ type CarouselNavigateEventDetail = {
  * The <code>ui5-carousel</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>content - Used to style the content of the component</li>
- * </ul>
- *
- * * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
- * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
- *
- * <ul>
- * <li>[UP/DOWN] - Navigates to previous and next item</li>
- * <li>[LEFT/RIGHT] - Navigates to previous and next item</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
@@ -114,10 +111,18 @@ type CarouselNavigateEventDetail = {
  * @since 1.0.0-rc.6
  * @public
  */
-@customElement("ui5-carousel")
-@languageAware
-@fastNavigation
-
+@customElement({
+	tag: "ui5-carousel",
+	languageAware: true,
+	fastNavigation: true,
+	renderer: litRender,
+	styles: CarouselCss,
+	template: CarouselTemplate,
+	dependencies: [
+		Button,
+		Label,
+	],
+})
 /**
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
@@ -287,18 +292,6 @@ class Carousel extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return CarouselCss;
-	}
-
-	static get template() {
-		return CarouselTemplate;
-	}
 
 	static get pageTypeLimit() {
 		return 9;
@@ -716,13 +709,6 @@ class Carousel extends UI5Element {
 		});
 
 		return visibleItemsIndices;
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-			Label,
-		];
 	}
 
 	static async onDefine() {

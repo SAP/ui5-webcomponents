@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -118,8 +117,29 @@ interface IOption extends UI5Element {
  * @public
  * @since 0.8.0
  */
-@customElement("ui5-select")
-@languageAware
+@customElement({
+	tag: "ui5-select",
+	languageAware: true,
+	renderer: litRender,
+	template: SelectTemplate,
+	staticAreaTemplate: SelectPopoverTemplate,
+	styles: selectCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		ValueStateMessageCss,
+		SelectPopoverCss,
+	],
+	dependencies: [
+		Option,
+		Label,
+		ResponsivePopover,
+		Popover,
+		List,
+		StandardListItem,
+		Icon,
+		Button,
+	],
+})
 /**
  * Fired when the selected option changes.
  *
@@ -156,7 +176,7 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Select.disabled
+	 * @name sap.ui.webc.main.Select.prototype.disabled
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -177,7 +197,7 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.name
+	 * @name sap.ui.webc.main.Select.prototype.name
 	 * @public
 	 */
 	@property()
@@ -197,7 +217,7 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @defaultvalue "None"
-	 * @name sap.ui.webc.main.Select.valueState
+	 * @name sap.ui.webc.main.Select.prototype.valueState
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
@@ -209,7 +229,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @since 1.0.0-rc.9
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Select.required
+	 * @name sap.ui.webc.main.Select.prototype.required
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -222,7 +242,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @since 1.0.0-rc.9
 	 * @public
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.accessibleName
+	 * @name sap.ui.webc.main.Select.prototype.accessibleName
 	 * @since 1.0.0-rc.15
 	 */
 	@property()
@@ -233,7 +253,7 @@ class Select extends UI5Element implements IFormElement {
 	 *
 	 * @type {string}
 	 * @defaultvalue ""
-	 * @name sap.ui.webc.main.Select.accessibleNameRef
+	 * @name sap.ui.webc.main.Select.prototype.accessibleNameRef
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -329,26 +349,6 @@ class Select extends UI5Element implements IFormElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return SelectTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return SelectPopoverTemplate;
-	}
-
-	static get styles() {
-		return selectCss;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss, SelectPopoverCss];
-	}
-
 	constructor() {
 		super();
 
@@ -400,6 +400,7 @@ class Select extends UI5Element implements IFormElement {
 	 * Currently selected <code>ui5-option</code> element.
 	 * @readonly
 	 * @type {sap.ui.webc.main.ISelectOption}
+     * @name sap.ui.webc.main.Select.prototype.selectedOption
 	 * @public
 	 */
 	get selectedOption() {
@@ -894,19 +895,6 @@ class Select extends UI5Element implements IFormElement {
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem!.querySelector<Popover>("[ui5-popover]");
-	}
-
-	static get dependencies() {
-		return [
-			Option,
-			Label,
-			ResponsivePopover,
-			Popover,
-			List,
-			StandardListItem,
-			Icon,
-			Button,
-		];
 	}
 
 	static async onDefine() {

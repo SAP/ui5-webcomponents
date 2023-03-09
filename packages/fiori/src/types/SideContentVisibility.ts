@@ -1,5 +1,7 @@
 /**
- * @class
+ * Side Content visibility options.
+ *
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -15,7 +14,7 @@ import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
 
 // Template
-import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
+import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
 
 import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -69,8 +68,13 @@ type LinkClickEventDetail = {
  * @tagname ui5-link
  * @public
  */
-@customElement("ui5-link")
-@languageAware
+@customElement({
+	tag: "ui5-link",
+	languageAware: true,
+	renderer: litRender,
+	template: LinkTemplate,
+	styles: linkCss,
+})
 /**
  * Fired when the component is triggered either with a mouse/tap
  * or by using the Enter key.
@@ -269,18 +273,6 @@ class Link extends UI5Element implements ITabbable {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return LinkRederer;
-	}
-
-	static get styles() {
-		return linkCss;
 	}
 
 	onBeforeRendering() {

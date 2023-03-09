@@ -334,6 +334,7 @@ describe("Testing events", () => {
 		await browser.url(`test/pages/RangeSlider.html`);
 
 		const rangeSlider = await browser.$("#test-slider");
+		const rangeSliderProgressBar = await rangeSlider.shadow$(".ui5-slider-progress");
 		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 
 		await firstHandle.click();
@@ -345,6 +346,7 @@ describe("Testing events", () => {
 
 		assert.strictEqual(inputEventStartValue, "2", "The input event is fired with the correct values");
 		assert.strictEqual(inputEventEndValue, "3", "The input event is fired with the correct values");
+		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuenow"), "1", "aria-valuenow is set correctly");
 	});
 
 	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", async () => {
@@ -373,6 +375,7 @@ describe("Accessibility", async () => {
 			`${await rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuetext"),
 			`From ${await rangeSlider.getProperty("startValue")} to ${await rangeSlider.getProperty("endValue")}`, "aria-valuetext is set correctly");
+		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuenow"), "20", "aria-valuenow is set correctly");
 	});
 
 	it("Aria attributes of the start handle are set correctly", async () => {

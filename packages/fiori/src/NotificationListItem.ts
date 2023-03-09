@@ -1,6 +1,5 @@
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -92,8 +91,19 @@ type Footnote = Record<string, any>;
  * @implements sap.ui.webc.fiori.INotificationListItem, sap.ui.webc.main.IListItem
  * @public
  */
-@customElement("ui5-li-notification")
-@languageAware
+@customElement({
+	tag: "ui5-li-notification",
+	languageAware: true,
+	styles: NotificationListItemCss,
+	template: NotificationListItemTemplate,
+	dependencies: [
+		Button,
+		Icon,
+		BusyIndicator,
+		Link,
+		Popover,
+	],
+})
 
 @event("_press")
 class NotificationListItem extends NotificationListItemBase {
@@ -186,24 +196,6 @@ class NotificationListItem extends NotificationListItemBase {
 
 		// the resize handler
 		this._onResizeBind = this.onResize.bind(this);
-	}
-
-	static get styles() {
-		return NotificationListItemCss;
-	}
-
-	static get template() {
-		return NotificationListItemTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-			Icon,
-			BusyIndicator,
-			Link,
-			Popover,
-		];
 	}
 
 	onEnterDOM() {

@@ -1,5 +1,5 @@
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ListItem from "./ListItem.js";
@@ -24,7 +24,11 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
-@customElement("ui5-li-custom")
+@customElement({
+	tag: "ui5-li-custom",
+	template: CustomListItemTemplate,
+	styles: [ListItem.styles, customListItemCss],
+})
 class CustomListItem extends ListItem {
 	/**
 	 * Defines the text alternative of the component.
@@ -46,14 +50,6 @@ class CustomListItem extends ListItem {
 	 * @slot
 	 * @public
 	 */
-
-	static get template() {
-		return CustomListItemTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [ListItem.styles, customListItemCss];
-	}
 
 	_onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);

@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -97,13 +96,29 @@ type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedIte
  * @public
  */
 
-@customElement("ui5-side-navigation")
-@fastNavigation
+@customElement({
+	tag: "ui5-side-navigation",
+	fastNavigation: true,
+	renderer: litRender,
+	template: SideNavigationTemplate,
+	staticAreaTemplate: SideNavigationPopoverTemplate,
+	styles: [SideNavigationCss, SideNavigationPopoverCss],
+	staticAreaStyles: [SideNavigationCss, SideNavigationPopoverCss],
+	dependencies: [
+		List,
+		StandardListItem,
+		Tree,
+		TreeItem,
+		ResponsivePopover,
+		SideNavigationItem,
+		SideNavigationSubItem,
+	],
+})
 /**
  * Fired when the selection has changed via user interaction
  *
  * @event sap.ui.webc.fiori.SideNavigation#selection-change
- * @param {sap.ui.webc.fiori.SideNavigationItem|sap.ui.webc.fiori.SideNavigationSubItem} item the clicked item.
+ * @param {sap.ui.webc.fiori.ISideNavigationItem|sap.ui.webc.fiori.ISideNavigationSubItem} item the clicked item.
  * @allowPreventDefault
  * @public
  */
@@ -136,7 +151,7 @@ class SideNavigation extends UI5Element {
 	 * inside the items.
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
+	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
 	 * @slot items
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.default
 	 */
@@ -165,7 +180,7 @@ class SideNavigation extends UI5Element {
 	 * <b>Note:</b> In order to achieve the best user experience, it is recommended that you keep the fixed items "flat" (do not pass sub-items)
 	 *
 	 * @public
-	 * @type {sap.ui.webc.fiori.SideNavigationItem[]}
+	 * @type {sap.ui.webc.fiori.ISideNavigationItem[]}
 	 * @slot fixedItems
 	 * @name sap.ui.webc.fiori.SideNavigation.prototype.fixedItems
 	 */
@@ -173,38 +188,6 @@ class SideNavigation extends UI5Element {
 	fixedItems!: Array<SideNavigationItem>;
 
 	static i18nBundle: I18nBundle;
-
-	static get staticAreaStyles() {
-		return [SideNavigationCss, SideNavigationPopoverCss];
-	}
-
-	static get styles() {
-		return [SideNavigationCss, SideNavigationPopoverCss];
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return SideNavigationTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return SideNavigationPopoverTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			List,
-			StandardListItem,
-			Tree,
-			TreeItem,
-			ResponsivePopover,
-			SideNavigationItem,
-			SideNavigationSubItem,
-		];
-	}
 
 	get _items() {
 		return this.items.map(this._createTreeItem);

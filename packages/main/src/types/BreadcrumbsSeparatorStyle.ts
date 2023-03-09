@@ -1,7 +1,7 @@
 /**
  * Different Breadcrumbs separator styles.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

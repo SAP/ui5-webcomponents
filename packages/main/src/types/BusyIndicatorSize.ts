@@ -1,7 +1,7 @@
 /**
  * Different BusyIndicator sizes.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

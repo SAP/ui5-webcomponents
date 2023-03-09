@@ -93,7 +93,16 @@ const INITIAL_SPEED = 120; // milliseconds
  * @since 1.0.0-rc.13
  * @public
  */
-@customElement("ui5-step-input")
+@customElement({
+	tag: "ui5-step-input",
+	renderer: litRender,
+	styles: StepInputCss,
+	template: StepInputTemplate,
+	dependencies: [
+		Icon,
+		Input,
+	],
+})
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -327,25 +336,6 @@ class StepInput extends UI5Element implements IFormElement {
 	_initialValueState?: ValueState;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return StepInputCss;
-	}
-
-	static get template() {
-		return StepInputTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			Input,
-		];
-	}
 
 	static async onDefine() {
 		StepInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");

@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -59,9 +58,14 @@ import "@ui5/webcomponents-icons/dist/employee.js";
  * @implements sap.ui.webc.main.IAvatar
  * @public
  */
-@customElement("ui5-avatar")
-@languageAware
-
+@customElement({
+	tag: "ui5-avatar",
+	languageAware: true,
+	renderer: litRender,
+	styles: AvatarCss,
+	template: AvatarTemplate,
+	dependencies: [Icon],
+})
 /**
 * Fired on mouseup, space and enter if avatar is interactive
 *
@@ -272,22 +276,6 @@ class Avatar extends UI5Element implements ITabbable {
 
 	_onclick?: (e: MouseEvent) => void;
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return AvatarCss;
-	}
-
-	static get template() {
-		return AvatarTemplate;
-	}
-
-	static get dependencies() {
-		return [Icon];
-	}
 
 	static async onDefine() {
 		Avatar.i18nBundle = await getI18nBundle("@ui5/webcomponents");

@@ -1,7 +1,7 @@
 /**
  * Different Carousel page indicator styles.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

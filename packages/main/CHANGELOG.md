@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0...v1.12.0-rc.0) (2023-03-09)
+
+
+### Bug Fixes
+
+* **ui5-datetime-picker:** align styles in footer ([#6665](https://github.com/SAP/ui5-webcomponents/issues/6665)) ([d58da29](https://github.com/SAP/ui5-webcomponents/commit/d58da29f07ba46e476c1d54153521fabe6691ec5)), closes [#4852](https://github.com/SAP/ui5-webcomponents/issues/4852)
+* **ui5-input, ui5-textarea:** remove redundant styles ([#6662](https://github.com/SAP/ui5-webcomponents/issues/6662)) ([52ff41a](https://github.com/SAP/ui5-webcomponents/commit/52ff41a6ec114b6ee43ed3749750cb1449270a2b))
+
+
+### Features
+
+* **ui5-switch:** make change event preventable ([#6603](https://github.com/SAP/ui5-webcomponents/issues/6603)) ([953a1d0](https://github.com/SAP/ui5-webcomponents/commit/953a1d0fe103c6a510325188832154adcd04502b)), closes [#5953](https://github.com/SAP/ui5-webcomponents/issues/5953)
+
+
+
+
+
+# [1.11.0](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.4...v1.11.0) (2023-03-06)
+
+**Note:** Version bump only for package @ui5/webcomponents
+
+
+
+
+
+# [1.11.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.3...v1.11.0-rc.4) (2023-03-02)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** filter items when lazy-loading after initial rendering ([#6512](https://github.com/SAP/ui5-webcomponents/issues/6512)) ([7032e5e](https://github.com/SAP/ui5-webcomponents/commit/7032e5ec0bf4452ae47bc39b462baee051a7a57d))
+* **ui5-multi-input/ui5-multi-combobox:** enhance tokenizer visualization ([#6597](https://github.com/SAP/ui5-webcomponents/issues/6597)) ([fd7aa30](https://github.com/SAP/ui5-webcomponents/commit/fd7aa309568058663f7ef2c60095870641427b37))
+* **ui5-range-slider:** add aria-valuenow to the progress bar ([#6612](https://github.com/SAP/ui5-webcomponents/issues/6612)) ([71284ba](https://github.com/SAP/ui5-webcomponents/commit/71284bad05d10e9b73205f2a6f59f3757b853771))
+* **ui5-range-slider:** stabilize failing tests ([#6450](https://github.com/SAP/ui5-webcomponents/issues/6450)) ([5e8f605](https://github.com/SAP/ui5-webcomponents/commit/5e8f605008fee0b4c4e05ebe0f6ff486ed44f998))
+* **ui5-select:** fixed valuestate message scroll prevention ([#6548](https://github.com/SAP/ui5-webcomponents/issues/6548)) ([ec995f1](https://github.com/SAP/ui5-webcomponents/commit/ec995f1cee7b621c93b0016785d28c9d6413d634)), closes [#5970](https://github.com/SAP/ui5-webcomponents/issues/5970)
+* **ui5-table:** adjust sample snippet ([#6580](https://github.com/SAP/ui5-webcomponents/issues/6580)) ([3e62b11](https://github.com/SAP/ui5-webcomponents/commit/3e62b113c7eb7a53fd03696506f753ae1691ffda))
+* **ui5-toggle-button:** fix Emphasized Toggle Button text shadow in Belize theme ([#6566](https://github.com/SAP/ui5-webcomponents/issues/6566)) ([63972e5](https://github.com/SAP/ui5-webcomponents/commit/63972e5d3b0cbfc61c10091842e719ea63accf9b))
+* **ui5-tree:** correctly pass mode to sub items ([#6574](https://github.com/SAP/ui5-webcomponents/issues/6574)) ([92547be](https://github.com/SAP/ui5-webcomponents/commit/92547be0e4491e87f97dae45c1705e44f18b1913))
+* **ui5-tree:** fixed header-text apperance ([#6573](https://github.com/SAP/ui5-webcomponents/issues/6573)) ([2f15053](https://github.com/SAP/ui5-webcomponents/commit/2f15053424b752dfd00349414809197390e72e22)), closes [#6534](https://github.com/SAP/ui5-webcomponents/issues/6534)
+
+
+### Features
+
+* **framework:** use decorators for all static getters to define a custom element ([#6538](https://github.com/SAP/ui5-webcomponents/issues/6538)) ([c90cf0c](https://github.com/SAP/ui5-webcomponents/commit/c90cf0c2521cdbf063ba55706c25006a9f13e68a))
+* **ui5-checkbox:** make change event preventable ([#6553](https://github.com/SAP/ui5-webcomponents/issues/6553)) ([8f6a4c5](https://github.com/SAP/ui5-webcomponents/commit/8f6a4c571d97f24a0ae83af80314d8dffe2286ea))
+* **ui5-multi-combobox:** migrate to Typescript ([#6559](https://github.com/SAP/ui5-webcomponents/issues/6559)) ([64d9df2](https://github.com/SAP/ui5-webcomponents/commit/64d9df279dcef946d8ced5dbc5fa118235977ec6))
+* **ui5-multi-input:** migrate to Typescript ([#6562](https://github.com/SAP/ui5-webcomponents/issues/6562)) ([cc3653a](https://github.com/SAP/ui5-webcomponents/commit/cc3653a2a200b628448b836e28cdb4c40113fb24))
+* **ui5-rating-indicator:** migrate to Typescript ([#6550](https://github.com/SAP/ui5-webcomponents/issues/6550)) ([e0f89b9](https://github.com/SAP/ui5-webcomponents/commit/e0f89b91461b9a14417bfc8069b2b1486241e0a3))
+
+
+
+
+
 # [1.11.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0-rc.2...v1.11.0-rc.3) (2023-02-23)
 
 
