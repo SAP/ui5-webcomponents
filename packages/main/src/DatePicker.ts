@@ -4,6 +4,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -26,6 +27,7 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -736,6 +738,23 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_canOpenPicker() {
 		return !this.disabled && !this.readonly;
+	}
+
+	get _calendarPickersMode() {
+		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
+		const patternSymbolTypes = format.aFormatArray.map(patternSymbolSettings => {
+			return patternSymbolSettings.type.toLowerCase();
+		});
+
+		if (patternSymbolTypes.includes("day")) {
+			return CalendarPickersMode.DAY_MONTH_YEAR;
+		}
+
+		if (patternSymbolTypes.includes("month") || patternSymbolTypes.includes("monthstandalone")) {
+			return CalendarPickersMode.MONTH_YEAR;
+		}
+
+		return CalendarPickersMode.YEAR;
 	}
 
 	/**
