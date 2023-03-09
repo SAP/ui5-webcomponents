@@ -322,7 +322,7 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the filter type of the component.
-	 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code> and <code>Contains</code>.
+	 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.ComboBox.prototype.filter
@@ -336,8 +336,8 @@ class ComboBox extends UI5Element {
 	 * Indicates whether the input is focssed
 	 * @private
 	 */
-	 @property({ type: Boolean })
-	 focused!: boolean;
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	/**
 	 * Indicates whether the visual focus is on the value state header
@@ -453,7 +453,7 @@ class ComboBox extends UI5Element {
 
 		this.FormSupport = getFeature<typeof FormSupportT>("FormSupport");
 
-		if (this._initialRendering) {
+		if (this._initialRendering || this.filter === "None") {
 			this._filteredItems = this.items;
 		}
 
@@ -709,7 +709,7 @@ class ComboBox extends UI5Element {
 		this._isKeyNavigation = true;
 
 		if (
-				 e.key === "ArrowDown"
+			e.key === "ArrowDown"
 			|| e.key === "ArrowUp"
 			|| e.key === "PageUp"
 			|| e.key === "PageDown"
@@ -968,7 +968,7 @@ class ComboBox extends UI5Element {
 		}
 	}
 
-	_getFirstMatchingItem(current:string): ComboBoxItem | undefined {
+	_getFirstMatchingItem(current: string): ComboBoxItem | undefined {
 		const currentlyFocusedItem = this.items.find(item => item.focused === true);
 
 		if (currentlyFocusedItem?.isGroupItem) {

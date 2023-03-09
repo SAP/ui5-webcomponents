@@ -1,5 +1,7 @@
 /**
- * @class
+ * Different illustration types of Illustrated Message.
+ *
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

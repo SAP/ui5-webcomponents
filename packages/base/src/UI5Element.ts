@@ -78,8 +78,6 @@ function _invalidate(this: UI5Element, changeInfo: ChangeInfo) {
 	this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
 
-let metadata = {} as Metadata;
-
 /**
  * Base class for all UI5 Web Components
  *
@@ -1040,17 +1038,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the metadata object for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get metadata() {
-		return metadata;
-	}
-
-	/**
-	 * Sets a new metadata object for this UI5 Web Component Class
-	 * @protected
-	 */
-	static set metadata(newMetadata) {
-		metadata = newMetadata;
-	}
+	static metadata: Metadata = {};
 
 	/**
 	 * Returns the CSS for this UI5 Web Component Class
@@ -1152,21 +1140,17 @@ abstract class UI5Element extends HTMLElement {
 			return this._metadata;
 		}
 
-		const effectiveMetadata = Object.keys(this.metadata).length ? this.metadata : this.decoratorMetadata;
-		const metadataObjects = [effectiveMetadata];
+		const metadataObjects = [this.metadata];
 		let klass = this; // eslint-disable-line
 		while (klass !== UI5Element) {
 			klass = Object.getPrototypeOf(klass);
-			const effectiveKlassMetadata = Object.keys(klass.metadata).length ? klass.metadata : klass.decoratorMetadata;
-			metadataObjects.unshift(effectiveKlassMetadata);
+			metadataObjects.unshift(klass.metadata);
 		}
 		const mergedMetadata = merge({}, ...metadataObjects) as Metadata;
 
 		this._metadata = new UI5ElementMetadata(mergedMetadata);
 		return this._metadata;
 	}
-
-	static decoratorMetadata: Metadata = {};
 }
 
 /**

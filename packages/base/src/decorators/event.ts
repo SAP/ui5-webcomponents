@@ -9,16 +9,16 @@ import { EventData } from "../UI5ElementMetadata.js";
  */
 const event = (name: string, data: EventData = {}): ClassDecorator => {
 	return (target: any) => {
-		if (!Object.prototype.hasOwnProperty.call(target, "decoratorMetadata")) {
-			target.decoratorMetadata = {};
+		if (!Object.prototype.hasOwnProperty.call(target, "metadata")) {
+			target.metadata = {};
 		}
 
-		const decoratorMetadata = target.decoratorMetadata;
-		if (!decoratorMetadata.events) {
-			decoratorMetadata.events = {};
+		const metadata = target.metadata;
+		if (!metadata.events) {
+			metadata.events = {};
 		}
 
-		const eventsMetadata = decoratorMetadata.events;
+		const eventsMetadata = metadata.events;
 		if (!eventsMetadata[name]) {
 			eventsMetadata[name] = data;
 		}

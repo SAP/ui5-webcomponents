@@ -1,39 +1,67 @@
 import { html } from "lit-html";
-import type { Meta, StoryFn } from "@storybook/web-components";
-
+import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
 import { DocsPage } from "../../../.storybook/docs";
-
-// @ts-ignore
 import type Title from "@ui5/webcomponents/dist/Title.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { ifDefined } from "lit-html/directives/if-defined.js";
+import TitleLevel from "@ui5/webcomponents/dist/types/TitleLevel.js";
+import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
 
 const component = "ui5-title";
 
 export default {
-    title: "Main/Title",
-    component,
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
-    argTypes,
+	title: "Main/Title",
+	component,
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component })
+		},
+	},
+	argTypes,
 } as Meta<Title>;
 
-const Template: UI5StoryArgs<Title, StoryArgsSlots> = (args) => html`<div></div>`;
+const Template: UI5StoryArgs<Title, StoryArgsSlots> = (args) => {
+	return html`
+<ui5-title
+	level="${ifDefined(args.level)}"
+	wrapping-type="${ifDefined(args.wrappingType)}"
+>${unsafeHTML(args.default)}</ui5-title>`;
+};
+Template.decorators = [
+	(story, {args}) => {
+		return html`
+${story({args: {...args, level: TitleLevel.H1}})}
+${story({args: {...args, level: TitleLevel.H2}})}
+${story({args: {...args, level: TitleLevel.H3}})}
+${story({args: {...args, level: TitleLevel.H4}})}
+${story({args: {...args, level: TitleLevel.H5}})}
+${story({args: {...args, level: TitleLevel.H6}})}`;
+	},
+];
 
+export const Basic = Template.bind({});
+Basic.args = {
+	default: "Title text",
+};
+Basic.decorators = [...Template.decorators];
 
-export const Template0: StoryFn = () => html`
-<h3>Title in All Available Levels</h3>
-	<div class="snippet flex-column">
-		<ui5-title level="H1">Title level 1</ui5-title>
-		<ui5-title level="H2">Title level 2</ui5-title>
-		<ui5-title level="H3">Title level 3</ui5-title>
-		<ui5-title level="H4">Title level 4</ui5-title>
-		<ui5-title level="H5">Title level 5</ui5-title>
-		<ui5-title level="H6">Title level 6</ui5-title>
-	</div>
-`;
+export const Wrapping = Template.bind({});
+Wrapping.args = {
+	default: "Long title text text text which wraps",
+	wrappingType: WrappingType.Normal,
+}
+Wrapping.decorators = [
+	...Template.decorators,
+	(story) => {
+		return html`
+<style>
+	ui5-title {
+		width: 15ch;
+	}
+</style>
+${story()}`
+	},
+];

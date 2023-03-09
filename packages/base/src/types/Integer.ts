@@ -10,7 +10,6 @@ import DataType from "./DataType.js";
  * @author SAP SE
  * @alias sap.ui.webc.base.types.Integer
  * @public
- * @enum {number}
  */
 class Integer extends DataType {
 	static override isValid(value: any) {

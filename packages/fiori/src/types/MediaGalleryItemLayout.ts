@@ -1,5 +1,7 @@
 /**
- * @class
+ * Defines the layout of the content displayed in the <code>ui5-media-gallery-item</code>.
+ *
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

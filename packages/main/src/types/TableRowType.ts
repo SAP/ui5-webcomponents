@@ -1,7 +1,7 @@
 /**
  * Different table row types.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

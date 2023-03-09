@@ -1,7 +1,7 @@
 /**
  * Table cell popin display.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

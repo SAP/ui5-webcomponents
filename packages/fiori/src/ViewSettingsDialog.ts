@@ -102,7 +102,24 @@ type VSDInternalSettings = {
  * @since 1.0.0-rc.16
  * @public
  */
-@customElement("ui5-view-settings-dialog")
+@customElement({
+	tag: "ui5-view-settings-dialog",
+	renderer: litRender,
+	styles: viewSettingsDialogCSS,
+	template: ViewSettingsDialogTemplate,
+	dependencies: [
+		Bar,
+		Button,
+		Title,
+		Dialog,
+		Label,
+		List,
+		StandardListItem,
+		GroupHeaderListItem,
+		SegmentedButton,
+		SegmentedButtonItem,
+	],
+})
 
 /**
  * Fired when confirmation button is activated.
@@ -280,33 +297,6 @@ class ViewSettingsDialog extends UI5Element {
 
 			filter.additionalText = !selectedCount ? "" : `${selectedCount}`;
 		});
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get dependencies() { // remove type casting after refactoring these
-		return [
-			Bar,
-			Button,
-			Title,
-			Dialog,
-			Label,
-			List,
-			StandardListItem,
-			GroupHeaderListItem,
-			SegmentedButton as typeof UI5Element,
-			SegmentedButtonItem as typeof UI5Element,
-		];
-	}
-
-	static get template() {
-		return ViewSettingsDialogTemplate;
-	}
-
-	static get styles() {
-		return viewSettingsDialogCSS;
 	}
 
 	static async onDefine() {
