@@ -107,6 +107,7 @@ class IllustratedMessage extends UI5Element {
 	* <li><code>NoTasks_v1</code></li>
 	* <li><code>NoTasks</code></li>
 	* <li><code>NoDimensionsSet</code></li>
+	* <li><code>NoColumnsSet</code></li>
 	* <li><code>PageNotFound</code></li>
 	* <li><code>ReloadScreen</code></li>
 	* <li><code>ResizeColumn</code></li>

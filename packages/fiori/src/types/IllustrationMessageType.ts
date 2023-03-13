@@ -87,6 +87,12 @@ enum IllustrationMessageType {
 	 */
 	NoDimensionsSet = "NoDimensionsSet",
 	/**
+	 * "No Columns Set" illustration type.
+	 * @public
+	 * @type {NoColumnsSet}
+	 */
+	NoColumnsSet = "NoColumnsSet",
+	/**
 	 * "Unable To Load" illustration type.
 	 * @public
 	 * @type {UnableToLoad}
