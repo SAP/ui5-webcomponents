@@ -537,7 +537,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		this.liveValue = value;
 
 		const previousValue = this.value;
-		
+
 		if (updateValue) {
 			this._getInput().value = value;
 			this.value = value;
