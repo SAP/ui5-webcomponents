@@ -1147,7 +1147,7 @@ describe("Date Picker Tests", () => {
 		await browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
 		assert.equal(await input.getProperty("valueState"), "None", 'the value state is not changed');
-		assert.equal(await browser.$("#lblChangePreventTargetValue").textContent, "target value on event fire: Mar 31, 1995", 'the value is applied on target before prevention');
+		assert.equal(await browser.$("#lblChangePreventTargetValue").getHTML(false), "target value on event fire: Mar 31, 1995", 'the value is applied on target before prevention');
 	});
 
 	it("DatePicker's formatter has strict parsing enabled", async () => {
