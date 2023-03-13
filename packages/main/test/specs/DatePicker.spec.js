@@ -1133,7 +1133,23 @@ describe("Date Picker Tests", () => {
 		await root.keys("Jan 1, 1999999");
 		await browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
 
+		assert.equal(await input.getProperty("value"), "", 'the value is not changed');
+	});
+
+	it("when value is prevented, the target value is restored to previous one", async () => {
+		datepicker.id = "#dpPrevent";
+
+		const input = await datepicker.getInput();
+		await input.click();
+
+		const root = await datepicker.getRoot();
+		await root.keys("Mar 31, 1995");
+		await browser.$("#dp5").shadow$("ui5-input").shadow$("input").click(); //click elsewhere to focusout
+
+		const lblChangePrevent = await browser.$("#lblChangePrevent");
+
 		assert.equal(await input.getProperty("valueState"), "None", 'the value state is not changed');
+		assert.equal(lblChangePrevent.value, "Mar 31, 1995", 'the value state is not changed');
 	});
 
 	it("DatePicker's formatter has strict parsing enabled", async () => {
