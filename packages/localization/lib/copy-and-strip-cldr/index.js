@@ -5,6 +5,7 @@ const stripCLDR = async () => {
 	const inputDir = process.argv[2];
 	const outputDir = process.argv[3];
 
+	await fs.mkdir(outputDir, { recursive: true });
 	const files = await fs.readdir(inputDir);
 	const promises = files.map(async fileName => {
 		if (!fileName.endsWith("json")) {
@@ -17,7 +18,6 @@ const stripCLDR = async () => {
 		fileContentObject = removeFields(fileContentObject);
 		const fileContentReduced = JSON.stringify(fileContentObject, null, 2);
 
-		await fs.mkdir(outputDir, { recursive: true });
 		const outputFilePath = path.join(outputDir, fileName);
 		return fs.writeFile(outputFilePath, fileContentReduced);
 	});
