@@ -112,7 +112,7 @@ class NotificationListItem extends NotificationListItemBase {
 	* they truncate by default.
 	*
 	* <br><br>
-	* <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
+	* <b>Note:</b> by default the <code>titleText</code> and <code>description</code>,
 	* and a <code>ShowMore/Less</code> button would be displayed.
 	* @type {sap.ui.webc.main.types.WrappingType}
 	* @defaultvalue "None"
