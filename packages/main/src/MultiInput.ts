@@ -1,6 +1,6 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import {
@@ -63,29 +63,31 @@ type MultiInputTokenDeleteEventDetail = {
 		Icon,
 	],
 })
-/**
- * Fired when the value help icon is pressed
- * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
- *
- * @event sap.ui.webc.main.MultiInput#value-help-trigger
- * @public
- */
-@event("value-help-trigger")
-
-/**
- * Fired when a token is about to be deleted.
- *
- * @event sap.ui.webc.main.MultiInput#token-delete
- * @param {HTMLElement} token deleted token.
- * @public
- */
-@event("token-delete", {
-	detail: {
-		token: { type: HTMLElement },
-	},
-})
-
 class MultiInput extends Input {
+	/**
+	 * Fired when the value help icon is pressed
+	 * and F4 or ALT/OPTION + ARROW_UP/ARROW_DOWN keyboard keys are used.
+	 *
+	 * @event sap.ui.webc.main.MultiInput#value-help-trigger
+	 * @public
+	 */
+	@event("value-help-trigger")
+	onValueHelpTrigger!: FireEventFn<void>;
+
+	/**
+	 * Fired when a token is about to be deleted.
+	 *
+	 * @event sap.ui.webc.main.MultiInput#token-delete
+	 * @param {HTMLElement} token deleted token.
+	 * @public
+	 */
+	@event("token-delete", {
+		detail: {
+			token: { type: HTMLElement },
+		},
+	})
+	onTokenDelete!: FireEventFn<MultiInputTokenDeleteEventDetail>;
+
 	/**
 	 * Determines whether a value help icon will be visualized in the end of the input.
 	 * Pressing the icon will fire <code>value-help-trigger</code> event.
@@ -138,7 +140,7 @@ class MultiInput extends Input {
 
 	valueHelpPress() {
 		this.closePopover();
-		this.fireEvent("value-help-trigger");
+		this.onValueHelpTrigger();
 	}
 
 	showMorePress() {
@@ -156,7 +158,7 @@ class MultiInput extends Input {
 		}
 
 		if (focusedToken) {
-			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token: focusedToken });
+			this.onTokenDelete({ token: focusedToken });
 			if (shouldFocusInput) {
 				this.focus();
 			}
@@ -169,7 +171,7 @@ class MultiInput extends Input {
 		}
 
 		selectedTokens.forEach(token => {
-			this.fireEvent("token-delete", { token });
+			this.onTokenDelete({ token });
 		});
 	}
 
@@ -252,7 +254,7 @@ class MultiInput extends Input {
 				const cutResult = this.tokenizer._fillClipboard(ClipboardDataOperation.cut, selectedTokens);
 
 				selectedTokens.forEach(token => {
-					this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
+					this.onTokenDelete({ token });
 				});
 
 				this.focus();

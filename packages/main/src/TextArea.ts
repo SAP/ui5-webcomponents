@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -96,25 +96,27 @@ type ExceededText = {
 	staticAreaStyles: valueStateMessageStyles,
 	dependencies: [Popover, Icon],
 })
-/**
- * Fired when the text has changed and the focus leaves the component.
- *
- * @event sap.ui.webc.main.TextArea#change
- * @public
- */
-@event("change")
-
-/**
- * Fired when the value of the component changes at each keystroke or when
- * something is pasted.
- *
- * @event sap.ui.webc.main.TextArea#input
- * @since 1.0.0-rc.5
- * @public
- */
-@event("input")
-
 class TextArea extends UI5Element implements IFormElement {
+	/**
+	 * Fired when the text has changed and the focus leaves the component.
+	 *
+	 * @event sap.ui.webc.main.TextArea#change
+	 * @public
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
+
+	/**
+	 * Fired when the value of the component changes at each keystroke or when
+	 * something is pasted.
+	 *
+	 * @event sap.ui.webc.main.TextArea#input
+	 * @since 1.0.0-rc.5
+	 * @public
+	 */
+	@event("input")
+	onInput!: FireEventFn<void>;
+
 	/**
 	 * Defines the value of the component.
 	 *
@@ -444,7 +446,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 			this.value = this.previousValue;
 			nativeTextArea.value = this.value;
-			this.fireEvent("input");
+			this.onInput();
 		}
 	}
 
@@ -470,7 +472,7 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	_onchange() {
-		this.fireEvent("change", {});
+		this.onChange();
 	}
 
 	_oninput(e: InputEvent) {
@@ -482,10 +484,7 @@ class TextArea extends UI5Element implements IFormElement {
 		}
 
 		this.value = nativeTextArea.value;
-		this.fireEvent("input", {});
-
-		// Angular two way data binding
-		this.fireEvent("value-changed");
+		this.onInput();
 	}
 
 	_onResize() {

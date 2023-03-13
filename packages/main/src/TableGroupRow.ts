@@ -134,7 +134,7 @@ class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 		this._colSpan = this.visibleColCount();
 	}
 
-	_onfocusin(e: FocusEvent) {
+	_onfocusin() {
 		this.onFocused();
 	}
 

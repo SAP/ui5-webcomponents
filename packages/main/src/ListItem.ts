@@ -7,7 +7,6 @@ import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/ty
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";

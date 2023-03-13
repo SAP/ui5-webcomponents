@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ClassMap, Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -199,46 +199,50 @@ type MultiComboboxItemWithSelection = {
 		Button,
 	],
 })
-/**
- * Fired when the input operation has finished by pressing Enter or on focusout.
- *
- * @event sap.ui.webc.main.MultiComboBox#change
- * @public
- */
- @event("change")
-
-/**
- * Fired when the value of the component changes at each keystroke.
- *
- * @event sap.ui.webc.main.MultiComboBox#input
- * @public
- */
-@event("input")
-
-/**
- * Fired when the dropdown is opened or closed.
- *
- * @event sap.ui.webc.main.MultiComboBox#open-change
- * @since 1.0.0-rc.5
- * @public
- */
-@event("open-change")
-
-/**
- * Fired when selection is changed by user interaction
- * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
- *
- * @event sap.ui.webc.main.MultiComboBox#selection-change
- * @param {Array} items an array of the selected items.
- * @public
- */
-@event("selection-change", {
-	detail: {
-		items: { type: Array },
-	},
-})
-
 class MultiComboBox extends UI5Element {
+	/**
+	 * Fired when the input operation has finished by pressing Enter or on focusout.
+	 *
+	 * @event sap.ui.webc.main.MultiComboBox#change
+	 * @public
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
+
+	/**
+	 * Fired when the value of the component changes at each keystroke.
+	 *
+	 * @event sap.ui.webc.main.MultiComboBox#input
+	 * @public
+	 */
+	@event("input")
+	onInput!: FireEventFn<void>;
+
+	/**
+	 * Fired when the dropdown is opened or closed.
+	 *
+	 * @event sap.ui.webc.main.MultiComboBox#open-change
+	 * @since 1.0.0-rc.5
+	 * @public
+	 */
+	@event("open-change")
+	onOpenChange!: FireEventFn<void>;
+
+	/**
+	 * Fired when selection is changed by user interaction
+	 * in <code>SingleSelect</code> and <code>MultiSelect</code> modes.
+	 *
+	 * @event sap.ui.webc.main.MultiComboBox#selection-change
+	 * @param {Array} items an array of the selected items.
+	 * @public
+	 */
+	@event("selection-change", {
+		detail: {
+			items: { type: Array },
+		},
+	})
+	onSelectionChange!: FireEventFn<MultiComboBoxSelectionChangeEventDetail>;
+
 	/**
 	 * Defines the value of the component.
 	 * <br><br>
@@ -520,7 +524,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_inputChange() {
-		this.fireEvent("change");
+		this.onChange();
 	}
 
 	togglePopover() {
@@ -592,7 +596,7 @@ class MultiComboBox extends UI5Element {
 			}
 		}
 
-		this.fireEvent("input");
+		this.onInput();
 	}
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
@@ -735,7 +739,7 @@ class MultiComboBox extends UI5Element {
 			});
 		} else {
 			this.value = pastedText;
-			this.fireEvent("input");
+			this.onInput();
 		}
 	}
 
@@ -1190,7 +1194,7 @@ class MultiComboBox extends UI5Element {
 
 	_toggle() {
 		this.open = !this.open;
-		this.fireEvent("open-change");
+		this.onOpenChange();
 	}
 
 	_getSelectedItems(): Array<MultiComboBoxItem> {
@@ -1220,7 +1224,7 @@ class MultiComboBox extends UI5Element {
 				this.fireSelectionChange();
 			}
 
-			this.fireEvent("input");
+			this.onInput();
 		}
 
 		this.value = this.valueBeforeAutoComplete || "";
@@ -1237,9 +1241,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	fireSelectionChange() {
-		this.fireEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", { items: this._getSelectedItems() });
-		// Angular 2 way data binding
-		this.fireEvent("value-changed");
+		this.onSelectionChange({ items: this._getSelectedItems() });
 	}
 
 	async _getRespPopover() {

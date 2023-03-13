@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -110,19 +110,21 @@ enum ClipboardDataOperation {
 		Button,
 	],
 })
-
-@event("token-delete", {
-	detail: {
-		ref: { type: HTMLElement },
-	},
-})
-
-@event("show-more-items-press", {
-	detail: {
-		ref: { type: HTMLElement },
-	},
-})
 class Tokenizer extends UI5Element {
+	@event("token-delete", {
+		detail: {
+			ref: { type: HTMLElement },
+		},
+	})
+	onTokenDelete!: FireEventFn<TokenizerTokenDeleteEventDetail>;
+
+	@event("show-more-items-press", {
+		detail: {
+			ref: { type: HTMLElement },
+		},
+	})
+	onShowMoreItemsPress!: FireEventFn<void>;
+
 	@property({ type: Boolean })
 	showMore!: boolean;
 
@@ -204,7 +206,7 @@ class Tokenizer extends UI5Element {
 			popover.showAt(this.morePopoverOpener || this);
 		}
 
-		this.fireEvent("show-more-items-press");
+		this.onShowMoreItemsPress();
 	}
 
 	_getTokens() {
@@ -270,7 +272,7 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token || target });
+		this.onTokenDelete({ ref: token || target });
 	}
 
 	_handleCurrentItemAfterDeletion(nextToken: Token) {
@@ -315,13 +317,13 @@ class Tokenizer extends UI5Element {
 
 		this._handleCurrentItemAfterDeletion(nextToken);
 
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+		this.onTokenDelete({ ref: token });
 	}
 
 	itemDelete(e: CustomEvent) {
 		const token = e.detail.item.tokenRef;
 
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+		this.onTokenDelete({ ref: token });
 	}
 
 	_onkeydown(e: KeyboardEvent) {

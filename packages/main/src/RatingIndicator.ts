@@ -1,5 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
@@ -86,15 +86,16 @@ type Star = {
 	template: RatingIndicatorTemplate,
 	dependencies: [Icon],
 })
-/**
- * The event is fired when the value changes.
- *
- * @event sap.ui.webc.main.RatingIndicator#change
- * @public
- */
-@event("change")
-
 class RatingIndicator extends UI5Element {
+	/**
+	 * The event is fired when the value changes.
+	 *
+	 * @event sap.ui.webc.main.RatingIndicator#change
+	 * @public
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
+
 	/**
 	 * The indicated value of the rating.
 	 * <br><br>
@@ -230,7 +231,7 @@ class RatingIndicator extends UI5Element {
 			}
 
 			if (this._liveValue !== this.value) {
-				this.fireEvent("change");
+				this.onChange();
 				this._liveValue = this.value;
 			}
 		}
@@ -267,7 +268,7 @@ class RatingIndicator extends UI5Element {
 				this.value = pressedNumber > this.max ? this.max : pressedNumber;
 			}
 
-			this.fireEvent("change");
+			this.onChange();
 		}
 	}
 

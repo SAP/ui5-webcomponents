@@ -2,38 +2,38 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event, {FireEventFn} from "@ui5/webcomponents-base/dist/decorators/event.js";
-import type {ClassMap} from "@ui5/webcomponents-base/dist/types.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import type {ResizeObserverCallback} from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import {isAndroid, isPhone,} from "@ui5/webcomponents-base/dist/Device.js";
+import { isAndroid, isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import {getFeature} from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import {
-  isBackSpace,
-  isDelete,
-  isDown,
-  isEnd,
-  isEnter,
-  isEscape,
-  isHome,
-  isPageDown,
-  isPageUp,
-  isSpace,
-  isTabNext,
-  isUp,
+	isBackSpace,
+	isDelete,
+	isDown,
+	isEnd,
+	isEnter,
+	isEscape,
+	isHome,
+	isPageDown,
+	isPageUp,
+	isSpace,
+	isTabNext,
+	isUp,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import {getI18nBundle} from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
-  deregisterUI5Element,
-  getAllAccessibleNameRefTexts,
-  getAssociatedLabelForTexts,
-  registerUI5Element,
+	deregisterUI5Element,
+	getAllAccessibleNameRefTexts,
+	getAssociatedLabelForTexts,
+	registerUI5Element,
 } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import {getCaretPosition, setCaretPosition} from "@ui5/webcomponents-base/dist/util/Caret.js";
+import { getCaretPosition, setCaretPosition } from "@ui5/webcomponents-base/dist/util/Caret.js";
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -42,32 +42,34 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
-import type InputSuggestions, {InputSuggestionText, SuggestionComponent} from "./features/InputSuggestions.js";
-import type FormSupportT, {IFormElement} from "./features/InputElementsFormSupport.js";
+import type InputSuggestions from "./features/InputSuggestions.js";
+import type { InputSuggestionText, SuggestionComponent } from "./features/InputSuggestions.js";
+import type FormSupportT from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type SuggestionListItem from "./SuggestionListItem.js";
-import type {PopupScrollEventDetail} from "./Popup.js";
+import type { PopupScrollEventDetail } from "./Popup.js";
 import InputType from "./types/InputType.js";
 import Popover from "./Popover.js";
 import Icon from "./Icon.js";
 // Templates
 import InputTemplate from "./generated/templates/InputTemplate.lit.js";
 import InputPopoverTemplate from "./generated/templates/InputPopoverTemplate.lit.js";
-import {StartsWith} from "./Filters.js";
+import { StartsWith } from "./Filters.js";
 
 import {
-  INPUT_SUGGESTIONS,
-  INPUT_SUGGESTIONS_MORE_HITS,
-  INPUT_SUGGESTIONS_NO_HIT,
-  INPUT_SUGGESTIONS_ONE_HIT,
-  INPUT_SUGGESTIONS_TITLE,
-  VALUE_STATE_ERROR,
-  VALUE_STATE_INFORMATION,
-  VALUE_STATE_SUCCESS,
-  VALUE_STATE_TYPE_ERROR,
-  VALUE_STATE_TYPE_INFORMATION,
-  VALUE_STATE_TYPE_SUCCESS,
-  VALUE_STATE_TYPE_WARNING,
-  VALUE_STATE_WARNING,
+	INPUT_SUGGESTIONS,
+	INPUT_SUGGESTIONS_MORE_HITS,
+	INPUT_SUGGESTIONS_NO_HIT,
+	INPUT_SUGGESTIONS_ONE_HIT,
+	INPUT_SUGGESTIONS_TITLE,
+	VALUE_STATE_ERROR,
+	VALUE_STATE_INFORMATION,
+	VALUE_STATE_SUCCESS,
+	VALUE_STATE_TYPE_ERROR,
+	VALUE_STATE_TYPE_INFORMATION,
+	VALUE_STATE_TYPE_SUCCESS,
+	VALUE_STATE_TYPE_WARNING,
+	VALUE_STATE_WARNING,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -92,13 +94,6 @@ type AccInfo = {
 	ariaExpanded?: string,
 	ariaDescription?: string,
 	ariaLabel?: string,
-}
-
-// all sementic events
-enum INPUT_EVENTS {
-	CHANGE = "change",
-	INPUT = "input",
-	SUGGESTION_ITEM_SELECT = "suggestion-item-select",
 }
 
 // all user interactions
@@ -1510,16 +1505,16 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	  return {
 		  "input": {
-			"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
-			"ariaDescribedBy": ariaDescribedBy || undefined,
-			"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
-			"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
-			"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
-			"role": this._inputAccInfo && this._inputAccInfo.role,
-			"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
-			"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
-			"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
-			"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
+				"ariaRoledescription": this._inputAccInfo && (this._inputAccInfo.ariaRoledescription || undefined),
+				"ariaDescribedBy": ariaDescribedBy || undefined,
+				"ariaInvalid": this.valueState === ValueState.Error ? "true" : undefined,
+				"ariaHasPopup": this._inputAccInfo.ariaHasPopup ? this._inputAccInfo.ariaHasPopup : ariaHasPopupDefault,
+				"ariaAutoComplete": this._inputAccInfo.ariaAutoComplete ? this._inputAccInfo.ariaAutoComplete : ariaAutoCompleteDefault,
+				"role": this._inputAccInfo && this._inputAccInfo.role,
+				"ariaControls": this._inputAccInfo && this._inputAccInfo.ariaControls,
+				"ariaExpanded": this._inputAccInfo && this._inputAccInfo.ariaExpanded,
+				"ariaDescription": this._inputAccInfo && this._inputAccInfo.ariaDescription,
+				"ariaLabel": (this._inputAccInfo && this._inputAccInfo.ariaLabel) || this._accessibleLabelsRefTexts || this.accessibleName || this._associatedLabelsTexts || undefined,
 		  },
 		};
 	}

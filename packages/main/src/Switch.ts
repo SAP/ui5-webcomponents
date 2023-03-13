@@ -218,7 +218,7 @@ class Switch extends UI5Element {
 	toggle() {
 		if (!this.disabled) {
 			this.checked = !this.checked;
-			const changePrevented = !this.onChange(null, true);
+			const changePrevented = !this.onChange(undefined, false, true);
 			// Angular two way data binding;
 			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
 

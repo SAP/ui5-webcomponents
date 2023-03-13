@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
@@ -182,36 +182,40 @@ interface IComboBoxItem extends UI5Element {
 		ComboBoxGroupItem,
 	],
 })
-/**
- * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
- *
- * @event sap.ui.webc.main.ComboBox#change
- * @public
- */
-@event("change")
-
-/**
- * Fired when typing in input.
- * <br><br>
- * <b>Note:</b> filterValue property is updated, input is changed.
- * @event sap.ui.webc.main.ComboBox#input
- * @public
- */
-@event("input")
-/**
- * Fired when selection is changed by user interaction
- *
- * @event sap.ui.webc.main.ComboBox#selection-change
- * @param {sap.ui.webc.main.IComboBoxItem} item item to be selected.
- * @public
- */
-@event("selection-change", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
 class ComboBox extends UI5Element {
+	/**
+	 * Fired when the input operation has finished by pressing Enter, focusout or an item is selected.
+	 *
+	 * @event sap.ui.webc.main.ComboBox#change
+	 * @public
+	 */
+	@event("change")
+	onChange!: FireEventFn<void>;
+
+	/**
+	 * Fired when typing in input.
+	 * <br><br>
+	 * <b>Note:</b> filterValue property is updated, input is changed.
+	 * @event sap.ui.webc.main.ComboBox#input
+	 * @public
+	 */
+	@event("input")
+	onInput!: FireEventFn<void>;
+
+	/**
+	 * Fired when selection is changed by user interaction
+	 *
+	 * @event sap.ui.webc.main.ComboBox#selection-change
+	 * @param {sap.ui.webc.main.IComboBoxItem} item item to be selected.
+	 * @public
+	 */
+	@event("selection-change", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onSelectionChange!: FireEventFn<ComboBoxSelectionChangeEventDetail>;
+
 	/**
 	 * Defines the value of the component.
 	 *
@@ -629,13 +633,13 @@ class ComboBox extends UI5Element {
 			item && this._applyAtomicValueAndSelection(item, value, true);
 
 			if (value !== "" && (item && !item.selected && !item.isGroupItem)) {
-				this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
+				this.onSelectionChange({
 					item,
 				});
 			}
 		}
 
-		this.fireEvent("input");
+		this.onInput();
 
 		if (isPhone()) {
 			return;
@@ -647,6 +651,7 @@ class ComboBox extends UI5Element {
 			this._openRespPopover();
 		}
 	}
+
 	shouldAutocomplete(e: InputEvent): boolean {
 		const eventType = e.inputType;
 		const allowedEventTypes = [
@@ -752,12 +757,12 @@ class ComboBox extends UI5Element {
 		item && this._applyAtomicValueAndSelection(item, (this.open ? this._userTypedValue : ""), true);
 
 		if ((item && !item.selected)) {
-			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
+			this.onSelectionChange({
 				item,
 			});
 		}
 
-		this.fireEvent("input");
+		this.onInput();
 		this._fireChangeEvent();
 	}
 
@@ -1000,7 +1005,7 @@ class ComboBox extends UI5Element {
 
 	_fireChangeEvent() {
 		if (this.value !== this._lastValue) {
-			this.fireEvent("change");
+			this.onChange();
 			this._lastValue = this.value;
 		}
 	}
@@ -1030,7 +1035,7 @@ class ComboBox extends UI5Element {
 		this.value = this._selectedItemText;
 
 		if (!listItem.mappedItem.selected) {
-			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
+			this.onSelectionChange({
 				item: listItem.mappedItem,
 			});
 		}

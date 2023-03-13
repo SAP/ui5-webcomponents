@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -179,7 +178,6 @@ type CalendarChangeEventDetail = {
 		YearPicker,
 	],
 })
-@fastNavigation
 class Calendar extends CalendarPart {
 	/**
 	 * Fired when the selected dates change.
@@ -456,7 +454,7 @@ class Calendar extends CalendarPart {
 		}
 	}
 
-    _onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
+	_onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
 		this._fireEventAndUpdateSelectedDates(e.detail.dates);
 	}

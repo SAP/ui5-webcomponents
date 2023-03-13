@@ -78,7 +78,7 @@ type ColorPaletteItemClickEventDetail = {
 	},
 })
 class ColorPalette extends UI5Element {
-  /**
+	/**
 	 * Fired when the user selects a color.
 	 *
 	 * @event sap.ui.webc.main.ColorPalette#item-click

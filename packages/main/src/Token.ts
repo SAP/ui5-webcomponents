@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
@@ -56,30 +56,32 @@ type TokenDeleteEventDetail = {
 	styles: tokenStyles,
 	dependencies: [Icon],
 })
-/**
- * Fired when the the component is selected by user interaction with mouse or by clicking space.
- *
- * @event sap.ui.webc.main.Token#select
- * @public
- */
-@event("select")
-
-/**
- * Fired when the backspace, delete or close icon of the token is pressed
- *
- * @event
- * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
- * @param {Boolean} delete Indicates whether token is deleted by delete key.
- * @private
- */
-@event("delete", {
-	detail: {
-		"backSpace": { type: Boolean },
-		"delete": { type: Boolean },
-	},
-})
 
 class Token extends UI5Element implements ITabbable {
+	/**
+	 * Fired when the the component is selected by user interaction with mouse or by clicking space.
+	 *
+	 * @event sap.ui.webc.main.Token#select
+	 * @public
+	 */
+	@event("select")
+	onSelect!: FireEventFn<void>;
+
+	/**
+	 * Fired when the backspace, delete or close icon of the token is pressed
+	 *
+	 * @event
+	 * @param {Boolean} backSpace Indicates whether token is deleted by backspace key.
+	 * @param {Boolean} delete Indicates whether token is deleted by delete key.
+	 * @private
+	 */
+	@event("delete", {
+		detail: {
+			"backSpace": { type: Boolean },
+			"delete": { type: Boolean },
+		},
+	})
+	onDelete!: FireEventFn<TokenDeleteEventDetail>;
 	/**
 	 * Defines the text of the token.
 	 *
@@ -171,7 +173,7 @@ class Token extends UI5Element implements ITabbable {
 
 	_handleSelect() {
 		this.selected = !this.selected;
-		this.fireEvent("select");
+		this.onSelect();
 	}
 
 	_focusin() {
@@ -187,7 +189,10 @@ class Token extends UI5Element implements ITabbable {
 	}
 
 	_delete() {
-		this.fireEvent("delete");
+		this.onDelete({
+			backSpace: false,
+			"delete": false,
+		});
 	}
 
 	_keydown(e: KeyboardEvent) {
@@ -197,7 +202,7 @@ class Token extends UI5Element implements ITabbable {
 		if (!this.readonly && (isBackSpacePressed || isDeletePressed)) {
 			e.preventDefault();
 
-			this.fireEvent<TokenDeleteEventDetail>("delete", {
+			this.onDelete({
 				backSpace: isBackSpacePressed,
 				"delete": isDeletePressed,
 			});
