@@ -536,19 +536,23 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		let executeEvent = true;
 		this.liveValue = value;
 
+		const previousValue = this.value;
+
+		if (updateValue) {
+			this._getInput().value = value;
+			this.value = value;
+			this._updateValueState(); // Change the value state to Error/None, but only if needed
+		}
+
 		events.forEach((e: string) => {
 			if (!this.fireEvent(e, { value, valid }, true)) {
 				executeEvent = false;
 			}
 		});
 
-		if (!executeEvent) {
-			return;
-		}
-
-		if (updateValue) {
-			this._getInput().value = value;
-			this.value = value;
+		if (!executeEvent && updateValue) {
+			this._getInput().value = previousValue;
+			this.value = previousValue;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 	}
