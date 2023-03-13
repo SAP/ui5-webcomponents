@@ -1,7 +1,7 @@
 const fs = require("fs").promises;
 const path = require("path");
 
-const stripCLDR = async () => {
+const copyAndStripCLDR = async () => {
 	const inputDir = process.argv[2];
 	const outputDir = process.argv[3];
 
@@ -25,20 +25,40 @@ const stripCLDR = async () => {
 }
 
 const removeFields = object => {
+	// remove all fields related to currency
 	for (const field in object) {
-		if (field.includes("currency")) { // remove all fields related to currency
+		if (field.includes("currency")) {
 			delete object[field];
 		}
 	}
 
 	// remove all deny-listed fields
-	["timezoneNames", "decimalFormat-short", "decimalFormat-long", "units"].forEach(field => {
+	[
+		"languages",
+		"territories",
+		"scripts",
+		"timezoneNames",
+		"decimalFormat-short",
+		"decimalFormat-long",
+		"units"
+	].forEach(field => {
 		delete object[field];
+	});
+
+
+	["ca-gregorian", "ca-islamic", "ca-japanese", "ca-buddhist", "ca-persian"].forEach(calendar => {
+		// remove all deny-listed fields from the calendar objects
+		[
+			"quarters",
+			"flexibleDayPeriods"
+		].forEach(field => {
+			delete object[calendar][field];
+		});
 	})
 
 	return object;
 }
 
-stripCLDR().then(() => {
+copyAndStripCLDR().then(() => {
 	console.log("CLDR files copied and reduced in size.");
 });
