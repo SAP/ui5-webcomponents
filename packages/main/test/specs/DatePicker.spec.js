@@ -1149,7 +1149,7 @@ describe("Date Picker Tests", () => {
 		const lblChangePrevent = await browser.$("#lblChangePrevent");
 
 		assert.equal(await input.getProperty("valueState"), "None", 'the value state is not changed');
-		assert.equal(lblChangePrevent.text, "Mar 31, 1995", 'the value state is not changed');
+		assert.equal(lblChangePrevent.textContent, "target value on event fire: Mar 31, 1995", 'the value is applied on target before prevention');
 	});
 
 	it("DatePicker's formatter has strict parsing enabled", async () => {
