@@ -2,7 +2,7 @@ import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import BusyIndicator from "@ui5/webcomponents/dist/BusyIndicator.js";
@@ -98,15 +98,16 @@ type NotificationListGroupItemToggleEventDetail = {
 		Popover,
 	],
 })
-
-/**
- * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
- *
- * @public
- * @event sap.ui.webc.fiori.NotificationListGroupItem#toggle
- */
-@event("toggle")
 class NotificationListGroupItem extends NotificationListItemBase {
+	/**
+	 * Fired when the <code>ui5-li-notification-group</code> is expanded/collapsed by user interaction.
+	 *
+	 * @public
+	 * @event sap.ui.webc.fiori.NotificationListGroupItem#toggle
+	 */
+	@event("toggle")
+	onToggle!: FireEventFn<NotificationListGroupItemToggleEventDetail>;
+
 	/**
 	 * Defines if the group is collapsed or expanded.
 	 * @type {boolean}
@@ -234,7 +235,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 	 */
 	_onBtnToggleClick() {
 		this.collapsed = !this.collapsed;
-		this.fireEvent<NotificationListGroupItemToggleEventDetail>("toggle", { item: this });
+		this.onToggle({ item: this });
 	}
 }
 

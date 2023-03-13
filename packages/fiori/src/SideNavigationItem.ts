@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
@@ -30,15 +30,16 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-item")
-/**
- * Fired when the component is activated either with a
- * click/tap or by using the Enter or Space key.
- *
- * @event sap.ui.webc.fiori.SideNavigationItem#click
- * @public
- */
-@event("click")
 class SideNavigationItem extends UI5Element {
+	/**
+	 * Fired when the component is activated either with a
+	 * click/tap or by using the Enter or Space key.
+	 *
+	 * @event sap.ui.webc.fiori.SideNavigationItem#click
+	 * @public
+	 */
+	@event("click")
+	onClick!: FireEventFn<void>;
 	/**
 	 * Defines the text of the item.
 	 *

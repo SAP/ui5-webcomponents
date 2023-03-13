@@ -2,29 +2,29 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
 import { getAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
-import List from "@ui5/webcomponents/dist/List.js";
 import type { SelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import List from "@ui5/webcomponents/dist/List.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/search.js";
 import "@ui5/webcomponents-icons/dist/bell.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import "@ui5/webcomponents-icons/dist/grid.js";
-import type { Timeout, ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap, Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import type ShellBarItem from "./ShellBarItem.js";
 
 // Templates
@@ -36,15 +36,15 @@ import shellBarStyles from "./generated/themes/ShellBar.css.js";
 import ShellBarPopoverCss from "./generated/themes/ShellBarPopover.css.js";
 
 import {
+	SHELLBAR_CANCEL,
+	SHELLBAR_COPILOT,
 	SHELLBAR_LABEL,
 	SHELLBAR_LOGO,
-	SHELLBAR_COPILOT,
 	SHELLBAR_NOTIFICATIONS,
-	SHELLBAR_CANCEL,
-	SHELLBAR_PROFILE,
-	SHELLBAR_PRODUCTS,
-	SHELLBAR_SEARCH,
 	SHELLBAR_OVERFLOW,
+	SHELLBAR_PRODUCTS,
+	SHELLBAR_PROFILE,
+	SHELLBAR_SEARCH,
 } from "./generated/i18n/i18n-defaults.js";
 
 type AccessibilityRoles = {
@@ -185,93 +185,99 @@ const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
 		StandardListItem,
 	],
 })
-/**
- *
- * Fired, when the notification icon is activated.
- *
- * @event sap.ui.webc.fiori.ShellBar#notifications-click
- * @allowPreventDefault
- * @param {HTMLElement} targetRef dom ref of the activated element
- * @public
- */
-@event("notifications-click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired, when the profile slot is present.
- *
- * @event sap.ui.webc.fiori.ShellBar#profile-click
- * @param {HTMLElement} targetRef dom ref of the activated element
- * @public
- */
-@event("profile-click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired, when the product switch icon is activated.
- * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
- *
- * @event sap.ui.webc.fiori.ShellBar#product-switch-click
- * @allowPreventDefault
- * @param {HTMLElement} targetRef dom ref of the activated element
- * @public
- */
-@event("product-switch-click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired, when the logo is activated.
- *
- * @event sap.ui.webc.fiori.ShellBar#logo-click
- * @param {HTMLElement} targetRef dom ref of the activated element
- * @since 0.10
- * @public
- */
-@event("logo-click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired, when the co pilot is activated.
- *
- * @event sap.ui.webc.fiori.ShellBar#co-pilot-click
- * @param {HTMLElement} targetRef dom ref of the activated element
- * @since 0.10
- * @public
- */
-@event("co-pilot-click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired, when a menu item is activated
- * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
- *
- * @event sap.ui.webc.fiori.ShellBar#menu-item-click
- * @param {HTMLElement} item DOM ref of the activated list item
- * @since 0.10
- * @public
- */
-@event("menu-item-click", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
 class ShellBar extends UI5Element {
+	/**
+	 *
+	 * Fired, when the notification icon is activated.
+	 *
+	 * @event sap.ui.webc.fiori.ShellBar#notifications-click
+	 * @allowPreventDefault
+	 * @param {HTMLElement} targetRef dom ref of the activated element
+	 * @public
+	 */
+	@event("notifications-click", {
+		detail: {
+			targetRef: { type: HTMLElement },
+		},
+	})
+	onNotificationsClick!: FireEventFn<ShellBarNotificationsClickEventDetail>;
+
+	/**
+	 * Fired, when the profile slot is present.
+	 *
+	 * @event sap.ui.webc.fiori.ShellBar#profile-click
+	 * @param {HTMLElement} targetRef dom ref of the activated element
+	 * @public
+	 */
+	@event("profile-click", {
+		detail: {
+			targetRef: { type: HTMLElement },
+		},
+	})
+	onProfileClick!: FireEventFn<ShellBarProfileClickEventDetail>;
+
+	/**
+	 * Fired, when the product switch icon is activated.
+	 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
+	 *
+	 * @event sap.ui.webc.fiori.ShellBar#product-switch-click
+	 * @allowPreventDefault
+	 * @param {HTMLElement} targetRef dom ref of the activated element
+	 * @public
+	 */
+	@event("product-switch-click", {
+		detail: {
+			targetRef: { type: HTMLElement },
+		},
+	})
+	onProductSwitchClick!: FireEventFn<ShellBarProductSwitchClickEventDetail>;
+
+	/**
+	 * Fired, when the logo is activated.
+	 *
+	 * @event sap.ui.webc.fiori.ShellBar#logo-click
+	 * @param {HTMLElement} targetRef dom ref of the activated element
+	 * @since 0.10
+	 * @public
+	 */
+	@event("logo-click", {
+		detail: {
+			targetRef: { type: HTMLElement },
+		},
+	})
+	onLogoClick!: FireEventFn<ShellBarLogoClickEventDetail>;
+
+	/**
+	 * Fired, when the co pilot is activated.
+	 *
+	 * @event sap.ui.webc.fiori.ShellBar#co-pilot-click
+	 * @param {HTMLElement} targetRef dom ref of the activated element
+	 * @since 0.10
+	 * @public
+	 */
+	@event("co-pilot-click", {
+		detail: {
+			targetRef: { type: HTMLElement },
+		},
+	})
+	onCoPilotClick!: FireEventFn<ShellBarCoPilotClickEventDetail>;
+
+	/**
+	 * Fired, when a menu item is activated
+	 * <b>Note:</b> You can prevent closing of overflow popover by calling <code>event.preventDefault()</code>.
+	 *
+	 * @event sap.ui.webc.fiori.ShellBar#menu-item-click
+	 * @param {HTMLElement} item DOM ref of the activated list item
+	 * @since 0.10
+	 * @public
+	 */
+	@event("menu-item-click", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onMenuItemClick!: FireEventFn<ShellBarMenuItemClickEventDetail>;
+
 	/**
 	 * Defines the <code>primaryTitle</code>.
 	 * <br><br>
@@ -601,13 +607,13 @@ class ShellBar extends UI5Element {
 
 	_menuItemPress(e: CustomEvent<SelectionChangeEventDetail>) {
 		this.menuPopover!.close();
-		this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
+		this.onMenuItemClick({
 			item: e.detail.selectedItems[0],
 		}, true);
 	}
 
 	_logoPress() {
-		this.fireEvent<ShellBarLogoClickEventDetail>("logo-click", {
+		this.onLogoClick({
 			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-logo")!,
 		});
 	}
@@ -652,7 +658,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_fireCoPilotClick() {
-		this.fireEvent<ShellBarCoPilotClickEventDetail>("co-pilot-click", {
+		this.onCoPilotClick({
 			targetRef: this.shadowRoot!.querySelector(".ui5-shellbar-coPilot")!,
 		});
 	}
@@ -871,9 +877,7 @@ class ShellBar extends UI5Element {
 				return item._id === refItemId;
 			});
 
-			const prevented = shellbarItem!.fireClickEvent(e);
-
-			this._defaultItemPressPrevented = prevented;
+			this._defaultItemPressPrevented = shellbarItem!.fireClickEvent(e) as boolean;
 		}
 	}
 
@@ -885,13 +889,13 @@ class ShellBar extends UI5Element {
 		const notificationIconRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-bell-button")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellBarNotificationsClickEventDetail>("notifications-click", {
+		this._defaultItemPressPrevented = !this.onNotificationsClick({
 			targetRef: notificationIconRef.classList.contains("ui5-shellbar-hidden-button") ? target : notificationIconRef,
 		}, true);
 	}
 
 	_handleProfilePress() {
-		this.fireEvent<ShellBarProfileClickEventDetail>("profile-click", {
+		this.onProfileClick({
 			targetRef: this.shadowRoot!.querySelector<Button>(".ui5-shellbar-image-button")!,
 		});
 	}
@@ -904,7 +908,7 @@ class ShellBar extends UI5Element {
 		const buttonRef = this.shadowRoot!.querySelector<Button>(".ui5-shellbar-button-product-switch")!,
 			target = e.target as HTMLElement;
 
-		this._defaultItemPressPrevented = !this.fireEvent<ShellBarProductSwitchClickEventDetail>("product-switch-click", {
+		this._defaultItemPressPrevented = !this.onProductSwitchClick({
 			targetRef: buttonRef.classList.contains("ui5-shellbar-hidden-button") ? target : buttonRef,
 		}, true);
 	}

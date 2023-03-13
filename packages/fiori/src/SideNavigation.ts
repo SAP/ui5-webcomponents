@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -114,20 +114,21 @@ type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedIte
 		SideNavigationSubItem,
 	],
 })
-/**
- * Fired when the selection has changed via user interaction
- *
- * @event sap.ui.webc.fiori.SideNavigation#selection-change
- * @param {sap.ui.webc.fiori.ISideNavigationItem|sap.ui.webc.fiori.ISideNavigationSubItem} item the clicked item.
- * @allowPreventDefault
- * @public
- */
-@event("selection-change", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
 class SideNavigation extends UI5Element {
+	/**
+	 * Fired when the selection has changed via user interaction
+	 *
+	 * @event sap.ui.webc.fiori.SideNavigation#selection-change
+	 * @param {sap.ui.webc.fiori.ISideNavigationItem|sap.ui.webc.fiori.ISideNavigationSubItem} item the clicked item.
+	 * @allowPreventDefault
+	 * @public
+	 */
+	@event("selection-change", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onSelectionChange!: FireEventFn<SideNavigationSelectionChangeEventDetail>;
 	/**
 	 * Defines whether the <code>ui5-side-navigation</code> is expanded or collapsed.
 	 *
@@ -205,7 +206,7 @@ class SideNavigation extends UI5Element {
 	}
 
 	_setSelectedItem(item: TSideNavigationItem) {
-		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
+		if (!this.onSelectionChange({ item }, true)) {
 			return;
 		}
 
@@ -261,9 +262,9 @@ class SideNavigation extends UI5Element {
 		const item = treeItem.associatedItem;
 
 		if (item instanceof SideNavigationItem && !item.wholeItemToggleable) {
-			item.fireEvent("click");
+			item.onClick();
 		} else if (item instanceof SideNavigationSubItem) {
-			item.fireEvent("click");
+			item.onClick();
 		} else {
 			item.expanded = !item.expanded;
 		}
@@ -290,7 +291,7 @@ class SideNavigation extends UI5Element {
 		const item = e.detail.item;
 		const { associatedItem } = item;
 
-		associatedItem.fireEvent("click");
+		associatedItem.onClick();
 		if (associatedItem.selected) {
 			return;
 		}

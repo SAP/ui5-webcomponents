@@ -2,7 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type Button from "@ui5/webcomponents/dist/Button.js";
 
 type NotificationActionClickEventDetail = {
@@ -24,20 +24,21 @@ type NotificationActionClickEventDetail = {
  * @public
  */
 @customElement("ui5-notification-action")
-
-/**
- * Fired, when the action is pressed.
- *
- * @event sap.ui.webc.fiori.NotificationAction#click
- * @param {HTMLElement} targetRef DOM ref of the clicked element
- * @public
- */
-@event("click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-	},
-})
 class NotificationAction extends UI5Element {
+	/**
+	 * Fired, when the action is pressed.
+	 *
+	 * @event sap.ui.webc.fiori.NotificationAction#click
+	 * @param {HTMLElement} targetRef DOM ref of the clicked element
+	 * @public
+	 */
+	@event("click", {
+		detail: {
+			targetRef: { type: HTMLElement },
+		},
+	})
+	onClick!: FireEventFn<NotificationActionClickEventDetail>;
+
 	/**
 	 * Defines the text of the <code>ui5-notification-action</code>.
 	 *
@@ -107,9 +108,9 @@ class NotificationAction extends UI5Element {
 	 * @returns { boolean } false, if the event was cancelled (preventDefault called), true otherwise
 	 */
 	fireClickEvent(e: MouseEvent): boolean {
-		return this.fireEvent<NotificationActionClickEventDetail>("click", {
+		return this.onClick({
 			targetRef: (e.target as Button),
-		}, true);
+		}, true) as boolean;
 	}
 }
 

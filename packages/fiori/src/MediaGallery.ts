@@ -12,7 +12,7 @@ import Carousel from "@ui5/webcomponents/dist/Carousel.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import MediaGalleryItem from "./MediaGalleryItem.js";
 import MediaGalleryItemLayout from "./types/MediaGalleryItemLayout.js";
@@ -95,39 +95,41 @@ const COLUMNS_COUNT: Record<string, number> = {
 		Carousel,
 	],
 })
-
-/**
- * Fired when selection is changed by user interaction.
- *
- * @event sap.ui.webc.fiori.MediaGallery#selection-change
- * @param {HTMLElement} item the selected item.
- * @public
- */
-@event("selection-change", {
-	detail: {
-		item: { type: HTMLElement },
-	},
-})
-
-/**
- * Fired when the thumbnails overflow button is clicked.
- *
- * @event sap.ui.webc.fiori.MediaGallery#overflow-click
- * @public
- */
-@event("overflow-click")
-
-/**
- * Fired when the display area is clicked.<br>
- * The display area is the central area that contains
- * the enlarged content of the currently selected item.
- *
- * @event sap.ui.webc.fiori.MediaGallery#display-area-click
- * @public
- */
-@event("display-area-click")
-
 class MediaGallery extends UI5Element {
+	/**
+	 * Fired when selection is changed by user interaction.
+	 *
+	 * @event sap.ui.webc.fiori.MediaGallery#selection-change
+	 * @param {HTMLElement} item the selected item.
+	 * @public
+	 */
+	@event("selection-change", {
+		detail: {
+			item: { type: HTMLElement },
+		},
+	})
+	onSelectionChange!: FireEventFn<MediaGallerySelectionChangeEventDetail>;
+
+	/**
+	 * Fired when the thumbnails overflow button is clicked.
+	 *
+	 * @event sap.ui.webc.fiori.MediaGallery#overflow-click
+	 * @public
+	 */
+	@event("overflow-click")
+	onOverflowClick!: FireEventFn<void>;
+
+	/**
+	 * Fired when the display area is clicked.<br>
+	 * The display area is the central area that contains
+	 * the enlarged content of the currently selected item.
+	 *
+	 * @event sap.ui.webc.fiori.MediaGallery#display-area-click
+	 * @public
+	 */
+	@event("display-area-click")
+	onDisplayAreaClick!: FireEventFn<void>;
+
 	/**
 	 * If set to <code>true</code>, all thumbnails are rendered in a scrollable container.
 	 * If <code>false</code>, only up to five thumbnails are rendered, followed by
@@ -428,7 +430,7 @@ class MediaGallery extends UI5Element {
 		this._itemNavigation.setCurrentItem(item);
 
 		if (userInteraction) {
-			this.fireEvent<MediaGallerySelectionChangeEventDetail>("selection-change", { item });
+			this.onSelectionChange({ item });
 		}
 
 		if (isPhone()) {

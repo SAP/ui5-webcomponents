@@ -1,7 +1,7 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isSpace, isEnter, isSpaceShift } from "@ui5/webcomponents-base/dist/Keys.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
@@ -41,16 +41,16 @@ type WizardTabInfo = {
 	template: WizardTabTemplate,
 	dependencies: [Icon],
 })
-
-/**
- * Fired when clicking on none disabled step.
- *
- * @event sap.ui.webc.fiori.WizardTab#selection-change-requested
- * @private
- */
-@event("selection-change-requested")
-
 class WizardTab extends UI5Element implements ITabbable {
+	/**
+	 * Fired when clicking on none disabled step.
+	 *
+	 * @event sap.ui.webc.fiori.WizardTab#selection-change-requested
+	 * @private
+	 */
+	@event("selection-change-requested")
+	onSelectionChangeRequested!: FireEventFn<any>;
+
 	/**
 	 * Defines the <code>icon</code> of the step.
 	 * @type {string}
@@ -149,7 +149,7 @@ class WizardTab extends UI5Element implements ITabbable {
 
 	_onclick() {
 		if (!this.disabled) {
-			this.fireEvent("selection-change-requested");
+			this.onSelectionChangeRequested();
 		}
 	}
 
@@ -160,7 +160,7 @@ class WizardTab extends UI5Element implements ITabbable {
 
 		if ((isSpace(e) || isEnter(e)) && !isSpaceShift(e)) {
 			e.preventDefault();
-			this.fireEvent("selection-change-requested");
+			this.onSelectionChangeRequested();
 		}
 	}
 

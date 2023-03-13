@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
 type ShellBarItemClickEventDetail = {
@@ -25,22 +25,23 @@ type ShellBarItemClickEventDetail = {
  * @public
  */
 @customElement("ui5-shellbar-item")
-/**
- * Fired, when the item is pressed.
- *
- * @event sap.ui.webc.fiori.ShellBarItem#click
- * @allowPreventDefault
- * @param {HTMLElement} targetRef DOM ref of the clicked element
- * @public
- * @native
- */
-@event("click", {
-	detail: {
-		targetRef: { type: HTMLElement },
-	},
-})
-
 class ShellBarItem extends UI5Element {
+	/**
+	 * Fired, when the item is pressed.
+	 *
+	 * @event sap.ui.webc.fiori.ShellBarItem#click
+	 * @allowPreventDefault
+	 * @param {HTMLElement} targetRef DOM ref of the clicked element
+	 * @public
+	 * @native
+	 */
+	@event("click", {
+		detail: {
+			targetRef: { type: HTMLElement },
+		},
+	})
+	onClick!: FireEventFn<ShellBarItemClickEventDetail>;
+
 	/**
 	 * Defines the name of the item's icon.
 	 * @type {string}
@@ -77,7 +78,7 @@ class ShellBarItem extends UI5Element {
 	}
 
 	fireClickEvent(e: MouseEvent) {
-		return this.fireEvent<ShellBarItemClickEventDetail>("click", {
+		return this.onClick({
 			targetRef: (e.target as HTMLElement),
 		}, true);
 	}

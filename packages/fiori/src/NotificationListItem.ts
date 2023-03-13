@@ -2,7 +2,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -104,80 +104,81 @@ type Footnote = Record<string, any>;
 		Popover,
 	],
 })
-
-@event("_press")
 class NotificationListItem extends NotificationListItemBase {
+	@event("_press")
+	onPress!: FireEventFn<NotificationListItemPressEventDetail>;
+
 	/**
-	* Defines if the <code>titleText</code> and <code>description</code> should wrap,
-	* they truncate by default.
-	*
-	* <br><br>
-	* <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
-	* and a <code>ShowMore/Less</code> button would be displayed.
-	* @type {sap.ui.webc.main.types.WrappingType}
-	* @defaultvalue "None"
-	* @public
-	* @name sap.ui.webc.fiori.NotificationListItem.prototype.wrappingType
-	* @since 1.0.0-rc.15
-	*/
+	 * Defines if the <code>titleText</code> and <code>description</code> should wrap,
+	 * they truncate by default.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
+	 * and a <code>ShowMore/Less</code> button would be displayed.
+	 * @type {sap.ui.webc.main.types.WrappingType}
+	 * @defaultvalue "None"
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItem.prototype.wrappingType
+	 * @since 1.0.0-rc.15
+	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType!: WrappingType;
 
 	/**
-	* Defines the state of the <code>titleText</code> and <code>description</code>,
-	* if less or more information is displayed.
-	* @private
-	*/
+	 * Defines the state of the <code>titleText</code> and <code>description</code>,
+	 * if less or more information is displayed.
+	 * @private
+	 */
 	@property({ type: Boolean })
 	_showMorePressed!: boolean;
 
 	/**
-	* Defines the visibility of the <code>showMore</code> button.
-	* @private
-	*/
+	 * Defines the visibility of the <code>showMore</code> button.
+	 * @private
+	 */
 	@property({ type: Boolean })
 	_showMore!: boolean;
 
 	/**
-	* Defines the avatar, displayed in the <code>ui5-li-notification</code>.
-	*
-	* <br><br>
-	* <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
-	* <br>
-	* <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
-	* we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
-	* you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
-	*
-	* @type {sap.ui.webc.main.IAvatar}
-	* @slot
-	* @public
-	* @name sap.ui.webc.fiori.NotificationListItem.prototype.avatar
-	*/
+	 * Defines the avatar, displayed in the <code>ui5-li-notification</code>.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Consider using the <code>ui5-avatar</code> to display icons, initials or images.
+	 * <br>
+	 * <b>Note:</b>In order to be complaint with the UX guidlines and for best experience,
+	 * we recommend using avatars with 2rem X 2rem in size (32px X 32px). In case you are using the <code>ui5-avatar</code>
+	 * you can set its <code>size</code> property to <code>XS</code> to get the required size - <code>&lt;ui5-avatar size="XS">&lt;/ui5-avatar></code>.
+	 *
+	 * @type {sap.ui.webc.main.IAvatar}
+	 * @slot
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItem.prototype.avatar
+	 */
 	@slot()
 	avatar!: Array<HTMLElement>;
 
 	/**
-	* Defines the elements, displayed in the footer of the of the component.
-	* @type {HTMLElement[]}
-	* @slot
-	* @public
-	* @name sap.ui.webc.fiori.NotificationListItem.prototype.footnotes
-	*/
+	 * Defines the elements, displayed in the footer of the of the component.
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItem.prototype.footnotes
+	 */
 	@slot({ type: HTMLElement, individualSlots: true })
 	footnotes!: Array<HTMLElement>;
 
 	/**
-	* Defines the content of the <code>ui5-li-notification</code>,
-	* usually a description of the notification.
-	*
-	* <br><br>
-	* <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
-	*
-	* @type {Node[]}
-	* @slot description
-	* @public
-	* @name sap.ui.webc.fiori.NotificationListItem.prototype.default
-	*/
+	 * Defines the content of the <code>ui5-li-notification</code>,
+	 * usually a description of the notification.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
+	 *
+	 * @type {Node[]}
+	 * @slot description
+	 * @public
+	 * @name sap.ui.webc.fiori.NotificationListItem.prototype.default
+	 */
 	@slot({ type: Node, "default": true })
 	description!: Array<Node>;
 
@@ -370,7 +371,7 @@ class NotificationListItem extends NotificationListItemBase {
 			return;
 		}
 
-		this.fireEvent<NotificationListItemPressEventDetail>("_press", { item: this });
+		this.onPress({ item: this });
 	}
 
 	onResize() {

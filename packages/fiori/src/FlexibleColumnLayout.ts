@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";

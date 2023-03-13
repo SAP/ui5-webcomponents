@@ -2,7 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import { isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import event, { FireEventFn } from "@ui5/webcomponents-base/dist/decorators/event.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
@@ -55,23 +55,25 @@ type NotificationListItemBaseCloseEventDetail = {
  * @public
  */
 
-/**
- * Fired when the <code>Close</code> button is pressed.
- *
- * @event sap.ui.webc.fiori.NotificationListItemBase#close
- * @param {HTMLElement} item the closed item.
- * @public
- */
-@event("close", {
-	 detail: {
-		item: HTMLElement,
-	},
-})
 @customElement({
 	staticAreaStyles: NotificationOverflowActionsPopoverCss,
 	staticAreaTemplate: NotificationOverflowActionsPopoverTemplate,
 })
 class NotificationListItemBase extends ListItemBase {
+	/**
+	 * Fired when the <code>Close</code> button is pressed.
+	 *
+	 * @event sap.ui.webc.fiori.NotificationListItemBase#close
+	 * @param {HTMLElement} item the closed item.
+	 * @public
+	 */
+	@event("close", {
+		detail: {
+			item: HTMLElement,
+		},
+	})
+	onClose!: FireEventFn<NotificationListItemBaseCloseEventDetail>;
+
 	/**
 	 * Defines the <code>titleText</code> of the item.
 	 * @type {string}
@@ -212,7 +214,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * Event handlers
 	 */
 	_onBtnCloseClick() {
-		this.fireEvent<NotificationListItemBaseCloseEventDetail>("close", { item: this });
+		this.onClose({ item: this });
 	}
 
 	_onBtnOverflowClick() {
