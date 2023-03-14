@@ -172,4 +172,4 @@ Tip: for multi-colored icons, you can specify multiple SVG elements and put a fi
 </g>
 ```
 
-Next: [Using Additional Assets](./05-using-assets)
+Next: [Using Additional Assets](./05-using-assets.md)

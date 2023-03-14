@@ -111,7 +111,7 @@ export default Demo;
 
 So far, we've defined a `ui5-demo` Web Component with no properties, slots or events.
 
-For a complete reference to all metadata entities, click [here](../understanding-components-metadata).
+For a complete reference to all metadata entities, click [here](./03-understanding-components-metadata.md).
 
 ### The render engine
 
