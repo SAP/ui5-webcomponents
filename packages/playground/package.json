@@ -58,10 +58,6 @@
     "prepare:samples": "npm run clean:samples && npm run copy:samples",
     "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js",
     "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/\" \"./docs/\"",
-    "prepare:next:nojekyll": "copy-and-watch \"./.nojekyll\" \"./dist\"",
-    "prepare:next:samples": "node ./build-scripts-storybook/samples-prepare.js",
-    "prepare:next:manifest": "node ./build-scripts-storybook/parse-manifest.js",
-    "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js",
     "storybook": "npm-run-all --parallel prepare:next:* && storybook dev -p 6006",
     "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && storybook build -o ./dist/_playground"
   }

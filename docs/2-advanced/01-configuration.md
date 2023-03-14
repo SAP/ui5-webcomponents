@@ -43,7 +43,7 @@ import "@ui5/webcomponents/dist/Assets.js";
 import "@ui5/webcomponents-fiori/dist/Assets.js";
 ```
 
-For more about assets, see the dedicated [Assets](../../getting-started/using-assets) section.
+For more about assets, see the dedicated [Assets](./1-getting-started/05-using-assets) section.
 
  - Configure the additional theme either via the [configuration script](#script) or [module imports](#imports).
 
@@ -279,4 +279,4 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import { getFetchDefaultLanguage, setFetchDefaultLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 ```
 
-Next: [Right-To-Left (RTL) And Compact Mode](../rtl-and-compact-mode)
+Next: [Right-To-Left (RTL) And Compact Mode](./02-rtl-and-compact-mode)

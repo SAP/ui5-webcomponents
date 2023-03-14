@@ -6,6 +6,10 @@ const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
 const srcPath = path.resolve(process.argv[2]); // where to find the .mds
 const destPath = path.resolve(process.argv[3]); // where to create the output
 
+const convertToTechnicalName = (name) => {
+	return name.replace(/^[0-9\-\.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
+}
+
 const files = fs.readdirSync(srcPath).filter(file => !["README.md", "images"].includes(file)); // skip the top-level readme
 
 files.forEach((file, fileIndex) => {
@@ -25,6 +29,10 @@ files.forEach((file, fileIndex) => {
 		articles.forEach((article, articleIndex) => {
 			const articlePath = path.join(srcFilePath, article);
 			let articleContent = `${fs.readFileSync(articlePath)}`;
+			// Get all relative links
+			articleContent = articleContent.replaceAll(/\[.+\]\(\..+\)/g, e => {
+				return e.replaceAll(/(\d+-(?:\w+-?)+)/g, convertToTechnicalName).replace(/\(\.\//, "(../");
+			})
 
 			if (article.endsWith("README.md")) { // Create a top-level item
 
@@ -43,7 +51,7 @@ ${articleContent}
 			} else { // Create a nested item
 
 				const articleHumanReadableName = capitalizeFirst(article.replace(/^[0-9\-\.]+/, "").replace(/\.md$/, "").replace(/-/g, " "));
-				const articleTechnicalName = article.replace(/^[0-9\-\.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
+				const articleTechnicalName = convertToTechnicalName(article);
 				articleContent = `---
 layout: docs
 title: ${articleHumanReadableName}
@@ -61,7 +69,7 @@ ${articleContent}`;
 		});
 	} else { // create a standalone article outside the directory structure (f.e. FAQ)
 		let articleContent = `${fs.readFileSync(srcFilePath)}`;
-		const shortName = file.replace(/^[0-9\-\.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
+		const shortName = convertToTechnicalName(file);
 		const cleanName = file.replace(/^[0-9\-\.]+/, "");
 		articleContent = `---
 layout: docs
