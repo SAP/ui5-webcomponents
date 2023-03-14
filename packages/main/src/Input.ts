@@ -648,6 +648,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	_selectedText?: string;
 	_clearIconClicked?: boolean;
 	_focusedAfterClear: boolean;
+	_performTextSelection?: boolean;
 	_previewItem?: SuggestionListItem;
 	static i18nBundle: I18nBundle;
 
@@ -750,12 +751,14 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		if (this._shouldAutocomplete && !isAndroid() && !autoCompletedChars && !this._isKeyNavigation) {
 			const item = this._getFirstMatchingItem(value);
 			if (item) {
-				this._handleTypeAhead(item, value);
+				this._handleTypeAhead(item);
 			}
 		}
 	}
 
 	async onAfterRendering() {
+		const innerInput = this.getInputDOMRefSync()!;
+
 		if (this.Suggestions && this.showSuggestions) {
 			this.Suggestions.toggle(this.open, {
 				preventFocusRestore: true,
@@ -769,6 +772,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		} else {
 			this.closePopover();
 		}
+
+		if (this._performTextSelection) {
+			// this is required to syncronize lit-html input's value and user's input
+			// lit-html does not sync its stored value for the value property when the user is typing
+			if (innerInput.value !== this._innerValue) {
+				innerInput.value = this._innerValue;
+			}
+
+			if (this.typedInValue.length && this.value.length) {
+				innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
+			}
+		}
+
+		this._performTextSelection = false;
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -1033,6 +1050,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		if (this.previousValue !== this.getInputDOMRefSync()!.value) {
 			this.fireEvent(INPUT_EVENTS.CHANGE);
 			this.previousValue = this.value;
+			this.typedInValue = this.value;
 		}
 	}
 
@@ -1155,18 +1173,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		}
 	}
 
-	_handleTypeAhead(item: SuggestionItem, filterValue: string) {
+	_handleTypeAhead(item: SuggestionItem) {
 		const value = item.text ? item.text : item.textContent || "";
-		const innerInput = this.getInputDOMRefSync()!;
 
-		filterValue = filterValue || "";
 		this._innerValue = value;
 		this.value = value;
-
-		innerInput.value = value;
-		setTimeout(() => {
-			innerInput.setSelectionRange(filterValue.length, value.length);
-		}, 0);
+		this._performTextSelection = true;
 
 		this._shouldAutocomplete = false;
 	}
@@ -1203,6 +1215,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.openOnMobile = false;
 		this.open = false;
 		this._forceOpen = false;
+
+		if (this.hasSuggestionItemSelected) {
+			this.focus();
+		}
 	}
 
 	/**
@@ -1268,7 +1284,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			return;
 		}
 
-		const innerInput = this.getInputDOMRefSync()!;
 		const value = this.typedInValue || this.value;
 		const itemText = item.text || item.textContent || ""; // keep textContent for compatibility
 		const fireInput = keyboardUsed
@@ -1280,10 +1295,20 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 			this.value = itemText;
 			this.valueBeforeItemSelection = itemText;
 			this.lastConfirmedValue = itemText;
-			innerInput.value = itemText;
-			this.fireEvent<InputEventDetail>(INPUT_EVENTS.INPUT);
-			this._handleChange();
-			innerInput.setSelectionRange(this.value.length, this.value.length);
+
+			this._performTextSelection = true;
+			this.hasSuggestionItemSelected = true;
+			this.value = itemText;
+
+			this.fireEvent(INPUT_EVENTS.CHANGE);
+
+			if (isPhone()) {
+				this.fireEvent(INPUT_EVENTS.INPUT);
+			}
+
+			// value might change in the change event handler
+			this.typedInValue = this.value;
+			this.previousValue = this.value;
 		}
 
 		this.valueBeforeItemPreview = "";
@@ -1309,12 +1334,10 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 */
 	updateValueOnPreview(item: SuggestionListItem) {
 		const noPreview = item.type === "Inactive" || item.groupItem;
-		const innerInput = this.getInputDOMRefSync()!;
 		const itemValue = noPreview ? this.valueBeforeItemPreview : (item.effectiveTitle || item.textContent || "");
 
 		this.value = itemValue;
-		innerInput.value = itemValue;
-		innerInput.setSelectionRange(this.typedInValue.length, this.value.length);
+		this._performTextSelection = true;
 	}
 
 	/**
