@@ -31,10 +31,19 @@ files.forEach((file, fileIndex) => {
 			let articleContent = `${fs.readFileSync(articlePath)}`;
 			// Get all relative links
 			articleContent = articleContent.replaceAll(/\[.+\]\(\..+\)/g, e => {
+				// Preproces markdown links to make them work in the playground.
+				// All folder names (1-getting-started) and file names (01-first-steps.md)
+				// should be transformed to not contain numbers.
 				return e.replaceAll(/(\d+-(?:\w+-?)+)/g, convertToTechnicalName)
+					// Jekyll creates a directory for each page to follow the
+					// permalink structure so markdown links should be replaced with
+					// one out folder backward.
 					.replaceAll("(../", "(../../")
 					.replaceAll("(./", "(../")
+					// README.md file is replaced with generated HTML file whose
+					// path is the folder where it is stored so the link should point only to the path.
 					.replaceAll("/README.md", "")
+					// File extensions should be removed from links.
 					.replaceAll(".md", "");
 			})
 

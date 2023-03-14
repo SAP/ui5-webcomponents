@@ -45,7 +45,7 @@
     "clean:samples": "rimraf ./docs/components/*sample.html",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",
     "clean:pages": "rimraf ./docs/pages/content/main && rimraf ./docs/pages/content/fiori",
-    "start": "npm-run-all --parallel prepare:documentation && bundle exec jekyll serve",
+    "start": "npm-run-all --parallel prepare:* && bundle exec jekyll serve",
     "install:dependencies": "gem install bundler -v 2.3.5 && bundle install",
     "install:dependencies_as_admin": "sudo gem install bundler -v 2.3.5 && bundle install",
     "copy:assets": "npm-run-all copy:assets:resources copy:assets:main copy:assets:fiori",
@@ -58,6 +58,10 @@
     "prepare:samples": "npm run clean:samples && npm run copy:samples",
     "prepare:pages": "npm run clean:pages && node ./build-scripts/pages-prepare.js",
     "prepare:documentation": "node ./build-scripts/documentation-prepare.js \"../../docs/\" \"./docs/\"",
+    "prepare:next:nojekyll": "copy-and-watch \"./.nojekyll\" \"./dist\"",
+    "prepare:next:samples": "node ./build-scripts-storybook/samples-prepare.js",
+    "prepare:next:manifest": "node ./build-scripts-storybook/parse-manifest.js",
+    "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js",
     "storybook": "npm-run-all --parallel prepare:next:* && storybook dev -p 6006",
     "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && storybook build -o ./dist/_playground"
   }
