@@ -20,7 +20,7 @@ const scripts = {
 	typescript: "tsc",
 	copy: {
 		"used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
-		cldr: `copy-and-watch "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/*.json" dist/generated/assets/cldr/`,
+		cldr: `node ./lib/copy-and-strip-cldr/index.js "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/" dist/generated/assets/cldr/`,
 		overlay: `copy-and-watch "overlay/**/*.js" dist/`,
 		src: `copy-and-watch "src/**/*.js" dist/`,
 	},
