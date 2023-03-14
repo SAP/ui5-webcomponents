@@ -41,7 +41,6 @@ const removeFields = object => {
 		"decimalFormat-short",
 		"decimalFormat-long",
 		"units",
-		"dateFields",
 		"timezoneNamesFormats",
 		"decimalFormat",
 		"scientificFormat",
