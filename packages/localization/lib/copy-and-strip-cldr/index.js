@@ -47,8 +47,7 @@ const removeFields = object => {
 		"scientificFormat",
 		"percentFormat",
 		"miscPattern",
-		"lenient-scope-number",
-		"dayPeriodRules"
+		"lenient-scope-number"
 	].forEach(field => {
 		delete object[field];
 	});
