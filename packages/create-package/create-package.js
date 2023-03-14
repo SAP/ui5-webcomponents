@@ -114,15 +114,11 @@ const generateFilesContent = (name, tag, typescript) => {
 			"@ui5/webcomponents-tools": version,
 			"chromedriver": "*",
 		},
-		"peerDependencies": {
-			"typescript": "^4.9.4",
-		},
-		"peerDependenciesMeta": {
-			"typescript": {
-				"optional": true,
-			}
-		}
 	};
+
+	if (typescript) {
+		packageContent.devDependencies.typescript = "^4.9.4";
+	}
 
 	// Update package.json
 	const destDir = path.join(`./`, name);
