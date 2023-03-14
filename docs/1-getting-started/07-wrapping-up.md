@@ -6,7 +6,7 @@ In the previous chapters we covered **bundling** UI5 Web Components, using **com
 
 ## Applying the Learnings in the `vite` App 
 
-If you created the test app, described in [Getting Started](./01.%20Getting%20Started.md), you can enhance it as follows:
+If you created the test app, described in [Getting Started](./README.md), you can enhance it as follows:
 
  1) In the "Getting Started" section you installed the `@ui5/webcomponents` package.
 
