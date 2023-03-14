@@ -31,7 +31,11 @@ files.forEach((file, fileIndex) => {
 			let articleContent = `${fs.readFileSync(articlePath)}`;
 			// Get all relative links
 			articleContent = articleContent.replaceAll(/\[.+\]\(\..+\)/g, e => {
-				return e.replaceAll(/(\d+-(?:\w+-?)+)/g, convertToTechnicalName).replace(/\(\.\//, "(../");
+				return e.replaceAll(/(\d+-(?:\w+-?)+)/g, convertToTechnicalName)
+					.replaceAll("(../", "(../../")
+					.replaceAll("(./", "(../")
+					.replaceAll("/README.md", "")
+					.replaceAll(".md", "");
 			})
 
 			if (article.endsWith("README.md")) { // Create a top-level item
