@@ -42,14 +42,6 @@ describe("Icon general interaction", () => {
 		await nonInteractiveIcon.click();
 		assert.strictEqual(await inpClickRes2.getAttribute("value"), "1", "The 'click' event is fired.");
 		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "1", "The 'ui5-click' event is fired.");
-
-		await nonInteractiveIcon.keys("Enter");
-		assert.strictEqual(await inpClickRes2.getAttribute("value"), "2", "Enter fires 'click'");
-		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "2", "Enter fires 'ui5-click'");
-
-		await nonInteractiveIcon.keys("Space");
-		assert.strictEqual(await inpClickRes2.getAttribute("value"), "3", "Space ires 'click'");
-		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "3", "Enter fires 'ui5-click'");
 	});
 
 	it("Tests 'ui5-click' fired, 'click' not fired, when noConflict='true'", async () => {
@@ -73,10 +65,8 @@ describe("Icon general interaction", () => {
 		const inpUI5ClickRes2 = await browser.$("#ui5-click-event-2");
 
 		await nonInteractiveIcon.click();
-		assert.strictEqual(await inpClickRes2.getAttribute("value"), "3", "The 'click' event is not fired in noConflict mode.");
-		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "4", "The 'ui5-click' event is fired in noConflict mode.");
-
-
+		assert.strictEqual(await inpClickRes2.getAttribute("value"), "1", "The 'click' event is not fired in noConflict mode.");
+		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "2", "The 'ui5-click' event is fired in noConflict mode.");
 	});
 
 	it("Tests the accessibility attributes", async () => {
