@@ -381,6 +381,10 @@ class SplitButton extends UI5Element {
 		return this.textContent;
 	}
 
+	get isTextButton() {
+		return !!this.textContent;
+	}
+
 	get textButton() {
 		return this.getDomRef()?.querySelector<Button>(".ui5-split-text-button");
 	}
