@@ -282,9 +282,17 @@ class Icon extends UI5Element {
 	viewBox?: string;
 	customSvg?: object;
 
-	_onclick?: ((event: MouseEvent) => void) | undefined;
-	_onfocusout?: ((event: FocusEvent) => void) | undefined;
-	_onfocusin?: ((event: FocusEvent) => void) | undefined;
+	_onclick: ((event: MouseEvent) => void) | undefined;
+	_onfocusout: ((event: FocusEvent) => void) | undefined;
+	_onfocusin: ((event: FocusEvent) => void) | undefined;
+
+	constructor() {
+		super();
+
+		this._onclick = this._onClickHandler.bind(this);
+		this._onfocusout = this._onFocusOutHandler.bind(this);
+		this._onfocusin = this._onFocusInHandler.bind(this);
+	}
 
 	_onFocusInHandler() {
 		if (this.interactive) {
@@ -398,10 +406,6 @@ class Icon extends UI5Element {
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
-
-		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
-		this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
-		this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
 
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;

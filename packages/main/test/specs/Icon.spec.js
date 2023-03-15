@@ -16,45 +16,67 @@ describe("Icon general interaction", () => {
 			"Built-in tooltip is correct");
 	});
 
-	it("Tests noConflict 'ui5-click' event is thrown for interactive icons", async () => {
-		const iconRoot = await browser.$("#interactive-icon").shadow$(".ui5-icon-root");
-		const input = await browser.$("#click-event");
+	it("Tests events 'click' and 'ui5-click' events", async () => {
+		// Interactive icon
+		const interactiveIcon = await browser.$("#interactive-icon");
+		const inpClickRes = await browser.$("#click-event");
+		const inpUI5ClickRes = await browser.$("#ui5-click-event");
 
-		await iconRoot.click();
-		assert.strictEqual(await input.getAttribute("value"), "1", "Mouse click throws event");
+		await interactiveIcon.click();
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "1", "The 'click' event is fired.");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "1", "The 'ui5-click' event is fired.");
 
-		await iconRoot.keys("Enter");
-		assert.strictEqual(await input.getAttribute("value"), "2", "Enter throws event");
+		await interactiveIcon.keys("Enter");
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "2", "Enter fires 'click'");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "2", "Enter fires 'ui5-click'");
 
-		await iconRoot.keys("Space");
-		assert.strictEqual(await input.getAttribute("value"), "3", "Space throws event");
+		await interactiveIcon.keys("Space");
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "3", "Space ires 'click'");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "3", "Enter fires 'ui5-click'");
+
+		// Non-interactive icon
+		const nonInteractiveIcon = await browser.$("#non-interactive-icon");
+		const inpClickRes2 = await browser.$("#click-event-2");
+		const inpUI5ClickRes2 = await browser.$("#ui5-click-event-2");
+
+		await nonInteractiveIcon.click();
+		assert.strictEqual(await inpClickRes2.getAttribute("value"), "1", "The 'click' event is fired.");
+		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "1", "The 'ui5-click' event is fired.");
+
+		await nonInteractiveIcon.keys("Enter");
+		assert.strictEqual(await inpClickRes2.getAttribute("value"), "2", "Enter fires 'click'");
+		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "2", "Enter fires 'ui5-click'");
+
+		await nonInteractiveIcon.keys("Space");
+		assert.strictEqual(await inpClickRes2.getAttribute("value"), "3", "Space ires 'click'");
+		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "3", "Enter fires 'ui5-click'");
 	});
 
-	it("Tests noConflict 'ui5-click' event is not thrown for non interactive icons", async () => {
-		const iconRoot = await browser.$("#non-interactive-icon");
-		const input = await browser.$("#click-event");
-
-		await iconRoot.click();
-		assert.strictEqual(await input.getAttribute("value"), "3", "Mouse click throws event");
-
-		await iconRoot.keys("Enter");
-		assert.strictEqual(await input.getAttribute("value"), "3", "Enter throws event");
-
-		await iconRoot.keys("Space");
-		assert.strictEqual(await input.getAttribute("value"), "3", "Space throws event");
-	});
-
-	it("Tests native 'click' event thrown", async () => {
+	it("Tests 'ui5-click' fired, 'click' not fired, when noConflict='true'", async () => {
 		await browser.executeAsync(function(done) {
-			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(false);
+			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(true);
 			done();
 		});
 
-		const icon = await browser.$("#myInteractiveIcon");
-		const input = await browser.$("#click-event-2");
+		// Interactive icon
+		const interactiveIcon = await browser.$("#interactive-icon");
+		const inpClickRes = await browser.$("#click-event");
+		const inpUI5ClickRes = await browser.$("#ui5-click-event");
 
-		await icon.click();
-		assert.strictEqual(await input.getAttribute("value"), "1", "Mouse click throws event");
+		await interactiveIcon.click();
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "3", "The 'click' event is not fired in noConflict mode.");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "4", "The 'ui5-click' event is fired in noConflict mode.");
+
+		// Non-interactive icon
+		const nonInteractiveIcon = await browser.$("#non-interactive-icon");
+		const inpClickRes2 = await browser.$("#click-event-2");
+		const inpUI5ClickRes2 = await browser.$("#ui5-click-event-2");
+
+		await nonInteractiveIcon.click();
+		assert.strictEqual(await inpClickRes2.getAttribute("value"), "3", "The 'click' event is not fired in noConflict mode.");
+		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "4", "The 'ui5-click' event is fired in noConflict mode.");
+
+
 	});
 
 	it("Tests the accessibility attributes", async () => {
