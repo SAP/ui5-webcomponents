@@ -450,8 +450,6 @@ class Popover extends Popup {
 			placement = this.calcPlacement(this._openerRect!, popoverSize);
 		}
 
-		const stretching = this.horizontalAlign === PopoverHorizontalAlign.Stretch;
-
 		if (this._preventRepositionAndClose || this.isOpenerOutsideViewport(this._openerRect!)) {
 			return this.close();
 		}
@@ -490,7 +488,7 @@ class Popover extends Popup {
 		});
 		super._show();
 
-		if (stretching && this._width) {
+		if (this.horizontalAlign === PopoverHorizontalAlign.Stretch && this._width) {
 			this.style.width = this._width;
 		}
 	}
@@ -651,13 +649,14 @@ class Popover extends Popup {
 	 * @returns {{x: number, y: number}} Arrow's coordinates
 	 */
 	getArrowPosition(targetRect: DOMRect, popoverSize: PopoverSize, left: number, top: number, isVertical: boolean, borderRadius: number): ArrowPosition {
-		let arrowXCentered = this.horizontalAlign === PopoverHorizontalAlign.Center || this.horizontalAlign === PopoverHorizontalAlign.Stretch;
+		const horizontalAlign = this._actualHorizontalAlign;
+		let arrowXCentered = horizontalAlign === PopoverHorizontalAlign.Center || horizontalAlign === PopoverHorizontalAlign.Stretch;
 
-		if (this.horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
+		if (horizontalAlign === PopoverHorizontalAlign.Right && left <= targetRect.left) {
 			arrowXCentered = true;
 		}
 
-		if (this.horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
+		if (horizontalAlign === PopoverHorizontalAlign.Left && left + popoverSize.width >= targetRect.left + targetRect.width) {
 			arrowXCentered = true;
 		}
 
@@ -751,9 +750,10 @@ class Popover extends Popup {
 	}
 
 	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
+		const horizontalAlign = this._actualHorizontalAlign;
 		let left;
 
-		switch (this.horizontalAlign) {
+		switch (horizontalAlign) {
 		case PopoverHorizontalAlign.Center:
 		case PopoverHorizontalAlign.Stretch:
 			left = targetRect.left - (popoverSize.width - targetRect.width) / 2;
@@ -836,6 +836,20 @@ class Popover extends Popup {
 	 */
 	get _displayFooter() {
 		return true;
+	}
+
+	get _actualHorizontalAlign() {
+		if (this.effectiveDir === "rtl") {
+			if (this.horizontalAlign === PopoverHorizontalAlign.Left) {
+				return PopoverHorizontalAlign.Right;
+			}
+
+			if (this.horizontalAlign === PopoverHorizontalAlign.Right) {
+				return PopoverHorizontalAlign.Left;
+			}
+		}
+
+		return this.horizontalAlign;
 	}
 }
 
