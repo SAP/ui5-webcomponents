@@ -6,6 +6,8 @@
 .ui5-product-switch-root {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: inherit;
+	align-items: inherit;
 	width: 752px; /* 4 * item size */
 	padding: 1.25rem .75rem;
 }

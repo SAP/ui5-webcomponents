@@ -323,45 +323,6 @@
 		</ui5-list>
 	</ui5-popover>
 
-	<br>
-	<br>
-	<div id="targetOpener" class="popover9auto"></div>
-
-	<ui5-button id="btnOpenXLeft">Open Popup Left aligned</ui5-button>
-
-	<ui5-popover
-		header-text="My Heading"
-		id="popXLeft" horizontal-align="Left"
-		class="popover6auto">
-		<div slot="header">
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-		<div>
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-		<div>
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-	</ui5-popover>
-
-	<div id="targetOpener2" class="popover10auto"></div>
-
-	<ui5-button id="btnOpenXRight">Open Popup Right aligned</ui5-button>
-
-	<ui5-popover
-		header-text="My Heading"
-		id="popXRight" horizontal-align="Right"
-		class="popover6auto">
-		<div slot="header">
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-		<div>
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-		<div>
-			<ui5-button id="first-focusable">I am in the header</ui5-button>
-		</div>
-	</ui5-popover>
 
 	<div class="popover11auto">
 		<p>Right-aligned Popover, wider than button, arrow should be centered on the button</p>
@@ -444,6 +405,26 @@
 		<ui5-button id="fistButtonInPopover">Confirm</ui5-button>
 	</ui5-popover>
 
+	<h2>Horizontal Align</h2>
+	<div>
+		<ui5-radio-button name="horizontalAlign" checked text="Center"></ui5-radio-button>
+		<ui5-radio-button name="horizontalAlign" text="Stretch"></ui5-radio-button>
+		<ui5-radio-button name="horizontalAlign" text="Left"></ui5-radio-button>
+		<ui5-radio-button name="horizontalAlign" text="Right"></ui5-radio-button>
+	</div>
+	<div>
+		<ui5-checkbox id="rtlCb" text="rtl"></ui5-checkbox>
+	</div>
+	
+	<div id="horizontalAlignContainer">
+		<div id="targetOpener" class="popover10auto">
+			<span>Target opener</span>
+		</div>
+		<ui5-popover id="popoverHorizontalAlign" placement-type="Top">
+			<span></span>
+		</ui5-popover>
+	</div>
+	<ui5-button id="horizontalAlignBtn">Open horizontally aligned popover</ui5-button>
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
@@ -558,12 +539,6 @@
 
 			btnQuickViewCardOpener.setAttribute("hidden", true);
 		})
-		btnOpenXLeft.addEventListener("click", function (event) {
-			popXLeft.showAt(targetOpener);
-		});
-		btnOpenXRight.addEventListener("click", function (event) {
-			popXRight.showAt(targetOpener2);
-		});
 
 		firstBtn.addEventListener("click", function (event) {
 			popNoFocusableContent.innerHTML = "First button is clicked";
@@ -627,6 +602,18 @@
 
 		popoverFocusButton.addEventListener("click", function () {
 			popoverFocus.showAt(popoverFocusButton);
+		});
+
+		horizontalAlignBtn.addEventListener("click", function () {
+			var selectedAlign = document.querySelector("[ui5-radio-button][name='horizontalAlign'][checked]").text;
+
+			popoverHorizontalAlign.horizontalAlign = selectedAlign;
+			popoverHorizontalAlign.firstElementChild.innerText = "Horizontal alignment is: " + selectedAlign;
+			popoverHorizontalAlign.showAt(targetOpener);
+		});
+
+		rtlCb.addEventListener("ui5-change", function (e) {
+			horizontalAlignContainer.setAttribute("dir", rtlCb.checked ? "rtl" : "")
 		});
 
 	</script>

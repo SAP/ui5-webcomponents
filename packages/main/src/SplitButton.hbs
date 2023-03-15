@@ -24,7 +24,9 @@
 		@focusin={{_setTabIndexValue}}
 		@focusout={{_onFocusOut}}
 	>
-		<slot></slot>
+		{{#if isTextButton}}
+			<slot></slot>
+		{{/if}}
 	</ui5-button>
 
 	<div

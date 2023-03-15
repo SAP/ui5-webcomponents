@@ -86,7 +86,7 @@ type DatePickerChangeEventDetail = {
  * the input field, it must fit to the used date format.
  * <br><br>
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
+ * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
  * <br><br>
  * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
@@ -536,19 +536,23 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		let executeEvent = true;
 		this.liveValue = value;
 
+		const previousValue = this.value;
+
+		if (updateValue) {
+			this._getInput().value = value;
+			this.value = value;
+			this._updateValueState(); // Change the value state to Error/None, but only if needed
+		}
+
 		events.forEach((e: string) => {
 			if (!this.fireEvent(e, { value, valid }, true)) {
 				executeEvent = false;
 			}
 		});
 
-		if (!executeEvent) {
-			return;
-		}
-
-		if (updateValue) {
-			this._getInput().value = value;
-			this.value = value;
+		if (!executeEvent && updateValue) {
+			this._getInput().value = previousValue;
+			this.value = previousValue;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 	}
