@@ -44,7 +44,6 @@ import ComboBox from "./dist/ComboBox.js";
 import DatePicker from "./dist/DatePicker.js";
 import DateRangePicker from "./dist/DateRangePicker.js";
 import DateTimePicker from "./dist/DateTimePicker.js";
-import DurationPicker from "./dist/DurationPicker.js";
 import Dialog from "./dist/Dialog.js";
 import FileUploader from "./dist/FileUploader.js";
 import Icon from "./dist/Icon.js";
