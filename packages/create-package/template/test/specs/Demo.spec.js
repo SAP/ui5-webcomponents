@@ -1,7 +1,9 @@
 const assert = require("assert");
 
 describe("INIT_PACKAGE_VAR_TAG rendering", async () => {
-	await browser.url("test/pages/index.html");
+	before(async () => {
+		await browser.url("test/pages/index.html");
+	});
 
 	it("tests if web component is correctly rendered", async () => {
 
