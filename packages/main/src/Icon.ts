@@ -350,7 +350,7 @@ class Icon extends UI5Element {
 	}
 
 	get _tabIndex() {
-		return this.interactive ? "0" : undefined;
+		return this.interactive ? "0" : "-1";
 	}
 
 	get isDecorative() {

@@ -59,7 +59,6 @@
 }
 
 .ui5-button-icon {
-	pointer-events: none;
 	color: inherit;
 	flex-shrink: 0;
 }
