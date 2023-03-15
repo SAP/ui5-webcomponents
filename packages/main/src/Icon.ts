@@ -282,9 +282,9 @@ class Icon extends UI5Element {
 	viewBox?: string;
 	customSvg?: object;
 
-	_onclick: ((event: MouseEvent) => void) | undefined;
-	_onfocusout: ((event: FocusEvent) => void) | undefined;
-	_onfocusin: ((event: FocusEvent) => void) | undefined;
+	_onclick: ((event: MouseEvent) => void);
+	_onfocusout: ((event: FocusEvent) => void);
+	_onfocusin: ((event: FocusEvent) => void);
 
 	constructor() {
 		super();

@@ -61,16 +61,15 @@
 	{{/if}}
 
 	{{#unless readonly}}
-		<div @click={{togglePopoverByDropdownIcon}}>
-			<ui5-icon name="slim-arrow-down"
-				input-icon
-				slot="icon"
-				tabindex="-1"
-				@mousedown="{{_onIconMousedown}}"
-				@focusin="{{_forwardFocusToInner}}"
-				?pressed="{{open}}"
-				accessible-name="{{_iconAccessibleNameText}}"
-			></ui5-icon>
-		</div>
+		<ui5-icon name="slim-arrow-down"
+			input-icon
+			slot="icon"
+			tabindex="-1"
+			@ui5-click={{togglePopoverByDropdownIcon}}
+			@mousedown="{{_onIconMousedown}}"
+			@focusin="{{_forwardFocusToInner}}"
+			?pressed="{{open}}"
+			accessible-name="{{_iconAccessibleNameText}}"
+		></ui5-icon>
 	{{/unless}}
 </div>

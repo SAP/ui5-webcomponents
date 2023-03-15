@@ -30,13 +30,12 @@
 
 {{#*inline "postContent"}}
 	{{#if showValueHelpIcon}}
-		<div @click={{valueHelpPress}}>
-			<ui5-icon
-				@mousedown={{valueHelpMouseDown}}
-				@mouseup={{valueHelpMouseUp}}
-				input-icon
-				name="value-help"
-			></ui5-icon>
-		</div>
+		<ui5-icon
+			@ui5-click={{valueHelpPress}}
+			@mousedown={{valueHelpMouseDown}}
+			@mouseup={{valueHelpMouseUp}}
+			input-icon
+			name="value-help"
+		></ui5-icon>
 	{{/if}}
 {{/inline}}

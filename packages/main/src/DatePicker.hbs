@@ -26,18 +26,18 @@
 		{{/if}}
 
 		{{#unless readonly}}
-			<div slot="icon" @click="{{togglePicker}}">
-				<ui5-icon
-					name="{{openIconName}}"
-					tabindex="-1"
-					accessible-name="{{openIconTitle}}"
-					accessible-role="button"
-					aria-hidden="{{_ariaHidden}}"
-					show-tooltip
-					input-icon
-					?pressed="{{_isPickerOpen}}"
-				></ui5-icon>
-			</div>
+			<ui5-icon
+				slot="icon"
+				name="{{openIconName}}"
+				tabindex="-1"
+				accessible-name="{{openIconTitle}}"
+				accessible-role="button"
+				aria-hidden="{{_ariaHidden}}"
+				show-tooltip
+				input-icon
+				@ui5-click="{{togglePicker}}"
+				?pressed="{{_isPickerOpen}}"
+			></ui5-icon>
 		{{/unless}}
 	</ui5-input>
 
