@@ -137,4 +137,10 @@ describe("Button general interaction", () => {
 
 		assert.strictEqual(await button.getAttribute("title"), "Go home", "Attribute is reflected");
 	});
+
+	it("tooltip from inner icon is propagated", async () => {
+		const button = await browser.$("#download-icon-only").shadow$("button");
+
+		assert.strictEqual(await button.getAttribute("title"), "Download", "Icon tooltip is shown");
+	});
 });

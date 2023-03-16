@@ -312,6 +312,12 @@ class Button extends UI5Element implements IFormElement {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
+	/**
+	 * @private
+	 */
+	@property({ noAttribute: true, defaultValue: undefined })
+	iconAccessibleName?: string;
+
 	_deactivate: () => void;
 
 	_ontouchstart: PassiveEventListenerObject;
@@ -361,6 +367,13 @@ class Button extends UI5Element implements IFormElement {
 
 		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
+	}
+
+	onAfterRendering() {
+		if (!!this.icon && this.iconOnly) {
+			const icon = this.shadowRoot!.querySelector("[ui5-icon]") as Icon;
+			this.iconAccessibleName = icon.effectiveAccessibleName;
+		}
 	}
 
 	_onclick(e: MouseEvent) {
@@ -444,7 +457,7 @@ class Button extends UI5Element implements IFormElement {
 			return "";
 		}
 
-		return this.showIconTooltip ? "img" : "presentation";
+		return "presentation";
 	}
 
 	get isIconOnly() {
@@ -479,6 +492,14 @@ class Button extends UI5Element implements IFormElement {
 
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get buttonTitle() {
+		if (!this.tooltip && this.icon && this.iconOnly) {
+			return this.iconAccessibleName;
+		}
+
+		return this.tooltip;
 	}
 
 	static async onDefine() {
