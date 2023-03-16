@@ -8,7 +8,7 @@ attachBoot(() => {
 })
 
 // boot the framework
-await boot();
+boot();
 
 const testAssets = {
     // registerThemePropertiesLoader after boot (and after attachBoot ), will call applyTheme
