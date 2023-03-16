@@ -73,7 +73,7 @@ describe("CheckBox general interaction", () => {
 		assert.strictEqual(await defaultCb.getProperty("checked"), !currentChecked, "The checkbox is checked");
 	});
 
-	it.only("tests change event preventDefault - value is not changed", async () => {
+	it("tests change event preventDefault - value is not changed", async () => {
 		const defaultPreventedCbs = await browser.$$(".defaultPreventedCb");
 		for(const defaultPreventedCb of defaultPreventedCbs) {
 			const state = {

@@ -183,6 +183,22 @@ describe("MultiInput general interaction", () => {
 		// Assert
 		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");
 	});
+
+	it("should empty the field when value is cleared in the change handler", async () => {
+		const mi = await $("#token-unique");
+		const valueHelpIcon = mi.shadow$("ui5-icon");
+		const innerInput = mi.shadow$("input");
+
+		mi.scrollIntoView();
+		await valueHelpIcon.click();
+		
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#token-unique");
+		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+
+		await listItem.click();
+
+		assert.strictEqual(await innerInput.getProperty("value"), "", "Input's value should be empty");
+	});
 });
 
 describe("ARIA attributes", () => {

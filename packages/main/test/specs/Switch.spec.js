@@ -53,4 +53,13 @@ describe("Switch general interaction", async () => {
 		assert.notOk(await switchEl.getAttribute("aria-label"), "Attribute is reflected");
 	});
 
+	it("tests change event - value is not changed", async () => {
+		const switchPrevented = await browser.$("#switchprevented");
+		const currentChecked = await switchPrevented.getProperty("checked");
+
+		await switchPrevented.click();
+
+		assert.strictEqual(await switchPrevented.getProperty("checked"), currentChecked, "The switch is not checked");
+	});
+
 });

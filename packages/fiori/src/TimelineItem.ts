@@ -9,7 +9,7 @@ import Link from "@ui5/webcomponents/dist/Link.js";
 import TimelineItemTemplate from "./generated/templates/TimelineItemTemplate.lit.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 // Styles
-import styles from "./generated/themes/TimelineItem.css.js";
+import TimelineItemCss from "./generated/themes/TimelineItem.css.js";
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
 const LARGE_LINE_WIDTH = "LargeLineWidth";
@@ -29,7 +29,16 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @implements sap.ui.webc.fiori.ITimelineItem
  * @public
  */
-@customElement("ui5-timeline-item")
+@customElement({
+	tag: "ui5-timeline-item",
+	renderer: litRender,
+	styles: TimelineItemCss,
+	template: TimelineItemTemplate,
+	dependencies: [
+		Icon,
+		Link,
+	],
+})
 /**
  * Fired when the item name is pressed either with a
  * click/tap or by using the Enter or Space key.
@@ -47,7 +56,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 	 * SAP-icons font provides numerous options.
 	 * <br><br>
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.fiori.TimelineItem.prototype.icon
@@ -131,31 +140,12 @@ class TimelineItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TimelineItemTemplate;
-	}
-
-	static get styles() {
-		return styles;
-	}
-
 	constructor() {
 		super();
 	}
 
 	onNamePress() {
 		this.fireEvent("name-click", {});
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			Link,
-		];
 	}
 
 	/**

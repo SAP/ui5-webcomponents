@@ -32,6 +32,7 @@ import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerP
 // Styles
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -67,7 +68,7 @@ type PreviewValues = {
  * The value entered by typing into the input field must fit to the used date/time format.
  * <br><br>
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see <ui5-link target="_blank" href="https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
+ * For more information, see <ui5-link target="_blank" href="https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
  * <br><br>
  * <b>Example:</b> the following format <code>dd/MM/yyyy, hh:mm:ss aa</code>
  * corresponds the <code>13/04/2020, 03:16:16 AM</code> value.
@@ -415,6 +416,13 @@ class DateTimePicker extends DatePicker {
 		}
 
 		return selectedDate;
+	}
+
+	/**
+	 * @override
+	 */
+	get _calendarPickersMode() {
+		return CalendarPickersMode.DAY_MONTH_YEAR;
 	}
 }
 

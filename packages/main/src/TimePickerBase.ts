@@ -75,16 +75,38 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 *
 * @event sap.ui.webc.main.TimePickerBase#change
  * @public
- */
-@event("change")
+ * @param {string} value The submitted value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+*/
+@event("change", {
+	detail: {
+		value: {
+			type: String,
+		},
+		valid: {
+			type: Boolean,
+		},
+	},
+})
 
 /**
  * Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
  *
  * @event sap.ui.webc.main.TimePickerBase#input
  * @public
- */
-@event("input")
+ * @param {string} value The current value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+*/
+@event("input", {
+	detail: {
+		value: {
+			type: String,
+		},
+		valid: {
+			type: Boolean,
+		},
+	},
+})
 class TimePickerBase extends UI5Element {
 	/**
 	 * Defines a formatted time value.
@@ -236,7 +258,7 @@ class TimePickerBase extends UI5Element {
 		}
 
 		if (!eventsNames.includes("input")) {
-			this.value = ""; // Do not remove! DurationPicker use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
+			this.value = ""; // Do not remove! DurationPicker (an external component extending TimePickerBase) use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
 			this.value = value;
 		}
 		this.tempValue = value; // if the picker is open, sync it

@@ -21,6 +21,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @tagname ui5-side-navigation-sub-item
  * @public
  * @abstract
+ * @implements sap.ui.webc.fiori.ISideNavigationSubItem
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-sub-item")
@@ -61,7 +62,7 @@ class SideNavigationSubItem extends UI5Element {
 	 *
 	 * The SAP-icons font provides numerous options.
 	 * <br>
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 * @public
 	 * @type {string}
 	 * @defaultvalue ""

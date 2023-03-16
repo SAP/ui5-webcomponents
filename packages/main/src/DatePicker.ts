@@ -4,6 +4,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -26,6 +27,7 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -84,7 +86,7 @@ type DatePickerChangeEventDetail = {
  * the input field, it must fit to the used date format.
  * <br><br>
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
+ * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
  * <br><br>
  * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
@@ -534,19 +536,23 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		let executeEvent = true;
 		this.liveValue = value;
 
+		const previousValue = this.value;
+
+		if (updateValue) {
+			this._getInput().value = value;
+			this.value = value;
+			this._updateValueState(); // Change the value state to Error/None, but only if needed
+		}
+
 		events.forEach((e: string) => {
 			if (!this.fireEvent(e, { value, valid }, true)) {
 				executeEvent = false;
 			}
 		});
 
-		if (!executeEvent) {
-			return;
-		}
-
-		if (updateValue) {
-			this._getInput().value = value;
-			this.value = value;
+		if (!executeEvent && updateValue) {
+			this._getInput().value = previousValue;
+			this.value = previousValue;
 			this._updateValueState(); // Change the value state to Error/None, but only if needed
 		}
 	}
@@ -736,6 +742,23 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	_canOpenPicker() {
 		return !this.disabled && !this.readonly;
+	}
+
+	get _calendarPickersMode() {
+		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
+		const patternSymbolTypes = format.aFormatArray.map(patternSymbolSettings => {
+			return patternSymbolSettings.type.toLowerCase();
+		});
+
+		if (patternSymbolTypes.includes("day")) {
+			return CalendarPickersMode.DAY_MONTH_YEAR;
+		}
+
+		if (patternSymbolTypes.includes("month") || patternSymbolTypes.includes("monthstandalone")) {
+			return CalendarPickersMode.MONTH_YEAR;
+		}
+
+		return CalendarPickersMode.YEAR;
 	}
 
 	/**

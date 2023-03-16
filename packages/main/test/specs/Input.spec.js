@@ -1034,6 +1034,25 @@ describe("Input general interaction", () => {
 		// Assert
 		assert.strictEqual(await changeValue.getHTML(false), "", "The change event should pass a correct value");
 	});
+
+	it("Changes text if cleared in change event handler", async () => {
+		const input = await $("#change-event-value");
+		const inner = await input.shadow$("input");
+
+		await input.scrollIntoView();
+
+		await browser.executeAsync((done) =>{
+			return done(document.getElementById("change-event-value").openPicker());
+		});
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-event-value");
+		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+
+		await listItem.click();
+
+		assert.strictEqual(await input.getValue(), "", "Input's value should be empty");
+		assert.strictEqual(await inner.getValue(), "", "Inner input's value should be empty");
+	});
 });
 
 describe("Input arrow navigation", () => {

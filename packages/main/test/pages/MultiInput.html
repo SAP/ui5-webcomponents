@@ -258,7 +258,7 @@
 	</div>
 
 	<div class="sample-container">
-		<ui5-multi-input show-suggestions id="token-unique" style="width: 50%">
+		<ui5-multi-input show-suggestions id="token-unique" show-value-help-icon style="width: 50%">
 			<div slot="valueStateMessage" id="value-state-wrapper">Token is already in the list</div>
 			<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
 		</ui5-multi-input>
@@ -436,6 +436,12 @@
 				event.target.appendChild(createTokenFromText(event.target.value));
 		
 				event.target.value = "";
+			});
+
+		document
+			.getElementById("token-unique")
+			.addEventListener("ui5-value-help-trigger", function (event) {
+				event.target.openPicker();
 			});
 	</script>
 </body>

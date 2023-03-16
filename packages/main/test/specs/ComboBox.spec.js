@@ -475,11 +475,29 @@ describe("General interaction", () => {
 
 		await arrow.click();
 
-		const listItem = listItems[8];
+		const listItem = listItems[7];
+		const listItemText = await listItem.shadow$(".ui5-li-title").getText();
 
 		await listItem.click();
 
-		assert.strictEqual(await label.getText(), await listItem.shadow$(".ui5-li-title").getText(), "event is fired correctly");
+		assert.strictEqual(await label.getText(), listItemText, "event is fired correctly");
+	});
+
+	it ("Tests selection-change event when type text after selection", async () => {
+		const combo = await browser.$("#combo");
+		let label = await browser.$("#selection-change-event-result");
+		const arrow = await combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		await arrow.click();
+		await combo.keys("Backspace");
+		await combo.keys("A");
+
+		const fisrtListItem = listItems[0];
+
+		assert.strictEqual(await label.getText(), await fisrtListItem.shadow$(".ui5-li-title").getText(), "event is fired correctly");
 	});
 
 	it ("Tests focused property when clicking on the arrow", async () => {
