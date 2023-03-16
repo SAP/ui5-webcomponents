@@ -5,9 +5,9 @@ describe("Framework boot", async () => {
 		await browser.url("test/pages/Boot.html");
 	});
 
-	it("Tests theme loading, when attachBoot is called before theme is registered", async () => {
+	it("Tests theme loading, when registered after 'attachBoot' and 'boot'", async () => {
 		await browser.executeAsync(done => {
-			window['sap-ui-webcomponents-bundle'].registerThemePropsAndBoot();
+			window['sap-ui-webcomponents-bundle'].registerThemeProps();
 			done();
 		});
 
@@ -15,6 +15,6 @@ describe("Framework boot", async () => {
 			return done(document.querySelector("head>style[data-ui5-theme-properties]"));
 		});
 
-		assert.ok(styleElement, "style[data-ui5-theme-properties] tag is successfully created");
+		assert.ok(styleElement, "style[data-ui5-theme-properties] tag is successfully created and theme applied.");
 	});
 });

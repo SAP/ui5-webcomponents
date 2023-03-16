@@ -1,5 +1,6 @@
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 import { StyleData, StyleDataCSP } from "../types.js";
+import { fireThemeRegistered } from "../theming/ThemeRegistered.js";
 
 type ThemeData = {_: StyleDataCSP } | StyleDataCSP | string;
 type ThemeLoader = (themeName: string) => Promise<ThemeData>;
@@ -13,6 +14,7 @@ const registerThemePropertiesLoader = (packageName: string, themeName: string, l
 	loaders.set(`${packageName}/${themeName}`, loader);
 	registeredPackages.add(packageName);
 	registeredThemes.add(themeName);
+	fireThemeRegistered(`${packageName}/${themeName}`);
 };
 
 const getThemeProperties = async (packageName: string, themeName: string) => {

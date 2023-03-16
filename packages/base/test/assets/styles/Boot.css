@@ -1,3 +1,4 @@
 .content {
-    color: var(--var1);
+    color: var(--customCol);
+    background-color: var(--customBg);
 }

@@ -9,6 +9,7 @@ import { getFeature } from "./FeaturesRegistry.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type F6Navigation from "./features/F6Navigation.js";
 import { PromiseResolve } from "./types.js";
+import { attachThemeRegistered } from "./theming/ThemeRegistered.js";
 
 let booted = false;
 let bootPromise: Promise<void>;
@@ -39,6 +40,13 @@ const boot = async (): Promise<void> => {
 			resolve();
 			return;
 		}
+
+		attachThemeRegistered(() => {
+			if (!booted) {
+				return;
+			}
+			applyTheme(getTheme());
+		});
 
 		registerCurrentRuntime();
 
