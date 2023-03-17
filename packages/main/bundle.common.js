@@ -173,6 +173,7 @@ import {registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries
 registerIconLoader("my-custom-icons", () => {
 	return {
 		"collection": "my-custom-icons",
+		"packageName": "test",
 		"data": {
 			"mark": {
 				paths: [
