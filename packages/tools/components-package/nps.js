@@ -24,7 +24,7 @@ const getScripts = (options) => {
 		try {
 			require("typescript");
 		} catch(e) {
-			console.error(`TypeScript is probably not found. Try to install it by running \`npm install --save-dev typescript\` if you are using npm or by running \`yarn add --dev typescript\` if you are using yarn.`);
+			console.error(`TypeScript is not found. Try to install it by running \`npm install --save-dev typescript\` if you are using npm or by running \`yarn add --dev typescript\` if you are using yarn.`);
 			process.exit(e.code);
 		}
 	}
