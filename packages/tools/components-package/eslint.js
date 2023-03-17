@@ -3,7 +3,7 @@ const tsMode = process.env.UI5_TS === "true";
 /**
  * Typescript Rules
  */
-const overrides = true ? [{
+const overrides = tsMode ? [{
 	files: ["*.ts"],
 	parser: "@typescript-eslint/parser",
 	plugins: ["@typescript-eslint"],
