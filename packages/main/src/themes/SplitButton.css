@@ -1,5 +1,9 @@
 @import "./InvisibleTextStyles.css";
 
+:host {
+	vertical-align: middle;
+}
+
 :host(:not([hidden])) {
 	display: inline-block;
 	height: 100%;
