@@ -257,7 +257,7 @@ class Icon extends UI5Element {
 	 * @private
 	 */
 	@property({ type: Object, noAttribute: true })
-	accData!: I18nText;
+	accData?: I18nText;
 
 	/**
 	 * @private
