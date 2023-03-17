@@ -1,5 +1,5 @@
-<div 
-	class="ui5-avatar-root" 
+<div
+	class="ui5-avatar-root"
 	tabindex="{{tabindex}}"
 	data-sap-focus-ref
 	@keyup={{_onkeyup}}
@@ -12,10 +12,16 @@
 >
 	{{#if hasImage}}
 		<slot></slot>
-	{{else if icon}}
-		<ui5-icon class="ui5-avatar-icon" name="{{icon}}" accessible-name="{{accessibleNameText}}"></ui5-icon>
-	{{else if initials}}
-		<span class="ui5-avatar-initials">{{validInitials}}</span>
+	{{else}}
+		{{#if icon}}
+			<ui5-icon class="ui5-avatar-icon" name="{{icon}}" accessible-name="{{accessibleNameText}}"></ui5-icon>
+		{{/if}}
+
+		{{#if initials}}
+			<span class="ui5-avatar-initials">{{validInitials}}</span>
+			<ui5-icon class="ui5-avatar-icon ui5-avatar-icon-fallback" name="employee" accessible-name="{{accessibleNameText}}"></ui5-icon>
+		{{/if}}
+
 	{{/if}}
 
 	<slot name="badge"></slot>
