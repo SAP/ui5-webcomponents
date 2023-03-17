@@ -376,7 +376,7 @@ class Button extends UI5Element implements IFormElement {
 		}
 
 		if (this.iconAccessibleName && this.tooltip !== this.buttonTitle) {
-			this.tooltip = this.buttonTitle as string;
+			this.tooltip = this.buttonTitle;
 		}
 	}
 
