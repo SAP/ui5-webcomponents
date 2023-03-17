@@ -17,21 +17,6 @@
 	background-color: var(--sapGroup_ContentBackground);
 }
 
-.uc-no-files .icon-container {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 100%;
-	height: 8rem;
-}
-
-.uc-no-files .icon-container [ui5-icon] {
-	width: 6rem;
-	height: 6rem;
-	color: var(--sapContent_NonInteractiveIconColor);
-	opacity: 0.5;
-}
-
 .uc-no-files .title {
 	font-size: var(--sapFontHeader2Size);
 	color: var(--sapGroup_TitleTextColor);
