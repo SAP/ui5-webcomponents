@@ -256,8 +256,8 @@ class Icon extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property({ type: Object, noAttribute: true })
-	accData!: I18nText;
+	@property({ type: Object, defaultValue: undefined, noAttribute: true })
+	accData?: I18nText;
 
 	/**
 	 * @private
@@ -395,9 +395,7 @@ class Icon extends UI5Element {
 		// in case a new valid name is set, show the icon
 		this.invalid = false;
 		this.pathData = Array.isArray(iconData.pathData) ? iconData.pathData : [iconData.pathData];
-		if (iconData.accData) {
-			this.accData = iconData.accData;
-		}
+		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
 
