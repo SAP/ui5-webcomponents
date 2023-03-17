@@ -315,8 +315,8 @@ class Button extends UI5Element implements IFormElement {
 	/**
 	 * @private
 	 */
-	@property({ noAttribute: true, defaultValue: undefined })
-	iconAccessibleName?: string;
+	@property({ noAttribute: true, defaultValue: "" })
+	iconAccessibleName!: string;
 
 	_deactivate: () => void;
 
@@ -373,6 +373,10 @@ class Button extends UI5Element implements IFormElement {
 		if (!!this.icon && this.iconOnly) {
 			const icon = this.shadowRoot!.querySelector("[ui5-icon]") as Icon;
 			this.iconAccessibleName = icon.effectiveAccessibleName;
+		}
+
+		if (this.iconAccessibleName && this.tooltip !== this.buttonTitle) {
+			this.tooltip = this.buttonTitle as string;
 		}
 	}
 
