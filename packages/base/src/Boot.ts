@@ -41,12 +41,7 @@ const boot = async (): Promise<void> => {
 			return;
 		}
 
-		attachThemeRegistered(() => {
-			if (!booted) {
-				return;
-			}
-			applyTheme(getTheme());
-		});
+		attachThemeRegistered(onThemeRegistered);
 
 		registerCurrentRuntime();
 
@@ -76,6 +71,19 @@ const boot = async (): Promise<void> => {
 
 	bootPromise = new Promise(bootExecutor as (resolve: PromiseResolve) => void);
 	return bootPromise;
+};
+
+/**
+ * Callback, executed after theme properties registration
+ * to apply the newly registered theme.
+ * @private
+ * @param { string } theme
+ */
+const onThemeRegistered = (theme: string) => {
+	const currentTheme = getTheme();
+	if (booted && theme === currentTheme) {
+		applyTheme(currentTheme);
+	}
 };
 
 export {

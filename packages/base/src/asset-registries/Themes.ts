@@ -14,7 +14,7 @@ const registerThemePropertiesLoader = (packageName: string, themeName: string, l
 	loaders.set(`${packageName}/${themeName}`, loader);
 	registeredPackages.add(packageName);
 	registeredThemes.add(themeName);
-	fireThemeRegistered(`${packageName}/${themeName}`);
+	fireThemeRegistered(themeName);
 };
 
 const getThemeProperties = async (packageName: string, themeName: string) => {
