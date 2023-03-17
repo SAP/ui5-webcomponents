@@ -6,6 +6,10 @@ const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
 const srcPath = path.resolve(process.argv[2]); // where to find the .mds
 const destPath = path.resolve(process.argv[3]); // where to create the output
 
+const convertToTechnicalName = (name) => {
+	return name.replace(/^[0-9\-\.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
+}
+
 const files = fs.readdirSync(srcPath).filter(file => !["README.md", "images"].includes(file)); // skip the top-level readme
 
 files.forEach((file, fileIndex) => {
@@ -27,6 +31,18 @@ files.forEach((file, fileIndex) => {
 			let articleContent = `${fs.readFileSync(articlePath)}`;
 
 			if (article.endsWith("README.md")) { // Create a top-level item
+				articleContent = articleContent.replaceAll(/\[.+\]\(\..+\)/g, e => {
+					// Preproces markdown links to make them work in the playground.
+					// All folder names (1-getting-started) and file names (01-first-steps.md)
+					// should be transformed to not contain numbers.
+					return e.replaceAll(/(\d+-(?:\w+-?)+)/g, convertToTechnicalName)
+						// README.md file is replaced with generated HTML file whose
+						// path is the folder where it is stored so the link should point only to the path.
+						.replaceAll("/README.md", "")
+						// File extensions should be removed from links.
+						.replaceAll(".md", "");
+				})
+
 
 				articleContent = `---
 layout: default
@@ -41,9 +57,25 @@ ${articleContent}
 {:toc}`;
 
 			} else { // Create a nested item
+				articleContent = articleContent.replaceAll(/\[.+\]\(\..+\)/g, e => {
+					// Preproces markdown links to make them work in the playground.
+					// All folder names (1-getting-started) and file names (01-first-steps.md)
+					// should be transformed to not contain numbers.
+					return e.replaceAll(/(\d+-(?:\w+-?)+)/g, convertToTechnicalName)
+						// Jekyll creates a directory for each page to follow the
+						// permalink structure so markdown links should be replaced with
+						// one out folder backward.
+						.replaceAll("(../", "(../../")
+						.replaceAll("(./", "(../")
+						// README.md file is replaced with generated HTML file whose
+						// path is the folder where it is stored so the link should point only to the path.
+						.replaceAll("/README.md", "")
+						// File extensions should be removed from links.
+						.replaceAll(".md", "");
+				})
 
 				const articleHumanReadableName = capitalizeFirst(article.replace(/^[0-9\-\.]+/, "").replace(/\.md$/, "").replace(/-/g, " "));
-				const articleTechnicalName = article.replace(/^[0-9\-\.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
+				const articleTechnicalName = convertToTechnicalName(article);
 				articleContent = `---
 layout: docs
 title: ${articleHumanReadableName}
@@ -61,7 +93,7 @@ ${articleContent}`;
 		});
 	} else { // create a standalone article outside the directory structure (f.e. FAQ)
 		let articleContent = `${fs.readFileSync(srcFilePath)}`;
-		const shortName = file.replace(/^[0-9\-\.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
+		const shortName = convertToTechnicalName(file);
 		const cleanName = file.replace(/^[0-9\-\.]+/, "");
 		articleContent = `---
 layout: docs

@@ -98,3 +98,5 @@ Since Constructable Stylesheets are CSP-compliant, UI5 Web Components is CSP-com
 that support them (Chrome, Edge) out of the box. For the other browsers (Firefox, Safari), in order to
 achieve CSP-compliance, you must instruct the framework to use `<link>` instead of `<style>` tags, but
 then you must also copy the CSS resources to a directory you can serve them from.
+
+Next: [Scrollbars customization](./09-scrollbars-customization.md)
