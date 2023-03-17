@@ -72,7 +72,6 @@ packages/playground/docs/pages/content/main/*
 packages/playground/docs/pages/content/fiori/*
 
 packages/playground/docs/advanced
-packages/playground/docs/test/
 packages/playground/docs/contributing/
 packages/playground/docs/customizing/
 packages/playground/docs/development/

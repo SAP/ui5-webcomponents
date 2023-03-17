@@ -10,7 +10,7 @@ const convertToTechnicalName = (name) => {
 	return name.replace(/^[0-9\-\.]+/, "").replace(/ /g, "-").replace(/\.md$/, "").toLowerCase();
 }
 
-const files = fs.readdirSync(srcPath).filter(file => !["README.md", "images", "test"].includes(file)); // skip the top-level readme
+const files = fs.readdirSync(srcPath).filter(file => !["README.md", "images"].includes(file)); // skip the top-level readme
 
 files.forEach((file, fileIndex) => {
 	const srcFilePath = path.join(srcPath, file); // f.e. "../../docs/4. Usage with Frameworks"
