@@ -16,11 +16,10 @@
 		</ui5-list>
 		{{#if _showNoData}}
 			<div class="{{classes.noFiles}}">
-				<div class="icon-container">
-					<ui5-icon name="document"></ui5-icon>
-				</div>
-				<ui5-label class="title" wrapping-type="Normal">{{_noDataText}}</ui5-label>
-				<ui5-label class="subtitle" wrapping-type="Normal">{{_noDataDescription}}</ui5-label>
+				<ui5-illustrated-message name="Tent">
+					<ui5-title slot="title" class="title" level="H2">{{_noDataText}}</ui5-title>
+					<span slot="subtitle" class="subtitle">{{_noDataDescription}}</span>
+				</ui5-illustrated-message>
 			</div>
 		{{/if}}
 		{{#if _showDndOverlay}}

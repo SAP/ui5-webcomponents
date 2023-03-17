@@ -90,4 +90,4 @@ having the word `-test-` in their name are not scoped.
 Setting scoping rules is handy if, for example, your library uses both standard and custom UI5 Web Components and you don't want
 to scope the custom ones (as no disambiguation will be necessary for them).
 
-Next:  [OpenUI5 Integration](../openui5-integration)
+Next:  [OpenUI5 Integration](./04-openui5-integration.md)

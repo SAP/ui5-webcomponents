@@ -67,7 +67,13 @@
     "zx": "^4.3.0"
   },
   "peerDependencies": {
-    "chromedriver": "*"
+    "chromedriver": "*",
+    "typescript": "^4.9.4"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "yargs": "^17.5.1"

@@ -15,7 +15,7 @@ const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/compo
 
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
-	lint: `eslint . ${eslintConfig}`,
+	lint: `cross-env UI5_TS=true eslint . ${eslintConfig}`,
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
 	typescript: "tsc",
 	integrate: {

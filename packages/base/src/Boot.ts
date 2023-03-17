@@ -9,6 +9,7 @@ import { getFeature } from "./FeaturesRegistry.js";
 import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type F6Navigation from "./features/F6Navigation.js";
 import { PromiseResolve } from "./types.js";
+import { attachThemeRegistered } from "./theming/ThemeRegistered.js";
 
 let booted = false;
 let bootPromise: Promise<void>;
@@ -40,6 +41,8 @@ const boot = async (): Promise<void> => {
 			return;
 		}
 
+		attachThemeRegistered(onThemeRegistered);
+
 		registerCurrentRuntime();
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
@@ -68,6 +71,19 @@ const boot = async (): Promise<void> => {
 
 	bootPromise = new Promise(bootExecutor as (resolve: PromiseResolve) => void);
 	return bootPromise;
+};
+
+/**
+ * Callback, executed after theme properties registration
+ * to apply the newly registered theme.
+ * @private
+ * @param { string } theme
+ */
+const onThemeRegistered = (theme: string) => {
+	const currentTheme = getTheme();
+	if (booted && theme === currentTheme) {
+		applyTheme(currentTheme);
+	}
 };
 
 export {
