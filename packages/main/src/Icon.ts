@@ -368,6 +368,10 @@ class Icon extends UI5Element {
 			return console.warn("Icon name property is required", this);
 		}
 
+		await this.loadIconData(name);
+	}
+
+	async loadIconData(name: string) {
 		let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
 		if (!iconData) {
 			iconData = await getIconData(name);

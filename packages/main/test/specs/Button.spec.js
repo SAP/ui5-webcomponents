@@ -141,7 +141,6 @@ describe("Button general interaction", () => {
 	it("tooltip from inner icon is propagated", async () => {
 		const button = await browser.$("#download");
 		const nativeButton = await button.shadow$("button");
-		await nativeButton.click();
 
 		assert.strictEqual(await nativeButton.getAttribute("title"), "Download", "Icon tooltip is shown");
 	});
