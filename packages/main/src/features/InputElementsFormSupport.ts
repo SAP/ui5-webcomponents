@@ -1,5 +1,5 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 interface IFormElement extends UI5Element {
 	value?: string | number,

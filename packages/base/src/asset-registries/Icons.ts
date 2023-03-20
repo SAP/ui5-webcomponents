@@ -11,10 +11,10 @@ type CollectionData = {
 	packageName: string,
 	version?: string,
 	data: Record<string, {
-		path: string,
-		paths: Array<string>,
-		ltr: boolean,
-		acc: I18nText,
+		path?: string,
+		paths?: Array<string>,
+		ltr?: boolean,
+		acc?: I18nText,
 	}>,
 };
 
@@ -22,8 +22,8 @@ type IconData = {
 	collection: string,
 	packageName: string,
 	pathData: string | Array<string>,
-	ltr: boolean,
-	accData: I18nText,
+	ltr?: boolean,
+	accData?: I18nText,
 	customTemplate?: TemplateFunction,
 	viewBox?: string,
 };
@@ -56,7 +56,7 @@ const _fillRegistry = (bundleData: CollectionData) => {
 		const iconData = bundleData.data[iconName];
 
 		registerIcon(iconName, {
-			pathData: iconData.path || iconData.paths,
+			pathData: (iconData.path || iconData.paths)!,
 			ltr: iconData.ltr,
 			accData: iconData.acc,
 			collection: bundleData.collection,

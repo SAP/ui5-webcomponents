@@ -1,37 +1,25 @@
 import { attachBoot } from "../../dist/Boot.js";
 import { boot } from "../../dist/Boot.js";
+import { registerThemePropertiesLoader } from "../../dist/AssetRegistry.js";
 
-// Call attachBoot early
+// attachBoot (no longer triggers "boot")
 attachBoot(() => {
     console.log("Listener1: after framework booted!")
 })
 
-attachBoot(() => {
-    console.log("Listener2: after framework booted!")
-})
-
-attachBoot(() => {
-    console.log("Listener3: after framework booted!")
-})
-import { registerThemePropertiesLoader } from "../../dist/AssetRegistry.js";
+// boot the framework
+boot();
 
 const testAssets = {
-    registerThemePropsAndBoot: () => {
+    // registerThemePropertiesLoader after boot (and after attachBoot ), will call applyTheme
+    registerThemeProps: async () => {
         registerThemePropertiesLoader("@ui5/webcomponents-theming", "sap_fiori_3", () => {
             return {
-                content: `:root{ --var1: red; }`,
+                content: `:root{ --customCol: #fff; --customBg: #000; }`,
                 packageName: "",
                 fileName: "",
             };
         });
-        // call "boot" multiple times as if multiple web components start upgrading
-        console.log("Booting...");
-        boot();
-        boot();
-        boot();
-        boot();
-        boot();
-        boot();
     },
 }
 window["sap-ui-webcomponents-bundle"] = testAssets;
