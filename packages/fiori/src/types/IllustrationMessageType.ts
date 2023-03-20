@@ -21,6 +21,12 @@ enum IllustrationMessageType {
 	 */
 	NoActivities = "NoActivities",
 	/**
+	 * "No Columns Set" illustration type.
+	 * @public
+	 * @type {NoColumnsSet}
+	 */
+	NoColumnsSet = "NoColumnsSet",
+	/**
 	 * "No Data" illustration type.
 	 * @public
 	 * @type {NoData}
