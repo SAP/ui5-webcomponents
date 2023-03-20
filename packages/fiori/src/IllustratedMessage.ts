@@ -95,6 +95,7 @@ class IllustratedMessage extends UI5Element {
 	* <li><code>FilterTable</code></li>
 	* <li><code>GroupTable</code></li>
 	* <li><code>NoActivities</code></li>
+	* <li><code>NoColumnsSet</code></li>
 	* <li><code>NoData</code></li>
 	* <li><code>NoEntries</code></li>
 	* <li><code>NoFilterResults</code></li>
