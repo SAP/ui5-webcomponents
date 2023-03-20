@@ -4,6 +4,7 @@ import {
 } from "../InitialConfiguration.js";
 import { fireLanguageChange } from "../locale/languageChange.js";
 import { reRenderAllUI5Elements } from "../Render.js";
+import { DEFAULT_LANGUAGE } from "../generated/AssetParameters.js";
 
 let curLanguage: string | undefined;
 let fetchDefaultLanguage: boolean;
@@ -40,6 +41,18 @@ const setLanguage = async (language: string): Promise<void> => {
 };
 
 /**
+ * Returns the default languague.
+ *
+ * Note: Default language might be different than the configurated one.
+ *
+ * @public
+ * @returns {string}
+ */
+const getDefaultLanguage = (): string => {
+	return DEFAULT_LANGUAGE;
+};
+
+/**
  * Defines if the default language, that is inlined, should be
  * fetched over the network instead of using the inlined one.
  * <b>Note:</b> By default the language will not be fetched.
@@ -67,6 +80,7 @@ const getFetchDefaultLanguage = (): boolean => {
 export {
 	getLanguage,
 	setLanguage,
+	getDefaultLanguage,
 	setFetchDefaultLanguage,
 	getFetchDefaultLanguage,
 };
