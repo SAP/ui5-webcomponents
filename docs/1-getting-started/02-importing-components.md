@@ -55,4 +55,4 @@ For example:
 **Note:** For most components the name of the module (f.e. `Button.js`, `Icon.js`) coincides with the name of the tag (`ui5-button`, `ui5-icon`), 
 whereas for others this is not the case (f.e. `StandardListItem.js` and `ui5-li`). Always consult the documentation when in doubt.
 
-Next: [Understanding UI5 Web Components APIs](../understanding-components-apis)
+Next: [Understanding UI5 Web Components APIs](./03-understanding-components-apis.md)

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.0...v1.12.0-rc.1) (2023-03-16)
+
+
+### Bug Fixes
+
+* **icons:** use strings instead of template literal for imports ([#6681](https://github.com/SAP/ui5-webcomponents/issues/6681)) ([ac70676](https://github.com/SAP/ui5-webcomponents/commit/ac7067685c72288ddc8d55363f5b589a9d279b0d))
+
+
+
+
+
 # [1.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0...v1.12.0-rc.0) (2023-03-09)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons-tnt

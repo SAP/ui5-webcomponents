@@ -20,6 +20,15 @@ const getScripts = (options) => {
 	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
 	const copySrcGenerated = tsOption ? "" : "copy.srcGenerated";
 
+	if (tsOption) {
+		try {
+			require("typescript");
+		} catch(e) {
+			console.error(`TypeScript is not found. Try to install it by running \`npm install --save-dev typescript\` if you are using npm or by running \`yarn add --dev typescript\` if you are using yarn.`);
+			process.exit(e.code);
+		}
+	}
+
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
 		// old project setup where config file is in separate folder
@@ -46,8 +55,8 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
-		lint: `eslint . ${eslintConfig}`,
-		lintfix: `eslint . ${eslintConfig} --fix`,
+		lint: `${tsCrossEnv} eslint . ${eslintConfig}`,
+		lintfix: `${tsCrossEnv} eslint . ${eslintConfig} --fix`,
 		prepare: {
 			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',

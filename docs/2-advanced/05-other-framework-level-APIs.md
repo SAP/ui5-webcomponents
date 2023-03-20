@@ -22,4 +22,4 @@ attachBoot(() => {
 });
 ```
 
-Next: [UI5 Web Components i18n for Apps](../using-i18n-for-apps)
+Next: [UI5 Web Components i18n for Apps](./06-using-i18n-for-apps.md)
