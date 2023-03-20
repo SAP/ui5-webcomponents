@@ -498,14 +498,6 @@ class Button extends UI5Element implements IFormElement {
 		return getEffectiveAriaLabelText(this);
 	}
 
-	get buttonTitle() {
-		if (!this.tooltip && this.icon && this.iconOnly) {
-			return this.iconAccessibleName;
-		}
-
-		return this.tooltip;
-	}
-
 	static async onDefine() {
 		Button.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
