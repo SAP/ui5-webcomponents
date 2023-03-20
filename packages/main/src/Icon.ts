@@ -272,7 +272,7 @@ class Icon extends UI5Element {
 	invalid!: boolean;
 
 	/**
-	 * @private
+	 * @protected
 	 */
 	@property({ noAttribute: true, defaultValue: undefined })
 	effectiveAccessibleName?: string;

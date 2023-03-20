@@ -312,12 +312,6 @@ class Button extends UI5Element implements IFormElement {
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
 
-	/**
-	 * @private
-	 */
-	@property({ noAttribute: true, defaultValue: undefined })
-	iconAccessibleName?: string;
-
 	_deactivate: () => void;
 
 	_ontouchstart: PassiveEventListenerObject;
