@@ -1,0 +1,7 @@
+.clock-wrapper {
+    display: block;
+    text-align: center;
+    width: 18rem;
+    height: 18rem;
+    touch-action: none;
+}

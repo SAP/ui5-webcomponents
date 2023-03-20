@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>TimePickerClock test page</title>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"formatSettings": {
+                "firstDayOfWeek": 0
+            }
+		}
+	</script>
+
+	<link rel="stylesheet" type="text/css" href="./styles/TimePickerClock.css">
+
+</head>
+<body class="stepinput1auto">
+
+	<h3>TimePickerClock</h3>
+	<div class="clock-wrapper">
+		<ui5-time-picker-clock id="myLabelChange" label="Hours" item-min="1" item-max="12" inner-items1 last-item-replacement1="0"></ui5-time-picker-clock>
+	</div>
+
+	<script>
+/*
+		var labelChange = document.getElementById('myLabelChange');
+		var siCozy = document.getElementById('stepInputCozy');
+		var siCompact = document.getElementById('stepInputCompact');
+		var siMinMax = document.getElementById('stepInputMinMax');
+		var siPrecision = document.getElementById('stepInputPrecision');
+		var changeResult = document.getElementById('changeResult');
+		var changeCount = 0;
+		var displayChange = function (event) {
+			labelChange.innerHTML = "Event [change] :: [" + event.target.id + " ] :: " + event.detail.value;
+			changeCount++;
+			changeResult.value = changeCount;
+		}
+
+		siCozy.addEventListener('ui5-change', displayChange);
+		siCompact.addEventListener('ui5-change', displayChange);
+		siMinMax.addEventListener('ui5-change', displayChange);
+		siPrecision.addEventListener('ui5-change', displayChange);
+
+		stepInputChange1.addEventListener('ui5-change', function(e) {
+			const val = Number.parseInt(e.target.value, 10);
+			stepInputChange2.value = val + 999;
+			displayChange(e);
+		});
+
+		stepInputChange2.addEventListener('ui5-change', displayChange);
+*/
+	</script>
+
+</body>
+</html>

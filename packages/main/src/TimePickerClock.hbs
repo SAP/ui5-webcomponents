@@ -1,0 +1,40 @@
+<div
+	id="{{_id}}"
+	ondragstart="return false;"
+	ondrop="return false;"
+	aria-hidden="true"
+	class="{{classes.clock}}"
+>
+	<div
+		data-label="{{label}}"
+		class="ui5-tp-clock-dial"
+	>
+	</div>
+
+	<div>
+	{{#each _items}}
+		<div class="ui5-tp-clock-item" style="--tpc-degree: {{this.angle}}deg">
+		{{#if this.item includeZero=true}}
+			<span class="ui5-tp-clock-dot"></span>
+			<span id="{{../_id}}-{{this.item}}" class="ui5-tp-clock-number" style="--tpc-degree: -{{this.angle}}deg">{{this.item}}</span>
+			{{#if this.innerItem includeZero=true}}
+			<span id="{{../_id}}-{{this.innerItem}}" class="ui5-tp-clock-number" style="--tpc-degree: -{{this.angle}}deg">{{this.innerItem}}</span>
+			{{/if}}
+		{{else unless ../hideFractions}}
+			<span class="ui5-tp-clock-mid-dot"></span>
+		{{/if}}
+		</div>
+	{{/each}}
+
+	{{#if _selectedItem.showMarker}}
+		<div class="ui5-tp-clock-item" style="--tpc-degree: {{_selectedItem.angle}}deg">
+			<div class="ui5-tp-clock-marker"></div>
+			<div class="{{_selectedItem.itemClasses}}" style="--tpc-degree: -{{_selectedItem.angle}}deg">{{_selectedItem.item}}</div>
+			<div id="{{_id}}-selected" class="{{_selectedItem.innerItemClasses}}" style="--tpc-degree: -{{_selectedItem.angle}}deg">{{_selectedItem.innerItem}}</div>
+		</div>
+	{{/if}}
+
+	</div>
+
+	<div class="ui5-tp-clock-cover"></div>
+</div>
