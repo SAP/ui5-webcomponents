@@ -339,6 +339,12 @@ enum IllustrationMessageType {
 	 */
 	SuccessScreen = "SuccessScreen",
 	/**
+	 * "Survey" illustration type.
+	 * @public
+	 * @type {Survey}
+	 */
+	Survey = "Survey",
+	/**
 	 * "Tent" illustration type.
 	 * @public
 	 * @type {Tent}
