@@ -1,4 +1,5 @@
 import { html } from "lit-html";
+import { ifDefined } from "lit-html/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -7,83 +8,78 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
+import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 const component = "ui5-toggle-button";
 
 export default {
-    title: "Main/ToggleButton",
-    component,
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
-    argTypes,
+	title: "Main/ToggleButton",
+	component,
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component })
+		},
+	},
+	argTypes,
 } as Meta<ToggleButton>;
 
-const Template: UI5StoryArgs<ToggleButton, StoryArgsSlots> = (args) => html`<div></div>`;
+const Template: UI5StoryArgs<ToggleButton, StoryArgsSlots> = (args) => html`
+<ui5-toggle-button
+	?pressed="${ifDefined(args.pressed)}"
+	?disabled="${ifDefined(args.disabled)}"
+	design="${ifDefined(args.design)}"
+	icon="${ifDefined(args.icon)}"
+	>${unsafeHTML(args.default)}</ui5-toggle-button
+>`;
 
+export const Basic = Template.bind({});
+Basic.storyName = "Basic ToggleButton";
+Basic.args = {
+	default: "ToggleButton"
+};
 
-export const Template0: StoryFn = () => html`
-<h3>ToggleButton States</h3>
-	<div class="snippet">
-		<ui5-toggle-button class="samples-margin">ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" pressed="">Pressed ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" disabled="">Disabled ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" disabled="" pressed="">Disabled and Pressed ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Positive">Accept ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Positive" pressed="">Pressed Accept ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Negative">Reject ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Negative" pressed="">Pressed Reject ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Transparent">Transparent ToggleButton</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Transparent" pressed="">Pressed Transparent ToggleButton</ui5-toggle-button>
-	</div>
-`;
+export const Pressed = Template.bind({});
+Pressed.storyName = "Pressed ToggleButton";
+Pressed.args = {
+	default: "ToggleButton",
+	pressed: true,
+};
 
+export const Disabled = Template.bind({});
+Disabled.storyName = "Disabled ToggleButton";
+Disabled.args = {
+	default: "ToggleButton",
+	disabled: true,
+};
 
-export const Template1: StoryFn = () => html`
-<h3>ToggleButton with Icon</h3>
-	<div class="snippet">
-		<ui5-toggle-button class="samples-margin" icon="menu">Menu</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Emphasized" icon="add">Add</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Default" icon="nav-back">Back</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Positive" icon="accept">Accept</ui5-toggle-button>
-		<ui5-toggle-button class="samples-margin" design="Negative" icon="sys-cancel">Deny</ui5-toggle-button>
-	</div>
-`;
+export const DisabledAndPressed = Template.bind({});
+DisabledAndPressed.storyName = "Disabled and pressed ToggleButton";
+DisabledAndPressed.args = {
+	default: "ToggleButton",
+	pressed: true,
+	disabled: true,
+};
 
+export const WithButtonDesign = Template.bind({});
+WithButtonDesign.storyName = "ToggleButton with Design";
+WithButtonDesign.args = {
+	default: "ToggleButton",
+	design: ButtonDesign.Positive,
+};
 
-export const Template2: StoryFn = () => html`
-<h3>ToggleButton with Icon Only</h3>
-	<div class="snippet">
-			<ui5-toggle-button class="samples-margin" icon="away"></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="action-settings" pressed=""></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="add"></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="alert" pressed=""></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="accept" design="Positive"></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="bookmark" design="Positive" pressed=""></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="cancel" design="Negative"></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="call" design="Negative" pressed=""></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="camera" design="Transparent"></ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" icon="cart" design="Transparent" pressed=""></ui5-toggle-button>
-	</div>
-`;
+export const IconOnly = Template.bind({});
+IconOnly.storyName = "Icon-Only ToggleButton";
+IconOnly.args = {
+	icon: "add",
+};
 
-
-export const Template3: StoryFn = () => html`
-<h3>ToggleButton</h3>
-	<div class="snippet">
-			<ui5-toggle-button class="samples-margin">Yes/No</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" pressed="">Yes/No</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin">Toggle Button</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" pressed="">Toggle Button pressed</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" design="Positive">On/Off</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" design="Positive" pressed="">On/Off</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" design="Negative">Menu</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" design="Negative" pressed="">Menu</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" design="Transparent">Transparent</ui5-toggle-button>
-			<ui5-toggle-button class="samples-margin" design="Transparent" pressed="">Transparent</ui5-toggle-button>
-	</div>
-`;
+export const WithIcon = Template.bind({});
+WithIcon.storyName = "ToggleButton with an icon and design";
+WithIcon.args = {
+	default: "ToggleButton",
+	design: ButtonDesign.Emphasized,
+	pressed: false,
+	icon: "add",
+};
