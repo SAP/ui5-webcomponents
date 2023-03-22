@@ -140,13 +140,13 @@ const getIconData = async (name: string) => {
 };
 
 /**
- * Returns the accessibility name for the given icon name,
- * or undefined if accessibility name is not present.
+ * Returns the accessible name for the given icon,
+ * or undefined if accessible name is not present.
  *
  * @param { string } name
  * @return { Promise }
  */
-const getIconA11yName = async (name: string) => {
+const getIconAccessibleName = async (name: string) => {
 	let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
 	if (!iconData) {
 		iconData = await getIconData(name);
@@ -183,7 +183,7 @@ export {
 	registerIconLoader,
 	getIconData,
 	getIconDataSync,
-	getIconA11yName,
+	getIconAccessibleName,
 	registerIcon,
 	_getRegisteredNames,
 };

@@ -126,7 +126,7 @@ describe("Icon general interaction", () => {
 		const expectedAccNames = ["Add", "Back to Top", "Collapse", "Download"];
 		const actualAccNames = await browser.executeAsync(async done => {
 			const values = await Promise.all(icons.map(iconName => {
-				return window["sap-ui-webcomponents-bundle"].getIconA11yName(iconName);
+				return window["sap-ui-webcomponents-bundle"].getIconAccessibleName(iconName);
 			}));
 			done(values);
 		});
