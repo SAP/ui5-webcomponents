@@ -39,6 +39,7 @@ web.config
 /sap-ui-cachebuster-info.json
 
 # Ignore Visual Studio Code project and settings files
+.vscode/
 .idea/
 
 # Ignore yarn files
