@@ -1,8 +1,9 @@
 import getSharedResource from "../getSharedResource.js";
 import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js";
 import { getEffectiveIconCollection } from "../config/Icons.js";
-import { I18nText } from "../i18nBundle.js";
-import { TemplateFunction } from "../renderer/executeTemplate.js";
+import { getI18nBundle } from "../i18nBundle.js";
+import type { I18nText } from "../i18nBundle.js";
+import type { TemplateFunction } from "../renderer/executeTemplate.js";
 
 type IconLoader = (collectionName: string) => Promise<CollectionData>;
 
@@ -138,6 +139,37 @@ const getIconData = async (name: string) => {
 	return registry.get(registryKey);
 };
 
+/**
+ * Returns the accessibility name for the given icon name,
+ * or undefined if accessibility name is not present.
+ *
+ * @param { string } name
+ * @return { Promise }
+ */
+const getIconA11yName = async (name: string) => {
+	let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
+	if (!iconData) {
+		iconData = await getIconData(name);
+	}
+
+	if (!iconData) {
+		/* eslint-disable-next-line */
+		console.warn(`Required icon is not registered. Invalid icon name: ${name}`);
+		return;
+	}
+
+	if (iconData === ICON_NOT_FOUND) {
+		/* eslint-disable-next-line */
+		console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/AllIcons.js".`);
+		return;
+	}
+
+	if (iconData && iconData.accData) {
+		const i18nBundle = await getI18nBundle(iconData.packageName);
+		return i18nBundle.getText(iconData.accData) || undefined;
+	}
+};
+
 // test page usage only
 const _getRegisteredNames = async () => {
 	// fetch one icon of each collection to trigger the bundle load
@@ -151,6 +183,7 @@ export {
 	registerIconLoader,
 	getIconData,
 	getIconDataSync,
+	getIconA11yName,
 	registerIcon,
 	_getRegisteredNames,
 };
