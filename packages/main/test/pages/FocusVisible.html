@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<title>Button</title>
+	<script>
+		// delete Document.prototype.adoptedStyleSheets
+	</script>
+
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="./styles/Button.css">
+	<style>
+		button:focus-visible {
+			outline: solid 1px red;
+		}
+	</style>
+</head>
+
+<body class="button1auto">
+	<button id="button1">button 1</button>
+	<button id="button2">button 2</button>
+	<script>
+		setTimeout(() => {
+			window.button2.focus();
+		}, 3000)
+	</script>
+</body>
+</html>
