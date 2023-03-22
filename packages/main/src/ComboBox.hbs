@@ -32,15 +32,14 @@
 	{{/if}}
 
 	{{#unless readonly}}
-		<div @click={{_arrowClick}}>
-			<ui5-icon
-				name="slim-arrow-down"
-				slot="icon"
-				tabindex="-1"
-				input-icon
-				?pressed="{{_iconPressed}}"
-				accessible-name="{{_iconAccessibleNameText}}"
-			></ui5-icon>
-		</div>
+		<ui5-icon
+			name="slim-arrow-down"
+			slot="icon"
+			tabindex="-1"
+			input-icon
+			?pressed="{{_iconPressed}}"
+			@click="{{_arrowClick}}"
+			accessible-name="{{_iconAccessibleNameText}}"
+		></ui5-icon>
 	{{/unless}}
 </div>

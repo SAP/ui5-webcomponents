@@ -52,8 +52,8 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
-		lint: `${tsCrossEnv} eslint . ${eslintConfig}`,
-		lintfix: `${tsCrossEnv} eslint . ${eslintConfig} --fix`,
+		lint: `eslint . ${eslintConfig}`,
+		lintfix: `eslint . ${eslintConfig} --fix`,
 		prepare: {
 			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
