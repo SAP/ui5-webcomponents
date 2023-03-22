@@ -121,7 +121,7 @@ describe("Icon general interaction", () => {
 		assert.equal(await iconSVG.getAttribute("aria-label"), null);
 	});
 
-	it("Tests getIconA11yName", async () => {
+	it("Tests getIconAccessibleName", async () => {
 		const icons = ["add", "back-to-top", "collapse", "download"];
 		const expectedAccNames = ["Add", "Back to Top", "Collapse", "Download"];
 		const actualAccNames = await browser.executeAsync(async done => {
@@ -132,6 +132,6 @@ describe("Icon general interaction", () => {
 		});
 
 		assert.strictEqual(actualAccNames.join(), expectedAccNames.join(),
-			"getIconA11yName returns the correct icon a11y names.");
+			"getIconAccessibleName returns the correct icon a11y names.");
 	});
 });
