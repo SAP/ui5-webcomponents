@@ -97,8 +97,8 @@ describe("Icon general interaction", () => {
 		});
 		assert.strictEqual(actualExportedValues, expectedExportedValues, "Exported values are correct.");
 	});
-	it("Icon svg aria-label cleaned after name change", async () => {
 
+	it("Icon svg aria-label cleaned after name change", async () => {
 		// assert - initial SVG aria-label
 		let iconEl = await browser.$("#iconError");
 		let iconSVG = await browser.$("#iconError").shadow$(".ui5-icon-root");
@@ -119,6 +119,18 @@ describe("Icon general interaction", () => {
 		iconEl = await browser.$("#iconError");
 		iconSVG = await browser.$("#iconError").shadow$(".ui5-icon-root");
 		assert.equal(await iconSVG.getAttribute("aria-label"), null);
+	});
 
+	it("Tests getIconAccessibleName", async () => {
+		const expectedAccNames = ["Add", "Back to Top", "Collapse", "Download"];
+		const actualAccNames = await browser.executeAsync(async done => {
+			const values = await Promise.all(["add", "back-to-top", "collapse", "download"].map(iconName => {
+				return window["sap-ui-webcomponents-bundle"].getIconAccessibleName(iconName);
+			}));
+			done(values);
+		});
+
+		assert.strictEqual(actualAccNames.join(), expectedAccNames.join(),
+			"getIconAccessibleName returns the correct icon a11y names.");
 	});
 });
