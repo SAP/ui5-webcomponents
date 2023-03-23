@@ -12,7 +12,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import { getIconAccessibleName } from  "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
 	isPhone,
