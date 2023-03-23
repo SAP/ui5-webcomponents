@@ -148,19 +148,12 @@ const getIconData = async (name: string) => {
  */
 const getIconAccessibleName = async (name: string): Promise<string | undefined> => {
 	let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
+
 	if (!iconData) {
 		iconData = await getIconData(name);
 	}
 
-	if (!iconData) {
-		return;
-	}
-
-	if (iconData === ICON_NOT_FOUND) {
-		return;
-	}
-
-	if (iconData.accData) {
+	if (iconData && iconData !== ICON_NOT_FOUND && iconData.accData) {
 		const i18nBundle = await getI18nBundle(iconData.packageName);
 		return i18nBundle.getText(iconData.accData);
 	}
