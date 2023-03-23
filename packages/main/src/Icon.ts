@@ -368,10 +368,6 @@ class Icon extends UI5Element {
 			return console.warn("Icon name property is required", this);
 		}
 
-		await this.loadIconData(name);
-	}
-
-	async loadIconData(name: string) {
 		let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
 		if (!iconData) {
 			iconData = await getIconData(name);
@@ -380,7 +376,7 @@ class Icon extends UI5Element {
 		if (!iconData) {
 			this.invalid = true;
 			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
+			return console.warn(`Required icon is not registered. Invalid icon name: ${name}`);
 		}
 
 		if (iconData === ICON_NOT_FOUND) {
