@@ -8,9 +8,9 @@ src/thirdparty
 bundle.esm.js
 bundle.es5.js
 rollup.config*.js
-wdio.conf.js
-postcss.config.js
-package-scripts.js
-.eslintrc.js
+wdio.conf.cjs
+postcss.config.cjs
+package-scripts.cjs
+.eslintrc.cjs
 src/renderer/directives/style-map.js
 src/util/metaUrl.js
