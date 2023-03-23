@@ -1,6 +1,7 @@
 import { getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 import applyTheme from "../theming/applyTheme.js";
+import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 
 let curTheme: string;
 
@@ -36,6 +37,18 @@ const setTheme = async (theme: string): Promise<void> => {
 };
 
 /**
+ * Returns the default theme.
+ *
+ * Note: Default theme might be different than the configurated one.
+ *
+ * @public
+ * @returns {string}
+ */
+const getDefaultTheme = (): string => {
+	return DEFAULT_THEME;
+};
+
+/**
  * Returns if the given theme name is the one currently applied.
  * @private
  * @param {string} theme
@@ -61,4 +74,5 @@ export {
 	setTheme,
 	isTheme,
 	isThemeFamily,
+	getDefaultTheme,
 };

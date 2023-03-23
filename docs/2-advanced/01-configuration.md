@@ -52,7 +52,12 @@ Example:
 import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
-   
+
+- To reset the theme to the default one:
+```js
+import { setTheme, getDefaultTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+setTheme(getDefaultTheme());
+```
 
 ### language
 <a name="language"></a>
@@ -86,6 +91,12 @@ Example:
 ```js
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 setLanguage("fr");
+```
+
+- To reset the langauge to the default one:
+```js
+import { setLanguage, getDefaultLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+setLanguage(getDefaultLanguage());
 ```
 
 

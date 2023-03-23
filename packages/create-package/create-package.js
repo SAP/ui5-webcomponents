@@ -116,6 +116,10 @@ const generateFilesContent = (name, tag, typescript) => {
 		},
 	};
 
+	if (typescript) {
+		packageContent.devDependencies.typescript = "^4.9.4";
+	}
+
 	// Update package.json
 	const destDir = path.join(`./`, name);
 	mkdirp.sync(destDir);

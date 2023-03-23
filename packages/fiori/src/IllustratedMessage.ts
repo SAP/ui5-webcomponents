@@ -95,6 +95,7 @@ class IllustratedMessage extends UI5Element {
 	* <li><code>FilterTable</code></li>
 	* <li><code>GroupTable</code></li>
 	* <li><code>NoActivities</code></li>
+	* <li><code>NoColumnsSet</code></li>
 	* <li><code>NoData</code></li>
 	* <li><code>NoEntries</code></li>
 	* <li><code>NoFilterResults</code></li>
@@ -132,6 +133,7 @@ class IllustratedMessage extends UI5Element {
 	* <li><code>SuccessCheckMark</code></li>
 	* <li><code>SuccessHighFive</code></li>
 	* <li><code>SuccessScreen</code></li>
+	* <li><code>Survey</code></li>
 	* <li><code>Tent</code></li>
 	* <li><code>UnableToLoad</code></li>
 	* <li><code>UnableToLoadImage</code></li>

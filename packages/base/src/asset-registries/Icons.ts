@@ -1,8 +1,9 @@
 import getSharedResource from "../getSharedResource.js";
 import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js";
 import { getEffectiveIconCollection } from "../config/Icons.js";
-import { I18nText } from "../i18nBundle.js";
-import { TemplateFunction } from "../renderer/executeTemplate.js";
+import { getI18nBundle } from "../i18nBundle.js";
+import type { I18nText } from "../i18nBundle.js";
+import type { TemplateFunction } from "../renderer/executeTemplate.js";
 
 type IconLoader = (collectionName: string) => Promise<CollectionData>;
 
@@ -11,10 +12,10 @@ type CollectionData = {
 	packageName: string,
 	version?: string,
 	data: Record<string, {
-		path: string,
-		paths: Array<string>,
-		ltr: boolean,
-		acc: I18nText,
+		path?: string,
+		paths?: Array<string>,
+		ltr?: boolean,
+		acc?: I18nText,
 	}>,
 };
 
@@ -22,8 +23,8 @@ type IconData = {
 	collection: string,
 	packageName: string,
 	pathData: string | Array<string>,
-	ltr: boolean,
-	accData: I18nText,
+	ltr?: boolean,
+	accData?: I18nText,
 	customTemplate?: TemplateFunction,
 	viewBox?: string,
 };
@@ -56,7 +57,7 @@ const _fillRegistry = (bundleData: CollectionData) => {
 		const iconData = bundleData.data[iconName];
 
 		registerIcon(iconName, {
-			pathData: iconData.path || iconData.paths,
+			pathData: (iconData.path || iconData.paths)!,
 			ltr: iconData.ltr,
 			accData: iconData.acc,
 			collection: bundleData.collection,
@@ -138,6 +139,26 @@ const getIconData = async (name: string) => {
 	return registry.get(registryKey);
 };
 
+/**
+ * Returns the accessible name for the given icon,
+ * or undefined if accessible name is not present.
+ *
+ * @param { string } name
+ * @return { Promise }
+ */
+const getIconAccessibleName = async (name: string): Promise<string | undefined> => {
+	let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
+
+	if (!iconData) {
+		iconData = await getIconData(name);
+	}
+
+	if (iconData && iconData !== ICON_NOT_FOUND && iconData.accData) {
+		const i18nBundle = await getI18nBundle(iconData.packageName);
+		return i18nBundle.getText(iconData.accData);
+	}
+};
+
 // test page usage only
 const _getRegisteredNames = async () => {
 	// fetch one icon of each collection to trigger the bundle load
@@ -151,6 +172,7 @@ export {
 	registerIconLoader,
 	getIconData,
 	getIconDataSync,
+	getIconAccessibleName,
 	registerIcon,
 	_getRegisteredNames,
 };
