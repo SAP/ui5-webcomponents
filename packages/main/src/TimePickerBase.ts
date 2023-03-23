@@ -409,7 +409,7 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date and time
 	 * according to the <code>formatPattern</code> property of the TimePicker instance
-	 * @param {object} date A Java Script date object to be formatted as string
+	 * @param {Date} date A Java Script date object to be formatted as string
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#formatValue

@@ -1,0 +1,2 @@
+# Auto detect the chromedriver version
+detect_chromedriver_version=true
