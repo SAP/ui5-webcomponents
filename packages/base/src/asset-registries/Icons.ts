@@ -146,27 +146,23 @@ const getIconData = async (name: string) => {
  * @param { string } name
  * @return { Promise }
  */
-const getIconAccessibleName = async (name: string) => {
+const getIconAccessibleName = async (name: string): Promise<string | undefined> => {
 	let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
 	if (!iconData) {
 		iconData = await getIconData(name);
 	}
 
 	if (!iconData) {
-		/* eslint-disable-next-line */
-		console.warn(`Required icon is not registered. Invalid icon name: ${name}`);
 		return;
 	}
 
 	if (iconData === ICON_NOT_FOUND) {
-		/* eslint-disable-next-line */
-		console.warn(`Required icon is not registered. You can either import the icon as a module in order to use it e.g. "@ui5/webcomponents-icons/dist/${name.replace("sap-icon://", "")}.js", or setup a JSON build step and import "@ui5/webcomponents-icons/dist/AllIcons.js".`);
 		return;
 	}
 
-	if (iconData && iconData.accData) {
+	if (iconData.accData) {
 		const i18nBundle = await getI18nBundle(iconData.packageName);
-		return i18nBundle.getText(iconData.accData) || undefined;
+		return i18nBundle.getText(iconData.accData);
 	}
 };
 
