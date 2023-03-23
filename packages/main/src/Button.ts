@@ -287,8 +287,8 @@ class Button extends UI5Element implements IFormElement {
 	 * Indicates if the element if focusable
 	 * @private
 	 */
-	 @property({ type: String, noAttribute: true })
-	 buttonTitle!: string;
+	@property({ type: String, noAttribute: true })
+	buttonTitle?: string;
 
 	@property({ type: Object })
 	_iconSettings!: object;
@@ -370,24 +370,10 @@ class Button extends UI5Element implements IFormElement {
 		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
 
-		this.buttonTitle = this.tooltip || await getIconAccessibleName();
+		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}
 
 	onAfterRendering() {
-		// let iconAccessibleName;
-
-		// if (!!this.icon && this.iconOnly && !this.tooltip) {
-		// 	const icon = this.shadowRoot!.querySelector("[ui5-icon]") as Icon;
-		// 	if (!icon.effectiveAccessibleName) {
-		// 		await icon.loadIconData(this.icon);
-		// 	}
-
-		// 	iconAccessibleName = icon.effectiveAccessibleName;
-		// }
-
-		// if (iconAccessibleName && this.tooltip !== iconAccessibleName) {
-		// 	this.tooltip = iconAccessibleName;
-		// }
 	}
 
 	_onclick(e: MouseEvent) {
