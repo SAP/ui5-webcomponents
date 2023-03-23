@@ -23,8 +23,11 @@ const toCamelCase = parts => {
 		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 	}).join("");
 };
-const isTypescriptRelatedFile = sourcePath => {
+const isTSRelatedFile = sourcePath => {
 	return ["Assets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
+};
+const isJSRelatedFile = sourcePath => {
+	return ["Assets.js", "MyFirstComponent.js"].some(fileName => sourcePath.includes(fileName));
 };
 
 // Validation of user input
@@ -45,8 +48,8 @@ const replaceVarsInFileName = (vars, fileName) => {
 };
 
 const copyFile = (vars, sourcePath, destPath) => {
-	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && sourcePath.includes("MyFirstComponent.js");
-	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTypescriptRelatedFile(sourcePath);
+	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && isJSRelatedFile(sourcePath);
+	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTSRelatedFile(sourcePath);
 
 	if (ignoreJsRelated || ignoreTsRelated) {
 		return;
