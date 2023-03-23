@@ -42,6 +42,7 @@ describe("RadioButton general interaction", () => {
 	it("tests change and value-changed events", async () => {
 		const radioButton = await browser.$("#rb1").shadow$(".ui5-radio-root");
 		const field = await browser.$("#field");
+		const field2 = await browser.$("#field2");
 
 		await radioButton.click();
 		assert.strictEqual(await field.getProperty("value"), "1", "change event should be fired 1 time.");
