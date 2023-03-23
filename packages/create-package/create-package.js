@@ -89,6 +89,9 @@ const generateFilesContent = (name, tag, typescript) => {
 		ui5: {
 			webComponentsPackage: true,
 		},
+		repository: {
+			"directory": "/"
+		},
 		scripts: {
 			"clean": "wc-dev clean",
 			"lint": "wc-dev lint",
