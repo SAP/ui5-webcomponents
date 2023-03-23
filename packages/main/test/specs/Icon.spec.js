@@ -122,10 +122,9 @@ describe("Icon general interaction", () => {
 	});
 
 	it("Tests getIconAccessibleName", async () => {
-		const icons = ["add", "back-to-top", "collapse", "download"];
 		const expectedAccNames = ["Add", "Back to Top", "Collapse", "Download"];
 		const actualAccNames = await browser.executeAsync(async done => {
-			const values = await Promise.all(icons.map(iconName => {
+			const values = await Promise.all(["add", "back-to-top", "collapse", "download"].map(iconName => {
 				return window["sap-ui-webcomponents-bundle"].getIconAccessibleName(iconName);
 			}));
 			done(values);
