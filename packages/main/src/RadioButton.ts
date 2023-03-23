@@ -444,6 +444,7 @@ class RadioButton extends UI5Element implements IFormElement {
 		if (!this.name) {
 			this.checked = !this.checked;
 			this.fireEvent("change");
+			this.fireEvent("value-changed"); // added for Angular two way data binding
 			return this;
 		}
 

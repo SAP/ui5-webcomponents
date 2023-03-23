@@ -39,15 +39,17 @@ describe("RadioButton general interaction", () => {
 		await browser.url(`test/pages/RadioButton.html`);
 	});
 
-	it("tests change event", async () => {
+	it("tests change and value-changed events", async () => {
 		const radioButton = await browser.$("#rb1").shadow$(".ui5-radio-root");
 		const field = await browser.$("#field");
 
 		await radioButton.click();
-		assert.strictEqual(await field.getProperty("value"), "1", "Change event should be fired 1 time.");
+		assert.strictEqual(await field.getProperty("value"), "1", "change event should be fired 1 time.");
+		assert.strictEqual(await field2.getProperty("value"), "1", "value-changed event should be fired 1 time.");
 
 		await radioButton.click();
-		assert.strictEqual(await field.getProperty("value"), "1", "Change event should not be called any more, as radio is already selected.");
+		assert.strictEqual(await field.getProperty("value"), "1", "change event should not be called any more, as radio is already selected.");
+		assert.strictEqual(await field.getProperty("value"), "1", "value-changed event should not be called any more, as radio is already selected.");
 	});
 
 	it("tests change event upon ENTER", async () => {

@@ -85,6 +85,7 @@
 		<br/>
 		<ui5-radio-button id="wrappingRb" wrapping-type="Normal" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s." class="radiobutton2auto"></ui5-radio-button>
 		<ui5-input id="field"></ui5-input>
+		<ui5-input id="field2"></ui5-input>
 	</div>
 
 	<ui5-title level="H2">accessibleName</ui5-title>
@@ -164,12 +165,17 @@
 
 	<script>
 		var counter = 0;
+		var counterValueChanged = 0;
 		var groupEventCounter = 0;
 
 		[window["rb1"], window["rb2"], window["rb3"], window["rb4"]].forEach(function (radio) {
 			radio.addEventListener("ui5-change", function (event) {
 				counter += 1;
 				window["field"].value = counter;
+			});
+			radio.addEventListener("value-changed", function (event) {
+				counterValueChanged += 1;
+				window["field2"].value = counterValueChanged;
 			});
 		})
 

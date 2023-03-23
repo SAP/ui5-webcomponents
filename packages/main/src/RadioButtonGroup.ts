@@ -159,6 +159,7 @@ class RadioButtonGroup {
 			radioBtn.checked = true;
 			radioBtn._checked = true;
 			radioBtn.fireEvent("change");
+			radioBtn.fireEvent("value-changed"); // added for Angular two-way data binding
 		}
 	}
 
