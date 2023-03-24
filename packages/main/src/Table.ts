@@ -112,7 +112,7 @@ enum TableFocusTargetElement {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-import type { table } from "./TableRow.js";/code> component provides a set of sophisticated and convenient functions for responsive table design.
+ * The <code>ui5-table</code> component provides a set of sophisticated and convenient functions for responsive table design.
  * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
  * <br><br>
  * To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the

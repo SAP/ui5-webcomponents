@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.1...v1.12.0-rc.2) (2023-03-23)
+
+
+### Bug Fixes
+
+* fix eslint for JS 3rd party projects ([#6725](https://github.com/SAP/ui5-webcomponents/issues/6725)) ([215a888](https://github.com/SAP/ui5-webcomponents/commit/215a888b006e46d431edd6324812b9d39249aef4))
+* **framework:** apply theme after every theme props registration ([#6718](https://github.com/SAP/ui5-webcomponents/issues/6718)) ([9b6c414](https://github.com/SAP/ui5-webcomponents/commit/9b6c414e7ae625d835a7d14c3761d2c235b750ff)), closes [#6666](https://github.com/SAP/ui5-webcomponents/issues/6666)
+* **i18n:** use correct i18n text bundle ([#6720](https://github.com/SAP/ui5-webcomponents/issues/6720)) ([9636000](https://github.com/SAP/ui5-webcomponents/commit/963600046d1847133512f8a2a7a8f9087bfcd3f2))
+* inline sources in the .map file so the src folder is not mandatory ([#6732](https://github.com/SAP/ui5-webcomponents/issues/6732)) ([16771a6](https://github.com/SAP/ui5-webcomponents/commit/16771a64d7b13f418af9afa1a03b224fe3762775))
+
+
+### Features
+
+* **framework:** add default values for language/theme ([#6738](https://github.com/SAP/ui5-webcomponents/issues/6738)) ([36d3636](https://github.com/SAP/ui5-webcomponents/commit/36d3636be27b785ccfe7210d1da65c628623c28d))
+* **icons-tnt:** add/update icons ([#6756](https://github.com/SAP/ui5-webcomponents/issues/6756)) ([41e7cfd](https://github.com/SAP/ui5-webcomponents/commit/41e7cfdafee72e0e80775788da192a3498a75b05))
+* **icons:** add/update icons ([#6754](https://github.com/SAP/ui5-webcomponents/issues/6754)) ([cad512a](https://github.com/SAP/ui5-webcomponents/commit/cad512aa3c3eaae81dfec340bfa3a51b3395eeee))
+* **ui5-illustrated-message:** added new illustration type "Survey" ([#6747](https://github.com/SAP/ui5-webcomponents/issues/6747)) ([43301a9](https://github.com/SAP/ui5-webcomponents/commit/43301a961da009500bdfba96d4abcdf86a2a0039))
+* **ui5-illustrated-message:** added new illustrations ([#6701](https://github.com/SAP/ui5-webcomponents/issues/6701)) ([bead264](https://github.com/SAP/ui5-webcomponents/commit/bead2646325f86a6e5f136d48f8b04ec7983155c))
+* **ui5-upload-collection:** add IllustratedMessage for empty state ([#6657](https://github.com/SAP/ui5-webcomponents/issues/6657)) ([9ea5c93](https://github.com/SAP/ui5-webcomponents/commit/9ea5c93a5016143a50240d9d178422434a069365)), closes [#6271](https://github.com/SAP/ui5-webcomponents/issues/6271)
+
+
+### Reverts
+
+* Revert "chore: add missing ui5- prefix to component events in .hbs files" (#6740) ([a151e15](https://github.com/SAP/ui5-webcomponents/commit/a151e15f5d40b9ed290f67d413c203a7ac5c26a0)), closes [#6740](https://github.com/SAP/ui5-webcomponents/issues/6740) [#6565](https://github.com/SAP/ui5-webcomponents/issues/6565)
+
+
+
+
+
+# [1.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.0...v1.12.0-rc.1) (2023-03-16)
+
+
+### Bug Fixes
+
+* **icons:** use strings instead of template literal for imports ([#6681](https://github.com/SAP/ui5-webcomponents/issues/6681)) ([ac70676](https://github.com/SAP/ui5-webcomponents/commit/ac7067685c72288ddc8d55363f5b589a9d279b0d))
+* **ui5-breadcrumbs:** import used arrow-down icon ([#6685](https://github.com/SAP/ui5-webcomponents/issues/6685)) ([3a000ce](https://github.com/SAP/ui5-webcomponents/commit/3a000ce0c4d1e15537209068226bced3381b0bba))
+* **ui5-combobox:** fire selection-change correctly ([#6652](https://github.com/SAP/ui5-webcomponents/issues/6652)) ([3d70b44](https://github.com/SAP/ui5-webcomponents/commit/3d70b4472521a8775062dad5f1246060c1a36754))
+* **ui5-date-picker:** change and restore value if change event is prevented ([#6693](https://github.com/SAP/ui5-webcomponents/issues/6693)) ([597017f](https://github.com/SAP/ui5-webcomponents/commit/597017f7adda2985cf64bd040d32eabca55e5770))
+* **ui5-icon:** aria-label change ([#6584](https://github.com/SAP/ui5-webcomponents/issues/6584)) ([932f451](https://github.com/SAP/ui5-webcomponents/commit/932f451c701a0ecebac7d17023d7b6c68af855ac))
+* **ui5-input:** remove field value when cleared in change event handler ([#6417](https://github.com/SAP/ui5-webcomponents/issues/6417)) ([aeca9ac](https://github.com/SAP/ui5-webcomponents/commit/aeca9aca0d3ca02d8cff80beffedba9e21e05af4)), closes [#6249](https://github.com/SAP/ui5-webcomponents/issues/6249)
+* **ui5-popover:** flip horizontalAlign Right with Left and vice versa in RTL ([#6645](https://github.com/SAP/ui5-webcomponents/issues/6645)) ([043a263](https://github.com/SAP/ui5-webcomponents/commit/043a263a3ffb3ea34f90970e39235dd42fd588fa))
+* **ui5-split-button:** align styles in icon only mode ([#6697](https://github.com/SAP/ui5-webcomponents/issues/6697)) ([dbdf625](https://github.com/SAP/ui5-webcomponents/commit/dbdf625a49b391028a7ff92d0a9c68a4f4bdd3da)), closes [#6688](https://github.com/SAP/ui5-webcomponents/issues/6688)
+* **ui5-step-input:** align style to specification ([#6699](https://github.com/SAP/ui5-webcomponents/issues/6699)) ([85b4f8e](https://github.com/SAP/ui5-webcomponents/commit/85b4f8e52528f70c5829e7d3c4d4caecdaf32da0)), closes [#6687](https://github.com/SAP/ui5-webcomponents/issues/6687)
+
+
+### Features
+
+* **ui5-datepicker:** show only needed pickers based on date format ([#6490](https://github.com/SAP/ui5-webcomponents/issues/6490)) ([182ebb2](https://github.com/SAP/ui5-webcomponents/commit/182ebb26b9939d436e28a07c5069b9fa9a4ab976))
+* **ui5-product-switch:** enable alignment of items ([#6683](https://github.com/SAP/ui5-webcomponents/issues/6683)) ([97cba4b](https://github.com/SAP/ui5-webcomponents/commit/97cba4b0b63d3c8be5be1972188ebc780c255c2a))
+
+
+
+
+
 # [1.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0...v1.12.0-rc.0) (2023-03-09)
 
 

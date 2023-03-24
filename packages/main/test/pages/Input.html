@@ -332,6 +332,13 @@
 
 	<h3>Short Input With Centered Text</h3>
 	<ui5-input class="short" value="244"></ui5-input>
+
+	<h3>Input with suggestions: clear value on selection change</h3>
+	<ui5-input id="change-event-value" show-suggestions>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
 	<link rel="stylesheet" type="text/css" href="./styles/Input.css">
 
 	<h3>Test Backspace</h3>
@@ -715,6 +722,8 @@
 			const resultInput = document.getElementById("input-number35_eventValue");
 			resultInput.value = event.target.value;
 		});
+
+		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
 	</script>
 </body>
 </html>

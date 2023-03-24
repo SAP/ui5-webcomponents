@@ -112,7 +112,7 @@ class NotificationListItem extends NotificationListItemBase {
 	* they truncate by default.
 	*
 	* <br><br>
-	* <b>Note:</b> by default the <code>titleText</code> and <code>decription</code>,
+	* <b>Note:</b> by default the <code>titleText</code> and <code>description</code>,
 	* and a <code>ShowMore/Less</code> button would be displayed.
 	* @type {sap.ui.webc.main.types.WrappingType}
 	* @defaultvalue "None"
@@ -183,7 +183,7 @@ class NotificationListItem extends NotificationListItemBase {
 
 	_titleTextOverflowHeight: number;
 	_descOverflowHeight: number;
-	_onResizeBind: ResizeObserverCallback;
+	_onResizeBound: ResizeObserverCallback;
 
 	constructor() {
 		super();
@@ -195,15 +195,15 @@ class NotificationListItem extends NotificationListItemBase {
 		this._descOverflowHeight = 0;
 
 		// the resize handler
-		this._onResizeBind = this.onResize.bind(this);
+		this._onResizeBound = this.onResize.bind(this);
 	}
 
 	onEnterDOM() {
-		ResizeHandler.register(this, this._onResizeBind.bind(this));
+		ResizeHandler.register(this, this._onResizeBound);
 	}
 
 	onExitDOM() {
-		ResizeHandler.deregister(this, this._onResizeBind.bind(this));
+		ResizeHandler.deregister(this, this._onResizeBound);
 	}
 
 	get hasDesc() {

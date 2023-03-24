@@ -58,9 +58,13 @@ const _loadMessageBundleOnce = (packageName: string, localeId: string) => {
 const _showAssetsWarningOnce = (packageName: string) => {
 	if (!warningShown.has(packageName)) {
 		console.warn(`[${packageName}]: Message bundle assets are not configured. Falling back to English texts.`, /* eslint-disable-line */
-		` Add \`import "${packageName}/dist/Assets.js"\` in your bundle and make sure your build tool supports dynamic imports and JSON imports. See section "Assets" in the documentation for more information.`); /* eslint-disable-line */
+			` Add \`import "${packageName}/dist/Assets.js"\` in your bundle and make sure your build tool supports dynamic imports and JSON imports. See section "Assets" in the documentation for more information.`); /* eslint-disable-line */
 		warningShown.add(packageName);
 	}
+};
+
+const useFallbackBundle = (packageName: string, localeId: string) => {
+	return localeId !== DEFAULT_LANGUAGE && !_hasLoader(packageName, localeId);
 };
 
 /**
@@ -75,10 +79,14 @@ const _showAssetsWarningOnce = (packageName: string) => {
 const fetchI18nBundle = async (packageName: string) => {
 	const language = getLocale().getLanguage();
 	const region = getLocale().getRegion();
-	let localeId = normalizeLocale(language + (region ? `-${region}` : ``));
+	let localeId = language + (region ? `-${region}` : ``);
 
-	while (localeId !== DEFAULT_LANGUAGE && !_hasLoader(packageName, localeId)) {
-		localeId = nextFallbackLocale(localeId);
+	if (useFallbackBundle(packageName, localeId)) {
+		localeId = normalizeLocale(localeId);
+
+		while (useFallbackBundle(packageName, localeId)) {
+			localeId = nextFallbackLocale(localeId);
+		}
 	}
 
 	// use default language unless configured to always fetch it from the network

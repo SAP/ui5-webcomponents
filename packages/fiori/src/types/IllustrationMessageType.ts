@@ -21,6 +21,12 @@ enum IllustrationMessageType {
 	 */
 	NoActivities = "NoActivities",
 	/**
+	 * "No Columns Set" illustration type.
+	 * @public
+	 * @type {NoColumnsSet}
+	 */
+	NoColumnsSet = "NoColumnsSet",
+	/**
 	 * "No Data" illustration type.
 	 * @public
 	 * @type {NoData}
@@ -332,6 +338,12 @@ enum IllustrationMessageType {
 	 * @type {SuccessScreen}
 	 */
 	SuccessScreen = "SuccessScreen",
+	/**
+	 * "Survey" illustration type.
+	 * @public
+	 * @type {Survey}
+	 */
+	Survey = "Survey",
 	/**
 	 * "Tent" illustration type.
 	 * @public

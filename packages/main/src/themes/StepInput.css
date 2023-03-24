@@ -19,6 +19,7 @@
 	height: var(--_ui5_input_height);
 	position: relative;
 	min-width: var(--_ui5_step_input_min_width);
+	text-align: right;
 }
 
 :host .ui5-step-input-input {
