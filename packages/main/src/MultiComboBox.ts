@@ -601,6 +601,7 @@ class MultiComboBox extends UI5Element {
 
 		deletingItem.selected = false;
 		this._deleting = true;
+		this._preventTokenizerToggle = true;
 
 		this.fireSelectionChange();
 	}
