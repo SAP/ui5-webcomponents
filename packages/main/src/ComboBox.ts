@@ -420,7 +420,6 @@ class ComboBox extends UI5Element {
 
 	_initialRendering: boolean;
 	_itemFocused: boolean;
-	_selectionChanged: boolean;
 	// used only for Safari fix (check onAfterRendering)
 	_autocomplete: boolean;
 	_isKeyNavigation: boolean;
@@ -439,7 +438,6 @@ class ComboBox extends UI5Element {
 		this._filteredItems = [];
 		this._initialRendering = true;
 		this._itemFocused = false;
-		this._selectionChanged = false;
 		this._autocomplete = false;
 		this._isKeyNavigation = false;
 		this._lastValue = "";
@@ -630,12 +628,10 @@ class ComboBox extends UI5Element {
 			const item = this._getFirstMatchingItem(value);
 			item && this._applyAtomicValueAndSelection(item, value, true);
 
-			if (value !== "" && !this._selectionChanged && (item && !item.selected && !item.isGroupItem)) {
+			if (value !== "" && (item && !item.selected && !item.isGroupItem)) {
 				this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 					item,
 				});
-
-				this._selectionChanged = false;
 			}
 		}
 
@@ -744,7 +740,6 @@ class ComboBox extends UI5Element {
 		}
 
 		this._isValueStateFocused = false;
-		this._selectionChanged = true;
 
 		this._announceSelectedItem(indexOfItem);
 
@@ -1038,8 +1033,6 @@ class ComboBox extends UI5Element {
 			this.fireEvent<ComboBoxSelectionChangeEventDetail>("selection-change", {
 				item: listItem.mappedItem,
 			});
-
-			this._selectionChanged = true;
 		}
 
 		this._filteredItems.map(item => {

@@ -5,7 +5,7 @@ const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/in
 
 const scripts = {
 	clean: "rimraf dist",
-	lint: "eslint . --config config/.eslintrc.js",
+	lint: "cross-env UI5_TS=true eslint . --config config/.eslintrc.js",
 	build: {
 		"default": "nps lint clean copy.used-modules copy.cldr copy.overlay build.replace-amd build.replace-export-true build.replace-export-false build.amd-to-es6 build.replace-global-core-usage build.esm-abs-to-rel build.jsonImports build.typescript copy.src",
 		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
@@ -20,7 +20,7 @@ const scripts = {
 	typescript: "tsc",
 	copy: {
 		"used-modules": `node "${copyUsedModules}" ./used-modules.txt dist/`,
-		cldr: `copy-and-watch "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/*.json" dist/generated/assets/cldr/`,
+		cldr: `node ./lib/copy-and-strip-cldr/index.js "../../node_modules/@openui5/sap.ui.core/src/sap/ui/core/cldr/" dist/generated/assets/cldr/`,
 		overlay: `copy-and-watch "overlay/**/*.js" dist/`,
 		src: `copy-and-watch "src/**/*.js" dist/`,
 	},

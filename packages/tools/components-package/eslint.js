@@ -1,3 +1,36 @@
+const fs = require("fs");
+const path = require("path");
+const tsMode = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
+
+/**
+ * Typescript Rules
+ */
+const overrides = tsMode ? [{
+	files: ["*.ts"],
+	parser: "@typescript-eslint/parser",
+	plugins: ["@typescript-eslint"],
+	extends: [
+		"plugin:@typescript-eslint/recommended",
+		"plugin:@typescript-eslint/recommended-requiring-type-checking"
+	],
+	parserOptions: {
+	  "project": ["./tsconfig.json", "./packages/*/tsconfig.json"],
+	},
+	rules: {
+		"no-shadow": "off",
+		"@typescript-eslint/no-shadow": ["error"],
+		"@typescript-eslint/no-unsafe-member-access": "off",
+		"@typescript-eslint/no-floating-promises": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-unsafe-assignment": "off",
+		"@typescript-eslint/ban-ts-comment": "off",
+		"@typescript-eslint/no-unsafe-call": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"@typescript-eslint/no-empty-function": "off",
+		"lines-between-class-members": "off",
+	}
+}] : [];
+
 module.exports = {
 	"env": {
 		"browser": true,
@@ -5,34 +38,7 @@ module.exports = {
 	},
 	"root": true,
 	"extends": "airbnb-base",
-	overrides: [{
-		files: ["*.ts"],
-		parser: "@typescript-eslint/parser",
-		plugins: ["@typescript-eslint"],
-		extends: [
-			"plugin:@typescript-eslint/recommended",
-			"plugin:@typescript-eslint/recommended-requiring-type-checking"
-		],
-		parserOptions: {
-		  "project": ["./tsconfig.json", "./packages/*/tsconfig.json"],
-		},
-		/**
-		 * Typescript Rules
-		 */
-		rules: {
-			"no-shadow": "off",
-			"@typescript-eslint/no-shadow": ["error"],
-			"@typescript-eslint/no-unsafe-member-access": "off",
-			"@typescript-eslint/no-floating-promises": "off",
-			"@typescript-eslint/no-explicit-any": "off",
-			"@typescript-eslint/no-unsafe-assignment": "off",
-			"@typescript-eslint/ban-ts-comment": "off",
-			"@typescript-eslint/no-unsafe-call": "off",
-			"@typescript-eslint/no-non-null-assertion": "off",
-			"@typescript-eslint/no-empty-function": "off",
-			"lines-between-class-members": "off",
-		}
-	}],
+	overrides,
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module"

@@ -43,7 +43,7 @@ import "@ui5/webcomponents/dist/Assets.js";
 import "@ui5/webcomponents-fiori/dist/Assets.js";
 ```
 
-For more about assets, see the dedicated [Assets](../../getting-started/using-assets) section.
+For more about assets, see the dedicated [Assets](../1-getting-started/05-using-assets.md) section.
 
  - Configure the additional theme either via the [configuration script](#script) or [module imports](#imports).
 
@@ -52,7 +52,12 @@ Example:
 import { setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme("sap_belize_hcb");
 ```
-   
+
+- To reset the theme to the default one:
+```js
+import { setTheme, getDefaultTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+setTheme(getDefaultTheme());
+```
 
 ### language
 <a name="language"></a>
@@ -78,7 +83,7 @@ import "@ui5/webcomponents-fiori/dist/Assets.js";
 import "@ui5/webcomponents-icons/dist/Assets.js";
 ```
 
-For more about assets, see the dedicated [Assets](../../getting-started/using-assets) section.
+For more about assets, see the dedicated [Assets](../1-getting-started/05-using-assets.md) section.
 
 - Configure the additional language either via the [configuration script](#script) or [module imports](#imports).
 
@@ -86,6 +91,12 @@ Example:
 ```js
 import { setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 setLanguage("fr");
+```
+
+- To reset the langauge to the default one:
+```js
+import { setLanguage, getDefaultLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+setLanguage(getDefaultLanguage());
 ```
 
 
@@ -111,7 +122,7 @@ You can always override the calendar type for each instance via component-specif
 
 The `Gregorian` calendar type is built in all date-related UI5 Web Components.
 
-Calendar types are opt-in features, see [Using Features](../../getting-started/using-features) for details.
+Calendar types are opt-in features, see [Using Features](../1-getting-started/06-using-features.md) for details.
 Setting another calendar type via configuration or component properties requires that the respective calendar type be explicitly imported.
 
 Example:
@@ -279,4 +290,4 @@ import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSet
 import { getFetchDefaultLanguage, setFetchDefaultLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 ```
 
-Next: [Right-To-Left (RTL) And Compact Mode](../rtl-and-compact-mode)
+Next: [Right-To-Left (RTL) And Compact Mode](./02-rtl-and-compact-mode.md)

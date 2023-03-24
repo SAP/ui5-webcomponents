@@ -1,166 +1,220 @@
 import { html } from "lit-html";
-import type { Meta, StoryFn } from "@storybook/web-components";
-
+import { ifDefined } from "lit-html/directives/if-defined.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
 import { DocsPage } from "../../../.storybook/docs";
-
-// @ts-ignore
 import type NotificationListItem from "@ui5/webcomponents-fiori/dist/NotificationListItem.js";
+import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 
 const component = "ui5-li-notification";
 
 export default {
-    title: "Fiori/NotificationListItem",
-    component,
-    subcomponents: {'NotificationAction' : 'ui5-notification-action'},
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
-    argTypes,
+	title: "Fiori/NotificationListItem",
+	component,
+	subcomponents: { 'NotificationAction': 'ui5-notification-action' },
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component }),
+			story: {
+				iframeHeight: "470px",
+				inline: false,
+			}
+		},
+	},
+	argTypes,
 } as Meta<NotificationListItem>;
 
-const Template: UI5StoryArgs<NotificationListItem, StoryArgsSlots> = (args) => html`<div></div>`;
+const wrapInList = (story: () => unknown) => {
+	return html`<ui5-list header-text="Notifications">
+	${story()}
+</ui5-list>
 
-
-export const Template0: StoryFn = () => html`
-<h3>NotificationListItem</h3>
-	<div class="snippet">
-		<ui5-list id="myList" class="full-width" header-text="Notifications">
-			<ui5-li-notification show-close="" title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc." priority="High">
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar size="XS" slot="avatar">
-					<img src="../assets/images/avatars/woman_avatar_1.png">
-				</ui5-avatar>
-				<span slot="footnotes">Monique Legrand</span>
-				<span slot="footnotes">2 Days</span>
-			</ui5-li-notification>
-			<ui5-li-notification show-close="" title-text="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc." priority="High">
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar size="XS" slot="avatar">
-					<img src="../assets/images/avatars/man_avatar_1.png">
-				</ui5-avatar>
-				<span slot="footnotes">Alain Chevalier</span>
-				<span slot="footnotes">2 Days</span>
-			</ui5-li-notification>
-			<ui5-li-notification show-close="" priority="High" title-text="New order (#2525) With a short title">
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar size="XS" slot="avatar">
-					<img src="../assets/images/avatars/man_avatar_2.png">
-				</ui5-avatar>
-				<span slot="footnotes">John Doe</span>
-				<span slot="footnotes">2 Days</span>
-			</ui5-li-notification>
-		</ui5-list>
-		<script>
-			myList.addEventListener("item-close", function(e) {
-				e.detail.item.hidden = true;
-			});
-		</script>
-	</div>
-`;
-Template0.parameters = {
-	docs: {
-		story: {
-			// Opt-out of inline rendering
-			inline: false,
-		},
-	}
+<script>
+	var notificationList = document.querySelector("ui5-list");
+	notificationList.addEventListener("item-close", e => {
+		e.detail.item.hidden = true;
+	});
+</script>`;
 };
 
-export const Template1: StoryFn = () => html`
-<h3>NotificationListItem - Custom Actions</h3>
-	<div class="snippet">
-		<ui5-list id="myList3" class="full-width" header-text="Notifications">
-			<ui5-li-notification show-close="" priority="Low" title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.">
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar size="XS" slot="avatar">
-					<img src="../assets/images/avatars/woman_avatar_1.png">
-				</ui5-avatar>
-				<span slot="footnotes">Monique Legrand</span>
-				<span slot="footnotes">2 Days</span>
-				<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
-				<ui5-notification-action icon="message-error" text="Reject" slot="actions"></ui5-notification-action>
-			</ui5-li-notification>
-			<ui5-li-notification show-close="" priority="Low" title-text="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.">
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar size="XS" slot="avatar">
-					<img src="../assets/images/avatars/man_avatar_1.png">
-				</ui5-avatar>
-				<span slot="footnotes">Alain Chevalier</span>
-				<span slot="footnotes">2 Days</span>
-				<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
-			</ui5-li-notification>
-			<ui5-li-notification show-close="" priority="Low" title-text="New order (#2525) With a short title">
-				And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-				<ui5-avatar size="XS" slot="avatar">
-					<img src="../assets/images/avatars/man_avatar_2.png">
-				</ui5-avatar>
-				<span slot="footnotes">John Doe</span>
-				<span slot="footnotes">2 Days</span>
-				<ui5-notification-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-action>
-			<ui5-notification-action icon="decline" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
-			</ui5-li-notification>
-		</ui5-list>
-	</div>
-`;
+const Template: UI5StoryArgs<NotificationListItem, StoryArgsSlots> = (args) => {
+	return html`<ui5-li-notification
+	title-text="${ifDefined(args.titleText)}"
+	priority="${ifDefined(args.priority)}"
+	?show-close="${ifDefined(args.showClose)}"
+	?read="${ifDefined(args.read)}"
+	?busy="${ifDefined(args.busy)}"
+	busy-delay="${ifDefined(args.busyDelay)}"
+	wrappingType="${ifDefined(args.wrappingType)}"
+>
+	${unsafeHTML(args.actions)}
+	${unsafeHTML(args.avatar)}
+	${unsafeHTML(args.footnotes)}
+	${unsafeHTML(args.default)}
+</ui5-li-notification>`;
+};
+Template.decorators = [wrapInList];
 
+export const Basic = Template.bind({});
+Basic.args = {
+	titleText: "New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.",
+	default: "And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.",
+	showClose: true,
+	priority: Priority.High,
+	avatar: `<ui5-avatar size="XS" slot="avatar">
+	<img src="../assets/images/avatars/woman_avatar_1.png">
+</ui5-avatar>`,
+	footnotes: `<span slot="footnotes">Monique Legrand</span>
+<span slot="footnotes">2 Days</span>`,
+};
 
-export const Template2: StoryFn = () => html`
-<h3>NotificationListItem In ShellBar</h3>
-	<div class="snippet">
-		<ui5-shellbar id="shellbar" primary-title="Corporate Portal" logo="../assets/images/sap-logo-svg.svg" show-notifications="" notifications-count="4">
-		</ui5-shellbar>
-		<ui5-popover id="notificationsPopover" style="max-width: 400px" placement-type="Bottom" horizontal-align="Right">
-			<ui5-list id="notificationListTop" header-text="Notifications">
-				<ui5-li-notification show-close="" title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.">
-					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-					<ui5-avatar initials="JD" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">John Doe</span>
-					<span slot="footnotes">2 Days</span>
-					<ui5-notification-action id="acceptBtnInPopover" icon="accept" text="Accept" slot="actions"></ui5-notification-action>
-					<ui5-notification-action id="rejectBtnInPopover" icon="message-error" text="Reject" slot="actions"></ui5-notification-action>
-				</ui5-li-notification>
-				<ui5-li-notification show-close="" title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc." priority="High">
-					And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
-					<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Office Notifications</span>
-					<span slot="footnotes">3 Days</span>
-					<ui5-notification-action id="acceptBtn2InPopover" icon="accept" text="Accept" slot="actions"></ui5-notification-action>
-				</ui5-li-notification>
-				<ui5-li-notification title-text="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc." priority="Medium">
-						Short description
-					<ui5-avatar initials="JS" size="XS" slot="avatar"></ui5-avatar>
-					<span slot="footnotes">Patricia Clarck</span>
-					<span slot="footnotes">3 Days</span>
-					<ui5-notification-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-action>
-					<ui5-notification-action icon="decline" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
-				</ui5-li-notification>
-				<ui5-li-notification title-text="New order (#2523)">
-					<div>. With a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.</div>
-					<span slot="footnotes">John SMith</span>
-					<span slot="footnotes">3 Days</span>
-					<ui5-notification-action icon="message-error" text="Reject" slot="actions"></ui5-notification-action>
-				</ui5-li-notification>
-			</ui5-list>
-		</ui5-popover>
-		<script>
-			shellbar.addEventListener("notifications-click", function(event) {
-				event.preventDefault();
-				notificationsPopover.showAt(event.detail.targetRef);
-			});
-		</script>
-	</div>
-`;
-Template2.parameters = {
+Basic.decorators = [
+	(story) => {
+		return html`${story()}
+
+<ui5-li-notification show-close title-text="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc." priority="High">
+	<ui5-avatar size="XS" slot="avatar">
+		<img src="../assets/images/avatars/man_avatar_1.png">
+	</ui5-avatar>
+	<span slot="footnotes">Alain Chevalier</span>
+	<span slot="footnotes">2 Days</span>
+	And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+</ui5-li-notification>
+
+<ui5-li-notification show-close title-text="New order (#2525) With a short title" priority="High" read>
+	<ui5-avatar size="XS" slot="avatar">
+		<img src="../assets/images/avatars/man_avatar_2.png">
+	</ui5-avatar>
+	<span slot="footnotes">John Doe</span>
+	<span slot="footnotes">2 Days</span>
+	And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+</ui5-li-notification>`
+	},
+	wrapInList,
+];
+
+export const Actions = Template.bind({});
+Actions.args = {
+	titleText: "New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.",
+	default: "And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.",
+	showClose: true,
+	priority: Priority.Low,
+	actions: `<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
+<ui5-notification-action icon="message-error" text="Reject" slot="actions"></ui5-notification-action>`,
+	avatar: `<ui5-avatar size="XS" slot="avatar">
+	<img src="../assets/images/avatars/woman_avatar_1.png">
+</ui5-avatar>`,
+	footnotes: `<span slot="footnotes">Monique Legrand</span>
+<span slot="footnotes">2 Days</span>`,
+};
+
+Actions.decorators = [
+	(story) => {
+		return html`${story()}
+
+<ui5-li-notification priority="Low" show-close title-text="And with a very long description and only one action - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.">
+	<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
+	<ui5-avatar size="XS" icon="employee" slot="avatar">
+		<img src="../assets/images/avatars/woman_avatar_1.png">
+	</ui5-avatar>
+	<span slot="footnotes-1">Monique Legrand</span>
+	<span slot="footnotes-2">2 Days</span>
+	And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+</ui5-li-notification>
+
+<ui5-li-notification read show-close priority="Low" title-text="New order (#2525) With a short title">
+	<ui5-notification-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-action>
+	<ui5-notification-action icon="decline" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
+	<ui5-avatar size="XS" icon="employee" slot="avatar">
+		<img src="../assets/images/avatars/woman_avatar_1.png">
+	</ui5-avatar>
+	<span slot="footnotes-1">Monique Legrand</span>
+	<span slot="footnotes-2">2 Days</span>
+	And with a very long description and long labels of the actions - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+</ui5-li-notification>`
+	},
+	wrapInList,
+];
+
+export const InShellBar = Template.bind({});
+InShellBar.args = {
+	showClose: true,
+	titleText: "New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.",
+	default: "And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.",
+	avatar: `<ui5-avatar initials="JD" size="XS" slot="avatar"></ui5-avatar>`,
+	footnotes: `<span slot="footnotes">John Doe</span>
+<span slot="footnotes">2 Days</span>`,
+	actions: `<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
+<ui5-notification-action icon="message-error" text="Reject" slot="actions"></ui5-notification-action>`,
+};
+
+InShellBar.decorators = [
+	(story) => {
+		return html`${story()}
+<ui5-li-notification
+	show-close
+	title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+	priority="High"
+>
+	<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
+	<span slot="footnotes">Office Notifications</span>
+	<span slot="footnotes">3 Days</span>
+	<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
+	And with a very long description and long labels of the action buttons - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+</ui5-li-notification>
+
+<ui5-li-notification
+	title-text="New order (#2565) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
+	priority="Medium"
+>
+	<ui5-avatar initials="JS" size="XS" slot="avatar"></ui5-avatar>
+	<span slot="footnotes">Patricia Clark</span>
+	<span slot="footnotes">3 Days</span>
+	<ui5-notification-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-action>
+	<ui5-notification-action icon="decline" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
+	Short description
+</ui5-li-notification>
+
+<ui5-li-notification title-text="New order (#2523)">
+	<span slot="footnotes">John Smith</span>
+	<span slot="footnotes">3 Days</span>
+	<ui5-notification-action icon="message-error" text="Reject" slot="actions"></ui5-notification-action>
+	With a very long description - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.
+</ui5-li-notification>`;
+	},
+	(story) => {
+		return html`<ui5-shellbar
+	primary-title="Corporate Portal"
+	logo="../assets/images/sap-logo-svg.svg"
+	show-notifications
+	notifications-count="4"
+></ui5-shellbar>
+<ui5-popover
+	placement-type="Bottom"
+	horizontal-align="Right"
+	style="max-width: 400px"
+>
+	${wrapInList(story)}
+</ui5-popover>
+
+<script>
+	var shellbar = document.querySelector("ui5-shellbar");
+	var notificationsPopover = document.querySelector("ui5-popover");
+
+	shellbar.addEventListener("notifications-click", e => {
+		event.preventDefault();
+		notificationsPopover.showAt(e.detail.targetRef);
+	});
+</script>`;
+	},
+];
+InShellBar.parameters = {
 	docs: {
 		story: {
-			// Opt-out of inline rendering
-			inline: false,
+			iframeHeight: "700px",
 		},
-	}
+	},
 };

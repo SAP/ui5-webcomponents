@@ -303,10 +303,6 @@ body {
 	font-size: 16px;
 }
 
-.api-table-content-cell-link {
-	vertical-align: top;
-}
-
 .api-table-event-param-cell {
 	padding: 8px 0 8px 64px;
 	font-family: "72-Regular";

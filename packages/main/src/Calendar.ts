@@ -24,6 +24,7 @@ import type { MonthPickerChangeEventDetail } from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import type { YearPickerChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -253,6 +254,9 @@ class Calendar extends CalendarPart {
 	@property()
 	_headerYearButtonTextSecType!: string;
 
+	@property({ type: CalendarPickersMode, defaultValue: CalendarPickersMode.DAY_MONTH_YEAR, noAttribute: true })
+	_pickersMode!: CalendarPickersMode;
+
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
 	 * for this calendar as instances of <code>ui5-date</code>.
@@ -296,6 +300,23 @@ class Calendar extends CalendarPart {
 			dateElement.value = value;
 			this.appendChild(dateElement);
 		});
+	}
+
+	/**
+	 * Makes sure that _currentPicker is always set to a value, allowed by _pickersMode
+	 */
+	_normalizeCurrentPicker() {
+		if (this._currentPicker === "day" && this._pickersMode !== CalendarPickersMode.DAY_MONTH_YEAR) {
+			this._currentPicker = "month";
+		}
+
+		if (this._currentPicker === "month" && this._pickersMode === CalendarPickersMode.YEAR) {
+			this._currentPicker = "year";
+		}
+	}
+
+	onBeforeRendering() {
+		this._normalizeCurrentPicker();
 	}
 
 	async onAfterRendering() {
@@ -416,30 +437,46 @@ class Calendar extends CalendarPart {
 		return this._currentPicker !== "year";
 	}
 
-	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
-		const timestamp = e.detail.timestamp;
-		const selectedDates = e.detail.dates;
-		const datesValues = selectedDates.map(ts => {
-			const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
+	_fireEventAndUpdateSelectedDates(selectedDates: Array<number>) {
+		const datesValues = selectedDates.map(timestamp => {
+			const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		this.timestamp = timestamp;
-		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
 	}
 
+	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
+		this.timestamp = e.detail.timestamp;
+		this._fireEventAndUpdateSelectedDates(e.detail.dates);
+	}
+
 	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		this._currentPicker = "day";
+
+		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
+			this._currentPicker = "day";
+		} else {
+			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+		}
+
 		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		this._currentPicker = "day";
+
+		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
+			this._currentPicker = "day";
+		} else if (this._pickersMode === CalendarPickersMode.MONTH_YEAR) {
+			this._currentPicker = "month";
+		} else {
+			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+		}
+
 		this._currentPickerDOM._autoFocus = true;
 	}
 

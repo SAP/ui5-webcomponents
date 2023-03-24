@@ -39,7 +39,7 @@ import treeItemCustomCss from "./generated/themes/TreeItem.css.js";
  * @tagname ui5-tree-item-custom
  * @public
  * @implements sap.ui.webc.main.ITreeItem
- * @since 1.0.0-rc.8
+ * @since 1.9.2
  */
 @customElement({
 	tag: "ui5-tree-item-custom",

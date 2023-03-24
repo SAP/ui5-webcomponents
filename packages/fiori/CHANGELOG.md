@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.1...v1.12.0-rc.2) (2023-03-23)
+
+
+### Bug Fixes
+
+* inline sources in the .map file so the src folder is not mandatory ([#6732](https://github.com/SAP/ui5-webcomponents/issues/6732)) ([16771a6](https://github.com/SAP/ui5-webcomponents/commit/16771a64d7b13f418af9afa1a03b224fe3762775))
+
+
+### Features
+
+* **ui5-illustrated-message:** added new illustration type "Survey" ([#6747](https://github.com/SAP/ui5-webcomponents/issues/6747)) ([43301a9](https://github.com/SAP/ui5-webcomponents/commit/43301a961da009500bdfba96d4abcdf86a2a0039))
+* **ui5-illustrated-message:** added new illustrations ([#6701](https://github.com/SAP/ui5-webcomponents/issues/6701)) ([bead264](https://github.com/SAP/ui5-webcomponents/commit/bead2646325f86a6e5f136d48f8b04ec7983155c))
+* **ui5-upload-collection:** add IllustratedMessage for empty state ([#6657](https://github.com/SAP/ui5-webcomponents/issues/6657)) ([9ea5c93](https://github.com/SAP/ui5-webcomponents/commit/9ea5c93a5016143a50240d9d178422434a069365)), closes [#6271](https://github.com/SAP/ui5-webcomponents/issues/6271)
+
+
+
+
+
+# [1.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.0...v1.12.0-rc.1) (2023-03-16)
+
+
+### Features
+
+* **ui5-product-switch:** enable alignment of items ([#6683](https://github.com/SAP/ui5-webcomponents/issues/6683)) ([97cba4b](https://github.com/SAP/ui5-webcomponents/commit/97cba4b0b63d3c8be5be1972188ebc780c255c2a))
+
+
+
+
+
 # [1.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0...v1.12.0-rc.0) (2023-03-09)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

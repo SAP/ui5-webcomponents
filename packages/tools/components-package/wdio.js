@@ -56,8 +56,15 @@ exports.config = {
 		'goog:chromeOptions': {
 			// to run chrome headless the following flags are required
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
-			args: ['--headless', '--disable-gpu'],
-			// args: ['--disable-gpu'],
+			args: [
+				'headless',             // start in headless mode
+				'start-maximized',      // maximize the window
+				'no-sandbox',           // disable sandbox isolation
+				'disable-infobars',     // disable the infos
+				'disable-gpu',          // on windows disable gpu hw acceleration
+				'disable-extensions',   // disable extensions
+				'disable-dev-shm-usage' // disable /dev/shm in CI
+			],
 		}
 	}],
 	//

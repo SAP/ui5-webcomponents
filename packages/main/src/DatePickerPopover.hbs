@@ -49,6 +49,7 @@
 		@ui5-show-year-press="{{onHeaderShowYearPress}}"
 		?hide-week-numbers="{{hideWeekNumbers}}"
 		._currentPicker="{{_calendarCurrentPicker}}"
+		._pickersMode="{{_calendarPickersMode}}"
 	>
 		{{#each _calendarSelectedDates}}
 			<ui5-date value="{{this}}"></ui5-date>

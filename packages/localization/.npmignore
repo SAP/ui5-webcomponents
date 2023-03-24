@@ -1,4 +1,5 @@
 lib/
+src/**/*.ts
 node_modules/
 overlay/
 !core

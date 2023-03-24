@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.1...v1.12.0-rc.2) (2023-03-23)
+
+
+### Bug Fixes
+
+* fix eslint for JS 3rd party projects ([#6725](https://github.com/SAP/ui5-webcomponents/issues/6725)) ([215a888](https://github.com/SAP/ui5-webcomponents/commit/215a888b006e46d431edd6324812b9d39249aef4))
+* **framework:** apply theme after every theme props registration ([#6718](https://github.com/SAP/ui5-webcomponents/issues/6718)) ([9b6c414](https://github.com/SAP/ui5-webcomponents/commit/9b6c414e7ae625d835a7d14c3761d2c235b750ff)), closes [#6666](https://github.com/SAP/ui5-webcomponents/issues/6666)
+* **i18n:** use correct i18n text bundle ([#6720](https://github.com/SAP/ui5-webcomponents/issues/6720)) ([9636000](https://github.com/SAP/ui5-webcomponents/commit/963600046d1847133512f8a2a7a8f9087bfcd3f2))
+* inline sources in the .map file so the src folder is not mandatory ([#6732](https://github.com/SAP/ui5-webcomponents/issues/6732)) ([16771a6](https://github.com/SAP/ui5-webcomponents/commit/16771a64d7b13f418af9afa1a03b224fe3762775))
+
+
+### Features
+
+* **framework:** add default values for language/theme ([#6738](https://github.com/SAP/ui5-webcomponents/issues/6738)) ([36d3636](https://github.com/SAP/ui5-webcomponents/commit/36d3636be27b785ccfe7210d1da65c628623c28d))
+
+
+
+
+
+# [1.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.0...v1.12.0-rc.1) (2023-03-16)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
 # [1.12.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.11.0...v1.12.0-rc.0) (2023-03-09)
 
 **Note:** Version bump only for package @ui5/webcomponents-base
