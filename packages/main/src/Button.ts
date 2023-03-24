@@ -373,9 +373,6 @@ class Button extends UI5Element implements IFormElement {
 		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}
 
-	onAfterRendering() {
-	}
-
 	_onclick(e: MouseEvent) {
 		if (this.nonInteractive) {
 			return;

@@ -272,7 +272,7 @@ class Icon extends UI5Element {
 	invalid!: boolean;
 
 	/**
-	 * @protected
+	 * @private
 	 */
 	@property({ noAttribute: true, defaultValue: undefined })
 	effectiveAccessibleName?: string;
@@ -376,7 +376,7 @@ class Icon extends UI5Element {
 		if (!iconData) {
 			this.invalid = true;
 			/* eslint-disable-next-line */
-			return console.warn(`Required icon is not registered. Invalid icon name: ${name}`);
+			return console.warn(`Required icon is not registered. Invalid icon name: ${this.name}`);
 		}
 
 		if (iconData === ICON_NOT_FOUND) {
