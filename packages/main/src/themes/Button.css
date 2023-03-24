@@ -59,7 +59,6 @@
 }
 
 .ui5-button-icon {
-	pointer-events: none;
 	color: inherit;
 	flex-shrink: 0;
 }
@@ -120,7 +119,6 @@
 	right: 0.0625rem;
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_focused_border);
-	pointer-events: none;
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
 
@@ -137,7 +135,6 @@
 	right: 0.0625rem;
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_emphasized_focused_border_before);
-	pointer-events: none;
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
 

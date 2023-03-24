@@ -282,17 +282,8 @@ class Icon extends UI5Element {
 	viewBox?: string;
 	customSvg?: object;
 
-	_onclick: ((event: MouseEvent) => void);
-	_onfocusout: ((event: FocusEvent) => void);
-	_onfocusin: ((event: FocusEvent) => void);
-
-	constructor() {
-		super();
-
-		this._onclick = this._onClickHandler.bind(this);
-		this._onfocusout = this._onFocusOutHandler.bind(this);
-		this._onfocusin = this._onFocusInHandler.bind(this);
-	}
+	_onfocusout?: ((event: FocusEvent) => void);
+	_onfocusin?: ((event: FocusEvent) => void);
 
 	_onFocusInHandler() {
 		if (this.interactive) {
@@ -324,12 +315,6 @@ class Icon extends UI5Element {
 		}
 	}
 
-	_onClickHandler(e: MouseEvent) {
-		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-		e.stopPropagation();
-		this.fireEvent("click");
-	}
-
 	/**
 	* Enforce "ltr" direction, based on the icons collection metadata.
 	*/
@@ -350,7 +335,7 @@ class Icon extends UI5Element {
 	}
 
 	get _tabIndex() {
-		return this.interactive ? "0" : "-1";
+		return this.interactive ? "0" : undefined;
 	}
 
 	get isDecorative() {
@@ -406,6 +391,9 @@ class Icon extends UI5Element {
 		this.accData = iconData.accData;
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
+
+		this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
+		this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
 
 		if (this.accessibleName) {
 			this.effectiveAccessibleName = this.accessibleName;
