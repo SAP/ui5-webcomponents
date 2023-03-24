@@ -32,7 +32,6 @@ const Template: UI5StoryArgs<SegmentedButton, StoryArgsSlots> = (args) => html`
 >`;
 
 export const Basic = Template.bind({});
-Basic.storyName = "SegmentedButton with SegmentedButtonItems";
 Basic.args = {
 	default: `
 		<ui5-segmented-button-item>Map</ui5-segmented-button-item>
@@ -43,7 +42,6 @@ Basic.args = {
 };
 
 export const WithIcons = Template.bind({});
-WithIcons.storyName = "SegmentedButtonItems with Icons";
 WithIcons.args = {
 	default: `
 		<ui5-segmented-button-item icon="employee" pressed=""></ui5-segmented-button-item>
@@ -53,7 +51,7 @@ WithIcons.args = {
 };
 
 export const WithMoreItems = Template.bind({});
-WithMoreItems.storyName = "Example with more SegmentedButtonItems";
+WithMoreItems.storyName = "With More Segmented Button Items";
 WithMoreItems.args = {
 	default: `
 		<ui5-segmented-button-item>Item</ui5-segmented-button-item>

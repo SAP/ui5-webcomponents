@@ -35,36 +35,31 @@ const Template: UI5StoryArgs<ToggleButton, StoryArgsSlots> = (args) => html`
 >`;
 
 export const Basic = Template.bind({});
-Basic.storyName = "Basic ToggleButton";
 Basic.args = {
-	default: "ToggleButton"
+	default: "Default",
 };
 
 export const Pressed = Template.bind({});
-Pressed.storyName = "Pressed ToggleButton";
 Pressed.args = {
-	default: "ToggleButton",
+	default: "Pressed",
 	pressed: true,
 };
 
 export const Disabled = Template.bind({});
-Disabled.storyName = "Disabled ToggleButton";
 Disabled.args = {
-	default: "ToggleButton",
+	default: "Disabled",
 	disabled: true,
 };
 
 export const DisabledAndPressed = Template.bind({});
-DisabledAndPressed.storyName = "Disabled and pressed ToggleButton";
 DisabledAndPressed.args = {
 	default: "ToggleButton",
 	pressed: true,
 	disabled: true,
 };
 
-export const WithButtonDesign = Template.bind({});
-WithButtonDesign.storyName = "ToggleButton with Design";
-WithButtonDesign.args = {
+export const Design = Template.bind({});
+Design.args = {
 	default: "ToggleButton",
 	design: ButtonDesign.Positive,
 };
@@ -75,9 +70,8 @@ IconOnly.args = {
 	icon: "add",
 };
 
-export const WithIcon = Template.bind({});
-WithIcon.storyName = "ToggleButton with an icon and design";
-WithIcon.args = {
+export const WithIconAndDesign = Template.bind({});
+WithIconAndDesign.args = {
 	default: "ToggleButton",
 	design: ButtonDesign.Emphasized,
 	pressed: false,

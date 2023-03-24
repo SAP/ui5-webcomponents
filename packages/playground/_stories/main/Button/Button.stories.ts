@@ -15,14 +15,14 @@ import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 const component = "ui5-button";
 
 export default {
-    title: "Main/Button",
-    component,
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
-    argTypes,
+	title: "Main/Button",
+	component,
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component })
+		},
+	},
+	argTypes,
 } as Meta<Button>;
 
 const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`
@@ -30,7 +30,8 @@ const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`
 	design="${ifDefined(args.design)}"
 	?disabled="${ifDefined(args.disabled)}"
 	icon="${ifDefined(args.icon)}"
-	icon-end="${ifDefined(args.iconEnd)}"
+	?icon-end="${ifDefined(args.iconEnd)}"
+	?submits="${ifDefined(args.submits)}"
 	tooltip="${ifDefined(args.tooltip)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
@@ -39,50 +40,47 @@ const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`
 >`;
 
 export const Basic = Template.bind({});
-Basic.storyName = "Basic button with text";
+Basic.storyName = "Basic Button with Text";
 Basic.args = {
-	default: "Default",
-	design: ButtonDesign.Default
+	default: "Button",
+	design: ButtonDesign.Default,
 };
 
-export const TransparentDesign = Template.bind({});
-TransparentDesign.storyName = "Button with design";
-TransparentDesign.args = {
+export const Design = Template.bind({});
+Design.args = {
 	default: "Transparent",
-	design: ButtonDesign.Transparent
+	design: ButtonDesign.Transparent,
 };
 
 export const Disabled = Template.bind({});
-Disabled.storyName = "Disabled button";
 Disabled.args = {
 	default: "Disabled",
-	disabled: true
+	disabled: true,
 };
 
-export const IconAndDesign = Template.bind({});
-IconAndDesign.storyName = "Button with an icon and design";
-IconAndDesign.args = {
+export const WithIconAndDesign = Template.bind({});
+WithIconAndDesign.args = {
 	default: "Warning",
 	design: ButtonDesign.Attention,
-	icon: "message-warning"
+	icon: "message-warning",
 };
 
 export const IconEnd = Template.bind({});
-IconEnd.storyName = "Button with an end icon";
+IconEnd.storyName = "Button with an End Icon";
 IconEnd.args = {
 	default: "Download",
 	icon: "download",
-	iconEnd: true
+	iconEnd: true,
 };
 
 export const IconOnly = Template.bind({});
-IconOnly.storyName = "Icon-only button";
+IconOnly.storyName = "Icon-only Button";
 IconOnly.args = {
 	design: ButtonDesign.Negative,
 	icon: "cancel",
 	accessibleName: "Cancel",
 	accessibleNameRef: "lblCancel",
-	tooltip: "Cancel"
+	tooltip: "Cancel",
 };
 IconOnly.decorators = [
 	(story) => html`
