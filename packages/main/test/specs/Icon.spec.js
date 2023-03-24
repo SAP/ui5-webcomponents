@@ -17,6 +17,11 @@ describe("Icon general interaction", () => {
 	});
 
 	it("Tests events 'click' and 'ui5-click' events", async () => {
+		// (1) on mouse click (no matter the noConflict mode), the icon fires the native "click" event
+		// (2) on SPACE and ENTER
+		// - noConflict: false - the icon fires "click" (custom event)
+		// - noConflict: true - the icon fires "click" and "ui5-click" (custom events)
+
 		// Interactive icon
 		const interactiveIcon = await browser.$("#interactive-icon");
 		const inpClickRes = await browser.$("#click-event");
@@ -31,7 +36,7 @@ describe("Icon general interaction", () => {
 		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "1", "Enter fires 'ui5-click'");
 
 		await interactiveIcon.keys("Space");
-		assert.strictEqual(await inpClickRes.getAttribute("value"), "3", "Space ires 'click'");
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "3", "Space fires 'click'");
 		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "2", "Space fires 'ui5-click'");
 
 		// Non-interactive icon
@@ -41,7 +46,7 @@ describe("Icon general interaction", () => {
 
 		await nonInteractiveIcon.click();
 		assert.strictEqual(await inpClickRes2.getAttribute("value"), "1", "The 'click' event is fired.");
-		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "0", "The 'ui5-click' event is not fired.");
+		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "0", "The 'ui5-click' event is not fired on mouse click..");
 	});
 
 	it("Tests the accessibility attributes", async () => {

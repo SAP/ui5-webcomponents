@@ -117,7 +117,9 @@ const PRESENTATION_ROLE = "presentation";
 	styles: iconCss,
 })
 /**
- * Fired on mouseup, space and enter if icon is interactive
+ * Fired on mouseup, <code>SPACE</code> and <code>ENTER</code>.
+ * - on mouse click, the icon fires native <code>click</code> event
+ * - on <code>SPACE</code> and <code>ENTER</code>, the icon fires custom <code>click</code> event
  * @private
  * @since 1.0.0-rc.8
  */
