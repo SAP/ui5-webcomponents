@@ -5,7 +5,7 @@ const esmAbsToRel = resolve.sync("@ui5/webcomponents-tools/lib/esm-abs-to-rel/in
 
 const scripts = {
 	clean: "rimraf dist",
-	lint: "cross-env UI5_TS=true eslint . --config config/.eslintrc.js",
+	lint: "eslint . --config .eslintrc.cjs",
 	build: {
 		"default": "nps lint clean copy.used-modules copy.cldr copy.overlay build.replace-amd build.replace-export-true build.replace-export-false build.amd-to-es6 build.replace-global-core-usage build.esm-abs-to-rel build.jsonImports build.typescript copy.src",
 		"replace-amd": "replace-in-file sap.ui.define define dist/**/*.js",
