@@ -177,7 +177,6 @@ function visitEachBlock(block) {
 	this.paths.push(normalizePath.call(this, block.params[0].original));
 	this.blockLevel++;
 
-	console.log("blockParameters", this.blockParameters)
 	if (this.blockParameters.indexOf("item: any") === -1) {
 		bParamAdded = true;
 		this.blockParameters.unshift("index: number");

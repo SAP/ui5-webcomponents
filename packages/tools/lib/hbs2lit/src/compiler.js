@@ -41,7 +41,6 @@ const hbs2lit = async (file, componentName) => {
 		let block = lv.blocks[key];
 
 		if (block.match(/scopeTag/)) {
-			console.log({block})
 			// const matches = block.match(/^(.*?)( => )(.*?);$/);
 			const matches = block.match(/^(function .*? \{ return )(.*?);\}$/);
 			const scopedCode = matches[2];
