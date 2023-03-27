@@ -284,10 +284,10 @@ class Button extends UI5Element implements IFormElement {
 	nonInteractive!: boolean;
 
 	/**
-	 * Indicates if the element if focusable
+	 * The current title of the button, either the tooltip property or the icons tooltip. The tooltip property with higher prio.
 	 * @private
 	 */
-	@property({ type: String, noAttribute: true })
+	@property({ noAttribute: true })
 	buttonTitle?: string;
 
 	@property({ type: Object })
