@@ -35,8 +35,8 @@ function HTMLLitVisitor(componentName, debug) {
 	this.result = "";
 	this.mainBlock = "";
 	this.blockLevel = 0;
-	this.blockParameters = ["context: UI5Element", "tags: string[]", "suffix: string | undefined"];
-	this.blockParametersNested = ["context", "tags", "suffix"];
+	this.blockParametersDefinition = ["context: UI5Element", "tags: string[]", "suffix: string | undefined"];
+	this.blockParametersUsage = ["context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
 	this.componentName = componentName
 	this.debug = debug;
@@ -53,11 +53,11 @@ HTMLLitVisitor.prototype.Program = function(program) {
 	this.keys.push(key);
 	this.debug && this.blockByNumber.push(key);
 
-	// this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: any, ` + this.blockParameters.join(", ") + ") { ";
-	this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: ${this.componentName}, ` + this.blockParameters.join(", ") + ") { ";
+	// this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: any, ` + this.blockParametersDefinition.join(", ") + ") { ";
+	this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: ${this.componentName}, ` + this.blockParametersDefinition.join(", ") + ") { ";
 
 	if (this.keys.length > 1) { //it's a nested block
-		this.blocks[this.prevKey()] += this.currentKey() + ".call(this, " + this.blockParametersNested.join(", ") + ")";
+		this.blocks[this.prevKey()] += this.currentKey() + ".call(this, " + this.blockParametersUsage.join(", ") + ")";
 	} else {
 		this.mainBlock = this.currentKey();
 	}
@@ -177,19 +177,19 @@ function visitEachBlock(block) {
 	this.paths.push(normalizePath.call(this, block.params[0].original));
 	this.blockLevel++;
 
-	if (this.blockParameters.indexOf("item: any") === -1) {
+	if (this.blockParametersDefinition.indexOf("item: any") === -1) {
 		bParamAdded = true;
-		this.blockParameters.unshift("index: number");
-		this.blockParameters.unshift("item: any");
-		this.blockParametersNested.unshift("index");
-		this.blockParametersNested.unshift("item");
+		this.blockParametersDefinition.unshift("index: number");
+		this.blockParametersDefinition.unshift("item: any");
+		this.blockParametersUsage.unshift("index");
+		this.blockParametersUsage.unshift("item");
 	}
 	this.acceptKey(block, "program");
 	if (bParamAdded) {
-		this.blockParameters.shift("item: any");
-		this.blockParameters.shift("index: number");
-		this.blockParametersNested.shift("item");
-		this.blockParametersNested.shift("index");
+		this.blockParametersDefinition.shift("item: any");
+		this.blockParametersDefinition.shift("index: number");
+		this.blockParametersUsage.shift("item");
+		this.blockParametersUsage.shift("index");
 	}
 	this.blockLevel--;
 	this.blocks[this.currentKey()] += ") }";
