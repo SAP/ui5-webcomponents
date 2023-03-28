@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Overflow Toolbar</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+</head>
+<body>
+	<a href="?sap-ui-theme=sap_horizon">SAP Horizon</a> |
+	<a href="?sap-ui-theme=sap_fiori_3">Fiori 3</a> |
+	<a href="?sap-ui-theme=sap_fiori_3_dark">Fiori 3 Dark</a> |
+	<a href="?sap-ui-theme=sap_belize">Belize</a> |
+	<a href="?sap-ui-theme=sap_belize_hcb">Belize High Contrast Black</a>
+	<br>
+	<span>or in the browser console, for example:</span>
+	<code>window['sap-ui-webcomponents-bundle'].configuration.setTheme("sap_belize_hcb")</code>
+
+	<br><br>
+
+	<a href="?sap-ui-language=en">English</a> |
+	<a href="?sap-ui-language=de">German</a> |
+	<a href="?sap-ui-language=es">Spanish</a> |
+	<a href="?sap-ui-language=fr">French</a>
+
+	<br><br>
+
+	<ui5-title level="H1">Resize btns</ui5-title>
+
+	<div slot="startContent" style="display:flex; align-items: center;">
+		<ui5-toggle-button class="size" data-size="376">Small</ui5-toggle-button>
+		<ui5-toggle-button class="size" data-size="767">Meidum</ui5-toggle-button>
+		<ui5-toggle-button class="size" data-size="1024">Large</ui5-toggle-button>
+		<ui5-button id="btnRemove">Remove</ui5-button>
+	</div>
+	<br><br>
+
+	<ui5-title level="H1">Solid</ui5-title>
+	<section id="testSection">
+		<ui5-title level="H1">Use case</ui5-title>
+
+		<ui5-overflow-toolbar id="otb_a" design="Solid" align-content="Start" prevent-overflow-closing>
+			<ui5-overflow-button image-width="100px" icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-overflow-button>
+			<ui5-overflow-button icon="decline" text="Left 2"></ui5-overflow-button>
+			<ui5-overflow-button icon="employee" text="Left 3"></ui5-overflow-button>
+			<ui5-overflow-button icon="decline" text="Left 4"></ui5-overflow-button>
+			<ui5-toolbar-spacer width="100px"></ui5-toolbar-spacer>
+			<ui5-overflow-button icon="add" text="Mid 1"></ui5-overflow-button>
+			<ui5-overflow-button icon="decline" text="Mid 2"></ui5-overflow-button>
+			<ui5-overflow-button icon="decline" text="Mid 3"></ui5-overflow-button>
+			<ui5-overflow-button text="Mid 4"></ui5-overflow-button>
+			<ui5-toolbar-spacer width="200px"></ui5-toolbar-spacer>
+			<ui5-overflow-button icon="add" text="Right 1"></ui5-overflow-button>
+			<ui5-overflow-button icon="decline" text="Right 2"></ui5-overflow-button>
+			<ui5-overflow-button icon="decline" text="Right 3"></ui5-overflow-button>
+			<ui5-overflow-button icon="employee" text="Right 4"></ui5-overflow-button>
+			<ui5-overflow-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-overflow-button>
+
+		</ui5-overflow-toolbar>
+
+
+	</section>
+
+	<ui5-popover id="myPopup" placement="Bottom">
+		<div slot="header" style="padding: 0.5rem">Hello World</div>
+		<div>
+			<ui5-input placeholder="Hi"></ui5-input>
+
+			<ui5-list>
+				<ui5-li>Hello</ui5-li>
+				<ui5-li>World</ui5-li>
+				<ui5-li>Again</ui5-li>
+			</ui5-list>
+			<br/>
+			<ui5-button>Hi!</ui5-button>
+		</div>
+	</ui5-popover>
+	<script>
+
+		document.getElementById("otb_a").addEventListener("overflow-toggle", e => {
+			console.log(e.detail.open);
+		});
+
+		Array.from(document.getElementsByClassName("size")).forEach(btn => {
+			btn.addEventListener("click", e => {
+				if (event.target.pressed) {
+					testSection.style.width = `${e.target.getAttribute("data-size")}px`;
+				} else {
+					testSection.style.width = "auto";
+				}
+			});
+		});
+
+		btnRemove.addEventListener("click", e => {
+			otb.removeChild(otb.children[0]);
+		});
+
+		myOverflowBtn.addEventListener("click", e => {
+			myPopup.showAt(e.detail.targetRef);
+		});
+	</script>
+	</body>
+</html>

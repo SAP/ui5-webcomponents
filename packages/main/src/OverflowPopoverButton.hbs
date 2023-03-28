@@ -1,0 +1,26 @@
+<ui5-button
+	icon="{{this.icon}}"
+	design="{{this.design}}"
+	?disabled="{{this.disabled}}"
+	?hidden="{{this.hidden}}"
+	?always-overflow="{{alwaysOverflow}}"
+	@click="{{this.press}}"
+	class="ui5-button-in-overflow"
+	data-ui5-external-action-item-id="{{this.refItemid}}"
+>
+	{{#if this.imageSrc}}
+				<div class="ui5-otb-action-content">
+					{{#if this.imageLast}}
+						<div class="ui5-otb-action-content-text ui5-otb-action-content-image-last">{{this.text}}</div>
+					{{/if}}
+
+					<img src="{{this.imageSrc}}" alt="{{imageAlt}}" width="{{imageWidth}}" height="{{imageHeight}}">
+
+					{{#unless this.imageLast}}
+						<div class="ui5-otb-action-content-text">{{this.text}}</div>
+					{{/unless}}
+				</div>
+	{{else}}
+		{{this.text}}
+	{{/if}}
+</ui5-button>

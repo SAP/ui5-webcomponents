@@ -1,0 +1,27 @@
+<div
+	class="ui5-otb-root"
+	tabindex="{{tabIndex}}"
+	part="otb"
+>
+	{{#if hasStartContent}}
+		<div class="ui5-otb-start">
+			<slot name="startContent"></slot>
+		</div>
+	{{/if}}
+
+	<div class="{{classes.actions}}">
+		{{#each standardActions}}
+			{{this.overflowTemplate}}
+		{{/each}}
+
+		{{#if showOverflowBtn}}
+			<ui5-button
+				icon="overflow"
+				design="Transparent"
+				?disabled="{{this.disabled}}"
+				@click="{{onBtnOverflowClick}}"
+				class="ui5-otb-overflow-btn"
+			></ui5-button>
+		{{/if}}
+	</div>
+</div>

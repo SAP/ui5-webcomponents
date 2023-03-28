@@ -53,6 +53,7 @@ import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
 import Menu from "./dist/Menu.js";
 import MenuItem from "./dist/MenuItem.js";
+import OverflowToolbar from "./dist/OverflowToolbar";
 import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
