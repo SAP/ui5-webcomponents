@@ -1,9 +1,11 @@
 import { getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 import applyTheme from "../theming/applyTheme.js";
+import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 
 let curTheme: string;
+const SupportedThemeFamilies = ["sap_belize", "sap_fiori_3", "sap_horizon"];
 
 /**
  * Returns the current theme.
@@ -61,11 +63,16 @@ const isTheme = (theme: string) => {
 
 /**
  * Returns if the current theme is part of given theme family.
+ * <b>Note</b>: checks the base theme when custom theme, built via the ThemeDesigner, is set.
+ *
  * @private
  * @param {string} theme the theme family
  * @returns {boolean}
  */
 const isThemeFamily = (theme: string) => {
+	if (!SupportedThemeFamilies.includes(theme)) {
+		return !!getThemeDesignerTheme()?.baseThemeName?.startsWith(theme);
+	}
 	return getTheme().startsWith(theme);
 };
 
