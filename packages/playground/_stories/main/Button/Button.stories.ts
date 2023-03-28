@@ -31,7 +31,6 @@ const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`
 	?disabled="${ifDefined(args.disabled)}"
 	icon="${ifDefined(args.icon)}"
 	?icon-end="${ifDefined(args.iconEnd)}"
-	?submits="${ifDefined(args.submits)}"
 	tooltip="${ifDefined(args.tooltip)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
