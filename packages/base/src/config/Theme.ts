@@ -5,7 +5,7 @@ import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 
 let curTheme: string;
-const SupportedThemeFamilies = ["sap_belize", "sap_fiori_3", "sap_horizon"];
+const ThemeFamilies: Array<string> = ["sap_belize", "sap_fiori_3", "sap_horizon"];
 
 /**
  * Returns the current theme.
@@ -70,7 +70,7 @@ const isTheme = (theme: string) => {
  * @returns {boolean}
  */
 const isThemeFamily = (theme: string) => {
-	if (!SupportedThemeFamilies.includes(theme)) {
+	if (!ThemeFamilies.includes(theme)) {
 		return !!getThemeDesignerTheme()?.baseThemeName?.startsWith(theme);
 	}
 	return getTheme().startsWith(theme);
