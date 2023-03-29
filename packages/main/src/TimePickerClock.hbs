@@ -36,5 +36,16 @@
 
 	</div>
 
-	<div class="ui5-tp-clock-cover"></div>
+	<div
+		class="ui5-tp-clock-cover"
+		@touchstart="{{_onTouchStart}}"
+		@touchmove="{{_onTouchMove}}"
+		@touchend="{{_onTouchEnd}}"
+		@mousedown="{{_onTouchStart}}"
+		@mousemove="{{_onTouchMove}}"
+		@mouseup="{{_onTouchEnd}}"
+		@mouseout="{{_onMouseOut}}"
+		@mousewheel="{{_onMouseWheel}}"
+		@DOMMouseScroll="{{_onMouseWheel}}"
+	></div>
 </div>

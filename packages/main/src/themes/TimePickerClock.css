@@ -120,7 +120,6 @@
 	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	color: var(--sapTextColor);
-
 }
 
 .ui5-tp-clock-number.ui5-tp-clock-number-hover:not(.ui5-tp-clock-selected) {
