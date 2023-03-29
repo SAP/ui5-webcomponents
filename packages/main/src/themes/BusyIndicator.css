@@ -57,6 +57,7 @@
 	align-items: center;
 	position: relative;
 	background-color: inherit;
+	height: inherit;
 }
 
 .ui5-busy-indicator-busy-area {
