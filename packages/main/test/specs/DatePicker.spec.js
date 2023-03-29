@@ -866,7 +866,7 @@ describe("Date Picker Tests", () => {
 
 		datepicker.id = "#dp33";
 		await datepicker.openPicker();
-		const displayedDay = await datepicker.getDisplayedDay(13);
+		const displayedDay = await datepicker.getDisplayedDay(12);
 
 		assert.ok(await displayedDay.isFocusedDeep(), "Days in range are enabled");
 	});
