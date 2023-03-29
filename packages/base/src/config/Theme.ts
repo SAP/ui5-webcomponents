@@ -2,10 +2,9 @@ import { getTheme as getConfiguredTheme } from "../InitialConfiguration.js";
 import { reRenderAllUI5Elements } from "../Render.js";
 import applyTheme from "../theming/applyTheme.js";
 import getThemeDesignerTheme from "../theming/getThemeDesignerTheme.js";
-import { DEFAULT_THEME } from "../generated/AssetParameters.js";
+import { DEFAULT_THEME, SUPPORTED_THEMES } from "../generated/AssetParameters.js";
 
 let curTheme: string;
-const ThemeFamilies: Array<string> = ["sap_belize", "sap_fiori_3", "sap_horizon"];
 
 /**
  * Returns the current theme.
@@ -62,24 +61,28 @@ const isTheme = (theme: string) => {
 };
 
 /**
- * Returns if the current theme is part of given theme family.
- * <b>Note</b>: checks the base theme when custom theme, built via the ThemeDesigner, is set.
+ * Returns if the currently set theme is part of legacy theme families ("sap_belize" or "sap_fiori_3").
+ * <b>Note</b>: in addition, the method checks the base theme of a custom theme, built via the ThemeDesigner.
  *
  * @private
- * @param {string} theme the theme family
- * @returns {boolean}
+ * @returns { boolean }
  */
-const isThemeFamily = (theme: string) => {
-	if (!ThemeFamilies.includes(theme)) {
-		return !!getThemeDesignerTheme()?.baseThemeName?.startsWith(theme);
+const isLegacyThemeFamily = () => {
+	const currentTheme = getTheme();
+
+	if (!isKnownTheme(currentTheme)) {
+		return !getThemeDesignerTheme()?.baseThemeName?.startsWith("sap_horizon");
 	}
-	return getTheme().startsWith(theme);
+
+	return !currentTheme.startsWith("sap_horizon");
 };
+
+const isKnownTheme = (theme: string) => SUPPORTED_THEMES.includes(theme);
 
 export {
 	getTheme,
 	setTheme,
 	isTheme,
-	isThemeFamily,
+	isLegacyThemeFamily,
 	getDefaultTheme,
 };
