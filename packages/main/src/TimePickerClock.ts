@@ -74,7 +74,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
  * @abstract
  * @tagname ui5-time-picker-clock
  * @since 1.??.??
- * @public
+ * @private
  */
 @customElement({
 	tag: "ui5-time-picker-clock",
