@@ -38,4 +38,4 @@ For example:
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js;";
 ```
 
-Next: [Wrapping Up](./07-wrapping-up.md)
+Next: [Typescript Support](./07-typescript-support)

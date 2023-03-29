@@ -307,6 +307,25 @@ describe("List Tests", () => {
 		assert.ok(await afterBtn.isFocused(), "element outside of the list is focused");
 	});
 
+	it("keyboard handling on TAB when 2 level nested UI5Element is focused", async () => {
+		const list = await browser.$("#focusAfterList");
+		const breadcrumbsItem = await list.$(".breadcrumbsItem");
+		const breadcrumb = await list.$("ui5-breadcrumbs");
+		const afterBtn = await browser.$('#afterFocusListBtn');
+
+		// act: click on the item
+		await breadcrumbsItem.click();
+		assert.ok(await breadcrumbsItem.isFocused(), "breadcrumb is focused");
+
+		// act: Tab from list item to breadcrumbs
+		await breadcrumbsItem.keys("Tab");
+		assert.ok(await breadcrumb.isFocused(), "breadcrumb is focused");
+
+		// act: Tab to element outside of the list -> focus should go to after button
+		await breadcrumb.keys("Tab");
+		assert.ok(await afterBtn.isFocused(), "after button is focused");
+	});
+
 	it("does not focus next / prev item when right / left arrow is pressed", async () => {
 		const firstListItem = await browser.$("#country1");
 		const secondListItem = await browser.$("#country2");
