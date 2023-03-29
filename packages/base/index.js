@@ -1,5 +1,3 @@
-import UI5Element from "./dist/UI5Element.js";
-
 // animations/
 import scroll from "./dist/animations/scroll.js";
 import slideDown from "./dist/animations/slideDown.js";
@@ -8,7 +6,7 @@ import slideUp from "./dist/animations/slideup.js";
 // config/
 import { getAnimationMode, setAnimationMode } from "./dist/config/AnimationMode.js";
 import { getCalendarType } from "./dist/config/CalendarType.js";
-import { getFirstDayOfWeek,	getLegacyDateCalendarCustomizing } from "./dist/config/FormatSettings.js";
+import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "./dist/config/FormatSettings.js";
 import {
 	setDefaultIconCollection,
 	getDefaultIconCollection,
@@ -22,7 +20,7 @@ import {
 	setFetchDefaultLanguage,
 	getFetchDefaultLanguage,
 } from "./dist/config/Language.js";
-import { getNoConflict,	setNoConflict } from "./dist/config/NoConflict.js";
+import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getRTL } from "./dist/config/RTL.js";
 import {
 	getTheme,
@@ -43,7 +41,7 @@ import ScrollEnablement from "./dist/delegate/ScrollEnablement.js";
 
 // locale/
 import applyDirection from "./dist/locale/applyDirection.js";
-import { attachDirectionChange,	detachDirectionChange } from "./dist/locale/directionChange.js";
+import { attachDirectionChange, detachDirectionChange } from "./dist/locale/directionChange.js";
 import getEffectiveDir from "./dist/locale/getEffectiveDir.js";
 import { attachLanguageChange, detachLanguageChange } from "./dist/locale/languageChange.js";
 
@@ -72,6 +70,7 @@ import {
 	getCustomElementsScopingSuffix,
 	setCustomElementsScopingRules,
 	getCustomElementsScopingRules,
+	getEffectiveScopingSuffixForTag,
 } from "./dist/CustomElementsScope.js";
 
 // Device.ts
@@ -89,8 +88,14 @@ import {
 	isAndroid,
 } from "./dist/Device.js";
 
+// EventProvider.ts
+import EventProvider from "./dist/EventProvider.js";
+
 // i18nBundle.ts
-import { getI18nBundle,	registerCustomI18nBundleGetter } from "./dist/i18nBundle.js";
+import I18nBundle, { getI18nBundle, registerCustomI18nBundleGetter } from "./dist/i18nBundle.js";
+
+// MediaRange.ts
+import MediaRange from "./dist/MediaRange.js";
 
 // PropertiesFileFormat.ts
 import parseProperties from "./dist/PropertiesFileFormat.js";
@@ -105,6 +110,9 @@ import {
 
 // Theming.ts
 import { addCustomCSS, attachThemeLoaded, detachThemeLoaded } from "./dist/Theming.js";
+
+// UI5Element.ts
+import UI5Element from "./dist/UI5Element.js";
 
 export default UI5Element;
 export {
@@ -177,6 +185,7 @@ export {
 	getCustomElementsScopingSuffix,
 	setCustomElementsScopingRules,
 	getCustomElementsScopingRules,
+	getEffectiveScopingSuffixForTag,
 
 	// Device.ts
 	supportsTouch,
@@ -191,9 +200,16 @@ export {
 	isIOS,
 	isAndroid,
 
+	// EventProvider.ts
+	EventProvider,
+
 	// i18nBundle.ts
+	I18nBundle,
 	getI18nBundle,
 	registerCustomI18nBundleGetter,
+
+	// MediaRange.ts
+	MediaRange,
 
 	// PropertiesFileFormat.ts
 	parseProperties,
