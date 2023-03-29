@@ -29,7 +29,7 @@ export class LinksParser implements IDocsParser {
         if (Array.isArray(matches)) {
             matches.forEach((match) => {
                 const [_, text, link] = match.match(LinksParser.SEARCH) || [];
-                if (this.isMatch(link)) {
+                if (!this.isMatch(link)) {
                     return;
                 }
                 const parsedLink = this.parseLink(link, pathRelative);
@@ -64,6 +64,8 @@ export class LinksParser implements IDocsParser {
             .replace(/\.(mdx|md)$/, "")
             // remove numbers and dash (1-, 01-, 02-, etc.) from the beginning of the file name
             .replace(/\/[0-9-]+/, "/")
+            // remove numbers and dash (1-, 01-, 02-, etc.) from the beginning of string
+            .replace(/^[0-9-]+/, "")
             // replace path.sep with dash
             .replace(new RegExp(path.sep, "g"), "-");
 
