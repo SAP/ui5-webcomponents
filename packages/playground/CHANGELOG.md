@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.2...v1.12.0-rc.3) (2023-03-30)
+
+
+### Features
+
+* **playground:** disaply parameters and return values ([#6581](https://github.com/SAP/ui5-webcomponents/issues/6581)) ([d0b2a1c](https://github.com/SAP/ui5-webcomponents/commit/d0b2a1cb5372ef2b044733412dc77efde9781fae))
+
+
+
+
+
 # [1.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.1...v1.12.0-rc.2) (2023-03-23)
 
 
