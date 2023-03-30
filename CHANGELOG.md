@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.2...v1.12.0-rc.3) (2023-03-30)
+
+
+### Bug Fixes
+
+* **icons-tnt:** correct icons for v2 ([#6819](https://github.com/SAP/ui5-webcomponents/issues/6819)) ([25445a6](https://github.com/SAP/ui5-webcomponents/commit/25445a608aeb2a8312af262f8fd5d1a03cba1d5c))
+* **ui5-avatar:** documentation fix ([#6822](https://github.com/SAP/ui5-webcomponents/issues/6822)) ([e0ec2eb](https://github.com/SAP/ui5-webcomponents/commit/e0ec2eb6374df16e3b9f993075662ae13924b9c8))
+* **ui5-busy-indicator:** height of the root element inherits the height of the Busy Indicator ([#6805](https://github.com/SAP/ui5-webcomponents/issues/6805)) ([3659ca0](https://github.com/SAP/ui5-webcomponents/commit/3659ca08351f8dccfd7a7505e958f1b8b53c9795)), closes [#6668](https://github.com/SAP/ui5-webcomponents/issues/6668)
+* **ui5-list:** forward focus behaviour ([#6790](https://github.com/SAP/ui5-webcomponents/issues/6790)) ([3ac819c](https://github.com/SAP/ui5-webcomponents/commit/3ac819c6e56953a133cd3ecf5cc703b45c561cea))
+* **ui5-multi-combobox:** prevent focus lost after token deletion ([#6734](https://github.com/SAP/ui5-webcomponents/issues/6734)) ([d23b8d7](https://github.com/SAP/ui5-webcomponents/commit/d23b8d7ca2dcf0319fd87abd109b9ead6b0b76a3)), closes [#6671](https://github.com/SAP/ui5-webcomponents/issues/6671)
+* **ui5-select:** selected option is announced on dropdown open ([#6733](https://github.com/SAP/ui5-webcomponents/issues/6733)) ([6a6f87f](https://github.com/SAP/ui5-webcomponents/commit/6a6f87f64db0b61c41369e7c7414e800435a848d))
+* **ui5-side-navigation:** correct-style description ([#6814](https://github.com/SAP/ui5-webcomponents/issues/6814)) ([38b14c5](https://github.com/SAP/ui5-webcomponents/commit/38b14c509cc8d650f34250d21422ea57f7ce5cdd))
+* **ui5-textarea:** apply correct styles to value state None ([#6804](https://github.com/SAP/ui5-webcomponents/issues/6804)) ([6f7a22b](https://github.com/SAP/ui5-webcomponents/commit/6f7a22b2ba58c92fcfa947df7787a406152b26c4))
+
+
+### Features
+
+* **icons-business-suite:** update icons ([#6755](https://github.com/SAP/ui5-webcomponents/issues/6755)) ([052ddcd](https://github.com/SAP/ui5-webcomponents/commit/052ddcdd27669d6b6277a977f8c9959b88ecaace))
+* **playground:** disaply parameters and return values ([#6581](https://github.com/SAP/ui5-webcomponents/issues/6581)) ([d0b2a1c](https://github.com/SAP/ui5-webcomponents/commit/d0b2a1cb5372ef2b044733412dc77efde9781fae))
+* **ui5-button:** propagate icon default title to button ([#6719](https://github.com/SAP/ui5-webcomponents/issues/6719)) ([575039e](https://github.com/SAP/ui5-webcomponents/commit/575039e03dacc49b353afefe4a9bc97998a1354e)), closes [#5733](https://github.com/SAP/ui5-webcomponents/issues/5733)
+* **ui5-calendar:** focus the nearest day when today is out of range ([#6801](https://github.com/SAP/ui5-webcomponents/issues/6801)) ([e67a442](https://github.com/SAP/ui5-webcomponents/commit/e67a44273146fdb32ce8f4538ec26ba1e6135dc2)), closes [#6750](https://github.com/SAP/ui5-webcomponents/issues/6750)
+
+
+
+
+
 # [1.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.1...v1.12.0-rc.2) (2023-03-23)
 
 
