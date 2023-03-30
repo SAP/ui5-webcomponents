@@ -712,7 +712,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	_updateSecondTimestamp() {
-		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1 || this.selectedDates.length === 2) {
+		if (this.selectionMode === CalendarSelectionMode.Range && (this.selectedDates.length === 1 || this.selectedDates.length === 2)) {
 			this._secondTimestamp = this.timestamp;
 		}
 	}
