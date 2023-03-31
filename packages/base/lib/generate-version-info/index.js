@@ -1,4 +1,4 @@
-const fs = require('fs').promises;
+import fs from "fs/promises";
 
 const generate = async () => {
 	const version = JSON.parse(await fs.readFile("package.json")).version;

@@ -1,5 +1,5 @@
-const fs = require("fs").promises;
-const path = require("path");
+import fs from "fs/promises";
+import path from "path";
 
 const copyAndStripCLDR = async () => {
 	const inputDir = process.argv[2];

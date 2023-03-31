@@ -1,5 +1,5 @@
-const assert = require("chai").assert;
-HANDLE_RESIZE_DEBOUNCE_RATE_WAIT = 250; // ms
+import { assert } from "chai";
+const HANDLE_RESIZE_DEBOUNCE_RATE_WAIT = 250; // ms
 
 const getOverflowPopover = async id => {
 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName(`#${id}`);
@@ -8,18 +8,16 @@ const getOverflowPopover = async id => {
 
 const getOverflowChildProp = async (id, pos, prop) => {
 	const popover = await getOverflowPopover(id);
+	const items = await popover.$$("ui5-li");
 
-	return browser.executeAsync((popover, pos, prop, done) => {
-		done([...popover.querySelectorAll("ui5-li")][pos].getAttribute(prop));
-	}, popover, pos, prop);
+	return [...items][pos].getAttribute(prop);
 }
 
 const getCustomActionProp = async (id, pos, prop) => {
 	const shellbar = await browser.$(`#${id}`);
+	const items = await shellbar.shadowRoot.querySelectorAll(".ui5-shellbar-custom-item");
 
-	return browser.executeAsync((shellbar, pos, prop, done) => {
-		done([...shellbar.shadowRoot.querySelectorAll(".ui5-shellbar-custom-item")][pos].getAttribute(prop));
-	}, shellbar, pos, prop);
+	return [...items][pos].getAttribute(prop);
 }
 
 describe("Component Behavior", () => {
@@ -54,7 +52,7 @@ describe("Component Behavior", () => {
 
 			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
 
-			// assert
+			// assertHANDLE_RESIZE_DEBOUNCE_RATE_WAIT
 			assert.strictEqual(await logoDOM.getAttribute("role"), "link",
 				"Logo has the correct custom role.");
 		});

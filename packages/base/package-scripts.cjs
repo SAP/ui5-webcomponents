@@ -58,8 +58,9 @@ const scripts = {
 	},
 	start: "nps prepare watch.withBundle",
 	test: {
-		default: 'concurrently "nps test.wdio"',
+		default: 'concurrently "nps test.wdio" "nps test.ssr" "nps test.ssr2"',
 		ssr: `mocha test/ssr`,
+		ssr2: "node -e \"import('./dist/Device.js')\"",
 		wdio: `node "${LIB}/test-runner/test-runner.js"`
 	},
 };
