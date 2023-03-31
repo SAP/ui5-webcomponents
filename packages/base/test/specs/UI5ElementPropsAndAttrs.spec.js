@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Properties and attributes convert to each other", () => {
 	before(async () => {
