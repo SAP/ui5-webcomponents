@@ -1,4 +1,6 @@
 import { html } from "lit-html";
+import { ifDefined } from "lit-html/directives/if-defined.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -8,8 +10,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 
 import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
-import { ifDefined } from "lit-html/directives/if-defined.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 
 const component = "ui5-split-button";
@@ -32,8 +32,9 @@ const Template: UI5StoryArgs<SplitButton, StoryArgsSlots> = (args) => html`
 	icon="${ifDefined(args.icon)}"
 	active-icon="${ifDefined(args.activeIcon)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
-	>${unsafeHTML(args.default)}</ui5-split-button
->`;
+>
+	${unsafeHTML(args.default)}
+</ui5-split-button>`;
 
 export const Basic = Template.bind({});
 Basic.args = {

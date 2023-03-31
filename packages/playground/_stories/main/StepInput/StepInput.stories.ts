@@ -1,4 +1,6 @@
 import { html } from "lit-html";
+import { ifDefined } from "lit-html/directives/if-defined.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -8,8 +10,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 
 import type StepInput from "@ui5/webcomponents/dist/StepInput.js";
-import { ifDefined } from "lit-html/directives/if-defined.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState";
 
 const component = "ui5-step-input";
@@ -42,8 +42,9 @@ const Template: UI5StoryArgs<StepInput, StoryArgsSlots> = (args) => html`
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 	id="${ifDefined(args.id)}"
 	style="${ifDefined(args.style)}"
-	>${unsafeHTML(args.valueStateMessage)}</ui5-step-input
->`;
+>
+	${unsafeHTML(args.valueStateMessage)}
+</ui5-step-input>`;
 
 export const Basic = Template.bind({});
 Basic.args = {
@@ -63,14 +64,14 @@ Disabled.args = {
 };
 
 export const Design = Template.bind({});
-Design.storyName = "With Value State";
+Design.storyName = "Value State";
 Design.args = {
 	value: 5,
 	valueState: ValueState.Success,
 };
 
 export const MinMax = Template.bind({});
-MinMax.storyName = "With Min, Max and Step Values";
+MinMax.storyName = "Min/Max and Step Values";
 MinMax.args = {
 	value: 0,
 	min: -100,
@@ -79,7 +80,6 @@ MinMax.args = {
 };
 
 export const ValuePrecision = Template.bind({});
-ValuePrecision.storyName = "With Value Precision";
 ValuePrecision.args = {
 	value: 5,
 	min: 0,
@@ -98,7 +98,6 @@ Label.args = {
 };
 Label.decorators = [
 	(story) => html`
-		<ui5-label class="samples-big-margin-right" for="myStepInput" required="" show-colon="">Number</ui5-label>
-		${story()}
-	`,
+	<ui5-label class="samples-big-margin-right" for="myStepInput" required="" show-colon="">Number</ui5-label>
+	${story()}`,
 ];

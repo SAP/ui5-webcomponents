@@ -1,4 +1,5 @@
 import { html } from "lit-html";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
@@ -10,7 +11,6 @@ import { DocsPage } from "../../../.storybook/docs";
 
 import type ToggleButton from "@ui5/webcomponents/dist/ToggleButton.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 const component = "ui5-toggle-button";
 
@@ -31,8 +31,9 @@ const Template: UI5StoryArgs<ToggleButton, StoryArgsSlots> = (args) => html`
 	?disabled="${ifDefined(args.disabled)}"
 	design="${ifDefined(args.design)}"
 	icon="${ifDefined(args.icon)}"
-	>${unsafeHTML(args.default)}</ui5-toggle-button
->`;
+>
+	${unsafeHTML(args.default)}
+</ui5-toggle-button>`;
 
 export const Basic = Template.bind({});
 Basic.args = {

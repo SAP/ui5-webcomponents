@@ -1,5 +1,6 @@
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -10,7 +11,6 @@ import { DocsPage } from "../../../.storybook/docs";
 
 import type Button from "@ui5/webcomponents/dist/Button.js";
 import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 
 const component = "ui5-button";
 
@@ -35,11 +35,11 @@ const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 	accessibility-attributes="${ifDefined(args.accessibilityAttributes)}"
-	>${unsafeHTML(args.default)}</ui5-button
->`;
+>
+	${unsafeHTML(args.default)}
+</ui5-button>`;
 
 export const Basic = Template.bind({});
-Basic.storyName = "Basic Button with Text";
 Basic.args = {
 	default: "Button",
 	design: ButtonDesign.Default,
@@ -64,9 +64,8 @@ WithIconAndDesign.args = {
 	icon: "message-warning",
 };
 
-export const IconEnd = Template.bind({});
-IconEnd.storyName = "Button with an End Icon";
-IconEnd.args = {
+export const WithEndIcon = Template.bind({});
+WithEndIcon.args = {
 	default: "Download",
 	icon: "download",
 	iconEnd: true,
@@ -83,7 +82,6 @@ IconOnly.args = {
 };
 IconOnly.decorators = [
 	(story) => html`
-		<ui5-label style="display:none;" id="lblCancel" aria-hidden="true">Cancel</ui5-label>
-		${story()}
-	`,
+	<ui5-label style="display:none;" id="lblCancel" aria-hidden="true">Cancel</ui5-label>
+	${story()}`,
 ];

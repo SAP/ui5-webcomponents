@@ -1,4 +1,5 @@
 import { html } from "lit-html";
+import { ifDefined } from "lit-html/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -8,7 +9,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 
 import type Switch from "@ui5/webcomponents/dist/Switch.js";
-import { ifDefined } from "lit-html/directives/if-defined.js";
 import SwitchDesign from "@ui5/webcomponents/dist/types/SwitchDesign.js";
 
 const component = "ui5-switch";
