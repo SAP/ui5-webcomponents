@@ -268,7 +268,6 @@ class SideNavigation extends UI5Element {
 			item.expanded = !item.expanded;
 		}
 
-		// debugger
 		if (item.selected && !this.collapsed) {
 			return;
 		}
