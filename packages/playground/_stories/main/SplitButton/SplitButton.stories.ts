@@ -63,5 +63,6 @@ WithIcon.args = {
 export const WithActiveIcon = Template.bind({});
 WithActiveIcon.args = {
 	default: "Press Me",
+	icon: "add",
 	activeIcon: "accept",
 };
