@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 const openPickerById = async (id, options) => {
 	await browser.$(`#${id}`).scrollIntoView();

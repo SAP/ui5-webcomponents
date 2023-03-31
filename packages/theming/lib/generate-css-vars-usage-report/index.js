@@ -1,6 +1,7 @@
-const fs = require('fs').promises;
-const path = require("path");
-const beautify = require("json-beautify");
+import fs from "fs/promises";
+import path from "path";
+import beautify from "json-beautify";
+import { URL } from 'url';
 
 const vars = new Set();
 
@@ -15,6 +16,7 @@ const processFile = async file => {
 
 const generate = async () => {
 	const { globby } = await import("globby");
+	const __dirname = new URL('.', import.meta.url).pathname;
 
 	const mainFiles = await globby(path.join(__dirname, "../../../main/src/themes/**/*.css").replace(/\\/g, "/"));
 	const fioriFiles = await globby(path.join(__dirname, "../../../fiori/src/themes/**/*.css").replace(/\\/g, "/"));

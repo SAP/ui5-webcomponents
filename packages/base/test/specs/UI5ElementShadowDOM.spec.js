@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("The framework can define web components", () => {
 	before(async () => {
