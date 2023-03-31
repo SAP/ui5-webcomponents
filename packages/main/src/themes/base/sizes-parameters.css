@@ -121,7 +121,11 @@
 	--_ui5_tc_item_add_text_margin_top: 0.375rem;
 
 	/* TextArea */
-	/* --_ui5_textarea_padding is deprecated since 1.10.0 (to be removed 1.16.0) */
+	/* 
+	The "--_ui5_textarea_padding" CSS var is not used, but left for compatitability
+	when multiple ui5 webc versions are used on same page and will be removed with 1.16.0
+	@deprecated since 1.10.0.
+	*/
 	--_ui5_textarea_padding: var(--_ui5_textarea_padding_top) var(--_ui5_textarea_padding_right_and_left) var(--_ui5_textarea_padding_bottom);
 	--_ui5_textarea_margin: .25rem 0;
 
