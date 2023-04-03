@@ -157,7 +157,7 @@ type AccessibilityRoles = {
  */
 @event("layout-change", {
 	detail: {
-		layout: { type: `${FCLLayout}` },
+		layout: { type: FCLLayout },
 		columnLayout: { type: Array },
 		startColumnVisible: { type: Boolean },
 		midColumnVisible: { type: Boolean },
