@@ -132,7 +132,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * @public
 	 */
 	@property({ type: TableRowType, defaultValue: TableRowType.Inactive })
-	type!: TableRowType;
+	type!: `${TableRowType}`;
 
 	/**
 	 * Defines the row's selected state.
@@ -166,7 +166,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * @private
 	 */
 	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: TableMode;
+	mode!: `${TableMode}`;
 
 	/**
 	 * Indicates if the table row is active.

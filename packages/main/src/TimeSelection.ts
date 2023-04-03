@@ -181,7 +181,7 @@ class TimeSelection extends UI5Element {
 	_currentSlider!: string;
 
 	@property({ type: CalendarType })
-	_calendarType!: CalendarType;
+	_calendarType!: `${CalendarType}`;
 
 	static i18nBundle: I18nBundle;
 

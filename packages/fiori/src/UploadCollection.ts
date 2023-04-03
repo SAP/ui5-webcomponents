@@ -140,7 +140,7 @@ class UploadCollection extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
@@ -199,7 +199,7 @@ class UploadCollection extends UI5Element {
 	 * @private
 	 */
 	@property({ type: UploadCollectionDnDOverlayMode, defaultValue: UploadCollectionDnDOverlayMode.None })
-	_dndOverlayMode!: UploadCollectionDnDOverlayMode;
+	_dndOverlayMode!: `${UploadCollectionDnDOverlayMode}`;
 
 	/**
 	 * Defines the items of the <code>ui5-upload-collection</code>.

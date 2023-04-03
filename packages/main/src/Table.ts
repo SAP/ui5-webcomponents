@@ -66,7 +66,7 @@ const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 const PAGE_UP_DOWN_SIZE = 20;
 
 interface ITableRow extends UI5Element {
-	mode: TableMode,
+	mode: `${TableMode}`,
 	selected: boolean,
 	_busy: boolean,
 	_tabIndex: string,
@@ -83,7 +83,7 @@ type TableColumnInfo = {
 	visible?: boolean,
 	demandPopin?: boolean,
 	popinText?: string,
-	popinDisplay?: TableColumnPopinDisplay,
+	popinDisplay?: `${TableColumnPopinDisplay}`,
 	popinDisplayInline?: boolean,
 	classes?: string,
 	minWidth?: number,
@@ -320,7 +320,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TableGrowingMode, defaultValue: TableGrowingMode.None })
-	growing!: TableGrowingMode;
+	growing!: `${TableGrowingMode}`;
 
 	/**
 	 * Defines if the table is in busy state.
@@ -394,7 +394,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: TableMode;
+	mode!: `${TableMode}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.

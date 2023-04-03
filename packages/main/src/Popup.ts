@@ -211,7 +211,7 @@ abstract class Popup extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
-	accessibleRole!: PopupAccessibleRole;
+	accessibleRole!: `${PopupAccessibleRole}`;
 
 	/**
 	 * Defines the current media query size.

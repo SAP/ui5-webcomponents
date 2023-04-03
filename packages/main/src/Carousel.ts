@@ -221,7 +221,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CarouselPageIndicatorStyle, defaultValue: CarouselPageIndicatorStyle.Default })
-	pageIndicatorStyle!: CarouselPageIndicatorStyle;
+	pageIndicatorStyle!: `${CarouselPageIndicatorStyle}`;
 
 	/**
 	 * Defines the index of the initially selected item.
@@ -251,7 +251,7 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CarouselArrowsPlacement, defaultValue: CarouselArrowsPlacement.Content })
-	arrowsPlacement!: CarouselArrowsPlacement;
+	arrowsPlacement!: `${CarouselArrowsPlacement}`;
 
 	/**
 	 * Defines the carousel width in pixels.

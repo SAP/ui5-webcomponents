@@ -6,7 +6,7 @@ type UniversalDate = {
     new (time: number): UniversalDate;
     oDate: Date,
     sCalendarType: string,
-    getInstance: (oDate: Date, sCalendarType?: CalendarType) => UniversalDate,
+    getInstance: (oDate: Date, sCalendarType?: `${CalendarType}`) => UniversalDate,
     getDate: () => number,
     getMonth: () => number,
     getFullYear: () => number,

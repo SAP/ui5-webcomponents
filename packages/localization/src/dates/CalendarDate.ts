@@ -8,7 +8,7 @@ class CalendarDate {
 		let aArgs = arguments, // eslint-disable-line
 			oJSDate: Date,
 			oNow: Date,
-			sCalendarType!: CalendarType;
+			sCalendarType!: `${CalendarType}`;
 
 		switch (aArgs.length) {
 		case 0: // defaults to the current date
@@ -165,7 +165,7 @@ class CalendarDate {
 		return this._oUDate.getTime();
 	}
 
-	static fromLocalJSDate(oJSDate: Date, sCalendarType?: CalendarType) {
+	static fromLocalJSDate(oJSDate: Date, sCalendarType?: `${CalendarType}`) {
 		// Cross frame check for a date should be performed here otherwise setDateValue would fail in OPA tests
 		// because Date object in the test is different than the Date object in the application (due to the iframe).
 		// We can use jQuery.type or this method:
@@ -178,7 +178,7 @@ class CalendarDate {
 		return new CalendarDate(oJSDate.getFullYear(), oJSDate.getMonth(), oJSDate.getDate(), sCalendarType);
 	}
 
-	static fromTimestamp(iTimestamp: number, sCalendarType?: CalendarType) {
+	static fromTimestamp(iTimestamp: number, sCalendarType?: `${CalendarType}`) {
 		const oCalDate = new CalendarDate(0, 0, 1);
 		let oUDate;
 		try {
@@ -191,7 +191,7 @@ class CalendarDate {
 	}
 }
 
-function createUniversalUTCDate(oDate: Date, sCalendarType: CalendarType) {
+function createUniversalUTCDate(oDate: Date, sCalendarType: `${CalendarType}`) {
 	if (sCalendarType) {
 		return UniversalDate.getInstance(createUTCDate(oDate), sCalendarType);
 	}

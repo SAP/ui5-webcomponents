@@ -216,7 +216,7 @@ class Tree extends UI5Element {
 	 * @defaultValue "None"
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.

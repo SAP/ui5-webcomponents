@@ -9,6 +9,8 @@ import CalendarType from "./types/CalendarType.js";
 
 let initialized = false;
 
+type CalendarTLiteral = `${CalendarType}`
+
 type InitialConfig = {
 	[key: string]: any,
 	animationMode: AnimationMode,
@@ -16,7 +18,7 @@ type InitialConfig = {
 	themeRoot: string | undefined,
 	rtl: boolean | undefined,
 	language: string | undefined,
-	calendarType: CalendarType | undefined,
+	calendarType: CalendarTLiteral | undefined,
 	noConflict: boolean,
 	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,

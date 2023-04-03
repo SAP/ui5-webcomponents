@@ -216,7 +216,7 @@ class Calendar extends CalendarPart {
 		type: CalendarSelectionMode,
 		defaultValue: CalendarSelectionMode.Single,
 	})
-	selectionMode!: CalendarSelectionMode;
+	selectionMode!: `${CalendarSelectionMode}`;
 
 	/**
 	 * Defines the visibility of the week numbers column.

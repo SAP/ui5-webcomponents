@@ -43,7 +43,7 @@ type InputSuggestionText = {
 	description: string;
 	image?: string;
 	icon?: string;
-	type: ListItemType;
+	type: `${ListItemType}`;
 	additionalText?: string;
 	additionalTextState: ValueState;
 	groupItem: boolean;

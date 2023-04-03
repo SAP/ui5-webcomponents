@@ -259,7 +259,7 @@ class TreeItemBase extends ListItem {
 	 * @private
 	 */
 	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: HasPopup;
+	ariaHaspopup?: `${HasPopup}`;
 
 	/**
 	 * Defines the items of the component.

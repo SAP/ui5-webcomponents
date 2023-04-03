@@ -357,7 +357,7 @@ class MultiComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ComboBoxFilter, defaultValue: ComboBoxFilter.StartsWithPerTerm })
-	filter!: ComboBoxFilter;
+	filter!: `${ComboBoxFilter}`;
 
 	/**
 	 * Indicates whether the dropdown is open. True if the dropdown is open, false otherwise.

@@ -240,7 +240,7 @@ class RadioButton extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.

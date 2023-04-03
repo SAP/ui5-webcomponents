@@ -147,7 +147,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @public
 	 */
 	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
-	selectionMode!: CalendarSelectionMode;
+	selectionMode!: `${CalendarSelectionMode}`;
 
 	/**
 	 * Defines the visibility of the week numbers column.

@@ -145,7 +145,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @since 1.5.0
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	 * Indicates if the list item has text content.

@@ -41,7 +41,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	primaryCalendarType?: CalendarType;
+	primaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Defines the secondary calendar type.
@@ -53,7 +53,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	secondaryCalendarType?: CalendarType;
+	secondaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Determines the format, displayed in the input field.
