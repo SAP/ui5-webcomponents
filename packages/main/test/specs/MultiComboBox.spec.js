@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("MultiComboBox general interaction", () => {
 	before(async () => {

@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("MessageStrip general interaction", () => {
 	before(async () => {

@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("RTL", () => {
 	it("language forces RTL, if RTL not specified", async () => {

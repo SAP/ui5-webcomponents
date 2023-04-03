@@ -1,8 +1,8 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Some settings can be set via SAP UI URL params", () => {
-	before(async () => {
-		await browser.url("test/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb&sap-ui-animationMode=basic");
+	beforeEach(async () => {
+		await browser.url("test/pages/Configuration.html?sap-ui-rtl=true&sap-ui-language=ja&sap-ui-calendarType=Japanese&sap-ui-theme=sap_belize_hcb@https://example.com&sap-ui-animationMode=basic");
 	});
 
 	it("Tests that RTL is applied", async () => {
@@ -35,6 +35,36 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			done(config.getTheme());
 		});
 		assert.strictEqual(res, 'sap_belize_hcb', "Thems is HCB");
+	});
+
+	it("Tests that theme root is applied", async () => {
+		let location;
+		let res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getThemeRoot());
+		});
+		assert.strictEqual(res, 'https://example.com/UI5/', "Theme root is https://example.com/UI5");
+
+		await browser.url("test/pages/Configuration.html?sap-ui-theme=sap_belize_hcb@https://another-example.com");
+
+		res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getThemeRoot());
+		});
+		location = await browser.executeAsync(done => {
+			done(window.location);
+		});
+
+		assert.strictEqual(res, `${location.origin}/UI5/`, `Theme root is ${location.origin}/UI5/`);
+
+		await browser.url("test/pages/Configuration.html?sap-ui-theme=sap_belize_hcb@./test");
+
+		res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getThemeRoot());
+		});
+
+		assert.ok(res.endsWith("/test/UI5/"), `Theme root is set correctly with relative url`);
 	});
 
 	it("Tests that animationMode is applied", async () => {
