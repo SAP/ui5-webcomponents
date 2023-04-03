@@ -35,10 +35,12 @@ function HTMLLitVisitor(componentName, debug) {
 	this.result = "";
 	this.mainBlock = "";
 	this.blockLevel = 0;
-	this.blockParametersDefinition = ["context: UI5Element", "tags: string[]", "suffix: string | undefined"];
-	this.blockParametersUsage = ["context", "tags", "suffix"];
-	this.paths = []; //contains all normalized relative paths
 	this.componentName = componentName
+	const blockParametersDefinitionTS = [`this: ${componentName}`, "context: UI5Element", "tags: string[]", "suffix: string | undefined"];
+	const blockParametersDefinitionJS = ["context", "tags", "suffix"];
+	this.blockParametersDefinition = process.env.UI5_TS ? blockParametersDefinitionTS : blockParametersDefinitionJS;
+	this.blockParametersUsage = ["this", "context", "tags", "suffix"];
+	this.paths = []; //contains all normalized relative paths
 	this.debug = debug;
 	if (this.debug) {
 		this.blockByNumber = [];
@@ -54,10 +56,10 @@ HTMLLitVisitor.prototype.Program = function(program) {
 	this.debug && this.blockByNumber.push(key);
 
 	// this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: any, ` + this.blockParametersDefinition.join(", ") + ") { ";
-	this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: ${this.componentName}, ` + this.blockParametersDefinition.join(", ") + ") { ";
+	this.blocks[this.currentKey()] = `function ${this.currentKey()} (${this.blockParametersDefinition.join(", ")}) { `;
 
 	if (this.keys.length > 1) { //it's a nested block
-		this.blocks[this.prevKey()] += this.currentKey() + ".call(this, " + this.blockParametersUsage.join(", ") + ")";
+		this.blocks[this.prevKey()] += this.currentKey() + ".call(" + this.blockParametersUsage.join(", ") + ")";
 	} else {
 		this.mainBlock = this.currentKey();
 	}
@@ -108,7 +110,11 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		if (isNodeValue && !mustache.escaped) {
 			parsedCode = `\${unsafeHTML(${path})}`;
 		} else if (hasCalculatingClasses) {
-			parsedCode = `\${classMap(${path} as ClassMapValue)}`;
+			if (process.env.UI5_TS) {
+				parsedCode = `\${classMap(${path} as ClassMapValue)}`;
+			} else {
+				parsedCode = `\${classMap(${path})}`;
+			}
 		} else if (isStyleAttribute) {
 			parsedCode = `\${styleMap(${path})}`;
 		} else if (skipIfDefined){
@@ -173,23 +179,35 @@ function visitEachBlock(block) {
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
 
-	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item: any, index: number) => item._id || index, (item: any, index: number) => ";
+	const reapeatDirectiveParamsTS = "(item: any, index: number) => item._id || index, (item: any, index: number)";
+	const reapeatDirectiveParamsJS = "(item, index) => item._id || index, (item, index)";
+	const repleatDirectiveParams = process.env.UI5_TS ? reapeatDirectiveParamsTS : reapeatDirectiveParamsJS;
+	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", " + repleatDirectiveParams + " => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
 	this.blockLevel++;
 
-	if (this.blockParametersDefinition.indexOf("item: any") === -1) {
+	// block params is [this, context, tags, suffix] for top level blocks
+	// blcok params is [this, context, tags, suffix, item, index] for nested blocks
+	if (!this.blockParametersUsage.includes("index")) {
+		// last item is not index, but an each block is processed, add the paramters for further nested blocks
 		bParamAdded = true;
-		this.blockParametersDefinition.unshift("index: number");
-		this.blockParametersDefinition.unshift("item: any");
-		this.blockParametersUsage.unshift("index");
-		this.blockParametersUsage.unshift("item");
+		if (process.env.UI5_TS) {
+			this.blockParametersDefinition.push("item: any");
+			this.blockParametersDefinition.push("index: number");
+		} else {
+			this.blockParametersDefinition.push("item");
+			this.blockParametersDefinition.push("index");
+		}
+		this.blockParametersUsage.push("item");
+		this.blockParametersUsage.push("index");
 	}
 	this.acceptKey(block, "program");
 	if (bParamAdded) {
-		this.blockParametersDefinition.shift("item: any");
-		this.blockParametersDefinition.shift("index: number");
-		this.blockParametersUsage.shift("item");
-		this.blockParametersUsage.shift("index");
+		// if parameters were added at this step, remove the last two
+		this.blockParametersDefinition.pop();
+		this.blockParametersDefinition.pop();
+		this.blockParametersUsage.pop();
+		this.blockParametersUsage.pop();
 	}
 	this.blockLevel--;
 	this.blocks[this.currentKey()] += ") }";

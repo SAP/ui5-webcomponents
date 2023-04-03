@@ -40,7 +40,7 @@ const scripts = {
 	generateAssetParameters: `node "${assetParametersScript}"`,
 	generateVersionInfo: `node "${versionScript}"`,
 	generateStyles: `node "${stylesScript}"`,
-	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
+	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
 	generateAPI: {
 		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
 		prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,

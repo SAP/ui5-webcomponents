@@ -38,7 +38,20 @@ jsControls = ["RatingIndicator",
 	"Wizard",
 ]
 
+const tsImports = (controlName) => {
+	if (!process.env.UI5_TS) {
+		return "";
+	}
+
+	const importPrefix = process.env.UI5_BASE ? "../../../" : "@ui5/webcomponents-base/dist/"
+
+	return `import type UI5Element from "${importPrefix}UI5Element";
+	${importForControl(controlName)}
+	import type { ClassMapValue } from "${importPrefix}types";
+	`;
+}
 const importForControl = (controlName) => {
+
 	if (jsControls.includes(controlName)) {
 		return `type ${controlName} = any;`;
 	}
@@ -52,13 +65,9 @@ const importForControl = (controlName) => {
 
 const buildRenderer = (controlName, litTemplate) => {
 	// typescript cannot process package imports for the same package and the paths are changed to relative for base package templates
-	const importPrefix = process.env.UI5_BASE ? "../../../" : "@ui5/webcomponents-base/dist/"
 	return `/* eslint no-unused-vars: 0 */
 import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "${importPrefix}renderer/LitRenderer.js";
-import type UI5Element from "${importPrefix}UI5Element";
-${importForControl(controlName)}
-import type { ClassMapValue } from "${importPrefix}types";
-
+${tsImports(controlName)}
 ${litTemplate}
 
 export default block0;`;

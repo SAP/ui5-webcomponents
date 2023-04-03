@@ -26,6 +26,7 @@ const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
 const processFile = async (file, outputDir) => {
 	const componentNameMatcher = /(\w+)(\.hbs)/gim;
 	const componentName = componentNameMatcher.exec(file)[1];
+	console.log({componentName})
 	const litCode = await hbs2lit(file, componentName);
 	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
 
@@ -70,7 +71,7 @@ const writeRenderers = async (outputDir, controlName, fileContent) => {
 
 		await fs.mkdir(outputDir, { recursive: true });
 
-		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.ts`;
+		const compiledFilePath = `${outputDir}${path.sep}${controlName}Template.lit.${process.env.UI5_TS ? "ts" : "js"}`;
 
 		// strip DOS line endings because the break the source maps
 		let fileContentUnix = fileContent.replace(/\r\n/g, "\n");
