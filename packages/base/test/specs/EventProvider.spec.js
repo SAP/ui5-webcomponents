@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Event provider attaches and detaches listeners properly", () => {
 	before(async () => {

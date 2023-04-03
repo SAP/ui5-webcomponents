@@ -1,15 +1,17 @@
-const fs = require('fs').promises;
-const assets = require('@ui5/webcomponents-tools/assets-meta.js');
+import fs from "fs/promises";
+import assets from "@ui5/webcomponents-tools/assets-meta.js";
 
 const fileContent = `const assetParameters = ${JSON.stringify(assets)};
 
 const DEFAULT_THEME = assetParameters.themes.default;
+const SUPPORTED_THEMES = assetParameters.themes.all;
 const DEFAULT_LANGUAGE = assetParameters.languages.default;
 const DEFAULT_LOCALE = assetParameters.locales.default;
 const SUPPORTED_LOCALES = assetParameters.locales.all;
 
 export {
 	DEFAULT_THEME,
+	SUPPORTED_THEMES,
 	DEFAULT_LANGUAGE,
 	DEFAULT_LOCALE,
 	SUPPORTED_LOCALES,
