@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("ResponsivePopover general interaction", () => {
 	before(async () => {

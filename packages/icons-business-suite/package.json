@@ -4,6 +4,7 @@
   "description": "UI5 Web Components: SAP Fiori Tools icon set",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
+  "type": "module",
   "private": false,
   "keywords": [
     "openui5",

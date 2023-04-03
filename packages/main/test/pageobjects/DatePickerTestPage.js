@@ -175,4 +175,4 @@ class DatePickerTestPage {
 	}
 }
 
-module.exports = new DatePickerTestPage();
+export default new DatePickerTestPage();
