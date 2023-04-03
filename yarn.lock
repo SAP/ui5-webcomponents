@@ -1903,10 +1903,10 @@
   dependencies:
     "@octokit/openapi-types" "^16.0.0"
 
-"@openui5/sap.ui.core@1.109.0":
-  version "1.109.0"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.109.0.tgz#bd4e70eecb1e1a7fbe79942fa42b5958d344f8c2"
-  integrity sha512-s0chMgOy3RRLElil2vDNcAhEy1UVmbGUNXq35O492R1BHQ+4zwf6SYWfAETsnlljEmXuYrCjb2rpwAHz68KTqQ==
+"@openui5/sap.ui.core@1.112.0":
+  version "1.112.0"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.112.0.tgz#79085f4485db50b29627599673e1d0635e497675"
+  integrity sha512-z41l8nHeLW1Cc0gDtGloYauJMPSLBhezjMzykiBxlelNuSmtaha98YP9DueU9Cd7ry4Qb177rMZqqbGJTiBR8g==
 
 "@parcel/watcher@2.0.4":
   version "2.0.4"
