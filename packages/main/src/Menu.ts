@@ -44,6 +44,14 @@ type CurrentItem = {
 
 type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
+type BusyIndicatorAttributes = {
+	title?: string,
+	text?: string,
+	size?: string,
+	delay?: number,
+	active?: boolean,
+}
+
 /**
  * @class
  *
@@ -210,7 +218,7 @@ class Menu extends UI5Element {
 	 * @since 1.14.0
 	 */
 	@property({ type: Object })
-	busyIndicator!: object;
+	busyIndicator!: BusyIndicatorAttributes;
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
