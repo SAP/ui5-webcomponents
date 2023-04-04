@@ -97,6 +97,36 @@ class MenuItem extends UI5Element {
 	disabled!: boolean;
 
 	/**
+	 * Defines the corresponding sub-menu busy state.
+	 *
+	 * The following fields are supported:
+	 *
+	 * <ul>
+	 * 		<li><code>text</code>: The text to be displayed below the <code>ui5-busy-indicator</code>. It can be used to inform the user of the current operation. Accepts a string value.
+	 * 		</li>
+	 * 		<li><code>title</code>: The text to be used as tooltip of the <code>ui5-busy-indicator</code>. Accepts a string value.
+	 * 		</li>
+	 * 		<li><code>size</code>: The size of the <code>ui5-busy-indicator</code>. Accepts the following string values:
+	 *			<ul>
+	 *				<li><code>Small</code></li>
+	 *				<li><code>Medium</code></li>
+	 *				<li><code>Large</code></li>
+	 *			</ul>
+	 * 		</li>
+	 * 		<li><code>delay</code>: The delay in milliseconds, after which the busy indicator will be visible on the screen. Accepts an integer value. The default value is 1000.
+	 * 		</li>
+	 * 		<li><code>active</code>: Defines if the <code>ui5-busy-indicator</code> is visible on the screen. By default it is not. Accepts a boolean value.
+	 * 		</li>
+	 * </ul>
+	 * @name sap.ui.webc.main.Menu.prototype.busyIndicator
+	 * @public
+	 * @type {sap.ui.webc.main.Menu.prototype.busyIndicator}
+	 * @since 1.14.0
+	 */
+	@property({ type: Object })
+	busyIndicator!: object;
+
+	/**
 	 * Defines the accessible ARIA name of the component.
 	 *
 	 * @name sap.ui.webc.main.MenuItem.prototype.accessibleName

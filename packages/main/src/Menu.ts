@@ -24,6 +24,7 @@ import Button from "./Button.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import BusyIndicator from "./BusyIndicator.js";
 import type MenuItem from "./MenuItem.js";
 import type { ClickEventDetail } from "./List.js";
 import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
@@ -92,6 +93,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 		List,
 		StandardListItem,
 		Icon,
+		BusyIndicator,
 	],
 })
 
@@ -181,6 +183,36 @@ class Menu extends UI5Element {
 	open!:boolean;
 
 	/**
+	 * Defines the menu busy state.
+	 *
+	 * The following fields are supported:
+	 *
+	 * <ul>
+	 * 		<li><code>text</code>: The text to be displayed below the <code>ui5-busy-indicator</code>. It can be used to inform the user of the current operation. Accepts a string value.
+	 * 		</li>
+	 *		<li><code>title</code>: The text to be used as tooltip of the <code>ui5-busy-indicator</code>. Accepts a string value.
+	 * 		</li>
+	 * 		<li><code>size</code>: The size of the <code>ui5-busy-indicator</code>. Accepts the following string values:
+	 *			<ul>
+	 *				<li><code>Small</code></li>
+	 *				<li><code>Medium</code></li>
+	 *				<li><code>Large</code></li>
+	 *			</ul>
+	 * 		</li>
+	 * 		<li><code>delay</code>: The delay in milliseconds, after which the busy indicator will be visible on the screen. Accepts an integer value. The default value is 1000.
+	 * 		</li>
+	 * 		<li><code>active</code>: Defines if the <code>ui5-busy-indicator</code> is visible on the screen. By default it is not. Accepts a boolean value.
+	 * 		</li>
+	 * </ul>
+	 * @name sap.ui.webc.main.Menu.prototype.busyIndicator
+	 * @public
+	 * @type {sap.ui.webc.main.Menu.prototype.busyIndicator}
+	 * @since 1.14.0
+	 */
+	@property({ type: Object })
+	busyIndicator!: object;
+
+	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
 	 *
 	 * @name sap.ui.webc.main.Menu.prototype.opener
@@ -256,7 +288,14 @@ class Menu extends UI5Element {
 	 * @slot items
 	 * @public
 	 */
-	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
+	@slot({
+		"default": true,
+		type: HTMLElement,
+		invalidateOnChildChange: {
+			"properties": true,
+			"slots": true,
+		},
+	})
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
@@ -298,6 +337,10 @@ class Menu extends UI5Element {
 		return isPhone();
 	}
 
+	get isBusy() {
+		return Boolean(this.busyIndicator && this.busyIndicator.active);
+	}
+
 	get isSubMenuOpened() {
 		return !!this._parentMenuItem;
 	}
@@ -315,6 +358,9 @@ class Menu extends UI5Element {
 		this._currentItems.forEach(item => {
 			item.item._siblingsWithChildren = itemsWithChildren;
 			item.item._siblingsWithIcon = itemsWithIcon;
+			if (item.item._subMenu) {
+				item.item._subMenu.busyIndicator = item.item.busyIndicator;
+			}
 		});
 	}
 
@@ -411,6 +457,7 @@ class Menu extends UI5Element {
 		subMenu._isSubMenu = true;
 		subMenu.setAttribute("id", `submenu-${openerId}`);
 		subMenu._parentMenuItem = item;
+		subMenu.busyIndicator = item.busyIndicator;
 		const subItems = item.children;
 		let clonedItem,
 			idx;
@@ -488,19 +535,19 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_itemMouseOut(e: MouseEvent) {
-		if (isDesktop()) {
-			// respect mouseover only on desktop
-			const opener = e.target as OpenerStandardListItem;
-			const item = opener.associatedItem;
+	// _itemMouseOut(e: MouseEvent) {
+	// 	if (isDesktop()) {
+	// 		// respect mouseover only on desktop
+	// 		const opener = e.target as OpenerStandardListItem;
+	// 		const item = opener.associatedItem;
 
-			if (item && item.hasChildren && item._subMenu) {
-				// try to close the sub-menu
-				item._preventSubMenuClose = false;
-				this._closeItemSubMenu(item);
-			}
-		}
-	}
+	// 		if (item && item.hasChildren && item._subMenu) {
+	// 			// try to close the sub-menu
+	// 			item._preventSubMenuClose = false;
+	// 			this._closeItemSubMenu(item);
+	// 		}
+	// 	}
+	// }
 
 	_itemKeyDown(e: KeyboardEvent) {
 		const isMenuClose = this.isRtl ? isRight(e) : isLeft(e);

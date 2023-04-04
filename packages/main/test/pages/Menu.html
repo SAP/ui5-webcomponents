@@ -86,6 +86,22 @@
 	</div>
 
 	<script>
+
+		// Simulate loading of ui5-menu-items
+		setTimeout(function() {
+			menu.items[2].busyIndicator = {
+				active: false,
+			};
+		}, 10000);
+
+		menu.querySelectorAll("ui5-menu-item")[2].busyIndicator = {
+			title: "Loading...",
+			text: "Loading...",
+			size: "Medium",
+			delay: "100",
+			active: true,
+		};
+
 		btnOpen.accessibilityAttributes = {
 			hasPopup: "Menu",
 		};
