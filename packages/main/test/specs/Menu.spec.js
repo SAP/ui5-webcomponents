@@ -135,13 +135,13 @@ describe("Menu interaction", () => {
 	it("Menu and Menu items busyIndicator property", async () => {
 		await browser.url(`test/pages/Menu.html`);
 		const openButton = await browser.$("#btnOpen");
-		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
 
 		openButton.click();
-		menuItems[2].click();
 
-		const staticAreaItems = await browser.$$("ui5-static-area-item");
-		const subMenuPopover = await staticAreaItems[staticAreaItems.length - 1].shadow$("ui5-responsive-popover");
+		const menuItem = await browser.$("ui5-menu > ui5-menu-item[text='Open']");
+		menuItem.click();
+
+		const subMenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
 		const busyIndicator = await subMenuPopover.shadow$("ui5-busy-indicator");
 
 		assert.strictEqual(await busyIndicator.getAttribute("active"), "true", "Active attribute is propelry set.");
