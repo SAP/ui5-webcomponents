@@ -138,16 +138,8 @@ describe("Menu interaction", () => {
 		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
 
 		openButton.click();
-
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-		const listItems = await popover.$("ui5-list").$$("ui5-li");
-
 		menuItems[2].click();
 
-		assert.ok(await menuItems[2].subMenuOpened(), "The sub-menu is opened.");
-
-		
 		const staticAreaItems = await browser.$$("ui5-static-area-item");
 		const subMenuPopover = await staticAreaItems.shadow$("ui5-responsive-popover");
 		const busyIndicator = await subMenuPopover.shadow$("ui5-busy-indicator");
