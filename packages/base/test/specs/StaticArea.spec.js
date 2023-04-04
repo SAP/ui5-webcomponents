@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("Some configuration options can be changed at runtime", () => {
 	before(async () => {

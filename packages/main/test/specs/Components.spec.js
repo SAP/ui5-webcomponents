@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 const assertBooleanProperty = async (el, prop) => {
 	assert.notOk(await el.getProperty(prop),  "the value should be false by default.");

@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 async function getItemsCount(selector) {
 	const items = await getItems(selector);

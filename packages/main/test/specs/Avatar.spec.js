@@ -1,4 +1,5 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
+
 
 describe("Avatar", () => {
 	before(async () => {

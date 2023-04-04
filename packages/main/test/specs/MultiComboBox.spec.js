@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("MultiComboBox general interaction", () => {
 	before(async () => {
@@ -1366,24 +1366,6 @@ describe("MultiComboBox general interaction", () => {
 			let listItem = await popover.$("ui5-list").$$("ui5-li")[1];
 
 			assert.equal(await listItem.getProperty("focused"), true, "The second item should be focused");
-		});
-
-		it ("Backspace deletes token and forwards the focus to the last token without collapsing the tokenizer", async () => {
-			const mcb = await $("#n-more-many-items");
-			const inner = await mcb.shadow$("input");
-			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-
-			await inner.click();
-
-			assert.strictEqual(tokens.length, 7, "7 Tokens are placed in the MCB");
-
-			await inner.keys("Backspace");
-			await inner.keys("Backspace");
-
-			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-
-			assert.strictEqual(tokens.length, 6, "6 Tokens are placed in the MCB");
-			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
 		});
 	});
 

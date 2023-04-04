@@ -7,7 +7,6 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
-import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -97,7 +96,9 @@ class ListItemBase extends UI5Element implements ITabbable {
 	_onkeyup(e: KeyboardEvent) {} // eslint-disable-line
 
 	_handleTabNext(e: KeyboardEvent) {
-		if (this.shouldForwardTabAfter()) {
+		const target = e.target as HTMLElement;
+
+		if (this.shouldForwardTabAfter(target)) {
 			if (!this.fireEvent("_forward-after", {}, true)) {
 				e.preventDefault();
 			}
@@ -116,10 +117,14 @@ class ListItemBase extends UI5Element implements ITabbable {
 	* Determines if th current list item either has no tabbable content or
 	* [TAB] is performed onto the last tabbale content item.
 	*/
-	shouldForwardTabAfter() {
+	shouldForwardTabAfter(target: HTMLElement | UI5Element) {
 		const aContent = getTabbableElements(this.getFocusDomRef()!);
 
-		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
+		if (target instanceof UI5Element) {
+			target = target.getFocusDomRef()!;
+		}
+
+		return !aContent.length || (aContent[aContent.length - 1] === target);
 	}
 
 	/*

@@ -1,4 +1,5 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
+
 
 describe("Color Picker general interaction", () => {
 	before(async () => {

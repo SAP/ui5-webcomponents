@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 const getTokenizerPopoverId = async (inputId) => {
 	return await browser.executeAsync(async (inputId, done) => {
@@ -178,7 +178,7 @@ describe("MultiInput general interaction", () => {
 		await browser.keys("Backspace");
 		await browser.keys("Backspace");
 		await browser.keys("Delete");
-		const tokens = await input.$$("ui5-token");
+		tokens = await input.$$("ui5-token");
 
 		// Assert
 		assert.strictEqual(tokens.length, 4, "The tokenizer has 4 tokens");

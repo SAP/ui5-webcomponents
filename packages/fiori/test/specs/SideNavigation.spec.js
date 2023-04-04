@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 async function getTreeItemsInPopover() {
 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
@@ -191,14 +191,14 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), "navigation", "Role of the SideNavigation root element is correctly set");
 
-			let roleDescription = await browser.executeAsync(done => {
+			roleDescription = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
 				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC));
 			});
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree element is correctly set");
 
 			// items
-			let roleDescriptionItem = await browser.executeAsync(done => {
+			roleDescriptionItem = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
 				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC));
 			});
@@ -230,14 +230,14 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), "navigation", "Role of the SideNavigation root element is correctly set");
 
-			let roleDescription = await browser.executeAsync(done => {
+			roleDescription = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
 				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC));
 			});
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree element is correctly set");
 
 			// items
-			let roleDescriptionItem = await browser.executeAsync(done => {
+			roleDescriptionItem = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
 				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC));
 			});

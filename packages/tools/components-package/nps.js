@@ -42,7 +42,10 @@ const getScripts = (options) => {
 	}
 
 	let eslintConfig;
-	if (fs.existsSync(".eslintrc.js") || fs.existsSync(".eslintrc.cjs")) {
+	if (fs.existsSync("config/.eslintrc.js")) {
+		// old project setup where config file is in separate folder
+		eslintConfig = "--config config/.eslintrc.js";
+	} else if (fs.existsSync(".eslintrc.js")) {
 		// preferred way of custom configuration in root project folder
 		eslintConfig = "";
 	} else {
@@ -52,8 +55,8 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
-		lint: `eslint . ${eslintConfig}`,
-		lintfix: `eslint . ${eslintConfig} --fix`,
+		lint: `${tsCrossEnv} eslint . ${eslintConfig}`,
+		lintfix: `${tsCrossEnv} eslint . ${eslintConfig} --fix`,
 		prepare: {
 			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',

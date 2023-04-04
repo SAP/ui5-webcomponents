@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("Lit HTML key function for #each", async () => {
 	before(async () => {

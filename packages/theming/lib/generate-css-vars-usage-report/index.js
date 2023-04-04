@@ -1,10 +1,6 @@
-import fs from "fs/promises";
-import path from "path";
-import beautify from "json-beautify";
-import { fileURLToPath } from 'url';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const fs = require('fs').promises;
+const path = require("path");
+const beautify = require("json-beautify");
 
 const vars = new Set();
 

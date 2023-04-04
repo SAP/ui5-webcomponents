@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 const KEYS = {
 	SHIFT: '\uE008',
 	CTRL: '\uE009',
@@ -302,7 +302,7 @@ describe("Breadcrumbs general interaction", () => {
 		await link.click();
 		await browser.releaseActions();
 		// Check
-		let eventResult = await browser.$("#result");
+		eventResult = await browser.$("#result");
 		assert.strictEqual(await eventResult.getText(), 'META:' + await link.getText(), "label for pressed link is correct");
 
 		// Setup for ALT Key

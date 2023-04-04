@@ -3,50 +3,6 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.12.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.0) (2023-04-04)
-
-
-### Bug Fixes
-
-* **framework:** relative paths for external themes ([#6799](https://github.com/SAP/ui5-webcomponents/issues/6799)) ([df1ddfc](https://github.com/SAP/ui5-webcomponents/commit/df1ddfc955ef3bb46d3b1e4694e7b931655a3079))
-* **theming:** fix icons version display for custom themes (built via the ThemeDesigner) ([#6815](https://github.com/SAP/ui5-webcomponents/issues/6815)) ([63ff800](https://github.com/SAP/ui5-webcomponents/commit/63ff8007889a66efae074fc6b4dbcb1b7ea36713)), closes [#6758](https://github.com/SAP/ui5-webcomponents/issues/6758)
-
-
-### Features
-
-* **framework:** re-export all public imports from index.js ([#6823](https://github.com/SAP/ui5-webcomponents/issues/6823)) ([a08d464](https://github.com/SAP/ui5-webcomponents/commit/a08d4645aeaae6e6f5eb8c55d8cb8bfaf4aa58b6))
-
-
-
-
-
-# [1.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.2...v1.12.0-rc.3) (2023-03-30)
-
-**Note:** Version bump only for package @ui5/webcomponents-base
-
-
-
-
-
-# [1.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.1...v1.12.0-rc.2) (2023-03-23)
-
-
-### Bug Fixes
-
-* fix eslint for JS 3rd party projects ([#6725](https://github.com/SAP/ui5-webcomponents/issues/6725)) ([215a888](https://github.com/SAP/ui5-webcomponents/commit/215a888b006e46d431edd6324812b9d39249aef4))
-* **framework:** apply theme after every theme props registration ([#6718](https://github.com/SAP/ui5-webcomponents/issues/6718)) ([9b6c414](https://github.com/SAP/ui5-webcomponents/commit/9b6c414e7ae625d835a7d14c3761d2c235b750ff)), closes [#6666](https://github.com/SAP/ui5-webcomponents/issues/6666)
-* **i18n:** use correct i18n text bundle ([#6720](https://github.com/SAP/ui5-webcomponents/issues/6720)) ([9636000](https://github.com/SAP/ui5-webcomponents/commit/963600046d1847133512f8a2a7a8f9087bfcd3f2))
-* inline sources in the .map file so the src folder is not mandatory ([#6732](https://github.com/SAP/ui5-webcomponents/issues/6732)) ([16771a6](https://github.com/SAP/ui5-webcomponents/commit/16771a64d7b13f418af9afa1a03b224fe3762775))
-
-
-### Features
-
-* **framework:** add default values for language/theme ([#6738](https://github.com/SAP/ui5-webcomponents/issues/6738)) ([36d3636](https://github.com/SAP/ui5-webcomponents/commit/36d3636be27b785ccfe7210d1da65c628623c28d))
-
-
-
-
-
 # [1.12.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.0...v1.12.0-rc.1) (2023-03-16)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

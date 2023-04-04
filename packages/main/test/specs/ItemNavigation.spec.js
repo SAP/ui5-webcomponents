@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("Item Navigation Tests", () => {
 	before(async () => {

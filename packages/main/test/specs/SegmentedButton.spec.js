@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("SegmentedButton general interaction", () => {
 	before(async () => {

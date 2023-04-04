@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 async function getResourceBundleTexts(keys) {
 	return browser.executeAsync((keys, done) => {
@@ -66,7 +66,7 @@ describe("Select general interaction", () => {
 
 		const select = await browser.$("#mySelect");
 		const inputResultClose = await browser.$("#inputResultClose");
-
+		
 		await select.click(); // open
 		await select.click(); // close
 
@@ -165,23 +165,6 @@ describe("Select general interaction", () => {
 		await btn.click();
 
 		assert.strictEqual(await inputResult.getProperty("value"), "3", "Change event should have fired twice");
-	});
-
-	it("announces the selected value once Select Popover is opened", async () => {
-		await browser.url(`test/pages/Select.html`);
-
-		const politeSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const select = await browser.$("#mySelect");
-
-		// open picker
-		await select.click();
-
-		let politeSpanHtml = await politeSpan.getHTML(false);
-		let selectedOptionHTML = await browser.$("#mySelect ui5-option[selected]").getHTML(false);
-
-		// expect the selected item to be read out
-		assert.include(politeSpanHtml, selectedOptionHTML, "Selected item is announced on Select opening");
-
 	});
 
 	it("changes selection on Tab", async () => {
@@ -496,7 +479,7 @@ describe("Select general interaction", () => {
 			"VALUE_STATE_TYPE_WARNING",
 		];
 		const texts = await getResourceBundleTexts(keys);
-
+		
 		assert.ok(valueStateText.includes(texts.VALUE_STATE_TYPE_SUCCESS),
 			"The value state text is correct.");
 		assert.ok(infoValueStateText.includes(texts.VALUE_STATE_TYPE_INFORMATION),

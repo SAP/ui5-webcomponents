@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("Menu interaction", () => {
 	it("Menu opens after button click", async () => {

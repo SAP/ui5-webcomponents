@@ -12,7 +12,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { markEvent } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
-import { getIconAccessibleName } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
 import {
 	isPhone,
@@ -283,13 +282,6 @@ class Button extends UI5Element implements IFormElement {
 	@property({ type: Boolean })
 	nonInteractive!: boolean;
 
-	/**
-	 * The current title of the button, either the tooltip property or the icons tooltip. The tooltip property with higher prio.
-	 * @private
-	 */
-	@property({ noAttribute: true })
-	buttonTitle?: string;
-
 	@property({ type: Object })
 	_iconSettings!: object;
 
@@ -361,7 +353,7 @@ class Button extends UI5Element implements IFormElement {
 		this._isTouch = (isPhone() || isTablet()) && !isCombi();
 	}
 
-	async onBeforeRendering() {
+	onBeforeRendering() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (this.submits && !formSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -369,8 +361,6 @@ class Button extends UI5Element implements IFormElement {
 
 		this.iconOnly = this.isIconOnly;
 		this.hasIcon = !!this.icon;
-
-		this.buttonTitle = this.tooltip || await getIconAccessibleName(this.icon);
 	}
 
 	_onclick(e: MouseEvent) {
@@ -454,7 +444,7 @@ class Button extends UI5Element implements IFormElement {
 			return "";
 		}
 
-		return "presentation";
+		return this.showIconTooltip ? "img" : "presentation";
 	}
 
 	get isIconOnly() {

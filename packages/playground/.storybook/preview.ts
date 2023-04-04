@@ -3,8 +3,7 @@ import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEff
 import customElements from "./custom-elements.json";
 import { setCustomElementsManifest } from "@storybook/web-components";
 import { useOptions, themes } from "./useOptions";
-import type { Parameters, GlobalTypes, DecoratorFunction, ArgTypesEnhancer } from '@storybook/types';
-import { enhanceArgTypes } from "./args/enhanceArgTypes";
+import type { Parameters, GlobalTypes, DecoratorFunction } from '@storybook/types';
 
 if (customElements?.modules) {
   setCustomElementsManifest(customElements);
@@ -81,4 +80,3 @@ export const globalTypes: GlobalTypes = {
 };
 
 export const decorators: DecoratorFunction[] = [useOptions];
-export const argTypesEnhancers: ArgTypesEnhancer[] = [enhanceArgTypes];

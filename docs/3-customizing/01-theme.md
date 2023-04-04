@@ -86,14 +86,4 @@ setTheme("sap_fiori_3_dark");
 
 For more on configuring themes, see [Configuration](../2-advanced/01-configuration.md).
 
-## Load external theme
-To load an external theme, you have to specify where the theme resources are located in the theme URL parameter. For example:
-```
-index.html?sap-ui-theme=mytheme@https://my-example-host.com/
-```
-
-In this example, "mytheme" theme will be applied and its resources (CSS variables specific to the theme) will be loaded from https://my-example-host.com/UI5/Base/baseLib/mytheme/css_variables.css.
-
-**Note:** When an external theme is loaded some security restrictions will apply. Absolute URLs to a different origin than the current page will return the current page as an origin. To allow certain origins, you have to use `<meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/">` tag inside the head of the page.
-
 Next: [Custom Fonts](./02-fonts.md)

@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("Properties can only have values, restricted to their types", () => {
 	before(async () => {

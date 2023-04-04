@@ -20,13 +20,11 @@ declare global {
 
 	module "*generated/AssetParameters.js" {
 		const DEFAULT_THEME: string;
-		const SUPPORTED_THEMES: Array<string>;
 		const DEFAULT_LANGUAGE: string;
 		const DEFAULT_LOCALE: string;
 		const SUPPORTED_LOCALES: Array<string>;
 		export {
 			DEFAULT_THEME,
-			SUPPORTED_THEMES,
 			DEFAULT_LANGUAGE,
 			DEFAULT_LOCALE,
 			SUPPORTED_LOCALES,

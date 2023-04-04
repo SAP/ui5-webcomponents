@@ -202,7 +202,6 @@
 :host([active][checked]:not([value-state]):not([disabled])) .ui5-checkbox-inner,
 :host([active][checked][value-state="None"]:not([disabled])) .ui5-checkbox-inner {
 	border-color: var(--_ui5_checkbox_inner_selected_border_color);
-	background-color: var(--_ui5_checkbox_active_background);
 }
 
 .ui5-checkbox-inner {

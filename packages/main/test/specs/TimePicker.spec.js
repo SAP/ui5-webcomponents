@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("TimePicker general interaction", () => {
 	it("input receives value in format pattern depending on the set language", async () => {

@@ -49,7 +49,9 @@ type NotificationListItemBaseCloseEventDetail = {
  * @author SAP SE
  * @alias sap.ui.webc.fiori.NotificationListItemBase
  * @extends sap.ui.webc.main.ListItemBase
+ * @tagname ui5-li-notification-group
  * @since 1.0.0-rc.8
+ * @appenddocs sap.ui.webc.fiori.NotificationAction
  * @public
  */
 

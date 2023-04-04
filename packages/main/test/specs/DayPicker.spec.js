@@ -1,5 +1,5 @@
-import daypicker from "../pageobjects/DayPickerTestPage.js";
-import { assert } from "chai";
+const daypicker = require("../pageobjects/DayPickerTestPage");
+const assert = require("chai").assert;
 
 describe("Day Picker Tests", () => {
 	before(async () => {

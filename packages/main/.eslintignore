@@ -7,7 +7,7 @@ lib
 test
 bundle.*.js
 rollup.config*.js
-wdio.conf.cjs
-postcss.config.cjs
-package-scripts.cjs
-.eslintrc.cjs
+wdio.conf.js
+postcss.config.js
+package-scripts.js
+.eslintrc.js

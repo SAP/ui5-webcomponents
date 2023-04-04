@@ -38,11 +38,11 @@ export { pathData, ltr, accData };`;
 
 
 
-const collectionTemplate = (name, versions, fullName) => `import { isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+const collectionTemplate = (name, versions, fullName) => `import { isThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { pathData as pathData${versions[0]}, ltr, accData } from "./${versions[0]}/${name}.js";
 import { pathData as pathData${versions[1]} } from "./${versions[1]}/${name}.js";
 
-const pathData = isLegacyThemeFamily() ? pathData${versions[0]} : pathData${versions[1]};
+const pathData = isThemeFamily("sap_horizon") ? pathData${versions[1]} : pathData${versions[0]};
 
 export default "${fullName}";
 export { pathData, ltr, accData };`;

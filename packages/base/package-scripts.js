@@ -11,10 +11,11 @@ const preprocessJSDocScript = resolve.sync("@ui5/webcomponents-tools/lib/jsdoc/p
 const LIB = path.join(__dirname, `../tools/lib/`);
 
 const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-package/vite.config.js")}"`;
+const eslintConfig = `--config ${require.resolve("@ui5/webcomponents-tools/components-package/eslint.js")}`;
 
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
-	lint: `eslint .`,
+	lint: `cross-env UI5_TS=true eslint . ${eslintConfig}`,
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
 	typescript: "tsc",
 	integrate: {
@@ -58,9 +59,8 @@ const scripts = {
 	},
 	start: "nps prepare watch.withBundle",
 	test: {
-		default: 'concurrently "nps test.wdio" "nps test.ssr" "nps test.ssr2"',
+		default: 'concurrently "nps test.wdio"',
 		ssr: `mocha test/ssr`,
-		ssr2: "node -e \"import('./dist/Device.js')\"",
 		wdio: `node "${LIB}/test-runner/test-runner.js"`
 	},
 };

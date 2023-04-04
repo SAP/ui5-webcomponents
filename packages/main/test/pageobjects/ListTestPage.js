@@ -16,4 +16,4 @@ class ListTestPage {
 	}
 }
 
-export default new ListTestPage()
+module.exports = new ListTestPage();

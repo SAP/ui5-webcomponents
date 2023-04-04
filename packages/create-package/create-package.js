@@ -23,17 +23,8 @@ const toCamelCase = parts => {
 		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 	}).join("");
 };
-const isTSRelatedFile = sourcePath => {
+const isTypescriptRelatedFile = sourcePath => {
 	return ["Assets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
-};
-const isJSRelatedFile = sourcePath => {
-	return ["Assets.js", "MyFirstComponent.js"].some(fileName => sourcePath.includes(fileName));
-};
-const isGitIgnore = sourcePath => {
-	return sourcePath.includes("gitignore");
-};
-const isNPMRC = sourcePath => {
-	return sourcePath.includes("npmrc");
 };
 
 // Validation of user input
@@ -54,8 +45,8 @@ const replaceVarsInFileName = (vars, fileName) => {
 };
 
 const copyFile = (vars, sourcePath, destPath) => {
-	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && isJSRelatedFile(sourcePath);
-	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTSRelatedFile(sourcePath);
+	const ignoreJsRelated = vars.INIT_PACKAGE_VAR_TYPESCRIPT && sourcePath.includes("MyFirstComponent.js");
+	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTypescriptRelatedFile(sourcePath);
 
 	if (ignoreJsRelated || ignoreTsRelated) {
 		return;
@@ -64,18 +55,7 @@ const copyFile = (vars, sourcePath, destPath) => {
 	let content = fs.readFileSync(sourcePath, { encoding: "UTF-8" });
 	content = replaceVarsInFileContent(vars, content);
 	destPath = replaceVarsInFileName(vars, destPath);
-
 	fs.writeFileSync(destPath, content);
-
-	// Rename "gitignore" to ".gitignore" (npm init won't include ".gitignore", so we add it as "gitignore" and rename it later)
-	if (isGitIgnore(sourcePath)) {
-		fs.renameSync(destPath, destPath.replace("gitignore", ".gitignore"))
-	}
-
-	// Rename "npmrc" to ".npmrc" (npm init won't include ".npmrc", so we add it as "npmrc" and rename it later)
-	if (isNPMRC(sourcePath)) {
-		fs.renameSync(destPath, destPath.replace("npmrc", ".npmrc"));
-	}
 };
 
 const copyFiles = (vars, sourcePath, destPath) => {

@@ -133,7 +133,6 @@ class IllustratedMessage extends UI5Element {
 	* <li><code>SuccessCheckMark</code></li>
 	* <li><code>SuccessHighFive</code></li>
 	* <li><code>SuccessScreen</code></li>
-	* <li><code>Survey</code></li>
 	* <li><code>Tent</code></li>
 	* <li><code>UnableToLoad</code></li>
 	* <li><code>UnableToLoadImage</code></li>

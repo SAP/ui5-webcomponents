@@ -1,7 +1,6 @@
 const child_process = require("child_process");
 const { readFileSync } = require("fs");
 const path = require("path");
-const fs = require("fs");
 
 // search for dev-server port 
 // start in current folder
@@ -24,7 +23,7 @@ while (true) {
 // check if we are in a monorepo and extract path from package.json
 let packageRepositoryPath = "";
 const pkg = require(path.join(process.cwd(), "package.json"));
-packageRepositoryPath = pkg.repository ? pkg.repository.directory : "";
+packageRepositoryPath = pkg.repository.directory;
 
 // construct base url
 // use devServerPort if a dev server is running, otherwise let the baseUrl in the wdio config be used
@@ -58,14 +57,7 @@ if (process.argv.length > 3) {
     restParams = process.argv.slice(2).join(" ");
 }
 
-let wdioConfig = "";
-if (fs.existsSync("config/wdio.conf.cjs")) {
-    wdioConfig = "config/wdio.conf.cjs";
-} else {
-    fs.existsSync("config/wdio.conf.js")
-}
-
 // run wdio with calculated parameters
-const cmd = `yarn cross-env WDIO_LOG_LEVEL=error wdio ${wdioConfig} ${spec} ${baseUrl} ${restParams}`;
+const cmd = `yarn cross-env WDIO_LOG_LEVEL=error wdio config/wdio.conf.js ${spec} ${baseUrl} ${restParams}`;
 console.log(`executing: ${cmd}`);
 child_process.execSync(cmd, {stdio: 'inherit'});

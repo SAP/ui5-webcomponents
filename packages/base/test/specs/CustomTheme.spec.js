@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("Custom themes can be registered", () => {
 	before(async () => {

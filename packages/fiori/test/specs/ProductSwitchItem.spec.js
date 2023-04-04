@@ -1,4 +1,4 @@
-import { assert } from "chai";
+const assert = require("chai").assert;
 
 describe("ProductSwitchItem general interaction", async () => {
 	before(async () => {

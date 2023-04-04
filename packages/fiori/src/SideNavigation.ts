@@ -102,8 +102,8 @@ type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedIte
 	renderer: litRender,
 	template: SideNavigationTemplate,
 	staticAreaTemplate: SideNavigationPopoverTemplate,
-	styles: SideNavigationCss,
-	staticAreaStyles: SideNavigationPopoverCss,
+	styles: [SideNavigationCss, SideNavigationPopoverCss],
+	staticAreaStyles: [SideNavigationCss, SideNavigationPopoverCss],
 	dependencies: [
 		List,
 		StandardListItem,

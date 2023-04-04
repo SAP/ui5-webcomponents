@@ -22,11 +22,11 @@ const slot = (slotData?: Slot): PropertyDecorator => {
 
 		const slotMetadata = metadata.slots;
 
-		if (slotData && slotData.default && slotMetadata.default) {
+		if (slotData?.default && slotMetadata.default) {
 			throw new Error("Only one slot can be the default slot.");
 		}
 
-		const key = slotData && slotData.default ? "default" : slotKey as string;
+		const key = slotData?.default ? "default" : slotKey as string;
 		slotData = slotData || { type: HTMLElement };
 
 		if (!slotData.type) {
