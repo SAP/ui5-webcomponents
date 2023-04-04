@@ -535,19 +535,19 @@ class Menu extends UI5Element {
 		}
 	}
 
-	// _itemMouseOut(e: MouseEvent) {
-	// 	if (isDesktop()) {
-	// 		// respect mouseover only on desktop
-	// 		const opener = e.target as OpenerStandardListItem;
-	// 		const item = opener.associatedItem;
+	_itemMouseOut(e: MouseEvent) {
+		if (isDesktop()) {
+			// respect mouseover only on desktop
+			const opener = e.target as OpenerStandardListItem;
+			const item = opener.associatedItem;
 
-	// 		if (item && item.hasChildren && item._subMenu) {
-	// 			// try to close the sub-menu
-	// 			item._preventSubMenuClose = false;
-	// 			this._closeItemSubMenu(item);
-	// 		}
-	// 	}
-	// }
+			if (item && item.hasChildren && item._subMenu) {
+				// try to close the sub-menu
+				item._preventSubMenuClose = false;
+				this._closeItemSubMenu(item);
+			}
+		}
+	}
 
 	_itemKeyDown(e: KeyboardEvent) {
 		const isMenuClose = this.isRtl ? isRight(e) : isLeft(e);

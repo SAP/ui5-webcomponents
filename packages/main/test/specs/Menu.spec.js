@@ -131,6 +131,33 @@ describe("Menu interaction", () => {
 		assert.notEqual(eventLoggerValue.indexOf("before-close"), -1, "'before-close' event is fired");
 		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
 	});
+
+	it("Menu and Menu items busyIndicator property", async () => {
+		await browser.url(`test/pages/Menu.html`);
+		const openButton = await browser.$("#btnOpen");
+		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
+
+		openButton.click();
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		const listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		menuItems[2].click();
+
+		assert.ok(await menuItems[2].subMenuOpened(), "The sub-menu is opened.");
+
+		
+		const staticAreaItems = await browser.$$("ui5-static-area-item");
+		const subMenuPopover = await staticAreaItems.shadow$("ui5-responsive-popover");
+		const busyIndicator = await subMenuPopover.shadow$("ui5-busy-indicator");
+
+		assert.strictEqual(await busyIndicator.getAttribute("active"), "true", "Active attribute is propelry set.");
+		assert.strictEqual(await busyIndicator.getAttribute("text"), "Loading...", "Text attribute is propelry set.");
+		assert.strictEqual(await busyIndicator.getAttribute("title"), "Loading...", "Title attribute is propelry set.");
+		assert.strictEqual(await busyIndicator.getAttribute("size"), "Medium", "Size attribute is propelry set.");
+		assert.strictEqual(await busyIndicator.getAttribute("delay"), "100", "Delay attribute is propelry set.");
+	});
 });
 
 describe("Menu Accessibility", () => {
@@ -154,32 +181,3 @@ describe("Menu Accessibility", () => {
 			"There is additional description added");
 	});
 });
-
-// describe("Menu Accessibility", () => {
-// 	it("Menu and Menu items accessibility attributes", async () => {
-// 		await browser.url(`test/pages/Menu.html`);
-// 		const openButton = await browser.$("#btnOpen");
-// 		const menuItems = await browser.$$("ui5-menu>ui5-menu-item");
-
-// 		openButton.click();
-
-// 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#menu");
-// 		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-// 		const listItems = await popover.$("ui5-list").$$("ui5-li");
-
-// 		menuItems[2].click();
-
-// 		assert.ok(await menuItems[2].subMenuOpened(), "The sub-menu is opened.");
-
-		
-// 		const staticAreaItems = await browser.$$("ui5-static-area-item");
-// 		const subMenuPopover = await staticAreaItems.shadow$("ui5-responsive-popover");
-// 		const busyIndicator = await subMenuPopover.shadow$("ui5-busy-indicator");
-
-// 		assert.strictEqual(await busyIndicator.getAttribute("active"), "true", "Active attribute is propelry set.");
-// 		assert.strictEqual(await busyIndicator.getAttribute("text"), "Loading...", "Text attribute is propelry set.");
-// 		assert.strictEqual(await busyIndicator.getAttribute("title"), "Loading...", "Title attribute is propelry set.");
-// 		assert.strictEqual(await busyIndicator.getAttribute("size"), "Medium", "Size attribute is propelry set.");
-// 		assert.strictEqual(await busyIndicator.getAttribute("delay"), "100", "Delay attribute is propelry set.");
-// 	});
-// });
