@@ -146,7 +146,7 @@ class CalendarDate {
 		oLocalDate.setFullYear(oLocalDate.getUTCFullYear(), oLocalDate.getUTCMonth(), oLocalDate.getUTCDate());
 		oLocalDate.setHours(0, 0, 0, 0);
 
-		return oLocalDate;
+		return oLocalDate as Date;
 	}
 
 	toUTCJSDate() {
@@ -155,7 +155,7 @@ class CalendarDate {
 		const oUTCDate = UI5Date.getInstance(this._oUDate.getTime());
 		oUTCDate.setUTCHours(0, 0, 0, 0);
 
-		return oUTCDate;
+		return oUTCDate as Date;
 	}
 
 	toString() {
