@@ -1,13 +1,8 @@
-import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 // @ts-ignore
-import UniversalDateNative from "../sap/ui/core/date/UniversalDate.js";
-import type UI5Date from "./UI5Date.js";
+import UI5DateNative from "../sap/ui/core/date/UI5Date.js";
 
-type UniversalDate = {
-    new (time: number): UniversalDate;
-    oDate: Date,
-    sCalendarType: string,
-    getInstance: (oDate: UI5Date | Date, sCalendarType?: CalendarType) => UniversalDate,
+type UI5Date = {
+    getInstance: (timeOrYear?: number, month?: number, day?: number) => UI5Date | Date,
     getDate: () => number,
     getMonth: () => number,
     getFullYear: () => number,
@@ -17,6 +12,7 @@ type UniversalDate = {
     getMinutes: () => number,
     getSeconds: () => number,
     getMilliseconds: () => number,
+    getTimezoneOffset: () => number,
     getUTCDate: () => number,
     getUTCMonth: () => number,
     getUTCFullYear: () => number,
@@ -26,10 +22,6 @@ type UniversalDate = {
     getUTCSeconds: () => number,
     getUTCMilliseconds: () => number,
     getTime: () => number,
-    valueOf: () => number,
-    getTimezoneOffset: () => number,
-    toString: () => string,
-    toDateString: () => string,
     setDate: (dayValue: number) => number,
     setFullYear: (yearValue: number, monthValue?: number, dateValue?: number) => number,
     setYear: (yearValue: number) => number,
@@ -47,6 +39,6 @@ type UniversalDate = {
     setUTCMilliseconds: (setMilliseconds: number) => number,
 }
 
-const UniversalDate: UniversalDate = UniversalDateNative;
+const UI5Date: UI5Date = UI5DateNative;
 
-export default UniversalDate;
+export default UI5Date;
