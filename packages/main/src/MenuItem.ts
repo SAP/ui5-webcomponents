@@ -4,6 +4,14 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type Menu from "./Menu.js";
 
+type BusyIndicatorAttributes = {
+	title?: string,
+	text?: string,
+	size?: string,
+	delay?: number,
+	active?: boolean,
+}
+
 /**
  * @class
  *
@@ -124,7 +132,7 @@ class MenuItem extends UI5Element {
 	 * @since 1.14.0
 	 */
 	@property({ type: Object })
-	busyIndicator!: object;
+	busyIndicator!: BusyIndicatorAttributes;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
