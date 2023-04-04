@@ -296,14 +296,7 @@ class Menu extends UI5Element {
 	 * @slot items
 	 * @public
 	 */
-	@slot({
-		"default": true,
-		type: HTMLElement,
-		invalidateOnChildChange: {
-			"properties": true,
-			"slots": true,
-		},
-	})
+	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
