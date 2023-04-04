@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.0) (2023-04-04)
+
+
+### Bug Fixes
+
+* **framework:** relative paths for external themes ([#6799](https://github.com/SAP/ui5-webcomponents/issues/6799)) ([df1ddfc](https://github.com/SAP/ui5-webcomponents/commit/df1ddfc955ef3bb46d3b1e4694e7b931655a3079))
+* **theming:** fix icons version display for custom themes (built via the ThemeDesigner) ([#6815](https://github.com/SAP/ui5-webcomponents/issues/6815)) ([63ff800](https://github.com/SAP/ui5-webcomponents/commit/63ff8007889a66efae074fc6b4dbcb1b7ea36713)), closes [#6758](https://github.com/SAP/ui5-webcomponents/issues/6758)
+
+
+### Features
+
+* **framework:** re-export all public imports from index.js ([#6823](https://github.com/SAP/ui5-webcomponents/issues/6823)) ([a08d464](https://github.com/SAP/ui5-webcomponents/commit/a08d4645aeaae6e6f5eb8c55d8cb8bfaf4aa58b6))
+
+
+
+
+
 # [1.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.2...v1.12.0-rc.3) (2023-03-30)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

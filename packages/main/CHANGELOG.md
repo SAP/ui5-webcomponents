@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.12.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.0) (2023-04-04)
+
+
+### Bug Fixes
+
+* **theming:** fix icons version display for custom themes (built via the ThemeDesigner) ([#6815](https://github.com/SAP/ui5-webcomponents/issues/6815)) ([63ff800](https://github.com/SAP/ui5-webcomponents/commit/63ff8007889a66efae074fc6b4dbcb1b7ea36713)), closes [#6758](https://github.com/SAP/ui5-webcomponents/issues/6758)
+* **ui5-checkbox:** apply correct styles to down state ([#6824](https://github.com/SAP/ui5-webcomponents/issues/6824)) ([c7c186d](https://github.com/SAP/ui5-webcomponents/commit/c7c186d048ed3a38941610e319a2568b9e92073a))
+* **ui5-daypicker:** date selection range light blue indication ([#6836](https://github.com/SAP/ui5-webcomponents/issues/6836)) ([d16cf33](https://github.com/SAP/ui5-webcomponents/commit/d16cf33ef9418d7ae8857845709dd618593a3d96)), closes [#6781](https://github.com/SAP/ui5-webcomponents/issues/6781)
+* **ui5-progress-indicator:** disabled opacity fix ([#6808](https://github.com/SAP/ui5-webcomponents/issues/6808)) ([1174b48](https://github.com/SAP/ui5-webcomponents/commit/1174b486d2df234b3e295af4e3d95158751bf58b))
+
+
+
+
+
 # [1.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.2...v1.12.0-rc.3) (2023-03-30)
 
 
