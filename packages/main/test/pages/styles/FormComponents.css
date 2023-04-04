@@ -13,3 +13,8 @@ body {
 .textarea {
 	width: 15rem;
 }
+
+.nativebutton {
+	height: 36px;
+	box-sizing: border-box;
+}
