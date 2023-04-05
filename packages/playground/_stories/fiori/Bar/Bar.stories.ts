@@ -25,8 +25,7 @@ export default {
 	argTypes,
 } as Meta<Bar>;
 
-const Template: UI5StoryArgs<Bar, StoryArgsSlots> = (args) => html`
-<ui5-bar
+const Template: UI5StoryArgs<Bar, StoryArgsSlots> = (args) => html`<ui5-bar
 	design="${ifDefined(args.design)}"
 >
 	${unsafeHTML(args.default)}
