@@ -1,6 +1,6 @@
-import { html } from "lit-html";
-import { ifDefined } from "lit-html/directives/if-defined.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { html } from "lit";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { StoryFn, Meta } from "@storybook/web-components";
 
 import type Select from "@ui5/webcomponents/dist/Select.js";
