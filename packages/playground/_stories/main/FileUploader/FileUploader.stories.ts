@@ -24,8 +24,7 @@ export default {
 	argTypes,
 } as Meta<FileUploader>;
 
-const Template: UI5StoryArgs<FileUploader, StoryArgsSlots> = (args) => html`
-<ui5-file-uploader
+const Template: UI5StoryArgs<FileUploader, StoryArgsSlots> = (args) => html`<ui5-file-uploader
 	accept="${ifDefined(args.accept)}"
 	?hide-input="${ifDefined(args.hideInput)}"
 	?disabled="${ifDefined(args.disabled)}"
@@ -75,8 +74,7 @@ Advanced.args = {
 	multiple: true,
 };
 Advanced.decorators = [
-	(story) => html`
-	${story()}
+	(story) => html`${story()}
 	<div id="result"></div>
 	<script>
 		var fileUploader = document.querySelector("#fileuploader"),

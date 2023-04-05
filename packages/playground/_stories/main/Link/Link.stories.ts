@@ -26,8 +26,7 @@ export default {
 	argTypes,
 } as Meta<Link>;
 
-const Template: UI5StoryArgs<Link, StoryArgsSlots> = (args) => html`
-<ui5-link
+const Template: UI5StoryArgs<Link, StoryArgsSlots> = (args) => html`<ui5-link
 	design="${ifDefined(args.design)}"
 	?disabled="${ifDefined(args.disabled)}"
 	href="${ifDefined(args.href)}"
