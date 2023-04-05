@@ -7,7 +7,15 @@ const capitalize = (str: string): string =>
 interface IMDXParserOptions {
     subTitle?: string;
 }
-export class MDXParser implements IMDXParserOptions, IDocsParser {
+
+/**
+ * This parser is responsible for parsing markdown files and converting them to MDX.
+ * Adds the following to the top of the file:
+ * import { Meta } from '@storybook/blocks';
+ * <Meta title="title" />
+ * where title is the title of the article. The title is parsed from the file path.
+ */
+export class MDXParser implements IDocsParser {
     public readonly subTitle: string | undefined;
 
     constructor(options?: IMDXParserOptions) {
@@ -16,11 +24,10 @@ export class MDXParser implements IMDXParserOptions, IDocsParser {
 
     public async parse(file: IFile): Promise<IFile> {
         const mdxTitle = this.getMdxTitle(file.path);
-        const content = this.removeMetadata(file.content);
 
         return {
             path: this.parsePath(file.path),
-            content: this.parseContent(content, mdxTitle),
+            content: this.parseContent(file.content, mdxTitle),
         };
     }
 
@@ -43,6 +50,7 @@ ${content}`;
                 // remove any number that prefixes the
                 // name as well as the dash after it
                 .replace(/^\d+-/, "")
+                // trim any whitespace
                 .replace(/^\s+|\s+$/g, "")
                 // remove all dashes and replace them with spaces
                 .replace(/-/g, " ")
@@ -69,9 +77,5 @@ ${content}`;
         const articleTitle = parts.filter(Boolean).join("/");
 
         return articleTitle;
-    }
-
-    private removeMetadata(content: string): string {
-        return content.replace(/^---[\s\S]+?---/g, "");
     }
 }

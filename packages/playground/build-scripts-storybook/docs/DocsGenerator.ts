@@ -19,6 +19,12 @@ interface IDocsGeneratorOptions {
     sorters?: IDocsSorter[];
 }
 
+/**
+ * This class is responsible for generating the docs.
+ * Requires a reader, writer, and optionally parsers and sorters.
+ * If no parsers or sorters are provided, the files will be written as is.
+ * The parsers and sorters are run in the order they are provided.
+ */
 export class DocsGenerator implements IDocsGenerator {
     private reader: IDocsReader;
     private writer: IDocsWriter;

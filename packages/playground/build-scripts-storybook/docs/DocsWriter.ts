@@ -12,6 +12,10 @@ interface IDocsWriterOptions {
     directoryUtils: IDirectoryUtils;
 }
 
+/**
+ * This class is responsible for writing the docs to the file system.
+ * Requires a destination directory.
+ */
 export class DocsWriter implements IDocsWriter {
     private dest: string;
     private directoryUtils: IDirectoryUtils;

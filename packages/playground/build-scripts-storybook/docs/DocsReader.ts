@@ -11,6 +11,12 @@ interface IDocsReaderOptions {
     directoryUtils: IDirectoryUtils;
 }
 
+/**
+ * This class is responsible for reading the docs from the file system.
+ * Requires a source directory and optionally an array of files to ignore.
+ * The files are returned as an array of IFile objects.
+ * The IFile object contains the path and content of the file.
+ */
 export class DocsReader implements IDocsReader {
     private src: string;
     private ignore: string[];
@@ -33,9 +39,9 @@ export class DocsReader implements IDocsReader {
         );
 
         const filesPromises = files.map(async (file: string) => {
-            const relativePath = this.directoryUtils.getRelativePath(
-                file,
-                this.src
+            const relativePath = this.directoryUtils.globToRelativePath(
+                this.src,
+                file
             );
             const content = await this.directoryUtils.readContent(file);
             return {

@@ -7,21 +7,25 @@ export interface IDirectoryUtils {
     cleanDirectory(dir: string): Promise<void>;
     readFiles(src: string, ignore: string[]): Promise<string[]>;
     writeFile(filePath: string, content: string): Promise<void>;
-    getRelativePath(filePath: string, globStr: string): string;
+    globToRelativePath(globStr: string, filePath: string): string;
     readContent(filePath: string): Promise<string>;
     resolvePath(filePath: string): string;
 }
 
+/**
+ * This class is responsible for reading and writing files to the file system.
+ * It also provides some utility methods for working with file paths.
+ */
 export class DirectoryUtils implements IDirectoryUtils {
     public async assureDirectoryExistence(
-        filePath: string
+        directory: string
     ): Promise<string | void> {
-        if (!filePath) {
+        if (!directory) {
             throw new Error("No file path provided");
         }
 
         try {
-            const dir = path.dirname(filePath);
+            const dir = path.dirname(directory);
             await fsPromises.mkdir(dir, { recursive: true });
         } catch (error: any) {
             // if the directory already exists, we don't need to create it
@@ -33,13 +37,13 @@ export class DirectoryUtils implements IDirectoryUtils {
         return Promise.resolve();
     }
 
-    public async cleanDirectory(dir: string): Promise<void> {
-        if (!dir) {
+    public async cleanDirectory(directory: string): Promise<void> {
+        if (!directory) {
             throw new Error("No directory path provided");
         }
 
         try {
-            await fsPromises.rm(dir, { recursive: true });
+            await fsPromises.rm(directory, { recursive: true });
         } catch (error: any) {
             // if the directory does not exist, we don't need to clean it
             if (error.code !== "ENOENT") {
@@ -83,7 +87,7 @@ export class DirectoryUtils implements IDirectoryUtils {
         await fsPromises.writeFile(filePath, content);
     }
 
-    public getRelativePath(filePath: string, globStr: string): string {
+    public globToRelativePath(globStr: string, filePath: string): string {
         if (!filePath) {
             throw new Error("No file path provided");
         }
