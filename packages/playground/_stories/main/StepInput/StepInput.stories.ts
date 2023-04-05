@@ -25,8 +25,7 @@ export default {
 	argTypes,
 } as Meta<StepInput>;
 
-const Template: UI5StoryArgs<StepInput, StoryArgsSlots> = (args) => html`
-<ui5-step-input
+const Template: UI5StoryArgs<StepInput, StoryArgsSlots> = (args) => html`<ui5-step-input
 	value="${ifDefined(args.value)}"
 	value-state="${ifDefined(args.valueState)}"
 	value-precision="${ifDefined(args.valuePrecision)}"
@@ -99,4 +98,4 @@ Label.args = {
 Label.decorators = [
 	(story) => html`<ui5-label class="samples-big-margin-right" for="myStepInput">Number</ui5-label>
 	${story()}`,
-];
+]

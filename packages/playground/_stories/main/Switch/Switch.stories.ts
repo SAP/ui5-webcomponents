@@ -24,8 +24,7 @@ export default {
 	argTypes,
 } as Meta<Switch>;
 
-const Template: UI5StoryArgs<Switch, StoryArgsSlots> = (args) => html`
-<ui5-switch
+const Template: UI5StoryArgs<Switch, StoryArgsSlots> = (args) => html`<ui5-switch
 	design="${ifDefined(args.design)}"
 	?checked="${ifDefined(args.checked)}"
 	?disabled="${ifDefined(args.disabled)}"

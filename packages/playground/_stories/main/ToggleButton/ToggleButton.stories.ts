@@ -25,8 +25,7 @@ export default {
 	argTypes,
 } as Meta<ToggleButton>;
 
-const Template: UI5StoryArgs<ToggleButton, StoryArgsSlots> = (args) => html`
-<ui5-toggle-button
+const Template: UI5StoryArgs<ToggleButton, StoryArgsSlots> = (args) => html`<ui5-toggle-button
 	?pressed="${ifDefined(args.pressed)}"
 	?disabled="${ifDefined(args.disabled)}"
 	design="${ifDefined(args.design)}"

@@ -25,8 +25,7 @@ export default {
 	argTypes,
 } as Meta<Button>;
 
-const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`
-<ui5-button
+const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`<ui5-button
 	design="${ifDefined(args.design)}"
 	?disabled="${ifDefined(args.disabled)}"
 	icon="${ifDefined(args.icon)}"

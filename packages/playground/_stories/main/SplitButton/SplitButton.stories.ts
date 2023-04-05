@@ -25,8 +25,7 @@ export default {
 argTypes,
 } as Meta<SplitButton>;
 
-const Template: UI5StoryArgs<SplitButton, StoryArgsSlots> = (args) => html`
-<ui5-split-button
+const Template: UI5StoryArgs<SplitButton, StoryArgsSlots> = (args) => html`<ui5-split-button
 	?disabled="${ifDefined(args.disabled)}"
 	design="${ifDefined(args.design)}"
 	icon="${ifDefined(args.icon)}"

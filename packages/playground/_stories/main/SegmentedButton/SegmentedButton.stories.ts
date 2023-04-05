@@ -25,8 +25,7 @@ export default {
 	argTypes,
 } as Meta<SegmentedButton>;
 
-const Template: UI5StoryArgs<SegmentedButton, StoryArgsSlots> = (args) => html`
-<ui5-segmented-button
+const Template: UI5StoryArgs<SegmentedButton, StoryArgsSlots> = (args) => html`<ui5-segmented-button
 	accessible-name="${ifDefined(args.accessibleName)}"
 >
 	${unsafeHTML(args.default)}
