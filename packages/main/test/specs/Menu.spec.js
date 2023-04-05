@@ -142,7 +142,7 @@ describe("Menu interaction", () => {
 		menuItem.click();
 
 		const subMenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-		const busyIndicator = await subMenuPopover.shadow$("ui5-busy-indicator");
+		const busyIndicator = await subMenuPopover.$("ui5-busy-indicator");
 
 		assert.strictEqual(await busyIndicator.getAttribute("active"), "true", "Active attribute is propelry set.");
 		assert.strictEqual(await busyIndicator.getAttribute("text"), "Loading...", "Text attribute is propelry set.");
