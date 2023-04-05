@@ -1,4 +1,4 @@
-import type { IDocsSorter } from "./index";
+import type { IDocsSorter } from ".";
 import type { IFile } from "../DocsGenerator";
 
 interface IVersion {
