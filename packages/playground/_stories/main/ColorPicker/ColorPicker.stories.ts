@@ -23,11 +23,9 @@ export default {
 	argTypes,
 } as Meta<ColorPicker>;
 
-const Template: UI5StoryArgs<ColorPicker, StoryArgsSlots> = (args) => html`
-<ui5-color-picker
+const Template: UI5StoryArgs<ColorPicker, StoryArgsSlots> = (args) => html`<ui5-color-picker
 	color="${ifDefined(args.color)}"
-	>Picker</ui5-color-picker
->`;
+>Picker</ui5-color-picker>`;
 
 export const Basic = Template.bind({});
 Basic.args = {

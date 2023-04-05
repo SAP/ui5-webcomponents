@@ -24,8 +24,7 @@ export default {
 	argTypes,
 } as Meta<ColorPalettePopover>;
 
-const Template: UI5StoryArgs<ColorPalettePopover, StoryArgsSlots> = (args) => html`
-<ui5-color-palette-popover
+const Template: UI5StoryArgs<ColorPalettePopover, StoryArgsSlots> = (args) => html`<ui5-color-palette-popover
 	id="${ifDefined(args.id)}"
 	?show-recent-colors="${ifDefined(args.showRecentColors)}"
 	?show-more-colors="${ifDefined(args.showMoreColors)}"
@@ -39,15 +38,13 @@ export const Basic = Template.bind({});
 Basic.storyName = "With No Additional Features";
 Basic.args = {
 	id: "colorPalettePopover",
-	default: `
-	<ui5-color-palette-item value="pink"></ui5-color-palette-item>
-	<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
-	<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
-	<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>`,
+	default: `<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>`,
 };
 Basic.decorators = [
-	(story) => html`
-	<ui5-button id="colorPaletteBtn">Open ColorPalettePopover</ui5-button>
+	(story) => html`<ui5-button id="colorPaletteBtn">Open ColorPalettePopover</ui5-button>
 	${story()}
 	<script>
 		colorPaletteBtn.addEventListener("click", function(event) {
@@ -67,18 +64,16 @@ export const DefaultColor = Template.bind({});
 DefaultColor.storyName = "With Default Color";
 DefaultColor.args = {
 	id: "colorPalettePopover",
-	default: `
-	<ui5-color-palette-item value="blue"></ui5-color-palette-item>
-	<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
-	<ui5-color-palette-item value="orange"></ui5-color-palette-item>
-	<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
-	<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>`,
 	defaultColor: "orange",
 	showDefaultColor: true,
+	default: `<ui5-color-palette-item value="blue"></ui5-color-palette-item>
+<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+<ui5-color-palette-item value="orange"></ui5-color-palette-item>
+<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
+<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>`,
 };
 DefaultColor.decorators = [
-	(story) => html`
-	<ui5-button id="colorPaletteBtn">Open ColorPalettePopover</ui5-button>
+	(story) => html`<ui5-button id="colorPaletteBtn">Open ColorPalettePopover</ui5-button>
 	${story()}
 	<script>
 		colorPaletteBtn.addEventListener("click", function(event) {
@@ -89,7 +84,6 @@ DefaultColor.decorators = [
 DefaultColor.parameters = {
 	docs: {
 		story: {
-			// Opt-out of inline rendering
 			inline: false,
 		},
 	}
@@ -99,17 +93,15 @@ export const MoreColors = Template.bind({});
 MoreColors.storyName = "With Recent and More Colors";
 MoreColors.args = {
 	id: "colorPalettePopover",
-	default: `
-	<ui5-color-palette-item value="pink"></ui5-color-palette-item>
-	<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
-	<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
-	<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>`,
 	showRecentColors: true,
 	showMoreColors: true,
+	default: `<ui5-color-palette-item value="pink"></ui5-color-palette-item>
+<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
+<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>`,
 };
 MoreColors.decorators = [
-	(story) => html`
-	<ui5-button id="colorPaletteBtn">Open ColorPalettePopover</ui5-button>
+	(story) => html`<ui5-button id="colorPaletteBtn">Open ColorPalettePopover</ui5-button>
 	${story()}
 	<script>
 		colorPaletteBtn.addEventListener("click", function(event) {
