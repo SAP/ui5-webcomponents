@@ -1,5 +1,5 @@
-import { html } from "lit";
-import { ifDefined } from "lit/directives/if-defined.js";
+import { html } from "lit-html";
+import { ifDefined } from "lit-html/directives/if-defined.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
