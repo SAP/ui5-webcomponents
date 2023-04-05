@@ -28,8 +28,7 @@ export default {
 	argTypes,
 } as Meta<Calendar>;
 
-const Template: UI5StoryArgs<Calendar, StoryArgsSlots> = (args) => html`
-<ui5-calendar
+const Template: UI5StoryArgs<Calendar, StoryArgsSlots> = (args) => html`<ui5-calendar
 	selection-mode="${ifDefined(args.selectionMode)}"
 	?hide-week-numbers="${ifDefined(args.hideWeekNumbers)}"
 	primary-calendar-type="${ifDefined(args.primaryCalendarType)}"

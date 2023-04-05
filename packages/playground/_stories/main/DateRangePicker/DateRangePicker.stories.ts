@@ -24,8 +24,7 @@ export default {
 	argTypes,
 } as Meta<DateRangePicker>;
 
-const Template: UI5StoryArgs<DateRangePicker, StoryArgsSlots> = (args) => html`
-<ui5-daterange-picker
+const Template: UI5StoryArgs<DateRangePicker, StoryArgsSlots> = (args) => html`<ui5-daterange-picker
 	value="${ifDefined(args.value)}"
 	value-state="${ifDefined(args.valueState)}"
 	?disabled="${ifDefined(args.disabled)}"

@@ -25,8 +25,7 @@ export default {
 	argTypes,
 } as Meta<TimePicker>;
 
-const Template: UI5StoryArgs<TimePicker, StoryArgsSlots> = (args) => html`
-<ui5-time-picker
+const Template: UI5StoryArgs<TimePicker, StoryArgsSlots> = (args) => html`<ui5-time-picker
 	value="${ifDefined(args.value)}"
 	value-state="${ifDefined(args.valueState)}"
 	?disabled="${ifDefined(args.disabled)}"
