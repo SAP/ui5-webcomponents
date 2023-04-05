@@ -1,4 +1,4 @@
-export * from "./ChangelogSorter";
+export * from "./ChangelogSorter2";
 
 import { IFile } from "../DocsGenerator";
 
