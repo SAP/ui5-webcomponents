@@ -34,28 +34,25 @@ const Template: UI5StoryArgs<SegmentedButton, StoryArgsSlots> = (args) => html`
 
 export const Basic = Template.bind({});
 Basic.args = {
-	default: `
-		<ui5-segmented-button-item>Map</ui5-segmented-button-item>
-		<ui5-segmented-button-item pressed="">Satellite</ui5-segmented-button-item>
-		<ui5-segmented-button-item>Terrain</ui5-segmented-button-item>`,
+	default: `<ui5-segmented-button-item>Map</ui5-segmented-button-item>
+<ui5-segmented-button-item pressed="">Satellite</ui5-segmented-button-item>
+<ui5-segmented-button-item>Terrain</ui5-segmented-button-item>`,
 	accessibleName: "Geographic location",
 };
 
 export const WithIcons = Template.bind({});
 WithIcons.args = {
-	default: `
-		<ui5-segmented-button-item icon="employee" pressed=""></ui5-segmented-button-item>
-		<ui5-segmented-button-item icon="menu"></ui5-segmented-button-item>
-		<ui5-segmented-button-item icon="factory"></ui5-segmented-button-item>`,
+	default: `<ui5-segmented-button-item icon="employee" pressed=""></ui5-segmented-button-item>
+<ui5-segmented-button-item icon="menu"></ui5-segmented-button-item>
+<ui5-segmented-button-item icon="factory"></ui5-segmented-button-item>`,
 };
 
 export const WithMoreItems = Template.bind({});
 WithMoreItems.storyName = "More Segmented Button Items";
 WithMoreItems.args = {
-	default: `
-		<ui5-segmented-button-item>Item</ui5-segmented-button-item>
-		<ui5-segmented-button-item pressed="">Pressed SegmentedButtonItem With Bigger Text</ui5-segmented-button-item>
-		<ui5-segmented-button-item>Item</ui5-segmented-button-item>
-		<ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
-		<ui5-segmented-button-item>Press me</ui5-segmented-button-item>`,
+	default: `<ui5-segmented-button-item>Item</ui5-segmented-button-item>
+<ui5-segmented-button-item pressed="">Pressed SegmentedButtonItem With Bigger Text</ui5-segmented-button-item>
+<ui5-segmented-button-item>Item</ui5-segmented-button-item>
+<ui5-segmented-button-item>SegmentedButtonItem</ui5-segmented-button-item>
+<ui5-segmented-button-item>Press me</ui5-segmented-button-item>`,
 };

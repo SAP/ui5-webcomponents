@@ -97,7 +97,6 @@ Label.args = {
 	required: true,
 };
 Label.decorators = [
-	(story) => html`
-	<ui5-label class="samples-big-margin-right" for="myStepInput" required="" show-colon="">Number</ui5-label>
+	(story) => html`<ui5-label class="samples-big-margin-right" for="myStepInput">Number</ui5-label>
 	${story()}`,
 ];

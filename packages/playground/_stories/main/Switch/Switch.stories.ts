@@ -34,8 +34,7 @@ const Template: UI5StoryArgs<Switch, StoryArgsSlots> = (args) => html`
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 	tooltip="${ifDefined(args.tooltip)}"
-	></ui5-switch
->`;
+></ui5-switch>`;
 
 export const Basic = Template.bind({});
 

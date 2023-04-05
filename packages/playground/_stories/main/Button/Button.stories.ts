@@ -42,13 +42,6 @@ const Template: UI5StoryArgs<Button, StoryArgsSlots> = (args) => html`
 export const Basic = Template.bind({});
 Basic.args = {
 	default: "Button",
-	design: ButtonDesign.Default,
-};
-
-export const Design = Template.bind({});
-Design.args = {
-	default: "Transparent",
-	design: ButtonDesign.Transparent,
 };
 
 export const Disabled = Template.bind({});
@@ -81,7 +74,6 @@ IconOnly.args = {
 	tooltip: "Cancel",
 };
 IconOnly.decorators = [
-	(story) => html`
-	<ui5-label style="display:none;" id="lblCancel" aria-hidden="true">Cancel</ui5-label>
+	(story) => html`<ui5-label style="display:none;" id="lblCancel" aria-hidden="true">Cancel</ui5-label>
 	${story()}`,
 ];

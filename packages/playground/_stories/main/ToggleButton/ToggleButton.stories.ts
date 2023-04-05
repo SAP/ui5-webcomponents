@@ -46,23 +46,11 @@ Pressed.args = {
 	pressed: true,
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-	default: "Disabled",
-	disabled: true,
-};
-
 export const DisabledAndPressed = Template.bind({});
 DisabledAndPressed.args = {
 	default: "ToggleButton",
 	pressed: true,
 	disabled: true,
-};
-
-export const Design = Template.bind({});
-Design.args = {
-	default: "ToggleButton",
-	design: ButtonDesign.Positive,
 };
 
 export const IconOnly = Template.bind({});
@@ -74,7 +62,7 @@ IconOnly.args = {
 export const WithIconAndDesign = Template.bind({});
 WithIconAndDesign.args = {
 	default: "ToggleButton",
-	design: ButtonDesign.Emphasized,
+	design: ButtonDesign.Positive,
 	pressed: false,
 	icon: "add",
 };
