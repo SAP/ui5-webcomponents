@@ -30,6 +30,7 @@ import { getMaxCalendarDate, getMinCalendarDate } from "@ui5/webcomponents-local
  */
 @customElement({
 	languageAware: true,
+	timezoneAware: true,
 	renderer: litRender,
 })
 class DateComponentBase extends UI5Element {

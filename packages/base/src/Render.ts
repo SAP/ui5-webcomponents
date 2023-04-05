@@ -147,14 +147,15 @@ const _resolveTaskPromise = () => {
  * @param {object|undefined} filters - Object with keys that can be "rtlAware" or "languageAware"
  * @returns {Promise<void>}
  */
-const reRenderAllUI5Elements = async (filters?: {tag?: string, rtlAware?: boolean, languageAware?: boolean, themeAware?: boolean}) => {
+const reRenderAllUI5Elements = async (filters?: { tag?: string, rtlAware?: boolean, languageAware?: boolean, themeAware?: boolean, timezoneAware?: boolean }) => {
 	registeredElements.forEach((element: UI5Element) => {
 		const ctor = element.constructor as typeof UI5Element;
 		const tag = ctor.getMetadata().getTag();
 		const rtlAware = isRtlAware(ctor);
 		const languageAware = ctor.getMetadata().isLanguageAware();
 		const themeAware = ctor.getMetadata().isThemeAware();
-		if (!filters || (filters.tag === tag) || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware) || (filters.themeAware && themeAware)) {
+		const timezoneAware = ctor.getMetadata().isTimezoneAware();
+		if (!filters || (filters.tag === tag) || (filters.rtlAware && rtlAware) || (filters.languageAware && languageAware) || (filters.themeAware && themeAware) || (filters.timezoneAware && timezoneAware)) {
 			renderDeferred(element);
 		}
 	});

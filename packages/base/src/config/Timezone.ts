@@ -1,4 +1,5 @@
 import { getTimezone as getConfiguredTimezone } from "../InitialConfiguration.js";
+import { reRenderAllUI5Elements } from "../Render.js";
 
 let currTimezone: string | undefined;
 
@@ -20,15 +21,16 @@ const getTimezone = (): string | undefined => {
  *
  * @param {string} timezone
  * @private
+ * @returns { Promise<void> }
  */
-const setTimezone = (timezone: string) => {
+const setTimezone = async (timezone: string): Promise<void> => {
 	if (currTimezone === timezone) {
 		return;
 	}
 
 	currTimezone = timezone;
 
-	// Think of adding timezoneAware option to components metadata to re-render date/time components
+	await reRenderAllUI5Elements({ timezoneAware: true });
 };
 
 export {
