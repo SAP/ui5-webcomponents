@@ -14,13 +14,13 @@
 <style>
 	#dialog-bar::part(header),
 	#dialog-bar::part(footer) {
-		padding: 0;
+		padding-inline: 0;
 	}
 </style>
 
 <body class="bar1auto">
 	<ui5-button id="dialog-bar-open">Dialog with Bar in Footer</ui5-button>
-	<ui5-dialog open id="dialog-bar" header-text="Using bar with design=Footer as footer">
+	<ui5-dialog open resizable id="dialog-bar" header-text="Using bar with design=Footer as footer">
 		<ui5-bar slot="header" design="Header">
 			<ui5-text slot="startContent">Sample Dialog With Bar</ui5-text>
 			<ui5-button

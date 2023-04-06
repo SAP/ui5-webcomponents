@@ -120,6 +120,26 @@ FioriDialog.args = {
 </div>`,
 };
 
+export const BarInDialog = Template.bind({});
+BarInDialog.storyName = "Bar in Header/Footer";
+BarInDialog.args = {
+	header: '<ui5-bar slot="header" design="Header"> <ui5-text slot="startContent">Bar used in Header and Footer</ui5-text> <ui5-button class="dialogCloser" design="Transparent" id="closeDialogButton" slot="endContent" icon="decline"/> </ui5-bar>',
+	default: "<p>Adding styles for the parts to remove the default Dialog's paddings when ui5-bar is used inside Header and Footer</p>",
+	footer: `<ui5-bar slot="footer" design="Footer">
+	<ui5-button class="dialogCloser" design="Emphasized" slot="endContent">OK</ui5-button>
+</ui5-bar>`,
+};
+
+BarInDialog.decorators = [
+	(story) => html`<style>
+	#dialog::part(header),
+	#dialog::part(footer) {
+		padding-inline: 0;
+	}
+</style>
+${story()}`
+];
+
 export const WithState = Template.bind({});
 WithState.args = {
 	state: ValueState.Error,
