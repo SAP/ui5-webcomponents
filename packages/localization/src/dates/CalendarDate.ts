@@ -166,11 +166,11 @@ class CalendarDate {
 		return this._oUDate.getTime();
 	}
 
-	static fromLocalJSDate(oJSDate: Date, sCalendarType?: CalendarType) {
+	static fromLocalJSDate(oJSDate: Date | UI5Date, sCalendarType?: CalendarType) {
 		// Cross frame check for a date should be performed here otherwise setDateValue would fail in OPA tests
 		// because Date object in the test is different than the Date object in the application (due to the iframe).
 		// We can use jQuery.type or this method:
-		function isValidDate(date: Date) {
+		function isValidDate(date: Date | UI5Date) {
 			return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date as unknown as number); // eslint-disable-line
 		}
 		if (!isValidDate(oJSDate)) {
@@ -183,9 +183,9 @@ class CalendarDate {
 		const oCalDate = new CalendarDate(0, 0, 1);
 		let oUDate;
 		try {
-			oUDate = UniversalDate.getInstance(new Date(iTimestamp), sCalendarType);
+			oUDate = UniversalDate.getInstance(UI5Date.getInstance(iTimestamp), sCalendarType);
 		} catch (e) {
-			oUDate = new Date(NaN); // UniversalDate.getInstance may now throw an Exception - keep the old behavior
+			oUDate = UI5Date.getInstance(NaN); // UniversalDate.getInstance may now throw an Exception - keep the old behavior
 		}
 		oCalDate._oUDate = oUDate;
 		return oCalDate;
