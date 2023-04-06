@@ -74,10 +74,10 @@ const findFocusableElement = async (container: HTMLElement, forward: boolean, st
 		child = forward ? originalChild.nextSibling as HTMLElement : originalChild.previousSibling as HTMLElement;
 
 		// If the child element is not part of the currently assigned element,
-		// we have to check the next element assigned to the slot or continue with the next sibling of the slot,
-		// otherwise, the nextSibling is the next element inside the light DOM
+		// we have to check the next/previous element assigned to the slot or continue with the next/previous sibling of the slot,
+		// otherwise, the nextSibling/previousSibling is the next element inside the light DOM
 		if (assignedElements && !assignedElements[currentIndex].contains(child)) {
-			child = assignedElements[++currentIndex] as HTMLElement;
+			child = forward ? assignedElements[++currentIndex] as HTMLElement : assignedElements[--currentIndex] as HTMLElement;
 		}
 	}
 
