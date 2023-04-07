@@ -32,6 +32,7 @@
 .ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
 	min-width: 0px;
 	overflow: hidden;
+	height: 100%;
 }
 
 .ui5-bar-root .ui5-bar-endcontent-container {
