@@ -37,6 +37,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	margin: 0;
 }
 
 .ui5-time-picker-input-icon-button {

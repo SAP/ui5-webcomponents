@@ -47,6 +47,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	margin: 0;
 }
 
 :host(:not([disabled]):not([readonly])) .ui5-date-picker-input[focused] {
