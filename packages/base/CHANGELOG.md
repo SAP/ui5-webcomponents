@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0...v1.13.0-rc.0) (2023-04-06)
+
+
+### Bug Fixes
+
+* fix components metadata calculation ([#6865](https://github.com/SAP/ui5-webcomponents/issues/6865)) ([0089891](https://github.com/SAP/ui5-webcomponents/commit/0089891fae58f1271873f1fff0109bbc9b908b19))
+* **framework:** remove invalid element from head ([#6848](https://github.com/SAP/ui5-webcomponents/issues/6848)) ([bb52a7b](https://github.com/SAP/ui5-webcomponents/commit/bb52a7bcfcb2b48f2cc7efe810ca119d09456245)), closes [#6748](https://github.com/SAP/ui5-webcomponents/issues/6748)
+
+
+
+
+
 # [1.12.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.0) (2023-04-04)
 
 

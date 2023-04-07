@@ -180,6 +180,26 @@ describe("Component Behavior", () => {
 			await selectionChangeCheckbox.click();
 		});
 
+		it("tests avoiding re-selecting already selected item", async () => {
+			const sideNavigation = await browser.$("#sn1");
+			await sideNavigation.setAttribute("collapsed", "true");
+
+			const input = await browser.$("#counter");
+			const items = await getItems(".ui5-sn-items-tree [ui5-tree-item]");
+
+			await items[0].click();
+
+			const beforeClickingSelectedItem = await input.getProperty("value");
+
+			await items[0].click();
+
+			const afterClickingSelectedItem = await input.getProperty("value");
+
+			assert.strictEqual(afterClickingSelectedItem, beforeClickingSelectedItem, "Event did not fire twice after the already selected item was clicked");
+
+			await sideNavigation.removeAttribute("collapsed");
+		});
+
 		it("Tests ACC roles and more when expanded", async () => {
 			const sideNavigation = await browser.$("#sn1");
 			const sideNavigationRoot = await sideNavigation.shadow$(".ui5-sn-root");
