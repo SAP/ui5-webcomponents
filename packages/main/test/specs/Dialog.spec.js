@@ -351,26 +351,26 @@ describe("Dialog general interaction", () => {
 
 	it("Test focus circularity", async () => {
 		const opener = await browser.$("#btn-focus-circ");
-	const dialog = await browser.$("#focus-circ");
-	const firstActiveBtn = await browser.$("#active-btn-1");
-	const secondActiveBtn = await browser.$("#active-btn-2");
+		const dialog = await browser.$("#focus-circ");
+		const firstActiveBtn = await browser.$("#active-btn-1");
+		const secondActiveBtn = await browser.$("#active-btn-2");
 
-	await opener.click();
-	await dialog.isDisplayed();
+		await opener.click();
+		await dialog.isDisplayed();
 
-	assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
-	await browser.keys("Tab");
-	assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
-	await browser.keys("Tab");
-	assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.keys("Tab");
+		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.keys("Tab");
+		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
 
-	await browser.keys(["Shift", "Tab"]);
-	assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
-	await browser.keys(["Shift", "Tab"]);
-	assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
-	await browser.keys(["Shift", "Tab"]);
-	assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
-});
+		await browser.keys(["Shift", "Tab"]);
+		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.keys(["Shift", "Tab"]);
+		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.keys(["Shift", "Tab"]);
+		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+	});
 });
 
 describe("Acc", () => {
