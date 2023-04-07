@@ -39,7 +39,6 @@ type Metadata = {
 	events?: EventData,
 	fastNavigation?: boolean,
 	themeAware?: boolean,
-	timezoneAware?: boolean,
 	languageAware?: boolean,
 };
 
@@ -269,13 +268,6 @@ class UI5ElementMetadata {
 	 */
 	 isThemeAware() {
 		return !!this.metadata.themeAware;
-	}
-	/**
-	 * Determines whether this UI5 Element is timezone dependant.
-	 * @returns {boolean}
-	 */
-	isTimezoneAware() {
-		return !!this.metadata.timezoneAware;
 	}
 
 	/**

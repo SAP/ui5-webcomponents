@@ -19,7 +19,6 @@ const customElement = (tagNameOrComponentSettings: string | {
 	staticAreaTemplate?: Template,
 	languageAware?: boolean,
 	themeAware?: boolean,
-	timezoneAware?: boolean,
 	fastNavigation?: boolean,
 }): ClassDecorator => {
 	return (target: any) => {
@@ -36,7 +35,6 @@ const customElement = (tagNameOrComponentSettings: string | {
 			tag,
 			languageAware,
 			themeAware,
-			timezoneAware,
 			fastNavigation,
 		 } = tagNameOrComponentSettings;
 
@@ -46,9 +44,6 @@ const customElement = (tagNameOrComponentSettings: string | {
 		}
 		if (themeAware) {
 			target.metadata.themeAware = themeAware;
-		}
-		if (timezoneAware) {
-			target.metadata.timezoneAware = timezoneAware;
 		}
 		if (fastNavigation) {
 			target.metadata.fastNavigation = fastNavigation;
