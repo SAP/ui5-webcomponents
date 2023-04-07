@@ -330,28 +330,47 @@ describe("Dialog general interaction", () => {
 		assert.notOk(await dialog.isDisplayedInViewport(), "Dialog is closed");
 	});
 
-	it("Test focus circularity", async () => {
-			const opener = await browser.$("#btn-focus-circ");
-		const dialog = await browser.$("#focus-circ");
-		const firstActiveBtn = await browser.$("#active-btn-1");
-		const secondActiveBtn = await browser.$("#active-btn-2");
+	it("Test initial focus when content is provided before the header", async () => {
+		const listContainerItem = await browser.$("#dialogFocus");
+		await listContainerItem.scrollIntoView();
+		await listContainerItem.click();
 
-		await opener.click();
-		await dialog.isDisplayed();
+		const closeButton = await browser.$("#closeDialogFocusButton");
 
-		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
-		await browser.keys("Tab");
-		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
-		await browser.keys("Tab");
-		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.waitUntil(async () => {
+			const activeElement = await browser.$(await browser.getActiveElement());
+			return await activeElement.getProperty("id") === "fistButtonInDialog";
+		}, {
+			timeout: 500,
+			timeoutMsg: "the active element must be the button in the content of the dialog"
+		});
 
-		await browser.keys(["Shift", "Tab"]);
-		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
-		await browser.keys(["Shift", "Tab"]);
-		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
-		await browser.keys(["Shift", "Tab"]);
-		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+		await closeButton.click();
+
 	});
+
+	it("Test focus circularity", async () => {
+		const opener = await browser.$("#btn-focus-circ");
+	const dialog = await browser.$("#focus-circ");
+	const firstActiveBtn = await browser.$("#active-btn-1");
+	const secondActiveBtn = await browser.$("#active-btn-2");
+
+	await opener.click();
+	await dialog.isDisplayed();
+
+	assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+	await browser.keys("Tab");
+	assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+	await browser.keys("Tab");
+	assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+
+	await browser.keys(["Shift", "Tab"]);
+	assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+	await browser.keys(["Shift", "Tab"]);
+	assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+	await browser.keys(["Shift", "Tab"]);
+	assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+});
 });
 
 describe("Acc", () => {
