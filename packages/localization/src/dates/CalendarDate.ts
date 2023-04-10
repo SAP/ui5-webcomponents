@@ -140,22 +140,22 @@ class CalendarDate {
 	toLocalJSDate() {
 		// Use this._oUDate.getTime()(returns the same point of time regardless calendar type)  instead of
 		// this._oUDate's getters to avoid non-gregorian Year, Month and Date to be used to construct a Gregorian date
-		const oLocalDate = UI5Date.getInstance(this._oUDate.getTime());
+		const oLocalDate = new Date(this._oUDate.getTime());
 
 		// Make this date really local. Now getters are safe.
 		oLocalDate.setFullYear(oLocalDate.getUTCFullYear(), oLocalDate.getUTCMonth(), oLocalDate.getUTCDate());
 		oLocalDate.setHours(0, 0, 0, 0);
 
-		return oLocalDate as Date;
+		return oLocalDate;
 	}
 
 	toUTCJSDate() {
 		// Use this._oUDate.getTime()(returns the same point of time regardless calendar type)  instead of
 		// this._oUDate's getters to avoid non-gregorian Year, Month and Date to be used to construct a Gregorian date
-		const oUTCDate = UI5Date.getInstance(this._oUDate.getTime());
+		const oUTCDate = new Date(this._oUDate.getTime());
 		oUTCDate.setUTCHours(0, 0, 0, 0);
 
-		return oUTCDate as Date;
+		return oUTCDate;
 	}
 
 	toString() {
@@ -185,7 +185,7 @@ class CalendarDate {
 		try {
 			oUDate = UniversalDate.getInstance(UI5Date.getInstance(iTimestamp), sCalendarType);
 		} catch (e) {
-			oUDate = UI5Date.getInstance(NaN); // UniversalDate.getInstance may now throw an Exception - keep the old behavior
+			oUDate = new Date(NaN); // UniversalDate.getInstance may now throw an Exception - keep the old behavior
 		}
 		oCalDate._oUDate = oUDate;
 		return oCalDate;
@@ -205,7 +205,7 @@ function createUniversalUTCDate(oDate: UI5Date | Date, sCalendarType: CalendarTy
  * @returns {Date} JavaScript date created from the date object, but this time considered as UTC date information.
  */
 function createUTCDate(oDate: UI5Date | Date) {
-	const oUTCDate = UI5Date.getInstance(Date.UTC(0, 0, 1));
+	const oUTCDate = new Date(Date.UTC(0, 0, 1));
 
 	oUTCDate.setUTCFullYear(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
 
