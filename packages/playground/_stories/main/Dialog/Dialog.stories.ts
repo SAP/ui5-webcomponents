@@ -124,13 +124,13 @@ export const BarInDialog = Template.bind({});
 BarInDialog.storyName = "Bar in Header/Footer";
 BarInDialog.args = {
 	header: `<ui5-bar slot="header" design="Header">
-				<ui5-title level="H5" slot="startContent">Bar used in Header and Footer</ui5-title>
-				<ui5-button class="dialogCloser" design="Transparent" id="closeDialogButton" slot="endContent" icon="decline"></ui5-button>
-			</ui5-bar>`,
+		<ui5-title level="H5" slot="startContent">Bar used in Header and Footer</ui5-title>
+		<ui5-button class="dialogCloser" design="Transparent" id="closeDialogButton" slot="endContent" icon="decline"></ui5-button>
+</ui5-bar>`,
 	default: "<p>Adding styles for the parts to remove the default Dialog's paddings when ui5-bar is used inside Header and Footer</p>",
 	footer: `<ui5-bar slot="footer" design="Footer">
-				<ui5-button class="dialogCloser" design="Emphasized" slot="endContent" style="min-width: 4rem;">OK</ui5-button>
-			</ui5-bar>`,
+		<ui5-button class="dialogCloser" design="Emphasized" slot="endContent" style="min-width: 4rem;">OK</ui5-button>
+</ui5-bar>`,
 };
 
 BarInDialog.decorators = [
