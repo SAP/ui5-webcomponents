@@ -73,11 +73,6 @@
 	padding-inline-start: 1rem;
 }
 
-
-:host(:not([_onsafari])) ::slotted([ui5-table-cell]) {
-	overflow: hidden;
-}
-
 /** Hover **/
 :host([type="Active"]) .ui5-table-row-root:hover,
 :host([mode="SingleSelect"]) .ui5-table-row-root:hover:not(:active) {
