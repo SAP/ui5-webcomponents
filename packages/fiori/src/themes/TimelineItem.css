@@ -10,7 +10,7 @@
 	flex-direction: column;
 }
 
-:host([layout="Vertical"]) .ui5-tli-indicator {
+:host(:not([layout="Horizontal"])) .ui5-tli-indicator {
 	position: relative;
 	width: 2rem;
 }
@@ -22,7 +22,7 @@
 	align-items: center;
 }
 
-:host([layout="Vertical"]) .ui5-tli-indicator::before {
+:host(:not([layout="Horizontal"])) .ui5-tli-indicator::before {
 	content: "";
 	display: inline-block;
 	background-color: var(--sapContent_ForegroundBorderColor);
@@ -43,7 +43,7 @@
 	left: 2.0625rem;
 	right: var(--_ui5_timeline_tli_indicator_before_right);
 }
-:host([layout="Vertical"]) .ui5-tli-indicator.ui5-tli-indicator-large-line::before {
+:host(:not([layout="Horizontal"])) .ui5-tli-indicator.ui5-tli-indicator-large-line::before {
 	bottom: var(--_ui5_timeline_tli_indicator_before_without_icon_bottom);
 }
 
@@ -52,7 +52,7 @@
 }
 
 /* Line when no Icon is provided */
-:host([layout="Vertical"]:not([icon])) .ui5-tli-indicator::before {
+:host(:not([layout="Horizontal"])):not([icon]) .ui5-tli-indicator::before {
 	bottom: var(--_ui5_timeline_tli_indicator_before_without_icon_bottom);
 	top: 1.875rem;
 }
@@ -64,7 +64,7 @@
 	left: 1.6875rem;
 }
 
-:host([layout="Vertical"]:not([icon])) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
+:host(:not([layout="Horizontal"])):not([icon]) .ui5-tli-indicator.ui5-tli-indicator-short-line::before {
 	bottom: var(--_ui5_timeline_tli_indicator_before_bottom);
 }
 
@@ -84,13 +84,13 @@
 	height: 0.375rem;
 	position: absolute;
 	top: 0.9375rem;
-	left: 50%;
+	left: 51.75%;
 	transform: translateX(-50%);
 }
 
 /* No Icon Dot in Hotizontal */
 :host([layout="Horizontal"]:not([icon])) .ui5-tli-indicator::after {
-	top: 0.78125rem;
+	top: 0.84rem;
 	left: 0.9625rem;
 }
 
