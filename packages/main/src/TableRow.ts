@@ -228,6 +228,10 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 		};
 	}
 
+	onEnterDOM() {
+		this._markSafari();
+	}
+
 	_onmouseup() {
 		this.deactivate();
 	}
@@ -476,6 +480,12 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 
 	static async onDefine() {
 		TableRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
+	}
+
+	_markSafari() : void {
+		if (navigator && (navigator.userAgent.indexOf("Safari") !== -1 && navigator.userAgent.indexOf("Chrome") === -1)) {
+			this.setAttribute("_onSafari", "");
+		}
 	}
 }
 
