@@ -18,9 +18,11 @@ import {
 import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
+import {
+	isSafari,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import type TableCell from "./TableCell.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
-
 import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
@@ -229,7 +231,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	}
 
 	onEnterDOM() {
-		this._markSafari();
+		this._markIsSafari();
 	}
 
 	_onmouseup() {
@@ -482,8 +484,8 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 		TableRow.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	_markSafari() : void {
-		if (navigator && (navigator.userAgent.indexOf("Safari") !== -1 && navigator.userAgent.indexOf("Chrome") === -1)) {
+	_markIsSafari() : void {
+		if (isSafari()) {
 			this.setAttribute("_onSafari", "");
 		}
 	}
