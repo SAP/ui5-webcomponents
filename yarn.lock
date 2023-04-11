@@ -4867,19 +4867,6 @@ chromedriver@*:
     proxy-from-env "^1.1.0"
     tcp-port-used "^1.0.1"
 
-chromedriver@110.0.0:
-  version "110.0.0"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-110.0.0.tgz#d00a1a2976592d933faa8e9839e97692922834a4"
-  integrity sha512-Le6q8xrA/3fAt+g8qiN0YjsYxINIhQMC6wj9X3W5L77uN4NspEzklDrqYNwBcEVn7PcAEJ73nLlS7mTyZRspHA==
-  dependencies:
-    "@testim/chrome-version" "^1.1.3"
-    axios "^1.2.1"
-    compare-versions "^5.0.1"
-    extract-zip "^2.0.1"
-    https-proxy-agent "^5.0.1"
-    proxy-from-env "^1.1.0"
-    tcp-port-used "^1.0.1"
-
 ci-info@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
