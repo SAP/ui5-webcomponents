@@ -37,10 +37,7 @@ const loadComponentPackages = async (theme: string) => {
 			return;
 		}
 
-		const cssData = await getThemeProperties(packageName, theme);
-		if (cssData) {
-			createOrUpdateStyle(cssData, "data-ui5-theme-properties", packageName);
-		}
+		return getThemeProperties(packageName, theme);
 	});
 
 	return Promise.all(packagesStylesPromises);
@@ -70,6 +67,25 @@ const detectExternalTheme = async (theme: string) => {
 	}
 };
 
+const themeProps = new CSSStyleSheet();
+
+const getEffectiveThemeProperties = () => {
+	return themeProps;
+};
+
+const loadAndApplyThemeProps = async (packagesTheme?: string) => {
+	const packagesProperties = await loadComponentPackages(packagesTheme || DEFAULT_THEME);
+	let rules = "";
+
+	packagesProperties.forEach(packageProperties => {
+		if (packageProperties) {
+			rules += typeof packageProperties === "string" ? packageProperties : packageProperties.content;
+		}
+	});
+
+	getEffectiveThemeProperties().replaceSync(rules);
+};
+
 const applyTheme = async (theme: string) => {
 	const extTheme = await detectExternalTheme(theme);
 
@@ -82,9 +98,10 @@ const applyTheme = async (theme: string) => {
 
 	// Always load component packages properties. For non-registered themes, try with the base theme, if any
 	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
-	await loadComponentPackages(packagesTheme || DEFAULT_THEME);
+	await loadAndApplyThemeProps(packagesTheme);
 
 	fireThemeLoaded(theme);
 };
 
 export default applyTheme;
+export { getEffectiveThemeProperties };
