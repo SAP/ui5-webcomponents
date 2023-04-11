@@ -1,9 +1,12 @@
 const fs = require('fs').promises;
+const existsSync = require('fs').existsSync;
 const getopts = require('getopts');
 const hbs2lit = require('../hbs2lit');
 const path = require('path');
 const litRenderer = require('./RenderTemplates/LitRenderer');
 const recursiveReadDir = require("recursive-readdir");
+
+let missingTypesReported = false;
 
 const args = getopts(process.argv.slice(2), {
 	alias: {
@@ -23,10 +26,22 @@ const onError = (place) => {
 
 const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
 
+const hasTypes = (file, componentName) => {
+	const tsFile = path.join(path.dirname(file), componentName + ".ts")
+	const dtsFile = path.join(path.dirname(file), componentName + ".ds.ts")
+	return existsSync(tsFile) || existsSync(dtsFile);
+}
+
 const processFile = async (file, outputDir) => {
 	const componentNameMatcher = /(\w+)(\.hbs)/gim;
 	const componentName = componentNameMatcher.exec(file)[1];
-	console.log({componentName})
+	if (!hasTypes(file, componentName)) { 
+		if (!missingTypesReported) {
+			console.warn("[Warn] The following templates do not have a corresponging .ts or .d.ts file and won't be type checked:")
+			missingTypesReported = true;
+		}
+		console.log("  -> " + componentName + ".hbs");
+	}
 	const litCode = await hbs2lit(file, componentName);
 	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
 

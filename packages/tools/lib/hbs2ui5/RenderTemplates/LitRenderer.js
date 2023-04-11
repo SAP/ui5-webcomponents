@@ -1,44 +1,4 @@
-jsControls = ["RatingIndicator",
-	"SelectPopover",
-	"TabContainerPopover",
-	"TabInOverflow",
-	"TabInStrip",
-	"TabSeparatorInOverflow",
-	"TabSeparatorInStrip",
-	"TextAreaPopover",
-	"TextArea",
-	"TimePickerPopover",
-	"Toast",
-	"TokenizerPopover",
-	"Tokenizer",
-	"Token",
-	"BreadcrumbsPopover",
-	"ColorPaletteDialog",
-	"ComboBoxPopover",
-	"ComboBox",
-	"DatePickerPopover",
-	"DateTimePickerPopover",
-	"FileUploaderPopover",
-	"MultiComboBoxPopover",
-	"MultiComboBox", "MultiInput",
-	"PopupBlockLayer",
-	"MediaGalleryItem",
-	"MediaGallery",
-	"NotificationListGroupItem",
-	"NotificationListItem",
-	"NotificationOverflowActionsPopover",
-	"ShellBarPopover",
-	"ShellBar",
-	"SideNavigationItemPopoverContent",
-	"SideNavigation",
-	"SideNavigationItem",
-	"SideNavigationPopover",
-	"WizardPopover",
-	"WizardTab",
-	"Wizard",
-]
-
-const tsImports = (controlName) => {
+const tsImports = (controlName, hasTypes) => {
 	if (!process.env.UI5_TS) {
 		return "";
 	}
@@ -46,13 +6,13 @@ const tsImports = (controlName) => {
 	const importPrefix = process.env.UI5_BASE ? "../../../" : "@ui5/webcomponents-base/dist/"
 
 	return `import type UI5Element from "${importPrefix}UI5Element";
-	${importForControl(controlName)}
+	${importForControl(controlName, hasTypes)}
 	import type { ClassMapValue } from "${importPrefix}types";
 	`;
 }
-const importForControl = (controlName) => {
+const importForControl = (controlName, hasTypes) => {
 
-	if (jsControls.includes(controlName)) {
+	if (!hasTypes) {
 		return `type ${controlName} = any;`;
 	}
 
@@ -63,11 +23,13 @@ const importForControl = (controlName) => {
 	return `import type ${controlName} from "../../${controlName}";`
 }
 
-const buildRenderer = (controlName, litTemplate) => {
+const buildRenderer = (controlName, litTemplate, hasTypes) => {
+	const importPrefix = process.env.UI5_BASE ? "../../../" : "@ui5/webcomponents-base/dist/"
+
 	// typescript cannot process package imports for the same package and the paths are changed to relative for base package templates
 	return `/* eslint no-unused-vars: 0 */
 import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag } from "${importPrefix}renderer/LitRenderer.js";
-${tsImports(controlName)}
+${tsImports(controlName, hasTypes)}
 ${litTemplate}
 
 export default block0;`;
