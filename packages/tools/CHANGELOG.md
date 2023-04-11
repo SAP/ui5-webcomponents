@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.1) (2023-04-11)
+
+
+### Bug Fixes
+
+* **theming:** fix icons version display for custom themes (built via the ThemeDesigner) ([#6815](https://github.com/SAP/ui5-webcomponents/issues/6815)) ([63ff800](https://github.com/SAP/ui5-webcomponents/commit/63ff8007889a66efae074fc6b4dbcb1b7ea36713)), closes [#6758](https://github.com/SAP/ui5-webcomponents/issues/6758)
+
+
+
+
+
 # [1.12.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.0) (2023-04-04)
 
 
