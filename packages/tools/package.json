@@ -67,7 +67,6 @@
     "zx": "^4.3.0"
   },
   "peerDependencies": {
-    "chromedriver": "*",
     "typescript": "^4.9.4"
   },
   "peerDependenciesMeta": {
