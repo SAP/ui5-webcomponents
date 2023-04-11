@@ -105,8 +105,9 @@ window.sanitizeHTML = sanitizeHTML;
 window.URLListValidator = URLListValidator;
 
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getEffectiveIconCollection } from "@ui5/webcomponents-base/config/Icons.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
@@ -138,6 +139,7 @@ const testAssets = {
 		setAnimationMode,
 		getTheme,
 		setTheme,
+		isLegacyThemeFamily,
 		getLanguage,
 		setLanguage,
 		setNoConflict,
@@ -159,6 +161,7 @@ const testAssets = {
 	renderFinished,
 	defaultTexts,
 	getExportedIconsValues: () => icons,
+	getEffectiveIconCollection,
 };
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,

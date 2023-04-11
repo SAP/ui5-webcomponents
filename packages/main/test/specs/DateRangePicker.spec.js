@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("DateRangePicker general interaction", () => {
 	before(async () => {

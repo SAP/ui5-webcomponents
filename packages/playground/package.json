@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-playground",
   "private": true,
-  "version": "1.12.0-rc.2",
+  "version": "1.13.0-rc.0",
   "description": "UI5 Web Components Playground",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -33,7 +33,8 @@
     "remark-gfm": "^3.0.1",
     "rimraf": "^3.0.2",
     "storybook": "^7.0.2",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vite-node": "^0.29.8"
   },
   "scripts": {
     "build": "yarn install:dependencies && npm-run-all --parallel prepare:* && tsc && bundle exec jekyll build --source ./ --destination ./dist",
@@ -62,7 +63,7 @@
     "prepare:next:nojekyll": "copy-and-watch \"./.nojekyll\" \"./dist\"",
     "prepare:next:samples": "node ./build-scripts-storybook/samples-prepare.js",
     "prepare:next:manifest": "node ./build-scripts-storybook/parse-manifest.js",
-    "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js",
+    "prepare:next:documentation": "vite-node ./build-scripts-storybook/documentation-prepare.ts",
     "storybook": "npm-run-all --parallel prepare:next:* && storybook dev -p 6006",
     "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && storybook build -o ./dist/_playground"
   }

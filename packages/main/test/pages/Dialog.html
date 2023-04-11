@@ -451,6 +451,17 @@
 	<br>
 	<br>
 	<div>
+		<ui5-label>Focus circularity</ui5-label>
+		<ui5-button id="btn-focus-circ">Dialog focus circularity</ui5-button>
+		<ui5-dialog id="focus-circ">
+			<ui5-busy-indicator slot="header">
+				<ui5-button id="active-btn-1">1</ui5-button>
+			</ui5-busy-indicator>
+			<ui5-busy-indicator slot="footer">
+				<ui5-button id="active-btn-2">2</ui5-button>
+			</ui5-busy-indicator>
+		</ui5-dialog>
+	</div>
 		<div>
 			<ui5-label>Dialog states</ui5-label>
 		</div>
@@ -603,6 +614,13 @@
 
 		btnOpenDialog.addEventListener("click", function () {
 			dialog.show();
+		});
+
+		const focusCirBtn = document.getElementById("btn-focus-circ");
+		const focusCircDialog = document.getElementById("focus-circ");
+
+		focusCirBtn.addEventListener("click", function () {
+			focusCircDialog.show();
 		});
 
 		btnOpenDialogNoPaddings.addEventListener("click", function () {
