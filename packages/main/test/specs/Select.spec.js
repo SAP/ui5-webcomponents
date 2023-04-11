@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 async function getResourceBundleTexts(keys) {
 	return browser.executeAsync((keys, done) => {
@@ -66,7 +66,7 @@ describe("Select general interaction", () => {
 
 		const select = await browser.$("#mySelect");
 		const inputResultClose = await browser.$("#inputResultClose");
-		
+
 		await select.click(); // open
 		await select.click(); // close
 
@@ -165,6 +165,23 @@ describe("Select general interaction", () => {
 		await btn.click();
 
 		assert.strictEqual(await inputResult.getProperty("value"), "3", "Change event should have fired twice");
+	});
+
+	it("announces the selected value once Select Popover is opened", async () => {
+		await browser.url(`test/pages/Select.html`);
+
+		const politeSpan = await browser.$(".ui5-invisiblemessage-polite");
+		const select = await browser.$("#mySelect");
+
+		// open picker
+		await select.click();
+
+		let politeSpanHtml = await politeSpan.getHTML(false);
+		let selectedOptionHTML = await browser.$("#mySelect ui5-option[selected]").getHTML(false);
+
+		// expect the selected item to be read out
+		assert.include(politeSpanHtml, selectedOptionHTML, "Selected item is announced on Select opening");
+
 	});
 
 	it("changes selection on Tab", async () => {
@@ -479,7 +496,7 @@ describe("Select general interaction", () => {
 			"VALUE_STATE_TYPE_WARNING",
 		];
 		const texts = await getResourceBundleTexts(keys);
-		
+
 		assert.ok(valueStateText.includes(texts.VALUE_STATE_TYPE_SUCCESS),
 			"The value state text is correct.");
 		assert.ok(infoValueStateText.includes(texts.VALUE_STATE_TYPE_INFORMATION),
@@ -488,6 +505,25 @@ describe("Select general interaction", () => {
 			"The value state text is correct.");
 		assert.ok(warningValueStateText.includes(texts.VALUE_STATE_TYPE_WARNING),
 			"The value state text is correct.");
+	});
+
+	it("Tests that the picker is closed when the selected value is clicked", async () => {
+		const select = await browser.$("#mySelect");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect")
+		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// select the first item
+		await select.click();
+		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		await firstItem.click();
+		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+
+		// click the selected item again
+		await select.click();
+		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		await firstItem.click();
+		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
 	});
 });
 

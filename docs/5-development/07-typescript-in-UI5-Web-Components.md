@@ -1,13 +1,13 @@
-# Typescript development
+# TypeScript Development
 
+Since 1.11.0 we migrated the framework and all components to TypeScript.
+In addition to the pure code migration, we introduced a new format of component metadata definition leveraging TypeScript decorators.
 
-## Metadata
+## Component Metadata
 
 ### Decorators
 
-We use decorators to describe metadata.
-
-List of all available decorators:
+We use decorators to describe the components' metadata. Here is the list of all available decorators:
 
 ```ts
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
@@ -16,18 +16,22 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 ```
 
-### Types of decorators
+### Class decorators
+The class decorators are used just before the component's class declaration and applied to the constructor of the class to describe the component:
 
-#### Class decorators
-
-These are used **outside** the class declaration and describe the class:
+- `@customElement` - to define class-related metadata entities: `tag`, `renderer`, `template`, `styles`, `dependencies` and more.
 
 ```ts
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+```
+
+- `@event` - to define the events, fired by the component
+
+```ts
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 ```
 
-Example:
+**Example:**
 
 ```ts
 @customElement("ui5-menu")
@@ -46,32 +50,7 @@ class MyClass extends UI5Element {
 }
 ```
 
-#### Property decorators
-
-These are used **inside** the class and are associated with accessors (class members).
-Such decorators are used for properties and slots:
-
-```ts
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-```
-
-Example:
-
-```ts
-class MyClass extends UI5Element {
-	@property({ type: Boolean })
-	open!:boolean;
-}
-```
-
-### Defining the tag, static getters and other settings
-
-Use `@customElement` as a replacement for the metadata `tag` setting and all the `static get` methods.
-
-Use `themeAware`, `languageAware` and `fastNavigation` where needed.
-
-**Example**
+**Example:** `@customElement` can be used to define all class-related metadata entities:
 
 ```ts
 @customElement({
@@ -82,25 +61,46 @@ Use `themeAware`, `languageAware` and `fastNavigation` where needed.
 	renderer: Renderer,
 	styles: MyElementStyles,
 	template: MyElementTemplate,
+	staticAreaStyles: MyStaticAreaStyles,
+ 	staticAreaTemplate: MyStaticAreaTemplate,
+	dependencies: [ComponentA, ComponentB],
 })
 class MyElement extends UI5Element {
-	...
+
 }
 ```
-And the pattern goes on for all the `static get` methods as well, such as :
- - `static get render()`;
-   - **Note!**: We now use it as **`renderer`** instead of `render` in the `@customElement` decorator as we can see from the example;
- - `static get dependencies()`;
- - `static get staticAreaStyles()`;
- - `static get staticAreaTemplate()`;
 
-<br />
+**Note**: the `static get render()` that we use when developing in JavaScript (still supported for backward compatibility) is replaced with **`renderer`** in the `@customElement` decorator.
+
+### Property decorators
+
+These are used inside the class and are associated with accessors (class members).
+These decorators are used for properties and slots:
+
+- `@property`- to define components' properties
+```ts
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+```
+- `@slot` - to define components' slots
+
+```ts
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+```
 
 ### Defining properties (`@property`)
 
-Pass an object with the settings (`type`, `defaultValue`, etc.), defining the property, as the only parameter to the `@property` decorator.
+The `@property` decorator has a single parameter of type object with the following fields to describe a component property:
 
- - `String` is the default type, no need to explicitly write it
+- type?: BooleanConstructor | StringConstructor | ObjectConstructor | DataType
+- validator?: DataType,
+- defaultValue?: PropertyValue,
+- noAttribute?: boolean,
+- multiple?: boolean,
+- compareValues?: boolean,
+
+The fields are explained in detail in the [Deep dive and best practices](./06-deep-dive-and-best-practices.md) article.
+
+**Example:** "`String` properties with no specific default value" - we skip all settings as `String` is the default type and `empty string` is the default value.
 
 ```ts
 /**
@@ -115,23 +115,11 @@ Pass an object with the settings (`type`, `defaultValue`, etc.), defining the pr
 headerText!: string;
 ```
 
- - use Typescript `enum` for enums (do not extend `DataType`)
+**Example:** "Properties with enumerated values" - we use `enum` for both the TypeScript class member and the property metadata in the decorator
 
 ```ts
 /**
  * Defines the component design.
- *
- * <br/><br/>
- * <b>The available values are:</b>
- *
- * <ul>
- * <li><code>Default</code></li>
- * <li><code>Emphasized</code></li>
- * <li><code>Positive</code></li>
- * <li><code>Negative</code></li>
- * <li><code>Transparent</code></li>
- * <li><code>Attention</code></li>
- * </ul>
  *
  * @type {sap.ui.webc.main.types.ButtonDesign}
  * @name sap.ui.webc.main.Button.prototype.design
@@ -142,7 +130,7 @@ headerText!: string;
 design!: ButtonDesign;
 ```
 
- - use `validator` instead of `type` for `DataType` descendants (although `type` still works for compatibility) 
+**Example:** use `validator` instead of `type` for `DataType` descendants (although `type` still works for compatibility) 
 
 ```ts
 /**
@@ -156,27 +144,47 @@ design!: ButtonDesign;
 timestamp?: number;
 ```
 
-The `validator` setting is preferable to `type` as it avoids confusion with the actual Typescript type (i.e. `number` in this example)
+The `validator` setting is preferable to `type` as it avoids confusion with the actual TypeScript type (i.e. `number` in this example).
 
-- Note the difference between Typescript types (`string`, `boolean`) and Javascript constructors (`String`, `Boolean`).
 
-The former are used for Typescript class members, and the latter (as before) for the metadata settings.
+**Example:** TypeScript types (`string`, `boolean`) are used for TypeScript class members, and  Javascript constructors (`String`, `Boolean`) for the metadata settings (as before)
 
 ```ts
 @property({ type: Boolean })
 hidden!: boolean;
 ```
 
-- **Important:** set the `@name` JSDoc annotation for all *public* properties as JSDoc cannot associate the JSDoc comment with the property in the code.
+### Usage of `@name` in properties' documentation
+Set the `@name` JSDoc annotation for all *public* properties as JSDoc cannot associate the JSDoc comment with the property in the code.
 This will not be necessary once we've switched to TypeDoc.
 
-- Use `?` for all metadata properties that may be `undefined`, and `!` for all other metadata properties.
+### Usage of `?` and `!`
+Use `?` for all metadata properties that may be `undefined` or `null`, and `!` for all other metadata properties. As a rule of thumb:
+- `Boolean` properties are always defined with `!` as they
+are always `false` by default
+```ts
+@property({ type: Boolean })
+interactive!: boolean;
+```
+- `String` properties are always defined with `!` as they
+are `empty string` by default, unless you specifically set `defaultValue: undefined` (then use `?`)
+```ts
+@property()
+text!: string;
+```
 
-As a rule of thumb, `String` properties are always defined with `!` unless you specifically set `defaultValue: undefined` and `validator`
-properties are always defined with `?` unless you specify a default value. `Boolean` properties are always defined with `!` as they
-always have a default value of `false`.
+```ts
+@property({ defaultValue: undefined })
+target?: string;
+```
 
-- **Important:** never initialize metadata properties. Use `defaultValue` instead.
+- properties with `validator` set, should be always defined with `?` as they are `undefined` by default, unless you specify a `truthy` default value.
+```ts
+@property({ validator: Float })
+width?: number
+```
+
+### Never initialize metadata properties. Use `defaultValue` instead.
 
 Wrong:
 ```ts
@@ -209,8 +217,7 @@ class Button extends UI5Element {
 }
 ```
 
-Note the usage of `!` to tell Typescript that this variable will always be defined,
-since Typescript does not know that the framework will create a special getter for it.
+**Note:** we use `!` to instruct the TypeScript compiler that the variable will be initialized with a default value different than `null` and `undefined`, since the TypeScript compiler does not know about the component lifecycle and the fact that the framework will initialize the `design` class member.
 
 ### Defining slots (`@slot`)
 
@@ -386,7 +393,7 @@ Example:
 ```ts
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 ```
-Using the keyword `"event"` as a paramater for our handlers leads to a collision between the parameter and the `@event` decorator. 
+Using the keyword `"event"` as a parameter for our handlers leads to a collision between the parameter and the `@event` decorator. 
 <br/>
 ```ts
 // Before ( which would lead to a name collision now )
@@ -397,7 +404,7 @@ _onfocusin(event: FocusEvent) {
 	this._currentIndex = this.items.indexOf(target);
 }
 ```
-In order to avoid this and keep consistency, we made a decision to name the parameters in our handlers `"e"` instead.
+To avoid this and keep consistency, we decided to name the parameters in our handlers `"e"` instead.
 
 ```ts
 // After
@@ -455,7 +462,7 @@ To enhance the quality and readability of our code, we should establish specific
 
 - ***3.1 How should we structure the name of our EventDetail type ?***
 
-- - In order to be consistent within our project, the latest convention about how we name our EventDetail types is by using the following pattern: <br/>
+- - To be consistent within our project, the latest convention about how we name our EventDetail types is by using the following pattern: <br/>
 
 ```ts
 // File: DayPicker.ts
@@ -527,9 +534,9 @@ enum CSSColors {
 ```
 <br/>
 
-**6. Use the `"keyof typeof"` syntax when accessing dynamically objects with known keys.**
+**6. Use the `"keyof typeof"` syntax when dynamically accessing objects with known keys.**
 
-When accessing dynamically objects with **known** keys, always use the `"keyof typeof"` syntax for improved accuracy.
+When dynamically accessing objects with **known** keys, always use the `"keyof typeof"` syntax for improved accuracy.
 
 Example:
 
@@ -555,7 +562,7 @@ const getRGBColor = (color: string): ColorRGB => {
 
 ```
 #
-In the cases where the keys are unknown or uncertain we use the `Record<K, T>` notation instead of the `{[key]}` notation.<br/>
+In the cases where the keys are unknown or uncertain, we use the `Record<K, T>` notation instead of the `{[key]}` notation.<br/>
 In short, `Record<K, T>` is a TypeScript notation for describing an object with keys of `type K` and values of `type T`.
 
 Example:
@@ -578,16 +585,16 @@ type Metadata = {
 
 **7. Do not use "any", unless absolutely necessary.**
 
-The `"any"` type, while powerful, can be a **dangerous** feature as it instructs the TypeScript compiler to ignore type checking for a specific variable or expression. This can result in errors and make the code more complex to understand and maintain. Our `ESLint` usually takes care of this by enforcing best practices and avoiding its usage.
+The `"any"` type instructs the TypeScript compiler to ignore type checking for a specific variable or expression. This can result in errors and make the code more complex to understand and maintain. Our `ESLint` usually takes care of this by enforcing best practices and avoiding its usage.
 
 <br/>
 
-### TypeScript specific guidelines
+### TypeScript-specific guidelines
 <br/>
 
 **1. When to use "import type" ?**
 
-The `import` keyword is used to import values from a module, while `import type` is used to import only the type information of a module without its values. This type information can be used in type annotations and declarations.
+The `import` keyword is used to import values from a module, while `import type` is used to import only the type information of a module without its values. This type of information can be used in type annotations and declarations.
 <br/>
 
 For clarity, it is recommended to keep ***type*** and ***non-type*** imports on separate lines and explicitly mark types with the `type` keyword, as in the following example:
@@ -601,15 +608,14 @@ import I18nBundle, { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dis
 
 // Should be split into 
 
-// Named export (function) used into the the component class
+// Named export (function) called into the component class
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
-// Default export used into the the component class.
-// I18nBundle is a class constructor, but in the current example it's used 
-// as a type for a variable to which the class will be assinged.
+// Default type export.
+// Although I18nBundle is a class, it's used as a type of a variable.
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
-// named type export
+// Named type export, used as a type of a variable.
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 ```
 
@@ -638,7 +644,7 @@ class Example extends UI5Element {
 	}
 
 	onAfterRendering() {
-		// here TypeScript will complain about that the testProperty may be undefined
+		// here TypeScript will complain that the testProperty may be undefined
 		// in order of its definition and because it doesn't understand the framework's lifecycle
 		const varName: string = this.testProperty!;
 	}
@@ -650,8 +656,7 @@ class Example extends UI5Element {
 
 Generics in TypeScript help us with the creation of classes, functions, and other entities that can work with multiple types, instead of just a single one. This allows users to use their own types when consuming these entities.
 
-In the migration to TypeScript, generic functions have been added to the `UI5Element`, and a common approach for using built-in generics has been established.
-
+Generic functions have been added to the `UI5Element`, and a common approach for using built-in generics has been established.
 Our first generic function is the `fireEvent` function, which uses generics to describe the event details and to check that all necessary details have been provided. The types used to describe the details provide helpful information to consumers of the event as explained above.
 
 For example: 
@@ -661,13 +666,13 @@ fireEvent<EventDetail>("click")
 ```
 <br/>
 
-The use of custom events as the type for the first argument of an event handler can result in TypeScript complaining about unknown properties in the details. By using generics and introducing a type for event details, we can tell Typescript which parameters are included in the details, and thus avoid these complaints.
+The use of custom events as the type for the first argument of an event handler can result in TypeScript complaining about unknown properties in the details. By using generics and introducing a type for event details, we can tell TypeScript which parameters are included in the details, and thus avoid these complaints.
 
 ```ts
 handleClick(e: CustomEvent<EventDetail>)
 ```
 
-The second use of generics is in the `querySelector` function. It allows us to specify a custom element return type, such as "List," while retaining the default return type of `T | null.` This allows for more precise type checking and better understanding of the expected return value.
+The second use of generics is in the `querySelector` function. It allows us to specify a custom element return type, such as "List," while retaining the default return type of `T | null.` This allows for more precise type checking and a better understanding of the expected return value.
 
 It's important to note that casting the returned result will exclude "`null`." Additionally, if the result is always in the template and not surrounded by expressions, the "!" operator can be used.
 
@@ -680,7 +685,7 @@ async _getDialog() {
 }
 ```
 
-The third use case for generics is with the `getFeature` function. This function enables us to retrieve a feature, if it is **registered**. It is important to note that `getFeature` returns the class definition, rather than an instance of the class. To use it effectively, the `typeof` keyword should be utilized to obtain the class type, which will then be set as the return type of the function.
+The third use case for generics is with the `getFeature` function. This function enables us to retrieve a feature if it is **registered**. It is important to note that `getFeature` returns the class definition, rather than an instance of the class. To use it effectively, the `typeof` keyword should be utilized to obtain the class type, which will then be set as the return type of the function.
 
 ```ts
 	getFeature<typeof FormSupportT>("FormSupport")

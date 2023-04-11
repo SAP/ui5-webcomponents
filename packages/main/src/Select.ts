@@ -33,7 +33,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import List from "./List.js";
-import type { SelectionChangeEventDetail } from "./List.js";
+import type { ClickEventDetail } from "./List.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
@@ -605,8 +605,8 @@ class Select extends UI5Element implements IFormElement {
 	 * The user clicked on an item from the list
 	 * @private
 	 */
-	_handleItemPress(e: CustomEvent<SelectionChangeEventDetail>) {
-		const item = e.detail.selectedItems[0];
+	_handleItemPress(e: CustomEvent<ClickEventDetail>) {
+		const item = e.detail.item;
 		const selectedItemIndex = this._getSelectedItemIndex(item);
 
 		this._handleSelectionChange(selectedItemIndex);
@@ -687,6 +687,7 @@ class Select extends UI5Element implements IFormElement {
 	_afterOpen() {
 		this.opened = true;
 		this.fireEvent<CustomEvent>("open");
+		this.itemSelectionAnnounce();
 	}
 
 	_afterClose() {

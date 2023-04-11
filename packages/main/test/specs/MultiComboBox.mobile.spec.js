@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Basic interaction", () => {
 	before(async () => {
@@ -105,10 +105,11 @@ describe("Typeahead", () => {
 
 	it("Should autocomplete the first matched suggestion item", async () => {
 		const mcb = await browser.$("#mcb");
+		const mcbInput = await mcb.shadow$("#ui5-multi-combobox-input");
 		const sExpected = "Cosy";
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
 
-		await mcb.click();
+		await mcbInput.click();
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
 
@@ -122,9 +123,10 @@ describe("Typeahead", () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
 
 		const mcb = await browser.$("#mcb-no-typeahead");
+		const mcbInput = await mcb.shadow$("#ui5-multi-combobox-input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-no-typeahead");
 
-		await mcb.click();
+		await mcbInput.click();
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
 
@@ -140,10 +142,10 @@ describe("Typeahead", () => {
 		let tokens;
 
 		const mcb = await browser.$("#mcb");
-		const sExpected = "Cosy";
+		const mcbInput = await mcb.shadow$("#ui5-multi-combobox-input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb")
 
-		await mcb.click();
+		await mcbInput.click();
 
 		const dialogInput = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".input-root-phone input");
 
@@ -173,10 +175,11 @@ describe("Items selection", () => {
 
 	it("Should close the picker and create token when item is pressed in the picker", async () => {
 		const multiCombo = await browser.$("#mcb");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
 
 		await multiCombo.scrollIntoView();
-		await multiCombo.click();
+		await mcbInput.click();
 
 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li")[0];
 		await listItem.click();
@@ -187,10 +190,11 @@ describe("Items selection", () => {
 
 	it("Should create token when item is selected in the picker and ok button is pressed", async () => {
 		const multiCombo = await browser.$("#mcb");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
 
 		await multiCombo.scrollIntoView();
-		await multiCombo.click();
+		await mcbInput.click();
 
 		const listItemCheckbox = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li")[1].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
@@ -204,10 +208,11 @@ describe("Items selection", () => {
 
 	it("Should not create token when item is selected in the picker and the 'Close' button is pressed", async () => {
 		const multiCombo = await browser.$("#mcb");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
 
 		await multiCombo.scrollIntoView();
-		await multiCombo.click();
+		await mcbInput.click();
 
 		const listItemCheckbox = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li")[2].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();
@@ -289,10 +294,11 @@ describe("Eventing", () => {
 
 	it("Should fire selection change event when the item inside the picker (not the checkbox) is pressed", async () => {
 		const multiCombo = await browser.$("#mcb");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
 
 		await multiCombo.scrollIntoView();
-		await multiCombo.click();
+		await mcbInput.click();
 
 		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li")[0];
 		await listItem.click();
@@ -304,10 +310,11 @@ describe("Eventing", () => {
 
 	it("Should fire selection change event when items are selected and the 'OK' button is pressed", async () => {
 		const multiCombo = await browser.$("#mcb");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb");
 
 		await multiCombo.scrollIntoView();
-		await multiCombo.click();
+		await mcbInput.click();
 
 		const listItemCheckbox = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li")[1].shadow$("ui5-checkbox");
 		await listItemCheckbox.click();

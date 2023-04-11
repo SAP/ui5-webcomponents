@@ -129,7 +129,7 @@
 			<p>Move this dialog around the screen by dragging it by its header.</p>
 			<p>This feature available only on Desktop.</p>
 
-			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
 				<ui5-button id="resizable-drggable-close" design="Emphasized">OK</ui5-button>
 			</div>
 		</ui5-dialog>
@@ -199,6 +199,84 @@
 </section>
 
 <section>
+	<h3>Dialog with Bar in the Header and in the Footer</h3>
+	<div class="snippet">
+		<ui5-button id="with-bar">Open dialog with ui5-bar</ui5-button>
+
+		<ui5-dialog id="with-bar-dialog">
+			<ui5-bar slot="header" design="Header">
+				<ui5-title level="H5" slot="startContent">Sample Dialog with Bar</ui5-title>
+				<ui5-button
+				  design="Transparent"
+				  id="with-bar-close"
+				  slot="endContent"
+				  icon="decline">
+				</ui5-button>
+			  </ui5-bar>
+			  <div>
+				Adding styles for the parts "header" and "footer" to remove the default Dialog's paddings when ui5-bar is used inside Header and Footer.
+			  </div>
+			<ui5-bar slot="footer" design="Footer">
+				<ui5-button id="with-bar-ok" design="Emphasized" slot="endContent" style="min-width: 4rem;">OK</ui5-button>
+			</ui5-bar>
+		</ui5-dialog>
+	</div>
+
+	<script>
+		var dialogOpener4 = document.getElementById("with-bar");
+		var dialog4 = document.getElementById("with-bar-dialog");
+		var dialogCloser41 = document.getElementById("with-bar-close");
+		var dialogCloser42 = document.getElementById("with-bar-ok");
+
+		dialogOpener4.addEventListener("click", function() {
+			dialog4.show();
+		});
+
+		dialogCloser41.addEventListener("click", function() {
+			dialog4.close();
+		});
+
+		dialogCloser42.addEventListener("click", function() {
+			dialog4.close();
+		});
+	</script>
+
+	<pre class="prettyprint lang-html"><xmp>
+		<ui5-dialog id="with-bar-dialog">
+			<ui5-bar slot="header" design="Header">
+				<ui5-title level="H5" slot="startContent">Sample Dialog with Bar</ui5-title>
+				<ui5-button
+				  design="Transparent"
+				  id="with-bar-close"
+				  slot="endContent"
+				  icon="decline">
+				</ui5-button>
+			  </ui5-bar>
+			  <div>
+				Adding styles for the parts "header" and "footer" to remove the default Dialog's paddings when ui5-bar is used inside Header and Footer.
+			  </div>
+			<ui5-bar slot="footer" design="Footer">
+				<ui5-button id="with-bar-ok" design="Emphasized" slot="endContent" style="min-width: 4rem;">OK</ui5-button>
+			</ui5-bar>
+		</ui5-dialog>
+
+		<style>
+			#with-bar-dialog::part(header),
+			#with-bar-dialog::part(footer) {
+				padding-inline: 0;
+			}
+		</style>
+	</xmp></pre>
+</section>
+
+<style>
+	#with-bar-dialog::part(header),
+	#with-bar-dialog::part(footer) {
+		padding-inline: 0;
+	}
+</style>
+
+<section>
 	<h3>Dialogs with various state properties</h3>
 	<div class="snippet">
 		<ui5-button id="error-state">Open error state dialog</ui5-button>
@@ -208,28 +286,28 @@
 
 		<ui5-dialog id="error-state-dialog" header-text="Error" state="Error">
 			<p>Error state dialog</p>
-			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
 				<ui5-button id="error-close">Close</ui5-button>
 			</div>
 		</ui5-dialog>
 
 		<ui5-dialog id="information-state-dialog" header-text="Information" state="Information">
 			<p>Information state dialog</p>
-			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
 				<ui5-button id="information-close">Close</ui5-button>
 			</div>
 		</ui5-dialog>
 
 		<ui5-dialog id="success-state-dialog" header-text="Success" state="Success">
 			<p>Success state dialog</p>
-			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
 				<ui5-button id="success-close">Close</ui5-button>
 			</div>
 		</ui5-dialog>
 
 		<ui5-dialog id="warning-state-dialog" header-text="Warning" state="Warning">
 			<p>Warning state dialog</p>
-			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+			<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
 				<ui5-button id="warning-close">Close</ui5-button>
 			</div>
 		</ui5-dialog>
@@ -289,7 +367,7 @@
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-dialog id="error-state-dialog" header-text="Error" state="Error">
 	<p>Error state dialog</p>
-	<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+	<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center;">
 		<ui5-button id="error-close">Close</ui5-button>
 	</div>
 </ui5-dialog>

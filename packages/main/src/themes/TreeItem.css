@@ -32,7 +32,7 @@
 	bottom: 0.125rem;
 }
 
-:host([_minimal]) .ui5-li-tree-text-wrapper {
+:host([_minimal]) .ui5-li-text-wrapper {
 	display: none;
 }
 
@@ -92,12 +92,6 @@
 
 :host([active][actionable]) .ui5-li-tree-toggle-icon {
 	color: var(--sapList_Active_TextColor);
-}
-
-.ui5-li-tree-text-wrapper {
-	display: flex;
-	justify-content: space-between;
-	width: 100%;
 }
 
 /* move host styles to .ui5-li-root as the focused element of [ui5-tree-item]
