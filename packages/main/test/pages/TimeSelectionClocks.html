@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>TimeSelectionClocks test page</title>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+
+	<script data-id="sap-ui-config" type="application/json">
+		{
+			"rtl": false,
+			"formatSettings": {
+                "firstDayOfWeek": 0
+            }
+		}
+	</script>
+
+	<link rel="stylesheet" type="text/css" href="./styles/TimeSelectionClocks.css">
+
+</head>
+<body>
+
+	<h3>TimeSelectionClocks</h3>
+
+	<ui5-time-selection-clocks
+		id="myClocks"
+		format-pattern="HH:mm:ss"
+		minutes-step="1"
+		seconds-step="1"
+		max-hours="24"
+		max-minutes="60"
+		max-seconds="60"
+	></ui5-time-selection-clocks>
+
+	<!--
+	<div>
+		<div class="clock-wrapper">
+			<ui5-time-picker-clock id="myHours12" label="myHours12" item-min="1" item-max="12" display-step="1" last-item-replacement1="0"></ui5-time-picker-clock>
+		</div>
+		<div class="clock-wrapper">
+			<ui5-time-picker-clock id="myHours00" label="myHours00" item-min="1" item-max="12" display-step="1" inner-items prepend-zero last-item-replacement="0"></ui5-time-picker-clock>
+		</div>
+		<div class="clock-wrapper">
+			<ui5-time-picker-clock id="myHours24" label="myHours24" item-min="1" item-max="12" display-step="1" inner-items prepend-zero support2400 last-item-replacement="0"></ui5-time-picker-clock>
+		</div>
+		<div class="clock-wrapper">
+			<ui5-time-picker-clock id="myMinutes" label="myMinutes" item-min="1" item-max="60" last-item-replacement="0"></ui5-time-picker-clock>
+		</div>
+		<div class="clock-wrapper">
+			<ui5-time-picker-clock id="myMinutes10" label="myMinutes10" item-min="1" item-max="60" display-step="10" value-step="10" last-item-replacement="0"></ui5-time-picker-clock>
+		</div>
+	</div>
+
+	<div>
+		<h3>Last Changed Clock - ID, value and string value</h3>
+		<ui5-input id="clockChangeId"></ui5-input>
+		<ui5-input id="clockChangeValue"></ui5-input>
+		<ui5-input id="clockChangeStringValue"></ui5-input>
+	</div>
+
+	<script>
+
+		myHours12.addEventListener('change', displayChange);
+		myHours00.addEventListener('change', displayChange);
+		myHours24.addEventListener('change', displayChange);
+		myMinutes.addEventListener('change', displayChange);
+		myMinutes10.addEventListener('change', displayChange);
+
+		function displayChange(event) {
+			var clock = event.target;
+			clockChangeId.value = clock.id;
+			clockChangeValue.value = clock.selectedValue;
+			clockChangeStringValue.value = clock._getStringValue(clock.selectedValue);
+		}
+	</script>
+-->
+</body>
+</html>

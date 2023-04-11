@@ -14,6 +14,12 @@ import TimePickerClockTemplate from "./generated/templates/TimePickerClockTempla
 // Styles
 import TimePickerClockCss from "./generated/themes/TimePickerClock.css.js";
 
+type ChangeEventDetail = {
+	value: number,
+	stringValue: string,
+	finalChange: boolean,
+}
+
 type TimePickerClockItem = {
 	angle?: number,
 	item?: string,
@@ -111,6 +117,17 @@ class TimePickerClock extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
+
+	/**
+	 * Determines whether the component is active (visible).
+	 *
+	 * @name sap.ui.webc.main.TimePickerClock.prototype.active
+	 * @type {Boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	active!: boolean;
 
 	/**
 	 * Minimum item value for the outer circle of the clock.
@@ -248,6 +265,8 @@ class TimePickerClock extends UI5Element {
 	 *
 	 * - on both device types, if there is a keyboard attached: 24 or 00 can be typed directly.
 	 *
+	 * <b>Note:</b> Don't use it together with am/pm.
+	 *
 	 * @name sap.ui.webc.main.TimePickerClock.prototype.support2400
 	 * @type {Boolean}
 	 * @defaultvalue false
@@ -290,7 +309,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue false
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_mouseOrTouchDown!: boolean;
 
 	/**
@@ -300,7 +319,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue false
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_cancelTouchOut!: boolean;
 
 	/**
@@ -310,7 +329,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue false
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_is24HoursVisible!: boolean;
 
 	/**
@@ -320,7 +339,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue -1
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
+	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_selectedValue!: number;
 
 	/**
@@ -330,7 +349,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue -1
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
+	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_movSelectedValue!: number;
 
 	/**
@@ -340,7 +359,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue -1
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
+	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_hoveredValue!: number;
 
 	/**
@@ -350,7 +369,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue -1
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
+	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_prevHoveredValue!: number;
 
 	/**
@@ -360,7 +379,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue false
 	 * @private
 	 */
-	@property({ type: Boolean })
+	@property({ type: Boolean, noAttribute: true })
 	_animationInProgress!: boolean;
 
 	/**
@@ -370,7 +389,7 @@ class TimePickerClock extends UI5Element {
 	 * @defaultvalue -1
 	 * @private
 	 */
-	@property({ validator: Integer, defaultValue: -1 })
+	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_longTouchId!: number;
 
 	constructor() {
@@ -384,7 +403,7 @@ class TimePickerClock extends UI5Element {
 			clock: {
 				"ui5-tp-clock": true,
 				"ui5-tp-clock-inner": this.innerItems,
-				"ui5-tp-clock-active": true,
+				"ui5-tp-clock-active": this.active,
 			},
 		};
 	}
@@ -775,7 +794,7 @@ class TimePickerClock extends UI5Element {
 		} else {
 			// the new value is set, fire event
 			setTimeout(() => {
-				this.fireEvent("change", {
+				this.fireEvent<ChangeEventDetail>("change", {
 					"value": newValue,
 					"stringValue": this._getStringValue(newValue),
 					"finalChange": true,
@@ -837,7 +856,7 @@ class TimePickerClock extends UI5Element {
 	_setSelectedValue(value: number) {
 		const realValue: number = this._fixReplacementValue(value);
 		this.selectedValue = realValue;
-		this.fireEvent("change", {
+		this.fireEvent<ChangeEventDetail>("change", {
 			"value": realValue,
 			"stringValue": this._getStringValue(realValue),
 			"finalChange": false,
@@ -998,3 +1017,4 @@ class TimePickerClock extends UI5Element {
 TimePickerClock.define();
 
 export default TimePickerClock;
+export type { ChangeEventDetail };

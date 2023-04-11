@@ -1,0 +1,64 @@
+<div
+	id="{{_id}}"
+	class="ui5-time-picker-tsc-container"
+	tabindex="-1"
+	@keydown={{_onkeydown}}
+	@keyup={{_onkeyup}}
+>
+	<div
+		class="ui5-time-picker-tsc-buttons"
+	>
+	{{#each _buttons}}
+		<ui5-toggle-spin-button
+			id="{{this.id}}"
+			.valueMin="{{this.valueMin}}"
+			.valueMax="{{this.valueMax}}"
+			.valueNow="{{this.valueNow}}"
+			.valueText="{{this.valueText}}"
+			.accessibleName="{{this.accessibleName}}"
+			.pressed="{{this.pressed}}"
+			?focused="{{this.pressed}}"
+			@click={{../_buttonClick}}
+			@focusin="{{../_buttonFocusIn}}"
+		>{{this.valueString}}</ui5-toggle-spin-button>
+	{{/each}}
+	{{#if _showAmPmButton}}
+		<ui5-segmented-button>
+    		<ui5-segmented-button-item
+			pressed
+			>AM</ui5-segmented-button-item>
+    		<ui5-segmented-button-item
+			?pressed="{{_pmPressed}}"
+			>PM</ui5-segmented-button-item>
+		</ui5-segmented-button>
+	{{/if}}
+	</div>
+
+	<div
+		class="ui5-time-picker-tsc-clocks"
+		role="img"
+		aria-label="{{_clockDialAriaLabel}}"
+	>
+	{{#each _clocks}}
+		<ui5-time-picker-clock
+			id="{{this.id}}"
+			.active="{{this.active}}"
+			.label="{{this.label}}"
+			.itemMin="{{this.itemMin}}"
+			.itemMax="{{this.itemMax}}"
+			.selectedValue="{{this.selectedValue}}"
+			.displayStep="{{this.displayStep}}"
+			.valueStep="{{this.valueStep}}"
+			.disabled="{{this.disabled}}"
+			.lastItemReplacement="{{this.lastItemReplacement}}"
+			.innerItems="{{this.innerItems}}"
+			.prependZero="{{this.prependZero}}"
+			.support2400="{{this.support2400}}"
+			.hideFractions="{{this.hideFractions}}"
+			@change={{../_clockChange}}
+		>
+		</ui5-time-picker-clock>
+	{{/each}}
+	</div>
+
+</div>

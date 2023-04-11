@@ -134,12 +134,6 @@
 	transform: rotate(var(--tpc-degree));
 }
 
-
-
-.sapMTPCInvisible {
-/*	visibility: hidden; */
-}
-
 .ui5-tp-clock-selected {
 	color: var(--sapButton_Selected_TextColor);
 	background-color: var(--sapButton_Selected_Background);

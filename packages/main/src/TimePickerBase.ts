@@ -33,6 +33,8 @@ import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelection from "./TimeSelection.js";
 import type { TimeSelectionChangeEventDetail } from "./TimeSelection.js";
+// import TimeSelectionClocks from "./TimeSelectionClocks.js";
+// import type { TimeSelectionClocksChangeEventDetail } from "./TimeSelectionClocks.js";
 
 import {
 	TIMEPICKER_SUBMIT_BUTTON,
@@ -65,6 +67,7 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
 		Icon,
 		ResponsivePopover,
 		TimeSelection,
+		// TimeSelectionClocks,
 		Input,
 		Button,
 	],
@@ -225,6 +228,10 @@ class TimePickerBase extends UI5Element {
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this.tempValue = e.detail.value; // every time the user changes the sliders -> update tempValue
 	}
+
+	// onTimeSelectionChange(e: CustomEvent<TimeSelectionClocksChangeEventDetail>) {
+	// 	this.tempValue = e.detail.value; // every time the user changes the sliders -> update tempValue
+	// }
 
 	submitPickers() {
 		this._updateValueAndFireEvents(this.tempValue, true, ["change", "value-changed"]);

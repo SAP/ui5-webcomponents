@@ -1,0 +1,10 @@
+{{>include "./Button.hbs"}}
+
+{{#*inline "ariaPressed"}}
+	aria-pressed="{{pressed}}"
+	aria-valuemin="{{valueMin}}"
+	aria-valuemax="{{valueMax}}"
+	aria-valuenow="{{valueNow}}"
+	aria-valuetext="{{valueText}}"
+	role="spinbutton"
+{{/inline}}

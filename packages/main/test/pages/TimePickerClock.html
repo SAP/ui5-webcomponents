@@ -25,24 +25,24 @@
 	<link rel="stylesheet" type="text/css" href="./styles/TimePickerClock.css">
 
 </head>
-<body class="stepinput1auto">
+<body>
 
 	<h3>TimePickerClock</h3>
 	<div>
 		<div class="clock-wrapper">
-			<ui5-time-picker-clock id="myHours12" label="myHours12" item-min="1" item-max="12" display-step="1" last-item-replacement1="0"></ui5-time-picker-clock>
+			<ui5-time-picker-clock id="myHours12" label="myHours12" item-min="1" item-max="12" display-step="1" last-item-replacement1="0" active></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
-			<ui5-time-picker-clock id="myHours00" label="myHours00" item-min="1" item-max="12" display-step="1" inner-items prepend-zero last-item-replacement="0"></ui5-time-picker-clock>
+			<ui5-time-picker-clock id="myHours00" label="myHours00" item-min="1" item-max="12" display-step="1" inner-items prepend-zero last-item-replacement="0" active></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
-			<ui5-time-picker-clock id="myHours24" label="myHours24" item-min="1" item-max="12" display-step="1" inner-items prepend-zero support2400 last-item-replacement="0"></ui5-time-picker-clock>
+			<ui5-time-picker-clock id="myHours24" label="myHours24" item-min="1" item-max="12" display-step="1" inner-items prepend-zero support2400 last-item-replacement="0" active></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
-			<ui5-time-picker-clock id="myMinutes" label="myMinutes" item-min="1" item-max="60" last-item-replacement="0"></ui5-time-picker-clock>
+			<ui5-time-picker-clock id="myMinutes" label="myMinutes" item-min="1" item-max="60" last-item-replacement="0" active></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
-			<ui5-time-picker-clock id="myMinutes10" label="myMinutes10" item-min="1" item-max="60" display-step="10" value-step="10" last-item-replacement="0"></ui5-time-picker-clock>
+			<ui5-time-picker-clock id="myMinutes10" label="myMinutes10" item-min="1" item-max="60" display-step="10" value-step="10" last-item-replacement="0" active></ui5-time-picker-clock>
 		</div>
 	</div>
 
@@ -55,11 +55,11 @@
 
 	<script>
 
-		myHours12.addEventListener('change', displayChange);
-		myHours00.addEventListener('change', displayChange);
-		myHours24.addEventListener('change', displayChange);
-		myMinutes.addEventListener('change', displayChange);
-		myMinutes10.addEventListener('change', displayChange);
+		myHours12.addEventListener('ui5-change', displayChange);
+		myHours00.addEventListener('ui5-change', displayChange);
+		myHours24.addEventListener('ui5-change', displayChange);
+		myMinutes.addEventListener('ui5-change', displayChange);
+		myMinutes10.addEventListener('ui5-change', displayChange);
 
 		function displayChange(event) {
 			var clock = event.target;
