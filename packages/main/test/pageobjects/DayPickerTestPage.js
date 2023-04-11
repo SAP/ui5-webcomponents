@@ -15,4 +15,4 @@ class DayPickerTestHelper {
 	}
 }
 
-module.exports = new DayPickerTestHelper();
+export default new DayPickerTestHelper();

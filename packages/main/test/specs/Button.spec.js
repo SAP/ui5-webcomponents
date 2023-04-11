@@ -1,5 +1,4 @@
-const assert = require("chai").assert;
-// 
+import { assert } from "chai";
 
 describe("Button general interaction", () => {
 	before(async () => {
@@ -136,5 +135,12 @@ describe("Button general interaction", () => {
 		const button = await browser.$("#customTooltip").shadow$("button");
 
 		assert.strictEqual(await button.getAttribute("title"), "Go home", "Attribute is reflected");
+	});
+
+	it("tooltip from inner icon is propagated", async () => {
+		const button = await browser.$("#download");
+		const nativeButton = await button.shadow$("button");
+
+		assert.strictEqual(await nativeButton.getAttribute("title"), "Download", "Icon tooltip is shown");
 	});
 });
