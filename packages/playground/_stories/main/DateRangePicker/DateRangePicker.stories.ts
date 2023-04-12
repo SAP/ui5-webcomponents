@@ -45,12 +45,6 @@ const Template: UI5StoryArgs<DateRangePicker, StoryArgsSlots> = (args) => html`<
 
 export const Basic = Template.bind({});
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-	value: "Mar 31, 2023 - Apr 9, 2023",
-	disabled: true,
-};
-
 export const MinMax = Template.bind({});
 MinMax.storyName = "Min/Max Dates and Format Pattern";
 MinMax.args = {

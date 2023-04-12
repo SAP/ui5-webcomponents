@@ -44,13 +44,6 @@ const Template: UI5StoryArgs<DateTimePicker, StoryArgsSlots> = (args) => html`<u
 
 export const Basic = Template.bind({});
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-	value: "Oct 15, 2020, 12:56:45 PM",
-	formatPattern: "long",
-	disabled: true,
-};
-
 export const FormatPattern = Template.bind({});
 FormatPattern.args = {
 	formatPattern: "dd/MM/yyyy, hh:mm:ss aa",

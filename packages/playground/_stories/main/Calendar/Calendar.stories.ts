@@ -42,17 +42,6 @@ const Template: UI5StoryArgs<Calendar, StoryArgsSlots> = (args) => html`<ui5-cal
 
 export const Basic = Template.bind({});
 
-export const WeekNumbering = Template.bind({});
-WeekNumbering.storyName = "Hide Week Numbers";
-WeekNumbering.args = {
-	hideWeekNumbers: true,
-};
-
-export const SelectionMode = Template.bind({});
-SelectionMode.args = {
-	selectionMode: CalendarSelectionMode.Multiple,
-};
-
 export const Bounds = Template.bind({});
 Bounds.storyName = "Min/Max Dates and Format Pattern";
 Bounds.args = {

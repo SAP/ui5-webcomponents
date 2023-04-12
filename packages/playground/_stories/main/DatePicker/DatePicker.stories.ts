@@ -51,24 +51,6 @@ Placeholder.args = {
 	placeholder: "Delivery Date...",
 };
 
-export const WeekNumbers = Template.bind({});
-WeekNumbers.storyName = "Hide Week Numbers";
-WeekNumbers.args = {
-	hideWeekNumbers: true,
-};
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-	value: "18 September, 2021",
-	disabled: true,
-};
-
-export const Readonly = Template.bind({});
-Readonly.args = {
-	value: "14 February, 2023",
-	readonly: true,
-};
-
 export const State = Template.bind({});
 State.storyName = "ValueState and Message";
 State.args = {
@@ -83,13 +65,6 @@ MinMax.args = {
 	minDate: "1/1/2020",
 	maxDate: "4/5/2020",
 	formatPattern: "dd/MM/yyyy",
-};
-
-export const LongFormat = Template.bind({});
-LongFormat.storyName = "Long Format Pattern";
-LongFormat.args = {
-	value: "2023-03-03",
-	formatPattern: "long",
 };
 
 export const CalendarTypes = Template.bind({});

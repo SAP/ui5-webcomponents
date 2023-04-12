@@ -38,20 +38,10 @@ const Template: UI5StoryArgs<TimePicker, StoryArgsSlots> = (args) => html`<ui5-t
 
 export const Basic = Template.bind({});
 
-export const Placeholder = Template.bind({});
-Placeholder.args = {
-	placeholder: "Event start time...",
-};
-
-export const FormatPattern = Template.bind({});
-FormatPattern.args = {
-	formatPattern: "hh:mm:ss a",
-};
-
 export const WithValueState = Template.bind({});
 WithValueState.storyName = "Value State and Message";
 WithValueState.args = {
-	formatPattern: "mm:ss",
+	formatPattern: "hh:mm:ss a",
 	valueState: ValueState.Error,
 	valueStateMessage: `<div slot="valueStateMessage">Please provide valid value</div>`,
 };
