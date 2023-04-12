@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 async function getTreeItemsInPopover() {
 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#sn1");
@@ -180,6 +180,26 @@ describe("Component Behavior", () => {
 			await selectionChangeCheckbox.click();
 		});
 
+		it("tests avoiding re-selecting already selected item", async () => {
+			const sideNavigation = await browser.$("#sn1");
+			await sideNavigation.setAttribute("collapsed", "true");
+
+			const input = await browser.$("#counter");
+			const items = await getItems(".ui5-sn-items-tree [ui5-tree-item]");
+
+			await items[0].click();
+
+			const beforeClickingSelectedItem = await input.getProperty("value");
+
+			await items[0].click();
+
+			const afterClickingSelectedItem = await input.getProperty("value");
+
+			assert.strictEqual(afterClickingSelectedItem, beforeClickingSelectedItem, "Event did not fire twice after the already selected item was clicked");
+
+			await sideNavigation.removeAttribute("collapsed");
+		});
+
 		it("Tests ACC roles and more when expanded", async () => {
 			const sideNavigation = await browser.$("#sn1");
 			const sideNavigationRoot = await sideNavigation.shadow$(".ui5-sn-root");
@@ -191,14 +211,14 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), "navigation", "Role of the SideNavigation root element is correctly set");
 
-			roleDescription = await browser.executeAsync(done => {
+			let roleDescription = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
 				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_LIST_ARIA_ROLE_DESC));
 			});
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree element is correctly set");
 
 			// items
-			roleDescriptionItem = await browser.executeAsync(done => {
+			let roleDescriptionItem = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
 				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_LIST_ITEMS_ARIA_ROLE_DESC));
 			});
@@ -230,14 +250,14 @@ describe("Component Behavior", () => {
 
 			assert.strictEqual(await sideNavigationRoot.getAttribute("role"), "navigation", "Role of the SideNavigation root element is correctly set");
 
-			roleDescription = await browser.executeAsync(done => {
+			let roleDescription = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
 				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_COLLAPSED_LIST_ARIA_ROLE_DESC));
 			});
 			assert.strictEqual(await sideNavigationTree.getAttribute("aria-roledescription"), roleDescription, "Role description of the SideNavigation tree element is correctly set");
 
 			// items
-			roleDescriptionItem = await browser.executeAsync(done => {
+			let roleDescriptionItem = await browser.executeAsync(done => {
 				const sn = document.getElementById("sn1");
 				done(sn.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SIDE_NAVIGATION_COLLAPSED_LIST_ITEMS_ARIA_ROLE_DESC));
 			});
