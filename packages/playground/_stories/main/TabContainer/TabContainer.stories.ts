@@ -8,6 +8,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type TabContainer from "@ui5/webcomponents/dist/TabContainer.js";
 import TabLayout from "@ui5/webcomponents/dist/types/TabLayout.js";
+import { Overview } from "./Overview.js";
 
 const component = "ui5-tabcontainer";
 
@@ -156,3 +157,7 @@ NestedTabs.args = {
 	</ui5-tab>
 </ui5-tab>`,
 };
+
+export {
+	Overview,
+}
