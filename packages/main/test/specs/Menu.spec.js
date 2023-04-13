@@ -137,18 +137,14 @@ describe("Menu interaction", () => {
 		const openButton = await browser.$("#btnOpen");
 
 		openButton.click();
-		await browser.pause(100);
+		const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+		const visualMenuItem = await menuPopover.$("ui5-li[accessible-name='Open']");
 
-		const menuItem = await browser.$("ui5-menu > ui5-menu-item[text='Open']");
-		menuItem.click();
-		await browser.pause(100);
-
+		visualMenuItem.click();
 		const subMenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
 		const busyIndicator = await subMenuPopover.$("ui5-busy-indicator");
 
-		assert.strictEqual(await busyIndicator.getAttribute("active"), "true", "Active attribute is properly set.");
-		assert.strictEqual(await busyIndicator.getAttribute("text"), "Loading...", "Text attribute is properly set.");
-		assert.strictEqual(await busyIndicator.getAttribute("title"), "Loading...", "Title attribute is properly set.");
+		assert.ok(await busyIndicator.getAttribute("active"), "Active attribute is properly set.");
 		assert.strictEqual(await busyIndicator.getAttribute("size"), "Medium", "Size attribute is properly set.");
 		assert.strictEqual(await busyIndicator.getAttribute("delay"), "100", "Delay attribute is properly set.");
 	});

@@ -47,14 +47,10 @@
 		id="{{_id}}-menu-main"
 	>
 
-	{{#if isBusy}}
+	{{#if busy}}
 		<ui5-busy-indicator
 			id="{{_id}}-menu-busy-indicator"
-			text="{{busyIndicator.text}}"
-			title="{{busyIndicator.title}}"
-			size="{{busyIndicator.size}}"
-			delay="{{busyIndicator.delay}}"
-			active="{{busyIndicator.active}}"
+			delay="{{busyDelay}}"
 			class="ui5-menu-busy-indicator"
 			active>
 		</ui5-busy-indicator>

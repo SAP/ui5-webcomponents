@@ -2,15 +2,8 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type Menu from "./Menu.js";
-
-type BusyIndicatorAttributes = {
-	title?: string,
-	text?: string,
-	size?: string,
-	delay?: number,
-	active?: boolean,
-}
 
 /**
  * @class
@@ -105,34 +98,30 @@ class MenuItem extends UI5Element {
 	disabled!: boolean;
 
 	/**
-	 * Defines the corresponding sub-menu busy state.
+	 * Defines if a loading indicator would be displayed inside the corresponding sub-menu popover.
 	 *
-	 * The following fields are supported:
+	 * Note: If set to <code>true</code> a <code>ui5-busy-indicator</code> component will be displayed into the related to the current <code>ui5-menu-item</code> sub-menu popover.
 	 *
-	 * <ul>
-	 * 		<li><code>text</code>: The text to be displayed below the <code>ui5-busy-indicator</code>. It can be used to inform the user of the current operation. Accepts a string value.
-	 * 		</li>
-	 * 		<li><code>title</code>: The text to be used as tooltip of the <code>ui5-busy-indicator</code>. Accepts a string value.
-	 * 		</li>
-	 * 		<li><code>size</code>: The size of the <code>ui5-busy-indicator</code>. Accepts the following string values:
-	 *			<ul>
-	 *				<li><code>Small</code></li>
-	 *				<li><code>Medium</code></li>
-	 *				<li><code>Large</code></li>
-	 *			</ul>
-	 * 		</li>
-	 * 		<li><code>delay</code>: The delay in milliseconds, after which the busy indicator will be visible on the screen. Accepts an integer value. The default value is 1000.
-	 * 		</li>
-	 * 		<li><code>active</code>: Defines if the <code>ui5-busy-indicator</code> is visible on the screen. By default it is not. Accepts a boolean value.
-	 * 		</li>
-	 * </ul>
-	 * @name sap.ui.webc.main.Menu.prototype.busyIndicator
+	 * @name sap.ui.webc.main.List.prototype.busy
+	 * @type {boolean}
+	 * @defaultvalue false
 	 * @public
-	 * @type {sap.ui.webc.main.Menu.prototype.busyIndicator}
 	 * @since 1.14.0
 	 */
-	@property({ type: Object })
-	busyIndicator!: BusyIndicatorAttributes;
+	@property({ type: Boolean })
+	busy!: boolean;
+
+	/**
+	 * Defines the delay in milliseconds, after which the busy indicator will displayed inside the corresponding ui5-menu popover.
+	 *
+	 * @name sap.ui.webc.main.List.prototype.busyDelay
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultValue 1000
+	 * @public
+	 * @since 1.14.0
+	 */
+	@property({ validator: Integer, defaultValue: 1000 })
+	busyDelay!: number;
 
 	/**
 	 * Defines the accessible ARIA name of the component.

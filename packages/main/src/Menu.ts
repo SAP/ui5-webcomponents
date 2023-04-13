@@ -18,6 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
@@ -43,14 +44,6 @@ type CurrentItem = {
 }
 
 type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
-
-type BusyIndicatorAttributes = {
-	title?: string,
-	text?: string,
-	size?: string,
-	delay?: number,
-	active?: boolean,
-}
 
 /**
  * @class
@@ -191,34 +184,28 @@ class Menu extends UI5Element {
 	open!:boolean;
 
 	/**
-	 * Defines the menu busy state.
+	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * The following fields are supported:
-	 *
-	 * <ul>
-	 * 		<li><code>text</code>: The text to be displayed below the <code>ui5-busy-indicator</code>. It can be used to inform the user of the current operation. Accepts a string value.
-	 * 		</li>
-	 *		<li><code>title</code>: The text to be used as tooltip of the <code>ui5-busy-indicator</code>. Accepts a string value.
-	 * 		</li>
-	 * 		<li><code>size</code>: The size of the <code>ui5-busy-indicator</code>. Accepts the following string values:
-	 *			<ul>
-	 *				<li><code>Small</code></li>
-	 *				<li><code>Medium</code></li>
-	 *				<li><code>Large</code></li>
-	 *			</ul>
-	 * 		</li>
-	 * 		<li><code>delay</code>: The delay in milliseconds, after which the busy indicator will be visible on the screen. Accepts an integer value. The default value is 1000.
-	 * 		</li>
-	 * 		<li><code>active</code>: Defines if the <code>ui5-busy-indicator</code> is visible on the screen. By default it is not. Accepts a boolean value.
-	 * 		</li>
-	 * </ul>
-	 * @name sap.ui.webc.main.Menu.prototype.busyIndicator
+	 * @name sap.ui.webc.main.List.prototype.busy
+	 * @type {boolean}
+	 * @defaultvalue false
 	 * @public
-	 * @type {sap.ui.webc.main.Menu.prototype.busyIndicator}
 	 * @since 1.14.0
 	 */
-	@property({ type: Object })
-	busyIndicator!: BusyIndicatorAttributes;
+	@property({ type: Boolean })
+	busy!: boolean;
+
+	/**
+	 * Defines the delay in milliseconds, after which the busy indicator will displayed inside the corresponding ui5-menu popover.
+	 *
+	 * @name sap.ui.webc.main.List.prototype.busyDelay
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultValue 1000
+	 * @public
+	 * @since 1.14.0
+	 */
+	@property({ validator: Integer, defaultValue: 1000 })
+	busyDelay!: number;
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
@@ -338,10 +325,6 @@ class Menu extends UI5Element {
 		return isPhone();
 	}
 
-	get isBusy() {
-		return Boolean(this.busyIndicator && this.busyIndicator.active);
-	}
-
 	get isSubMenuOpened() {
 		return !!this._parentMenuItem;
 	}
@@ -360,7 +343,8 @@ class Menu extends UI5Element {
 			item.item._siblingsWithChildren = itemsWithChildren;
 			item.item._siblingsWithIcon = itemsWithIcon;
 			if (item.item._subMenu) {
-				item.item._subMenu.busyIndicator = item.item.busyIndicator;
+				item.item._subMenu.busy = item.item.busy;
+				item.item._subMenu.busyDelay = item.item.busyDelay;
 			}
 		});
 	}
@@ -458,7 +442,8 @@ class Menu extends UI5Element {
 		subMenu._isSubMenu = true;
 		subMenu.setAttribute("id", `submenu-${openerId}`);
 		subMenu._parentMenuItem = item;
-		subMenu.busyIndicator = item.busyIndicator;
+		subMenu.busy = item.busy;
+		subMenu.busyDelay = item.busyDelay;
 		const subItems = item.children;
 		let clonedItem,
 			idx;

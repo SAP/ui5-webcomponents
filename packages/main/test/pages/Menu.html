@@ -18,7 +18,7 @@
 
 		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
-		<ui5-menu-item text="Open" icon="open-folder" starts-section>
+		<ui5-menu-item text="Open" icon="open-folder" starts-section busy-delay="100" busy>
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
 				<ui5-menu-item text="Open from C"></ui5-menu-item>
 				<ui5-menu-item text="Open from D"></ui5-menu-item>
@@ -86,22 +86,6 @@
 	</div>
 
 	<script>
-
-		// Simulate loading of ui5-menu-items
-		// setTimeout(function() {
-		// 	menu.items[2].busyIndicator = {
-		// 		active: false,
-		// 	};
-		// }, 10000);
-
-		menu.querySelectorAll("ui5-menu-item")[2].busyIndicator = {
-			title: "Loading...",
-			text: "Loading...",
-			size: "Medium",
-			delay: "100",
-			active: true,
-		};
-
 		btnOpen.accessibilityAttributes = {
 			hasPopup: "Menu",
 		};
