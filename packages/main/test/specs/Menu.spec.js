@@ -144,9 +144,9 @@ describe("Menu interaction", () => {
 		const subMenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
 		const busyIndicator = await subMenuPopover.$("ui5-busy-indicator");
 
-		assert.ok(await busyIndicator.getAttribute("active"), "Active attribute is properly set.");
-		assert.strictEqual(await busyIndicator.getAttribute("size"), "Medium", "Size attribute is properly set.");
-		assert.strictEqual(await busyIndicator.getAttribute("delay"), "100", "Delay attribute is properly set.");
+		assert.ok(await busyIndicator.getProperty("active"), "Active attribute is properly set.");
+		assert.strictEqual(await busyIndicator.getProperty("size"), "Medium", "Size attribute is properly set.");
+		assert.strictEqual(await busyIndicator.getProperty("delay"), "100", "Delay attribute is properly set.");
 	});
 });
 

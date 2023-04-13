@@ -190,7 +190,7 @@ class Menu extends UI5Element {
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
-	 * @since 1.14.0
+	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
 	busy!: boolean;
@@ -198,11 +198,11 @@ class Menu extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will displayed inside the corresponding ui5-menu popover.
 	 *
-	 * @name sap.ui.webc.main.List.prototype.busyDelay
+	 * @name sap.ui.webc.main.Menu.prototype.busyDelay
 	 * @type {sap.ui.webc.base.types.Integer}
 	 * @defaultValue 1000
 	 * @public
-	 * @since 1.14.0
+	 * @since 1.13.0
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
 	busyDelay!: number;

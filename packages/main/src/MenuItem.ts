@@ -102,11 +102,11 @@ class MenuItem extends UI5Element {
 	 *
 	 * Note: If set to <code>true</code> a <code>ui5-busy-indicator</code> component will be displayed into the related to the current <code>ui5-menu-item</code> sub-menu popover.
 	 *
-	 * @name sap.ui.webc.main.List.prototype.busy
+	 * @name sap.ui.webc.main.MenuItem.prototype.busy
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
-	 * @since 1.14.0
+	 * @since 1.13.0
 	 */
 	@property({ type: Boolean })
 	busy!: boolean;
@@ -114,11 +114,11 @@ class MenuItem extends UI5Element {
 	/**
 	 * Defines the delay in milliseconds, after which the busy indicator will displayed inside the corresponding ui5-menu popover.
 	 *
-	 * @name sap.ui.webc.main.List.prototype.busyDelay
+	 * @name sap.ui.webc.main.MenuItem.prototype.busyDelay
 	 * @type {sap.ui.webc.base.types.Integer}
 	 * @defaultValue 1000
 	 * @public
-	 * @since 1.14.0
+	 * @since 1.13.0
 	 */
 	@property({ validator: Integer, defaultValue: 1000 })
 	busyDelay!: number;
