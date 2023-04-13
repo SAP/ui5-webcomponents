@@ -219,4 +219,58 @@
 	</xmp></pre>
 </section>
 
+<section>
+	<h3>Menu with initial menu items and additional menu items fetching from a database</h3>
+	<div class="snippet">
+		<ui5-button id="btnMenuListBusy" class="samples-margin">Open Menu</ui5-button> <br/>
+		<ui5-menu id="menuListBusy" busy-delay="100" busy>
+			<ui5-menu-item text="New File" icon="add-document" additional-text="Ctrl+N"></ui5-menu-item>
+			<ui5-menu-item text="New Folder" icon="add-folder" additional-text="Ctrl+F" disabled></ui5-menu-item>
+		</ui5-menu>
+		<script>
+			btnMenuListBusy.addEventListener("click", function(event) {
+				menuListBusy.showAt(btnMenuListBusy);
+			});
+
+			menuListBusy.addEventListener("ui5-before-open", function(event) {
+				setTimeout(function() {
+					menuListBusy.removeAttribute("busy");
+					let openNode = document.createElement("ui5-menu-item");
+					openNode.setAttribute("text", "Open");
+					openNode.setAttribute("icon", "open-folder");
+					openNode.setAttribute("starts-section", "");
+					menuListBusy.appendChild(openNode);
+					let closeNode = document.createElement("ui5-menu-item");
+					closeNode.setAttribute("text", "Close");
+					menuListBusy.appendChild(closeNode);
+				}, 3000);
+			}, { once: true });
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-button id="btnMenuListBusy">Open Menu</ui5-button> <br/>
+<ui5-menu id="menuListBusy" busy-delay="100" busy>
+</ui5-menu>
+<script>
+	btnMenuListBusy.addEventListener("click", function(event) {
+		menuListBusy.showAt(btnMenuListBusy);
+	});
+
+	menuListBusy.addEventListener("ui5-before-open", function(event) {
+		setTimeout(function() {
+			menuListBusy.removeAttribute("busy");
+			let openNode = document.createElement("ui5-menu-item");
+			openNode.setAttribute("text", "Open");
+			openNode.setAttribute("icon", "open-folder");
+			openNode.setAttribute("starts-section", "");
+			menuListBusy.appendChild(openNode);
+			let closeNode = document.createElement("ui5-menu-item");
+			closeNode.setAttribute("text", "Close");
+			menuListBusy.appendChild(closeNode);
+		}, 3000);
+	}, { once: true });
+</script>
+	</xmp></pre>
+</section>
+
 <!-- JSDoc marker -->

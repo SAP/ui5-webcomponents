@@ -98,9 +98,9 @@ class MenuItem extends UI5Element {
 	disabled!: boolean;
 
 	/**
-	 * Defines if a loading indicator would be displayed inside the corresponding sub-menu popover.
+	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * Note: If set to <code>true</code> a <code>ui5-busy-indicator</code> component will be displayed into the related to the current <code>ui5-menu-item</code> sub-menu popover.
+	 * Note: If set to <code>true</code> a <code>ui5-busy-indicator</code> component will be displayed into the related one to the current <code>ui5-menu-item</code> sub-menu popover.
 	 *
 	 * @name sap.ui.webc.main.MenuItem.prototype.busy
 	 * @type {boolean}
@@ -170,8 +170,8 @@ class MenuItem extends UI5Element {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<MenuItem>;
 
-	get hasChildren() {
-		return !!this.items.length;
+	get hasSubmenu() {
+		return !!(this.items.length || this.busy);
 	}
 
 	get hasDummyIcon() {
@@ -183,7 +183,7 @@ class MenuItem extends UI5Element {
 	}
 
 	get _additionalText() {
-		return this.hasChildren ? "" : this.additionalText;
+		return this.hasSubmenu ? "" : this.additionalText;
 	}
 
 	get ariaLabelledByText() {

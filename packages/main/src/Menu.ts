@@ -196,7 +196,7 @@ class Menu extends UI5Element {
 	busy!: boolean;
 
 	/**
-	 * Defines the delay in milliseconds, after which the busy indicator will displayed inside the corresponding ui5-menu popover.
+	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
 	 *
 	 * @name sap.ui.webc.main.Menu.prototype.busyDelay
 	 * @type {sap.ui.webc.base.types.Integer}
@@ -429,7 +429,7 @@ class Menu extends UI5Element {
 			return {
 				item,
 				position: index + 1,
-				ariaHasPopup: item.hasChildren ? "menu" : undefined,
+				ariaHasPopup: item.hasSubmenu ? "menu" : undefined,
 			};
 		});
 	}
@@ -489,11 +489,11 @@ class Menu extends UI5Element {
 	}
 
 	_prepareSubMenuDesktopTablet(item: MenuItem, opener: HTMLElement, actionId: string) {
-		if (actionId !== this._subMenuOpenerId || (item && item.hasChildren)) {
+		if (actionId !== this._subMenuOpenerId || (item && item.hasSubmenu)) {
 			// close opened sub-menu if there is any opened
 			this._closeItemSubMenu(this._openedSubMenuItem!, true);
 		}
-		if (item && item.hasChildren) {
+		if (item && item.hasSubmenu) {
 			// create new sub-menu
 			this._createSubMenu(item, actionId);
 			this._openItemSubMenu(item, opener, actionId);
@@ -527,7 +527,7 @@ class Menu extends UI5Element {
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
 
-			if (item && item.hasChildren && item._subMenu) {
+			if (item && item.hasSubmenu && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
 				this._closeItemSubMenu(item);
@@ -547,7 +547,7 @@ class Menu extends UI5Element {
 			const item = opener.associatedItem;
 			const hoverId = opener.getAttribute("id")!;
 
-			item.hasChildren && this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+			item.hasSubmenu && this._prepareSubMenuDesktopTablet(item, opener, hoverId);
 		} else if (isMenuClose && this._isSubMenu && this._parentMenuItem) {
 			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
 			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true);
@@ -559,7 +559,7 @@ class Menu extends UI5Element {
 		const item = opener.associatedItem;
 		const actionId = opener.getAttribute("id")!;
 
-		if (!item.hasChildren) {
+		if (!item.hasSubmenu) {
 			// click on an item that doesn't have sub-items fires an "item-click" event
 			if (!this._isSubMenu) {
 				if (isPhone()) {
