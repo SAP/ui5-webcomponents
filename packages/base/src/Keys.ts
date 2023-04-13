@@ -229,6 +229,10 @@ const isCtrlA = (event: KeyboardEvent): boolean => ((event.key === "A" || event.
 
 const isCtrlV = (event: KeyboardEvent): boolean => ((event.key === "V" || event.key === "v") || event.which === KeyCodes.V) && checkModifierKeys(event, true, false, false);
 
+const isKeyA = (event: KeyboardEvent): boolean => ((event.key === "A" || event.key === "a") || event.which === KeyCodes.A) && checkModifierKeys(event, false, false, false);
+
+const isKeyP = (event: KeyboardEvent): boolean => ((event.key === "P" || event.key === "p") || event.which === KeyCodes.P) && checkModifierKeys(event, false, false, false);
+
 const hasModifierKeys = (event: KeyboardEvent): boolean => event.shiftKey || event.altKey || getCtrlKey(event);
 
 const getCtrlKey = (event: KeyboardEvent): boolean => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
@@ -289,6 +293,8 @@ export {
 	isShift,
 	isCtrlA,
 	isCtrlV,
+	isKeyA,
+	isKeyP,
 	isDeleteShift,
 	isInsertShift,
 	isInsertCtrl,

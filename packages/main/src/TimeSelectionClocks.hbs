@@ -22,14 +22,17 @@
 			@focusin="{{../_buttonFocusIn}}"
 		>{{this.valueString}}</ui5-toggle-spin-button>
 	{{/each}}
-	{{#if _showAmPmButton}}
-		<ui5-segmented-button>
+	{{#if _hasPeriodsComponent}}
+		<ui5-segmented-button
+			id="{{_id}}_AmPm"
+		>
+		{{#each _periods}}
     		<ui5-segmented-button-item
-			pressed
-			>AM</ui5-segmented-button-item>
-    		<ui5-segmented-button-item
-			?pressed="{{_pmPressed}}"
-			>PM</ui5-segmented-button-item>
+				?pressed={{this.pressed}}
+			>
+			{{this.label}}
+			</ui5-segmented-button-item>
+		{{/each}}
 		</ui5-segmented-button>
 	{{/if}}
 	</div>

@@ -17,20 +17,27 @@ import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleD
 import type { ChangeEventDetail } from "./TimePickerClock.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import TimePickerInternals from "./TimePickerInternals.js";
+import type { TimePickerComponentIndexMap } from "./TimePickerInternals.js";
 import TimePickerClock from "./TimePickerClock.js";
 import ToggleSpinButton from "./ToggleSpinButton.js";
+import SegmentedButton from "./SegmentedButton.js";
+
 
 import {
 	isDown,
 	isUp,
 	isDownAlt,
 	isUpAlt,
+	isPageUp,
+	isPageDown,
+	isPageUpShift,
+	isPageDownShift,
+	isPageUpShiftCtrl,
+	isPageDownShiftCtrl,
 	isSpace,
+	isKeyA,
+	isKeyP,
 } from "@ui5/webcomponents-base/dist/Keys.js";
-
-
-// import SegmentedButton from "./SegmentedButton.js";
-
 
 import {
 	TIMEPICKER_HOURS_LABEL,
@@ -44,11 +51,6 @@ import TimeSelectionClocksTemplate from "./generated/templates/TimeSelectionCloc
 
 // Styles
 import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.js";
-
-type TimeSelectionClocksChangeEventDetail = {
-	value: string | undefined,
-	valid: boolean,
-}
 
 type TimePickerClockProperties = {
 	id: string,
@@ -108,6 +110,8 @@ type ToggleSpinButtonProperties = {
 	template: TimeSelectionClocksTemplate,
 	dependencies: [
 		TimePickerClock,
+		ToggleSpinButton,
+		SegmentedButton,
 	],
 })
 
@@ -130,63 +134,128 @@ class TimeSelectionClocks extends TimePickerInternals {
 	@property({ type: Object, multiple: true })
 	_buttons!: Array<ToggleSpinButtonProperties>;
 
-	/**
-	 * The index of the active Clock/TogleSpinButton.
-	 * @private
-	 * @defaultvalue 0
-	 * @type {Integer}
-	 */
-	@property({ validator: Integer, defaultValue: 0 })
-	_activeIndex!: number;
-
 	constructor() {
 		super();
 
 		this._createComponents();
 	}
 
-	static i18nBundle: I18nBundle;
-
-	static async onDefine() {
-		[TimeSelectionClocks.i18nBundle] = await Promise.all([
-			getI18nBundle("@ui5/webcomponents"),
-			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
-		]);
-	}
-
 	onAfterRendering() {
-		// const button = this._buttonComponent(this._activeIndex);
-
-		// set initially seleced button focused; the active button should always stay focused.
-		// setTimeout(() => button && button.focus(), 1000);
-		// this.focus();
 	}
 
-	get _showAmPmButton(): boolean {
-		return true;
+	/**
+	 * Returns ToggleSpinButton component by index or name.
+	 *
+	 * @param {number | string} indexOrName the index or name of the component
+	 * @returns { ToggleSpinButton | undefined} component (if exists) or undefined
+	 * @private
+	 */
+	_buttonComponent(indexOrName: number | string) {
+		if (typeof indexOrName === 'string') {
+			const key = this._componentKey(indexOrName);
+			const index = this._componentMap[key];
+			return index !== undefined ? this.shadowRoot?.querySelector<ToggleSpinButton>("#" + this._buttons[index].id) : undefined;
+		} else {
+			return this.shadowRoot?.querySelector<ToggleSpinButton>("#" + this._buttons[indexOrName].id);
+		}
 	}
 
-	get _pmPressed(): boolean {
-		return false;
+	/**
+	 * Returns TimePickerClock component by index or name.
+	 *
+	 * @param {number | string} indexOrName the index or name of the component
+	 * @returns { TimePickerClock | undefined} component (if exists) or undefined
+	 * @private
+	 */
+	_clockComponent(indexOrName: number | string) {
+		if (typeof indexOrName === 'string') {
+			const key = this._componentKey(indexOrName);
+			const index = this._componentMap[key];
+			return index !== undefined ? this.shadowRoot?.querySelector<TimePickerClock>("#" + this._clocks[index].id) : undefined;
+		} else {
+			return this.shadowRoot?.querySelector<TimePickerClock>("#" + this._clocks[indexOrName].id);
+		}
+	}
+
+	/**
+	 * Returns name of the clock or button from the id of the event target.
+	 *
+	 * @returns {string | undefined} name of the clock/button
+	 * @private
+	 */
+	_getNameFromId(id: string) {
+		const parts = id.split("_");
+		return parts.length > 0 ? parts[parts.length - 1] : undefined;
+	}
+
+	/**
+	 * Returns index of the clock or button from the id of the event target.
+	 *
+	 * @returns {number} index of the clock/button
+	 * @private
+	 */
+	_getIndexFromId(id: string) {
+		const name = this._getNameFromId(id);
+		if (name) {
+			const key = this._componentKey(name);
+			return this._componentMap[key];
+		} else {
+			return 0;
+		}
 	}
 
 	_buttonFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
-		const index = this._getIndexFromId(target.id);
-		this._switchClock(index);
+		const name = this._getNameFromId(target.id);
+		name && this._switchTo(name);
+		// const index = this._getIndexFromId(target.id);
+		// this._switchClock(index);
 	}
 
 	_onkeyup(evt: KeyboardEvent) {
 	}
 
 	_onkeydown(evt: KeyboardEvent) {
-		const clock = this._clockComponent(this._activeIndex);
+		let clock;
 
 		if (isSpace(evt)) {
 			this._switchNextClock(true);
 		} else if ((isUp(evt) || isDown(evt)) && !isUpAlt(evt) && !isDownAlt(evt)) {
 			// Arrows up/down increase/decrease currently active clock
+			clock = this._clockComponent(this._activeIndex);
 			clock && !clock.disabled && clock._modifyValue(isUp(evt));
+			evt.preventDefault();
+		} else if (isPageUp(evt) || isPageDown(evt)) {
+			// PageUp/PageDown increase/decrease hours clock
+			clock = this._clockComponent('hours');
+			if (clock && !clock.disabled) {
+				this._switchTo('hours');
+				clock._modifyValue(isPageUp(evt));
+			}
+			evt.preventDefault();
+		} else if (isPageUpShift(evt) || isPageDownShift(evt)) {
+			// Shift+PageUp/Shift+PageDown increase/decrease minutes clock
+			clock = this._clockComponent('minutes');
+			if (clock && !clock.disabled) {
+				this._switchTo('minutes');
+				clock._modifyValue(isPageUpShift(evt));
+			}
+			evt.preventDefault();
+		} else if (isPageUpShiftCtrl(evt) || isPageDownShiftCtrl(evt)) {
+			// Ctrl+Shift+PageUp/Ctrl+Shift+PageDown increase/decrease seconds clock
+			clock = this._clockComponent('seconds');
+			if (clock && !clock.disabled) {
+				this._switchTo('seconds');
+				clock._modifyValue(isPageUpShiftCtrl(evt));
+			}
+			evt.preventDefault();
+		} else if (isKeyA(evt) || isKeyP(evt)) {
+			// A/P selects AM/PM segmented button item
+			const buttonAmPm = this._buttonAmPm();
+			if (buttonAmPm) {
+				buttonAmPm.items[0].pressed = isKeyA(evt);
+				buttonAmPm.items[1].pressed = isKeyP(evt);
+			}
 			evt.preventDefault();
 		}
 	}
@@ -197,111 +266,135 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * @private
 	 */
 	_createComponents() {
-		const hoursLabel = TimeSelectionClocks.i18nBundle.getText(TIMEPICKER_HOURS_LABEL);
-		const minutesLabel = TimeSelectionClocks.i18nBundle.getText(TIMEPICKER_MINUTES_LABEL);
-		const secondsLabel = TimeSelectionClocks.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL);
 
-		const timeObject = {
-			hours: 15,
-			minutes: 33,
-			seconds: 17,
+		// REPLACE WITH REAL DATA
+		const time = {
+			hours: parseInt(this._hours),
+			minutes: parseInt(this._minutes),
+			seconds: parseInt(this._seconds),
 		};
+
+		console.warn(this.periodsArray);
 
 		this._clocks = [];
 		this._buttons = [];
+		this._periods = [];
 
-		// add Hours clock
-		this._clocks.push({
-			"id": `${this._id}_clock_0`,
-			"label": hoursLabel,
-			"itemMin": 1,
-			"itemMax": 12,
-			"selectedValue": timeObject.hours,
-			"displayStep": 1,
-			"valueStep": 1,
-			"lastItemReplacement": 0,
-			"innerItems": true,
-			"prependZero": true,
-			"active": this._activeIndex === 0,
-		});
+		if (this._hasHoursComponent) {
+			// add Hours clock
+			this._componentMap.hours = this._clocks.length;
+			this._clocks.push({
+				"id": `${this._id}_clock_hours`,
+				"label": this.hoursLabel,
+				"itemMin": 1,
+				"itemMax": 12,
+				"selectedValue": time.hours,
+				"displayStep": 1,
+				"valueStep": 1,
+				"lastItemReplacement": 0,
+				"innerItems": true,
+				"prependZero": true,
+				"active": true,
+			});
+			// add Hours button
+			this._buttons.push({
+				"id": `${this._id}_button_hours`,
+				"valueMin": 0,
+				"valueMax": 23,
+				"valueNow": time.hours,
+				"valueString": this._hours,
+				"valueText": `${time.hours} ${this.hoursLabel}`,
+				"accessibleName": this.hoursLabel,
+				"pressed": true,
+			});
+		}
 
-		// add Minutes clock
-		this._clocks.push({
-			"id": `${this._id}_clock_1`,
-			"label": minutesLabel,
-			"itemMin": 1,
-			"itemMax": 60,
-			"selectedValue": timeObject.minutes,
-			"displayStep": 5,
-			"valueStep": 1,
-			"lastItemReplacement": 0,
-			"innerItems": false,
-			"prependZero": false,
-			"active": this._activeIndex === 1,
-		});
+		if (this._hasMinutesComponent) {
+			// add Minutes clock
+			this._componentMap.minutes = this._clocks.length;
+			this._clocks.push({
+				"id": `${this._id}_clock_minutes`,
+				"label": this.minutesLabel,
+				"itemMin": 1,
+				"itemMax": 60,
+				"selectedValue": time.minutes,
+				"displayStep": 5,
+				"valueStep": 1,
+				"lastItemReplacement": 0,
+				"innerItems": false,
+				"prependZero": false,
+				"active": false,
+			});
 
-		// add Seconds clock
-		this._clocks.push({
-			"id": `${this._id}_clock_2`,
-			"label": secondsLabel,
-			"itemMin": 1,
-			"itemMax": 60,
-			"selectedValue": timeObject.seconds,
-			"displayStep": 5,
-			"valueStep": 1,
-			"lastItemReplacement": 0,
-			"innerItems": false,
-			"prependZero": false,
-			"active": this._activeIndex === 2,
-		});
+			// add Minutes button
+			this._buttons.push({
+				"id": `${this._id}_button_minutes`,
+				"valueMin": 0,
+				"valueMax": 59,
+				"valueNow": time.minutes,
+				"valueString": this._minutes,
+				"valueText": `${time.minutes} ${this.minutesLabel}`,
+				"accessibleName": this.minutesLabel,
+				"pressed": false,
+			});
+		}
 
-		// add Hours button
-		this._buttons.push({
-			"id": `${this._id}_button_0`,
-			"valueMin": 0,
-			"valueMax": 23,
-			"valueNow": timeObject.hours,
-			"valueString": timeObject.hours.toString().padStart(2, "0"),
-			"valueText": `${timeObject.hours} ${hoursLabel}`,
-			"accessibleName": hoursLabel,
-			"pressed": this._activeIndex === 0,
-		});
+		if (this._hasSecondsComponent) {
+			// add Seconds clock
+			this._componentMap.seconds = this._clocks.length;
+			this._clocks.push({
+				"id": `${this._id}_clock_seconds`,
+				"label": this.secondsLabel,
+				"itemMin": 1,
+				"itemMax": 60,
+				"selectedValue": time.seconds,
+				"displayStep": 5,
+				"valueStep": 1,
+				"lastItemReplacement": 0,
+				"innerItems": false,
+				"prependZero": false,
+				"active": false,
+			});
 
-		// add Minutes button
-		this._buttons.push({
-			"id": `${this._id}_button_1`,
-			"valueMin": 0,
-			"valueMax": 59,
-			"valueNow": timeObject.minutes,
-			"valueString": timeObject.minutes.toString().padStart(2, "0"),
-			"valueText": `${timeObject.minutes} ${minutesLabel}`,
-			"accessibleName": minutesLabel,
-			"pressed": this._activeIndex === 1,
-		});
+			// add Seconds button
+			this._buttons.push({
+				"id": `${this._id}_button_seconds`,
+				"valueMin": 0,
+				"valueMax": 59,
+				"valueNow": time.seconds,
+				"valueString": this._seconds,
+				"valueText": `${time.seconds} ${this.secondsLabel}`,
+				"accessibleName": this.secondsLabel,
+				"pressed": false,
+			});
+		}
 
-		// add Seconds button
-		this._buttons.push({
-			"id": `${this._id}_button_2`,
-			"valueMin": 0,
-			"valueMax": 59,
-			"valueNow": timeObject.seconds,
-			"valueString": timeObject.seconds.toString().padStart(2, "0"),
-			"valueText": `${timeObject.seconds} ${secondsLabel}`,
-			"accessibleName": secondsLabel,
-			"pressed": this._activeIndex === 2,
-		});
-	}
-
-	_buttonComponent(index: number) {
-		return this.shadowRoot?.querySelector<ToggleSpinButton>("#" + this._buttons[index].id);
-	}
-
-	_clockComponent(index: number) {
-		return this.shadowRoot?.querySelector<TimePickerClock>("#" + this._clocks[index].id);
+		if (this._hasPeriodsComponent) {
+			// add period item
+			this.periodsArray.forEach((item) => {
+				this._periods.push({
+					"label": item,
+					"pressed": this._period === item,
+				});
+			})
+		}
 	}
 
 	/**
-	 * Switches to the specific clock.
+	 * Switches to the specific clock by name.
+	 *
+	 * @param {string} clockName the name of the clock
+	 * @private
+	 */
+	_switchTo(clockName: string) {
+		const key = this._componentKey(clockName);
+		if (this._componentMap[key] !== undefined) {
+			this._switchClock(this._componentMap[key]);
+		}
+	}
+
+	/**
+	 * Switches to the specific clock by its index in _clocks property.
 	 *
 	 * @param {int} clockIndex the index of the clock
 	 * @private
@@ -350,17 +443,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 		TimeSelectionClocks.i18nBundle.getText(TIMEPICKER_CLOCK_DIAL_LABEL)
 	}
 
-	/**
-	 * Returns index of the clock or button from the id of the event target.
-	 *
-	 * @returns {number} index of the clock/button
-	 * @private
-	 */
-	_getIndexFromId(id: string) {
-		const parts = id.split("_");
-		return parts.length > 0 ? parseInt(parts[parts.length - 1]) : 0;
-	}
-
 	/** Button 'click' event handler
 	 *
 	 * @param {event} evt Event object
@@ -377,21 +459,23 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 */
 	_clockChange(evt: CustomEvent<ChangeEventDetail>) {
 		const index = this._getIndexFromId((evt.target as HTMLElement).id);
-		const value = (evt as CustomEvent<ChangeEventDetail>).detail.stringValue;
+		const stringValue = (evt as CustomEvent<ChangeEventDetail>).detail.stringValue;
+		const value =  (evt as CustomEvent<ChangeEventDetail>).detail.value;
 		const button = this._buttonComponent(index);
 
 		if (!button) {
 			return;
 		}
 
-		this._buttons[index].valueString = value;
+		this._buttons[index].valueString = stringValue;
+		this._buttons[index].valueNow = value;
+		this._buttons[index].valueText = `${value} ${this._buttons[index].accessibleName}`;
 		this._buttons = JSON.parse(JSON.stringify(this._buttons));
 
 		if (evt.detail.finalChange) {
 			if (this._activeIndex < this._clocks.length - 1) {
 				this._switchNextClock(false);
 				const newButton = this._buttonComponent(this._activeIndex);
-				// newButton?.focus();
 			} else {
 				button.focus();
 			}
@@ -403,4 +487,3 @@ class TimeSelectionClocks extends TimePickerInternals {
 TimeSelectionClocks.define();
 
 export default TimeSelectionClocks;
-export type { TimeSelectionClocksChangeEventDetail };
