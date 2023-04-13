@@ -186,7 +186,7 @@ class Menu extends UI5Element {
 	/**
 	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
 	 *
-	 * @name sap.ui.webc.main.List.prototype.busy
+	 * @name sap.ui.webc.main.Menu.prototype.busy
 	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
