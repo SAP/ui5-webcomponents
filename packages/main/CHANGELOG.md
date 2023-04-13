@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.1...v1.12.2) (2023-04-13)
+
+
+### Bug Fixes
+
+* **ui5-table:** prevent Safari from crashing ([#6888](https://github.com/SAP/ui5-webcomponents/issues/6888)) ([20c4e66](https://github.com/SAP/ui5-webcomponents/commit/20c4e661c6536538474b55ba987e0300e8da9d4f)), closes [#6570](https://github.com/SAP/ui5-webcomponents/issues/6570)
+
+
+
+
+
 ## [1.12.1](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.1) (2023-04-11)
 
 

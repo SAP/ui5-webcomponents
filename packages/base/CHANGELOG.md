@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.1...v1.12.2) (2023-04-13)
+
+
+### Bug Fixes
+
+* **framework:** export StaticArea class ([#6917](https://github.com/SAP/ui5-webcomponents/issues/6917)) ([ce312b6](https://github.com/SAP/ui5-webcomponents/commit/ce312b6b60b206eee2629473fdd2529926c58379)), closes [#6916](https://github.com/SAP/ui5-webcomponents/issues/6916)
+
+
+
+
+
 ## [1.12.1](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.1) (2023-04-11)
 
 
