@@ -2153,10 +2153,10 @@
   dependencies:
     "@octokit/openapi-types" "^16.0.0"
 
-"@openui5/sap.ui.core@1.109.0":
-  version "1.109.0"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.109.0.tgz#bd4e70eecb1e1a7fbe79942fa42b5958d344f8c2"
-  integrity sha512-s0chMgOy3RRLElil2vDNcAhEy1UVmbGUNXq35O492R1BHQ+4zwf6SYWfAETsnlljEmXuYrCjb2rpwAHz68KTqQ==
+"@openui5/sap.ui.core@1.112.0":
+  version "1.112.0"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.112.0.tgz#79085f4485db50b29627599673e1d0635e497675"
+  integrity sha512-z41l8nHeLW1Cc0gDtGloYauJMPSLBhezjMzykiBxlelNuSmtaha98YP9DueU9Cd7ry4Qb177rMZqqbGJTiBR8g==
 
 "@parcel/watcher@2.0.4":
   version "2.0.4"
@@ -3246,7 +3246,8 @@
   resolved "https://registry.yarnpkg.com/@types/object-inspect/-/object-inspect-1.8.1.tgz#7c08197ad05cc0e513f529b1f3919cc99f720e1f"
   integrity sha512-0JTdf3CGV0oWzE6Wa40Ayv2e2GhpP3pEJMcrlM74vBSJPuuNkVwfDnl0SZxyFCXETcB4oKA/MpTVfuYSMOelBg==
 
-"@types/openui5@^1.109.0":
+
+"@types/openui5@^1.112.0":
   version "1.112.0"
   resolved "https://registry.yarnpkg.com/@types/openui5/-/openui5-1.112.0.tgz#4d88013491eda357113870c83575ca3bb2a47ea7"
   integrity sha512-rY7Mh7c1WbbYFCFG8toxphn5ODUvDHYtszIWR2KfAzMfEHql2ekCCgyfPz2PpoAQ/ep2WxdHVxaPlQBe4hW3Gw==
