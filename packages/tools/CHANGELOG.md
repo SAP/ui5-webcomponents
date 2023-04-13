@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.0...v1.13.0-rc.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* **framework:** correct fileName in component CSS import ([#6900](https://github.com/SAP/ui5-webcomponents/issues/6900)) ([4d950c5](https://github.com/SAP/ui5-webcomponents/commit/4d950c5ea3bee0e3b629e5797693ecf41a2cdfd3))
+
+
+
+
+
 # [1.13.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0...v1.13.0-rc.0) (2023-04-06)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools

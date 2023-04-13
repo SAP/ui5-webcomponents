@@ -1,18 +1,19 @@
 import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+import UI5Date from "./UI5Date.js";
 import UniversalDate from "./UniversalDate.js";
 
 class CalendarDate {
-	_oUDate!: Date | UniversalDate;
+	_oUDate!: UI5Date | Date | UniversalDate;
 
 	constructor(year?: number | CalendarDate, month?: number | string, date?: number, calendarType?: string) { // eslint-disable-line
 		let aArgs = arguments, // eslint-disable-line
-			oJSDate: Date,
-			oNow: Date,
+			oJSDate: UI5Date | Date,
+			oNow: UI5Date | Date,
 			sCalendarType!: CalendarType;
 
 		switch (aArgs.length) {
 		case 0: // defaults to the current date
-			oNow = new Date();
+			oNow = UI5Date.getInstance();
 			return (this.constructor(oNow.getFullYear(), oNow.getMonth(), oNow.getDate()) as CalendarDate);
 
 		case 1: // CalendarDate
@@ -23,7 +24,7 @@ class CalendarDate {
 			sCalendarType = aArgs[1] ? aArgs[1] : (aArgs[0]._oUDate as UniversalDate).sCalendarType;
 			// Use source.valueOf() (returns the same point of time regardless calendar type) instead of
 			// source's getters to avoid non-gregorian Year, Month and Date may be used to construct a Gregorian date
-			oJSDate = new Date(aArgs[0].valueOf());
+			oJSDate = UI5Date.getInstance(aArgs[0].valueOf());
 
 			// Make this date really local. Now getters are safe.
 			oJSDate.setFullYear(oJSDate.getUTCFullYear(), oJSDate.getUTCMonth(), oJSDate.getUTCDate());
@@ -38,7 +39,7 @@ class CalendarDate {
 			checkNumericLike(aArgs[1] as number, `Invalid month: ${aArgs[1] as number}`);
 			checkNumericLike(aArgs[2] as number, `Invalid date: ${aArgs[2] as number}`);
 
-			oJSDate = new Date(0, 0, 1);
+			oJSDate = UI5Date.getInstance(0, 0, 1);
 			oJSDate.setFullYear(aArgs[0] as number, aArgs[1] as number, aArgs[2] as number); // 2 digits year is not supported. If so, it is considered as full year as well.
 
 			if (aArgs[3]) {
@@ -139,7 +140,7 @@ class CalendarDate {
 	toLocalJSDate() {
 		// Use this._oUDate.getTime()(returns the same point of time regardless calendar type)  instead of
 		// this._oUDate's getters to avoid non-gregorian Year, Month and Date to be used to construct a Gregorian date
-		const oLocalDate = new Date(this._oUDate.getTime());
+		const oLocalDate = UI5Date.getInstance(this._oUDate.getTime());
 
 		// Make this date really local. Now getters are safe.
 		oLocalDate.setFullYear(oLocalDate.getUTCFullYear(), oLocalDate.getUTCMonth(), oLocalDate.getUTCDate());
@@ -151,7 +152,7 @@ class CalendarDate {
 	toUTCJSDate() {
 		// Use this._oUDate.getTime()(returns the same point of time regardless calendar type)  instead of
 		// this._oUDate's getters to avoid non-gregorian Year, Month and Date to be used to construct a Gregorian date
-		const oUTCDate = new Date(this._oUDate.getTime());
+		const oUTCDate = UI5Date.getInstance(this._oUDate.getTime());
 		oUTCDate.setUTCHours(0, 0, 0, 0);
 
 		return oUTCDate;
@@ -165,11 +166,11 @@ class CalendarDate {
 		return this._oUDate.getTime();
 	}
 
-	static fromLocalJSDate(oJSDate: Date, sCalendarType?: CalendarType) {
+	static fromLocalJSDate(oJSDate: Date | UI5Date, sCalendarType?: CalendarType) {
 		// Cross frame check for a date should be performed here otherwise setDateValue would fail in OPA tests
 		// because Date object in the test is different than the Date object in the application (due to the iframe).
 		// We can use jQuery.type or this method:
-		function isValidDate(date: Date) {
+		function isValidDate(date: Date | UI5Date) {
 			return date && Object.prototype.toString.call(date) === "[object Date]" && !isNaN(date as unknown as number); // eslint-disable-line
 		}
 		if (!isValidDate(oJSDate)) {
@@ -182,7 +183,7 @@ class CalendarDate {
 		const oCalDate = new CalendarDate(0, 0, 1);
 		let oUDate;
 		try {
-			oUDate = UniversalDate.getInstance(new Date(iTimestamp), sCalendarType);
+			oUDate = UniversalDate.getInstance(UI5Date.getInstance(iTimestamp), sCalendarType);
 		} catch (e) {
 			oUDate = new Date(NaN); // UniversalDate.getInstance may now throw an Exception - keep the old behavior
 		}
@@ -191,7 +192,7 @@ class CalendarDate {
 	}
 }
 
-function createUniversalUTCDate(oDate: Date, sCalendarType: CalendarType) {
+function createUniversalUTCDate(oDate: UI5Date | Date, sCalendarType: CalendarType) {
 	if (sCalendarType) {
 		return UniversalDate.getInstance(createUTCDate(oDate), sCalendarType);
 	}
@@ -203,8 +204,8 @@ function createUniversalUTCDate(oDate: Date, sCalendarType: CalendarType) {
  * @param {Date} oDate JavaScript date object. Time related information is cut.
  * @returns {Date} JavaScript date created from the date object, but this time considered as UTC date information.
  */
-function createUTCDate(oDate: Date) {
-	const oUTCDate = new Date(Date.UTC(0, 0, 1));
+function createUTCDate(oDate: UI5Date | Date) {
+	const oUTCDate = new Date(Date.UTC(0, 0, 1)); // no need to replace with UI5Date as we are creating a new UTC date object
 
 	oUTCDate.setUTCFullYear(oDate.getFullYear(), oDate.getMonth(), oDate.getDate());
 
