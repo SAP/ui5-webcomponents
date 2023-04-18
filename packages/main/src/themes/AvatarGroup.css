@@ -1,6 +1,8 @@
 @import "./TapHighlightColor.css";
+
 :host(:not([hidden])) {
 	display: block;
+	width: 100%;
 }
 
 .ui5-avatar-group-items:focus {

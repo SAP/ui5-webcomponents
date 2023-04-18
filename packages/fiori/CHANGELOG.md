@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.0...v1.13.0-rc.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* **ui5-bar:** fix top and bottom border of Buttons hidden in ui5-bar when shrinked ([#6887](https://github.com/SAP/ui5-webcomponents/issues/6887)) ([c425bde](https://github.com/SAP/ui5-webcomponents/commit/c425bded5e1047ad5863c764206286bce9b15282))
+* **ui5-shellbar:** primary title respects text spacing styles ([#6882](https://github.com/SAP/ui5-webcomponents/issues/6882)) ([5ab70d7](https://github.com/SAP/ui5-webcomponents/commit/5ab70d79673a83a3ebefb890065698d841cf0fe3))
+* **ui5-side-navigation:** avoid firing selection-change when the selected item is clicked ([#6842](https://github.com/SAP/ui5-webcomponents/issues/6842)) ([98c554f](https://github.com/SAP/ui5-webcomponents/commit/98c554f94e5d1ccd5987d9b799e7ead3f6a1745b)), closes [#6825](https://github.com/SAP/ui5-webcomponents/issues/6825)
+* **ui5-timeline*:** fix chronological line not displaying in vertical or default layout ([#6872](https://github.com/SAP/ui5-webcomponents/issues/6872)) ([69ad2a9](https://github.com/SAP/ui5-webcomponents/commit/69ad2a999a83429041e190033d9733c6bd0e1526))
+
+
+
+
+
+# [1.13.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0...v1.13.0-rc.0) (2023-04-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 # [1.12.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.0) (2023-04-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori
