@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Split Button general interaction", () => {
 	it("tests inner buttons design", async () => {

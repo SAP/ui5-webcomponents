@@ -1,4 +1,6 @@
 import { html } from "lit-html";
+import { ifDefined } from "lit-html/directives/if-defined.js";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -7,51 +9,59 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type SplitButton from "@ui5/webcomponents/dist/SplitButton.js";
+import ButtonDesign from "@ui5/webcomponents/dist/types/ButtonDesign.js";
 
 const component = "ui5-split-button";
 
 export default {
-    title: "Main/SplitButton",
-    component,
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
-    argTypes,
+	title: "Main/SplitButton",
+	component,
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component })
+		},
+},
+argTypes,
 } as Meta<SplitButton>;
 
-const Template: UI5StoryArgs<SplitButton, StoryArgsSlots> = (args) => html`<div></div>`;
+const Template: UI5StoryArgs<SplitButton, StoryArgsSlots> = (args) => html`<ui5-split-button
+	?disabled="${ifDefined(args.disabled)}"
+	design="${ifDefined(args.design)}"
+	icon="${ifDefined(args.icon)}"
+	active-icon="${ifDefined(args.activeIcon)}"
+	accessible-name="${ifDefined(args.accessibleName)}"
+>
+	${unsafeHTML(args.default)}
+</ui5-split-button>`;
 
+export const Basic = Template.bind({});
+Basic.args = {
+	default: "Default",
+};
 
-export const Template0: StoryFn = () => html`
-<h3>Default SplitButton</h3>
-	<div class="snippet">
-		<ui5-split-button class="samples-margin">Default</ui5-split-button>
-		<ui5-split-button disabled="" class="samples-margin">Default</ui5-split-button>
-	</div>
-`;
+export const Disabled = Template.bind({});
+Disabled.storyName = "Disabled SplitButton";
+Disabled.args = {
+	default: "Disabled",
+	disabled: true,
+};
 
+export const Design = Template.bind({});
+Design.args = {
+	default: "Attention",
+	design: ButtonDesign.Attention,
+};
 
-export const Template1: StoryFn = () => html`
-<h3>SplitButton with Design</h3>
-	<div class="snippet">
-		<ui5-split-button design="Default" class="samples-margin">Default</ui5-split-button>
-		<ui5-split-button design="Emphasized" class="samples-margin">Emphasized</ui5-split-button>
-		<ui5-split-button design="Positive" class="samples-margin">Positive</ui5-split-button>
-		<ui5-split-button design="Negative" class="samples-margin">Negative</ui5-split-button>
-		<ui5-split-button design="Attention" class="samples-margin">Attention</ui5-split-button>
-		<ui5-split-button design="Transparent" class="samples-margin">Transparent</ui5-split-button>
-	</div>
-`;
+export const WithIcon = Template.bind({});
+WithIcon.args = {
+	default: "Icon",
+	icon: "add",
+};
 
-
-export const Template2: StoryFn = () => html`
-<h3>SplitButton with Icons</h3>
-	<div class="snippet">
-		<ui5-split-button icon="add" class="samples-margin">Icon</ui5-split-button>
-		<ui5-split-button icon="add" active-icon="accept" class="samples-margin">Icon + Active Icon</ui5-split-button>
-	</div>
-`;
+export const WithActiveIcon = Template.bind({});
+WithActiveIcon.args = {
+	default: "Press Me",
+	icon: "add",
+	activeIcon: "accept",
+};

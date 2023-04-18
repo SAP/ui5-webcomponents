@@ -289,20 +289,29 @@ class ColorPicker extends UI5Element {
 	}
 
 	_handleHEXChange(e: CustomEvent | KeyboardEvent) {
-		let newValue: string = (e.target as Input).value.toLowerCase();
 		const hexRegex = new RegExp("^[<0-9 abcdef]+$");
+		const input: Input = (e.target as Input);
+		let inputValueLowerCase = input.value.toLowerCase();
 
 		// Shorthand Syntax
-		if (newValue.length === 3) {
-			newValue = `${newValue[0]}${newValue[0]}${newValue[1]}${newValue[1]}${newValue[2]}${newValue[2]}`;
+		if (inputValueLowerCase.length === 3) {
+			inputValueLowerCase = `${inputValueLowerCase[0]}${inputValueLowerCase[0]}${inputValueLowerCase[1]}${inputValueLowerCase[1]}${inputValueLowerCase[2]}${inputValueLowerCase[2]}`;
 		}
 
-		if (newValue === this.hex) {
+		const isNewValueValid = inputValueLowerCase.length === 6 && hexRegex.test(inputValueLowerCase);
+
+		if (isNewValueValid && input.value !== inputValueLowerCase) {
+			this._wrongHEX = false;
+			input.value = inputValueLowerCase;
+		}
+
+		if (inputValueLowerCase === this.hex) {
 			return;
 		}
 
-		this.hex = newValue;
-		if (newValue.length !== 6 || !hexRegex.test(newValue)) {
+		this.hex = inputValueLowerCase;
+
+		if (!isNewValueValid) {
 			this._wrongHEX = true;
 		} else {
 			this._wrongHEX = false;
@@ -426,8 +435,12 @@ class ColorPicker extends UI5Element {
 
 	_setColor(color: ColorRGB = { r: 0, g: 0, b: 0 }) {
 		this.color = `rgba(${color.r}, ${color.g}, ${color.b}, ${this._alpha})`;
-
+		this._wrongHEX = !this.isValidRGBColor(color);
 		this.fireEvent("change");
+	}
+
+	isValidRGBColor(color: ColorRGB) {
+		return color.r >= 0 && color.r <= 255 && color.g >= 0 && color.g <= 255 && color.b >= 0 && color.b <= 255;
 	}
 
 	_setHex() {
