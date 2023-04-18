@@ -28,7 +28,6 @@ export default {
 const Template: UI5StoryArgs<Page, StoryArgsSlots> = (args) => {
     return html`
 <ui5-page
-    id="page"
     style="height: 700px; width: 500px"
     background-design="${ifDefined(args.backgroundDesign)}"
 	?disable-scrolling="${ifDefined(args.disableScrolling)}"
