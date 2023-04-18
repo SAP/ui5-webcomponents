@@ -94,7 +94,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	disabled!: boolean;
 
 	/**
-	 * Represents the "additionalText" text, which is displayed in the tab.
+	 * Represents the "additionalText" text, which is displayed in the tab. In the cases of a mix between Tabs with Icons and Tabs without icon if the tab has no icon the count is shown as a bigger number.
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @public
