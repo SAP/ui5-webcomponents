@@ -44,29 +44,15 @@ Basic.args = {
 	default: `<ui5-button icon="upload">Upload Single File</ui5-button>`,
 };
 
-export const NoInput = Template.bind({});
-NoInput.storyName = "With Hidden Input";
-NoInput.args = {
-	hideInput: true,
-	default: `<ui5-button icon="upload" icon-end="">Upload</ui5-button>`,
-};
-
 export const Custom = Template.bind({});
-Custom.storyName = "Custom File Uploader ";
+Custom.storyName = "With Custom Design ";
 Custom.args = {
 	hideInput: true,
 	default: `<ui5-badge>Upload File</ui5-badge>`,
 };
 
-export const OnlyText = Template.bind({});
-OnlyText.storyName = "Only Accept Text Files";
-OnlyText.args = {
-	accept: ".txt",
-	default: `<ui5-button icon="upload">Upload Text File</ui5-button>`,
-};
-
 export const Advanced = Template.bind({});
-Advanced.storyName = "Upload multiple files and display them";
+Advanced.storyName = "Image Uploader";
 Advanced.args = {
 	id: "fileuploader",
 	accept: "image/*",

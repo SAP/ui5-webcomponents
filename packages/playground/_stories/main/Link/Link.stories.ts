@@ -56,16 +56,8 @@ Design.args = {
 	design: LinkDesign.Subtle,
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-	default: "Disabled Link",
-	href: "https://www.sap.com",
-	target: "_blank",
-	disabled: true,
-};
-
-export const Wrapping = Template.bind({});
-Wrapping.args = {
+export const TextWrapping = Template.bind({});
+TextWrapping.args = {
 	default: "This is a really long link. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
 	href: "https://www.sap.com",
 	target: "_blank",
