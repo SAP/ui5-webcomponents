@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.0...v1.13.0-rc.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* getIconAccessibleName now handles empty strings ([#6891](https://github.com/SAP/ui5-webcomponents/issues/6891)) ([7b80914](https://github.com/SAP/ui5-webcomponents/commit/7b8091477c97ef36e1399aa960b0d692de29993a))
+
+
+### Features
+
+* **localization:** add `timezone` support [experimental] ([#6857](https://github.com/SAP/ui5-webcomponents/issues/6857)) ([aa91fd1](https://github.com/SAP/ui5-webcomponents/commit/aa91fd136f8bff757d476b83444f963d4299d562))
+
+
+
+
+
+# [1.13.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0...v1.13.0-rc.0) (2023-04-06)
+
+
+### Bug Fixes
+
+* fix components metadata calculation ([#6865](https://github.com/SAP/ui5-webcomponents/issues/6865)) ([0089891](https://github.com/SAP/ui5-webcomponents/commit/0089891fae58f1271873f1fff0109bbc9b908b19))
+* **framework:** remove invalid element from head ([#6848](https://github.com/SAP/ui5-webcomponents/issues/6848)) ([bb52a7b](https://github.com/SAP/ui5-webcomponents/commit/bb52a7bcfcb2b48f2cc7efe810ca119d09456245)), closes [#6748](https://github.com/SAP/ui5-webcomponents/issues/6748)
+
+
+
+
+
+# [1.12.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.3...v1.12.0) (2023-04-04)
+
+
+### Bug Fixes
+
+* **framework:** relative paths for external themes ([#6799](https://github.com/SAP/ui5-webcomponents/issues/6799)) ([df1ddfc](https://github.com/SAP/ui5-webcomponents/commit/df1ddfc955ef3bb46d3b1e4694e7b931655a3079))
+* **theming:** fix icons version display for custom themes (built via the ThemeDesigner) ([#6815](https://github.com/SAP/ui5-webcomponents/issues/6815)) ([63ff800](https://github.com/SAP/ui5-webcomponents/commit/63ff8007889a66efae074fc6b4dbcb1b7ea36713)), closes [#6758](https://github.com/SAP/ui5-webcomponents/issues/6758)
+
+
+### Features
+
+* **framework:** re-export all public imports from index.js ([#6823](https://github.com/SAP/ui5-webcomponents/issues/6823)) ([a08d464](https://github.com/SAP/ui5-webcomponents/commit/a08d4645aeaae6e6f5eb8c55d8cb8bfaf4aa58b6))
+
+
+
+
+
+# [1.12.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.2...v1.12.0-rc.3) (2023-03-30)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
 # [1.12.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0-rc.1...v1.12.0-rc.2) (2023-03-23)
 
 

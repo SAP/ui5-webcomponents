@@ -1,5 +1,5 @@
-const datepicker = require("../pageobjects/DatePickerTestPage");
-const assert = require("chai").assert;
+import datepicker from "../pageobjects/DatePickerTestPage.js";
+import { assert } from "chai";
 
 describe("Date Picker Tests", () => {
 	before(async () => {
@@ -855,19 +855,20 @@ describe("Date Picker Tests", () => {
 		await datepicker.openPicker();
 
 		const displayedDay = await datepicker.getDisplayedDay(15);
+
 		assert.ok(await displayedDay.hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
 	});
 
-	it("Days are disabled when out of range", async () => {
+	it("Days are enabled when in range", async () => {
 		datepicker.id = "#dp33";
 		const root = await datepicker.getRoot();
 		await root.keys("Escape");
 
-		datepicker.id = "#dp34";
+		datepicker.id = "#dp33";
 		await datepicker.openPicker();
+		const displayedDay = await datepicker.getDisplayedDay(12);
 
-		const displayedDay = await datepicker.getDisplayedDay(14);
-		assert.ok(await displayedDay.isFocusedDeep(), "Days out of range are disabled");
+		assert.ok(await displayedDay.isFocusedDeep(), "Days in range are enabled");
 	});
 
 	it("Min and Max date are included in the interval", async () => {

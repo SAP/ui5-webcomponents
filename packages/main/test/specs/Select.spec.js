@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 async function getResourceBundleTexts(keys) {
 	return browser.executeAsync((keys, done) => {
@@ -505,6 +505,25 @@ describe("Select general interaction", () => {
 			"The value state text is correct.");
 		assert.ok(warningValueStateText.includes(texts.VALUE_STATE_TYPE_WARNING),
 			"The value state text is correct.");
+	});
+
+	it("Tests that the picker is closed when the selected value is clicked", async () => {
+		const select = await browser.$("#mySelect");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mySelect")
+		const firstItem = (await browser.$(`.${staticAreaItemClassName}`).shadow$$("ui5-li"))[0];
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// select the first item
+		await select.click();
+		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		await firstItem.click();
+		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
+
+		// click the selected item again
+		await select.click();
+		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+		await firstItem.click();
+		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
 	});
 });
 

@@ -33,15 +33,21 @@ const customElement = (tagNameOrComponentSettings: string | {
 
 		const {
 			tag,
-			languageAware = false,
-			themeAware = false,
-			fastNavigation = false,
+			languageAware,
+			themeAware,
+			fastNavigation,
 		 } = tagNameOrComponentSettings;
 
 		target.metadata.tag = tag;
-		target.metadata.languageAware = languageAware;
-		target.metadata.themeAware = themeAware;
-		target.metadata.fastNavigation = fastNavigation;
+		if (languageAware) {
+			target.metadata.languageAware = languageAware;
+		}
+		if (themeAware) {
+			target.metadata.themeAware = themeAware;
+		}
+		if (fastNavigation) {
+			target.metadata.fastNavigation = fastNavigation;
+		}
 
 		["render", "renderer", "template", "staticAreaTemplate", "styles", "staticAreaStyles", "dependencies"].forEach((customElementEntity: string) => {
 			const _customElementEntity = customElementEntity === "render" ? "renderer" : customElementEntity;
