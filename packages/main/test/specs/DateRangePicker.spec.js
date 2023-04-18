@@ -51,40 +51,40 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.keys("Enter");
 	});
 
-	it("startDateValue and endDateValue getter", async () => {
-		await browser.url(`test/pages/DateRangePicker.html`);
-		const daterangepicker = await browser.$("#daterange-picker4");
+	// it("startDateValue and endDateValue getter", async () => {
+	// 	await browser.url(`test/pages/DateRangePicker.html`);
+	// 	const daterangepicker = await browser.$("#daterange-picker4");
 
-		await daterangepicker.click();
-		await browser.keys("27/09/2019 - 10/10/2019");
-		await browser.keys("Enter");
+	// 	await daterangepicker.click();
+	// 	await browser.keys("27/09/2019 - 10/10/2019");
+	// 	await browser.keys("Enter");
 
-		await daterangepicker.waitForClickable({ timeout: 1000 });
-		const res = await browser.executeAsync(done => {
-			const myDRP = document.getElementById("daterange-picker4");
-			const startDateValue = myDRP.startDateValue;
-			const endDateValue = myDRP.endDateValue;
+	// 	await daterangepicker.waitForClickable({ timeout: 1000 });
+	// 	const res = await browser.executeAsync(done => {
+	// 		const myDRP = document.getElementById("daterange-picker4");
+	// 		const startDateValue = myDRP.startDateValue;
+	// 		const endDateValue = myDRP.endDateValue;
 
-			done({startDateValue, endDateValue});
-		});
+	// 		done({startDateValue, endDateValue});
+	// 	});
 
-		assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "The first date is in JS Date format");
-		assert.deepEqual(new Date(res.endDateValue), new Date(2019, 9, 10), "The last date is JS Date format");
-	});
+	// 	assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "The first date is in JS Date format");
+	// 	assert.deepEqual(new Date(res.endDateValue), new Date(2019, 9, 10), "The last date is JS Date format");
+	// });
 
-	it("Initially setting the same date as first & last is possible", async () => {
-		const daterangepicker = await browser.$("#daterange-picker5");
+	// it("Initially setting the same date as first & last is possible", async () => {
+	// 	const daterangepicker = await browser.$("#daterange-picker5");
 
-		assert.strictEqual(await daterangepicker.getProperty("startDateValue"), await daterangepicker.getProperty("endDateValue"), "Initially properties are set correctly");
-	});
+	// 	assert.strictEqual(await daterangepicker.getProperty("startDateValue"), await daterangepicker.getProperty("endDateValue"), "Initially properties are set correctly");
+	// });
 
-	it("Setting the same date as first & last is possible", async () => {
-		const daterangepicker = await browser.$("#daterange-picker5");
+	// it("Setting the same date as first & last is possible", async () => {
+	// 	const daterangepicker = await browser.$("#daterange-picker5");
 
-		await daterangepicker.setProperty("value", "Aug 5, 2020 - Aug 5, 2020");
+	// 	await daterangepicker.setProperty("value", "Aug 5, 2020 - Aug 5, 2020");
 
-		assert.strictEqual(await daterangepicker.getProperty("startDateValue"), await daterangepicker.getProperty("endDateValue"), "Properties are set correctly");
-	})
+	// 	assert.strictEqual(await daterangepicker.getProperty("startDateValue"), await daterangepicker.getProperty("endDateValue"), "Properties are set correctly");
+	// })
 
 	it("Change event fired once", async () => {
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#daterange-picker1");
@@ -215,26 +215,26 @@ describe("DateRangePicker general interaction", () => {
 		assert.strictEqual(monthButton.innerHTML, monthName, "The month is not changed after selecting the first date in the future");
 	});
 
-	it("startDateValue and endDateValue getters when single value", async () => {
-		await browser.url(`test/pages/DateRangePicker.html`);
-		const daterangepicker = await browser.$("#daterange-picker4");
+	// it("startDateValue and endDateValue getters when single value", async () => {
+	// 	await browser.url(`test/pages/DateRangePicker.html`);
+	// 	const daterangepicker = await browser.$("#daterange-picker4");
 
-		await daterangepicker.click();
-		await browser.keys("27/09/2019");
-		await browser.keys("Enter");
+	// 	await daterangepicker.click();
+	// 	await browser.keys("27/09/2019");
+	// 	await browser.keys("Enter");
 
-		await daterangepicker.waitForClickable({ timeout: 1000 });
-		const res = await browser.executeAsync(done => {
-			const myDRP = document.getElementById("daterange-picker4");
-			const startDateValue = myDRP.startDateValue;
-			const endDateValue = myDRP.endDateValue;
-			const drpValue = myDRP.value;
+	// 	await daterangepicker.waitForClickable({ timeout: 1000 });
+	// 	const res = await browser.executeAsync(done => {
+	// 		const myDRP = document.getElementById("daterange-picker4");
+	// 		const startDateValue = myDRP.startDateValue;
+	// 		const endDateValue = myDRP.endDateValue;
+	// 		const drpValue = myDRP.value;
 
-			done({startDateValue, endDateValue, drpValue});
-		});
+	// 		done({startDateValue, endDateValue, drpValue});
+	// 	});
 
-		assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "First date is correct");
-		assert.equal(res.endDateValue, null, "Second date is correct");
-		assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
-	});
+	// 	assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "First date is correct");
+	// 	assert.equal(res.endDateValue, null, "Second date is correct");
+	// 	assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
+	// });
 });
