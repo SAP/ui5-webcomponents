@@ -137,11 +137,13 @@ describe("Menu interaction", () => {
 		const openButton = await browser.$("#btnOpen");
 
 		openButton.click();
+		await browser.pause(100);
 		const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
 		const visualOpenItem = await menuPopover.$("ui5-li[accessible-name='Open']");
 		const visualCloseItem = await menuPopover.$("ui5-li[accessible-name='Close']");
 
 		visualOpenItem.click();
+		await browser.pause(100);
 		const openSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
 		const busyIndicator = await openSubmenuPopover.$("ui5-busy-indicator");
 
@@ -150,6 +152,7 @@ describe("Menu interaction", () => {
 		assert.strictEqual(await busyIndicator.delay, "100", "Delay attribute is properly set.");
 
 		visualCloseItem.click();
+		await browser.pause(100);
 		const closeSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
 		const closeMenuList = await closeSubmenuPopover.$("ui5-list");
 
