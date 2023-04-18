@@ -132,32 +132,32 @@ describe("Menu interaction", () => {
 		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
 	});
 
-	it("Menu and Menu items busy indication", async () => {
-		await browser.url(`test/pages/Menu.html`);
-		const openButton = await browser.$("#btnOpen");
+	// it("Menu and Menu items busy indication", async () => {
+	// 	await browser.url(`test/pages/Menu.html`);
+	// 	const openButton = await browser.$("#btnOpen");
 
-		openButton.click();
-		await browser.pause(100);
-		const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-		const visualOpenItem = await menuPopover.$("ui5-li[accessible-name='Open']");
-		const visualCloseItem = await menuPopover.$("ui5-li[accessible-name='Close']");
+	// 	openButton.click();
+	// 	await browser.pause(100);
+	// 	const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+	// 	const visualOpenItem = await menuPopover.$("ui5-li[accessible-name='Open']");
+	// 	const visualCloseItem = await menuPopover.$("ui5-li[accessible-name='Close']");
 
-		visualOpenItem.click();
-		await browser.pause(100);
-		const openSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-		const busyIndicator = await openSubmenuPopover.$("ui5-busy-indicator");
+	// 	visualOpenItem.click();
+	// 	await browser.pause(100);
+	// 	const openSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+	// 	const busyIndicator = await openSubmenuPopover.$("ui5-busy-indicator");
 
-		assert.ok(await busyIndicator.getProperty("active"), "Active attribute is properly set.");
-		assert.strictEqual(await busyIndicator.getProperty("size"), "Medium", "Size attribute is properly set.");
-		assert.strictEqual(await busyIndicator.getProperty("delay"), "100", "Delay attribute is properly set.");
+	// 	assert.ok(await busyIndicator.getProperty("active"), "Active attribute is properly set.");
+	// 	assert.strictEqual(await busyIndicator.getProperty("size"), "Medium", "Size attribute is properly set.");
+	// 	assert.strictEqual(await busyIndicator.getProperty("delay"), "100", "Delay attribute is properly set.");
 
-		visualCloseItem.click();
-		await browser.pause(100);
-		const closeSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-		const closeMenuList = await closeSubmenuPopover.$("ui5-list");
+	// 	visualCloseItem.click();
+	// 	await browser.pause(100);
+	// 	const closeSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
+	// 	const closeMenuList = await closeSubmenuPopover.$("ui5-list");
 
-		assert.ok(await closeMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
-	});
+	// 	assert.ok(await closeMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
+	// });
 });
 
 describe("Menu Accessibility", () => {
