@@ -2,9 +2,8 @@
 	display: table-cell;
 	font-family: "72override", var(--sapFontFamily);
 	font-size: 0.875rem;
-	height: 100%;
+	height: var(--ui5_table_row_height);
 	box-sizing: border-box;
-	overflow: hidden;
 	color: var(--sapContent_LabelColor);
 	word-break: break-word;
 	vertical-align: middle;

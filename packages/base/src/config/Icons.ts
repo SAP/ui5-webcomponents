@@ -1,4 +1,4 @@
-import { getTheme, isThemeFamily } from "./Theme.js";
+import { getTheme, isLegacyThemeFamily } from "./Theme.js";
 import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js";
 
 const IconCollectionConfiguration = new Map<string, string>();
@@ -97,18 +97,18 @@ const getEffectiveIconCollection = (collectionName?: IconCollection): IconCollec
  * @returns { RegisteredIconCollection } the registered collection name
  */
 const getIconCollectionByTheme = (collectionName?: IconCollection): RegisteredIconCollection => {
-	const horizonThemeFamily = isThemeFamily("sap_horizon");
+	const legacyThemeFamily = isLegacyThemeFamily();
 
 	if (!collectionName) {
-		return horizonThemeFamily ? RegisteredIconCollection.SAPIconsV5 : RegisteredIconCollection.SAPIconsV4;
+		return legacyThemeFamily ? RegisteredIconCollection.SAPIconsV4 : RegisteredIconCollection.SAPIconsV5;
 	}
 
 	if (collectionName === "tnt") {
-		return horizonThemeFamily ? RegisteredIconCollection.SAPIconsTNTV3 : RegisteredIconCollection.SAPIconsTNTV2;
+		return legacyThemeFamily ? RegisteredIconCollection.SAPIconsTNTV2 : RegisteredIconCollection.SAPIconsTNTV3;
 	}
 
 	if (collectionName === "business-suite") {
-		return horizonThemeFamily ? RegisteredIconCollection.SAPBSIconsV2 : RegisteredIconCollection.SAPBSIconsV1;
+		return legacyThemeFamily ? RegisteredIconCollection.SAPBSIconsV1 : RegisteredIconCollection.SAPBSIconsV2;
 	}
 
 	return collectionName as RegisteredIconCollection;

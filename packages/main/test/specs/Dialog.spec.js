@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Dialog general interaction", () => {
 	before(async () => {
@@ -348,8 +348,30 @@ describe("Dialog general interaction", () => {
 		await closeButton.click();
 
 	});
-});
 
+	it("Test focus circularity", async () => {
+		const opener = await browser.$("#btn-focus-circ");
+		const dialog = await browser.$("#focus-circ");
+		const firstActiveBtn = await browser.$("#active-btn-1");
+		const secondActiveBtn = await browser.$("#active-btn-2");
+
+		await opener.click();
+		await dialog.isDisplayed();
+
+		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.keys("Tab");
+		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.keys("Tab");
+		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+
+		await browser.keys(["Shift", "Tab"]);
+		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.keys(["Shift", "Tab"]);
+		assert.strictEqual(await firstActiveBtn.isFocused(), true, "Correct element is focused");
+		await browser.keys(["Shift", "Tab"]);
+		assert.strictEqual(await secondActiveBtn.isFocused(), true, "Correct element is focused");
+	});
+});
 
 describe("Acc", () => {
 	before(async () => {

@@ -20,29 +20,27 @@ const buildCorrectUrl = (oldUrl: string, newOrigin: string) => {
 };
 
 const validateThemeRoot = (themeRoot: string) => {
-	let themeRootURL,
-		resultUrl;
+	let resultUrl;
 
 	try {
-		themeRootURL = new URL(themeRoot);
-
-		const origin = themeRootURL.origin;
-
-		themeRootURL = themeRootURL.toString();
-
-		if (themeRootURL.startsWith(".") || themeRootURL.startsWith("/")) {
+		if (themeRoot.startsWith(".") || themeRoot.startsWith("/")) {
 			// Handle relative url
 			// new URL("/newExmPath", "http://example.com/exmPath") => http://example.com/newExmPath
 			// new URL("./newExmPath", "http://example.com/exmPath") => http://example.com/exmPath/newExmPath
 			// new URL("../newExmPath", "http://example.com/exmPath") => http://example.com/newExmPath
-			resultUrl = new URL(themeRootURL, window.location.href).toString();
-		} else if (origin && validateThemeOrigin(origin)) {
-			// If origin is allowed, use it
-			resultUrl = themeRootURL.toString();
+			resultUrl = new URL(themeRoot, window.location.href).toString();
 		} else {
-			// If origin is not allow and the URL is not relative, we have to replace the origin
-			// with current location
-			resultUrl = buildCorrectUrl(themeRootURL, window.location.href);
+			const themeRootURL = new URL(themeRoot);
+			const origin = themeRootURL.origin;
+
+			if (origin && validateThemeOrigin(origin)) {
+				// If origin is allowed, use it
+				resultUrl = themeRootURL.toString();
+			} else {
+				// If origin is not allow and the URL is not relative, we have to replace the origin
+				// with current location
+				resultUrl = buildCorrectUrl(themeRootURL.toString(), window.location.href);
+			}
 		}
 
 		if (!resultUrl.endsWith("/")) {

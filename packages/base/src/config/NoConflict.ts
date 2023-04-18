@@ -3,6 +3,7 @@ import { getNoConflict as getConfiguredNoConflict } from "../InitialConfiguratio
 // Fire these events even with noConflict: true
 const excludeList = [
 	"value-changed",
+	"click",
 ];
 
 type NoConflictData = boolean | { events: Array<string>};
