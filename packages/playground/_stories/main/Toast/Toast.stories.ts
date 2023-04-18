@@ -26,22 +26,25 @@ export default {
     argTypes,
 } as Meta<Toast>;
 
-const Template: UI5StoryArgs<Toast, StoryArgsSlots> = (args) =>
-	html`
-<ui5-button id="btnShowToast">Show Toast</ui5-button>
+let index = 0;
+
+const Template: UI5StoryArgs<Toast, StoryArgsSlots> = (args) => {
+	return 	html`
+<ui5-button id="btn-${++index}">Show Toast</ui5-button>
 <ui5-toast
-	id="toastBasic"
+	id="toast-${index}"
 	duration="${ifDefined(args.duration)}"
 	placement="${ifDefined(args.placement)}"
 	>${unsafeHTML(args.default)}</ui5-toast>
 <script>
-	var toastOpener = document.getElementById("btnShowToast");
-	var toast = document.getElementById("toastBasic"); 
+	var toastOpener${index} = document.getElementById("btn-${index}");
+	var toast${index} = document.getElementById("toast-${index}"); 
 
-	toastOpener.addEventListener("click", () => {
-		toast.show();
+	toastOpener${index}.addEventListener("click", () => {
+		toast${index}.show();
 	});
 </script>`;
+}
 
 export const Basic = Template.bind({});
 Basic.args = {
