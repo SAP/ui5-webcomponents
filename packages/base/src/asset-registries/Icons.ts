@@ -147,6 +147,10 @@ const getIconData = async (name: string) => {
  * @return { Promise }
  */
 const getIconAccessibleName = async (name: string): Promise<string | undefined> => {
+	if (!name) {
+		return;
+	}
+
 	let iconData: typeof ICON_NOT_FOUND | IconData | undefined = getIconDataSync(name);
 
 	if (!iconData) {

@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.0...v1.13.0-rc.1) (2023-04-13)
+
+
+### Bug Fixes
+
+* **u5-tree-item:** correct text alignment on truncation ([#6879](https://github.com/SAP/ui5-webcomponents/issues/6879)) ([d146aca](https://github.com/SAP/ui5-webcomponents/commit/d146aca53f4f92fc49219ab4a9865e82ce6b99e6))
+* **ui5-avatar-group, ui5-breadcrumbs:** expand width to fill container ([#6873](https://github.com/SAP/ui5-webcomponents/issues/6873)) ([7fcdbbc](https://github.com/SAP/ui5-webcomponents/commit/7fcdbbcfb1986fccc7380142b3d3f72f5b53e05f))
+* **ui5-color-picker:** fix incorrect input state after invalid values ([#6870](https://github.com/SAP/ui5-webcomponents/issues/6870)) ([5e22b70](https://github.com/SAP/ui5-webcomponents/commit/5e22b7040c0cc310b9f8b42139fbff5bace42765))
+* **ui5-menu:** fix children closing unexpectedly when opener is right aligned ([#6894](https://github.com/SAP/ui5-webcomponents/issues/6894)) ([e1e8cf5](https://github.com/SAP/ui5-webcomponents/commit/e1e8cf5e283903a3a10fc9711b3e96e6e465aa7e)), closes [#5802](https://github.com/SAP/ui5-webcomponents/issues/5802)
+* **ui5-select:** close picker on selection ([#6883](https://github.com/SAP/ui5-webcomponents/issues/6883)) ([2189681](https://github.com/SAP/ui5-webcomponents/commit/218968188ab799ad7371d7ec4dd6b28c4ccf85bd))
+* **ui5-table:** prevent Safari from crashing ([#6888](https://github.com/SAP/ui5-webcomponents/issues/6888)) ([ae11e1d](https://github.com/SAP/ui5-webcomponents/commit/ae11e1d7389711e78808819057bf9fa741e5b8af)), closes [#6570](https://github.com/SAP/ui5-webcomponents/issues/6570)
+
+
+### Features
+
+* **localization:** add `timezone` support [experimental] ([#6857](https://github.com/SAP/ui5-webcomponents/issues/6857)) ([aa91fd1](https://github.com/SAP/ui5-webcomponents/commit/aa91fd136f8bff757d476b83444f963d4299d562))
+
+
+
+
+
 # [1.13.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.12.0...v1.13.0-rc.0) (2023-04-06)
 
 
