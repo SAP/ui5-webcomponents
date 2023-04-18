@@ -81,6 +81,7 @@
 
 .ui5-tc__overflow > [ui5-button][focused] {
 	outline-offset: 0.125rem;
+	--_ui5_button_focused_border_radius: 0.75rem;
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {
