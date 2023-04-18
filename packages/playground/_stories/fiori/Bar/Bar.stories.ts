@@ -34,19 +34,10 @@ const Template: UI5StoryArgs<Bar, StoryArgsSlots> = (args) => html`<ui5-bar
 </ui5-bar>`;
 
 export const Basic = Template.bind({});
-Basic.storyName = "With Content and Header Design";
+Basic.storyName = "With Content and Design";
 Basic.args = {
 	design: BarDesign.Header,
 	startContent: `<ui5-button icon="home" tooltip="Go home" design="Transparent" slot="startContent"></ui5-button>`,
-	default: `<ui5-label id="basic-label">Title</ui5-label>`,
+	default: `<ui5-label id="basic-label">Content</ui5-label>`,
 	endContent: `<ui5-button icon="action-settings" tooltip="Go to settings" slot="endContent"></ui5-button>`,
-};
-
-export const Footer = Template.bind({});
-Footer.storyName = "With Content and Footer Design";
-Footer.args = {
-	design: BarDesign.Footer,
-	startContent: `<ui5-button design="Positive" slot="endContent">Agree</ui5-button>`,
-	default: `<ui5-button design="Negative" slot="endContent">Decline</ui5-button>`,
-	endContent: `<ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>`,
 };
