@@ -147,16 +147,16 @@ describe("Menu interaction", () => {
 		const openSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
 		const busyIndicator = await openSubmenuPopover.$("ui5-busy-indicator");
 
-		assert.ok(await busyIndicator.active, "Active attribute is properly set.");
-		assert.strictEqual(await busyIndicator.size, "Medium", "Size attribute is properly set.");
-		assert.strictEqual(await busyIndicator.delay, "100", "Delay attribute is properly set.");
+		assert.ok(await busyIndicator.getProperty("active"), "Active attribute is properly set.");
+		assert.strictEqual(await busyIndicator.getProperty("size"), "Medium", "Size attribute is properly set.");
+		assert.strictEqual(await busyIndicator.getProperty("delay"), "100", "Delay attribute is properly set.");
 
 		visualCloseItem.click();
 		await browser.pause(100);
 		const closeSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
 		const closeMenuList = await closeSubmenuPopover.$("ui5-list");
 
-		assert.ok(await closeMenuList.busy, "Busy property is properly propagated to the ui5-list component.");
+		assert.ok(await closeMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
 	});
 });
 
