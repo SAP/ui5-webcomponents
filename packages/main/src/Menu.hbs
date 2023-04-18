@@ -55,6 +55,7 @@
 			separators="None"
 			accessible-role="menu"
 			@ui5-item-click={{_itemClick}}
+			@mouseover="{{_busyMouseOver}}"
 		>
 		{{#each _currentItems}}
 			<ui5-li
@@ -102,6 +103,7 @@
 			id="{{_id}}-menu-busy-indicator"
 			delay="{{busyDelay}}"
 			class="ui5-menu-busy-indicator"
+			@mouseover="{{_busyMouseOver}}"
 			active>
 		</ui5-busy-indicator>
 	{{/if}}

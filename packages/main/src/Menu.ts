@@ -521,6 +521,12 @@ class Menu extends UI5Element {
 		}
 	}
 
+	_busyMouseOver() {
+		if (this._parentMenuItem) {
+			this._parentMenuItem._preventSubMenuClose = true;
+		}
+	}
+
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
