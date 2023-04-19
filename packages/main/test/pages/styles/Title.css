@@ -1,12 +1,12 @@
 .title1auto {
-    background-color: var(--sapBackgroundColor);
+	background-color: var(--sapBackgroundColor);
 }
 
-.title2auto {
-    width: 200px;
-    border: 1px solid #ccc
+.wrapping {
+	width: 200px;
+	border: 1px solid #ccc
 }
 
-.title3auto {
-    margin-bottom: 1rem;
+.wrapping > * {
+	margin-bottom: 1rem;
 }

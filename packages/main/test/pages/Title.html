@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 
@@ -11,7 +12,7 @@
 	<script src="../../bundle.esm.js" type="module"></script>
 
 
-<link rel="stylesheet" type="text/css" href="./styles/Title.css">
+	<link rel="stylesheet" type="text/css" href="./styles/Title.css">
 </head>
 
 <body class="title1auto">
@@ -26,10 +27,31 @@
 		<ui5-title level="H2">Very long long long text of title title with level two</ui5-title>
 	</section>
 
-	<section class="title2auto">
+	<section class="wrapping">
 		<h2>Wrapping</h2>
-		<ui5-title level="H6" id="truncated-title" class="title3auto">Truncated title Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, ab.</ui5-title>
+		<ui5-title level="H6" id="truncated-title">Truncated title Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, ab.</ui5-title>
 		<ui5-title level="H6" wrapping-type="Normal" id="wrapping-title">Wrapping title Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, ab.</ui5-title>
+	</section>
+
+	<section>
+		<h2>Usage with ui5-link</h2>
+		<ui5-title level="H3">
+			<ui5-link design="Default">With Default link (57)</ui5-link>
+		</ui5-title>
+		<ui5-title level="H3">
+			<ui5-link design="Emphasized">With Emphasized link (58)</ui5-link>
+		</ui5-title>
+		<ui5-title level="H3">
+			<ui5-link design="Subtle">With Subtle link (59)</ui5-link>
+		</ui5-title>
+		<div class="wrapping">
+			<ui5-title level="H3">
+				<ui5-link design="Default">Truncated With link (60) Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, ab.</ui5-link>
+			</ui5-title>
+			<ui5-title level="H3" wrapping-type="Normal">
+				<ui5-link design="Default">Wrapping With link (61) Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, ab.</ui5-link>
+			</ui5-title>
+		</div>
 	</section>
 </body>
 </html>

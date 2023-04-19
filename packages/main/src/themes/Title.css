@@ -30,8 +30,23 @@
 	cursor: inherit;
 }
 
-:host([wrapping-type="Normal"]) .ui5-title-root {
+::slotted(*) {
+	font-size: inherit;
+	font-family: inherit;
+	text-shadow: inherit;
+}
+
+:host([wrapping-type="Normal"]) .ui5-title-root,
+:host([wrapping-type="Normal"]) ::slotted(*) {
 	white-space: pre-line;
+}
+
+/* special case for Link */
+::slotted([ui5-link][design="Subtle"]) {
+	color: var(--sapLinkColor);
+}
+::slotted([ui5-link][design="Subtle"]:hover) {
+	color: var(--sapLink_Hover_Color);
 }
 
 /* Level H1 */

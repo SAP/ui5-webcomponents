@@ -65,3 +65,9 @@ Wrapping.decorators = [
 ${story()}`
 	},
 ];
+
+export const WithLink = Template.bind({});
+WithLink.args = {
+	default: `<ui5-link design="Default">With Default link (57)</ui5-link>`,
+};
+WithLink.decorators = [...Template.decorators];

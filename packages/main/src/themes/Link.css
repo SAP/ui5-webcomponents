@@ -13,6 +13,8 @@
 	outline: none;
 	text-decoration: var(--_ui5_link_text_decoration);
 	text-shadow: var(--sapContent_TextShadow);
+	white-space: nowrap;
+	overflow-wrap: normal;
 }
 
 :host([disabled]) {
@@ -31,7 +33,7 @@
 	font-family: var(--sapFontBoldFamily);
 }
 
-:host([design="Subtle"]) .ui5-link-root {
+:host([design="Subtle"]) {
 	color: var(--sapLink_SubtleColor);
 	text-decoration: var(--_ui5_link_subtle_text_decoration);
 }
@@ -40,7 +42,7 @@
 	color: var(--sapLinkColor);
 }
 
-:host([wrapping-type="Normal"]) .ui5-link-root {
+:host([wrapping-type="Normal"]) {
 	white-space: normal;
 	overflow-wrap: break-word;
 }
@@ -49,11 +51,11 @@
 	width: 100%;
 	display: inline-block;
 	position: relative;
-	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	overflow-wrap: normal;
 	outline: none;
+	white-space: inherit;
+	overflow-wrap: inherit;
 	text-decoration: inherit;
 	color: inherit;
 }
@@ -81,6 +83,11 @@
 :host(:hover) {
 	color: var(--sapLink_Hover_Color);
 	text-decoration: var(--_ui5_link_hover_text_decoration);
+}
+
+:host([design="Subtle"]:hover) {
+	color: var(--sapLink_SubtleColor);
+	text-decoration: var(--_ui5_link_subtle_text_decoration_hover);
 }
 
 :host([focused]:hover) {
