@@ -29,17 +29,17 @@ export default {
 } as Meta<Panel>;
 
 const Template : UI5StoryArgs<Panel, StoryArgsSlots> = (args) => html`
-	<ui5-panel
-		accessible-role="${ifDefined(args.accessibleRole)}"
-		header-text="${ifDefined(args.headerText)}"
-		?fixed="${ifDefined(args.fixed)}"
-		?collapsed="${ifDefined(args.collapsed)}"
-		?no-animation="${ifDefined(args.noAnimation)}"
-		header-level="${ifDefined(args.headerLevel)}"
-		accessible-name="${ifDefined(args.accessibleName)}">
-		${unsafeHTML(args.header)}
-		${unsafeHTML(args.default)}
-	</ui5-panel>
+<ui5-panel
+	accessible-role="${ifDefined(args.accessibleRole)}"
+	header-text="${ifDefined(args.headerText)}"
+	?fixed="${ifDefined(args.fixed)}"
+	?collapsed="${ifDefined(args.collapsed)}"
+	?no-animation="${ifDefined(args.noAnimation)}"
+	header-level="${ifDefined(args.headerLevel)}"
+	accessible-name="${ifDefined(args.accessibleName)}">
+	${unsafeHTML(args.header)}
+	${unsafeHTML(args.default)}
+</ui5-panel>
 `;
 
 export const BasicPanel = Template.bind({});
@@ -58,7 +58,7 @@ BasicPanel.storyName = "Basic Panel";
 
 export const PanelWithList = Template.bind({});
 PanelWithList.args = {
-	default: '<ui5-list id="myList1" mode="MultiSelect"><ui5-li key="country1">Argentina</ui5-li><ui5-li key="country2">Bulgaria</ui5-li><ui5-li key="country3">China</ui5-li><ui5-li key="country4">Germany</ui5-li><ui5-li key="country5">Hungary</ui5-li><ui5-li key="country6">England</ui5-li><ui5-li key="country7">USA</ui5-li><ui5-li key="country8">Canada</ui5-li></ui5-list>',
+	default: '<ui5-list mode="MultiSelect"><ui5-li key="country1">Argentina</ui5-li><ui5-li key="country2">Bulgaria</ui5-li><ui5-li key="country3">China</ui5-li><ui5-li key="country4">Germany</ui5-li><ui5-li key="country5">Hungary</ui5-li><ui5-li key="country6">England</ui5-li><ui5-li key="country7">USA</ui5-li><ui5-li key="country8">Canada</ui5-li></ui5-list>',
 	headerText: "Select your country",
 	accessibleRole: PanelAccessibleRole.Complementary
 };
@@ -67,7 +67,7 @@ PanelWithList.storyName = "Panel with List";
 
 export const FixedPanel = Template.bind({});
 FixedPanel.args = {
-	default: '<ui5-list id="myList2" mode="SingleSelectBegin" ><ui5-li key="country1">Argentina</ui5-li><ui5-li key="country2">Bulgaria</ui5-li><ui5-li key="country3">China</ui5-li><ui5-li key="country4">Germany</ui5-li></ui5-list>',
+	default: '<ui5-list mode="SingleSelectBegin" ><ui5-li key="country1">Argentina</ui5-li><ui5-li key="country2">Bulgaria</ui5-li><ui5-li key="country3">China</ui5-li><ui5-li key="country4">Germany</ui5-li></ui5-list>',
 	headerText: "Country Of Birth",
 	accessibleRole: PanelAccessibleRole.Complementary,
 	fixed: true
@@ -76,9 +76,24 @@ FixedPanel.storyName = "Fixed Panel (Can't be Collapsed/Expanded)";
 
 
 export const PanelCustomHeader = Template.bind({});
+PanelCustomHeader.decorators = [
+	(story) => {
+		return html`
+		<style>
+			.header {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+			}
+		</style>
+		${story()}
+		`;
+	}
+]
 PanelCustomHeader.args = {
 	header:'<div slot="header" class="header"><ui5-title>Countries</ui5-title><div><ui5-button>Edit</ui5-button><ui5-button design="Emphasized">Add</ui5-button><ui5-button design="Negative">Remove</ui5-button></div></div>',
-	default: '<ui5-list id="myList1" mode="MultiSelect"><ui5-li key="country1">Argentina</ui5-li><ui5-li key="country2">Bulgaria</ui5-li><ui5-li key="country3">China</ui5-li></ui5-list>',
+	default: '<ui5-list mode="MultiSelect"><ui5-li key="country1">Argentina</ui5-li><ui5-li key="country2">Bulgaria</ui5-li><ui5-li key="country3">China</ui5-li></ui5-list>',
 	accessibleRole: PanelAccessibleRole.Complementary
 };
 PanelCustomHeader.storyName = "Panel with Custom Header";

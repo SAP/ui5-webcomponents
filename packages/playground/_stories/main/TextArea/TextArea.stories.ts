@@ -14,6 +14,7 @@ import type TextArea from "@ui5/webcomponents/dist/TextArea.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 const component = "ui5-textarea";
+let index = 0;
 
 export default {
     title: "Main/TextArea",
@@ -27,23 +28,23 @@ export default {
 } as Meta<TextArea>;
 
 const Template: UI5StoryArgs<TextArea, StoryArgsSlots> = (args) => html`
-	<ui5-textarea
-		value="${ifDefined(args.value)}"
-		?disabled="${ifDefined(args.disabled)}"
-		?readonly="${ifDefined(args.readonly)}"
-		?required="${ifDefined(args.required)}"
-		placeholder="${ifDefined(args.placeholder)}"
-		value-state="${ifDefined(args.valueState)}"
-		rows="${ifDefined(args.rows)}"
-		maxlength="${ifDefined(args.maxlength)}"
-		?show-exceeded-text="${ifDefined(args.showExceededText)}"
-		?growing="${ifDefined(args.growing)}"
-		growing-max-lines="${ifDefined(args.growingMaxLines)}"
-		name="${ifDefined(args.name)}"
-		accessible-name="${ifDefined(args.accessibleName)}"
-		accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
-		>
-	</ui5-textarea>
+<ui5-textarea
+	id="textArea-${index++}"
+	value="${ifDefined(args.value)}"
+	?disabled="${ifDefined(args.disabled)}"
+	?readonly="${ifDefined(args.readonly)}"
+	?required="${ifDefined(args.required)}"
+	placeholder="${ifDefined(args.placeholder)}"
+	value-state="${ifDefined(args.valueState)}"
+	rows="${ifDefined(args.rows)}"
+	maxlength="${ifDefined(args.maxlength)}"
+	?show-exceeded-text="${ifDefined(args.showExceededText)}"
+	?growing="${ifDefined(args.growing)}"
+	growing-max-lines="${ifDefined(args.growingMaxLines)}"
+	name="${ifDefined(args.name)}"
+	accessible-name="${ifDefined(args.accessibleName)}"
+	accessible-name-ref="${ifDefined(args.accessibleNameRef)}">
+</ui5-textarea>
 `;
 
 export const BasicTextArea = Template.bind({});
@@ -62,7 +63,19 @@ TextAreaMaxLength.args = {
 };
 TextAreaMaxLength.storyName = "TextArea with Maximum Length";
 
-export const TextAreaLabel: StoryFn = () => html`
-	<ui5-label for="textAreaWithLabelID">Description</ui5-label>
-	<ui5-textarea id="textAreaWithLabelID" required="" placeholder="Enter description"></ui5-textarea>
-`;
+export const TextAreaLabel = Template.bind({});
+TextAreaLabel.decorators = [
+	(story) => {
+		return html`
+		<ui5-label for="textArea-${index}">Description</ui5-label>
+		${story()}
+		`;
+	}
+]
+TextAreaLabel.args = {
+	placeholder: 'Enter description',
+	required: true
+
+};
+
+
