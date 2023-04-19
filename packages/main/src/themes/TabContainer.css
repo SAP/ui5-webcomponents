@@ -77,11 +77,15 @@
 	margin-top: 0.25rem;
 	border-radius: 0.75rem;
 	height: 1.5rem;
+	border: 0.25rem solid transparent; /* to reserve space for the outside border and prevent flickering*/
 }
 
 .ui5-tc__overflow > [ui5-button][focused] {
 	outline-offset: 0.125rem;
 	--_ui5_button_focused_border_radius: 0.75rem;
+	--_ui5_button_focused_border: none;
+	padding: 0.125rem;
+	border: 2px solid var(--sapContent_FocusColor);
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {
