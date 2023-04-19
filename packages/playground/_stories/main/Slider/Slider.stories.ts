@@ -24,16 +24,17 @@ export default {
     argTypes,
 } as Meta<Slider>;
 
-const Template: UI5StoryArgs<Slider, StoryArgsSlots> = (args) => html`	<ui5-slider
-value="${ifDefined(args.value)}"
-min="${ifDefined(args.min)}"
-max="${ifDefined(args.max)}"
-step="${ifDefined(args.step)}"
-?show-tickmarks="${ifDefined(args.showTickmarks)}"
-label-interval="${ifDefined(args.labelInterval)}"
-?show-tooltip="${ifDefined(args.showTooltip)}"
-?disabled="${ifDefined(args.disabled)}"
-accessible-name="${ifDefined(args.accessibleName)}"
+const Template: UI5StoryArgs<Slider, StoryArgsSlots> = (args) => html`
+<ui5-slider
+	value="${ifDefined(args.value)}"
+	min="${ifDefined(args.min)}"
+	max="${ifDefined(args.max)}"
+	step="${ifDefined(args.step)}"
+	?show-tickmarks="${ifDefined(args.showTickmarks)}"
+	label-interval="${ifDefined(args.labelInterval)}"
+	?show-tooltip="${ifDefined(args.showTooltip)}"
+	?disabled="${ifDefined(args.disabled)}"
+	accessible-name="${ifDefined(args.accessibleName)}"
 ></ui5-slider>`;
 
 export const BasicSlider = Template.bind({});

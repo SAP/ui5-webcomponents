@@ -25,13 +25,13 @@ export default {
 } as Meta<RatingIndicator>;
 
 const Template: UI5StoryArgs<RatingIndicator, StoryArgsSlots> = (args) => html`
-	<ui5-rating-indicator
+<ui5-rating-indicator
 	value="${ifDefined(args.value)}"
 	max="${ifDefined(args.max)}"
 	?disabled="${ifDefined(args.disabled)}"
 	?readonly="${ifDefined(args.readonly)}"
 	accessible-нame="${ifDefined(args.accessibleName)}"
-	></ui5-rating-indicator>`;
+></ui5-rating-indicator>`;
 
 export const BasicRatingIndicator = Template.bind({});
 BasicRatingIndicator.args = {

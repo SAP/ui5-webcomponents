@@ -43,9 +43,8 @@ const Template: UI5StoryArgs<TextArea, StoryArgsSlots> = (args) => html`
 	growing-max-lines="${ifDefined(args.growingMaxLines)}"
 	name="${ifDefined(args.name)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
-	accessible-name-ref="${ifDefined(args.accessibleNameRef)}">
-</ui5-textarea>
-`;
+	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
+></ui5-textarea>`;
 
 export const BasicTextArea = Template.bind({});
 BasicTextArea.args = {

@@ -36,11 +36,11 @@ const Template : UI5StoryArgs<Panel, StoryArgsSlots> = (args) => html`
 	?collapsed="${ifDefined(args.collapsed)}"
 	?no-animation="${ifDefined(args.noAnimation)}"
 	header-level="${ifDefined(args.headerLevel)}"
-	accessible-name="${ifDefined(args.accessibleName)}">
+	accessible-name="${ifDefined(args.accessibleName)}"
+>
 	${unsafeHTML(args.header)}
 	${unsafeHTML(args.default)}
-</ui5-panel>
-`;
+</ui5-panel>`;
 
 export const BasicPanel = Template.bind({});
 BasicPanel.args = {
