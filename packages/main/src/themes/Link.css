@@ -33,7 +33,7 @@
 	font-family: var(--sapFontBoldFamily);
 }
 
-:host([design="Subtle"]) {
+:host([design="Subtle"]) .ui5-link-root {
 	color: var(--sapLink_SubtleColor);
 	text-decoration: var(--_ui5_link_subtle_text_decoration);
 }

@@ -4,9 +4,10 @@
 
 .wrapping {
 	width: 200px;
-	border: 1px solid #ccc
+	margin-block-start: 1rem;
+	border: 1px solid #ccc;
 }
 
 .wrapping > * {
-	margin-bottom: 1rem;
+	margin-block: 0 1rem;
 }
