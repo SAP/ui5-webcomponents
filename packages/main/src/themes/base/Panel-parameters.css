@@ -10,6 +10,7 @@
 	--_ui5_panel_header_padding_right: 0.5rem;
 	--_ui5_panel_header_button_wrapper_padding: .25rem;
 	--_ui5_panel_focus_offset: 1px;
+	--_ui5_panel_content_padding: 0.625rem 1rem 1.375rem 1rem
 }
 
 [data-ui5-compact-size],
