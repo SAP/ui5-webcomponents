@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.1...v1.13.0-rc.2) (2023-04-20)
+
+
+### Bug Fixes
+
+* **ui5-panel:** adjust panel content padding ([#6869](https://github.com/SAP/ui5-webcomponents/issues/6869)) ([bfa9d06](https://github.com/SAP/ui5-webcomponents/commit/bfa9d06b1905593adcf7a168b9e1b2d38208f329))
+* **ui5-table:** correct row height in Safari ([#6903](https://github.com/SAP/ui5-webcomponents/issues/6903)) ([8ab20d9](https://github.com/SAP/ui5-webcomponents/commit/8ab20d9ec20e9d64ded0d1a63766711210e9f7b0))
+
+
+
+
+
 # [1.13.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.0...v1.13.0-rc.1) (2023-04-13)
 
 
