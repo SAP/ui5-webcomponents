@@ -90,12 +90,12 @@ export const WizardOverview: StoryFn = () => html`
 		</ui5-wizard-step>
 	</ui5-wizard>
 	<script>
-		let wizard${index}Wiz = document.getElementById("wiz-${index}");
-		let wizard${index}Sw = document.getElementById("wiz-${index}-sw");
-		let wizard${index}Dp = document.getElementById("wiz-${index}-dp");
-		let wizard${index}ToStep2 = document.getElementById("wiz-${index}-toStep2");
-		let wizard${index}ToStep3 = document.getElementById("wiz-${index}-toStep3");
-		let wizard${index}Finalize = document.getElementById("wiz-${index}-finalize");
+		const wizard${index}Wiz = document.getElementById("wiz-${index}");
+		const wizard${index}Sw = document.getElementById("wiz-${index}-sw");
+		const wizard${index}Dp = document.getElementById("wiz-${index}-dp");
+		const wizard${index}ToStep2 = document.getElementById("wiz-${index}-toStep2");
+		const wizard${index}ToStep3 = document.getElementById("wiz-${index}-toStep3");
+		const wizard${index}Finalize = document.getElementById("wiz-${index}-finalize");
 
 		wizard${index}Wiz.addEventListener("step-change", function () {
 			console.log(event.detail.step);
