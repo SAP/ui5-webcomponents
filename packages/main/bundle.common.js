@@ -106,6 +106,7 @@ window.URLListValidator = URLListValidator;
 
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getEffectiveIconCollection } from "@ui5/webcomponents-base/config/Icons.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
@@ -145,6 +146,8 @@ const testAssets = {
 		setNoConflict,
 		getRTL,
 		getFirstDayOfWeek,
+		getTimezone,
+		setTimezone,
 	},
 	invisibleMessage : {
 		announce,
@@ -223,7 +226,6 @@ registerIconLoader("my-custom-icons", () => {
 		},
 	});
 });
-
 
 window["sap-ui-webcomponents-bundle"] = testAssets;
 
