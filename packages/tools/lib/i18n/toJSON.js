@@ -34,7 +34,7 @@ const convertToJSON = async (file) => {
 const generate = async () => {
 	const { globby } = await import("globby");
 	await fs.mkdir(messagesJSONDist, { recursive: true });
-	const files = await globby(messagesBundles);
+	const files = await globby(messagesBundles.replace(/\\/g, "/"));
 	return Promise.all(files.map(convertToJSON));
 };
 

@@ -49,7 +49,7 @@ const convertImports = async (srcPath) => {
 
 const generate = async () => {
 	const { globby } = await import("globby");
-	const fileNames = await globby(basePath + "**/*.js");
+	const fileNames = await globby(basePath.replace(/\\/g, "/") + "**/*.js");
 	return Promise.all(fileNames.map(convertImports).filter(x => !!x));
 };
 
