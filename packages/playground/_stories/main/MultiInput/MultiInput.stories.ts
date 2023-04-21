@@ -93,7 +93,7 @@ MultiInputTokenCreation.decorators = [
 	return html`
 	${story()}
 <script>
-	var createTokenFromText = function (text) {
+	let createTokenFromText = function (text) {
 		let token = document.createElement("ui5-token");
 		token.setAttribute("text", text);
 		token.setAttribute("slot", "tokens");
