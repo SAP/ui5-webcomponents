@@ -7,7 +7,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type MultiInput from "@ui5/webcomponents/dist/MultiInput.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
@@ -45,7 +44,6 @@ export const BasicMultiInput = Template.bind({});
 BasicMultiInput.args = {
 	value: "basic input"
 };
-BasicMultiInput.storyName = "Basic Multi Input";
 
 export const BasicMultiInputVHDIcon = Template.bind({});
 BasicMultiInputVHDIcon.args = {
@@ -92,37 +90,37 @@ MultiInputTokenCreation.args = {
 };
 MultiInputTokenCreation.decorators = [
 	(story) => {
-		return html`
-		${story()}
-		<script>
-			var createTokenFromText = function (text) {
-				var token = document.createElement("ui5-token");
-				token.setAttribute("text", text);
-				token.setAttribute("slot", "tokens");
-				return token;
-			};
-			document.getElementById("multi-input-${index}").addEventListener("token-delete", function (event) {
-				const token = event.detail?.token;
-				token && token.remove();
-			});
-			document.getElementById("multi-input-${index}").addEventListener("change", function (event) {
-				if (!event.target.value) {
-					return;
-				}
-				var isDuplicate = event.target.tokens.some(function(token) {
-					return token.text === event.target.value
-				});
-				if (isDuplicate) {
-					event.target.valueState = "Error";
-					setTimeout(function () {
-						event.target.valueState = "Normal";
-					}, 2000);
-					return;
-				}
-				event.target.appendChild(createTokenFromText(event.target.value));
-				event.target.value = "";
-			});
-		</script>`;
+	return html`
+	${story()}
+<script>
+	var createTokenFromText = function (text) {
+		let token = document.createElement("ui5-token");
+		token.setAttribute("text", text);
+		token.setAttribute("slot", "tokens");
+		return token;
+	};
+	document.getElementById("multi-input-${index}").addEventListener("token-delete", function (event) {
+		const token = event.detail?.token;
+		token && token.remove();
+	});
+	document.getElementById("multi-input-${index}").addEventListener("change", function (event) {
+		if (!event.target.value) {
+			return;
+		}
+		let isDuplicate = event.target.tokens.some(function(token) {
+			return token.text === event.target.value
+		});
+		if (isDuplicate) {
+			event.target.valueState = "Error";
+			setTimeout(function () {
+				event.target.valueState = "Normal";
+			}, 2000);
+			return;
+		}
+		event.target.appendChild(createTokenFromText(event.target.value));
+		event.target.value = "";
+	});
+</script>`;
 	}
 ]
 MultiInputTokenCreation.storyName = "Multi Input and token creation onChange";
