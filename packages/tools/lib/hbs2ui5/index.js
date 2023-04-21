@@ -28,7 +28,7 @@ const isHandlebars = (fileName) => fileName.indexOf('.hbs') !== -1;
 
 const hasTypes = (file, componentName) => {
 	const tsFile = path.join(path.dirname(file), componentName + ".ts")
-	const dtsFile = path.join(path.dirname(file), componentName + ".ds.ts")
+	const dtsFile = path.join(path.dirname(file), componentName + ".d.ts")
 	return existsSync(tsFile) || existsSync(dtsFile);
 }
 
