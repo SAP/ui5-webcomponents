@@ -7,7 +7,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type Input from "@ui5/webcomponents/dist/Input.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
@@ -50,9 +49,9 @@ const Template: UI5StoryArgs<Input, StoryArgsSlots> = (args) => html`
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 	?show-clear-icon="${ifDefined(args.showClearIcon)}"
 >
+	${unsafeHTML(args.valueStateMessage)}
 	${unsafeHTML(args.default)}
 	${unsafeHTML(args.icon)}
-	${unsafeHTML(args.valueStateMessage)}
 </ui5-input>`;
 
 
@@ -61,44 +60,43 @@ BasicInput.args = {
 	showClearIcon: true,
 	value: "Input"
 };
-BasicInput.storyName = "Basic Input";
 
 export const InputSuggestions = Template.bind({});
 InputSuggestions.decorators = [
 	(story) => {
 		return html`
 		${story()}
-		<script>
-			var value,
-				li,
-				input = document.getElementById("input-${index}"),
-				ui5_database_entries = ["Argentina", "Albania", "Algeria", "Angola",
-				"Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
-				"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait",
-				"Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal",
-				"Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
-			input.addEventListener("input", function(event) {
-				value = input.value,
-				 	suggestionItems = [];
-				if (value) {
-					suggestionItems = ui5_database_entries.filter(function (item) {
-						return item.toUpperCase().indexOf(value.toUpperCase()) === 0;
-					});
-				}
-				[].slice.call(input.children).forEach(function(child) {
-					input.removeChild(child);
-				});
-				suggestionItems.forEach(function(item) {
-					li = document.createElement("ui5-suggestion-item");
-					li.icon = "world";
-					li.additionalText = "explore";
-					li.additionalTextState = "Success";
-					li.description = "travel the world";
-					li.text = item;
-					input.appendChild(li);
-				});
+<script>
+	let value,
+		li,
+		input = document.getElementById("input-${index}"),
+		ui5_database_entries = ["Argentina", "Albania", "Algeria", "Angola",
+		"Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
+		"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait",
+		"Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal",
+		"Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
+	input.addEventListener("input", function(event) {
+		value = input.value,
+		suggestionItems = [];
+		if (value) {
+			suggestionItems = ui5_database_entries.filter(function (item) {
+				return item.toUpperCase().indexOf(value.toUpperCase()) === 0;
 			});
-		</script>`;
+		}
+		[].slice.call(input.children).forEach(function(child) {
+			input.removeChild(child);
+		});
+		suggestionItems.forEach(function(item) {
+			li = document.createElement("ui5-suggestion-item");
+			li.icon = "world";
+			li.additionalText = "explore";
+			li.additionalTextState = "Success";
+			li.description = "travel the world";
+			li.text = item;
+			input.appendChild(li);
+		});
+	});
+</script>`;
 	}
 ]
 InputSuggestions.args = {
@@ -119,7 +117,10 @@ InputValueState.storyName = "Input with Value State";
 
 export const InputSuggestionsValueStateMessage = Template.bind({});
 InputSuggestionsValueStateMessage.args = {
-	default: '<ui5-li>Cozy</ui5-li><ui5-li>Compact</ui5-li><ui5-li>Condensed</ui5-li>',
+	default: `
+	<ui5-li>Cozy</ui5-li>
+	<ui5-li>Compact</ui5-li>
+	<ui5-li>Condensed</ui5-li>`,
 	placeholder: "Choose content density",
 	showSuggestions: true,
 	valueState: ValueState.Error,
@@ -136,17 +137,17 @@ InputSearchField.decorators = [
 	(story) => {
 		return html`
 		${story()}
-		<script>
-			var searchCriteria = document.getElementById("searchIcon"),
-				searchInput = document.getElementById("input-${index}"),
-				searchCriteria = "PASTA";
-			searchIcon.addEventListener("click", function(){
-				alert("Look for: " + searchCriteria);
-			});
-			searchInput.addEventListener("change", function(e){
-				searchCriteria = e.target.value;
-			});
-		</script>`;
+<script>
+	var searchCriteria = document.getElementById("searchIcon"),
+		searchInput = document.getElementById("input-${index}"),
+		searchCriteria = "PASTA";
+	searchIcon.addEventListener("click", function(){
+		alert("Look for: " + searchCriteria);
+	});
+	searchInput.addEventListener("change", function(e){
+		searchCriteria = e.target.value;
+	});
+</script>`;
 	}
 ]
 InputSearchField.storyName = "Input as Search Field";
@@ -169,112 +170,120 @@ InputLabel.args = {
 InputLabel.storyName = "Input with Label";
 
 export const InputWithVHD: StoryFn = () => html`
-	<ui5-input id="valueHelpInput" placeholder="Enter product" show-suggestions="">
-		<ui5-icon id="valueHelpIcon" slot="icon" name="value-help"></ui5-icon>
-	</ui5-input>
-	<ui5-dialog id="dialog" accessible-name="Products Value Help">
-		<div slot="header" id="dialogHeader" style="width: 100%; padding: 0 1rem 0.5rem 1rem;">
-			<div id="titleBar" style="
-				display: flex;
-				justify-content: space-between;
-				align-items: center;">
-				<h2 id="headerTitle" style="
-					margin-top: 1em !important;
-					font-size: 1rem;
-					font-weight: 500;
-				">Products</h2>
-				<ui5-button design="Transparent" id="clearButton">Clear</ui5-button>
-			</div>
-			<ui5-input id="dialogSearchInput" placeholder="Search">
-				<ui5-icon id="dialogSearchIcon" slot="icon" name="search"></ui5-icon>
-			</ui5-input>
+<ui5-input id="valueHelpInput" placeholder="Enter product" show-suggestions="">
+	<ui5-icon id="valueHelpIcon" slot="icon" name="value-help"></ui5-icon>
+</ui5-input>
+<ui5-dialog id="dialog" accessible-name="Products Value Help">
+	<div slot="header" id="dialogHeader" style="width: 100%; padding: 0 1rem 0.5rem 1rem;">
+		<div id="titleBar" style="
+			display: flex;
+			justify-content: space-between;
+			align-items: center;">
+			<h2 id="headerTitle" style="
+				margin-top: 1em !important;
+				font-size: 1rem;
+				font-weight: 500;">
+				Products
+			</h2>
+			<ui5-button design="Transparent" id="clearButton">Clear</ui5-button>
 		</div>
-		<ui5-list id="itemsList" no-data-text="No data"></ui5-list>
-		<div slot="footer" id="footer">
-			<ui5-button design="Transparent" id="cancelButton">Cancel</ui5-button>
-		</div>
-	</ui5-dialog>
-	<script>
-		valueHelpInput.addEventListener("input", loadSuggestions);
-		valueHelpIcon.addEventListener("click", showDialog);
-		dialogSearchInput.addEventListener("change", loadList);
-		dialogSearchIcon.addEventListener("click", loadList);
-		clearButton.addEventListener("click", clearQuery);
-		cancelButton.addEventListener("click", closeDialog);
-		itemsList.addEventListener("item-click", handleItemClick);
-		async function loadSuggestions() {
-			var li,
-				response = await fetch("../assets/data/products.json"),
-				products = await response.json();
-				query = valueHelpInput.value.toLowerCase();
-				suggestionItems = [];
-			if (query) {
-				suggestionItems = products
-					.filter(function (product) {
-						return product.name.toLowerCase().indexOf(query) === 0;
-					})
-					.map(function (product) {
-						return product.name;
-					})
-					.sort(function (a, b) {
-						return a.localeCompare(b);
-					})
-					.slice(0, 10);
-			}
-			[].slice.call(valueHelpInput.children, 1).forEach(function (item) {
-				valueHelpInput.removeChild(item);
-			});
-			suggestionItems.forEach(function (item) {
-				li = document.createElement("ui5-suggestion-item");
-				li.text = item;
-				valueHelpInput.appendChild(li);
-			});
-		}
-		function showDialog() {
-			dialogSearchInput.value = valueHelpInput.value;
-			loadList();
-			if (screen.width <= 768) {
-				dialog.setAttribute("stretch", "");
-			}
-			dialog.show();
-			// Required by UX as the VH dialog's popup content has no padding in UI5.
-			dialog.shadowRoot.querySelector(".ui5-popup-content").style.padding = 0;
-			dialog.shadowRoot.querySelector(".ui5-popup-content").style.height = "100vw";
-		}
-		function closeDialog() {
-			dialog.close();
-		}
-		async function loadList() {
-			var li,
-				response = await fetch("../assets/data/products.json"),
-				products = await response.json(),
-				query = dialogSearchInput.value.toLowerCase();
-			itemsList.innerHTML = "";
-			products
+		<ui5-input id="dialogSearchInput" placeholder="Search">
+			<ui5-icon id="dialogSearchIcon" slot="icon" name="search"></ui5-icon>
+		</ui5-input>
+	</div>
+	<ui5-list id="itemsList" no-data-text="No data"></ui5-list>
+	<div slot="footer" id="footer">
+		<ui5-button design="Transparent" id="cancelButton">Cancel</ui5-button>
+	</div>
+</ui5-dialog>
+<script>
+	let valueHelpInput = document.getElementById("valueHelpInput"),
+		valueHelpIcon = document.getElementById("valueHelpIcon"),
+		dialogSearchInput = document.getElementById("dialogSearchInput"),
+		dialogSearchIcon = document.getElementById("dialogSearchIcon"),
+		clearButton = document.getElementById("clearButton"),
+		cancelButton = document.getElementById("cancelButton"),
+		itemsList = document.getElementById("itemsList");
+	valueHelpInput.addEventListener("input", loadSuggestions);
+	valueHelpIcon.addEventListener("click", showDialog);
+	dialogSearchInput.addEventListener("change", loadList);
+	dialogSearchIcon.addEventListener("click", loadList);
+	clearButton.addEventListener("click", clearQuery);
+	cancelButton.addEventListener("click", closeDialog);
+	itemsList.addEventListener("item-click", handleItemClick);
+	async function loadSuggestions() {
+		let li,
+			response = await fetch("../assets/data/products.json"),
+			products = await response.json();
+			query = valueHelpInput.value.toLowerCase();
+			suggestionItems = [];
+		if (query) {
+			suggestionItems = products
 				.filter(function (product) {
 					return product.name.toLowerCase().indexOf(query) === 0;
 				})
-				.sort(function (a, b) {
-					return a.name.localeCompare(b.name);
+				.map(function (product) {
+					return product.name;
 				})
-				.forEach(function (item) {
-					li = document.createElement("ui5-li");
-					li.innerHTML = item.name;
-					li.image = item.productPicUrl;
-					li.description = item.productId;
-					itemsList.appendChild(li);
-				});
+				.sort(function (a, b) {
+					return a.localeCompare(b);
+				})
+				.slice(0, 10);
 		}
-		function handleItemClick(event) {
-			var item = event.detail.item;
-			valueHelpInput.setAttribute("value", item.innerHTML);
-			dialog.close();
+		[].slice.call(valueHelpInput.children, 1).forEach(function (item) {
+			valueHelpInput.removeChild(item);
+		});
+		suggestionItems.forEach(function (item) {
+			li = document.createElement("ui5-suggestion-item");
+			li.text = item;
+			valueHelpInput.appendChild(li);
+		});
+	}
+	function showDialog() {
+		dialogSearchInput.value = valueHelpInput.value;
+		loadList();
+		if (screen.width <= 768) {
+			dialog.setAttribute("stretch", "");
 		}
-		function clearQuery() {
-			dialogSearchInput.setAttribute("value", "");
-			loadList();
-		}
-	</script>
+		dialog.show();
+		// Required by UX as the VH dialog's popup content has no padding in UI5.
+		dialog.shadowRoot.querySelector(".ui5-popup-content").style.padding = 0;
+		dialog.shadowRoot.querySelector(".ui5-popup-content").style.height = "100vw";
+	}
+	function closeDialog() {
+		dialog.close();
+	}
+	async function loadList() {
+		let li,
+			response = await fetch("../assets/data/products.json"),
+			products = await response.json(),
+			query = dialogSearchInput.value.toLowerCase();
+		itemsList.innerHTML = "";
+		products
+			.filter(function (product) {
+				return product.name.toLowerCase().indexOf(query) === 0;
+			})
+			.sort(function (a, b) {
+				return a.name.localeCompare(b.name);
+			})
+			.forEach(function (item) {
+				li = document.createElement("ui5-li");
+				li.innerHTML = item.name;
+				li.image = item.productPicUrl;
+				li.description = item.productId;
+				itemsList.appendChild(li);
+			});
+	}
+	function handleItemClick(event) {
+		let item = event.detail.item;
+		valueHelpInput.setAttribute("value", item.innerHTML);
+		dialog.close();
+	}
+	function clearQuery() {
+		dialogSearchInput.setAttribute("value", "");
+		loadList();
+	}
+</script>
 `;
 InputWithVHD.parameters = {
 	docs: {
