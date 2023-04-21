@@ -8,7 +8,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type RatingIndicator from "@ui5/webcomponents/dist/RatingIndicator.js";
 
 const component = "ui5-rating-indicator";
@@ -37,7 +36,6 @@ export const BasicRatingIndicator = Template.bind({});
 BasicRatingIndicator.args = {
 	value: 3.7
 };
-BasicRatingIndicator.storyName = "Basic Rating Indicator";
 
 export const RatingIndicatorMax = Template.bind({});
 RatingIndicatorMax.args = {
@@ -53,8 +51,6 @@ DisabledRatingIndicator.args = {
 	max: 10,
 	disabled: true
 };
-DisabledRatingIndicator.storyName = "Disabled Rating Indicator";
-
 
 export const ReadonlyRatingIndicator: StoryFn = Template.bind({});
 ReadonlyRatingIndicator.args = {
@@ -62,4 +58,3 @@ ReadonlyRatingIndicator.args = {
 	max: 7,
 	readonly: true
 };
-ReadonlyRatingIndicator.storyName = "Readonly Rating Indicator";

@@ -7,7 +7,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type Slider from "@ui5/webcomponents/dist/Slider.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 
@@ -38,8 +37,6 @@ const Template: UI5StoryArgs<Slider, StoryArgsSlots> = (args) => html`
 ></ui5-slider>`;
 
 export const BasicSlider = Template.bind({});
-BasicSlider.args = {};
-BasicSlider.storyName = "Basic Slider";
 
 export const SliderTooltip = Template.bind({});
 SliderTooltip.args = {

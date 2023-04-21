@@ -9,9 +9,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type TextArea from "@ui5/webcomponents/dist/TextArea.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 const component = "ui5-textarea";
 let index = 0;
@@ -50,8 +48,6 @@ export const BasicTextArea = Template.bind({});
 BasicTextArea.args = {
 	placeholder: 'Type as much text as you wish',
 };
-BasicTextArea.storyName = "Basic TextArea";
-
 
 export const TextAreaMaxLength = Template.bind({});
 TextAreaMaxLength.args = {
@@ -60,7 +56,7 @@ TextAreaMaxLength.args = {
 	showExceededText: true
 
 };
-TextAreaMaxLength.storyName = "TextArea with Maximum Length";
+TextAreaMaxLength.storyName = "Text Area with Maximum Length";
 
 export const TextAreaLabel = Template.bind({});
 TextAreaLabel.decorators = [
