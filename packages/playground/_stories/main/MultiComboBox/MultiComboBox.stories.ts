@@ -7,7 +7,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type MultiComboBox from "@ui5/webcomponents/dist/MultiComboBox.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
