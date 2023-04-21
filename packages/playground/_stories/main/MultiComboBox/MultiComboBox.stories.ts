@@ -52,15 +52,13 @@ BasicMultiComboBox.args = {
 	placeholder: 'Type your value',
 	default: `<ui5-mcb-item selected="" text="UI5"></ui5-mcb-item>`
 };
-BasicMultiComboBox.storyName = "Basic MultiComboBox";
 
-export const ReadOnlyMultiComboBox = Template.bind({});
-ReadOnlyMultiComboBox.args = {
+export const ReadonlyMultiComboBox = Template.bind({});
+ReadonlyMultiComboBox.args = {
 	value: 'Readonly combo',
 	readonly: true,
 	default: `<ui5-mcb-item selected="" text="UI5"></ui5-mcb-item>`
 };
-ReadOnlyMultiComboBox.storyName = "Readonly MultiComboBox";
 
 export const DisabledMultiComboBox = Template.bind({});
 DisabledMultiComboBox.args = {
@@ -68,7 +66,6 @@ DisabledMultiComboBox.args = {
 	disabled: true,
 	default: `<ui5-mcb-item selected="" text="UI5"></ui5-mcb-item>`
 };
-DisabledMultiComboBox.storyName = "Disabled MultiComboBox";
 
 export const MultiComboBoxItems = Template.bind({});
 MultiComboBoxItems.args = {
@@ -86,7 +83,7 @@ MultiComboBoxItems.args = {
 	<ui5-mcb-item text="Paraguay"></ui5-mcb-item>`
 };
 
-MultiComboBoxItems.storyName = "MultiComboBox with items";
+MultiComboBoxItems.storyName = "Multi Combo Box with items";
 
 export const MultiComboBoxFreeTextInput = Template.bind({});
 MultiComboBoxFreeTextInput.args = {
@@ -104,7 +101,7 @@ MultiComboBoxFreeTextInput.args = {
 	<ui5-mcb-item text="Philippines"></ui5-mcb-item>
 	<ui5-mcb-item text="Paraguay"></ui5-mcb-item>`
 };
-MultiComboBoxFreeTextInput.storyName = "MultiComboBox with free text input";
+MultiComboBoxFreeTextInput.storyName = "Multi Combo Box with free text input";
 
 export const MultiComboBoxWithValueState = Template.bind({});
 MultiComboBoxWithValueState.args = {
@@ -120,7 +117,7 @@ MultiComboBoxWithValueState.args = {
 	<ui5-mcb-item text="Error"></ui5-mcb-item>
 	<ui5-mcb-item text="Mistake"></ui5-mcb-item>`
 };
-MultiComboBoxWithValueState.storyName = "MultiComboBox with Value State";
+MultiComboBoxWithValueState.storyName = "Multi Combo Box with Value State";
 
 export const MultiComboBoxGroupingItems = Template.bind({});
 MultiComboBoxGroupingItems.args = {
@@ -142,4 +139,4 @@ MultiComboBoxGroupingItems.args = {
 	<ui5-mcb-item text="Haiti"></ui5-mcb-item>
 	<ui5-mcb-item text="United States"></ui5-mcb-item>`
 };
-MultiComboBoxGroupingItems.storyName = "MultiComboBox with Grouping of Items";
+MultiComboBoxGroupingItems.storyName = "Multi Combo Box with Grouping of Items";
