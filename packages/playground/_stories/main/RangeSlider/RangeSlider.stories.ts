@@ -7,7 +7,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type RangeSlider from "@ui5/webcomponents/dist/RangeSlider.js";
 import { ifDefined } from "lit-html/directives/if-defined.js";
 
@@ -40,7 +39,6 @@ export const BasicRangeSlider = Template.bind({});
 BasicRangeSlider.args = {
 	endValue: 20
 };
-BasicRangeSlider.storyName = "Basic Range Slider";
 
 export const RangeSliderCustomValues = Template.bind({});
 RangeSliderCustomValues.args = {
