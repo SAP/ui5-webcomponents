@@ -118,6 +118,7 @@
 
 .ui5-dp-item.ui5-dp-item--weeekend:hover {
 	background: var(--sapList_Hover_Background);
+	filter: var(--_ui5_daypicker_item_weeekend_filter);
 }
 
 .ui5-dp-item.ui5-dp-item--othermonth {
@@ -171,14 +172,14 @@
 	inset: 0;
 	border: var(--_ui5_daypicker_item_selected_border);
 	content: "";
-	border-radius: var(--_ui5_daypicker_item_border_radius_focus_after);
+	border-radius: var(--_ui5_daypicker_item_border_radius_item);
 }
 
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item.ui5-dp-item--now .ui5-dp-daytext {
 	border: var(--_ui5_day_picker_item_selected_now_border);
 	outline: var(--_ui5_daypicker_item_selected_text_outline);
 	outline-offset: -0.3125rem;
-	border-radius: var(--_ui5_daypicker_item_border_radius_focus_after);
+	border-radius: var(--_ui5_daypicker_item_border_radius_item);
 	font-family: var(--_ui5_daypicker_item_selected_text_font);
 }
 
@@ -216,7 +217,7 @@
 }
 
 .ui5-dp-item.ui5-dp-item--selected:hover {
-	background: var(--sapContent_Selected_Hover_Background);
+	background: var( --_ui5_daypicker_item_selected_hover);
 	color: var(--sapContent_ContrastTextColor);
 }
 
