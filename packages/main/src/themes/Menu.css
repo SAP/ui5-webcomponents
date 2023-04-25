@@ -43,6 +43,10 @@
 	pointer-events: none;
 }
 
+.ui5-menu-busy-indicator {
+	width: 100%;
+}
+
 .ui5-menu-dialog-header {
 	display: flex;
 	height: var(--_ui5-responsive_popover_header_height);
@@ -103,6 +107,11 @@
 .ui5-menu-rp[sub-menu] {
 	margin-top: 0.25rem;
 	margin-inline: var(--_ui5_menu_submenu_margin_offset);
+}
+
+.ui5-menu-rp[sub-menu][actual-placement-type="Left"] {
+	margin-top: 0.25rem;
+	margin-inline: var(--_ui5_menu_submenu_placement_type_left_margin_offset);
 }
 
 .ui5-menu-item::part(additional-text) {
