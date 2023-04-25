@@ -64,5 +64,8 @@
 {{#*inline additionalText}}
 	{{#if this.additionalText}}
 		<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
+
+	{{else if this.icon}}
+		<span class="ui5-tab-strip-itemAdditionalText-hidden" id="{{this._id}}-additionalText-hidden"></span>
 	{{/if}}
 {{/inline}}

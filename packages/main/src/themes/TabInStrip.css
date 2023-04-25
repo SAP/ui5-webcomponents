@@ -229,6 +229,11 @@
 	display: flex;
 }
 
+.ui5-tab-strip-itemAdditionalText-hidden {
+	visibility: hidden ;
+	margin-top: 1.25rem;
+}
+
 .ui5-tab-strip-item--inline .ui5-tab-strip-itemAdditionalText + .ui5-tab-strip-itemText {
 	display: inline;
 }
