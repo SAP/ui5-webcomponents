@@ -63,57 +63,48 @@
 
 /* value states */
 :host([value-state="Error"]) .ui5-checkbox-inner,
-:host([value-state="Error"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+:host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--sapField_InvalidBackground);
 	border: var(--_ui5_checkbox_inner_error_border);
 	color: var(--sapField_InvalidColor);
 }
 
-:host([value-state="Error"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
-	box-shadow: var(--_ui5_checkbox_inner_error_box_shadow);
+:host([value-state="Error"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_inner_error_background_hover);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox-inner,
-:host([value-state="Warning"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+:host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--sapField_WarningBackground);
 	border: var(--_ui5_checkbox_inner_warning_border);
 	color: var(--_ui5_checkbox_inner_warning_color);
 }
 
-:host([value-state="Warning"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
-	box-shadow: var(--_ui5_checkbox_inner_warning_box_shadow);
+:host([value-state="Warning"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_inner_warning_background_hover);
 }
 
 :host([value-state="Information"]) .ui5-checkbox-inner,
-:host([value-state="Information"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+:host([value-state="Information"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--sapField_InformationBackground);
 	border: var(--_ui5_checkbox_inner_information_border);
 	color: var(--_ui5_checkbox_inner_information_color);
 }
 
-:host([value-state="Information"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
-	box-shadow: var(--_ui5_checkbox_inner_information_box_shadow);
+:host([value-state="Information"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_inner_information_background_hover);
 }
 
 
 :host([value-state="Success"]) .ui5-checkbox-inner,
-:host([value-state="Success"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover  {
+:host([value-state="Success"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner  {
 	background: var(--sapField_SuccessBackground);
 	border: var(--_ui5_checkbox_inner_success_border);
 	color: var(--sapField_SuccessColor);
 }
 
-:host([value-state="Success"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover  {
-	box-shadow: var(--_ui5_checkbox_inner_success_box_shadow);
+:host([value-state="Success"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner  {
 	background: var(--_ui5_checkbox_inner_success_background_hover);
-}
-
-:host(:not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
-:host([value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
-	box-shadow: var(--_ui5_checkbox_inner_default_box_shadow);
 }
 
 :host([value-state="Warning"]) .ui5-checkbox-icon,
@@ -164,7 +155,6 @@
 /* hover */
 :host(:hover:not([disabled])) {
 	background: var(--_ui5_checkbox_outer_hover_background);
-	box-shadow: var(--_ui5_checkbox_box_shadow);
 }
 
 .ui5-checkbox--hoverable .ui5-checkbox-label:hover {
@@ -172,15 +162,15 @@
 }
 
 /* hover, not active, not checked */
-:host(:not([active]):not([checked]):not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
-:host(:not([active]):not([checked])[value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+:host(:not([active]):not([checked]):not([value-state])) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner,
+:host(:not([active]):not([checked])[value-state="None"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_hover_background);
 	border-color: var(--_ui5_checkbox_inner_hover_border_color);
 }
 
 /* hover, not active, checked */
-:host(:not([active])[checked]:not([value-state])) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover,
-:host(:not([active])[checked][value-state="None"]) .ui5-checkbox--hoverable .ui5-checkbox-inner:hover {
+:host(:not([active])[checked]:not([value-state])) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner,
+:host(:not([active])[checked][value-state="None"]) .ui5-checkbox--hoverable:hover .ui5-checkbox-inner {
 	background: var(--_ui5_checkbox_hover_background);
 	border-color: var(--_ui5_checkbox_inner_hover_checked_border_color);
 }
