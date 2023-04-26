@@ -127,10 +127,12 @@ class CalendarHeader extends UI5Element {
 
 	onPrevButtonClick(e: MouseEvent) {
 		this.fireEvent("previous-press", e);
+		e.preventDefault();
 	}
 
 	onNextButtonClick(e: MouseEvent) {
 		this.fireEvent("next-press", e);
+		e.preventDefault();
 	}
 
 	onMonthButtonClick(e: MouseEvent) {

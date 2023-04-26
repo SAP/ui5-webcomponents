@@ -374,6 +374,12 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		if (this._autoFocus && !this._hidden) {
 			this.focus();
 		}
+
+		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
+
+		if (focusedDay && document.activeElement !== focusedDay) {
+			focusedDay.focus();
+		}
 	}
 
 	_onfocusin() {
@@ -664,20 +670,18 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> same as for "PageUp"
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampBy(-1, "month");
+		this._modifyTimestampByClick(-1, "month");
 	}
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> same as for "PageDown"
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(1, "month");
+		this._modifyTimestampByClick(1, "month");
 	}
 
 	/**
@@ -689,6 +693,21 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_modifyTimestampBy(amount: number, unit: string) {
 		// Modify the current timestamp
 		this._safelyModifyTimestampBy(amount, unit);
+		this._updateSecondTimestamp();
+
+		// Notify the calendar to update its timestamp
+		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
+	}
+
+	/**
+	 * <b>Note:</b> Used in the case when user is navigating with the mouse through the arrows of the Calendar header.
+	 * @param { number } amount
+	 * @param { string } unit
+	 * @private
+	 */
+	_modifyTimestampByClick(amount: number, unit: string) {
+		// Modify the current timestamp
+		this._safelyModifyTimestampByClick(amount, unit);
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
