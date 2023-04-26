@@ -69,6 +69,8 @@ class DateComponentBase extends UI5Element {
 	/**
 	 * Determines the minimum date available for selection.
 	 *
+	 * <b>Note:</b> If the formatPattern property is not set, the minDate value must be provided in the ISO date format (YYYY-MM-dd).
+	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.DateComponentBase.prototype.minDate
 	 * @defaultvalue ""
@@ -80,6 +82,8 @@ class DateComponentBase extends UI5Element {
 
 	/**
 	 * Determines the maximum date available for selection.
+	 *
+	 * <b>Note:</b> If the formatPattern property is not set, the maxDate value must be provided in the ISO date format (YYYY-MM-dd).
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.DateComponentBase.prototype.maxDate
@@ -102,19 +106,23 @@ class DateComponentBase extends UI5Element {
 	}
 
 	get _minDate() {
-		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-		const utc = undefined as unknown as boolean;
-		const strict = undefined as unknown as boolean;
-		return this.minDate && this.getFormat().parse(this.minDate, utc, strict) ? this._getCalendarDateFromString(this.minDate)! : getMinCalendarDate(this._primaryCalendarType);
+		let minDate;
+
+		if (this.minDate) {
+			minDate = this._getMinMaxCalendarDateFromString(this.minDate);
+		}
+
+		return minDate || getMinCalendarDate(this._primaryCalendarType);
 	}
 
 	get _maxDate() {
-		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-		const utc = undefined as unknown as boolean;
-		const strict = undefined as unknown as boolean;
-		return this.maxDate && this.getFormat().parse(this.maxDate, utc, strict) ? this._getCalendarDateFromString(this.maxDate)! : getMaxCalendarDate(this._primaryCalendarType);
+		let maxDate;
+
+		if (this.maxDate) {
+			maxDate = this._getMinMaxCalendarDateFromString(this.maxDate)!;
+		}
+
+		return maxDate || getMaxCalendarDate(this._primaryCalendarType);
 	}
 
 	get _formatPattern() {
@@ -123,6 +131,24 @@ class DateComponentBase extends UI5Element {
 
 	get _isPattern() {
 		return this._formatPattern !== "medium" && this._formatPattern !== "short" && this._formatPattern !== "long";
+	}
+
+	_getMinMaxCalendarDateFromString(date: string) {
+		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
+		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
+		const utc = undefined as unknown as boolean;
+		const strict = undefined as unknown as boolean;
+
+		if (this.getFormat().parse(date, utc, strict)) {
+			return this._getCalendarDateFromString(date);
+		}
+
+		const jsDate = this.getISOFormat().parse(date, utc, strict) as Date;
+		if (jsDate) {
+			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
+		}
+
+		return null;
 	}
 
 	_getCalendarDateFromString(value: string) {
@@ -160,6 +186,14 @@ class DateComponentBase extends UI5Element {
 				style: this._formatPattern,
 				calendarType: this._primaryCalendarType,
 			});
+	}
+
+	getISOFormat() {
+		return DateFormat.getDateInstance({
+			strictParsing: true,
+			pattern: "YYYY-MM-dd",
+			calendarType: this._primaryCalendarType,
+		});
 	}
 
 	static async onDefine() {
