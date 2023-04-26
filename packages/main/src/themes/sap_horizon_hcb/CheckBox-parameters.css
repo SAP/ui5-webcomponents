@@ -14,7 +14,6 @@
 	/* hover & active */
 	--_ui5_checkbox_hover_background: var(--sapSelectedColor);
 	--_ui5_checkbox_inner_hover_border_color: var(--sapField_Hover_BorderColor);
-	--_ui5_checkbox_hover_background: var(--sapSelectedColor);
 	--_ui5_checkbox_inner_hover_checked_border_color: var(--sapField_Hover_BorderColor);
 	--_ui5_checkbox_inner_selected_border_color: var(--sapField_Hover_BorderColor);
 	--_ui5_checkbox_inner_active_border_color: var(--sapField_Hover_BorderColor);

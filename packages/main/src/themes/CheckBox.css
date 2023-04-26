@@ -35,7 +35,7 @@
 :host([readonly]:not([value-state="Warning"]):not([value-state="Error"])) .ui5-checkbox-inner {
 	background: var(--sapField_ReadOnly_Background);
 	border: var(--_ui5_checkbox_inner_readonly_border);
-	color: var(--sapContent_NonInteractiveIconColor);
+	color: var(--sapField_TextColor);
 }
 
 /* wrap */

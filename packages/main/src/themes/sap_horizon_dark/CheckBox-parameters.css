@@ -11,13 +11,12 @@
 	--_ui5_checkbox_inner_border_radius: var(--sapField_BorderCornerRadius);
 	--_ui5_checkbox_checkmark_color: var(--sapContent_Selected_ForegroundColor);
 	/* hover & active */
-	--_ui5_checkbox_hover_background: var(--sapField_Hover_Background);
+	--_ui5_checkbox_hover_background: var(--sapContent_Selected_Hover_Background);
 	--_ui5_checkbox_inner_hover_border_color: var(--sapField_Hover_BorderColor);
-	--_ui5_checkbox_hover_background: var(--sapField_Hover_Background);
 	--_ui5_checkbox_inner_hover_checked_border_color: var(--sapField_Hover_BorderColor);
 	--_ui5_checkbox_inner_selected_border_color: var(--sapField_Hover_BorderColor);
 	--_ui5_checkbox_inner_active_border_color: var(--sapField_Hover_BorderColor);
-	--_ui5_checkbox_active_background: var(--sapField_Hover_Background);
+	--_ui5_checkbox_active_background: var(--sapContent_Selected_Hover_Background);
 	--_ui5_checkbox_inner_selected_border_color: var(--sapField_Hover_BorderColor);
 	/* readonly */
 	--_ui5_checkbox_inner_readonly_border: var(--sapElement_BorderWidth)  var(--sapField_ReadOnly_BorderColor) dashed;
