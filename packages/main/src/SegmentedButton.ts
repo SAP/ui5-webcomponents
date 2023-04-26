@@ -16,6 +16,7 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { SEGMENTEDBUTTON_ARIA_DESCRIPTION, SEGMENTEDBUTTON_ARIA_DESCRIBEDBY } from "./generated/i18n/i18n-defaults.js";
 import SegmentedButtonItem from "./SegmentedButtonItem.js";
+import SegmentedButtonMode from "./types/SegmentedButtonMode.js";
 
 // Template
 import SegmentedButtonTemplate from "./generated/templates/SegmentedButtonTemplate.lit.js";
@@ -66,11 +67,12 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * @param {HTMLElement} selectedItem the pressed item.
  * @public
  */
-@event("selection-change", {
+@event("selection-change", { // Maybe just "item" as it might be deselected instead of selected (Similar to the ui5-list) or an array of selected items.
 	detail: {
 		selectedItem: { type: HTMLElement },
 	},
 })
+
 class SegmentedButton extends UI5Element {
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -83,6 +85,27 @@ class SegmentedButton extends UI5Element {
 	 */
 	@property({ defaultValue: undefined })
 	accessibleName?: string;
+
+	/**
+	 * Defines the component selection mode.
+	 *
+	 * <br><br>
+	 * <b>The available values are:</b>
+	 *
+	 * <ul>
+	 * <li><code>Single</code></li>
+	 * <li><code>Multi</code></li>
+	 * <li><code>ZeroOrSingle</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.main.types.SegmentedButtonMode}
+	 * @defaultvalue "Single"
+	 * @public
+	 * @name sap.ui.webc.main.SegmentedButton.prototype.mode
+	 * @since 1.14.0
+	 */
+	@property({ type: SegmentedButtonMode, defaultValue: SegmentedButtonMode.Single })
+	mode!: SegmentedButtonMode;
 
 	/**
 	 * Defines the items of <code>ui5-segmented-button</code>.
@@ -110,6 +133,7 @@ class SegmentedButton extends UI5Element {
 
 	widths?: Array<number>;
 	_selectedItem?: SegmentedButtonItem;
+	_selectedItems?: [SegmentedButtonItem];
 
 	static async onDefine() {
 		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -172,19 +196,36 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
+		// All the code is targets the addition of "pressed" attribute programatically.
+		// It means that we need to repsect the selection modes when such attributes are set.
+		// First the pressed attribute would be recognized by the ui5-toggle-button.
+		// Then we need to decide depending on the selection mode how many of those buttons should remain pressed.
 		const selectedItems = this.items.filter(item => item.pressed);
-		const selectedIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
 
-		if (this._selectedItem && selectedItems.length > 1) {
-			selectedItems.splice(selectedIndex, 1);
-		}
-		this._selectedItem = selectedItems.pop();
-
-		if (this._selectedItem) {
+		switch (this.mode) {
+		case SegmentedButtonMode.Multi:
 			this.items.forEach(item => {
 				item.pressed = false;
 			});
-			this._selectedItem.pressed = true;
+			selectedItems.forEach(item => {
+				item.pressed = true;
+			});
+			break;
+		case SegmentedButtonMode.ZeroOrSingle:
+			this.items.forEach(item => {
+				item.pressed = false;
+			});
+			if (selectedItems.length) {
+				selectedItems[0].pressed = true;
+			}
+			break;
+		default:
+			if (this._selectedItem) {
+				this.items.forEach(item => {
+					item.pressed = false;
+				});
+				this._selectedItem.pressed = true;
+			}
 		}
 	}
 
@@ -196,17 +237,51 @@ class SegmentedButton extends UI5Element {
 			return;
 		}
 
-		if (target !== this._selectedItem) {
-			if (this._selectedItem) {
-				this._selectedItem.pressed = false;
+		switch (this.mode) {
+		case SegmentedButtonMode.Multi:
+			if (e instanceof KeyboardEvent) {
+				target.pressed = !target.pressed;
+			}
+			if (target.pressed) {
+				this._selectedItems?.push(target);
+			} else {
+				const index = this._selectedItems?.indexOf(target);
+				if (index) {
+					this._selectedItems?.splice(index, 1);
+				}
 			}
 			this._selectedItem = target;
 			this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
-				selectedItem: this._selectedItem,
+				selectedItem: this._selectedItem, // We might need to fire the event with an array if selected items here
 			});
+			break;
+		case SegmentedButtonMode.ZeroOrSingle:
+			if (e instanceof KeyboardEvent) {
+				target.pressed = !target.pressed;
+			}
+			if (target !== this._selectedItem) {
+				if (this._selectedItem) {
+					this._selectedItem.pressed = false;
+				}
+				this._selectedItem = target;
+				this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
+					selectedItem: this._selectedItem,
+				});
+			}
+			break;
+		default:
+			if (target !== this._selectedItem) {
+				if (this._selectedItem) {
+					this._selectedItem.pressed = false;
+				}
+				this._selectedItem = target;
+				this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
+					selectedItem: this._selectedItem,
+				});
+			}
+			this._selectedItem.pressed = true;
 		}
 
-		this._selectedItem.pressed = true;
 		this._itemNavigation.setCurrentItem(this._selectedItem);
 
 		this.selectedItem!.focus();
@@ -292,7 +367,7 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 */
 	get selectedItem() {
-		return this._selectedItem;
+		return this._selectedItem; // This might have to return an array in some cases
 	}
 
 	get ariaDescribedBy() {
