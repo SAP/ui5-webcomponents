@@ -25,8 +25,10 @@
 	--_ui5_daypicker_item_selected_between_text_font: var(--sapFontFamily);
 	--_ui5_daypicker_item_selected_text_font: var(--sapFontBoldFamily);
 	--_ui5_daypicker_item_now_selected_between_inset: 0.25rem;
+	--_ui5_daypicker_item_now_selected_outline_offset: -0.1875rem;
 	--_ui5_daypicker_item_now_selected_between_border: 0.0625rem solid var(--sapContent_Selected_ForegroundColor);
 	--_ui5_daypicker_item_now_selected_between_border_radius: 0.1875rem;
 	--_ui5_daypicker_item_selected_text_outline: 0.125rem solid var(--sapContent_FocusColor);
 	--_ui5_daypicker_item_select_between_border: 1px solid var(--sapContent_Selected_ForegroundColor);
+	--_ui5_daypicker_item_now_inset: 0.375rem;
 }

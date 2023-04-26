@@ -178,7 +178,7 @@
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item.ui5-dp-item--now .ui5-dp-daytext {
 	border: var(--_ui5_day_picker_item_selected_now_border);
 	outline: var(--_ui5_daypicker_item_selected_text_outline);
-	outline-offset: -0.3125rem;
+	outline-offset: var(--_ui5_daypicker_item_now_selected_outline_offset);
 	border-radius: var(--_ui5_daypicker_item_border_radius_item);
 	font-family: var(--_ui5_daypicker_item_selected_text_font);
 }

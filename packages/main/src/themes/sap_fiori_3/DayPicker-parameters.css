@@ -21,4 +21,5 @@
 	--_ui5_daypicker_item_selected_text_border: none;
 	--_ui5_daypicker_item_selected_between_text_border_radios: 0.25rem;
 	--_ui5_daypicker_item_select_between_border: 1px solid var(--sapContent_Selected_ForegroundColor);
+	--_ui5_daypicker_item_now_selected_outline_offset: -0.3125rem;
 }

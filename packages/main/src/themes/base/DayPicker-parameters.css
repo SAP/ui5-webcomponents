@@ -44,4 +44,5 @@
 	--_ui5_daypicker_item_weeekend_filter: brightness(100%);
 	--_ui5_daypicker_item_selected_hover: var(--sapContent_Selected_Hover_Background);
 	--_ui5_daypicker_item_border_radius_item: none;
+	--_ui5_daypicker_item_now_selected_outline_offset: -0.3125rem;
 }
