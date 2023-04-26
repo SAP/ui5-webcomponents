@@ -70,7 +70,7 @@ module.exports = function (opts) {
 			mkdirp.sync(path.dirname(targetFile));
 
 			const filePath = `${targetFile}.${tsMode ? "ts" : "js"}`;
-		
+
 			// it seems slower to read the old content, but writing the same content with no real changes
 			// (as in initial build and then watch mode) will cause an unnecessary dev server refresh
 			let oldContent = "";
@@ -80,7 +80,7 @@ module.exports = function (opts) {
 				// file not found
 			}
 
-			const content = getFileContent(tsMode, filePath, packageName, css, includeDefaultTheme);
+			const content = getFileContent(tsMode, targetFile, packageName, css, includeDefaultTheme);
 			if (content !== oldContent) {
 				fs.writeFileSync(filePath, content);
 			}

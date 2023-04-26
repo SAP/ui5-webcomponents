@@ -9,8 +9,6 @@ import CalendarType from "./types/CalendarType.js";
 
 let initialized = false;
 
-type CalendarTLiteral = `${CalendarType}`
-
 type InitialConfig = {
 	[key: string]: any,
 	animationMode: AnimationMode,
@@ -18,7 +16,8 @@ type InitialConfig = {
 	themeRoot: string | undefined,
 	rtl: boolean | undefined,
 	language: string | undefined,
-	calendarType: CalendarTLiteral | undefined,
+	calendarType: `${CalendarType}` | undefined,
+	timezone: string | undefined,
 	noConflict: boolean,
 	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,
@@ -30,6 +29,7 @@ let initialConfig: InitialConfig = {
 	themeRoot: undefined,
 	rtl: undefined,
 	language: undefined,
+	timezone: undefined,
 	calendarType: undefined,
 	noConflict: false, // no URL
 	formatSettings: {},
@@ -84,6 +84,15 @@ const getNoConflict = () => {
 const getCalendarType = () => {
 	initConfiguration();
 	return initialConfig.calendarType;
+};
+
+/**
+ * Returns the configured IANA timezone ID.
+ * @returns { String } the configured IANA timezone ID, e.g. "America/New_York"
+ */
+const getTimezone = () => {
+	initConfiguration();
+	return initialConfig.timezone;
 };
 
 const getFormatSettings = () => {
@@ -205,5 +214,6 @@ export {
 	getFetchDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
+	getTimezone,
 	getFormatSettings,
 };

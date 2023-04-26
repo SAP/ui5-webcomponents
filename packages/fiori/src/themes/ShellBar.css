@@ -42,6 +42,9 @@
 	white-space: initial;
 	overflow: initial;
 	text-overflow: initial;
+	line-height: inherit;
+	letter-spacing: inherit;
+	word-spacing: inherit;
 }
 
 ::slotted([ui5-button][slot="startButton"]) {

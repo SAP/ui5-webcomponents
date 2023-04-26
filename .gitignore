@@ -82,7 +82,7 @@ packages/playground/docs/FAQ.md
 # Ignore the generated storybook related files
 packages/playground/_stories/**/*/argTypes.ts
 packages/playground/.storybook/custom-elements.json
-packages/playground/docs/**/*.mdx
+packages/playground/docs/storybook/**/*
 
 packages/main/test/pages/fix.js
 packages/fiori/test/pages/fix.js

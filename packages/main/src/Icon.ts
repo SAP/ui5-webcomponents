@@ -117,7 +117,9 @@ const PRESENTATION_ROLE = "presentation";
 	styles: iconCss,
 })
 /**
- * Fired on mouseup, space and enter if icon is interactive
+ * Fired on mouseup, <code>SPACE</code> and <code>ENTER</code>.
+ * - on mouse click, the icon fires native <code>click</code> event
+ * - on <code>SPACE</code> and <code>ENTER</code>, the icon fires custom <code>click</code> event
  * @private
  * @since 1.0.0-rc.8
  */
@@ -282,9 +284,8 @@ class Icon extends UI5Element {
 	viewBox?: string;
 	customSvg?: object;
 
-	_onclick?: ((event: MouseEvent) => void) | undefined;
-	_onfocusout?: ((event: FocusEvent) => void) | undefined;
-	_onfocusin?: ((event: FocusEvent) => void) | undefined;
+	_onfocusout?: ((event: FocusEvent) => void);
+	_onfocusin?: ((event: FocusEvent) => void);
 
 	_onFocusInHandler() {
 		if (this.interactive) {
@@ -314,12 +315,6 @@ class Icon extends UI5Element {
 		if (this.interactive && isSpace(e)) {
 			this.fireEvent("click");
 		}
-	}
-
-	_onClickHandler(e: MouseEvent) {
-		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-		e.stopPropagation();
-		this.fireEvent("click");
 	}
 
 	/**
@@ -399,7 +394,6 @@ class Icon extends UI5Element {
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
 
-		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
 		this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
 		this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
 
