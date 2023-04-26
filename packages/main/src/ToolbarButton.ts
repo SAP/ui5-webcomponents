@@ -1,15 +1,15 @@
 import ButtonDesign from "./types/ButtonDesign.js";
 
-import OverflowItem from "./OverflowItem.js";
+import ToolbarItem from "./ToolbarItem.js";
 
-import OverflowButtonTemplate from "./generated/templates/OverflowButtonTemplate.lit.js";
-import OverflowPopoverButtonTemplate from "./generated/templates/OverflowPopoverButtonTemplate.lit.js";
+import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
+import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
 
 /**
  * @public
  */
 const metadata = {
-	tag: "ui5-overflow-button",
+	tag: "ui5-toolbar-button",
 	properties: {
 		/**
 		 * Defines if the action is disabled.
@@ -109,11 +109,6 @@ const metadata = {
 		imageLast: {
 			type: Boolean,
 		},
-
-		/**
-		 * When set, the button will be always part of the overflow.
-		 * @public
-		 */
 	},
 	slots: {
 	},
@@ -124,42 +119,36 @@ const metadata = {
 
 /**
  * @class
- * The <code>ui5-overflow-button</code> represents an abstract action,
- * used in the <code>ui5-overflow-toolbar</code>.
+ * The <code>ui5-toolbar-button</code> represents an abstract action,
+ * used in the <code>ui5-toolbar</code>.
  *
  * @constructor
  * @author SAP SE
- * @alias OverflowButton
+ * @alias ToolbarButton
  * @extends UI5Element
  * @public
  */
-class OverflowButton extends OverflowItem {
+class ToolbarButton extends ToolbarItem {
 	static get metadata() {
 		return metadata;
 	}
 
-	/**
-	 * Returns Promise to the DOM ref of the overflow button.
-	 *
-	 * @public
-	 * @async
-	 * @returns {Promise}
-	 */
-	// @ts-ignore
-	async getDomRef(): Promise<HTMLElement | undefined> {
-		const parentElement: any = this.parentElement!;
-		return (await parentElement.getActionDOMRefByID(this.id)); // eslint-disable-line
+	get styles() {
+		return {
+			width: this.width,
+			display: this.hidden ? "none" : "block",
+		};
 	}
 
-	get overflowToolbarTemplate() {
-		return OverflowButtonTemplate;
+	get toolbarTemplate() {
+		return ToolbarButtonTemplate;
 	}
 
-	get overflowPopoverTemplate() {
-		return OverflowPopoverButtonTemplate;
+	get toolbarPopoverTemplate() {
+		return ToolbarPopoverButtonTemplate;
 	}
 }
 
-OverflowButton.define();
+ToolbarButton.define();
 
-export default OverflowButton;
+export default ToolbarButton;

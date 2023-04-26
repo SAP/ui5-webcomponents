@@ -1,3 +1,4 @@
+import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -12,26 +13,24 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "./Button.js";
 import Popover from "./Popover.js";
 
-import OverflowToolbarTemplate from "./generated/templates/OverflowToolbarTemplate.lit.js";
-import OverflowToolbarCss from "./generated/themes/OverflowToolbar.css.js";
+import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
+import ToolbarCss from "./generated/themes/Toolbar.css.js";
 
-import OverflowToolbarPopoverTemplate from "./generated/templates/OverflowToolbarPopoverTemplate.lit.js";
-import OverflowToolbarPopoverCss from "./generated/themes/OverflowToolbarPopover.css.js";
+import ToolbarPopoverTemplate from "./generated/templates/ToolbarPopoverTemplate.lit.js";
+import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
 import ToolbarDesign from "./types/ToolbarDesign.js";
 import ToolbarStyling from "./types/ToolbarStyling.js";
-import OverflowToolbarAlign from "./types/OverflowToolbarAlign.js";
+import ToolbarAlign from "./types/ToolbarAlign.js";
 
-import OverflowButton from "./OverflowButton.js";
-import OverflowSpacer from "./ToolbarSpacer.js";
+import ToolbarButton from "./ToolbarButton.js";
+import ToolbarSpacer from "./ToolbarSpacer.js";
+import ToolbarItem from "./ToolbarItem.js";
+import ToolbarSeparator from "./ToolbarSeparator.js";
 
 type ActionsWidthMap = {
 	[key: string]: number
 };
-interface IOverflowItem extends UI5Element {
-	alwaysOverflow: boolean,
-	hidden: boolean,
-}
 
 /**
  * @class
@@ -41,24 +40,25 @@ interface IOverflowItem extends UI5Element {
  *
  * @constructor
  * @author SAP SE
- * @alias OverflowToolbar
+ * @alias Toolbar
  * @extends UI5Element
- * @tagname ui5-overflow-toolbar
+ * @tagname ui5-toolbar
  * @public
  */
 @customElement({
-	tag: "ui5-overflow-toolbar",
+	tag: "ui5-toolbar",
 	languageAware: true,
 	renderer: litRender,
-	template: OverflowToolbarTemplate,
-	staticAreaTemplate: OverflowToolbarPopoverTemplate,
-	styles: OverflowToolbarCss,
-	staticAreaStyles: OverflowToolbarPopoverCss,
+	template: ToolbarTemplate,
+	staticAreaTemplate: ToolbarPopoverTemplate,
+	styles: ToolbarCss,
+	staticAreaStyles: ToolbarPopoverCss,
 	dependencies: [
 		Popover,
 		Button,
-		OverflowButton,
-		OverflowSpacer,
+		ToolbarButton,
+		ToolbarSpacer,
+		ToolbarSeparator,
 	],
 })
 
@@ -71,7 +71,7 @@ interface IOverflowItem extends UI5Element {
 	},
 })
 /**
- * Fired whenever the overflow popup closes and opens.
+ * Fired whenever the toolbar popup closes and opens.
  * @param {Boolean} open indicates the state of the popup
  * @event
  */
@@ -81,16 +81,15 @@ interface IOverflowItem extends UI5Element {
 	},
 })
 
-// @ts-ignore
-class OverflowToolbar extends UI5Element {
+class Toolbar extends UI5Element {
 	@property({ type: Object, multiple: true })
-	actionsToBar: Array<UI5Element | any>;
+	actionsToBar!: Array<ToolbarItem>;
 
 	@property({ type: Object, multiple: true })
-	actionsToOverflow: Array<UI5Element>;
+	actionsToOverflow!: Array<ToolbarItem>;
 
 	@property({ type: Object })
-	ACTIONS_WIDTH_MAP: ActionsWidthMap;
+	ACTIONS_WIDTH_MAP!: ActionsWidthMap;
 
 	@property({ type: Boolean })
 	actionsWidthMeasured!: boolean;
@@ -103,12 +102,6 @@ class OverflowToolbar extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
-	/**
-	 * @type {boolean}
-	 * @public
-	 */
-	@property({ type: Boolean })
-	type!: boolean;
 
 	/**
 	 * @type {string}
@@ -127,7 +120,7 @@ class OverflowToolbar extends UI5Element {
 	styling!: string;
 
 	/**
-	 * Defines if the overflow should close upon intereaction with the actions inside.
+	 * Defines if the toolbar overflow popup should close upon intereaction with the actions inside.
 	 * It will close by default.
 	 * @type {boolean}
 	 * @public
@@ -138,22 +131,10 @@ class OverflowToolbar extends UI5Element {
 	/**
 	 *  @type {boolean}
 	 *  @public
-	 *  @defaultvalue: OverflowToolbarAlign.End
+	 *  @defaultvalue: ToolbarAlign.End
 	 */
-	@property({ type: OverflowToolbarAlign })
+	@property({ type: ToolbarAlign })
 	alignContent!: string;
-
-	/**
-	* @private
-	*/
-	@property({ type: Boolean })
-	nonFocusable!: boolean;
-
-	/**
-	* @private
-	*/
-	@property({ type: Boolean })
-	noPadding!: boolean;
 
 	/**
 	* @private
@@ -170,12 +151,6 @@ class OverflowToolbar extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property({ type: String })
-	alwaysOverflowActionsHash!: string;
-
-	/**
-	 * @private
-	 */
 	@property({ type: Boolean })
 	reverseOverflow!: boolean;
 
@@ -186,7 +161,7 @@ class OverflowToolbar extends UI5Element {
 	*/
 
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
-	actions!: Array<UI5Element>
+	actions!: Array<ToolbarItem>
 	@slot({ type: HTMLElement })
 	startContent!: Array<HTMLElement>;
 
@@ -198,7 +173,7 @@ class OverflowToolbar extends UI5Element {
 		// actions displayed in the bar
 		this.actionsToBar = [];
 
-		// actions displayed in the overflow popover
+		// actions displayed in the toolbar overflow popover
 		this.actionsToOverflow = [];
 
 		// store for actions width
@@ -212,26 +187,6 @@ class OverflowToolbar extends UI5Element {
 
 		// resize handler
 		this._onResize = this.onResize.bind(this);
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return OverflowToolbarCss;
-	}
-
-	static get template() {
-		return OverflowToolbarTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return OverflowToolbarPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return OverflowToolbarPopoverCss;
 	}
 
 	static get OVERFLOW_BTN_SIZE(): number {
@@ -265,7 +220,7 @@ class OverflowToolbar extends UI5Element {
 
 		await renderFinished();
 		this.storeActionsWidth();
-		this.doLayout(true);
+		this.doLayout();
 	}
 
 	/**
@@ -274,7 +229,7 @@ class OverflowToolbar extends UI5Element {
 	doLayout(forceLayout = false) {
 		const containerWidth = this.getContainerWidth();
 		const contentWidth: number = this.getAllActionsWidth();
-		const contentOverflows = contentWidth + OverflowToolbar.OVERFLOW_BTN_SIZE > containerWidth;
+		const contentOverflows = contentWidth + Toolbar.OVERFLOW_BTN_SIZE > containerWidth;
 
 		// skip calculation if the width has not been changed
 		if (!forceLayout && this.width === containerWidth) {
@@ -288,7 +243,7 @@ class OverflowToolbar extends UI5Element {
 		}
 
 		this.width = containerWidth; // invalidating
-		this.alwaysOverflowActionsHash = this.alwaysOverflowActions.reduce((acc, item: UI5Element) => `${acc}${item._id}`, "");// invalidating
+		// alwaysOverflowActionsHash = this.alwaysOverflowActions.reduce((acc, item: UI5Element) => `${acc}${item._id}`, "");// invalidating
 
 		if (this.contentWidth !== contentWidth) {
 			this.contentWidth = contentWidth; // invalidating
@@ -311,20 +266,24 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	distributeActions(overflowSpace = 0) {
-		overflowSpace += OverflowToolbar.OVERFLOW_BTN_SIZE;
-		overflowSpace += OverflowToolbar.PADDING;
+		overflowSpace += Toolbar.OVERFLOW_BTN_SIZE;
+		overflowSpace += Toolbar.PADDING;
 
 		this.actionsToBar = [];
 		this.actionsToOverflow = [];
 
-		// distribute actionsthat always overflow
+		// distribute actions that always overflow
 		this.distributeActionsThatAlwaysOverflow();
 
 		// distribute the rest of the actions, based on the available space
-		this.movableActions.reverse().forEach((action: UI5Element) => {
+		this.movableActions.reverse().forEach(action => {
 			if (overflowSpace > 0) {
-				this.actionsToOverflow.unshift(action);
-				overflowSpace -= this.getCachedActionWidth(action._id);
+				if (action.getAttribute("priority") !== "Never") {
+					this.actionsToOverflow.unshift(action);
+					overflowSpace -= this.getCachedActionWidth(action._id);
+				} else {
+					this.actionsToBar.unshift(action);
+				}
 			} else {
 				this.actionsToBar.unshift(action);
 			}
@@ -333,9 +292,11 @@ class OverflowToolbar extends UI5Element {
 		// If the last bar item is a spacer, force it to the overflow even if there is enough space for it
 		if (this.actionsToBar.length) {
 			const lastActionToBar = this.actionsToBar[this.actionsToBar.length - 1];
-			if (lastActionToBar.isSpacer) {
-				const actionBar: UI5Element = this.actionsToBar.pop();
-				this.actionsToOverflow.unshift(actionBar);
+			if (lastActionToBar.ignoreSpace) {
+				const actionBar = this.actionsToBar.pop();
+				if (actionBar) {
+					this.actionsToOverflow.unshift(actionBar);
+				}
 			}
 		}
 	}
@@ -343,25 +304,38 @@ class OverflowToolbar extends UI5Element {
 	displayAllActionsIntoBar() {
 		this.actionsToOverflow = [];
 
-		// distribute actionsthat always overflow
+		// distribute actions that always overflow
 		this.distributeActionsThatAlwaysOverflow();
 
+		// distribute actions that always overflow
+		this.distributeActionsThatNeverOverflow();
+
 		// distribute the rest of the actions into the bar
-		this.actionsToBar = this.movableActions.map((action: UI5Element) => action);
+		this.actionsToBar = this.movableActions.map((action: ToolbarItem) => action);
 	}
 
 	distributeActionsThatAlwaysOverflow() {
-		this.alwaysOverflowActions.forEach((action: UI5Element) => {
+		this.alwaysOverflowActions.forEach((action: ToolbarItem) => {
 			this.actionsToOverflow.push(action);
 		});
 	}
 
+	distributeActionsThatNeverOverflow() {
+		this.neverOverflowActions.forEach((action: ToolbarItem) => {
+			this.actionsToBar.push(action);
+		});
+	}
+
 	get alwaysOverflowActions() {
-		return this._actions.filter((action: UI5Element) => action.hasAttribute("always-overflow"));
+		return this._actions.filter((action: ToolbarItem) => action.getAttribute("priority") === "Always");
 	}
 
 	get movableActions() {
-		return this._actions.filter((action: UI5Element) => !action.hasAttribute("always-overflow"));
+		return this._actions.filter((action: ToolbarItem) => action.getAttribute("priority") !== "Always");
+	}
+
+	get neverOverflowActions() {
+		return this._actions.filter((action: ToolbarItem) => action.getAttribute("priority") === "Never");
 	}
 
 	/**
@@ -382,7 +356,13 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	onCustomActionClick(e: any) {
-		const refItemId: string = e.target.closest("ui5-button").getAttribute("data-ui5-external-action-item-id");
+		const target = e.target.closest(".ui5-tb-item");
+
+		if (!target) {
+			return;
+		}
+
+		const refItemId: string = target.getAttribute("data-ui5-ref-id");
 
 		if (refItemId) {
 			this.getActionByID(refItemId)!.fireEvent("click", {
@@ -423,9 +403,9 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	get standardActions(): Array<any> {
-		// if (!this.actionsWidthMeasured) {
-		// 	this.actionsToBar = this._actions.filter(action => action);
-		// }
+		if (!this.actionsWidthMeasured && (JSON.stringify(this._actions) !== JSON.stringify(this.actionsToBar))) {
+			this.actionsToBar = this._actions.filter(action => action);
+		}
 
 		return this.getActionsInfo(this.actionsToBar);
 	}
@@ -435,15 +415,11 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	get tabIndex(): number {
-		return this.nonFocusable || this.disabled ? -1 : 0;
+		return -1;
 	}
 
-	get _actions(): Array<UI5Element> {
+	get _actions(): Array<ToolbarItem> {
 		return this.getSlottedNodes("actions");
-	}
-
-	get _disabled() {
-		return this.disabled ? "true" : undefined;
 	}
 
 	get hasStartContent() {
@@ -451,18 +427,18 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	/**
-	 * Overflow Popover
+	 * Toolbar Overflow Popover
 	 */
 	get overflowButtonDOM(): HTMLElement | null {
-		return this.shadowRoot!.querySelector(".ui5-otb-overflow-btn");
+		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
 	}
 
 	get startContentDOM(): HTMLElement {
-		return this.shadowRoot!.querySelector(".ui5-otb-start")!;
+		return this.shadowRoot!.querySelector(".ui5-tb-start")!;
 	}
 
 	get actionsDOM() {
-		return this.shadowRoot!.querySelector(".ui5-otb-actions");
+		return this.shadowRoot!.querySelector(".ui5-tb-actions");
 	}
 
 	get hasActionWithText(): boolean {
@@ -470,14 +446,14 @@ class OverflowToolbar extends UI5Element {
 	}
 
 	get hasFlexibleSpacers() {
-		return this.actions.some((action: any) => action.isSpacer && !action.width);
+		return this.actions.some((action: any) => action.localName === "ui5-toolbar-spacer" && !action.width);
 	}
 
 	get classes() {
 		return {
 			actions: {
-				"ui5-otb-actions": true,
-				"ui5-otb-actions-full-width": this.hasFlexibleSpacers,
+				"ui5-tb-actions": true,
+				"ui5-tb-actions-full-width": this.hasFlexibleSpacers,
 			},
 			overflow: {
 				"ui5-overflow-list--alignleft": this.hasActionWithText,
@@ -504,35 +480,13 @@ class OverflowToolbar extends UI5Element {
 	/**
 	 * Private members
 	 */
-	getActionsInfo(actions: Array<any>) {
-		return actions.map((action: any) => {
-			const isSpacer: boolean = action.isSpacer;
-			const refItemid = action._id;
-			const width: number = action.width;
-			const display = action.hidden ? "none" : "block";
-			let style = {};
-
-			if (isSpacer) {
-				style = width ? { width } : { flex: "auto" };
-			} else {
-				style = {
-					display,
-					width,
-				};
-			}
-
+	getActionsInfo(actions: Array<ToolbarItem>) {
+		return actions.map((action: ToolbarItem) => {
 			// Item props
 			const item = {
-				isSpacer,
-				refItemid,
-				style,
-				press: this.onCustomActionClick.bind(this),
-				overflowTemplate: {},
-				overflowPopoverTemplate: {},
-				alwaysOverflow: action.alwaysOverflow || action.getAttribute("always-overflow"),
+				toolbarTemplate: executeTemplate(action.toolbarTemplate, action),
+				toolbarPopoverTemplate: executeTemplate(action.toolbarPopoverTemplate, action),
 			};
-			item.overflowTemplate = action.overflowToolbarTemplate({ ...JSON.parse(JSON.stringify(action)), ...item } as unknown as UI5Element, [], undefined);
-			item.overflowPopoverTemplate = action.overflowPopoverTemplate({ ...JSON.parse(JSON.stringify(action)), ...item } as unknown as UI5Element, [], undefined);
 
 			return item;
 		});
@@ -540,7 +494,7 @@ class OverflowToolbar extends UI5Element {
 
 	getActionWidth(action: any): number {
 		// Spacer width - always 0 for flexible spacers, so that they shrink, otherwise - measure the width normally
-		if (action.isSpacer && !action.width) {
+		if (action.ignoreSpace && !action.width) {
 			return 0;
 		}
 		const id: string = action._id;
@@ -550,7 +504,7 @@ class OverflowToolbar extends UI5Element {
 		let actionWidth = 0;
 
 		if (renderedAction) {
-			actionWidth = renderedAction.offsetWidth + OverflowToolbar.ACTION_MARGIN;
+			actionWidth = renderedAction.offsetWidth + Toolbar.ACTION_MARGIN;
 		} else {
 			actionWidth = this.getCachedActionWidth(id) || 0;
 		}
@@ -592,10 +546,6 @@ class OverflowToolbar extends UI5Element {
 	}
 }
 
-OverflowToolbar.define();
+Toolbar.define();
 
-export default OverflowToolbar;
-
-export type {
-	IOverflowItem,
-};
+export default Toolbar;

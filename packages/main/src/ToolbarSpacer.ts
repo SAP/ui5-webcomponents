@@ -1,14 +1,14 @@
 import ToolbarSpacerTemplate from "./generated/templates/ToolbarSpacerTemplate.lit.js";
 
-import OverflowItem from "./OverflowItem.js";
+import ToolbarItem from "./ToolbarItem.js";
 
-class ToolbarSpacer extends OverflowItem {
+class ToolbarSpacer extends ToolbarItem {
 	static get metadata() {
 		return {
 			tag: "ui5-toolbar-spacer",
 			properties: {
 				/**
-				 * Button width
+				 * Spacer width
 				 * @public
 				 */
 				width: {
@@ -18,15 +18,23 @@ class ToolbarSpacer extends OverflowItem {
 		};
 	}
 
-	get isSpacer() {
+	get styles() {
+		return this.width ? { width: this.width } : { flex: "auto" };
+	}
+
+	get ignoreSpace() {
 		return true;
 	}
 
-	get overflowToolbarTemplate() {
+	get template() {
 		return ToolbarSpacerTemplate;
 	}
 
-	get overflowPopoverTemplate() {
+	get toolbarTemplate() {
+		return ToolbarSpacerTemplate;
+	}
+
+	get toolbarPopoverTemplate() {
 		return ToolbarSpacerTemplate;
 	}
 }

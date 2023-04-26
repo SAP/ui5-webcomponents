@@ -1,0 +1,6 @@
+/* @import "../base/Toolbar-parameters.css"; */
+
+:root {
+	--_ui5-toolbar_height: 2.75rem;
+	--data-ui5-compact-size: 3rem;
+}

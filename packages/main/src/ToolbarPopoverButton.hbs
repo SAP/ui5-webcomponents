@@ -5,19 +5,19 @@
 	?hidden="{{this.hidden}}"
 	?always-overflow="{{alwaysOverflow}}"
 	@click="{{this.press}}"
-	class="ui5-button-in-overflow"
+	class="ui5-tb-popover-button ui5-tb-popover-item"
 	data-ui5-external-action-item-id="{{this.refItemid}}"
 >
 	{{#if this.imageSrc}}
-				<div class="ui5-otb-action-content">
+				<div class="ui5-tb-action-content">
 					{{#if this.imageLast}}
-						<div class="ui5-otb-action-content-text ui5-otb-action-content-image-last">{{this.text}}</div>
+						<div class="ui5-tb-action-content-text ui5-tb-action-content-image-last">{{this.text}}</div>
 					{{/if}}
 
 					<img src="{{this.imageSrc}}" alt="{{imageAlt}}" width="{{imageWidth}}" height="{{imageHeight}}">
 
 					{{#unless this.imageLast}}
-						<div class="ui5-otb-action-content-text">{{this.text}}</div>
+						<div class="ui5-tb-action-content-text">{{this.text}}</div>
 					{{/unless}}
 				</div>
 	{{else}}

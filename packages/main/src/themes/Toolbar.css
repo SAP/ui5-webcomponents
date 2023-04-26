@@ -1,0 +1,122 @@
+:host(:not([hidden])) {
+	display: inline-block;
+	width: 100%;
+	height: var(--_ui5-toolbar_height);
+	background: var(--ui5-toolbar-Background);
+	border-bottom: 0.0625rem solid var(--sapGroup_ContentBorderColor);
+	flex-shrink: 1;
+	color: var(--sapButton_TextColor);
+}
+
+:host(:not([hidden])[data-ui5-compact-size]) {
+	height: var(--_ui5-toolbar_height_compact);
+}
+
+:host([disabled]) {
+	opacity: .5;
+	pointer-events: none;
+}
+
+:host([design="Solid"]) {
+	background: var(--sapBaseColor);
+}
+
+:host([design="Transparent"]) {
+	background: var(--sapToolbar_Background);
+}
+
+:host([styling="Clear"]) {
+	border-bottom: 0;
+}
+
+.ui5-tb-root {
+	min-width: 2.5rem;
+	width: 100%;
+	padding: 0 0.5rem;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+:host .ui5-tb-root:focus {
+	outline: 0.0625rem dotted var(--sapContent_FocusColor);
+	outline-offset: -0.1875rem;
+}
+
+:host([no-padding]) .ui5-tb-root {
+	padding: 0;
+}
+
+:host([align-content="End"]) .ui5-tb-root {
+	justify-content: flex-end;
+}
+
+:host([align-content="Start"]) .ui5-tb-root {
+	justify-content: flex-start;
+}
+
+:host([align-content="SpaceBetween"]) .ui5-tb-root {
+	justify-content: space-between;
+}
+
+
+
+.ui5-tb-root,
+.ui5-tb-actions {
+	display: flex;
+	height: 100%;
+	white-space: nowrap;
+	align-items: center;
+	outline: none;
+	box-sizing: border-box;
+}
+
+.ui5-tb-actions-full-width {
+    width: 100%;
+}
+
+.ui5-tb-start {
+	display: flex;
+	flex-shrink: 0;
+}
+
+.ui5-tb-actions {
+	justify-content: flex-end;
+}
+
+ui5-button[design="Transparent"] {
+	color: inherit;
+}
+
+
+.ui5-tb-button {
+    flex-shrink: 0;
+}
+
+.ui5-tb-item:not(:last-child) {
+	margin-right: 0.25rem;
+}
+
+.ui5-tb-spacer {
+    min-width: 1rem;
+}
+
+.ui5-tb-separator {
+    height: var(--_ui5_button_base_height);
+	width: 0.0625rem;
+	background-color: var(--sapButton_TextColor);
+	box-sizing: border-box;
+}
+
+.ui5-tb-action-content {
+    display: flex;
+    align-items: center;
+}
+
+.ui5-tb-action-content > .ui5-tb-action-content-text {
+    margin-left: 0.25rem;
+}
+
+.ui5-tb-action-content > .ui5-tb-action-content-text.ui5-tb-action-content-image-last {
+    margin-left: 0;
+    margin-right: 0.25rem;
+}

@@ -6,35 +6,35 @@
 	padding: 0 0.5rem;
 }
 
-.ui5-overflow-list--alignleft .ui5-button-in-overflow::part(button) {
+.ui5-overflow-list--alignleft .ui5-tb-popover-button::part(button) {
 	justify-content: flex-start;
 }
 
-.ui5-overflow-list--alignleft .ui5-button-in-overflow[icon-only]::part(button) {
+.ui5-overflow-list--alignleft .ui5-tb-popover-button[icon-only]::part(button) {
 	margin-left: 0.625rem; /* needed for icon only buttons, otherwise with flex-start from above, icons get stuck to the left border of the button */
 }
 
-.ui5-button-in-overflow {
+.ui5-tb-popover-button {
 	width: 100%;
 	margin-bottom: 0.25rem;
 }
 
-.ui5-otb-horizontal-line {
+.ui5-tb-horizontal-line {
 	width: 100%;
 	border-bottom: 1px solid var(--sapButton_TextColor);
 	margin: 0 0 0.25rem 0;
 }
 
-.ui5-otb-action-content {
+.ui5-tb-action-content {
 	display: flex;
 	align-items: center;
 }
 
-.ui5-otb-action-content > .ui5-otb-action-content-text {
+.ui5-tb-action-content > .ui5-tb-action-content-text {
 	margin-left: 0.25rem;
 }
 
-.ui5-otb-action-content > .ui5-otb-action-content-text.ui5-otb-action-content-image-last {
+.ui5-tb-action-content > .ui5-tb-action-content-text.ui5-tb-action-content-image-last {
 	margin-left: 0;
 	margin-right: 0.25rem;
 }

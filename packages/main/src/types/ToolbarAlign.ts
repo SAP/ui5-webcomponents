@@ -1,4 +1,4 @@
-const OverflowToolbarAlign = {
+const ToolbarAlign = {
 	/**
 	 * @public
 	 */
@@ -15,4 +15,4 @@ const OverflowToolbarAlign = {
 	SpaceBetween: "SpaceBetween",
 };
 
-export default OverflowToolbarAlign;
+export default ToolbarAlign;

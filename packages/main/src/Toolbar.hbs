@@ -1,17 +1,17 @@
 <div
-	class="ui5-otb-root"
+	class="ui5-tb-root"
 	tabindex="{{tabIndex}}"
 	part="otb"
 >
 	{{#if hasStartContent}}
-		<div class="ui5-otb-start">
+		<div class="ui5-tb-start">
 			<slot name="startContent"></slot>
 		</div>
 	{{/if}}
 
-	<div class="{{classes.actions}}">
+	<div class="{{classes.actions}}" @click="{{onCustomActionClick}}">
 		{{#each standardActions}}
-			{{this.overflowTemplate}}
+			{{this.toolbarTemplate}}
 		{{/each}}
 
 		{{#if showOverflowBtn}}
@@ -20,7 +20,7 @@
 				design="Transparent"
 				?disabled="{{this.disabled}}"
 				@click="{{onBtnOverflowClick}}"
-				class="ui5-otb-overflow-btn"
+				class="ui5-tb-overflow-btn"
 			></ui5-button>
 		{{/if}}
 	</div>

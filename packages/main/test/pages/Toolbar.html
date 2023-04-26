@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 
-	<title>Overflow Toolbar</title>
+	<title>Toolbar</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<meta charset="utf-8">
 
@@ -45,25 +45,31 @@
 	<section id="testSection">
 		<ui5-title level="H1">Use case</ui5-title>
 
-		<ui5-overflow-toolbar id="otb_a" design="Solid" align-content="Start" prevent-overflow-closing>
-			<ui5-overflow-button image-width="100px" icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-overflow-button>
-			<ui5-overflow-button icon="decline" text="Left 2"></ui5-overflow-button>
-			<ui5-overflow-button icon="employee" text="Left 3"></ui5-overflow-button>
-			<ui5-overflow-button icon="decline" text="Left 4"></ui5-overflow-button>
-			<ui5-toolbar-spacer width="100px"></ui5-toolbar-spacer>
-			<ui5-overflow-button icon="add" text="Mid 1"></ui5-overflow-button>
-			<ui5-overflow-button icon="decline" text="Mid 2"></ui5-overflow-button>
-			<ui5-overflow-button icon="decline" text="Mid 3"></ui5-overflow-button>
-			<ui5-overflow-button text="Mid 4"></ui5-overflow-button>
-			<ui5-toolbar-spacer width="200px"></ui5-toolbar-spacer>
-			<ui5-overflow-button icon="add" text="Right 1"></ui5-overflow-button>
-			<ui5-overflow-button icon="decline" text="Right 2"></ui5-overflow-button>
-			<ui5-overflow-button icon="decline" text="Right 3"></ui5-overflow-button>
-			<ui5-overflow-button icon="employee" text="Right 4"></ui5-overflow-button>
-			<ui5-overflow-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-overflow-button>
+	<div style="display:flex;">
+		<div style="flex:1">
+		<ui5-toolbar id="otb_a" non-focusable design="Solid" prevent-overflow-closing>
+			<ui5-toolbar-button image-width="100px" icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
+			<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>
+		</ui5-toolbar>
+		</div>
+		<div style="flex:1">
 
-		</ui5-overflow-toolbar>
-
+		<ui5-toolbar id="otb_b" design="Solid" prevent-overflow-closing>
+			<ui5-toolbar-separator></ui5-toolbar-separator>
+			<ui5-toolbar-button image-width="100px" icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" priority="Never" text="Left 2"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" priority="Never" text="Left 3"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+		</ui5-toolbar>
+		</div>
+	</div>
 
 	</section>
 
