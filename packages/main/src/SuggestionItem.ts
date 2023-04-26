@@ -120,7 +120,7 @@ class SuggestionItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: ValueState
+	additionalTextState!: `${ValueState}`
 
 	get groupItem() {
 		return false;

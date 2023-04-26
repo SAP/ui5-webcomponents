@@ -186,7 +186,7 @@ class AvatarGroup extends UI5Element {
 	 * @public
 	 */
 	@property({ type: AvatarGroupType, defaultValue: AvatarGroupType.Group })
-	type!: AvatarGroupType;
+	type!: `${AvatarGroupType}`;
 
 	/**
 	 * Defines the aria-haspopup value of the component on:

@@ -11,7 +11,7 @@ let initialized = false;
 
 type InitialConfig = {
 	[key: string]: any,
-	animationMode: AnimationMode,
+	animationMode: `${AnimationMode}`,
 	theme: string,
 	themeRoot: string | undefined,
 	rtl: boolean | undefined,

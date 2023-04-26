@@ -45,7 +45,7 @@ type InputSuggestionText = {
 	icon?: string;
 	type: `${ListItemType}`;
 	additionalText?: string;
-	additionalTextState: ValueState;
+	additionalTextState: `${ValueState}`;
 	groupItem: boolean;
 	key: number;
 }

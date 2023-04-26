@@ -319,7 +319,7 @@ class MultiComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -557,7 +557,7 @@ class MultiComboBox extends UI5Element {
 		const input = e.target as HTMLInputElement;
 		const value: string = input.value;
 		const filteredItems: Array<IMultiComboBoxItem> = this._filterItems(value);
-		const oldValueState: ValueState = this.valueState;
+		const oldValueState: `${ValueState}` = this.valueState;
 
 		this._shouldFilterItems = true;
 
@@ -1091,7 +1091,7 @@ class MultiComboBox extends UI5Element {
 		}
 	}
 
-	_resetValueState(valueState: ValueState, callback?: () => void) {
+	_resetValueState(valueState: `${ValueState}`, callback?: () => void) {
 		this._validationTimeout = setTimeout(() => {
 			this.valueState = valueState;
 			this._validationTimeout = null;

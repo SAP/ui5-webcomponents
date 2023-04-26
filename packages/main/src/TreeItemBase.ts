@@ -185,7 +185,7 @@ class TreeItemBase extends ListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: ValueState;
+	additionalTextState!: `${ValueState}`;
 
 	/**
 	 * Defines the accessible name of the component.
