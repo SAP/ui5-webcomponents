@@ -30,7 +30,7 @@ describe("Card general interaction", () => {
 		const nonInteractiveCardHeader = card.$("ui5-card-header");
 
 		assert.strictEqual(await nonInteractiveCardHeader.getProperty("interactive"), false, "card header doesn't have interactive property");
-		assert.strictEqual(await nonInteractiveCardRoot.hasClass("ui5-card--interactive"), true, "card root doesn't have interactive class");
+		assert.strictEqual(await nonInteractiveCardRoot.hasClass("ui5-card--interactive"), false, "card root doesn't have interactive class");
 	});
 
 	it("tests header's click event with mouse click, Enter and Space", async () => {
