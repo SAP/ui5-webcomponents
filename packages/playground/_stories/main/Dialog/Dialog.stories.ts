@@ -109,16 +109,28 @@ DraggableAndResizable.args = {
 </div>`,
 };
 
-export const FioriDialog = Template.bind({});
-FioriDialog.storyName = "SAP Fiori Styled Footer";
-FioriDialog.args = {
-	headerText: "SAP Fiori Styled Footer",
-	default: "<p>Adding custom styles to achieve the look and feel of a SAP Fiori footer</p>",
-	footer: `<div slot="footer" style="display: flex; align-items: center; justify-content: end; width: 100%; box-sizing: border-box;">
-	<ui5-button class="dialogCloser" design="Emphasized" style="min-width: 4rem;">OK</ui5-button>
-	<ui5-button class="dialogCloser" style="margin: 0 0 0 0.5rem; min-width: 4rem;">Cancel</ui5-button>
-</div>`,
+export const BarInDialog = Template.bind({});
+BarInDialog.storyName = "Bar in Header/Footer";
+BarInDialog.args = {
+	header: `<ui5-bar slot="header" design="Header">
+	<ui5-title level="H5" slot="startContent">Bar used in Header and Footer</ui5-title>
+	<ui5-button class="dialogCloser" design="Transparent" id="closeDialogButton" slot="endContent" icon="decline"></ui5-button>
+</ui5-bar>`,
+	default: "<p>Adding styles for the parts to remove the default Dialog's paddings when ui5-bar is used inside Header and Footer</p>",
+	footer: `<ui5-bar slot="footer" design="Footer">
+	<ui5-button class="dialogCloser" design="Emphasized" slot="endContent" style="min-width: 4rem;">OK</ui5-button>
+</ui5-bar>`,
 };
+
+BarInDialog.decorators = [
+	(story) => html`<style>
+	#dialog::part(header),
+	#dialog::part(footer) {
+		padding-inline: 0;
+	}
+</style>
+${story()}`
+];
 
 export const WithState = Template.bind({});
 WithState.args = {

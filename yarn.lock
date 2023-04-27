@@ -2066,10 +2066,10 @@
   dependencies:
     "@octokit/openapi-types" "^16.0.0"
 
-"@openui5/sap.ui.core@1.109.0":
-  version "1.109.0"
-  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.109.0.tgz#bd4e70eecb1e1a7fbe79942fa42b5958d344f8c2"
-  integrity sha512-s0chMgOy3RRLElil2vDNcAhEy1UVmbGUNXq35O492R1BHQ+4zwf6SYWfAETsnlljEmXuYrCjb2rpwAHz68KTqQ==
+"@openui5/sap.ui.core@1.112.0":
+  version "1.112.0"
+  resolved "https://registry.yarnpkg.com/@openui5/sap.ui.core/-/sap.ui.core-1.112.0.tgz#79085f4485db50b29627599673e1d0635e497675"
+  integrity sha512-z41l8nHeLW1Cc0gDtGloYauJMPSLBhezjMzykiBxlelNuSmtaha98YP9DueU9Cd7ry4Qb177rMZqqbGJTiBR8g==
 
 "@parcel/watcher@2.0.4":
   version "2.0.4"
@@ -2079,10 +2079,10 @@
     node-addon-api "^3.2.1"
     node-gyp-build "^4.3.0"
 
-"@sap-theming/theming-base-content@11.2.1":
-  version "11.2.1"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.2.1.tgz#ee2e4c6cb3fc709bebcc9b344eed769deff574cf"
-  integrity sha512-8BF0ZXxIuLO5+Gv+6bKFl/wnakBZKJ6AwRL0lNgC7v/6eA4G0yvhyvG+VPcF4XJAArzsvlIZzi5cYMh9USuI8Q==
+"@sap-theming/theming-base-content@11.3.2":
+  version "11.3.2"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.3.2.tgz#efa307c25421225fa77b02fc7059f9ce3eecb259"
+  integrity sha512-zBsPDL5RNEZTS8DiCERibiAnIJCLzyiVINcJNuBk5FGdcqX9WV0WSypj2bgQ22rkrI7ewMPz680ZS3Dd5epjWA==
 
 "@sigstore/protobuf-specs@^0.1.0":
   version "0.1.0"
@@ -3162,7 +3162,7 @@
   resolved "https://registry.yarnpkg.com/@types/object-inspect/-/object-inspect-1.8.1.tgz#7c08197ad05cc0e513f529b1f3919cc99f720e1f"
   integrity sha512-0JTdf3CGV0oWzE6Wa40Ayv2e2GhpP3pEJMcrlM74vBSJPuuNkVwfDnl0SZxyFCXETcB4oKA/MpTVfuYSMOelBg==
 
-"@types/openui5@^1.109.0":
+"@types/openui5@^1.112.0":
   version "1.112.0"
   resolved "https://registry.yarnpkg.com/@types/openui5/-/openui5-1.112.0.tgz#4d88013491eda357113870c83575ca3bb2a47ea7"
   integrity sha512-rY7Mh7c1WbbYFCFG8toxphn5ODUvDHYtszIWR2KfAzMfEHql2ekCCgyfPz2PpoAQ/ep2WxdHVxaPlQBe4hW3Gw==
@@ -4777,10 +4777,10 @@ chrome-launcher@^0.15.0:
     is-wsl "^2.2.0"
     lighthouse-logger "^1.0.0"
 
-chromedriver@110.0.0:
-  version "110.0.0"
-  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-110.0.0.tgz#d00a1a2976592d933faa8e9839e97692922834a4"
-  integrity sha512-Le6q8xrA/3fAt+g8qiN0YjsYxINIhQMC6wj9X3W5L77uN4NspEzklDrqYNwBcEVn7PcAEJ73nLlS7mTyZRspHA==
+chromedriver@112.0.0:
+  version "112.0.0"
+  resolved "https://registry.yarnpkg.com/chromedriver/-/chromedriver-112.0.0.tgz#34c86f6cfc8f5e208100088dbb9563439243f8b2"
+  integrity sha512-fEw1tI05dmK1KK8MGh99LAppP7zCOPEXUxxbYX5wpIBCCmKasyrwZhk/qsdnxJYKd/h0TfiHvGEj7ReDQXW1AA==
   dependencies:
     "@testim/chrome-version" "^1.1.3"
     axios "^1.2.1"

@@ -1,12 +1,13 @@
 import type CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 // @ts-ignore
 import UniversalDateNative from "../sap/ui/core/date/UniversalDate.js";
+import type UI5Date from "./UI5Date.js";
 
 type UniversalDate = {
     new (time: number): UniversalDate;
     oDate: Date,
     sCalendarType: string,
-    getInstance: (oDate: Date, sCalendarType?: CalendarType) => UniversalDate,
+    getInstance: (oDate: UI5Date | Date, sCalendarType?: CalendarType) => UniversalDate,
     getDate: () => number,
     getMonth: () => number,
     getFullYear: () => number,

@@ -1,9 +1,12 @@
 import { html } from "lit";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
+import ToastPlacement from "@ui5/webcomponents/dist/types/ToastPlacement.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
@@ -23,61 +26,39 @@ export default {
     argTypes,
 } as Meta<Toast>;
 
-const Template: UI5StoryArgs<Toast, StoryArgsSlots> = (args) => html`<div></div>`;
+let index = 0;
 
+const Template: UI5StoryArgs<Toast, StoryArgsSlots> = (args) => {
+	return 	html`
+<ui5-button id="btn-${++index}">Show Toast</ui5-button>
+<ui5-toast
+	id="toast-${index}"
+	duration="${ifDefined(args.duration)}"
+	placement="${ifDefined(args.placement)}"
+	>${unsafeHTML(args.default)}</ui5-toast>
+<script>
+	var toastOpener${index} = document.getElementById("btn-${index}");
+	var toast${index} = document.getElementById("toast-${index}"); 
 
-export const Template0: StoryFn = () => html`
-<h3>Basic Toast</h3>
-	<div class="snippet">
-		<!--Basic Toast-->
-		<ui5-button id="wcBtnShowToastBasic" class="samples-margin">Basic Toast</ui5-button>
-		<ui5-toast id="wcToastBasic">Basic Toast</ui5-toast>
-	</div>
-`;
+	toastOpener${index}.addEventListener("click", () => {
+		toast${index}.show();
+	});
+</script>`;
+}
 
+export const Basic = Template.bind({});
+Basic.args = {
+	default: "Basic Toast",
+};
 
-export const Template1: StoryFn = () => html`
-<h3>Toast Duration</h3>
-	<div class="snippet">
-		<!--Short Toast-->
-		<ui5-button id="wcBtnShowToastShort" class="samples-margin">Short Toast</ui5-button>
-		<ui5-toast id="wcToastShort" duration="1500" placement="BottomStart">Short Toast</ui5-toast>
-		<!--Long Toast-->
-		<ui5-button id="wcBtnShowToastLong" class="samples-margin">Long Toast</ui5-button>
-		<ui5-toast id="wcToastLong" duration="4500" placement="BottomEnd">Long Toast</ui5-toast>
-	</div>
-`;
+export const ToastDuration = Template.bind({});
+ToastDuration.args = {
+	default: "Long Toast",
+	duration: 4500,
+};
 
-
-export const Template2: StoryFn = () => html`
-<h3>Toast Placements</h3>
-	<div class="snippet">
-		<!--TopStart-->
-		<ui5-button id="wcBtnShowToastTS" class="samples-margin">TopStart</ui5-button>
-		<ui5-toast id="wcToastTS" placement="TopStart">TopStart</ui5-toast>
-		<!--TopCenter-->
-		<ui5-button id="wcBtnShowToastTC" class="samples-margin">TopCenter</ui5-button>
-		<ui5-toast id="wcToastTC" placement="TopCenter">TopCenter</ui5-toast>
-		<!--TopEnd-->
-		<ui5-button id="wcBtnShowToastTE" class="samples-margin">TopEnd</ui5-button>
-		<ui5-toast id="wcToastTE" placement="TopEnd">TopEnd</ui5-toast>
-		<!--MiddleStart-->
-		<ui5-button id="wcBtnShowToastMS" class="samples-margin">MiddleStart</ui5-button>
-		<ui5-toast id="wcToastMS" placement="MiddleStart">MiddleStart</ui5-toast>
-		<!--MiddleCenter-->
-		<ui5-button id="wcBtnShowToastMC" class="samples-margin">MiddleCenter</ui5-button>
-		<ui5-toast id="wcToastMC" placement="MiddleCenter">MiddleCenter</ui5-toast>
-		<!--MiddleEnd-->
-		<ui5-button id="wcBtnShowToastME" class="samples-margin">MiddleEnd</ui5-button>
-		<ui5-toast id="wcToastME" placement="MiddleEnd">MiddleEnd</ui5-toast>
-		<!--BottomStart-->
-		<ui5-button id="wcBtnShowToastBS" class="samples-margin">BottomStart</ui5-button>
-		<ui5-toast id="wcToastBS" placement="BottomStart">BottomStart</ui5-toast>
-		<!--BottomCenter-->
-		<ui5-button id="wcBtnShowToastBC" class="samples-margin">BottomCenter</ui5-button>
-		<ui5-toast id="wcToastBC">BottomCenter</ui5-toast>
-		<!--BottomEnd-->
-		<ui5-button id="wcBtnShowToastBE" class="samples-margin">BottomEnd</ui5-button>
-		<ui5-toast id="wcToastBE" placement="BottomEnd">BottomEnd</ui5-toast>
-	</div>
-`;
+export const ToastPlacements = Template.bind({});
+ToastPlacements.args = {
+	default: "Middle Center Toast",
+	placement: ToastPlacement.MiddleCenter,
+};

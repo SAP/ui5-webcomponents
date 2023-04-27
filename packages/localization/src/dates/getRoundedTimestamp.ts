@@ -5,6 +5,7 @@
  */
 const getRoundedTimestamp = (millisecondsUTC: number) => {
 	if (!millisecondsUTC) {
+		// no need to replace with UI5Date, as we don't use any non-UTC functions
 		millisecondsUTC = new Date().getTime();
 	}
 	const rounded = millisecondsUTC - (millisecondsUTC % (24 * 60 * 60 * 1000));
