@@ -237,7 +237,7 @@
 <section>
 	<h3>TabContainer with text and additional-text</h3>
 	<div class="snippet">
-		<ui5-tabcontainer collapsed fixed>
+		<ui5-tabcontainer collapsed fixed tab-layout="Inline">
 			<ui5-tab text="Info" additional-text="3">
 			</ui5-tab>
 			<ui5-tab text="Attachments" additional-text="24" selected>
@@ -457,6 +457,43 @@
 	</ui5-tab>
 	<ui5-tab text="Tab 3">
 		<ui5-label>Dolores totam perferendis numquam incidunt obcaecati, id quo at alias rem deserunt praesentium repellat ipsum commodi consequuntur veniam et ducimus animi qui nobis accusantium tenetur eveniet culpa non!</ui5-label>
+	</ui5-tab>
+</ui5-tabcontainer>
+	</xmp></pre>
+</section>
+
+		<!-- Mixed Tabs -->
+
+<section>
+	<div class="snippet">
+		<h3>Tab Container with Tabs with Icons and Tabs without Icons</h3>
+			<ui5-tabcontainer id="tabContainer1" fixed collapsed>
+				<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125"></ui5-tab>
+				<ui5-tab-separator></ui5-tab-separator>
+				<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40"></ui5-tab>
+				<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40"></ui5-tab>
+			</ui5-tabcontainer>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-tabcontainer id="tabContainer1" fixed collapsed>
+	<ui5-tab stable-dom-ref="products-ref" text="Products" additional-text="125">
+	</ui5-tab>
+	<ui5-tab-separator></ui5-tab-separator>
+	<ui5-tab icon="sap-icon://menu2" text="Laptops" design="Positive" additional-text="25">
+	</ui5-tab>
+	<ui5-tab icon="sap-icon://menu" text="Monitors" selected design="Critical" additional-text="45">
+	</ui5-tab>
+	<ui5-tab icon="sap-icon://menu2" text="Keyboards" design="Negative" additional-text="15">
+	</ui5-tab>
+	<ui5-tab icon="sap-icon://menu2" disabled text="Disabled" design="Negative" additional-text="40">
+	</ui5-tab>
+	<ui5-tab icon="sap-icon://menu2" text="Neutral" design="Neutral" additional-text="40">
+	</ui5-tab>
+	<ui5-tab icon="sap-icon://menu2" text="Default" additional-text="40">
 	</ui5-tab>
 </ui5-tabcontainer>
 	</xmp></pre>
