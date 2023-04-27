@@ -16,7 +16,6 @@ import TableGrowingMode from "@ui5/webcomponents/dist/types/TableGrowingMode.js"
 
 const component = "ui5-table";
 let index = 0;
-debugger
 
 export default {
     title: "Main/Table",
@@ -829,18 +828,17 @@ ${story()}
 				"DimUnit": "cm"
 			}
 		]
-	};
-	var growingTable = document.getElementById("table-${index}"),
+	},
+	growingTable = document.getElementById("table-${index}"),
 	collectionLength = products.ProductCollection.length;
 	rows = 4,
 	loads = 1,
 	loadsAll = Math.ceil(collectionLength / rows),
 	sliceIndex = 0,
 	endSliceIndex = sliceIndex + rows;
-;
+
 	function init(rows) {
 		let result = "";
-
 		products.ProductCollection.slice(sliceIndex, endSliceIndex).forEach(function (product, index, arr) {
 			let htmlTableRow = "<ui5-table-row  id=roll-" + index + ">" +
 						"<ui5-table-cell>" +
@@ -854,7 +852,6 @@ ${story()}
 						"<ui5-table-cell style='text-align: right'><span><b> " + product.Price + "</b>" + product.CurrencyCode + "</span></ui5-table-cell></ui5-table-row>";
 			result += htmlTableRow;
 		});
-		;
 		if (loads >= loadsAll) {
 			growingTable.growing = "None";
 		} else {
@@ -865,7 +862,6 @@ ${story()}
 
 	}
 	function loadMore() {
-		debugger
 		growingTable.busy = true;
 		setTimeout(function() {
 			++loads;
@@ -916,7 +912,7 @@ GrowingTableScroll.decorators = [
 		return html `
 			${story()}
 		<script>
-			var products = {
+			var productsScrollTable = {
 				"ProductCollection": [
 					{
 						"ProductId": "HT-1000",
@@ -1161,13 +1157,18 @@ GrowingTableScroll.decorators = [
 						"DimUnit": "cm"
 					}
 				]
-			};
-
-			var growingTable = document.getElementById("table-${index}"),
-				result = '';
-			function fill(rows) {
-				products.ProductCollection.slice(0, rows).forEach(function (product, index, arr) {
-					var test = "<ui5-table-row  id=roll-" + index + ">" +
+			},
+			growingTableScroll = document.getElementById("table-${index}"),
+			result = '',
+			collectionLengthScroll = productsScrollTable.ProductCollection.length;
+			rowsScroll = 4,
+			loadsScroll = 1,
+			loadsAllScroll = Math.ceil(collectionLengthScroll / rowsScroll),
+			sliceIndexScroll = 0,
+			endSliceIndexScroll = sliceIndexScroll + rowsScroll;
+			function fill(rowsScroll) {
+				productsScrollTable.ProductCollection.slice(sliceIndexScroll, endSliceIndexScroll).forEach(function (product, index, arr) {
+					let test = "<ui5-table-row  id=roll-" + index + ">" +
 						"<ui5-table-cell>" +
 						"<div class='double-line-content'>" +
 						"<span><b>" + product.Name +"</b></span>" +
@@ -1179,20 +1180,27 @@ GrowingTableScroll.decorators = [
 						"<ui5-table-cell style='text-align: right'><span><b> " + product.Price + "</b>" + product.CurrencyCode + "</span></ui5-table-cell></ui5-table-row>";
 					result += test;
 				});
-				growingTable.insertAdjacentHTML('beforeend', result);
+				if (loadsScroll >= loadsAllScroll) {
+					growingTableScroll.growing = "None";
+				} else {
+					sliceIndexScroll += rowsScroll;
+				}
+				growingTableScroll.insertAdjacentHTML('beforeend', result);
 			}
 			function growOnScroll() {
-				growingTable.busy = true;
+				growingTableScroll.busy = true;
 				if (timeout) {
 					clearTimeout(timeout);
 				}
 				var timeout = setTimeout(() => {
-					fill(4);
-					growingTable.busy = false;
+					loadsScroll++
+					endSliceIndexScroll = sliceIndexScroll + rowsScroll;
+					fill(rowsScroll);
+					growingTableScroll.busy = false;
 				}, 1500);
 			}
-			growingTable.addEventListener("load-more", growOnScroll);
-			fill(10);
+			growingTableScroll.addEventListener("load-more", growOnScroll);
+			fill(rowsScroll);
 </script>
 <style>
 	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
