@@ -27,7 +27,7 @@ describe("Card general interaction", () => {
 
 		const nonInteractiveCard = await browser.$("#card2");
 		const nonInteractiveCardRoot = nonInteractiveCard.shadow$(".ui5-card-root");
-		const nonInteractiveCardHeader = card.$("ui5-card-header");
+		const nonInteractiveCardHeader = nonInteractiveCard.$("ui5-card-header");
 
 		assert.strictEqual(await nonInteractiveCardHeader.getProperty("interactive"), false, "card header doesn't have interactive property");
 		assert.strictEqual(await nonInteractiveCardRoot.hasClass("ui5-card--interactive"), false, "card root doesn't have interactive class");
