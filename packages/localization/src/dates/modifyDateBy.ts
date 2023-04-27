@@ -60,8 +60,16 @@ const modifyDateByClick = (date: CalendarDate, amount: number, unit: string, min
 		break;
 	case "month":
 		if (amount === 1) {
-			newDate.setMonth(newDate.getMonth() + amount);
-			newDate.setDate(1);
+			const currentMonth = newDate.getMonth();
+			newDate.setMonth(currentMonth + 1);
+			if (newDate.getMonth() === currentMonth + 2) {
+				// We have skipped a month, so set the date to the last day of the current month
+				newDate.setDate(0);
+				newDate.setDate(1);
+			} else {
+				// We are still in the same month, so set the date to the first day of the new month
+				newDate.setDate(1);
+			}
 		}
 		if (amount === -1) {
 			newDate.setDate(0);

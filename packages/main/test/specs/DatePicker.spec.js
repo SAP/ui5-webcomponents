@@ -1288,5 +1288,4 @@ describe("Date Picker Tests", () => {
 
 		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after year selection");
 	});
-
 });
