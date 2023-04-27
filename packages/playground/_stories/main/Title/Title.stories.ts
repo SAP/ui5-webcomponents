@@ -44,13 +44,13 @@ ${story({args: {...args, level: TitleLevel.H6}})}`;
 
 export const Basic = Template.bind({});
 Basic.args = {
-	default: "Title text",
+	default: "Title Text",
 };
 Basic.decorators = [...Template.decorators];
 
 export const Wrapping = Template.bind({});
 Wrapping.args = {
-	default: "Long title text text text which wraps",
+	default: "Long Title Text Text Text Which Wraps",
 	wrappingType: WrappingType.Normal,
 }
 Wrapping.decorators = [
@@ -65,3 +65,9 @@ Wrapping.decorators = [
 ${story()}`
 	},
 ];
+
+export const WithLink = Template.bind({});
+WithLink.args = {
+	default: `<ui5-link design="Default">With Default Link (57)</ui5-link>`,
+};
+WithLink.decorators = [...Template.decorators];
