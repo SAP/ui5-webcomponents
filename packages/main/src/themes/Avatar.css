@@ -216,6 +216,22 @@
 	color: inherit;
 }
 
+.ui5-avatar-icon ~ .ui5-avatar-initials,
+.ui5-avatar-icon ~ .ui5-avatar-icon-fallback {
+	display: none;
+}
+
+.ui5-avatar-initials:not(.ui5-avatar-initials-hidden) + .ui5-avatar-icon-fallback {
+	display: none;
+}
+
+.ui5-avatar-initials-hidden {
+	position: absolute;
+	visibility: hidden;
+	z-index: 0;
+	pointer-events: none;
+}
+
 /* Slotted Badge */
 ::slotted([slot="badge"]) {
 	position: absolute;
