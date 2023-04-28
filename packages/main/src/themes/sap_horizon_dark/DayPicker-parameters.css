@@ -34,4 +34,5 @@
 	--_ui5_daypicker_item_now_selected_between_border_radius: 0.1875rem;
 	--_ui5_daypicker_item_select_between_border: 1px solid var(--sapContent_Selected_ForegroundColor);
 	--_ui5_daypicker_item_now_inset: 0.375rem;
+	--_ui5-dp-item_withsecondtype_border: 0.1875rem;
 }

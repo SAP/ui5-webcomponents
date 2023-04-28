@@ -36,5 +36,6 @@
 	--_ui5_daypicker_item_weeekend_filter: brightness(105%);
 	--_ui5_daypicker_item_selected_hover: var(--sapList_Hover_Background);
 	--_ui5_daypicker_item_now_inset: 0.375rem;
+	--_ui5-dp-item_withsecondtype_border: 0.1875rem;
 }
  

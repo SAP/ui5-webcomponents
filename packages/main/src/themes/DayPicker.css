@@ -162,7 +162,6 @@
 :host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now .ui5-dp-daysectext {
 	height: 1rem;
 	padding-top: 0;
-	padding-bottom: .187rem;
 }
 .ui5-dp-item.ui5-dp-item--selected {
 	background: var(--sapContent_Selected_Background)
