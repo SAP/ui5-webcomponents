@@ -230,7 +230,7 @@
 }
 
 .ui5-tab-strip-itemAdditionalText-hidden {
-	visibility: hidden ;
+	visibility: hidden;
 	margin-top: 1.25rem;
 }
 
@@ -258,7 +258,7 @@
 	padding: 0 0.188rem;
 }
 
-.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--withAddionalText {
+.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--withAdditionalText {
 	justify-content: flex-start;
 	height: var(--_ui5_tc_item_text_only_with_additional_text_height);
 }

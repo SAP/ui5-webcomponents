@@ -380,6 +380,22 @@ class Tab extends UI5Element implements ITab, ITabbable {
 			classes.push(`ui5-tab-strip-item--singleClickArea`);
 		}
 
+		return {
+			itemClasses: classes.join(" "),
+			additionalTextClasses: this.additionalTextClasses,
+		};
+	}
+
+	get additionalTextClasses() {
+		const classes = [];
+		if (this.additionalText) {
+			classes.push("ui5-tab-strip-itemAdditionalText");
+		}
+
+		if (this.icon && !this.additionalText) {
+			classes.push("ui5-tab-strip-itemAdditionalText-hidden");
+		}
+
 		return classes.join(" ");
 	}
 
