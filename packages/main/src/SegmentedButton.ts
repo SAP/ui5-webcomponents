@@ -98,6 +98,19 @@ class SegmentedButton extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SegmentedButtonItem>;
 
+	/**
+	 * Defines custom component width.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> By default the component's width is auto and it takes up the space it needs to fit its items.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @public
+	 * @name sap.ui.webc.main.SegmentedButton.prototype.customWidth
+	 */
+	@property()
+	customWidth!: string;
+
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
@@ -110,6 +123,8 @@ class SegmentedButton extends UI5Element {
 
 	widths?: Array<number>;
 	_selectedItem?: SegmentedButtonItem;
+	prevParentWidth!: string; // used to store the width of the component's parent before the resize
+	initialState!: boolean; // helper which indicates whether the stored width in the prevParentWidth is the initial one, since on change they change a few times and we want only the first one
 
 	static async onDefine() {
 		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -268,8 +283,15 @@ class SegmentedButton extends UI5Element {
 
 		const parentWidth = this.parentNode ? (this.parentNode as HTMLElement).offsetWidth : 0;
 
-		if (!this.style.width || this.percentageWidthSet) {
+		if (!this.customWidth && (!this.style.width || this.percentageWidthSet)) {
 			this.style.width = `${Math.max(...this.widths!) * this.items.length}px`;
+			this.absoluteWidthSet = true;
+			if (!this.initialState) {
+				this.prevParentWidth = `${Math.max(...this.widths!) * this.items.length}px`;
+				this.initialState = true;
+			}
+		} else if (this.customWidth) {
+			this.style.width = this.customWidth;
 			this.absoluteWidthSet = true;
 		}
 
@@ -277,9 +299,16 @@ class SegmentedButton extends UI5Element {
 			item.style.width = "100%";
 		});
 
-		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
+		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet && this.customWidth) {
 			this.style.width = "100%";
 			this.percentageWidthSet = true;
+		} else if (parentWidth <= this.offsetWidth && this.absoluteWidthSet && !this.customWidth) {
+			this.style.width = "100%";
+		}
+
+		if (parentWidth > parseInt(this.prevParentWidth.replace("px", "")) && !this.customWidth) {
+			this.style.width = this.prevParentWidth!;
+			this.absoluteWidthSet = true;
 		}
 	}
 
