@@ -46,11 +46,6 @@ const Template: UI5StoryArgs<DatePicker, StoryArgsSlots> = (args) => html`<ui5-d
 
 export const Basic = Template.bind({});
 
-export const Placeholder = Template.bind({});
-Placeholder.args = {
-	placeholder: "Delivery Date...",
-};
-
 export const State = Template.bind({});
 State.storyName = "ValueState and Message";
 State.args = {
