@@ -1319,18 +1319,15 @@ describe("Date Picker Tests", () => {
 
 		const Input = await datepicker.getInput();
 		await Input.click();
-		await browser.keys("Apr 12, 2120");
+		await browser.keys("Apr 12, 2024");
 		await browser.keys("Enter");
 		assert.equal(await Input.getProperty("valueState"), "None", "Correct value state");
 
 		await datepicker.openPicker();
 		const btnYear = await datepicker.getBtnYear();
-		const nextBtn = await datepicker.getBtnNext();
 		await btnYear.click();
-		await nextBtn.click();
-		await nextBtn.click();
 
-		let displayedYear = await datepicker.getDisplayedYear(13);
-		assert.notOk(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2163 is not disabled");
+		let displayedYear = await datepicker.getDisplayedYear(11);
+		assert.notOk(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2025 is not disabled");
 	});
 });

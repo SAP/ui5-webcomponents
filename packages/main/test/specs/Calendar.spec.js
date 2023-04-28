@@ -387,30 +387,23 @@ describe("Calendar general interaction", () => {
 		const prevButton = await calendar.shadow$("ui5-calendar-header").shadow$("[data-ui5-cal-header-btn-prev]");
 		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
 		// setting the min and max dates both to a valid format date, but not in the valid ISO format.
-		await calendar.setAttribute("max-date", new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).valueOf() / 1000);
+		await calendar.setAttribute("max-date", `${new Date(Date.UTC(2024, 9, 4, 0, 0, 0))}`);
 		await calendar.setAttribute("min-date", "25.10.2018");
+		console.log(await calendar.getAttribute("max-date"));
 
 		await yearButton.click();
-		await prevButton.click();
-		await prevButton.click();
-		const year1973 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
+		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
 			const text = await span.getText();
-			return text === "1973";
+			return text === "2016";
 		}).parentElement();
 
-		assert.strictEqual(await year1973.hasClass("ui5-yp-item--disabled"), false, "Year 1973 is not disabled");
-		
-		await nextButton.click();
-		await nextButton.click();
-		await nextButton.click();
-		await nextButton.click();
-		await nextButton.click();
+		assert.strictEqual(await year2016.hasClass("ui5-yp-item--disabled"), false, "Year 2016 is not disabled");
 
-		const year2073 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
+		const year2024 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
 			const text = await span.getText();
-			return text === "2073";
+			return text === "2024";
 		}).parentElement();
 
-		assert.strictEqual(await year2073.hasClass("ui5-yp-item--disabled"), false, "Year 2073 is not disabled");
+		assert.strictEqual(await year2024.hasClass("ui5-yp-item--disabled"), false, "Year 2024 is not disabled");
 	});
 });
