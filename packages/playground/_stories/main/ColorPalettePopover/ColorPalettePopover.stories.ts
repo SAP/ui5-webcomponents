@@ -37,10 +37,16 @@ const Template: UI5StoryArgs<ColorPalettePopover, StoryArgsSlots> = (args) => ht
 export const Basic = Template.bind({});
 Basic.args = {
 	id: "colorPalettePopover",
-	default: `<ui5-color-palette-item value="pink"></ui5-color-palette-item>
-<ui5-color-palette-item value="darkblue"></ui5-color-palette-item>
-<ui5-color-palette-item value="#444444"></ui5-color-palette-item>
-<ui5-color-palette-item value="rgb(0,200,0)"></ui5-color-palette-item>`,
+	default: `<ui5-color-palette-item value="lightsalmon"></ui5-color-palette-item>
+<ui5-color-palette-item value="lightpink"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(216,124,172)"></ui5-color-palette-item>
+<ui5-color-palette-item value="#6c666d"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(55,81,95)"></ui5-color-palette-item>
+<ui5-color-palette-item value="#0072bb"></ui5-color-palette-item>
+<ui5-color-palette-item value="powderblue"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(143,201,58)"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(195,172,206)"></ui5-color-palette-item>
+<ui5-color-palette-item value="orange"></ui5-color-palette-item>`,
 };
 Basic.decorators = [
 	(story) => html`<ui5-button id="colorPaletteBtn">Open ColorPalettePopover</ui5-button>
@@ -67,11 +73,21 @@ DefaultColor.args = {
 	showDefaultColor: true,
 	showRecentColors: true,
 	showMoreColors: true,
-	default: `<ui5-color-palette-item value="blue"></ui5-color-palette-item>
-<ui5-color-palette-item value="cyan"></ui5-color-palette-item>
+	default: `<ui5-color-palette-item value="lightsalmon"></ui5-color-palette-item>
+<ui5-color-palette-item value="lightpink"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(216,124,172)"></ui5-color-palette-item>
+<ui5-color-palette-item value="#6c666d"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(55,81,95)"></ui5-color-palette-item>
+<ui5-color-palette-item value="#0072bb"></ui5-color-palette-item>
+<ui5-color-palette-item value="powderblue"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(143,201,58)"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(195,172,206)"></ui5-color-palette-item>
 <ui5-color-palette-item value="orange"></ui5-color-palette-item>
-<ui5-color-palette-item value="#5480e7"></ui5-color-palette-item>
-<ui5-color-palette-item value="#ff6699"></ui5-color-palette-item>`,
+<ui5-color-palette-item value="#ef3054"></ui5-color-palette-item>
+<ui5-color-palette-item value="#ff6f59"></ui5-color-palette-item>
+<ui5-color-palette-item value="moccasin"></ui5-color-palette-item>
+<ui5-color-palette-item value="#07A0C3"></ui5-color-palette-item>
+<ui5-color-palette-item value="rgb(8,103,136)"></ui5-color-palette-item>`,
 };
 DefaultColor.decorators = [
 	(story) => html`<ui5-button id="colorPaletteBtn">Open ColorPalettePopover</ui5-button>
