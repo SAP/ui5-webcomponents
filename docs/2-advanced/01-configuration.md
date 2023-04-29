@@ -9,6 +9,7 @@ There are several configuration settings that affect all UI5 Web Components glob
 | Setting                                       | Values                                                                                                                                                                                                                                                                                         | Default Value | Description                                                          | Applies To                                                       |
 |-----------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|----------------------------------------------------------------------|------------------------------------------------------------------|
 | [theme](#theme)                               | `sap_fiori_3`, `sap_fiori_3_dark`, `sap_fiori_3_hcb`, `sap_fiori_3_hcw`, `sap_belize`, `sap_belize_hcb`, `sap_belize_hcw`, `sap_horizon`, `sap_horizon_dark`, `sap_horizon_hcb`, `sap_horizon_hcw`                                                                                                                                                                    | `sap_fiori_3` | Visual theme to be applied                                           | All components                                                   |
+| [themeRoot] (#themeRoot)                      | `""` | The themeRoot the load theme styles from                             | All components                                                   |
 | [language](#language)                         | `ar`, `bg`, `ca`, `cs`, `cy`, `da`, `de`, `el`, `en`, `en_GB`, `es`, `es_MX`, `et`, `fi`, `fr`, `fr_CA`, `hi`, `hr`, `hu`, `in`, `it`, `iw`, `ja`, `kk`, `ko`, `lt`, `lv`, `ms`, `nl`, `no`, `pl`, `pt_PT`, `pt`, `ro`, `ru`, `sh`, `sk`, `sl`, `sv`, `th`, `tr`, `uk`, `vi`, `zh_CN`, `zh_TW` | N/A (`null`)  | Language to be used for translatable texts                           | Components and icons with translatable texts                     |
 | [animationMode](#animationMode)               | `full`, `basic`, `minimal`, `none`                                                                                                                                                                                                                                                             | `full`        | Amount/intensity of animations to be played for some components      | Components with animations (`ui5-panel`, `ui5-carousel`, etc.) |
 | [calendarType](#calendarType)                 | `Gregorian`, `Islamic`, `Buddhist`, `Japanese`, `Persian`                                                                                                                                                                                                                                      | `Gregorian`   | Default calendar type to be used for date-related components         | Date/time components (`ui5-date-picker`, etc.)                 |
@@ -57,6 +58,17 @@ setTheme("sap_belize_hcb");
 ```js
 import { setTheme, getDefaultTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 setTheme(getDefaultTheme());
+```
+
+### themeRoot
+The `themeRoot` setting is specific to custom themes, created with [UI Theme Designer](../3-customizing/01-theme.md) and allows fetching a theme from external location, e.g theme root.
+When `themeRoot` (and `theme`) is set, the framework will fetch the theme CSS variables from the following location: `${themeRoot}Base/baseLib/${theme}/css_variables.css`, where the path is specific to themes, created via the [UI Theme Designer](../3-customizing/01-theme.md).
+
+Example:
+```js
+import { setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
+setThemeRoot("https://my-example-host.com/");
+// will fetch theme CSS variables from "https://my-example-host.com/UI5/Base/baseLib/mytheme/css_variables.css".
 ```
 
 ### language
