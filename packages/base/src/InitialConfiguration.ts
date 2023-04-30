@@ -173,6 +173,8 @@ const applyURLParam = (key: string, value: string, paramType: string) => {
 		if (value && value.includes("@")) {
 			initialConfig.themeRoot = normalizeThemeRootParamValue(value);
 		}
+	} else if (param === "themeRoot") {
+		initialConfig.themeRoot = validateThemeRoot(value);
 	} else {
 		initialConfig[param] = value;
 	}

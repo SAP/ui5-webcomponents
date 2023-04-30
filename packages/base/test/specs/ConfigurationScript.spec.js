@@ -42,7 +42,15 @@ describe("Configuration script has effect", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getTheme());
 		});
-		assert.strictEqual(res, 'sap_belize_hcb', "Thems is HCB");
+		assert.strictEqual(res, 'sap_belize_hcb', "Theme is HCB");
+	});
+
+	it("Tests that theme root is applied", async () => {
+		const res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getThemeRoot());
+		});
+		assert.strictEqual(res, 'https://my-example-host.com/', "Theme root is set");
 	});
 
 	it("Tests that noConflict is applied", async () => {

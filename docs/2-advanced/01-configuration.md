@@ -62,7 +62,7 @@ setTheme(getDefaultTheme());
 
 ### themeRoot
 The `themeRoot` setting is specific to custom themes, created with [UI Theme Designer](../3-customizing/01-theme.md) and allows fetching a theme from external location, e.g theme root.
-When `themeRoot` (and `theme`) is set, the framework will fetch the theme CSS variables from the following location: `${themeRoot}Base/baseLib/${theme}/css_variables.css`, where the path is specific to themes, created via the [UI Theme Designer](../3-customizing/01-theme.md).
+When `themeRoot` (and `theme`) is set, the framework will fetch the theme CSS variables from the following location: `${themeRoot}/UI5/Base/baseLib/${theme}/css_variables.css`, where the path is specific to themes, created via the [UI Theme Designer](../3-customizing/01-theme.md).
 
 It's possible to configure the theme root either via the [configuration script](#script) or [module imports](#imports).
 
