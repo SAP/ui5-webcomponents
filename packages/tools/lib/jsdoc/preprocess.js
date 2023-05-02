@@ -8,7 +8,7 @@ const sourceDir = process.argv[3];
 const preprocessTypes = async () => {
 	try {
 		const { globby } = await import("globby");
-		const fileNames = await globby(inputDir + "**/types/*.js");
+		const fileNames = await globby(inputDir.replace(/\\/g, "/") + "**/types/*.js");
 
 		return Promise.all(fileNames.map(processTypeFile));
 	} catch(e) {
@@ -63,7 +63,7 @@ const preprocessComponents = async () => {
 
 	try {
 		const { globby } = await import("globby");
-		const fileNames = await globby(sourceDir + "/*.ts");
+		const fileNames = await globby(sourceDir.replace(/\\/g, "/") + "/*.ts");
 
 		return Promise.all(fileNames.map(processComponentFile));
 	} catch(e) {

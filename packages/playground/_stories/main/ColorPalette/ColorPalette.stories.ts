@@ -1,5 +1,5 @@
-import { html } from "lit-html";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { html } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";

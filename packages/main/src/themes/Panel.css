@@ -81,7 +81,7 @@
 }
 
 .ui5-panel-content {
-	padding: 0.625rem 1rem 1.375rem 1rem;
+	padding: var(--_ui5_panel_content_padding);
 	background-color: var(--sapGroup_ContentBackground);
 	outline: none;
 	border-bottom-left-radius: var(--_ui5_panel_border_radius);
