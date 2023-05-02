@@ -1,4 +1,5 @@
 const fs = require("fs");
+const path = require("path");
 const prompts = require("prompts");
 const jsFileContentTemplate = require("./jsFileContentTemplate.js");
 const tsFileContentTemplate = require("./tsFileContentTemplate.js");
@@ -78,9 +79,6 @@ const createWebComponent = async () => {
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
 	let tagName = consoleArguments[1];
-	let language = consoleArguments[2];
-	let isTypeScript;
-
 
 	if (componentName && !isNameValid(componentName)) {
 		throw new Error("Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
@@ -88,10 +86,6 @@ const createWebComponent = async () => {
 
 	if (tagName && !isTagNameValid(tagName)) {
 		throw new Error("Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
-	}
-
-	if (language && language !== "typescript" && language !== "ts" && language !== "javascript" && language !== "js") {
-		throw new Error("Invalid language. Please use 'typescript','javascript' or their respective 'ts','js'.");
 	}
 
 	if (!componentName) {
@@ -122,28 +116,7 @@ const createWebComponent = async () => {
 		}
 	}
 
-	if (!language) {
-		const response = await prompts({
-			type: "select",
-			name: "isTypeScript",
-			message: "Please select a language:",
-			choices: [
-				{
-					title: "TypeScript (recommended)",
-					value: true,
-				},
-				{
-					title: "JavaScript",
-					value: false,
-				},
-			],
-		});
-		isTypeScript = response.isTypeScript;
-	} else if (language === "typescript" || language === "ts") {
-		isTypeScript = true;
-	} else {
-		isTypeScript = false;
-	}
+	const isTypeScript = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
 
 	generateFiles(componentName, tagName, library, packageName, isTypeScript);
 };
