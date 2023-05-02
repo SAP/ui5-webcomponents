@@ -25,6 +25,7 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
 
 type SegmentedButtonSelectionChangeEventDetail = {
 	selectedItem: SegmentedButtonItem,
+	pressed: boolean,
 }
 
 /**
@@ -69,6 +70,7 @@ type SegmentedButtonSelectionChangeEventDetail = {
 @event("selection-change", {
 	detail: {
 		selectedItem: { type: HTMLElement },
+		pressed: { type: Boolean },
 	},
 })
 class SegmentedButton extends UI5Element {
@@ -172,20 +174,20 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
-		const selectedItems = this.items.filter(item => item.pressed);
-		const selectedIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
+		// const selectedItems = this.items.filter(item => item.pressed);
+		// const selectedIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
 
-		if (this._selectedItem && selectedItems.length > 1) {
-			selectedItems.splice(selectedIndex, 1);
-		}
-		this._selectedItem = selectedItems.pop();
+		// if (this._selectedItem && selectedItems.length > 1) {
+		// 	selectedItems.splice(selectedIndex, 1);
+		// }
+		// this._selectedItem = selectedItems.pop();
 
-		if (this._selectedItem) {
-			this.items.forEach(item => {
-				item.pressed = false;
-			});
-			this._selectedItem.pressed = true;
-		}
+		// if (this._selectedItem) {
+		// this.items.forEach(item => {
+		// 	item.pressed = false;
+		// });
+		// 	this._selectedItem.pressed = true;
+		// }
 	}
 
 	_selectItem(e: MouseEvent | KeyboardEvent) {
@@ -196,17 +198,12 @@ class SegmentedButton extends UI5Element {
 			return;
 		}
 
-		if (target !== this._selectedItem) {
-			if (this._selectedItem) {
-				this._selectedItem.pressed = false;
-			}
-			this._selectedItem = target;
-			this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
-				selectedItem: this._selectedItem,
-			});
-		}
+		this._selectedItem = target;
+		this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
+			selectedItem: target,
+			pressed: !target.pressed,
+		});
 
-		this._selectedItem.pressed = true;
 		this._itemNavigation.setCurrentItem(this._selectedItem);
 
 		this.selectedItem!.focus();

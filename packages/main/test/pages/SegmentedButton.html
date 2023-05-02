@@ -126,6 +126,11 @@
 
 	<script>
 
+		segButtonProg.addEventListener("selection-change", function(event) {
+			let target = event.detail.selectedItem;
+			target.pressed = event.detail.pressed;
+		});
+
 		progSetButton1.addEventListener("click", function() {
 			segButtonProg.items[1].pressed = true;
 		});
