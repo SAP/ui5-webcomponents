@@ -9,7 +9,7 @@ export interface IDirectoryUtils {
     writeFile(filePath: string, content: string): Promise<void>;
     globToRelativePath(globStr: string, filePath: string): string;
     readContent(filePath: string): Promise<string>;
-    resolvePath(filePath: string): string;
+    joinPath(filePath: string): string;
 }
 
 /**
@@ -62,15 +62,22 @@ export class DirectoryUtils implements IDirectoryUtils {
             throw new Error("No source path provided");
         }
 
+        const config = {
+            absolute: false,
+            ignore: ignore.map((pattern) => path.resolve(pattern)),
+        };
+
         // this src is a regex, e.g. ../../../docs/**/*
         const files = await new Promise<string[]>((resolve, reject) => {
-            glob(src, { absolute: false, ignore }, (err, files) => {
+            const onDone = (err: Error | null, files: string[]) => {
                 if (err) {
                     reject(err);
                 } else {
                     resolve(files);
                 }
-            });
+            };
+
+            glob(src, config, onDone);
         });
 
         return files;
@@ -115,7 +122,7 @@ export class DirectoryUtils implements IDirectoryUtils {
         return content;
     }
 
-    public resolvePath(filePath: string): string {
+    public joinPath(filePath: string): string {
         if (!filePath) {
             throw new Error("No file path provided");
         }

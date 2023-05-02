@@ -30,8 +30,15 @@
 	cursor: inherit;
 }
 
-:host([wrapping-type="Normal"]) .ui5-title-root {
+:host([wrapping-type="Normal"]) .ui5-title-root,
+:host([wrapping-type="Normal"]) ::slotted(*) {
 	white-space: pre-line;
+}
+
+::slotted(*) {
+	font-size: inherit;
+	font-family: inherit;
+	text-shadow: inherit;
 }
 
 /* Level H1 */
