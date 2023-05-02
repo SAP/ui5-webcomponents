@@ -23,7 +23,10 @@ export default {
     subcomponents: {'TableColumn' : 'ui5-table-column', 'TableRow' : 'ui5-table-row', 'TableGroupRow' : 'ui5-table-group-row', 'TableCell' : 'ui5-table-cell'},
     parameters: {
         docs: {
-          page: DocsPage({ ...componentInfo, component })
+          page: DocsPage({ ...componentInfo, component }),
+		  story: {
+			height: "300px"
+		 }
         },
     },
     argTypes,
@@ -89,172 +92,6 @@ default:`
 	</ui5-table-cell>
 </ui5-table-row>`
 };
-
-export const TableSingleSelect = Template.bind({});
-TableSingleSelect.args = {
-	mode: TableMode.SingleSelect,
-	columns: `
-<ui5-table-column slot="columns">
-	<span>Product</span>
-</ui5-table-column>
-<ui5-table-column slot="columns" min-width="600" popin-text="Supplier" demand-popin="">
-	<span>Supplier</span>
-</ui5-table-column>
-<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin="" class="table-header-text-alignment">
-	<span>Dimensions</span>
-</ui5-table-column>
-<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin="" class="table-header-text-alignment">
-	<span>Weight</span>
-</ui5-table-column>
-<ui5-table-column slot="columns" class="table-header-text-alignment">
-	<span>Price</span>
-</ui5-table-column>`,
-default: `
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 15</b></span>
-			<span style="margin-top: 0.5rem">HT-1000</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>30 x 18 x 3cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>956</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 175</b></span>
-			<span style="margin-top: 0.5rem">HT-1001</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>29 x 17 x 3.1cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.5</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>1249</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 18</b></span>
-			<span style="margin-top: 0.5rem">HT-1002</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>28 x 19 x 2.5cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>1570</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>`
-}
-TableSingleSelect.storyName = "Table in SingleSelect mode";
-
-export const TableMultiSelect = Template.bind({});
-TableMultiSelect.args = {
-	mode: TableMode.MultiSelect,
-	columns: `
-<ui5-table-column slot="columns">
-	<span>Product</span>
-</ui5-table-column>
-<ui5-table-column slot="columns" min-width="600" popin-text="Supplier" demand-popin="">
-	<span>Supplier</span>
-</ui5-table-column>
-<ui5-table-column slot="columns" min-width="800" popin-text="Dimensions" demand-popin="" class="table-header-text-alignment">
-	<span>Dimensions</span>
-</ui5-table-column>
-<ui5-table-column slot="columns" min-width="800" popin-text="Weight" demand-popin="" class="table-header-text-alignment">
-	<span>Weight</span>
-</ui5-table-column>
-<ui5-table-column slot="columns" class="table-header-text-alignment">
-	<span>Price</span>
-</ui5-table-column>`,
-default: `
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 15</b></span>
-			<span style="margin-top: 0.5rem">HT-1000</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>30 x 18 x 3cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>956</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 175</b></span>
-			<span style="margin-top: 0.5rem">HT-1001</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>29 x 17 x 3.1cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.5</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>1249</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 18</b></span>
-			<span style="margin-top: 0.5rem">HT-1002</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>28 x 19 x 2.5cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>1570</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>`
-}
-TableMultiSelect.storyName = "Table in MultiSelect mode";
 
 export const TableDisplayInline = Template.bind({});
 TableDisplayInline.args = {
@@ -334,127 +171,29 @@ default: `
 	<ui5-table-cell style="text-align: right">
 		<span><b>1570</b>EUR</span>
 	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 15</b></span>
-			<span style="margin-top: 0.5rem">HT-1000</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>30 x 18 x 3cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>956</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 175</b></span>
-			<span style="margin-top: 0.5rem">HT-1001</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>29 x 17 x 3.1cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.5</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>1249</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 18</b></span>
-			<span style="margin-top: 0.5rem">HT-1002</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>28 x 19 x 2.5cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>1570</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 15</b></span>
-			<span style="margin-top: 0.5rem">HT-1000</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>30 x 18 x 3cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>956</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 175</b></span>
-			<span style="margin-top: 0.5rem">HT-1001</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>29 x 17 x 3.1cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.5</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>1249</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
-<ui5-table-row>
-	<ui5-table-cell>
-		<div class="double-line-content">
-			<span><b>Notebook Basic 18</b></span>
-			<span style="margin-top: 0.5rem">HT-1002</span>
-		</div>
-	</ui5-table-cell>
-	<ui5-table-cell>
-		<span>Very Best Screens</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span>28 x 19 x 2.5cm</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
-	</ui5-table-cell>
-	<ui5-table-cell style="text-align: right">
-		<span><b>1570</b>EUR</span>
-	</ui5-table-cell>
-</ui5-table-row>
+</ui5-table-row>`
+}
+
+export const TableStickyHeader = Template.bind({});
+TableStickyHeader.args = {
+	columns: `
+<ui5-table-column slot="columns">
+	<span style="line-height: 1.4rem">Product</span>
+</ui5-table-column>
+<ui5-table-column slot="columns" min-width="800">
+	<span style="line-height: 1.4rem">Supplier</span>
+</ui5-table-column>
+<ui5-table-column slot="columns" min-width="600" popin-text="Dimensions" demand-popin="" class="table-header-text-alignment">
+	<span style="line-height: 1.4rem">Dimensions</span>
+</ui5-table-column>
+<ui5-table-column slot="columns" min-width="600" popin-text="Weight" demand-popin="" class="table-header-text-alignment">
+	<span style="line-height: 1.4rem">Weight</span>
+</ui5-table-column>
+<ui5-table-column slot="columns" class="table-header-text-alignment">
+	<span style="line-height: 1.4rem">Price</span>
+</ui5-table-column>`,
+	stickyColumnHeader: true,
+	default: `
 <ui5-table-row>
 	<ui5-table-cell>
 		<div class="double-line-content">
@@ -515,22 +254,7 @@ default: `
 		<span><b>1570</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>`
-}
-TableDisplayInline.decorators = [
-	(story) =>  {
-		return html `
-<div class="header">
-	<button id="toggleSticky" style="height: 32px">Toggle Sticky Column Header</button>
-</div>
-${story()}
-<script>
-document.getElementById("toggleSticky").addEventListener("click", function(event) {
-document.getElementById("table-${index}").stickyColumnHeader = !document.getElementById("table-${index}").stickyColumnHeader
-});
-</script>`
-	}
-]
-
+};
 
 export const TableNoData = Template.bind({});
 TableNoData.args = {
@@ -558,7 +282,7 @@ TableNoData.storyName = "Table with No Data";
 export const GrowingTableMoreButton= Template.bind({});
 GrowingTableMoreButton.args = {
 	growing: TableGrowingMode.Button,
-	growingButtonSubtext: "[4 / 12]",
+	growingButtonSubtext: "[4 / 11]",
 	columns: `
 <ui5-table-column slot="columns">
 	<span style="line-height: 1.4rem">Product</span>
@@ -1213,8 +937,8 @@ GrowingTableScroll.decorators = [
 
 GrowingTableScroll.storyName = "Growing Table on Scroll";
 
-export const GroupingTableSingleSelect= Template.bind({});
-GroupingTableSingleSelect.args = {
+export const GroupingTableSelect= Template.bind({});
+GroupingTableSelect.args = {
 	mode: TableMode.SingleSelect,
 	columns: `
 	<ui5-table-column id="column-1" slot="columns">
@@ -1252,48 +976,4 @@ GroupingTableSingleSelect.args = {
 	</ui5-table-row>
 	`
 }
-GroupingTableSingleSelect.storyName = "Table with grouping (SingleSelect - click on item to set navigated)";
-
-
-
-
-export const GroupingTableMultiSelect= Template.bind({});
-GroupingTableMultiSelect.args = {
-	mode: TableMode.MultiSelect,
-	columns: `
-	<ui5-table-column id="column-1" slot="columns">
-		<ui5-label>City</ui5-label>
-	</ui5-table-column>
-	<ui5-table-column id="column-2" slot="columns" min-width="500" popin-text="Supplier" demand-popin="">
-		<ui5-label>Supplier</ui5-label>
-	</ui5-table-column>
-	<ui5-table-column id="column-3" slot="columns" min-width="500">
-		<ui5-label>Country</ui5-label>
-	</ui5-table-column>
-	`,
-	default: `
-	<ui5-table-group-row>Country: Bulgaria</ui5-table-group-row>
-	<ui5-table-row>
-		<ui5-table-cell><span>Sofia</span></ui5-table-cell>
-		<ui5-table-cell><span>Company 1</span></ui5-table-cell>
-		<ui5-table-cell><span>Bulgaria</span></ui5-table-cell>
-	</ui5-table-row>
-	<ui5-table-row>
-		<ui5-table-cell><span>Plovdiv</span></ui5-table-cell>
-		<ui5-table-cell><span>Company 2</span></ui5-table-cell>
-		<ui5-table-cell><span>Bulgaria</span></ui5-table-cell>
-	</ui5-table-row>
-	<ui5-table-group-row><span>Country: USA</span></ui5-table-group-row>
-	<ui5-table-row>
-		<ui5-table-cell><span>Denver</span></ui5-table-cell>
-		<ui5-table-cell><span>Company 3</span></ui5-table-cell>
-		<ui5-table-cell><span>USA</span></ui5-table-cell>
-	</ui5-table-row>
-	<ui5-table-row>
-		<ui5-table-cell><span>Boston</span></ui5-table-cell>
-		<ui5-table-cell><span>Company 4</span></ui5-table-cell>
-		<ui5-table-cell><span>USA</span></ui5-table-cell>
-	</ui5-table-row>
-	`
-}
-GroupingTableMultiSelect.storyName = "Tables with grouping (MultiSelect)";
+GroupingTableSelect.storyName = "Table with grouping and select mode";
