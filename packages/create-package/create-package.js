@@ -92,7 +92,7 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-const generateFilesContent = (name, tag, typescript) => {
+const generateFilesContent = (name, tag, typescript, noSubfolder) => {
 	const className = capitalizeFirst(kebabToCamelCase(tag));
 
 	// All variables that will be replaced in the content of the resources/
@@ -141,7 +141,7 @@ const generateFilesContent = (name, tag, typescript) => {
 	}
 
 	// Update package.json
-	const destDir = path.join(`./`, name);
+	const destDir = noSubfolder ? path.join(`./`) : path.join(`./`, name);
 	mkdirp.sync(destDir);
 	fs.writeFileSync(path.join(destDir, "package.json"), JSON.stringify(packageContent, null, 2));
 	// Copy files
@@ -180,9 +180,10 @@ const createWebcomponentsPackage = async () => {
 	let name = argv.name || "my-package";
 	let tag = argv.tag || "my-first-component";
 	let typescriptSupport = !!argv.enableTypescript;
+	let noSubfolder = !!argv.noSubfolder;
 
 	if (argv.skip) {
-		return generateFilesContent(name, tag, typescriptSupport);
+		return generateFilesContent(name, tag, typescriptSupport, noSubfolder);
 	}
 
 	if (!argv.name) {
@@ -225,7 +226,7 @@ const createWebcomponentsPackage = async () => {
 		tag = response.tag;
 	}
 
-	return generateFilesContent(name, tag, typescriptSupport);
+	return generateFilesContent(name, tag, typescriptSupport, noSubfolder);
 };
 
 createWebcomponentsPackage();
