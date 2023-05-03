@@ -4,6 +4,29 @@ const prompts = require("prompts");
 const jsFileContentTemplate = require("./jsFileContentTemplate.js");
 const tsFileContentTemplate = require("./tsFileContentTemplate.js");
 
+/**
+ * Hyphanates the given PascalCase string.
+ * For Example:
+ * FooBar -> "foo-bar"
+ * Foobar -> "foobar-tag" (adds suffix)
+ */
+const hyphaneteComponentName = (componentName) => {
+	const result = componentName.replace(/([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+
+	return result.includes("-") ? result : `${result}-tag`;
+};
+
+/**
+ * Capitalizes first letter of string.
+ */
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+
+/**
+ * Validates component name, enforcing PascalCase pattern - Button, MyButton.
+ */
+const PascalCasePattern = /^([A-Z]+)([A-Za-z]+)$/
+const isNameValid = name => typeof name === "string" && PascalCasePattern.test(name);
+
 const getPackageName = () => {
 	if (!fs.existsSync("./package.json")) {
 		throw("The current directory doesn't contain package.json file.");
@@ -35,13 +58,6 @@ const getLibraryName = packageName => {
 
 	return packageName.substr("webcomponents-".length);
 };
-
-// String manipulation
-const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
-
-// Validation of user input
-const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/);
-const isTagNameValid = tagName => tagName.match(/^([a-z][a-z0-9]*-)([a-z0-9]+(-[a-z0-9]+)*)$/);
 
 const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
 	componentName = capitalizeFirstLetter(componentName);
@@ -78,14 +94,9 @@ const createWebComponent = async () => {
 
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
-	let tagName = consoleArguments[1];
 
 	if (componentName && !isNameValid(componentName)) {
-		throw new Error("Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
-	}
-
-	if (tagName && !isTagNameValid(tagName)) {
-		throw new Error("Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
+		throw new Error(`${componentName} is invalid component name. Use only letters (at least two) and start with capital one:  Button, MyButton, etc.`);
 	}
 
 	if (!componentName) {
@@ -102,21 +113,8 @@ const createWebComponent = async () => {
 		}
 	}
 
-	if (!tagName) {
-		const response = await prompts({
-			type: "text",
-			name: "tagName",
-			message: "Please enter a tag name:",
-			validate: (value) => isTagNameValid(value),
-		});
-		tagName = response.tagName;
-
-		if (!tagName) {
-			process.exit();
-		}
-	}
-
 	const isTypeScript = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
+	const tagName = hyphaneteComponentName(componentName);
 
 	generateFiles(componentName, tagName, library, packageName, isTypeScript);
 };
