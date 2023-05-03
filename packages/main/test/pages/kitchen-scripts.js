@@ -63,12 +63,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	btnTheme.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? HCB : FIORI3;
-		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, theme);
+		window["sap-ui-webcomponents-bundle"].configuration.setTheme(theme)
 	}, false);
 
 	btnLightDark.addEventListener('click', function(e) {
 		var theme = e.target.pressed ? FIORI3_DARK : FIORI3;
-		window.location.href = buildURL(e.target.pressed, btnRTL.pressed, theme);
+		window["sap-ui-webcomponents-bundle"].configuration.setTheme(theme)
 	}, false);
 
 	menuBtn.addEventListener('click', function(event) {

@@ -68,9 +68,14 @@ const detectExternalTheme = async (theme: string) => {
 };
 
 const themeProps = new CSSStyleSheet();
+let themeRules = "";
 
 const getEffectiveThemeProperties = () => {
 	return themeProps;
+};
+
+const getEffectiveThemeRules = () => {
+	return themeRules;
 };
 
 const loadAndApplyThemeProps = async (packagesTheme?: string) => {
@@ -82,8 +87,8 @@ const loadAndApplyThemeProps = async (packagesTheme?: string) => {
 			rules += typeof packageProperties === "string" ? packageProperties : packageProperties.content;
 		}
 	});
-
-	getEffectiveThemeProperties().replaceSync(rules);
+	themeRules = rules;
+	getEffectiveThemeProperties().replaceSync(themeRules);
 };
 
 const applyTheme = async (theme: string) => {
@@ -104,4 +109,4 @@ const applyTheme = async (theme: string) => {
 };
 
 export default applyTheme;
-export { getEffectiveThemeProperties };
+export { getEffectiveThemeProperties, getEffectiveThemeRules };
