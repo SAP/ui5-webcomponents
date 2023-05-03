@@ -103,7 +103,7 @@ const createWebComponent = async () => {
 			type: "text",
 			name: "componentName",
 			message: "Please enter a component name:",
-			validate: (value) => isNameValid(value),
+			validate: (value) => isNameValid(value) ? true : "Component name should follow PascalCase pattern (f.e. Button, MyButton, etc.).",
 		});
 		componentName = response.componentName;
 

@@ -207,7 +207,7 @@ const createWebcomponentsPackage = async () => {
 			type: "text",
 			name: "name",
 			message: "Package name:",
-			validate: isNameValid,
+			validate: (value) => isNameValid(value) ? true : "Package name should be a string containing the following symbols [a-z,A-Z,0-9,_,-].",
 		});
 		name = response.name;
 	}
@@ -237,7 +237,7 @@ const createWebcomponentsPackage = async () => {
 			name: "componentName",
 			message: "Component name:",
 			initial: "MyComponent",
-			validate: isComponentNameValid,
+			validate: (value) => isComponentNameValid(value) ? true : "Component name should follow PascalCase pattern (f.e. Button, MyButton, etc.).",
 		});
 		componentName = response.componentName;
 	}
