@@ -235,7 +235,7 @@
     --_ui5_dialog_footer_height: 2.5rem;
 
 	/* Input */
-	--_ui5_input_height: var(--_ui5_input_compact_height);
+	--_ui5_input_height: var(--sapElement_Compact_Height);
 	--_ui5_input_inner_padding: 0 0.5rem;
 	--_ui5_input_inner_padding_with_icon: 0 0.2rem 0 0.5rem;
 	--_ui5_input_inner_space_to_tokenizer: 0.125rem;

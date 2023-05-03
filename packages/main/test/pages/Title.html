@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 
@@ -11,25 +12,47 @@
 	<script src="../../bundle.esm.js" type="module"></script>
 
 
-<link rel="stylesheet" type="text/css" href="./styles/Title.css">
+	<link rel="stylesheet" type="text/css" href="./styles/Title.css">
 </head>
 
 <body class="title1auto">
 	<section>
-		<ui5-title id="titleH1" level="H1">Title level 1</ui5-title>
-		<ui5-title>Title level Auto (2)</ui5-title>
-		<ui5-title id="titleH2" level="H2">Title level 2</ui5-title>
-		<ui5-title id="titleH3" level="H3">Title level 3</ui5-title>
-		<ui5-title id="titleH4" level="H4">Title level 4</ui5-title>
-		<ui5-title id="titleH5" level="H5">Title level 5</ui5-title>
-		<ui5-title id="titleH6" level="H6">Title level 6</ui5-title>
-		<ui5-title level="H2">Very long long long text of title title with level two</ui5-title>
+		<ui5-title id="titleH1" level="H1">Title Level 1</ui5-title>
+		<ui5-title>Title Level Auto (2)</ui5-title>
+		<ui5-title id="titleH2" level="H2">Title Level 2</ui5-title>
+		<ui5-title id="titleH3" level="H3">Title Level 3</ui5-title>
+		<ui5-title id="titleH4" level="H4">Title Level 4</ui5-title>
+		<ui5-title id="titleH5" level="H5">Title Level 5</ui5-title>
+		<ui5-title id="titleH6" level="H6">Title Level 6</ui5-title>
+		<ui5-title level="H2">A Very Long Long Long Long Title Text with Level Two</ui5-title>
 	</section>
 
-	<section class="title2auto">
+	<section class="wrapping">
 		<h2>Wrapping</h2>
-		<ui5-title level="H6" id="truncated-title" class="title3auto">Truncated title Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, ab.</ui5-title>
-		<ui5-title level="H6" wrapping-type="Normal" id="wrapping-title">Wrapping title Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, ab.</ui5-title>
+		<ui5-title level="H6" id="truncated-title">Truncated Title Lorem Ipsum Dolor, Sit Amet Consectetur Adipisicing Elit. Numquam, Ab.</ui5-title>
+		<ui5-title level="H6" wrapping-type="Normal" id="wrapping-title">Wrapping Title Lorem Ipsum Dolor, Sit Amet Consectetur Adipisicing Elit. Numquam, Ab.</ui5-title>
+	</section>
+
+	<section>
+		<h2>Usage With ui5-link</h2>
+		<ui5-title level="H3">
+			<ui5-link design="Default">With Default Link (57)</ui5-link>
+		</ui5-title>
+		<ui5-title level="H3">
+			<ui5-link design="Emphasized">With Emphasized Link (58)</ui5-link>
+		</ui5-title>
+		<ui5-title level="H3">
+			<ui5-link design="Subtle">With Subtle Link (59)</ui5-link>
+		</ui5-title>
+		<div class="wrapping">
+			<h2>Wrapping With Link</h2>
+			<ui5-title level="H6">
+				<ui5-link design="Default">Truncated With Link (60) Lorem Ipsum Dolor, Sit Amet Consectetur Adipisicing Elit. Numquam, Ab.</ui5-link>
+			</ui5-title>
+			<ui5-title level="H6" wrapping-type="Normal">
+				<ui5-link design="Default">Wrapping With Link (61) Lorem Ipsum Dolor, Sit Amet Consectetur Adipisicing Elit. Numquam, Ab.</ui5-link>
+			</ui5-title>
+		</div>
 	</section>
 </body>
 </html>
