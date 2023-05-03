@@ -5,15 +5,14 @@ const jsFileContentTemplate = require("./jsFileContentTemplate.js");
 const tsFileContentTemplate = require("./tsFileContentTemplate.js");
 
 /**
- * Hyphanates the given PascalCase string.
- * For Example:
+ * Hyphanates the given PascalCase string, f.e.:
+ * Foo -> "my-foo" (adds preffix)
  * FooBar -> "foo-bar"
- * Foobar -> "foobar-tag" (adds suffix)
  */
 const hyphaneteComponentName = (componentName) => {
 	const result = componentName.replace(/([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
 
-	return result.includes("-") ? result : `${result}-tag`;
+	return result.includes("-") ? result : `my-${result}`;
 };
 
 /**
@@ -24,7 +23,7 @@ const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.
 /**
  * Validates component name, enforcing PascalCase pattern - Button, MyButton.
  */
-const PascalCasePattern = /^[A-Z][A-Za-z]+$/;
+const PascalCasePattern = /^[A-Z][A-Za-z0-9]+$/;
 const isNameValid = name => typeof name === "string" && PascalCasePattern.test(name);
 
 const getPackageName = () => {
