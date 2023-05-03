@@ -105,7 +105,9 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-const generateFilesContent = (name, componentName, tagName, typescript, skipSubfolder) => {
+const generateFilesContent = (name, componentName, typescript, skipSubfolder) => {
+	const tagName = argv.tag || hyphaneteComponentName(componentName);
+
 	// All variables that will be replaced in the content of the resources/
 	const vars = {
 		INIT_PACKAGE_VAR_NAME: name,
@@ -195,11 +197,10 @@ const createWebcomponentsPackage = async () => {
 	let name = argv.name || "my-package";
 	let componentName = argv.componentName || "MyComponent";
 	let typescriptSupport = !!argv.enableTypescript;
-	const tagName = argv.tag || hyphaneteComponentName(componentName);
 	const skipSubfolder = !!argv.skipSubfolder;
 
 	if (argv.skip) {
-		return generateFilesContent(name, componentName, tagName, typescriptSupport, skipSubfolder);
+		return generateFilesContent(name, componentName, typescriptSupport, skipSubfolder);
 	}
 
 	if (!argv.name) {
@@ -237,12 +238,12 @@ const createWebcomponentsPackage = async () => {
 			name: "componentName",
 			message: "Component name:",
 			initial: "MyComponent",
-			validate: (value) => isComponentNameValid(value) ? true : "Component name should follow PascalCase pattern (f.e. Button, MyButton, etc.).",
+			validate: (value) => isComponentNameValid(value) ? true : "Component name should follow PascalCase naming convention (f.e. Button, MyButton, etc.).",
 		});
 		componentName = response.componentName;
 	}
 
-	return generateFilesContent(name, componentName, tagName, typescriptSupport, skipSubfolder);
+	return generateFilesContent(name, componentName, typescriptSupport, skipSubfolder);
 };
 
 createWebcomponentsPackage();
