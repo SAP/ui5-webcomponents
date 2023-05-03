@@ -38,7 +38,7 @@ const isNPMRC = sourcePath => {
 
 // Validation of user input
 const ComponentNamePattern = /^[A-Z][A-Za-z0-9]+$/;
-const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z0-9\-_]+$/);
+const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9\-_]+$/);
 const isComponentNameValid = name => typeof name === "string" && ComponentNamePattern.test(name);
 const isTagValid = tag => typeof tag === "string" && tag.match(/^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/);
 
@@ -183,7 +183,7 @@ const generateFilesContent = (name, componentName, typescript, skipSubfolder) =>
 const createWebcomponentsPackage = async () => {
 	let response;
 	if (argv.name && !isNameValid(argv.name)) {
-		throw new Error("The package name should be a string (a-z, A-Z, 0-9).");
+		throw new Error("The package name should be a string, starting with letter and containing the following symbols [a-z, A-Z, 0-9].");
 	}
 
 	if (argv.componentName && !isComponentNameValid(argv.componentName)) {
@@ -208,7 +208,7 @@ const createWebcomponentsPackage = async () => {
 			type: "text",
 			name: "name",
 			message: "Package name:",
-			validate: (value) => isNameValid(value) ? true : "Package name should be a string containing the following symbols [a-z,A-Z,0-9,_,-].",
+			validate: (value) => isNameValid(value) ? true : "Package name should be a string, starting with a letter and containing the following symbols [a-z, A-Z ,0-9, _, -].",
 		});
 		name = response.name;
 	}
