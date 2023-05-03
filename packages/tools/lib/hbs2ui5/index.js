@@ -35,7 +35,8 @@ const hasTypes = (file, componentName) => {
 const processFile = async (file, outputDir) => {
 	const componentNameMatcher = /(\w+)(\.hbs)/gim;
 	const componentName = componentNameMatcher.exec(file)[1];
-	if (!hasTypes(file, componentName)) { 
+	const componentHasTypes = hasTypes(file, componentName);
+	if (!componentHasTypes) { 
 		if (!missingTypesReported) {
 			console.warn("[Warn] The following templates do not have a corresponging .ts or .d.ts file and won't be type checked:")
 			missingTypesReported = true;
@@ -45,7 +46,7 @@ const processFile = async (file, outputDir) => {
 	const litCode = await hbs2lit(file, componentName);
 	const absoluteOutputDir = composeAbsoluteOutputDir(file, outputDir);
 
-	return writeRenderers(absoluteOutputDir, componentName, litRenderer.generateTemplate(componentName, litCode));
+	return writeRenderers(absoluteOutputDir, componentName, litRenderer.generateTemplate(componentName, litCode, componentHasTypes));
 };
 
 const composeAbsoluteOutputDir = (file, outputDir) => {

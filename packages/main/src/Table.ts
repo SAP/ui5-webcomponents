@@ -507,7 +507,7 @@ class Table extends UI5Element {
 
 	moreDataText?: string;
 	tableEndObserved: boolean;
-	visibleColumns!: Array<TableColumn>
+	visibleColumns: Array<TableColumn>;
 	visibleColumnsCount?: number;
 	lastFocusedElement: HTMLElement | null;
 	growingIntersectionObserver?: IntersectionObserver | null;
@@ -523,6 +523,7 @@ class Table extends UI5Element {
 	constructor() {
 		super();
 
+		this.visibleColumns = []; // template loop should always have a defined array
 		// The ItemNavigation requires each item to 1) have a "_tabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
 		this._columnHeader = {
 			id: `${this._id}-columnHeader`,
