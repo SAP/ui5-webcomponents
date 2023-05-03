@@ -432,9 +432,6 @@ class ShellBar extends UI5Element {
 	@property({ type: Object })
 	_itemsInfo!: Array<IShelBarItemInfo>;
 
-	@property({ type: Object })
-	_headerPress: () => Promise<void>;
-
 	@property({ type: Object, multiple: true })
 	_menuPopoverItems!: Array<HTMLElement>;
 
@@ -537,6 +534,7 @@ class ShellBar extends UI5Element {
 	_debounceInterval?: Timeout | null;
 	_hiddenIcons?: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
+	_headerPress: () => Promise<void>;
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
