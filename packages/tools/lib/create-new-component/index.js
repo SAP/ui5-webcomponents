@@ -24,7 +24,7 @@ const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.
 /**
  * Validates component name, enforcing PascalCase pattern - Button, MyButton.
  */
-const PascalCasePattern = /^([A-Z]+)([A-Za-z]+)$/
+const PascalCasePattern = /^[A-Z][A-Za-z]+$/;
 const isNameValid = name => typeof name === "string" && PascalCasePattern.test(name);
 
 const getPackageName = () => {
