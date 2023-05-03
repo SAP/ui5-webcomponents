@@ -23,10 +23,7 @@ export default {
     subcomponents: {'TableColumn' : 'ui5-table-column', 'TableRow' : 'ui5-table-row', 'TableGroupRow' : 'ui5-table-group-row', 'TableCell' : 'ui5-table-cell'},
     parameters: {
         docs: {
-          page: DocsPage({ ...componentInfo, component }),
-		  story: {
-			height: "300px"
-		 }
+          page: DocsPage({ ...componentInfo, component })
         },
     },
     argTypes,
