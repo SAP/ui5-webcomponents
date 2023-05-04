@@ -1,5 +1,5 @@
 @import "../base/Dialog-parameters.css";
 
-:root {
+:host {
 	--_ui5_dialog_resize_handle_color: 	var(--sapButton_Emphasized_Background);
 }

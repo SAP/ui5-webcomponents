@@ -1,6 +1,6 @@
 @import "../base/Input-parameters.css";
 
-:root {
+:host {
 	--_ui5_input_disabled_border_color: transparent;
 	--_ui5-input_disabled_background: var(--sapNeutralBackground);
 	--_ui5_input_readonly_background: var(--sapNeutralBackground);

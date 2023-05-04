@@ -1,6 +1,6 @@
 @import "../base/Input-parameters.css";
 
-:root {
+:host {
 	--_ui5_input_min_width: 3rem;
 	--_ui5_input_focus_border_width: 0.125rem;
 	--_ui5_input_state_border_width: 1px;

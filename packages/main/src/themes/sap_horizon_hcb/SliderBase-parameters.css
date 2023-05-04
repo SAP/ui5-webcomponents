@@ -1,6 +1,6 @@
 @import "../base/SliderBase-parameters.css";
 
-:root {
+:host {
 	/* handle */
 	--_ui5_slider_handle_height: 1.5rem;
 	--_ui5_slider_handle_width: 2rem;

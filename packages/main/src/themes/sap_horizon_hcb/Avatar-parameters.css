@@ -1,6 +1,6 @@
 @import "../base/Avatar-parameters.css";
 
-:root {
+:host {
 	--ui5-avatar-initials-border: 0.0625rem solid var(--sapAvatar_1_BorderColor);
 	--ui5-avatar-border-radius: var(--sapElement_BorderCornerRadius);
 	--_ui5_avatar_fontsize_XS: 1rem;

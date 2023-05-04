@@ -1,6 +1,6 @@
 @import "../base/ColorPalette-parameters.css";
 
-:root {
+:host {
 	--_ui5_color-palette-item-container-sides-padding: 0.3125rem;
 	--_ui5_color-palette-item-container-rows-padding: 0.6875rem;
 	--_ui5_color-palette-item-focus-height: 1.5rem;

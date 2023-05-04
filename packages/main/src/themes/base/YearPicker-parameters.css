@@ -1,4 +1,4 @@
-:root {
+:host {
 	--_ui5_yearpicker_item_selected_focus: var(--sapContent_Selected_Background);
 	--_ui5_yearpicker_item_selected_hover_color: var(--sapContent_Selected_Background);
 	--_ui5_yearpicker_item_border: none;

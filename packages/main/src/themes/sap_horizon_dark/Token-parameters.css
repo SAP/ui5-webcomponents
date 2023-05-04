@@ -1,6 +1,6 @@
 @import "../base/Token-parameters.css";
 
-:root {
+:host {
 	--_ui5_token_focus_outline_width: 0.0625rem;
 	--_ui5_token_hover_border_color: var(--sapButton_TokenBorderColor);
 	--_ui5_token_selected_focus_outline: none;

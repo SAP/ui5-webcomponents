@@ -1,5 +1,5 @@
 @import "../base/Token-parameters.css";
 
-:root {
+:host {
 	--_ui5_token_text_color: var(--sapTextColor);
 }

@@ -3,7 +3,7 @@ import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import getEffectiveLinksHrefs from "./theming/getEffectiveLinksHrefs.js";
 import { shouldUseLinks } from "./CSP.js";
 import type UI5Element from "./UI5Element.js";
-import { getEffectiveThemeProperties, getEffectiveThemeRules } from "./theming/applyTheme.js";
+import { getThemeRules, getThemeStyleSheet } from "./theming/applyTheme.js";
 
 /**
  * Updates the shadow root of a UI5Element or its static area item
@@ -29,9 +29,10 @@ const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 	if (shouldUseLinks()) {
 		styleStrOrHrefsArr = getEffectiveLinksHrefs(ctor, forStaticArea);
 	} else if (document.adoptedStyleSheets) { // Chrome
-		shadowRoot.adoptedStyleSheets = [getEffectiveThemeProperties(), ...getConstructableStyle(ctor, forStaticArea)];
+		// getThemeConstructableStyle is not null when adoptedStyleSheets exist
+		shadowRoot.adoptedStyleSheets = [getThemeStyleSheet()!, ...getConstructableStyle(ctor, forStaticArea)];
 	} else { // FF, Safari
-		styleStrOrHrefsArr = `${getEffectiveThemeRules()} ${getEffectiveStyle(ctor, forStaticArea)}`;
+		styleStrOrHrefsArr = `${getThemeRules()} ${getEffectiveStyle(ctor, forStaticArea)}`;
 	}
 
 	if (ctor.renderer) {

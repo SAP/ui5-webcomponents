@@ -1,6 +1,6 @@
 @import "../base/sizes-parameters.css";
 
-:root {
+:host {
 	/* SplitButton */
 	--_ui5_split_button_middle_separator_top: 0.625rem;
 	--_ui5_split_button_middle_separator_height: 1rem;

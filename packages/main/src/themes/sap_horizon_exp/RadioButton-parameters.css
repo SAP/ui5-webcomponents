@@ -1,6 +1,6 @@
 @import "../base/RadioButton-parameters.css";
 
-:root {
+:host {
 	--_ui5_radio_button_height: 2rem;
 	--_ui5_radio_button_inner_size: 100%;
 	--_ui5_radio_button_svg_size: 1.25rem;

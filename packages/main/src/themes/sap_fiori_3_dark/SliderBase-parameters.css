@@ -1,5 +1,5 @@
 @import "../base/SliderBase-parameters.css";
 
-:root {
+:host {
 	--_ui5_slider_inner_min_width: 4rem;
 }

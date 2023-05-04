@@ -1,5 +1,5 @@
 @import "../base/Input-parameters.css";
 
-:root {
+:host {
 	--_ui5-input-border: 1px solid var(--sapField_BorderColor);
 }

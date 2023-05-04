@@ -1,6 +1,6 @@
 @import "../base/SliderBase-parameters.css";
 
-:root {
+:host {
 	--_ui5_slider_progress_container_background: var(--sapSlider_Background);
 	--_ui5_slider_progress_container_dot_display: block;
 	--_ui5_slider_inner_min_width: 4rem;

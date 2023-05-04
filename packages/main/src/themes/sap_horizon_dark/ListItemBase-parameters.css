@@ -1,5 +1,5 @@
 @import "../base/ListItemBase-parameters.css";
 
-:root {
+:host {
 	--ui5-listitem-active-border-color: var(--sapContent_FocusColor);
 }

@@ -1,5 +1,5 @@
 @import "../base/Switch-parameters.css";
-:root {
+:host {
 	/* Switch */
 	--_ui5_switch_width: 3.5rem;
 	--_ui5_switch_compact_width: 3rem;

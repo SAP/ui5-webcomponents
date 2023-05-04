@@ -1,6 +1,6 @@
 @import "../base/WheelSlider-parameters.css";
 
-:root{
+:host{
 	--_ui5_wheelslider_item_background_color: var(--sapLegend_WorkingBackground);
 	--_ui5_wheelslider_item_text_color: var(--sapTextColor);
 	--_ui_wheelslider_item_hover_color: var(--sapList_Hover_Background);

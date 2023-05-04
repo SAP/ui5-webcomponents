@@ -1,5 +1,5 @@
 @import "../base/ColorPicker-parameters.css";
 
-:root {
+:host {
 	--_ui5_color_picker_slider_container_margin_top: -.5rem;
 }

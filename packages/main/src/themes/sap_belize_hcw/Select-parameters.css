@@ -1,6 +1,6 @@
 @import "../base/Select-parameters.css";
 
-:root {
+:host {
 	--_ui5_select_disabled_background: var(--sapHC_ReducedBackground);
 	--_ui5_select_disabled_border_color: var(--sapHC_ReducedForeground);
 	--_ui5_select_state_error_warning_border_style: dashed;

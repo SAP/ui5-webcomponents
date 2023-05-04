@@ -1,6 +1,6 @@
 @import "../base/TabContainer-parameters.css";
 
-:root {
+:host {
 	/* Header */
 	--_ui5_tc_header_height_text_with_additional_text: 3.625rem;
 	--_ui5_tc_header_box_shadow: none;

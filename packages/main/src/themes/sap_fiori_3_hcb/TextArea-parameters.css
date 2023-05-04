@@ -1,6 +1,6 @@
 @import "../base/TextArea-parameters.css";
 
-:root {
+:host {
 	--_ui5_textarea_placeholder_font_style: normal;
 	--_ui5_textarea_error_placeholder_color: var(--sapField_TextColor);
 	--_ui5_textarea_value_state_error_warning_placeholder_font_weight: bold;

@@ -1,6 +1,6 @@
 @import "../base/Switch-parameters.css";
 
-:root {
+:host {
 	--_ui5_switch_width: 40px;
 	--_ui5_switch_no_label_width: 40px;
 	--_ui5_switch_height: 24px;

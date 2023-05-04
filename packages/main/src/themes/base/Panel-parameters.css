@@ -1,4 +1,4 @@
-:root {
+:host {
 	--_ui5_panel_focus_border:   var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	--_ui5_panel_button_root_width: 3rem;
 	--_ui5_panel_border_radius: 0px;

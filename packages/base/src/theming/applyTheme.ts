@@ -1,11 +1,13 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
-import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
+import { removeStyle, createOrUpdateStyle, StyleDataCSP } from "../ManagedStyles.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoots.js";
 import type OpenUI5Support from "../features/OpenUI5Support.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
+import type { StyleData } from "../ManagedStyles.js";
+import { shouldUseLinks } from "../CSP.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
 
@@ -32,11 +34,7 @@ const deleteThemeBase = () => {
 const loadComponentPackages = async (theme: string) => {
 	const registeredPackages = getRegisteredPackages();
 
-	const packagesStylesPromises = [...registeredPackages].map(async packageName => {
-		if (packageName === BASE_THEME_PACKAGE) {
-			return;
-		}
-
+	const packagesStylesPromises = [...registeredPackages].filter(packageName => packageName !== BASE_THEME_PACKAGE).map(async packageName => {
 		return getThemeProperties(packageName, theme);
 	});
 
@@ -67,28 +65,44 @@ const detectExternalTheme = async (theme: string) => {
 	}
 };
 
-const themeProps = new CSSStyleSheet();
+let packagesProperties: Array<StyleData> = [];
 let themeRules = "";
+let test: CSSStyleSheet;
 
-const getEffectiveThemeProperties = () => {
-	return themeProps;
-};
-
-const getEffectiveThemeRules = () => {
+const getThemeRules = () => {
 	return themeRules;
 };
 
-const loadAndApplyThemeProps = async (packagesTheme?: string) => {
-	const packagesProperties = await loadComponentPackages(packagesTheme || DEFAULT_THEME);
-	let rules = "";
+const getThemeStyleSheet = () => {
+	if (!test) {
+		const style = new CSSStyleSheet();
+		style.replaceSync(getThemeRules());
 
-	packagesProperties.forEach(packageProperties => {
-		if (packageProperties) {
-			rules += typeof packageProperties === "string" ? packageProperties : packageProperties.content;
-		}
-	});
-	themeRules = rules;
-	getEffectiveThemeProperties().replaceSync(themeRules);
+		return style;
+	}
+
+	test.replaceSync(getThemeRules());
+
+	return test;
+};
+
+const getRegisteredPackagesThemeData = () => {
+	return packagesProperties;
+};
+
+const loadAndApplyThemeProps = async (packagesTheme?: string) => {
+	packagesProperties = [...await loadComponentPackages(packagesTheme || DEFAULT_THEME)].filter(componentPackage => !!componentPackage) as Array<StyleData>;
+
+	if (shouldUseLinks()) {
+		packagesProperties.forEach(packageProps => {
+			createOrUpdateStyle(packageProps, "data-ui5-package-theme-variables", (packageProps as StyleDataCSP).packageName);
+		});
+	} else {
+		themeRules = "";
+		packagesProperties.forEach(packageProps => {
+			themeRules += (packageProps as StyleDataCSP).content;
+		});
+	}
 };
 
 const applyTheme = async (theme: string) => {
@@ -109,4 +123,4 @@ const applyTheme = async (theme: string) => {
 };
 
 export default applyTheme;
-export { getEffectiveThemeProperties, getEffectiveThemeRules };
+export { getThemeRules, getThemeStyleSheet, getRegisteredPackagesThemeData };

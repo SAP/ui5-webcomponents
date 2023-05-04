@@ -1,4 +1,4 @@
-:root {
+:host {
 	/* Header */
 	--_ui5_tc_header_height: var(--_ui5_tc_item_height);
 	--_ui5_tc_header_height_text_only: var(--_ui5_tc_item_text_only_height);

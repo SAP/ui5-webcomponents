@@ -1,6 +1,6 @@
 @import "../base/InputIcon-parameters.css";
 
-:root {
+:host {
 	--_ui5_input_icon_padding: .5rem .5rem .5rem .5625rem;
 }
 

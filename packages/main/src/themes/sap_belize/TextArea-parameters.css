@@ -1,6 +1,6 @@
 @import "../base/TextArea-parameters.css";
 
-:root {
+:host {
 	--__ui5_textarea_min_height: 2.5rem;
 	--_ui5_textarea_padding_top: 0.5625rem;
 	--_ui5_textarea_padding_bottom:0.5625rem;

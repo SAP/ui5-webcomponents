@@ -1,6 +1,6 @@
 @import "../base/TextArea-parameters.css";
 
-:root {
+:host {
 	--_ui5_textarea_line_height: 1.5;
 	--_ui5_textarea_error_warning_border_style: dashed;
 	--_ui5_textarea_error_warning_font_weight: bold;

@@ -1,6 +1,6 @@
 @import "../base/TimelineItem-parameters.css";
 
-:root {
+:host {
 	--_ui5_TimelineItem_bubble_outline_width: 0.125rem;
 	--_ui5_TimelineItem_bubble_outline_top: -0.1875rem;
 	--_ui5_TimelineItem_bubble_outline_right: -0.1875rem;

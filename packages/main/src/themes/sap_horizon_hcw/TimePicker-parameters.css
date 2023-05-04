@@ -1,5 +1,5 @@
 @import "../base/TimePicker-parameters.css";
 
-:root {
+:host {
 	--_ui5_time_picker_border: 0.0625rem solid var(--sapField_Hover_BorderColor);
 }

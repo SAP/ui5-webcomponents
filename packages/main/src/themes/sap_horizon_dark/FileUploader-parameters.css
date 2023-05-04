@@ -1,5 +1,5 @@
 @import "../base/FileUploader-parameters.css";
 
-:root {
+:host {
 	--_ui5_file_uploader_hover_border: none;
 }

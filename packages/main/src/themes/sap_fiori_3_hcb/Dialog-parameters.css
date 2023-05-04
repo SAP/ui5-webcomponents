@@ -1,6 +1,6 @@
 @import "../base/Dialog-parameters.css";
 
-:root {
+:host {
 	--_ui5_dialog_header_error_state_box_shadow: inset 0 -0.125rem var(--sapErrorBorderColor);
 	--_ui5_dialog_header_information_state_box_shadow: inset 0 -0.125rem var(--sapInformationBorderColor);
 	--_ui5_dialog_header_success_state_box_shadow: inset 0 -0.125rem var(--sapSuccessBorderColor);

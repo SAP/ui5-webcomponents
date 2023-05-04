@@ -1,6 +1,6 @@
 @import "../base/Panel-parameters.css";
 
-:root {
+:host {
 	--_ui5_panel_header_padding_right: 1rem;
 	--_ui5_panel_header_height: 3rem;
 }

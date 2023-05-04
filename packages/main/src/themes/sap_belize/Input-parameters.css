@@ -1,6 +1,6 @@
 @import "../base/Input-parameters.css";
 
-:root {
+:host {
 	--_ui5_input_min_width: 3rem;
 	--_ui5_input_custom_icon_padding: .6875rem .625rem;
 	--_ui5_input_error_warning_icon_padding: .625rem .5rem .625rem .5625rem;

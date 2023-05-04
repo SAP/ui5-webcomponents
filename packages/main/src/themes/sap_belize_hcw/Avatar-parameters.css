@@ -1,6 +1,6 @@
 @import "../base/Avatar-parameters.css";
 
-:root {
+:host {
 	--ui5-avatar-initials-color: #000;
 	--ui5-avatar-initials-border: .0625rem solid #000;
 	--ui5-avatar-accent1: #fff;

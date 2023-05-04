@@ -1,5 +1,5 @@
 // OpenUI5 integration
-import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+// import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
 
 // Assets
 import "./dist/Assets.js";

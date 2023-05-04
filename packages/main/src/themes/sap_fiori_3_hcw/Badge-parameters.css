@@ -1,6 +1,6 @@
 @import "../base/Badge-parameters.css";
 
-:root {
+:host {
 	--ui5-badge-color-scheme-1-background: var(--sapGroup_ContentBackground);
 	--ui5-badge-color-scheme-1-border: var(--sapGroup_ContentBorderColor);
 	--ui5-badge-color-scheme-1-color: var(--sapTextColor);

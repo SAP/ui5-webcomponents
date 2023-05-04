@@ -1,4 +1,4 @@
-:root{
+:host{
 	--_ui5_wheelslider_item_text_size: var(--sapFontSize);
 	--_ui5_wheelslider_selected_item_hover_background_color: var(--sapList_BorderColor);
 	--_ui5_wheelslider_label_text_size: var(--sapFontSmallSize);

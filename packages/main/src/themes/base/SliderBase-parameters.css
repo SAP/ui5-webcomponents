@@ -1,5 +1,5 @@
 
-:root {
+:host {
 	--_ui5_slider_progress_container_background: var(--sapField_BorderColor);
 	--_ui5_slider_progress_container_dot_display: none;
 	--_ui5_slider_progress_container_dot_background: var(--sapField_BorderColor);

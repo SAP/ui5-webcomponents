@@ -1,6 +1,6 @@
 @import "../base/YearPicker-parameters.css";
 
-:root {
+:host {
 	--_ui5_yearpicker_item_border_radius: 0.5rem;
 	--_ui5_yearpicker_item_focus_after_offset: 0.25rem;
 	--_ui5_yearpicker_item_focus_after_border: var(--_ui5_button_focused_border);

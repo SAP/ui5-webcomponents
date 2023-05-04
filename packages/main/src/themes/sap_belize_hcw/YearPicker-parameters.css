@@ -1,6 +1,6 @@
 @import "../base/YearPicker-parameters.css";
 
-:root {
+:host {
 	--_ui5_yearpicker_item_border: 1px solid var(--sapList_BorderColor);
 	--_ui5_yearpicker_item_margin: 0;
 	--_ui5_yearpicker_item_focus_after_width: calc(100% - 0.25rem);

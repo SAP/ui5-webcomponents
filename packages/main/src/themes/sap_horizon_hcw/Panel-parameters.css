@@ -1,6 +1,6 @@
 @import "../base/Panel-parameters.css";
 
-:root {
+:host {
 	--_ui5_panel_focus_border: 0.125rem dotted var(--sapContent_FocusColor);
 	--_ui5_panel_button_root_width: 2.75rem;
 	--_ui5_panel_default_header_border: 0.0625rem solid var(--sapGroup_TitleBorderColor);

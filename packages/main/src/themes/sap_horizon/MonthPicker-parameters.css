@@ -1,6 +1,6 @@
 @import "../base/MonthPicker-parameters.css";
 
-:root {
+:host {
 	--_ui5_monthpicker_item_border_radius: 0.5rem;
 	--_ui5_monthpicker_item_focus_after_border: var(--_ui5_button_focused_border);
 	--_ui5_monthpicker_item_focus_after_border_radius: 0.5rem;

@@ -1,4 +1,4 @@
-:root {
+:host {
 	--_ui5-badge-cursor: default;
 
 	--ui5-badge-color-scheme-1-background: var(--sapLegendBackgroundColor1);

@@ -1,6 +1,6 @@
 @import "../base/SliderBase-parameters.css";
 
-:root {
+:host {
 	--_ui5_slider_progress_container_background: #dddddd;
 	--_ui5_slider_inner_height: 0.1875rem;
 	--_ui5_slider_progress_border-radius: 0;

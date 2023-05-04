@@ -1,6 +1,6 @@
 @import "../base/SideNavigation-parameters.css";
 
-:root {
+:host {
 	--_ui5_side_navigation_separator_backgound: var(--sapAccentColor6);
 	--_ui5_side_navigation_icon_color: var(--sapHighlightColor);
 	--_ui5_side_navigation_icon_size: 1.125rem;

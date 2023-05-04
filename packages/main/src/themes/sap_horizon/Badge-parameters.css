@@ -1,6 +1,6 @@
 @import "../base/Badge-parameters.css";
 
-:root {
+:host {
 	--ui5-badge-color-scheme-1-background: #FFF3B8; /* Mango2 */
 	--ui5-badge-color-scheme-1-border: #A93E00; /* Mango8 */
 	--ui5-badge-color-scheme-1-color: #A93E00; /* Mango8 */
