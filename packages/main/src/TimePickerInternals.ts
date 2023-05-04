@@ -2,30 +2,21 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
-
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
 import { fetchCldr } from "@ui5/webcomponents-base/dist/asset-registries/LocaleData.js";
-
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import SegmentedButton from "./SegmentedButton.js";
-import Button from "./Button.js";
-
 import {
-	getHours,
-	getMinutes,
-	getSeconds,
 	getHoursConfigByFormat,
 	getTimeControlsByFormat,
+	HourType,
 } from "./timepicker-utils/TimeSlider.js";
-
 import {
 	TIMEPICKER_HOURS_LABEL,
 	TIMEPICKER_MINUTES_LABEL,
@@ -39,14 +30,14 @@ type TimePickerComponentIndexMap = {
 	seconds: number,
 }
 
-type TimeSelectionChangeEventDetail = {
-	value: string | undefined,
-	valid: boolean,
-}
-
 type TimeSelectionPeriodProperties = {
 	label: string,
 	pressed: boolean,
+}
+
+type TimeSelectionChangeEventDetail = {
+	value: string | undefined,
+	valid: boolean,
 }
 
 /**
@@ -81,6 +72,16 @@ type TimeSelectionPeriodProperties = {
 	tag: "ui5-time-picker-internals",
 })
 
+/**
+ * Fired when the value changes due to user interaction with the sliders.
+ */
+@event("change", {
+	detail: {
+		value: { type: String },
+		valid: { type: Boolean },
+	},
+})
+
 class TimePickerInternals extends UI5Element {
 	/**
 	 * Defines a formatted time value.
@@ -110,67 +111,22 @@ class TimePickerInternals extends UI5Element {
 	formatPattern!: string;
 
 	/**
-	 * Hides the hours slider regardless of formatPattern
-	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
+	 * Determines the minutes step. The minutes clock is populated only by multiples of the step.
 	 * @public
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.hideHours
-	 * @type {boolean}
-	 */
-	@property({ type: Boolean })
-	hideHours!: boolean;
-
-	/**
-	 * Hides the minutes slider regardless of formatPattern
-	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-	 * @public
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.hideMinutes
-	 * @type {boolean}
-	 */
-	@property({ type: Boolean })
-	hideMinutes!: boolean;
-
-	/**
-	 * Hides the seconds slider regardless of formatPattern
-	 * This property is only needed for the duration picker use case which requires non-standard slider combinations
-	 * @public
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.hideSeconds
-	 * @type {boolean}
-	 */
-	@property({ type: Boolean })
-	hideSeconds!: boolean;
-
-	/**
-	 * The maximum number of hours to be displayed for the hours slider (only needed for the duration picker use case)
-	 * @public
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.maxHours
+	 * @name sap.ui.webc.main.TimePickerInternals.prototype.secondsStep
 	 * @type {Integer}
 	 */
-	@property({ validator: Integer })
-	maxHours?: number;
-
-	/**
-	 * The maximum number of minutes to be displayed for the minutes slider (only needed for the duration picker use case)
-	 * @public
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.maxMinutes
-	 * @type {Integer}
-	 */
-	@property({ validator: Integer })
-	maxMinutes?: number;
-
-	/**
-	 * The maximum number of seconds to be displayed for the seconds slider (only needed for the duration picker use case)
-	 * @public
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.maxSeconds
-	 * @type {Integer}
-	 */
-	@property({ validator: Integer })
-	maxSeconds?: number;
-
-	@property({ validator: Integer, defaultValue: 1 })
-	secondsStep!: number;
-
 	@property({ validator: Integer, defaultValue: 1 })
 	minutesStep!: number;
+
+	/**
+	 * Determines the seconds step. The seconds clock is populated only by multiples of the step.
+	 * @public
+	 * @name sap.ui.webc.main.TimePickerInternals.prototype.secondsStep
+	 * @type {Integer}
+	 */
+	@property({ validator: Integer, defaultValue: 1 })
+	secondsStep!: number;
 
 	/**
 	 * The index of the active Clock/TogleSpinButton.
@@ -178,12 +134,15 @@ class TimePickerInternals extends UI5Element {
 	 * @defaultvalue 0
 	 * @type {Integer}
 	 */
-	@property({ validator: Integer, defaultValue: 0 })
+	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
 	_activeIndex!: number;
 
-	@property({ defaultValue: "hours" })
-	_currentComponent!: string;
-
+	/**
+	 * Contains calendar type.
+	 *
+	 * @type {CalendarType}
+	 * @private
+	 */
 	@property({ type: CalendarType })
 	_calendarType!: CalendarType;
 
@@ -205,54 +164,32 @@ class TimePickerInternals extends UI5Element {
 	@property({ type: Object, multiple: true })
 	_periods!: Array<TimeSelectionPeriodProperties>;
 
-	/** OPTIONAL to implement Begin */
-
 	/**
-	 * Allows to set a value of 24:00, used to indicate the end of the day.
-	 * Works only with HH or H formats. Don't use it together with am/pm.
+	 * Contains list of separators between the buttons.
 	 *
-	 * When this property is set to <code>true</code>, the clock can display either 24 or 00 as last hour.
-	 * The change between 24 and 00 (and vice versa) can be done as follows:
-	 *
-	 * - on a desktop device: hold down the <code>Ctrl</code> key (this changes 24 to 00 and vice versa), and either
-	 * click with mouse on the 00/24 number, or navigate to this value using Arrow keys/PageUp/PageDown and press
-	 * <code>Space</code> key (Space key selects the highlighted value and switch to the next available clock).
-	 *
-	 * - on mobile/touch device: make a long touch on 24/00 value - this action toggles the value to the opposite one.
-	 *
-	 * - on both device types, if there is a keyboard attached: 24 or 00 can be typed directly.
-	 *
-	 * <b>Note:</b> Don't use it together with am/pm.
-	 *
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.support2400
-	 * @type {Boolean}
-	 * @defaultvalue false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	support2400!: boolean;
-
-	/**
-	 * Determines whether there is a shortcut navigation to current time.
-	 *
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.showCurrentTimeButton
-	 * @type {Boolean}
-	 * @defaultvalue false
-	 * @public
-	 */
-	@property({ type: Boolean })
-	showCurrentTimeButton!: boolean;
-
-	/**
-	 * Holds the inner button for shortcut navigation to current time.
-	 *
-	 * @type {SegmentedButton}
+	 * @type {Array}
 	 * @private
 	 */
-	@property({ type: Object })
-	_buttonNow!: Button;
+	@property({ multiple: true })
+	_separators!: Array<string>;
 
-	/** OPTIONAL to implement End */
+	/**
+	 * Contains separator before AM/PM (if there is any).
+	 *
+	 * @type {string}
+	 * @private
+	 */
+	@property({ defaultValue: "", noAttribute: true })
+	_amPmSeparator!: string;
+
+	/**
+	 * Contains separator after all buttons (if there is any).
+	 *
+	 * @type {string}
+	 * @private
+	 */
+	@property({ defaultValue: "", noAttribute: true })
+	_lastSeparator!: string;
 
 	static i18nBundle: I18nBundle;
 
@@ -277,15 +214,15 @@ class TimePickerInternals extends UI5Element {
 	}
 
 	get _hasHoursComponent() {
-		return this._neededComponents[0] && !this.hideHours;
+		return this._neededComponents[0];
 	}
 
 	get _hasMinutesComponent() {
-		return this._neededComponents[1] && !this.hideMinutes;
+		return this._neededComponents[1];
 	}
 
 	get _hasSecondsComponent() {
-		return this._neededComponents[2] && !this.hideSeconds;
+		return this._neededComponents[2];
 	}
 
 	get _hasPeriodsComponent() {
@@ -312,22 +249,6 @@ class TimePickerInternals extends UI5Element {
 
 	get _pmPressed(): boolean {
 		return false;
-	}
-
-	get _hoursSliderFocused() {
-		return this._currentComponent === "hours";
-	}
-
-	get _minutesSliderFocused() {
-		return this._currentComponent === "minutes";
-	}
-
-	get _secondsSliderFocused() {
-		return this._currentComponent === "seconds";
-	}
-
-	get _periodSliderFocused() {
-		return this._currentComponent === "periods";
 	}
 
 	get _hours() {
@@ -396,7 +317,14 @@ class TimePickerInternals extends UI5Element {
 		return TimePickerInternals.i18nBundle.getText(TIMEPICKER_SECONDS_LABEL);
 	}
 
+	get clockDialAriaLabel() {
+		return TimePickerInternals.i18nBundle.getText(TIMEPICKER_CLOCK_DIAL_LABEL);
+	}
 
+	get _nextSeparator() {
+		const sep = this._separators.shift() || "";
+		return sep;
+	}
 
 	setValue(date: Date) {
 		const value = this.formatValue(date);
@@ -404,12 +332,6 @@ class TimePickerInternals extends UI5Element {
 			this.value = this.normalizeValue(value);
 			this.fireEvent<TimeSelectionChangeEventDetail>("change", { value: this.value, valid: true });
 		}
-	}
-
-	_componentKey(name: string) {
-		type ComponentKey = keyof typeof this._componentMap;
-		const key = name as ComponentKey;
-		return key;
 	}
 
 	isValid(value: string) {
@@ -445,12 +367,73 @@ class TimePickerInternals extends UI5Element {
 		return this.getFormat().format(date);
 	}
 
+	_componentKey(name: string) {
+		type ComponentKey = keyof typeof this._componentMap;
+		const key = name as ComponentKey;
+		return key;
+	}
+
+	_getSeparators() {
+		// @ts-ignore aFormatArray is a private API of DateFormat
+		const formatArray = this.getFormat().aFormatArray;
+		let previousWasEntity = false;
+		let index;
+
+		this._separators = [];
+
+		if (!formatArray.length) {
+			return;
+		}
+
+		if (formatArray[0].type !== "text") {
+			this._separators.push("");
+		}
+
+		for (index = 0; index < formatArray.length; index++) {
+			if (formatArray[index].type !== "text") {
+				if (previousWasEntity) {
+					// there was previous non-separator entity, and this one is the same too, so add empty separator
+					this._separators.push("");
+				} else {
+					// this is non-separator entity, set the entity flag
+					previousWasEntity = true;
+				}
+			} else {
+				// add separator and clear non-separator entity flag
+				this._separators.push(formatArray[index].value as string);
+				previousWasEntity = false;
+			}
+		}
+
+		// push one more empty separator for the last entity
+		if (formatArray[index - 1].type !== "text") {
+			this._separators.push("");
+		}
+	}
+
 	_buttonAmPm() {
 		return this._hasPeriodsComponent ? this.shadowRoot?.querySelector<SegmentedButton>(`#${this._id}_AmPm`) : undefined;
+	}
+
+	_periodChange(evt: PointerEvent) {
+		const periodItem = evt.target;
+		if (periodItem) {
+			const period = (periodItem as HTMLElement).textContent;
+			const date = this.validDateValue;
+			if (period === this._periods[0].label && date.getHours() >= 12) {
+				date.setHours(date.getHours() - 12);
+			} if (period === this._periods[1].label && date.getHours() < 12) {
+				date.setHours(date.getHours() + 12);
+			}
+			this.setValue(date);
+		}
 	}
 }
 
 TimePickerInternals.define();
 
 export default TimePickerInternals;
-export type { TimePickerComponentIndexMap };
+export type {
+	TimePickerComponentIndexMap,
+	TimeSelectionChangeEventDetail,
+};

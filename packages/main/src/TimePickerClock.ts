@@ -1,9 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-// import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-// import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -14,7 +13,7 @@ import TimePickerClockTemplate from "./generated/templates/TimePickerClockTempla
 // Styles
 import TimePickerClockCss from "./generated/themes/TimePickerClock.css.js";
 
-type ChangeEventDetail = {
+type TimePickerClockChangeEventDetail = {
 	value: number,
 	stringValue: string,
 	finalChange: boolean,
@@ -398,8 +397,8 @@ class TimePickerClock extends UI5Element {
 		document.addEventListener("mouseup", this._onMouseOutUp.bind(this), false);
 	}
 
-	get classes() {
-		return {
+	get classes(): ClassMap {
+		return <ClassMap>{
 			clock: {
 				"ui5-tp-clock": true,
 				"ui5-tp-clock-inner": this.innerItems,
@@ -414,7 +413,8 @@ class TimePickerClock extends UI5Element {
 		this._updateSelectedValueObject(value);
 	}
 
-	/** Returns the real value of the passed clock item, if the replacement must be done, returns the replaced value.
+	/**
+	 * Returns the real value of the passed clock item, if the replacement must be done, returns the replaced value.
 	 *
 	 * @param {number} value The value of the clock item
 	 * @returns {number} The real/replaced value
@@ -436,7 +436,8 @@ class TimePickerClock extends UI5Element {
 		return realValue;
 	}
 
-	/** Updates internal selected value object constructed for rendering purposes.
+	/**
+	 * Updates internal selected value object constructed for rendering purposes.
 	 *
 	 * @param {number} value currently selected value.
 	 * @private
@@ -469,7 +470,8 @@ class TimePickerClock extends UI5Element {
 		};
 	}
 
-	/** Prepares clock items objects according to current clock settings. Item objects are used for rendering purposes.
+	/**
+	 * Prepares clock items objects according to current clock settings. Item objects are used for rendering purposes.
 	 *
 	 * @private
 	 */
@@ -517,7 +519,8 @@ class TimePickerClock extends UI5Element {
 		}
 	}
 
-	/** Returns the DOM Reference of the clock cover element
+	/**
+	 * Returns the DOM Reference of the clock cover element
 	 *
 	 * @returns {HTMLElement} the DOM Reference
 	 * @private
@@ -527,7 +530,8 @@ class TimePickerClock extends UI5Element {
 		return domRef && domRef.querySelector(".ui5-tp-clock-cover");
 	}
 
-	/** Returns the real max value of clock items, taking in count if there is inner circle or not.
+	/**
+	 * Returns the real max value of clock items, taking in count if there is inner circle or not.
 	 *
 	 * @returns {number} max value
 	 * @private
@@ -536,7 +540,8 @@ class TimePickerClock extends UI5Element {
 		return this.innerItems ? this.itemMax * 2 : this.itemMax;
 	}
 
-	/** Returns the visibility of '24' hour value as a last clock item
+	/**
+	 * Returns the visibility of '24' hour value as a last clock item.
 	 *
 	 * @returns {boolean} Visibility of the '24' hour value
 	 * @private
@@ -545,9 +550,10 @@ class TimePickerClock extends UI5Element {
 		return this.support2400 ? this._is24HoursVisible : false;
 	}
 
-	/** Sets the visibility of '24' hour
+	/**
+	 * Sets the visibility of '24' hour
 	 *
-	 * @param {boolean} isVisible visibility of the '24' hour item
+	 * @param {boolean} isVisible visibility of the '24' hour item.
 	 * @private
 	 */
 	_set24HoursVisible(isVisible: boolean) {
@@ -559,7 +565,8 @@ class TimePickerClock extends UI5Element {
 		}
 	}
 
-	/** Calculates the outer height of a HTML element
+	/**
+	 * Calculates the outer height of a HTML element.
 	 *
 	 * @param {HTMLElement} element The element which outer height to be calculated
 	 * @returns {number} Outer height of the passed HTML element
@@ -574,7 +581,8 @@ class TimePickerClock extends UI5Element {
 		return element.offsetHeight + parseInt(style.marginTop) + parseInt(style.marginBottom);
 	}
 
-	/** Returns the Id of the DOM element of the clock item that display specific value
+	/**
+	 * Returns the Id of the DOM element of the clock item that display specific value.
 	 *
 	 * @param {number} value The value of the clock item
 	 * @returns {string} Id of the clock item element
@@ -588,7 +596,8 @@ class TimePickerClock extends UI5Element {
 		return `#${this._id}-${valueString}`;
 	}
 
-	/** Returns provided value as string. Padding with additional zero is applied if necessary.
+	/**
+	 * Returns provided value as string. Padding with additional zero is applied if necessary.
 	 *
 	 * @param {number} value The value that should be returned as string
 	 * @returns {string} The value as string
@@ -794,7 +803,7 @@ class TimePickerClock extends UI5Element {
 		} else {
 			// the new value is set, fire event
 			setTimeout(() => {
-				this.fireEvent<ChangeEventDetail>("change", {
+				this.fireEvent<TimePickerClockChangeEventDetail>("change", {
 					"value": newValue,
 					"stringValue": this._getStringValue(newValue),
 					"finalChange": true,
@@ -856,7 +865,7 @@ class TimePickerClock extends UI5Element {
 	_setSelectedValue(value: number) {
 		const realValue: number = this._fixReplacementValue(value);
 		this.selectedValue = realValue;
-		this.fireEvent<ChangeEventDetail>("change", {
+		this.fireEvent<TimePickerClockChangeEventDetail>("change", {
 			"value": realValue,
 			"stringValue": this._getStringValue(realValue),
 			"finalChange": false,
@@ -886,7 +895,8 @@ class TimePickerClock extends UI5Element {
 		return this;
 	}
 
-	/** TouchStart/MouseDown event handler
+	/**
+	 * TouchStart/MouseDown event handler.
 	 *
 	 * @param {event} evt Event object
 	 * @private
@@ -912,7 +922,8 @@ class TimePickerClock extends UI5Element {
 		this._mouseOrTouchDown = true;
 	}
 
-	/** TouchMove/MouseMove event handler
+	/**
+	 * TouchMove/MouseMove event handler.
 	 *
 	 * @param {event} evt Event object
 	 * @private
@@ -953,7 +964,8 @@ class TimePickerClock extends UI5Element {
 		}
 	}
 
-	/** TouchEnd/MouseUp event handler
+	/**
+	 * TouchEnd/MouseUp event handler.
 	 *
 	 * @param {event} evt Event object
 	 * @private
@@ -979,7 +991,8 @@ class TimePickerClock extends UI5Element {
 		}
 	}
 
-	/** Mouse Wheel event handler
+	/**
+	 * Mouse Wheel event handler.
 	 *
 	 * @param {WheelEvent} evt Event object
 	 * @private
@@ -993,7 +1006,8 @@ class TimePickerClock extends UI5Element {
 		}
 	}
 
-	/** MouseOut event handler
+	/**
+	 * MouseOut event handler.
 	 *
 	 * @private
 	 */
@@ -1005,7 +1019,8 @@ class TimePickerClock extends UI5Element {
 		this._prevHoveredValue = -1;
 	}
 
-	/** MouseUp event handler on document level.
+	/**
+	 * MouseUp event handler on document level.
 	 *
 	 * @private
 	 */
@@ -1017,4 +1032,4 @@ class TimePickerClock extends UI5Element {
 TimePickerClock.define();
 
 export default TimePickerClock;
-export type { ChangeEventDetail };
+export type { TimePickerClockChangeEventDetail };

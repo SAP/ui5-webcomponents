@@ -19,6 +19,15 @@
 	width: 18rem;
 }
 
+.ui5-time-picker-tsc-buttons span[separator] {
+	min-width: 0.5rem;
+	padding: 0 0.125rem;
+	text-align: center;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
+	color: var(--sapContent_LabelColor);
+}
+
 .ui5-time-picker-tsc-clocks {
     display: block;
     text-align: center;

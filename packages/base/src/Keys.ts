@@ -89,7 +89,7 @@ enum KeyCodes {
 	F12 = 123,
 	NUM_LOCK = 144,
 	SCROLL_LOCK = 145,
-	OPEN_BRACKET = 186,
+	COLON = 186,
 	PLUS = 187,
 	COMMA = 188,
 	SLASH = 189,
@@ -239,6 +239,10 @@ const getCtrlKey = (event: KeyboardEvent): boolean => !!(event.metaKey || event.
 
 const checkModifierKeys = (event: KeyboardEvent, bCtrlKey: boolean, bAltKey: boolean, bShiftKey: boolean):boolean => event.shiftKey === bShiftKey && event.altKey === bAltKey && getCtrlKey(event) === bCtrlKey;
 
+const isNumber = (event: KeyboardEvent): boolean => ((event.key ? "0123456789".indexOf(event.key) !== -1 : event.keyCode >= KeyCodes.DIGIT_0 && event.keyCode <= KeyCodes.DIGIT_9) && checkModifierKeys(event, false, false, false));
+
+const isColon = (event: KeyboardEvent): boolean => ((event.key ? event.key === ":" : event.keyCode === KeyCodes.COLON) && checkModifierKeys(event, false, false, true));
+
 export {
 	isEnter,
 	isEnterShift,
@@ -298,4 +302,6 @@ export {
 	isDeleteShift,
 	isInsertShift,
 	isInsertCtrl,
+	isNumber,
+	isColon,
 };
