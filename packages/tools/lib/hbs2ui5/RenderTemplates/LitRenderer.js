@@ -5,9 +5,9 @@ const tsImports = (controlName, hasTypes) => {
 
 	const importPrefix = process.env.UI5_BASE ? "../../../" : "@ui5/webcomponents-base/dist/"
 
-	return `import type UI5Element from "${importPrefix}UI5Element";
+	return `import type UI5Element from "${importPrefix}UI5Element.js";
 	${importForControl(controlName, hasTypes)}
-	import type { ClassMapValue } from "${importPrefix}types";
+	import type { ClassMapValue } from "${importPrefix}types.js";
 	`;
 }
 const importForControl = (controlName, hasTypes) => {
@@ -18,9 +18,9 @@ const importForControl = (controlName, hasTypes) => {
 
 	if (process.env.UI5_BASE) {
 		// base package has a component in `test/elements` instead of `src`
-		return `import type ${controlName} from "../../../../test/elements/${controlName}";`
+		return `import type ${controlName} from "../../../../test/elements/${controlName}.js";`
 	}
-	return `import type ${controlName} from "../../${controlName}";`
+	return `import type ${controlName} from "../../${controlName}.js";`
 }
 
 const buildRenderer = (controlName, litTemplate, hasTypes) => {
