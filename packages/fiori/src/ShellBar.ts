@@ -432,9 +432,6 @@ class ShellBar extends UI5Element {
 	@property({ type: Object })
 	_itemsInfo!: Array<IShelBarItemInfo>;
 
-	@property({ type: Object })
-	_header!: object;
-
 	@property({ type: Object, multiple: true })
 	_menuPopoverItems!: Array<HTMLElement>;
 
@@ -537,6 +534,7 @@ class ShellBar extends UI5Element {
 	_debounceInterval?: Timeout | null;
 	_hiddenIcons?: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
+	_headerPress: () => Promise<void>;
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
@@ -571,15 +569,13 @@ class ShellBar extends UI5Element {
 			this._updateClonedMenuItems();
 		});
 
-		this._header = {
-			press: async () => {
-				this._updateClonedMenuItems();
+		this._headerPress = async () => {
+			this._updateClonedMenuItems();
 
-				if (this.hasMenuItems) {
-					const menuPopover = await this._getMenuPopover();
-					menuPopover!.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
-				}
-			},
+			if (this.hasMenuItems) {
+				const menuPopover = await this._getMenuPopover();
+				menuPopover!.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
+			}
 		};
 
 		this._handleResize = () => {
