@@ -18,7 +18,8 @@ Usage:
 
 Options:
     --name <string>     - defines the package name
-    --tag <string>      - defines the tag name of the sample web component that will be created in your new package
+    --componentName <string>      - defines the component class name that will be created in your new package
+    --tag <string>      - defines the tag name of the sample web component that will be created in your new package. The tag will be derived from the component name if not provided. 
     --enable-typescript - enables TypeScript support for the package
     --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
