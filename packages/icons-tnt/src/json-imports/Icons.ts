@@ -4,9 +4,9 @@ const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
 	let iconData: CollectionData;
 
 	if (collection === "tnt-v3") {
-		iconData = (await import("../generated/assets/v3/SAP-icons-TNT.json")).default;
+		iconData = (await import("../generated/assets/v3/SAP-icons-TNT.json")).default as unknown as CollectionData;
 	} else {
-		iconData = (await import("../generated/assets/v2/SAP-icons-TNT.json")).default;
+		iconData = (await import("../generated/assets/v2/SAP-icons-TNT.json")).default as unknown as CollectionData;
 	}
 
 	if (typeof iconData === "string" && (iconData as string).endsWith(".json")) {
