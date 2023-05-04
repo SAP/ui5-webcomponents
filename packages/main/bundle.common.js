@@ -178,11 +178,11 @@ const testAssets = {
 // setDefaultIconCollection("sap_fiori_3", "my-custom-icons");
 
 
-setUseLinks(true); // or "true", to force all browsers to use links
-setPackageCSSRoot("@ui5/webcomponents-base", "http://localhost:8080/packages/main/test/pages/css/base/");
-setPackageCSSRoot("@ui5/webcomponents-theming", "http://localhost:8080/packages/main/test/pages/css/theming/");
-setPackageCSSRoot("@ui5/webcomponents", "http://localhost:8080/packages/main/test/pages/css/main/");
-setPackageCSSRoot("@ui5/webcomponents-fiori", "http://localhost:8080/packages/main/test/pages/css/fiori/");
+// setUseLinks(true); // or "true", to force all browsers to use links
+// setPackageCSSRoot("@ui5/webcomponents-base", "http://localhost:8080/packages/main/test/pages/css/base/");
+// setPackageCSSRoot("@ui5/webcomponents-theming", "http://localhost:8080/packages/main/test/pages/css/theming/");
+// setPackageCSSRoot("@ui5/webcomponents", "http://localhost:8080/packages/main/test/pages/css/main/");
+// setPackageCSSRoot("@ui5/webcomponents-fiori", "http://localhost:8080/packages/main/test/pages/css/fiori/");
 
 import {registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 registerIconLoader("my-custom-icons", () => {
