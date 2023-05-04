@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-import type { BrowserMultiFormatReader, NotFoundException } from "@zxing/library/esm5/index";
+import type { BrowserMultiFormatReader, NotFoundException } from "@zxing/library/esm5/index.js";
 
 export {};
 
