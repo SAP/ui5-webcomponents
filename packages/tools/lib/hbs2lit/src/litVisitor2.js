@@ -179,7 +179,7 @@ function visitEachBlock(block) {
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
 
-	const reapeatDirectiveParamsTS = "(item: any, index: number) => item._id || index, (item: any, index: number)";
+	const reapeatDirectiveParamsTS = "(item, index) => (item as typeof item & {_id?: any})._id || index, (item, index: number)";
 	const reapeatDirectiveParamsJS = "(item, index) => item._id || index, (item, index)";
 	const repleatDirectiveParams = process.env.UI5_TS ? reapeatDirectiveParamsTS : reapeatDirectiveParamsJS;
 	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", " + repleatDirectiveParams + " => ";

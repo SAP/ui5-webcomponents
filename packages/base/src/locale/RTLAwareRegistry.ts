@@ -1,4 +1,4 @@
-import type UI5Element from "../UI5Element";
+import type UI5Element from "../UI5Element.js";
 
 const rtlAwareSet = new Set<typeof UI5Element>();
 
