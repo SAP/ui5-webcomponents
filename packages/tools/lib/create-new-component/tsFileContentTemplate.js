@@ -69,10 +69,6 @@ class ${componentName} extends UI5Element {
 	 */
 	@slot({ type: Node, "default": true })
 	text!: Array<Node>;
-
-	static async onDefine() {
-
-	}
 }
 
 ${componentName}.define();
