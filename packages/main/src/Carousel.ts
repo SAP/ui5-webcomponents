@@ -26,7 +26,7 @@ import {
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
 	CAROUSEL_PREVIOUS_ARROW_TEXT,
-	CAROUSEL_NEXT_ARROW_TEXT, TABCONTAINER_SUBTABS_DESCRIPTION,
+	CAROUSEL_NEXT_ARROW_TEXT,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
