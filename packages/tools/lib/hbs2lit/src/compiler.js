@@ -12,15 +12,17 @@ const removeWhiteSpaces = (source) => {
 		.replace(/}}\s+{{/g, "}}{{"); // Remove whitespace between }} and {{
 };
 
-const hbs2lit = async (file) => {
+const hbs2lit = async (file, componentName) => {
 	let sPreprocessed = await includesReplacer.replace(file);
 
 	sPreprocessed = removeWhiteSpaces(sPreprocessed);
 
+	const blockSignature = process.env.UI5_TS ? `this: ${componentName}` : ""
+
 	// icons hack
 	if (sPreprocessed.startsWith("<g ") || sPreprocessed.startsWith("<g>")) {
 		return `
-		let block0 = () => {
+		function block0 (${blockSignature}) {
 			return svg\`${sPreprocessed}\`
 		}`;
 	}
@@ -28,7 +30,7 @@ const hbs2lit = async (file) => {
 	const ast = Handlebars.parse(sPreprocessed);
 
 	const pv = new PartialsVisitor();
-	const lv = new HTMLLitVisitor();
+	const lv = new HTMLLitVisitor(componentName);
 
 	let result = "";
 
@@ -41,10 +43,11 @@ const hbs2lit = async (file) => {
 		let block = lv.blocks[key];
 
 		if (block.match(/scopeTag/)) {
-			const matches = block.match(/^(.*?)( => )(.*?);$/);
-			const scopedCode = matches[3];
+			// const matches = block.match(/^(.*?)( => )(.*?);$/);
+			const matches = block.match(/^(function .*? \{ return )(.*?);\}$/);
+			const scopedCode = matches[2];
 			const normalCode = scopedCode.replace(/\${scopeTag\("/g, "").replace(/", tags, suffix\)}/g, "");
-			block = `${matches[1]}${matches[2]}suffix ? ${scopedCode} : ${normalCode};`;
+			block = `${matches[1]}suffix ? ${scopedCode} : ${normalCode};}`;
 		}
 
 		result += block + "\n";

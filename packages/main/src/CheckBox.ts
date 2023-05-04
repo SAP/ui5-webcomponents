@@ -59,6 +59,16 @@ let activeCb: CheckBox;
  * property to <code>true</code>.
  *
  * <br><br>
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-checkbox</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>root - Used to style the outermost wrapper of the <code>ui5-checkbox</code></li>
+ * </ul>
+ *
+ * <br><br>
  * <h3>Keyboard Handling</h3>
  *
  * The user can use the following keyboard shortcuts to toggle the checked state of the <code>ui5-checkbox</code>.
