@@ -92,7 +92,7 @@ class Card extends UI5Element {
 	 * Defines the header of the component.
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
-	 * @type {sap.ui.webc.main.CardHeader[]}
+	 * @type {sap.ui.webc.main.ICardHeader[]}
 	 * @since 1.0.0-rc.15
 	 * @slot header
 	 * @name sap.ui.webc.main.Card.prototype.header
