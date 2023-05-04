@@ -26,10 +26,11 @@ import {
 	CAROUSEL_OF_TEXT,
 	CAROUSEL_DOT_TEXT,
 	CAROUSEL_PREVIOUS_ARROW_TEXT,
-	CAROUSEL_NEXT_ARROW_TEXT,
+	CAROUSEL_NEXT_ARROW_TEXT, TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -222,6 +223,17 @@ class Carousel extends UI5Element {
 	 */
 	@property({ type: CarouselPageIndicatorStyle, defaultValue: CarouselPageIndicatorStyle.Default })
 	pageIndicatorStyle!: CarouselPageIndicatorStyle;
+
+	/**
+	 * Defines the carousel's background design.
+	 * @type {sap.ui.webc.main.types.BackgroundDesign}
+	 * @name sap.ui.webc.main.Carousel.prototype.backgroundDesign
+	 * @since 1.10
+	 * @defaultvalue "Translucent"
+	 * @public
+	 */
+	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Translucent })
+	backgroundDesign!: BackgroundDesign;
 
 	/**
 	 * Defines the index of the initially selected item.
@@ -443,6 +455,10 @@ class Carousel extends UI5Element {
 		} else {
 			this.getDomRef()!.focus();
 		}
+	}
+
+	get _backgroundDesign() {
+		return this.backgroundDesign.toLowerCase();
 	}
 
 	get _getLastFocusedActivePageIndex() {
