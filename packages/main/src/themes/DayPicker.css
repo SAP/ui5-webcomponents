@@ -277,3 +277,40 @@
 	border: none;
 	outline: none;
 }
+
+/* styles for calendar with two types */
+
+:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--selected:not(.ui5-dp-item.ui5-dp-item--now) .ui5-dp-daytext::after{
+	border-width: 0.125rem;
+}
+
+:host([secondary-calendar-type]) .ui5-dp-item:focus::after {
+	inset: var(--_ui5_daypicker_two_calendar_item_no_selected_inset);
+	border-radius: var(--_ui5_daypicker_two_calendar_item__border_redius);
+}
+
+:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now::after {
+    /* //--_ui5_daypicker_two_calendar_item_no_selected_inset */
+    inset: var(--_ui5_daypicker_two_calendar_item_no_selected_focus_inset);
+    /* --_ui5_daypicker_two_calendar_item__border_redius) */
+    border-radius: var(--_ui5_daypicker_two_calendar_item_no_select_focus_border_redius);
+}
+
+:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--selected:focus::after {
+	border-width: var(--_ui5_daypicker_two_calendar_item_now_selected_border_width);
+	inset: 0;
+	border-radius: var(--_ui5_daypicker_two_calendar_item__border_redius);
+}
+
+:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now::after {
+	inset: var(--_ui5_daypicker_two_calendar_item_now_inset);
+	border-radius: var(--_ui5_daypicker_two_calendar_item_selected_now_border_radios_foucs);
+}
+
+:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now.ui5-dp-item--selected.ui5-dp-item--withsecondtype .ui5-dp-daytext:not(.ui5-dp-daysectext)::before {
+	content: var(--_ui5_daypicker_two_calendar_item_now_day_text_contetn);
+	position: absolute;
+	inset: 0.3125rem;
+	border-radius: var(--_ui5_daypicker_two_calendar_item_selected_now_border_radios_foucs);
+	outline: var(--_ui5_daypicker_item_selected__secondary_type_text_outline)
+}
