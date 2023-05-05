@@ -545,9 +545,9 @@ class TimeSelectionClocks extends TimePickerInternals {
 					"pressed": this._period === item,
 				});
 			});
+			this._amPmSeparator = this._nextSeparator;
 		}
 
-		this._amPmSeparator = this._nextSeparator;
 		this._lastSeparator = this._nextSeparator;
 
 		this._clocks[this._activeIndex].active = true;

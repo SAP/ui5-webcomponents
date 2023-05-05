@@ -83,6 +83,13 @@ class ToggleSpinButton extends ToggleButton {
 	 */
 	@property()
 	valueText?: string;
+
+	/**
+	 * Override of the handler in order to prevent toggling
+	 */
+	_onclick() {
+
+	}
 }
 
 ToggleSpinButton.define();

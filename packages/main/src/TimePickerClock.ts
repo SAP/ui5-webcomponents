@@ -613,7 +613,9 @@ class TimePickerClock extends UI5Element {
 	 * @private
 	 */
 	_calculateDimensions() {
-		const cover = this._getClockCoverContainerDomRef() as HTMLElement;
+		const cover = this.getDomRef() as HTMLElement;
+		const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+		const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
 		if (!cover) {
 			return;
@@ -637,8 +639,8 @@ class TimePickerClock extends UI5Element {
 			"outerMin": radius - numberHeight,
 			"innerMax": radius - numberHeight - 1,
 			"innerMin": radius - numberHeight * 2 - 1,
-			"offsetX": offset.left,
-			"offsetY": offset.top,
+			"offsetX": offset.left + scrollLeft,
+			"offsetY": offset.top + scrollTop,
 		};
 	}
 
@@ -910,6 +912,7 @@ class TimePickerClock extends UI5Element {
 
 		const x = evt.type === "touchstart" ? (evt as TouchEvent).touches[0].pageX : (evt as MouseEvent).pageX;
 		const y = evt.type === "touchstart" ? (evt as TouchEvent).touches[0].pageY : (evt as MouseEvent).pageY;
+		// console.warn(x, y);
 
 		this._movSelectedValue = this.selectedValue;
 		this._calculateDimensions();
