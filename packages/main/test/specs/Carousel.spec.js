@@ -50,7 +50,7 @@ describe("Carousel general interaction", () => {
 		const carousel = await browser.$("#carousel2");
 		await carousel.scrollIntoView();
 		await carousel.moveTo();
-		const navigation = await carousel.shadow$(".ui5-carousel-navigation > ui5-label");
+		const navigation = await carousel.shadow$(".ui5-carousel-navigation > .ui5-carousel-navigation-text");
 
 		assert.ok(await navigation.isExisting(), "Navigation is rendered");
 	});
@@ -195,7 +195,7 @@ describe("Carousel general interaction", () => {
 		const carousel = await browser.$("#carouselNumericPageIndicator");
 		await carousel.scrollIntoView();
 
-		assert.strictEqual(await carousel.shadow$(".ui5-carousel-navigation [ui5-label]").getText(), "1 of 2", "carousel is showing numeric page indicator");
+		assert.strictEqual(await carousel.shadow$(".ui5-carousel-navigation .ui5-carousel-navigation-text").getText(), "1 of 2", "carousel is showing numeric page indicator");
 	});
 
 	it("hide-page-indicator property", async () => {
