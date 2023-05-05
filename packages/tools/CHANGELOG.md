@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0) (2023-05-05)
+
+
+### Bug Fixes
+
+* **create-webcomponents-package:** fix package creation issues with test and lint ([#6976](https://github.com/SAP/ui5-webcomponents/issues/6976)) ([dd70f3a](https://github.com/SAP/ui5-webcomponents/commit/dd70f3aa8ef70b592f1d4e0f3f9894c6280fb1bf))
+
+
+
+
+
 # [1.13.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.3...v1.13.0-rc.4) (2023-05-04)
 
 
