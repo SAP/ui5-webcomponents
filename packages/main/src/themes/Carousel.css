@@ -92,7 +92,7 @@
     justify-content: center;
     align-items: center;
     background: var(--sapPageFooter_Background);
-    border-top: 1px solid var(--sapPageFooter_BorderColor);;
+    border-top: 1px solid var(--sapPageFooter_BorderColor);
 }
 
 .ui5-carousel-navigation-wrapper.ui5-carousel-navigation-with-buttons {
