@@ -11,7 +11,7 @@
 	font-size: var(--sapFontSize);
 	cursor: pointer;
 	outline: none;
-	text-decoration: var(--_ui5_link_text_decoration);
+	text-decoration: var(--sapLink_TextDecoration);
 	text-shadow: var(--sapContent_TextShadow);
 	white-space: nowrap;
 	overflow-wrap: normal;
@@ -62,7 +62,7 @@
 
 :host(:active) .ui5-link-root {
 	color: var(--sapLink_Active_Color);
-	text-decoration: var(--_ui5_link_active_text_decoration);
+	text-decoration: var(--sapLink_Active_TextDecoration);
 }
 
 :host .ui5-link-root {
@@ -82,7 +82,7 @@
 
 :host(:hover) {
 	color: var(--sapLink_Hover_Color);
-	text-decoration: var(--_ui5_link_hover_text_decoration);
+	text-decoration: var(--sapLink_Hover_TextDecoration);
 }
 
 :host([design="Subtle"]:hover) {
