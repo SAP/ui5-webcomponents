@@ -96,8 +96,18 @@ class DateComponentBase extends UI5Element {
 
 	static i18nBundle?: I18nBundle;
 
+	/**
+	 * Cached instance of DateFormat with a format pattern of "YYYY-MM-dd".
+	 * Used by the getISOFormat method to avoid creating a new DateFormat instance on each call.
+	 *
+	 * @type {DateFormat}
+	 * @private
+	 */
+	_isoFormatInstance: DateFormat | null;
+
 	constructor() {
 		super();
+		this._isoFormatInstance = null;
 	}
 
 	get _primaryCalendarType() {
@@ -147,8 +157,6 @@ class DateComponentBase extends UI5Element {
 		if (jsDate) {
 			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
 		}
-
-		return null;
 	}
 
 	_getCalendarDateFromString(value: string) {
@@ -189,11 +197,14 @@ class DateComponentBase extends UI5Element {
 	}
 
 	getISOFormat() {
-		return DateFormat.getDateInstance({
-			strictParsing: true,
-			pattern: "YYYY-MM-dd",
-			calendarType: this._primaryCalendarType,
-		});
+		if (!this._isoFormatInstance) {
+			this._isoFormatInstance = DateFormat.getDateInstance({
+				strictParsing: true,
+				pattern: "YYYY-MM-dd",
+				calendarType: this._primaryCalendarType,
+			});
+		}
+		return this._isoFormatInstance;
 	}
 
 	static async onDefine() {
