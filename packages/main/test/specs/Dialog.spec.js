@@ -398,6 +398,37 @@ describe("Acc", () => {
 
 		assert.strictEqual(await dialog.getAttribute("accessible-name"), accName, "dialog has correct attribute set");
 		assert.strictEqual(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), accName, "dialog has aria-label.");
+		assert.notOk(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-describedby"), "dialog hasn't aria-describedby.");
+
+		const closeDraggableDialog = await browser.$("#draggable-close");
+		await closeDraggableDialog.click();
+
+	});
+
+	it("tests aria-describedby for default header", async () => {
+		const openResizableDialog = await browser.$("#resizable-open");
+		await openResizableDialog.click();
+
+		const dialog = await browser.$("#resizable-dialog");
+		const idOfTheHiddenText = await dialog.shadow$(".ui5-hidden-text").getAttribute("id");
+
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-describedby"), idOfTheHiddenText, "dialog has aria-describedby.");
+		
+		const closeResizableDialog = await browser.$("#resizable-close");
+		await closeResizableDialog.click();
+	});
+
+	it("tests aria-describedby for slot header", async () => {
+		const openResizableDialog = await browser.$("#resizable-custom-header-open");
+		await openResizableDialog.click();
+
+		const dialog = await browser.$("#resizable-dialog-custom-header");
+		const idOfTheHiddenText = await dialog.shadow$(".ui5-hidden-text").getAttribute("id");
+
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-describedby"), idOfTheHiddenText, "dialog has aria-describedby.");
+
+		const closeResizableDialog = await browser.$("#resizable-custom-header-close");
+		await closeResizableDialog.click();
 	});
 
 	it("tests accessible-name-ref", async () => {

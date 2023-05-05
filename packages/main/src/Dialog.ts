@@ -8,6 +8,8 @@ import {
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Popup from "./Popup.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
@@ -15,6 +17,10 @@ import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
+
+import {
+	DIALOG_HEADER_ARIA_DESCRIBEDBY_RESIZABLE,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
@@ -240,6 +246,8 @@ class Dialog extends Popup {
 	@slot()
 	footer!: Array<HTMLElement>;
 
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 
@@ -252,6 +260,10 @@ class Dialog extends Popup {
 		this._resizeMouseUpHandler = this._onResizeMouseUp.bind(this);
 
 		this._dragStartHandler = this._handleDragStart.bind(this);
+	}
+
+	static async onDefine() {
+		Dialog.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	static _isHeader(element: HTMLElement) {
@@ -288,6 +300,14 @@ class Dialog extends Popup {
 		}
 
 		return ariaLabelledById;
+	}
+
+	get effectiveAriaDescribedBy() {
+		return this.resizable ? `${this._id}-descr` : undefined;
+	}
+
+	get ariaDescribedByHeaderText() {
+		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_RESIZABLE);
 	}
 
 	get _displayProp() {
