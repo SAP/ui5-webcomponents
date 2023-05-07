@@ -207,7 +207,7 @@
 
 .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now:focus::after {
 	inset: var(--_ui5_daypicker_item_now_inset);
-	border-radius: var(--_ui5_day_picker_item_selected_now_border_radios_focus);
+	border-radius: var(--_ui5_day_picker_item_selected_now_border_radius_focus);
 	border: var(--_ui5_day_picker_item_selected_now_border_focus);
 	position: absolute;
 	content: "";
