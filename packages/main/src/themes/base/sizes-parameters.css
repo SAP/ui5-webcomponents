@@ -13,10 +13,10 @@
 	--_ui5_checkbox_icon_size: 1rem;
 	--_ui5_checkbox_partially_icon_size: .75rem;
 	--_ui5_custom_list_item_rb_min_width: 2.75rem;
-	--_ui5_day_picker_item_width: 2.25rem;
-	--_ui5_day_picker_item_height: 2.875rem;
-	--_ui5_day_picker_empty_height: 3rem;
-	--_ui5_day_picker_item_justify_content: space-between;
+	--_ui5_dp_item_width: 2.25rem;
+	--_ui5_dp_item_height: 2.875rem;
+	--_ui5_dp_empty_height: 3rem;
+	--_ui5_dp_item_justify_content: space-between;
 
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
@@ -217,11 +217,11 @@
 	--_ui5_custom_list_item_rb_min_width: 2rem;
 
 	/* DayPicker */
-	--_ui5_daypicker_weeknumbers_container_padding_top: 2rem;
-	--_ui5_day_picker_item_width: 2rem;
-	--_ui5_day_picker_item_height: 2rem;
-	--_ui5_day_picker_empty_height: 2.125rem;
-	--_ui5_day_picker_item_justify_content: flex-end;
+	--_ui5_dp_weeknumbers_container_padding_top: 2rem;
+	--_ui5_dp_item_width: 2rem;
+	--_ui5_dp_item_height: 2rem;
+	--_ui5_dp_empty_height: 2.125rem;
+	--_ui5_dp_item_justify_content: flex-end;
 
 	/* DateTimePicker */
 	--_ui5_datetime_picker_height: 17rem;
