@@ -50,6 +50,7 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.CardHeader
+ * @implements sap.ui.webc.main.ICardHeader
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-card-header
  * @public

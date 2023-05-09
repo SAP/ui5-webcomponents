@@ -29,10 +29,6 @@ import cardCss from "./generated/themes/Card.css.js";
  *
  * Note: We recommend the usage of <code>ui5-card-header</code> for the header slot, so advantage can be taken for keyboard handling, styling and accessibility.
  *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
- *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Card";</code>
@@ -96,7 +92,7 @@ class Card extends UI5Element {
 	 * Defines the header of the component.
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
-	 * @type {sap.ui.webc.main.CardHeader[]}
+	 * @type {sap.ui.webc.main.ICardHeader[]}
 	 * @since 1.0.0-rc.15
 	 * @slot header
 	 * @name sap.ui.webc.main.Card.prototype.header

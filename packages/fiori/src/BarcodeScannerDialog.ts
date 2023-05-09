@@ -9,7 +9,7 @@ import * as ZXing from "@zxing/library/umd/index.min.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import type { Result, Exception } from "@zxing/library/esm5/index";
+import type { Result, Exception } from "@zxing/library/esm5/index.js";
 
 // Texts
 import {
