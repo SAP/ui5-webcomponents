@@ -1,5 +1,5 @@
 import { getThemeProperties, getRegisteredPackages, isThemeRegistered } from "../asset-registries/Themes.js";
-import { removeStyle, createOrUpdateStyle, StyleDataCSP } from "../ManagedStyles.js";
+import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";

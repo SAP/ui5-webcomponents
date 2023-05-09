@@ -7,6 +7,15 @@ import type { ComponentStylesData, StyleDataCSP } from "../types.js";
 
 const MAX_DEPTH_INHERITED_CLASSES = 10; // TypeScript complains about Infinity and big numbers
 
+const findCurrentPackageStyles = (stylesDataArray: Array<ComponentStylesData>) => {
+	return stylesDataArray.map(styleData => {
+		const registeredPackages = [...getRegisteredPackagesThemeData()]
+			.find(registeredPackageData => (registeredPackageData as StyleDataCSP).packageName === (styleData as StyleDataCSP).packageName);
+
+		return getUrl((registeredPackages as StyleDataCSP)?.packageName, (registeredPackages as StyleDataCSP)?.fileName);
+	}).filter((link, index, array) => array.indexOf(link) === index);
+};
+
 const getEffectiveLinksHrefs = (ElementClass: typeof UI5Element, forStaticArea = false) => {
 	const stylesData: ComponentStylesData = ElementClass[forStaticArea ? "staticAreaStyles" : "styles"];
 
@@ -21,19 +30,10 @@ const getEffectiveLinksHrefs = (ElementClass: typeof UI5Element, forStaticArea =
 		stylesDataArray.push(openUI5Enablement.getBusyIndicatorStyles());
 	}
 
-	const usedPackages = new Set<string>();
-	const componentStyleLinks = [...stylesDataArray].flat(MAX_DEPTH_INHERITED_CLASSES).filter(data => !!data).map(data => {
-		usedPackages.add((data as StyleDataCSP).packageName);
-		return getUrl((data as StyleDataCSP).packageName, (data as StyleDataCSP).fileName);
-	});
+	const componentStyleLinks = stylesDataArray.flat(MAX_DEPTH_INHERITED_CLASSES).filter(data => !!data).map(data => getUrl((data as StyleDataCSP).packageName, (data as StyleDataCSP).fileName));
+	const themePropertiesLinks = findCurrentPackageStyles(stylesDataArray);
 
-	const links = [...usedPackages].map(usedPackage => {
-		const registeredPackageData = [...getRegisteredPackagesThemeData()].find(registeredPackage => (registeredPackage as StyleDataCSP).packageName === usedPackage);
-
-		return getUrl((registeredPackageData as StyleDataCSP)?.packageName, (registeredPackageData as StyleDataCSP)?.fileName);
-	});
-
-	return [...componentStyleLinks, ...links];
+	return [...componentStyleLinks, ...themePropertiesLinks];
 };
 
 export default getEffectiveLinksHrefs;
