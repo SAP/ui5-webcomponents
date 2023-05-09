@@ -133,7 +133,7 @@ class TimePicker extends TimePickerBase {
 	 * @name sap.ui.webc.main.TimePicker.prototype.dateValue
 	 */
 	get dateValue() {
-		return this.getFormat().parse(this._effectiveValue as string, undefined, undefined);
+		return this.getFormat().parse(this._effectiveValue as string);
 	}
 
 	get accInfo() {

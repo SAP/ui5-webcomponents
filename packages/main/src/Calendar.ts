@@ -275,7 +275,7 @@ class Calendar extends CalendarPart {
 	get _selectedDatesTimestamps(): Array<number> {
 		return this.dates.map(date => {
 			const value = date.value;
-			const validValue = value && !!this.getFormat().parse(value, undefined, undefined);
+			const validValue = value && !!this.getFormat().parse(value);
 			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
 		}).filter((date): date is number => !!date);
 	}

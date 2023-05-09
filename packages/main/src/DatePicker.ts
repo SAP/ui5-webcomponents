@@ -630,7 +630,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value, undefined, undefined);
+		return !!this.getFormat().parse(value);
 	}
 
 	/**
@@ -664,7 +664,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, true, undefined), true); // it is important to both parse and format the date as UTC
+		return this.getFormat().format(this.getFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
 	}
 
 	get _displayFormat(): string {
@@ -853,11 +853,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @type { Date }
 	 */
 	get dateValue(): Date | null {
-		return this.liveValue ? this.getFormat().parse(this.liveValue, undefined, undefined) as Date : this.getFormat().parse(this.value, undefined, undefined) as Date;
+		return this.liveValue ? this.getFormat().parse(this.liveValue) as Date : this.getFormat().parse(this.value) as Date;
 	}
 
 	get dateValueUTC(): Date | null {
-		return this.liveValue ? this.getFormat().parse(this.liveValue, true, undefined) as Date : this.getFormat().parse(this.value, undefined, undefined) as Date;
+		return this.liveValue ? this.getFormat().parse(this.liveValue, true) as Date : this.getFormat().parse(this.value) as Date;
 	}
 
 	get styles() {

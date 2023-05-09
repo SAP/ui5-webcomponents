@@ -353,7 +353,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	isValid(value: string) {
-		return value === "" || this.getFormat().parse(value, undefined, undefined);
+		return value === "" || this.getFormat().parse(value);
 	}
 
 	normalizeValue(value: string) {
@@ -361,7 +361,7 @@ class TimeSelection extends UI5Element {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, undefined, undefined));
+		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	get _formatPattern() {
@@ -468,7 +468,7 @@ class TimeSelection extends UI5Element {
 	}
 
 	get dateValue() {
-		return this.value ? this.getFormat().parse(this.value, undefined, undefined) as Date : new Date();
+		return this.value ? this.getFormat().parse(this.value) as Date : new Date();
 	}
 
 	get validDateValue() {
