@@ -23,6 +23,7 @@ import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
+import executeTemplate from "./renderer/executeTemplate.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
@@ -153,6 +154,16 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		return this.__id;
+	}
+
+	render() {
+		const template = (this.constructor as typeof UI5Element).template;
+		return executeTemplate(template!, this);
+	}
+
+	renderStatic() {
+		const template = (this.constructor as typeof UI5Element).staticAreaTemplate;
+		return executeTemplate(template!, this);
 	}
 
 	/**
@@ -885,14 +896,14 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	static _needsShadowDOM() {
-		return !!this.template;
+		return !!this.template || Object.prototype.hasOwnProperty.call(this.prototype, "render");
 	}
 
 	/**
 	 * @private
 	 */
 	static _needsStaticArea() {
-		return !!this.staticAreaTemplate;
+		return !!this.staticAreaTemplate || Object.prototype.hasOwnProperty.call(this.prototype, "renderStatic");
 	}
 
 	/**
