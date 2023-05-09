@@ -57,6 +57,12 @@ type AccInfo = {
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
 	ariaHaspopup?: `${HasPopup}`;
+	posinset?: number;
+	setsize?: number;
+	ariaSelected?: boolean;
+	ariaChecked?: boolean;
+	listItemAriaLabel?: string;
+	ariaOwns?: string;
 }
 
 /**
@@ -225,6 +231,10 @@ abstract class ListItem extends ListItemBase {
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
+	// used in template, implemented in TreeItemBase
+	accessibleName?: string;
+	// used in ListItem template but implemented in TreeItemBase
+	indeterminate?: boolean;
 
 	static i18nBundle: I18nBundle;
 

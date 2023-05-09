@@ -1,5 +1,5 @@
 {
-    "include": ["_stories/**/*", ".storybook/**/*", "global.d.ts"],
+    "include": ["_stories/**/*", ".storybook/**/*", "global.d.ts", "build-scripts-storybook/**/*"],
     "compilerOptions": {
         "target": "ES2021",
         // Generate d.ts files
@@ -9,7 +9,8 @@
         "sourceMap": true,
         "inlineSources": true,
         "strict": true,
-        "moduleResolution": "node",
+        "module": "node16",
+      	"moduleResolution": "node16",
     		"resolveJsonModule": true,
         "esModuleInterop": true,
         "jsx": "react-jsx",

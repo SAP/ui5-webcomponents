@@ -229,6 +229,11 @@
 	display: flex;
 }
 
+.ui5-tab-strip-itemAdditionalText-hidden {
+	visibility: hidden;
+	margin-top: 1.25rem;
+}
+
 .ui5-tab-strip-item--inline .ui5-tab-strip-itemAdditionalText + .ui5-tab-strip-itemText {
 	display: inline;
 }
@@ -253,7 +258,7 @@
 	padding: 0 0.188rem;
 }
 
-.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--withAddionalText {
+.ui5-tab-strip-item--textOnly.ui5-tab-strip-item--withAdditionalText {
 	justify-content: flex-start;
 	height: var(--_ui5_tc_item_text_only_with_additional_text_height);
 }

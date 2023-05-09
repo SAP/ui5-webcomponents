@@ -80,7 +80,7 @@ export class LinksParser implements IDocsParser {
             // remove numbers and dash (1-, 01-, 02-, etc.) from the beginning of string
             .replace(/^[0-9-]+/, "")
             // replace path.sep with dash
-            .replace(new RegExp(path.sep, "g"), "-");
+            .replaceAll(path.sep, "-");
 
         const parsedLink = `/docs/docs-${pathRelativeParsed.toLowerCase()}--docs`;
 

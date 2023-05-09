@@ -11,4 +11,5 @@
 	--_ui5_link_focus_background_color: var(--sapContent_FocusColor);
 	--_ui5_link_focus_color: var(--sapContent_ContrastTextColor);
 	--_ui5_link_subtle_text_decoration: underline;
+	--_ui5_link_subtle_text_decoration_hover: none;
 }

@@ -695,6 +695,7 @@ class Carousel extends UI5Element {
 
 	/**
 	 * The indices of the currently visible items of the component.
+	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.15
 	 * @returns {Integer[]} the indices of the visible items

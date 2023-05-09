@@ -986,6 +986,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._focusedAfterClear = false;
 	}
 
+	/**
+	 * Called on "focusin" of the native input HTML Element.
+	 * <b>Note:</b> implemented in MultiInput, but used in the Input template.
+	 */
+	innerFocusIn(): void | undefined {}
+
 	_onfocusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
 		const focusedOutToSuggestions = this.Suggestions && toBeFocused && toBeFocused.shadowRoot && toBeFocused.shadowRoot.contains(this.Suggestions.responsivePopover as Node);

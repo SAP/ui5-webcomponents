@@ -2,7 +2,7 @@ import merge from "./thirdparty/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 import validateThemeRoot from "./validateThemeRoot.js";
-import type OpenUI5Support from "./features/OpenUI5Support";
+import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 import CalendarType from "./types/CalendarType.js";

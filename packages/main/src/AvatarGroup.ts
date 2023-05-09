@@ -14,7 +14,7 @@ import {
 	isSpace,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import Button from "./Button.js";
-import type Avatar from "./Avatar";
+import type Avatar from "./Avatar.js";
 import AvatarSize from "./types/AvatarSize.js";
 import AvatarGroupType from "./types/AvatarGroupType.js";
 import AvatarColorScheme from "./types/AvatarColorScheme.js";

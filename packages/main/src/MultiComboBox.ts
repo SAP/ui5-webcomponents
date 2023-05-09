@@ -1401,7 +1401,9 @@ class MultiComboBox extends UI5Element {
 
 	handleCancel() {
 		this._itemsBeforeOpen.forEach(item => {
-			item.ref.selected = item.selected;
+			if (item.ref instanceof MultiComboBoxItem) {
+				item.ref.selected = item.selected;
+			}
 		});
 
 		this.togglePopover();
