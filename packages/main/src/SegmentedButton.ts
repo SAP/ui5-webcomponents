@@ -98,33 +98,20 @@ class SegmentedButton extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SegmentedButtonItem>;
 
-	/**
-	 * Defines custom component width.
-	 *
-	 * <br><br>
-	 * <b>Note:</b> By default the component's width is auto and it takes up the space it needs to fit its items.
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @public
-	 * @name sap.ui.webc.main.SegmentedButton.prototype.customWidth
-	 */
-	@property()
-	customWidth!: string;
-
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
 
 	absoluteWidthSet: boolean // set to true whenever we set absolute width to the component
 	percentageWidthSet: boolean; // set to true whenever we set 100% width to the component
+	originalWidth!: string; // used to store the width of the component's parent before the resize
+	initialState!: boolean; // helper which indicates whether the stored width in the originalWidth is the initial one, since on change they change a few times and we want only the first one
 	hasPreviouslyFocusedItem: boolean;
 
 	_handleResizeBound: ResizeObserverCallback;
 
 	widths?: Array<number>;
 	_selectedItem?: SegmentedButtonItem;
-	prevParentWidth!: string; // used to store the width of the component's parent before the resize
-	initialState!: boolean; // helper which indicates whether the stored width in the prevParentWidth is the initial one, since on change they change a few times and we want only the first one
 
 	static async onDefine() {
 		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -139,6 +126,8 @@ class SegmentedButton extends UI5Element {
 
 		this.absoluteWidthSet = false; // true when component width is set to absolute
 		this.percentageWidthSet = false; // true when component width is set to 100%
+		this.initialState = false;
+		this.originalWidth = "";
 		this.hasPreviouslyFocusedItem = false;
 
 		this._handleResizeBound = this._doLayout.bind(this);
@@ -170,7 +159,6 @@ class SegmentedButton extends UI5Element {
 	}
 
 	prepareToMeasureItems() {
-		this.style.width = "";
 		this.items.forEach(item => {
 			item.style.width = "";
 		});
@@ -282,32 +270,69 @@ class SegmentedButton extends UI5Element {
 		}
 
 		const parentWidth = this.parentNode ? (this.parentNode as HTMLElement).offsetWidth : 0;
+		const defaultComponentWidth = `${Math.max(...this.widths!) * this.items.length}px`;
 
-		if (!this.customWidth && (!this.style.width || this.percentageWidthSet)) {
-			this.style.width = `${Math.max(...this.widths!) * this.items.length}px`;
+		const customWidth = getComputedStyle(this).width; // set by class or style attribute or calculated by the browser
+		const hasClass = this.hasAttribute("class"); // flag to check if class attribute is set
+		const settedWidth = this.style.width; // set by style attribute/getComputedStyle
+
+		if ((!this.style.width || this.percentageWidthSet) || (customWidth === settedWidth && !hasClass)) {
+			this.style.width = defaultComponentWidth;
+			this.absoluteWidthSet = true;
+		} else if ((!this.style.width || this.percentageWidthSet) || (customWidth === settedWidth && !hasClass)) {
+			this.style.width = defaultComponentWidth;
+			this.absoluteWidthSet = true;
+			if ((!this.style.width || this.percentageWidthSet) || customWidth === settedWidth) {
+				this.style.width = customWidth;
+				this.absoluteWidthSet = true;
+				if (!this.initialState) {
+					this.originalWidth = this.style.width;
+					this.initialState = true;
+				}
+			}
+		} else {
+			this.style.width = defaultComponentWidth;
 			this.absoluteWidthSet = true;
 			if (!this.initialState) {
-				this.prevParentWidth = `${Math.max(...this.widths!) * this.items.length}px`;
+				this.originalWidth = this.style.width;
 				this.initialState = true;
 			}
-		} else if (this.customWidth) {
-			this.style.width = this.customWidth;
+		}
+
+		if (!this.originalWidth) {
+			this.originalWidth = defaultComponentWidth;
+		}
+
+		if (customWidth !== defaultComponentWidth && (hasClass)) {
+			this.style.width = customWidth;
 			this.absoluteWidthSet = true;
+			if (!this.initialState) {
+				this.originalWidth = customWidth;
+				this.initialState = true;
+			}
+		} else if (customWidth !== defaultComponentWidth && (!hasClass) && !this.style.width) {
+			this.style.width = defaultComponentWidth;
+			this.absoluteWidthSet = true;
+			if (!this.initialState) {
+				this.originalWidth = defaultComponentWidth;
+				this.initialState = true;
+			}
 		}
 
 		this.items.forEach(item => {
 			item.style.width = "100%";
 		});
 
-		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet && this.customWidth) {
+		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
 			this.style.width = "100%";
 			this.percentageWidthSet = true;
-		} else if (parentWidth <= this.offsetWidth && this.absoluteWidthSet && !this.customWidth) {
+		} else if (parentWidth <= parseInt(this.originalWidth.replace("px", "")) && this.absoluteWidthSet) {
 			this.style.width = "100%";
+			this.percentageWidthSet = true;
 		}
 
-		if (parentWidth > parseInt(this.prevParentWidth.replace("px", "")) && !this.customWidth) {
-			this.style.width = this.prevParentWidth!;
+		if (parentWidth > parseInt(this.originalWidth.replace("px", ""))) {
+			this.style.width = this.originalWidth;
 			this.absoluteWidthSet = true;
 		}
 	}

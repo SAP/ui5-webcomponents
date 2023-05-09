@@ -3,6 +3,7 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+	width: inherit;
 }
 
 .ui5-segmented-button-root {
