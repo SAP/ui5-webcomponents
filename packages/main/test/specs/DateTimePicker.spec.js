@@ -293,4 +293,16 @@ describe("DateTimePicker general interaction", () => {
 		// assert
 		assert.strictEqual(await pickerInput.getProperty("value"), "", "Value should not be set");
 	});
+
+	it("Min and max dates are set, with no format pattern provided, using valid ISO format", async () => {
+		const picker = await getPicker("dtMinMaxDatesISO");
+
+		// get header navigation buttons
+		const prevButton = await picker.$("ui5-calendar").shadow$("ui5-calendar-header").shadow$("div[data-ui5-cal-header-btn-prev]");
+		const nextButton = await picker.$("ui5-calendar").shadow$("ui5-calendar-header").shadow$("div[data-ui5-cal-header-btn-next]");
+
+		// assert
+		assert.strictEqual(await prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The previous button is disabled.");
+		assert.strictEqual(await nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The next button is disabled.");
+	});
 });
