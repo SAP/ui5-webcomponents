@@ -255,7 +255,7 @@ class Calendar extends CalendarPart {
 	_headerYearButtonTextSecType!: string;
 
 	@property({ type: CalendarPickersMode, defaultValue: CalendarPickersMode.DAY_MONTH_YEAR, noAttribute: true })
-	_pickersMode!: CalendarPickersMode;
+	_pickersMode!: `${CalendarPickersMode}`;
 
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
