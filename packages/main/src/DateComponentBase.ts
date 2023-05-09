@@ -103,11 +103,10 @@ class DateComponentBase extends UI5Element {
 	 * @type {DateFormat}
 	 * @private
 	 */
-	_isoFormatInstance: DateFormat | null;
+	_isoFormatInstance?: DateFormat;
 
 	constructor() {
 		super();
-		this._isoFormatInstance = null;
 	}
 
 	get _primaryCalendarType() {
