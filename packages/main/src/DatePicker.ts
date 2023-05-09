@@ -630,9 +630,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			return true;
 		}
 
-		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-		return !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value, undefined, undefined);
 	}
 
 	/**
@@ -666,7 +664,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, true, undefined as unknown as boolean), true); // it is important to both parse and format the date as UTC
+		return this.getFormat().format(this.getFormat().parse(value, true, undefined), true); // it is important to both parse and format the date as UTC
 	}
 
 	get _displayFormat(): string {
@@ -855,15 +853,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @type { Date }
 	 */
 	get dateValue(): Date | null {
-		const utc = undefined as unknown as boolean;
-		const strict = undefined as unknown as boolean;
-		return this.liveValue ? this.getFormat().parse(this.liveValue, utc, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;
+		return this.liveValue ? this.getFormat().parse(this.liveValue, undefined, undefined) as Date : this.getFormat().parse(this.value, undefined, undefined) as Date;
 	}
 
 	get dateValueUTC(): Date | null {
-		const utc = undefined as unknown as boolean;
-		const strict = undefined as unknown as boolean;
-		return this.liveValue ? this.getFormat().parse(this.liveValue, true, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;
+		return this.liveValue ? this.getFormat().parse(this.liveValue, true, undefined) as Date : this.getFormat().parse(this.value, undefined, undefined) as Date;
 	}
 
 	get styles() {

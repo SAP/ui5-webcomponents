@@ -435,7 +435,7 @@ class TimePickerBase extends UI5Element {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value as string, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value as string, undefined, undefined);
 	}
 
 	normalizeValue(value: string) {
@@ -443,11 +443,11 @@ class TimePickerBase extends UI5Element {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean));
+		return this.getFormat().format(this.getFormat().parse(value, undefined, undefined));
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		const date = this.getFormat().parse(this._effectiveValue as string, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const date = this.getFormat().parse(this._effectiveValue as string, undefined, undefined) as Date;
 		if (!date) {
 			return;
 		}
