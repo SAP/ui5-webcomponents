@@ -106,10 +106,10 @@
 }
 
 .ui5-carousel-navigation-wrapper-bg-solid {
-    background: var(--ui5_carousel_background_color_solid);
+    background: var(--sapPageFooter_Background);
 }
 
-.ui5-carousel-navigation-wrapper-bg-solid {
+.ui5-carousel-navigation-wrapper-bg-translusent {
     background: var(--ui5_carousel_background_color_translusent);
 }
 
