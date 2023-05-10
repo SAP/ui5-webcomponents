@@ -38,12 +38,9 @@ const removeFields = object => {
 		"territories",
 		"scripts",
 		"timezoneNames",
-		"units",
 		"timezoneNamesFormats",
 		"scientificFormat",
-		"percentFormat",
 		"miscPattern",
-		"lenient-scope-number"
 	].forEach(field => {
 		delete object[field];
 	});
