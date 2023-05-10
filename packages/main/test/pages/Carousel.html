@@ -4,17 +4,12 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 	<title>Carousel</title>
-
-
 	<script src="../../bundle.esm.js" type="module"></script>
-
-
+	<link rel="stylesheet" type="text/css" href="./styles/Carousel.css">
 </head>
 
 <body class="carousel1auto">
-	<link rel="stylesheet" type="text/css" href="./styles/Carousel.css">
 	<ui5-carousel id="carouselCards" items-per-page-s="3" items-per-page-m="3" items-per-page-l="3">
 		<ui5-card id="card"
 			class="myCard">
@@ -298,8 +293,8 @@
 
 		<ui5-card id="card2" class="myCard">
 			<ui5-card-header slot="header" status="5 of 8" title-text="Quick Links" subtitle-text="quick links">
+				<ui5-icon name="group" slot="avatar"></ui5-icon>
 			</ui5-card-header>
-			<ui5-icon name="group" slot="avatar"></ui5-icon>
 			<ui5-list id="myList3" separators="Inner">
 				<ui5-li icon="horizontal-bullet-chart">Template Based Segmentation</ui5-li>
 				<ui5-li icon="opportunity">Segmentation Models</ui5-li>
@@ -561,6 +556,35 @@
 		<img src="./img/HT-1000.jpg" alt="Image 1">
 		<img src="./img/HT-1010.jpg" alt="Image 2">
 		<img src="./img/HT-1022.jpg" alt="Image 3">
+	</ui5-carousel>
+	<ui5-carousel class="shortCarousel" hide-page-indicator>
+		<ui5-card style="width: 300px;">
+			<ui5-card-header
+				slot="header"
+				status="3 of 5"
+				subtitle-text="Direct Reports"
+				title-text="TeamSpace"
+			>
+				<ui5-icon slot="avatar" name="person-placeholder"></ui5-icon>
+			</ui5-card-header>
+			<ui5-list>
+				<ui5-li description="Software Architect">Richard Wilson</ui5-li>
+			</ui5-list>
+		</ui5-card>
+
+		<ui5-card style="width: 300px;">
+			<ui5-card-header
+			slot="header"
+			status="3 of 5"
+			subtitle-text="Direct Reports"
+			title-text="TeamSpace"
+			>
+				<ui5-icon slot="avatar" name="person-placeholder"></ui5-icon>
+			</ui5-card-header>
+			<ui5-list>
+				<ui5-li description="Visual Designer">Elena Petrova</ui5-li>
+			</ui5-list>
+		</ui5-card>
 	</ui5-carousel>
 </body>
 
