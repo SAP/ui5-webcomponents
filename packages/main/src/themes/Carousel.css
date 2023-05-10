@@ -103,8 +103,22 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    background: var(--ui5_carousel_page_indicator_background);
-    border-top: var(--ui5_carousel_page_indicator_border_width) solid var(--sapList_BorderColor);
+}
+
+.ui5-carousel-navigation-wrapper-bg-solid {
+    background: var(--ui5_carousel_background_color_solid);
+}
+
+.ui5-carousel-navigation-wrapper-bg-solid {
+    background: var(--ui5_carousel_background_color_translusent);
+}
+
+.ui5-carousel-navigation-wrapper-bg-transparent {
+    background: transparent;
+}
+
+.ui5-carousel-navigation-wrapper-border-solid {
+    border-top: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
 }
 
 .ui5-carousel-navigation-wrapper.ui5-carousel-navigation-with-buttons {

@@ -31,6 +31,7 @@ import {
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
 import BackgroundDesign from "./types/BackgroundDesign.js";
+import BorderDesign from "./types/BorderDesign.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -228,12 +229,34 @@ class Carousel extends UI5Element {
 	 * Defines the carousel's background design.
 	 * @type {sap.ui.webc.main.types.BackgroundDesign}
 	 * @name sap.ui.webc.main.Carousel.prototype.backgroundDesign
-	 * @since 1.10
+	 * @since 1.14
 	 * @defaultvalue "Translucent"
 	 * @public
 	 */
 	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Translucent })
 	backgroundDesign!: BackgroundDesign;
+
+	/**
+	 * Defines the page indicator background design.
+	 * @type {sap.ui.webc.main.types.BackgroundDesign}
+	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorBackgroundDesign
+	 * @since 1.14
+	 * @defaultvalue "Solid"
+	 * @public
+	 */
+	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
+	pageIndicatorBackgroundDesign!: BackgroundDesign;
+
+	/**
+	 * Defines the page indicator border design.
+	 * @type {sap.ui.webc.main.types.BorderDesign}
+	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorBorderDesign
+	 * @since 1.14
+	 * @defaultvalue "Solid"
+	 * @public
+	 */
+	@property({ type: BorderDesign, defaultValue: BorderDesign.Solid })
+	pageIndicatorBorderDesign!: BorderDesign;
 
 	/**
 	 * Defines the index of the initially selected item.
@@ -461,6 +484,14 @@ class Carousel extends UI5Element {
 		return this.backgroundDesign.toLowerCase();
 	}
 
+	get _pageIndicatorBackgroundDesign() {
+		return this.pageIndicatorBackgroundDesign.toLowerCase();
+	}
+
+	get _pageIndicatorBorderDesign() {
+		return this.pageIndicatorBorderDesign.toLowerCase();
+	}
+
 	get _getLastFocusedActivePageIndex() {
 		for (let i = 0; i < this._orderOfLastFocusedPages.length; i++) {
 			const pageIndex = this._orderOfLastFocusedPages[i];
@@ -627,6 +658,8 @@ class Carousel extends UI5Element {
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
 				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
+				[`ui5-carousel-navigation-wrapper-bg-${this.pageIndicatorBackgroundDesign.toLowerCase()}`]: true,
+				[`ui5-carousel-navigation-wrapper-border-${this.pageIndicatorBorderDesign.toLowerCase()}`]: true,
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
