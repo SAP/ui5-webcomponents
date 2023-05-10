@@ -217,6 +217,7 @@ type ClickEventDetail = CloseEventDetail;
  * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
  *
  * @event sap.ui.webc.main.List#selection-change
+ * @allowPreventDefault
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
  * @public
@@ -715,13 +716,16 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent<SelectionChangeEventDetail>("selection-change", {
+			const changePrevented = !this.fireEvent<SelectionChangeEventDetail>("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: e.detail.selectionComponentPressed,
 				targetItem: e.detail.item,
 				key: e.detail.key,
-			});
+			}, true);
+			if (changePrevented) {
+				this._revertSelection(previouslySelectedItems);
+			}
 		}
 	}
 
@@ -777,6 +781,12 @@ class List extends UI5Element {
 
 	getItemsForProcessing(): Array<ListItemBase> {
 		return this.getItems();
+	}
+
+	_revertSelection(previouslySelectedItems: Array<ListItemBase>) {
+		this.getItems().forEach((item: ListItemBase) => {
+			item.selected = previouslySelectedItems.indexOf(item) !== -1;
+		});
 	}
 
 	_onkeydown(e: KeyboardEvent) {
