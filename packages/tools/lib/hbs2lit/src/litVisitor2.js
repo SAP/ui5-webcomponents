@@ -28,14 +28,18 @@ if (!String.prototype.replaceAll) {
 	};
 }
 
-function HTMLLitVisitor(debug) {
+function HTMLLitVisitor(componentName, debug) {
 	this.blockCounter = 0;
 	this.keys = [];
 	this.blocks = {};
 	this.result = "";
 	this.mainBlock = "";
 	this.blockLevel = 0;
-	this.blockParameters = ["context", "tags", "suffix"];
+	this.componentName = componentName
+	const blockParametersDefinitionTS = [`this: ${componentName}`, "context: UI5Element", "tags: string[]", "suffix: string | undefined"];
+	const blockParametersDefinitionJS = ["context", "tags", "suffix"];
+	this.blockParametersDefinition = process.env.UI5_TS ? blockParametersDefinitionTS : blockParametersDefinitionJS;
+	this.blockParametersUsage = ["this", "context", "tags", "suffix"];
 	this.paths = []; //contains all normalized relative paths
 	this.debug = debug;
 	if (this.debug) {
@@ -51,17 +55,18 @@ HTMLLitVisitor.prototype.Program = function(program) {
 	this.keys.push(key);
 	this.debug && this.blockByNumber.push(key);
 
-	this.blocks[this.currentKey()] = "const " + this.currentKey() + " = (" + this.blockParameters.join(", ") + ") => ";
+	// this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: any, ` + this.blockParametersDefinition.join(", ") + ") { ";
+	this.blocks[this.currentKey()] = `function ${this.currentKey()} (${this.blockParametersDefinition.join(", ")}) { `;
 
 	if (this.keys.length > 1) { //it's a nested block
-		this.blocks[this.prevKey()] += this.currentKey() + "(" + this.blockParameters.join(", ") + ")";
+		this.blocks[this.prevKey()] += this.currentKey() + ".call(" + this.blockParametersUsage.join(", ") + ")";
 	} else {
 		this.mainBlock = this.currentKey();
 	}
 
-	this.blocks[this.currentKey()] += "html`";
+	this.blocks[this.currentKey()] += "return html`";
 	Visitor.prototype.Program.call(this, program);
-	this.blocks[this.currentKey()] += "`;";
+	this.blocks[this.currentKey()] += "`;}";
 
 	this.keys.pop(key);
 };
@@ -98,14 +103,18 @@ HTMLLitVisitor.prototype.MustacheStatement = function(mustache) {
 		this.blocks[this.currentKey()] += "${index}";
 	} else {
 		const path = normalizePath.call(this, mustache.path.original);
-		const hasCalculatingClasses = path.includes("context.classes");
+		const hasCalculatingClasses = path.includes("this.classes");
 
 		let parsedCode = "";
 
 		if (isNodeValue && !mustache.escaped) {
 			parsedCode = `\${unsafeHTML(${path})}`;
 		} else if (hasCalculatingClasses) {
-			parsedCode = `\${classMap(${path})}`;
+			if (process.env.UI5_TS) {
+				parsedCode = `\${classMap(${path} as ClassMapValue)}`;
+			} else {
+				parsedCode = `\${classMap(${path})}`;
+			}
 		} else if (isStyleAttribute) {
 			parsedCode = `\${styleMap(${path})}`;
 		} else if (skipIfDefined){
@@ -170,19 +179,35 @@ function visitEachBlock(block) {
 	var bParamAdded = false;
 	visitSubExpression.call(this, block);
 
-	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", (item, index) => item._id || index, (item, index) => ";
+	const reapeatDirectiveParamsTS = "(item, index) => (item as typeof item & {_id?: any})._id || index, (item, index: number)";
+	const reapeatDirectiveParamsJS = "(item, index) => item._id || index, (item, index)";
+	const repleatDirectiveParams = process.env.UI5_TS ? reapeatDirectiveParamsTS : reapeatDirectiveParamsJS;
+	this.blocks[this.currentKey()] += "${ repeat(" + normalizePath.call(this, block.params[0].original) + ", " + repleatDirectiveParams + " => ";
 	this.paths.push(normalizePath.call(this, block.params[0].original));
 	this.blockLevel++;
 
-	if (this.blockParameters.indexOf("item") === -1) {
+	// block params is [this, context, tags, suffix] for top level blocks
+	// blcok params is [this, context, tags, suffix, item, index] for nested blocks
+	if (!this.blockParametersUsage.includes("index")) {
+		// last item is not index, but an each block is processed, add the paramters for further nested blocks
 		bParamAdded = true;
-		this.blockParameters.unshift("index");
-		this.blockParameters.unshift("item");
+		if (process.env.UI5_TS) {
+			this.blockParametersDefinition.push("item: any");
+			this.blockParametersDefinition.push("index: number");
+		} else {
+			this.blockParametersDefinition.push("item");
+			this.blockParametersDefinition.push("index");
+		}
+		this.blockParametersUsage.push("item");
+		this.blockParametersUsage.push("index");
 	}
 	this.acceptKey(block, "program");
 	if (bParamAdded) {
-		this.blockParameters.shift("item");
-		this.blockParameters.shift("index");
+		// if parameters were added at this step, remove the last two
+		this.blockParametersDefinition.pop();
+		this.blockParametersDefinition.pop();
+		this.blockParametersUsage.pop();
+		this.blockParametersUsage.pop();
 	}
 	this.blockLevel--;
 	this.blocks[this.currentKey()] += ") }";
@@ -197,7 +222,7 @@ function normalizePath(sPath) {
 	if (result.indexOf("@root") === 0) {
 		// Trying to access root context via the HBS "@root" variable.
 		// Example: {{@root.property}} compiles to "context.property" - called from anywhere within the template.
-		result = result.replace("@root", "context");
+		result = result.replace("@root", "this");
 
 	} else if (result.indexOf("../") === 0) {
 		let absolutePath;
@@ -207,7 +232,7 @@ function normalizePath(sPath) {
 			// Trying to access root context from nested loops.
 			// Example: {{../../property}} compiles to "context.property" - when currently in a nested level loop.
 			// Example: {{../../../property}} compile to "context.property" - when requested levels are not present. fallback to root context.
-			absolutePath = `context.${replaceAll(result,"../", "")}`;
+			absolutePath = `this.${replaceAll(result,"../", "")}`;
 		} else {
 			// Trying to access upper context (one-level-up) and based on the current lelev, that could be "context" or "item".
 			// Example: {{../property}} compiles to "context.property" - when called in a top level loop.
@@ -235,7 +260,7 @@ function normalizePath(sPath) {
 		// {{/each}}
 		// {{text}} -> compiles to "context.text"
 
-		const blockPath = this.blockLevel > 0 ? "item" : "context";
+		const blockPath = this.blockLevel > 0 ? "item" : "this";
 		result = result ? replaceAll(blockPath + "/" + result, "/", ".") : blockPath;
 	}
 

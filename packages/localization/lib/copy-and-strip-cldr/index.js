@@ -25,9 +25,9 @@ const copyAndStripCLDR = async () => {
 }
 
 const removeFields = object => {
-	// remove all fields related to currency or listPattern
+	// remove all fields related to listPattern
 	for (const field in object) {
-		if (field.includes("currency") || field.includes("listPattern")) {
+		if (field.includes("listPattern")) {
 			delete object[field];
 		}
 	}
@@ -38,15 +38,9 @@ const removeFields = object => {
 		"territories",
 		"scripts",
 		"timezoneNames",
-		"decimalFormat-short",
-		"decimalFormat-long",
-		"units",
 		"timezoneNamesFormats",
-		"decimalFormat",
 		"scientificFormat",
-		"percentFormat",
 		"miscPattern",
-		"lenient-scope-number"
 	].forEach(field => {
 		delete object[field];
 	});
