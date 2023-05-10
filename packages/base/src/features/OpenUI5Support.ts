@@ -1,5 +1,6 @@
 import { registerFeature } from "../FeaturesRegistry.js";
 import { setTheme } from "../config/Theme.js";
+import { setThemeRoot } from "../config/ThemeRoot.js";
 import { getCurrentZIndex } from "../util/PopupUtils.js";
 import { CLDRData } from "../asset-registries/LocaleData.js";
 import type { LegacyDateCalendarCustomizing } from "../features/LegacyDateFormats.js";
@@ -103,6 +104,7 @@ class OpenUI5Support {
 		const config = core.getConfiguration();
 		core.attachThemeChanged(async () => {
 			await setTheme(config.getTheme());
+			await setThemeRoot(config.getThemeRoot());
 		});
 	}
 

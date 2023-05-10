@@ -9,7 +9,7 @@ let currThemeRoot: string | undefined;
  * Returns the current theme root.
  *
  * @public
- * @since 1.13.0
+ * @since 1.14.0
  * @returns { string } the current theme root
  */
 const getThemeRoot = (): string | undefined => {
@@ -22,14 +22,14 @@ const getThemeRoot = (): string | undefined => {
 
 /**
  * Sets theme root and loads theme styles from that location
- * for the currently used theme.
+ * for the currently set theme.
  *
  * <b>Note:</b> Certain security restrictions will apply before fetching the theme assets.
  * Absolute URLs to a different origin than the current page will result in using the current page as an origin.
  * To allow specific origins, use &lt;meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/"&gt; tag inside the &lt;head&gt; of the page.
  *
  * @public
- * @since 1.13.0
+ * @since 1.14.0
  * @param { string } themeRoot the new theme root
  * @returns { Promise<void> } a promise that is resolved when &lt;link&gt; tag to the theme assets is appended to the head
  */

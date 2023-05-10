@@ -89,12 +89,10 @@ For more on configuring themes, see [Configuration](../2-advanced/01-configurati
 ## Load custom theme, built with `UI Theme Designer`, via URL
 
 ### Using URL parameter
-To load a custom theme via URL, you can specify theme's location either with the `theme` URL parameter,
-or with the `sap-ui-themeRoot` parameter:
+To load a custom theme via URL, you can specify theme's location with the `theme` URL parameter:
 
 ```
 index.html?sap-ui-theme=mytheme@https://my-example-host.com/
-index.html?sap-ui-theme=mytheme&sap-ui-themeRoot=https://my-example-host.com/
 ```
 
 In this example, "mytheme" theme will be applied and its resources (CSS variables specific to the theme) will be loaded from https://my-example-host.com/UI5/Base/baseLib/mytheme/css_variables.css.
