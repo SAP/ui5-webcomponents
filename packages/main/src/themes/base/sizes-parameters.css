@@ -17,6 +17,8 @@
 	--_ui5_day_picker_item_height: 2.875rem;
 	--_ui5_day_picker_empty_height: 3rem;
 	--_ui5_day_picker_item_justify_content: space-between;
+	--_ui5_dp_two_calendar_item_now_text_padding_top: 0.387rem;
+	--_ui5_dp_two_calendar_item_text_padding_top: 0.575rem;
 
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
@@ -34,7 +36,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.75rem;
-    --_ui5_dialog_footer_height: 2.75rem;
+	--_ui5_dialog_footer_height: 2.75rem;
 
 	--_ui5_input_inner_padding: 0 0.625rem;
 	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
@@ -222,6 +224,8 @@
 	--_ui5_day_picker_item_height: 2rem;
 	--_ui5_day_picker_empty_height: 2.125rem;
 	--_ui5_day_picker_item_justify_content: flex-end;
+	--_ui5_dp_two_calendar_item_now_text_padding_top: 1.1875rem;
+	--_ui5_dp_two_calendar_item_text_padding_top: 0.875rem;
 
 	/* DateTimePicker */
 	--_ui5_datetime_picker_height: 17rem;
@@ -232,7 +236,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.5rem;
-    --_ui5_dialog_footer_height: 2.5rem;
+	--_ui5_dialog_footer_height: 2.5rem;
 
 	/* Input */
 	--_ui5_input_height: var(--_ui5_input_compact_height);

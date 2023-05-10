@@ -18,7 +18,7 @@
 
 :host([secondary-calendar-type]) .ui5-dp-daytext {
 	height: 1.575rem;
-	padding: .575rem 0 0 0;
+	padding-top: var(--_ui5_dp_two_calendar_item_text_padding_top)
 }
 
 :host([secondary-calendar-type]) .ui5-dp-daysectext {
@@ -156,7 +156,7 @@
 
 :host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now .ui5-dp-daytext {
 	height: 1.8125rem;
-	padding-top: .387rem;
+	padding-top: var(--_ui5_dp_two_calendar_item_now_text_padding_top);
 }
 
 :host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now .ui5-dp-daysectext {
