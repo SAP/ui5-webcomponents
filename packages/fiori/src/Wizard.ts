@@ -8,6 +8,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import WizardRenderMode from "@ui5/webcomponents-base/dist/types/WizardRenderMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -233,6 +234,13 @@ type StepInfo = {
 })
 
 class Wizard extends UI5Element {
+	/**
+	 * Defines how the steps of the <code>ui5-wizard</code> would be visualized.
+	 * @public
+	 */
+	@property({ validator: String, defaultValue: WizardRenderMode.Scroll })
+	renderMode?: WizardRenderMode
+
 	/**
 	 * Defines the width of the <code>ui5-wizard</code>.
 	 * @private
