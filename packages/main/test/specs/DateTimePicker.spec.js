@@ -270,12 +270,13 @@ describe("DateTimePicker general interaction", () => {
 		// act
 		await openPickerById("secondaryCalendar");
 		await browser.keys("ArrowUp");
+		await browser.keys("ArrowDown");
 		await browser.keys("Enter");
 		const submitBtn = await getSubmitButton("secondaryCalendar");
 		await submitBtn.click();
 
 		// assert
-		assert.strictEqual(await picker.shadow$("ui5-input").getValue(), "Sha. 17, 1443 AH, 10:27:26 AM", "Value change is applied.");
+		assert.strictEqual(await picker.shadow$("ui5-input").getValue(), "Sha. 24, 1443 AH, 10:27:26 AM", "Value change is applied.");
 	});
 
 	it("tests change event is prevented on submit when prevent default is called", async () => {
