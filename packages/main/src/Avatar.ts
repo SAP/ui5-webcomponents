@@ -168,7 +168,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	_size!: `${AvatarSize}`;
+	_size!: AvatarSize;
 
 	/**
 	 * Defines the background color of the desired image.
@@ -199,7 +199,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	_colorScheme!: `${AvatarColorScheme}`;
+	_colorScheme!: AvatarColorScheme;
 
 	/**
 	 * Defines the text alternative of the component.

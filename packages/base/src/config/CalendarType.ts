@@ -1,14 +1,14 @@
 import CalendarType from "../types/CalendarType.js";
 import { getCalendarType as getConfiguredCalendarType } from "../InitialConfiguration.js";
 
-let calendarType: `${CalendarType}` | undefined;
+let calendarType: CalendarType | undefined;
 
 /**
  * Returns the configured or default calendar type.
  * @public
  * @returns { CalendarType } the effective calendar type
  */
-const getCalendarType = () => {
+const getCalendarType = (): CalendarType => {
 	if (calendarType === undefined) {
 		calendarType = getConfiguredCalendarType();
 	}

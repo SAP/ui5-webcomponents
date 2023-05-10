@@ -11,12 +11,12 @@ let initialized = false;
 
 type InitialConfig = {
 	[key: string]: any,
-	animationMode: `${AnimationMode}`,
+	animationMode: AnimationMode,
 	theme: string,
 	themeRoot: string | undefined,
 	rtl: boolean | undefined,
 	language: string | undefined,
-	calendarType: `${CalendarType}` | undefined,
+	calendarType: CalendarType | undefined,
 	timezone: string | undefined,
 	noConflict: boolean,
 	formatSettings: FormatSettings,
