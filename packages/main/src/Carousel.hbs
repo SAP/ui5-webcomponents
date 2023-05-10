@@ -1,5 +1,5 @@
 <section
-	class="ui5-carousel-root ui5-carousel-background-{{_backgroundDesign}}"
+	class="ui5-carousel-root"
 	tabindex="0"
 	role="listbox"
 	aria-activedescendant="{{ariaActiveDescendant}}"
@@ -11,7 +11,7 @@
 	<div class="{{classes.viewport}}" part="content">
 		<div class="{{classes.content}}" style="{{styles.content}}">
 			{{#each items}}
-				 <div id="{{id}}"
+				<div id="{{id}}"
 					class="ui5-carousel-item {{classes}}"
 					style="{{styles}}"
 					role="option"
@@ -22,44 +22,43 @@
 					<slot name="{{this.item._individualSlot}}" tabindex="{{this.tabIndex}}"></slot>
 				</div>
 			{{/each}}
-			</div>
 		</div>
-
 		{{#if showArrows.content}}
 			<div class="ui5-carousel-navigation-arrows">
 				{{> arrow-back}}
 				{{> arrow-forward}}
 			</div>
 		{{/if}}
+	</div>
 
-		{{#if renderNavigation}}
-			<div class="{{classes.navigation}}">
-				{{#if showArrows.navigation}}
-					{{> arrow-back}}
-				{{/if}}
+	{{#if renderNavigation}}
+		<div class="{{classes.navigation}}">
+			{{#if showArrows.navigation}}
+				{{> arrow-back}}
+			{{/if}}
 
-				<div class="ui5-carousel-navigation">
-					{{#unless hidePageIndicator}}
-						{{#if isPageTypeDots}}
-							{{#each dots}}
-								<div
-									role="img"
-									aria-label="{{ariaLabel}}"
-									?active="{{active}}"
-									class="ui5-carousel-navigation-dot"
-								></div>
-							{{/each}}
-						{{else}}
-							<div class="ui5-carousel-navigation-text">{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</div>
-						{{/if}}
-					{{/unless}}
-				</div>
-
-				{{#if showArrows.navigation}}
-					{{> arrow-forward}}
-				{{/if}}
+			<div class="ui5-carousel-navigation">
+				{{#unless hidePageIndicator}}
+					{{#if isPageTypeDots}}
+						{{#each dots}}
+							<div
+								role="img"
+								aria-label="{{ariaLabel}}"
+								?active="{{active}}"
+								class="ui5-carousel-navigation-dot"
+							></div>
+						{{/each}}
+					{{else}}
+						<ui5-label>{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</ui5-label>
+					{{/if}}
+				{{/unless}}
 			</div>
-		{{/if}}
+
+			{{#if showArrows.navigation}}
+				{{> arrow-forward}}
+			{{/if}}
+		</div>
+	{{/if}}
 	</div>
 </section>
 
