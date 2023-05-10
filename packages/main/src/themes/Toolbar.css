@@ -1,7 +1,7 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
-	height: var(--_ui5-toolbar_height);
+	height: 2.75rem;
 	background: var(--ui5-toolbar-Background);
 	border-bottom: 0.0625rem solid var(--sapGroup_ContentBorderColor);
 	flex-shrink: 1;
@@ -9,7 +9,7 @@
 }
 
 :host(:not([hidden])[data-ui5-compact-size]) {
-	height: var(--_ui5-toolbar_height_compact);
+	height: 2rem;
 }
 
 :host([disabled]) {
@@ -30,11 +30,12 @@
 }
 
 .ui5-tb-root {
-	min-width: 2.5rem;
+	/*min-width: 2.5rem;*/
 	width: 100%;
 	padding: 0 0.5rem;
 	justify-content: flex-end;
 	align-items: center;
+	overflow: hidden;
 }
 
 :host .ui5-tb-root:focus {
@@ -101,10 +102,15 @@ ui5-button[design="Transparent"] {
 }
 
 .ui5-tb-separator {
-    height: var(--_ui5_button_base_height);
+    height: 2rem;
 	width: 0.0625rem;
-	background-color: var(--sapButton_TextColor);
+	height: 2rem;
+	background: var(--sapToolbar_SeparatorColor);
 	box-sizing: border-box;
+}
+
+.ui5-tb-separator[data-ui5-compact-size] {
+	height: 1.5rem;
 }
 
 .ui5-tb-action-content {

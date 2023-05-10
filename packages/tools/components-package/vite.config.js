@@ -1,12 +1,13 @@
 // vite.config.js
-const { defineConfig } = require('vite');
-const virtualIndex = require("../lib/dev-server/virtual-index-html-plugin.js");
+import { defineConfig } from 'vite';
+import virtualIndex from '../lib/dev-server/virtual-index-html-plugin.js';
 
-module.exports = defineConfig(async () => {
+export default defineConfig(async () => {
+	const data = await virtualIndex();
 	return {
 		build: {
 			emptyOutDir: false,
 		},
-		plugins: [await virtualIndex()],
+		plugins: [data],
 	}
-});
+  })

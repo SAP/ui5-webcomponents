@@ -1,5 +1,5 @@
-const datepicker = require("../pageobjects/DatePickerTestPage");
-const assert = require("chai").assert;
+import datepicker from "../pageobjects/DatePickerTestPage.js";
+import { assert } from "chai";
 
 describe("Date Picker Tests", () => {
 	before(async () => {
@@ -855,19 +855,20 @@ describe("Date Picker Tests", () => {
 		await datepicker.openPicker();
 
 		const displayedDay = await datepicker.getDisplayedDay(15);
+
 		assert.ok(await displayedDay.hasClass("ui5-dp-item--disabled"), "Days out of range are disabled");
 	});
 
-	it("Days are disabled when out of range", async () => {
+	it("Days are enabled when in range", async () => {
 		datepicker.id = "#dp33";
 		const root = await datepicker.getRoot();
 		await root.keys("Escape");
 
-		datepicker.id = "#dp34";
+		datepicker.id = "#dp33";
 		await datepicker.openPicker();
+		const displayedDay = await datepicker.getDisplayedDay(12);
 
-		const displayedDay = await datepicker.getDisplayedDay(14);
-		assert.ok(await displayedDay.isFocusedDeep(), "Days out of range are disabled");
+		assert.ok(await displayedDay.isFocusedDeep(), "Days in range are enabled");
 	});
 
 	it("Min and Max date are included in the interval", async () => {
@@ -1288,4 +1289,45 @@ describe("Date Picker Tests", () => {
 		assert.isFalse(await datepicker.isPickerOpen(), "picker is closed after year selection");
 	});
 
+	it("Min and max dates are set, with no format pattern provided, using valid ISO format", async () => {
+		datepicker.id = "#dpISOMinMaxDates";
+
+		const Input = await datepicker.getInput();
+		await Input.click();
+		await browser.keys("Nov 1, 2020");
+		await browser.keys("Enter");
+		assert.equal(await Input.getProperty("valueState"), "Error", "Correct value state");
+
+		await datepicker.openPicker();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
+		let displayedYear = await datepicker.getDisplayedYear(3);
+
+		assert.ok(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2021 is disabled");
+		// close the pickers and revert the datePicker state to initial
+		await browser.keys("Enter");
+		await browser.keys("Enter");
+		await Input.setAttribute("value", "");
+	});
+
+	it("Min and max dates are NOT set because no format pattern is provided & format used is not ISO", async () => {
+		datepicker.id = "#dpISOMinMaxDates";
+		const root = await datepicker.getRoot();
+		// set min-date and max-date to valid dates, but not in ISO format
+		await root.setAttribute("min-date", "22.10.2020");
+		await root.setAttribute("max-date", "22.10.2021");
+
+		const Input = await datepicker.getInput();
+		await Input.click();
+		await browser.keys("Apr 12, 2024");
+		await browser.keys("Enter");
+		assert.equal(await Input.getProperty("valueState"), "None", "Correct value state");
+
+		await datepicker.openPicker();
+		const btnYear = await datepicker.getBtnYear();
+		await btnYear.click();
+
+		let displayedYear = await datepicker.getDisplayedYear(11);
+		assert.notOk(await displayedYear.hasClass("ui5-yp-item--disabled"), "Year 2025 is not disabled");
+	});
 });

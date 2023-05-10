@@ -102,8 +102,8 @@ type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedIte
 	renderer: litRender,
 	template: SideNavigationTemplate,
 	staticAreaTemplate: SideNavigationPopoverTemplate,
-	styles: [SideNavigationCss, SideNavigationPopoverCss],
-	staticAreaStyles: [SideNavigationCss, SideNavigationPopoverCss],
+	styles: SideNavigationCss,
+	staticAreaStyles: SideNavigationPopoverCss,
 	dependencies: [
 		List,
 		StandardListItem,
@@ -281,7 +281,7 @@ class SideNavigation extends UI5Element {
 			}
 
 			this.openPicker(tree!._getListItemForTreeItem(treeItem)!);
-		} else {
+		} else if (!item.selected) {
 			this._setSelectedItem(item);
 		}
 	}

@@ -2,7 +2,7 @@ import { attachLanguageChange } from "../locale/languageChange.js";
 import getLocale from "../locale/getLocale.js";
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES } from "../generated/AssetParameters.js";
 import { getFeature } from "../FeaturesRegistry.js";
-import type OpenUI5Support from "../features/OpenUI5Support";
+import type OpenUI5Support from "../features/OpenUI5Support.js";
 
 type LocaleDataLoader = (locale: string) => Promise<CLDRData>;
 type CLDRData = Record<string, object | boolean | string>;

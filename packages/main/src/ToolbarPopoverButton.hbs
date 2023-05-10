@@ -3,24 +3,10 @@
 	design="{{this.design}}"
 	?disabled="{{this.disabled}}"
 	?hidden="{{this.hidden}}"
-	?always-overflow="{{alwaysOverflow}}"
+	?priority="{{this.priority}}"
 	@click="{{this.press}}"
 	class="ui5-tb-popover-button ui5-tb-popover-item"
 	data-ui5-external-action-item-id="{{this.refItemid}}"
 >
-	{{#if this.imageSrc}}
-				<div class="ui5-tb-action-content">
-					{{#if this.imageLast}}
-						<div class="ui5-tb-action-content-text ui5-tb-action-content-image-last">{{this.text}}</div>
-					{{/if}}
-
-					<img src="{{this.imageSrc}}" alt="{{imageAlt}}" width="{{imageWidth}}" height="{{imageHeight}}">
-
-					{{#unless this.imageLast}}
-						<div class="ui5-tb-action-content-text">{{this.text}}</div>
-					{{/unless}}
-				</div>
-	{{else}}
-		{{this.text}}
-	{{/if}}
+	{{this.text}}
 </ui5-button>

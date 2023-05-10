@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Calendar general interaction", () => {
 	before(async () => {
@@ -39,7 +39,7 @@ describe("Calendar general interaction", () => {
 		const calendar = await browser.$("#calendar1");
 		await calendar.setAttribute("timestamp", new Date(Date.UTC(2000, 10, 22, 0, 0, 0)).valueOf() / 1000);
 		const dayPicker = await calendar.shadow$("ui5-daypicker");
-		const header  = await calendar.shadow$("ui5-calendar-header");
+		const header = await calendar.shadow$("ui5-calendar-header");
 		const currentDayItem = await dayPicker.shadow$(`div[data-sap-timestamp="974851200"]`);
 		const monthButton = await header.shadow$(`[data-ui5-cal-header-btn-month]`);
 		const yearButton = await header.shadow$(`[data-ui5-cal-header-btn-year]`);
@@ -360,5 +360,50 @@ describe("Calendar general interaction", () => {
 		assert.strictEqual(await years.length, 8, "YearPicker with two types only renders 8 years")
 		assert.strictEqual(await yaerInfo[0].getText(), "1416 AH", "First text of year set in the button")
 		assert.strictEqual(await yaerInfo[1].getText(), "1995 - 1996", "Second text of year set in the button")
+	});
+
+	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {
+		await browser.url("test/pages/Calendar.html");
+
+		const calendar = await browser.$("#calendar6");
+		await calendar.setAttribute("max-date", new Date(Date.UTC(2024, 9, 4, 0, 0, 0)).toISOString().split("T")[0]); // sets the max date to 2024-10-04
+		
+		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
+		await yearButton.click();
+
+		const year2025 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
+			const text = await span.getText();
+			return text === "2025";
+		}).parentElement();
+
+		assert.strictEqual(await year2025.hasClass("ui5-yp-item--disabled"), true, "Year 2025 is disabled");
+	});
+
+	it("Min and max dates are NOT set without format-pattern, because are not in ISO format (YYYY-MM-dd)", async () => {
+		await browser.url("test/pages/Calendar.html");
+
+		const calendar = await browser.$("#calendar1");
+		const nextButton = await calendar.shadow$("ui5-calendar-header").shadow$("[data-ui5-cal-header-btn-next]");
+		const prevButton = await calendar.shadow$("ui5-calendar-header").shadow$("[data-ui5-cal-header-btn-prev]");
+		const yearButton = await calendar.shadow$("ui5-calendar-header").shadow$(`div[data-ui5-cal-header-btn-year]`);
+		// setting the min and max dates both to a valid format date, but not in the valid ISO format.
+		await calendar.setAttribute("max-date", `${new Date(Date.UTC(2024, 9, 4, 0, 0, 0))}`);
+		await calendar.setAttribute("min-date", "25.10.2018");
+		console.log(await calendar.getAttribute("max-date"));
+
+		await yearButton.click();
+		const year2016 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
+			const text = await span.getText();
+			return text === "2016";
+		}).parentElement();
+
+		assert.strictEqual(await year2016.hasClass("ui5-yp-item--disabled"), false, "Year 2016 is not disabled");
+
+		const year2024 = await calendar.shadow$("ui5-yearpicker").shadow$$(`div[role="gridcell"] span`).find(async span => {
+			const text = await span.getText();
+			return text === "2024";
+		}).parentElement();
+
+		assert.strictEqual(await year2024.hasClass("ui5-yp-item--disabled"), false, "Year 2024 is not disabled");
 	});
 });

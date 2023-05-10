@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("DateRangePicker general interaction", () => {
 	before(async () => {
@@ -62,8 +62,8 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.waitForClickable({ timeout: 1000 });
 		const res = await browser.executeAsync(done => {
 			const myDRP = document.getElementById("daterange-picker4");
-			const startDateValue = myDRP.startDateValue;
-			const endDateValue = myDRP.endDateValue;
+			const startDateValue = myDRP.startDateValue.getTime();
+			const endDateValue = myDRP.endDateValue.getTime();
 
 			done({startDateValue, endDateValue});
 		});
@@ -73,9 +73,15 @@ describe("DateRangePicker general interaction", () => {
 	});
 
 	it("Initially setting the same date as first & last is possible", async () => {
-		const daterangepicker = await browser.$("#daterange-picker5");
+		const res = await browser.executeAsync(done => {
+			const myDRP = document.getElementById("daterange-picker5");
+			const startDateValue = myDRP.startDateValue.getTime();
+			const endDateValue = myDRP.endDateValue.getTime();
 
-		assert.strictEqual(await daterangepicker.getProperty("startDateValue"), await daterangepicker.getProperty("endDateValue"), "Initially properties are set correctly");
+			done({startDateValue, endDateValue});
+		});
+
+		assert.deepEqual(new Date(res.startDateValue), new Date(res.endDateValue), "Initially properties are set correctly");
 	});
 
 	it("Setting the same date as first & last is possible", async () => {
@@ -83,7 +89,15 @@ describe("DateRangePicker general interaction", () => {
 
 		await daterangepicker.setProperty("value", "Aug 5, 2020 - Aug 5, 2020");
 
-		assert.strictEqual(await daterangepicker.getProperty("startDateValue"), await daterangepicker.getProperty("endDateValue"), "Properties are set correctly");
+		const res = await browser.executeAsync(done => {
+			const myDRP = document.getElementById("daterange-picker5");
+			const startDateValue = myDRP.startDateValue.getTime();
+			const endDateValue = myDRP.endDateValue.getTime();
+
+			done({startDateValue, endDateValue});
+		});
+
+		assert.deepEqual(new Date(res.startDateValue), new Date(res.endDateValue), "Properties are set correctly");
 	})
 
 	it("Change event fired once", async () => {
@@ -226,8 +240,8 @@ describe("DateRangePicker general interaction", () => {
 		await daterangepicker.waitForClickable({ timeout: 1000 });
 		const res = await browser.executeAsync(done => {
 			const myDRP = document.getElementById("daterange-picker4");
-			const startDateValue = myDRP.startDateValue;
-			const endDateValue = myDRP.endDateValue;
+			const startDateValue = myDRP.startDateValue.getTime();
+			const endDateValue = myDRP.endDateValue.getTime();
 			const drpValue = myDRP.value;
 
 			done({startDateValue, endDateValue, drpValue});
@@ -236,5 +250,18 @@ describe("DateRangePicker general interaction", () => {
 		assert.deepEqual(new Date(res.startDateValue), new Date(2019, 8, 27), "First date is correct");
 		assert.equal(res.endDateValue, null, "Second date is correct");
 		assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
+	});
+
+	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {
+		await browser.url(`test/pages/DateRangePicker.html?sap-ui-language=bg`);
+		
+		const daterangepicker = await browser.$("#daterange-picker8");
+		const dateRangePickerInput = await daterangepicker.shadow$("ui5-input");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("10.02.2023 г. - 25.07.2023 г.");
+		await daterangepicker.keys("Enter");
+
+		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Error", "Min and max dates are set correctly");
 	});
 });

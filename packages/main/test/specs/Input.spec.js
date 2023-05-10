@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Attributes propagation", () => {
 	before(async () => {
@@ -499,7 +499,7 @@ describe("Input general interaction", () => {
 		const firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		await firstSuggestion.click();
 
-		valueNotSelected = await browser.execute(() =>{
+		const valueNotSelected = await browser.execute(() =>{
 			const input = document.getElementById("myInput").shadowRoot.querySelector("input");
 			return input.selectionEnd - input.selectionStart === 0;
 		});
@@ -528,7 +528,7 @@ describe("Input general interaction", () => {
 		const secondSuggestion = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[1];
 		await secondSuggestion.click();
 
-		valueNotSelected = await browser.execute(() =>{
+		const valueNotSelected = await browser.execute(() =>{
 			const input = document.getElementById("myInput").shadowRoot.querySelector("input");
 			return input.selectionEnd - input.selectionStart === 0;
 		});

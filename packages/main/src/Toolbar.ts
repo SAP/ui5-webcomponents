@@ -9,8 +9,10 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
+import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "./Button.js";
+
 import Popover from "./Popover.js";
 
 import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
@@ -25,6 +27,7 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 
 import ToolbarButton from "./ToolbarButton.js";
 import ToolbarSpacer from "./ToolbarSpacer.js";
+import ToolbarSelect from "./ToolbarSelect.js";
 import ToolbarItem from "./ToolbarItem.js";
 import ToolbarSeparator from "./ToolbarSeparator.js";
 
@@ -57,6 +60,7 @@ type ActionsWidthMap = {
 		Popover,
 		Button,
 		ToolbarButton,
+		ToolbarSelect,
 		ToolbarSpacer,
 		ToolbarSeparator,
 	],
@@ -64,8 +68,9 @@ type ActionsWidthMap = {
 
 /**
  * @event
+ * @public
  */
-@event("contentWidthChange", {
+@event("content-width-change", {
 	detail: {
 		contentWidth: { type: Number },
 	},
@@ -73,6 +78,7 @@ type ActionsWidthMap = {
 /**
  * Fired whenever the toolbar popup closes and opens.
  * @param {Boolean} open indicates the state of the popup
+ * @public
  * @event
  */
 @event("overflow-toggle", {
@@ -82,18 +88,34 @@ type ActionsWidthMap = {
 })
 
 class Toolbar extends UI5Element {
+	/**
+	 * @type {boolean}
+	 * @private
+	 */
 	@property({ type: Object, multiple: true })
 	actionsToBar!: Array<ToolbarItem>;
-
+	/**
+	 * @type {Object}
+	 * @private
+	 */
 	@property({ type: Object, multiple: true })
 	actionsToOverflow!: Array<ToolbarItem>;
-
+	/**
+	 * @type {Object}
+	 * @private
+	 */
 	@property({ type: Object })
 	ACTIONS_WIDTH_MAP!: ActionsWidthMap;
-
+	/**
+	 * @type {boolean}
+	 * @private
+	 */
 	@property({ type: Boolean })
 	actionsWidthMeasured!: boolean;
-
+	/**
+	 * @type {boolean}
+	 * @private
+	 */
 	@property({ type: Boolean })
 	resizing!: boolean;
 	/**
@@ -149,21 +171,19 @@ class Toolbar extends UI5Element {
 	contentWidth!: number;
 
 	/**
-	 * @private
+	 * @public
 	 */
 	@property({ type: Boolean })
 	reverseOverflow!: boolean;
 
 	/**
 	* @type {HTMLElement[]}
-	* @slot
+	* @name sap.ui.webc.main.Toolbar.prototype.default
+	* @slot actions
 	* @public
 	*/
-
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	actions!: Array<ToolbarItem>
-	@slot({ type: HTMLElement })
-	startContent!: Array<HTMLElement>;
 
 	_onResize!: ResizeObserverCallback;
 
@@ -242,11 +262,10 @@ class Toolbar extends UI5Element {
 			this.displayAllActionsIntoBar();
 		}
 
-		this.width = containerWidth; // invalidating
-		// alwaysOverflowActionsHash = this.alwaysOverflowActions.reduce((acc, item: UI5Element) => `${acc}${item._id}`, "");// invalidating
+		this.width = containerWidth;
 
 		if (this.contentWidth !== contentWidth) {
-			this.contentWidth = contentWidth; // invalidating
+			this.contentWidth = contentWidth;
 			this.fireEvent("contentWidthChange", { contentWidth });
 		}
 	}
@@ -254,7 +273,7 @@ class Toolbar extends UI5Element {
 	storeActionsWidth() {
 		let totalWidth = 0;
 
-		this.movableActions.forEach((action: any) => {
+		this.movableActions.forEach((action: ToolbarItem) => {
 			const actionWidth = this.getActionWidth(action);
 			const id: string = action._id;
 			totalWidth += actionWidth;
@@ -277,13 +296,9 @@ class Toolbar extends UI5Element {
 
 		// distribute the rest of the actions, based on the available space
 		this.movableActions.reverse().forEach(action => {
-			if (overflowSpace > 0) {
-				if (action.getAttribute("priority") !== "Never") {
-					this.actionsToOverflow.unshift(action);
-					overflowSpace -= this.getCachedActionWidth(action._id);
-				} else {
-					this.actionsToBar.unshift(action);
-				}
+			if (overflowSpace > 0 && action.getAttribute("priority") !== "Never") {
+				this.actionsToOverflow.unshift(action);
+				overflowSpace -= this.getCachedActionWidth(action._id);
 			} else {
 				this.actionsToBar.unshift(action);
 			}
@@ -355,14 +370,15 @@ class Toolbar extends UI5Element {
 		this.openOverflow();
 	}
 
-	onCustomActionClick(e: any) {
-		const target = e.target.closest(".ui5-tb-item");
+	onCustomActionClick(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const item = target.closest<ToolbarItem>(".ui5-external-action-item");
 
-		if (!target) {
+		if (!item) {
 			return;
 		}
 
-		const refItemId: string = target.getAttribute("data-ui5-ref-id");
+		const refItemId = target.getAttribute("data-ui5-ref-id");
 
 		if (refItemId) {
 			this.getActionByID(refItemId)!.fireEvent("click", {
@@ -397,13 +413,13 @@ class Toolbar extends UI5Element {
 	/**
 	 * Read-only members
 	 */
-	get overflowActions(): Array<any> {
+	get overflowActions() {
 		const overflowActions = this.getActionsInfo(this.actionsToOverflow);
 		return this.reverseOverflow ? overflowActions.reverse() : overflowActions;
 	}
 
-	get standardActions(): Array<any> {
-		if (!this.actionsWidthMeasured && (JSON.stringify(this._actions) !== JSON.stringify(this.actionsToBar))) {
+	get standardActions() {
+		if (!this.actionsWidthMeasured && (!arraysAreEqual(this._actions, this.actionsToBar))) {
 			this.actionsToBar = this._actions.filter(action => action);
 		}
 
@@ -422,10 +438,6 @@ class Toolbar extends UI5Element {
 		return this.getSlottedNodes("actions");
 	}
 
-	get hasStartContent() {
-		return !!this.startContent.length;
-	}
-
 	/**
 	 * Toolbar Overflow Popover
 	 */
@@ -433,20 +445,16 @@ class Toolbar extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
 	}
 
-	get startContentDOM(): HTMLElement {
-		return this.shadowRoot!.querySelector(".ui5-tb-start")!;
-	}
-
 	get actionsDOM() {
 		return this.shadowRoot!.querySelector(".ui5-tb-actions");
 	}
 
 	get hasActionWithText(): boolean {
-		return this.overflowActions.some((action: any) => !!action.text);
+		return this.overflowActions.some((action: ToolbarItem) => action.containsText);
 	}
 
 	get hasFlexibleSpacers() {
-		return this.actions.some((action: any) => action.localName === "ui5-toolbar-spacer" && !action.width);
+		return this.actions.some((action: ToolbarItem) => action.localName === "ui5-toolbar-spacer" && !action.hasFlexibleWidth);
 	}
 
 	get classes() {
@@ -488,13 +496,13 @@ class Toolbar extends UI5Element {
 				toolbarPopoverTemplate: executeTemplate(action.toolbarPopoverTemplate, action),
 			};
 
-			return item;
+			return item as ToolbarItem;
 		});
 	}
 
-	getActionWidth(action: any): number {
+	getActionWidth(action: ToolbarItem): number {
 		// Spacer width - always 0 for flexible spacers, so that they shrink, otherwise - measure the width normally
-		if (action.ignoreSpace && !action.width) {
+		if (action.ignoreSpace && !action.hasFlexibleWidth) {
 			return 0;
 		}
 		const id: string = action._id;
@@ -521,11 +529,7 @@ class Toolbar extends UI5Element {
 	}
 
 	getContainerWidth() {
-		if (!this.startContentDOM) {
-			return this.offsetWidth;
-		}
-
-		return this.offsetWidth - this.startContentDOM.offsetWidth;
+		return this.offsetWidth;
 	}
 
 	getActionByID(id: string) {
@@ -536,13 +540,13 @@ class Toolbar extends UI5Element {
 		return this.actionsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
 	}
 
-	async getOverflowedActionByID(id: string): Promise<Element | null> {
+	async getOverflowedActionByID(id: string): Promise<UI5Element | null> {
 		const popover = await this.getOverflowPopover();
-		return popover!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
+		return popover!.querySelector<UI5Element>(`[data-ui5-external-action-item-id="${id}"]`);
 	}
 
-	async getActionDOMRefByID(id: string) {
-		return this.getToolbarActionByID(id) || (await this.getOverflowedActionByID(id)); // eslint-disable-line
+	getActionDOMRefByID(id: string) {
+		return this.getToolbarActionByID(id) || (this.getOverflowedActionByID(id));
 	}
 }
 

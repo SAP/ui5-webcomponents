@@ -1,5 +1,6 @@
 <svg
 	class="ui5-icon-root"
+	part="root"
 	tabindex="{{_tabIndex}}"
 	dir="{{_dir}}"
 	viewBox="{{viewBox}}"
@@ -13,7 +14,6 @@
 	@focusout={{_onfocusout}}
 	@keydown={{_onkeydown}}
 	@keyup={{_onkeyup}}
-	@click={{_onclick}}
 >
 	{{#if hasIconTooltip}}
 		<title id="{{_id}}-tooltip">{{effectiveAccessibleName}}</title>
