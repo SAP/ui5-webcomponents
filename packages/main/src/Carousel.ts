@@ -484,14 +484,6 @@ class Carousel extends UI5Element {
 		return this.backgroundDesign.toLowerCase();
 	}
 
-	get _pageIndicatorBackgroundDesign() {
-		return this.pageIndicatorBackgroundDesign.toLowerCase();
-	}
-
-	get _pageIndicatorBorderDesign() {
-		return this.pageIndicatorBorderDesign.toLowerCase();
-	}
-
 	get _getLastFocusedActivePageIndex() {
 		for (let i = 0; i < this._orderOfLastFocusedPages.length; i++) {
 			const pageIndex = this._orderOfLastFocusedPages[i];
