@@ -26,7 +26,7 @@
 }
 
 .ui5-carousel-background-transparent {
-    background: var(--ui5_carousel_background_color_transparent);
+    background: transparent;
 }
 
 .ui5-carousel-viewport {
