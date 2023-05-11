@@ -1,4 +1,3 @@
-import executeTemplate from "./renderer/executeTemplate.js";
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import getEffectiveLinksHrefs from "./theming/getEffectiveLinksHrefs.js";
@@ -13,10 +12,13 @@ import type UI5Element from "./UI5Element.js";
 const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 	let styleStrOrHrefsArr;
 	const ctor = element.constructor as typeof UI5Element;
-	const propertyName = forStaticArea ? "staticAreaTemplate" : "template";
-	const template = ctor[propertyName];
 	const shadowRoot = forStaticArea ? element.staticAreaItem!.shadowRoot : element.shadowRoot;
-	const renderResult = executeTemplate(template!, element); // this is checked before calling updateShadowRoot
+	let renderResult;
+	if (forStaticArea) {
+		renderResult = element.renderStatic(); // this is checked before calling updateShadowRoot
+	} else {
+		renderResult = element.render(); // this is checked before calling updateShadowRoot
+	}
 
 	if (!shadowRoot) {
 		console.warn(`There is no shadow root to update`); // eslint-disable-line
