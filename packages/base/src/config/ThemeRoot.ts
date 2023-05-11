@@ -4,6 +4,7 @@ import { getThemeRoot as getConfiguredThemeRoot } from "../InitialConfiguration.
 import { getTheme } from "./Theme.js";
 
 let currThemeRoot: string | undefined;
+let effectiveThemeRoot: string | undefined; // the  validated equivalent of `currThemeRoot`
 
 /**
  * Returns the current theme root.
@@ -34,9 +35,14 @@ const getThemeRoot = (): string | undefined => {
  * @returns { Promise<void> } a promise that is resolved when &lt;link&gt; tag to the theme assets is appended to the head
  */
 const setThemeRoot = (themeRoot: string): Promise<void> | undefined => {
-	currThemeRoot = validateThemeRoot(themeRoot);
+	if (currThemeRoot === themeRoot) {
+		return;
+	}
 
-	if (!currThemeRoot) {
+	currThemeRoot = themeRoot;
+	effectiveThemeRoot = validateThemeRoot(themeRoot);
+
+	if (!effectiveThemeRoot) {
 		console.warn(`The ${themeRoot} is not valid. Check the allowed origins as suggested in the "setThemeRoot" description.`); // eslint-disable-line
 		return;
 	}
@@ -44,8 +50,23 @@ const setThemeRoot = (themeRoot: string): Promise<void> | undefined => {
 	return attachCustomThemeStylesToHead(getTheme());
 };
 
+/**
+ * Returns the effective theme root.
+ *
+ * @private
+ * @since 1.14.0
+ * @returns { string } the current theme root
+ */
+const getEffectiveThemeRoot = (): string | undefined => {
+	if (effectiveThemeRoot === undefined) {
+		effectiveThemeRoot = getThemeRoot();
+	}
+
+	return effectiveThemeRoot;
+};
+
 const formatThemeLink = (theme: string) => {
-	return `${getThemeRoot()!}Base/baseLib/${theme}/css_variables.css`; // theme root is always set.
+	return `${getEffectiveThemeRoot()!}Base/baseLib/${theme}/css_variables.css`; // theme root is always set.
 };
 
 const attachCustomThemeStylesToHead = async (theme: string): Promise<void> => {

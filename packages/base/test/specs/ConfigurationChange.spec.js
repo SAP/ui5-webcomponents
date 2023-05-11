@@ -24,16 +24,6 @@ describe("Some configuration options can be changed at runtime", () => {
 			done(config.getThemeRoot());
 		});
 
-		assert.strictEqual(themeRoot, 'https://example.com/UI5/', "Theme root is validated and set.");
-
-		// act: set relative URL
-		themeRoot = await browser.executeAsync(async done => {
-			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			await config.setThemeRoot("./test");
-
-			done(config.getThemeRoot());
-		});
-
-		assert.ok(res.endsWith("/test/UI5/"), `Theme root is normalized correctly when relative URL is used.`);
+		assert.strictEqual(themeRoot, 'https://example.com/', "Theme root is validated and set.");
 	});
 });
