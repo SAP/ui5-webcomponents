@@ -291,4 +291,6 @@ describe("DateTimePicker general interaction", () => {
 		assert.strictEqual(await prevButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The previous button is disabled.");
 		assert.strictEqual(await nextButton.hasClass("ui5-calheader-arrowbtn-disabled"), true, "The next button is disabled.");
 	});
+
+	// TO DO: Create new testing page test secondary calendar type behaviour.
 });
