@@ -43,13 +43,13 @@
     "directory": "packages/main"
   },
   "dependencies": {
-    "@ui5/webcomponents-base": "1.13.0-rc.5",
-    "@ui5/webcomponents-icons": "1.13.0-rc.5",
-    "@ui5/webcomponents-localization": "1.13.0-rc.5",
-    "@ui5/webcomponents-theming": "1.13.0-rc.5"
+    "@ui5/webcomponents-base": "^1.13.0-rc.5",
+    "@ui5/webcomponents-icons": "^1.13.0-rc.5",
+    "@ui5/webcomponents-localization": "^1.13.0-rc.5",
+    "@ui5/webcomponents-theming": "^1.13.0-rc.5"
   },
   "devDependencies": {
-    "@ui5/webcomponents-tools": "1.13.0-rc.5",
+    "@ui5/webcomponents-tools": "^1.13.0-rc.5",
     "chromedriver": "112.0.0"
   }
 }
