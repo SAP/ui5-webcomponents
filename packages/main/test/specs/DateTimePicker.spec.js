@@ -264,20 +264,21 @@ describe("DateTimePicker general interaction", () => {
 		assert.strictEqual(newValue.toUpperCase(), "13/04/2020, 12:00:00 PM", "The new date/time is correctly selected.");
 	});
 
-	it("Secondary calendar type", async () => {
-		const picker = await browser.$("#secondaryCalendar");
+	// TODO: create better test as the test is not changing the selection, just goes up and down to the iniially selected day.
+	// it("Secondary calendar type", async () => {
+	// 	const picker = await browser.$("#secondaryCalendar");
 
-		// act
-		await openPickerById("secondaryCalendar");
-		await browser.keys("ArrowUp");
-		await browser.keys("ArrowDown");
-		await browser.keys("Enter");
-		const submitBtn = await getSubmitButton("secondaryCalendar");
-		await submitBtn.click();
+	// 	// act
+	// 	await openPickerById("secondaryCalendar");
+	// 	await browser.keys("ArrowUp");
+	// 	await browser.keys("ArrowDown");
+	// 	await browser.keys("Enter");
+	// 	const submitBtn = await getSubmitButton("secondaryCalendar");
+	// 	await submitBtn.click();
 
-		// assert
-		assert.strictEqual(await picker.shadow$("ui5-input").getValue(), "Sha. 24, 1443 AH, 10:27:26 AM", "Value change is applied.");
-	});
+	// 	// assert
+	// 	assert.strictEqual(await picker.shadow$("ui5-input").getValue(), "Sha. 24, 1443 AH, 10:27:26 AM", "Value change is applied.");
+	// });
 
 	it("tests change event is prevented on submit when prevent default is called", async () => {
 		// test submit from empty value to current date/time value

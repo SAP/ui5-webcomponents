@@ -1,43 +1,43 @@
 import { registerThemePropertiesLoader } from "../../dist/asset-registries/Themes.js";
 
 const fiori3 = {
-	content: `:root{ --var1: red; }`,
+	content: `:root{ --var1:red; }`,
 	packageName: "",
 	fileName: "",
 };
 
 const fiori3Dark = {
-	content: `:root{ --var1: green; }`,
+	content: `:root{ --var1:green; }`,
 	packageName: "",
 	fileName: "",
 };
 
 const belize = {
-	content: `:root{ --var1: blue; }`,
+	content: `:root{ --var1:blue; }`,
 	packageName: "",
 	fileName: "",
 };
 
 const belizeHcb = {
-	content: `:root{ --var1: orange; }`,
+	content: `:root{ --var1:orange; }`,
 	packageName: "",
 	fileName: "",
 };
 
 const belizeHcw = {
-	content: `:root{ --var1: orange; }`,
+	content: `:root{ --var1:orange; }`,
 	packageName: "",
 	fileName: "",
 };
 
 const fiori3Hcb = {
-	content: `:root{ --var1: yellow; }`,
+	content: `:root{ --var1:yellow; }`,
 	packageName: "",
 	fileName: "",
 };
 
 const fiori3Hcw = {
-	content: `:root{ --var1: yellow; }`,
+	content: `:root{ --var1:yellow; }`,
 	packageName: "",
 	fileName: "",
 };
