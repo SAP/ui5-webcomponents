@@ -9,7 +9,7 @@ describe("Custom themes can be registered", () => {
 		const newTheme = 'my_custom_theme';
 
 		const res = await browser.executeAsync( async (newTheme, done) => {
-			const var1 = "--var1:#555555";
+			const var1 = "--var1: #555555";
 
 			window.registerThemePropertiesLoader("@ui5/webcomponents-base-test", newTheme, () => `:root{ ${var1}; }`);
 
