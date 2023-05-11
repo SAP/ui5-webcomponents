@@ -9,7 +9,7 @@ describe("Theming works", () => {
 
 		const res = await browser.executeAsync(done => {
 			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-theme-properties|@ui5/webcomponents-base-test").cssRules[0].cssText
-			done(style && style.includes("--var1:red")); // see test/assets/Themes.js
+			done(style && style.includes("--var1: red")); // see test/assets/Themes.js
 		});
 
 		assert.strictEqual(res, true, "The fiori3 vars are found");
@@ -23,7 +23,7 @@ describe("Theming works", () => {
 			await config.setTheme(newTheme);
 
 			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-theme-properties|@ui5/webcomponents-base-test").cssRules[0].cssText
-			const varsFound = style && style.includes("--var1:orange"); // see test/assets/Themes.js
+			const varsFound = style && style.includes("--var1: orange"); // see test/assets/Themes.js
 			done(varsFound);
 		}, newTheme);
 
@@ -34,11 +34,12 @@ describe("Theming works", () => {
 		const unknownTheme = 'sap_unknown_theme';
 		await browser.url(`test/pages/AllTestElements.html?sap-ui-theme=${unknownTheme}`);
 
-		const res = await browser.executeAsync( async (done) => {
-			const cssVarValue = getComputedStyle(document.documentElement).getPropertyValue('--var1');
-			done(cssVarValue);
+		const res = await browser.executeAsync(done => {
+			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-theme-properties|@ui5/webcomponents-base-test").cssRules[0].cssText
+			const varsFound = style && style.includes("--var1: red"); // "red" for fiori3 - see test/assets/Themes.js
+			done(varsFound);
 		});
 
-		assert.strictEqual(res, 'red', "Default theme parameters loaded");
+		assert.strictEqual(res, true, "Default theme parameters loaded");
 	});
 });
