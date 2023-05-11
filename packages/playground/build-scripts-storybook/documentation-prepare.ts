@@ -10,7 +10,7 @@ const directoryUtils = new DirectoryUtils();
 const docsGenerator = new DocsGenerator({
     reader: new DocsReader({
         directoryUtils,
-        src: directoryUtils.resolvePath("../../../docs/**/*.md"),
+        src: directoryUtils.joinPath("../../../docs/**/*.md"),
         ignore: ["/**/*/README.md", "/**/*/images", "/**/*/changelog"],
     }),
     parsers: [
@@ -20,14 +20,14 @@ const docsGenerator = new DocsGenerator({
     ],
     writer: new DocsWriter({
         directoryUtils,
-        dest: directoryUtils.resolvePath("../docs/storybook"),
+        dest: directoryUtils.joinPath("../docs/storybook"),
     }),
 });
 
 const changelogGenerator = new DocsGenerator({
     reader: new DocsReader({
         directoryUtils,
-        src: directoryUtils.resolvePath("../docs/changelog/**/*.md"),
+        src: directoryUtils.joinPath("../docs/changelog/**/*.md"),
         ignore: ["/**/*/changelog.md"],
     }),
     parsers: [
@@ -37,7 +37,7 @@ const changelogGenerator = new DocsGenerator({
     sorters: [new ChangelogSorter()],
     writer: new DocsWriter({
         directoryUtils,
-        dest: directoryUtils.resolvePath("../docs/storybook/99-changelog"),
+        dest: directoryUtils.joinPath("../docs/storybook/99-changelog"),
     }),
 });
 

@@ -147,5 +147,130 @@
 	</xmp></pre>
 </section>
 
+<section>
+	<h3>Menu with simulated menu item texts fetching from a database</h3>
+	<div class="snippet">
+		<ui5-button id="btnOpenMenuBusy" class="samples-margin">Open Menu</ui5-button> <br/>
+		<ui5-menu id="menuBusy" busy-delay="100" busy>
+		</ui5-menu>
+		<script>
+			btnOpenMenuBusy.addEventListener("click", function(event) {
+				menuBusy.showAt(btnOpenMenuBusy);
+			});
+
+			menuBusy.addEventListener("ui5-before-open", function(event) {
+				setTimeout(function() {
+					menuBusy.removeAttribute("busy");
+					let newFileNode = document.createElement("ui5-menu-item");
+					newFileNode.setAttribute("text", "New File");
+					newFileNode.setAttribute("icon", "add-document");
+					newFileNode.setAttribute("additional-text", "Ctrl+N");
+					menuBusy.appendChild(newFileNode);
+					let newFolderNode = document.createElement("ui5-menu-item");
+					newFolderNode.setAttribute("text", "New Folder");
+					newFolderNode.setAttribute("icon", "add-folder");
+					newFolderNode.setAttribute("additional-text", "Ctrl+F");
+					menuBusy.appendChild(newFolderNode);
+					let openNode = document.createElement("ui5-menu-item");
+					openNode.setAttribute("text", "Open");
+					openNode.setAttribute("icon", "open-folder");
+					openNode.setAttribute("starts-section", "");
+					menuBusy.appendChild(openNode);
+					let closeNode = document.createElement("ui5-menu-item");
+					closeNode.setAttribute("text", "Close");
+					menuBusy.appendChild(closeNode);
+				}, 3000);
+			}, { once: true });
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-button id="btnOpenMenuBusy">Open Menu</ui5-button> <br/>
+<ui5-menu id="menuBusy" busy-delay="100" busy>
+</ui5-menu>
+<script>
+	btnOpenMenuBusy.addEventListener("click", function(event) {
+		menuBusy.showAt(btnOpenMenuBusy);
+	});
+
+	menuBusy.addEventListener("ui5-before-open", function(event) {
+		setTimeout(function() {
+			menuBusy.removeAttribute("busy");
+			let newFileNode = document.createElement("ui5-menu-item");
+			newFileNode.setAttribute("text", "New File");
+			newFileNode.setAttribute("icon", "add-document");
+			newFileNode.setAttribute("additional-text", "Ctrl+N");
+			menuBusy.appendChild(newFileNode);
+			let newFolderNode = document.createElement("ui5-menu-item");
+			newFolderNode.setAttribute("text", "New Folder");
+			newFolderNode.setAttribute("icon", "add-folder");
+			newFolderNode.setAttribute("additional-text", "Ctrl+F");
+			menuBusy.appendChild(newFolderNode);
+			let openNode = document.createElement("ui5-menu-item");
+			openNode.setAttribute("text", "Open");
+			openNode.setAttribute("icon", "open-folder");
+			openNode.setAttribute("starts-section", "");
+			menuBusy.appendChild(openNode);
+			let closeNode = document.createElement("ui5-menu-item");
+			closeNode.setAttribute("text", "Close");
+			menuBusy.appendChild(closeNode);
+		}, 3000);
+	}, { once: true });
+</script>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Menu with initial menu items and additional menu items fetching from a database</h3>
+	<div class="snippet">
+		<ui5-button id="btnMenuListBusy" class="samples-margin">Open Menu</ui5-button> <br/>
+		<ui5-menu id="menuListBusy" busy-delay="100" busy>
+			<ui5-menu-item text="New File" icon="add-document" additional-text="Ctrl+N"></ui5-menu-item>
+			<ui5-menu-item text="New Folder" icon="add-folder" additional-text="Ctrl+F" disabled></ui5-menu-item>
+		</ui5-menu>
+		<script>
+			btnMenuListBusy.addEventListener("click", function(event) {
+				menuListBusy.showAt(btnMenuListBusy);
+			});
+
+			menuListBusy.addEventListener("ui5-before-open", function(event) {
+				setTimeout(function() {
+					menuListBusy.removeAttribute("busy");
+					let openNode = document.createElement("ui5-menu-item");
+					openNode.setAttribute("text", "Open");
+					openNode.setAttribute("icon", "open-folder");
+					openNode.setAttribute("starts-section", "");
+					menuListBusy.appendChild(openNode);
+					let closeNode = document.createElement("ui5-menu-item");
+					closeNode.setAttribute("text", "Close");
+					menuListBusy.appendChild(closeNode);
+				}, 3000);
+			}, { once: true });
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-button id="btnMenuListBusy">Open Menu</ui5-button> <br/>
+<ui5-menu id="menuListBusy" busy-delay="100" busy>
+</ui5-menu>
+<script>
+	btnMenuListBusy.addEventListener("click", function(event) {
+		menuListBusy.showAt(btnMenuListBusy);
+	});
+
+	menuListBusy.addEventListener("ui5-before-open", function(event) {
+		setTimeout(function() {
+			menuListBusy.removeAttribute("busy");
+			let openNode = document.createElement("ui5-menu-item");
+			openNode.setAttribute("text", "Open");
+			openNode.setAttribute("icon", "open-folder");
+			openNode.setAttribute("starts-section", "");
+			menuListBusy.appendChild(openNode);
+			let closeNode = document.createElement("ui5-menu-item");
+			closeNode.setAttribute("text", "Close");
+			menuListBusy.appendChild(closeNode);
+		}, 3000);
+	}, { once: true });
+</script>
+	</xmp></pre>
+</section>
 
 <!-- JSDoc marker -->

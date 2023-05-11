@@ -19,11 +19,11 @@
 	box-sizing: border-box;
 }
 
-.ui5-card-root:hover {
+.ui5-card-root.ui5-card--interactive:hover {
 	box-shadow: var(--_ui5_card_hover_box_shadow);
 }
 
-.ui5-card-root:active {
+.ui5-card-root.ui5-card--interactive:active {
 	box-shadow: var(--_ui5_card_box_shadow);
 }
 

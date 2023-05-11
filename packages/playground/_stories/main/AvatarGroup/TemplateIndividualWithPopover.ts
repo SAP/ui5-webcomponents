@@ -1,4 +1,4 @@
-import { html } from "lit-html";
+import { html } from "lit";
 
 let index = 0;
 export default () => {

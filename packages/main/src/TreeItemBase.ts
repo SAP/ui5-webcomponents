@@ -289,7 +289,7 @@ class TreeItemBase extends ListItem {
 	get styles() {
 		return {
 			preContent: {
-				"padding-left": `calc(var(--_ui5-tree-indent-step) * ${this.effectiveLevel})`,
+				"padding-inline-start": `calc(var(--_ui5-tree-indent-step) * ${this.effectiveLevel})`,
 			},
 		};
 	}

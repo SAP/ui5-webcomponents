@@ -11,4 +11,6 @@
 	--_ui5_link_focus_color: inherit;
 	--_ui5_link_focus_text_decoration: underline;
 	--_ui5_link_subtle_text_decoration: none;
+	--_ui5_link_subtle_text_decoration_hover: underline;
+
 }

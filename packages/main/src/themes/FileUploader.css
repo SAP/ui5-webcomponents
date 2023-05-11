@@ -31,27 +31,27 @@
 :host(:not([value-state]):not([disabled]):hover) [ui5-input] {
 	border: var(--_ui5_file_uploader_hover_border);
 	background-color: var(--sapField_Hover_Background);
-	box-shadow: var(--_ui5_input_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_Shadow);
 }
 
 :host([value-state="Error"]:not([disabled]):hover) [ui5-input] {
 	background-color: var(--_ui5_file_uploader_value_state_error_hover_background_color);
-	box-shadow: var(--_ui5_input_value_state_error_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_InvalidShadow);
 }
 
 :host([value-state="Warning"]:not([disabled]):hover) [ui5-input] {
 	background-color: var(--sapField_Hover_Background);
-	box-shadow: var(--_ui5_input_value_state_warning_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_WarningShadow);
 }
 
 :host([value-state="Success"]:not([disabled]):hover) [ui5-input] {
 	background-color: var(--sapField_Hover_Background);
-	box-shadow: var(--_ui5_input_value_state_success_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_SuccessShadow);
 }
 
 :host([value-state="Information"]:not([disabled]):hover) [ui5-input] {
 	background-color: var(--sapField_Hover_Background);
-	box-shadow: var(--_ui5_input_value_state_information_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_InformationShadow);
 }
 
 :host(:not([disabled]):active) [ui5-button] {
