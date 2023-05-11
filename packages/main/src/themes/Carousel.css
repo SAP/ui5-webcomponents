@@ -70,9 +70,9 @@
 
 .ui5-carousel-navigation-arrows {
     width: 100%;
-    padding:0 0.5rem;
+    padding: 0 0.5rem;
     position: absolute;
-    top: calc(50% - var(--ui5_carousel_button_size));
+    top: calc(50% - var(--ui5_carousel_button_size) / 2);
     left: 0;
     display: flex;
     justify-content: space-between;
