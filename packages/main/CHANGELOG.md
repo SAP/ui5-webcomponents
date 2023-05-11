@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.5...v1.13.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* **ui5-tree:** rtl styling fixes ([#7019](https://github.com/SAP/ui5-webcomponents/issues/7019)) ([88a63ee](https://github.com/SAP/ui5-webcomponents/commit/88a63eefa161b0576dc635cf2b16ecb1e27afacb)), closes [#6892](https://github.com/SAP/ui5-webcomponents/issues/6892)
+
+
+
+
+
 # [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
 
 
