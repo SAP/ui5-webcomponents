@@ -85,8 +85,6 @@ class TableCell extends UI5Element {
 	}
 
 	get ariaLabelEmptyCellText(): string {
-		const cellDomReference = this.getDomRef();
-
 		return !this.cellContent.length ? TableCell.i18nBundle.getText(ARIA_LABEL_EMPTY_CELL) : null;
 	}
 }
