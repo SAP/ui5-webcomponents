@@ -3162,10 +3162,10 @@
   resolved "https://registry.yarnpkg.com/@types/object-inspect/-/object-inspect-1.8.1.tgz#7c08197ad05cc0e513f529b1f3919cc99f720e1f"
   integrity sha512-0JTdf3CGV0oWzE6Wa40Ayv2e2GhpP3pEJMcrlM74vBSJPuuNkVwfDnl0SZxyFCXETcB4oKA/MpTVfuYSMOelBg==
 
-"@types/openui5@^1.112.0":
-  version "1.112.0"
-  resolved "https://registry.yarnpkg.com/@types/openui5/-/openui5-1.112.0.tgz#4d88013491eda357113870c83575ca3bb2a47ea7"
-  integrity sha512-rY7Mh7c1WbbYFCFG8toxphn5ODUvDHYtszIWR2KfAzMfEHql2ekCCgyfPz2PpoAQ/ep2WxdHVxaPlQBe4hW3Gw==
+"@types/openui5@^1.113.0":
+  version "1.113.0"
+  resolved "https://registry.yarnpkg.com/@types/openui5/-/openui5-1.113.0.tgz#181a42e436dfff2a6a924894cc712bbd5a487da1"
+  integrity sha512-GoIDksIMxQpxEsS3Nc4ug16vtVklBffjKU9llPml0+c0We1VM02j/3MrOPR6Ot2rgMn6/z7BGiQhJmds5BLc/g==
   dependencies:
     "@types/jquery" "*"
     "@types/qunit" "*"
