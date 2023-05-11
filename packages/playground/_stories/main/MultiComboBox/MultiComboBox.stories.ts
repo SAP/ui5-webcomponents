@@ -53,20 +53,6 @@ BasicMultiComboBox.args = {
 	default: `<ui5-mcb-item selected="" text="UI5"></ui5-mcb-item>`
 };
 
-export const ReadonlyMultiComboBox = Template.bind({});
-ReadonlyMultiComboBox.args = {
-	value: 'Readonly combo',
-	readonly: true,
-	default: `<ui5-mcb-item selected="" text="UI5"></ui5-mcb-item>`
-};
-
-export const DisabledMultiComboBox = Template.bind({});
-DisabledMultiComboBox.args = {
-	value: 'Disabled combo',
-	disabled: true,
-	default: `<ui5-mcb-item selected="" text="UI5"></ui5-mcb-item>`
-};
-
 export const MultiComboBoxItems = Template.bind({});
 MultiComboBoxItems.args = {
 	placeholder: 'Choose your countries',
@@ -87,25 +73,9 @@ MultiComboBoxItems.storyName = "Multi Combo Box with items";
 
 export const MultiComboBoxFreeTextInput = Template.bind({});
 MultiComboBoxFreeTextInput.args = {
-	placeholder: 'Choose your countries',
-	allowCustomValues: true,
-	default: `
-	<ui5-mcb-item text="Argentina"></ui5-mcb-item>
-	<ui5-mcb-item selected="" text="Bulgaria"></ui5-mcb-item>
-	<ui5-mcb-item text="Denmark"></ui5-mcb-item>
-	<ui5-mcb-item selected="" text="England"></ui5-mcb-item>
-	<ui5-mcb-item text="Albania"></ui5-mcb-item>
-	<ui5-mcb-item text="Morocco"></ui5-mcb-item>
-	<ui5-mcb-item text="Portugal"></ui5-mcb-item>
-	<ui5-mcb-item selected="" text="Germany"></ui5-mcb-item>
-	<ui5-mcb-item text="Philippines"></ui5-mcb-item>
-	<ui5-mcb-item text="Paraguay"></ui5-mcb-item>`
-};
-MultiComboBoxFreeTextInput.storyName = "Multi Combo Box with free text input";
-
-export const MultiComboBoxWithValueState = Template.bind({});
-MultiComboBoxWithValueState.args = {
+	placeholder: 'Choose your state',
 	valueState: ValueState.Success,
+	allowCustomValues: true,
 	default: `
 	<ui5-mcb-item text="Fortune"></ui5-mcb-item>
 	<ui5-mcb-item text="Luck"></ui5-mcb-item>
@@ -117,7 +87,7 @@ MultiComboBoxWithValueState.args = {
 	<ui5-mcb-item text="Error"></ui5-mcb-item>
 	<ui5-mcb-item text="Mistake"></ui5-mcb-item>`
 };
-MultiComboBoxWithValueState.storyName = "Multi Combo Box with Value State";
+MultiComboBoxFreeTextInput.storyName = "Multi Combo Box with free text input";
 
 export const MultiComboBoxGroupingItems = Template.bind({});
 MultiComboBoxGroupingItems.args = {
