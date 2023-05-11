@@ -9,7 +9,7 @@ class CalendarDate {
 		let aArgs = arguments, // eslint-disable-line
 			oJSDate: UI5Date | Date,
 			oNow: UI5Date | Date,
-			sCalendarType!: `${CalendarType}`;
+			sCalendarType!: CalendarType;
 
 		switch (aArgs.length) {
 		case 0: // defaults to the current date

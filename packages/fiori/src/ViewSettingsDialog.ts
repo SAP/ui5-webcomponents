@@ -225,7 +225,7 @@ class ViewSettingsDialog extends UI5Element {
 	 * @private
 	 */
 	@property({ type: ViewSettingsDialogMode, defaultValue: ViewSettingsDialogMode.Sort })
-	_currentMode!: `${ViewSettingsDialogMode}`;
+	_currentMode!: ViewSettingsDialogMode;
 
 	/**
 	 * When in Filter By mode, defines whether we need to show the list of keys, or the list with values.

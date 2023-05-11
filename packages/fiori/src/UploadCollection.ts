@@ -199,7 +199,7 @@ class UploadCollection extends UI5Element {
 	 * @private
 	 */
 	@property({ type: UploadCollectionDnDOverlayMode, defaultValue: UploadCollectionDnDOverlayMode.None })
-	_dndOverlayMode!: `${UploadCollectionDnDOverlayMode}`;
+	_dndOverlayMode!: UploadCollectionDnDOverlayMode;
 
 	/**
 	 * Defines the items of the <code>ui5-upload-collection</code>.

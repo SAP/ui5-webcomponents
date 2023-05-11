@@ -10,7 +10,7 @@ import UploadCollectionDnDOverlayMode from "../types/UploadCollectionDnDMode.js"
 type DnDEventListener = (param: DnDEventListenerParam) => void;
 
 type DnDEventListenerParam = {
-	mode: `${UploadCollectionDnDOverlayMode}`,
+	mode: UploadCollectionDnDOverlayMode,
 };
 
 const draggingFiles = (event: DragEvent) => {
