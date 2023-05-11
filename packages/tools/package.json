@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "1.13.0-rc.3",
+  "version": "1.13.1",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -57,6 +57,7 @@
     "postcss-cli": "^9.1.0",
     "postcss-import": "^14.0.2",
     "postcss-selector-parser": "^6.0.10",
+    "prompts": "^2.4.2",
     "properties-reader": "^2.2.0",
     "recursive-readdir": "^2.2.2",
     "resolve": "^1.20.0",

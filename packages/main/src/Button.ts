@@ -246,7 +246,7 @@ class Button extends UI5Element implements IFormElement {
 	 * @since 1.2.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: object;
+	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree", controls: string};
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.

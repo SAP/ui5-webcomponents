@@ -407,8 +407,8 @@ class DateTimePicker extends DatePicker {
 	}
 
 	getSelectedDateTime() {
-		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0], undefined as unknown as boolean, undefined as unknown as boolean) as Date;
-		const selectedTime = this.getFormat().parse(this._timeSelectionValue, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0]) as Date;
+		const selectedTime = this.getFormat().parse(this._timeSelectionValue) as Date;
 		if (selectedTime) {
 			selectedDate.setHours(selectedTime.getHours());
 			selectedDate.setMinutes(selectedTime.getMinutes());

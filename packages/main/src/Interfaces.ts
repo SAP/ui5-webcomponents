@@ -26,6 +26,15 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
 const IButton = "sap.ui.webc.main.IButton";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-card</code> as header
+ *
+ * @name sap.ui.webc.main.ICardHeader
+ * @interface
+ * @public
+ */
+const ICardHeader = "sap.ui.webc.main.ICardHeader";
+
+/**
  * Interface for components that may be used as dates inside <code>ui5-calendar</code>
  *
  * @name sap.ui.webc.main.ICalendarDate
@@ -182,6 +191,7 @@ export {
 	IAvatar,
 	IBreadcrumbsItem,
 	IButton,
+	ICardHeader,
 	ICalendarDate,
 	IColorPaletteItem,
 	IComboBoxItem,
