@@ -80,14 +80,6 @@ class TableCell extends UI5Element {
 		TableCell.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
-	// onAfterRendering(): void {
-	// 	const cellDomReference = this.getDomRef();
-
-	// 	if (!this.cellContent.length) {
-	// 		cellDomReference?.setAttribute("aria-label", this.ariaLabelEmptyCellText);
-	// 	}
-	// }
-
 	get cellContent(): Array<HTMLElement> {
 		return this.getSlottedNodes<HTMLElement>("content");
 	}
