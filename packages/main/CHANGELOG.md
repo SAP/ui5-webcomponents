@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
+
+
+### Bug Fixes
+
+* **ui5-carousel:** align arrows relative to the content ([#6975](https://github.com/SAP/ui5-webcomponents/issues/6975)) ([623d1ec](https://github.com/SAP/ui5-webcomponents/commit/623d1ecb249b4c09db4ffb530ede87f50d83970b)), closes [#6954](https://github.com/SAP/ui5-webcomponents/issues/6954)
+* **ui5-date-time-picker:** fix test ([#7005](https://github.com/SAP/ui5-webcomponents/issues/7005)) ([9e07724](https://github.com/SAP/ui5-webcomponents/commit/9e0772476d20c65c6981e2ca930d9a09bbb62af7))
+* **ui5-multi-combobox:** prevent exception on mobile device ([#6983](https://github.com/SAP/ui5-webcomponents/issues/6983)) ([ccaf3c9](https://github.com/SAP/ui5-webcomponents/commit/ccaf3c969dee8bfe3dd9850ee196c9f07ffc6e9f))
+
+
+### Features
+
+* **ui5-calendar,ui5-date*picker:** add static format (ISO) support for min/max dates ([#6955](https://github.com/SAP/ui5-webcomponents/issues/6955)) ([a89afbf](https://github.com/SAP/ui5-webcomponents/commit/a89afbf9088ea9cbf892468a9de4d98ac236cfec)), closes [#6885](https://github.com/SAP/ui5-webcomponents/issues/6885)
+
+
+
+
+
 # [1.13.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.3...v1.13.0-rc.4) (2023-05-04)
 
 
