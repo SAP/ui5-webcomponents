@@ -251,4 +251,17 @@ describe("DateRangePicker general interaction", () => {
 		assert.equal(res.endDateValue, null, "Second date is correct");
 		assert.equal(res.drpValue, await (await browser.$("#labelDate")).getHTML(false), "Event value is correct");
 	});
+
+	it("Min and max dates are set without format-pattern by using ISO (YYYY-MM-dd) format", async () => {
+		await browser.url(`test/pages/DateRangePicker.html?sap-ui-language=bg`);
+		
+		const daterangepicker = await browser.$("#daterange-picker8");
+		const dateRangePickerInput = await daterangepicker.shadow$("ui5-input");
+
+		await daterangepicker.click();
+		await daterangepicker.keys("10.02.2023 г. - 25.07.2023 г.");
+		await daterangepicker.keys("Enter");
+
+		assert.strictEqual(await dateRangePickerInput.getProperty("valueState"), "Error", "Min and max dates are set correctly");
+	});
 });

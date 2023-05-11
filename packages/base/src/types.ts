@@ -26,5 +26,6 @@ export type {
 	StyleDataCSP,
 	ComponentStylesData,
 	ClassMap,
+	ClassMapValue,
 	PassiveEventListenerObject,
 };

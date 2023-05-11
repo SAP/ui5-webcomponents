@@ -1,4 +1,6 @@
 import { html } from "lit";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta, StoryFn } from "@storybook/web-components";
 
 import argTypes, { componentInfo } from "./argTypes.js";
@@ -7,111 +9,50 @@ import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
-// @ts-ignore
 import type Calendar from "@ui5/webcomponents/dist/Calendar.js";
+import CalendarSelectionMode from "@ui5/webcomponents/dist/types/CalendarSelectionMode.js";
+import CalendarType from "@ui5/webcomponents-base/dist/types/CalendarType.js";
+
 
 const component = "ui5-calendar";
 
 export default {
-    title: "Main/Calendar",
-    component,
-    subcomponents: {'CalendarDate' : 'ui5-date'},
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
-    argTypes,
+	title: "Main/Calendar",
+	component,
+	subcomponents: {'CalendarDate' : 'ui5-date'},
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component })
+		},
+	},
+	argTypes,
 } as Meta<Calendar>;
 
-const Template: UI5StoryArgs<Calendar, StoryArgsSlots> = (args) => html`<div></div>`;
+const Template: UI5StoryArgs<Calendar, StoryArgsSlots> = (args) => html`<ui5-calendar
+	selection-mode="${ifDefined(args.selectionMode)}"
+	?hide-week-numbers="${ifDefined(args.hideWeekNumbers)}"
+	primary-calendar-type="${ifDefined(args.primaryCalendarType)}"
+	secondary-calendar-type="${ifDefined(args.secondaryCalendarType)}"
+	format-pattern="${ifDefined(args.formatPattern)}"
+	min-date="${ifDefined(args.minDate)}"
+	max-date="${ifDefined(args.maxDate)}"
+>
+	${unsafeHTML(args.default)}
+</ui5-calendar>`;
 
+export const Basic = Template.bind({});
 
-export const Template0: StoryFn = () => html`
-<h3>Basic Calendar</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar></ui5-calendar>
-		</div>
-	</div>
-`;
+export const Bounds = Template.bind({});
+Bounds.storyName = "Min/Max Dates and Format Pattern";
+Bounds.args = {
+	minDate: "7/10/2020", 
+	maxDate: "20/10/2020",
+	formatPattern: "dd/MM/yyyy",
+};
 
-
-export const Template1: StoryFn = () => html`
-<h3>Calendar with Minimum and Maximum Date &amp; Format Pattern</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar min-date="7/7/2020" max-date="20/10/2020" format-pattern="dd/MM/yyyy"></ui5-calendar>
-		</div>
-	</div>
-`;
-
-
-export const Template2: StoryFn = () => html`
-<h3>Calendar with Hidden Week Numbers</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar hide-week-numbers=""></ui5-calendar>
-		</div>
-	</div>
-`;
-
-
-export const Template3: StoryFn = () => html`
-<h3>Calendar with Selection Mode Multiple</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar selection-mode="Multiple"></ui5-calendar>
-		</div>
-	</div>
-`;
-
-
-export const Template4: StoryFn = () => html`
-<h3>Calendar with Selection Mode Range</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar selection-mode="Range"></ui5-calendar>
-		</div>
-	</div>
-`;
-
-
-export const Template5: StoryFn = () => html`
-<h3>Japanese Calendar</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar primary-calendar-type="Japanese"></ui5-calendar>
-		</div>
-	</div>
-`;
-
-
-export const Template6: StoryFn = () => html`
-<h3>Islamic Calendar</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar primary-calendar-type="Islamic"></ui5-calendar>
-		</div>
-	</div>
-`;
-
-
-export const Template7: StoryFn = () => html`
-<h3>Buddhist Calendar</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar primary-calendar-type="Buddhist"></ui5-calendar>
-		</div>
-	</div>
-`;
-
-
-export const Template8: StoryFn = () => html`
-<h3>Persian Calendar</h3>
-	<div class="snippet">
-		<div class="datepicker-width">
-			<ui5-calendar primary-calendar-type="Persian"></ui5-calendar>
-		</div>
-	</div>
-`;
+export const CalendarTypes = Template.bind({});
+CalendarTypes.storyName = "Primary and Secondary Calendar Types";
+CalendarTypes.args = {
+	primaryCalendarType: CalendarType.Japanese,
+	secondaryCalendarType: CalendarType.Islamic,
+};

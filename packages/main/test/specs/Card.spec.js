@@ -17,6 +17,22 @@ describe("Card general interaction", () => {
 		assert.ok(await status.isExisting(), "The status DOM is rendered.");
 	});
 
+	it("tests interactive header results in interactive class on the card", async () => {
+		const interactiveCard = await browser.$("#card");
+		const interactiveCardRoot = interactiveCard.shadow$(".ui5-card-root");
+		const interactiveCardHeader = interactiveCard.$("ui5-card-header");
+
+		assert.strictEqual(await interactiveCardHeader.getProperty("interactive"), true, "card header has interactive property");
+		assert.strictEqual(await interactiveCardRoot.hasClass("ui5-card--interactive"), true, "card root has interactive class");
+
+		const nonInteractiveCard = await browser.$("#card2");
+		const nonInteractiveCardRoot = nonInteractiveCard.shadow$(".ui5-card-root");
+		const nonInteractiveCardHeader = nonInteractiveCard.$("ui5-card-header");
+
+		assert.strictEqual(await nonInteractiveCardHeader.getProperty("interactive"), false, "card header doesn't have interactive property");
+		assert.strictEqual(await nonInteractiveCardRoot.hasClass("ui5-card--interactive"), false, "card root doesn't have interactive class");
+	});
+
 	it("tests header's click event with mouse click, Enter and Space", async () => {
 		const cardHeader = await browser.$("#cardHeader").shadow$(".ui5-card-header");
 		const cardHeader2 = await browser.$("#cardHeader2").shadow$(".ui5-card-header");

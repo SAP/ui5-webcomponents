@@ -53,7 +53,7 @@ class EventProvider<EventListenerParam, EventListenerReturn> {
 		}
 
 		return eventListeners.map(fn => {
-			return fn.call(this, data); // eslint-disable-line
+			return fn.call(this, data);
 		});
 	}
 

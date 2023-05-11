@@ -62,10 +62,6 @@ class ${componentName} extends UI5Element {
 	static get dependencies() {
 		return [];
 	}
-
-	static async onDefine() {
-
-	}
 }
 
 ${componentName}.define();
