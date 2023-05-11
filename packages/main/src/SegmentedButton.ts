@@ -276,9 +276,13 @@ class SegmentedButton extends UI5Element {
 		const hasClass = this.hasAttribute("class"); // flag to check if class attribute is set
 		const settedWidth = this.style.width; // set by style attribute/getComputedStyle
 
-		if ((!this.style.width || this.percentageWidthSet) || (customWidth === settedWidth && !hasClass)) {
-			this.style.width = defaultComponentWidth;
+		if (((!this.style.width && this.style.width === defaultComponentWidth) || this.percentageWidthSet) || (customWidth === settedWidth && !hasClass)) {
+			this.style.width = customWidth;
 			this.absoluteWidthSet = true;
+			if (!this.initialState) {
+				this.originalWidth = this.style.width;
+				this.initialState = true;
+			}
 		} else if ((!this.style.width || this.percentageWidthSet) || (customWidth === settedWidth && !hasClass)) {
 			this.style.width = defaultComponentWidth;
 			this.absoluteWidthSet = true;
