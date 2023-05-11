@@ -19,7 +19,7 @@ describe("Some configuration options can be changed at runtime", () => {
 		// act: set absolute URL
 		let themeRoot = await browser.executeAsync(async done => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
-			await config.setThemeRoot("https://example.com/UI5/");
+			await config.setThemeRoot("https://example.com/");
 
 			done(config.getThemeRoot());
 		});
