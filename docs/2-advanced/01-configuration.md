@@ -256,11 +256,6 @@ To do so, please import the desired functionality from the respective `"@ui5/web
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 ```
 
- - `themeRoot`
-
-```js
-import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
-```
  - `language`
 
 ```js

@@ -87,6 +87,7 @@ setTheme("sap_fiori_3_dark");
 For more on configuring themes, see [Configuration](../2-advanced/01-configuration.md).
 
 ## Load custom theme, built with `UI Theme Designer`, via URL
+The feature is specific to custom themes, created with the `UI Theme Designer` and allows fetching a theme from external location, e.g theme root.
 
 ### Using URL parameter
 To load a custom theme via URL, you can specify theme's location with the `theme` URL parameter:
