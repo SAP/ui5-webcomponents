@@ -2,6 +2,7 @@ import getEffectiveStyle from "./getEffectiveStyle.js";
 import { attachCustomCSSChange } from "./CustomStyle.js";
 import UI5Element from "../UI5Element.js";
 import { attachThemeLoaded } from "./ThemeLoaded.js";
+import getEffectiveThemeStyle from "./getEffectiveThemeStyle.js";
 
 const constructableStyleMap = new Map<string, Array<CSSStyleSheet>>();
 const themeConstructableStyleMap = new Map<string, Array<CSSStyleSheet>>();
@@ -32,7 +33,7 @@ const getConstructableStyle = (ElementClass: typeof UI5Element, forStaticArea = 
 	}
 
 	if (!themeConstructableStyleMap.has(key)) {
-		const styleContent = getEffectiveStyle(ElementClass, forStaticArea);
+		const styleContent = getEffectiveThemeStyle(ElementClass, forStaticArea);
 		const style = new CSSStyleSheet();
 		style.replaceSync(styleContent);
 		themeConstructableStyleMap.set(key, [style]);
