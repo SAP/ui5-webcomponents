@@ -1,8 +1,8 @@
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
-import { StyleData, StyleDataCSP } from "../types.js";
+import { StyleData } from "../types.js";
 import { fireThemeRegistered } from "../theming/ThemeRegistered.js";
 
-type ThemeData = {_: StyleDataCSP } | StyleDataCSP | string;
+type ThemeData = {_: StyleData } | StyleData;
 type ThemeLoader = (themeName: string) => Promise<ThemeData>;
 
 const themeStyles = new Map<string, StyleData>();
@@ -47,7 +47,7 @@ const _getThemeProperties = async (packageName: string, themeName: string) => {
 		console.error(packageName, e.message); /* eslint-disable-line */
 		return;
 	}
-	const themeProps = (data as {_: StyleDataCSP})._ || data; // Refactor: remove _ everywhere
+	const themeProps = (data as {_: StyleData})._ || data; // Refactor: remove _ everywhere
 
 	themeStyles.set(`${packageName}_${themeName}`, themeProps);
 	return themeProps;

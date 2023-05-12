@@ -30,6 +30,12 @@ const deleteThemeBase = () => {
 	removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
 };
 
+let packagesStylesData: Array<StyleData> = [];
+
+const getRegisteredComponentPackagesStyleData = () => {
+	return packagesStylesData;
+};
+
 const loadComponentPackages = async (theme: string) => {
 	const registeredPackages = getRegisteredPackages();
 
@@ -37,7 +43,7 @@ const loadComponentPackages = async (theme: string) => {
 		return getThemeProperties(packageName, theme);
 	});
 
-	return Promise.all(packagesStylesPromises);
+	packagesStylesData = (await Promise.all(packagesStylesPromises) as Array<StyleData>).filter(componentPackage => !!componentPackage);
 };
 
 const detectExternalTheme = async (theme: string) => {
@@ -64,16 +70,6 @@ const detectExternalTheme = async (theme: string) => {
 	}
 };
 
-let packagesProperties: Array<StyleData> = [];
-
-const getRegisteredPackagesThemeData = () => {
-	return packagesProperties;
-};
-
-const loadAndApplyThemeProps = async (packagesTheme?: string) => {
-	packagesProperties = [...await loadComponentPackages(packagesTheme || DEFAULT_THEME)].filter(componentPackage => !!componentPackage) as Array<StyleData>;
-};
-
 const applyTheme = async (theme: string) => {
 	const extTheme = await detectExternalTheme(theme);
 
@@ -86,10 +82,10 @@ const applyTheme = async (theme: string) => {
 
 	// Always load component packages properties. For non-registered themes, try with the base theme, if any
 	const packagesTheme = isThemeRegistered(theme) ? theme : extTheme && extTheme.baseThemeName;
-	await loadAndApplyThemeProps(packagesTheme);
+	await loadComponentPackages(packagesTheme || DEFAULT_THEME);
 
 	fireThemeLoaded(theme);
 };
 
 export default applyTheme;
-export { getRegisteredPackagesThemeData };
+export { getRegisteredComponentPackagesStyleData };

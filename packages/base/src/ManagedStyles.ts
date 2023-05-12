@@ -1,7 +1,7 @@
 import createStyleInHead from "./util/createStyleInHead.js";
 import createLinkInHead from "./util/createLinkInHead.js";
 import { shouldUseLinks, getUrl } from "./CSP.js";
-import { StyleData, StyleDataCSP } from "./types.js";
+import { StyleData } from "./types.js";
 
 const getStyleId = (name: string, value: string) => {
 	return value ? `${name}|${value}` : name;
@@ -13,7 +13,7 @@ const createStyle = (data: StyleData, name: string, value = "") => {
 	if (shouldUseLinks()) {
 		const attributes = {} as Record<string, any>;
 		attributes[name] = value;
-		const href = getUrl((data as StyleDataCSP).packageName, (data as StyleDataCSP).fileName);
+		const href = getUrl(data.packageName, data.fileName);
 		createLinkInHead(href, attributes);
 	} else if (document.adoptedStyleSheets) {
 		const stylesheet = new CSSStyleSheet();
@@ -32,7 +32,7 @@ const updateStyle = (data: StyleData, name: string, value = "") => {
 
 	if (shouldUseLinks()) {
 		const link = document.querySelector(`head>link[${name}="${value}"]`) as HTMLLinkElement;
-		link.href = getUrl((data as StyleDataCSP).packageName, (data as StyleDataCSP).fileName);
+		link.href = getUrl(data.packageName, data.fileName);
 	} else if (document.adoptedStyleSheets) {
 		const stylesheet = document.adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === getStyleId(name, value));
 		if (stylesheet) {
@@ -86,7 +86,4 @@ export {
 	createOrUpdateStyle,
 };
 
-export type {
-	StyleData,
-	StyleDataCSP,
-};
+export type { StyleData };

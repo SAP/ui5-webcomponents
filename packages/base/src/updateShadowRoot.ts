@@ -1,6 +1,7 @@
 import getConstructableStyle from "./theming/getConstructableStyle.js";
 import getEffectiveStyle from "./theming/getEffectiveStyle.js";
 import getEffectiveLinksHrefs from "./theming/getEffectiveLinksHrefs.js";
+import getEffectiveThemeVariables from "./theming/getEffectiveThemeVariables.js";
 import { shouldUseLinks } from "./CSP.js";
 import type UI5Element from "./UI5Element.js";
 
@@ -30,7 +31,7 @@ const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 	} else if (document.adoptedStyleSheets) { // Chrome
 		shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor, forStaticArea);
 	} else { // Safari
-		styleStrOrHrefsArr = getEffectiveStyle(ctor, forStaticArea);
+		styleStrOrHrefsArr = `${getEffectiveThemeVariables(ctor, forStaticArea)} ${getEffectiveStyle(ctor, forStaticArea)}`;
 	}
 
 	if (ctor.renderer) {

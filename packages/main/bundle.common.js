@@ -118,6 +118,7 @@ import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/direc
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+// import { setUseLinks, setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js";
 
 // SAP Icons
 import accept from "@ui5/webcomponents-icons/dist/accept.js";
@@ -175,6 +176,12 @@ const testAssets = {
 // setDefaultIconCollection("my_custom_theme", "SAP-icons-v5");
 // or for custom icon collection
 // setDefaultIconCollection("sap_fiori_3", "my-custom-icons");
+
+// setUseLinks(true); // "true" to force all browsers to use links
+// setPackageCSSRoot("@ui5/webcomponents-base", "./css/base/");
+// setPackageCSSRoot("@ui5/webcomponents-theming", "./css/theming/");
+// setPackageCSSRoot("@ui5/webcomponents", "./css/main/");
+// setPackageCSSRoot("@ui5/webcomponents-fiori", "./css/fiori/");
 
 import {registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 registerIconLoader("my-custom-icons", () => {
