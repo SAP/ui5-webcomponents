@@ -11,7 +11,6 @@
 	font-size: var(--sapFontSize);
 	cursor: pointer;
 	outline: none;
-	text-decoration: var(--sapLink_TextDecoration);
 	text-shadow: var(--sapContent_TextShadow);
 	white-space: nowrap;
 	overflow-wrap: normal;
@@ -62,12 +61,13 @@
 
 :host(:active) .ui5-link-root {
 	color: var(--sapLink_Active_Color);
-	text-decoration: var(--sapLink_Active_TextDecoration);
+	text-decoration: var(--_ui5_link_active_text_decoration);
 }
 
 :host .ui5-link-root {
 	border: var(--_ui5_link_border);
 	border-radius: var(--_ui5_link_focus_border-radius);
+	text-decoration: var(--_ui5_link_text_decoration);
 }
 
 :host([focused]) .ui5-link-root,
@@ -80,20 +80,17 @@
 	text-shadow: none;
 }
 
-:host(:hover) {
+:host(:hover:not(:active)) .ui5-link-root {
 	color: var(--sapLink_Hover_Color);
-	text-decoration: var(--sapLink_Hover_TextDecoration);
+	text-decoration: var(--_ui5_link_hover_text_decoration);
 }
 
-:host([design="Subtle"]:hover) {
+:host([design="Subtle"]:hover:not(:active)) .ui5-link-root {
 	color: var(--sapLink_SubtleColor);
 	text-decoration: var(--_ui5_link_subtle_text_decoration_hover);
 }
 
-:host([focused]:hover) {
-	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
-}
-
-:host([focused]:hover) .ui5-link-root {
+:host([focused]:hover:not(:active)) .ui5-link-root {
 	color: var(--_ui5_link_focused_hover_text_color);
+	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
 }
