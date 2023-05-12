@@ -19,14 +19,14 @@ const tagPrefixes: Array<string> = [];
  *
  * @public
  * @since 1.14.0
- * @param { string } tagPreffix
+ * @param { string } tagPrefix
  */
-const ignoreCustomElements = (tagPreffix: string) => {
-	if (typeof tagPreffix !== "string" || !tagPreffix.length) {
+const ignoreCustomElements = (tagPrefix: string) => {
+	if (typeof tagPrefix !== "string" || !tagPrefix.length) {
 		throw new Error("Only string characters for a tag preffix.");
 	}
 
-	tagPrefixes.push(tagPreffix);
+	tagPrefixes.push(tagPrefix);
 };
 
 /**
