@@ -5,6 +5,8 @@
 	hide-arrow
 	placement-type="Bottom"
 	horizontal-align="Left"
+	@ui5-before-open="{{handleOpen}}"
+	@ui5-before-close="{{handleClose}}"
 >
 	<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
 		{{#if _isPhone}}

@@ -22,7 +22,27 @@
 		<h1>Basic API</h1>
 
 		<h1 class="sample-container-title">Empty Multi Input</h1>
-		<ui5-multi-input id="empty-mi" placeholder="Placeholder"></ui5-multi-input>
+		<ui5-multi-input id="empty-mi" placeholder="Placeholder">
+			<ui5-token text="Mollit voluptate aliqua officia incididunt ex sint id occaecat tempor commodo proident." slot="tokens"></ui5-token>
+		</ui5-multi-input>
+
+		<br>
+
+		<ui5-multi-combobox id="empty-mi" placeholder="Placeholder">
+			<ui5-mcb-item text="Mollit voluptate aliqua officia incididunt ex sint id occaecat tempor commodo proident." selected></ui5-mcb-item>
+		</ui5-multi-combobox>
+
+		<br>
+		<ui5-tokenizer style="width: 210px" show-more>
+			<ui5-token text="Mollit voluptate aliqua officia incididunt ex sint id occaecat tempor commodo proident."></ui5-token>
+		</ui5-tokenizer>
+
+		<br>
+		<br>
+		<ui5-tokenizer style="width: 210px" show-more>
+			<ui5-token text="Mollit voluptate aliqua officia incididunt ex sint id occaecat tempor commodo proident."></ui5-token>
+			<ui5-token text="Test token"></ui5-token>
+		</ui5-tokenizer>
 
 		<br>
 		<br>

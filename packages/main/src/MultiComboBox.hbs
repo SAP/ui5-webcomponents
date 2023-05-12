@@ -17,6 +17,7 @@
 		@click={{_click}}
 		@keydown="{{_onTokenizerKeydown}}"
 		?expanded="{{_tokenizerExpanded}}"
+		.morePopoverOpener={{this}}
 	>
 		{{#each items}}
 			{{#if this.selected}}

@@ -126,6 +126,34 @@ class Token extends UI5Element implements ITabbable {
 	overflows!: boolean;
 
 	/**
+	 * Set by the tokenizer when a token should be truncated instead of overflown
+	 * This happens when a single token is available in the Tokenzer
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	truncated!: boolean;
+
+	/**
+	 * Indicats whether the More popup is open or not.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	popupOpen!: boolean;
+
+	/**
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @private
+	 */
+	@property({ type: Boolean })
+	effectiveTruncated!: boolean;
+
+	/**
 	 * Defines whether the component is focused or not.
 	 *
 	 * @type {boolean}
@@ -212,6 +240,7 @@ class Token extends UI5Element implements ITabbable {
 
 	onBeforeRendering() {
 		this.toBeDeleted = false;
+		this.effectiveTruncated = this.truncated && !this.focused && !this.popupOpen;
 	}
 
 	get tokenDeletableText() {

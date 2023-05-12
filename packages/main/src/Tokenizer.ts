@@ -137,6 +137,9 @@ class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	expanded!: boolean;
 
+	@property({ type: Boolean })
+	_showTruncatedToken!: boolean;
+
 	@property({ type: Object })
 	morePopoverOpener!: Tokenizer;
 
@@ -197,14 +200,24 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.contentDom, this._resizeHandler);
 	}
 
-	async _openOverflowPopover() {
+	async _openOverflowPopover(fireEvent) {
 		if (this.showPopover) {
 			const popover = await this.getPopover();
 
 			popover.showAt(this.morePopoverOpener || this);
 		}
 
-		this.fireEvent("show-more-items-press");
+		if (fireEvent) {
+			this.fireEvent("show-more-items-press");
+		}
+	}
+
+	handleOpen() {
+		this._tokens[0].popupOpen = true;
+	}
+
+	handleClose() {
+		this._tokens[0].popupOpen = false;
 	}
 
 	_getTokens() {
@@ -491,8 +504,13 @@ class Tokenizer extends UI5Element {
 
 	_handleTokenSelection(e: KeyboardEvent | MouseEvent, deselectAll = true) {
 		const target = e.target as Token;
+
 		if (target.hasAttribute("ui5-token")) {
 			const deselectTokens = deselectAll ? this._tokens : [];
+
+			if (this._tokens.length === 1 && this._showTruncatedToken) {
+				this._openOverflowPopover(false);
+			}
 
 			deselectTokens.forEach(token => {
 				if (token !== target) {
@@ -607,6 +625,17 @@ class Tokenizer extends UI5Element {
 		this._getTokens().forEach(token => {
 			token.overflows = false;
 		});
+
+		if (this._showTruncatedToken) {
+			this._getTokens()[0].truncated = true;
+			return [];
+		}
+
+		this._showTruncatedToken = false;
+
+		if (this._getTokens()[0]) {
+			this._getTokens()[0].truncated = false;
+		}
 
 		return this._getTokens().filter(token => {
 			const parentRect = this.contentDom.getBoundingClientRect();

@@ -106,3 +106,17 @@
 	padding: var(--_ui5_token_icon_padding);
 	color: var(--sapContent_IconColor);
 }
+
+:host([effective-truncated]) {
+	max-width: 100%;
+}
+
+:host([effective-truncated]) .ui5-token--wrapper {
+	max-width: 100%;
+}
+
+:host([effective-truncated]) .ui5-token--text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
+}

@@ -1344,6 +1344,10 @@ class MultiComboBox extends UI5Element {
 		this.tokenizerAvailable = this._getSelectedItems().length > 0;
 		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 
+		if (this._tokenizer) {
+			this._tokenizer._showTruncatedToken = this._tokenizer.tokens.length === 1 && !this.focused && !this._tokenizer.tokens[0].focused;
+		}
+
 		if (!input || !value) {
 			return;
 		}

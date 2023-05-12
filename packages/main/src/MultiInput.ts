@@ -324,6 +324,10 @@ class MultiInput extends Input {
 
 		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
 		this.tokenizerAvailable = this.tokens && this.tokens.length > 0;
+
+		if (this.tokenizer) {
+			this.tokenizer._showTruncatedToken = this.tokens.length === 1 && !this.focused && !this.tokens[0].focused;
+		}
 	}
 
 	get iconsCount() {
