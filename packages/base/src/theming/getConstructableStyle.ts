@@ -1,11 +1,17 @@
 import getEffectiveStyle from "./getEffectiveStyle.js";
 import { attachCustomCSSChange } from "./CustomStyle.js";
 import UI5Element from "../UI5Element.js";
+import { attachThemeLoaded } from "./ThemeLoaded.js";
 
 const constructableStyleMap = new Map<string, Array<CSSStyleSheet>>();
+const themeConstructableStyleMap = new Map<string, Array<CSSStyleSheet>>();
 
 attachCustomCSSChange((tag: string) => {
 	constructableStyleMap.delete(`${tag}_normal`); // there is custom CSS only for the component itself, not for its static area part
+});
+
+attachThemeLoaded(() => {
+	themeConstructableStyleMap.clear();
 });
 
 /**
@@ -14,7 +20,7 @@ attachCustomCSSChange((tag: string) => {
  * @param ElementClass
  * @returns {*}
  */
-const getConstructableStyle = (ElementClass: typeof UI5Element, forStaticArea = false) => {
+const getConstructableStyle = (ElementClass: typeof UI5Element, forStaticArea = false): Array<CSSStyleSheet> => {
 	const tag = ElementClass.getMetadata().getTag();
 	const key = `${tag}_${forStaticArea ? "static" : "normal"}`;
 
@@ -25,7 +31,14 @@ const getConstructableStyle = (ElementClass: typeof UI5Element, forStaticArea = 
 		constructableStyleMap.set(key, [style]);
 	}
 
-	return constructableStyleMap.get(key)!;
+	if (!themeConstructableStyleMap.has(key)) {
+		const styleContent = getEffectiveStyle(ElementClass, forStaticArea);
+		const style = new CSSStyleSheet();
+		style.replaceSync(styleContent);
+		themeConstructableStyleMap.set(key, [style]);
+	}
+
+	return [...constructableStyleMap.get(key)!, ...themeConstructableStyleMap.get(key)!];
 };
 
 export default getConstructableStyle;

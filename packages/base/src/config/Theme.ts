@@ -34,7 +34,7 @@ const setTheme = async (theme: string): Promise<void> => {
 
 	// Update CSS Custom Properties
 	await applyTheme(curTheme);
-	await reRenderAllUI5Elements({ themeAware: true });
+	await reRenderAllUI5Elements();
 };
 
 /**

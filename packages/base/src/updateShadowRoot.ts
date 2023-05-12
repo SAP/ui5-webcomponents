@@ -28,9 +28,8 @@ const updateShadowRoot = (element: UI5Element, forStaticArea = false) => {
 	if (shouldUseLinks()) {
 		styleStrOrHrefsArr = getEffectiveLinksHrefs(ctor, forStaticArea);
 	} else if (document.adoptedStyleSheets) { // Chrome
-		// getThemeConstructableStyle is not null when adoptedStyleSheets exist
 		shadowRoot.adoptedStyleSheets = getConstructableStyle(ctor, forStaticArea);
-	} else { // FF, Safari
+	} else { // Safari
 		styleStrOrHrefsArr = getEffectiveStyle(ctor, forStaticArea);
 	}
 
