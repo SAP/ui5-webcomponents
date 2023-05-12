@@ -21,8 +21,13 @@ const getThemeRoot = (): string | undefined => {
 };
 
 /**
- * Sets theme root and loads theme styles from that location
- * for the currently set theme.
+ * Sets theme root for the current theme.
+ * When set, the framework will validate the theme root and fetch the theme styles (CSS variables) from this location.
+ *
+ * <b>Note:</b> The feature is specific to custom themes, created with the `UI Theme Designer`.
+ * The provided theme root is used only as a base to construct the actual location of the theme styles: `{themeRoot}/.../css_variables.css`.
+ *
+ * <br/>
  *
  * <b>Note:</b> Certain security restrictions will apply before fetching the theme assets.
  * Absolute URLs to a different origin than the current page will result in using the current page as an origin.
@@ -31,7 +36,7 @@ const getThemeRoot = (): string | undefined => {
  * @public
  * @since 1.14.0
  * @param { string } themeRoot the new theme root
- * @returns { Promise<void> } a promise that is resolved when &lt;link&gt; tag to the theme assets is appended to the head
+ * @returns { Promise<void> }
  */
 const setThemeRoot = (themeRoot: string): Promise<void> | undefined => {
 	if (currThemeRoot === themeRoot) {
@@ -49,7 +54,7 @@ const setThemeRoot = (themeRoot: string): Promise<void> | undefined => {
 };
 
 const formatThemeLink = (theme: string) => {
-	return `${getThemeRoot()!}Base/baseLib/${theme}/css_variables.css`;
+	return `${getThemeRoot()!}Base/baseLib/${theme}/css_variables.css`; // theme root is always set at this point.
 };
 
 const attachCustomThemeStylesToHead = async (theme: string): Promise<void> => {
