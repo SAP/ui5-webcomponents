@@ -8,7 +8,6 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
-import WizardRenderMode from "@ui5/webcomponents-base/dist/types/WizardRenderMode.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -18,6 +17,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import WizardRenderMode from "./types/WizardRenderMode.js";
 
 // Texts
 import {

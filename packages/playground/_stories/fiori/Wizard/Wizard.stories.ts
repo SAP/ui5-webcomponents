@@ -11,17 +11,17 @@ import type Wizard from "@ui5/webcomponents-fiori/dist/Wizard.js";
 const component = "ui5-wizard";
 
 export default {
-    title: "Fiori/Wizard",
-    component,
-    subcomponents: {
-		WizardStep : 'ui5-wizard-step',
+	title: "Fiori/Wizard",
+	component,
+	subcomponents: {
+		WizardStep: 'ui5-wizard-step',
 	},
-    parameters: {
-        docs: {
-          page: DocsPage({ ...componentInfo, component })
-        },
-    },
-    argTypes,
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component })
+		},
+	},
+	argTypes,
 } as Meta<Wizard>;
 
 let index = 0;
@@ -215,50 +215,50 @@ export const WizardPageMode: StoryFn = () => html`
 		const cancelButton = document.getElementById("cancel");
 		const wizard${index}Finalize = document.getElementById("wiz-${index}-finalize");
 
-		btnOpenDialog.addEventListener("click", function() {
+		btnOpenDialog.addEventListener("click", () => {
 			dialog.show();
 			const index = wizard${index}Wiz.getSelectedStepIndex();
 			setButtonVisibility(index, wizard${index}Wiz.children.length);
 		});
 
-		wizard${index}Wiz.addEventListener("ui5-step-change", function (event) {
+		wizard${index}Wiz.addEventListener("ui5-step-change", (event) => {
 			const index = wizard${index}Wiz.getSelectedStepIndex();
 			setButtonVisibility(index, wizard${index}Wiz.children.length)
 		});
 
-		nextStepButton.addEventListener("click", function () {
+		nextStepButton.addEventListener("click", () => {
 			const index = wizard${index}Wiz.getSelectedStepIndex();
 			setNextStep(wizard${index}Wiz, index, index + 1);
 			setButtonVisibility(index + 1, wizard${index}Wiz.children.length)
 		});
 
-		previousStepButton.addEventListener("click", function () {
+		previousStepButton.addEventListener("click", () => {
 			const index = wizard${index}Wiz.getSelectedStepIndex();
 			deselectAll(wizard${index}Wiz);
 			setPreviousStep(wizard${index}Wiz, index, index - 1);
 			setButtonVisibility(index - 1, wizard${index}Wiz.children.length)
 		});
 
-		cancelButton.addEventListener("click", function () {
+		cancelButton.addEventListener("click", () => {
 			dialog.close();
 		});
 
-		wizard${index}Finalize.addEventListener("click", function () {
+		wizard${index}Finalize.addEventListener("click", () => {
 			alert("Finalize");
 			dialog.close();
 		});
 
-		function deselectAll(wizard) {
-			Array.from(wizard.children).forEach(function(step) {
+		const deselectAll = (wizard) => {
+			Array.from(wizard.children).forEach((step) => {
 				step.selected = false;
 			});
 		}
 
-		function getStep(wizard, idx) {
+		const getStep = (wizard, idx) => {
 			return Array.from(wizard.children)[idx];
 		}
 
-		function setNextStep(wizard, currentStepIndex, nextStepIndex) {
+		const setNextStep = (wizard, currentStepIndex, nextStepIndex) => {
 			const nextStep = getStep(wizard, nextStepIndex);
 			const currentStep = getStep(wizard, currentStepIndex);
 
@@ -266,7 +266,7 @@ export const WizardPageMode: StoryFn = () => html`
 			currentStep.disabled = false;
 		}
 
-		function setPreviousStep(wizard, currentStepIndex, previousStepIndex) {
+		const setPreviousStep = (wizard, currentStepIndex, previousStepIndex) => {
 			const previousStep = getStep(wizard, previousStepIndex);
 			const currentStep = getStep(wizard, currentStepIndex);
 
@@ -274,12 +274,11 @@ export const WizardPageMode: StoryFn = () => html`
 			currentStep.disabled = false;
 		}
 
-		function setButtonVisibility(index, totalItems) {
+		const setButtonVisibility = (index, totalItems) => {
 			const nextButton = document.getElementById('nextButton');
 			const prevButton = document.getElementById('prevButton');
 
 			if (index === 0) {
-				debugger;
 				wizard${index}Finalize.style.display = 'none';
 				prevButton.style.display = 'none';
 				nextButton.style.display = 'block';

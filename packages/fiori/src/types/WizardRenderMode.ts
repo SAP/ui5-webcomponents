@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webc.base.types.WizardRenderMode
+ * @alias sap.ui.webc.fiori.types.WizardRenderMode
  */
 enum WizardRenderMode {
 	/**
