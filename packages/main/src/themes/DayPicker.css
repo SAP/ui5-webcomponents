@@ -154,15 +154,6 @@
 	box-shadow: var(--_ui5_daypicker_item_now_box_shadow);
 }
 
-:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now .ui5-dp-daytext {
-	height: 1.8125rem;
-	padding-top: var(--_ui5_dp_two_calendar_item_now_text_padding_top);
-}
-
-:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now .ui5-dp-daysectext {
-	height: 1rem;
-	padding-top: 0;
-}
 .ui5-dp-item.ui5-dp-item--selected {
 	background: var(--sapContent_Selected_Background)
 }
@@ -284,6 +275,21 @@
 	border-width: 0.125rem;
 }
 
+:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now .ui5-dp-daytext {
+	height: var(--_ui5_dp_two_calendar_item_primary_text_height);
+	padding-top: var(--_ui5_dp_two_calendar_item_now_text_padding_top);
+}
+
+:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now .ui5-dp-daysectext {
+	height: var(--_ui5_dp_two_calendar_item_secondary_text_height);
+	padding-top: 0;
+    border-radius: var(--_ui5_dp_two_calendar_item_secondary_text_border_radios);
+}
+
+:host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item.ui5-dp-item--now .ui5-dp-daytext {
+    border-radius: var(--_ui5_daypicker_two_calendar_item_border_radius);
+}
+
 :host([secondary-calendar-type]) .ui5-dp-item:focus::after {
 	inset: var(--_ui5_daypicker_two_calendar_item_no_selected_inset);
 	border-radius: var(--_ui5_daypicker_two_calendar_item_border_radius);
@@ -296,7 +302,7 @@
 
 :host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--selected:focus::after {
 	border-width: var(--_ui5_daypicker_two_calendar_item_now_selected_border_width);
-	inset: 0;
+	inset: var(--_ui5_daypicker_two_calendar_item_now_selected_border_inset);
 	border-radius: var(--_ui5_daypicker_two_calendar_item_border_radius);
 }
 

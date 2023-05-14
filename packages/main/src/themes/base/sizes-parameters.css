@@ -18,6 +18,8 @@
 	--_ui5_day_picker_empty_height: 3rem;
 	--_ui5_day_picker_item_justify_content: space-between;
 	--_ui5_dp_two_calendar_item_now_text_padding_top: 0.387rem;
+    --_ui5_dp_two_calendar_item_primary_text_height: 1.8125rem;
+    --_ui5_dp_two_calendar_item_secondary_text_height: 1rem;
 	--_ui5_dp_two_calendar_item_text_padding_top: 0.575rem;
 
 	/* ColorPalette */
@@ -224,8 +226,10 @@
 	--_ui5_day_picker_item_height: 2rem;
 	--_ui5_day_picker_empty_height: 2.125rem;
 	--_ui5_day_picker_item_justify_content: flex-end;
-	--_ui5_dp_two_calendar_item_now_text_padding_top: 1.1875rem;
-	--_ui5_dp_two_calendar_item_text_padding_top: 0.875rem;
+	--_ui5_dp_two_calendar_item_now_text_padding_top: 0rem;
+    --_ui5_dp_two_calendar_item_primary_text_height: 1rem;
+    --_ui5_dp_two_calendar_item_secondary_text_height: 0.75rem;
+	--_ui5_dp_two_calendar_item_text_padding_top: 0;
 
 	/* DateTimePicker */
 	--_ui5_datetime_picker_height: 17rem;
