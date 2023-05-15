@@ -194,7 +194,7 @@ const createWebcomponentsPackage = async () => {
 	}
 
 	if (argv.namespace && !isNamespaceValid(argv.namespace)) {
-		throw new Error("The JSDoc namespace can only contain small-case letters, numbers, dots and dashes.");
+		throw new Error("The JSDoc namespace must start with a letter and can only contain small-case letters, numbers, dots and dashes.");
 	}
 
 	if (argv.tag && !isTagValid(argv.tag) ) {
@@ -257,7 +257,7 @@ const createWebcomponentsPackage = async () => {
 			name: "namespace",
 			message: "JSDoc namespace:",
 			initial: "demo.components",
-			validate: (value) => isNamespaceValid(value) ? true : "The JSDoc namespace can only contain small-case letters, numbers, dots and dashes.",
+			validate: (value) => isNamespaceValid(value) ? true : "The JSDoc namespace must start with a letter and can only contain small-case letters, numbers, dots and dashes.",
 		});
 		namespace = response.namespace;
 	}
