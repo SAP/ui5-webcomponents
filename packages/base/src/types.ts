@@ -2,11 +2,13 @@ type PromiseResolve = (value: void | PromiseLike<void>) => void;
 type Timeout = ReturnType<typeof setTimeout>;
 type Interval = ReturnType<typeof setInterval>;
 
-type StyleData = {
+type StyleDataCSP = {
 	content: string,
 	packageName: string,
 	fileName: string,
 };
+
+type StyleData = StyleDataCSP | string;
 
 type ComponentStylesData = Array<ComponentStylesData> | Array<StyleData> | StyleData;
 
@@ -21,6 +23,7 @@ export type {
 	Timeout,
 	Interval,
 	StyleData,
+	StyleDataCSP,
 	ComponentStylesData,
 	ClassMap,
 	ClassMapValue,

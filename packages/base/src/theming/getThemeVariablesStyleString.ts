@@ -1,9 +1,10 @@
-import type { ComponentStylesData, StyleData } from "../types.js";
+import type { ComponentStylesData, StyleData, StyleDataCSP } from "../types.js";
 import { getRegisteredComponentPackagesStyleData } from "./applyTheme.js";
 
 const MAX_DEPTH_INHERITED_CLASSES = 10; // TypeScript complains about Infinity and big numbers
 const findPackageVariables = (styleData: StyleData) => {
-	return [...getRegisteredComponentPackagesStyleData()].find(registeredPackage => (registeredPackage).packageName === styleData.packageName);
+	return [...getRegisteredComponentPackagesStyleData()]
+		.find(registeredPackage => (registeredPackage as StyleDataCSP).packageName === (styleData as StyleDataCSP).packageName);
 };
 
 const getThemeVariablesStyleString = (styles: ComponentStylesData) => {

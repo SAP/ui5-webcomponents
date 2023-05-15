@@ -1045,7 +1045,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @protected
 	 */
 	static get styles(): ComponentStylesData {
-		return [];
+		return "";
 	}
 
 	/**
@@ -1053,7 +1053,7 @@ abstract class UI5Element extends HTMLElement {
 	 * @protected
 	 */
 	static get staticAreaStyles(): ComponentStylesData {
-		return [];
+		return "";
 	}
 
 	/**
