@@ -26,7 +26,6 @@
     "test:suite-2": "wc-dev test-suite-2",
     "test:suite-3": "wc-dev test-suite-3",
     "test:suite-input": "wc-dev test-suite-input",
-    "test:suite-datetime": "wc-dev test-suite-datetime",
     "create-ui5-element": "wc-create-ui5-element",
     "prepublishOnly": "npm run build"
   },

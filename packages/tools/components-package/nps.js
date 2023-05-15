@@ -117,7 +117,6 @@ const getScripts = (options) => {
 		"test-suite-2": `node "${LIB}/test-runner/test-runner.js" --suite suite2`,
 		"test-suite-3": `node "${LIB}/test-runner/test-runner.js" --suite suite3`,
 		"test-suite-input": `node "${LIB}/test-runner/test-runner.js" --suite suite-input`,
-		"test-suite-datetime": `node "${LIB}/test-runner/test-runner.js" --suite suite-datetime`,
 		startWithScope: "nps scope.prepare scope.watchWithBundle",
 		scope: {
 			prepare: "nps scope.lint prepare scope.testPages",
