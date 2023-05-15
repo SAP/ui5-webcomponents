@@ -108,12 +108,12 @@ export const WizardOverview: StoryFn = () => html`
 		});
 
 		wizard${index}ToStep2.addEventListener("click", function () {
-			deselectAll(wizard${index}Wiz);
+			deselectAll${index}(wizard${index}Wiz);
 			setStep(wizard${index}Wiz, 1);
 			wizard${index}ToStep2.setAttribute("hidden", true);
 		});
 		wizard${index}ToStep3.addEventListener("click", function () {
-			deselectAll(wizard${index}Wiz);
+			deselectAll${index}(wizard${index}Wiz);
 			setStep(wizard${index}Wiz, 2);
 			wizard${index}ToStep3.setAttribute("hidden", true);
 		});
@@ -121,25 +121,25 @@ export const WizardOverview: StoryFn = () => html`
 			alert("Done!");
 		});
 
-		function deselectAll(wizard) {
+		function deselectAll${index}(wizard) {
 			Array.from(wizard.children).forEach(function(step) {
 				step.selected = false;
 			});
 		}
 		function setStep(wizard, idx) {
-			var step = getStep(wizard, idx);
+			var step = getStep${index}(wizard, idx);
 			step.selected = true;
 			step.disabled = false;
 		}
-		function getStep(wizard, idx) {
+		function getStep${index}(wizard, idx) {
 			return Array.from(wizard.children)[idx];
 		}
 	</script>
 `;
 
 export const WizardPageMode: StoryFn = () => html`
-	<ui5-dialog id="dialog" stretch header-heading="Wizard">
-		<ui5-wizard id="wiz-${++index}" renderMode="Page">
+	<ui5-dialog id="dialog${++index}" stretch header-heading="Wizard">
+		<ui5-wizard id="wiz-${index}" renderMode="Page">
 			<ui5-wizard-step icon="product" title-text="Product type" selected="">
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br/>
@@ -205,76 +205,43 @@ export const WizardPageMode: StoryFn = () => html`
 			<ui5-button id="cancel" design="Transparent" slot="endContent">Cancel</ui5-button>
 		</ui5-bar>
 	</ui5-dialog>
-	<ui5-button id="button">Open Dialog</ui5-button>
+	<ui5-button id="button">Open dialog</ui5-button>
 	<script>
+		const btnOpendialog${index} = document.getElementById("button");
+		const dialog${index} = document.getElementById("dialog${index}");
+		const nextStepButton${index} = document.getElementById("nextButton");
+		const previousStepButton${index} = document.getElementById("prevButton");
+		const cancelButton${index} = document.getElementById("cancel");
 		const wizard${index}Wiz = document.getElementById("wiz-${index}");
-		const btnOpenDialog = document.getElementById("button");
-		const dialog = document.getElementById("dialog");
-		const nextStepButton = document.getElementById("nextButton");
-		const previousStepButton = document.getElementById("prevButton");
-		const cancelButton = document.getElementById("cancel");
 		const wizard${index}Finalize = document.getElementById("wiz-${index}-finalize");
 
-		btnOpenDialog.addEventListener("click", () => {
-			dialog.show();
-			const index = wizard${index}Wiz.getSelectedStepIndex();
-			setButtonVisibility(index, wizard${index}Wiz.children.length);
-		});
-
-		wizard${index}Wiz.addEventListener("ui5-step-change", (event) => {
-			const index = wizard${index}Wiz.getSelectedStepIndex();
-			setButtonVisibility(index, wizard${index}Wiz.children.length)
-		});
-
-		nextStepButton.addEventListener("click", () => {
-			const index = wizard${index}Wiz.getSelectedStepIndex();
-			setNextStep(wizard${index}Wiz, index, index + 1);
-			setButtonVisibility(index + 1, wizard${index}Wiz.children.length)
-		});
-
-		previousStepButton.addEventListener("click", () => {
-			const index = wizard${index}Wiz.getSelectedStepIndex();
-			deselectAll(wizard${index}Wiz);
-			setPreviousStep(wizard${index}Wiz, index, index - 1);
-			setButtonVisibility(index - 1, wizard${index}Wiz.children.length)
-		});
-
-		cancelButton.addEventListener("click", () => {
-			dialog.close();
-		});
-
-		wizard${index}Finalize.addEventListener("click", () => {
-			alert("Finalize");
-			dialog.close();
-		});
-
-		const deselectAll = (wizard) => {
+		const deselectAll${index} = (wizard) => {
 			Array.from(wizard.children).forEach((step) => {
 				step.selected = false;
 			});
 		}
 
-		const getStep = (wizard, idx) => {
+		const getStep${index} = (wizard, idx) => {
 			return Array.from(wizard.children)[idx];
 		}
 
-		const setNextStep = (wizard, currentStepIndex, nextStepIndex) => {
-			const nextStep = getStep(wizard, nextStepIndex);
-			const currentStep = getStep(wizard, currentStepIndex);
+		const setNextStep${index} = (wizard, currentStepIndex, nextStepIndex) => {
+			const nextStep = getStep${index}(wizard, nextStepIndex);
+			const currentStep = getStep${index}(wizard, currentStepIndex);
 
 			nextStep.selected = true;
 			currentStep.disabled = false;
 		}
 
-		const setPreviousStep = (wizard, currentStepIndex, previousStepIndex) => {
-			const previousStep = getStep(wizard, previousStepIndex);
-			const currentStep = getStep(wizard, currentStepIndex);
+		const setPreviousStep${index} = (wizard, currentStepIndex, previousStepIndex) => {
+			const previousStep = getStep${index}(wizard, previousStepIndex);
+			const currentStep = getStep${index}(wizard, currentStepIndex);
 
 			previousStep.selected = true;
 			currentStep.disabled = false;
 		}
 
-		const setButtonVisibility = (index, totalItems) => {
+		const setButtonVisibility${index} = (index, totalItems) => {
 			const nextButton = document.getElementById('nextButton');
 			const prevButton = document.getElementById('prevButton');
 
@@ -291,5 +258,38 @@ export const WizardPageMode: StoryFn = () => html`
 				nextButton.style.display = 'block';
 			}
 		}
+
+		btnOpendialog${index}.addEventListener("click", () => {
+			dialog${index}.show();
+			const index = wizard${index}Wiz.getSelectedStepIndex();
+			setButtonVisibility${index}(index, wizard${index}Wiz.children.length);
+		});
+
+		wizard${index}Wiz.addEventListener("ui5-step-change", (event) => {
+			const index = wizard${index}Wiz.getSelectedStepIndex();
+			setButtonVisibility${index}(index, wizard${index}Wiz.children.length)
+		});
+
+		nextStepButton${index}.addEventListener("click", () => {
+			const index = wizard${index}Wiz.getSelectedStepIndex();
+			setNextStep${index}(wizard${index}Wiz, index, index + 1);
+			setButtonVisibility${index}(index + 1, wizard${index}Wiz.children.length)
+		});
+
+		previousStepButton${index}.addEventListener("click", () => {
+			const index = wizard${index}Wiz.getSelectedStepIndex();
+			deselectAll${index}(wizard${index}Wiz);
+			setPreviousStep${index}(wizard${index}Wiz, index, index - 1);
+			setButtonVisibility${index}(index - 1, wizard${index}Wiz.children.length)
+		});
+
+		cancelButton${index}.addEventListener("click", () => {
+			dialog${index}.close();
+		});
+
+		wizard${index}Finalize.addEventListener("click", () => {
+			alert("Finalize");
+			dialog${index}.close();
+		});
 	</script>
 `;
