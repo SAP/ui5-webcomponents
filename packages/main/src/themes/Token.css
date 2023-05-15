@@ -17,7 +17,7 @@
 }
 
 :host(:not([readonly]):hover) {
-	background: var(--_ui5_token_hover_background);
+	background: var(--sapButton_Hover_Background);
 	border-color: var(--_ui5_token_hover_border_color);
 	box-shadow: var(--sapContent_Interaction_Shadow);
 }
