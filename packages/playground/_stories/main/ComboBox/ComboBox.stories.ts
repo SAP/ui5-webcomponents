@@ -46,6 +46,8 @@ const Template: UI5StoryArgs<ComboBox, StoryArgsSlots> = (
 		accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
 >
 		${unsafeHTML(args.default)}
+		${unsafeHTML(args.valueStateMessage)}
+		${unsafeHTML(args.icon)}
 </ui5-combobox>`;
 
 const mapArrayToItems = (
