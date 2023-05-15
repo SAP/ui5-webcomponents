@@ -6,7 +6,6 @@ import { getFeature } from "../FeaturesRegistry.js";
 import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoots.js";
 import type OpenUI5Support from "../features/OpenUI5Support.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
-import type { StyleData } from "../ManagedStyles.js";
 import { StyleDataCSP } from "../types.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
