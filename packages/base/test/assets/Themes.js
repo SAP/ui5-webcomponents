@@ -1,44 +1,44 @@
 import { registerThemePropertiesLoader } from "../../dist/asset-registries/Themes.js";
 
 const fiori3 = {
-	content: `:root{ --var1: red; }`,
-	packageName: "",
+	content: `:host { --var1: red; }`,
+	packageName: "@ui5/webcomponents-base-test",
 	fileName: "",
 };
 
 const fiori3Dark = {
-	content: `:root{ --var1: green; }`,
-	packageName: "",
+	content: `:host { --var1: green; }`,
+	packageName: "@ui5/webcomponents-base-test",
 	fileName: "",
 };
 
 const belize = {
-	content: `:root{ --var1: blue; }`,
-	packageName: "",
+	content: `:host { --var1: blue; }`,
+	packageName: "@ui5/webcomponents-base-test",
 	fileName: "",
 };
 
 const belizeHcb = {
-	content: `:root{ --var1: orange; }`,
-	packageName: "",
-	fileName: "",
+	content: `:host { --var1: orange; }`,
+	packageName: "@ui5/webcomponents-base-test",
+	fileName: "@ui5/webcomponents-base-test",
 };
 
 const belizeHcw = {
-	content: `:root{ --var1: orange; }`,
-	packageName: "",
+	content: `:host { --var1: orange; }`,
+	packageName: "@ui5/webcomponents-base-test",
 	fileName: "",
 };
 
 const fiori3Hcb = {
-	content: `:root{ --var1: yellow; }`,
-	packageName: "",
+	content: `:host { --var1: yellow; }`,
+	packageName: "@ui5/webcomponents-base-test",
 	fileName: "",
 };
 
 const fiori3Hcw = {
-	content: `:root{ --var1: yellow; }`,
-	packageName: "",
+	content: `:host { --var1: yellow; }`,
+	packageName: "@ui5/webcomponents-base-test",
 	fileName: "",
 };
 

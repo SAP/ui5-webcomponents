@@ -66,11 +66,14 @@ class Generic extends UI5Element {
 	}
 
 	static get styles() {
-		return `:host {
-                    display: inline-block;
-                    border: 1px solid black;
-                    color: var(--var1);
-                }`;
+		return {
+			packageName: "@ui5/webcomponents-base-test",
+			content: `:host {
+				display: inline-block;
+				border: 1px solid black;
+				color: var(--var1);
+			}`
+		};
 	}
 
 	onBeforeRendering() {}

@@ -35,6 +35,7 @@ const getConstructableStyle = (ElementClass: typeof UI5Element, forStaticArea = 
 	if (!themeConstructableStyleMap.has(key)) {
 		const styleContent = getEffectiveThemeVariables(ElementClass, forStaticArea);
 		const style = new CSSStyleSheet();
+		(style as Record<string, any>)._ui5StyleId = "data-ui5-component-theme-variables"; // set an id so that we can find the style later
 		style.replaceSync(styleContent);
 		themeConstructableStyleMap.set(key, [style]);
 	}

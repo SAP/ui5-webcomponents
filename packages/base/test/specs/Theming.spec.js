@@ -8,7 +8,8 @@ describe("Theming works", () => {
 	it("Tests that the parameters for the default theme are embedded on boot", async () => {
 
 		const res = await browser.executeAsync(done => {
-			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-theme-properties|@ui5/webcomponents-base-test").cssRules[0].cssText
+			const elementShadowRoot = document.getElementById("gen").shadowRoot;
+			const style = elementShadowRoot.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-component-theme-variables").cssRules[0].cssText
 			done(style && style.includes("--var1: red")); // see test/assets/Themes.js
 		});
 
@@ -20,9 +21,10 @@ describe("Theming works", () => {
 
 		const res = await browser.executeAsync( async (newTheme, done) => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			const elementShadowRoot = document.getElementById("gen").shadowRoot;
 			await config.setTheme(newTheme);
 
-			const style = document.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-theme-properties|@ui5/webcomponents-base-test").cssRules[0].cssText
+			const style = elementShadowRoot.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-component-theme-variables").cssRules[0].cssText
 			const varsFound = style && style.includes("--var1: orange"); // see test/assets/Themes.js
 			done(varsFound);
 		}, newTheme);
@@ -34,11 +36,13 @@ describe("Theming works", () => {
 		const unknownTheme = 'sap_unknown_theme';
 		await browser.url(`test/pages/AllTestElements.html?sap-ui-theme=${unknownTheme}`);
 
-		const res = await browser.executeAsync( async (done) => {
-			const cssVarValue = getComputedStyle(document.documentElement).getPropertyValue('--var1');
-			done(cssVarValue);
+		const res = await browser.executeAsync(done => {
+			const elementShadowRoot = document.getElementById("gen").shadowRoot;
+			const style = elementShadowRoot.adoptedStyleSheets.find(sh => sh._ui5StyleId === "data-ui5-component-theme-variables").cssRules[0].cssText
+			const varsFound = style && style.includes("--var1: red"); // "red" for fiori3 - see test/assets/Themes.js
+			done(varsFound);
 		});
 
-		assert.strictEqual(res, ' red', "Default theme parameters loaded");
+		assert.strictEqual(res, true, "Default theme parameters loaded");
 	});
 });
