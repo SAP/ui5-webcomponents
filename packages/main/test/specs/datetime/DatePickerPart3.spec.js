@@ -7,6 +7,35 @@ describe("Date Picker Tests :: Part 2", () => {
 		await datepicker.open();
 	});
 
+    it("DayPicker content wrapped", async () => {
+		datepicker.id = "#dp19";
+		await datepicker.open();
+		let arr = await datepicker.getDayPickerContent();
+
+		arr.forEach(async function(el){
+			assert.strictEqual(await el.getAttribute("role"), "row", "Content wrapper has correct role");
+		});
+	});
+
+	it("DayPicker day name attribute", async () => {
+		// await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
+		const root = await datepicker.getRoot();
+		await root.setAttribute("primary-calendar-type", "Gregorian");
+		// datepicker.id = "#dp13";
+		// datepicker.openPicker();
+		// const root = await datepicker.getRoot();
+		await root.keys("May 3, 2100");
+		// const root = await datepicker.getRoot();
+		await root.keys("Enter");
+
+		// const content = Array.from(datepicker.getDayPickerDayNames());
+		// const dayName = ["Week number", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+		// content.forEach((element,index) => {
+		// 	assert.strictEqual(await element.getAttribute("role"), "columnheader", "Each day have column header role");
+		// 	assert.strictEqual(await element.getAttribute("aria-label"), dayName[index], "Aria-label is correct");
+		// });
+	});
+
     it("DayPiker day number attribute", async () => {
         await browser.url(`test/pages/DatePicker_test_page.html?sap-ui-language=en`);
         const root = await datepicker.getRoot();

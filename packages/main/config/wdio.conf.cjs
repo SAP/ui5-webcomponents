@@ -14,6 +14,9 @@ wdio.config.suites = {
 	"suite-input": [
 		'./test/specs/input/*.spec.js',
 	],
+	"suite-datetime": [
+		'./test/specs/datetime/*.spec.js',
+	],
 };
 
 module.exports = wdio;
