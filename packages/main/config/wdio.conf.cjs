@@ -8,6 +8,9 @@ wdio.config.suites = {
 	"suite2": [
 		'./test/specs/[^A-I]*.spec.js',
 	],
+	"suite-datetime": [
+		'./test/specs/datetime/*.spec.js',
+	],
 };
 
 module.exports = wdio;

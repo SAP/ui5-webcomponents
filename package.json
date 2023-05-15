@@ -54,6 +54,7 @@
     "test:main": "yarn workspace @ui5/webcomponents test",
     "test:main:suite-1": "yarn workspace @ui5/webcomponents test:suite-1",
     "test:main:suite-2": "yarn workspace @ui5/webcomponents test:suite-2",
+    "test:main:suite-datetime": "yarn workspace @ui5/webcomponents test:suite-datetime",
     "test:fiori": "yarn workspace @ui5/webcomponents-fiori test",
     "test": "npm-run-all --sequential test:base test:main test:fiori",
     "lint": "wsrun --exclude-missing lint",
