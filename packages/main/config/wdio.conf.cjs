@@ -11,6 +11,9 @@ wdio.config.suites = {
 	"suite3": [
 		'./test/specs/[S-Z]*.spec.js',
 	],
+	"suite-input": [
+		'./test/specs/input/*.spec.js',
+	],
 	"suite-datetime": [
 		'./test/specs/datetime/*.spec.js',
 	],
