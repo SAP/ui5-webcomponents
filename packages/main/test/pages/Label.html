@@ -24,7 +24,7 @@
 </head>
 
 <body class="label1auto">
-	<section class="group">
+	<section class="group vertical">
 		<h2>Basic labels</h2>
 		<ui5-label id="basic-label">Basic Label</ui5-label>
 		<ui5-label show-colon id="basic-label2">Basic Label</ui5-label>
@@ -42,16 +42,15 @@
 		<ui5-label class="label2auto" show-colon id="basic-label8">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
 		<ui5-label class="label2auto" required id="basic-label8">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
 		<ui5-label class="label2auto" show-colon required id="basic-label9">Start The quick brown fox jumps over the lazy sheep End</ui5-label>
-	</section>
-	<section class="group">
+
 		<h2>Required labels</h2>
 		<ui5-label id="required-label" required>Required</ui5-label><span>native span</span>
 		<ui5-label id="required-label-2" required show-colon>Required semi-colon</ui5-label><span>native span</span>
-		<ui5-label id="required-label-3" required show-colon wrapping-type="Normal">Required semi-colon wrapped</ui5-label><span>native span</span>
+		<ui5-label class="label2auto" id="required-label-3" required show-colon wrapping-type="Normal">Required semi-colon wrapped</ui5-label><span>native span</span>
 	</section>
 
-	<section class="group">
-		<h2>Wrapping label</h2>
+	<section class="group vertical more-space">
+		<h2>Wrapping</h2>
 		<ui5-label class="label3auto" id="wrapping-label-1">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 		<ui5-label class="label3auto" id="wrapping-label-2" show-colon>Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur</ui5-label>
 		<ui5-label class="label3auto" id="wrapping-label" wrapping-type="Normal">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
@@ -59,16 +58,15 @@
 		<ui5-label class="label2auto" id="truncated-label" required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 		<ui5-label class="label2auto" id="truncated-label-2" show-colon required >Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
 		<ui5-label class="label2auto" id="truncated-label-3" show-colon required wrapping-type="Normal">Reprehenderit amet cillum tempor ex eu dolor adipisicing reprehenderit pariatur.</ui5-label>
-
 		<div>
 			<ui5-label class="label4auto" id="wrapping-label-4" wrapping-type="Normal">Must be right-aligned using `text-align: right` and wrapping-type="Normal".</ui5-label>
 		</div>
+		<h2>Test show-colon not forcing truncation</h2>
+		<div>
+			<ui5-label id="showColon-false">Basic Label</ui5-label>
+			<ui5-label show-colon id="showColon-true">Basic Label</ui5-label>
+		</div>
 	</section>
-
-	<h2>Test show-colon not forcing truncation</h2>
-	<ui5-label id="showColon-false">Basic Label</ui5-label>
-	<ui5-label show-colon id="showColon-true">Basic Label</ui5-label>
-
 	<section class="group">
 		<h2>label + input</h2>
 		<div class="label5auto">
@@ -117,42 +115,47 @@
 		</ui5-list>
 	</section>
 
-	<section class="group label3auto" >
+	<section class="group vertical label3auto">
 		<h2>Italic Label</h2>
-		<ui5-label class="label8auto"> Short labelH</ui5-label>
-		<ui5-label class="label8auto"> Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label required class="label8auto"> Short labelH</ui5-label>
-		<ui5-label required class="label8auto"> Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label show-colon class="label8auto"> Short labelH</ui5-label>
-		<ui5-label show-colon class="label8auto"> Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label required show-colon class="label8auto"> Short labelH</ui5-label>
-		<ui5-label required show-colon class="label8auto"> Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label wrapping-type="Normal" class="label8auto"> Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" required class="label8auto"> Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" show-colon class="label8auto"> Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" required show-colon class="label8auto"> Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label class="label8auto">Short labelH</ui5-label>
+		<ui5-label class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label required class="label8auto">Short labelH</ui5-label>
+		<ui5-label required class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label show-colon class="label8auto">Short labelH</ui5-label>
+		<ui5-label show-colon class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label required show-colon class="label8auto">Short labelH</ui5-label>
+		<ui5-label required show-colon class="label8auto">Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label wrapping-type="Normal" class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label wrapping-type="Normal" required class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label wrapping-type="Normal" show-colon class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label wrapping-type="Normal" required show-colon class="label8auto">Long label - Reprehenderit amet cillum temporH</ui5-label>
 	</section>
 
-	<section class="group label3auto" >
+	<section class="group vertical label3auto">
 		<h2>Standard Label</h2>
-		<ui5-label> Short labelH</ui5-label>
-		<ui5-label> Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label required> Short labelH</ui5-label>
-		<ui5-label required> Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label show-colon> Short labelH</ui5-label>
-		<ui5-label show-colon> Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label required show-colon> Short labelH</ui5-label>
-		<ui5-label required show-colon> Long label - Reprehenderit amet cillum tempor</ui5-label>
-		<ui5-label wrapping-type="Normal"> Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" required> Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" show-colon> Long label - Reprehenderit amet cillum temporH</ui5-label>
-		<ui5-label wrapping-type="Normal" required show-colon> Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label>Short labelH</ui5-label>
+		<ui5-label>Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label required>Short labelH</ui5-label>
+		<ui5-label required>Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label show-colon>Short labelH</ui5-label>
+		<ui5-label show-colon>Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label required show-colon>Short labelH</ui5-label>
+		<ui5-label required show-colon>Long label - Reprehenderit amet cillum tempor</ui5-label>
+		<ui5-label wrapping-type="Normal">Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label wrapping-type="Normal" required>Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label wrapping-type="Normal" show-colon>Long label - Reprehenderit amet cillum temporH</ui5-label>
+		<ui5-label wrapping-type="Normal" required show-colon>Long label - Reprehenderit amet cillum temporH</ui5-label>
 	</section>
 
-	<section>
+	<section class="group">
 		<h2>Using a Label inside Shadow Root</h2>
 		<label-page-custom-element id="custom-element-with-label"></label-page-custom-element>
 	</section>
+	<div>
+		<ui5-label>Short labelH</ui5-label>
+<ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label>
+	</div>
+
 </body>
 
 </html>
