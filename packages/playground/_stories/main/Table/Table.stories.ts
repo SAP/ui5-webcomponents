@@ -331,13 +331,13 @@ GrowingTableMoreButton.decorators = [
 		return html`
 ${story()}
 <script>
-	var growingTable = document.getElementById("table-${index}"),
-		rows = 4,
-		loads = 1,
-		sliceIndex = 0,
-		endSliceIndex = sliceIndex + rows;
+	let growingTable${index} = document.getElementById("table-${index}"),
+		rows${index} = 4,
+		loads${index} = 1,
+		sliceIndex${index} = 0,
+		endSliceIndex${index} = sliceIndex${index} + rows${index};
 
-	async function init(rows) {
+	async function init(growingTable, rows, loads, sliceIndex, endSliceIndex) {
 		let response = await fetch("../assets/data/products.json"),
 			products = await response.json(),
 			collectionLength = products.length,
@@ -367,16 +367,16 @@ ${story()}
 
 	}
 	function loadMore() {
-		growingTable.busy = true;
+		growingTable${index}.busy = true;
 		setTimeout(function() {
-			++loads;
-			endSliceIndex = sliceIndex + rows;
-			init(rows);
-			growingTable.busy = false;
+			++loads${index};
+			endSliceIndex${index} = sliceIndex${index} + rows${index};
+			init(growingTable${index}, rows${index}, loads${index}, sliceIndex${index}, endSliceIndex${index});
+			growingTable${index}.busy = false;
 		}, 1500);
 	}
-	growingTable.addEventListener("load-more", loadMore);
-	init(rows);
+	growingTable${index}.addEventListener("load-more", loadMore);
+	init(growingTable${index}, rows${index}, loads${index}, sliceIndex${index}, endSliceIndex${index});
 </script>
 <style>
 	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
@@ -419,15 +419,15 @@ GrowingTableScroll.decorators = [
 	${story()}
 </div>
 <script>
-	var growingTableScroll = document.getElementById("table-${index}"),
-		result = '',
-		rowsScroll = 4,
-		loadsScroll = 1,
-		sliceIndexScroll = 0,
-		endSliceIndexScroll = sliceIndexScroll + rowsScroll;
+	let growingTableScroll${index} = document.getElementById("table-${index}"),
+		rowsScroll${index} = 4,
+		loadsScroll${index} = 1,
+		sliceIndexScroll${index} = 0,
+		endSliceIndexScroll${index} = sliceIndexScroll${index} + rowsScroll${index};
 
-	async function fill(rowsScroll) {
-		let responseScrollTable = await fetch("../assets/data/products.json"),
+	async function fill(rowsScroll, loadsScroll, sliceIndexScroll, endSliceIndexScroll) {
+		let result = "",
+			responseScrollTable = await fetch("../assets/data/products.json"),
 			productsScrollTable = await responseScrollTable.json(),
 			collectionLengthScroll = productsScrollTable.length,
 			loadsAllScroll = Math.ceil(collectionLengthScroll / rowsScroll);
@@ -446,26 +446,26 @@ GrowingTableScroll.decorators = [
 			result += test;
 		});
 		if (loadsScroll >= loadsAllScroll) {
-			growingTableScroll.growing = "None";
+			growingTableScroll${index}.growing = "None";
 		} else {
-			sliceIndexScroll += rowsScroll;
+			sliceIndexScroll${index} += rowsScroll${index};
 		}
-		growingTableScroll.insertAdjacentHTML('beforeend', result);
+		growingTableScroll${index}.insertAdjacentHTML('beforeend', result);
 	}
 	function growOnScroll() {
-		growingTableScroll.busy = true;
+		growingTableScroll${index}.busy = true;
 		if (timeout) {
 			clearTimeout(timeout);
 		}
 		var timeout = setTimeout(() => {
-			loadsScroll++
-			endSliceIndexScroll = sliceIndexScroll + rowsScroll;
-			fill(rowsScroll);
-			growingTableScroll.busy = false;
+			loadsScroll${index}++
+			endSliceIndexScroll${index} = sliceIndexScroll${index} + rowsScroll${index};
+			fill(rowsScroll${index}, loadsScroll${index}, sliceIndexScroll${index}, endSliceIndexScroll${index});
+			growingTableScroll${index}.busy = false;
 		}, 1500);
 	}
-	growingTableScroll.addEventListener("load-more", growOnScroll);
-	fill(rowsScroll);
+	growingTableScroll${index}.addEventListener("load-more", growOnScroll);
+	fill(rowsScroll${index}, loadsScroll${index}, sliceIndexScroll${index}, endSliceIndexScroll${index});
 </script>
 <style>
 	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
