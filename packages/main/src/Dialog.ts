@@ -19,7 +19,10 @@ import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 
 import {
+	DIALOG_HEADER_ARIA_ROLE_DESCRIPTION,
 	DIALOG_HEADER_ARIA_DESCRIBEDBY_RESIZABLE,
+	DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE,
+	DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Template
@@ -302,12 +305,24 @@ class Dialog extends Popup {
 		return ariaLabelledById;
 	}
 
-	get effectiveAriaDescribedBy() {
-		return this.resizable ? `${this._id}-descr` : undefined;
+	get ariaRoleDescriptionHeaderText() {
+		return (this.resizable || this.draggable) ? Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_ROLE_DESCRIPTION) : undefined;
 	}
 
-	get ariaDescribedByHeaderText() {
+	get effectiveAriaDescribedBy() {
+		return (this.resizable || this.draggable) ? `${this._id}-descr` : undefined;
+	}
+
+	get ariaDescribedByHeaderTextResizable() {
 		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_RESIZABLE);
+	}
+
+	get ariaDescribedByHeaderTextDraggable() {
+		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE);
+	}
+
+	get ariaDescribedByHeaderTextDraggableAndResizable() {
+		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE);
 	}
 
 	get _displayProp() {

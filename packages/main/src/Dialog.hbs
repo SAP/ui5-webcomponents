@@ -6,6 +6,7 @@
 			class="ui5-popup-header-root"
 			id="ui5-popup-header"
 			aria-describedby={{effectiveAriaDescribedBy}}
+			aria-roledescription={{ariaRoleDescriptionHeaderText}}
 			tabindex="{{_headerTabIndex}}"
 			@keydown="{{_onDragOrResizeKeyDown}}"
 			@mousedown="{{_onDragMouseDown}}"
@@ -21,7 +22,15 @@
 			{{/if}}
 
 			{{#if resizable}}
-				<span id="{{_id}}-descr" class="ui5-hidden-text">{{ariaDescribedByHeaderText}}</span>
+				{{#if draggable}}
+				<span id="{{_id}}-descr" class="ui5-hidden-text">{{ariaDescribedByHeaderTextDraggableAndResizable}}</span>
+				{{else}}
+				<span id="{{_id}}-descr" class="ui5-hidden-text">{{ariaDescribedByHeaderTextResizable}}</span>
+				{{/if}}
+			{{else}}
+				{{#if draggable}}
+					<span id="{{_id}}-descr" class="ui5-hidden-text">{{ariaDescribedByHeaderTextDraggable}}</span>
+				{{/if}}
 			{{/if}}
 		</header>
 	{{/if}}
