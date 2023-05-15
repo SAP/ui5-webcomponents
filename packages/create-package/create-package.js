@@ -112,10 +112,10 @@ const generateFilesContent = (name, componentName, namespace, typescript, skipSu
 
 	// All variables that will be replaced in the content of the resources/
 	const vars = {
+		INIT_PACKAGE_VAR_NAMESPACE: namespace, // namespace must be replaced before name
 		INIT_PACKAGE_VAR_NAME: name,
 		INIT_PACKAGE_VAR_TAG: tagName,
 		INIT_PACKAGE_VAR_CLASS_NAME: componentName,
-		INIT_PACKAGE_VAR_NAMESPACE: namespace,
 		INIT_PACKAGE_VAR_TYPESCRIPT: typescript,
 	};
 
