@@ -50,9 +50,12 @@
 		<ui5-list
 			id="{{_id}}-menu-list"
 			mode="None"
+			?busy="{{busy}}"
+			busy-delay="{{busyDelay}}"
 			separators="None"
 			accessible-role="menu"
 			@ui5-item-click={{_itemClick}}
+			@mouseover="{{_busyMouseOver}}"
 		>
 		{{#each _currentItems}}
 			<ui5-li
@@ -79,7 +82,7 @@
 					</div>
 				{{/if}}
 				{{this.item.text}}
-				{{#if this.item.hasChildren}}
+				{{#if this.item.hasSubmenu}}
 					<ui5-icon
 						part="icon"
 						name="slim-arrow-right"
@@ -95,6 +98,14 @@
 			</ui5-li>
 		{{/each}}
 		</ui5-list>
+	{{else if busy}}
+		<ui5-busy-indicator
+			id="{{_id}}-menu-busy-indicator"
+			delay="{{busyDelay}}"
+			class="ui5-menu-busy-indicator"
+			@mouseover="{{_busyMouseOver}}"
+			active>
+		</ui5-busy-indicator>
 	{{/if}}
 	</div>
 </ui5-responsive-popover>

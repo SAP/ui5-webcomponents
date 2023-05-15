@@ -2,7 +2,7 @@
 const svgrx = new RegExp(/<svg[\s\S]*?>([\s\S]*?)<\/svg>/, 'g');
 const blockrx = /block[0-9]+/g;
 
-function process(input) {
+function processSVG(input) {
 	let matches;
 	let template = input;
 	let blockCounter = 0;
@@ -45,9 +45,16 @@ function getSVGMatches(template) {
 }
 
 function getSVGBlock(input, blockCounter) {
+	const definitionTS = `\nfunction blockSVG${blockCounter} (this: any, context: UI5Element, tags: string[], suffix: string | undefined) {
+		return svg\`${input}\`;
+	};`;
+	const definitionJS = `\nfunction blockSVG${blockCounter} (context, tags, suffix) {
+		return svg\`${input}\`;
+	};`;
+
 	return {
-		usage: `\${blockSVG${blockCounter}(context, tags, suffix)}`,
-		definition: `\nconst blockSVG${blockCounter} = (context, tags, suffix) => svg\`${input}\`;`,
+		usage: `\${blockSVG${blockCounter}.call(this, context, tags, suffix)}`,
+		definition: process.env.UI5_TS ? definitionTS : definitionJS,
 	};
 }
 
@@ -55,7 +62,7 @@ function replaceInternalBlocks(template, svgContent) {
 	const internalBlocks = svgContent.match(blockrx) || [];
 
 	internalBlocks.forEach(blockName => {
-		const rx = new RegExp(`const ${blockName}.*(html\`).*;`);
+		const rx = new RegExp(`function ${blockName}.*(html\`).*;`);
 		template = template.replace(rx, (match, p1) => {
 			return match.replace(p1, "svg\`");
 		});
@@ -65,5 +72,5 @@ function replaceInternalBlocks(template, svgContent) {
 }
 
 module.exports = {
-	process: process
+	process: processSVG,
 };

@@ -18,12 +18,14 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
 import Button from "./Button.js";
 import List from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
+import BusyIndicator from "./BusyIndicator.js";
 import type MenuItem from "./MenuItem.js";
 import type { ClickEventDetail } from "./List.js";
 import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
@@ -92,6 +94,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 		List,
 		StandardListItem,
 		Icon,
+		BusyIndicator,
 	],
 })
 
@@ -179,6 +182,30 @@ class Menu extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	open!:boolean;
+
+	/**
+	 * Defines if a loading indicator would be displayed inside the corresponding ui5-menu popover.
+	 *
+	 * @name sap.ui.webc.main.Menu.prototype.busy
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.13.0
+	 */
+	@property({ type: Boolean })
+	busy!: boolean;
+
+	/**
+	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover..
+	 *
+	 * @name sap.ui.webc.main.Menu.prototype.busyDelay
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultValue 1000
+	 * @public
+	 * @since 1.13.0
+	 */
+	@property({ validator: Integer, defaultValue: 1000 })
+	busyDelay!: number;
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the menu is shown at
@@ -315,6 +342,10 @@ class Menu extends UI5Element {
 		this._currentItems.forEach(item => {
 			item.item._siblingsWithChildren = itemsWithChildren;
 			item.item._siblingsWithIcon = itemsWithIcon;
+			if (item.item._subMenu) {
+				item.item._subMenu.busy = item.item.busy;
+				item.item._subMenu.busyDelay = item.item.busyDelay;
+			}
 		});
 	}
 
@@ -398,7 +429,7 @@ class Menu extends UI5Element {
 			return {
 				item,
 				position: index + 1,
-				ariaHasPopup: item.hasChildren ? "menu" : undefined,
+				ariaHasPopup: item.hasSubmenu ? "menu" : undefined,
 			};
 		});
 	}
@@ -411,6 +442,8 @@ class Menu extends UI5Element {
 		subMenu._isSubMenu = true;
 		subMenu.setAttribute("id", `submenu-${openerId}`);
 		subMenu._parentMenuItem = item;
+		subMenu.busy = item.busy;
+		subMenu.busyDelay = item.busyDelay;
 		const subItems = item.children;
 		let clonedItem,
 			idx;
@@ -456,11 +489,11 @@ class Menu extends UI5Element {
 	}
 
 	_prepareSubMenuDesktopTablet(item: MenuItem, opener: HTMLElement, actionId: string) {
-		if (actionId !== this._subMenuOpenerId || (item && item.hasChildren)) {
+		if (actionId !== this._subMenuOpenerId || (item && item.hasSubmenu)) {
 			// close opened sub-menu if there is any opened
 			this._closeItemSubMenu(this._openedSubMenuItem!, true);
 		}
-		if (item && item.hasChildren) {
+		if (item && item.hasSubmenu) {
 			// create new sub-menu
 			this._createSubMenu(item, actionId);
 			this._openItemSubMenu(item, opener, actionId);
@@ -488,13 +521,19 @@ class Menu extends UI5Element {
 		}
 	}
 
+	_busyMouseOver() {
+		if (this._parentMenuItem) {
+			this._parentMenuItem._preventSubMenuClose = true;
+		}
+	}
+
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
 
-			if (item && item.hasChildren && item._subMenu) {
+			if (item && item.hasSubmenu && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
 				this._closeItemSubMenu(item);
@@ -514,7 +553,7 @@ class Menu extends UI5Element {
 			const item = opener.associatedItem;
 			const hoverId = opener.getAttribute("id")!;
 
-			item.hasChildren && this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+			item.hasSubmenu && this._prepareSubMenuDesktopTablet(item, opener, hoverId);
 		} else if (isMenuClose && this._isSubMenu && this._parentMenuItem) {
 			const parentMenuItemParent = this._parentMenuItem.parentElement as Menu;
 			parentMenuItemParent._closeItemSubMenu(this._parentMenuItem, true);
@@ -526,7 +565,7 @@ class Menu extends UI5Element {
 		const item = opener.associatedItem;
 		const actionId = opener.getAttribute("id")!;
 
-		if (!item.hasChildren) {
+		if (!item.hasSubmenu) {
 			// click on an item that doesn't have sub-items fires an "item-click" event
 			if (!this._isSubMenu) {
 				if (isPhone()) {

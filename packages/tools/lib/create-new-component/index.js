@@ -1,7 +1,30 @@
 const fs = require("fs");
+const path = require("path");
 const prompts = require("prompts");
 const jsFileContentTemplate = require("./jsFileContentTemplate.js");
 const tsFileContentTemplate = require("./tsFileContentTemplate.js");
+
+/**
+ * Hyphanates the given PascalCase string, f.e.:
+ * Foo -> "my-foo" (adds preffix)
+ * FooBar -> "foo-bar"
+ */
+const hyphaneteComponentName = (componentName) => {
+	const result = componentName.replace(/([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+
+	return result.includes("-") ? result : `my-${result}`;
+};
+
+/**
+ * Capitalizes first letter of string.
+ */
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+
+/**
+ * Validates component name, enforcing PascalCase pattern - Button, MyButton.
+ */
+const PascalCasePattern = /^[A-Z][A-Za-z0-9]+$/;
+const isNameValid = name => typeof name === "string" && PascalCasePattern.test(name);
 
 const getPackageName = () => {
 	if (!fs.existsSync("./package.json")) {
@@ -34,13 +57,6 @@ const getLibraryName = packageName => {
 
 	return packageName.substr("webcomponents-".length);
 };
-
-// String manipulation
-const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
-
-// Validation of user input
-const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9_-]*$/);
-const isTagNameValid = tagName => tagName.match(/^([a-z][a-z0-9]*-)([a-z0-9]+(-[a-z0-9]+)*)$/);
 
 const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
 	componentName = capitalizeFirstLetter(componentName);
@@ -77,21 +93,9 @@ const createWebComponent = async () => {
 
 	const consoleArguments = process.argv.slice(2);
 	let componentName = consoleArguments[0];
-	let tagName = consoleArguments[1];
-	let language = consoleArguments[2];
-	let isTypeScript;
-
 
 	if (componentName && !isNameValid(componentName)) {
-		throw new Error("Invalid component name. Please use only letters, numbers, dashes and underscores. The first character must be a letter.");
-	}
-
-	if (tagName && !isTagNameValid(tagName)) {
-		throw new Error("Invalid tag name. The tag name should only contain lowercase letters, numbers, dashes, and underscores. The first character must be a letter, and it should follow the pattern 'tag-name'.");
-	}
-
-	if (language && language !== "typescript" && language !== "ts" && language !== "javascript" && language !== "js") {
-		throw new Error("Invalid language. Please use 'typescript','javascript' or their respective 'ts','js'.");
+		throw new Error(`${componentName} is invalid component name. Use only letters (at least two) and start with capital one:  Button, MyButton, etc.`);
 	}
 
 	if (!componentName) {
@@ -99,7 +103,7 @@ const createWebComponent = async () => {
 			type: "text",
 			name: "componentName",
 			message: "Please enter a component name:",
-			validate: (value) => isNameValid(value),
+			validate: (value) => isNameValid(value) ? true : "Component name should follow PascalCase naming convention (f.e. Button, MyButton, etc.).",
 		});
 		componentName = response.componentName;
 
@@ -108,42 +112,8 @@ const createWebComponent = async () => {
 		}
 	}
 
-	if (!tagName) {
-		const response = await prompts({
-			type: "text",
-			name: "tagName",
-			message: "Please enter a tag name:",
-			validate: (value) => isTagNameValid(value),
-		});
-		tagName = response.tagName;
-
-		if (!tagName) {
-			process.exit();
-		}
-	}
-
-	if (!language) {
-		const response = await prompts({
-			type: "select",
-			name: "isTypeScript",
-			message: "Please select a language:",
-			choices: [
-				{
-					title: "TypeScript (recommended)",
-					value: true,
-				},
-				{
-					title: "JavaScript",
-					value: false,
-				},
-			],
-		});
-		isTypeScript = response.isTypeScript;
-	} else if (language === "typescript" || language === "ts") {
-		isTypeScript = true;
-	} else {
-		isTypeScript = false;
-	}
+	const isTypeScript = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
+	const tagName = hyphaneteComponentName(componentName);
 
 	generateFiles(componentName, tagName, library, packageName, isTypeScript);
 };
