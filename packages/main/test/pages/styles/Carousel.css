@@ -19,3 +19,7 @@ ui5-carousel {
 .carouselContentLeftAligned::part(content) {
 	align-items: flex-start;
 }
+
+.shortCarousel {
+    height: 10rem;
+}

@@ -50,7 +50,7 @@ type Month = {
 	classes: string,
 }
 
-type MothInterval = Array<Array<Month>>;
+type MonthInterval = Array<Array<Month>>;
 
 type MonthPickerChangeEventDetail = {
 	timestamp: number,
@@ -108,7 +108,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	selectedDates!: Array<number>;
 
 	@property({ type: Object, multiple: true })
-	_months!: MothInterval;
+	_months!: MonthInterval;
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden!: boolean;
@@ -141,7 +141,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const monthsNames = localeData.getMonthsStandAlone("wide", this._primaryCalendarType);
 
-		const months: MothInterval = [];
+		const months: MonthInterval = [];
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
 		const maxDate = this._maxDate; // store the value of the expensive getter

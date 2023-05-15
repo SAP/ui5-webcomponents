@@ -34,7 +34,13 @@
 	<link rel="stylesheet" type="text/css" href="./styles/DatePicker.css">
 </head>
 <body class="datepicker1auto">
-	<div style='width:500px;'>
+	<div style='width:600px;'>
+		<div>
+			<h3> DatePicker with no format pattern & min-max dates in ISO format</h3>
+			<ui5-date-picker id="dpMinMax-dates" min-date="2019-09-01" max-date="2019-11-01"></ui5-date-picker>
+		</div>
+
+		<h3>Date picker with placeholder.</h3>
 		<ui5-date-picker id='ui5-datepicker--startDate'
 			placeholder='Delivery Date...'>
 		</ui5-date-picker>

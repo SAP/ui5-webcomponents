@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.1...v1.13.2) (2023-05-15)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** containers shrink factor reduced ([#6982](https://github.com/SAP/ui5-webcomponents/issues/6982)) ([e82744b](https://github.com/SAP/ui5-webcomponents/commit/e82744bd715bae744a7e41849f1fafc5ccc389ee))
+
+
+
+
+
+## [1.13.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.5...v1.13.1) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 # [1.13.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.3...v1.13.0-rc.4) (2023-05-04)
 
 
