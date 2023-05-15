@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        suite: ['base', 'main:suite-1', 'main:suite-2', 'main:suite-datetime', 'fiori']
+        suite: ['base', 'main:suite-1', 'main:suite-2', 'main:suite-3', 'main:suite-datetime', 'fiori']
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
