@@ -7,6 +7,7 @@ import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoot
 import type OpenUI5Support from "../features/OpenUI5Support.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 import type { StyleData } from "../ManagedStyles.js";
+import { StyleDataCSP } from "../types.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
 
@@ -30,7 +31,7 @@ const deleteThemeBase = () => {
 	removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
 };
 
-let packagesStylesData: Array<StyleData> = [];
+let packagesStylesData: Array<StyleDataCSP> = [];
 
 const getRegisteredComponentPackagesStyleData = () => {
 	return packagesStylesData;
@@ -43,7 +44,7 @@ const loadComponentPackages = async (theme: string) => {
 		return getThemeProperties(packageName, theme);
 	});
 
-	packagesStylesData = (await Promise.all(packagesStylesPromises) as Array<StyleData>).filter(componentPackage => !!componentPackage);
+	packagesStylesData = (await Promise.all(packagesStylesPromises) as Array<StyleDataCSP>).filter(componentPackage => !!componentPackage);
 };
 
 const detectExternalTheme = async (theme: string) => {

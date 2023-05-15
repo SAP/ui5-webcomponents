@@ -10,13 +10,13 @@ const MAX_DEPTH_INHERITED_CLASSES = 10; // TypeScript complains about Infinity a
 const findCurrentPackageStyles = (stylesDataArray: Array<ComponentStylesData>) => {
 	return stylesDataArray.map(styleData => {
 		const registeredPackage = [...getRegisteredComponentPackagesStyleData()]
-			.find(registeredPackageData => (registeredPackageData as StyleDataCSP).packageName === (styleData as StyleDataCSP).packageName);
+			.find(registeredPackageData => (registeredPackageData).packageName === (styleData as StyleDataCSP).packageName);
 
 		if (!registeredPackage) {
 			return "";
 		}
 
-		return getUrl((registeredPackage as StyleDataCSP)?.packageName, (registeredPackage as StyleDataCSP)?.fileName);
+		return getUrl((registeredPackage)?.packageName, (registeredPackage)?.fileName);
 	}).filter((link, index, array) => array.indexOf(link) === index);
 };
 
@@ -37,6 +37,7 @@ const getEffectiveLinksHrefs = (ElementClass: typeof UI5Element, forStaticArea =
 	const componentStyleLinks = stylesDataArray.flat(MAX_DEPTH_INHERITED_CLASSES)
 		.filter(data => !!data)
 		.map(data => getUrl((data as StyleDataCSP).packageName, (data as StyleDataCSP).fileName));
+
 	const themePropertiesLinks = findCurrentPackageStyles(stylesDataArray);
 
 	return [...componentStyleLinks, ...themePropertiesLinks];
