@@ -20,7 +20,7 @@ import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
  * The <code>INIT_PACKAGE_VAR_TAG</code> component is a demo component that displays some text.
  *
  * @constructor
- * @alias demo.components.INIT_PACKAGE_VAR_CLASS_NAME
+ * @alias INIT_PACKAGE_VAR_NAMESPACE.INIT_PACKAGE_VAR_CLASS_NAME
  * @extends sap.ui.webc.base.UI5Element
  * @tagname INIT_PACKAGE_VAR_TAG
  * @public

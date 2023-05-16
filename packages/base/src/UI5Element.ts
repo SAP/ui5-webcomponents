@@ -11,6 +11,7 @@ import EventProvider from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
+import { shouldIgnoreCustomElement } from "./IgnoreCustomElements.js";
 import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
@@ -333,8 +334,9 @@ abstract class UI5Element extends HTMLElement {
 			// Await for not-yet-defined custom elements
 			if (child instanceof HTMLElement) {
 				const localName = child.localName;
-				const isCustomElement = localName.includes("-");
-				if (isCustomElement) {
+				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
+
+				if (shouldWaitForCustomElement) {
 					const isDefined = window.customElements.get(localName);
 					if (!isDefined) {
 						const whenDefinedPromise = window.customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
