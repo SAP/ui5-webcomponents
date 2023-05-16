@@ -139,7 +139,7 @@ export const WizardOverview: StoryFn = () => html`
 
 export const WizardPageMode: StoryFn = () => html`
 	<ui5-dialog id="dialog${++index}" stretch header-heading="Wizard">
-		<ui5-wizard id="wiz-${index}" render-mode="Page">
+		<ui5-wizard id="wiz-${index}" content-layout="SingleStep">
 			<ui5-wizard-step icon="product" title-text="Product type" selected="">
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br/>
@@ -199,8 +199,8 @@ export const WizardPageMode: StoryFn = () => html`
 			</ui5-wizard-step>
 		</ui5-wizard>
 		<ui5-bar id="footer" slot="footer" design="Footer">
-			<ui5-button id="nextButton" design="Emphasized" slot="endContent">Next step</ui5-button>
 			<ui5-button id="prevButton" design="Emphasized" slot="endContent">Previous Step</ui5-button>
+			<ui5-button id="nextButton" design="Emphasized" slot="endContent">Next step</ui5-button>
 			<ui5-button id="wiz-${index}-finalize" design="Emphasized" slot="endContent">Finalize</ui5-button>
 			<ui5-button id="cancel" design="Transparent" slot="endContent">Cancel</ui5-button>
 		</ui5-bar>

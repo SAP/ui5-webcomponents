@@ -52,7 +52,7 @@
 	padding-bottom: 1rem;
 }
 
-:host([render-mode="Page"]) .ui5-wiz-content-item:not([selected]) {
+:host([content-layout="SingleStep"]) .ui5-wiz-content-item:not([selected]) {
 	display: none;
 }
 

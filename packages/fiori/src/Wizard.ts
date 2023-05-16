@@ -17,7 +17,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
-import WizardRenderMode from "./types/WizardRenderMode.js";
+import WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
 import {
@@ -235,11 +235,11 @@ type StepInfo = {
 
 class Wizard extends UI5Element {
 	/**
-	 * Defines how the steps of the <code>ui5-wizard</code> would be visualized.
+	 * Defines how the content of the <code>ui5-wizard</code> would be visualized.
 	 * @public
 	 */
-	@property({ validator: String, defaultValue: WizardRenderMode.Scroll })
-	renderMode?: WizardRenderMode
+	@property({ validator: String, defaultValue: WizardContentLayout.MultipleSteps })
+	contentLayout?: WizardContentLayout
 
 	/**
 	 * Defines the width of the <code>ui5-wizard</code>.

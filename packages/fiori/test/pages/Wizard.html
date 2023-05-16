@@ -649,7 +649,7 @@
 	</ui5-wizard>
 
 	<ui5-dialog id="dialog" stretch header-heading="Wizard">
-		<ui5-wizard id="wiz2" render-mode="Page">
+		<ui5-wizard id="wiz2" content-layout="SingleStep">
 			<ui5-wizard-step icon="sap-icon://home" title-text="Product type">
 				<div class="wizard3auto">
 					<ui5-title>1. Product Type</ui5-title><br>
@@ -795,8 +795,8 @@
 			</ui5-wizard-step>
 		</ui5-wizard>
 		<ui5-bar id="footer" slot="footer" design="Footer">
-			<ui5-button id="nextButton" design="Emphasized" slot="endContent">Next step</ui5-button>
 			<ui5-button id="prevButton" design="Emphasized" slot="endContent">Previous Step</ui5-button>
+			<ui5-button id="nextButton" design="Emphasized" slot="endContent">Next step</ui5-button>
 			<ui5-button id="finalize2" design="Emphasized" slot="endContent">Finalize</ui5-button>
 			<ui5-button id="cancel" design="Transparent" slot="endContent">Cancel</ui5-button>
 		</ui5-bar>
