@@ -18,7 +18,8 @@
 	margin: var(--_ui5_textarea_margin);
 }
 
-:host(:not([value-state]):not([readonly]):not([disabled]):not([focused])) .ui5-textarea-wrapper,
+:host([value-state][disabled]) .ui5-textarea-wrapper,
+:host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper,
 :host([value-state="None"]:not([readonly]):not([disabled]):not([focused])) .ui5-textarea-wrapper {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapField_Background);
@@ -33,7 +34,7 @@
 
 :host(:not([value-state]):not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper,
 :host([value-state="None"]:not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
-	box-shadow: var(--_ui5_textarea_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_Shadow);
 }
 
 .ui5-textarea-root {
@@ -69,6 +70,10 @@
 	opacity: var(--_ui5_textarea_disabled_opacity);
 	cursor: default;
 	pointer-events: none;
+}
+
+:host(:not([readonly])) .ui5-textarea-wrapper {
+	box-shadow: var(--sapField_Shadow);
 }
 
 :host([value-state]) .ui5-textarea-wrapper {
@@ -296,6 +301,7 @@
 	background: var(--sapField_InvalidBackgroundStyle);
 	background-color: var(--sapField_InvalidBackground);
 	border-color: var(--sapField_InvalidColor);
+	box-shadow: var(--sapField_InvalidShadow);
 }
 
 :host([value-state="Error"][focused]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
@@ -309,7 +315,7 @@
 
 :host([value-state="Error"]:not([readonly]):not([focused]):not([disabled]):hover) .ui5-textarea-wrapper {
 	background-color: var(--_ui5_textarea_error_hover_background_color);
-	box-shadow: var(--_ui5_textarea_value_state_error_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_InvalidShadow);
 }
 
 :host([value-state="Error"]:not([readonly]):not([disabled])) .ui5-textarea-inner,
@@ -335,6 +341,7 @@
 	background: var(--sapField_WarningBackgroundStyle);
 	background-color: var(--sapField_WarningBackground);
 	border-color: var(--sapField_WarningColor);
+	box-shadow: var(--sapField_WarningShadow);
 }
 
 :host([value-state="Warning"][focused]:not([readonly])) .ui5-textarea-wrapper {
@@ -348,7 +355,7 @@
 
 :host([value-state="Warning"]:not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
 	background-color: var(--sapField_Hover_Background);
-	box-shadow: var(--_ui5_textarea_value_state_warning_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_WarningShadow);
 }
 
 :host([value-state="Success"]:not([readonly]):not([disabled])) .ui5-textarea-wrapper {
@@ -356,6 +363,7 @@
 	background-color: var(--sapField_SuccessBackground);
 	border-color: var(--sapField_SuccessColor);
 	border-width: var(--sapField_BorderWidth);
+	box-shadow: var(--sapField_SuccessShadow);
 }
 
 :host([value-state="Success"][focused]:not([readonly])) .ui5-textarea-wrapper {
@@ -370,7 +378,7 @@
 
 :host([value-state="Success"]:not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
 	background-color: var(--sapField_Hover_Background);
-	box-shadow: var(--_ui5_textarea_value_state_success_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_SuccessShadow);
 }
 
 :host([value-state][value-state="Success"]) .ui5-textarea-inner {
@@ -385,6 +393,7 @@
 	background: var(--sapField_InformationBackgroundStyle);
 	background-color: var(--sapField_InformationBackground);
 	border-color: var(--sapField_InformationColor);
+	box-shadow: var(--sapField_InformationShadow);
 }
 
 :host([value-state="Information"][focused]:not([readonly])) .ui5-textarea-wrapper {
@@ -399,7 +408,7 @@
 
 :host([value-state="Information"]:not([readonly]):not([disabled]):not([focused]):hover) .ui5-textarea-wrapper {
 	background-color: var(--sapField_Hover_Background);
-	box-shadow: var(--_ui5_textarea_value_state_information_hover_box_shadow);
+	box-shadow: var(--sapField_Hover_InformationShadow);
 }
 
 .ui5-textarea-exceeded-text {
@@ -414,7 +423,7 @@
 	display: none;
 }
 
-:host(:not([disabled])) :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
+:host :not(.ui5-content-native-scrollbars) ::-webkit-scrollbar {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapScrollBar_TrackColor);
 	border-top-right-radius: var(--sapField_BorderCornerRadius);

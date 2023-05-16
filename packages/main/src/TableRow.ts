@@ -426,7 +426,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 		const isRowSelectable = this.isSingleSelect || this.isMultiSelect;
 		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
-			const cellText = this.getCellText(cell);
+			const cellText = cell.cellContent.length ? this.getCellText(cell) : cell.ariaLabelEmptyCellText;
 			return `${columText} ${cellText}`;
 		}).join(" ");
 

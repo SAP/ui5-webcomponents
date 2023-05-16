@@ -1,0 +1,10 @@
+.bg {
+	background-color: var(--sapBackgroundColor);
+}
+
+.myCard-trip-calendar {
+    display: block;
+    height: 100px;
+    background-color: yellow;
+    margin: 1rem 0;
+}

@@ -207,6 +207,10 @@ slot[name="profile"] {
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
 }
 
+.ui5-shellbar-menu-button .ui5-shellbar-logo:hover {
+	box-shadow: none;
+}
+
 .ui5-shellbar-button {
 	width: 2.5rem;
 }
@@ -358,10 +362,10 @@ slot[name="profile"] {
 	background: var(--sapContent_BadgeBackground);
 	border: var(--_ui5_shellbar_button_badge_border);
 	color: var(--sapContent_BadgeTextColor);
-	top: 0.125rem;
-	left: 1.5rem;
-	padding: .25rem;
-	border-radius: 1rem;
+	top: -0.25rem;
+	right: -0.25rem;
+	padding: 0 0.3125rem;
+	border-radius: 0.5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;
