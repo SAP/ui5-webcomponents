@@ -17,18 +17,18 @@ import ComboBoxFilter from "@ui5/webcomponents/dist/types/ComboBoxFilter.js";
 const component = "ui5-combobox";
 
 export default {
-		title: "Main/ComboBox",
-		component,
-		subcomponents: {
-				ComboBoxItem: "ui5-cb-item",
-				ComboBoxGroupItem: "ui5-cb-group-item",
+	title: "Main/ComboBox",
+	component,
+	subcomponents: {
+		ComboBoxItem: "ui5-cb-item",
+		ComboBoxGroupItem: "ui5-cb-group-item",
+	},
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component }),
 		},
-		parameters: {
-				docs: {
-						page: DocsPage({ ...componentInfo, component }),
-				},
-		},
-		argTypes,
+	},
+	argTypes,
 } as Meta<ComboBox>;
 
 const Template: UI5StoryArgs<ComboBox, StoryArgsSlots> = (
@@ -50,26 +50,10 @@ const Template: UI5StoryArgs<ComboBox, StoryArgsSlots> = (
 		${unsafeHTML(args.icon)}
 </ui5-combobox>`;
 
-const mapArrayToItems = (
-		arr: Array<{ text: String; key?: String; isGroupItem?: Boolean }>
-) =>
-		arr.map((item) => {
-				if (item.isGroupItem) {
-						return html`<ui5-cb-group-item
-								text="${item.text}"
-						></ui5-cb-group-item>`;
-				}
-
-				return html`<ui5-cb-item
-						text="${item.text}"
-						additional-text=${item.key}
-				></ui5-cb-item>`;
-		});
-
 export const Basic = Template.bind({});
 Basic.args = {
-		placeholder: "Enter value",
-		default: `
+	placeholder: "Enter value",
+	default: `
 		<ui5-cb-item text="Item 1"></ui5-cb-item>
 		<ui5-cb-item text="Item 2"></ui5-cb-item>
 		<ui5-cb-item text="Item 3"></ui5-cb-item>
@@ -78,15 +62,15 @@ Basic.args = {
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-		disabled: true,
-		value: "Disabled",
+	disabled: true,
+	value: "Disabled",
 };
 
 export const Filters = Template.bind({});
 Filters.args = {
-		placeholder: "Contains Filtering",
-		filter: ComboBoxFilter.Contains,
-		default: `
+	placeholder: "Contains Filtering",
+	filter: ComboBoxFilter.Contains,
+	default: `
 		<ui5-cb-item text="Austria"></ui5-cb-item>
 		<ui5-cb-item text="Bulgaria"></ui5-cb-item>
 		<ui5-cb-item text="Germany"></ui5-cb-item>
@@ -97,8 +81,8 @@ Filters.args = {
 
 export const TwoColumns = Template.bind({});
 TwoColumns.args = {
-		placeholder: "Two-column layout",
-		default: `
+	placeholder: "Two-column layout",
+	default: `
 		<ui5-cb-item text="Austria" additional-text="AT"></ui5-cb-item>
 		<ui5-cb-item text="Belgium" additional-text="BE"></ui5-cb-item>
 		<ui5-cb-item text="Brazil" additional-text="BR"></ui5-cb-item>
@@ -109,8 +93,8 @@ TwoColumns.args = {
 
 export const GroupingItems = Template.bind({});
 GroupingItems.args = {
-		placeholder: "ComboBox with grouping of suggestions",
-		default: `
+	placeholder: "ComboBox with grouping of suggestions",
+	default: `
 		<ui5-cb-group-item text="A"></ui5-cb-group-item>
 		<ui5-cb-item text="Argentina"></ui5-cb-item>
 		<ui5-cb-item text="Australia"></ui5-cb-item>
