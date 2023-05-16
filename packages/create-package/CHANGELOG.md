@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.5...v1.13.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* **create-package:** revert  `moduleResolution` setting to `node` ([#7020](https://github.com/SAP/ui5-webcomponents/issues/7020)) ([9fc84e2](https://github.com/SAP/ui5-webcomponents/commit/9fc84e288452616ee72f3a2b6fc31d9752f05f6f))
+
+
+
+
+
 # [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
 
 

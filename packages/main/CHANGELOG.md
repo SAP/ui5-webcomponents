@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.1...v1.13.2) (2023-05-15)
+
+
+### Bug Fixes
+
+* **ui5-input:** apply content-box to all slotted icons with !important ([#6948](https://github.com/SAP/ui5-webcomponents/issues/6948)) ([de89ea0](https://github.com/SAP/ui5-webcomponents/commit/de89ea0e00e942a7cea02d1fa04252c1fb6d2fc1)), closes [#6071](https://github.com/SAP/ui5-webcomponents/issues/6071)
+
+
+
+
+
+## [1.13.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.5...v1.13.1) (2023-05-11)
+
+
+### Bug Fixes
+
+* **ui5-tree:** rtl styling fixes ([#7019](https://github.com/SAP/ui5-webcomponents/issues/7019)) ([88a63ee](https://github.com/SAP/ui5-webcomponents/commit/88a63eefa161b0576dc635cf2b16ecb1e27afacb)), closes [#6892](https://github.com/SAP/ui5-webcomponents/issues/6892)
+
+
+
+
+
 # [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
 
 
