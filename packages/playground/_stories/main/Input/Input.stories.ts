@@ -67,11 +67,11 @@ InputSuggestions.decorators = [
 		return html`
 		${story()}
 <script>
-	let input${index} = document.getElementById("input-${index}");
+	const input${index} = document.getElementById("input-${index}");
 	input${index}.addEventListener("input", () => {
-		let value = input${index}.value,
-		suggestionItems = [],
-		ui5_database_entries = ["Argentina", "Albania", "Algeria", "Angola",
+		let value = input${index}.value;
+		let suggestionItems = [];
+		const ui5_database_entries = ["Argentina", "Albania", "Algeria", "Angola",
 		"Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
 		"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait",
 		"Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal",
@@ -163,14 +163,15 @@ export const InputWithVHD: StoryFn = () => html`
 	</div>
 </ui5-dialog>
 <script>
-	let valueHelpInput${index} = document.getElementById("valueHelpInput"),
-		valueHelpIcon${index} = document.getElementById("valueHelpIcon"),
-		dialog${index} = document.getElementById("dialog"),
-		dialogSearchInput${index} = document.getElementById("dialogSearchInput"),
-		dialogSearchIcon${index} = document.getElementById("dialogSearchIcon"),
-		clearButton${index} = document.getElementById("clearButton"),
-		cancelButton${index} = document.getElementById("cancelButton"),
-		itemsList${index} = document.getElementById("itemsList");
+	const valueHelpInput${index} = document.getElementById("valueHelpInput");
+	const valueHelpIcon${index} = document.getElementById("valueHelpIcon");
+	const dialog${index} = document.getElementById("dialog");
+	const dialogSearchInput${index} = document.getElementById("dialogSearchInput");
+	const dialogSearchIcon${index} = document.getElementById("dialogSearchIcon");
+	const clearButton${index} = document.getElementById("clearButton");
+	const cancelButton${index} = document.getElementById("cancelButton");
+	const itemsList${index} = document.getElementById("itemsList");
+
 	valueHelpInput${index}.addEventListener("input", loadSuggestions);
 	valueHelpIcon${index}.addEventListener("click", showDialog);
 	dialogSearchInput${index}.addEventListener("change", loadList);
@@ -178,12 +179,12 @@ export const InputWithVHD: StoryFn = () => html`
 	clearButton${index}.addEventListener("click", clearQuery);
 	cancelButton${index}.addEventListener("click", closeDialog);
 	itemsList${index}.addEventListener("item-click", handleItemClick);
+
 	async function loadSuggestions() {
-		let li,
-			response = await fetch("../assets/data/products.json"),
-			products = await response.json();
-			query = valueHelpInput${index}.value.toLowerCase();
-			suggestionItems = [];
+		const response = await fetch("../assets/data/products.json");
+		const products = await response.json();
+		const query = valueHelpInput${index}.value.toLowerCase();
+
 		if (query) {
 			suggestionItems = products
 				.filter((product) => {
@@ -201,7 +202,7 @@ export const InputWithVHD: StoryFn = () => html`
 			valueHelpInput${index}.removeChild(item);
 		});
 		suggestionItems.forEach((item) => {
-			li = document.createElement("ui5-suggestion-item");
+			let li = document.createElement("ui5-suggestion-item");
 			li.text = item;
 			valueHelpInput${index}.appendChild(li);
 		});
@@ -221,9 +222,10 @@ export const InputWithVHD: StoryFn = () => html`
 		dialog${index}.close();
 	}
 	async function loadList() {
-		let response = await fetch("../assets/data/products.json"),
-			products = await response.json(),
-			query = dialogSearchInput${index}.value.toLowerCase();
+		const response = await fetch("../assets/data/products.json");
+		const products = await response.json();
+		const query = dialogSearchInput${index}.value.toLowerCase();
+
 		itemsList${index}.innerHTML = "";
 		products
 			.filter((product) => {
