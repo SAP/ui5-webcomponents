@@ -139,7 +139,7 @@ export const WizardOverview: StoryFn = () => html`
 
 export const WizardPageMode: StoryFn = () => html`
 	<ui5-dialog id="dialog${++index}" stretch header-heading="Wizard">
-		<ui5-wizard id="wiz-${index}" renderMode="Page">
+		<ui5-wizard id="wiz-${index}" render-mode="Page">
 			<ui5-wizard-step icon="product" title-text="Product type" selected="">
 				<div style="display: flex; min-height: 200px; flex-direction: column;">
 					<ui5-title>1. Product Type</ui5-title><br/>
