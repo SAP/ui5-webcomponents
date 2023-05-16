@@ -453,11 +453,12 @@ GrowingTableScroll.decorators = [
 		growingTableScroll${index}.insertAdjacentHTML('beforeend', result);
 	}
 	function growOnScroll() {
+		let timeout${index};
 		growingTableScroll${index}.busy = true;
-		if (timeout) {
-			clearTimeout(timeout);
+		if (timeout${index}) {
+			clearTimeout(timeout${index});
 		}
-		var timeout = setTimeout(() => {
+		timeout${index} = setTimeout(() => {
 			loadsScroll${index}++
 			endSliceIndexScroll${index} = sliceIndexScroll${index} + rowsScroll${index};
 			fill(rowsScroll${index}, loadsScroll${index}, sliceIndexScroll${index}, endSliceIndexScroll${index});
