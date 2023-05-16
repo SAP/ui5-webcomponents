@@ -116,7 +116,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get _tempTimestamp() {
-		return this._tempValue && (this.getFormat().parse(this._tempValue, true, undefined as unknown as boolean) as Date).getTime() / 1000;
+		return this._tempValue && (this.getFormat().parse(this._tempValue, true) as Date).getTime() / 1000;
 	}
 
 	/**
@@ -293,7 +293,7 @@ class DateRangePicker extends DatePicker {
 		const partsArray = value.split(this._prevDelimiter || this._effectiveDelimiter);
 
 		// if format successfully parse the value, the value contains only single date
-		if (this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean)) {
+		if (this.getFormat().parse(value)) {
 			valuesArray[0] = partsArray.join(this._effectiveDelimiter);
 			valuesArray[1] = "";
 		} else {
@@ -315,7 +315,7 @@ class DateRangePicker extends DatePicker {
 
 		const dateStrings = this._splitValueByDelimiter(value); // at least one item guaranteed due to the checks above (non-empty and valid)
 
-		const parsedDate = this.getFormat().parse(dateStrings[0], true, undefined as unknown as boolean) as Date;
+		const parsedDate = this.getFormat().parse(dateStrings[0], true) as Date;
 		return parsedDate.getTime() / 1000;
 	}
 
@@ -330,7 +330,7 @@ class DateRangePicker extends DatePicker {
 
 		const dateStrings = this._splitValueByDelimiter(value);
 		if (dateStrings[1]) {
-			const parsedDate = this.getFormat().parse(dateStrings[1], true, undefined as unknown as boolean) as Date;
+			const parsedDate = this.getFormat().parse(dateStrings[1], true) as Date;
 			return parsedDate.getTime() / 1000;
 		}
 

@@ -351,7 +351,7 @@ class MultiComboBox extends UI5Element {
 	 * Defines the filter type of the component.
 	 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 	 *
-	 * @type {string}
+	 * @type {sap.ui.webc.main.types.ComboBoxFilter}
 	 * @name sap.ui.webc.main.MultiComboBox.prototype.filter
 	 * @defaultvalue "StartsWithPerTerm"
 	 * @public

@@ -38,23 +38,9 @@ const removeFields = object => {
 		"territories",
 		"scripts",
 		"timezoneNames",
-		"timezoneNamesFormats",
-		"scientificFormat",
-		"miscPattern",
 	].forEach(field => {
 		delete object[field];
 	});
-
-
-	["ca-gregorian", "ca-islamic", "ca-japanese", "ca-buddhist", "ca-persian"].forEach(calendar => {
-		// remove all deny-listed fields from the calendar objects
-		[
-			"quarters",
-			"flexibleDayPeriods"
-		].forEach(field => {
-			delete object[calendar][field];
-		});
-	})
 
 	return object;
 }
