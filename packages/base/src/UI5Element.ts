@@ -25,6 +25,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
+import { getCurrentRuntimeIndexAttribute } from "./Runtimes.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
@@ -174,6 +175,7 @@ abstract class UI5Element extends HTMLElement {
 	async connectedCallback() {
 		const ctor = this.constructor as typeof UI5Element;
 
+		this.setAttribute(getCurrentRuntimeIndexAttribute(), "");
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");
 		if (ctor.getMetadata().supportsF6FastNavigation()) {
 			this.setAttribute("data-sap-ui-fastnavgroup", "true");
