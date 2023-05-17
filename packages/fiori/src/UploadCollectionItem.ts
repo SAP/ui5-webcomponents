@@ -222,7 +222,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: UploadState, defaultValue: UploadState.Ready })
-	uploadState!: UploadState;
+	uploadState!: `${UploadState}`;
 
 	/**
 	 * Indicates if editing.

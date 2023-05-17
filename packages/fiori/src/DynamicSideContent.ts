@@ -179,7 +179,7 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: SideContentPosition, defaultValue: SideContentPosition.End })
-	sideContentPosition!: SideContentPosition;
+	sideContentPosition!: `${SideContentPosition}`;
 
 	/**
 	 * Defines on which breakpoints the side content is visible.
@@ -202,7 +202,7 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: SideContentVisibility, defaultValue: SideContentVisibility.ShowAboveS })
-	sideContentVisibility!: SideContentVisibility;
+	sideContentVisibility!: `${SideContentVisibility}`;
 
 	/**
 	 * Defines on which breakpoints the side content falls down below the main content.
@@ -224,7 +224,7 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: SideContentFallDown, defaultValue: SideContentFallDown.OnMinimumWidth })
-	sideContentFallDown!: SideContentFallDown;
+	sideContentFallDown!: `${SideContentFallDown}`;
 
 	/**
 	 * Defines whether the component is in equal split mode. In this mode, the side and

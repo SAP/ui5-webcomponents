@@ -352,7 +352,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property({ type: InputType, defaultValue: InputType.Text })
-	type!: InputType;
+	type!: `${InputType}`;
 
 	/**
 	 * Defines the value of the component.
@@ -399,7 +399,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.

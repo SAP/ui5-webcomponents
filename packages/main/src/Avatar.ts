@@ -143,7 +143,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: AvatarShape, defaultValue: AvatarShape.Circle })
-	shape!: AvatarShape;
+	shape!: `${AvatarShape}`;
 
 	/**
 	 * Defines predefined size of the component.
@@ -162,7 +162,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	size!: AvatarSize;
+	size!: `${AvatarSize}`;
 
 	/**
 	 * @private
@@ -193,7 +193,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	colorScheme!: AvatarColorScheme;
+	colorScheme!: `${AvatarColorScheme}`;
 
 	/**
 	 * @private

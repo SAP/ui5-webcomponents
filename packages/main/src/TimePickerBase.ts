@@ -139,7 +139,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Determines whether the <code>ui5-time-picker</code> is displayed as disabled.

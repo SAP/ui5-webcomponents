@@ -99,7 +99,7 @@ class BusyIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: BusyIndicatorSize, defaultValue: BusyIndicatorSize.Medium })
-	size!: BusyIndicatorSize;
+	size!: `${BusyIndicatorSize}`;
 
 	/**
 	 * Defines if the busy indicator is visible on the screen. By default it is not.
