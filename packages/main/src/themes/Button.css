@@ -17,7 +17,6 @@
 	background-color: var(--sapButton_Background);
 	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
 	color: var(--sapButton_TextColor);
-	background-color: var(--test);
 	box-sizing: border-box;
 	white-space: nowrap;
 	overflow: hidden;

@@ -12,5 +12,4 @@
 	--_ui5_button_emphasized_focused_border: 0.0625rem dotted var(--sapContent_ContrastFocusColor);
 	--_ui5_button_emphasized_focused_border_before: 0.0625rem solid var(--sapContent_FocusColor);
 	--_ui5_button_emphasized_outline: 1px solid var(--sapContent_FocusColor);
-	--test: red;
 }
