@@ -21,13 +21,6 @@ enum SegmentedButtonMode {
 	 * @type {Multi}
 	 */
 	Multi = "Multi",
-
-	/**
-	 * Selecting one deselects the previous one. All items can be deselected.
-	 * @public
-	 * @type {ZeroOrSingle}
-	 */
-	ZeroOrSingle = "ZeroOrSingle",
 }
 
 export default SegmentedButtonMode;
