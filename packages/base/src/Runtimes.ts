@@ -42,10 +42,6 @@ const getCurrentRuntimeIndex = () => {
 	return currentRuntimeIndex;
 };
 
-const getCurrentRuntimeIndexAttribute = (): string => {
-	return `ui5-host-${getCurrentRuntimeIndex()}`;
-};
-
 /**
  * Compares two runtimes and returns 1 if the first is of a bigger version, -1 if the second is of a bigger version, and 0 if equal
  * @param index1 The index of the first runtime to compare
@@ -110,7 +106,6 @@ const getAllRuntimes = () => {
 };
 
 export {
-	getCurrentRuntimeIndexAttribute,
 	getCurrentRuntimeIndex,
 	registerCurrentRuntime,
 	compareRuntimes,

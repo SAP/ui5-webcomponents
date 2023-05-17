@@ -26,7 +26,7 @@ module.exports = {
 				suffix: [
 					{
 						match: '*',
-						with: '<SCOPING_PLACEHOLDER>', // every selector will be suffixed with > *, for example: ul li > *
+						with: '[_ui5host]', // every selector will be suffixed with > *, for example: ul li > *
 					},
 				],
 			}),
