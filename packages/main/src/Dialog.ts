@@ -182,7 +182,7 @@ class Dialog extends Popup {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	state!: ValueState;
+	state!: `${ValueState}`;
 
 	/**
 	 * @private
