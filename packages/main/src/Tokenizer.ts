@@ -151,7 +151,7 @@ class Tokenizer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	@property({ validator: Integer })
 	_nMoreCount!: number;

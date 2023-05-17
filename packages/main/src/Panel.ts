@@ -169,7 +169,7 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: PanelAccessibleRole, defaultValue: PanelAccessibleRole.Form })
-	accessibleRole!: PanelAccessibleRole;
+	accessibleRole!: `${PanelAccessibleRole}`;
 
 	/**
 	 * Defines the "aria-level" of component heading,
@@ -182,7 +182,7 @@ class Panel extends UI5Element {
 	 * @public
 	*/
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	headerLevel!: TitleLevel;
+	headerLevel!: `${TitleLevel}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.

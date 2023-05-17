@@ -160,7 +160,7 @@ class Icon extends UI5Element {
 	 * @since 1.9.2
 	 */
 	@property({ type: IconDesign, defaultValue: IconDesign.Default })
-	design!: IconDesign;
+	design!: `${IconDesign}`;
 
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)

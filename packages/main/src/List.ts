@@ -298,7 +298,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
@@ -328,7 +328,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListSeparators, defaultValue: ListSeparators.All })
-	separators!: ListSeparators;
+	separators!: `${ListSeparators}`;
 
 	/**
 	 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
@@ -354,7 +354,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListGrowingMode, defaultValue: ListGrowingMode.None })
-	growing!: ListGrowingMode;
+	growing!: `${ListGrowingMode}`;
 
 	/**
 	 * Defines if the component would display a loading indicator over the list.
@@ -577,7 +577,7 @@ class List extends UI5Element {
 			ListMode.SingleSelectBegin,
 			ListMode.SingleSelectEnd,
 			ListMode.SingleSelectAuto,
-		].includes(this.mode);
+		].includes(this.mode as ListMode);
 	}
 
 	get isMultiSelect() {
