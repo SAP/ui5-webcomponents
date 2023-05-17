@@ -18,7 +18,7 @@
 }
 
 .ui5-bar-root .ui5-bar-startcontent-container {
-	padding-inline-start: 0.5rem;
+	padding-left: 0.75rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -26,7 +26,7 @@
 }
 
 .ui5-bar-root .ui5-bar-content-container {
-	min-width: 30%;
+	min-width: 29%; /* Remaining space after removing paddings and margins */
 }
 
 .ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
@@ -36,7 +36,7 @@
 }
 
 .ui5-bar-root .ui5-bar-endcontent-container {
-	padding-inline-end: 0.5rem;
+	padding-right: 0.75rem;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
