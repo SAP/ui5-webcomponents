@@ -173,7 +173,7 @@ default: `
 
 export const TableStickyHeader = Template.bind({});
 TableStickyHeader.decorators = [
-	(story) => {
+	story => {
 		return html`
 <div style="height: 150px; overflow: scroll;">
 	${story()}
@@ -301,11 +301,12 @@ TableNoData.args = {
 	<span style="line-height: 1.4rem">Price</span>
 </ui5-table-column>`,
 	noDataText: "No Data"
-
 };
+
 TableNoData.storyName = "Table with No Data";
 
 export const GrowingTableMoreButton= Template.bind({});
+
 GrowingTableMoreButton.args = {
 	growing: TableGrowingMode.Button,
 	columns: `
@@ -324,10 +325,10 @@ GrowingTableMoreButton.args = {
 <ui5-table-column slot="columns" class="table-header-text-alignment">
 	<span style="line-height: 1.4rem">Price</span>
 </ui5-table-column>`
-
 };
+
 GrowingTableMoreButton.decorators = [
-	(story) => {
+	story => {
 		return html`
 ${story()}
 <script>
@@ -336,27 +337,23 @@ ${story()}
 	let loads${index} = 1;
 	let sliceIndex${index} = 0;
 	let endSliceIndex${index} = sliceIndex${index} + rows${index};
-
 	const init${index} = async (rows) => {
 		const response = await fetch("../assets/data/products.json");
 		const products = await response.json();
 		const collectionLength = products.length;
 		const loadsAll = Math.ceil(collectionLength / rows);
-		let result = "";
-
-		products.slice(sliceIndex${index}, endSliceIndex${index}).forEach((product, index, arr) => {
-			let htmlTableRow = "<ui5-table-row  id=roll-" + index + ">" +
-						"<ui5-table-cell>" +
-						"<div class='double-line-content'>" +
-						"<span><b>" + product.name +"</b></span>" +
-						"<span style='margin-top: 0.5rem'>" + product.productId +"</span>" +
-						"</div></ui5-table-cell>" +
-						"<ui5-table-cell><span>" + product.supplierName + "</span></ui5-table-cell>" +
-						"<ui5-table-cell style='text-align: right'><span>" + product.width + " x " + product.depth + " x " + product.height + product.dimUnit + "</span></ui5-table-cell>" +
-						"<ui5-table-cell style='text-align: right'><span style='color: #2b7c2b' class='middle'><b>" + product.weightMeasure + "</b>" + product.weightUnit + "</span></ui5-table-cell>" +
-						"<ui5-table-cell style='text-align: right'><span><b> " + product.price + "</b>" + product.currencyCode + "</span></ui5-table-cell></ui5-table-row>";
-			result += htmlTableRow;
-		});
+		const result = products.slice(sliceIndex${index}, endSliceIndex${index}).map((product, index) => {
+			return "<ui5-table-row  id=roll-" + index + ">" +
+				"<ui5-table-cell>" +
+				"<div class='double-line-content'>" +
+				"<span><b>" + product.name +"</b></span>" +
+				"<span style='margin-top: 0.5rem'>" + product.productId +"</span>" +
+				"</div></ui5-table-cell>" +
+				"<ui5-table-cell><span>" + product.supplierName + "</span></ui5-table-cell>" +
+				"<ui5-table-cell style='text-align: right'><span>" + product.width + " x " + product.depth + " x " + product.height + product.dimUnit + "</span></ui5-table-cell>" +
+				"<ui5-table-cell style='text-align: right'><span style='color: #2b7c2b' class='middle'><b>" + product.weightMeasure + "</b>" + product.weightUnit + "</span></ui5-table-cell>" +
+				"<ui5-table-cell style='text-align: right'><span><b> " + product.price + "</b>" + product.currencyCode + "</span></ui5-table-cell></ui5-table-row>";
+		}).join("");
 		if (loads${index} >= loadsAll) {
 			growingTable${index}.growing = "None";
 		} else {
@@ -364,7 +361,6 @@ ${story()}
 			sliceIndex${index} += rows;
 		}
 		growingTable${index}.insertAdjacentHTML('beforeend', result);
-
 	}
 	const loadMore${index} = () => {
 		growingTable${index}.busy = true;
@@ -413,7 +409,7 @@ GrowingTableScroll.args = {
 }
 
 GrowingTableScroll.decorators = [
-	(story) =>  {
+	story =>  {
 		return html `
 <div style="height: 200px; overflow: scroll;">
 	${story()}
@@ -424,16 +420,13 @@ GrowingTableScroll.decorators = [
 	let sliceIndexScroll${index} = 0;
 	let loadsScroll${index} = 1;
 	let endSliceIndexScroll${index} = sliceIndexScroll${index} + rowsScroll${index};
-
 	const fill${index} = async (rowsScroll) => {
 		const responseScrollTable = await fetch("../assets/data/products.json");
 		const productsScrollTable = await responseScrollTable.json();
 		const collectionLengthScroll = productsScrollTable.length;
-		let result = "";
 		let loadsAllScroll = Math.ceil(collectionLengthScroll / rowsScroll);
-
-		productsScrollTable.slice(sliceIndexScroll${index}, endSliceIndexScroll${index}).forEach((product, index, arr) => {
-			let test = "<ui5-table-row  id=roll-" + index + ">" +
+		const result = productsScrollTable.slice(sliceIndexScroll${index}, endSliceIndexScroll${index}).map((product, index) => {
+			return "<ui5-table-row  id=roll-" + index + ">" +
 				"<ui5-table-cell>" +
 				"<div class='double-line-content'>" +
 				"<span><b>" + product.name +"</b></span>" +
@@ -443,8 +436,7 @@ GrowingTableScroll.decorators = [
 				"<ui5-table-cell style='text-align: right'><span>" + product.width + " x " + product.depth + " x " + product.height + product.dimUnit + "</span></ui5-table-cell>" +
 				"<ui5-table-cell style='text-align: right'><span style='color: #2b7c2b'><b>" + product.weightMeasure + "</b>" + product.weightUnit + "</span></ui5-table-cell>" +
 				"<ui5-table-cell style='text-align: right'><span><b> " + product.price + "</b>" + product.currencyCode + "</span></ui5-table-cell></ui5-table-row>";
-			result += test;
-		});
+		}).join("");
 		if (loadsScroll${index} >= loadsAllScroll) {
 			growingTableScroll${index}.growing = "None";
 		} else {
