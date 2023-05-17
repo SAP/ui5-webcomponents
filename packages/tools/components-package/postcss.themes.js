@@ -26,7 +26,7 @@ module.exports = {
 				suffix: [
 					{
 						match: '*',
-						with: '[_ui5host]', // every selector will be suffixed with > *, for example: ul li > *
+						with: '[_ui5host]', // Add suffix to each selector in the file (:root => :root [_ui5host])
 					},
 				],
 			}),
