@@ -69,7 +69,7 @@ InputSuggestions.decorators = [
 <script>
 	const input${index} = document.getElementById("input-${index}");
 	input${index}.addEventListener("input", () => {
-		let value = input${index}.value;
+		const value = input${index}.value;
 		let suggestionItems = [];
 		const ui5_database_entries = ["Argentina", "Albania", "Algeria", "Angola",
 		"Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
@@ -86,7 +86,7 @@ InputSuggestions.decorators = [
 			input${index}.removeChild(child);
 		});
 		suggestionItems.forEach((item) => {
-			let li = document.createElement("ui5-suggestion-item");
+			const li = document.createElement("ui5-suggestion-item");
 			li.icon = "world";
 			li.additionalText = "explore";
 			li.additionalTextState = "Success";
@@ -172,15 +172,7 @@ export const InputWithVHD: StoryFn = () => html`
 	const cancelButton${index} = document.getElementById("cancelButton");
 	const itemsList${index} = document.getElementById("itemsList");
 
-	valueHelpInput${index}.addEventListener("input", loadSuggestions);
-	valueHelpIcon${index}.addEventListener("click", showDialog);
-	dialogSearchInput${index}.addEventListener("change", loadList);
-	dialogSearchIcon${index}.addEventListener("click", loadList);
-	clearButton${index}.addEventListener("click", clearQuery);
-	cancelButton${index}.addEventListener("click", closeDialog);
-	itemsList${index}.addEventListener("item-click", handleItemClick);
-
-	async function loadSuggestions() {
+	const loadSuggestions = async () => {
 		const response = await fetch("../assets/data/products.json");
 		const products = await response.json();
 		const query = valueHelpInput${index}.value.toLowerCase();
@@ -202,12 +194,12 @@ export const InputWithVHD: StoryFn = () => html`
 			valueHelpInput${index}.removeChild(item);
 		});
 		suggestionItems.forEach((item) => {
-			let li = document.createElement("ui5-suggestion-item");
+			const li = document.createElement("ui5-suggestion-item");
 			li.text = item;
 			valueHelpInput${index}.appendChild(li);
 		});
 	}
-	function showDialog() {
+	const showDialog = () => {
 		dialogSearchInput${index}.value = valueHelpInput${index}.value;
 		loadList();
 		if (screen.width <= 768) {
@@ -218,10 +210,10 @@ export const InputWithVHD: StoryFn = () => html`
 		dialog${index}.shadowRoot.querySelector(".ui5-popup-content").style.padding = 0;
 		dialog${index}.shadowRoot.querySelector(".ui5-popup-content").style.height = "100vw";
 	}
-	function closeDialog() {
+	const closeDialog = () => {
 		dialog${index}.close();
 	}
-	async function loadList() {
+	const loadList = async () => {
 		const response = await fetch("../assets/data/products.json");
 		const products = await response.json();
 		const query = dialogSearchInput${index}.value.toLowerCase();
@@ -235,22 +227,30 @@ export const InputWithVHD: StoryFn = () => html`
 				return a.name.localeCompare(b.name);
 			})
 			.forEach((item) => {
-				let li = document.createElement("ui5-li");
+				const li = document.createElement("ui5-li");
 				li.innerHTML = item.name;
 				li.image = item.productPicUrl;
 				li.description = item.productId;
 				itemsList${index}.appendChild(li);
 			});
 	}
-	function handleItemClick(event) {
-		let item = event.detail.item;
+	const handleItemClick = event => {
+		const item = event.detail.item;
 		valueHelpInput${index}.setAttribute("value", item.innerHTML);
 		dialog${index}.close();
 	}
-	function clearQuery() {
+	const clearQuery = () => {
 		dialogSearchInput${index}.setAttribute("value", "");
 		loadList();
 	}
+
+	valueHelpInput${index}.addEventListener("input", loadSuggestions);
+	valueHelpIcon${index}.addEventListener("click", showDialog);
+	dialogSearchInput${index}.addEventListener("change", loadList);
+	dialogSearchIcon${index}.addEventListener("click", loadList);
+	clearButton${index}.addEventListener("click", clearQuery);
+	cancelButton${index}.addEventListener("click", closeDialog);
+	itemsList${index}.addEventListener("item-click", handleItemClick);
 </script>
 `;
 InputWithVHD.parameters = {
