@@ -100,7 +100,6 @@ class SegmentedButton extends UI5Element {
 	 * <ul>
 	 * <li><code>Single</code></li>
 	 * <li><code>Multi</code></li>
-	 * <li><code>ZeroOrSingle</code></li>
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.SegmentedButtonMode}

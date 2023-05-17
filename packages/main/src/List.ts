@@ -183,7 +183,7 @@ type ClickEventDetail = CloseEventDetail;
 /**
  * Fired when the <code>Toggle</code> button of any item is clicked.
  * <br><br>
- * <b>Note:</b> This event is only applicable to list that can be toggled (such as notification group list items).
+ * <b>Note:</b> This event is only applicable to list items that can be toggled (such as notification group list items).
  *
  * @event sap.ui.webc.main.List#item-toggle
  * @param {HTMLElement} item the toggled item.
