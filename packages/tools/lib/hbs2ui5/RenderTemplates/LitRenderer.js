@@ -8,6 +8,7 @@ const tsImports = (controlName, hasTypes) => {
 	return `import type UI5Element from "${importPrefix}UI5Element.js";
 	${importForControl(controlName, hasTypes)}
 	import type { ClassMapValue } from "${importPrefix}types.js";
+	import type { TemplateResult } from "lit-html";
 	`;
 }
 const importForControl = (controlName, hasTypes) => {
@@ -32,6 +33,7 @@ import { html, svg, repeat, classMap, styleMap, ifDefined, unsafeHTML, scopeTag 
 ${tsImports(controlName, hasTypes)}
 ${litTemplate}
 
+export { TemplateResult };
 export default block0;`;
 };
 

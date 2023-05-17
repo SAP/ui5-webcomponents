@@ -56,7 +56,7 @@ HTMLLitVisitor.prototype.Program = function(program) {
 	this.debug && this.blockByNumber.push(key);
 
 	// this.blocks[this.currentKey()] = "function " + this.currentKey() + ` (this: any, ` + this.blockParametersDefinition.join(", ") + ") { ";
-	this.blocks[this.currentKey()] = `function ${this.currentKey()} (${this.blockParametersDefinition.join(", ")}) { `;
+	this.blocks[this.currentKey()] = `function ${this.currentKey()} (${this.blockParametersDefinition.join(", ")}): TemplateResult { `;
 
 	if (this.keys.length > 1) { //it's a nested block
 		this.blocks[this.prevKey()] += this.currentKey() + ".call(" + this.blockParametersUsage.join(", ") + ")";
