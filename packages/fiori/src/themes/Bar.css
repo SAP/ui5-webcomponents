@@ -26,7 +26,7 @@
 }
 
 .ui5-bar-root .ui5-bar-content-container {
-	min-width: 29%; /* Remaining space after removing paddings and margins */
+	min-width: calc(30% - 4rem); /* Remaining space after removing paddings and margins */
 }
 
 .ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
