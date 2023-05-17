@@ -199,14 +199,14 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
-		const pressedItems = this.pressedItems;
-		const selectedIndex = this._selectedItem ? pressedItems.indexOf(this._selectedItem) : -1;
+		const selectedItems = this.pressedItems;
+		const selectedIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
 
-		if (this._selectedItem && pressedItems.length > 1) {
-			pressedItems.splice(selectedIndex, 1);
+		if (this._selectedItem && selectedItems.length > 1) {
+			selectedItems.splice(selectedIndex, 1);
 		}
 
-		const pressedItem = pressedItems.pop() || this.items[0];
+		const pressedItem = selectedItems.pop() || this.items[0];
 
 		switch (this.mode) {
 		case SegmentedButtonMode.Single:
