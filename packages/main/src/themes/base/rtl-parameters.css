@@ -42,4 +42,7 @@
 	--_ui5_menu_submenu_margin_offset: 0 -0.25rem;
 	--_ui5_menu_submenu_placement_type_left_margin_offset: 0 0.25rem;
 	--_ui5-menu_item_icon_float: left;
+
+	--_ui5_progress_indicator_bar_border_radius: 0.5rem;
+    --_ui5_progress_indicator_remaining_bar_border_radius: 0.25rem;
 }
