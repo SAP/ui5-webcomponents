@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.3](https://github.com/SAP/ui5-webcomponents/compare/v1.13.2...v1.13.3) (2023-05-18)
+
+
+### Bug Fixes
+
+* **framework:** store shared resources as `meta` tag within the `head` ([#7051](https://github.com/SAP/ui5-webcomponents/issues/7051)) ([d21e38e](https://github.com/SAP/ui5-webcomponents/commit/d21e38ebbede23d9ffa2f2c63f75ce84a58744b0))
+
+
+
+
+
 ## [1.13.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.1...v1.13.2) (2023-05-15)
 
 
