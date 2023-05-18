@@ -345,6 +345,12 @@ class Menu extends UI5Element {
 			if (item.item._subMenu) {
 				item.item._subMenu.busy = item.item.busy;
 				item.item._subMenu.busyDelay = item.item.busyDelay;
+				const subMenu = item.item._subMenu;
+				subMenu.innerHTML = "";
+				for (let i = 0; i < item.item.items.length; ++i) {
+					const menuItem = item.item.items[i].cloneNode(true);
+					subMenu.appendChild(menuItem);
+				}
 			}
 		});
 	}
@@ -457,6 +463,10 @@ class Menu extends UI5Element {
 	}
 
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
+		const mainMenu = this._findTopLevelMenu(item);
+		mainMenu.fireEvent("before-open", {
+			item,
+		});
 		item._subMenu!.showAt(opener);
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
@@ -579,13 +589,8 @@ class Menu extends UI5Element {
 				this._popover!.close();
 			} else {
 				// find top-level menu and redirect event to it
-				let parentMenu = item.parentElement as Menu;
-				while (parentMenu._parentMenuItem) {
-					parentMenu._parentMenuItem._preventSubMenuClose = false;
-					this._closeItemSubMenu(parentMenu._parentMenuItem);
-					parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
-				}
-				parentMenu._itemClick(e);
+				const mainMenu = this._findTopLevelMenu(item);
+				mainMenu._itemClick(e);
 			}
 		} else if (isPhone()) {
 			// prepares and opens sub-menu on phone
@@ -594,6 +599,17 @@ class Menu extends UI5Element {
 			// prepares and opens sub-menu on tablet
 			this._prepareSubMenuDesktopTablet(item, opener, actionId);
 		}
+	}
+
+	_findTopLevelMenu(item: MenuItem) {
+		let parentMenu = item.parentElement as Menu;
+		while (parentMenu._parentMenuItem) {
+			parentMenu._parentMenuItem._preventSubMenuClose = false;
+			this._closeItemSubMenu(parentMenu._parentMenuItem);
+			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
+		}
+
+		return parentMenu;
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
