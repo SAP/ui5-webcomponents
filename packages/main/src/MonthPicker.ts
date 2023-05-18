@@ -50,7 +50,7 @@ type Month = {
 	classes: string,
 }
 
-type MothInterval = Array<Array<Month>>;
+type MonthInterval = Array<Array<Month>>;
 
 type MonthPickerChangeEventDetail = {
 	timestamp: number,
@@ -108,7 +108,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	selectedDates!: Array<number>;
 
 	@property({ type: Object, multiple: true })
-	_months!: MothInterval;
+	_months!: MonthInterval;
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden!: boolean;
@@ -141,7 +141,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const monthsNames = localeData.getMonthsStandAlone("wide", this._primaryCalendarType);
 
-		const months: MothInterval = [];
+		const months: MonthInterval = [];
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
 		const maxDate = this._maxDate; // store the value of the expensive getter
@@ -205,17 +205,17 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isSpace(e)) {
 			e.preventDefault();
 		} else if (isLeft(e)) {
-			this._modifyTimestampBy(-1);
+			this._modifyTimestampBy(-1, true);
 		} else if (isRight(e)) {
-			this._modifyTimestampBy(1);
+			this._modifyTimestampBy(1, true);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-ROW_SIZE);
+			this._modifyTimestampBy(-ROW_SIZE, true);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(ROW_SIZE);
+			this._modifyTimestampBy(ROW_SIZE, true);
 		} else if (isPageUp(e)) {
-			this._modifyTimestampBy(-PAGE_SIZE);
+			this._modifyTimestampBy(-PAGE_SIZE, true);
 		} else if (isPageDown(e)) {
-			this._modifyTimestampBy(PAGE_SIZE);
+			this._modifyTimestampBy(PAGE_SIZE, true);
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
@@ -255,11 +255,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * Modifies timestamp by a given amount of months and,
 	 * if necessary, loads the prev/next page.
 	 * @param { number } amount
+	 * @param { boolean } isPageUpOrPageDown - whether the method is called when the date is being modified by the PageUp/PageDown keys/logic
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number) {
+	_modifyTimestampBy(amount: number, isPageUpOrPageDown?: boolean) {
 		// Modify the current timestamp
-		this._safelyModifyTimestampBy(amount, "month");
+		this._safelyModifyTimestampBy(amount, "month", isPageUpOrPageDown);
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
@@ -312,7 +313,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampBy(-PAGE_SIZE);
+		this._modifyTimestampBy(-PAGE_SIZE, true);
 	}
 
 	/**
@@ -321,7 +322,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(PAGE_SIZE);
+		this._modifyTimestampBy(PAGE_SIZE, true);
 	}
 
 	_isOutOfSelectableRange(date: CalendarDate, minDate: CalendarDate, maxDate: CalendarDate): boolean {

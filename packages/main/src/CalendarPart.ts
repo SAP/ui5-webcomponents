@@ -1,7 +1,7 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
-import modifyDateBy, { modifyDateByClick } from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
+import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getTodayUTCTimestamp from "@ui5/webcomponents-localization/dist/dates/getTodayUTCTimestamp.js";
 import DateComponentBase from "./DateComponentBase.js";
 
@@ -88,23 +88,11 @@ class CalendarPart extends DateComponentBase {
 	 * Modify a timestamp by a certain amount of days/months/years and enforce limits
 	 * @param amount
 	 * @param unit
+	 * @param isPageUpOrPageDown whether the method is called when the date is being modified by the PageUp/PageDown keys/logic
 	 * @protected
 	 */
-	_safelyModifyTimestampBy(amount: number, unit: string) {
-		const newDate = modifyDateBy(this._calendarDate, amount, unit);
-		this._safelySetTimestamp(newDate.valueOf() / 1000);
-	}
-
-	/**
-	 * Modify a timestamp by a certain amount of days/months/years and enforce limits. <br>
-	 * <b>Note:</b> Used in the case when user is navigating with the mouse through the arrows of the Calendar header.
-	 *
-	 * @param amount
-	 * @param unit
-	 * @protected
-	 */
-	_safelyModifyTimestampByClick(amount: number, unit: string) {
-		const newDate = modifyDateByClick(this._calendarDate, amount, unit);
+	_safelyModifyTimestampBy(amount: number, unit: string, isPageUpOrPageDown?: boolean) {
+		const newDate = modifyDateBy(this._calendarDate, amount, unit, isPageUpOrPageDown);
 		this._safelySetTimestamp(newDate.valueOf() / 1000);
 	}
 

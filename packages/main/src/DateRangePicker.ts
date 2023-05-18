@@ -253,9 +253,9 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	async _modifyDateValue(amount: number, unit: string) {
+	async _modifyDateValue(amount: number, unit: string, isPageUpOrPageDown?: boolean) {
 		if (!this._endDateTimestamp) { // If empty or only one date -> treat as datepicker entirely
-			return super._modifyDateValue(amount, unit);
+			return super._modifyDateValue(amount, unit, isPageUpOrPageDown);
 		}
 
 		const input = this._getInput();
@@ -263,14 +263,14 @@ class DateRangePicker extends DatePicker {
 		let newValue: string;
 
 		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the second date
-			const startDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000), amount, unit, this._minDate, this._maxDate);
+			const startDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000), amount, unit, isPageUpOrPageDown, this._minDate, this._maxDate);
 			const newStartDateTimestamp = startDateModified.valueOf() / 1000;
 			if (newStartDateTimestamp > this._endDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
 				caretPos += Math.ceil(this.value.length / 2);
 			}
 			newValue = this._buildValue(newStartDateTimestamp, this._endDateTimestamp); // the value will be normalized so we don't try to order them here
 		} else {
-			const endDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._endDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
+			const endDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._endDateTimestamp * 1000), amount, unit, isPageUpOrPageDown, this._minDate, this._maxDate);
 			const newEndDateTimestamp = endDateModified.valueOf() / 1000;
 			newValue = this._buildValue(this._startDateTimestamp, newEndDateTimestamp); // the value will be normalized so we don't try to order them here
 			if (newEndDateTimestamp < this._startDateTimestamp!) { // dates flipped -> move the caret to the same position but on the first date

@@ -581,17 +581,17 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isDown(e)) {
 			this._modifyTimestampBy(7, "day");
 		} else if (isPageUp(e)) {
-			this._modifyTimestampBy(-1, "month");
+			this._modifyTimestampBy(-1, "month", true);
 		} else if (isPageDown(e)) {
-			this._modifyTimestampBy(1, "month");
+			this._modifyTimestampBy(1, "month", true);
 		} else if (isPageUpShift(e) || isPageUpAlt(e)) {
-			this._modifyTimestampBy(-1, "year");
+			this._modifyTimestampBy(-1, "year", true);
 		} else if (isPageDownShift(e) || isPageDownAlt(e)) {
-			this._modifyTimestampBy(1, "year");
+			this._modifyTimestampBy(1, "year", true);
 		} else if (isPageUpShiftCtrl(e)) {
-			this._modifyTimestampBy(-10, "year");
+			this._modifyTimestampBy(-10, "year", true);
 		} else if (isPageDownShiftCtrl(e)) {
-			this._modifyTimestampBy(10, "year");
+			this._modifyTimestampBy(10, "year", true);
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
@@ -673,7 +673,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampByClick(-1, "month");
+		this._modifyTimestampBy(-1, "month");
 	}
 
 	/**
@@ -681,33 +681,19 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampByClick(1, "month");
+		this._modifyTimestampBy(1, "month");
 	}
 
 	/**
 	 * Modifies the timestamp by a certain amount of days/months/years.
 	 * @param { number } amount
 	 * @param { string } unit
+	 * @param { boolean } isPageUpOrPageDown whether the method is called when the date is being modified by the PageUp/PageDown keys
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, unit: string) {
+	_modifyTimestampBy(amount: number, unit: string, isPageUpOrPageDown?: boolean) {
 		// Modify the current timestamp
-		this._safelyModifyTimestampBy(amount, unit);
-		this._updateSecondTimestamp();
-
-		// Notify the calendar to update its timestamp
-		this.fireEvent<DayPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
-	}
-
-	/**
-	 * <b>Note:</b> Used in the case when user is navigating with the mouse through the arrows of the Calendar header.
-	 * @param { number } amount
-	 * @param { string } unit
-	 * @private
-	 */
-	_modifyTimestampByClick(amount: number, unit: string) {
-		// Modify the current timestamp
-		this._safelyModifyTimestampByClick(amount, unit);
+		this._safelyModifyTimestampBy(amount, unit, isPageUpOrPageDown);
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
