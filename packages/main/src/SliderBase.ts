@@ -55,7 +55,7 @@ type DirectionStart = "left" | "right";
  * @public
  */
 @event("input")
-class SliderBase extends UI5Element {
+abstract class SliderBase extends UI5Element {
 	/**
 	 * Defines the minimum value of the slider.
 	 *
@@ -207,6 +207,15 @@ class SliderBase extends UI5Element {
 	_onmousedown(e: TouchEvent | MouseEvent) {} // eslint-disable-line
 
 	_handleActionKeyPress(e: Event) {} // eslint-disable-line
+
+	// used in base template, but implemented in subclasses
+	abstract styles: {
+		label: object,
+		labelContainer: object,
+	};
+
+	abstract tickmarksObject: any;
+	abstract _ariaLabelledByText: string;
 
 	static get ACTION_KEYS() {
 		return [

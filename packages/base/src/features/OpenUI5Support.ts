@@ -21,6 +21,7 @@ type OpenUI5CoreConfiguration = {
 	getTheme: () => string,
 	getThemeRoot: () => string,
 	getRTL: () => string,
+	getTimezone: () => string,
 	getCalendarType: () => string,
 	getLocale: () => string,
 	getFormatSettings: () => {
@@ -77,6 +78,7 @@ class OpenUI5Support {
 			theme: config.getTheme(),
 			themeRoot: config.getThemeRoot(),
 			rtl: config.getRTL(),
+			timezone: config.getTimezone(),
 			calendarType: config.getCalendarType(),
 			formatSettings: {
 				firstDayOfWeek: LocaleData ? LocaleData.getInstance(config.getLocale()).getFirstDayOfWeek() : undefined,

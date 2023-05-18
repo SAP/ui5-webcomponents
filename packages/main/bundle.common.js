@@ -105,17 +105,22 @@ window.sanitizeHTML = sanitizeHTML;
 window.URLListValidator = URLListValidator;
 
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
-import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
+import { getEffectiveIconCollection } from "@ui5/webcomponents-base/config/Icons.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
-import { _getRegisteredNames as getIconNames } from  "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
+import { _getRegisteredNames as getIconNames, getIconAccessibleName } from  "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 import applyDirection from "@ui5/webcomponents-base/dist/locale/applyDirection.js";
 import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/directionChange.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import { ignoreCustomElements, shouldIgnoreCustomElement } from "@ui5/webcomponents-base/dist/IgnoreCustomElements.js";
+ignoreCustomElements("app-");
+ignoreCustomElements("my-");
 
 // SAP Icons
 import accept from "@ui5/webcomponents-icons/dist/accept.js";
@@ -138,11 +143,14 @@ const testAssets = {
 		setAnimationMode,
 		getTheme,
 		setTheme,
+		isLegacyThemeFamily,
 		getLanguage,
 		setLanguage,
 		setNoConflict,
 		getRTL,
 		getFirstDayOfWeek,
+		getTimezone,
+		setTimezone,
 	},
 	invisibleMessage : {
 		announce,
@@ -155,9 +163,13 @@ const testAssets = {
 	attachThemeLoaded,
 	detachThemeLoaded,
 	getIconNames,
+	getIconAccessibleName,
 	renderFinished,
 	defaultTexts,
 	getExportedIconsValues: () => icons,
+	getEffectiveIconCollection,
+	ignoreCustomElements,
+	shouldIgnoreCustomElement,
 };
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,
@@ -219,7 +231,6 @@ registerIconLoader("my-custom-icons", () => {
 		},
 	});
 });
-
 
 window["sap-ui-webcomponents-bundle"] = testAssets;
 

@@ -409,7 +409,7 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date and time
 	 * according to the <code>formatPattern</code> property of the TimePicker instance
-	 * @param {object} date A Java Script date object to be formatted as string
+	 * @param {Date} date A Java Script date object to be formatted as string
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#formatValue
@@ -435,7 +435,7 @@ class TimePickerBase extends UI5Element {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value as string, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value as string);
 	}
 
 	normalizeValue(value: string) {
@@ -443,11 +443,11 @@ class TimePickerBase extends UI5Element {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean));
+		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		const date = this.getFormat().parse(this._effectiveValue as string, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const date = this.getFormat().parse(this._effectiveValue as string) as Date;
 		if (!date) {
 			return;
 		}

@@ -43,7 +43,7 @@
 			mode="SingleSelectAuto"
 			separators="None"
 			@mousedown="{{_itemMousedown}}"
-			@ui5-selection-change="{{_handleItemPress}}"
+			@ui5-item-click="{{_handleItemPress}}"
 		>
 			{{#each _syncedOptions}}
 				<ui5-li

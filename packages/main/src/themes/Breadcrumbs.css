@@ -1,3 +1,8 @@
+:host(:not([hidden])) {
+	display: block;
+	width: 100%;
+}
+
 .ui5-breadcrumbs-root {
     white-space: nowrap;
     outline: none;

@@ -42,10 +42,7 @@ const getScripts = (options) => {
 	}
 
 	let eslintConfig;
-	if (fs.existsSync("config/.eslintrc.js")) {
-		// old project setup where config file is in separate folder
-		eslintConfig = "--config config/.eslintrc.js";
-	} else if (fs.existsSync(".eslintrc.js")) {
+	if (fs.existsSync(".eslintrc.js") || fs.existsSync(".eslintrc.cjs")) {
 		// preferred way of custom configuration in root project folder
 		eslintConfig = "";
 	} else {
@@ -55,8 +52,8 @@ const getScripts = (options) => {
 
 	const scripts = {
 		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
-		lint: `${tsCrossEnv} eslint . ${eslintConfig}`,
-		lintfix: `${tsCrossEnv} eslint . ${eslintConfig} --fix`,
+		lint: `eslint . ${eslintConfig}`,
+		lintfix: `eslint . ${eslintConfig} --fix`,
 		prepare: {
 			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
@@ -65,7 +62,7 @@ const getScripts = (options) => {
 		typescript: tsCommand,
 		build: {
 			default: "nps prepare lint build.bundle",
-			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
+			templates: `mkdirp dist/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
 				default: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,

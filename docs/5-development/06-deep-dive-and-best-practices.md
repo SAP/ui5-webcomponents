@@ -1396,3 +1396,6 @@ First, we get a reference to the static area item's shadow root in `staticAreaIt
 by using the attribute selector (`[ui5-popover]`), as is the best practice. See [Tag](#metadata_tag) in the [Metadata deep dive](#metadata) section above. 
 
 Also, note that no matter how many times you call `getStaticAreaItemDomRef`, the static area item will be created only the first time.
+
+
+Next: [Typescript In UI5 Web Components](./07-typescript-in-UI5-Web-Components.md)

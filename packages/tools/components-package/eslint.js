@@ -1,4 +1,6 @@
-const tsMode = process.env.UI5_TS === "true";
+const fs = require("fs");
+const path = require("path");
+const tsMode = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
 
 /**
  * Typescript Rules

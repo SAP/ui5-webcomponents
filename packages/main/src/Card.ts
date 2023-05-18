@@ -8,6 +8,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import CardTemplate from "./generated/templates/CardTemplate.lit.js";
 import Icon from "./Icon.js";
+import type CardHeader from "./CardHeader.js";
 
 import {
 	ARIA_ROLEDESCRIPTION_CARD,
@@ -24,13 +25,9 @@ import cardCss from "./generated/themes/Card.css.js";
  * The <code>ui5-card</code> is a component that represents information in the form of a
  * tile with separate header and content areas.
  * The content area of a <code>ui5-card</code> can be arbitrary HTML content.
- * The header can be used through slot <code>header</code>. For which there is a <code>ui5-card-header</code> component to achieve the card look and fill.
+ * The header can be used through slot <code>header</code>. For which there is a <code>ui5-card-header</code> component to achieve the card look and feel.
  *
  * Note: We recommend the usage of <code>ui5-card-header</code> for the header slot, so advantage can be taken for keyboard handling, styling and accessibility.
- *
- * <h3>CSS Shadow Parts</h3>
- *
- * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -95,14 +92,14 @@ class Card extends UI5Element {
 	 * Defines the header of the component.
 	 * <br><br>
 	 * <b>Note:</b> Use <code>ui5-card-header</code> for the intended design.
-	 * @type {HTMLElement[]}
+	 * @type {sap.ui.webc.main.ICardHeader[]}
 	 * @since 1.0.0-rc.15
 	 * @slot header
 	 * @name sap.ui.webc.main.Card.prototype.header
 	 * @public
 	*/
-	@slot()
-	header!: Array<HTMLElement>;
+	@slot({ type: HTMLElement, invalidateOnChildChange: true })
+	header!: Array<CardHeader>;
 
 	static i18nBundle: I18nBundle;
 
@@ -110,6 +107,7 @@ class Card extends UI5Element {
 		return {
 			root: {
 				"ui5-card-root": true,
+				"ui5-card--interactive": this._hasHeader && this.header[0].interactive,
 				"ui5-card--nocontent": !this.content.length,
 			},
 		};

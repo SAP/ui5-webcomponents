@@ -601,6 +601,7 @@ class MultiComboBox extends UI5Element {
 
 		deletingItem.selected = false;
 		this._deleting = true;
+		this._preventTokenizerToggle = true;
 
 		this.fireSelectionChange();
 	}
@@ -1400,7 +1401,9 @@ class MultiComboBox extends UI5Element {
 
 	handleCancel() {
 		this._itemsBeforeOpen.forEach(item => {
-			item.ref.selected = item.selected;
+			if (item.ref instanceof MultiComboBoxItem) {
+				item.ref.selected = item.selected;
+			}
 		});
 
 		this.togglePopover();

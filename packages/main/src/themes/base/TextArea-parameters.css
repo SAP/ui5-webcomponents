@@ -7,7 +7,6 @@
 	--_ui5_textarea_error_placeholder_color: var(--sapField_PlaceholderTextColor);
 	--_ui5_textarea_error_hover_background_color: var(--sapField_Hover_Background);
 	--_ui5_textarea_hover_border: var(--sapField_BorderWidth) var(--sapField_BorderStyle) var(--sapField_Hover_BorderColor);
-	--_ui5_textarea_hover_box_shadow: none;
 	--_ui5_textarea_error_warning_border_style: solid;
 	--_ui5_textarea_disabled_opacity: 0.4;
 	--_ui5_textarea_line_height: 1.4;

@@ -89,6 +89,17 @@ const PRESENTATION_ROLE = "presentation";
  * <code>&lt;ui5-icon name="tnt/antenna">&lt;/ui5-icon></code><br>
  * <code>&lt;ui5-icon name="business-suite/ab-testing">&lt;/ui5-icon></code>
  *
+ * <br><br>
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-icon</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>root - Used to style the outermost wrapper of the <code>ui5-icon</code></li>
+ * </ul>
+ *
+ * <br><br>
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
@@ -117,7 +128,9 @@ const PRESENTATION_ROLE = "presentation";
 	styles: iconCss,
 })
 /**
- * Fired on mouseup, space and enter if icon is interactive
+ * Fired on mouseup, <code>SPACE</code> and <code>ENTER</code>.
+ * - on mouse click, the icon fires native <code>click</code> event
+ * - on <code>SPACE</code> and <code>ENTER</code>, the icon fires custom <code>click</code> event
  * @private
  * @since 1.0.0-rc.8
  */
@@ -282,9 +295,8 @@ class Icon extends UI5Element {
 	viewBox?: string;
 	customSvg?: object;
 
-	_onclick?: ((event: MouseEvent) => void) | undefined;
-	_onfocusout?: ((event: FocusEvent) => void) | undefined;
-	_onfocusin?: ((event: FocusEvent) => void) | undefined;
+	_onfocusout?: ((event: FocusEvent) => void);
+	_onfocusin?: ((event: FocusEvent) => void);
 
 	_onFocusInHandler() {
 		if (this.interactive) {
@@ -314,12 +326,6 @@ class Icon extends UI5Element {
 		if (this.interactive && isSpace(e)) {
 			this.fireEvent("click");
 		}
-	}
-
-	_onClickHandler(e: MouseEvent) {
-		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-		e.stopPropagation();
-		this.fireEvent("click");
 	}
 
 	/**
@@ -399,7 +405,6 @@ class Icon extends UI5Element {
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
 
-		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
 		this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
 		this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
 

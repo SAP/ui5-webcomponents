@@ -1,14 +1,14 @@
-import { html } from "lit-html";
+import { html } from "lit";
 import type { Meta, StoryFn } from "@storybook/web-components";
-
+import { ifDefined } from "lit/directives/if-defined.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
 import { DocsPage } from "../../../.storybook/docs";
-
-// @ts-ignore
-import type MessageStrip from "@ui5/webcomponents/dist/MessageStrip.js";
+import MessageStrip from "@ui5/webcomponents/dist/MessageStrip.js";
+import MessageStripDesign from "@ui5/webcomponents/dist/types/MessageStripDesign.js";
 
 const component = "ui5-message-strip";
 
@@ -23,87 +23,67 @@ export default {
     argTypes,
 } as Meta<MessageStrip>;
 
-const Template: UI5StoryArgs<MessageStrip, StoryArgsSlots> = (args) => html`<div></div>`;
-
-
-export const Template0: StoryFn = () => html`
-<h3>MessageStrip</h3>
-	<div class="snippet">
-		<ui5-message-strip class="samples-margin-bottom" design="Information">Information MessageStrip</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Positive">Positive MessageStrip</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Negative">Negative MessageStrip</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Warning">Warning MessageStrip</ui5-message-strip>
-	</div>
+const Template: UI5StoryArgs<MessageStrip, StoryArgsSlots> = (args) => 
+html`<ui5-message-strip 
+	design="${ifDefined(args.design)}"
+	?hide-icon="${ifDefined(args.hideIcon)}"
+	?hide-close-button="${ifDefined(args.hideCloseButton)}"
+>
+	${unsafeHTML(args.icon)}
+	${unsafeHTML(args.default)}
+</ui5-message-strip>
 `;
 
-
-export const Template1: StoryFn = () => html`
-<h3>MessageStrip With No Close Button</h3>
-	<div class="snippet">
-		<ui5-message-strip class="samples-margin-bottom" design="Information" hide-close-button="">Information MessageStrip With No Close Button</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Positive" hide-close-button="">Positive MessageStrip With No Close Button</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Negative" hide-close-button="">Negative MessageStrip With No Close Button</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Warning" hide-close-button="">Warning MessageStrip With No Close Button</ui5-message-strip>
-	</div>
-`;
-
-
-export const Template2: StoryFn = () => html`
-<h3>MessageStrip With No Icon</h3>
-	<div class="snippet">
-		<ui5-message-strip class="samples-margin-bottom" design="Information" hide-icon="">Information MessageStrip With No Icon</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Positive" hide-icon="">Positive MessageStrip With No Icon</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Negative" hide-icon="">Negative MessageStrip With No Icon</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom" design="Warning" hide-icon="">Warning MessageStrip With No Icon</ui5-message-strip>
-	</div>
-`;
-
-
-export const Template3: StoryFn = () => html`
-<h3>Dynamic Message Strip Generator</h3>
-	<div class="snippet">
-		<div class="wrapper">
-			<ui5-button id="button1">Generate MessageStrip</ui5-button>
-		</div>
-		<script>
-			const container = document.querySelector(".wrapper");
-			const button =  document.querySelector("#button1");
-			button.addEventListener("click", function(event) {
-				let invisibleMessage =  window["sap-ui-webcomponents-bundle"].invisibleMessage;
-				const messageStrip = document.querySelector("#msgStrip");
-				const types = ["Information", "Warning", "Negative", "Positive"];
-				const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco.";
-				let type = types[Math.round(Math.random() * 3)];
-				if (messageStrip) {
-					container.removeChild(messageStrip);
-				}
-				let generatedMsgStrip = document.createElement("ui5-message-strip");
-				generatedMsgStrip.id = "msgStrip";
-				generatedMsgStrip.design = type;
-				generatedMsgStrip.textContent = text;
-				invisibleMessage.announce(\`New Information Bar of type \${type} \${text}\`, "Assertive");
-				container.appendChild(generatedMsgStrip);
-			});
-		</script>
-	</div>
-`;
-Template3.parameters = {
-	docs: {
-		story: {
-			// Opt-out of inline rendering
-			inline: false,
-		},
-	}
+export const Basic = Template.bind({});
+Basic.args = {
+  design: MessageStripDesign.Information,
+  default: "Information MessageStrip",
 };
 
-export const Template4: StoryFn = () => html`
-<h3>Custom MessageStrip</h3>
-	<div class="snippet">
-		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Information" hide-icon="" hide-close-button="">You have new message.</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Positive" hide-close-button="">Successfull login!</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Negative" hide-icon="">Access denied!</ui5-message-strip>
-		<ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Warning">Update is required.</ui5-message-strip>
-        <ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Warning"><ui5-icon name="palette" slot="icon"></ui5-icon>Custom icon</ui5-message-strip>
-        <ui5-message-strip class="samples-margin-bottom samples-vertical-align" style="width: 200px;" design="Positive"><img src="../assets/images/loading.gif" width="16" height="16" slot="icon">Custom animated gif</ui5-message-strip>
-	</div>
+export const MessageStripWithNoCloseButton = Template.bind({});
+MessageStripWithNoCloseButton.args = {
+  design: MessageStripDesign.Positive,
+  hideCloseButton: true,
+  default: "Positive MessageStrip With No Close Button",
+};
+
+export const MessageStripWithNoIcon = Template.bind({});
+MessageStripWithNoIcon.args = {
+  design: MessageStripDesign.Warning,
+  hideIcon: true,
+  default: "Warning MessageStrip With No Icon",
+};
+
+export const DynamicMessageStrip: StoryFn = () => html`
+<div class="wrapper">
+	<ui5-button id="button1">Generate MessageStrip</ui5-button>
+</div>
+<script>
+	const container = document.querySelector(".wrapper");
+	const button =  document.querySelector("#button1");
+	button.addEventListener("click", function(event) {
+		let invisibleMessage =  window["sap-ui-webcomponents-bundle"].invisibleMessage;
+		const messageStrip = document.querySelector("#msgStrip");
+		const types = ["Information", "Warning", "Negative", "Positive"];
+		const text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam, quis nostrud exercitation ullamco.";
+		let type = types[Math.round(Math.random() * 3)];
+		if (messageStrip) {
+			container.removeChild(messageStrip);
+		}
+		let generatedMsgStrip = document.createElement("ui5-message-strip");
+		generatedMsgStrip.id = "msgStrip";
+		generatedMsgStrip.design = type;
+		generatedMsgStrip.textContent = text;
+		invisibleMessage.announce(\`New Information Bar of type \${type} \${text}\`, "Assertive");
+		container.appendChild(generatedMsgStrip);
+	});
+</script>
 `;
+
+
+export const CustomMessageStrip = Template.bind({});
+CustomMessageStrip.args = {
+  design: MessageStripDesign.Negative,
+  icon: `<img src="../assets/images/loading.gif" width="16" height="16" slot="icon">`,
+  default: "Custom MessageStrip with animated gif",
+};

@@ -2,7 +2,7 @@ import merge from "./thirdparty/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 import validateThemeRoot from "./validateThemeRoot.js";
-import type OpenUI5Support from "./features/OpenUI5Support";
+import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 import CalendarType from "./types/CalendarType.js";
@@ -16,6 +16,7 @@ type InitialConfig = {
 	themeRoot: string | undefined,
 	rtl: boolean | undefined,
 	language: string | undefined,
+	timezone: string | undefined,
 	calendarType: CalendarType | undefined,
 	noConflict: boolean,
 	formatSettings: FormatSettings,
@@ -28,6 +29,7 @@ let initialConfig: InitialConfig = {
 	themeRoot: undefined,
 	rtl: undefined,
 	language: undefined,
+	timezone: undefined,
 	calendarType: undefined,
 	noConflict: false, // no URL
 	formatSettings: {},
@@ -82,6 +84,15 @@ const getNoConflict = () => {
 const getCalendarType = () => {
 	initConfiguration();
 	return initialConfig.calendarType;
+};
+
+/**
+ * Returns the configured IANA timezone ID.
+ * @returns { String } the configured IANA timezone ID, e.g. "America/New_York"
+ */
+const getTimezone = () => {
+	initConfiguration();
+	return initialConfig.timezone;
 };
 
 const getFormatSettings = () => {
@@ -203,5 +214,6 @@ export {
 	getFetchDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
+	getTimezone,
 	getFormatSettings,
 };

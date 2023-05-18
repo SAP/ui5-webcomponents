@@ -1,7 +1,7 @@
 {
   "name": "@ui5/webcomponents-playground",
   "private": true,
-  "version": "1.12.0-rc.1",
+  "version": "1.13.1",
   "description": "UI5 Web Components Playground",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -15,15 +15,16 @@
     "url": "https://github.com/SAP/ui5-webcomponents.git"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^7.0.0-beta.45",
-    "@storybook/addon-essentials": "^7.0.0-beta.45",
-    "@storybook/addon-links": "^7.0.0-beta.45",
-    "@storybook/web-components": "^7.0.0-beta.45",
-    "@storybook/web-components-vite": "^7.0.0-beta.45",
+    "@storybook/addon-actions": "^7.0.2",
+    "@storybook/addon-essentials": "^7.0.2",
+    "@storybook/addon-links": "^7.0.2",
+    "@storybook/web-components": "^7.0.2",
+    "@storybook/web-components-vite": "^7.0.2",
     "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.11",
     "@whitespace/storybook-addon-html": "^5.1.0",
     "copy-and-watch": "^0.1.5",
-    "lit-html": "^2.2.7",
+    "lit": "^2.7.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.8.1",
     "react": "^18.2.0",
@@ -31,8 +32,9 @@
     "react-syntax-highlighter": "^15.5.0",
     "remark-gfm": "^3.0.1",
     "rimraf": "^3.0.2",
-    "storybook": "^7.0.0-beta.45",
-    "typescript": "^4.9.4"
+    "storybook": "^7.0.2",
+    "typescript": "^4.9.4",
+    "vite-node": "^0.29.8"
   },
   "scripts": {
     "build": "yarn install:dependencies && npm-run-all --parallel prepare:* && tsc && bundle exec jekyll build --source ./ --destination ./dist",
@@ -61,7 +63,7 @@
     "prepare:next:nojekyll": "copy-and-watch \"./.nojekyll\" \"./dist\"",
     "prepare:next:samples": "ts-node ./build-scripts-storybook/samples-prepare.ts",
     "prepare:next:manifest": "node ./build-scripts-storybook/parse-manifest.js",
-    "prepare:next:documentation": "node ./build-scripts-storybook/documentation-prepare.js",
+    "prepare:next:documentation": "vite-node ./build-scripts-storybook/documentation-prepare.ts",
     "storybook": "npm-run-all --parallel prepare:next:* && storybook dev -p 6006",
     "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && storybook build -o ./dist/_playground"
   }

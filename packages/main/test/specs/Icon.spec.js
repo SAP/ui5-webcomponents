@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Icon general interaction", () => {
 	before(async () => {
@@ -16,45 +16,37 @@ describe("Icon general interaction", () => {
 			"Built-in tooltip is correct");
 	});
 
-	it("Tests noConflict 'ui5-click' event is thrown for interactive icons", async () => {
-		const iconRoot = await browser.$("#interactive-icon").shadow$(".ui5-icon-root");
-		const input = await browser.$("#click-event");
+	it("Tests events 'click' and 'ui5-click' events", async () => {
+		// (1) on mouse click (no matter the noConflict mode), the icon fires the native "click" event
+		// (2) on SPACE and ENTER
+		// - noConflict: false - the icon fires "click" (custom event)
+		// - noConflict: true - the icon fires "click" and "ui5-click" (custom events)
 
-		await iconRoot.click();
-		assert.strictEqual(await input.getAttribute("value"), "1", "Mouse click throws event");
+		// Interactive icon
+		const interactiveIcon = await browser.$("#interactive-icon");
+		const inpClickRes = await browser.$("#click-event");
+		const inpUI5ClickRes = await browser.$("#ui5-click-event");
 
-		await iconRoot.keys("Enter");
-		assert.strictEqual(await input.getAttribute("value"), "2", "Enter throws event");
+		await interactiveIcon.click();
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "1", "The 'click' event is fired.");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "0", "The 'ui5-click' event is not fired on mouse click.");
 
-		await iconRoot.keys("Space");
-		assert.strictEqual(await input.getAttribute("value"), "3", "Space throws event");
-	});
+		await interactiveIcon.keys("Enter");
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "2", "Enter fires 'click'");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "1", "Enter fires 'ui5-click'");
 
-	it("Tests noConflict 'ui5-click' event is not thrown for non interactive icons", async () => {
-		const iconRoot = await browser.$("#non-interactive-icon");
-		const input = await browser.$("#click-event");
+		await interactiveIcon.keys("Space");
+		assert.strictEqual(await inpClickRes.getAttribute("value"), "3", "Space fires 'click'");
+		assert.strictEqual(await inpUI5ClickRes.getAttribute("value"), "2", "Space fires 'ui5-click'");
 
-		await iconRoot.click();
-		assert.strictEqual(await input.getAttribute("value"), "3", "Mouse click throws event");
+		// Non-interactive icon
+		const nonInteractiveIcon = await browser.$("#non-interactive-icon");
+		const inpClickRes2 = await browser.$("#click-event-2");
+		const inpUI5ClickRes2 = await browser.$("#ui5-click-event-2");
 
-		await iconRoot.keys("Enter");
-		assert.strictEqual(await input.getAttribute("value"), "3", "Enter throws event");
-
-		await iconRoot.keys("Space");
-		assert.strictEqual(await input.getAttribute("value"), "3", "Space throws event");
-	});
-
-	it("Tests native 'click' event thrown", async () => {
-		await browser.executeAsync(function(done) {
-			window["sap-ui-webcomponents-bundle"].configuration.setNoConflict(false);
-			done();
-		});
-
-		const icon = await browser.$("#myInteractiveIcon");
-		const input = await browser.$("#click-event-2");
-
-		await icon.click();
-		assert.strictEqual(await input.getAttribute("value"), "1", "Mouse click throws event");
+		await nonInteractiveIcon.click();
+		assert.strictEqual(await inpClickRes2.getAttribute("value"), "1", "The 'click' event is fired.");
+		assert.strictEqual(await inpUI5ClickRes2.getAttribute("value"), "0", "The 'ui5-click' event is not fired on mouse click..");
 	});
 
 	it("Tests the accessibility attributes", async () => {
@@ -97,8 +89,8 @@ describe("Icon general interaction", () => {
 		});
 		assert.strictEqual(actualExportedValues, expectedExportedValues, "Exported values are correct.");
 	});
-	it("Icon svg aria-label cleaned after name change", async () => {
 
+	it("Icon svg aria-label cleaned after name change", async () => {
 		// assert - initial SVG aria-label
 		let iconEl = await browser.$("#iconError");
 		let iconSVG = await browser.$("#iconError").shadow$(".ui5-icon-root");
@@ -119,6 +111,18 @@ describe("Icon general interaction", () => {
 		iconEl = await browser.$("#iconError");
 		iconSVG = await browser.$("#iconError").shadow$(".ui5-icon-root");
 		assert.equal(await iconSVG.getAttribute("aria-label"), null);
+	});
 
+	it("Tests getIconAccessibleName", async () => {
+		const expectedAccNames = ["Add", "Back to Top", "Collapse", "Download"];
+		const actualAccNames = await browser.executeAsync(async done => {
+			const values = await Promise.all(["add", "back-to-top", "collapse", "download"].map(iconName => {
+				return window["sap-ui-webcomponents-bundle"].getIconAccessibleName(iconName);
+			}));
+			done(values);
+		});
+
+		assert.strictEqual(actualAccNames.join(), expectedAccNames.join(),
+			"getIconAccessibleName returns the correct icon a11y names.");
 	});
 });

@@ -57,11 +57,11 @@
     min-height: 0;
 }
 
-[ui5-tree]::part(toggle-icon) {
+[ui5-tree-item]::part(toggle-icon) {
     color: var(--sapContent_NonInteractiveIconColor);
     flex-shrink: 0;
 }
 
-[ui5-tree]::part(icon) {
+[ui5-tree-item]::part(icon) {
     color: var(--_ui5_side_navigation_icon_color);
 }
