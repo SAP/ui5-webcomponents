@@ -1,18 +1,9 @@
-import type {
-    IApiReader,
-    IComponentAPI,
-    IComponentData,
-    IComponentProperty,
-} from "../ApiReader";
+import type { IApiReader, IComponentProperty } from "../ApiReader";
 import { InputType as IArgType } from "@storybook/types";
 import { ArgGenerator } from "./ArgGenerator";
 
 export class ArgPropertiesGenerator extends ArgGenerator {
     public fieldName = "properties";
-
-    protected extractData(componentApi: IComponentData): IComponentAPI[] {
-        return componentApi.properties;
-    }
 
     protected parseData(
         properties: IComponentProperty[],

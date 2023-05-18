@@ -1,4 +1,9 @@
-import type { IApiReader, IComponentAPI, IComponentData } from "../ApiReader";
+import type {
+    IApiReader,
+    IComponentAPI,
+    IComponentData,
+    IComponentUI5CustomData,
+} from "../ApiReader";
 import { InputType as IArgType } from "@storybook/types";
 
 export interface IGenerator {
@@ -9,7 +14,10 @@ export interface IGenerator {
 export class ArgGenerator implements IGenerator {
     public fieldName: string = "properties";
 
-    protected extractData?(componentApi: IComponentData): IComponentAPI[];
+    protected extractData(componentApi: IComponentData): IComponentAPI[] {
+        return componentApi[this.fieldName as keyof IComponentData] as IComponentAPI[];
+    }
+
     protected parseData?(
         data: any[],
         apiReader: IApiReader
@@ -29,6 +37,22 @@ export class ArgGenerator implements IGenerator {
         if (extendsComponent && extendsComponent !== "HTMLElement") {
             const parentSlots = this.generate(extendsComponent, apiReader);
             result = { ...parentSlots, ...result };
+        }
+
+        return result;
+    }
+
+    protected parseUI5CustomData(
+        data: IComponentUI5CustomData
+    ): Record<string, any> {
+        const result: Record<string, any> = {};
+
+        if (data.parameters) {
+            result.parameters = data.parameters;
+        }
+
+        if (data.returnValue) {
+            result.returnValue = data.returnValue;
         }
 
         return result;

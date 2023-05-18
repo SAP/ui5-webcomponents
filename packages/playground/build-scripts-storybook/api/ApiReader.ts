@@ -9,6 +9,11 @@ export interface IComponentAPI {
     deprecated?: boolean;
 }
 
+export interface IComponentUI5CustomData {
+    parameters?: Record<string, any>;
+    returnValue: Record<string, any>;
+}
+
 export interface IComponentProperty extends IComponentAPI {
     type: string;
     defaultValue: string;

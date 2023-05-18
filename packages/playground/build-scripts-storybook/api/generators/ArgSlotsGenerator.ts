@@ -1,13 +1,9 @@
-import type { IApiReader, IComponentData, IComponentSlot } from "../ApiReader";
-import { ArgGenerator, IGenerator } from "./ArgGenerator";
+import type { IComponentSlot } from "../ApiReader";
+import { ArgGenerator } from "./ArgGenerator";
 import { InputType as IArgType } from "@storybook/types";
 
 export class ArgSlotsGenerator extends ArgGenerator {
     public fieldName = "slots";
-
-    protected extractData(componentApi: IComponentData): IComponentSlot[] {
-        return componentApi.slots;
-    }
 
     protected parseData(slots: IComponentSlot[]): Record<string, IArgType> {
         const result: Record<string, IArgType> = {};

@@ -1,17 +1,9 @@
-import type {
-    IComponentAPI,
-    IComponentData,
-    IComponentMethod,
-} from "../ApiReader";
+import type { IComponentMethod } from "../ApiReader";
 import { ArgGenerator } from "./ArgGenerator";
 import { InputType as IArgType } from "@storybook/types";
 
 export class ArgMethodsGenerator extends ArgGenerator {
     public fieldName = "methods";
-
-    protected extractData(componentApi: IComponentData): IComponentAPI[] {
-        return componentApi.methods;
-    }
 
     protected parseData(methods: IComponentMethod[]): Record<string, IArgType> {
         const result: Record<string, any> = {};
@@ -23,10 +15,14 @@ export class ArgMethodsGenerator extends ArgGenerator {
         methods.forEach((method) => {
             if (method.visibility === "public") {
                 result[method.name] = {
+                    description: method.description,
                     table: {
-                        category: "methods",
+                        category: this.fieldName,
                     },
                 };
+
+                result[method.name].UI5CustomData =
+                    this.parseUI5CustomData(method);
             }
         });
 
