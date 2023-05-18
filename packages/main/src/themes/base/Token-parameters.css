@@ -23,5 +23,7 @@
 	--_ui5_token_selected_text_font_family: "72override", var(--sapFontFamily);
 	--_ui5_token_selected_internal_border_bottom: none;
 	--_ui5_token_selected_internal_border_bottom_radius: 0;
-	--_ui5_token_selected_box_shadow: none;
+	--_ui5_token_selected_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_token_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_token_text_icon_top: 0;
 }

@@ -19,14 +19,14 @@
 :host(:not([readonly]):hover) {
 	background: var(--sapButton_Hover_Background);
 	border-color: var(--_ui5_token_hover_border_color);
-	box-shadow: var(--sapContent_Interaction_Shadow);
+	box-shadow: var(--_ui5_token_box_shadow);
 }
 
 :host([selected]:not([readonly])) {
 	color: var(--sapButton_Selected_TextColor);
 }
 
-:host([selected]:not([readonly]):not([focused])) {
+:host([selected]:not([readonly])) {
 	background: var(--sapButton_Selected_Background);
 	border: var(--sapButton_BorderWidth) solid var(--sapButton_Selected_BorderColor);
 	box-shadow: var(--_ui5_token_selected_box_shadow);
@@ -41,7 +41,7 @@
 :host([selected]:not([readonly]):hover) {
 	background: var(--_ui5_token_selected_hover_background);
 	border-color: var(--_ui5_token_selected_hover_border_color);
-	box-shadow: var(--sapContent_Interaction_Shadow);
+	box-shadow: var(--_ui5_token_selected_box_shadow);
 }
 
 :host([readonly]) {
@@ -55,6 +55,12 @@
 
 :host([selected]) .ui5-token--wrapper:focus {
 	outline: var(--_ui5_token_selected_focus_outline);
+}
+
+:host([selected]) .ui5-token--text,
+:host([selected]) .ui5-token--icon {
+	top: var(--_ui5_token_text_icon_top);
+	position: relative;
 }
 
 :host([focused][selected]:not([readonly]):not(:hover)) {
