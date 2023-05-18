@@ -135,11 +135,11 @@ import icon_3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
 import icon_3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
 import icon_3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
 import { setUseLinks, setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js";
-setUseLinks(true); // "true" to force all browsers to use links
-setPackageCSSRoot("@ui5/webcomponents-base", "./resources/css/base/");
-setPackageCSSRoot("@ui5/webcomponents-theming", "./resources/css/theming/");
-setPackageCSSRoot("@ui5/webcomponents", "./resources/css/main/");
-setPackageCSSRoot("@ui5/webcomponents-fiori", "./resources/css/fiori/");
+// setUseLinks(true); // "true" to force all browsers to use links
+// setPackageCSSRoot("@ui5/webcomponents-base", "./resources/css/base/");
+// setPackageCSSRoot("@ui5/webcomponents-theming", "./resources/css/theming/");
+// setPackageCSSRoot("@ui5/webcomponents", "./resources/css/main/");
+// setPackageCSSRoot("@ui5/webcomponents-fiori", "./resources/css/fiori/");
 
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon_3d, icon_3dv1, icon_3dv2];
 
