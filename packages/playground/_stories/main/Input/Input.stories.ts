@@ -82,7 +82,7 @@ InputSuggestions.decorators = [
 				return item.toUpperCase().indexOf(value.toUpperCase()) === 0;
 			});
 		}
-		[].slice.call(input${index}.children).forEach((child) => {
+		Array.from(input${index}.children).forEach((child) => {
 			input${index}.removeChild(child);
 		});
 		suggestionItems.forEach((item) => {
