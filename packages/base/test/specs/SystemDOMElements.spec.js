@@ -1,6 +1,6 @@
 import { assert } from "chai";
 
-describe("Some configuration options can be changed at runtime", () => {
+describe("Static Area :: runtime changes", () => {
 	before(async () => {
 		await browser.url("test/pages/AllTestElements.html");
 	});
@@ -74,5 +74,15 @@ describe("Some configuration options can be changed at runtime", () => {
 			done();
 		});
 		assert.notOk(await staticArea.$(`.${componentId}`).getAttribute("dir"), "dir attribute dynamically removed for static area item owner");
+	});
+});
+
+describe("Shared Resources", () => {
+	it("Tests the presense of the shared resources 'meta' element", async () => {
+		const sharedResourcesElement = await browser.executeAsync(done => {
+			return done(document.querySelector(`meta[name="ui5-shared-resources"]`));
+		});
+
+		assert.ok(sharedResourcesElement, "The 'meta' element for shared resources is created.");
 	});
 });
