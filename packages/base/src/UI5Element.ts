@@ -175,7 +175,7 @@ abstract class UI5Element extends HTMLElement {
 	async connectedCallback() {
 		const ctor = this.constructor as typeof UI5Element;
 
-		this.setAttribute(`_ui5host${getCurrentRuntimeIndex()}`, "");
+		this.setAttribute(`_ui5rt${getCurrentRuntimeIndex()}`, "");
 		this.setAttribute("_ui5host", "");
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");
 		if (ctor.getMetadata().supportsF6FastNavigation()) {

@@ -11,8 +11,9 @@ const getStyleId = (name: string, value: string) => {
 const createStyle = (data: StyleData, name: string, value = "") => {
 	let content = typeof data === "string" ? data : data.content;
 
+	console.log(content);
 	if (content.includes("[_ui5host]")) {
-		content = content.replaceAll("[_ui5host]", `[_ui5host${getCurrentRuntimeIndex()}]`);
+		content = content.replaceAll("[_ui5host]", `[_ui5rt${getCurrentRuntimeIndex()}]`);
 	}
 
 	if (shouldUseLinks()) {

@@ -75,7 +75,7 @@ class StaticAreaItem extends HTMLElement {
 	}
 
 	_updateAdditionalAttrs() {
-		this.setAttribute(`_ui5host${getCurrentRuntimeIndex()}`, "");
+		this.setAttribute(`_ui5rt${getCurrentRuntimeIndex()}`, "");
 		this.setAttribute("_ui5host", "");
 		this.setAttribute(pureTagName, "");
 		this.setAttribute(popupIntegrationAttr, "");
