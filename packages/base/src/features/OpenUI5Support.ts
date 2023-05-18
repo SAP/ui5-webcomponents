@@ -104,7 +104,6 @@ class OpenUI5Support {
 		const config = core.getConfiguration();
 		core.attachThemeChanged(async () => {
 			await setTheme(config.getTheme());
-			await setThemeRoot(config.getThemeRoot());
 		});
 	}
 
