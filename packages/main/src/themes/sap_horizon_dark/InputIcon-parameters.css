@@ -16,9 +16,3 @@
 	--_ui5_input_icon_information_pressed_color: var(--sapButton_Selected_TextColor);
 	--_ui5_input_icon_success_pressed_color: var(--sapButton_Accept_Selected_TextColor);
 }
-
-[data-ui5-compact-size],
-.ui5-content-density-compact,
-.sapUiSizeCompact {
-	--_ui5_input_icon_padding: .3125rem .5rem .25rem .5rem;
-}

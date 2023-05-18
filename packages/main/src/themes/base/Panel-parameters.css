@@ -12,9 +12,3 @@
 	--_ui5_panel_focus_offset: 1px;
 	--_ui5_panel_content_padding: 0.625rem 1rem 1.375rem 1rem
 }
-
-[data-ui5-compact-size],
-.ui5-content-density-compact,
-.sapUiSizeCompact {
-	--_ui5_panel_header_button_wrapper_padding: .5625rem .375rem;
-}

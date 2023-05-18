@@ -94,12 +94,3 @@
 	--_ui5_slider_handle_focus_visibility: none;
 	--_ui5_slider_handle_icon_size: 1rem;
 }
-
-[data-ui5-compact-size],
-.ui5-content-density-compact,
-.sapUiSizeCompact {
-	--_ui5_slider_handle_focused_top: -0.625rem;
-	--_ui5_slider_handle_focused_margin_left: -0.75rem;
-	--_ui5_slider_handle_icon_size: .875rem;
-	--_ui5_slider_padding: 1rem 1.0625rem;
-}

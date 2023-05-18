@@ -70,10 +70,3 @@
 	--_ui5_input_margin_top_bottom: 0.1875rem;
 	--_ui5_input_tokenizer_min_width: 3.25rem;
 }
-
-[data-ui5-compact-size],
-.ui5-content-density-compact,
-.sapUiSizeCompact {
-	--_ui5_input_min_width: 2rem;
-	--_ui5_input_icon_width: 2rem;
-}

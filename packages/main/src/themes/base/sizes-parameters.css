@@ -122,9 +122,25 @@
 
 	/* TextArea */
 	--_ui5_textarea_margin: .25rem 0;
+	--_ui5_textarea_padding_right_and_left: 0.4375rem;
+	--_ui5_textarea_padding_right_and_left_error_warning: 0.375rem;
+	--_ui5_textarea_padding_right_and_left_information: 0.375rem;
+	--_ui5_textarea_padding_right_and_left_readonly: 0.4375rem;
+	--_ui5_textarea_padding_top: 0.125rem;
+	--_ui5_textarea_padding_bottom: 0.125rem;
+	--_ui5_textarea_padding_top_readonly: 0.125rem;
+	--_ui5_textarea_padding_bottom_readonly: 0.125rem;
+	--_ui5_textarea_padding_top_error_warning: 0.0625rem;
+	--_ui5_textarea_padding_bottom_error_warning: 0.0625rem;
+	--_ui5_textarea_padding_top_information: 0.0625rem;
+	--_ui5_textarea_padding_bottom_information: 0.0625rem;
+	--_ui5_textarea_exceeded_text_height: 0.375rem;
+	--_ui5_textarea_margin: 0.1875rem 0;
+	--__ui5_textarea_min_height: 1.625rem;
 
 	/* Panel */
 	--_ui5_panel_header_height: 2.75rem;
+	--_ui5_panel_header_button_wrapper_padding: .5625rem .375rem;
 
 	/* Radio Button */
 	--_ui5_radio_button_height: 2.75rem;
@@ -248,6 +264,8 @@
 	--_ui5_input_error_warning_custom_icon_padding: .1875rem .5rem;
 	--_ui5_input_information_custom_icon_padding: .1875rem .5rem;
 	--_ui5_input_value_state_icon_padding: .1875rem .5rem;
+	--_ui5_input_min_width: 2rem;
+	--_ui5_input_icon_width: 2rem;
 
 	/* Menu */
 	--_ui5_menu_item_padding: 0 0.75rem 0 0.5rem;
@@ -400,4 +418,17 @@
 	--_ui5_vsd_sub_header_container_height: 2rem;
 	--_ui5_vsd_header_height: 4rem;
 	--_ui5_vsd_expand_content_height: 25.4375rem;
+
+	/* RatingIndicator */
+	--_ui5_rating_indicator_item_height: 0.67em;
+	--_ui5_rating_indicator_item_width: 0.67em;
+	--_ui5_rating_indicator_readonly_item_height: 0.67em;
+	--_ui5_rating_indicator_readonly_item_width: 0.67em;
+	--_ui5_rating_indicator_component_spacing: 0.8125rem 0px;
+
+	/* SliderBase */
+	--_ui5_slider_handle_focused_top: -0.625rem;
+	--_ui5_slider_handle_focused_margin_left: -0.75rem;
+	--_ui5_slider_handle_icon_size: .875rem;
+	--_ui5_slider_padding: 1rem 1.0625rem;
 }

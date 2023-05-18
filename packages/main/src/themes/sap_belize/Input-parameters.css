@@ -12,11 +12,3 @@
 	--_ui5-input_disabled_background: var(--sapField_ReadOnly_Background);
 	--_ui5_input_disabled_border_color: var(--sapField_ReadOnly_BorderColor);
 }
-
-[data-ui5-compact-size],
-.ui5-content-density-compact,
-.sapUiSizeCompact {
-	--_ui5_input_min_width: 2rem;
-	--_ui5_input_error_warning_custom_icon_padding: .1875rem .5rem;
-	--_ui5_input_information_custom_icon_padding: .1875rem .5rem;
-}
