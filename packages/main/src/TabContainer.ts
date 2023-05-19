@@ -64,7 +64,7 @@ interface ITab extends UI5Element {
 	getTabInStripDomRef: () => ITab | null;
 	stableDomRef: string;
 	additionalText?: string;
-	design?: SemanticColor;
+	design?: `${SemanticColor}`;
 	disabled?: boolean;
 	icon?: string;
 	isSingleClickArea?: boolean;
@@ -247,7 +247,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TabLayout, defaultValue: TabLayout.Standard })
-	tabLayout!: TabLayout;
+	tabLayout!: `${TabLayout}`;
 
 	/**
 	 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
@@ -272,7 +272,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TabsOverflowMode, defaultValue: TabsOverflowMode.End })
-	tabsOverflowMode!: TabsOverflowMode;
+	tabsOverflowMode!: `${TabsOverflowMode}`;
 
 	/**
 	 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
@@ -284,7 +284,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
-	headerBackgroundDesign!: TabContainerBackgroundDesign;
+	headerBackgroundDesign!: `${TabContainerBackgroundDesign}`;
 
 	/**
 	 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
@@ -296,7 +296,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
-	contentBackgroundDesign!: TabContainerBackgroundDesign;
+	contentBackgroundDesign!: `${TabContainerBackgroundDesign}`;
 
 	/**
 	 * Defines the placement of the tab strip relative to the actual tabs' content.
@@ -319,7 +319,7 @@ class TabContainer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: TabContainerTabsPlacement, defaultValue: TabContainerTabsPlacement.Top })
-	tabsPlacement!: TabContainerTabsPlacement;
+	tabsPlacement!: `${TabContainerTabsPlacement}`;
 
 	/**
 	 * Defines the current media query size.

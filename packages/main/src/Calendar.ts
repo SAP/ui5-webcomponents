@@ -216,7 +216,7 @@ class Calendar extends CalendarPart {
 		type: CalendarSelectionMode,
 		defaultValue: CalendarSelectionMode.Single,
 	})
-	selectionMode!: CalendarSelectionMode;
+	selectionMode!: `${CalendarSelectionMode}`;
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -275,9 +275,7 @@ class Calendar extends CalendarPart {
 	get _selectedDatesTimestamps(): Array<number> {
 		return this.dates.map(date => {
 			const value = date.value;
-			// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-			// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
+			const validValue = value && !!this.getFormat().parse(value);
 			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
 		}).filter((date): date is number => !!date);
 	}

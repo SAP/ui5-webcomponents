@@ -95,7 +95,7 @@ class NotificationListItemBase extends ListItemBase {
 	 * @name sap.ui.webc.fiori.NotificationListItemBase.prototype.priority
 	 */
 	@property({ type: Priority, defaultValue: Priority.None })
-	priority!: Priority;
+	priority!: `${Priority}`;
 
 	/**
 	 * Defines if the <code>close</code> button would be displayed.

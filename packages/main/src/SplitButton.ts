@@ -153,7 +153,7 @@ class SplitButton extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: ButtonDesign;
+	design!: `${ButtonDesign}`;
 
 	/**
 	 * Defines whether the component is disabled.

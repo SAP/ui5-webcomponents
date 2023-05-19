@@ -87,7 +87,7 @@ class Bar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: BarDesign, defaultValue: BarDesign.Header })
-	design!: BarDesign
+	design!: `${BarDesign}`
 
 	/**
 	* Defines the content at the start of the bar

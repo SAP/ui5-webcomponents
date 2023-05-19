@@ -139,7 +139,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
@@ -435,7 +435,7 @@ class TimePickerBase extends UI5Element {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value as string, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value as string);
 	}
 
 	normalizeValue(value: string) {
@@ -443,11 +443,11 @@ class TimePickerBase extends UI5Element {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean));
+		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		const date = this.getFormat().parse(this._effectiveValue as string, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const date = this.getFormat().parse(this._effectiveValue as string) as Date;
 		if (!date) {
 			return;
 		}

@@ -239,7 +239,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Defines whether the component text wraps when there is not enough space.
@@ -256,7 +256,7 @@ class CheckBox extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.

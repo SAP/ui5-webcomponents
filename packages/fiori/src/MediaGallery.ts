@@ -172,7 +172,7 @@ class MediaGallery extends UI5Element {
 	 * @public
 	 */
 	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Auto })
-	layout!: MediaGalleryLayout;
+	layout!: `${MediaGalleryLayout}`;
 
 	/**
 	 * Determines the horizontal alignment of the thumbnails menu
@@ -190,7 +190,7 @@ class MediaGallery extends UI5Element {
 	 * @public
 	 */
 	@property({ type: MediaGalleryMenuHorizontalAlign, defaultValue: MediaGalleryMenuHorizontalAlign.Left })
-	menuHorizontalAlign!: MediaGalleryMenuHorizontalAlign;
+	menuHorizontalAlign!: `${MediaGalleryMenuHorizontalAlign}`;
 
 	/**
 	 * Determines the vertical alignment of the thumbnails menu
@@ -208,7 +208,7 @@ class MediaGallery extends UI5Element {
 	 * @public
 	 */
 	@property({ type: MediaGalleryMenuVerticalAlign, defaultValue: MediaGalleryMenuVerticalAlign.Bottom })
-	menuVerticalAlign!: MediaGalleryMenuVerticalAlign;
+	menuVerticalAlign!: `${MediaGalleryMenuVerticalAlign}`;
 
 	/**
 	 * Determines the actual applied layout type
@@ -226,7 +226,7 @@ class MediaGallery extends UI5Element {
 	 * @private
 	 */
 	@property({ type: MediaGalleryLayout, defaultValue: MediaGalleryLayout.Vertical })
-	effectiveLayout!: MediaGalleryLayout;
+	effectiveLayout!: `${MediaGalleryLayout}`;
 
 	/**
 	 * Defines the current media query size.
