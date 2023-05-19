@@ -45,19 +45,8 @@ type TimeSelectionChangeEventDetail = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * ### TODO
- *
- * <code>ui5-time-picker-internals</code> is component that contains all the <code>ui5-time-picker-clock</code> components
- * necessary for the <code>ui5-time-picker</code> as well as all necessary buttons used for switching between different clocks.
- * <code>ui5-time-picker-clock</code> components and buttons depend on the time format set to <code>ui5-time-picker</code>
- *
- * <h3>Usage</h3>y
- *
- * <code>ui5-time-picker-internals</code> can display hours, minutes or seconds <code>ui5-time-picker-clock</code> components
- *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/TimePickerInternals.js";</code>
+ * <code>ui5-time-picker-internals</code> is helper component that contains shared methods used in <code>ui5-time-selection-clocks</code>
+ * and <ui5-time-selection-inputs> components and should not be used separately.
  *
  * @constructor
  * @author SAP SE
@@ -65,7 +54,7 @@ type TimeSelectionChangeEventDetail = {
  * @extends sap.ui.webc.base.UI5Element
  * @abstract
  * @tagname ui5-time-picker-internals
- * @since 1.??.??
+ * @since 1.14.0
  * @private
  */
 @customElement({
@@ -112,27 +101,27 @@ class TimePickerInternals extends UI5Element {
 
 	/**
 	 * Determines the minutes step. The minutes clock is populated only by multiples of the step.
-	 * @public
+	 * @type {integer}
 	 * @name sap.ui.webc.main.TimePickerInternals.prototype.secondsStep
-	 * @type {Integer}
+	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
 	minutesStep!: number;
 
 	/**
 	 * Determines the seconds step. The seconds clock is populated only by multiples of the step.
-	 * @public
+	 * @type {integer}
 	 * @name sap.ui.webc.main.TimePickerInternals.prototype.secondsStep
-	 * @type {Integer}
+	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: 1 })
 	secondsStep!: number;
 
 	/**
 	 * The index of the active Clock/TogleSpinButton.
-	 * @private
+	 * @type {integer}
 	 * @defaultvalue 0
-	 * @type {Integer}
+	 * @private
 	 */
 	@property({ validator: Integer, defaultValue: 0, noAttribute: true })
 	_activeIndex!: number;
@@ -207,6 +196,14 @@ class TimePickerInternals extends UI5Element {
 		return getHoursConfigByFormat(hourFormat ? hourFormat.type : "hour0_23");
 	}
 
+	get _zeroPaddedHours() {
+		// @ts-ignore aFormatArray is a private API of DateFormat
+		const formatArray = this.getFormat().aFormatArray as Array<{ type: HourType }>;
+		const hourFormat = formatArray.find(item => item.type.startsWith("hour")); // try to find an entry for the hours
+		// @ts-ignore digits is a private API of aFormatArray
+		return !(hourFormat.digits && (hourFormat.digits as Integer) === 1);
+	}
+
 	get _neededComponents() {
 		// @ts-ignore aFormatArray is a private API of DateFormat
 		const formatArray = this.getFormat().aFormatArray as Array<{ type: HourType }>;
@@ -261,7 +258,7 @@ class TimePickerInternals extends UI5Element {
 		} else {
 			hours = dateValue.getHours();
 		}
-		if (hours.toString().length === 1) {
+		if (hours.toString().length === 1 && this._zeroPaddedHours) {
 			hours = `0${hours}`;
 		}
 		return hours.toString();
@@ -419,14 +416,18 @@ class TimePickerInternals extends UI5Element {
 		const periodItem = evt.target;
 		if (periodItem) {
 			const period = (periodItem as HTMLElement).textContent;
-			const date = this.validDateValue;
-			if (period === this._periods[0].label && date.getHours() >= 12) {
-				date.setHours(date.getHours() - 12);
-			} if (period === this._periods[1].label && date.getHours() < 12) {
-				date.setHours(date.getHours() + 12);
-			}
-			this.setValue(date);
+			this._calculatePeriodChange(period as string);
 		}
+	}
+
+	_calculatePeriodChange(period: string) {
+		const date = this.validDateValue;
+		if (period === this._periods[0].label && date.getHours() >= 12) {
+			date.setHours(date.getHours() - 12);
+		} if (period === this._periods[1].label && date.getHours() < 12) {
+			date.setHours(date.getHours() + 12);
+		}
+		this.setValue(date);
 	}
 }
 

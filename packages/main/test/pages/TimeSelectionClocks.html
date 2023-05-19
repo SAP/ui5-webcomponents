@@ -35,5 +35,28 @@
 		value="12:20:40"
 	></ui5-time-selection-clocks>
 
+	<ui5-time-selection-clocks
+		id="myClocksAmPm"
+		format-pattern="hh:mm:ss a"
+		value="12:20:40 PM"
+	></ui5-time-selection-clocks>
+
+	<div>
+		<h3>'change' event count</h3>
+		<ui5-input id="clocksChangeEvent"></ui5-input>
+	</div>
+
+	<script>
+		var eventCount = 0;
+
+		myClocksAmPm.addEventListener('ui5-change', displayChange);
+
+		function displayChange(event) {
+			eventCount++;
+			clocksChangeEvent.value = eventCount;
+		}
+
+	</script>
+
 </body>
 </html>

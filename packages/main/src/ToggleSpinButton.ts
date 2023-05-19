@@ -14,15 +14,9 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * <code>ui5-toggle-spin-button</code> is...
- *
- * <h3>Usage</h3>y
- *
- * <code>ui5-toggle-spin-button</code>
- *
- * <h3>ES6 Module Import</h3>
- *
- * <code>import "@ui5/webcomponents/dist/ToggleSpinButton.js";</code>
+ * <code>ui5-toggle-spin-button</code> is explicitly used in the new design of <code>ui5-time-picker</code>.
+ * It extends <code>ui5-toggle-button</code> with some specific accessibility-related properties in order to
+ * have spin button look and feel from accessibility point of view. This component should not be used separately.
  *
  * @constructor
  * @author SAP SE
@@ -30,7 +24,7 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
  * @extends sap.ui.webc.base.UI5Element
  * @abstract
  * @tagname ui5-toggle-spin-button
- * @since 1.??.??
+ * @since 1.14.0
  * @private
  */
 @customElement({
@@ -47,7 +41,6 @@ class ToggleSpinButton extends ToggleButton {
 	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueMin
 	 * @type {Integer}
 	 * @defaultvalue -1
-	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueMin!: number;
@@ -58,7 +51,6 @@ class ToggleSpinButton extends ToggleButton {
 	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueMax
 	 * @type {Integer}
 	 * @defaultvalue -1
-	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueMax!: number;
@@ -69,7 +61,6 @@ class ToggleSpinButton extends ToggleButton {
 	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueNow
 	 * @type {Integer}
 	 * @defaultvalue -1
-	 * @public
 	 */
 	@property({ validator: Integer, defaultValue: -1 })
 	valueNow!: number;
@@ -79,17 +70,14 @@ class ToggleSpinButton extends ToggleButton {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.ToggleSpinButton.prototype.valueText
-	 * @public
 	 */
 	@property()
 	valueText?: string;
 
 	/**
-	 * Override of the handler in order to prevent toggling
+	 * Override of the handler in order to prevent button toggle functionality
 	 */
-	_onclick() {
-
-	}
+	_onclick() {}
 }
 
 ToggleSpinButton.define();

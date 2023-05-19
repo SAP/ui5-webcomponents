@@ -1,6 +1,7 @@
 import { assert } from "chai";
 
 describe("TimePicker general interaction", () => {
+
 	it("input receives value in format pattern depending on the set language", async () => {
 		await browser.url(`test/pages/TimePicker.html?sap-ui-language=bg`);
 
@@ -12,7 +13,7 @@ describe("TimePicker general interaction", () => {
 		assert.equal(await timepicker.shadow$("ui5-input").getValue(), "3:16:16 ч.");
 	});
 
-	it("tests sliders value", async () => {
+	it("tests clocks value", async () => {
 		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 		const timepicker = await browser.$("#timepicker");
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
@@ -22,19 +23,20 @@ describe("TimePicker general interaction", () => {
 		await timepicker.setProperty("value", "11:12:13");
 		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
 
-		const hoursSliderValue = await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).getValue();
-		const minutesSliderValue = await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).getValue();
-		const secondsSliderValue = await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).getValue();
+		const hoursClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="hours"]`).getProperty("selectedValue");
+		const minutesClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="minutes"]`).getProperty("selectedValue");
+		const secondsClockValue = await timepickerPopover.$("ui5-time-selection-clocks").shadow$(`ui5-time-picker-clock[data-sap-clock="seconds"]`).getProperty("selectedValue");
 
 		// assert
-		assert.strictEqual(hoursSliderValue, "11", "Hours are equal");
-		assert.strictEqual(minutesSliderValue, "12", "Minutes are equal");
-		assert.strictEqual(secondsSliderValue, "13", "Minutes are equal");
+		assert.strictEqual(hoursClockValue, 11, "Hours are equal");
+		assert.strictEqual(minutesClockValue, 12, "Minutes are equal");
+		assert.strictEqual(secondsClockValue, 13, "Minutes are equal");
 	});
 
-	it("tests sliders submit value", async () => {
-		const timepicker = await browser.$("#timepicker");
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker");
+	it("tests clocks submit value", async () => {
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
+		const timepicker = await browser.$("#timepicker5");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker5");
 		const picker = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
 
 		// act
@@ -42,29 +44,28 @@ describe("TimePicker general interaction", () => {
 		await browser.keys("Escape");
 		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
 
-		// await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown"); // select 00
-		for (let i=1; i<= 14; i++) await browser.keys("ArrowDown"); // Select 14
+		// hours clock is displayed
+		for (let i=1; i<= 10; i++) await browser.keys("ArrowDown"); // Select 02
 
-		// await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="minutes"]`).shadow$(`div[tabindex="0"]`).click();
+		// switch to minutes clock
 		await browser.keys("Tab");
-		await browser.keys("PageDown");// select 00
-		for (let i=1; i<= 15; i++) await browser.keys("ArrowDown"); // Select 15
+		for (let i=1; i<= 20; i++) await browser.keys("ArrowDown"); // Select 40
 
-		// await picker.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="seconds"]`).shadow$(`div[tabindex="0"]`).click();
+		// switch to seconds clock
 		await browser.keys("Tab");
-		await browser.keys("PageDown");// select 00
-		for (let i=1; i<= 16; i++) await browser.keys("ArrowDown"); // Select 16
+		for (let i=1; i<= 4; i++) await browser.keys("ArrowUp"); // Select 5
 
 		await browser.keys("Tab"); // Move to submit
 		await browser.keys("Enter"); // Enter on submit
 
 		const textValue = await timepicker.shadow$("ui5-input").getValue();
-		assert.strictEqual(textValue.substring(0,2), "14", "Hours are equal");
-		assert.strictEqual(textValue.substring(3,5), "15", "Minutes are equal");
+		assert.strictEqual(textValue.substring(0,2), "02", "Hours are equal");
+		assert.strictEqual(textValue.substring(3,5), "40", "Minutes are equal");
+		assert.strictEqual(textValue.substring(6,8), "05", "Seconds are equal");
 	});
 
 	it("tests submit wrong value", async () => {
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 		const timepicker = await browser.$("#timepicker");
 
 		await timepicker.click();
@@ -75,6 +76,7 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("tests valueStateMessage slot", async () => {
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 		const timepicker = await browser.$("#timepickerValueStateMessage");
 
 		await timepicker.click();
@@ -87,6 +89,7 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("tests change event", async () => {
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepickerChange");
 		const timepicker = await browser.$("#timepickerChange");
 		const input = await timepicker.shadow$("ui5-input");
@@ -104,9 +107,8 @@ describe("TimePicker general interaction", () => {
 		// act - submit value after changing time
 		await icon.click();
 
-		await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("PageDown"); // select 00
-		for (let i=1; i<= 10; i++) await browser.keys("ArrowDown"); // Select 10
+		await browser.keys("PageDown"); // select 11
+		for (let i=1; i<= 10; i++) await browser.keys("ArrowDown"); // Select 1
 
 		await timepickerPopover.$("#submit").click();
 
@@ -122,8 +124,8 @@ describe("TimePicker general interaction", () => {
 
 		// act - submit value after changing time
 		await icon.click();
-		await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="hours"]`).shadow$(`div[tabindex="0"]`).click();
-		await browser.keys("ArrowDown"); // select 11
+		await browser.keys("ArrowDown"); // select 00
+
 		await timepickerPopover.$("#submit").click(); // click submit (the other test tests Enter, this one tests click)
 
 		// assert
@@ -140,6 +142,7 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("tests value state", async () => {
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 		const timepicker = await browser.$("#timepickerEmptyValue");
 		const button = await browser.$("#testBtn");
 
@@ -155,6 +158,7 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("tests input keyboard handling", async () => {
+		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
 		const timepicker = await browser.$("#timepicker5");
 
 		// act
@@ -203,27 +207,6 @@ describe("TimePicker general interaction", () => {
 		assert.strictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "12:00:01", "The value of seconds is -1");
 	});
 
-	it("test arrow navigation", async () => {
-		// arrange
-		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
-
-		const timepicker = await browser.$("#timepicker3"); //picker with 4 sliders
-		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#timepicker3");
-
-		// act
-		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
-
-		await browser.keys("ArrowRight");
-		await browser.keys("ArrowRight");
-		await browser.keys("ArrowRight");
-
-		const timepickerPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-
-		// assert
-		assert.strictEqual(await timepickerPopover.$("ui5-time-selection").shadow$(`ui5-wheelslider[data-sap-slider="periods"]`).getAttribute("expanded"),
-			"", "the periods slider should be expanded");
-	});
-
 	it("test closing the picker with the keyboard", async () => {
 		// arrange
 		await browser.url(`test/pages/TimePicker.html?sap-ui-language=en`);
@@ -240,4 +223,5 @@ describe("TimePicker general interaction", () => {
 		// assert
 		assert.notOk(await timepickerPopover.isDisplayed(), "the picker should be collapsed");
 	});
+
 });

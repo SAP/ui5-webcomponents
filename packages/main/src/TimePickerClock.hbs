@@ -27,7 +27,7 @@
 	{{/each}}
 
 	{{#if _selectedItem.showMarker}}
-		<div class="ui5-tp-clock-item" style="--tpc-degree: {{_selectedItem.angle}}deg">
+		<div class="ui5-tp-clock-item" style="--tpc-degree: {{_selectedItem.angle}}deg" marker>
 			<div class="ui5-tp-clock-marker"></div>
 			<div class="{{_selectedItem.itemClasses}}" style="--tpc-degree: -{{_selectedItem.angle}}deg">{{_selectedItem.item}}</div>
 			<div id="{{_id}}-selected" class="{{_selectedItem.innerItemClasses}}" style="--tpc-degree: -{{_selectedItem.angle}}deg">{{_selectedItem.innerItem}}</div>

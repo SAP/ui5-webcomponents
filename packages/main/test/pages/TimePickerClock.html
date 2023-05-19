@@ -33,7 +33,7 @@
 			<ui5-time-picker-clock id="myHours12" label="myHours12" item-min="1" item-max="12" display-step="1" selected-value="12" active></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
-			<ui5-time-picker-clock id="myHours12D" label="myHours12" item-min="1" item-max="12" display-step="1" selected-value="12" active disabled></ui5-time-picker-clock>
+			<ui5-time-picker-clock id="myHours12Disabled" label="myHours12 (disabled)" item-min="1" item-max="12" display-step="1" selected-value="12" active disabled></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
 			<ui5-time-picker-clock id="myHours00" label="myHours00" item-min="1" item-max="12" display-step="1" selected-value="1" inner-items prepend-zero last-item-replacement="0" active></ui5-time-picker-clock>
@@ -47,6 +47,9 @@
 		<div class="clock-wrapper">
 			<ui5-time-picker-clock id="myMinutes10" label="myMinutes10" item-min="1" item-max="60" display-step="10" value-step="10" last-item-replacement="0" selected-value="10" active></ui5-time-picker-clock>
 		</div>
+		<div class="clock-wrapper">
+			<ui5-time-picker-clock id="myMinutesInactive" label="myMinutes (inactive)" item-min="1" item-max="60" last-item-replacement="0" selected-value="0"></ui5-time-picker-clock>
+		</div>
 	</div>
 
 	<div>
@@ -56,7 +59,13 @@
 		<ui5-input id="clockChangeStringValue"></ui5-input>
 	</div>
 
+	<div>
+		<h3>final 'change' event count</h3>
+		<ui5-input id="clockChangeEvent"></ui5-input>
+	</div>
+
 	<script>
+		var eventCount = 0;
 
 		myHours12.addEventListener('ui5-change', displayChange);
 		myHours00.addEventListener('ui5-change', displayChange);
@@ -66,10 +75,14 @@
 
 		function displayChange(event) {
 			var clock = event.target;
+			console.warn(event);
+			event.detail.finalChange && eventCount++;
 			clockChangeId.value = clock.id;
 			clockChangeValue.value = clock.selectedValue;
 			clockChangeStringValue.value = clock._getStringValue(clock.selectedValue);
+			clockChangeEvent.value = eventCount;
 		}
+
 	</script>
 
 </body>

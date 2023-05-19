@@ -50,6 +50,7 @@
 	{{#each _clocks}}
 		<ui5-time-picker-clock
 			id="{{this.id}}"
+			data-sap-clock="{{this.clock}}"
 			.active="{{this.active}}"
 			.label="{{this.label}}"
 			.itemMin="{{this.itemMin}}"
@@ -63,7 +64,7 @@
 			.prependZero="{{this.prependZero}}"
 			.support2400="{{this.support2400}}"
 			.hideFractions="{{this.hideFractions}}"
-			@change={{../_clockChange}}
+			@ui5-change={{../_clockChange}}
 		>
 		</ui5-time-picker-clock>
 	{{/each}}
