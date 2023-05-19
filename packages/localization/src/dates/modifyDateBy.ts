@@ -28,16 +28,7 @@ const modifyDateBy = (date: CalendarDate, amount: number, unit: string, isPageUp
 			}
 		} else {
 			if (amount === 1) {
-				const currentMonth = newDate.getMonth();
-				newDate.setMonth(currentMonth + amount);
-				if (newDate.getMonth() === currentMonth + 2) {
-					// We have skipped a month, so get back 1 month, and then set the date to the first day of the month
-					newDate.setDate(0);
-					newDate.setDate(1);
-				} else {
-					// We are still in the same month, so set the date to the first day of the month
-					newDate.setDate(1);
-				}
+				newDate.setMonth(newDate.getMonth() + 1, 1);
 			}
 			if (amount === -1) {
 				newDate.setDate(0);
@@ -54,11 +45,11 @@ const modifyDateBy = (date: CalendarDate, amount: number, unit: string, isPageUp
 		break;
 	}
 
-	if (minDate && newDate.valueOf() < minDate.valueOf()) {
+	if (minDate && newDate.isBefore(minDate)) {
 		return new CalendarDate(minDate);
 	}
 
-	if (maxDate && newDate.valueOf() > maxDate.valueOf()) {
+	if (maxDate && newDate.isAfter(maxDate)) {
 		return new CalendarDate(maxDate);
 	}
 
