@@ -45,16 +45,16 @@ Basic.decorators = [
             const scanResult = document.getElementById("scanResult");
             const scanError = document.getElementById("scanError");
 
-            btnScan.addEventListener("click", function (event) {
+            btnScan.addEventListener("click", (event) => {
                 dlgScan.show();
             });
 
-            dlgScan.addEventListener("scan-success", function (event) {
+            dlgScan.addEventListener("scan-success", (event) => {
                 scanResult.innerHTML = event.detail.text;
                 dlgScan.close();
             });
 
-            dlgScan.addEventListener("scan-error", function (event) {
+            dlgScan.addEventListener("scan-error", (event) => {
                 scanError.innerHTML = event.detail.message;
                 dlgScan.close();
             });
