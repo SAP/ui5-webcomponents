@@ -2,7 +2,7 @@
 
 
 ### PR checklist
-- [ ] Follow the [Commit meesage Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/docs/6-contributing/02-conventions-and-guidelines.md#commit-message-style)
+- [ ] Follow the [Commit message Guidelines](https://github.com/SAP/ui5-webcomponents/blob/main/docs/6-contributing/02-conventions-and-guidelines.md#commit-message-style)
 
 For example: `fix(ui5-*): correct/fix sth` or `feat(ui5-*): add/intoduce sth`. If you don't want the change to be part of the release changlog - use `chore`, `refactor` or `docs`.
 
