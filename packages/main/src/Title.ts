@@ -51,7 +51,7 @@ class Title extends UI5Element {
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType
+	wrappingType!: `${WrappingType}`
 
 	/**
 	 * Defines the component level.
@@ -63,7 +63,7 @@ class Title extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	level!: TitleLevel;
+	level!: `${TitleLevel}`;
 
 	/**
 	 * Defines the text of the component.

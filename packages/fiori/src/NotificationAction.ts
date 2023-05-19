@@ -81,7 +81,7 @@ class NotificationAction extends UI5Element {
 	 * @name sap.ui.webc.fiori.NotificationAction.prototype.design
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Transparent })
-	design!: ButtonDesign;
+	design!: `${ButtonDesign}`;
 
 	/**
 	 * Defines the <code>icon</code> source URI.

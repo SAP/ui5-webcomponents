@@ -121,7 +121,7 @@ class NotificationListItem extends NotificationListItemBase {
 	* @since 1.0.0-rc.15
 	*/
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	* Defines the state of the <code>titleText</code> and <code>description</code>,
