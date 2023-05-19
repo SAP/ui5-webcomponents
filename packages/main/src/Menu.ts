@@ -342,15 +342,15 @@ class Menu extends UI5Element {
 		this._currentItems.forEach(item => {
 			item.item._siblingsWithChildren = itemsWithChildren;
 			item.item._siblingsWithIcon = itemsWithIcon;
-			if (item.item._subMenu) {
-				item.item._subMenu.busy = item.item.busy;
-				item.item._subMenu.busyDelay = item.item.busyDelay;
-				const subMenu = item.item._subMenu;
-				subMenu.innerHTML = "";
-				for (let i = 0; i < item.item.items.length; ++i) {
-					const menuItem = item.item.items[i].cloneNode(true);
-					subMenu.appendChild(menuItem);
-				}
+			const subMenu = item.item._subMenu;
+			const menuItem = item.item;
+			if (subMenu && subMenu.busy) {
+				this._cloneItems(menuItem, subMenu);
+			}
+
+			if (subMenu) {
+				subMenu.busy = item.item.busy;
+				subMenu.busyDelay = item.item.busyDelay;
 			}
 		});
 	}
@@ -443,27 +443,26 @@ class Menu extends UI5Element {
 	_createSubMenu(item: MenuItem, openerId: string) {
 		const ctor = this.constructor as typeof Menu;
 		const subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
-		const fragment = document.createDocumentFragment();
 
 		subMenu._isSubMenu = true;
 		subMenu.setAttribute("id", `submenu-${openerId}`);
 		subMenu._parentMenuItem = item;
 		subMenu.busy = item.busy;
 		subMenu.busyDelay = item.busyDelay;
-		const subItems = item.children;
-		let clonedItem,
-			idx;
-		for (idx = 0; idx < subItems.length; idx++) {
-			clonedItem = subItems[idx].cloneNode(true);
-			fragment.appendChild(clonedItem);
-		}
-		subMenu.appendChild(fragment);
+		this._cloneItems(item, subMenu);
 		this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
 		item._subMenu = subMenu;
 	}
 
+	_cloneItems(item: MenuItem, menu: Menu) {
+		for (let i = menu.items.length; i < item.items.length; ++i) {
+			const clonedItem = item.items[i].cloneNode(true);
+			menu.appendChild(clonedItem);
+		}
+	}
+
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
-		const mainMenu = this._findTopLevelMenu(item);
+		const mainMenu = this._findMainMenu(item);
 		mainMenu.fireEvent("before-open", {
 			item,
 		});
@@ -589,7 +588,7 @@ class Menu extends UI5Element {
 				this._popover!.close();
 			} else {
 				// find top-level menu and redirect event to it
-				const mainMenu = this._findTopLevelMenu(item);
+				const mainMenu = this._findMainMenu(item);
 				mainMenu._itemClick(e);
 			}
 		} else if (isPhone()) {
@@ -601,7 +600,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_findTopLevelMenu(item: MenuItem) {
+	_findMainMenu(item: MenuItem) {
 		let parentMenu = item.parentElement as Menu;
 		while (parentMenu._parentMenuItem) {
 			parentMenu._parentMenuItem._preventSubMenuClose = false;

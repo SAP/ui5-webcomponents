@@ -27,7 +27,7 @@
 			<ui5-menu-item text="Open from Cloud" additional-text="Ctrl+L"></ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-item text="Save" icon="save">
-			<ui5-menu-item id="test" text="Save Locally" icon="save">
+			<ui5-menu-item text="Save Locally" icon="save">
 				<ui5-menu-item text="Save on C" icon="save"></ui5-menu-item>
 				<ui5-menu-item text="Save on D" icon="save"></ui5-menu-item>
 				<ui5-menu-item text="Save on E" icon="save"></ui5-menu-item>
@@ -108,17 +108,15 @@
 
 		menu.addEventListener("ui5-before-open", function fetch(event) {
 			const item = event.detail.item;
-			if (item && item.text === "Close") {
+			if (item && item.text === "Open") {
+				menu.removeEventListener("ui5-before-open", fetch);
 				setTimeout(function() {
-					item.removeAttribute("busy");
-					item.removeAttribute("busy-delay");
 					let oneNode = document.createElement("ui5-menu-item");
 					oneNode.setAttribute("text", "One");
 					let twoNode = document.createElement("ui5-menu-item");
 					twoNode.setAttribute("text", "Two");
 					item.append(oneNode, twoNode);
-					menu.removeEventListener("ui5-before-open", fetch);
-				}, 3000);
+				}, 0);
 			}
 		});
 
