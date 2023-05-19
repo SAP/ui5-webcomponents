@@ -268,15 +268,15 @@ WithThumbnailOverflow.decorators = [
     const mediaGallery = document.querySelector(".container > ui5-media-gallery");
     const closeDialogButton = document.getElementById("closeDialogButton");
     
-    closeDialogButton.addEventListener("click", function () {
+    closeDialogButton.addEventListener("click", () => {
         mediaGalleryDialog.close();
     });
-    mediaGallery.addEventListener("overflow-click", function (event) {
+    mediaGallery.addEventListener("overflow-click", (event) => {
         mediaGalleryDialog.show();
     });
     mediaGallery.addEventListener(
         "display-area-click",
-        function (event) {
+        (event) => {
             mediaGalleryDialog.show();
         }
     );
