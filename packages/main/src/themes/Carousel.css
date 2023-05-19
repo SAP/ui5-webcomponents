@@ -153,6 +153,7 @@
 }
 
 .ui5-carousel-navigation-dot {
+    box-sizing: border-box;
     width: var(--ui5_carousel_inactive_dot_size);
     height: var(--ui5_carousel_inactive_dot_size);
     margin: var(--ui5_carousel_inactive_dot_margin);
