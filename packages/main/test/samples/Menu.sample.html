@@ -179,7 +179,7 @@
 					let closeNode = document.createElement("ui5-menu-item");
 					closeNode.setAttribute("text", "Close");
 					menuBusy.appendChild(closeNode);
-				}, 3000);
+				}, 2000);
 			}, { once: true });
 		</script>
 	</div>
@@ -213,7 +213,7 @@
 			let closeNode = document.createElement("ui5-menu-item");
 			closeNode.setAttribute("text", "Close");
 			menuBusy.appendChild(closeNode);
-		}, 3000);
+		}, 2000);
 	}, { once: true });
 </script>
 	</xmp></pre>
@@ -243,7 +243,7 @@
 					let closeNode = document.createElement("ui5-menu-item");
 					closeNode.setAttribute("text", "Close");
 					menuListBusy.appendChild(closeNode);
-				}, 3000);
+				}, 2000);
 			}, { once: true });
 		</script>
 	</div>
@@ -269,7 +269,7 @@
 			let closeNode = document.createElement("ui5-menu-item");
 			closeNode.setAttribute("text", "Close");
 			menuListBusy.appendChild(closeNode);
-		}, 3000);
+		}, 2000);
 	}, { once: true });
 </script>
 	</xmp></pre>
@@ -277,6 +277,29 @@
 
 <section>
 	<h3>Sub-menu with items fetching from a database</h3>
+	<p>
+		Please do refer to this specific sample when implementing data fetching for a sub-menu <code>ui5-menu-item</code>s.</br>
+		There are a lot of scenarios that needs to be taken care of in the <code>ui5-before-open</code> handler.
+	</p>
+	<ul>
+		<li>
+			A conditional would be needed to filter the correct <code>ui5-menu-item</code></br>
+			as the <code>ui5-before-open</code> event would be fired for each <code>ui5-menu-item</code>.
+		</li>
+		<li>
+			The <code>ui5-before-open</code> event listener needs to be removed prior to the data feching.</br>
+			Otherwise the same data could be fetched multiple times during an interaction with the <code>ui5-menu-item</code>.
+		</li>
+		<li>
+			After the data is fetched the <code>ui5-before-open</code> event listener has to be re-attached to the menu.</br>
+			Otherwise the handler would not be executed for any other <code>ui5-menu-item</code>'s.
+		</li>
+		<li>
+			In this sample the <code>ui5-before-open</code> handler is a named function, in order to be</br>
+			easily detached and re-attached when needed. 
+		</li>
+	</ul>
+	  
 	<div class="snippet">
 		<ui5-button id="btnSubMenuListBusy" class="samples-margin">Open Menu</ui5-button> <br/>
 		<ui5-menu id="subMenuListBusy">
@@ -303,7 +326,8 @@
 						saveCloud.setAttribute("text", "Save on Cloud");
 						saveCloud.setAttribute("iocn", "upload-to-cloud");
 						item.append(saveLocally, saveCloud);
-					}, 3000);
+						subMenuListBusy.addEventListener("ui5-before-open", fetch);
+					}, 2000);
 				}
 			});
 		</script>
@@ -334,7 +358,8 @@
 				saveCloud.setAttribute("text", "Save on Cloud");
 				saveCloud.setAttribute("iocn", "upload-to-cloud");
 				item.append(saveLocally, saveCloud);
-			}, 3000);
+				subMenuListBusy.addEventListener("ui5-before-open", fetch);
+			}, 2000);
 		}
 	});
 </script>

@@ -111,11 +111,14 @@
 			if (item && item.text === "Open") {
 				menu.removeEventListener("ui5-before-open", fetch);
 				setTimeout(function() {
+					// item.removeAttribute("busy");
+					// item.removeAttribute("busy-delay");
 					let oneNode = document.createElement("ui5-menu-item");
 					oneNode.setAttribute("text", "One");
 					let twoNode = document.createElement("ui5-menu-item");
 					twoNode.setAttribute("text", "Two");
 					item.append(oneNode, twoNode);
+					menu.addEventListener("ui5-before-open", fetch);
 				}, 0);
 			}
 		});

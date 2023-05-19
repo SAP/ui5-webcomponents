@@ -345,6 +345,7 @@ class Menu extends UI5Element {
 			const subMenu = item.item._subMenu;
 			const menuItem = item.item;
 			if (subMenu && subMenu.busy) {
+				subMenu.innerHTML = "";
 				this._cloneItems(menuItem, subMenu);
 			}
 
@@ -455,7 +456,7 @@ class Menu extends UI5Element {
 	}
 
 	_cloneItems(item: MenuItem, menu: Menu) {
-		for (let i = menu.items.length; i < item.items.length; ++i) {
+		for (let i = 0; i < item.items.length; ++i) {
 			const clonedItem = item.items[i].cloneNode(true);
 			menu.appendChild(clonedItem);
 		}
