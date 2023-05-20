@@ -86,14 +86,29 @@ setTheme("sap_fiori_3_dark");
 
 For more on configuring themes, see [Configuration](../2-advanced/01-configuration.md).
 
-## Load external theme
-To load an external theme, you have to specify where the theme resources are located in the theme URL parameter. For example:
+## Load custom theme, built with `UI Theme Designer`, via URL
+The feature is specific to custom themes, created with the `UI Theme Designer` and allows fetching a theme from external location, e.g theme root.
+
+### Using URL parameter
+To load a custom theme via URL, you can specify theme's location with the `theme` URL parameter:
+
 ```
 index.html?sap-ui-theme=mytheme@https://my-example-host.com/
 ```
 
 In this example, "mytheme" theme will be applied and its resources (CSS variables specific to the theme) will be loaded from https://my-example-host.com/UI5/Base/baseLib/mytheme/css_variables.css.
 
-**Note:** When an external theme is loaded some security restrictions will apply. Absolute URLs to a different origin than the current page will return the current page as an origin. To allow certain origins, you have to use `<meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/">` tag inside the head of the page.
+**Note:** Certain security restrictions will apply before loading the custom theme. Absolute URLs to a different origin than the current page will return the current page as an origin. To allow certain origins, you have to use `<meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/">` tag inside the head of the page.
+
+### Using JS API
+
+To load a custom theme via URL, you can also use the available `setThemeRoot` method. The specified theme root will be applied to the currently set theme.
+
+**Note:** Certain security restrictions will apply before loading the custom theme. Absolute URLs to a different origin than the current page will return the current page as an origin. To allow certain origins, you have to use `<meta name="sap-allowedThemeOrigins" content="https://my-example-host.com/">` tag inside the head of the page.
+
+```js
+import { setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
+setThemeRoot("https://my-example-host.com/");
+```
 
 Next: [Custom Fonts](./02-fonts.md)

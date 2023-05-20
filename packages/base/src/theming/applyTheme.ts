@@ -3,7 +3,7 @@ import { removeStyle, createOrUpdateStyle } from "../ManagedStyles.js";
 import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
-import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoots.js";
+import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoot.js";
 import type OpenUI5Support from "../features/OpenUI5Support.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 

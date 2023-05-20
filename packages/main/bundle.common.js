@@ -106,6 +106,7 @@ window.URLListValidator = URLListValidator;
 
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
 import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getEffectiveIconCollection } from "@ui5/webcomponents-base/config/Icons.js";
@@ -143,6 +144,8 @@ const testAssets = {
 		setAnimationMode,
 		getTheme,
 		setTheme,
+		getThemeRoot,
+		setThemeRoot,
 		isLegacyThemeFamily,
 		getLanguage,
 		setLanguage,
