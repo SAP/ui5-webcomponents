@@ -48,6 +48,8 @@ import {
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
 } from "./generated/i18n/i18n-defaults.js";
+import CheckBox from "./CheckBox.js";
+import RadioButton from "./RadioButton.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -785,7 +787,16 @@ class List extends UI5Element {
 
 	_revertSelection(previouslySelectedItems: Array<ListItemBase>) {
 		this.getItems().forEach((item: ListItemBase) => {
-			item.selected = previouslySelectedItems.indexOf(item) !== -1;
+			const oldSelection = previouslySelectedItems.indexOf(item) !== -1;
+			const multiSelectCheckBox = item.shadowRoot!.querySelector<CheckBox>(".ui5-li-multisel-cb");
+			const singleSelectRadioButton = item.shadowRoot!.querySelector<RadioButton>(".ui5-li-singlesel-radiobtn");
+
+			item.selected = oldSelection;
+			if (multiSelectCheckBox) {
+				multiSelectCheckBox.checked = oldSelection;
+			} else if (singleSelectRadioButton) {
+				singleSelectRadioButton.checked = oldSelection;
+			}
 		});
 	}
 
