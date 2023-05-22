@@ -263,64 +263,54 @@ class SegmentedButton extends UI5Element {
 		}
 	}
 
+	/**
+	 * Performs the layout for the SegmentedButton component.
+	 *
+	 * Calculates and sets the appropriate width for the component based on the inline style and/or CSS class.
+	 * Adjusts the responsiveness of the component based on the parent width.
+	 *
+	 * @returns {Promise<void>} A Promise that resolves once the layout is completed.
+	 * @private
+	 */
 	async _doLayout(): Promise<void> {
-		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2); // 2 pixels added for rounding
+		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2);
 		if (!itemsHaveWidth) {
 			await this.measureItemsWidth();
 		}
 
 		const parentWidth = this.parentNode ? (this.parentNode as HTMLElement).offsetWidth : 0;
+
+		/**
+		 * Calculates the default width for the SegmentedButton component based on the items' widths, if there is no custom width set.
+		 */
 		const defaultComponentWidth = `${Math.max(...this.widths!) * this.items.length}px`;
+		const inlineWidth = this.style.width; // Inline style width
+		const classWidth = this.getAttribute("class") ? getComputedStyle(this).width : ""; // Width defined by CSS class
 
-		const customWidth = getComputedStyle(this).width; // set by class or style attribute or calculated by the browser
-		const hasClass = this.hasAttribute("class"); // flag to check if class attribute is set
-		const settedWidth = this.style.width; // set by style attribute/getComputedStyle
+		/**
+		 * Calculates the width to be set for the SegmentedButton component based on the inline style and/or CSS class.
+		 *
+		 * @returns {string} The calculated width for the SegmentedButton component.
+		 * @private
+		 */
+		const calculateWidth = (): string => {
+			if (inlineWidth && classWidth) {
+				return inlineWidth;
+			} if (inlineWidth) {
+				return inlineWidth;
+			} if (classWidth) {
+				return classWidth;
+			}
+			return defaultComponentWidth;
+		};
 
-		if (((!this.style.width && this.style.width === defaultComponentWidth) || this.percentageWidthSet) || (customWidth === settedWidth && !hasClass)) {
-			this.style.width = customWidth;
-			this.absoluteWidthSet = true;
-			if (!this.initialState) {
-				this.originalWidth = this.style.width;
-				this.initialState = true;
-			}
-		} else if ((!this.style.width || this.percentageWidthSet) || (customWidth === settedWidth && !hasClass)) {
-			this.style.width = defaultComponentWidth;
-			this.absoluteWidthSet = true;
-			if ((!this.style.width || this.percentageWidthSet) || customWidth === settedWidth) {
-				this.style.width = customWidth;
-				this.absoluteWidthSet = true;
-				if (!this.initialState) {
-					this.originalWidth = this.style.width;
-					this.initialState = true;
-				}
-			}
-		} else {
-			this.style.width = defaultComponentWidth;
-			this.absoluteWidthSet = true;
-			if (!this.initialState) {
-				this.originalWidth = this.style.width;
-				this.initialState = true;
-			}
-		}
+		const width = calculateWidth();
 
-		if (!this.originalWidth) {
-			this.originalWidth = defaultComponentWidth;
-		}
-
-		if (customWidth !== defaultComponentWidth && (hasClass)) {
-			this.style.width = customWidth;
-			this.absoluteWidthSet = true;
-			if (!this.initialState) {
-				this.originalWidth = customWidth;
-				this.initialState = true;
-			}
-		} else if (customWidth !== defaultComponentWidth && (!hasClass) && !this.style.width) {
-			this.style.width = defaultComponentWidth;
-			this.absoluteWidthSet = true;
-			if (!this.initialState) {
-				this.originalWidth = defaultComponentWidth;
-				this.initialState = true;
-			}
+		this.style.width = width;
+		this.absoluteWidthSet = true;
+		if (!this.initialState) {
+			this.originalWidth = width;
+			this.initialState = true;
 		}
 
 		this.items.forEach(item => {
