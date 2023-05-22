@@ -16,7 +16,7 @@ enum SegmentedButtonMode {
 	Single = "Single",
 
 	/**
-	 * Multiple item can be selected at a time. All items can be deselected.
+	 * Multiple items can be selected at a time. All items can be deselected.
 	 * @public
 	 * @type {Multi}
 	 */

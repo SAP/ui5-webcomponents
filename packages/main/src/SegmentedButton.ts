@@ -337,9 +337,9 @@ class SegmentedButton extends UI5Element {
 	}
 
 	/**
-	 * Retrieves an array of <code>SegmentedButtonItem</code>'s.
+	 * Returns an array of the currently pressed items.
 	 * @readonly
-	 * @name sap.ui.webc.main.SegmentedButton.prototype.selectedItem
+	 * @name sap.ui.webc.main.SegmentedButton.prototype.pressedItems
 	 * @type {sap.ui.webc.main.ISegmentedButtonItem[]}
 	 * @since 1.14.0
 	 * @public
