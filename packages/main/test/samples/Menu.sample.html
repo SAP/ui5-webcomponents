@@ -326,7 +326,7 @@
 
 	subMenuListBusy.addEventListener("ui5-before-open", function(event) {
 		const item = event.detail.item;
-		if (item && item.text === "Save") {
+		if (item && item.text === "Save" && !feched) {
 			setTimeout(function() {
 				item.removeAttribute("busy");
 				item.removeAttribute("busy-delay");
