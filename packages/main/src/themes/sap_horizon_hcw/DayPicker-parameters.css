@@ -31,14 +31,15 @@
 	--_ui5_daypicker_item_selected_text_border: none;
 	--_ui5_daypicker_two_calendar_item_now_selected_border_inset: 0;
 	--_ui5_daypicker_two_calendar_item_border_radius: 0.5rem;
+	--_ui5_daypicker_two_calendar_item_border_focus_border_radius: 0.5rem;
 	--_ui5_daypicker_two_calendar_item_no_selected_inset: 0;
-    --_ui5_daypicker_item_border_radius_focus_after: 0.5rem;	
+	--_ui5_daypicker_item_border_radius_focus_after: 0.5rem;	
 	--_ui5_daypicker_item_border_radius_item: 0.5rem;
-    --_ui5_daypicker_item_margin: 0;
-    --_ui5_daypicker_item_selected_between_text_font: var(--sapFontFamily);	
+	--_ui5_daypicker_item_margin: 0;
+	--_ui5_daypicker_item_selected_between_text_font: var(--sapFontFamily);	
 	--_ui5_daypicker_item_selected_text_font: var(--sapFontBoldFamily);	
 	--_ui5_daypicker_item_now_selected_between_inset: 0.25rem;
-    --_ui5_daypicker_item_now_selected_between_border: 0.0625rem solid var(--sapContent_Selected_ForegroundColor);	
+	--_ui5_daypicker_item_now_selected_between_border: 0.0625rem solid var(--sapContent_Selected_ForegroundColor);	
 	--_ui5_daypicker_item_now_selected_between_border_radius: 0.1875rem;	
 	--_ui5_daypicker_item_selected_text_outline: 0.125rem solid var(--sapSelectedColor);
 }

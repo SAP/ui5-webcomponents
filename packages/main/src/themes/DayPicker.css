@@ -292,7 +292,7 @@
 
 :host([secondary-calendar-type]) .ui5-dp-item:focus::after {
 	inset: var(--_ui5_daypicker_two_calendar_item_no_selected_inset);
-	border-radius: var(--_ui5_daypicker_two_calendar_item_border_radius);
+	border-radius: var(--_ui5_daypicker_two_calendar_item_border_focus_border_radius);
 }
 
 :host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--now::after {
@@ -303,7 +303,7 @@
 :host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--selected:focus::after {
 	border-width: var(--_ui5_daypicker_two_calendar_item_now_selected_border_width);
 	inset: var(--_ui5_daypicker_two_calendar_item_now_selected_border_inset);
-	border-radius: var(--_ui5_daypicker_two_calendar_item_border_radius);
+	border-radius: var(--_ui5_daypicker_two_calendar_item_border_focus_border_radius);
 }
 
 :host([secondary-calendar-type]) .ui5-dp-item.ui5-dp-item--selected.ui5-dp-item--now::after {

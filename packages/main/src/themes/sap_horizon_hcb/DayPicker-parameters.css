@@ -38,5 +38,6 @@
 	--_ui5_daypicker_item_selected_text_border: none;
 	--_ui5_daypicker_two_calendar_item_now_selected_border_inset: 0;
 	--_ui5_daypicker_two_calendar_item_border_radius: 0.5rem;
+	--_ui5_daypicker_two_calendar_item_border_focus_border_radius: 0.5rem;
 	--_ui5_daypicker_two_calendar_item_no_selected_inset: 0;
 }
