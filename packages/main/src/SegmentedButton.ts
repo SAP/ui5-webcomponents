@@ -65,14 +65,16 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * Fired when the selected item changes.
  *
  * @event sap.ui.webc.main.SegmentedButton#selection-change
- * @deprecated As of 1.14.0. This parameter is not guaranteed in future releases.
- * Please use the <code>pressedItems</code> parameter instead.
  * @param {HTMLElement} selectedItem the pressed item.
  * @param {string} pressedItems an array of pressed items.
  * @public
  */
 @event("selection-change", {
 	detail: {
+		/**
+		 * @deprecated As of 1.14.0. This parameter is not guaranteed in future releases.
+		 * Please use the <code>pressedItems</code> parameter instead.
+		 */
 		selectedItem: { type: HTMLElement },
 		pressedItems: { type: Array },
 	},
@@ -136,7 +138,7 @@ class SegmentedButton extends UI5Element {
 	_handleResizeBound: ResizeObserverCallback;
 
 	widths?: Array<number>;
-	_selectedItem?: SegmentedButtonItem;
+	_pressedItem?: SegmentedButtonItem;
 
 	static async onDefine() {
 		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -199,19 +201,17 @@ class SegmentedButton extends UI5Element {
 	}
 
 	normalizeSelection() {
-		const selectedItems = this.pressedItems;
-		const selectedIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
-
-		if (this._selectedItem && selectedItems.length > 1) {
-			selectedItems.splice(selectedIndex, 1);
-		}
-
-		const pressedItem = selectedItems.pop() || this.items[0];
-
 		switch (this.mode) {
-		case SegmentedButtonMode.Single:
-			this._applySingleSelectionTo(pressedItem);
+		case SegmentedButtonMode.Single: {
+			const pressedItems = this.pressedItems;
+			const pressedItemIndex = this._pressedItem ? pressedItems.indexOf(this._pressedItem) : -1;
+			if (this._pressedItem && pressedItems.length > 1) {
+				pressedItems.splice(pressedItemIndex, 1);
+			}
+			const pressedItem = pressedItems.pop() || this.items[0];
+			this._applySingleSelection(pressedItem);
 			break;
+		}
 		default:
 		}
 	}
@@ -225,13 +225,13 @@ class SegmentedButton extends UI5Element {
 		}
 
 		switch (this.mode) {
-		case SegmentedButtonMode.Single:
-			this._applySingleSelectionTo(target);
-			break;
-		default:
+		case SegmentedButtonMode.Multi:
 			if (e instanceof KeyboardEvent) {
 				target.pressed = !target.pressed;
 			}
+			break;
+		default:
+			this._applySingleSelection(target);
 		}
 
 		this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
@@ -245,12 +245,12 @@ class SegmentedButton extends UI5Element {
 		return this;
 	}
 
-	_applySingleSelectionTo(item: SegmentedButtonItem) {
+	_applySingleSelection(item: SegmentedButtonItem) {
 		this.items.forEach(currentItem => {
 			currentItem.pressed = false;
 		});
 		item.pressed = true;
-		this._selectedItem = item;
+		this._pressedItem = item;
 	}
 
 	_onclick(e: MouseEvent) {
@@ -333,7 +333,7 @@ class SegmentedButton extends UI5Element {
 	 * @public
 	 */
 	get selectedItem() {
-		return this._selectedItem;
+		return this._pressedItem;
 	}
 
 	/**
