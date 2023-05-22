@@ -490,10 +490,6 @@ class Tree extends UI5Element {
 	_isInstanceOfTreeItemBase(object: any): object is TreeItemBase {
 		return "isTreeItem" in object;
 	}
-
-	_onSlotChange() {
-		this.shadowRoot!.querySelector<TreeList>("[ui5-tree-list]")!.onBeforeRendering();
-	}
 }
 
 const walkTree = (el: Tree | TreeItemBase, level: number, callback: WalkCallback) => {
