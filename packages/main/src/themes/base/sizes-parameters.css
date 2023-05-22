@@ -375,6 +375,7 @@
 
 	/* StepInput */
 	--_ui5_step_input_min_width: 6rem;
+	--_ui5_step_input_padding: 2rem;
 
 	/* Table */
 	--_ui5_load_more_text_height: 2.625rem;

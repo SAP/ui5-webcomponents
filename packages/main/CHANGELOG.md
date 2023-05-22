@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.13.2...v1.14.0-rc.0) (2023-05-18)
+
+
+### Bug Fixes
+
+* **ui5-multi-combobox:** delete duplicated tests ([#7036](https://github.com/SAP/ui5-webcomponents/issues/7036)) ([2b9bf7f](https://github.com/SAP/ui5-webcomponents/commit/2b9bf7f419ae7cccf0e9a086a6e5047b41597c23))
+* **ui5-textarea:** adjust Horizon themes according to the latest specifications ([#7012](https://github.com/SAP/ui5-webcomponents/issues/7012)) ([a066527](https://github.com/SAP/ui5-webcomponents/commit/a066527306ce33e518a0d52dc94c87c3acafab37))
+
+
+### Features
+
+* **framework:** add `ignoreCustomElements` public API ([#7027](https://github.com/SAP/ui5-webcomponents/issues/7027)) ([776f905](https://github.com/SAP/ui5-webcomponents/commit/776f9058de5b4e37489dd3ef388863edc2627eb3))
+* **framework:** use `template literal notation` for enum types ([#6856](https://github.com/SAP/ui5-webcomponents/issues/6856)) ([0de21e8](https://github.com/SAP/ui5-webcomponents/commit/0de21e8ba37c6a75fd3d2a29a16cc82661619cb1)), closes [#6636](https://github.com/SAP/ui5-webcomponents/issues/6636)
+* **ui5-table:** announce empty cells ([#7013](https://github.com/SAP/ui5-webcomponents/issues/7013)) ([a884c87](https://github.com/SAP/ui5-webcomponents/commit/a884c87c7d5ce1838fc580442f314d34a3631c2e)), closes [#3594](https://github.com/SAP/ui5-webcomponents/issues/3594)
+
+
+
+
+
 ## [1.13.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.1...v1.13.2) (2023-05-15)
 
 

@@ -277,6 +277,7 @@
   "--sapFontHeaderFamily",
   "--sapFontLargeSize",
   "--sapFontMediumSize",
+  "--sapFontSemiboldDuplexFamily",
   "--sapFontSize",
   "--sapFontSmallSize",
   "--sapGroup_ContentBackground",
