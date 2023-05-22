@@ -122,10 +122,20 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  *
  * @public
  * @event sap.ui.webc.main.Menu#before-open
+ * @param {object} item The corresponding <code>ui5-menu-item</code> to the sub-menu that will be opened.
  * @allowPreventDefault
  * @since 1.10.0
  */
-@event("before-open")
+@event("before-open", {
+	detail: {
+		/**
+		 * @since 1.14.0
+		 */
+		item: {
+			type: Object,
+		},
+	},
+})
 
 /**
  * Fired after the menu is opened. <b>This event does not bubble.</b>
