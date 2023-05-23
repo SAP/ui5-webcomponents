@@ -33,4 +33,10 @@ describe("API", () => {
 		const input = await fileUploader.shadow$("input");
 		assert.strictEqual(await input.getProperty("accept"), ".txt,.docx", "Native input is has the rignt accept property.");
 	});
+
+	it("setting accessible-name-ref on the host of an element in the FileUploader is reflected", async () => {
+		const UploadFilebutton = await browser.$("#ariaLabelFU").$("ui5-button").shadow$("button");
+
+		assert.strictEqual(await UploadFilebutton.getAttribute("aria-label"), "Upload a File From PC", "Attribute is reflected");
+	});
 });

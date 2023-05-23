@@ -10,6 +10,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import {
 	FILEUPLOAD_BROWSE,
 	FILEUPLOADER_TITLE,
@@ -204,6 +205,18 @@ class FileUploader extends UI5Element implements IFormElement {
 	focused!: boolean;
 
 	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.FileUploader.prototype.accessibleNameRef
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.15.0
+	 */
+	@property({ defaultValue: "" })
+	accessibleNameRef!: string;
+
+	/**
 	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
 	 *
 	 * @type {HTMLElement[]}
@@ -321,6 +334,12 @@ class FileUploader extends UI5Element implements IFormElement {
 		}
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
+
+		this.content.forEach(item => {
+			if (item instanceof HTMLElement && item.tabIndex > -1) {
+				item.setAttribute("aria-label", this.ariaLabelText as string);
+			}
+		});
 	}
 
 	_enableFormSupport() {
@@ -487,6 +506,10 @@ class FileUploader extends UI5Element implements IFormElement {
 				"ui5-valuestatemessage--information": this.valueState === ValueState.Information,
 			},
 		};
+	}
+
+	get ariaLabelText() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get styles() {
