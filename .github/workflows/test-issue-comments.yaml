@@ -19,7 +19,7 @@ jobs:
       run: yarn --frozen-lockfile
 
     - name: Add release comments to issues and PRs
-    - uses: actions/github-script@v6
+      uses: actions/github-script@v6
       env:
           GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
       with:
