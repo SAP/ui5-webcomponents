@@ -11,9 +11,20 @@
 	font-size: var(--sapFontSize);
 	cursor: pointer;
 	outline: none;
+	text-decoration: var(--_ui5_link_text_decoration);
 	text-shadow: var(--sapContent_TextShadow);
 	white-space: nowrap;
 	overflow-wrap: normal;
+}
+
+:host(:hover) {
+	color: var(--sapLink_Hover_Color);
+	text-decoration: var(--_ui5_link_hover_text_decoration);
+}
+
+:host(:active) {
+	color: var(--sapLink_Active_Color);
+	text-decoration: var(--_ui5_link_active_text_decoration);
 }
 
 :host([disabled]) {
@@ -32,13 +43,14 @@
 	font-family: var(--sapFontBoldFamily);
 }
 
-:host([design="Subtle"]) .ui5-link-root {
+:host([design="Subtle"]) {
 	color: var(--sapLink_SubtleColor);
 	text-decoration: var(--_ui5_link_subtle_text_decoration);
 }
 
-:host([design="Subtle"]) .ui5-link-root:focus {
-	color: var(--sapLinkColor);
+:host([design="Subtle"]:hover:not(:active)) {
+	color: var(--sapLink_SubtleColor);
+	text-decoration: var(--_ui5_link_subtle_text_decoration_hover);
 }
 
 :host([wrapping-type="Normal"]) {
@@ -59,38 +71,26 @@
 	color: inherit;
 }
 
-:host(:active) .ui5-link-root {
-	color: var(--sapLink_Active_Color);
-	text-decoration: var(--_ui5_link_active_text_decoration);
-}
-
 :host .ui5-link-root {
 	border: var(--_ui5_link_border);
 	border-radius: var(--_ui5_link_focus_border-radius);
-	text-decoration: var(--_ui5_link_text_decoration);
 }
 
 :host([focused]) .ui5-link-root,
 :host([design="Subtle"][focused]) .ui5-link-root {
 	background-color: var(--_ui5_link_focus_background_color);
-	color:  var(--_ui5_link_focus_color);
 	border: var(--_ui5_link_border_focus);
 	border-radius: var(--_ui5_link_focus_border-radius);
-	text-decoration: var(--_ui5_link_focus_text_decoration);
 	text-shadow: none;
 }
 
-:host(:hover:not(:active)) .ui5-link-root {
-	color: var(--sapLink_Hover_Color);
-	text-decoration: var(--_ui5_link_hover_text_decoration);
+:host([focused]),
+:host([design="Subtle"][focused]) {
+	color:  var(--_ui5_link_focus_color);
+	text-decoration: var(--_ui5_link_focus_text_decoration);
 }
 
-:host([design="Subtle"]:hover:not(:active)) .ui5-link-root {
-	color: var(--sapLink_SubtleColor);
-	text-decoration: var(--_ui5_link_subtle_text_decoration_hover);
-}
-
-:host([focused]:hover:not(:active)) .ui5-link-root {
+:host([focused]:hover:not(:active)) {
 	color: var(--_ui5_link_focused_hover_text_color);
 	text-decoration: var(--_ui5_link_focused_hover_text_decoration);
 }
