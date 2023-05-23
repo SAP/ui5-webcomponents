@@ -124,7 +124,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @event sap.ui.webc.main.Menu#before-open
  * @allowPreventDefault
  * @since 1.10.0
- * @param {object} item The <code>ui5-menu-item</code> that triggers the corresponding sub-menu to get opened. Note: available since 1.14.0.
+ * @param {object} item The <code>ui5-menu-item</code> that triggers opening of the sub-menu. Note: available since 1.14.0.
  */
 @event("before-open", {
 	detail: {
