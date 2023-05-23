@@ -21,7 +21,7 @@ You can try this yourself on the Input's [test page](https://sap.github.io/ui5-w
 Unfortunately, this can't be done for all components, because it depends on the complexity of the DOM structure.
 
 
-## Usage of Shadow Parts: 
+## Usage of Shadow Parts
 For more complex components, the styling on the tag level is not possible, therefore we introduced shadow parts on specific elements in the components’ Shadow DOM, that the user can restyle, using [standard CSS syntax](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) for shadow parts.
 
 <b>For example:</b> You can change the appearance of the CardHeader’s status with the CSS shadow parts syntax:
@@ -37,9 +37,9 @@ For more complex components, the styling on the tag level is not possible, there
 ```
 
 ```css
-  ui5-card-header::part(status) {
-    color: red;
-  }
+ui5-card-header::part(status) {
+  color: red;
+}
 ```
 
 <b>Note:</b> All the available shadow parts are described in the API reference, as part of the "Overview" section of each component
@@ -55,9 +55,9 @@ The UI5 WebComponents leverage CSS variables, so if you inspect the elements ins
 ```
 
 ```css
-  ui5-button {
-    --sapButton_TextColor: purple;
-  }
+ui5-button {
+  --sapButton_TextColor: purple;
+}
 ```
 
 
