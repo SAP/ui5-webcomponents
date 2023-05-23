@@ -46,7 +46,7 @@ For more complex components, the styling on the tag level is not possible, there
 
 
 ## Changing CSS Vars
-The UI5 WebComponents leverage CSS variables, so if you inspect the elements inside the Shadow DOM, you will probably find which variable you need to change. Check the list of all [Global CSS Variables]((https://github.com/SAP/theming-base-content/blob/master/content/Base/baseLib/sap_horizon/css_variables.css)) that we use in the component. Altering them will change the component's appearance.
+The UI5 WebComponents leverage CSS variables, so if you inspect the elements inside the Shadow DOM, you will probably find which variable you need to change. Check the list of all [Global CSS Variables](https://github.com/SAP/theming-base-content/blob/master/content/Base/baseLib/sap_horizon/css_variables.css) that we use in the component. Altering them will change the component's appearance.
 
 <b>For example:</b> You can change the button text color by overriding the `--sapButton_TextColor` CSS variable as follows.
 
