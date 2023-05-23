@@ -65,16 +65,12 @@ type SegmentedButtonSelectionChangeEventDetail = {
  * Fired when the selected item changes.
  *
  * @event sap.ui.webc.main.SegmentedButton#selection-change
- * @param {HTMLElement} selectedItem the pressed item.
+ * @param {HTMLElement} selectedItem the pressed item. Note: deprecated since 1.14.0, use the <code>pressedItems</code> parameter instead.
  * @param {string} pressedItems an array of pressed items.
  * @public
  */
 @event("selection-change", {
 	detail: {
-		/**
-		 * @deprecated As of 1.14.0. This parameter is not guaranteed in future releases.
-		 * Please use the <code>pressedItems</code> parameter instead.
-		 */
 		selectedItem: { type: HTMLElement },
 		pressedItems: { type: Array },
 	},
