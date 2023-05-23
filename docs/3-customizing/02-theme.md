@@ -111,4 +111,4 @@ import { setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
 setThemeRoot("https://my-example-host.com/");
 ```
 
-Next: [Custom Fonts](./02-fonts.md)
+Next: [Custom Fonts](./03-fonts.md)
