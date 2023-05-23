@@ -25,6 +25,9 @@ export const parameters: Parameters = {
   },
   actions: { argTypesRegex: "^ui5-[a-z].*" }, // automatically match ui5-* events for actions
   docs: {
+    source: {
+      format: true,
+    },
     iframeHeight: "300px", // stories including script tags are loaded in an iframe, this is the height of the iframe
     transformSource: (
       source: string // this is called before rendering of the "code" inside the preview of the stories
