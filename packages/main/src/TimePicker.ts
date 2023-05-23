@@ -23,7 +23,7 @@ import {
  * <li>Typing it in directly in the input field</li>
  * </ul>
  * <br><br>
- * When the user makes an entry and chooses the enter key, the clocks shows the corresponding time (hours, minutes and seconds separately).
+ * When the user makes an entry and chooses the enter key, the clocks show the corresponding time (hours, minutes and seconds separately).
  * When the user directly triggers the clocks display, the actual time is displayed.
  * For the <code>ui5-time-picker</code>
  *
