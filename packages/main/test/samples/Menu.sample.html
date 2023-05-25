@@ -263,6 +263,7 @@
 			menuListBusy.removeAttribute("busy");
 			let openNode = document.createElement("ui5-menu-item");
 			openNode.setAttribute("text", "Open");
+			openNode.setAttribute("icon", "open-folder");
 			openNode.setAttribute("starts-section", "");
 			menuListBusy.appendChild(openNode);
 			let closeNode = document.createElement("ui5-menu-item");
@@ -298,8 +299,10 @@
 						item.removeAttribute("busy-delay");
 						let saveLocally = document.createElement("ui5-menu-item");
 						saveLocally.setAttribute("text", "Save Locally");
+						saveLocally.setAttribute("icon", "save");
 						let saveCloud = document.createElement("ui5-menu-item");
 						saveCloud.setAttribute("text", "Save on Cloud");
+						saveCloud.setAttribute("icon", "upload-to-cloud");
 						item.append(saveLocally, saveCloud);
 						feched = true;
 					}, 2000);
@@ -329,8 +332,10 @@
 				item.removeAttribute("busy-delay");
 				let saveLocally = document.createElement("ui5-menu-item");
 				saveLocally.setAttribute("text", "Save Locally");
+				saveLocally.setAttribute("icon", "save");
 				let saveCloud = document.createElement("ui5-menu-item");
 				saveCloud.setAttribute("text", "Save on Cloud");
+				saveCloud.setAttribute("icon", "upload-to-cloud");
 				item.append(saveLocally, saveCloud);
 				feched = true;
 			}, 2000);
