@@ -48,6 +48,8 @@ import {
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
 } from "./generated/i18n/i18n-defaults.js";
+import CheckBox from "./CheckBox.js";
+import RadioButton from "./RadioButton.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
@@ -217,6 +219,7 @@ type ClickEventDetail = CloseEventDetail;
  * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
  *
  * @event sap.ui.webc.main.List#selection-change
+ * @allowPreventDefault
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
  * @public
@@ -297,7 +300,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
@@ -327,7 +330,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListSeparators, defaultValue: ListSeparators.All })
-	separators!: ListSeparators;
+	separators!: `${ListSeparators}`;
 
 	/**
 	 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
@@ -353,7 +356,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListGrowingMode, defaultValue: ListGrowingMode.None })
-	growing!: ListGrowingMode;
+	growing!: `${ListGrowingMode}`;
 
 	/**
 	 * Defines if the component would display a loading indicator over the list.
@@ -576,7 +579,7 @@ class List extends UI5Element {
 			ListMode.SingleSelectBegin,
 			ListMode.SingleSelectEnd,
 			ListMode.SingleSelectAuto,
-		].includes(this.mode);
+		].includes(this.mode as ListMode);
 	}
 
 	get isMultiSelect() {
@@ -715,13 +718,16 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent<SelectionChangeEventDetail>("selection-change", {
+			const changePrevented = !this.fireEvent<SelectionChangeEventDetail>("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: e.detail.selectionComponentPressed,
 				targetItem: e.detail.item,
 				key: e.detail.key,
-			});
+			}, true);
+			if (changePrevented) {
+				this._revertSelection(previouslySelectedItems);
+			}
 		}
 	}
 
@@ -777,6 +783,21 @@ class List extends UI5Element {
 
 	getItemsForProcessing(): Array<ListItemBase> {
 		return this.getItems();
+	}
+
+	_revertSelection(previouslySelectedItems: Array<ListItemBase>) {
+		this.getItems().forEach((item: ListItemBase) => {
+			const oldSelection = previouslySelectedItems.indexOf(item) !== -1;
+			const multiSelectCheckBox = item.shadowRoot!.querySelector<CheckBox>(".ui5-li-multisel-cb");
+			const singleSelectRadioButton = item.shadowRoot!.querySelector<RadioButton>(".ui5-li-singlesel-radiobtn");
+
+			item.selected = oldSelection;
+			if (multiSelectCheckBox) {
+				multiSelectCheckBox.checked = oldSelection;
+			} else if (singleSelectRadioButton) {
+				singleSelectRadioButton.checked = oldSelection;
+			}
+		});
 	}
 
 	_onkeydown(e: KeyboardEvent) {

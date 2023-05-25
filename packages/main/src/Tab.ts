@@ -137,7 +137,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * @name sap.ui.webc.main.Tab.prototype.design
 	 */
 	@property({ type: SemanticColor, defaultValue: SemanticColor.Default })
-	design!: SemanticColor;
+	design!: `${SemanticColor}`;
 
 	/**
 	 * Specifies if the component is selected.

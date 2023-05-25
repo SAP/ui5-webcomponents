@@ -27,6 +27,7 @@
 @import "./MonthPicker-parameters.css";
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
+@import "../base/Popover-parameters.css";
 @import "../base/PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters.css";
 @import "./RadioButton-parameters.css";

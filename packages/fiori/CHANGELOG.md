@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.13.2...v1.14.0-rc.0) (2023-05-18)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** badge visual alignment ([#7004](https://github.com/SAP/ui5-webcomponents/issues/7004)) ([45a176d](https://github.com/SAP/ui5-webcomponents/commit/45a176da6dd5413617a25a92c1f7ba2e194790b6))
+* **ui5-shellbar:** remove double box-shadow effect on hover ([#7033](https://github.com/SAP/ui5-webcomponents/issues/7033)) ([fde8b69](https://github.com/SAP/ui5-webcomponents/commit/fde8b69b99175b91cf1a6c3b5018c044c07c8bd7))
+
+
+### Features
+
+* **framework:** use `template literal notation` for enum types ([#6856](https://github.com/SAP/ui5-webcomponents/issues/6856)) ([0de21e8](https://github.com/SAP/ui5-webcomponents/commit/0de21e8ba37c6a75fd3d2a29a16cc82661619cb1)), closes [#6636](https://github.com/SAP/ui5-webcomponents/issues/6636)
+
+
+
+
+
 ## [1.13.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.1...v1.13.2) (2023-05-15)
 
 

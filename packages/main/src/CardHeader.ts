@@ -35,7 +35,7 @@ import cardHeaderCss from "./generated/themes/CardHeader.css.js";
  *
  * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
  * <br>
- * The <code>ui5-card</code> exposes the following CSS Shadow Parts:
+ * The <code>ui5-card-header</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>root - Used to style the root DOM element of the CardHeader</li>
  * <li>title - Used to style the title of the CardHeader</li>

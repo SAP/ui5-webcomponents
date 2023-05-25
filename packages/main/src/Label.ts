@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import WrappingType from "./types/WrappingType.js";
@@ -98,7 +97,7 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	 * Defines the text of the component.
@@ -109,15 +108,6 @@ class Label extends UI5Element {
 	 * @public
 	 * @name sap.ui.webc.main.Label.prototype.default
 	 */
-
-	get classes() {
-		return {
-			textWrapper: {
-				"ui5-label-text-wrapper": true,
-				"ui5-label-text-wrapper-safari": isSafari(),
-			},
-		};
-	}
 
 	_onclick() {
 		if (!this.for) {

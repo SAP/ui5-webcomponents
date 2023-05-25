@@ -90,7 +90,7 @@ class Switch extends UI5Element {
 	 * @defaultValue "Textual"
 	 */
 	@property({ type: SwitchDesign, defaultValue: SwitchDesign.Textual })
-	design!: SwitchDesign;
+	design!: `${SwitchDesign}`;
 
 	/**
 	 * Defines if the component is checked.
