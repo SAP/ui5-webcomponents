@@ -335,11 +335,21 @@ class FileUploader extends UI5Element implements IFormElement {
 
 		this.toggleValueStatePopover(this.shouldOpenValueStateMessagePopover);
 
-		this.content.forEach(item => {
-			if (item instanceof HTMLElement && item.tabIndex > -1) {
-				item.setAttribute("aria-label", this.ariaLabelText as string);
-			}
-		});
+		if (this.accessibleNameRef) {
+			this.content.forEach(item => {
+				let focusableElement;
+
+				if (item instanceof UI5Element) {
+					focusableElement = item.shadowRoot!.querySelector("[tabindex='0']") as HTMLElement;
+				} else {
+					focusableElement = item;
+				}
+
+				if (focusableElement && focusableElement.tabIndex > -1) {
+					focusableElement.setAttribute("aria-label", this.ariaLabelText as string);
+				}
+			});
+		}
 	}
 
 	_enableFormSupport() {
