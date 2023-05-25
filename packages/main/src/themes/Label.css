@@ -35,7 +35,7 @@
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {
-	content: ":";
+	content: attr(data-colon);
 }
 
 :host([required]) .ui5-label-required-colon:after {
@@ -59,4 +59,5 @@ bdi {
 
 :host([show-colon]) .ui5-label-required-colon {
 	margin-inline-start: -0.05rem; /*0.8px - fix for last letter clipping issue when style is italic*/
+	white-space: pre;
 }
