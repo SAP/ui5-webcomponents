@@ -375,6 +375,16 @@ describe("Popover general interaction", () => {
 		await browser.keys("Escape");
 
 	});
+
+	it("tests initial focus when the popover is removed from the DOM in the meantime", async () => {
+		const createAndRemovePopover = await browser.$("#createAndRemove");
+		const result = await browser.$("#createAndRemoveResult");
+
+		await createAndRemovePopover.click();
+		await result.waitForDisplayed({ timeout: 3000 })
+
+		assert.strictEqual(await result.getText(), "No uncaught errors", "There is no error.");
+	});
 });
 
 describe("Acc", () => {

@@ -418,6 +418,10 @@ abstract class Popup extends UI5Element {
 	async applyFocus() {
 		await this._waitForDomRef();
 
+		if (!this.parentElement) {
+			return;
+		}
+
 		const element = (this.getRootNode() as Document).getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
 			|| await getFirstFocusableElement(this)
