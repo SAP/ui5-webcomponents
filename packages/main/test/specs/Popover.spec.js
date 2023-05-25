@@ -219,11 +219,11 @@ describe("Popover general interaction", () => {
 		await btnOpenPopover.click();
 
 		assert.ok(await focusedButton.getProperty("focused"), "The button is focused.");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests focus trapping using TAB", async () => {
-		await browser.url(`test/pages/Popover.html`);
-
 		const btn = await browser.$("#btn");
 		const ff = await browser.$("#first-focusable");
 
@@ -251,11 +251,11 @@ describe("Popover general interaction", () => {
 		await browser.keys("Tab");
 
 		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests focus trapping using SHIFT TAB", async () => {
-		await browser.url(`test/pages/Popover.html`);
-
 		const btn = await browser.$("#btn");
 		const ff = await browser.$("#first-focusable");
 
@@ -279,11 +279,11 @@ describe("Popover general interaction", () => {
 		await browser.keys(["Shift", "Tab"]);
 
 		assert.ok(await ff.getProperty("focused"), "The first focusable element is focused.");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests focus when there is no focusable content", async () => {
-		await browser.url(`test/pages/Popover.html`);
-
 		const firstBtn = await browser.$("#firstBtn");
 		const popoverId = "popNoFocusableContent";
 
@@ -298,11 +298,11 @@ describe("Popover general interaction", () => {
 		activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
 
 		assert.equal(activeElementId, popoverId, "Popover remains focused");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests focus when content, which can't be focused is clicked", async () => {
-		await browser.url(`test/pages/Popover.html`);
-
 		await browser.$("#btnOpenPopoverWithDiv").click();
 		await browser.$("#divContent").click();
 
@@ -310,11 +310,11 @@ describe("Popover general interaction", () => {
 		const activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
 
 		assert.strictEqual(activeElementId, popoverId, "Popover is focused");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests that dynamically created popover is opened", async () => {
-		await browser.url(`test/pages/Popover.html`);
-
 		const btnOpenDynamic = await browser.$("#btnOpenDynamic");
 		await btnOpenDynamic.click();
 		const popover = await browser.$('#dynamic-popover');
@@ -328,6 +328,8 @@ describe("Popover general interaction", () => {
 		);
 
 		assert.ok(true, "popover is opened");
+
+		await browser.keys("Escape");
 	});
 
 	it("tests that ENTER on list item that opens another popover doesn't trigger click event inside the focused element of that popover", async () => {
