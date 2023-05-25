@@ -107,10 +107,10 @@ WithVerticalLayout.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithInteractiveDisplayArea = Template.bind({});
-WithInteractiveDisplayArea.args = {
+export const WithThumbnailsOnTheRight = Template.bind({});
+WithThumbnailsOnTheRight.args = {
     showAllThumbnails: true,
-    layout: MediaGalleryLayout.Vertical,
+    layout: MediaGalleryLayout.Horizontal,
     menuHorizontalAlign: MediaGalleryMenuHorizontalAlign.Right,
     default: `
     <ui5-media-gallery-item>
@@ -133,8 +133,8 @@ WithInteractiveDisplayArea.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithMenuHorizontalAlign = Template.bind({});
-WithMenuHorizontalAlign.args = {
+export const WithSeparateImageThumbnail = Template.bind({});
+WithSeparateImageThumbnail.args = {
     default: `
     <ui5-media-gallery-item>
         <img src="../assets/images/HT-1000.jpg" />
@@ -145,8 +145,8 @@ WithMenuHorizontalAlign.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithMenuVerticalAlign = Template.bind({});
-WithMenuVerticalAlign.args = {
+export const WithVideoContent = Template.bind({});
+WithVideoContent.args = {
     default: `
     <ui5-media-gallery-item layout="Wide">
         <iframe
