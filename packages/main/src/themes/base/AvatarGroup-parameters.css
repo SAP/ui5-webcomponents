@@ -1,3 +1,3 @@
-[ui5-avatar-group] {
-	--_ui5_button_focused_border: none
+:root {
+	--_ui5_avatar_group_button_focus_border: none;
 }

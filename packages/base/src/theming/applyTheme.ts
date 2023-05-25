@@ -6,6 +6,7 @@ import { getFeature } from "../FeaturesRegistry.js";
 import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoot.js";
 import type OpenUI5Support from "../features/OpenUI5Support.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
+import { getCurrentRuntimeIndex } from "../Runtimes.js";
 
 const BASE_THEME_PACKAGE = "@ui5/webcomponents-theming";
 
@@ -39,7 +40,7 @@ const loadComponentPackages = async (theme: string) => {
 
 		const cssData = await getThemeProperties(packageName, theme);
 		if (cssData) {
-			createOrUpdateStyle(cssData, "data-ui5-theme-properties", packageName);
+			createOrUpdateStyle(cssData, `data-ui5-component-properties-${getCurrentRuntimeIndex()}`, packageName);
 		}
 	});
 

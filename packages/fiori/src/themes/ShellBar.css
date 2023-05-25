@@ -7,6 +7,10 @@
 
 :host {
 	--_ui5_input_placeholder_color: var(--sapShell_InteractiveTextColor);
+	--_ui5_input_border_radius: var(--_ui5_shellbar_input_border_radius);
+	--_ui5_input_focus_border_radius: var(--_ui5_shellbar_input_focus_border_radius);
+	--_ui5_input_background_color: var(--_ui5_shellbar_input_background_color);
+	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
 }
 
 .ui5-shellbar-root {

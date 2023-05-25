@@ -1,5 +1,3 @@
-@import "../base/sizes-parameters.css";
-@import "../base/rtl-parameters.css";
 @import "./Avatar-parameters.css";
 @import "../base/AvatarGroup-parameters.css";
 @import "./Badge-parameters.css";
@@ -52,3 +50,5 @@
 @import "../base/MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "../base/StepInput-parameters.css";
+@import "../base/sizes-parameters.css";
+@import "../base/rtl-parameters.css";
