@@ -3,6 +3,10 @@ body {
 	margin: 0;
 }
 
+#message {
+	padding: 1rem 1rem 0 1rem;
+}
+
 .group {
 	padding: 1rem;
 }

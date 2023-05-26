@@ -17,8 +17,8 @@ import labelCss from "./generated/themes/Label.css.js";
  *
  * The <code>ui5-label</code> is a component used to represent a label,
  * providing valuable information to the user.
- * Usually it is placed next to a value holder, such as a text field.
- * It informs the user about what data is displayed or expected in the value holder.
+ * The proper use of ui5-label is to define a label for elements like input, textarea, select.
+ * It informs the user about what data is displayed or expected in the input.
  * <br><br>
  * The <code>ui5-label</code> appearance can be influenced by properties,
  * such as <code>required</code> and <code>wrappingType</code>.

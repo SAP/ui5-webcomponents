@@ -29,6 +29,7 @@ const Template: UI5StoryArgs<Label, StoryArgsSlots> = (args) => {
 	?required="${ifDefined(args.required)}"
 	?show-colon="${ifDefined(args.showColon)}"
 	wrapping-type="${ifDefined(args.wrappingType)}"
+	class="${ifDefined(args.className)}"
 >
 	${unsafeHTML(args.default)}
 </ui5-label>`;
@@ -37,37 +38,63 @@ const Template: UI5StoryArgs<Label, StoryArgsSlots> = (args) => {
 
 export const Basic = Template.bind({});
 Basic.args = {
-	default: "The quick brown fox jumps over the lazy dog"
+	showColon: true,
 };
+Basic.decorators = [
+	(story, { args }) => {
+		return html`
+	${story({ args: { ...args, for: "myInputSimple", default: "Simple label"}})}
+	<ui5-input id="myInputSimple"></ui5-input>
+`;
+	},
+];
 
 export const RequiredWithColon = Template.bind({});
 RequiredWithColon.args = {
-	default: "Required label with colon",
 	showColon: true,
 	required: true,
 };
+RequiredWithColon.decorators = [
+	(story, { args }) => {
+		return html`
+	${story({ args: { ...args, for: "myInputRequired", default: "Required label with colon"}})}
+	<ui5-input id="myInputRequired"></ui5-input>
+`;
+	},
+];
 
 const SetWidth200Px = (story: () => unknown) => html`
 <style>
-	ui5-label {
+	.limitedWidth {
 		width: 200px;
 	}
 </style>
-
 ${story()}`;
 
 export const Truncating = Template.bind({});
 Truncating.args = {
-	default: "Long labels are truncated by default.",
+	showColon: true,
 };
-Truncating.decorators = [SetWidth200Px];
+Truncating.decorators = [SetWidth200Px,
+	(story, { args }) => {
+		return html`
+	${story({ args: { ...args, for: "myInputTruncation", default: "Long labels are truncated by default.", className: "limitedWidth" }})}
+	<ui5-input id="myInputTruncation"></ui5-input>
+`;
+},];
 
 export const WrappingText = Template.bind({});
 WrappingText.args = {
-	default: `Long labels can wrap if the text is too long. Set 'wrapping-type="Normal"'. Long labels can wrap if the text is too long`,
 	wrappingType: WrappingType.Normal,
+	showColon: true,
 };
-WrappingText.decorators = [SetWidth200Px];
+WrappingText.decorators = [SetWidth200Px,
+	(story, { args }) => {
+		return html`
+	${story({ args: { ...args, for: "myInputWrapping", default: `Long labels can wrap if the text is too long. Set 'wrapping-type="Normal"'. Long labels can wrap if the text is too long`, className: "limitedWidth" }})}
+	<ui5-input id="myInputWrapping"></ui5-input>
+`;
+},];
 
 export const UsageWithInputs = Template.bind({});
 UsageWithInputs.args = {
