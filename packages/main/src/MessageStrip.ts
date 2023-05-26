@@ -36,7 +36,7 @@ enum DesignClassesMapping {
 	Warning = "ui5-message-strip-root--warning",
 }
 
-enum IconMappings {
+enum IconMapping {
 	Information = "information",
 	Positive = "sys-enter-2",
 	Negative = "error",
@@ -114,7 +114,7 @@ class MessageStrip extends UI5Element {
 		type: MessageStripDesign,
 		defaultValue: MessageStripDesign.Information,
 	})
-	design!: MessageStripDesign;
+	design!: `${MessageStripDesign}`;
 
 	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
@@ -219,7 +219,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return IconMappings[this.design];
+		return IconMapping[this.design];
 	}
 
 	get designClasses() {

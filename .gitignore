@@ -19,6 +19,8 @@ packages/fiori/jsdoc-dist
 # scoping feature generated entry points for vite consumption
 packages/main/test/pages/scoped
 packages/fiori/test/pages/scoped
+packages/main/test/pages/resources/css
+packages/fiori/test/pages/resources/css
 
 # Ignore default target directory for the npm package 'ui5-codecompletion'
 .ui5

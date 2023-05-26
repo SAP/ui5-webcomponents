@@ -111,6 +111,14 @@ body:
       label: Additional Context
       description: Add business impact or any other context about the problem here.
 
+  - type: input
+    id: org
+    attributes:
+      label: Organization
+      description: Add your organization name.
+    validations:
+      required: false
+
   - type: markdown
     attributes:
       value: |

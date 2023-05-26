@@ -185,7 +185,7 @@ class TreeItemBase extends ListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: ValueState;
+	additionalTextState!: `${ValueState}`;
 
 	/**
 	 * Defines the accessible name of the component.
@@ -259,7 +259,7 @@ class TreeItemBase extends ListItem {
 	 * @private
 	 */
 	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: HasPopup;
+	ariaHaspopup?: `${HasPopup}`;
 
 	/**
 	 * Defines the items of the component.
@@ -289,7 +289,7 @@ class TreeItemBase extends ListItem {
 	get styles() {
 		return {
 			preContent: {
-				"padding-left": `calc(var(--_ui5-tree-indent-step) * ${this.effectiveLevel})`,
+				"padding-inline-start": `calc(var(--_ui5-tree-indent-step) * ${this.effectiveLevel})`,
 			},
 		};
 	}

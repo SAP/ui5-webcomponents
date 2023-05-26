@@ -140,7 +140,7 @@ class UploadCollection extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.

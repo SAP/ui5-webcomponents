@@ -149,7 +149,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	*/
 	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
-	design!: BreadcrumbsDesign;
+	design!: `${BreadcrumbsDesign}`;
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
@@ -171,7 +171,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	 */
 	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
-	separatorStyle!: BreadcrumbsSeparatorStyle;
+	separatorStyle!: `${BreadcrumbsSeparatorStyle}`;
 
 	/**
 	 * Holds the number of items in the overflow.

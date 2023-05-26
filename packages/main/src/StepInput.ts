@@ -171,7 +171,7 @@ class StepInput extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Defines whether the component is required.
@@ -333,7 +333,7 @@ class StepInput extends UI5Element implements IFormElement {
 	@slot()
 	formSupport!: Array<HTMLElement>;
 
-	_initialValueState?: ValueState;
+	_initialValueState?: `${ValueState}`;
 
 	static i18nBundle: I18nBundle;
 

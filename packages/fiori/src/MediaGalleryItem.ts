@@ -91,7 +91,7 @@ class MediaGalleryItem extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: MediaGalleryItemLayout, defaultValue: MediaGalleryItemLayout.Square })
-	layout!: MediaGalleryItemLayout;
+	layout!: `${MediaGalleryItemLayout}`;
 
 	/**
 	 * @private

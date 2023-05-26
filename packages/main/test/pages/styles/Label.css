@@ -1,44 +1,54 @@
 html,
-		body {
-    margin: 0;
+body {
+	margin: 0;
 }
 
 .group {
-    padding: 1rem;
+	padding: 1rem;
+}
+
+.vertical {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+
+.more-space {
+	gap: 1rem;
 }
 
 .label1auto {
-    background-color: var(--sapBackgroundColor);
+	background-color: var(--sapBackgroundColor);
 }
 
 .label2auto {
-    width: 100px
+	width: 100px
 }
 
 .label3auto {
-    width: 200px
+	width: 200px
 }
 
 .label4auto {
-    width: 600px;
-    text-align: right;
+	width: 600px;
+	text-align: right;
 }
 
 .label5auto {
-    display: flex;
-    align-items: center
+	display: flex;
+	align-items: center
 }
 
 .label6auto {
-    width: 320px;
-    margin: 0 16px;
+	width: 320px;
+	margin: 0 16px;
 }
 
 .label7auto {
-    display: flex;
-    flex-direction: column
+	display: flex;
+	flex-direction: column
 }
 
 .label8auto {
-    font-style: italic
+	font-style: italic
 }

@@ -50,7 +50,7 @@ class SegmentedButtonItem extends ToggleButton {
 	 * @public
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: ButtonDesign;
+	design!: `${ButtonDesign}`;
 
 	/**
 	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
