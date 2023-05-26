@@ -41,10 +41,6 @@ type SelectionChangeEventDetail = {
 	selectedItems: Array<UploadCollectionItem>,
 };
 
-type ItemDeleteEventDetail = {
-	item: UploadCollectionItem,
-};
-
 /**
  * @class
  *
@@ -94,12 +90,10 @@ type ItemDeleteEventDetail = {
 @event("drop")
 
 /**
- * Fired when the Delete button of any item is pressed.
- * <br><br>
- * <b>Note:</b> A Delete button is displayed on each item,
- * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
+ * Fired when the delete button of any item is pressed.
+ *
  * @event sap.ui.webc.fiori.UploadCollection#item-delete
- * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
+ * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was deleted.
  * @public
  */
 @event("item-delete", {
@@ -130,8 +124,10 @@ class UploadCollection extends UI5Element {
 	 * <ul>
 	 * <li><code>None</code></li>
 	 * <li><code>SingleSelect</code></li>
+	 * <li><code>SingleSelectBegin</code></li>
+	 * <li><code>SingleSelectEnd</code></li>
 	 * <li><code>MultiSelect</code></li>
-	 * <li><code>Delete</code></li>
+	 * <li><code>Delete</code> - this mode has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem</li>
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.ListMode}
@@ -303,8 +299,8 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 	}
 
-	_onItemDelete(e: CustomEvent<ItemDeleteEventDetail>) {
-		this.fireEvent("item-delete", { item: e.detail.item });
+	_onItemDelete(e: CustomEvent) {
+		this.fireEvent("item-delete", { item: e.target });
 	}
 
 	_onSelectionChange(e: CustomEvent<SelectionChangeEventDetail>) {
