@@ -17,4 +17,7 @@
 	--_ui5_daypicker_item_now_inset: 0;
 	--_ui5_daypicker_item_now_border_color: var(--sapContent_FocusColor);
 	--sapLegend_WorkingBackground: var(--_ui5_daypicker_item_othermonth_background_color);
+	--_ui5_daypicker_two_calendar_item_now_selected_border_width: 0.125rem;
+	--_ui5_daypicker_item_selected_text_border: none;
+	--_ui5_daypicker_two_calendar_item_now_selected_border_inset: 0.125rem;
 }
