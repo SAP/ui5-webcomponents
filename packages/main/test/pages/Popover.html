@@ -425,6 +425,14 @@
 		</ui5-popover>
 	</div>
 	<ui5-button id="horizontalAlignBtn">Open horizontally aligned popover</ui5-button>
+
+	<br>
+	<br>
+	<ui5-button id="createAndRemove">Create a popover and then remove it</ui5-button>
+	<span id="createAndRemoveResult" style="display: none;"></span>
+	<br>
+	<br>
+
 	<script>
 		btn.addEventListener("click", function (event) {
 			pop.showAt(btn);
@@ -614,6 +622,32 @@
 
 		rtlCb.addEventListener("ui5-change", function (e) {
 			horizontalAlignContainer.setAttribute("dir", rtlCb.checked ? "rtl" : "")
+		});
+
+		createAndRemove.addEventListener("click", function () {
+			var pop = document.createElement("ui5-popover");
+	
+			pop.setAttribute("open", true);
+			pop.setAttribute("opener", "createAndRemove");
+
+			var inp = document.createElement("ui5-input");
+			inp.setAttribute("slot", "header")
+			pop.appendChild(inp)
+
+			document.body.appendChild(pop)
+
+			pop.addEventListener("ui5-before-open", async () => {
+				var applyFocusResult = pop.applyFocus();
+				pop.remove();
+
+				try {
+					await applyFocusResult;
+					createAndRemoveResult.innerText = "No uncaught errors";
+ 				} catch (e) {
+					createAndRemoveResult.innerText = e.toString();
+				}
+				createAndRemoveResult.style.display = "";
+			})
 		});
 
 	</script>

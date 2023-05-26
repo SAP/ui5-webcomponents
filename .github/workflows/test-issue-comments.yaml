@@ -1,0 +1,33 @@
+name: Test auto issue comments
+
+on: workflow_dispatch
+  
+jobs:
+  test-issue-comment:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+        fetch-depth: 0
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'yarn'
+
+    - name: Install
+      run: yarn --frozen-lockfile
+
+    - name: Add release comments to issues and PRs
+      uses: actions/github-script@v6
+      env:
+          GH_TOKEN: ${{ secrets.UI5_WEBCOMP_BOT_GH_TOKEN }}
+      with:
+          script: |
+            const { readFileSync } = require('fs');
+            const { URL } = require('url');
+            const { version } = require('./lerna.json');
+            const script = require('./.github/actions/createIssueComments.cjs');
+
+            console.log('Create issue comments for lerna version: ', version);
+            await script({ github: github.rest, context, core, "1.13.0" })
