@@ -26,7 +26,7 @@ import SegmentedButtonCss from "./generated/themes/SegmentedButton.css.js";
 
 type SegmentedButtonSelectionChangeEventDetail = {
 	selectedItem: SegmentedButtonItem,
-	pressedItems: Array<SegmentedButtonItem>,
+	selectedItems: Array<SegmentedButtonItem>,
 }
 
 /**
@@ -66,14 +66,14 @@ type SegmentedButtonSelectionChangeEventDetail = {
  *
  * @event sap.ui.webc.main.SegmentedButton#selection-change
  * @param {HTMLElement} selectedItem the pressed item.
- * Note: deprecated since 1.14.0 and will be removed in the next major release, use the <code>pressedItems</code> parameter instead.
- * @param {string} pressedItems an array of pressed items. Note: available since 1.14.0.
+ * Note: deprecated since 1.14.0 and will be removed in the next major release, use the <code>selectedItems</code> parameter instead.
+ * @param {string} selectedItems an array of pressed items. Note: available since 1.14.0.
  * @public
  */
 @event("selection-change", {
 	detail: {
 		selectedItem: { type: HTMLElement },
-		pressedItems: { type: Array },
+		selectedItems: { type: Array },
 	},
 })
 
@@ -97,17 +97,17 @@ class SegmentedButton extends UI5Element {
 	 * <b>The available values are:</b>
 	 *
 	 * <ul>
-	 * <li><code>Single</code></li>
-	 * <li><code>Multi</code></li>
+	 * <li><code>SingleSelect</code></li>
+	 * <li><code>MultiSelect</code></li>
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.SegmentedButtonMode}
-	 * @defaultvalue "Single"
+	 * @defaultvalue "SingleSelect"
 	 * @public
 	 * @name sap.ui.webc.main.SegmentedButton.prototype.mode
 	 * @since 1.14.0
 	 */
-	@property({ type: SegmentedButtonMode, defaultValue: SegmentedButtonMode.Single })
+	@property({ type: SegmentedButtonMode, defaultValue: SegmentedButtonMode.SingleSelect })
 	mode!: `${SegmentedButtonMode}`;
 
 	/**
@@ -135,7 +135,7 @@ class SegmentedButton extends UI5Element {
 	_handleResizeBound: ResizeObserverCallback;
 
 	widths?: Array<number>;
-	_pressedItem?: SegmentedButtonItem;
+	_selectedItem?: SegmentedButtonItem;
 
 	static async onDefine() {
 		SegmentedButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -199,14 +199,14 @@ class SegmentedButton extends UI5Element {
 
 	normalizeSelection() {
 		switch (this.mode) {
-		case SegmentedButtonMode.Single: {
-			const pressedItems = this.pressedItems;
-			const pressedItemIndex = this._pressedItem ? pressedItems.indexOf(this._pressedItem) : -1;
-			if (this._pressedItem && pressedItems.length > 1) {
-				pressedItems.splice(pressedItemIndex, 1);
+		case SegmentedButtonMode.SingleSelect: {
+			const selectedItems = this.selectedItems;
+			const selectedItemIndex = this._selectedItem ? selectedItems.indexOf(this._selectedItem) : -1;
+			if (this._selectedItem && selectedItems.length > 1) {
+				selectedItems.splice(selectedItemIndex, 1);
 			}
-			const pressedItem = pressedItems.pop() || this.items[0];
-			this._applySingleSelection(pressedItem);
+			const selectedItem = selectedItems.pop() || this.items[0];
+			this._applySingleSelection(selectedItem);
 			break;
 		}
 		default:
@@ -222,7 +222,7 @@ class SegmentedButton extends UI5Element {
 		}
 
 		switch (this.mode) {
-		case SegmentedButtonMode.Multi:
+		case SegmentedButtonMode.MultiSelect:
 			if (e instanceof KeyboardEvent) {
 				target.pressed = !target.pressed;
 			}
@@ -233,7 +233,7 @@ class SegmentedButton extends UI5Element {
 
 		this.fireEvent<SegmentedButtonSelectionChangeEventDetail>("selection-change", {
 			selectedItem: target,
-			pressedItems: this.pressedItems,
+			selectedItems: this.selectedItems,
 		});
 
 		this._itemNavigation.setCurrentItem(target);
@@ -247,7 +247,7 @@ class SegmentedButton extends UI5Element {
 			currentItem.pressed = false;
 		});
 		item.pressed = true;
-		this._pressedItem = item;
+		this._selectedItem = item;
 	}
 
 	_onclick(e: MouseEvent) {
@@ -289,9 +289,9 @@ class SegmentedButton extends UI5Element {
 
 		// If the component is focused for the first time
 		// focus the selected item if such is present
-		if (this.pressedItems.length) {
-			this.pressedItems[0].focus();
-			this._itemNavigation.setCurrentItem(this.pressedItems[0]);
+		if (this.selectedItems.length) {
+			this.selectedItems[0].focus();
+			this._itemNavigation.setCurrentItem(this.selectedItems[0]);
 			this.hasPreviouslyFocusedItem = true;
 		}
 	}
@@ -325,23 +325,23 @@ class SegmentedButton extends UI5Element {
 	 * @readonly
 	 * @type {sap.ui.webc.main.ISegmentedButtonItem}
 	 * @name sap.ui.webc.main.SegmentedButton.prototype.selectedItem
-	 * @deprecated since 1.14.0. This method is will be removed in the next major release.
-	 * Please use the <code>pressedItems</code> property instead.
+	 * @deprecated since 1.14.0. This method will be removed in the next major release.
+	 * Please use the <code>selectedItems</code> property instead.
 	 * @public
 	 */
 	get selectedItem() {
-		return this._pressedItem;
+		return this._selectedItem;
 	}
 
 	/**
 	 * Returns an array of the currently pressed items.
 	 * @readonly
-	 * @name sap.ui.webc.main.SegmentedButton.prototype.pressedItems
+	 * @name sap.ui.webc.main.SegmentedButton.prototype.selectedItems
 	 * @type {sap.ui.webc.main.ISegmentedButtonItem[]}
 	 * @since 1.14.0
 	 * @public
 	 */
-	get pressedItems(): Array<SegmentedButtonItem> {
+	get selectedItems(): Array<SegmentedButtonItem> {
 		return this.items.filter(item => item.pressed);
 	}
 

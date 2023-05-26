@@ -11,16 +11,16 @@ enum SegmentedButtonMode {
 	/**
 	 * There is always one selected. Selecting one deselects the previous one.
 	 * @public
-	 * @type {Single}
+	 * @type {SingleSelect}
 	 */
-	Single = "Single",
+	SingleSelect = "SingleSelect",
 
 	/**
 	 * Multiple items can be selected at a time. All items can be deselected.
 	 * @public
-	 * @type {Multi}
+	 * @type {MultiSelect}
 	 */
-	Multi = "Multi",
+	MultiSelect = "MultiSelect",
 }
 
 export default SegmentedButtonMode;
