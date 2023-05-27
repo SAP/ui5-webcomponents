@@ -1,5 +1,3 @@
-@import "./sizes-parameters.css";
-@import "../base/rtl-parameters.css";
 @import "./Avatar-parameters.css";
 @import "../base/AvatarGroup-parameters.css";
 @import "./Badge-parameters.css";
@@ -27,6 +25,7 @@
 @import "./MonthPicker-parameters.css";
 @import "./MessageStrip-parameters.css";
 @import "./Panel-parameters.css";
+@import "../base/Popover-parameters.css";
 @import "./PopupsCommon-parameters.css";
 @import "./ProgressIndicator-parameters";
 @import "./RadioButton-parameters.css";
@@ -53,3 +52,5 @@
 @import "../base/MultiComboBox-parameters.css";
 @import "./SliderBase-parameters.css";
 @import "../base/StepInput-parameters.css";
+@import "./sizes-parameters.css";
+@import "../base/rtl-parameters.css";

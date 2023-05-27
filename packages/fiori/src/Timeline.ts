@@ -67,7 +67,7 @@ class Timeline extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
-	layout!: TimelineLayout;
+	layout!: `${TimelineLayout}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.

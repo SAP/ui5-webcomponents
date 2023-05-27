@@ -49,7 +49,7 @@ class SuggestionItem extends UI5Element {
 	 * @since 1.0.0-rc.8
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: ListItemType
+	type!: `${ListItemType}`
 
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
@@ -120,7 +120,7 @@ class SuggestionItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: ValueState
+	additionalTextState!: `${ValueState}`
 
 	get groupItem() {
 		return false;

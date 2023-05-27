@@ -21,13 +21,8 @@
 }
 
 :host(:not([wrapping-type="Normal"])) .ui5-label-root {
-	display: inline-block;
+	display: inline-flex;
 	white-space: nowrap;
-}
-
-bdi {
-	content: "";
-	padding-right: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
 }
 
 :host(:not([wrapping-type="Normal"])) .ui5-label-text-wrapper {
@@ -35,28 +30,8 @@ bdi {
 	overflow: hidden;
 	display: inline-block;
 	vertical-align: top;
-	max-width: 100%;
-}
-
-:host(:not([wrapping-type="Normal"])[required][show-colon]) .ui5-label-text-wrapper,
-:host(:not([wrapping-type="Normal"])[required][show-colon]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari {
-	max-width: calc(100% - .8rem);
-}
-
-:host(:not([wrapping-type="Normal"])[required]) .ui5-label-text-wrapper {
-	max-width: calc(100% - .475rem);
-}
-
-:host(:not([wrapping-type="Normal"])[required]) .ui5-label-text-wrapper.ui5-label-text-wrapper-safari {
-	max-width: calc(100% - .425rem);
-}
-
-:host(:not([wrapping-type="Normal"])[show-colon]) .ui5-label-text-wrapper {
-	max-width: calc(100% - 0.125rem);
-}
-
-:host([show-colon]) .ui5-label-required-colon {
-	margin-inline-start: -0.05rem; /*0.8px - fix for last letter clipping issue when style is italic*/
+	flex: 0 1 auto;
+	min-width: 0;
 }
 
 :host([show-colon]) .ui5-label-required-colon:before {
@@ -76,4 +51,12 @@ bdi {
 
 :host([required][show-colon]) .ui5-label-required-colon:after {
 	margin-inline-start: .125rem;
+}
+
+bdi {
+	padding-right: 0.075rem; /*1.2px - fix for last letter clipping issue when style is italic*/
+}
+
+:host([show-colon]) .ui5-label-required-colon {
+	margin-inline-start: -0.05rem; /*0.8px - fix for last letter clipping issue when style is italic*/
 }

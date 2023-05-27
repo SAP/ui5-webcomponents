@@ -282,7 +282,7 @@ class ComboBox extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Defines whether the component is read-only.
@@ -324,13 +324,13 @@ class ComboBox extends UI5Element {
 	 * Defines the filter type of the component.
 	 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 	 *
-	 * @type {string}
+	 * @type {sap.ui.webc.main.types.ComboBoxFilter}
 	 * @name sap.ui.webc.main.ComboBox.prototype.filter
 	 * @defaultvalue "StartsWithPerTerm"
 	 * @public
 	 */
 	@property({ type: ComboBoxFilter, defaultValue: ComboBoxFilter.StartsWithPerTerm })
-	filter!: ComboBoxFilter;
+	filter!: `${ComboBoxFilter}`;
 
 	/**
 	 * Indicates whether the input is focssed
@@ -1153,7 +1153,7 @@ class ComboBox extends UI5Element {
 		return !this.valueStateMessage.length && this.hasValueStateText;
 	}
 
-	get _valueStatePopoverHorizontalAlign(): PopoverHorizontalAlign {
+	get _valueStatePopoverHorizontalAlign(): `${PopoverHorizontalAlign}` {
 		return this.effectiveDir !== "rtl" ? PopoverHorizontalAlign.Left : PopoverHorizontalAlign.Right;
 	}
 

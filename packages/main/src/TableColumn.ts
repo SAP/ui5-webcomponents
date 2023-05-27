@@ -99,7 +99,7 @@ class TableColumn extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TableColumnPopinDisplay, defaultValue: TableColumnPopinDisplay.Block })
-	popinDisplay!: TableColumnPopinDisplay;
+	popinDisplay!: `${TableColumnPopinDisplay}`;
 
 	/**
 	 * @private

@@ -78,7 +78,7 @@ class TreeItem extends TreeItemBase {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: ValueState;
+	additionalTextState!: `${ValueState}`;
 
 	get _showTitle() {
 		return this.text.length && !this._minimal;
