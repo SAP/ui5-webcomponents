@@ -237,6 +237,10 @@ class Wizard extends UI5Element {
 	/**
 	 * Defines how the content of the <code>ui5-wizard</code> would be visualized.
 	 * @public
+	 * @type {sap.ui.webc.fiori.types.WizardContentLayout}
+	 * @since 1.15.0
+	 * @name sap.ui.webc.fiori.Wizard.prototype.contentLayout
+	 * @defaultvalue "MultipleSteps"
 	 */
 	@property({ validator: String, defaultValue: WizardContentLayout.MultipleSteps })
 	contentLayout?: WizardContentLayout
