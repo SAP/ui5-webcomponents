@@ -666,3 +666,8 @@ class Menu extends UI5Element {
 Menu.define();
 
 export default Menu;
+export type {
+	MenuItemClickEventDetail,
+	MenuBeforeCloseEventDetail,
+	MenuBeforeOpenEventDetail,
+};
