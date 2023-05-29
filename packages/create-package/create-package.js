@@ -32,7 +32,7 @@ const isNPMRC = sourcePath => {
 // Validation of user input
 const ComponentNamePattern = /^[A-Z][A-Za-z0-9]+$/;
 const NamespacePattern = /^[a-z][a-z0-9\.\-]+$/;
-const isNameValid = name => typeof name === "string" && name.match(/^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/);
+const isPackageNameValid = name => typeof name === "string" && name.match(/^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/);
 const isComponentNameValid = name => typeof name === "string" && ComponentNamePattern.test(name);
 const isNamespaceValid = name => typeof name === "string" && NamespacePattern.test(name);
 const isTagValid = tag => typeof tag === "string" && tag.match(/^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/);
@@ -100,20 +100,20 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-const generateFilesContent = (name, componentName, namespace, typescript, skipSubfolder) => {
+const generateFilesContent = (packageName, componentName, namespace, typescript, skipSubfolder) => {
 	const tagName = argv.tag || hyphaneteComponentName(componentName);
 
 	// All variables that will be replaced in the content of the resources/
 	const vars = {
 		INIT_PACKAGE_VAR_NAMESPACE: namespace, // namespace must be replaced before name
-		INIT_PACKAGE_VAR_NAME: name,
+		INIT_PACKAGE_VAR_NAME: packageName,
 		INIT_PACKAGE_VAR_TAG: tagName,
 		INIT_PACKAGE_VAR_CLASS_NAME: componentName,
 		INIT_PACKAGE_VAR_TYPESCRIPT: typescript,
 	};
 
 	const packageContent = {
-		name,
+		packageName,
 		version: "0.0.1",
 		ui5: {
 			webComponentsPackage: true,
@@ -150,7 +150,7 @@ const generateFilesContent = (name, componentName, namespace, typescript, skipSu
 	}
 
 	// Update package.json
-	let destDir = name.includes("@") ? name.slice(name.lastIndexOf("/") + 1) : name;
+	let destDir = packageName.includes("@") ? packageName.slice(packageName.lastIndexOf("/") + 1) : packageName;
 
 	destDir = skipSubfolder ? path.join("./") : path.join("./", destDir);
 	mkdirp.sync(destDir);
@@ -159,7 +159,7 @@ const generateFilesContent = (name, componentName, namespace, typescript, skipSu
 	copyFiles(vars, TEMPLATE_DIR, destDir);
 
 	console.log("\nPackage successfully created!\nNext steps:\n");
-	console.log(`$ cd ${name}`);
+	console.log(`$ cd ${destDir}`);
 
 	let userAgentInfo;
 	try {
@@ -180,7 +180,7 @@ const generateFilesContent = (name, componentName, namespace, typescript, skipSu
 // Main function
 const createWebcomponentsPackage = async () => {
 	let response;
-	if (argv.name && !isNameValid(argv.name)) {
+	if (argv.name && !isPackageNameValid(argv.name)) {
 		throw new Error("The package name should be a string, starting with letter and containing the following symbols [a-z, A-Z, 0-9].");
 	}
 
@@ -196,14 +196,14 @@ const createWebcomponentsPackage = async () => {
 		throw new Error("The tag should be in kebab-case (f.e my-component) and it can't be a single word.");
 	}
 
-	let name = argv.name || "my-package";
+	let packageName = argv.name || "my-package";
 	let componentName = argv.componentName || "MyComponent";
 	let namespace = argv.namespace || "demo.components";
 	let typescriptSupport = !!argv.enableTypescript;
 	const skipSubfolder = !!argv.skipSubfolder;
 
 	if (argv.skip) {
-		return generateFilesContent(name, componentName, namespace, typescriptSupport, skipSubfolder);
+		return generateFilesContent(packageName, componentName, namespace, typescriptSupport, skipSubfolder);
 	}
 
 	if (!argv.name) {
@@ -211,9 +211,9 @@ const createWebcomponentsPackage = async () => {
 			type: "text",
 			name: "name",
 			message: "Package name:",
-			validate: (value) => isNameValid(value) ? true : "Package name should be a string, starting with a letter and containing the following symbols [a-z, A-Z ,0-9, _, -].",
+			validate: (value) => isPackageNameValid(value) ? true : "Package name should be a string, starting with a letter and containing the following symbols [a-z, A-Z ,0-9, _, -].",
 		});
-		name = response.name;
+		packageName = response.name;
 	}
 
 	if (!typescriptSupport) {
@@ -257,7 +257,7 @@ const createWebcomponentsPackage = async () => {
 		namespace = response.namespace;
 	}
 
-	return generateFilesContent(name, componentName, namespace, typescriptSupport, skipSubfolder);
+	return generateFilesContent(packageName, componentName, namespace, typescriptSupport, skipSubfolder);
 };
 
 createWebcomponentsPackage();
