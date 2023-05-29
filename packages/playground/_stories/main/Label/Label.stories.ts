@@ -90,7 +90,7 @@ Truncating.decorators = [
 	${story({ args: { ...args, for: "myInputTruncation", className: "limitedWidth" }})}
 `;
 },
-addInput("myInputTruncation")
+	addInput("myInputTruncation")
 ];
 
 export const WrappingText = Template.bind({});
@@ -106,7 +106,7 @@ WrappingText.decorators = [
 	${story({ args: { ...args, for: "myInputWrapping", className: "limitedWidth" }})}
 `;
 },
-addInput("myInputWrapping")
+	addInput("myInputWrapping")
 ];
 
 export const UsageWithInputs = Template.bind({});
