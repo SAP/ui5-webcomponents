@@ -22,6 +22,12 @@
 	<ui5-button id="restore-items-btn">Restore Items</ui5-button>
 	<ui5-button id="myBtn2">click</ui5-button>
 
+	<h2>Change prevention</h2>
+	<ui5-select id="selectPrevent">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option>Compact</ui5-option>
+		<ui5-option selected>Condensed</ui5-option>
+	</ui5-select>
 
 	<h2>Content size</h2>
 	<ui5-label id="lblResult"></ui5-label>
@@ -167,6 +173,11 @@
 	var counterClose = 0;
 
 	// Select
+
+	selectPrevent.addEventListener("ui5-change", function(e) {
+		e.preventDefault();
+	});
+
 	select.addEventListener("ui5-change", function(e) {
 		lbl.innerHTML = "selected item :: " + e.detail.selectedOption.textContent + " :: " + (++counter);
 		inputResult.value = counter;

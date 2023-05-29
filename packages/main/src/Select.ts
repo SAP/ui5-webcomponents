@@ -144,6 +144,7 @@ interface IOption extends UI5Element {
  * Fired when the selected option changes.
  *
  * @event sap.ui.webc.main.Select#change
+ * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
@@ -706,11 +707,15 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_fireChangeEvent(selectedOption: Option) {
-		this.fireEvent<SelectChangeEventDetail>("change", { selectedOption });
+		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
 		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
+		if (changePrevented) {
+			this.selectedItem = this._lastSelectedOption!.textContent;
+			this._select(this._selectedIndexBeforeOpen);
+		}
 	}
 
 	get valueStateTextMappings() {
