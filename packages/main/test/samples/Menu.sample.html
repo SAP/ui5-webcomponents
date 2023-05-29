@@ -179,7 +179,7 @@
 					let closeNode = document.createElement("ui5-menu-item");
 					closeNode.setAttribute("text", "Close");
 					menuBusy.appendChild(closeNode);
-				}, 3000);
+				}, 2000);
 			}, { once: true });
 		</script>
 	</div>
@@ -213,7 +213,7 @@
 			let closeNode = document.createElement("ui5-menu-item");
 			closeNode.setAttribute("text", "Close");
 			menuBusy.appendChild(closeNode);
-		}, 3000);
+		}, 2000);
 	}, { once: true });
 </script>
 	</xmp></pre>
@@ -243,13 +243,15 @@
 					let closeNode = document.createElement("ui5-menu-item");
 					closeNode.setAttribute("text", "Close");
 					menuListBusy.appendChild(closeNode);
-				}, 3000);
+				}, 2000);
 			}, { once: true });
 		</script>
 	</div>
 	<pre class="prettyprint lang-html"><xmp>
-<ui5-button id="btnMenuListBusy">Open Menu</ui5-button> <br/>
+<ui5-button id="btnMenuListBusy" class="samples-margin">Open Menu</ui5-button> <br/>
 <ui5-menu id="menuListBusy" busy-delay="100" busy>
+	<ui5-menu-item text="New File" icon="add-document" additional-text="Ctrl+N"></ui5-menu-item>
+	<ui5-menu-item text="New Folder" icon="add-folder" additional-text="Ctrl+F" disabled></ui5-menu-item>
 </ui5-menu>
 <script>
 	btnMenuListBusy.addEventListener("click", function(event) {
@@ -267,8 +269,78 @@
 			let closeNode = document.createElement("ui5-menu-item");
 			closeNode.setAttribute("text", "Close");
 			menuListBusy.appendChild(closeNode);
-		}, 3000);
+		}, 2000);
 	}, { once: true });
+</script>
+	</xmp></pre>
+</section>
+
+<section>
+	<h3>Sub-menu with items fetching from a database</h3>  
+	<div class="snippet">
+		<ui5-button id="btnSubMenuListBusy" class="samples-margin">Open Menu</ui5-button> <br/>
+		<ui5-menu id="subMenuListBusy">
+			<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" icon="add-document"></ui5-menu-item>
+			<ui5-menu-item text="Open" icon="open-folder"></ui5-menu-item>
+			<ui5-menu-item text="Save" icon="save" busy-delay="100" busy></ui5-menu-item>
+		</ui5-menu>
+		<script>
+			btnSubMenuListBusy.addEventListener("click", function(event) {
+				subMenuListBusy.showAt(btnSubMenuListBusy);
+			});
+
+			let feched = false;
+
+			subMenuListBusy.addEventListener("ui5-before-open", function(event) {
+				const item = event.detail.item;
+				if (item && item.text === "Save" && !feched) {
+					setTimeout(function() {
+						item.removeAttribute("busy");
+						item.removeAttribute("busy-delay");
+						let saveLocally = document.createElement("ui5-menu-item");
+						saveLocally.setAttribute("text", "Save Locally");
+						saveLocally.setAttribute("icon", "save");
+						let saveCloud = document.createElement("ui5-menu-item");
+						saveCloud.setAttribute("text", "Save on Cloud");
+						saveCloud.setAttribute("icon", "upload-to-cloud");
+						item.append(saveLocally, saveCloud);
+						feched = true;
+					}, 2000);
+				}
+			});
+		</script>
+	</div>
+	<pre class="prettyprint lang-html"><xmp>
+<ui5-button id="btnSubMenuListBusy" class="samples-margin">Open Menu</ui5-button> <br/>
+<ui5-menu id="subMenuListBusy">
+	<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" icon="add-document"></ui5-menu-item>
+	<ui5-menu-item text="Open" icon="open-folder"></ui5-menu-item>
+	<ui5-menu-item text="Save" icon="save" busy-delay="100" busy></ui5-menu-item>
+</ui5-menu>
+<script>
+	btnSubMenuListBusy.addEventListener("click", function(event) {
+		subMenuListBusy.showAt(btnSubMenuListBusy);
+	});
+
+	let feched = false;
+
+	subMenuListBusy.addEventListener("ui5-before-open", function(event) {
+		const item = event.detail.item;
+		if (item && item.text === "Save" && !feched) {
+			setTimeout(function() {
+				item.removeAttribute("busy");
+				item.removeAttribute("busy-delay");
+				let saveLocally = document.createElement("ui5-menu-item");
+				saveLocally.setAttribute("text", "Save Locally");
+				saveLocally.setAttribute("icon", "save");
+				let saveCloud = document.createElement("ui5-menu-item");
+				saveCloud.setAttribute("text", "Save on Cloud");
+				saveCloud.setAttribute("icon", "upload-to-cloud");
+				item.append(saveLocally, saveCloud);
+				feched = true;
+			}, 2000);
+		}
+	});
 </script>
 	</xmp></pre>
 </section>

@@ -124,8 +124,15 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * @event sap.ui.webc.main.Menu#before-open
  * @allowPreventDefault
  * @since 1.10.0
+ * @param {object} item The <code>ui5-menu-item</code> that triggers opening of the sub-menu. Note: available since 1.14.0.
  */
-@event("before-open")
+@event("before-open", {
+	detail: {
+		item: {
+			type: Object,
+		},
+	},
+})
 
 /**
  * Fired after the menu is opened. <b>This event does not bubble.</b>
@@ -342,9 +349,16 @@ class Menu extends UI5Element {
 		this._currentItems.forEach(item => {
 			item.item._siblingsWithChildren = itemsWithChildren;
 			item.item._siblingsWithIcon = itemsWithIcon;
-			if (item.item._subMenu) {
-				item.item._subMenu.busy = item.item.busy;
-				item.item._subMenu.busyDelay = item.item.busyDelay;
+			const subMenu = item.item._subMenu;
+			const menuItem = item.item;
+			if (subMenu && subMenu.busy) {
+				subMenu.innerHTML = "";
+				this._cloneItems(menuItem, subMenu);
+			}
+
+			if (subMenu) {
+				subMenu.busy = item.item.busy;
+				subMenu.busyDelay = item.item.busyDelay;
 			}
 		});
 	}
@@ -437,26 +451,29 @@ class Menu extends UI5Element {
 	_createSubMenu(item: MenuItem, openerId: string) {
 		const ctor = this.constructor as typeof Menu;
 		const subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
-		const fragment = document.createDocumentFragment();
 
 		subMenu._isSubMenu = true;
 		subMenu.setAttribute("id", `submenu-${openerId}`);
 		subMenu._parentMenuItem = item;
 		subMenu.busy = item.busy;
 		subMenu.busyDelay = item.busyDelay;
-		const subItems = item.children;
-		let clonedItem,
-			idx;
-		for (idx = 0; idx < subItems.length; idx++) {
-			clonedItem = subItems[idx].cloneNode(true);
-			fragment.appendChild(clonedItem);
-		}
-		subMenu.appendChild(fragment);
+		this._cloneItems(item, subMenu);
 		this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
 		item._subMenu = subMenu;
 	}
 
+	_cloneItems(item: MenuItem, menu: Menu) {
+		for (let i = 0; i < item.items.length; ++i) {
+			const clonedItem = item.items[i].cloneNode(true);
+			menu.appendChild(clonedItem);
+		}
+	}
+
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
+		const mainMenu = this._findMainMenu(item);
+		mainMenu.fireEvent("before-open", {
+			item,
+		});
 		item._subMenu!.showAt(opener);
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
@@ -579,13 +596,8 @@ class Menu extends UI5Element {
 				this._popover!.close();
 			} else {
 				// find top-level menu and redirect event to it
-				let parentMenu = item.parentElement as Menu;
-				while (parentMenu._parentMenuItem) {
-					parentMenu._parentMenuItem._preventSubMenuClose = false;
-					this._closeItemSubMenu(parentMenu._parentMenuItem);
-					parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
-				}
-				parentMenu._itemClick(e);
+				const mainMenu = this._findMainMenu(item);
+				mainMenu._itemClick(e);
 			}
 		} else if (isPhone()) {
 			// prepares and opens sub-menu on phone
@@ -594,6 +606,17 @@ class Menu extends UI5Element {
 			// prepares and opens sub-menu on tablet
 			this._prepareSubMenuDesktopTablet(item, opener, actionId);
 		}
+	}
+
+	_findMainMenu(item: MenuItem) {
+		let parentMenu = item.parentElement as Menu;
+		while (parentMenu._parentMenuItem) {
+			parentMenu._parentMenuItem._preventSubMenuClose = false;
+			this._closeItemSubMenu(parentMenu._parentMenuItem);
+			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
+		}
+
+		return parentMenu;
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
