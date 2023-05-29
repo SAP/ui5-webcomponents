@@ -2,7 +2,10 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import WrappingType from "./types/WrappingType.js";
+import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
@@ -98,6 +101,12 @@ class Label extends UI5Element {
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType!: `${WrappingType}`;
 
+	static i18nBundle: I18nBundle;
+
+	static async onDefine() {
+		Label.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+	}
+
 	/**
 	 * Defines the text of the component.
 	 * <br><b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -117,6 +126,10 @@ class Label extends UI5Element {
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
+	}
+
+	get _colonSymbol() {
+		return Label.i18nBundle.getText(LABEL_COLON);
 	}
 }
 
