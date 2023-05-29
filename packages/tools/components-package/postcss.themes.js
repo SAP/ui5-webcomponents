@@ -3,6 +3,7 @@ const combineSelectors = require('../lib/postcss-combine-duplicated-selectors/in
 const postcssCSStoJSON = require('../lib/postcss-css-to-json/index.js');
 const postcssCSStoESM = require('../lib/postcss-css-to-esm/index.js');
 const cssnano = require('cssnano');
+const modifySelectors = require("modify-selectors");
 const fs = require("fs");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
@@ -20,6 +21,15 @@ module.exports = {
 					},
 				]
 			},),
+			modifySelectors({
+				enable: true,
+				suffix: [
+					{
+						match: '*',
+						with: '[_ui5host]', // Add suffix to each selector in the file (:root => :root [_ui5host])
+					},
+				],
+			}),
 			postcssCSStoJSON({ toReplace: 'src', packageName }),
 			postcssCSStoESM({ toReplace: 'src', packageName }),
 		]

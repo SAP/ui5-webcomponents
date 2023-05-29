@@ -1,5 +1,3 @@
-@import "./sizes-parameters.css";
-@import "../base/rtl-parameters.css";
 @import "./Avatar-parameters.css";
 @import "../sap_horizon/AvatarGroup-parameters.css";
 @import "./Badge-parameters.css";
@@ -62,3 +60,5 @@
 @import "./TableGroupRow-parameters.css";
 @import "./StepInput-parameters.css";
 @import "./GrowingButton-parameters.css";
+@import "./sizes-parameters.css";
+@import "../base/rtl-parameters.css";

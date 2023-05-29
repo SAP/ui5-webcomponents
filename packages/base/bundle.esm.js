@@ -37,6 +37,7 @@ import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "./dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
 import applyDirection from "./dist/locale/applyDirection.js";
+import { getCurrentRuntimeIndex } from "./dist/Runtimes.js";
 import LegacyDateFormats from "./dist/features/LegacyDateFormats.js";
 
 window["sap-ui-webcomponents-bundle"] = {
@@ -55,6 +56,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		getFirstDayOfWeek,
 		getLegacyDateCalendarCustomizing,
 	},
+	getCurrentRuntimeIndex,
 	getIconNames,
 	parseProperties,
 	registerI18nLoader,
