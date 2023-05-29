@@ -126,14 +126,6 @@
 	background-color: var(--sapList_Hover_Background);
 }
 
-.ui5-tp-clock-item {
-	transform: translate(-50%) rotate(var(--tpc-degree));
-}
-
-.ui5-tp-clock-item .ui5-tp-clock-number {
-	transform: rotate(var(--tpc-degree));
-}
-
 .ui5-tp-clock-selected {
 	color: var(--sapButton_Selected_TextColor);
 	background-color: var(--sapButton_Selected_Background);

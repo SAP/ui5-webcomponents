@@ -23,6 +23,8 @@ type TimePickerClockItem = {
 	angle?: number,
 	item?: string,
 	innerItem?: string,
+	outerStyles?: object,
+	innerStyles?: object,
 }
 
 type TimePickerClockSelection = {
@@ -444,6 +446,12 @@ class TimePickerClock extends UI5Element {
 			"showMarker": selectedOuter || selectedInner,
 			"itemClasses": CLOCK_NUMBER_CLASS + (selectedOuter ? ` ${CLOCK_NUMBER_SELECTED_CLASS}` : ""),
 			"innerItemClasses": CLOCK_NUMBER_CLASS + (selectedInner ? ` ${CLOCK_NUMBER_SELECTED_CLASS}` : ""),
+			"outerStyles": {
+				transform: `translate(-50%) rotate(${currentAngle || 0}deg)`,
+			},
+			"innerStyles": {
+				transform: `rotate(-${currentAngle || 0}deg)`,
+			},
 		};
 	}
 
@@ -486,6 +494,12 @@ class TimePickerClock extends UI5Element {
 			valueIndex = i / itemStep - 1;
 			item = i % displayStep !== 0 ? {} : values[valueIndex];
 			item.angle = i * CLOCK_ANGLE_STEP;
+			item.outerStyles = {
+				transform: `translate(-50%) rotate(${i * 6}deg)`,
+			};
+			item.innerStyles = {
+				transform: `rotate(-${i * 6}deg)`,
+			};
 			this._items.push(item);
 		}
 	}

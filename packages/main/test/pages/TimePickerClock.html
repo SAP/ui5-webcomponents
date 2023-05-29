@@ -33,13 +33,13 @@
 			<ui5-time-picker-clock id="myHours12" label="myHours12" item-min="1" item-max="12" display-step="1" selected-value="12" active></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
-			<ui5-time-picker-clock id="myHours12Disabled" label="myHours12 (disabled)" item-min="1" item-max="12" display-step="1" selected-value="12" active disabled></ui5-time-picker-clock>
+			<ui5-time-picker-clock id="myHours24" label="myHours24" item-min="1" item-max="12" display-step="1" selected-value="1" inner-items prepend-zero support2400 last-item-replacement="24" active></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
 			<ui5-time-picker-clock id="myHours00" label="myHours00" item-min="1" item-max="12" display-step="1" selected-value="1" inner-items prepend-zero last-item-replacement="0" active></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
-			<ui5-time-picker-clock id="myHours24" label="myHours24" item-min="1" item-max="12" display-step="1" selected-value="1" inner-items prepend-zero support2400 last-item-replacement="24" active></ui5-time-picker-clock>
+			<ui5-time-picker-clock id="myHours12Disabled" label="myHours12 (disabled)" item-min="1" item-max="12" display-step="1" selected-value="12" active disabled></ui5-time-picker-clock>
 		</div>
 		<div class="clock-wrapper">
 			<ui5-time-picker-clock id="myMinutes" label="myMinutes" item-min="1" item-max="60" last-item-replacement="0" selected-value="0" active></ui5-time-picker-clock>
@@ -75,7 +75,6 @@
 
 		function displayChange(event) {
 			var clock = event.target;
-			console.warn(event);
 			event.detail.finalChange && eventCount++;
 			clockChangeId.value = clock.id;
 			clockChangeValue.value = clock.selectedValue;

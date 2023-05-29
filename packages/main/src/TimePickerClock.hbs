@@ -13,12 +13,12 @@
 
 	<div>
 	{{#each _items}}
-		<div class="ui5-tp-clock-item" style="--tpc-degree: {{this.angle}}deg">
-		{{#if this.item includeZero=true}}
+		<div class="ui5-tp-clock-item" style="{{this.outerStyles}}">
+		{{#if this.item}}
 			<span class="ui5-tp-clock-dot"></span>
-			<span id="{{../_id}}-{{this.item}}" class="ui5-tp-clock-number" style="--tpc-degree: -{{this.angle}}deg">{{this.item}}</span>
-			{{#if this.innerItem includeZero=true}}
-			<span id="{{../_id}}-{{this.innerItem}}" class="ui5-tp-clock-number" style="--tpc-degree: -{{this.angle}}deg">{{this.innerItem}}</span>
+			<span id="{{../_id}}-{{this.item}}" class="ui5-tp-clock-number" style="{{this.innerStyles}}">{{this.item}}</span>
+			{{#if this.innerItem}}
+			<span id="{{../_id}}-{{this.innerItem}}" class="ui5-tp-clock-number" style="{{this.innerStyles}}">{{this.innerItem}}</span>
 			{{/if}}
 		{{else unless ../hideFractions}}
 			<span class="ui5-tp-clock-mid-dot"></span>
@@ -27,10 +27,10 @@
 	{{/each}}
 
 	{{#if _selectedItem.showMarker}}
-		<div class="ui5-tp-clock-item" style="--tpc-degree: {{_selectedItem.angle}}deg" marker>
+		<div class="ui5-tp-clock-item" style="{{_selectedItem.outerStyles}}" marker>
 			<div class="ui5-tp-clock-marker"></div>
-			<div class="{{_selectedItem.itemClasses}}" style="--tpc-degree: -{{_selectedItem.angle}}deg">{{_selectedItem.item}}</div>
-			<div id="{{_id}}-selected" class="{{_selectedItem.innerItemClasses}}" style="--tpc-degree: -{{_selectedItem.angle}}deg">{{_selectedItem.innerItem}}</div>
+			<div class="{{_selectedItem.itemClasses}}" style="{{_selectedItem.innerStyles}}">{{_selectedItem.item}}</div>
+			<div id="{{_id}}-selected" class="{{_selectedItem.innerItemClasses}}" style="{{_selectedItem.innerStyles}}">{{_selectedItem.innerItem}}</div>
 		</div>
 	{{/if}}
 

@@ -88,13 +88,13 @@ describe("Clock item selection", () => {
 		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 1, "The event returned proper value");
 		assert.strictEqual(Number(parseInt(await countInput.getValue())), 1, "The event is fired once");
 
-		await hours12Cover.click({ x: -40, y: -60, skipRelease: true });
+		await hours12Cover.click({ x: 0, y: -110, skipRelease: true });
 		await browser.pause(500);
-		assert.strictEqual(await hours12.getProperty("selectedValue"), 11, "The selected value is proper");
-		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 11, "The event returned proper value");
+		assert.strictEqual(await hours12.getProperty("selectedValue"), 12, "The selected value is proper");
+		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 12, "The event returned proper value");
 		assert.strictEqual(Number(parseInt(await countInput.getValue())), 2, "The event is fired once");
 
-		await hours24Cover.click({ x: -60, y: -100, skipRelease: true });
+		await hours24Cover.click({ x: -55, y: -105, skipRelease: true });
 		await browser.pause(500);
 		assert.strictEqual(await hours24.getProperty("selectedValue"), 11, "The selected value is proper");
 		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 11, "The event returned proper value");
