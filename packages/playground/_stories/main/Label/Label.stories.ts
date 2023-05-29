@@ -43,7 +43,7 @@ Basic.args = {
 Basic.decorators = [
 	(story, { args }) => {
 		return html`
-	${story({ args: { ...args, for: "myInputSimple", default: "Simple label"}})}
+	${story({ args: { ...args, for: "myInputSimple", default: "Simple Label"}})}
 	<ui5-input id="myInputSimple"></ui5-input>
 `;
 	},
