@@ -8,6 +8,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type Label from "@ui5/webcomponents/dist/Label.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
+import type { Decorator } from "@storybook/web-components"
 
 const component = "ui5-label";
 
@@ -31,14 +32,16 @@ const Template: UI5StoryArgs<Label, StoryArgsSlots> = (args) => {
 	wrapping-type="${ifDefined(args.wrappingType)}"
 	class="${ifDefined(args.className)}"
 >
-	${unsafeHTML(args.default)}
+${unsafeHTML(args.default)}
 </ui5-label>`;
 };
 
-const addInput = (id: string) => {
-	return (story: () => unknown) => html`
-${story()}
-<ui5-input id="${id}"></ui5-input>`;	
+const addInput = (id: string): Decorator => {
+	return (story, { args }) => {
+		return html`
+${story({ args: { ...args, for: id } })}
+<ui5-input id="${id}"></ui5-input>`;
+	};
 };
 
 export const Basic = Template.bind({});
@@ -47,11 +50,6 @@ Basic.args = {
 	default: "Simple Label"
 };
 Basic.decorators = [
-	(story, { args }) => {
-		return html`
-${story({ args: { ...args, for: "myInputSimple"}})}
-`;
-	},
 	addInput("myInputSimple")
 ];
 
@@ -62,34 +60,27 @@ RequiredWithColon.args = {
 	default: "Required label with colon",
 };
 RequiredWithColon.decorators = [
-	(story, { args }) => {
-		return html`
-	${story({ args: { ...args, for: "myInputRequired"}})}
-`;
-	},
 	addInput("myInputRequired")
 ];
 
-const SetWidth200Px = (story: () => unknown) => html`
+const SetWidth200Px: Decorator = (story, { args }) => {
+	return html`
 <style>
-	.limitedWidth {
+	.w200 {
 		width: 200px;
 	}
 </style>
-${story()}`;
+${story({ args: { ...args, className: "w200" } })}`;
+};
 
 export const Truncating = Template.bind({});
 Truncating.args = {
 	showColon: true,
 	default: "Long labels are truncated by default.",
+	className: "limitedWidth",
 };
 Truncating.decorators = [
 	SetWidth200Px,
-	(story, { args }) => {
-		return html`
-	${story({ args: { ...args, for: "myInputTruncation", className: "limitedWidth" }})}
-`;
-},
 	addInput("myInputTruncation")
 ];
 
@@ -101,11 +92,6 @@ WrappingText.args = {
 };
 WrappingText.decorators = [
 	SetWidth200Px,
-	(story, { args }) => {
-		return html`
-	${story({ args: { ...args, for: "myInputWrapping", className: "limitedWidth" }})}
-`;
-},
 	addInput("myInputWrapping")
 ];
 
