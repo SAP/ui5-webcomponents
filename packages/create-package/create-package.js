@@ -16,13 +16,6 @@ const version = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))
 const TEMPLATE_DIR = path.join(`${__dirname}`, `template/`);
 
 // String utils
-const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
-const kebabToCamelCase = string => toCamelCase(string.split("-"));
-const toCamelCase = parts => {
-	return parts.map((string, index) => {
-		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-	}).join("");
-};
 const isTSRelatedFile = sourcePath => {
 	return ["Assets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
 };
@@ -39,7 +32,7 @@ const isNPMRC = sourcePath => {
 // Validation of user input
 const ComponentNamePattern = /^[A-Z][A-Za-z0-9]+$/;
 const NamespacePattern = /^[a-z][a-z0-9\.\-]+$/;
-const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9\-_]+$/);
+const isNameValid = name => typeof name === "string" && name.match(/^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/);
 const isComponentNameValid = name => typeof name === "string" && ComponentNamePattern.test(name);
 const isNamespaceValid = name => typeof name === "string" && NamespacePattern.test(name);
 const isTagValid = tag => typeof tag === "string" && tag.match(/^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/);
@@ -157,7 +150,9 @@ const generateFilesContent = (name, componentName, namespace, typescript, skipSu
 	}
 
 	// Update package.json
-	const destDir = skipSubfolder ? path.join("./") : path.join("./", name);
+	let destDir = name.includes("@") ? name.slice(name.lastIndexOf("/") + 1) : name;
+
+	destDir = skipSubfolder ? path.join("./") : path.join("./", destDir);
 	mkdirp.sync(destDir);
 	fs.writeFileSync(path.join(destDir, "package.json"), JSON.stringify(packageContent, null, 2));
 	// Copy files
