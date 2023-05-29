@@ -350,7 +350,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		if (!isSafari()) { // TODO remove when adopting native dialog
+		if (!isSafari()) { // Remove when adopting native dialog
 			this._root.removeAttribute("tabindex");
 		}
 
@@ -362,7 +362,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmouseup() {
-		if (!isSafari()) { // TODO remove when adopting native dialog
+		if (!isSafari()) { // Remove when adopting native dialog
 			this._root.tabIndex = -1;
 		}
 
