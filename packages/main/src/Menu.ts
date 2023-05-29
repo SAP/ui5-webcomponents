@@ -43,6 +43,14 @@ type CurrentItem = {
 	ariaHasPopup: string | undefined,
 }
 
+type MenuItemClickEventDetail = {
+	item: MenuItem,
+	text: string,
+}
+
+type MenuBeforeOpenEventDetail = { item?: MenuItem };
+type MenuBeforeCloseEventDetail = { escPressed: boolean };
+
 type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
@@ -102,14 +110,14 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
  * Fired when an item is being clicked.
  *
  * @event sap.ui.webc.main.Menu#item-click
- * @param {object} item The currently clicked menu item.
- * @param {string} text The text of the currently clicked menu item.
+ * @param { HTMLElement } item The currently clicked menu item.
+ * @param { string } text The text of the currently clicked menu item.
  * @public
  */
 @event("item-click", {
 	detail: {
 		item: {
-			type: Object,
+			type: HTMLElement,
 		},
 		text: {
 			type: String,
@@ -119,17 +127,18 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired before the menu is opened. This event can be cancelled, which will prevent the menu from opening. <b>This event does not bubble.</b>
+ * <b>Note:</b> Since 1.14.0 the event is also fired before a sub-menu opens.
  *
  * @public
  * @event sap.ui.webc.main.Menu#before-open
  * @allowPreventDefault
  * @since 1.10.0
- * @param {object} item The <code>ui5-menu-item</code> that triggers opening of the sub-menu. Note: available since 1.14.0.
+ * @param { HTMLElement } item The <code>ui5-menu-item</code> that triggers opening of the sub-menu or undefined when fired upon root menu opening. <b>Note:</b> available since 1.14.0.
  */
 @event("before-open", {
 	detail: {
 		item: {
-			type: Object,
+			type: HTMLElement,
 		},
 	},
 })
@@ -471,7 +480,7 @@ class Menu extends UI5Element {
 
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
 		const mainMenu = this._findMainMenu(item);
-		mainMenu.fireEvent("before-open", {
+		mainMenu.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
 		});
 		item._subMenu!.showAt(opener);
@@ -589,7 +598,7 @@ class Menu extends UI5Element {
 					this._parentMenuItem = undefined;
 				}
 				// fire event if the click is on top-level menu item
-				this.fireEvent("item-click", {
+				this.fireEvent<MenuItemClickEventDetail>("item-click", {
 					"item": item,
 					"text": item.text,
 				});
@@ -620,7 +629,7 @@ class Menu extends UI5Element {
 	}
 
 	_beforePopoverOpen(e: CustomEvent) {
-		const prevented = !this.fireEvent("before-open", {}, true, false);
+		const prevented = !this.fireEvent<MenuBeforeOpenEventDetail>("before-open", {}, true, false);
 
 		if (prevented) {
 			this.open = false;
@@ -634,7 +643,7 @@ class Menu extends UI5Element {
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
-		const prevented = !this.fireEvent("before-close", { escPressed: e.detail.escPressed }, true, false);
+		const prevented = !this.fireEvent<MenuBeforeCloseEventDetail>("before-close", { escPressed: e.detail.escPressed }, true, false);
 
 		if (prevented) {
 			this.open = true;
