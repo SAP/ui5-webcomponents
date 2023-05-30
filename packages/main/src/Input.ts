@@ -116,16 +116,16 @@ type InputEventDetail = {
 	inputType?: string;
 }
 
-type SuggestionItemSelectEventDetail = {
+type InputSuggestionItemSelectEventDetail = {
 	item: SuggestionItem;
 }
 
-type SuggestionItemPreviewEventDetail = {
+type InputSuggestionItemPreviewEventDetail = {
 	item: SuggestionItem;
 	targetRef: SuggestionListItem;
 }
 
-type SuggestionScrollEventDetail = {
+type InputSuggestionScrollEventDetail = {
 	scrollTop: number;
 	scrollContainer: HTMLElement;
 }
@@ -1074,7 +1074,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_scroll(e: CustomEvent<PopupScrollEventDetail>) {
-		this.fireEvent<SuggestionScrollEventDetail>("suggestion-scroll", {
+		this.fireEvent<InputSuggestionScrollEventDetail>("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
 		});
@@ -1320,7 +1320,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = "";
 		this.suggestionSelectionCanceled = false;
 
-		this.fireEvent<SuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item });
+		this.fireEvent<InputSuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item });
 
 		this.isTyping = false;
 		this.openOnMobile = false;
@@ -1476,7 +1476,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onItemPreviewed(item: SuggestionListItem) {
 		this.previewSuggestion(item);
-		this.fireEvent<SuggestionItemPreviewEventDetail>("suggestion-item-preview", {
+		this.fireEvent<InputSuggestionItemPreviewEventDetail>("suggestion-item-preview", {
 			item: this.getSuggestionByListItem(item),
 			targetRef: item,
 		});
@@ -1785,7 +1785,7 @@ Input.define();
 
 export default Input;
 export type {
-	SuggestionScrollEventDetail,
-	SuggestionItemSelectEventDetail,
-	SuggestionItemPreviewEventDetail,
+	InputSuggestionScrollEventDetail,
+	InputSuggestionItemSelectEventDetail,
+	InputSuggestionItemPreviewEventDetail,
 };
