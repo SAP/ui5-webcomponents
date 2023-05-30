@@ -312,10 +312,10 @@ class SegmentedButton extends UI5Element {
 			}
 
 			const widthValue = parseInt(resultWidth.replace("px", ""));
+			const minWidthAllowed = numItems * itemMinWidthPx;
 
-			if (widthValue < numItems * itemMinWidthPx) {
-				// If the width is less than minimum allowed width, sets the width to the minimum allowed width
-				resultWidth = `${numItems * itemMinWidthPx}px`;
+			if (widthValue < minWidthAllowed) {
+				resultWidth = `${minWidthAllowed}px`;
 			}
 
 			return resultWidth;
