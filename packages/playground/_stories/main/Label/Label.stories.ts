@@ -31,8 +31,7 @@ const Template: UI5StoryArgs<Label, StoryArgsSlots> = (args) => {
 	?show-colon="${ifDefined(args.showColon)}"
 	wrapping-type="${ifDefined(args.wrappingType)}"
 	class="${ifDefined(args.className)}"
->
-${unsafeHTML(args.default)}</ui5-label>`;
+>${unsafeHTML(args.default)}</ui5-label>`;
 };
 
 const addInput = (id: string): Decorator => {
