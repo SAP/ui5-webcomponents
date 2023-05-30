@@ -1,6 +1,9 @@
 :root {
 	--_ui5_bar_base_height: 2.75rem;
 	--_ui5_bar_subheader_height: 3rem;
+	--_ui5_bar-start-content-container-padding-inline-start: 0.75rem;
+	--_ui5_bar-mid-content-container-padding-left-right: 0.5rem;
+	--_ui5_bar-end-content-container-padding-inline-end: 0.75rem;
 }
 
 [data-ui5-compact-size],
