@@ -35,7 +35,7 @@ type TreeItemMouseoverEventDetail = TreeItemEventDetail;
 type TreeItemMouseoutEventDetail = TreeItemEventDetail;
 type TreeItemClickEventDetail = TreeItemEventDetail;
 type TreeItemDeleteEventDetail = TreeItemEventDetail;
-type TreeItemSelectionChangeEventDetail = {
+type TreeSelectionChangeEventDetail = {
 	selectedItems: Array<TreeItemBase>;
 	previouslySelectedItems: Array<TreeItemBase>;
 	targetItem: TreeItemBase;
@@ -426,7 +426,7 @@ class Tree extends UI5Element {
 			item.selected = true;
 		});
 
-		this.fireEvent<TreeItemSelectionChangeEventDetail>("selection-change", {
+		this.fireEvent<TreeSelectionChangeEventDetail>("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
 			targetItem,
@@ -511,5 +511,5 @@ export type {
 	TreeItemMouseoutEventDetail,
 	TreeItemClickEventDetail,
 	TreeItemDeleteEventDetail,
-	TreeItemSelectionChangeEventDetail,
+	TreeSelectionChangeEventDetail,
 };
