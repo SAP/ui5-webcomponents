@@ -55,9 +55,14 @@ import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 type DatePickerChangeEventDetail = {
-	dates: Array<number>;
-	values: Array<string>
-};
+	value: string,
+	valid: boolean,
+}
+
+type DatePickerInputEventDetail = {
+	value: string,
+	valid: boolean,
+}
 
 /**
  * @class
@@ -545,7 +550,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		events.forEach((e: string) => {
-			if (!this.fireEvent(e, { value, valid }, true)) {
+			if (!this.fireEvent<DatePickerChangeEventDetail>(e, { value, valid }, true)) {
 				executeEvent = false;
 			}
 		});
@@ -876,5 +881,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 DatePicker.define();
 
 export default DatePicker;
-
-export type { DatePickerChangeEventDetail };
+export type {
+	DatePickerChangeEventDetail,
+	DatePickerInputEventDetail,
+};

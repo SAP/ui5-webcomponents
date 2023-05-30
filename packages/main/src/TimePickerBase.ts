@@ -44,6 +44,14 @@ import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
+type TimePickerBaseChangeInputEventDetail = {
+	value: string,
+	valid: boolean,
+}
+
+type TimePickerBaseChangeEventDetail = TimePickerBaseChangeInputEventDetail;
+type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
+
 /**
  * @class
  *
@@ -227,7 +235,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	submitPickers() {
-		this._updateValueAndFireEvents(this.tempValue, true, ["change", "value-changed"]);
+		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
 		this.closePicker();
 	}
 
@@ -247,7 +255,7 @@ class TimePickerBase extends UI5Element {
 		}
 	}
 
-	_updateValueAndFireEvents(value: string | undefined, normalizeValue: boolean, eventsNames: Array<string>) {
+	_updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<string>) {
 		if (value === this.value) {
 			return;
 		}
@@ -264,7 +272,7 @@ class TimePickerBase extends UI5Element {
 		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		eventsNames.forEach(eventName => {
-			this.fireEvent(eventName, { value, valid });
+			this.fireEvent<TimePickerBaseChangeInputEventDetail>(eventName, { value, valid });
 		});
 	}
 
@@ -492,3 +500,8 @@ class TimePickerBase extends UI5Element {
 }
 
 export default TimePickerBase;
+export type {
+	TimeSelectionChangeEventDetail,
+	TimePickerBaseChangeEventDetail,
+	TimePickerBaseInputEventDetail,
+};

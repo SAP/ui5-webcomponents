@@ -14,6 +14,10 @@ import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
 import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
+import type {
+	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
+	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
+} from "./DatePicker.js";
 import TimeSelection from "./TimeSelection.js";
 import type { TimeSelectionChangeEventDetail, TimeSelectionSliderChangeEventDetail } from "./TimeSelection.js";
 
@@ -429,3 +433,7 @@ class DateTimePicker extends DatePicker {
 DateTimePicker.define();
 
 export default DateTimePicker;
+export type {
+	DateTimePickerChangeEventDetail,
+	DateTimePickerInputEventDetail,
+};

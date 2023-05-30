@@ -4,6 +4,11 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import TimePickerBase from "./TimePickerBase.js";
 
+import type {
+	TimePickerBaseChangeEventDetail as TimePickerChangeEventDetail,
+	TimePickerBaseInputEventDetail as TimePickerInputEventDetail,
+} from "./TimePickerBase.js";
+
 import {
 	TIMEPICKER_INPUT_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
@@ -153,3 +158,7 @@ class TimePicker extends TimePickerBase {
 TimePicker.define();
 
 export default TimePicker;
+export type {
+	TimePickerChangeEventDetail,
+	TimePickerInputEventDetail,
+};
