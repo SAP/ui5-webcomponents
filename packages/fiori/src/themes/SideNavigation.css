@@ -1,14 +1,8 @@
 :host(:not([hidden])) {
     display: inline-block;
-    width: 15rem;
+    width: 16rem;
     height: 100%;
     transition: width .25s;
-    --_ui5-tree-toggle-box-width: var(--_ui5_side_navigation_icon_padding);
-    --_ui5_list_item_icon_size: var(--_ui5_side_navigation_icon_size);
-    --_ui5-tree-toggle-icon-size: var(--_ui5_side_navigation_toggle_icon_size);
-    --_ui5_list_item_title_size: var(--sapFontLargeSize);
-    --_ui5_list_item_icon_padding-inline-end: var(--_ui5_side_navigation_icon_padding);
-    --_ui5-tree-indent-step: var(--_ui5_side_navigation_indent_step);
 }
 
 :host([collapsed]) {
@@ -25,30 +19,46 @@
     flex-direction: column;
     box-sizing: border-box;
     background: var(--sapList_Background);
-    border-right: var(--sapList_BorderWidth) solid var(--sapList_GroupHeaderBorderColor);
+    border-inline-end: var(--_ui5_side_navigation_border_inline_end);
+    border-radius: var(--_ui5_side_navigation_border_radius);
     box-shadow: var(--sapContent_Shadow0);
+    box-sizing: border-box;
+	padding: var(--_ui5_side_navigation_container_padding);
+}
+
+:host(.ui5-side-navigation-in-popover) .ui5-sn-root {
+	padding: var(--_ui5_side_navigation_container_padding_in_popover);
+}
+
+.ui5-sn-tree {
+    --_ui5-tree-toggle-box-width: var(--_ui5_side_navigation_icon_padding_inline_start);
+    --_ui5_list_item_icon_padding-inline-end: var(--_ui5_side_navigation_icon_padding_inline_end);
+    --_ui5-tree-indent-step: var(--_ui5_side_navigation_indent_step);
+    --_ui5-tree-toggle-icon-size: var(--_ui5_side_navigation_toggle_icon_size);
+    --_ui5_list_item_icon_size: var(--_ui5_side_navigation_icon_size);
 }
 
 .ui5-sn-items-tree {
     overflow: auto;
 }
 
-.ui5-sn-bottom-content-border {
+.ui5-sn-divider {
     width: 100%;
-    padding: 0 1rem;
-    margin: 0.25rem 0;
+    padding: var(--_ui5_side_navigation_divider_padding);
+    margin: var(--_ui5_side_navigation_divider_margin);
     display: flex;
     justify-content: center;
     box-sizing: border-box;
 }
 
-:host([collapsed]) .ui5-sn-bottom-content-border {
-    padding: 0 0.5rem;
+:host([collapsed]) .ui5-sn-divider {
+    /* padding: 0 0.5rem; */
 }
 
-.ui5-sn-bottom-content-border > span {
+.ui5-sn-divider > span {
     width: 100%;
-    height: .125rem;
+    height: var(--_ui5_side_navigation_divider_height);
+    border-radius: 0.125rem;
     background: var(--_ui5_side_navigation_separator_backgound);
 }
 
@@ -57,11 +67,65 @@
     min-height: 0;
 }
 
+[ui5-tree-item] {
+    --_ui5_list_item_title_size: var(--sapFontSize);
+    --ui5-listitem-padding: var(--_ui5_side_navigation_item_padding);
+    --ui5-listitem-focus-border-radius: var(--_ui5_side_navigation_item_border_radius);
+}
+
 [ui5-tree-item]::part(toggle-icon) {
-    color: var(--sapContent_NonInteractiveIconColor);
+    color: var(--_ui5_side_navigation_toggle_icon_color);
     flex-shrink: 0;
 }
 
 [ui5-tree-item]::part(icon) {
-    color: var(--_ui5_side_navigation_icon_color);
+    color: var(--_ui5_side_navigation_item_icon_color);
+}
+
+[ui5-tree-item][level="1"]::part(title) {
+    font-family: var(--_ui5_side_navigation_item_level_1_font);
+}
+
+[ui5-tree-item]::part(native-li) {
+    border-color: var(--_ui5_side_navigation_item_border_color);
+    border-radius: var(--_ui5_side_navigation_item_border_radius);
+    --ui5-listitem-focus-offset: 0px;
+    --_ui5_list_item_base_height: var(--_ui5_side_navigation_item_height);
+    transition: var(--_ui5_side_navigation_item_transition);
+}
+
+/* gap between items */
+[ui5-tree-item]::part(native-li) {
+    margin-block-end: var(--_ui5_side_navigation_item_gap);
+}
+
+[ui5-tree-item][level="1"]:last-child:not([expanded])::part(native-li) {
+    margin-block-end: 0;
+}
+
+[ui5-tree-item][level="1"][expanded]:last-child > [ui5-tree-item][level="2"]:last-child::part(native-li) {
+    margin-block-end: 0;
+}
+
+/* selected state */
+[ui5-tree-item][selected]::part(native-li) {
+
+}
+
+[ui5-tree-item][selected]::part(title) {
+    position: relative;
+    padding-inline-end: var(--_ui5_side_navigation_item_selection_indicator_reserved_space);
+}
+
+[ui5-tree-item][selected]::part(title)::after {
+    display: var(--_ui5_side_navigation_item_selection_indicator_display);
+    content: "";
+    position: absolute;
+    right: 0.4375rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    background-color: var(--_ui5_side_navigation_item_selection_indicator_color);
+    border-radius: 50%;
 }
