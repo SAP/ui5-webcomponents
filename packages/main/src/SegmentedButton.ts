@@ -273,6 +273,10 @@ class SegmentedButton extends UI5Element {
 	 * @private
 	 */
 	async _doLayout(): Promise<void> {
+		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize); // Gets the root font size in pixels in order to convert rem to pixels correctly
+		const itemMinWidth = 2.5; // Item minimum width in rem
+		const itemMinWidthPx = itemMinWidth * rootFontSize; // Converts rem to pixels
+
 		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2);
 		if (!itemsHaveWidth) {
 			await this.measureItemsWidth();
@@ -294,14 +298,27 @@ class SegmentedButton extends UI5Element {
 		 * @private
 		 */
 		const calculateWidth = (): string => {
+			const numItems = this.items.length;
+			let resultWidth = "";
+
 			if (inlineWidth && classWidth) {
-				return inlineWidth;
-			} if (inlineWidth) {
-				return inlineWidth;
-			} if (classWidth) {
-				return classWidth;
+				resultWidth = inlineWidth;
+			} else if (inlineWidth) {
+				resultWidth = inlineWidth;
+			} else if (classWidth) {
+				resultWidth = classWidth;
+			} else {
+				resultWidth = defaultComponentWidth;
 			}
-			return defaultComponentWidth;
+
+			const widthValue = parseInt(resultWidth.replace("px", ""));
+
+			if (widthValue < numItems * itemMinWidthPx) {
+				// If the width is less than minimum allowed width, sets the width to the minimum allowed width
+				resultWidth = `${numItems * itemMinWidthPx}px`;
+			}
+
+			return resultWidth;
 		};
 
 		const width = calculateWidth();
