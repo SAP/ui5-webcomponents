@@ -32,8 +32,7 @@ const Template: UI5StoryArgs<Label, StoryArgsSlots> = (args) => {
 	wrapping-type="${ifDefined(args.wrappingType)}"
 	class="${ifDefined(args.className)}"
 >
-${unsafeHTML(args.default)}
-</ui5-label>`;
+${unsafeHTML(args.default)}</ui5-label>`;
 };
 
 const addInput = (id: string): Decorator => {
@@ -77,7 +76,6 @@ export const Truncating = Template.bind({});
 Truncating.args = {
 	showColon: true,
 	default: "Long labels are truncated by default.",
-	className: "limitedWidth",
 };
 Truncating.decorators = [
 	SetWidth200Px,
