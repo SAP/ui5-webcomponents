@@ -1784,3 +1784,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 Input.define();
 
 export default Input;
+export type {
+	SuggestionScrollEventDetail,
+	SuggestionItemSelectEventDetail,
+	SuggestionItemPreviewEventDetail,
+};

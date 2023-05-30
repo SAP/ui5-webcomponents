@@ -65,7 +65,7 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
-import type { SelectionChangeEventDetail } from "./List.js";
+import type { ListSelectionChangeEventDetail } from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import ToggleButton from "./ToggleButton.js";
 import * as Filters from "./Filters.js";
@@ -1200,7 +1200,7 @@ class MultiComboBox extends UI5Element {
 		return this.selectedValues as Array<MultiComboBoxItem>;
 	}
 
-	_listSelectionChange(e: CustomEvent<SelectionChangeEventDetail>) {
+	_listSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		// sync list items and cb items
 		this.syncItems((e.target as List).items);
 

@@ -16,9 +16,9 @@ import type {
 	TreeItemBaseStepOutEventDetail,
 } from "./TreeItemBase.js";
 import type {
-	ClickEventDetail as ListItemClickEventDetail,
-	DeleteEventDetail as ListItemDeleteEventDetail,
-	SelectionChangeEventDetail as ListSelectionChangeEventDetail,
+	ListItemClickEventDetail,
+	ListItemDeleteEventDetail,
+	ListSelectionChangeEventDetail,
 } from "./List.js";
 
 // Template

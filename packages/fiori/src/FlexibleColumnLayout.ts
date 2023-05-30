@@ -813,4 +813,7 @@ FlexibleColumnLayout.define();
 
 export default FlexibleColumnLayout;
 
-export type { MEDIA };
+export type {
+	MEDIA,
+	FCLLayoutChangeEventDetail,
+};

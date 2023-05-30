@@ -169,7 +169,7 @@ class MultiInput extends Input {
 		}
 
 		selectedTokens.forEach(token => {
-			this.fireEvent("token-delete", { token });
+			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
 		});
 	}
 

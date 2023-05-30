@@ -36,6 +36,7 @@ import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.j
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import type {
+	TableRowClickEventDetail,
 	TableRowSelectionRequestedEventDetail,
 	TableRowF7PressEventDetail,
 	TableRowForwardBeforeEventDetail,
@@ -1287,4 +1288,7 @@ export default Table;
 export type {
 	ITableRow,
 	TableColumnInfo,
+	TableRowClickEventDetail,
+	TableSelectionChangeEvent,
+	TablePopinChangeEvent,
 };

@@ -37,11 +37,11 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
-type SelectionChangeEventDetail = {
+type UploadCollectionSelectionChangeEventDetail = {
 	selectedItems: Array<UploadCollectionItem>,
 };
 
-type ItemDeleteEventDetail = {
+type UploadCollectionItemDeleteEventDetail = {
 	item: UploadCollectionItem,
 };
 
@@ -303,11 +303,11 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 	}
 
-	_onItemDelete(e: CustomEvent<ItemDeleteEventDetail>) {
+	_onItemDelete(e: CustomEvent<UploadCollectionItemDeleteEventDetail>) {
 		this.fireEvent("item-delete", { item: e.detail.item });
 	}
 
-	_onSelectionChange(e: CustomEvent<SelectionChangeEventDetail>) {
+	_onSelectionChange(e: CustomEvent<UploadCollectionSelectionChangeEventDetail>) {
 		this.fireEvent("selection-change", { selectedItems: e.detail.selectedItems });
 	}
 
@@ -369,3 +369,7 @@ class UploadCollection extends UI5Element {
 UploadCollection.define();
 
 export default UploadCollection;
+export type {
+	UploadCollectionItemDeleteEventDetail,
+	UploadCollectionSelectionChangeEventDetail,
+};
