@@ -6,7 +6,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
+import { isChrome, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -350,7 +350,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		this._root.removeAttribute("tabindex");
+		if (!isSafari()) { // Remove when adopting native dialog
+			this._root.removeAttribute("tabindex");
+		}
 
 		if (this.shadowRoot!.contains(e.target as HTMLElement)) {
 			this._shouldFocusRoot = true;
@@ -360,7 +362,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmouseup() {
-		this._root.tabIndex = -1;
+		if (!isSafari()) { // Remove when adopting native dialog
+			this._root.tabIndex = -1;
+		}
 
 		if (this._shouldFocusRoot) {
 			if (isChrome()) {
@@ -417,6 +421,10 @@ abstract class Popup extends UI5Element {
 	 */
 	async applyFocus() {
 		await this._waitForDomRef();
+
+		if (this.getRootNode() === this) {
+			return;
+		}
 
 		const element = (this.getRootNode() as Document).getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)

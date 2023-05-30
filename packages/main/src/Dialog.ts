@@ -223,6 +223,7 @@ class Dialog extends Popup {
 	_initialLeft?: number;
 	_minWidth?: number;
 	_cachedMinHeight?: number;
+	_draggedOrResized = false;
 
 	/**
 	 * Defines the header HTML Element.
@@ -254,7 +255,7 @@ class Dialog extends Popup {
 	constructor() {
 		super();
 
-		this._screenResizeHandler = this._center.bind(this);
+		this._screenResizeHandler = this._screenResize.bind(this);
 
 		this._dragMouseMoveHandler = this._onDragMouseMove.bind(this);
 		this._dragMouseUpHandler = this._onDragMouseUp.bind(this);
@@ -425,9 +426,13 @@ class Dialog extends Popup {
 	_resize() {
 		super._resize();
 
-		if (this._screenResizeHandlerAttached) {
+		if (!this._draggedOrResized) {
 			this._center();
 		}
+	}
+
+	_screenResize() {
+		this._center();
 	}
 
 	_attachScreenResizeHandler() {
@@ -493,6 +498,7 @@ class Dialog extends Popup {
 		this._x = e.clientX;
 		this._y = e.clientY;
 
+		this._draggedOrResized = true;
 		this._attachMouseDragHandlers();
 	}
 
@@ -578,7 +584,7 @@ class Dialog extends Popup {
 	}
 
 	_resizeWithEvent(e: KeyboardEvent) {
-		this._detachScreenResizeHandler();
+		this._draggedOrResized = true;
 		this.addEventListener("ui5-before-close", this._revertSize, { once: true });
 
 		const { top, left } = this.getBoundingClientRect(),
@@ -615,8 +621,6 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseDragHandlers() {
-		this._detachScreenResizeHandler();
-
 		window.addEventListener("mousemove", this._dragMouseMoveHandler);
 		window.addEventListener("mouseup", this._dragMouseUpHandler);
 	}
@@ -657,6 +661,7 @@ class Dialog extends Popup {
 			left: `${left}px`,
 		});
 
+		this._draggedOrResized = true;
 		this._attachMouseResizeHandlers();
 	}
 
@@ -719,8 +724,6 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseResizeHandlers() {
-		this._detachScreenResizeHandler();
-
 		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.addEventListener("mouseup", this._resizeMouseUpHandler);
 		this.addEventListener("ui5-before-close", this._revertSize, { once: true });
