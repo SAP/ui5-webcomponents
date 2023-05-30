@@ -53,7 +53,7 @@ enum BREAKPOINTS {
 
 type ColumnLayout = Array<string | number>;
 
-type FCLLayoutChangeEventDetail = {
+type FlexibleColumnLayoutLayoutChangeEventDetail = {
 	layout: `${FCLLayout}`,
 	columnLayout: ColumnLayout,
 	startColumnVisible: boolean,
@@ -496,7 +496,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(arrowUsed: boolean, resize: boolean) {
-		this.fireEvent<FCLLayoutChangeEventDetail>("layout-change", {
+		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,
@@ -815,5 +815,5 @@ export default FlexibleColumnLayout;
 
 export type {
 	MEDIA,
-	FCLLayoutChangeEventDetail,
+	FlexibleColumnLayoutLayoutChangeEventDetail,
 };

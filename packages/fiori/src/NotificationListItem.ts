@@ -39,7 +39,7 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
 
-import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupItemCloseEventDetail } from "./NotificationListItemBase.js";
+import type { NotificationListItemBaseCloseEventDetail as NotificationListItemCloseEventDetail } from "./NotificationListItemBase.js";
 
 type NotificationListItemPressEventDetail = {
 	item: NotificationListItem,
@@ -406,5 +406,5 @@ NotificationListItem.define();
 export default NotificationListItem;
 export type {
 	NotificationListItemPressEventDetail,
-	NotificationListGroupItemCloseEventDetail,
+	NotificationListItemCloseEventDetail,
 };
