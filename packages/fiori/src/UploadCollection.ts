@@ -12,7 +12,7 @@ import List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
-import "./illustrations/sapIllus-Scene-Tent.js";
+import "./illustrations/Tent.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
