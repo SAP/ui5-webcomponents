@@ -381,7 +381,7 @@ class MultiInput extends Input {
 MultiInput.define();
 
 export default MultiInput;
-export {
+export type {
 	MultiInputTokenDeleteEventDetail,
 	MultiInputSuggestionItemSelectEventDetail,
 	MultiInputSuggestionItemPreviewEventDetail,
