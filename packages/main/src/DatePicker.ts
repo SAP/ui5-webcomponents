@@ -39,7 +39,7 @@ import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
-import type { CalendarChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
@@ -55,9 +55,14 @@ import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 type DatePickerChangeEventDetail = {
-	dates: Array<number>;
-	values: Array<string>
-};
+	value: string,
+	valid: boolean,
+}
+
+type DatePickerInputEventDetail = {
+	value: string,
+	valid: boolean,
+}
 
 /**
  * @class
@@ -545,7 +550,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		}
 
 		events.forEach((e: string) => {
-			if (!this.fireEvent(e, { value, valid }, true)) {
+			if (!this.fireEvent<DatePickerChangeEventDetail>(e, { value, valid }, true)) {
 				executeEvent = false;
 			}
 		});
@@ -764,7 +769,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @param event
 	 * @protected
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
 		e.preventDefault();
 		const newValue = e.detail.values && e.detail.values[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
@@ -876,5 +881,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 DatePicker.define();
 
 export default DatePicker;
-
-export type { DatePickerChangeEventDetail };
+export type {
+	DatePickerChangeEventDetail,
+	DatePickerInputEventDetail,
+};

@@ -38,7 +38,7 @@ import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import type Tab from "./Tab.js";
-import type { ClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -647,7 +647,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	async _onOverflowListItemClick(e: CustomEvent<ClickEventDetail>) {
+	async _onOverflowListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		e.preventDefault(); // cancel the item selection
 
 		this._onItemSelect(e.detail.item.id.slice(0, -3)); // strip "-li" from end of id

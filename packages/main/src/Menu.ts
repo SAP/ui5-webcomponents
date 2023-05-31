@@ -27,7 +27,7 @@ import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import BusyIndicator from "./BusyIndicator.js";
 import type MenuItem from "./MenuItem.js";
-import type { ClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail } from "./List.js";
 import staticAreaMenuTemplate from "./generated/templates/MenuTemplate.lit.js";
 import {
 	MENU_BACK_BUTTON_ARIA_LABEL,
@@ -586,7 +586,7 @@ class Menu extends UI5Element {
 		}
 	}
 
-	_itemClick(e: CustomEvent<ClickEventDetail>) {
+	_itemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		const opener = e.detail.item as OpenerStandardListItem;
 		const item = opener.associatedItem;
 		const actionId = opener.getAttribute("id")!;

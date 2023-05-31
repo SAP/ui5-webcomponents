@@ -357,3 +357,6 @@ class SegmentedButton extends UI5Element {
 SegmentedButton.define();
 
 export default SegmentedButton;
+export type {
+	SegmentedButtonSelectionChangeEventDetail,
+};
