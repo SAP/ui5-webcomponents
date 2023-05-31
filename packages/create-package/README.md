@@ -18,8 +18,8 @@ Usage:
 
 Options:
     --name <string>     - defines the package name
-    --componentName <string>      - defines the component class name that will be created in your new package
-    --tag <string>      - defines the tag name of the sample web component that will be created in your new package. The tag will be derived from the component name if not provided. 
+    --component-name <string>      - defines the component class name that will be created in your new package
+    --tag <string>      - defines the tag name of the sample web component that will be created in your new package. The tag will be derived from the component name if not provided.
     --enable-typescript - enables TypeScript support for the package
     --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
 ```
@@ -34,6 +34,7 @@ Usage:
     yarn create @ui5/webcomponents-package [OPTIONS]
 Options:
     --name <string>     - defines the package name
+    --component-name <string>      - defines the component class name that will be created in your new package
     --tag <string>      - defines the tag name of the sample web component that will be created in your new package
     --enable-typescript - enables TypeScript support for the package
     --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
