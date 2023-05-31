@@ -5,6 +5,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+import { getTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { attachThemeLoaded, detachThemeLoaded } from "@ui5/webcomponents-base/dist/Theming.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -12,6 +14,7 @@ import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
 import IllustrationMessageType from "./types/IllustrationMessageType.js";
+import { getIllustrationAlternateType } from "./illustrations/IllustrationsAlternates.js";
 import "./illustrations/BeforeSearch.js";
 
 // Styles
@@ -337,6 +340,7 @@ class IllustratedMessage extends UI5Element {
 	_lastKnownOffsetWidthForMedia: Record<string, number>;
 	_lastKnownMedia: string;
 	_handleResize: ResizeObserverCallback;
+	_themeChangeHandler: (theme: string) => void;
 
 	constructor() {
 		super();
@@ -346,6 +350,10 @@ class IllustratedMessage extends UI5Element {
 		this._lastKnownOffsetWidthForMedia = {};
 		// this will store the last known media, in order to detect if IllustratedMessage has been hidden by expand/collapse container
 		this._lastKnownMedia = "base";
+
+		this._themeChangeHandler = () => {
+			this._refreshIllustration();
+		};
 	}
 
 	static async onDefine() {
@@ -369,8 +377,13 @@ class IllustratedMessage extends UI5Element {
 		};
 	}
 
-	async onBeforeRendering() {
-		let illustrationData = getIllustrationDataSync(this.name);
+	onBeforeRendering() {
+		this._refreshIllustration();
+	}
+
+	async _refreshIllustration() {
+		const formattedName = this._getFormattedName(this.name);
+		let illustrationData = getIllustrationDataSync(formattedName);
 
 		// Gets the current illustration name given in the "name" attribute
 		const currentIllustration = this.getAttribute("name") as IllustrationMessageType;
@@ -381,7 +394,7 @@ class IllustratedMessage extends UI5Element {
 		}
 
 		if (illustrationData === undefined) {
-			illustrationData = await getIllustrationData(this.name);
+			illustrationData = await getIllustrationData(formattedName);
 		}
 
 		this.spotSvg = illustrationData!.spotSvg;
@@ -397,10 +410,12 @@ class IllustratedMessage extends UI5Element {
 	}
 
 	onEnterDOM() {
+		attachThemeLoaded(this._themeChangeHandler);
 		ResizeHandler.register(this, this._handleResize);
 	}
 
 	onExitDOM() {
+		detachThemeLoaded(this._themeChangeHandler);
 		ResizeHandler.deregister(this, this._handleResize);
 	}
 
@@ -410,6 +425,10 @@ class IllustratedMessage extends UI5Element {
 		}
 
 		this._applyMedia();
+	}
+
+	_getFormattedName(name: string): string {
+		return getIllustrationAlternateType(getTheme(), name);
 	}
 
 	_applyMedia() {
