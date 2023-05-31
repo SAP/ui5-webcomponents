@@ -134,7 +134,7 @@ type VSDInternalSettings = {
  * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
  * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
  * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
- * @param {Array} filterItems The selected filters items.
+ * @param {Array} filters The selected filters items.
  * @public
  */
 @event("confirm", {
@@ -155,7 +155,7 @@ type VSDInternalSettings = {
  * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
  * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
  * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
- * @param {Array} filterItems The selected filters items.
+ * @param {Array} filters The selected filters items.
  * @public
  */
 @event("cancel", {
