@@ -2079,10 +2079,10 @@
     node-addon-api "^3.2.1"
     node-gyp-build "^4.3.0"
 
-"@sap-theming/theming-base-content@11.3.2":
-  version "11.3.2"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.3.2.tgz#efa307c25421225fa77b02fc7059f9ce3eecb259"
-  integrity sha512-zBsPDL5RNEZTS8DiCERibiAnIJCLzyiVINcJNuBk5FGdcqX9WV0WSypj2bgQ22rkrI7ewMPz680ZS3Dd5epjWA==
+"@sap-theming/theming-base-content@11.4.2":
+  version "11.4.2"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.4.2.tgz#7b30ed929d53fe494f500ab614bf524feb166209"
+  integrity sha512-luXKyJP0AGxM2S+8aIGOi4eOz/zREftntF9CY4F6xuRBLDmnzRB0Z/OxA2t3lBr6qjDhcmowG8/BVz6XDZXy0g==
 
 "@sigstore/protobuf-specs@^0.1.0":
   version "0.1.0"
