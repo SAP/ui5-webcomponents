@@ -25,13 +25,13 @@
 
 				{{#if resizable}}
 					{{#if draggable}}
-					<span id="{{_id}}-descr" class="ui5-hidden-text">{{ariaDescribedByHeaderTextDraggableAndResizable}}</span>
+					<span id="{{_id}}-descr" aria-hidden="true" class="ui5-hidden-text">{{ariaDescribedByHeaderTextDraggableAndResizable}}</span>
 					{{else}}
-					<span id="{{_id}}-descr" class="ui5-hidden-text">{{ariaDescribedByHeaderTextResizable}}</span>
+					<span id="{{_id}}-descr" aria-hidden="true" class="ui5-hidden-text">{{ariaDescribedByHeaderTextResizable}}</span>
 					{{/if}}
 				{{else}}
 					{{#if draggable}}
-						<span id="{{_id}}-descr" class="ui5-hidden-text">{{ariaDescribedByHeaderTextDraggable}}</span>
+						<span id="{{_id}}-descr" aria-hidden="true" class="ui5-hidden-text">{{ariaDescribedByHeaderTextDraggable}}</span>
 					{{/if}}
 				{{/if}}
 			</div>
