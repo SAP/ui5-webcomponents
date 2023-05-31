@@ -7,11 +7,11 @@ import CalendarDate from "./CalendarDate.js";
  * @param date CalendarDate instance
  * @param amount how many days/months/years to add (can be a negative number)
  * @param unit what to modify: "day", "month" or "year"
- * @param isPageUpOrPageDown whether the method is called when the date is being modified by the PageUp/PageDown keys/logic
+ * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
  * @param minDate minimum date to enforce
  * @param maxDate maximum date to enforce
  */
-const modifyDateBy = (date: CalendarDate, amount: number, unit: string, isPageUpOrPageDown?:boolean, minDate?: CalendarDate, maxDate?: CalendarDate) => {
+const modifyDateBy = (date: CalendarDate, amount: number, unit: string, preserveDate = true, minDate?: CalendarDate, maxDate?: CalendarDate) => {
 	const newDate = new CalendarDate(date);
 
 	switch (unit) {
@@ -19,7 +19,7 @@ const modifyDateBy = (date: CalendarDate, amount: number, unit: string, isPageUp
 		newDate.setDate(date.getDate() + amount);
 		break;
 	case "month":
-		if (isPageUpOrPageDown) { // In cases where the method is called when the date is being modified by the PageUp/PageDown keys/logic
+		if (preserveDate) {
 			newDate.setMonth(date.getMonth() + amount);
 			const stillSameMonth = amount === -1 && newDate.getMonth() === date.getMonth(); // f.e. PageUp remained in the same month
 			const monthSkipped = amount === 1 && newDate.getMonth() - date.getMonth() > 1; // f.e. PageDown skipped a whole month

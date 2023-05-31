@@ -88,11 +88,11 @@ class CalendarPart extends DateComponentBase {
 	 * Modify a timestamp by a certain amount of days/months/years and enforce limits
 	 * @param amount
 	 * @param unit
-	 * @param isPageUpOrPageDown whether the method is called when the date is being modified by the PageUp/PageDown keys/logic
+	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @protected
 	 */
-	_safelyModifyTimestampBy(amount: number, unit: string, isPageUpOrPageDown?: boolean) {
-		const newDate = modifyDateBy(this._calendarDate, amount, unit, isPageUpOrPageDown);
+	_safelyModifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
+		const newDate = modifyDateBy(this._calendarDate, amount, unit, preserveDate);
 		this._safelySetTimestamp(newDate.valueOf() / 1000);
 	}
 

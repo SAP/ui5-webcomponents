@@ -491,22 +491,22 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			}
 		} else if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
-			this._modifyDateValue(1, "year", true);
+			this._modifyDateValue(1, "year");
 		} else if (isPageUpShift(e)) {
 			e.preventDefault();
-			this._modifyDateValue(1, "month", true);
+			this._modifyDateValue(1, "month");
 		} else if (isPageUp(e)) {
 			e.preventDefault();
-			this._modifyDateValue(1, "day", true);
+			this._modifyDateValue(1, "day");
 		} else if (isPageDownShiftCtrl(e)) {
 			e.preventDefault();
-			this._modifyDateValue(-1, "year", true);
+			this._modifyDateValue(-1, "year");
 		} else if (isPageDownShift(e)) {
 			e.preventDefault();
-			this._modifyDateValue(-1, "month", true);
+			this._modifyDateValue(-1, "month");
 		} else if (isPageDown(e)) {
 			e.preventDefault();
-			this._modifyDateValue(-1, "day", true);
+			this._modifyDateValue(-1, "day");
 		}
 	}
 
@@ -514,15 +514,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * @param { number } amount
 	 * @param { string } unit
-	 * @param { boolean } isPageUpOrPageDown whether the method is called when the date is being modified by the PageUp/PageDown keys/logic
+	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @protected
 	 */
-	_modifyDateValue(amount: number, unit: string, isPageUpOrPageDown?: boolean) {
+	_modifyDateValue(amount: number, unit: string, preserveDate?: boolean) {
 		if (!this.dateValue) {
 			return;
 		}
 
-		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, isPageUpOrPageDown, this._minDate, this._maxDate);
+		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, preserveDate, this._minDate, this._maxDate);
 		const newValue = this.formatValue(modifiedDate.toUTCJSDate());
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}

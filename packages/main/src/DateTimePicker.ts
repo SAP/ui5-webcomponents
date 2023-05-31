@@ -386,12 +386,12 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	_modifyDateValue(amount: number, unit: string, isPageUpOrPageDown?: boolean) {
+	_modifyDateValue(amount: number, unit: string, preserveDate: boolean) {
 		if (!this.dateValue) {
 			return;
 		}
 
-		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, isPageUpOrPageDown, this._minDate, this._maxDate);
+		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, preserveDate, this._minDate, this._maxDate);
 		const modifiedLocalDate = modifiedDate.toLocalJSDate();
 		modifiedLocalDate.setHours(this.dateValue.getHours());
 		modifiedLocalDate.setMinutes(this.dateValue.getMinutes());

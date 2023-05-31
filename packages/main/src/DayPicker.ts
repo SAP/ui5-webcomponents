@@ -573,25 +573,25 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isSpace(e) || isSpaceShift(e)) {
 			e.preventDefault();
 		} else if (isLeft(e)) {
-			this._modifyTimestampBy(-1, "day");
+			this._modifyTimestampBy(-1, "day", false);
 		} else if (isRight(e)) {
-			this._modifyTimestampBy(1, "day");
+			this._modifyTimestampBy(1, "day", false);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-7, "day");
+			this._modifyTimestampBy(-7, "day", false);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(7, "day");
+			this._modifyTimestampBy(7, "day", false);
 		} else if (isPageUp(e)) {
-			this._modifyTimestampBy(-1, "month", true);
+			this._modifyTimestampBy(-1, "month");
 		} else if (isPageDown(e)) {
-			this._modifyTimestampBy(1, "month", true);
+			this._modifyTimestampBy(1, "month");
 		} else if (isPageUpShift(e) || isPageUpAlt(e)) {
-			this._modifyTimestampBy(-1, "year", true);
+			this._modifyTimestampBy(-1, "year");
 		} else if (isPageDownShift(e) || isPageDownAlt(e)) {
-			this._modifyTimestampBy(1, "year", true);
+			this._modifyTimestampBy(1, "year");
 		} else if (isPageUpShiftCtrl(e)) {
-			this._modifyTimestampBy(-10, "year", true);
+			this._modifyTimestampBy(-10, "year");
 		} else if (isPageDownShiftCtrl(e)) {
-			this._modifyTimestampBy(10, "year", true);
+			this._modifyTimestampBy(10, "year");
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
@@ -673,7 +673,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampBy(-1, "month");
+		this._modifyTimestampBy(-1, "month", false);
 	}
 
 	/**
@@ -681,19 +681,19 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(1, "month");
+		this._modifyTimestampBy(1, "month", false);
 	}
 
 	/**
 	 * Modifies the timestamp by a certain amount of days/months/years.
 	 * @param { number } amount
 	 * @param { string } unit
-	 * @param { boolean } isPageUpOrPageDown whether the method is called when the date is being modified by the PageUp/PageDown keys
+	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, unit: string, isPageUpOrPageDown?: boolean) {
+	_modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
 		// Modify the current timestamp
-		this._safelyModifyTimestampBy(amount, unit, isPageUpOrPageDown);
+		this._safelyModifyTimestampBy(amount, unit, preserveDate);
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp

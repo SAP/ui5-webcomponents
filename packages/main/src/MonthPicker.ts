@@ -205,17 +205,17 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isSpace(e)) {
 			e.preventDefault();
 		} else if (isLeft(e)) {
-			this._modifyTimestampBy(-1, true);
+			this._modifyTimestampBy(-1);
 		} else if (isRight(e)) {
-			this._modifyTimestampBy(1, true);
+			this._modifyTimestampBy(1);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-ROW_SIZE, true);
+			this._modifyTimestampBy(-ROW_SIZE);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(ROW_SIZE, true);
+			this._modifyTimestampBy(ROW_SIZE);
 		} else if (isPageUp(e)) {
-			this._modifyTimestampBy(-PAGE_SIZE, true);
+			this._modifyTimestampBy(-PAGE_SIZE);
 		} else if (isPageDown(e)) {
-			this._modifyTimestampBy(PAGE_SIZE, true);
+			this._modifyTimestampBy(PAGE_SIZE);
 		} else if (isHome(e) || isEnd(e)) {
 			this._onHomeOrEnd(isHome(e));
 		} else if (isHomeCtrl(e)) {
@@ -255,12 +255,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * Modifies timestamp by a given amount of months and,
 	 * if necessary, loads the prev/next page.
 	 * @param { number } amount
-	 * @param { boolean } isPageUpOrPageDown - whether the method is called when the date is being modified by the PageUp/PageDown keys/logic
+	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, isPageUpOrPageDown?: boolean) {
+	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
 		// Modify the current timestamp
-		this._safelyModifyTimestampBy(amount, "month", isPageUpOrPageDown);
+		this._safelyModifyTimestampBy(amount, "month", preserveDate);
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
