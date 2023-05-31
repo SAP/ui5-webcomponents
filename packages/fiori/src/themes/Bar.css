@@ -18,7 +18,7 @@
 }
 
 .ui5-bar-root .ui5-bar-startcontent-container {
-	padding-inline-start: var(--_ui5_bar-start-content-container-padding-inline-start);
+	padding-inline-start: var(--_ui5_bar-start-container-padding-start);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -26,9 +26,9 @@
 }
 
 .ui5-bar-root .ui5-bar-content-container {
-	min-width: calc(30% - calc(var(--_ui5_bar-start-content-container-padding-inline-start)
-							 + var(--_ui5_bar-end-content-container-padding-inline-end)
-						  + (2*var(--_ui5_bar-mid-content-container-padding-left-right))));
+	min-width: calc(30% - calc(var(--_ui5_bar-start-container-padding-start)
+							 + var(--_ui5_bar-end-container-padding-end)
+						  + (2*var(--_ui5_bar-mid-container-padding-start-end))));
 }
 
 .ui5-bar-root.ui5-bar-root-shrinked .ui5-bar-content-container {
@@ -38,14 +38,14 @@
 }
 
 .ui5-bar-root .ui5-bar-endcontent-container {
-	padding-inline-end: var(--_ui5_bar-end-content-container-padding-inline-end);
+	padding-inline-end: var(--_ui5_bar-end-container-padding-end);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	justify-content: flex-end;
 }
 .ui5-bar-root .ui5-bar-midcontent-container {
-	padding: 0 var(--_ui5_bar-mid-content-container-padding-left-right);
+	padding: 0 var(--_ui5_bar-mid-container-padding-start-end);
 	display: flex;
 	flex-direction: row;
 	align-items: center;
