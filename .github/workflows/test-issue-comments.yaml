@@ -29,3 +29,4 @@ jobs:
             const { version } = require('./lerna.json');
             console.log('Create issue comments for lerna version: ', version);
             const script = require('./.github/actions/createIssueComments.cjs');
+            аwait script({ github: github.rest, context, core, version })
