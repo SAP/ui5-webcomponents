@@ -9,29 +9,33 @@ export interface IComponentAPI {
     deprecated?: boolean;
 }
 
-export interface IComponentUI5CustomData {
-    parameters?: Record<string, any>;
-    returnValue: Record<string, any>;
+export interface IComponentParsedAPI extends IComponentAPI, IComponentUI5CustomData {
+    fieldName: string;
 }
 
-export interface IComponentProperty extends IComponentAPI {
+export interface IComponentUI5CustomData {
+    parameters?: Record<string, any>;
+    returnValue?: Record<string, any>;
+}
+
+export interface IComponentProperty extends IComponentParsedAPI {
     type: string;
     defaultValue: string;
     readonly: boolean;
 }
 
-interface IComponentEvent extends IComponentAPI {
+interface IComponentEvent extends IComponentParsedAPI {
     parameters: Record<string, any>;
 }
 
-export interface IComponentMethod extends IComponentAPI {
+export interface IComponentMethod extends IComponentParsedAPI {
     parameters: Record<string, any>;
     returnValue: Record<string, any>;
     readonly: boolean;
     type: string;
 }
 
-export interface IComponentSlot extends IComponentAPI {
+export interface IComponentSlot extends IComponentParsedAPI {
     type: string;
 }
 

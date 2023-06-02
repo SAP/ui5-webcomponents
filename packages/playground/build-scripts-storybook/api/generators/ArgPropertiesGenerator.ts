@@ -1,37 +1,32 @@
-import type { IApiReader, IComponentProperty } from "../ApiReader";
-import { InputType as IArgType } from "@storybook/types";
-import { ArgGenerator } from "./ArgGenerator";
+import { IApiReader, IComponentParsedAPI, IComponentProperty } from "../ApiReader";
+import { IGenerator } from "./ArgGenerator";
+import type { InputType as IArgType } from "@storybook/types";
 
-export class ArgPropertiesGenerator extends ArgGenerator {
-    public fieldName = "properties";
+class ArgPropertiesGenerator implements IGenerator {
+    isMatch(dataParsed: IComponentParsedAPI): boolean {
+        return dataParsed.fieldName === "properties";
+    }
+    generate(dataParsed: IComponentProperty, apiReader: IApiReader): IArgType {
+        let result = {};
+        const typeEnum = apiReader.findApi(dataParsed.type);
 
-    protected parseData(
-        properties: IComponentProperty[],
-        apiReader: IApiReader
-    ): Record<string, IArgType> {
-        const result: Record<string, IArgType> = {};
-        if (!properties) {
-            return result;
+        if (dataParsed.readonly) {
+            result = {
+                control: {
+                    type: false,
+                },
+            };
+        } else if (Array.isArray(typeEnum?.properties)) {
+            result = {
+                control: "select",
+                options: typeEnum.properties.map((a) => a.type),
+            };
         }
-
-        properties.forEach((property) => {
-            if (property.visibility === "public") {
-                const typeEnum = apiReader.findApi(property.type);
-                if (property.readonly) {
-                    result[property.name] = {
-                        control: {
-                            type: false,
-                        },
-                    };
-                } else if (Array.isArray(typeEnum?.properties)) {
-                    result[property.name] = {
-                        control: "select",
-                        options: typeEnum.properties.map((a) => a.type),
-                    };
-                }
-            }
-        });
 
         return result;
     }
+}
+
+export {
+    ArgPropertiesGenerator,
 }

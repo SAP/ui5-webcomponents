@@ -38,7 +38,7 @@ export class StoryArgTypesWriter implements IStoryArgTypesWriter {
                     StoryArgTypesWriter.STORIES_WRITE_FILE_NAME
                 );
 
-                const content = await this.generateFile(
+                const content = this.generateFile(
                     apiReader,
                     story,
                     argTypes
@@ -54,7 +54,7 @@ export class StoryArgTypesWriter implements IStoryArgTypesWriter {
     private generateFile(
         apiReader: IApiReader,
         story: string,
-        argTypes: IArgType
+        argTypes: Record<string, Record<string, IArgType[]>>
     ) {
         if (!argTypes[story]) {
             throw new Error(`No argTypes found for story ${story}`);
@@ -62,7 +62,7 @@ export class StoryArgTypesWriter implements IStoryArgTypesWriter {
 
         const properties = argTypes[story].properties;
         const methods = argTypes[story].methods;
-        const slots = argTypes[story].slots;
+        const slots = argTypes[story].slots || {};
         const slotNames = Object.keys(slots);
 
         const info = JSON.stringify(apiReader.findInfo(story), null, 4);
