@@ -8,7 +8,7 @@ import INIT_PACKAGE_VAR_CLASS_NAMETemplate from "./generated/templates/INIT_PACK
 // Styles
 import INIT_PACKAGE_VAR_CLASS_NAMECss from "./generated/themes/INIT_PACKAGE_VAR_CLASS_NAME.css.js";
 
-import { COUNTER } from "./generated/i18n/i18n-defaults.js";
+import { COUNT } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @public
@@ -17,12 +17,12 @@ const metadata = {
 	tag: "INIT_PACKAGE_VAR_TAG",
 	properties: /** @lends INIT_PACKAGE_VAR_NAMESPACE.INIT_PACKAGE_VAR_CLASS_NAME.prototype */ {
 		/**
-		 * Defines the counter of the component.
+		 * Defines the count of the component.
 		 * @type { number }
 		 * @defaultvalue 0
 		 * @public
 		 */
-		counter: {
+		count: {
 			defaultValue: 0,
 		},
 	},
@@ -67,11 +67,11 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	}
 
 	onClick() {
-		this.counter++;
+		this.count++;
 	}
 
 	get counterText() {
-		return INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle.getText(COUNTER);
+		return INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle.getText(COUNT);
 	}
 }
 

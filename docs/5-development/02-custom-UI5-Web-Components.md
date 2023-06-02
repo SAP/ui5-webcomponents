@@ -355,17 +355,17 @@ export default Demo;
 
 ### Adding i18n support
 
-There are 2 steps to do that:
+There are few steps to do that:
  1. Get and assign an i18n bundle during component definition
  ```js
  await Demo.i18nBundle = getI18nBundle("my-ui5-web-components");
  ```
 The `getI18nBundle` method is provided by the `i18nBundle.js` module from the `@ui5/webcomponents-base` package.
 
- 3. Get texts from the bundle, according to the currently [configured](../2-advanced/01-configuration.md) language
- `return Demo.i18nBundle.getText(COUNTER);`
+ 2. Get texts from the bundle (in this case for the "Count" word), according to the currently [configured](../2-advanced/01-configuration.md) language
+ `return Demo.i18nBundle.getText(COUNT);`
 
-In the example, we want to get the i18n for the "Counter" word and create a simple getter `get counterText()` to use it in the template later-on.
+ 3. And, create a simple getter `get countText()` to use it in the template later-on.
 
 So the final source code is:
 
@@ -380,7 +380,7 @@ import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
 // Styles
 import DemoCss from "./generated/themes/Demo.css.js";
 
-import { COUNTER } from "./generated/i18n/i18n-defaults.js";
+import { COUNT } from "./generated/i18n/i18n-defaults.js";
 
 
 const metadata = {
@@ -419,7 +419,7 @@ class Demo extends UI5Element {
 	}
 
 	get counterText() {
-		return Demo.i18nBundle.getText(COUNTER);
+		return Demo.i18nBundle.getText(COUNT);
 	}
 }
 
@@ -435,7 +435,7 @@ is the `name` property of your `package.json` file.
 
 ## Adding a property
 
-To add a property, you need to change the metadata object - a `counter` property with e default value `0` has been added:
+To add a property, you need to change the metadata object - a `count` property with e default value `0` has been added:
 
 ```js
 const metadata = {
@@ -472,8 +472,8 @@ class Demo extends UI5Element {
 		Demo.i18nBundle = await getI18nBundle("my-ui5-web-components");
 	}
 
-	get counterText() {
-		return Demo.i18nBundle.getText(COUNTER);
+	get countText() {
+		return Demo.i18nBundle.getText(COUNT);
 	}
 }
 
@@ -490,12 +490,12 @@ The template of the Web Component is in the `Demo.hbs` file.
 In this particular example it looks like this:
 
 ```handlebars
-<div>{{counterText}} :: {{counter}}</div>
+<div>{{countText}} :: {{count}}</div>
 ```
 
 The context in the template is the **Web Component instance**, therefore you can directly use any properties/getters on the object.
-Here, we see the `counterText` getter that will return the "Counter" word, translated into the currently configured language
- and the `counter` property, defined in the previous step (f.e. in English we will get "Counter :: 0").
+Here, we see the `countText` getter that will return the "Count" word, translated into the currently configured language
+ and the `count` property, defined in the previous step (f.e. in English we will get "Count :: 0").
 
 As explained above, the `.hbs` file is transformed by the build script to a `.js` file in the `lit-html` syntax. More specifically, this file
 is provided to the Web Component class.

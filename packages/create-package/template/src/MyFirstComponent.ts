@@ -11,7 +11,7 @@ import INIT_PACKAGE_VAR_CLASS_NAMETemplate from "./generated/templates/INIT_PACK
 // Styles
 import INIT_PACKAGE_VAR_CLASS_NAMECss from "./generated/themes/INIT_PACKAGE_VAR_CLASS_NAME.css.js";
 
-import { COUNTER } from "./generated/i18n/i18n-defaults.js";
+import { COUNT } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @class
@@ -40,20 +40,20 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	}
 
 	/**
-	 * Defines the component counter.
-	 * @name NIT_PACKAGE_VAR_NAMESPACE.INIT_PACKAGE_VAR_CLASS_NAME.prototype.counter
+	 * Defines the component count.
+	 * @name NIT_PACKAGE_VAR_NAMESPACE.INIT_PACKAGE_VAR_CLASS_NAME.prototype.count
 	 * @public
 	 * @type { number }
 	 */
 	@property({ defaultValue: 0 })
-	counter!: number;
+	count!: number;
 
 	onClick() {
-		this.counter++;
+		this.count++;
 	}
 
 	get counterText() {
-		return INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle.getText(COUNTER);
+		return INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle.getText(COUNT);
 	}
 }
 
