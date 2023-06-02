@@ -12,7 +12,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
-import type { SelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
+import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -595,7 +595,7 @@ class ShellBar extends UI5Element {
 		}, delay);
 	}
 
-	_menuItemPress(e: CustomEvent<SelectionChangeEventDetail>) {
+	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		this.menuPopover!.close();
 		this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
 			item: e.detail.selectedItems[0],

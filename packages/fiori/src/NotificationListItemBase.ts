@@ -263,3 +263,6 @@ class NotificationListItemBase extends ListItemBase {
 }
 
 export default NotificationListItemBase;
+export type {
+	NotificationListItemBaseCloseEventDetail,
+};

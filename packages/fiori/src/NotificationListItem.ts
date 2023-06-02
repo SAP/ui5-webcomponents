@@ -39,6 +39,8 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
 
+import type { NotificationListItemBaseCloseEventDetail as NotificationListItemCloseEventDetail } from "./NotificationListItemBase.js";
+
 type NotificationListItemPressEventDetail = {
 	item: NotificationListItem,
 };
@@ -402,3 +404,7 @@ class NotificationListItem extends NotificationListItemBase {
 NotificationListItem.define();
 
 export default NotificationListItem;
+export type {
+	NotificationListItemPressEventDetail,
+	NotificationListItemCloseEventDetail,
+};

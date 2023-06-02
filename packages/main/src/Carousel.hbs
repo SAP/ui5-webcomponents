@@ -1,5 +1,5 @@
 <section
-	class="ui5-carousel-root"
+	class="ui5-carousel-root ui5-carousel-background-{{_backgroundDesign}}"
 	tabindex="0"
 	role="listbox"
 	aria-activedescendant="{{ariaActiveDescendant}}"
@@ -49,7 +49,7 @@
 							></div>
 						{{/each}}
 					{{else}}
-						<ui5-label>{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</ui5-label>
+						<div class="ui5-carousel-navigation-text">{{selectedIndexToShow}}&nbsp;{{ofText}}&nbsp;{{pagesCount}}</div>
 					{{/if}}
 				{{/unless}}
 			</div>

@@ -61,6 +61,9 @@
 	<ui5-button id="resizable-open">Open resizable dialog</ui5-button>
 	<br>
 	<br>
+	<ui5-button id="resizable-custom-header-open">Open resizable dialog with custom header</ui5-button>
+	<br>
+	<br>
 	<ui5-button id="draggable-and-resizable-open">Open draggable & resizable dialog</ui5-button>
 	<br>
 	<br>
@@ -347,9 +350,9 @@
 	</ui5-dialog>
 
 	<ui5-dialog id="draggable-dialog" accessible-name="Draggable" draggable>
-		<div id="tlt" slot="header"  class="dialog7auto">Draggable dialog</div>
+		<div id="tlt" slot="header"  class="dialog7auto">Draggable dialog header</div>
 
-		<p>Move this dialog around the screen by dragging it by its header or use the arrow keys.</p>
+		<p>Hint: Move this dialog around the screen by dragging it by its header or use the arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
 
 		<div slot="footer" class="dialogFooter">
@@ -357,17 +360,26 @@
 		</div>
 	</ui5-dialog>
 
-	<ui5-dialog id="resizable-dialog" header-text="Resizable dialog" resizable>
-		<p>Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
+	<ui5-dialog id="resizable-dialog" header-text="Resizable dialog header" resizable>
+		<p>Hint: Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
-
 		<div slot="footer" class="dialogFooter">
 			<ui5-button id="resizable-close" design="Emphasized">OK</ui5-button>
 		</div>
 	</ui5-dialog>
 
-	<ui5-dialog id="draggable-and-resizable-dialog" header-text="Draggable & resizable dialog" draggable resizable>
-		<p>Move this dialog around the screen by dragging it by its header or use the arrow keys.</p>
+	<ui5-dialog id="resizable-dialog-custom-header" resizable>
+		<div slot="header">
+			<ui5-title level="H1">Resizable dialog with custom Header</ui5-title>
+		</div>
+		<p>Content</p>
+		<div slot="footer" class="dialogFooter">
+			<ui5-button id="resizable-custom-header-close" design="Emphasized">OK</ui5-button>
+		</div>
+	</ui5-dialog>
+
+	<ui5-dialog id="draggable-and-resizable-dialog" header-text="Draggable & resizable dialog header" draggable resizable>
+		<p>Hint: Move this dialog around the screen by dragging it by its header or use the arrow keys.</p>
 		<p>Resize this dialog by dragging it by its resize handle or use shift+arrow keys.</p>
 		<p>This feature is available only on Desktop.</p>
 
@@ -694,6 +706,8 @@
 		window["draggable-close"].addEventListener("click", function () { window["draggable-dialog"].close(); });
 		window["resizable-open"].addEventListener("click", function () { window["resizable-dialog"].show(); });
 		window["resizable-close"].addEventListener("click", function () { window["resizable-dialog"].close(); });
+		window["resizable-custom-header-open"].addEventListener("click", function () { window["resizable-dialog-custom-header"].show(); });
+		window["resizable-custom-header-close"].addEventListener("click", function () { window["resizable-dialog-custom-header"].close(); });
 		window["draggable-and-resizable-open"].addEventListener("click", function () { window["draggable-and-resizable-dialog"].show(); });
 		window["draggable-and-resizable-close"].addEventListener("click", function () { window["draggable-and-resizable-dialog"].close(); });
 

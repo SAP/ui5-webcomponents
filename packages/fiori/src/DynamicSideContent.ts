@@ -27,6 +27,13 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
 	L_XL_BREAKPOINT = 1440, // Breakpoint between L and XL screen sizes
 	MINIMUM_WIDTH_BREAKPOINT = 960; // Minimum width of the control where main and side contents are side by side
 
+type DynamicSideContentLayoutChangeEventDetail = {
+	currentBreakpoint: string,
+	previousBreakpoint: string,
+	mainContentVisible: boolean,
+	sideContentVisible: boolean,
+}
+
 /**
  * @class
  *
@@ -515,7 +522,7 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this.fireEvent("layout-change", eventParams);
+			this.fireEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
 			this._currentBreakpoint = this.breakpoint;
 		}
 
@@ -535,3 +542,6 @@ class DynamicSideContent extends UI5Element {
 DynamicSideContent.define();
 
 export default DynamicSideContent;
+export type {
+	DynamicSideContentLayoutChangeEventDetail,
+};

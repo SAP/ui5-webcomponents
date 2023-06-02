@@ -68,7 +68,7 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
-import type { ClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail } from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
@@ -1013,7 +1013,7 @@ class ComboBox extends UI5Element {
 		e.preventDefault();
 	}
 
-	_selectItem(e: CustomEvent<ClickEventDetail>) {
+	_selectItem(e: CustomEvent<ListItemClickEventDetail>) {
 		const listItem = e.detail.item as ComboBoxListItem;
 
 		this._selectedItemText = listItem.mappedItem.text;

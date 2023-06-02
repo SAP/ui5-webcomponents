@@ -112,5 +112,25 @@ describe("SegmentedButton general interaction", () => {
 		assert.notOk(await segmentedButtonItem3.getProperty("pressed"), "[step 5] The first SegmentedButtonItem should be pressed.");
 	});
 
+	it("tests if a pressed item could be deselected", async () => {
+		const firstSegmentedButtonItem =  await browser.$("#segButtonMulti > ui5-segmented-button-item:first-child");
 
+		await firstSegmentedButtonItem.click();
+		assert.ok(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should be pressed");
+
+		await firstSegmentedButtonItem.click();
+		assert.notOk(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should be deselected");
+	});
+
+	it("tests if multiple items could be pressed", async () => {
+		const firstSegmentedButtonItem =  await browser.$("#segButtonMulti > ui5-segmented-button-item:first-child");
+		const secondSegmentedButtonItem =  await browser.$("#segButtonMulti > ui5-segmented-button-item:nth-child(1)");
+
+		await firstSegmentedButtonItem.click();
+		await secondSegmentedButtonItem.keys("ArrowRight");
+		await browser.keys("Space");
+
+		assert.ok(await firstSegmentedButtonItem.getProperty("pressed"), "First SegmentedButtonItem should be pressed");
+		assert.ok(await secondSegmentedButtonItem.getProperty("pressed"), "Second SegmentedButtonItem should be pressed");
+	});
 });

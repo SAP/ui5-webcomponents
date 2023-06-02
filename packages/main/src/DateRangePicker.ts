@@ -9,8 +9,13 @@ import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import type { DatePickerChangeEventDetail } from "./DatePicker.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+
+import type {
+	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
+	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
+} from "./DatePicker.js";
+import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 
 /**
  * @class
@@ -233,7 +238,7 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(event: CustomEvent<DatePickerChangeEventDetail>) {
+	onSelectedDatesChange(event: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
 		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
 		const values = event.detail.values;
 
@@ -368,3 +373,7 @@ class DateRangePicker extends DatePicker {
 DateRangePicker.define();
 
 export default DateRangePicker;
+export type {
+	DateRangePickerChangeEventDetail,
+	DateRangePickerInputEventDetail,
+};

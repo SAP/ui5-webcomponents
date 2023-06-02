@@ -3,7 +3,6 @@
 
 <head>
 	<meta charset="utf-8">
-
 	<title>Label</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -20,6 +19,7 @@
 
 
 	<script src="./modules/LabelPageCustomElement.js" type="module" defer></script>
+	<script src="./modules/LabelPage.js" type="module" defer></script>
 	<link rel="stylesheet" type="text/css" href="./styles/Label.css">
 </head>
 
@@ -153,8 +153,36 @@
 	</section>
 	<div>
 		<ui5-label>Short labelH</ui5-label>
-<ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label>
+		<ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label><ui5-label>Short labelH</ui5-label>
 	</div>
+
+	<section class="group" id="differentLanguages">
+		<h2>Labels in different languages</h2>
+		<ui5-select id="languageSelect">
+			<ui5-option id="en" selected>en</ui5-option>
+			<ui5-option id="fr">fr</ui5-option>
+			<ui5-option id="zh-CN">zh-CN (Simplified Chinese)</ui5-option>
+			<ui5-option id="zh-Hans">zh-Hans (Simplified Chinese)</ui5-option>
+			<ui5-option id="zh-TW">zh-TW (Traditional Chinese)</ui5-option>
+			<ui5-option id="zh-Hant">zh-Hant (Traditional Chinese)</ui5-option>
+		</ui5-select>
+		<div>
+			<ui5-label show-colon></ui5-label>
+			<ui5-input></ui5-input>
+		</div>
+		<div>
+			<ui5-label show-colon required></ui5-label>
+			<ui5-input></ui5-input>
+		</div>
+		<div>
+			<ui5-label show-colon class="width50px"></ui5-label>
+			<ui5-input></ui5-input>
+		</div>
+		<div>
+			<ui5-label show-colon required class="width50px"></ui5-label>
+			<ui5-input></ui5-input>
+		</div>
+	</section>
 
 </body>
 
