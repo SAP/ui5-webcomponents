@@ -1,10 +1,17 @@
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 
-const getSharedResourcesInstance = (): Record<string, unknown> | null => {
+const getMetaDomEl = () => {
+	const el = document.createElement("meta");
+	el.setAttribute("name", "ui5-shared-resources");
+	el.setAttribute("content", ""); // attribute "content" should be present when "name" is set.
+	return el;
+};
+
+const getSharedResourcesInstance = (): Element | null => {
 	if (typeof document === "undefined") {
 		return null;
 	}
-	return getSingletonElementInstance("ui5-shared-resources") as unknown as Record<string, unknown>;
+	return getSingletonElementInstance(`meta[name="ui5-shared-resources"]`, document.head, getMetaDomEl);
 };
 
 /**

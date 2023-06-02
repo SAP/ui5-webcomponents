@@ -71,7 +71,7 @@ class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	 * @private
 	 */
 	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: TableMode;
+	mode!: `${TableMode}`;
 
 	@property({ type: Object, multiple: true })
 	_columnsInfo!: Array<TableColumnInfo>;

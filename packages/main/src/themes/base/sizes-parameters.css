@@ -17,6 +17,10 @@
 	--_ui5_day_picker_item_height: 2.875rem;
 	--_ui5_day_picker_empty_height: 3rem;
 	--_ui5_day_picker_item_justify_content: space-between;
+	--_ui5_dp_two_calendar_item_now_text_padding_top: 0.387rem;
+    --_ui5_dp_two_calendar_item_primary_text_height: 1.8125rem;
+    --_ui5_dp_two_calendar_item_secondary_text_height: 1rem;
+	--_ui5_dp_two_calendar_item_text_padding_top: 0.575rem;
 
 	/* ColorPalette */
 	 --_ui5_color-palette-item-height: 1.75rem;
@@ -34,7 +38,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.75rem;
-    --_ui5_dialog_footer_height: 2.75rem;
+	--_ui5_dialog_footer_height: 2.75rem;
 
 	--_ui5_input_inner_padding: 0 0.625rem;
 	--_ui5_input_inner_padding_with_icon: 0 0.25rem 0 0.625rem;
@@ -79,37 +83,8 @@
 	--_ui5_tl_li_margin_bottom: 1.625rem;
 
 	/*switch*/
-	--_ui5_switch_height: var(--_ui5_switch_height);
-	--_ui5_switch_width: var(--_ui5_switch_width);
-	--_ui5_switch_with_label_width: var(--_ui5_switch_with_label_width);
-
-	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_outline_top);
-	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_outline_bottom);
-
-	--_ui5_switch_track_width: var(--_ui5_switch_track_width);
-	--_ui5_switch_track_height: var(--_ui5_switch_track_height);
-	--_ui5_switch_track_with_label_width: var(--_ui5_switch_track_with_label_width);
-	--_ui5_switch_track_with_label_height: var(--_ui5_switch_track_with_label_height);
-	--_ui5_switch_min_width: var(--_ui5_switch_min_width);
-
-	--_ui5_switch_handle_height: var(--_ui5_switch_handle_height);
-	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_width);
-	--_ui5_switch_handle_width: var(--_ui5_switch_handle_width);
-	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_height);
-
-	--_ui5_switch_text_active_left: var(--_ui5_switch_text_active_left);
-
-	--_ui5_switch_text_font_size: var(--_ui5_switch_text_font_size);
-	--_ui5_switch_text_width: var(--_ui5_switch_text_width);
-
 	--_ui5_switch_focus_width_size_horizon_exp: calc(100% + 4px);
 	--_ui5_switch_focus_height_size_horizon_exp: calc(100% + 4px);
-
-
-	--_ui5_switch_transform: var(--_ui5_switch_transform);
-	--_ui5_switch_transform_with_label: var(--_ui5_switch_transform_with_label);
-	--_ui5_switch_rtl_transform: var(--_ui5_switch_rtl_transform);
-	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_rtl_transform_with_label);
 
 	--_ui5_tc_item_text: 3rem;
 	--_ui5_tc_item_height: 4.75rem;
@@ -222,6 +197,10 @@
 	--_ui5_day_picker_item_height: 2rem;
 	--_ui5_day_picker_empty_height: 2.125rem;
 	--_ui5_day_picker_item_justify_content: flex-end;
+	--_ui5_dp_two_calendar_item_now_text_padding_top: 0rem;
+    --_ui5_dp_two_calendar_item_primary_text_height: 1rem;
+    --_ui5_dp_two_calendar_item_secondary_text_height: 0.75rem;
+	--_ui5_dp_two_calendar_item_text_padding_top: 0;
 
 	/* DateTimePicker */
 	--_ui5_datetime_picker_height: 17rem;
@@ -232,7 +211,7 @@
 
 	/* Dialog */
 	--_ui5_dialog_content_min_height: 2.5rem;
-    --_ui5_dialog_footer_height: 2.5rem;
+	--_ui5_dialog_footer_height: 2.5rem;
 
 	/* Input */
 	--_ui5_input_height: var(--sapElement_Compact_Height);
@@ -305,35 +284,6 @@
 	--_ui5_wheelslider_arrows_visibility: visible;
 	--_ui5_wheelslider_mobile_selection_frame_margin_top: 128px;
 
-	/*switch*/
-	--_ui5_switch_height: var(--_ui5_switch_compact_height);
-	--_ui5_switch_width: var(--_ui5_switch_compact_width);
-	--_ui5_switch_with_label_width: var(--_ui5_switch_compact_with_label_width);
-
-	--_ui5_switch_root_outline_top: var(--_ui5_switch_root_compact_outline_top);
-	--_ui5_switch_root_outline_bottom: var(--_ui5_switch_root_compact_outline_bottom);
-
-	--_ui5_switch_track_width: var(--_ui5_switch_track_compact_width);
-	--_ui5_switch_track_height: var(--_ui5_switch_track_compact_height);
-	--_ui5_switch_track_with_label_width: var(--_ui5_switch_track_with_label_compact_width);
-	--_ui5_switch_track_with_label_height: var(--_ui5_switch_track_with_label_compact_height);
-	--_ui5_switch_min_width: var(--_ui5_switch_compact_min_width);
-
-	--_ui5_switch_handle_height: var(--_ui5_switch_handle_compact_height);
-	--_ui5_switch_handle_with_label_width: var(--_ui5_switch_handle_with_label_compact_width);
-	--_ui5_switch_handle_width: var(--_ui5_switch_handle_compact_width);
-	--_ui5_switch_handle_with_label_height: var(--_ui5_switch_handle_with_label_compact_height);
-
-	--_ui5_switch_text_active_left: var(--_ui5_switch_text_compact_active_left);
-
-	--_ui5_switch_text_font_size: var(--_ui5_switch_text_compact_font_size);
-	--_ui5_switch_text_width: var(--_ui5_switch_text_compact_width);
-
-	--_ui5_switch_transform: var(--_ui5_switch_compact_transform);
-	--_ui5_switch_transform_with_label: var(--_ui5_switch_compact_transform_with_label);
-	--_ui5_switch_rtl_transform: var(--_ui5_switch_compact_rtl_transform);
-	--_ui5_switch_rtl_transform_with_label: var(--_ui5_switch_compact_rtl_transform_with_label);
-
 	--_ui5_tc_item_text: 2rem;
 	--_ui5_tc_item_text_line_height: 1.325rem;
 	--_ui5_tc_item_icon_size: 1rem;
@@ -375,6 +325,7 @@
 
 	/* StepInput */
 	--_ui5_step_input_min_width: 6rem;
+	--_ui5_step_input_padding: 2rem;
 
 	/* Table */
 	--_ui5_load_more_text_height: 2.625rem;

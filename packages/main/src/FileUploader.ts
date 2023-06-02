@@ -34,6 +34,10 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
+type FileUploaderChangeEventDetail = {
+	files: FileList | null,
+}
+
 /**
  * @class
  *
@@ -195,7 +199,7 @@ class FileUploader extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * @private
@@ -345,7 +349,7 @@ class FileUploader extends UI5Element implements IFormElement {
 		const changedFiles = (e.target as HTMLInputElement).files;
 
 		this._updateValue(changedFiles);
-		this.fireEvent("change", {
+		this.fireEvent<FileUploaderChangeEventDetail>("change", {
 			files: changedFiles,
 		});
 	}
@@ -509,3 +513,6 @@ class FileUploader extends UI5Element implements IFormElement {
 FileUploader.define();
 
 export default FileUploader;
+export type {
+	FileUploaderChangeEventDetail,
+};

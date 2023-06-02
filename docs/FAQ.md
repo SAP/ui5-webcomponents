@@ -26,6 +26,11 @@
 **A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](https://github.com/SAP/ui5-webcomponents/blob/main/docs/5-development/01-custom-UI5-Web-Components-Packages.md)
 
 
+**Q: How can I cancustomize UI5 Web Components' styles?**
+
+**A:** Read the [Styling UI5 Web Components](https://github.com/SAP/ui5-webcomponents/blob/main/docs/3-customizing/01-styles.md) article.
+
+
 **Q: How big is the runtime?**
 
 **A:** Currently on main, a simple working Web Component (```ui5-label```) and its dependencies equals to around 22K gzipped. 
@@ -36,14 +41,17 @@ Additional features, settings and old browser support will increase bundle size 
 
 
 **Q: What is the difference between UI5 Web Components and OpenUI5?**
+
 **A:** See the project's [readme.md](https://github.com/SAP/ui5-webcomponents) for more on this.
 
 
 **Q: Can I use UI5 Web Components in an OpenUI5 application?**
+
 **A:** This is not necessary as OpenUI5 already provides equivalents in the form of UI5 Controls. 
 
 
 **Q: How can I hide not yet upgraded Web Components so that users don't see them until styled?**
+
 **A:** You can place a CSS rule such as:
 
 ```CSS

@@ -97,7 +97,7 @@ class Toast extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ToastPlacement, defaultValue: ToastPlacement.BottomCenter })
-	placement!: ToastPlacement;
+	placement!: `${ToastPlacement}`;
 
 	/**
 	 * Indicates whether the component is open (visible).

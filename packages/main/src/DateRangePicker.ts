@@ -9,8 +9,13 @@ import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import type { DatePickerChangeEventDetail } from "./DatePicker.js";
 import CalendarPickersMode from "./types/CalendarPickersMode.js";
+
+import type {
+	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
+	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
+} from "./DatePicker.js";
+import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 
 /**
  * @class
@@ -116,7 +121,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get _tempTimestamp() {
-		return this._tempValue && (this.getFormat().parse(this._tempValue, true, undefined as unknown as boolean) as Date).getTime() / 1000;
+		return this._tempValue && (this.getFormat().parse(this._tempValue, true) as Date).getTime() / 1000;
 	}
 
 	/**
@@ -233,7 +238,7 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(event: CustomEvent<DatePickerChangeEventDetail>) {
+	onSelectedDatesChange(event: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
 		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
 		const values = event.detail.values;
 
@@ -293,7 +298,7 @@ class DateRangePicker extends DatePicker {
 		const partsArray = value.split(this._prevDelimiter || this._effectiveDelimiter);
 
 		// if format successfully parse the value, the value contains only single date
-		if (this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean)) {
+		if (this.getFormat().parse(value)) {
 			valuesArray[0] = partsArray.join(this._effectiveDelimiter);
 			valuesArray[1] = "";
 		} else {
@@ -315,7 +320,7 @@ class DateRangePicker extends DatePicker {
 
 		const dateStrings = this._splitValueByDelimiter(value); // at least one item guaranteed due to the checks above (non-empty and valid)
 
-		const parsedDate = this.getFormat().parse(dateStrings[0], true, undefined as unknown as boolean) as Date;
+		const parsedDate = this.getFormat().parse(dateStrings[0], true) as Date;
 		return parsedDate.getTime() / 1000;
 	}
 
@@ -330,7 +335,7 @@ class DateRangePicker extends DatePicker {
 
 		const dateStrings = this._splitValueByDelimiter(value);
 		if (dateStrings[1]) {
-			const parsedDate = this.getFormat().parse(dateStrings[1], true, undefined as unknown as boolean) as Date;
+			const parsedDate = this.getFormat().parse(dateStrings[1], true) as Date;
 			return parsedDate.getTime() / 1000;
 		}
 
@@ -368,3 +373,7 @@ class DateRangePicker extends DatePicker {
 DateRangePicker.define();
 
 export default DateRangePicker;
+export type {
+	DateRangePickerChangeEventDetail,
+	DateRangePickerInputEventDetail,
+};

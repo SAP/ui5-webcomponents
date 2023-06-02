@@ -6,6 +6,8 @@ import { useOptions, themes } from "./useOptions";
 import type { Parameters, GlobalTypes, DecoratorFunction, ArgTypesEnhancer } from '@storybook/types';
 import { enhanceArgTypes } from "./args/enhanceArgTypes";
 
+import { htmlTransformation } from "./addons/html/HTMLTransformation";
+
 if (customElements?.modules) {
   setCustomElementsManifest(customElements);
 }
@@ -17,7 +19,8 @@ export const parameters: Parameters = {
     transform: (code: string) => {
       // script tag (if any) is not inside the #root-inner element - we add it to the final result
       const script = document.querySelector('#scripts-root');
-      return code + script?.innerHTML;
+      const html = htmlTransformation.transform(code);
+      return html + script?.innerHTML;
     }
   },
   actions: { argTypesRegex: "^ui5-[a-z].*" }, // automatically match ui5-* events for actions

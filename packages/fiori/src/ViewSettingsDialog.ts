@@ -12,7 +12,7 @@ import Button from "@ui5/webcomponents/dist/Button.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import GroupHeaderListItem from "@ui5/webcomponents/dist/GroupHeaderListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
-import type { ClickEventDetail } from "@ui5/webcomponents/dist/List.js";
+import type { ListItemClickEventDetail } from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import SegmentedButton from "@ui5/webcomponents/dist/SegmentedButton.js";
@@ -55,7 +55,12 @@ type VSDSettings = {
 }
 
 // Events' detail
-type VSDEventDetail = VSDSettings & {
+type ViewSettingsDialogConfirmEventDetail = VSDSettings & {
+	sortByItem: SortItem,
+	sortDescending: boolean,
+}
+
+type ViewSettingsDialogCancelEventDetail = VSDSettings & {
 	sortByItem: SortItem,
 	sortDescending: boolean,
 }
@@ -129,7 +134,7 @@ type VSDInternalSettings = {
  * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
  * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
  * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
- * @param {Array} filterItems The selected filters items.
+ * @param {Array} filters The selected filters items.
  * @public
  */
 @event("confirm", {
@@ -150,7 +155,7 @@ type VSDInternalSettings = {
  * @param {String} sortBy The currently selected <code>ui5-sort-item</code> text attribute.
  * @param {HTMLElement} sortByItem The currently selected <code>ui5-sort-item</code>.
  * @param {Boolean} sortDescending The selected sort order (true = descending, false = ascending).
- * @param {Array} filterItems The selected filters items.
+ * @param {Array} filters The selected filters items.
  * @public
  */
 @event("cancel", {
@@ -516,7 +521,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._currentMode = ViewSettingsDialogMode[mode];
 	}
 
-	_handleFilterValueItemClick(e: CustomEvent<ClickEventDetail>) {
+	_handleFilterValueItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		// Update the component state
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			if (filter.selected) {
@@ -536,7 +541,7 @@ class ViewSettingsDialog extends UI5Element {
 		this._filterStepTwo = false;
 	}
 
-	_changeCurrentFilter(e: CustomEvent<ClickEventDetail>) {
+	_changeCurrentFilter(e: CustomEvent<ListItemClickEventDetail>) {
 		this._filterStepTwo = true;
 		this._currentSettings.filters = this._currentSettings.filters.map(filter => {
 			filter.selected = filter.text === e.detail.item.innerText;
@@ -572,7 +577,7 @@ class ViewSettingsDialog extends UI5Element {
 		this.close();
 		this._confirmedSettings = this._currentSettings;
 
-		this.fireEvent<VSDEventDetail>("confirm", this.eventsParams);
+		this.fireEvent<ViewSettingsDialogConfirmEventDetail>("confirm", this.eventsParams);
 	}
 
 	/**
@@ -581,7 +586,7 @@ class ViewSettingsDialog extends UI5Element {
 	_cancelSettings() {
 		this._restoreSettings(this._confirmedSettings);
 
-		this.fireEvent<VSDEventDetail>("cancel", this.eventsParams);
+		this.fireEvent<ViewSettingsDialogCancelEventDetail>("cancel", this.eventsParams);
 		this.close();
 	}
 
@@ -659,7 +664,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores <code>Sort Order</code> list as recently used control and its selected item in current state.
 	 */
-	_onSortOrderChange(e: CustomEvent<ClickEventDetail>) {
+	_onSortOrderChange(e: CustomEvent<ListItemClickEventDetail>) {
 		this._recentlyFocused = this._sortOrder!;
 		this._currentSettings.sortOrder = this.initSortOrderItems.map(item => {
 			item.selected = item.text === e.detail.item.innerText;
@@ -673,7 +678,7 @@ class ViewSettingsDialog extends UI5Element {
 	/**
 	 * Stores <code>Sort By</code> list as recently used control and its selected item in current state.
 	 */
-	 _onSortByChange(e: CustomEvent<ClickEventDetail>) {
+	 _onSortByChange(e: CustomEvent<ListItemClickEventDetail>) {
 		const selectedItemIndex = Number(e.detail.item.getAttribute("data-ui5-external-action-item-index"));
 		this._recentlyFocused = this._sortBy!;
 		this._currentSettings.sortBy = this.initSortByItems.map((item, index) => {
@@ -749,5 +754,6 @@ ViewSettingsDialog.define();
 
 export default ViewSettingsDialog;
 export type {
-	VSDEventDetail,
+	ViewSettingsDialogConfirmEventDetail,
+	ViewSettingsDialogCancelEventDetail,
 };
