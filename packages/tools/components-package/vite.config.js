@@ -9,8 +9,5 @@ export default defineConfig(async () => {
 			emptyOutDir: false,
 		},
 		plugins: [data],
-		server: {
-			open: "/packages/main/test/pages/Button.html",
-		}
 	}
   })
