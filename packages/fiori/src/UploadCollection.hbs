@@ -2,13 +2,13 @@
 	class="ui5-uc-root"
 	role="region"
 	aria-roledescription="{{_roleDescription}}"
-	@drop="{{_ondrop}}">
+	@drop="{{_ondrop}}"
+	@ui5-_uci-delete="{{_onItemDelete}}">
 	<div class="{{classes.content}}">
 		<ui5-list
 			accessible-name="{{accessibleName}}"
 			mode="{{mode}}"
 			@ui5-selection-change="{{_onSelectionChange}}"
-			@ui5-item-delete="{{_onItemDelete}}"
 		>
 			{{!-- forward slot header to inner list slot header --}}
 			<slot slot="header" name="header"></slot>
