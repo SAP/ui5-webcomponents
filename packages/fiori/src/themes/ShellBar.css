@@ -311,7 +311,6 @@ slot[name="profile"] {
 	justify-content: flex-end;
 	height: inherit;
 	align-items: center;
-	float: var(--_ui5_shellbar_overflow_container_float);
 }
 
 .ui5-shellbar-overflow-button {
