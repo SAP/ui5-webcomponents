@@ -72,7 +72,7 @@ const copyFile = (vars, sourcePath, destPath) => {
 		return;
 	}
 
-	if (isLogo) {
+	if (isLogo()) {
 		fs.copyFileSync(sourcePath, destPath);
 		return;
 	}
