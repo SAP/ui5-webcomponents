@@ -28,3 +28,4 @@ jobs:
             const { URL } = require('url');
             const { version } = require('./lerna.json');
             console.log('Create issue comments for lerna version: ', version);
+             const script = require('./.github/actions/createIssueComments.cjs');
