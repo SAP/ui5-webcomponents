@@ -128,4 +128,11 @@ describe("ARIA attributes", () => {
 
 		assert.notExists(ariaHasPopup, "should not have aria-haspopup set");
 	});
+
+	it ("aria-label is correctly set", async () => {
+		const avatar = await $("#interactive-avatar"),
+			  avatarRoot = avatar.shadow$(".ui5-avatar-root");
+
+		assert.equal(await avatarRoot.getAttribute("aria-label"), await avatar.getAttribute("accessible-name"), "aria-label should be set according to accessibleName property");
+	});
 });

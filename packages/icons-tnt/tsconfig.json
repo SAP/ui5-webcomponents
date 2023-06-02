@@ -1,8 +1,7 @@
 {
-	"include": ["src/**/*", "global.d.ts"],
+	"include": ["src/**/*"],
 	"compilerOptions": {
 		"target": "es2022",
-		"module": "es2022",
 		// Generate d.ts files
 		"declaration": true,
 		"outDir": "dist",
@@ -10,6 +9,9 @@
 		"sourceMap": true,
 		"inlineSources": true,
 		"strict": true,
-		"moduleResolution": "node",
+		"module": "es2022",
+      	"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
 	},
 }

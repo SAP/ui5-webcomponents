@@ -3,6 +3,107 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.2...v1.14.0) (2023-06-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.1...v1.14.0-rc.2) (2023-06-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.0...v1.14.0-rc.1) (2023-05-25)
+
+
+### Bug Fixes
+
+* **framework:** store shared resources as `meta` tag within the `head` ([#7051](https://github.com/SAP/ui5-webcomponents/issues/7051)) ([90722da](https://github.com/SAP/ui5-webcomponents/commit/90722da24600e28f31864e9f2006d18e97c1e596))
+
+
+### Features
+
+* **framework:** add `setThemeRoot` public API ([#6970](https://github.com/SAP/ui5-webcomponents/issues/6970)) ([a0ad904](https://github.com/SAP/ui5-webcomponents/commit/a0ad904ea21578ada97dc0c990ec04dbb5072990))
+
+
+
+
+
+# [1.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.13.2...v1.14.0-rc.0) (2023-05-18)
+
+
+### Features
+
+* **framework:** add `ignoreCustomElements` public API ([#7027](https://github.com/SAP/ui5-webcomponents/issues/7027)) ([776f905](https://github.com/SAP/ui5-webcomponents/commit/776f9058de5b4e37489dd3ef388863edc2627eb3))
+* **framework:** use `template literal notation` for enum types ([#6856](https://github.com/SAP/ui5-webcomponents/issues/6856)) ([0de21e8](https://github.com/SAP/ui5-webcomponents/commit/0de21e8ba37c6a75fd3d2a29a16cc82661619cb1)), closes [#6636](https://github.com/SAP/ui5-webcomponents/issues/6636)
+
+
+
+
+
+## [1.13.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.1...v1.13.2) (2023-05-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.13.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.5...v1.13.1) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.13.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.3...v1.13.0-rc.4) (2023-05-04)
+
+
+### Features
+
+* generate TS from HBS templates ([#6558](https://github.com/SAP/ui5-webcomponents/issues/6558)) ([02611b2](https://github.com/SAP/ui5-webcomponents/commit/02611b2e24b2c2a06129b8e60a8bc680d9501e39))
+
+
+
+
+
+# [1.13.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.2...v1.13.0-rc.3) (2023-04-27)
+
+
+### Bug Fixes
+
+* **framework:** avoid ResizeObserver loop limit exceeded error ([#6934](https://github.com/SAP/ui5-webcomponents/issues/6934)) ([3b7f6d2](https://github.com/SAP/ui5-webcomponents/commit/3b7f6d2c4165c70bf7411425dd0cb3dd58ef953a)), closes [#6924](https://github.com/SAP/ui5-webcomponents/issues/6924)
+
+
+
+
+
+# [1.13.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.1...v1.13.0-rc.2) (2023-04-20)
+
+
+### Bug Fixes
+
+* **framework:** export StaticArea class ([#6917](https://github.com/SAP/ui5-webcomponents/issues/6917)) ([f4fb815](https://github.com/SAP/ui5-webcomponents/commit/f4fb81530b4c1a271cca52cd393b824dccb891cd)), closes [#6916](https://github.com/SAP/ui5-webcomponents/issues/6916)
+
+
+
+
+
 # [1.13.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.0...v1.13.0-rc.1) (2023-04-13)
 
 

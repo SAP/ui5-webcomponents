@@ -195,7 +195,7 @@ class TextArea extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Defines the number of visible text lines for the component.

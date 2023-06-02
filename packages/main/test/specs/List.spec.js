@@ -73,6 +73,34 @@ describe("List Tests", () => {
 		assert.strictEqual(await secondItem.getProperty("id"), await selectionChangeResultPreviousItemsParameter.getProperty("value"));
 	});
 
+	it("selection is reverted if selectionChange event is prevented and the mode is SingleSelect", async () => {
+		const firstItem = await browser.$("#listPreventSelectionChangeSingleSelect #country1");
+		const thirdItem = await browser.$("#listPreventSelectionChangeSingleSelect #country3");
+
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is initially selected");
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected (prevented)");
+		assert.ok(await thirdItem.getAttribute("selected"), "Selection reverted to third item");
+	});
+
+	it("selection is reverted if selectionChange event is prevented  and the mode is MultiSelect", async () => {
+		const firstItem = await browser.$("#listPreventSelectionChangeMultiSelect #country1");
+		const secondItem = await browser.$("#listPreventSelectionChangeMultiSelect #country2");
+		const thirdItem = await browser.$("#listPreventSelectionChangeMultiSelect #country3");
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is initially not selected");
+		assert.ok(await secondItem.getAttribute("selected"), "The second item is initially selected");
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is initially selected");
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected (prevented)");
+		assert.ok(await secondItem.getAttribute("selected"), "The second item is still selected");
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is still selected");
+	});
+
 	it("No data text is shown", async () => {
 		const noDataText = await browser.$("#no-data-list").shadow$(".ui5-list-nodata-text");
 

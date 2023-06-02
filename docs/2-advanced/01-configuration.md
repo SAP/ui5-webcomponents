@@ -255,6 +255,7 @@ To do so, please import the desired functionality from the respective `"@ui5/web
 ```js
 import { getTheme, setTheme } from "@ui5/webcomponents-base/dist/config/Theme.js";
 ```
+
  - `language`
 
 ```js

@@ -2,13 +2,18 @@ import createStyleInHead from "./util/createStyleInHead.js";
 import createLinkInHead from "./util/createLinkInHead.js";
 import { shouldUseLinks, getUrl } from "./CSP.js";
 import { StyleData, StyleDataCSP } from "./types.js";
+import { getCurrentRuntimeIndex } from "./Runtimes.js";
 
 const getStyleId = (name: string, value: string) => {
 	return value ? `${name}|${value}` : name;
 };
 
 const createStyle = (data: StyleData, name: string, value = "") => {
-	const content = typeof data === "string" ? data : data.content;
+	let content = typeof data === "string" ? data : data.content;
+
+	if (content.includes("[_ui5host]")) {
+		content = content.replaceAll("[_ui5host]", `[_ui5rt${getCurrentRuntimeIndex()}]`);
+	}
 
 	if (shouldUseLinks()) {
 		const attributes = {} as Record<string, any>;
@@ -28,7 +33,11 @@ const createStyle = (data: StyleData, name: string, value = "") => {
 };
 
 const updateStyle = (data: StyleData, name: string, value = "") => {
-	const content = typeof data === "string" ? data : data.content;
+	let content = typeof data === "string" ? data : data.content;
+
+	if (content.includes("[_ui5host]")) {
+		content = content.replaceAll("[_ui5host]", `[_ui5rt${getCurrentRuntimeIndex()}]`);
+	}
 
 	if (shouldUseLinks()) {
 		const link = document.querySelector(`head>link[${name}="${value}"]`) as HTMLLinkElement;

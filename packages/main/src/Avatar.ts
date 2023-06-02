@@ -7,7 +7,9 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-
+import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isEnter, isSpace } from "@ui5/webcomponents-base/dist/Keys.js";
 // Template
 import AvatarTemplate from "./generated/templates/AvatarTemplate.lit.js";
@@ -141,7 +143,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: AvatarShape, defaultValue: AvatarShape.Circle })
-	shape!: AvatarShape;
+	shape!: `${AvatarShape}`;
 
 	/**
 	 * Defines predefined size of the component.
@@ -160,7 +162,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
-	size!: AvatarSize;
+	size!: `${AvatarSize}`;
 
 	/**
 	 * @private
@@ -191,7 +193,7 @@ class Avatar extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: AvatarColorScheme, defaultValue: AvatarColorScheme.Accent6 })
-	colorScheme!: AvatarColorScheme;
+	colorScheme!: `${AvatarColorScheme}`;
 
 	/**
 	 * @private
@@ -278,6 +280,12 @@ class Avatar extends UI5Element implements ITabbable {
 
 	_onclick?: (e: MouseEvent) => void;
 	static i18nBundle: I18nBundle;
+	_handleResizeBound: ResizeObserverCallback;
+
+	constructor() {
+		super();
+		this._handleResizeBound = this.handleResize.bind(this);
+	}
 
 	static async onDefine() {
 		Avatar.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -344,18 +352,35 @@ class Avatar extends UI5Element implements ITabbable {
 		return this._hasImage;
 	}
 
+	get initialsContainer(): HTMLObjectElement | null {
+		return this.getDomRef()!.querySelector(".ui5-avatar-initials");
+	 }
+
 	onBeforeRendering() {
 		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
 	}
 
-	onAfterRendering() {
-		this._checkInitials();
+	async onAfterRendering() {
+		await renderFinished();
+		if (this.initials && !this.icon) {
+			this._checkInitials();
+		}
 	}
 
-	_setFallbackIcon() {
-		// if there isn`t icon set in the avatar the default one is shown, when the initials are not valid or are missing
-		this.icon = this.icon || "employee";
-		return this.icon;
+	onEnterDOM() {
+		this.initialsContainer && ResizeHandler.register(this.initialsContainer,
+			this._handleResizeBound);
+	}
+
+	onExitDOM() {
+		this.initialsContainer && ResizeHandler.deregister(this.initialsContainer,
+			this._handleResizeBound);
+	}
+
+	handleResize() {
+		if (this.initials && !this.icon) {
+			this._checkInitials();
+		}
 	}
 
 	_checkInitials() {
@@ -363,15 +388,16 @@ class Avatar extends UI5Element implements ITabbable {
 			avatarInitials = avatar.querySelector(".ui5-avatar-initials");
 		// if there aren`t initalts set - the fallBack icon should be shown
 		if (!this.validInitials) {
-			this._setFallbackIcon();
+			avatarInitials!.classList.add("ui5-avatar-initials-hidden");
+			return;
 		}
 		// if initials` width is bigger than the avatar, an icon should be shown inside the avatar
+		avatarInitials && avatarInitials.classList.remove("ui5-avatar-initials-hidden");
 		if (this.initials && this.initials.length === 3) {
-			if (avatarInitials && avatarInitials.scrollWidth >= avatar.scrollWidth) {
-				this._setFallbackIcon();
+			if (avatarInitials && avatarInitials.scrollWidth > avatar.scrollWidth) {
+				avatarInitials.classList.add("ui5-avatar-initials-hidden");
 			}
 		}
-		return this.icon;
 	}
 
 	_onClickHandler(e: MouseEvent) {

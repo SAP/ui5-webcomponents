@@ -1,6 +1,6 @@
-import { html } from "lit-html";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import { ifDefined } from "lit-html/directives/if-defined.js";
+import { html } from "lit";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import type { Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -8,6 +8,7 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type Label from "@ui5/webcomponents/dist/Label.js";
 import WrappingType from "@ui5/webcomponents/dist/types/WrappingType.js";
+import type { Decorator } from "@storybook/web-components"
 
 const component = "ui5-label";
 
@@ -29,45 +30,67 @@ const Template: UI5StoryArgs<Label, StoryArgsSlots> = (args) => {
 	?required="${ifDefined(args.required)}"
 	?show-colon="${ifDefined(args.showColon)}"
 	wrapping-type="${ifDefined(args.wrappingType)}"
->
-	${unsafeHTML(args.default)}
-</ui5-label>`;
+	class="${ifDefined(args.className)}"
+>${unsafeHTML(args.default)}</ui5-label>`;
 };
 
+const addInput = (id: string): Decorator => {
+	return (story, { args }) => {
+		return html`
+${story({ args: { ...args, for: id } })}
+<ui5-input id="${id}"></ui5-input>`;
+	};
+};
 
 export const Basic = Template.bind({});
 Basic.args = {
-	default: "The quick brown fox jumps over the lazy dog"
+	showColon: true,
+	default: "Simple Label"
 };
+Basic.decorators = [
+	addInput("myInputSimple")
+];
 
 export const RequiredWithColon = Template.bind({});
 RequiredWithColon.args = {
-	default: "Required label with colon",
 	showColon: true,
 	required: true,
+	default: "Required label with colon",
 };
+RequiredWithColon.decorators = [
+	addInput("myInputRequired")
+];
 
-const SetWidth200Px = (story: () => unknown) => html`
+const SetWidth200Px: Decorator = (story, { args }) => {
+	return html`
 <style>
-	ui5-label {
+	.w200 {
 		width: 200px;
 	}
 </style>
-
-${story()}`;
+${story({ args: { ...args, className: "w200" } })}`;
+};
 
 export const Truncating = Template.bind({});
 Truncating.args = {
+	showColon: true,
 	default: "Long labels are truncated by default.",
 };
-Truncating.decorators = [SetWidth200Px];
+Truncating.decorators = [
+	SetWidth200Px,
+	addInput("myInputTruncation")
+];
 
 export const WrappingText = Template.bind({});
 WrappingText.args = {
-	default: `Long labels can wrap if the text is too long. Set 'wrapping-type="Normal"'. Long labels can wrap if the text is too long`,
 	wrappingType: WrappingType.Normal,
+	showColon: true,
+	default: `Long labels can wrap if the text is too long. Set 'wrapping-type="Normal"'. Long labels can wrap if the text is too long`,
 };
-WrappingText.decorators = [SetWidth200Px];
+WrappingText.decorators = [
+	SetWidth200Px,
+	addInput("myInputWrapping")
+];
 
 export const UsageWithInputs = Template.bind({});
 UsageWithInputs.args = {

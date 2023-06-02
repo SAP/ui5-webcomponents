@@ -1,6 +1,6 @@
-import { html } from "lit-html";
-import { ifDefined } from "lit-html/directives/if-defined.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { html } from "lit";
+import { ifDefined } from "lit/directives/if-defined.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 
 import type Avatar from "@ui5/webcomponents/dist/Avatar.js";
@@ -36,6 +36,7 @@ const Template: UI5StoryArgs<Avatar, StoryArgsSlots> = (args) =>
     color-scheme="${ifDefined(args.colorScheme)}"
     ?interactive="${ifDefined(args.interactive)}"
     aria-haspopup="${ifDefined(args.ariaHaspopup)}"
+    accessible-name="${ifDefined(args.accessibleName)}"
   >
     ${unsafeHTML(args.default)}
   </ui5-avatar>`;
@@ -44,6 +45,7 @@ export const Basic = Template.bind({});
 Basic.args = {
   initials: "FJ",
   interactive: true,
+  accessibleName: "Avatar with accessible name"
 };
 
 export const WithImage = Template.bind({});

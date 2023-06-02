@@ -94,7 +94,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	disabled!: boolean;
 
 	/**
-	 * Represents the "additionalText" text, which is displayed in the tab.
+	 * Represents the "additionalText" text, which is displayed in the tab. In the cases when in the same time there are tabs with icons and tabs without icons, if a tab has no icon the "additionalText" is displayed larger.
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @public
@@ -137,7 +137,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 	 * @name sap.ui.webc.main.Tab.prototype.design
 	 */
 	@property({ type: SemanticColor, defaultValue: SemanticColor.Default })
-	design!: SemanticColor;
+	design!: `${SemanticColor}`;
 
 	/**
 	 * Specifies if the component is selected.
@@ -357,7 +357,7 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		}
 
 		if (this.additionalText) {
-			classes.push("ui5-tab-strip-item--withAddionalText");
+			classes.push("ui5-tab-strip-item--withAdditionalText");
 		}
 
 		if (!this.icon && !this._mixedMode) {
@@ -378,6 +378,22 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 		if (this.isSingleClickArea) {
 			classes.push(`ui5-tab-strip-item--singleClickArea`);
+		}
+
+		return {
+			itemClasses: classes.join(" "),
+			additionalTextClasses: this.additionalTextClasses,
+		};
+	}
+
+	get additionalTextClasses() {
+		const classes = [];
+		if (this.additionalText) {
+			classes.push("ui5-tab-strip-itemAdditionalText");
+		}
+
+		if (this.icon && !this.additionalText) {
+			classes.push("ui5-tab-strip-itemAdditionalText-hidden");
 		}
 
 		return classes.join(" ");

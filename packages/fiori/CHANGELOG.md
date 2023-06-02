@@ -3,6 +3,112 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.14.0](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.2...v1.14.0) (2023-06-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.1...v1.14.0-rc.2) (2023-06-01)
+
+
+### Features
+
+* **ui5-wizard:** introduce contentLayout property ([#7006](https://github.com/SAP/ui5-webcomponents/issues/7006)) ([66e9c3d](https://github.com/SAP/ui5-webcomponents/commit/66e9c3d83a945ae80e32d8614084b732cabd2bea))
+
+
+
+
+
+# [1.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.0...v1.14.0-rc.1) (2023-05-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.13.2...v1.14.0-rc.0) (2023-05-18)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** badge visual alignment ([#7004](https://github.com/SAP/ui5-webcomponents/issues/7004)) ([45a176d](https://github.com/SAP/ui5-webcomponents/commit/45a176da6dd5413617a25a92c1f7ba2e194790b6))
+* **ui5-shellbar:** remove double box-shadow effect on hover ([#7033](https://github.com/SAP/ui5-webcomponents/issues/7033)) ([fde8b69](https://github.com/SAP/ui5-webcomponents/commit/fde8b69b99175b91cf1a6c3b5018c044c07c8bd7))
+
+
+### Features
+
+* **framework:** use `template literal notation` for enum types ([#6856](https://github.com/SAP/ui5-webcomponents/issues/6856)) ([0de21e8](https://github.com/SAP/ui5-webcomponents/commit/0de21e8ba37c6a75fd3d2a29a16cc82661619cb1)), closes [#6636](https://github.com/SAP/ui5-webcomponents/issues/6636)
+
+
+
+
+
+## [1.13.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.1...v1.13.2) (2023-05-15)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** containers shrink factor reduced ([#6982](https://github.com/SAP/ui5-webcomponents/issues/6982)) ([e82744b](https://github.com/SAP/ui5-webcomponents/commit/e82744bd715bae744a7e41849f1fafc5ccc389ee))
+
+
+
+
+
+## [1.13.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.5...v1.13.1) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.13.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.3...v1.13.0-rc.4) (2023-05-04)
+
+
+### Bug Fixes
+
+* add missing file-extensions for ESM support ([#6971](https://github.com/SAP/ui5-webcomponents/issues/6971)) ([1f42d0c](https://github.com/SAP/ui5-webcomponents/commit/1f42d0c658a437d64000c0f9b7562edff85b8421))
+
+
+### Features
+
+* generate TS from HBS templates ([#6558](https://github.com/SAP/ui5-webcomponents/issues/6558)) ([02611b2](https://github.com/SAP/ui5-webcomponents/commit/02611b2e24b2c2a06129b8e60a8bc680d9501e39))
+
+
+
+
+
+# [1.13.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.2...v1.13.0-rc.3) (2023-04-27)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** add new border parameter for horizon theme ([#6915](https://github.com/SAP/ui5-webcomponents/issues/6915)) ([863a057](https://github.com/SAP/ui5-webcomponents/commit/863a0574fa0f712da34e1c25b660d197c28757b8))
+
+
+
+
+
+# [1.13.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.1...v1.13.0-rc.2) (2023-04-20)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 # [1.13.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.0...v1.13.0-rc.1) (2023-04-13)
 
 

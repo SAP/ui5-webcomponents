@@ -8,6 +8,7 @@ import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import { getClosedPopupParent } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import Popup from "./Popup.js";
+import type { PopupBeforeCloseEventDetail as PopoverBeforeCloseEventDetail } from "./Popup.js";
 import PopoverPlacementType from "./types/PopoverPlacementType.js";
 import PopoverVerticalAlign from "./types/PopoverVerticalAlign.js";
 import PopoverHorizontalAlign from "./types/PopoverHorizontalAlign.js";
@@ -36,7 +37,7 @@ type CalculatedPlacement = {
 	arrow: ArrowPosition,
 	top: number,
 	left: number,
-	placementType: PopoverPlacementType,
+	placementType: `${PopoverPlacementType}`,
 }
 
 /**
@@ -126,7 +127,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
-	placementType!: PopoverPlacementType;
+	placementType!: `${PopoverPlacementType}`;
 
 	/**
 	 * Determines the horizontal alignment of the component.
@@ -145,7 +146,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property({ type: PopoverHorizontalAlign, defaultValue: PopoverHorizontalAlign.Center })
-	horizontalAlign!: PopoverHorizontalAlign;
+	horizontalAlign!: `${PopoverHorizontalAlign}`;
 
 	/**
 	 * Determines the vertical alignment of the component.
@@ -164,7 +165,7 @@ class Popover extends Popup {
 	 * @public
 	 */
 	@property({ type: PopoverVerticalAlign, defaultValue: PopoverVerticalAlign.Center })
-	verticalAlign!: PopoverVerticalAlign;
+	verticalAlign!: `${PopoverVerticalAlign}`;
 
 	/**
 	 * Defines whether the component should close when
@@ -257,7 +258,7 @@ class Popover extends Popup {
 	 * @private
 	 */
 	@property({ type: PopoverPlacementType, defaultValue: PopoverPlacementType.Right })
-	actualPlacementType!: PopoverPlacementType;
+	actualPlacementType!: `${PopoverPlacementType}`;
 
 	@property({ validator: Integer, noAttribute: true })
 	_maxHeight?: number;
@@ -377,7 +378,7 @@ class Popover extends Popup {
 		removeOpenedPopover(this);
 	}
 
-	shouldCloseDueToOverflow(placement: PopoverPlacementType, openerRect: DOMRect): boolean {
+	shouldCloseDueToOverflow(placement: `${PopoverPlacementType}`, openerRect: DOMRect): boolean {
 		const threshold = 32;
 		const limits = {
 			"Right": openerRect.right,
@@ -714,7 +715,7 @@ class Popover extends Popup {
 		}
 	}
 
-	getActualPlacementType(targetRect: DOMRect, popoverSize: PopoverSize): PopoverPlacementType {
+	getActualPlacementType(targetRect: DOMRect, popoverSize: PopoverSize): `${PopoverPlacementType}` {
 		const placementType = this.placementType;
 		let actualPlacementType = placementType;
 
@@ -751,7 +752,7 @@ class Popover extends Popup {
 
 	getVerticalLeft(targetRect: DOMRect, popoverSize: PopoverSize): number {
 		const horizontalAlign = this._actualHorizontalAlign;
-		let left;
+		let left = 0;
 
 		switch (horizontalAlign) {
 		case PopoverHorizontalAlign.Center:
@@ -770,7 +771,7 @@ class Popover extends Popup {
 	}
 
 	getHorizontalTop(targetRect: DOMRect, popoverSize: PopoverSize): number {
-		let top;
+		let top = 0;
 
 		switch (this.verticalAlign) {
 		case PopoverVerticalAlign.Center:
@@ -862,3 +863,7 @@ Popover.define();
 export default Popover;
 
 export { instanceOfPopover };
+
+export type {
+	PopoverBeforeCloseEventDetail,
+};

@@ -22,6 +22,11 @@ import type { TokenizerTokenDeleteEventDetail } from "./Tokenizer.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/value-help.js";
 
+import type {
+	InputSuggestionItemSelectEventDetail as MultiInputSuggestionItemSelectEventDetail,
+	InputSuggestionItemPreviewEventDetail as MultiInputSuggestionItemPreviewEventDetail,
+} from "./Input.js";
+
 type MultiInputTokenDeleteEventDetail = {
 	token: Token;
 }
@@ -169,7 +174,7 @@ class MultiInput extends Input {
 		}
 
 		selectedTokens.forEach(token => {
-			this.fireEvent("token-delete", { token });
+			this.fireEvent<MultiInputTokenDeleteEventDetail>("token-delete", { token });
 		});
 	}
 
@@ -376,4 +381,8 @@ class MultiInput extends Input {
 MultiInput.define();
 
 export default MultiInput;
-export { MultiInputTokenDeleteEventDetail };
+export type {
+	MultiInputTokenDeleteEventDetail,
+	MultiInputSuggestionItemSelectEventDetail,
+	MultiInputSuggestionItemPreviewEventDetail,
+};

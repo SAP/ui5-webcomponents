@@ -44,6 +44,14 @@ import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
+type TimePickerBaseChangeInputEventDetail = {
+	value: string,
+	valid: boolean,
+}
+
+type TimePickerBaseChangeEventDetail = TimePickerBaseChangeInputEventDetail;
+type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
+
 /**
  * @class
  *
@@ -139,7 +147,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
@@ -227,7 +235,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	submitPickers() {
-		this._updateValueAndFireEvents(this.tempValue, true, ["change", "value-changed"]);
+		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
 		this.closePicker();
 	}
 
@@ -247,7 +255,7 @@ class TimePickerBase extends UI5Element {
 		}
 	}
 
-	_updateValueAndFireEvents(value: string | undefined, normalizeValue: boolean, eventsNames: Array<string>) {
+	_updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<string>) {
 		if (value === this.value) {
 			return;
 		}
@@ -264,7 +272,7 @@ class TimePickerBase extends UI5Element {
 		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		eventsNames.forEach(eventName => {
-			this.fireEvent(eventName, { value, valid });
+			this.fireEvent<TimePickerBaseChangeInputEventDetail>(eventName, { value, valid });
 		});
 	}
 
@@ -435,7 +443,7 @@ class TimePickerBase extends UI5Element {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value as string, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value as string);
 	}
 
 	normalizeValue(value: string) {
@@ -443,11 +451,11 @@ class TimePickerBase extends UI5Element {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean));
+		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		const date = this.getFormat().parse(this._effectiveValue as string, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const date = this.getFormat().parse(this._effectiveValue as string) as Date;
 		if (!date) {
 			return;
 		}
@@ -492,3 +500,8 @@ class TimePickerBase extends UI5Element {
 }
 
 export default TimePickerBase;
+export type {
+	TimeSelectionChangeEventDetail,
+	TimePickerBaseChangeEventDetail,
+	TimePickerBaseInputEventDetail,
+};

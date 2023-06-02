@@ -61,8 +61,8 @@ if (process.argv.length > 3) {
 let wdioConfig = "";
 if (fs.existsSync("config/wdio.conf.cjs")) {
     wdioConfig = "config/wdio.conf.cjs";
-} else {
-    fs.existsSync("config/wdio.conf.js")
+} else if (fs.existsSync("config/wdio.conf.js")) {
+    wdioConfig = "config/wdio.conf.js";
 }
 
 // run wdio with calculated parameters

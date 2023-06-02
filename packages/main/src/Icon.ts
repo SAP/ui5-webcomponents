@@ -89,6 +89,17 @@ const PRESENTATION_ROLE = "presentation";
  * <code>&lt;ui5-icon name="tnt/antenna">&lt;/ui5-icon></code><br>
  * <code>&lt;ui5-icon name="business-suite/ab-testing">&lt;/ui5-icon></code>
  *
+ * <br><br>
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-icon</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>root - Used to style the outermost wrapper of the <code>ui5-icon</code></li>
+ * </ul>
+ *
+ * <br><br>
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
@@ -149,7 +160,7 @@ class Icon extends UI5Element {
 	 * @since 1.9.2
 	 */
 	@property({ type: IconDesign, defaultValue: IconDesign.Default })
-	design!: IconDesign;
+	design!: `${IconDesign}`;
 
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)

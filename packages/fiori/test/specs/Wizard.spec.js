@@ -353,4 +353,52 @@ describe("Wizard general interaction", () => {
 		await browser.setWindowSize(1600, 1000);
 		assert.strictEqual(await wizard.getProperty("_breakpoint"), "XL", "Extra Large breakpoint is enabled");
 	});
+
+	it("WizardPageMode: move to next step", async () => {
+		await browser.url(`test/pages/WizardPageMode_test.html`);
+
+		const btnOpenDialog = await browser.$("#button");
+
+		await btnOpenDialog.click();
+
+		const wiz = await browser.$("#wiz2");
+		const step1 = await browser.$("#dialogStep1");
+		const step2 = await browser.$("#dialogStep2");
+		const step1InHeader = await wiz.shadow$(`[data-ui5-index="1"]`);
+		const step2InHeader = await wiz.shadow$(`[data-ui5-index="2"]`);
+
+		const nextStepButton = await browser.$("#nextButton");
+		const previousStepButton = await browser.$("#prevButton");
+
+		// assert - that first step in the content and in the header are selected
+		assert.strictEqual(await step1.getAttribute("selected"), "true",
+			"First step in the content is selected.");
+		assert.strictEqual(await step1InHeader.getAttribute("selected"), "true",
+			"First step in the header is selected.");
+
+		// act - click on the first step in the header
+		await nextStepButton.click();
+
+		// assert - that second step in the content and in the header are not selected
+		assert.strictEqual(await step2.getAttribute("selected"), "true",
+			"Second step in the content is not selected.");
+		assert.strictEqual(await step2InHeader.getAttribute("selected"), "true",
+			"Second step in the header is not selected.");
+		assert.strictEqual(await step1.getAttribute("selected"), null,
+			"First step in the content is not selected.");
+		assert.strictEqual(await step1.isDisplayedInViewport(), false,
+			"First step should not be visible.");
+
+		await previousStepButton.click();
+
+		// assert - that second step in the content and in the header are not selected
+		assert.strictEqual(await step1.getAttribute("selected"), "true",
+			"First step in the content is not selected.");
+		assert.strictEqual(await step1InHeader.getAttribute("selected"), "true",
+			"First step in the header is not selected.");
+		assert.strictEqual(await step2.getAttribute("selected"), null,
+			"Second step in the content is not selected.");
+		assert.strictEqual(await step2.isDisplayedInViewport(), false,
+			"Second step should not be visible.");
+	});
 });

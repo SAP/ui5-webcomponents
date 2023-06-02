@@ -12,7 +12,7 @@ import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import List from "@ui5/webcomponents/dist/List.js";
-import type { SelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
+import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import Popover from "@ui5/webcomponents/dist/Popover.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
@@ -432,9 +432,6 @@ class ShellBar extends UI5Element {
 	@property({ type: Object })
 	_itemsInfo!: Array<IShelBarItemInfo>;
 
-	@property({ type: Object })
-	_header!: object;
-
 	@property({ type: Object, multiple: true })
 	_menuPopoverItems!: Array<HTMLElement>;
 
@@ -537,6 +534,7 @@ class ShellBar extends UI5Element {
 	_debounceInterval?: Timeout | null;
 	_hiddenIcons?: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
+	_headerPress: () => Promise<void>;
 
 	static get FIORI_3_BREAKPOINTS() {
 		return [
@@ -571,15 +569,13 @@ class ShellBar extends UI5Element {
 			this._updateClonedMenuItems();
 		});
 
-		this._header = {
-			press: async () => {
-				this._updateClonedMenuItems();
+		this._headerPress = async () => {
+			this._updateClonedMenuItems();
 
-				if (this.hasMenuItems) {
-					const menuPopover = await this._getMenuPopover();
-					menuPopover!.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
-				}
-			},
+			if (this.hasMenuItems) {
+				const menuPopover = await this._getMenuPopover();
+				menuPopover!.showAt(this.shadowRoot!.querySelector<Button>(".ui5-shellbar-menu-button")!, true);
+			}
 		};
 
 		this._handleResize = () => {
@@ -599,7 +595,7 @@ class ShellBar extends UI5Element {
 		}, delay);
 	}
 
-	_menuItemPress(e: CustomEvent<SelectionChangeEventDetail>) {
+	_menuItemPress(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		this.menuPopover!.close();
 		this.fireEvent<ShellBarMenuItemClickEventDetail>("menu-item-click", {
 			item: e.detail.selectedItems[0],

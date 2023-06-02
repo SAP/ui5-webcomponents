@@ -42,7 +42,7 @@ describe("Configuration script has effect", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getTheme());
 		});
-		assert.strictEqual(res, 'sap_belize_hcb', "Thems is HCB");
+		assert.strictEqual(res, 'sap_belize_hcb', "Theme is HCB");
 	});
 
 	it("Tests that noConflict is applied", async () => {

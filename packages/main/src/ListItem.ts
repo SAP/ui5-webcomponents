@@ -56,7 +56,13 @@ type AccInfo = {
 	ariaLabel: string;
 	ariaLabelRadioButton: string;
 	ariaSelectedText?: string;
-	ariaHaspopup?: HasPopup;
+	ariaHaspopup?: `${HasPopup}`;
+	posinset?: number;
+	setsize?: number;
+	ariaSelected?: boolean;
+	ariaChecked?: boolean;
+	listItemAriaLabel?: string;
+	ariaOwns?: string;
 }
 
 /**
@@ -103,7 +109,7 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: ListItemType;
+	type!: `${ListItemType}`;
 
 	/**
 	 * The navigated state of the list item.
@@ -186,7 +192,7 @@ abstract class ListItem extends ListItemBase {
 	accessibleRole!: string;
 
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	_mode!: ListMode;
+	_mode!: `${ListMode}`;
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
@@ -196,7 +202,7 @@ abstract class ListItem extends ListItemBase {
 	 * @private
 	 */
 	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: HasPopup;
+	ariaHaspopup?: `${HasPopup}`;
 
 	@property({ type: Integer })
 	_level?: number;
@@ -225,6 +231,10 @@ abstract class ListItem extends ListItemBase {
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
+	// used in template, implemented in TreeItemBase
+	accessibleName?: string;
+	// used in ListItem template but implemented in TreeItemBase
+	indeterminate?: boolean;
 
 	static i18nBundle: I18nBundle;
 
@@ -395,7 +405,7 @@ abstract class ListItem extends ListItemBase {
 			ListMode.SingleSelectBegin,
 			ListMode.SingleSelectEnd,
 			ListMode.SingleSelect,
-		].includes(this._mode);
+		].includes(this._mode as ListMode);
 	}
 
 	get modeMultiSelect() {

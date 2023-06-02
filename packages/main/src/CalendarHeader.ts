@@ -57,7 +57,7 @@ class CalendarHeader extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	primaryCalendarType?: CalendarType;
+	primaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Defines component's secondary calendar type.
@@ -69,7 +69,7 @@ class CalendarHeader extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	secondaryCalendarType?: CalendarType;
+	secondaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Stores information for month button for secondary calendar type

@@ -1,5 +1,5 @@
 <div id="{{this._id}}"
-	class="{{this.stripClasses}}"
+	class="{{this.stripClasses.itemClasses}}"
 	tabindex="-1"
 	role="tab"
 	aria-roledescription="{{_roleDescription}}"
@@ -11,7 +11,6 @@
 	aria-disabled="{{this.effectiveDisabled}}"
 	?disabled="{{this.effectiveDisabled}}"
 	aria-labelledby="{{this.ariaLabelledBy}}"
-	data-ui5-stable="{{this.stableDomRef}}"
 	._realTab="{{this}}"
 >
 	{{#if this.icon}}
@@ -62,7 +61,5 @@
 	{{/if}}
 
 {{#*inline additionalText}}
-	{{#if this.additionalText}}
-		<span class="ui5-tab-strip-itemAdditionalText" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
-	{{/if}}
+		<span class="{{this.stripClasses.additionalTextClasses}}" id="{{this._id}}-additionalText">{{this.additionalText}}</span>
 {{/inline}}

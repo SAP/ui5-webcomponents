@@ -37,6 +37,10 @@ Contains the base files for all Web Components, most notably `@ui5/webcomponents
  - `setCustomElementsScopingRules`
  - `getCustomElementsScopingRules`
 
+### `IgnoreCustomElements.js`
+
+ - `ignoreCustomElements`
+
 ###  `CSP.js`
  - `setPackageCSSRoot` 
  - `setUseLinks`

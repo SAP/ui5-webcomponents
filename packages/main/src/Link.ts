@@ -156,7 +156,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: LinkDesign, defaultValue: LinkDesign.Default })
-	design!: LinkDesign;
+	design!: `${LinkDesign}`;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
@@ -172,7 +172,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -241,7 +241,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @since 1.1.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: object;
+	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree" };
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;

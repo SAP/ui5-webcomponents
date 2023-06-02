@@ -1,4 +1,4 @@
-import { html } from "lit-html";
+import { html } from "lit";
 
 export default () => html` <ui5-avatar-group type="Individual">
         <ui5-avatar size="S">

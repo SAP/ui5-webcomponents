@@ -32,7 +32,7 @@ import type { LinkClickEventDetail } from "./Link.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
-import type { SelectionChangeEventDetail } from "./List.js";
+import type { ListSelectionChangeEventDetail } from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
@@ -149,7 +149,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	*/
 	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
-	design!: BreadcrumbsDesign;
+	design!: `${BreadcrumbsDesign}`;
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
@@ -171,7 +171,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	 */
 	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
-	separatorStyle!: BreadcrumbsSeparatorStyle;
+	separatorStyle!: `${BreadcrumbsSeparatorStyle}`;
 
 	/**
 	 * Holds the number of items in the overflow.
@@ -407,7 +407,7 @@ class Breadcrumbs extends UI5Element {
 	_onLinkPress(e: CustomEvent<LinkClickEventDetail>) {
 		const link = e.target as Link,
 			items = this._getItems(),
-			item = items.find(x => `${x._id}-link` === link.id),
+			item = items.find(x => `${x._id}-link` === link.id)!,
 			{
 				altKey,
 				ctrlKey,
@@ -415,7 +415,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e.detail;
 
-		if (!this.fireEvent("item-click", {
+		if (!this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -445,7 +445,7 @@ class Breadcrumbs extends UI5Element {
 		});
 	}
 
-	_onOverflowListItemSelect(e: CustomEvent<SelectionChangeEventDetail>) {
+	_onOverflowListItemSelect(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		const listItem = e.detail.selectedItems[0],
 			items = this._getItems(),
 			item = items.find(x => `${x._id}-li` === listItem.id)!;
@@ -663,3 +663,6 @@ class Breadcrumbs extends UI5Element {
 Breadcrumbs.define();
 
 export default Breadcrumbs;
+export type {
+	BreadcrumbsItemClickEventDetail,
+};

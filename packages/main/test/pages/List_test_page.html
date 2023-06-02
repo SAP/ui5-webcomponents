@@ -53,6 +53,22 @@
 
 	<br><br><br>
 
+	<br>
+	<ui5-list id="listPreventSelectionChangeSingleSelect" mode="SingleSelect" header-text="Prevent ui5-selection-change on SingleSelect">
+		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country2" >Bulgaria</ui5-li>
+		<ui5-li id="country3" selected >China</ui5-li>
+	</ui5-list>
+
+	<br/>
+	<ui5-list id="listPreventSelectionChangeMultiSelect" mode="MultiSelect" header-text="Prevent ui5-selection-change on MultiSelect">
+		<ui5-li id="country1" >Argentina</ui5-li>
+		<ui5-li id="country2" selected >Bulgaria</ui5-li>
+		<ui5-li id="country3" selected >China</ui5-li>
+	</ui5-list>
+
+	<br><br><br>
+
 	<br/>
 	<ui5-list id="listPreventClickEvent" mode="SingleSelect">
 		<ui5-li id="country1">Argentina</ui5-li>
@@ -330,6 +346,14 @@
 		listPreventClickEvent.addEventListener("ui5-item-click", function (event) {
 			event.preventDefault();
 			itemClickPreventedResultField.value = event.detail.item.id;
+		});
+
+		listPreventSelectionChangeSingleSelect.addEventListener("ui5-selection-change", function (event) {
+			event.preventDefault();
+		});
+
+		listPreventSelectionChangeMultiSelect.addEventListener("ui5-selection-change", function (event) {
+			event.preventDefault();
 		});
 
 		var loadMoreCounter = 0;

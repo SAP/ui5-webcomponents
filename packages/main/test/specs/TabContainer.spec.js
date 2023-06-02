@@ -321,4 +321,18 @@ describe("TabContainer general interaction", () => {
 		assert.notOk(await allTabs[3].getProperty("selected"), "The fourth tab should not be selected");
 		assert.notOk(await allTabs[4].getProperty("selected"), "The fifth tab should not be selected");
 	});
+
+	it("tests tabs dom ref", async () => {
+		const productsTabDomRef = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").getDomRef());
+		const productsTabStableDomRef = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").shadowRoot.firstElementChild);
+
+		// Assert
+		assert.ok(productsTabDomRef.isEqual(productsTabStableDomRef) , "Stable dom ref of the tab is the same as its dom ref");
+
+		const productsTabDomRefInStrip = await browser.$(() => document.querySelector("[stable-dom-ref='products-ref']").getTabInStripDomRef());
+		const productsTabDomRefInStripExpected = await browser.$(() => document.getElementById("tabContainer1").getDomRef().querySelector(".ui5-tab-strip-item:first-child"));
+
+		// Assert
+		assert.ok(productsTabDomRefInStrip.isEqual(productsTabDomRefInStripExpected) , "Tab dom ref in strip should be the first child of the tab container's strip");
+	});
 });

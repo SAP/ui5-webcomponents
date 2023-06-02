@@ -18,6 +18,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: var(--ui5_carousel_background_color_translucent);
+}
+
+.ui5-carousel-background-solid {
+    background: var(--ui5_carousel_background_color_solid);
+}
+
+.ui5-carousel-background-transparent {
+    background: transparent;
 }
 
 .ui5-carousel-viewport {
@@ -28,6 +37,9 @@
     flex-direction: column;
     align-items: flex-start;
     overflow: hidden;
+    padding: 1px;
+    flex: 1;
+    min-height: 0;
 }
 
 .ui5-carousel-viewport.ui5-carousel-viewport--single {
@@ -40,7 +52,6 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    background: var(--ui5_carousel_background_color);
     transition: transform 0.5s cubic-bezier(.46, 0, .44, 1);
     will-change: transform;
 }
@@ -70,9 +81,9 @@
 
 .ui5-carousel-navigation-arrows {
     width: 100%;
-    padding:0 0.5rem;
+    padding: 0 0.5rem;
     position: absolute;
-    top: calc(50% - var(--ui5_carousel_button_size));
+    top: calc(50% - var(--ui5_carousel_button_size) / 2);
     left: 0;
     display: flex;
     justify-content: space-between;
@@ -91,8 +102,23 @@
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+    box-sizing: border-box;
+}
+
+.ui5-carousel-navigation-wrapper-bg-solid {
     background: var(--sapPageFooter_Background);
-    border-top: 1px solid var(--sapPageFooter_BorderColor);
+}
+
+.ui5-carousel-navigation-wrapper-bg-translucent {
+    background: var(--ui5_carousel_background_color_translucent);
+}
+
+.ui5-carousel-navigation-wrapper-bg-transparent {
+    background: transparent;
+}
+
+.ui5-carousel-navigation-wrapper-border-solid {
+    border-top: var(--sapElement_BorderWidth) solid var(--sapList_BorderColor);
 }
 
 .ui5-carousel-navigation-wrapper.ui5-carousel-navigation-with-buttons {
@@ -106,7 +132,6 @@
     box-shadow: none;
     cursor: pointer;
     outline-offset: .1rem;
-
     --_ui5_button_focused_border_radius: 50%;
 }
 
@@ -128,6 +153,7 @@
 }
 
 .ui5-carousel-navigation-dot {
+    box-sizing: border-box;
     width: var(--ui5_carousel_inactive_dot_size);
     height: var(--ui5_carousel_inactive_dot_size);
     margin: var(--ui5_carousel_inactive_dot_margin);
@@ -143,4 +169,15 @@
     margin: 0 .25rem;
     background-color: var(--ui5_carousel_active_dot_background);
     border: var(--ui5_carousel_active_dot_border);
+}
+
+.ui5-carousel-navigation-text {
+    font-family: var(--sapFontFamily);
+    font-size: var(--sapFontSize);
+    font-weight: normal;
+    color: var(--sapPageFooter_TextColor);
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
 }

@@ -27,6 +27,14 @@ body:
     validations:
       required: false
 
+  - type: input
+    id: org
+    attributes:
+      label: Organization
+      description: Add your organization name.
+    validations:
+      required: false
+
   - type: textarea
     id: context
     attributes:

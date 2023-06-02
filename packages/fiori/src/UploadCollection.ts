@@ -12,7 +12,7 @@ import List from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
-import "./illustrations/sapIllus-Scene-Tent.js";
+import "./illustrations/Tent.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
@@ -37,11 +37,11 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
-type SelectionChangeEventDetail = {
+type UploadCollectionSelectionChangeEventDetail = {
 	selectedItems: Array<UploadCollectionItem>,
 };
 
-type ItemDeleteEventDetail = {
+type UploadCollectionItemDeleteEventDetail = {
 	item: UploadCollectionItem,
 };
 
@@ -140,7 +140,7 @@ class UploadCollection extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
@@ -303,11 +303,11 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 	}
 
-	_onItemDelete(e: CustomEvent<ItemDeleteEventDetail>) {
+	_onItemDelete(e: CustomEvent<UploadCollectionItemDeleteEventDetail>) {
 		this.fireEvent("item-delete", { item: e.detail.item });
 	}
 
-	_onSelectionChange(e: CustomEvent<SelectionChangeEventDetail>) {
+	_onSelectionChange(e: CustomEvent<UploadCollectionSelectionChangeEventDetail>) {
 		this.fireEvent("selection-change", { selectedItems: e.detail.selectedItems });
 	}
 
@@ -369,3 +369,7 @@ class UploadCollection extends UI5Element {
 UploadCollection.define();
 
 export default UploadCollection;
+export type {
+	UploadCollectionItemDeleteEventDetail,
+	UploadCollectionSelectionChangeEventDetail,
+};

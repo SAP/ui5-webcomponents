@@ -116,16 +116,16 @@ type InputEventDetail = {
 	inputType?: string;
 }
 
-type SuggestionItemSelectEventDetail = {
+type InputSuggestionItemSelectEventDetail = {
 	item: SuggestionItem;
 }
 
-type SuggestionItemPreviewEventDetail = {
+type InputSuggestionItemPreviewEventDetail = {
 	item: SuggestionItem;
 	targetRef: SuggestionListItem;
 }
 
-type SuggestionScrollEventDetail = {
+type InputSuggestionScrollEventDetail = {
 	scrollTop: number;
 	scrollContainer: HTMLElement;
 }
@@ -352,7 +352,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property({ type: InputType, defaultValue: InputType.Text })
-	type!: InputType;
+	type!: `${InputType}`;
 
 	/**
 	 * Defines the value of the component.
@@ -399,7 +399,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Determines the name with which the component will be submitted in an HTML form.
@@ -986,6 +986,12 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this._focusedAfterClear = false;
 	}
 
+	/**
+	 * Called on "focusin" of the native input HTML Element.
+	 * <b>Note:</b> implemented in MultiInput, but used in the Input template.
+	 */
+	innerFocusIn(): void | undefined {}
+
 	_onfocusout(e: FocusEvent) {
 		const toBeFocused = e.relatedTarget as HTMLElement;
 		const focusedOutToSuggestions = this.Suggestions && toBeFocused && toBeFocused.shadowRoot && toBeFocused.shadowRoot.contains(this.Suggestions.responsivePopover as Node);
@@ -1068,7 +1074,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	}
 
 	_scroll(e: CustomEvent<PopupScrollEventDetail>) {
-		this.fireEvent<SuggestionScrollEventDetail>("suggestion-scroll", {
+		this.fireEvent<InputSuggestionScrollEventDetail>("suggestion-scroll", {
 			scrollTop: e.detail.scrollTop,
 			scrollContainer: e.detail.targetRef,
 		});
@@ -1314,7 +1320,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.valueBeforeItemPreview = "";
 		this.suggestionSelectionCanceled = false;
 
-		this.fireEvent<SuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item });
+		this.fireEvent<InputSuggestionItemSelectEventDetail>(INPUT_EVENTS.SUGGESTION_ITEM_SELECT, { item });
 
 		this.isTyping = false;
 		this.openOnMobile = false;
@@ -1470,7 +1476,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	onItemPreviewed(item: SuggestionListItem) {
 		this.previewSuggestion(item);
-		this.fireEvent<SuggestionItemPreviewEventDetail>("suggestion-item-preview", {
+		this.fireEvent<InputSuggestionItemPreviewEventDetail>("suggestion-item-preview", {
 			item: this.getSuggestionByListItem(item),
 			targetRef: item,
 		});
@@ -1778,3 +1784,8 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 Input.define();
 
 export default Input;
+export type {
+	InputSuggestionScrollEventDetail,
+	InputSuggestionItemSelectEventDetail,
+	InputSuggestionItemPreviewEventDetail,
+};

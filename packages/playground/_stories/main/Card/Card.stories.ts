@@ -1,12 +1,12 @@
-import { html } from "lit-html";
+import { html } from "lit";
 import type { Meta, StoryFn } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 import type Card from "@ui5/webcomponents/dist/Card.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import { ifDefined } from "lit-html/directives/if-defined.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 
 const component = "ui5-card";
 
