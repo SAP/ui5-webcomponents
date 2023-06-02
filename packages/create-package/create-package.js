@@ -113,7 +113,7 @@ const generateFilesContent = (packageName, componentName, namespace, typescript,
 	};
 
 	const packageContent = {
-		packageName,
+		name: packageName,
 		version: "0.0.1",
 		ui5: {
 			webComponentsPackage: true,
