@@ -45,7 +45,7 @@ type TimePickerClockProperties = {
 	displayStep: number,
 	valueStep: number,
 	lastItemReplacement: number,
-	innerItems: boolean,
+	showInnerCircle: boolean,
 	prependZero: boolean,
 	min: number,
 	max: number,
@@ -85,7 +85,7 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
  * @extends sap.ui.webc.main.TimePickerInternals
  * @abstract
  * @tagname ui5-time-selection-clocks
- * @since 1.14.0
+ * @since 1.15.0
  * @private
  */
 @customElement({
@@ -448,7 +448,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 				"displayStep": 1,
 				"valueStep": 1,
 				"lastItemReplacement": this._hoursConfiguration.isTwelveHoursFormat ? -1 : 0,
-				"innerItems": !this._hoursConfiguration.isTwelveHoursFormat,
+				"showInnerCircle": !this._hoursConfiguration.isTwelveHoursFormat,
 				"prependZero": this._zeroPaddedHours,
 				"min": this._hoursConfiguration.minHour,
 				"max": this._hoursConfiguration.maxHour,
@@ -481,7 +481,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 				"displayStep": 5,
 				"valueStep": this.minutesStep,
 				"lastItemReplacement": 0,
-				"innerItems": false,
+				"showInnerCircle": false,
 				"prependZero": false,
 				"min": 0,
 				"max": 59,
@@ -515,7 +515,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 				"displayStep": 5,
 				"valueStep": this.secondsStep,
 				"lastItemReplacement": 0,
-				"innerItems": false,
+				"showInnerCircle": false,
 				"prependZero": false,
 				"min": 0,
 				"max": 59,

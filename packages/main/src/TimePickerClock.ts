@@ -85,7 +85,7 @@ const CLOCK_MIDDOT_CLASS = "ui5-tp-clock-mid-dot";
  * @alias sap.ui.webc.main.TimePickerClock
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-time-picker-clock
- * @since 1.14.0
+ * @since 1.15.0
  * @private
  */
 @customElement({
@@ -156,12 +156,12 @@ class TimePickerClock extends UI5Element {
 	 * If set to <code>true</code>, an inner circle is displayed.
 	 * The first item value of the inner circle will be itemMax + 1
 	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.innerItems
+	 * @name sap.ui.webc.main.TimePickerClock.prototype.showInnerCircle
 	 * @type {boolean}
 	 * @defaultvalue false
 	 */
 	@property({ type: Boolean })
-	innerItems!: boolean;
+	showInnerCircle!: boolean;
 
 	/**
 	 * Label of the clock dial - for example, 'Hours', 'Minutes', or 'Seconds'.
@@ -382,7 +382,7 @@ class TimePickerClock extends UI5Element {
 		return <ClassMap>{
 			clock: {
 				"ui5-tp-clock": true,
-				"ui5-tp-clock-inner": this.innerItems,
+				"ui5-tp-clock-inner": this.showInnerCircle,
 				"ui5-tp-clock-active": this.active,
 			},
 		};
@@ -402,7 +402,7 @@ class TimePickerClock extends UI5Element {
 	 */
 	_fixReplacementValue(value: number) {
 		let realValue = value;
-		const maxValue = this.itemMax * (this.innerItems ? 2 : 1);
+		const maxValue = this.itemMax * (this.showInnerCircle ? 2 : 1);
 
 		if (!this.support2400)	{
 			if (realValue === 0) {
@@ -429,8 +429,8 @@ class TimePickerClock extends UI5Element {
 			return;
 		}
 
-		const selectedOuter = (value >= this.itemMin && value <= this.itemMax) || (!this.innerItems && value === this.lastItemReplacement);
-		const selectedInner = ((value >= this.itemMin + this.itemMax && value <= this.itemMax * 2) || value === this.lastItemReplacement) && this.innerItems;
+		const selectedOuter = (value >= this.itemMin && value <= this.itemMax) || (!this.showInnerCircle && value === this.lastItemReplacement);
+		const selectedInner = ((value >= this.itemMin + this.itemMax && value <= this.itemMax * 2) || value === this.lastItemReplacement) && this.showInnerCircle;
 		const stepAngle = 360 / (this.itemMax - this.itemMin + 1);
 		const innerValue = this.lastItemReplacement === -1 || !this.prependZero ? value.toString() : value.toString().padStart(2, "0");
 		let currentAngle: number | undefined = selectedOuter || selectedInner ? value * stepAngle : undefined;
@@ -470,12 +470,12 @@ class TimePickerClock extends UI5Element {
 		for (i = this.itemMin; i <= this.itemMax; i++) {
 			values.push({
 				"item": i.toString(),
-				"innerItem": this.innerItems ? (i + this.itemMax).toString() : undefined,
+				"innerItem": this.showInnerCircle ? (i + this.itemMax).toString() : undefined,
 			});
 		}
 
 		if (this.lastItemReplacement !== -1) {
-			if (this.innerItems && this.prependZero) {
+			if (this.showInnerCircle && this.prependZero) {
 				values[values.length - 1].innerItem = this.lastItemReplacement.toString().padStart(2, "0");
 			} else {
 				values[values.length - 1].item = this.lastItemReplacement.toString();
@@ -520,7 +520,7 @@ class TimePickerClock extends UI5Element {
 	 * @returns {number} max value
 	 */
 	_getMaxValue() {
-		return this.innerItems ? this.itemMax * 2 : this.itemMax;
+		return this.showInnerCircle ? this.itemMax * 2 : this.itemMax;
 	}
 
 	/**
@@ -571,7 +571,7 @@ class TimePickerClock extends UI5Element {
 		if (value === this._getMaxValue() && this.lastItemReplacement !== -1) {
 			value = this.lastItemReplacement;
 		}
-		const valueString = this.innerItems && value === this.lastItemReplacement && this.prependZero ? value.toString().padStart(2, "0") : value.toString();
+		const valueString = this.showInnerCircle && value === this.lastItemReplacement && this.prependZero ? value.toString().padStart(2, "0") : value.toString();
 		return `#${this._id}-${valueString}`;
 	}
 
@@ -635,8 +635,8 @@ class TimePickerClock extends UI5Element {
 		const angle = ((Math.atan(dY / dX) * 180) / Math.PI) + 90 + mod;
 		const angleStep = (360 / this.itemMax) * this.valueStep;
 		const radius = Math.sqrt(dX * dX + dY * dY);
-		const isOuter = radius <= this._dimensionParameters.outerMax && radius > (this.innerItems ? this._dimensionParameters.outerMin : this._dimensionParameters.innerMin);
-		const isInner = this.innerItems && radius <= this._dimensionParameters.innerMax && radius > this._dimensionParameters.innerMin;
+		const isOuter = radius <= this._dimensionParameters.outerMax && radius > (this.showInnerCircle ? this._dimensionParameters.outerMin : this._dimensionParameters.innerMin);
+		const isInner = this.showInnerCircle && radius <= this._dimensionParameters.innerMax && radius > this._dimensionParameters.innerMin;
 		const isOuterHover = radius <= this._dimensionParameters.outerMax && radius > this._dimensionParameters.outerMin;
 		const isInnerHover = isInner;
 		const is24HoursVisible = this._get24HoursVisible();
@@ -700,7 +700,7 @@ class TimePickerClock extends UI5Element {
 	 * @param {boolean} skipAnimation whether to skip the animation
 	 */
 	_changeValueAnimation(newValue: number, skipAnimation = false) {
-		const maxValue = this.itemMax * (this.innerItems ? 2 : 1);
+		const maxValue = this.itemMax * (this.showInnerCircle ? 2 : 1);
 		let firstSelected = this._movSelectedValue;
 		let	lastSelected = newValue;
 		let direction = 1;
@@ -788,7 +788,7 @@ class TimePickerClock extends UI5Element {
 		let selectedValue: number = this.selectedValue;
 		let	replacementValue: number = this.lastItemReplacement;
 		let	minValue: number = this.itemMin;
-		let	maxValue: number = this.itemMax * (this.innerItems ? 2 : 1);
+		let	maxValue: number = this.itemMax * (this.showInnerCircle ? 2 : 1);
 		let	step: number = this.valueStep;
 		let	newValue: number;
 

@@ -24,7 +24,7 @@ import ToggleSpinButtonTemplate from "./generated/templates/ToggleSpinButtonTemp
  * @extends sap.ui.webc.base.UI5Element
  * @abstract
  * @tagname ui5-toggle-spin-button
- * @since 1.14.0
+ * @since 1.15.0
  * @private
  */
 @customElement({

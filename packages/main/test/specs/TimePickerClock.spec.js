@@ -1,9 +1,11 @@
 import { assert } from "chai";
 
 describe("Clock API", () => {
+	before(async () => {
+		await browser.url(`test/pages/TimePickerClock.html`);
+	});
 
 	it("'disabled' property", async () => {
-		await browser.url(`test/pages/TimePickerClock.html`);
 		const hours12 = await browser.$("#myHours12");
 		const hours12Disabled = await browser.$("#myHours12Disabled");
 		const enabled = await hours12.shadow$(".ui5-tp-clock-cover");
@@ -19,7 +21,6 @@ describe("Clock API", () => {
 	});
 
 	it("'active' property", async () => {
-		await browser.url(`test/pages/TimePickerClock.html`);
 		const minutesActive = await browser.$("#myMinutes");
 		const minutesInactive = await browser.$("#myMinutesInactive");
 		const activeCSS = await minutesActive.shadow$(".ui5-tp-clock").getCSSProperty("display");
@@ -29,20 +30,18 @@ describe("Clock API", () => {
 		assert.strictEqual(inactiveCSS.value, "none", "The clock with active=false is invisible");
 	});
 
-	it("'innerItems' property", async () => {
-		await browser.url(`test/pages/TimePickerClock.html`);
+	it("'showInnerCircle' property", async () => {
 		const hours12 = await browser.$("#myHours12");
 		const hours24 = await browser.$("#myHours24");
 		const minutes10 = await browser.$("#myMinutes10");
 		const numbersInHours12 = await hours12.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
 		const numbersInHours24 = await hours24.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
 
-		assert.strictEqual(numbersInHours12.length, 12, "There are 12 numbers rendered in clock with innerItems=false");
-		assert.strictEqual(numbersInHours24.length, 24, "There are 24 numbers rendered in clock with innerItems=true");
+		assert.strictEqual(numbersInHours12.length, 12, "There are 12 numbers rendered in clock with showInnerCircle=false");
+		assert.strictEqual(numbersInHours24.length, 24, "There are 24 numbers rendered in clock with showInnerCircle=true");
 	});
 
 	it("'displayStep' and 'valueStep' properties", async () => {
-		await browser.url(`test/pages/TimePickerClock.html`);
 		const hours12 = await browser.$("#myHours12");
 		const minutes = await browser.$("#myMinutes");
 		const minutes10 = await browser.$("#myMinutes10");
@@ -56,7 +55,6 @@ describe("Clock API", () => {
 	});
 
 	it("'lastItemReplacement' and 'prependZero' properties", async () => {
-		await browser.url(`test/pages/TimePickerClock.html`);
 		const hours24 = await browser.$("#myHours24");
 		const hours00 = await browser.$("#myHours00");
 		const minutes = await browser.$("#myMinutes");
@@ -68,13 +66,14 @@ describe("Clock API", () => {
 		assert.strictEqual(await numbersInHours00[numbersInHours00.length-1].getText(), "00", "The last number element in clock with prependZero=true and lastItemReplacement=0 is '00'");
 		assert.strictEqual(await numbersInMinutes[numbersInMinutes.length-1].getText(), "0", "The last number element in clock with prependZero=false and lastItemReplacement=0 is '0'");
 	});
-
 });
 
 describe("Clock item selection", () => {
+	before(async () => {
+		await browser.url(`test/pages/TimePickerClock.html`);
+	});
 
 	it("select clock item and 'change' event", async () => {
-		await browser.url(`test/pages/TimePickerClock.html`);
 		const hours12 = await browser.$("#myHours12");
 		const hours24 = await browser.$("#myHours24");
 		const hours12Cover = await hours12.shadow$(".ui5-tp-clock-cover");
@@ -106,5 +105,4 @@ describe("Clock item selection", () => {
 		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 23, "The event returned proper value");
 		assert.strictEqual(Number(parseInt(await countInput.getValue())), 4, "The event is fired once");
 	});
-
 });

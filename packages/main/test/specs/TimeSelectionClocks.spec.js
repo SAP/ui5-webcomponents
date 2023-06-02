@@ -1,9 +1,11 @@
 import { assert } from "chai";
 
 describe("Interactions", () => {
+	before(async () => {
+		await browser.url(`test/pages/TimeSelectionClocks.html`);
+	});
 
 	it("switch active clock", async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
 		const clocksComponent = await browser.$("#myClocks");
 		const clocks = await clocksComponent.shadow$$("ui5-time-picker-clock");
 		const buttons = await clocksComponent.shadow$$("ui5-toggle-spin-button");
@@ -60,7 +62,6 @@ describe("Interactions", () => {
 	});
 
 	it("switch AM/PM", async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
 		const clocksAmPmComponent = await browser.$("#myClocksAmPm");
 		const amPmSegmentedButon = await clocksAmPmComponent.shadow$("ui5-segmented-button");
 		const amButtonItem =  await amPmSegmentedButon.$("ui5-segmented-button-item:first-child");
@@ -82,7 +83,6 @@ describe("Interactions", () => {
 	});
 
 	it("arrow keys", async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
 		const clocksComponent = await browser.$("#myClocks");
 		const clocks = await clocksComponent.shadow$$("ui5-time-picker-clock");
 		const buttons = await clocksComponent.shadow$$("ui5-toggle-spin-button");
@@ -122,7 +122,6 @@ describe("Interactions", () => {
 	});
 
 	it("pageup/pagedown", async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
 		const clocksComponent = await browser.$("#myClocks");
 		const clocks = await clocksComponent.shadow$$("ui5-time-picker-clock");
 		const buttons = await clocksComponent.shadow$$("ui5-toggle-spin-button");
@@ -167,7 +166,6 @@ describe("Interactions", () => {
 	});
 
 	it("direct number typing", async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
 		const clocksComponent = await browser.$("#myClocks");
 		const clocks = await clocksComponent.shadow$$("ui5-time-picker-clock");
 		const buttons = await clocksComponent.shadow$$("ui5-toggle-spin-button");
@@ -237,9 +235,11 @@ describe("Interactions", () => {
 });
 
 describe("Accessibility", () => {
+	before(async () => {
+		await browser.url(`test/pages/TimeSelectionClocks.html`);
+	});
 
 	it("accessibility-related attributes", async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
 		const clocksComponent = await browser.$("#myClocks");
 		const clocksWrapper = clocksComponent.shadow$(".ui5-time-picker-tsc-clocks");
 		const buttons = await clocksComponent.shadow$$("ui5-toggle-spin-button");
@@ -279,7 +279,6 @@ describe("Accessibility", () => {
 	});
 
 	it("change of accessibility-related attributes during interactions", async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
 		const clocksComponent = await browser.$("#myClocks");
 		const clocksWrapper = clocksComponent.shadow$(".ui5-time-picker-tsc-clocks");
 		const buttons = await clocksComponent.shadow$$("ui5-toggle-spin-button");
@@ -331,13 +330,14 @@ describe("Accessibility", () => {
 							await buttons[2].getAttribute("value-now") + " " + await buttons[2].getAttribute("accessible-name"),
 							"Seconds button have proper value-text attribute after interaction");
 	});
-
 });
 
 describe("Events", () => {
+	before(async () => {
+		await browser.url(`test/pages/TimeSelectionClocks.html`);
+	});
 
 	it("'change' event", async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
 		const amPmClocksComponent = await browser.$("#myClocksAmPm");
 		const buttons = await amPmClocksComponent.shadow$$("ui5-toggle-spin-button");
 		const countInput = await browser.$("#clocksChangeEvent");
@@ -356,6 +356,5 @@ describe("Events", () => {
 		await browser.keys("a");
 		assert.strictEqual(Number(parseInt(await countInput.getValue())), 4, "The event is fired after AM/PM change");
 	});
-
 });
 
