@@ -14,14 +14,15 @@ module.exports = async function run({
 	});
 	release.url = release.html_url;
 
-	const commits = [];
-	let result;
-	do {
-		result = commitShaRegExp.exec(release.body);
-		if (result && result.groups && result.groups.sha) {
-			commits.push({
-				hash: result.groups.sha
-			});
-		}
-	} while (result);
+	console.log(release);
+	// const commits = [];
+	// let result;
+	// do {
+	// 	result = commitShaRegExp.exec(release.body);
+	// 	if (result && result.groups && result.groups.sha) {
+	// 		commits.push({
+	// 			hash: result.groups.sha
+	// 		});
+	// 	}
+	// } while (result);
 };
