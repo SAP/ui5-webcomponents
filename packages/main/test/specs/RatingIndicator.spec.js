@@ -122,4 +122,18 @@ describe("Rating Indicator general interaction", () => {
 
 		assert.strictEqual(await ratingIndicator.getAttribute("title"), TOOLTIP, "The title attribute is rendered in the inner div as well.");
 	});
+
+	it("Tests ACC attrs - aria-required", async () => {
+		const ratingIndicator = await browser.$("#rating-indicator-required");
+		const REQUIRED = "true";
+
+		assert.strictEqual(await ratingIndicator.shadow$(".ui5-rating-indicator-root").getAttribute("aria-required"), REQUIRED, "aria-required should be true");
+	});
+
+	it("Tests ACC attrs - accessible-name-ref", async () => {
+		const ratingIndicator = await browser.$("#rating-indicator-acc-name-ref");
+		const expectedText = await browser.$("#label-acc-name-ref").getText();
+
+		assert.strictEqual(await ratingIndicator.shadow$(".ui5-rating-indicator-root").getAttribute("aria-label"), expectedText, "aria-label should be the text of the label.");
+	});
 });

@@ -14,6 +14,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -162,6 +163,30 @@ class RatingIndicator extends UI5Element {
 	accessibleName!: string;
 
 	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleNameRef
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.13.0
+	 */
+	 @property({ defaultValue: "" })
+	 accessibleNameRef!: string;
+
+	 /**
+	 * Defines whether the component is required.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.required
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.13.0
+	 */
+	@property({ type: Boolean })
+	required!: boolean;
+
+	/**
 	 * @private
 	 */
 	@property({ type: Object, multiple: true })
@@ -303,6 +328,10 @@ class RatingIndicator extends UI5Element {
 
 	get _ariaDisabled() {
 		return this.disabled || undefined;
+	}
+
+	get _ariaLabel() {
+		return getEffectiveAriaLabelText(this);
 	}
 
 	get ariaReadonly() {
