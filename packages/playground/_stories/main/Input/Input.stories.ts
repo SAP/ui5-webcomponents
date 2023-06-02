@@ -258,7 +258,7 @@ InputWithVHD.parameters = {
 		story: {
 			// Opt-out of inline rendering
 			inline: false,
-			iframeHeight: "200px",
+			iframeHeight: "500px",
 		},
 	}
 };
