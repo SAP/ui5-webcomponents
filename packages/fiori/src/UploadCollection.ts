@@ -9,6 +9,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
+import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
@@ -303,12 +304,12 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 	}
 
-	_onItemDelete(e: CustomEvent<UploadCollectionItemDeleteEventDetail>) {
-		this.fireEvent("item-delete", { item: e.detail.item });
+	_onItemDelete(e: CustomEvent) {
+		this.fireEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as UploadCollectionItem });
 	}
 
-	_onSelectionChange(e: CustomEvent<UploadCollectionSelectionChangeEventDetail>) {
-		this.fireEvent("selection-change", { selectedItems: e.detail.selectedItems });
+	_onSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		this.fireEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
 	}
 
 	get classes() {
