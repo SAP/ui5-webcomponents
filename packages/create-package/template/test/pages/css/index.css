@@ -1,0 +1,36 @@
+body {
+	color: var(--sapTextColor);
+	background-color: var(--sapBackgroundColor);
+	font-size: var(--sapFontSize);
+	font-family: var(--sapFontFamily);
+}
+
+h1 {
+	font-size: var(--sapFontHeader2Size);
+	margin-bottom: 0.5rem;
+}
+
+h2 {
+	font-size: var(--sapFontHeader3Size);
+	margin-bottom: 0.5rem;
+}
+
+.app, .app-first-component, .app-settings, .app-docs  {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.app-first-component {
+	margin-bottom: 3rem;
+}
+
+.app-docs {
+	margin-top: 3rem;
+}
+
+a {
+	margin: 0.25rem;
+	color: var(--sapLinkColor);
+}

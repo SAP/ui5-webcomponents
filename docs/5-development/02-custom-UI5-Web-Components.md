@@ -11,15 +11,12 @@ The main file representing the Web Component is `Demo.js`.
 ```js
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 
 // Template
 import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
 
 // Styles
 import DemoCss from "./generated/themes/Demo.css.js";
-
-import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
 
 
 const metadata = {
@@ -49,16 +46,9 @@ class Demo extends UI5Element {
 		return DemoCss;
 	}
 
-	static async onDefine() {
-		Demo.i18nBundle = await getI18nBundle("my-ui5-web-components");
-	}
 
 	static get dependencies() {
 		return []; // array of components used internally
-	}
-
-	get pleaseWaitText() {
-		return Demo.i18nBundle.getText(PLEASE_WAIT);
 	}
 }
 
@@ -370,11 +360,12 @@ There are 2 steps to do that:
  ```js
  await Demo.i18nBundle = getI18nBundle("my-ui5-web-components");
  ```
+The `getI18nBundle` method is provided by the `i18nBundle.js` module from the `@ui5/webcomponents-base` package.
 
  3. Get texts from the bundle, according to the currently [configured](../2-advanced/01-configuration.md) language
- `return Demo.i18nBundle.getText(PLEASE_WAIT);`
+ `return Demo.i18nBundle.getText(COUNTER);`
 
-The `getI18nBundle` method is provided by the `i18nBundle.js` module from the `@ui5/webcomponents-base` package.
+In the example, we want to get the i18n for the "Counter" word and create a simple getter `get counterText()` to use it in the template later-on.
 
 So the final source code is:
 
@@ -389,7 +380,7 @@ import DemoTemplate from "./generated/templates/DemoTemplate.lit.js";
 // Styles
 import DemoCss from "./generated/themes/Demo.css.js";
 
-import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
+import { COUNTER } from "./generated/i18n/i18n-defaults.js";
 
 
 const metadata = {
@@ -427,8 +418,8 @@ class Demo extends UI5Element {
 		Demo.i18nBundle = await getI18nBundle("my-ui5-web-components");
 	}
 
-	get pleaseWaitText() {
-		return Demo.i18nBundle.getText(PLEASE_WAIT);
+	get counterText() {
+		return Demo.i18nBundle.getText(COUNTER);
 	}
 }
 
@@ -441,6 +432,57 @@ Please, note that here we use the `onDefine` method of `UI5Element` in order to 
 before the Web Component has been defined. The used namespace for resource registration (in this example `my-ui5-web-components`)
 is the `name` property of your `package.json` file.
 
+
+## Adding a property
+
+To add a property, you need to change the metadata object - a `counter` property with e default value `0` has been added:
+
+```js
+const metadata = {
+	tag: "ui5-demo",
+	properties: {
+		counter: {
+			defaultValue: 0,
+		}
+	},
+};
+
+class Demo extends UI5Element {
+	static get metadata() {
+		return metadata;
+	}
+
+	static get render() {
+		return litRender;
+	}
+
+	static get template() {
+		return DemoTemplate;
+	}
+
+	static get styles() {
+		return DemoCss;
+	}
+
+	static get dependencies() {
+		return []; // array of components used internally
+	}
+
+	static async onDefine() {
+		Demo.i18nBundle = await getI18nBundle("my-ui5-web-components");
+	}
+
+	get counterText() {
+		return Demo.i18nBundle.getText(COUNTER);
+	}
+}
+
+Demo.define();
+
+export default Demo;
+```
+
+
 ## The template file
 <a name="hbs"></a>
 
@@ -448,11 +490,12 @@ The template of the Web Component is in the `Demo.hbs` file.
 In this particular example it looks like this:
 
 ```handlebars
-<div>This is: ui5-demo. {{pleaseWaitText}}</div>
+<div>{{counterText}} :: {{counter}}</div>
 ```
 
 The context in the template is the **Web Component instance**, therefore you can directly use any properties/getters on the object.
-Here, we see the `pleaseWaitText` getter, defined in the previous step.
+Here, we see the `counterText` getter that will return the "Counter" word, translated into the currently configured language
+ and the `counter` property, defined in the previous step (f.e. in English we will get "Counter :: 0").
 
 As explained above, the `.hbs` file is transformed by the build script to a `.js` file in the `lit-html` syntax. More specifically, this file
 is provided to the Web Component class.

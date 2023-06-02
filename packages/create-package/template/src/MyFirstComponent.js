@@ -8,14 +8,23 @@ import INIT_PACKAGE_VAR_CLASS_NAMETemplate from "./generated/templates/INIT_PACK
 // Styles
 import INIT_PACKAGE_VAR_CLASS_NAMECss from "./generated/themes/INIT_PACKAGE_VAR_CLASS_NAME.css.js";
 
-import { PLEASE_WAIT } from "./generated/i18n/i18n-defaults.js";
+import { COUNTER } from "./generated/i18n/i18n-defaults.js";
 
 /**
  * @public
  */
 const metadata = {
 	tag: "INIT_PACKAGE_VAR_TAG",
-	properties: {
+	properties: /** @lends INIT_PACKAGE_VAR_NAMESPACE.INIT_PACKAGE_VAR_CLASS_NAME.prototype */ {
+		/**
+		 * Defines the counter of the component.
+		 * @type { number }
+		 * @defaultvalue 0
+		 * @public
+		 */
+		counter: {
+			defaultValue: 0,
+		},
 	},
 	slots: {
 	},
@@ -57,8 +66,12 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 		INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle = await getI18nBundle("INIT_PACKAGE_VAR_NAME");
 	}
 
-	get pleaseWaitText() {
-		return INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle.getText(PLEASE_WAIT);
+	onClick() {
+		this.counter++;
+	}
+
+	get counterText() {
+		return INIT_PACKAGE_VAR_CLASS_NAME.i18nBundle.getText(COUNTER);
 	}
 }
 
