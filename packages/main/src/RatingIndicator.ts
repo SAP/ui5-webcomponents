@@ -169,7 +169,7 @@ class RatingIndicator extends UI5Element {
 	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleNameRef
 	 * @defaultvalue ""
 	 * @public
-	 * @since 1.13.0
+	 * @since 1.15.0
 	 */
 	 @property({ defaultValue: "" })
 	 accessibleNameRef!: string;
@@ -181,7 +181,7 @@ class RatingIndicator extends UI5Element {
 	 * @name sap.ui.webc.main.RatingIndicator.prototype.required
 	 * @defaultvalue false
 	 * @public
-	 * @since 1.13.0
+	 * @since 1.15.0
 	 */
 	@property({ type: Boolean })
 	required!: boolean;
@@ -332,6 +332,10 @@ class RatingIndicator extends UI5Element {
 
 	get _ariaLabel() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get _ariaDescription() {
+		return this.required ? "required" : "";
 	}
 
 	get ariaReadonly() {
