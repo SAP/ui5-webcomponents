@@ -123,11 +123,11 @@ describe("Rating Indicator general interaction", () => {
 		assert.strictEqual(await ratingIndicator.getAttribute("title"), TOOLTIP, "The title attribute is rendered in the inner div as well.");
 	});
 
-	it("Tests ACC attrs - aria-required", async () => {
+	it("Tests ACC attrs - required property add aria-description", async () => {
 		const ratingIndicator = await browser.$("#rating-indicator-required");
-		const REQUIRED = "true";
+		const REQUIRED = "required";
 
-		assert.strictEqual(await ratingIndicator.shadow$(".ui5-rating-indicator-root").getAttribute("aria-required"), REQUIRED, "aria-required should be true");
+		assert.strictEqual(await ratingIndicator.shadow$(".ui5-rating-indicator-root").getAttribute("aria-description"), REQUIRED, "aria-description should be true");
 	});
 
 	it("Tests ACC attrs - accessible-name-ref", async () => {
