@@ -435,9 +435,11 @@ is the `name` property of your `package.json` file.
 
 ## Adding a property
 
-To add a property, you need to change the metadata object. In this example, new `count` property has been added with `Integer` validator and default value `0`:
+To add a property, you need to change the metadata object. In this example, new `count` property has been added with default value `0`. Also, we use a custom type `Integer` as validator for the property.
 
 ```js
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
+
 const metadata = {
 	tag: "ui5-demo",
 	properties: {
