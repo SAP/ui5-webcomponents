@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 
 // Template
 import INIT_PACKAGE_VAR_CLASS_NAMETemplate from "./generated/templates/INIT_PACKAGE_VAR_CLASS_NAMETemplate.lit.js";
@@ -45,7 +46,7 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	 * @public
 	 * @type { number }
 	 */
-	@property({ defaultValue: 0 })
+	@property({ validator: Integer, defaultValue: 0 })
 	count!: number;
 
 	onClick() {

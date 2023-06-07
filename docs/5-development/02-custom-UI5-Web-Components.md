@@ -435,13 +435,14 @@ is the `name` property of your `package.json` file.
 
 ## Adding a property
 
-To add a property, you need to change the metadata object - a `count` property with e default value `0` has been added:
+To add a property, you need to change the metadata object. In this example, new `count` property has been added with `Integer` validator and default value `0`:
 
 ```js
 const metadata = {
 	tag: "ui5-demo",
 	properties: {
 		counter: {
+			validator: Integer,
 			defaultValue: 0,
 		}
 	},
