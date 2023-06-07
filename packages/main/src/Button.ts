@@ -176,7 +176,7 @@ class Button extends UI5Element implements IFormElement {
 	 * @name sap.ui.webc.main.Button.prototype.submits
 	 * @defaultvalue false
 	 * @public
-	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "None".
+	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
 	 */
 	@property({ type: Boolean })
 	submits!: boolean;
@@ -268,8 +268,9 @@ class Button extends UI5Element implements IFormElement {
 	 *
 	 * @type {sap.ui.webc.main.types.ButtonType}
 	 * @name sap.ui.webc.main.Button.prototype.type
-	 * @defaultvalue "Default"
+	 * @defaultvalue "Button"
 	 * @public
+	 * @since 1.15.0
 	 */
 	@property({ type: ButtonType, defaultValue: ButtonType.Button })
 	type!: `${ButtonType}`;
@@ -389,7 +390,7 @@ class Button extends UI5Element implements IFormElement {
 
 	async onBeforeRendering() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (this.type !== ButtonType.Button) {
+		if (this.type !== ButtonType.Button && !formSupport) {
 			console.warn(`In order for the "type" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
 		if (this.submits && !formSupport) {
