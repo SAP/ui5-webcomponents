@@ -255,11 +255,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * Modifies timestamp by a given amount of months and,
 	 * if necessary, loads the prev/next page.
 	 * @param { number } amount
+	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number) {
+	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
 		// Modify the current timestamp
-		this._safelyModifyTimestampBy(amount, "month");
+		this._safelyModifyTimestampBy(amount, "month", preserveDate);
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
@@ -312,7 +313,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampBy(-PAGE_SIZE);
+		this._modifyTimestampBy(-PAGE_SIZE, true);
 	}
 
 	/**
@@ -321,7 +322,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(PAGE_SIZE);
+		this._modifyTimestampBy(PAGE_SIZE, true);
 	}
 
 	_isOutOfSelectableRange(date: CalendarDate, minDate: CalendarDate, maxDate: CalendarDate): boolean {
