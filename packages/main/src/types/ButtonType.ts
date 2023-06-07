@@ -7,13 +7,13 @@
  * @author SAP SE
  * @alias sap.ui.webc.main.types.ButtonFormRole
  */
-enum ButtonFormRole {
+enum ButtonType {
 	/**
 	 * The button does not do anything special when inside a form
 	 * @public
-	 * @type {None}
+	 * @type {Button}
 	 */
-	None = "None",
+	Button = "Button",
 
 	/**
 	 * The button acts as a submit button (submits a form)
@@ -30,4 +30,4 @@ enum ButtonFormRole {
 	Reset = "Reset",
 }
 
-export default ButtonFormRole;
+export default ButtonType;
