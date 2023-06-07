@@ -83,7 +83,7 @@
 </section>
 
 <section>
-	<h3>Multi Input and token creation onChange</h3>
+	<h3>Multi Input and token creation onChange and onPaste</h3>
 	<div class="snippet">
 		<ui5-multi-input show-suggestions id="token-unique" style="width: 50%">
 			<div slot="valueStateMessage">Token is already in the list</div>
@@ -111,6 +111,24 @@
 
 				return token;
 			};
+
+			document.getElementById("token-unique").addEventListener("paste", function (event) {
+				event.preventDefault();
+
+				let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;
+
+				if (!pastedText) {
+					return;
+				}
+
+				let separatedTexts = pastedText.split(/\r\n|\r|\n|\t/g);
+
+				separatedTexts.forEach((tokenText) => {
+					if (tokenText) {
+						event.target.appendChild(createTokenFromText(tokenText));
+					}
+				})
+			});
 
 			document.getElementById("token-unique").addEventListener("token-delete", function (event) {
 				const token = event.detail?.token;
