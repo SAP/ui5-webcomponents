@@ -10,4 +10,6 @@ wdio.config.suites = {
 	],
 };
 
+wdio.config.services.push("devtools");
+
 module.exports = wdio;
