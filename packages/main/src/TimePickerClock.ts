@@ -372,10 +372,14 @@ class TimePickerClock extends UI5Element {
 	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
 	_longTouchId!: number;
 
+	_fnOnMouseOutUp: () => void;
+
 	constructor() {
 		super();
-		// attach global event
-		document.addEventListener("mouseup", this._onMouseOutUp.bind(this), false);
+
+		this._fnOnMouseOutUp = () => {
+			this._mouseOrTouchDown = false;
+		};
 	}
 
 	get classes(): ClassMap {
@@ -386,6 +390,14 @@ class TimePickerClock extends UI5Element {
 				"ui5-tp-clock-active": this.active,
 			},
 		};
+	}
+
+	onEnterDOM() {
+		document.addEventListener("mouseup", this._fnOnMouseOutUp, false);
+	}
+
+	onExitDOM() {
+		document.removeEventListener("mouseup", this._fnOnMouseOutUp, false);
 	}
 
 	onBeforeRendering() {
@@ -975,13 +987,6 @@ class TimePickerClock extends UI5Element {
 		hoveredNumber && hoveredNumber.classList.remove(CLOCK_NUMBER_HOVER_CLASS);
 		this._hoveredValue = -1;
 		this._prevHoveredValue = -1;
-	}
-
-	/**
-	 * MouseUp event handler on document level.
-	 */
-	_onMouseOutUp() {
-		this._mouseOrTouchDown = false;
 	}
 }
 

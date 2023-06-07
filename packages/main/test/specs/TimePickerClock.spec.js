@@ -69,10 +69,6 @@ describe("Clock API", () => {
 });
 
 describe("Clock item selection", () => {
-	before(async () => {
-		await browser.url(`test/pages/TimePickerClock.html`);
-	});
-
 	it("select clock item and 'change' event", async () => {
 		const hours12 = await browser.$("#myHours12");
 		const hours24 = await browser.$("#myHours24");
@@ -85,24 +81,25 @@ describe("Clock item selection", () => {
 		await browser.pause(500);
 		assert.strictEqual(await hours12.getProperty("selectedValue"), 1, "The selected value is proper");
 		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 1, "The event returned proper value");
-		assert.strictEqual(Number(parseInt(await countInput.getValue())), 1, "The event is fired once");
+		assert.strictEqual(Number(parseInt(await countInput.getValue())), 2, "The event is fired once");
 
 		await hours12Cover.click({ x: 0, y: -110, skipRelease: true });
 		await browser.pause(500);
 		assert.strictEqual(await hours12.getProperty("selectedValue"), 12, "The selected value is proper");
 		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 12, "The event returned proper value");
-		assert.strictEqual(Number(parseInt(await countInput.getValue())), 2, "The event is fired once");
+		assert.strictEqual(Number(parseInt(await countInput.getValue())), 3, "The event is fired once");
 
 		await hours24Cover.click({ x: -55, y: -105, skipRelease: true });
 		await browser.pause(500);
 		assert.strictEqual(await hours24.getProperty("selectedValue"), 11, "The selected value is proper");
 		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 11, "The event returned proper value");
-		assert.strictEqual(Number(parseInt(await countInput.getValue())), 3, "The event is fired once");
+		assert.strictEqual(Number(parseInt(await countInput.getValue())), 4, "The event is fired once");
 
 		await hours24Cover.click({ x: -40, y: -60, skipRelease: true });
 		await browser.pause(500);
 		assert.strictEqual(await hours24.getProperty("selectedValue"), 23, "The selected value is proper");
 		assert.strictEqual(Number(parseInt(await valueInput.getValue())), 23, "The event returned proper value");
-		assert.strictEqual(Number(parseInt(await countInput.getValue())), 4, "The event is fired once");
+		assert.strictEqual(Number(parseInt(await countInput.getValue())), 5, "The event is fired once");
+
 	});
 });

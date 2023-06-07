@@ -235,10 +235,6 @@ describe("Interactions", () => {
 });
 
 describe("Accessibility", () => {
-	before(async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
-	});
-
 	it("accessibility-related attributes", async () => {
 		const clocksComponent = await browser.$("#myClocks");
 		const clocksWrapper = clocksComponent.shadow$(".ui5-time-picker-tsc-clocks");
@@ -333,10 +329,6 @@ describe("Accessibility", () => {
 });
 
 describe("Events", () => {
-	before(async () => {
-		await browser.url(`test/pages/TimeSelectionClocks.html`);
-	});
-
 	it("'change' event", async () => {
 		const amPmClocksComponent = await browser.$("#myClocksAmPm");
 		const buttons = await amPmClocksComponent.shadow$$("ui5-toggle-spin-button");
@@ -345,16 +337,16 @@ describe("Events", () => {
 		await buttons[0].click();
 
 		await browser.keys("PageDown");
-		assert.strictEqual(Number(parseInt(await countInput.getValue())), 1, "The event is fired after hours change");
+		assert.strictEqual(Number(parseInt(await countInput.getValue())), 3, "The event is fired after hours change");
 
 		await browser.keys(["Shift", "PageDown"]);
-		assert.strictEqual(Number(parseInt(await countInput.getValue())), 2, "The event is fired after minutes change");
+		assert.strictEqual(Number(parseInt(await countInput.getValue())), 4, "The event is fired after minutes change");
 
 		await browser.keys(["Control", "Shift", "PageDown"]);
-		assert.strictEqual(Number(parseInt(await countInput.getValue())), 3, "The event is fired after seconds change");
+		assert.strictEqual(Number(parseInt(await countInput.getValue())), 5, "The event is fired after seconds change");
 
 		await browser.keys("a");
-		assert.strictEqual(Number(parseInt(await countInput.getValue())), 4, "The event is fired after AM/PM change");
+		assert.strictEqual(Number(parseInt(await countInput.getValue())), 6, "The event is fired after AM/PM change");
 	});
 });
 
