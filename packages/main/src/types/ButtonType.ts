@@ -5,7 +5,7 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webc.main.types.ButtonFormRole
+ * @alias sap.ui.webc.main.types.ButtonType
  */
 enum ButtonType {
 	/**
