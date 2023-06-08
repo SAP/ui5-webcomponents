@@ -47,7 +47,6 @@ describe("Calendar general interaction", () => {
 		await toggleButton.click();
 		await toggleButton.click();
 
-		await browser.keys("Tab");
 		assert.ok(await currentDayItem.isFocusedDeep(), "Current calendar day item is focused");
 
 		await browser.keys("Tab");

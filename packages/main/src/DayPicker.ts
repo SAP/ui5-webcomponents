@@ -374,6 +374,12 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		if (this._autoFocus && !this._hidden) {
 			this.focus();
 		}
+
+		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
+
+		if (focusedDay && document.activeElement !== focusedDay) {
+			focusedDay.focus();
+		}
 	}
 
 	_onfocusin() {
@@ -567,13 +573,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isSpace(e) || isSpaceShift(e)) {
 			e.preventDefault();
 		} else if (isLeft(e)) {
-			this._modifyTimestampBy(-1, "day");
+			this._modifyTimestampBy(-1, "day", false);
 		} else if (isRight(e)) {
-			this._modifyTimestampBy(1, "day");
+			this._modifyTimestampBy(1, "day", false);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-7, "day");
+			this._modifyTimestampBy(-7, "day", false);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(7, "day");
+			this._modifyTimestampBy(7, "day", false);
 		} else if (isPageUp(e)) {
 			this._modifyTimestampBy(-1, "month");
 		} else if (isPageDown(e)) {
@@ -664,31 +670,30 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> same as for "PageUp"
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampBy(-1, "month");
+		this._modifyTimestampBy(-1, "month", false);
 	}
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> same as for "PageDown"
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(1, "month");
+		this._modifyTimestampBy(1, "month", false);
 	}
 
 	/**
 	 * Modifies the timestamp by a certain amount of days/months/years.
 	 * @param { number } amount
 	 * @param { string } unit
+	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, unit: string) {
+	_modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
 		// Modify the current timestamp
-		this._safelyModifyTimestampBy(amount, unit);
+		this._safelyModifyTimestampBy(amount, unit, preserveDate);
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp

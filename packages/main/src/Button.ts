@@ -24,6 +24,7 @@ import {
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import ButtonDesign from "./types/ButtonDesign.js";
+import ButtonType from "./types/ButtonType.js";
 import ButtonTemplate from "./generated/templates/ButtonTemplate.lit.js";
 import Icon from "./Icon.js";
 
@@ -175,6 +176,7 @@ class Button extends UI5Element implements IFormElement {
 	 * @name sap.ui.webc.main.Button.prototype.submits
 	 * @defaultvalue false
 	 * @public
+	 * @deprecated Set the "type" property to "Submit" to achieve the same result. The "submits" property is ignored if "type" is set to any value other than "Button".
 	 */
 	@property({ type: Boolean })
 	submits!: boolean;
@@ -247,6 +249,31 @@ class Button extends UI5Element implements IFormElement {
 	 */
 	@property({ type: Object })
 	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree", controls: string};
+
+	/**
+	 * Defines whether the button has special form-related functionality.
+	 *
+	 * <br><br>
+	 * <b>The available values are:</b>
+	 *
+	 * <ul>
+	 * <li><code>Button</code></li>
+	 * <li><code>Submit</code></li>
+	 * <li><code>Reset</code></li>
+	 * </ul>
+	 *
+	 * <br><br>
+	 * <b>Note:</b> For the <code>type</code> property to have effect, you must add the following import to your project:
+	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 *
+	 * @type {sap.ui.webc.main.types.ButtonType}
+	 * @name sap.ui.webc.main.Button.prototype.type
+	 * @defaultvalue "Button"
+	 * @public
+	 * @since 1.15.0
+	 */
+	@property({ type: ButtonType, defaultValue: ButtonType.Button })
+	type!: `${ButtonType}`;
 
 	/**
 	 * Used to switch the active state (pressed or not) of the component.
@@ -363,6 +390,9 @@ class Button extends UI5Element implements IFormElement {
 
 	async onBeforeRendering() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
+		if (this.type !== ButtonType.Button && !formSupport) {
+			console.warn(`In order for the "type" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+		}
 		if (this.submits && !formSupport) {
 			console.warn(`In order for the "submits" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
@@ -379,8 +409,11 @@ class Button extends UI5Element implements IFormElement {
 		}
 		markEvent(e, "button");
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
-		if (formSupport && this.submits) {
+		if (formSupport && this._isSubmit) {
 			formSupport.triggerFormSubmit(this);
+		}
+		if (formSupport && this._isReset) {
+			formSupport.triggerFormReset(this);
 		}
 
 		if (isSafari()) {
@@ -489,6 +522,14 @@ class Button extends UI5Element implements IFormElement {
 
 	get ariaLabelText() {
 		return getEffectiveAriaLabelText(this);
+	}
+
+	get _isSubmit() {
+		return this.type === ButtonType.Submit || this.submits;
+	}
+
+	get _isReset() {
+		return this.type === ButtonType.Reset;
 	}
 
 	static async onDefine() {
