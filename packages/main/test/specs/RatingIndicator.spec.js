@@ -124,10 +124,15 @@ describe("Rating Indicator general interaction", () => {
 	});
 
 	it("Tests ACC attrs - required property add aria-description", async () => {
-		const ratingIndicator = await browser.$("#rating-indicator-required");
-		const REQUIRED = "required";
+		const ratingIndicatorRoot = await browser.$("#rating-indicator-required").shadow$(".ui5-rating-indicator-root");
+		let resourceBundleText = null;
 
-		assert.strictEqual(await ratingIndicator.shadow$(".ui5-rating-indicator-root").getAttribute("aria-description"), REQUIRED, "aria-description should be true");
+		resourceBundleText = await browser.executeAsync(done => {
+			const ratingIndicator = document.getElementById("rating-indicator-required");
+			done(ratingIndicator.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.RATING_INDICATOR_ARIA_DESCRIPTION));
+		});
+
+		assert.strictEqual(await ratingIndicatorRoot.getAttribute("aria-description"), resourceBundleText, "aria-description is correctly set");
 	});
 
 	it("Tests ACC attrs - accessible-name-ref", async () => {

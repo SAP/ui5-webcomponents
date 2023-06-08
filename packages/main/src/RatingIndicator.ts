@@ -22,6 +22,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
 	RATING_INDICATOR_TOOLTIP_TEXT,
+	RATING_INDICATOR_ARIA_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -335,7 +336,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get _ariaDescription() {
-		return this.required ? "required" : "";
+		return this.required ? RatingIndicator.i18nBundle.getText(RATING_INDICATOR_ARIA_DESCRIPTION) : "";
 	}
 
 	get ariaReadonly() {
