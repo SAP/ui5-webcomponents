@@ -63,17 +63,17 @@ ReadonlyRatingIndicator.args = {
 	readonly: true
 };
 
-export const RequiredRatingAccessibleNameRef: StoryFn = Template.bind({});
-RequiredRatingAccessibleNameRef.args = {
+export const RequiredRatingIndicatorWithLabel: StoryFn = Template.bind({});
+RequiredRatingIndicatorWithLabel.args = {
 	value: 5,
 	max: 7,
 	accessibleNameRef: "label-acc-name-ref",
 	required: true
 };
-RequiredRatingAccessibleNameRef.decorators = [
+RequiredRatingIndicatorWithLabel.decorators = [
 	(story) => {
 	return html`
-	<ui5-label id="label-acc-name-ref" for="rating-indicator-${index+1}">Some ACC label</ui5-label>
+	<ui5-label id="label-acc-name-ref" required="true" for="rating-indicator-${index+1}">Some ACC label</ui5-label>
 	${story()}`;
 	}
 ]
