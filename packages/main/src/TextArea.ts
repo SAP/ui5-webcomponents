@@ -508,13 +508,11 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	async openPopover() {
-		this.popover = await this._getPopover();
-		this.popover && await this.popover.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
+		(await this._getPopover())?.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
 	}
 
 	async closePopover() {
-		this.popover = await this._getPopover();
-		this.popover && this.popover.close();
+		(await this._getPopover())?.close();
 	}
 
 	async _getPopover() {
