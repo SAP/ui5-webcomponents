@@ -89,7 +89,7 @@ enum KeyCodes {
 	F12 = 123,
 	NUM_LOCK = 144,
 	SCROLL_LOCK = 145,
-	OPEN_BRACKET = 186,
+	COLON = 186,
 	PLUS = 187,
 	COMMA = 188,
 	SLASH = 189,
@@ -229,11 +229,19 @@ const isCtrlA = (event: KeyboardEvent): boolean => ((event.key === "A" || event.
 
 const isCtrlV = (event: KeyboardEvent): boolean => ((event.key === "V" || event.key === "v") || event.which === KeyCodes.V) && checkModifierKeys(event, true, false, false);
 
+const isKeyA = (event: KeyboardEvent): boolean => ((event.key === "A" || event.key === "a") || event.which === KeyCodes.A) && checkModifierKeys(event, false, false, false);
+
+const isKeyP = (event: KeyboardEvent): boolean => ((event.key === "P" || event.key === "p") || event.which === KeyCodes.P) && checkModifierKeys(event, false, false, false);
+
 const hasModifierKeys = (event: KeyboardEvent): boolean => event.shiftKey || event.altKey || getCtrlKey(event);
 
 const getCtrlKey = (event: KeyboardEvent): boolean => !!(event.metaKey || event.ctrlKey); // double negation doesn't have effect on boolean but ensures null and undefined are equivalent to false.
 
 const checkModifierKeys = (event: KeyboardEvent, bCtrlKey: boolean, bAltKey: boolean, bShiftKey: boolean):boolean => event.shiftKey === bShiftKey && event.altKey === bAltKey && getCtrlKey(event) === bCtrlKey;
+
+const isNumber = (event: KeyboardEvent): boolean => ((event.key ? "0123456789".indexOf(event.key) !== -1 : event.keyCode >= KeyCodes.DIGIT_0 && event.keyCode <= KeyCodes.DIGIT_9) && checkModifierKeys(event, false, false, false));
+
+const isColon = (event: KeyboardEvent): boolean => ((event.key ? event.key === ":" : event.keyCode === KeyCodes.COLON) && checkModifierKeys(event, false, false, true));
 
 export {
 	isEnter,
@@ -289,7 +297,11 @@ export {
 	isShift,
 	isCtrlA,
 	isCtrlV,
+	isKeyA,
+	isKeyP,
 	isDeleteShift,
 	isInsertShift,
 	isInsertCtrl,
+	isNumber,
+	isColon,
 };

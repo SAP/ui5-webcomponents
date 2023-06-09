@@ -10,44 +10,48 @@
 
 	<script data-ui5-config type="application/json">
 		{
+			"theme": "sap_horizon_dark",
 			"language": "EN"
 		}
 	</script>
-
+	
+	<link rel="stylesheet" type="text/css" href="./css/index.css">
 	<script src="../../bundle.esm.js" type="module"></script>
-
-    <style>
-        code { color: blue; font-size: small; }
-    </style>
-
 </head>
 
 <body>
-	<ul>
-	    <li><a href="?sap-ui-theme=sap_fiori_3">Fiori 3</a></li>
-		<li><a href="?sap-ui-theme=sap_fiori_3_dark">Fiori 3 Dark</a></li>
-		<li><a href="?sap-ui-theme=sap_fiori_3_hcb">Fiori 3 High Contrast Black</a></li>
-		<li><a href="?sap-ui-theme=sap_fiori_3_hcw">Fiori 3 High Contrast White</a></li>
-		<li><a href="?sap-ui-theme=sap_horizon">Horizon</a></li>
-		<li><a href="?sap-ui-theme=sap_horizon_dark">Horizon Dark</a></li>
-		<li><a href="?sap-ui-theme=sap_horizon_hcb">Horizon High Contrast Black</a></li>
-		<li><a href="?sap-ui-theme=sap_horizon_hcw">Horizon High Contrast White</a></li>
-	</ul>
-    <br>
-    <span>or in the browser console, for example:</span>
-    <code>window['sap-ui-webcomponents-bundle'].configuration.setTheme("sap_horizon_hcb")</code>
+	<div class="app">
+		<a href="https://sap.github.io/ui5-webcomponents/playground/getting-started" target="_blank"><img src="./img/logo.png" alt="logo"/></a>
 
-    <br><br>
+		<div class="app-first-component">
+			<h1>Hooray! It's Your First Web Component!</h1>
+			<div> <pre>&lt;INIT_PACKAGE_VAR_TAG>&lt;/INIT_PACKAGE_VAR_TAG> </pre></div>
+			<INIT_PACKAGE_VAR_TAG id="myFirstComponent"></INIT_PACKAGE_VAR_TAG>
+		</div>
+	
+		<div class="app-settings">
 
-    <a href="?sap-ui-language=en">English</a> |
-    <a href="?sap-ui-language=de">German</a> |
-    <a href="?sap-ui-language=es">Spanish</a> |
-    <a href="?sap-ui-language=fr">French</a>
+			<h2>Switch themes</h2>
+			<div style="display: flex; flex-direction: row;">
+				<a class="link" href="?sap-ui-theme=sap_horizon">Horizon</a>
+				<a class="link" href="?sap-ui-theme=sap_horizon_dark">Horizon Dark</a>
+				<a class="link" href="?sap-ui-theme=sap_horizon_hcb">Horizon High Contrast Black</a>
+				<a class="link" href="?sap-ui-theme=sap_horizon_hcw">Horizon High Contrast White</a>
+			</div>
+		
+			<h2>Switch language</h2>
+			<div>
+				<a class="link" href="?sap-ui-language=en">English</a>
+				<a class="link" href="?sap-ui-language=de">German</a>
+				<a class="link" href="?sap-ui-language=es">Spanish</a>
+				<a class="link" href="?sap-ui-language=fr">French</a>
+			</div>
+		</div>
 
-    <br><br>
-
-    <h1>Test your web components here</h1>
-    <INIT_PACKAGE_VAR_TAG id="myFirstComponent"></INIT_PACKAGE_VAR_TAG>
+		<div class="app-docs">
+			<h2>Documentation</h2>
+			<a class="link" href="https://sap.github.io/ui5-webcomponents/playground/development">Custom Component Development</a>
+		</div>
+	</div>
 </body>
-
 </html>
