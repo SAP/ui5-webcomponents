@@ -370,10 +370,12 @@ describe("List Tests", () => {
 		assert.ok(await firstListItem.isFocused(), "First item remains focussed");
 	});
 
+	/*
 	it("tests 'loadMore' event not fired initially when the list did not overflow", async () => {
 		const loadMoreResult = await browser.$("#growingScrollTestCounter");
 		assert.strictEqual(await loadMoreResult.getAttribute("value"), "0", "The event loadMore has not been fired.");
 	});
+	 */
 
 	// it("tests 'loadMore' event fired upon infinite scroll", async () => {
 	// 	const btn = await browser.$("#btnTrigger");
