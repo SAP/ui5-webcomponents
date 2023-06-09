@@ -44,7 +44,7 @@ class INIT_PACKAGE_VAR_CLASS_NAME extends UI5Element {
 	 * Defines the component count.
 	 * @name NIT_PACKAGE_VAR_NAMESPACE.INIT_PACKAGE_VAR_CLASS_NAME.prototype.count
 	 * @public
-	 * @type { number }
+	 * @type { sap.ui.webc.base.types.Integer }
 	 */
 	@property({ validator: Integer, defaultValue: 0 })
 	count!: number;

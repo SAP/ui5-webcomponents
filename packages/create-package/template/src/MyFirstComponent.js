@@ -19,7 +19,7 @@ const metadata = {
 	properties: /** @lends INIT_PACKAGE_VAR_NAMESPACE.INIT_PACKAGE_VAR_CLASS_NAME.prototype */ {
 		/**
 		 * Defines the count of the component.
-		 * @type { number }
+		 * @type { sap.ui.webc.base.types.Integer }
 		 * @defaultvalue 0
 		 * @public
 		 */
