@@ -301,7 +301,7 @@ class Select extends UI5Element implements IFormElement {
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
 	selectedItem?: string | null;
-	popover?: Popover;
+	valueStatePopover?: Popover;
 	value!: string;
 
 	/**
@@ -876,14 +876,14 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	async openValueStatePopover() {
-		this.popover = await this._getPopover() as Popover;
-		if (this.popover) {
-			this.popover.showAt(this);
+		this.valueStatePopover = await this._getPopover() as Popover;
+		if (this.valueStatePopover) {
+			this.valueStatePopover.showAt(this);
 		}
 	}
 
 	closeValueStatePopover() {
-		this.popover && this.popover.close();
+		this.valueStatePopover && this.valueStatePopover.close();
 	}
 
 	toggleValueStatePopover(open: boolean) {
