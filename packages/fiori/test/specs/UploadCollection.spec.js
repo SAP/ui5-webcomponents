@@ -90,6 +90,10 @@ describe("UploadCollection", () => {
 	});
 
 	describe("Events", () => {
+		before(async () => {
+			await browser.url(`test/pages/UploadCollection.html`);
+		});
+
 		it("item should fire 'rename'", async () => {
 			const secondItem = await browser.$("#secondItem");
 			const secondItemIndex = 1;
@@ -105,7 +109,7 @@ describe("UploadCollection", () => {
 			await browser.$("#secondItem").removeAttribute("_editing");
 		});
 
-		it("upload collection should fire 'item-delete'", async () => {
+		it("upload collection should fire 'item-delete' in Delete mode", async () => {
 			const uploadCollection = await browser.$("#uploadCollection");
 			const firstItem = await browser.$("#firstItem");
 
@@ -115,6 +119,18 @@ describe("UploadCollection", () => {
 			await deleteBtn.click();
 
 			assert.strictEqual((await uploadCollection.getProperty("items")).length, 4, "item should be deleted when 'item-delete' event is fired");
+		});
+
+		it("upload collection should fire 'item-delete' regardless of the mode", async () => {
+			const uploadCollection = await browser.$("#uploadCollection");
+			const item = await browser.$("#latestReportsPdf");
+
+			await uploadCollection.setAttribute("mode", "None");
+
+			const deleteBtn = await item.shadow$(".ui5-li-deletebtn");
+			await deleteBtn.click();
+
+			assert.strictEqual((await uploadCollection.getProperty("items")).length, 3, "item should be deleted when 'item-delete' event is fired");
 		});
 
 		it("item should fire 'retry'", async () => {
@@ -137,6 +153,10 @@ describe("UploadCollection", () => {
 	});
 
 	describe("Edit - various file names", async () => {
+		before(async () => {
+			await browser.url(`test/pages/UploadCollection.html`);
+		});
+
 		it("should preserve dots in the file name", async () => {
 			const latestReportsPdf = await browser.$("#latestReportsPdf");
 			const editButton = await latestReportsPdf.shadow$(".ui5-li-detailbtn");

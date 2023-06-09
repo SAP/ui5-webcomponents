@@ -21,7 +21,7 @@ export class AttributeProcessor implements IProcessor {
     }
 
     private removeAttributes(node: HTMLElement): void {
-        const attributes = node.attributes;
+        const attributes = Array.from(node.attributes);
 
         for (let attribute of attributes) {
             if (this.test(attribute)) {

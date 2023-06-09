@@ -27,7 +27,6 @@ jobs:
             const { readFileSync } = require('fs');
             const { URL } = require('url');
             const { version } = require('./lerna.json');
-            const script = require('./.github/actions/createIssueComments.cjs');
-
             console.log('Create issue comments for lerna version: ', version);
-            await script({ github: github.rest, context, core, "1.13.0" })
+            const script = require('./.github/actions/createIssueComments.cjs');
+            аwait script({ github: github.rest, context, core, version })

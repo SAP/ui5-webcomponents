@@ -85,6 +85,7 @@ Basic.parameters = {
 	docs: {
 		story: {
 			inline: false,
+			iframeHeight: "500px",
 		},
 	}
 };
