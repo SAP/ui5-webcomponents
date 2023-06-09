@@ -19,7 +19,6 @@ type OpenUI5CoreConfiguration = {
 	getAnimationMode: () => string,
 	getLanguage: () => string,
 	getTheme: () => string,
-	getThemeRoot: () => string,
 	getRTL: () => string,
 	getTimezone: () => string,
 	getCalendarType: () => string,
@@ -31,6 +30,10 @@ type OpenUI5CoreConfiguration = {
 
 type LocaleData = {
 	getInstance: (locale: string) => Locale,
+}
+
+type Theming = {
+    getThemeRoot: () => string,
 }
 
 type Locale = {
@@ -55,7 +58,7 @@ class OpenUI5Support {
 
 		return new Promise<void>(resolve => {
 			core.attachInit(() => {
-				window.sap.ui.require(["sap/ui/core/LocaleData", "sap/ui/core/Popup"], (LocaleData: LocaleData, Popup: OpenUI5Popup) => {
+				window.sap.ui.require(["sap/ui/core/Popup", "sap/ui/core/LocaleData", "sap/ui/core/Theming"], (Popup: OpenUI5Popup) => {
 					Popup.setInitialZIndex(getCurrentZIndex());
 					resolve();
 				});
@@ -71,12 +74,13 @@ class OpenUI5Support {
 
 		const config = core.getConfiguration();
 		const LocaleData = window.sap.ui.require("sap/ui/core/LocaleData");
+		const Theming = window.sap.ui.require("sap/ui/core/Theming");
 
 		return {
 			animationMode: config.getAnimationMode(),
 			language: config.getLanguage(),
 			theme: config.getTheme(),
-			themeRoot: config.getThemeRoot(),
+			themeRoot: Theming.getThemeRoot(),
 			rtl: config.getRTL(),
 			timezone: config.getTimezone(),
 			calendarType: config.getCalendarType(),
