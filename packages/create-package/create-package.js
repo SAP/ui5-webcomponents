@@ -25,6 +25,9 @@ const isJSRelatedFile = sourcePath => {
 const isGitIgnore = sourcePath => {
 	return sourcePath.includes("gitignore");
 };
+const isLogo = sourcePath => {
+	return sourcePath.includes("logo");
+};
 const isNPMRC = sourcePath => {
 	return sourcePath.includes("npmrc");
 };
@@ -66,6 +69,11 @@ const copyFile = (vars, sourcePath, destPath) => {
 	const ignoreTsRelated = !vars.INIT_PACKAGE_VAR_TYPESCRIPT && isTSRelatedFile(sourcePath);
 
 	if (ignoreJsRelated || ignoreTsRelated) {
+		return;
+	}
+
+	if (isLogo(sourcePath)) {
+		fs.copyFileSync(sourcePath, destPath);
 		return;
 	}
 
