@@ -374,7 +374,7 @@ class TextArea extends UI5Element implements IFormElement {
 	_keyDown?: boolean;
 	FormSupport?: typeof FormSupportT;
 	previousValue: string;
-	popover?: Popover;
+	valueStatePopover?: Popover;
 
 	static i18nBundle: I18nBundle;
 
@@ -508,13 +508,13 @@ class TextArea extends UI5Element implements IFormElement {
 	}
 
 	async openPopover() {
-		this.popover = await this._getPopover();
-		this.popover && await this.popover.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
+		this.valueStatePopover = await this._getPopover();
+		this.valueStatePopover && await this.valueStatePopover.showAt(this.shadowRoot!.querySelector(".ui5-textarea-root .ui5-textarea-wrapper")!);
 	}
 
 	async closePopover() {
-		this.popover = await this._getPopover();
-		this.popover && this.popover.close();
+		this.valueStatePopover = await this._getPopover();
+		this.valueStatePopover && this.valueStatePopover.close();
 	}
 
 	async _getPopover() {
