@@ -32,7 +32,7 @@ type LocaleData = {
 	getInstance: (locale: string) => Locale,
 }
 
-type Theming = {
+type CoreTheming = {
     getThemeRoot: () => string,
 }
 
@@ -74,7 +74,7 @@ class OpenUI5Support {
 
 		const config = core.getConfiguration();
 		const LocaleData = window.sap.ui.require("sap/ui/core/LocaleData");
-		const Theming = window.sap.ui.require("sap/ui/core/Theming");
+		const Theming: CoreTheming = window.sap.ui.require("sap/ui/core/Theming");
 
 		return {
 			animationMode: config.getAnimationMode(),
