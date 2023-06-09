@@ -187,6 +187,10 @@ class Tokenizer extends UI5Element {
 
 	onBeforeRendering() {
 		this._nMoreCount = this.overflownTokens.length;
+
+		this._tokens.forEach(token => {
+			token.singleToken = this._tokens.length === 1;
+		});
 	}
 
 	onEnterDOM() {
@@ -197,14 +201,17 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.contentDom, this._resizeHandler);
 	}
 
-	async _openOverflowPopover() {
+	async _openOverflowPopoverAndFireEvent() {
+		await this.openOverflowPopover();
+		this.fireEvent("show-more-items-press");
+	}
+
+	async openOverflowPopover() {
 		if (this.showPopover) {
 			const popover = await this.getPopover();
 
 			popover.showAt(this.morePopoverOpener || this);
 		}
-
-		this.fireEvent("show-more-items-press");
 	}
 
 	_getTokens() {

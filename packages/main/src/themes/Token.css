@@ -8,8 +8,10 @@
 	box-sizing: border-box;
 	margin-top: var(--_ui5_token_top_margin);
 	margin-bottom: var(--_ui5_token_bottom_margin);
+}
+
+:host(:not([single-token])) {
 	margin-inline-end: var(--_ui5_token_right_margin);
-	position: relative;
 }
 
 :host([overflows]) {
@@ -124,4 +126,18 @@
 	height: var(--_ui5_token_icon_size);
 	padding: var(--_ui5_token_icon_padding);
 	color: var(--sapContent_IconColor);
+}
+
+:host([single-token]) {
+	max-width: 100%;
+}
+
+:host([single-token]) .ui5-token--wrapper {
+	max-width: 100%;
+}
+
+:host([single-token]) .ui5-token--text {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 100%;
 }

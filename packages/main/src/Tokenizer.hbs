@@ -17,7 +17,7 @@
 
 	{{#if showNMore}}
 		<span
-			@click="{{_openOverflowPopover}}"
+			@click="{{_openOverflowPopoverAndFireEvent}}"
 			class="ui5-tokenizer-more-text"
 			part="n-more-text"
 		>{{_nMoreText}}</span>

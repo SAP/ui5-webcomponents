@@ -199,6 +199,19 @@ describe("MultiInput general interaction", () => {
 
 		assert.strictEqual(await innerInput.getProperty("value"), "", "Input's value should be empty");
 	});
+
+	it("should truncate token when single token is in the multinput and open popover on click", async () => {
+		const mi = await $("#truncated-token");
+		const token = mi.$("ui5-token");
+		const rpoClassName = await getTokenizerPopoverId("truncated-token");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+		
+		await token.click();
+
+		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+	});
 });
 
 describe("ARIA attributes", () => {

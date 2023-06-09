@@ -1474,6 +1474,19 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.click();
 			assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
 		});
+
+		it("should truncate token when single token is in the mcb and open popover on click", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#truncated-token");
+			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover")
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+			
+			await token.click();
+
+			assert.ok(await popover.getProperty("opened"), "More Popover should be open");
+		});
 	});
 
 	describe("ARIA attributes", () => {

@@ -632,8 +632,10 @@ class MultiComboBox extends UI5Element {
 		const lastTokenBeingDeleted = tokensCount - 1 === 0 && this._deleting;
 		const allTokensAreBeingDeleted = selectedTokens === tokensCount && this._deleting;
 		const relatedTarget: HTMLElement | undefined = e.relatedTarget as HTMLElement;
+		const isFocusingPopover = this.staticAreaItem === relatedTarget;
+		const isFocusingInput = this._inputDom === relatedTarget;
 
-		if (!relatedTarget || !relatedTarget.hasAttribute("ui5-token")) {
+		if (!relatedTarget?.hasAttribute("ui5-token") && !isFocusingPopover && !isFocusingInput) {
 			this._tokenizer.tokens.forEach(token => {
 				token.selected = false;
 			});
@@ -823,6 +825,15 @@ class MultiComboBox extends UI5Element {
 
 	_handleTab() {
 		this.allItemsPopover?.close();
+	}
+
+	_onTokenSelect() {
+		const tokens = this._tokenizer.tokens;
+
+		if (tokens.length === 1 && tokens[0].isTruncatable) {
+			this.filterSelected = true;
+			this.togglePopover();
+		}
 	}
 
 	_handleSelectAll() {

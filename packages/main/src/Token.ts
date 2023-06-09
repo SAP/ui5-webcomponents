@@ -125,6 +125,9 @@ class Token extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	overflows!: boolean;
 
+	@property({ type: Boolean })
+	singleToken!: boolean;
+
 	/**
 	 * Defines whether the component is focused or not.
 	 *
@@ -224,6 +227,14 @@ class Token extends UI5Element implements ITabbable {
 		}
 
 		return "decline";
+	}
+
+	get textDom() {
+		return this.getDomRef()!.querySelector(".ui5-token--text");
+	}
+
+	get isTruncatable() {
+		return this.textDom!.getBoundingClientRect().width < this.textDom!.scrollWidth;
 	}
 
 	static async onDefine() {

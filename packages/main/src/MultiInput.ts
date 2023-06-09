@@ -187,7 +187,9 @@ class MultiInput extends Input {
 	}
 
 	_tokenizerFocusOut(e: FocusEvent) {
-		if (!this.contains(e.relatedTarget as HTMLElement)) {
+		const isFocusingMorePopover = e.relatedTarget === this.tokenizer.staticAreaItem;
+
+		if (!this.contains(e.relatedTarget as HTMLElement) && !isFocusingMorePopover) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
@@ -203,6 +205,16 @@ class MultiInput extends Input {
 		this.expandedTokenizer = true;
 		this.focused = true;
 		this.tokenizer.scrollToEnd();
+	}
+
+	_onTokenSelect() {
+		if (this.tokens.length === 1 && this.tokens[0].isTruncatable) {
+			if (this.tokens[0].selected) {
+				this.tokenizer.openOverflowPopover();
+			} else {
+				this.tokenizer.closeMorePopover();
+			}
+		}
 	}
 
 	_onkeydown(e: KeyboardEvent) {
