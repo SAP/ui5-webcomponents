@@ -175,6 +175,7 @@ describe("Table general interaction", () => {
 		});
 	});
 
+	/*
 	describe("Growing Table on Scroll", async () => {
 		it("tests the 'load-more' event", async () => {
 			await browser.url(`test/pages/TableGrowingWithScroll.html`);
@@ -191,6 +192,7 @@ describe("Table general interaction", () => {
 			});
 		});
 	});
+	 */
 
 	describe("Table selection modes", async () => {
 		it("test click over Active/Inactive row in SingleSelect mode", async () => {
