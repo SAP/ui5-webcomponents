@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.2](https://github.com/SAP/ui5-webcomponents/compare/v1.14.1...v1.14.2) (2023-06-12)
+
+
+### Bug Fixes
+
+* **ui5-static-area-item:** element additional properties ([#7166](https://github.com/SAP/ui5-webcomponents/issues/7166)) ([2b8d406](https://github.com/SAP/ui5-webcomponents/commit/2b8d406638942dd1b6d579ae7a6d6f567a9ed4f1))
+* **ui5-textarea, ui5-select:** collision of 'popover' property with Google Chrome  ([#7162](https://github.com/SAP/ui5-webcomponents/issues/7162)) ([aff2ffa](https://github.com/SAP/ui5-webcomponents/commit/aff2ffa42c2b40d34754b9ccb028d32017372e4d))
+
+
+
+
+
 ## [1.14.1](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0...v1.14.1) (2023-06-08)
 
 **Note:** Version bump only for package ui5-webcomponents
