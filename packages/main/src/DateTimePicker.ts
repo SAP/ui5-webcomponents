@@ -215,7 +215,15 @@ class DateTimePicker extends DatePicker {
 	async openPicker() {
 		await super.openPicker();
 		this._currentTimeSlider = "hours";
-		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
+		const currentTime = new Date();
+		const hours = currentTime.getHours().toString();
+		this.onTimeSliderChange({
+			detail: {
+				slider: hours,
+				value: hours,
+				valid: true,
+			},
+		} as unknown as CustomEvent<TimeSelectionSliderChangeEventDetail>);
 	}
 
 	/**
