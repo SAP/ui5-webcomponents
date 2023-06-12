@@ -65,7 +65,7 @@ Basic.args = {
 	showClose: true,
 	priority: Priority.High,
 	avatar: `<ui5-avatar size="XS" slot="avatar">
-	<img src="../assets/images/avatars/woman_avatar_1.png">
+	<img src="./assets/images/avatars/woman_avatar_1.png">
 </ui5-avatar>`,
 	footnotes: `<span slot="footnotes">Monique Legrand</span>
 <span slot="footnotes">2 Days</span>`,
@@ -77,7 +77,7 @@ Basic.decorators = [
 
 <ui5-li-notification show-close title-text="New order (#2526) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc." priority="High">
 	<ui5-avatar size="XS" slot="avatar">
-		<img src="../assets/images/avatars/man_avatar_1.png">
+		<img src="./assets/images/avatars/man_avatar_1.png">
 	</ui5-avatar>
 	<span slot="footnotes">Alain Chevalier</span>
 	<span slot="footnotes">2 Days</span>
@@ -86,7 +86,7 @@ Basic.decorators = [
 
 <ui5-li-notification show-close title-text="New order (#2525) With a short title" priority="High" read>
 	<ui5-avatar size="XS" slot="avatar">
-		<img src="../assets/images/avatars/man_avatar_2.png">
+		<img src="./assets/images/avatars/man_avatar_2.png">
 	</ui5-avatar>
 	<span slot="footnotes">John Doe</span>
 	<span slot="footnotes">2 Days</span>
@@ -105,7 +105,7 @@ Actions.args = {
 	actions: `<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
 <ui5-notification-action icon="message-error" text="Reject" slot="actions"></ui5-notification-action>`,
 	avatar: `<ui5-avatar size="XS" slot="avatar">
-	<img src="../assets/images/avatars/woman_avatar_1.png">
+	<img src="./assets/images/avatars/woman_avatar_1.png">
 </ui5-avatar>`,
 	footnotes: `<span slot="footnotes">Monique Legrand</span>
 <span slot="footnotes">2 Days</span>`,
@@ -118,7 +118,7 @@ Actions.decorators = [
 <ui5-li-notification priority="Low" show-close title-text="And with a very long description and only one action - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc.">
 	<ui5-notification-action icon="accept" text="Accept" slot="actions"></ui5-notification-action>
 	<ui5-avatar size="XS" icon="employee" slot="avatar">
-		<img src="../assets/images/avatars/woman_avatar_1.png">
+		<img src="./assets/images/avatars/woman_avatar_1.png">
 	</ui5-avatar>
 	<span slot="footnotes-1">Monique Legrand</span>
 	<span slot="footnotes-2">2 Days</span>
@@ -129,7 +129,7 @@ Actions.decorators = [
 	<ui5-notification-action icon="accept" text="Accept All Requested Information" slot="actions"></ui5-notification-action>
 	<ui5-notification-action icon="decline" text="Reject All Requested Information" slot="actions"></ui5-notification-action>
 	<ui5-avatar size="XS" icon="employee" slot="avatar">
-		<img src="../assets/images/avatars/woman_avatar_1.png">
+		<img src="./assets/images/avatars/woman_avatar_1.png">
 	</ui5-avatar>
 	<span slot="footnotes-1">Monique Legrand</span>
 	<span slot="footnotes-2">2 Days</span>
@@ -188,7 +188,7 @@ InShellBar.decorators = [
 	(story) => {
 		return html`<ui5-shellbar
 	primary-title="Corporate Portal"
-	logo="../assets/images/sap-logo-svg.svg"
+	logo="./assets/images/sap-logo-svg.svg"
 	show-notifications
 	notifications-count="4"
 ></ui5-shellbar>

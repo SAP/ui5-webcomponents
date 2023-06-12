@@ -38,10 +38,10 @@
   },
   "scripts": {
     "build": "yarn install:dependencies && npm-run-all --parallel prepare:* && tsc && bundle exec jekyll build --source ./ --destination ./dist",
-    "build:next": "npm run build-storybook",
-    "build_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist && npm run build:next",
-    "build:main": "yarn install:dependencies && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml",
-    "build:main_as_admin": "yarn install:dependencies_as_admin && npm-run-all --parallel prepare:* && bundle exec jekyll build --source ./ --destination ./dist --config _config.yml,_config_main.yml && npm run build:next",
+    "build:next": "npm-run-all --parallel prepare:* && npm run build-storybook",
+    "build_as_admin": "npm run build:next",
+    "build:main": "npm run build:next",
+    "build:main_as_admin": "npm run build:next",
     "build:bundle": "vite build",
     "clean": "npm-run-all --parallel clean:*",
     "clean:samples": "rimraf ./docs/components/*sample.html",
@@ -63,8 +63,9 @@
     "prepare:next:nojekyll": "copy-and-watch \"./.nojekyll\" \"./dist\"",
     "prepare:next:samples": "node ./build-scripts-storybook/samples-prepare.js",
     "prepare:next:manifest": "node ./build-scripts-storybook/parse-manifest.js",
+    "prepare:next:pages": "vite-node ./build-scripts-storybook/pages-prepare.ts",
     "prepare:next:documentation": "vite-node ./build-scripts-storybook/documentation-prepare.ts",
     "storybook": "npm-run-all --parallel prepare:next:* && storybook dev -p 6006",
-    "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && storybook build -o ./dist/_playground"
+    "build-storybook": "npm-run-all --parallel prepare:next:* && tsc && storybook build -o ./dist/playground"
   }
 }

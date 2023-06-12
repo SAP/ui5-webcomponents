@@ -46,7 +46,7 @@ ProductSwitchWithShellBar.decorators = [
             id="shellbar"
             primary-title="Corporate Portal"
             secondary-title="home"
-            logo="../assets/images/sap-logo-svg.svg"
+            logo="./assets/images/sap-logo-svg.svg"
             show-product-switch=""
             show-co-pilot=""
         >

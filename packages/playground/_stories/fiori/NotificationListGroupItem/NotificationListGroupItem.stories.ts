@@ -211,7 +211,7 @@ InShellBar.decorators = [
 	(story) => {
 		return html`<ui5-shellbar
 	primary-title="Corporate Portal"
-	logo="../assets/images/sap-logo-svg.svg"
+	logo="./assets/images/sap-logo-svg.svg"
 	show-notifications
 	notifications-count="6"
 ></ui5-shellbar>

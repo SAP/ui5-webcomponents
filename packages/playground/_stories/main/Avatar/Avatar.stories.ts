@@ -52,7 +52,7 @@ export const WithImage = Template.bind({});
 WithImage.args = {
   default: `<img
 	alt="Woman 1"
-	src="../assets/images/avatars/man_avatar_1.png"
+	src="./assets/images/avatars/man_avatar_1.png"
 />`,
 };
 
@@ -68,7 +68,7 @@ Styles.args = {
   shape: AvatarShape.Square,
   style: "width: 250px; height:250px; border: 1px solid var(--sapField_BorderColor)",
   default: `<img
-	src="../assets/images/avatars/Lamp_avatar_01.jpg"
+	src="./assets/images/avatars/Lamp_avatar_01.jpg"
 	alt="Lamp"
 	style="object-fit: contain"
 />`,
