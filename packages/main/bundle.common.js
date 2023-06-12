@@ -80,6 +80,8 @@ import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
 import TimeSelection from "./dist/TimeSelection.js";
 import TimePicker from "./dist/TimePicker.js";
+import TimePickerClock from "./dist/TimePickerClock.js";
+import TimeSelectionClocks from "./dist/TimeSelectionClocks.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";

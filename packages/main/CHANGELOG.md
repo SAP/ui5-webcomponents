@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0...v1.15.0-rc.0) (2023-06-08)
+
+
+### Bug Fixes
+
+* **ui5-calendar:** prevent focus loss during arrow navigation with mouse/touch ([#6957](https://github.com/SAP/ui5-webcomponents/issues/6957)) ([216f6a7](https://github.com/SAP/ui5-webcomponents/commit/216f6a7a476d18a0f6fdf7ff189f953085e30b47))
+* **ui5-shellbar:** improve RTL styling of searchField ([#7089](https://github.com/SAP/ui5-webcomponents/issues/7089)) ([9373abf](https://github.com/SAP/ui5-webcomponents/commit/9373abfd0114650069855419f1caeb2fc5462114)), closes [#7065](https://github.com/SAP/ui5-webcomponents/issues/7065)
+
+
+### Features
+
+* **ui5-button:** type property added ([#7157](https://github.com/SAP/ui5-webcomponents/issues/7157)) ([0effdf7](https://github.com/SAP/ui5-webcomponents/commit/0effdf76fb4e337cbba6ac8826d8052af6779c85))
+
+
+
+
+
 # [1.14.0](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.2...v1.14.0) (2023-06-01)
 
 
