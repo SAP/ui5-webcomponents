@@ -2,6 +2,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -215,15 +216,19 @@ class DateTimePicker extends DatePicker {
 	async openPicker() {
 		await super.openPicker();
 		this._currentTimeSlider = "hours";
-		const currentTime = new Date();
-		const hours = currentTime.getHours().toString();
-		this.onTimeSliderChange({
-			detail: {
-				slider: hours,
-				value: hours,
-				valid: true,
-			},
-		} as unknown as CustomEvent<TimeSelectionSliderChangeEventDetail>);
+		this._previewValues.timeSelectionValue = this.value || this.getFormat().format(new Date());
+
+		if (isPhone()) {
+			const currentTime = new Date();
+			const hours = currentTime.getHours().toString();
+			this.onTimeSliderChange({
+				detail: {
+					slider: hours,
+					value: hours,
+					valid: true,
+				},
+			} as unknown as CustomEvent<TimeSelectionSliderChangeEventDetail>);
+		}
 	}
 
 	/**
