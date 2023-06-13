@@ -23,10 +23,3 @@
 	--_ui5_step_input_min_width: 7.25rem;
 	--_ui5_step_input_padding: 2.5rem;
 }
-
-[data-ui5-compact-size],
-.ui5-content-density-compact,
-.sapUiSizeCompact {
-	--_ui5_step_input_min_width: 6rem;
-	--_ui5_step_input_padding: 2rem;
-}

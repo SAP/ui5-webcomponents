@@ -61,6 +61,7 @@ Basic.parameters = {
 	docs: {
 		story: {
 			inline: false,
+			iframeHeight: "500px",
 		},
 	}
 };
@@ -102,6 +103,7 @@ DefaultColor.parameters = {
 	docs: {
 		story: {
 			inline: false,
+			iframeHeight: "500px",
 		},
 	}
 };

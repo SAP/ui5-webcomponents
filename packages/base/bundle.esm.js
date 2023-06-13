@@ -31,12 +31,13 @@ import { getAnimationMode } from "./dist/config/AnimationMode.js";
 import { getLanguage, setLanguage } from "./dist/config/Language.js";
 import { getCalendarType } from "./dist/config/CalendarType.js";
 import { getTheme, setTheme } from "./dist/config/Theme.js";
-import { getThemeRoot } from "./dist/config/ThemeRoots";
+import { getThemeRoot, setThemeRoot } from "./dist/config/ThemeRoot.js";
 import { getNoConflict, setNoConflict } from "./dist/config/NoConflict.js";
 import { getRTL } from "./dist/config/RTL.js";
 import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "./dist/config/FormatSettings.js";
 import { _getRegisteredNames as getIconNames } from  "./dist/asset-registries/Icons.js"
 import applyDirection from "./dist/locale/applyDirection.js";
+import { getCurrentRuntimeIndex } from "./dist/Runtimes.js";
 import LegacyDateFormats from "./dist/features/LegacyDateFormats.js";
 
 window["sap-ui-webcomponents-bundle"] = {
@@ -46,6 +47,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		setLanguage,
 		getTheme,
 		getThemeRoot,
+		setThemeRoot,
 		setTheme,
 		getNoConflict,
 		setNoConflict,
@@ -54,6 +56,7 @@ window["sap-ui-webcomponents-bundle"] = {
 		getFirstDayOfWeek,
 		getLegacyDateCalendarCustomizing,
 	},
+	getCurrentRuntimeIndex,
 	getIconNames,
 	parseProperties,
 	registerI18nLoader,

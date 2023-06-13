@@ -120,6 +120,10 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  */
 @event("_focus-requested")
 
+/**
+ * @private
+ */
+@event("_uci-delete")
 class UploadCollectionItem extends ListItem {
 	/**
 	 * Holds an instance of <code>File</code> associated with this item.
@@ -166,12 +170,13 @@ class UploadCollectionItem extends ListItem {
 	disableDeleteButton!: boolean;
 
 	/**
-	 * By default, the Delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
+	 * By default, the delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
 	 * Setting this property to <code>true</code> will hide the delete button.
 	 *
 	 * @type {boolean}
 	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.hideDeleteButton
 	 * @defaultvalue false
+	 * @public
 	 */
 	@property({ type: Boolean })
 	hideDeleteButton!: boolean;
@@ -222,7 +227,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: UploadState, defaultValue: UploadState.Ready })
-	uploadState!: UploadState;
+	uploadState!: `${UploadState}`;
 
 	/**
 	 * Indicates if editing.
@@ -374,6 +379,10 @@ class UploadCollectionItem extends ListItem {
 		if (isSpace(e)) {
 			this._onTerminate();
 		}
+	}
+
+	_onDelete() {
+		this.fireEvent("_uci-delete");
 	}
 
 	getFocusDomRef() {

@@ -88,10 +88,11 @@ class CalendarPart extends DateComponentBase {
 	 * Modify a timestamp by a certain amount of days/months/years and enforce limits
 	 * @param amount
 	 * @param unit
+	 * @param preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @protected
 	 */
-	_safelyModifyTimestampBy(amount: number, unit: string) {
-		const newDate = modifyDateBy(this._calendarDate, amount, unit);
+	_safelyModifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
+		const newDate = modifyDateBy(this._calendarDate, amount, unit, preserveDate);
 		this._safelySetTimestamp(newDate.valueOf() / 1000);
 	}
 

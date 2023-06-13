@@ -5,6 +5,7 @@ import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 import type UI5Element from "./UI5Element.js";
+import { getCurrentRuntimeIndex } from "./Runtimes.js";
 
 const pureTagName = "ui5-static-area-item";
 const popupIntegrationAttr = "data-sap-ui-integration-popup-content";
@@ -41,11 +42,15 @@ class StaticAreaItem extends HTMLElement {
 	 */
 	update() {
 		if (this._rendered) {
-			this._updateAdditionalAttrs();
-			this._updateContentDensity();
-			this._updateDirection();
+			this.updateAdditionalProperties();
 			updateShadowRoot(this.ownerElement!, true);
 		}
+	}
+
+	updateAdditionalProperties() {
+		this._updateAdditionalAttrs();
+		this._updateContentDensity();
+		this._updateDirection();
 	}
 
 	/**
@@ -74,6 +79,8 @@ class StaticAreaItem extends HTMLElement {
 	}
 
 	_updateAdditionalAttrs() {
+		this.setAttribute(`_ui5rt${getCurrentRuntimeIndex()}`, "");
+		this.setAttribute("_ui5host", "");
 		this.setAttribute(pureTagName, "");
 		this.setAttribute(popupIntegrationAttr, "");
 	}
@@ -83,7 +90,7 @@ class StaticAreaItem extends HTMLElement {
 	 * Returns reference to the DOM element where the current fragment is added.
 	 */
 	async getDomRef() {
-		this._updateContentDensity();
+		this.updateAdditionalProperties();
 		if (!this._rendered) {
 			this._rendered = true;
 			updateShadowRoot(this.ownerElement!, true);

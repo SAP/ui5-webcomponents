@@ -16,9 +16,9 @@ import type {
 	TreeItemBaseStepOutEventDetail,
 } from "./TreeItemBase.js";
 import type {
-	ClickEventDetail as ListItemClickEventDetail,
-	DeleteEventDetail as ListItemDeleteEventDetail,
-	SelectionChangeEventDetail as ListSelectionChangeEventDetail,
+	ListItemClickEventDetail,
+	ListItemDeleteEventDetail,
+	ListSelectionChangeEventDetail,
 } from "./List.js";
 
 // Template
@@ -35,7 +35,7 @@ type TreeItemMouseoverEventDetail = TreeItemEventDetail;
 type TreeItemMouseoutEventDetail = TreeItemEventDetail;
 type TreeItemClickEventDetail = TreeItemEventDetail;
 type TreeItemDeleteEventDetail = TreeItemEventDetail;
-type TreeItemSelectionChangeEventDetail = {
+type TreeSelectionChangeEventDetail = {
 	selectedItems: Array<TreeItemBase>;
 	previouslySelectedItems: Array<TreeItemBase>;
 	targetItem: TreeItemBase;
@@ -216,7 +216,7 @@ class Tree extends UI5Element {
 	 * @defaultValue "None"
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
@@ -337,6 +337,12 @@ class Tree extends UI5Element {
 		this._prepareTreeItems();
 	}
 
+	onAfterRendering() {
+		// Note: this is a workaround for the problem that the list cannot invalidate itself when its only physical child is a slot (and the list items are inside the slot)
+		// This code should be removed once a framework-level fix is implemented
+		this.shadowRoot!.querySelector<TreeList>("[ui5-tree-list]")!.onBeforeRendering();
+	}
+
 	get list() {
 		return this.getDomRef() as TreeList;
 	}
@@ -420,7 +426,7 @@ class Tree extends UI5Element {
 			item.selected = true;
 		});
 
-		this.fireEvent<TreeItemSelectionChangeEventDetail>("selection-change", {
+		this.fireEvent<TreeSelectionChangeEventDetail>("selection-change", {
 			previouslySelectedItems,
 			selectedItems,
 			targetItem,
@@ -505,5 +511,5 @@ export type {
 	TreeItemMouseoutEventDetail,
 	TreeItemClickEventDetail,
 	TreeItemDeleteEventDetail,
-	TreeItemSelectionChangeEventDetail,
+	TreeSelectionChangeEventDetail,
 };

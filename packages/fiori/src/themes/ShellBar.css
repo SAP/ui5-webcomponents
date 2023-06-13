@@ -7,6 +7,10 @@
 
 :host {
 	--_ui5_input_placeholder_color: var(--sapShell_InteractiveTextColor);
+	--_ui5_input_border_radius: var(--_ui5_shellbar_input_border_radius);
+	--_ui5_input_focus_border_radius: var(--_ui5_shellbar_input_focus_border_radius);
+	--_ui5_input_background_color: var(--_ui5_shellbar_input_background_color);
+	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
 }
 
 .ui5-shellbar-root {
@@ -194,7 +198,6 @@ slot[name="profile"] {
 .ui5-shellbar-logo {
 	cursor: pointer;
 	max-height: 2rem;
-	overflow: hidden;
 }
 
 .ui5-shellbar-logo:focus {
@@ -206,6 +209,10 @@ slot[name="profile"] {
 .ui5-shellbar-logo:hover {
 	box-shadow: var(--_ui5_shellbar_button_box_shadow);
 	border-radius: var(--_ui5_shellbar_logo_border_radius);
+}
+
+.ui5-shellbar-menu-button .ui5-shellbar-logo:hover {
+	box-shadow: none;
 }
 
 .ui5-shellbar-button {
@@ -243,8 +250,8 @@ slot[name="profile"] {
 	justify-content: flex-start;
 	margin-inline-end: 0.5rem;
 	max-width: 75%;
-	flex-shrink: 0;
-	flex-grow: 0;
+	flex-shrink: 1;
+	flex-grow: 1;
 }
 
 .ui5-shellbar-overflow-container-left > :nth-child(n) {
@@ -304,7 +311,6 @@ slot[name="profile"] {
 	justify-content: flex-end;
 	height: inherit;
 	align-items: center;
-	float: var(--_ui5_shellbar_overflow_container_float);
 }
 
 .ui5-shellbar-overflow-button {
@@ -359,10 +365,10 @@ slot[name="profile"] {
 	background: var(--sapContent_BadgeBackground);
 	border: var(--_ui5_shellbar_button_badge_border);
 	color: var(--sapContent_BadgeTextColor);
-	top: 0.125rem;
-	left: 1.5rem;
-	padding: .25rem;
-	border-radius: 1rem;
+	top: -0.25rem;
+	right: -0.25rem;
+	padding: 0 0.3125rem;
+	border-radius: 0.5rem;
 	display: flex;
 	justify-content: center;
 	align-items: center;

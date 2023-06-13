@@ -121,7 +121,7 @@ class ProgressIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	static i18nBundle: I18nBundle;
 	_previousValue: number;
@@ -153,7 +153,7 @@ class ProgressIndicator extends UI5Element {
 			"Error": "status-negative",
 			"Warning": "status-critical",
 			"Success": "status-positive",
-			"Information": "hint",
+			"Information": "information",
 		};
 	}
 

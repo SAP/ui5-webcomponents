@@ -9,8 +9,7 @@
       "sourceMap": true,
       "inlineSources": true,
       "strict": true,
-      "module": "node16",
-      "moduleResolution": "node16",
+      "moduleResolution": "node",
       "experimentalDecorators": true,
     },
 }

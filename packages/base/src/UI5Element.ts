@@ -11,6 +11,7 @@ import EventProvider from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
+import { shouldIgnoreCustomElement } from "./IgnoreCustomElements.js";
 import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
@@ -24,6 +25,7 @@ import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
 import executeTemplate from "./renderer/executeTemplate.js";
+import { getCurrentRuntimeIndex } from "./Runtimes.js";
 import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
 import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
@@ -173,6 +175,8 @@ abstract class UI5Element extends HTMLElement {
 	async connectedCallback() {
 		const ctor = this.constructor as typeof UI5Element;
 
+		this.setAttribute(`_ui5rt${getCurrentRuntimeIndex()}`, "");
+		this.setAttribute("_ui5host", "");
 		this.setAttribute(ctor.getMetadata().getPureTag(), "");
 		if (ctor.getMetadata().supportsF6FastNavigation()) {
 			this.setAttribute("data-sap-ui-fastnavgroup", "true");
@@ -333,8 +337,9 @@ abstract class UI5Element extends HTMLElement {
 			// Await for not-yet-defined custom elements
 			if (child instanceof HTMLElement) {
 				const localName = child.localName;
-				const isCustomElement = localName.includes("-");
-				if (isCustomElement) {
+				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
+
+				if (shouldWaitForCustomElement) {
 					const isDefined = window.customElements.get(localName);
 					if (!isDefined) {
 						const whenDefinedPromise = window.customElements.whenDefined(localName); // Class registered, but instances not upgraded yet

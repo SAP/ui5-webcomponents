@@ -52,6 +52,10 @@
 	padding-bottom: 1rem;
 }
 
+:host([content-layout="SingleStep"]) .ui5-wiz-content-item:not([selected]) {
+	display: none;
+}
+
 .ui5-wiz-content-item-wrapper {
 	display: block;
 	padding: var(--_ui5_wiz_content_item_wrapper_padding);

@@ -59,7 +59,7 @@
     "lint": "wsrun --exclude-missing lint",
     "link-all": "wsrun link",
     "unlink-all": "wsrun unlink",
-    "copy-css": "copy-and-watch \"packages/base/dist/css/**/*\" packages/main/dist/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/main/dist/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/main/dist/resources/css/main/ && copy-and-watch \"packages/base/dist/css/**/*\" packages/fiori/dist/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/fiori/dist/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/fiori/dist/resources/css/main/",
+    "copy-css": "copy-and-watch \"packages/base/dist/css/**/*\" packages/main/test/pages/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/main/test/pages/resources/css/theming/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/main/test/pages/resources/css/main/ && copy-and-watch \"packages/base/dist/css/**/*\" packages/fiori/test/pages/resources/css/base/ && copy-and-watch \"packages/theming/dist/css/**/*\" packages/fiori/test/pages/resources/css/theming/ && copy-and-watch \"packages/fiori/dist/css/**/*\" packages/fiori/test/pages/resources/css/fiori/ && copy-and-watch \"packages/main/dist/css/**/*\" packages/fiori/test/pages/resources/css/main/",
     "release": "node ./.github/actions/release.js",
     "prepare": "husky install",
     "husky:commit-msg": "commitlint -e",
@@ -69,6 +69,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
+    "@wdio/devtools-service": "^7.19.7",
     "command-line-args": "^5.1.1",
     "copy-and-watch": "^0.1.5",
     "globby": "^13.1.1",

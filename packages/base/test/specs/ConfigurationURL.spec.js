@@ -34,7 +34,7 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getTheme());
 		});
-		assert.strictEqual(res, 'sap_belize_hcb', "Thems is HCB");
+		assert.strictEqual(res, 'sap_belize_hcb', "Theme is HCB");
 	});
 
 	it("Tests that theme root is applied", async () => {
@@ -95,7 +95,7 @@ describe("Some settings can be set via SAP URL params", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getTheme());
 		});
-		assert.strictEqual(res, 'sap_fiori_3_dark', "Thems is Fiori Dark");
+		assert.strictEqual(res, 'sap_fiori_3_dark', "Theme is Fiori Dark");
 	});
 });
 

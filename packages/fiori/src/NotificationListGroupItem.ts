@@ -37,6 +37,8 @@ import NotificationListGroupItemTemplate from "./generated/templates/Notificatio
 // Styles
 import NotificationListGroupItemCss from "./generated/themes/NotificationListGroupItem.css.js";
 
+import type { NotificationListItemBaseCloseEventDetail as NotificationListGroupItemCloseEventDetail } from "./NotificationListItemBase.js";
+
 type NotificationListGroupItemToggleEventDetail = {
 	item: NotificationListGroupItem,
 };
@@ -241,3 +243,7 @@ class NotificationListGroupItem extends NotificationListItemBase {
 NotificationListGroupItem.define();
 
 export default NotificationListGroupItem;
+export type {
+	NotificationListGroupItemToggleEventDetail,
+	NotificationListGroupItemCloseEventDetail,
+};

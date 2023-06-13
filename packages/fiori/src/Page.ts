@@ -73,7 +73,7 @@ class Page extends UI5Element {
 	 * @public
 	 */
 	@property({ type: PageBackgroundDesign, defaultValue: PageBackgroundDesign.Solid })
-	backgroundDesign!: PageBackgroundDesign;
+	backgroundDesign!: `${PageBackgroundDesign}`;
 
 	/**
 	 * Disables vertical scrolling of page content.

@@ -16,13 +16,6 @@ const version = JSON.parse(fs.readFileSync(path.join(__dirname, "package.json"))
 const TEMPLATE_DIR = path.join(`${__dirname}`, `template/`);
 
 // String utils
-const capitalizeFirst = str => str.substr(0,1).toUpperCase() + str.substr(1);
-const kebabToCamelCase = string => toCamelCase(string.split("-"));
-const toCamelCase = parts => {
-	return parts.map((string, index) => {
-		return index === 0 ? string.toLowerCase() : string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-	}).join("");
-};
 const isTSRelatedFile = sourcePath => {
 	return ["Assets.ts", "MyFirstComponent.ts", "tsconfig.json", "global.d.ts"].some(fileName => sourcePath.includes(fileName));
 };
@@ -32,14 +25,19 @@ const isJSRelatedFile = sourcePath => {
 const isGitIgnore = sourcePath => {
 	return sourcePath.includes("gitignore");
 };
+const isLogo = sourcePath => {
+	return sourcePath.includes("logo");
+};
 const isNPMRC = sourcePath => {
 	return sourcePath.includes("npmrc");
 };
 
 // Validation of user input
 const ComponentNamePattern = /^[A-Z][A-Za-z0-9]+$/;
-const isNameValid = name => typeof name === "string" && name.match(/^[a-zA-Z][a-zA-Z0-9\-_]+$/);
+const NamespacePattern = /^[a-z][a-z0-9\.\-]+$/;
+const isPackageNameValid = name => typeof name === "string" && name.match(/^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/);
 const isComponentNameValid = name => typeof name === "string" && ComponentNamePattern.test(name);
+const isNamespaceValid = name => typeof name === "string" && NamespacePattern.test(name);
 const isTagValid = tag => typeof tag === "string" && tag.match(/^[a-z0-9]+?-[a-zA-Z0-9\-_]+?[a-z0-9]$/);
 
 /**
@@ -74,6 +72,11 @@ const copyFile = (vars, sourcePath, destPath) => {
 		return;
 	}
 
+	if (isLogo(sourcePath)) {
+		fs.copyFileSync(sourcePath, destPath);
+		return;
+	}
+
 	let content = fs.readFileSync(sourcePath, { encoding: "UTF-8" });
 	content = replaceVarsInFileContent(vars, content);
 	destPath = replaceVarsInFileName(vars, destPath);
@@ -105,19 +108,20 @@ const copyFiles = (vars, sourcePath, destPath) => {
 	}
 };
 
-const generateFilesContent = (name, componentName, typescript, skipSubfolder) => {
+const generateFilesContent = (packageName, componentName, namespace, typescript, skipSubfolder) => {
 	const tagName = argv.tag || hyphaneteComponentName(componentName);
 
 	// All variables that will be replaced in the content of the resources/
 	const vars = {
-		INIT_PACKAGE_VAR_NAME: name,
+		INIT_PACKAGE_VAR_NAMESPACE: namespace, // namespace must be replaced before name
+		INIT_PACKAGE_VAR_NAME: packageName,
 		INIT_PACKAGE_VAR_TAG: tagName,
 		INIT_PACKAGE_VAR_CLASS_NAME: componentName,
 		INIT_PACKAGE_VAR_TYPESCRIPT: typescript,
 	};
 
 	const packageContent = {
-		name,
+		name: packageName,
 		version: "0.0.1",
 		ui5: {
 			webComponentsPackage: true,
@@ -154,14 +158,16 @@ const generateFilesContent = (name, componentName, typescript, skipSubfolder) =>
 	}
 
 	// Update package.json
-	const destDir = skipSubfolder ? path.join("./") : path.join("./", name);
+	let destDir = packageName.includes("@") ? packageName.slice(packageName.lastIndexOf("/") + 1) : packageName;
+
+	destDir = skipSubfolder ? path.join("./") : path.join("./", destDir);
 	mkdirp.sync(destDir);
 	fs.writeFileSync(path.join(destDir, "package.json"), JSON.stringify(packageContent, null, 2));
 	// Copy files
 	copyFiles(vars, TEMPLATE_DIR, destDir);
 
 	console.log("\nPackage successfully created!\nNext steps:\n");
-	console.log(`$ cd ${name}`);
+	console.log(`$ cd ${destDir}`);
 
 	let userAgentInfo;
 	try {
@@ -182,7 +188,7 @@ const generateFilesContent = (name, componentName, typescript, skipSubfolder) =>
 // Main function
 const createWebcomponentsPackage = async () => {
 	let response;
-	if (argv.name && !isNameValid(argv.name)) {
+	if (argv.name && !isPackageNameValid(argv.name)) {
 		throw new Error("The package name should be a string, starting with letter and containing the following symbols [a-z, A-Z, 0-9].");
 	}
 
@@ -190,17 +196,22 @@ const createWebcomponentsPackage = async () => {
 		throw new Error("The component name should be a string, starting with a capital letter [A-Z][a-z], for example: Button, MyButton, etc.");
 	}
 
+	if (argv.namespace && !isNamespaceValid(argv.namespace)) {
+		throw new Error("The JSDoc namespace must start with a letter and can only contain small-case letters, numbers, dots and dashes.");
+	}
+
 	if (argv.tag && !isTagValid(argv.tag) ) {
 		throw new Error("The tag should be in kebab-case (f.e my-component) and it can't be a single word.");
 	}
 
-	let name = argv.name || "my-package";
+	let packageName = argv.name || "my-package";
 	let componentName = argv.componentName || "MyComponent";
+	let namespace = argv.namespace || "demo.components";
 	let typescriptSupport = !!argv.enableTypescript;
 	const skipSubfolder = !!argv.skipSubfolder;
 
 	if (argv.skip) {
-		return generateFilesContent(name, componentName, typescriptSupport, skipSubfolder);
+		return generateFilesContent(packageName, componentName, namespace, typescriptSupport, skipSubfolder);
 	}
 
 	if (!argv.name) {
@@ -208,9 +219,9 @@ const createWebcomponentsPackage = async () => {
 			type: "text",
 			name: "name",
 			message: "Package name:",
-			validate: (value) => isNameValid(value) ? true : "Package name should be a string, starting with a letter and containing the following symbols [a-z, A-Z ,0-9, _, -].",
+			validate: (value) => isPackageNameValid(value) ? true : "Package name should be a string, starting with a letter and containing the following symbols [a-z, A-Z ,0-9, _, -].",
 		});
-		name = response.name;
+		packageName = response.name;
 	}
 
 	if (!typescriptSupport) {
@@ -243,7 +254,18 @@ const createWebcomponentsPackage = async () => {
 		componentName = response.componentName;
 	}
 
-	return generateFilesContent(name, componentName, typescriptSupport, skipSubfolder);
+	if (!argv.namespace) {
+		response = await prompts({
+			type: "text",
+			name: "namespace",
+			message: "JSDoc namespace:",
+			initial: "demo.components",
+			validate: (value) => isNamespaceValid(value) ? true : "The JSDoc namespace must start with a letter and can only contain small-case letters, numbers, dots and dashes.",
+		});
+		namespace = response.namespace;
+	}
+
+	return generateFilesContent(packageName, componentName, namespace, typescriptSupport, skipSubfolder);
 };
 
 createWebcomponentsPackage();

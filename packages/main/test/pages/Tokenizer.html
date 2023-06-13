@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+
+	<title>Tokenizer</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta charset="utf-8">
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+	<script src="../../bundle.esm.js" type="module"></script>
+	<link rel="stylesheet" type="text/css" href="./styles/Tokenizer.css">
+</head>
+
+<body>
+	<div class="wrapper">
+
+		<ui5-segmented-button id="theme-switch">
+			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon" selected>Morning</ui5-segmented-button-item>
+			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_dark">Evening</ui5-segmented-button-item>
+			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcb">HCB</ui5-segmented-button-item>
+			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcw">HCW</ui5-segmented-button-item>
+		</ui5-segmented-button>
+
+		<div class="row">
+			<div class="col"></div>
+			<div class="col">Compact</div>
+			<div class="col">Cozy</div>
+		</div>
+
+		<div class="row">
+			<div class="col">Regular</div>
+			<div class="col sapUiSizeCompact">
+				<ui5-tokenizer show-more>
+					<ui5-token text="Token"></ui5-token>
+					<ui5-token text="Token 2"></ui5-token>
+					<ui5-token text="Token 3"></ui5-token>
+					<ui5-token text="Token 4"></ui5-token>
+					<ui5-token text="Token 5"></ui5-token>
+				</ui5-tokenizer>
+			</div>
+			<div class="col">
+				<ui5-tokenizer show-more>
+					<ui5-token text="Token"></ui5-token>
+					<ui5-token text="Token 2"></ui5-token>
+					<ui5-token text="Token 3"></ui5-token>
+					<ui5-token text="Token 4"></ui5-token>
+					<ui5-token text="Token 5"></ui5-token>
+				</ui5-tokenizer>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">Selected on First Token</div>
+			<div class="col sapUiSizeCompact">
+				<ui5-tokenizer show-more>
+					<ui5-token selected text="Token"></ui5-token>
+					<ui5-token text="Token 2"></ui5-token>
+					<ui5-token text="Token 3"></ui5-token>
+					<ui5-token text="Token 4"></ui5-token>
+					<ui5-token text="Token 5"></ui5-token>
+				</ui5-tokenizer>
+			</div>
+			<div class="col">
+				<ui5-tokenizer show-more>
+					<ui5-token selected text="Token"></ui5-token>
+					<ui5-token text="Token 2"></ui5-token>
+					<ui5-token text="Token 3"></ui5-token>
+					<ui5-token text="Token 4"></ui5-token>
+					<ui5-token text="Token 5"></ui5-token>
+				</ui5-tokenizer>
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+		document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
+			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
+		});
+	</script>
+</body>
+
+</html>

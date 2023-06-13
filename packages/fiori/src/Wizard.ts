@@ -17,6 +17,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
 import {
@@ -233,6 +234,17 @@ type StepInfo = {
 })
 
 class Wizard extends UI5Element {
+	/**
+	 * Defines how the content of the <code>ui5-wizard</code> would be visualized.
+	 * @public
+	 * @type {sap.ui.webc.fiori.types.WizardContentLayout}
+	 * @since 1.14.0
+	 * @name sap.ui.webc.fiori.Wizard.prototype.contentLayout
+	 * @defaultvalue "MultipleSteps"
+	 */
+	@property({ validator: String, defaultValue: WizardContentLayout.MultipleSteps })
+	contentLayout?: WizardContentLayout
+
 	/**
 	 * Defines the width of the <code>ui5-wizard</code>.
 	 * @private
