@@ -8,10 +8,9 @@ interface IContentParser {
 
 class AssetsParser implements IContentParser {
     public parseContent(content: string): string {
-        const assetsExpr = /([a-zA-Z0-9_\-]+)="([^"]*assets\/[^"]*)"/g;
-        return content.replace(assetsExpr, (_, p1, p2) => {
-            return `${p1}="../../../..${p2}"`; // to /dist/assets
-        });
+        const regex = /([a-zA-Z0-9_\-]+)="([^"]*assets\/[^"]*)"/g;
+        const replacement = '$1="../../../..$2"';
+        return content.replace(regex, replacement);
     }
 }
 
