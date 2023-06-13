@@ -30,6 +30,20 @@ module.exports = {
 					},
 				],
 			}),
+			modifySelectors({
+				enable: true,
+				modify: [
+					{
+						match: (selector) => {
+							const selectors = [".sapUiSizeCompact", ".ui5-content-density-compact", "[data-ui5-compact-size]", "[dir=\"rtl\"]", "[dir=\"ltr\"]"]
+							return selectors.some($ => selector.startsWith($))
+						},
+						with: (selector) => {
+							return `${selector.replace(" ", "")}, ${selector}`
+						},
+					},
+				]
+			}),
 			postcssCSStoJSON({ toReplace: 'src', packageName }),
 			postcssCSStoESM({ toReplace: 'src', packageName }),
 		]
