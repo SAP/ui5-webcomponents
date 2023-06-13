@@ -41,13 +41,13 @@
 
 @font-face {
     font-family: '72-Light';
-    font-style: 300;
+    font-style: normal;
     src: url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_horizon/fonts/72-Light.woff2?ui5-webcomponents) format("woff2"), local('72-Light');
 }
 
 @font-face {
     font-family: '72-Lightfull';
-    font-style: 300;
+    font-style: normal;
     src: url(https://sdk.openui5.org/resources/sap/ui/core/themes/sap_horizon/fonts/72-Light-full.woff2?ui5-webcomponents) format("woff2");
 }
 
