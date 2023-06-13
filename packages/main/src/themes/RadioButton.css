@@ -41,10 +41,6 @@
 	stroke: var(--_ui5_radio_button_color);
 }
 
-:host([disabled]) .ui5-radio-label {
-	opacity: var(--sapContent_DisabledOpacity);
-}
-
 /* focused */
 :host(:not([disabled])) .ui5-radio-root:focus-visible:before {
 	content: "";

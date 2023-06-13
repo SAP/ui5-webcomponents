@@ -26,4 +26,5 @@
 	--_ui5_radio_button_label_color: var(--sapTitleColor);
 	--_ui5_radio_button_items_align: center;
 	--_ui5_radio_button_inner_width: 100%;
+	--_ui5_radio_button_checked_warning_fill: var(--sapField_WarningColor);
 }
