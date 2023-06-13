@@ -1,0 +1,73 @@
+<div
+	id="{{_id}}"
+	class="ui5-time-picker-tsc-container"
+	tabindex="-1"
+	@keydown={{_onkeydown}}
+	@keyup={{_onkeyup}}
+	@focusin={{_clocksFocusIn}}
+	format-pattern="{{formatPattern}}"
+>
+	<div
+		class="ui5-time-picker-tsc-buttons"
+	>
+	{{#each _buttons}}
+		<span separator>{{this.separator}}</span>
+		<ui5-toggle-spin-button
+			id="{{this.id}}"
+			.valueMin="{{this.valueMin}}"
+			.valueMax="{{this.valueMax}}"
+			.valueNow="{{this.valueNow}}"
+			.valueText="{{this.valueText}}"
+			.accessibleName="{{this.accessibleName}}"
+			.pressed="{{this.pressed}}"
+			?focused="{{this.pressed}}"
+			@focusin="{{../_buttonFocusIn}}"
+		>{{this.valueString}}</ui5-toggle-spin-button>
+	{{/each}}
+	{{#if _periods.length}}
+		<span separator>{{_amPmSeparator}}</span>
+		<ui5-segmented-button
+			id="{{_id}}_AmPm"
+			@click={{_periodChange}}
+		>
+		{{#each _periods}}
+    		<ui5-segmented-button-item
+				?pressed={{this.pressed}}
+			>
+			{{this.label}}
+			</ui5-segmented-button-item>
+		{{/each}}
+		</ui5-segmented-button>
+	{{/if}}
+		<span separator>{{_lastSeparator}}</span>
+	</div>
+
+	<div
+		class="ui5-time-picker-tsc-clocks"
+		role="img"
+		aria-label="{{clockDialAriaLabel}}"
+	>
+	{{#each _clocks}}
+		<ui5-time-picker-clock
+			id="{{this.id}}"
+			data-sap-clock="{{this.clock}}"
+			.active="{{this.active}}"
+			.label="{{this.label}}"
+			.itemMin="{{this.itemMin}}"
+			.itemMax="{{this.itemMax}}"
+			.selectedValue="{{this.selectedValue}}"
+			.displayStep="{{this.displayStep}}"
+			.valueStep="{{this.valueStep}}"
+			.disabled="{{this.disabled}}"
+			.lastItemReplacement="{{this.lastItemReplacement}}"
+			.showInnerCircle="{{this.showInnerCircle}}"
+			.prependZero="{{this.prependZero}}"
+			.support2400="{{this.support2400}}"
+			.hideFractions="{{this.hideFractions}}"
+			@ui5-change={{../_clockChange}}
+		>
+		</ui5-time-picker-clock>
+	{{/each}}
+	</div>
+
+</div>

@@ -11,20 +11,15 @@
 	@keydown="{{_onkeydown}}"
 >
 
-	<ui5-time-selection
+	<ui5-time-selection-clocks
 		id="{{_id}}-time-sel"
 		value="{{_timeSelectionValue}}"
 		format-pattern="{{_formatPattern}}"
-		.hideHours="{{hideHours}}"
-		.hideMinutes="{{hideMinutes}}"
-		.hideSeconds="{{hideSeconds}}"
 		.minutesStep="{{minutesStep}}"
 		.secondsStep="{{secondsStep}}"
-		.maxHours="{{maxHours}}"
-		.maxMinutes="{{maxMinutes}}"
-		.maxSeconds="{{maxSeconds}}"
 		@ui5-change="{{onTimeSelectionChange}}"
-	></ui5-time-selection>
+		@close-picker="{{submitPickers}}"
+	></ui5-time-selection-clocks>
 
 	<div slot="footer" class="ui5-time-picker-footer" @keydown={{_onfooterkeydown}}>
 		<ui5-button id="submit" design="Emphasized" @click="{{submitPickers}}">{{submitButtonLabel}}</ui5-button>
