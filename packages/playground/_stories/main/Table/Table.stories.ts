@@ -82,10 +82,10 @@ default:`
 		<span>30 x 18 x 3cm</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
+		<span style="color: #2b7c2b"><b style='padding-right: 0.125rem'>4.2</b>KG</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span><b>956</b>EUR</span>
+		<span><b style='padding-right: 0.125rem'>956</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>`
 };
@@ -123,10 +123,10 @@ default: `
 		<span>30 x 18 x 3cm</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
+		<span style="color: #2b7c2b"><b style='padding-right: 0.125rem'>4.2</b>KG</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span><b>956</b>EUR</span>
+		<span><b style='padding-right: 0.125rem'>956</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>
 <ui5-table-row>
@@ -143,10 +143,10 @@ default: `
 		<span>29 x 17 x 3.1cm</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.5</b>KG</span>
+		<span style="color: #2b7c2b"><b style='padding-right: 0.125rem'>4.5</b>KG</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span><b>1249</b>EUR</span>
+		<span><b style='padding-right: 0.125rem'>1249</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>
 <ui5-table-row>
@@ -163,10 +163,10 @@ default: `
 		<span>28 x 19 x 2.5cm</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
+		<span style="color: #2b7c2b"><b style='padding-right: 0.125rem'>4.2</b>KG</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span><b>1570</b>EUR</span>
+		<span><b style='padding-right: 0.125rem'>1570</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>`
 }
@@ -214,10 +214,10 @@ TableStickyHeader.args = {
 		<span>30 x 18 x 3cm</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
+		<span style="color: #2b7c2b"><b style='padding-right: 0.125rem'>4.2</b>KG</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span><b>956</b>EUR</span>
+		<span><b style='padding-right: 0.125rem'>956</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>
 <ui5-table-row>
@@ -234,10 +234,10 @@ TableStickyHeader.args = {
 		<span>29 x 17 x 3.1cm</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.5</b>KG</span>
+		<span style="color: #2b7c2b"><b style='padding-right: 0.125rem'>4.5</b>KG</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span><b>1249</b>EUR</span>
+		<span><b style='padding-right: 0.125rem'>1249</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>
 <ui5-table-row>
@@ -254,10 +254,10 @@ TableStickyHeader.args = {
 		<span>28 x 19 x 2.5cm</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
+		<span style="color: #2b7c2b"><b style='padding-right: 0.125rem'>4.2</b>KG</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span><b>1570</b>EUR</span>
+		<span><b style='padding-right: 0.125rem'>1570</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>
 <ui5-table-row>
@@ -274,10 +274,10 @@ TableStickyHeader.args = {
 		<span>32 x 21 x 4cm</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span style="color: #2b7c2b"><b>4.2</b>KG</span>
+		<span style="color: #2b7c2b"><b style='padding-right: 0.125rem'>4.2</b>KG</span>
 	</ui5-table-cell>
 	<ui5-table-cell style="text-align: right">
-		<span><b>1650</b>EUR</span>
+		<span><b style='padding-right: 0.125rem'>1650</b>EUR</span>
 	</ui5-table-cell>
 </ui5-table-row>`
 };
@@ -351,8 +351,8 @@ ${story()}
 				"</div></ui5-table-cell>" +
 				"<ui5-table-cell><span>" + product.supplierName + "</span></ui5-table-cell>" +
 				"<ui5-table-cell style='text-align: right'><span>" + product.width + " x " + product.depth + " x " + product.height + product.dimUnit + "</span></ui5-table-cell>" +
-				"<ui5-table-cell style='text-align: right'><span style='color: #2b7c2b' class='middle'><b>" + product.weightMeasure + "</b>" + product.weightUnit + "</span></ui5-table-cell>" +
-				"<ui5-table-cell style='text-align: right'><span><b> " + product.price + "</b>" + product.currencyCode + "</span></ui5-table-cell></ui5-table-row>";
+				"<ui5-table-cell style='text-align: right'><span style='color: #2b7c2b' class='middle'><b style='padding-right: 0.125rem'>" + product.weightMeasure + "</b>" + product.weightUnit + "</span></ui5-table-cell>" +
+				"<ui5-table-cell style='text-align: right'><span><b style='padding-right: 0.125rem'> " + product.price + "</b>" + product.currencyCode + "</span></ui5-table-cell></ui5-table-row>";
 		}).join("");
 		if (loads${index} >= loadsAll) {
 			growingTable${index}.growing = "None";
@@ -434,8 +434,8 @@ GrowingTableScroll.decorators = [
 				"</div></ui5-table-cell>" +
 				"<ui5-table-cell><span>" + product.supplierName + "</span></ui5-table-cell>" +
 				"<ui5-table-cell style='text-align: right'><span>" + product.width + " x " + product.depth + " x " + product.height + product.dimUnit + "</span></ui5-table-cell>" +
-				"<ui5-table-cell style='text-align: right'><span style='color: #2b7c2b'><b>" + product.weightMeasure + "</b>" + product.weightUnit + "</span></ui5-table-cell>" +
-				"<ui5-table-cell style='text-align: right'><span><b> " + product.price + "</b>" + product.currencyCode + "</span></ui5-table-cell></ui5-table-row>";
+				"<ui5-table-cell style='text-align: right'><span style='color: #2b7c2b'><b style='padding-right: 0.125rem'>" + product.weightMeasure + "</b>" + product.weightUnit + "</span></ui5-table-cell>" +
+				"<ui5-table-cell style='text-align: right'><span><b style='padding-right: 0.125rem'> " + product.price + "</b>" + product.currencyCode + "</span></ui5-table-cell></ui5-table-row>";
 		}).join("");
 		if (loadsScroll${index} >= loadsAllScroll) {
 			growingTableScroll${index}.growing = "None";

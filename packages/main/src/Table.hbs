@@ -1,4 +1,4 @@
-<div 
+<div
 	class="ui5-table-root"
 	@ui5-selection-requested="{{_handleSelect}}"
 	@ui5-_forward-after="{{_onForwardAfter}}"
@@ -51,7 +51,7 @@
 			{{#unless rows.length}}
 				{{#unless hideNoData}}
 					<tr class="ui5-table-no-data-row-root">
-						<td colspan="{{visibleColumnsCount}}" role="cell">
+						<td colspan="{{visibleColumnsCount}}" role="cell" style="width: 100%">
 
 							<div class="ui5-table-no-data-row">
 								<span>{{noDataText}}</span>
