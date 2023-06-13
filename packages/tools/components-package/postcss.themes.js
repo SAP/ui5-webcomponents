@@ -7,7 +7,7 @@ const modifySelectors = require("modify-selectors");
 const fs = require("fs");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
-const selectors = [".sapUiSizeCompact", ".ui5-content-density-compact", "[data-ui5-compact-size]", "[dir=\"rtl\"]", "[dir=\"ltr\"]"]
+const selectors = [".sapUiSizeCompact", ".ui5-content-density-compact", "[data-ui5-compact-size]", "[dir=\"rtl\"]", "[dir=\"ltr\"]"];
 
 module.exports = {
 		plugins: [
@@ -36,10 +36,10 @@ module.exports = {
 				modify: [
 					{
 						match: (selector) => {
-							return selectors.some($ => selector.startsWith($))
+							return selectors.some($ => selector.startsWith($));
 						},
 						with: (selector) => {
-							return `${selector.replace(" ", "")}, ${selector}`
+							return `${selector.replace(" ", "")}, ${selector}`;
 						},
 					},
 				]
