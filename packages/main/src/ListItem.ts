@@ -65,6 +65,11 @@ type AccInfo = {
 	ariaOwns?: string;
 }
 
+type AccessibilityAttributes = {
+	ariaSetsize: number,
+	ariaPosinset: number,
+}
+
 /**
  * @class
  * A class to serve as a base
@@ -110,6 +115,17 @@ abstract class ListItem extends ListItemBase {
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
 	type!: `${ListItemType}`;
+
+	/**
+	 * An object of strings that defines several additional accessibility attribute values
+	 * for customization depending on the use case.
+	 *
+	 * @type {object}
+	 * @name sap.ui.webc.main.ListItem.prototype.accessibilityAttributes
+	 * @public
+	 */
+	@property({ type: Object })
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	/**
 	 * The navigated state of the list item.
@@ -488,6 +504,8 @@ abstract class ListItem extends ListItemBase {
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
 			ariaHaspopup: this.ariaHaspopup || undefined,
+			setsize: this.accessibilityAttributes.ariaSetsize,
+			posinset: this.accessibilityAttributes.ariaPosinset,
 		};
 	}
 
