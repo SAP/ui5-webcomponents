@@ -41,7 +41,7 @@ export const Template0: StoryFn = () => html`
 				</ui5-file-uploader>
 			</div>
 			<ui5-upload-collection-item file-name="LaptopHT-1000.jpg" file-name-clickable="" upload-state="Complete">
-				<img src="./assets/images/HT-1000.jpg" slot="thumbnail">
+				<img src="../assets/images/HT-1000.jpg" slot="thumbnail">
 				Uploaded By: David Keane · Uploaded On: 2014-07-26 · File Size: 35 KB
 			</ui5-upload-collection-item>
 			<ui5-upload-collection-item file-name="Notes.txt" upload-state="Complete">
@@ -110,7 +110,7 @@ export const Template1: StoryFn = () => html`
 				<ui5-title>Attachments(2)</ui5-title>
 			</div>
 			<ui5-upload-collection-item file-name="LaptopHT-1000.jpg" file-name-clickable="" type="Detail" upload-state="Complete">
-				<img src="./assets/images/HT-1000.jpg" slot="thumbnail">
+				<img src="../assets/images/HT-1000.jpg" slot="thumbnail">
 				Uploaded By: David Keane · Uploaded On: 2014-07-26 · File Size: 35 KB
 			</ui5-upload-collection-item>
 			<ui5-upload-collection-item file-name="Notes.txt" type="Detail" upload-state="Complete">
@@ -142,11 +142,11 @@ export const Template2: StoryFn = () => html`
 				<ui5-title>Upload States</ui5-title>
 			</div>
 			<ui5-upload-collection-item file-name="LaptopHT-1000.jpg" upload-state="Complete">
-				<img src="./assets/images/HT-1000.jpg" slot="thumbnail">
+				<img src="../assets/images/HT-1000.jpg" slot="thumbnail">
 				uploadState="Complete"
 			</ui5-upload-collection-item>
 			<ui5-upload-collection-item file-name="Laptop.jpg" upload-state="Uploading" progress="37">
-				<img src="./assets/images/HT-1000.jpg" slot="thumbnail">
+				<img src="../assets/images/HT-1000.jpg" slot="thumbnail">
 				uploadState="Uploading"
 			</ui5-upload-collection-item>
 			<ui5-upload-collection-item file-name="latest.reports.pdf" upload-state="Error" progress="59">

@@ -173,7 +173,7 @@ export const InputWithVHD: StoryFn = () => html`
 	const itemsList${index} = document.getElementById("itemsList");
 
 	const loadSuggestions = async () => {
-		const response = await fetch("./assets/data/products.json");
+		const response = await fetch("../assets/data/products.json");
 		const products = await response.json();
 		const query = valueHelpInput${index}.value.toLowerCase();
 
@@ -214,7 +214,7 @@ export const InputWithVHD: StoryFn = () => html`
 		dialog${index}.close();
 	}
 	const loadList = async () => {
-		const response = await fetch("./assets/data/products.json");
+		const response = await fetch("../assets/data/products.json");
 		const products = await response.json();
 		const query = dialogSearchInput${index}.value.toLowerCase();
 

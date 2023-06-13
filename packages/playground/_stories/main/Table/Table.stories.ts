@@ -338,7 +338,7 @@ ${story()}
 	let sliceIndex${index} = 0;
 	let endSliceIndex${index} = sliceIndex${index} + rows${index};
 	const init${index} = async (rows) => {
-		const response = await fetch("./assets/data/products.json");
+		const response = await fetch("../assets/data/products.json");
 		const products = await response.json();
 		const collectionLength = products.length;
 		const loadsAll = Math.ceil(collectionLength / rows);
@@ -421,7 +421,7 @@ GrowingTableScroll.decorators = [
 	let loadsScroll${index} = 1;
 	let endSliceIndexScroll${index} = sliceIndexScroll${index} + rowsScroll${index};
 	const fill${index} = async (rowsScroll) => {
-		const responseScrollTable = await fetch("./assets/data/products.json");
+		const responseScrollTable = await fetch("../assets/data/products.json");
 		const productsScrollTable = await responseScrollTable.json();
 		const collectionLengthScroll = productsScrollTable.length;
 		let loadsAllScroll = Math.ceil(collectionLengthScroll / rowsScroll);

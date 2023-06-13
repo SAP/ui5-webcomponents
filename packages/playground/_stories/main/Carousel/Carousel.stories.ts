@@ -45,9 +45,9 @@ const Template: UI5StoryArgs<Carousel, StoryArgsSlots> = (args) => {
 export const SingleItemPerPage = Template.bind({});
 SingleItemPerPage.args = {
 	cyclic: true,
-	default: `<img src="./assets/images/sample1.jpg" alt="Landscape 1">
-	<img src="./assets/images/sample2.jpg" alt="Landscape 2">
-	<img src="./assets/images/sample3.jpg" alt="Bulb">`
+	default: `<img src="../assets/images/sample1.jpg" alt="Landscape 1">
+	<img src="../assets/images/sample2.jpg" alt="Landscape 2">
+	<img src="../assets/images/sample3.jpg" alt="Bulb">`
 };
 SingleItemPerPage.decorators = [
 	(story) => html`<style>
@@ -74,7 +74,7 @@ MultipleItemsPerPage.args = {
 </ui5-card>
 <ui5-card class="small">
 	<ui5-card-header slot="header" title-text="David Williams" subtitle-text="Sales Manager">
-		<img src="./assets/images/avatars/man_avatar_1.png" alt="" slot="avatar">
+		<img src="../assets/images/avatars/man_avatar_1.png" alt="" slot="avatar">
 	</ui5-card-header>
 	<ui5-list separators="Inner">
 		<ui5-li icon="competitor" icon-end>Personal Development</ui5-li>
@@ -88,9 +88,9 @@ MultipleItemsPerPage.args = {
 	</ui5-card-header>
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
-			<ui5-li image="./assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
-			<ui5-li image="./assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-			<ui5-li image="./assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
+			<ui5-li image="../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
+			<ui5-li image="../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
+			<ui5-li image="../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
 		</ui5-list>
 	</div>
 </ui5-card>
@@ -100,9 +100,9 @@ MultipleItemsPerPage.args = {
 	</ui5-card-header>
 	<div class="card-content">
 		<ui5-list separators="None" class="card-content-child" style="width: 100%">
-			<ui5-li image="./assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
-			<ui5-li image="./assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
-			<ui5-li image="./assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
+			<ui5-li image="../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
+			<ui5-li image="../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
+			<ui5-li image="../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
 		</ui5-list>
 	</div>
 </ui5-card>`
