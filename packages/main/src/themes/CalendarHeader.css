@@ -30,8 +30,8 @@
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:active,
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled:focus,
 .ui5-calheader-arrowbtn.ui5-calheader-arrowbtn-disabled {
-	pointer-events: none;
 	opacity: 0.4;
+	cursor: default;
 	outline: none;
 	background-color: var(--sapButton_Lite_Background);
 	color: var(--sapButton_Lite_TextColor);

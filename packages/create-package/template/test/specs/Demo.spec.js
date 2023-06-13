@@ -6,7 +6,6 @@ describe("INIT_PACKAGE_VAR_TAG rendering", async () => {
 	});
 
 	it("tests if web component is correctly rendered", async () => {
-
 		const innerContent = await browser.$("#myFirstComponent").shadow$("div");
 
 		assert.ok(innerContent, "content rendered");
