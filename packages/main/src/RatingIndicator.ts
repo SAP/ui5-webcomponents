@@ -336,7 +336,7 @@ class RatingIndicator extends UI5Element {
 	}
 
 	get _ariaDescription() {
-		return this.required ? RatingIndicator.i18nBundle.getText(RATING_INDICATOR_ARIA_DESCRIPTION) : "";
+		return this.required ? RatingIndicator.i18nBundle.getText(RATING_INDICATOR_ARIA_DESCRIPTION) : undefined;
 	}
 
 	get ariaReadonly() {
