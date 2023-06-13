@@ -84,12 +84,12 @@
 	justify-content: flex-end;
 }
 
-ui5-button[design="Transparent"] {
+.ui5-tb-item[design="Transparent"] {
 	color: inherit;
 }
 
 
-.ui5-tb-button {
+.ui5-tb-item {
     flex-shrink: 0;
 }
 

@@ -187,6 +187,15 @@ const IToken = "sap.ui.webc.main.IToken";
  */
 const ITreeItem = "sap.ui.webc.main.ITreeItem";
 
+/**
+ * Interface for toolbar items for the purpose of <code>ui5-toolbar</code>
+ *
+ * @name sap.ui.webc.main.IToolbarItem
+ * @interface
+ * @public
+ */
+const IToolbarItem = "sap.ui.webc.main.IToolbarItem";
+
 export {
 	IAvatar,
 	IBreadcrumbsItem,
@@ -209,4 +218,5 @@ export {
 	ITableRow,
 	IToken,
 	ITreeItem,
+	IToolbarItem,
 };
