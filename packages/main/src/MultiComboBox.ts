@@ -728,7 +728,7 @@ class MultiComboBox extends UI5Element {
 		const separatedText = pastedText.split(/\r\n|\r|\n|\t/g);
 		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
 
-		if (matchingItems.length > 1) {
+		if (separatedText.length > 1) {
 			matchingItems.forEach(item => {
 				item.selected = true;
 				this.value = "";
