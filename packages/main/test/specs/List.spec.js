@@ -442,9 +442,11 @@ describe("List Tests", () => {
 
 	it("tests aria-setsize and aria-posinset attributes", async () => {
 		const listItem = await browser.$("#listItem").shadow$("li");
+		const ariaSetSize = "200";
+		const ariaPosInSet = "3";
 
-		assert.strictEqual(await listItem.getAttribute("aria-setsize"), "3", "The aria-setsize is correct.");
-		assert.strictEqual(await listItem.getAttribute("aria-posinset"), "200", "The aria-posinset is correct.");
+		assert.strictEqual(await listItem.getAttribute("aria-setsize"), ariaSetSize, "The aria-setsize is correct.");
+		assert.strictEqual(await listItem.getAttribute("aria-posinset"), ariaPosInSet, "The aria-posinset is correct.");
 
 	});
 
