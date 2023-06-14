@@ -40,6 +40,28 @@ Basic.args = {
 	default: "Default",
 };
 
+export const SplitButtonWithMenu = Template.bind(this);
+SplitButtonWithMenu.args = {
+	default: "Open Menu",
+};
+SplitButtonWithMenu.decorators = [
+	(story) => {
+		return html`
+		<ui5-menu id="menuInSplitBtnDefaultAction">
+		<ui5-menu-item text="Edit" icon="add"></ui5-menu-item>
+		<ui5-menu-item text="Save" icon="save"></ui5-menu-item>
+		<ui5-menu-item text="Delete" icon="delete"></ui5-menu-item>
+		</ui5-menu>
+	${story()}
+	<script>
+		const splitBtnWithMenuDefaultAction = document.querySelector("ui5-split-button");
+		const menuInSplitBtn = document.getElementById("menuInSplitBtnDefaultAction");
+		splitBtnWithMenuDefaultAction.addEventListener("ui5-arrow-click", function () {
+			menuInSplitBtn.open ? menuInSplitBtn.close() : menuInSplitBtn.showAt(splitBtnWithMenuDefaultAction);
+		});
+	</script>`;}
+];
+
 export const Disabled = Template.bind({});
 Disabled.storyName = "Disabled SplitButton";
 Disabled.args = {
