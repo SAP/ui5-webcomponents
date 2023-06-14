@@ -142,7 +142,7 @@ class OpenUI5Support {
 		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5Popup;
 
 		if (!Popup) {
-			return;
+			console.warn(`The OpenUI5Support feature hasn't been initialized properly. Make sure you import the "@ui5/webcomponents-base/dist/features/OpenUI5Support.js" module before all components' modules.`); // eslint-disable-line
 		}
 
 		return Popup.getNextZIndex();
