@@ -140,6 +140,11 @@ class OpenUI5Support {
 		}
 
 		const Popup = window.sap.ui.require("sap/ui/core/Popup") as OpenUI5Popup;
+
+		if (!Popup) {
+			return;
+		}
+
 		return Popup.getNextZIndex();
 	}
 

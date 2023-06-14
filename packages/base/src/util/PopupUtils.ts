@@ -89,13 +89,22 @@ const getClosedPopupParent = (el: HTMLElement): HTMLElement => {
 };
 
 const getNextZIndex = () => {
-	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-	if (openUI5Support && openUI5Support.isLoaded()) { // use OpenUI5 for getting z-index values, if loaded
-		return openUI5Support.getNextZIndex();
+	const openUI5NextZIndex = getOpenUI5NextZIndex();
+
+	if (openUI5NextZIndex) {
+		return openUI5NextZIndex;
 	}
 
 	popupUtilsData.currentZIndex += 2;
 	return popupUtilsData.currentZIndex;
+};
+
+const getOpenUI5NextZIndex = (): number | undefined => {
+	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
+
+	if (openUI5Support && openUI5Support.isLoaded()) { // use OpenUI5 for getting z-index values, if loaded
+		return openUI5Support.getNextZIndex();
+	}
 };
 
 const getCurrentZIndex = () => {
