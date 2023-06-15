@@ -42,6 +42,10 @@ type Locale = {
 	_get: () => CLDRData,
 };
 
+type VersionUtil = (version: string) => {
+	compareTo: (version: string) => number,
+};
+
 const getCore = () => {
 	return window.sap?.ui?.getCore?.() as OpenUI5Core;
 };
@@ -58,18 +62,18 @@ class OpenUI5Support {
 		}
 
 		return new Promise<void>(resolve => {
+			const VersionUtil: VersionUtil = window.sap.ui.requireSync("sap/base/util/Version");
+			const deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
+			const version: string = window.sap.ui.version || "";
+
+			if (VersionUtil && VersionUtil(version).compareTo("1.116.0") >= 0) { // for versions since 1.116.0 and onward, use the Theming module
+				deps.push("sap/ui/core/Theming");
+			}
+
 			core.attachInit(() => {
-				window.sap.ui.require(["sap/ui/core/Popup", "sap/ui/core/LocaleData"], (Popup: OpenUI5Popup) => {
+				window.sap.ui.require(deps, (Popup: OpenUI5Popup) => {
 					Popup.setInitialZIndex(getCurrentZIndex());
-					const version: string = window.sap.ui.version || "";
-					const parts = version.split(".");
-					if (parts && parts[1] && parseInt(parts[1]) > 115) {
-						window.sap.ui.require(["sap/ui/core/Theming"], () => {
-							resolve();
-						});
-					} else {
-						resolve();
-					}
+					resolve();
 				});
 			 });
 		});
