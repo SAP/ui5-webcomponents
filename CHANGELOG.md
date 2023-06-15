@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.3](https://github.com/SAP/ui5-webcomponents/compare/v1.14.2...v1.14.3) (2023-06-15)
+
+
+### Bug Fixes
+
+* **framework:** support older OpenUI5 getThemeRoot API ([#7202](https://github.com/SAP/ui5-webcomponents/issues/7202)) ([4aae2db](https://github.com/SAP/ui5-webcomponents/commit/4aae2db0ac5fc2c8c82670c351e394ef0cc50aef)), closes [#7199](https://github.com/SAP/ui5-webcomponents/issues/7199)
+
+
+
+
+
 ## [1.14.2](https://github.com/SAP/ui5-webcomponents/compare/v1.14.1...v1.14.2) (2023-06-12)
 
 
