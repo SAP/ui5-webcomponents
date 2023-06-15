@@ -542,7 +542,6 @@ class Menu extends UI5Element {
 			const item = opener.associatedItem;
 			const hoverId = opener.getAttribute("id")!;
 
-			opener.focus();
 			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
 		}
 	}
