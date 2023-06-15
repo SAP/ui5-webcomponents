@@ -59,11 +59,19 @@ class OpenUI5Support {
 
 		return new Promise<void>(resolve => {
 			core.attachInit(() => {
-				window.sap.ui.require(["sap/ui/core/Popup", "sap/ui/core/LocaleData", "sap/ui/core/Theming"], (Popup: OpenUI5Popup) => {
+				window.sap.ui.require(["sap/ui/core/Popup", "sap/ui/core/LocaleData"], (Popup: OpenUI5Popup) => {
 					Popup.setInitialZIndex(getCurrentZIndex());
-					resolve();
+					const version: string = window.sap.ui.version || "";
+					const parts = version.split(".");
+					if (parts && parts[1] && parseInt(parts[1]) > 115) {
+						window.sap.ui.require(["sap/ui/core/Theming"], () => {
+							resolve();
+						});
+					} else {
+						resolve();
+					}
 				});
-			});
+			 });
 		});
 	}
 
