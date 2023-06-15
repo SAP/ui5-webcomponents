@@ -313,6 +313,10 @@ slot[name="profile"] {
 	align-items: center;
 }
 
+.ui5-shellbar-overflow-container-right-child .ui5-shellbar-button[data-count]:has(+ .ui5-shellbar-overflow-button)::before  {
+	right: -0.125rem;
+}
+
 .ui5-shellbar-overflow-button {
 	display: none;
 }
