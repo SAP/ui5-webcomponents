@@ -19,6 +19,7 @@ type OpenUI5CoreConfiguration = {
 	getAnimationMode: () => string,
 	getLanguage: () => string,
 	getTheme: () => string,
+	getThemeRoot: () => string,
 	getRTL: () => string,
 	getTimezone: () => string,
 	getCalendarType: () => string,
@@ -41,6 +42,10 @@ type Locale = {
 	_get: () => CLDRData,
 };
 
+type VersionUtil = (version: string) => {
+	compareTo: (version: string) => number,
+};
+
 const getCore = () => {
 	return window.sap?.ui?.getCore?.() as OpenUI5Core;
 };
@@ -57,10 +62,19 @@ class OpenUI5Support {
 		}
 
 		return new Promise<void>(resolve => {
-			core.attachInit(() => {
-				window.sap.ui.require(["sap/ui/core/Popup", "sap/ui/core/LocaleData", "sap/ui/core/Theming"], (Popup: OpenUI5Popup) => {
-					Popup.setInitialZIndex(getCurrentZIndex());
-					resolve();
+			const deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
+			const version: string = window.sap.ui.version || "";
+
+			window.sap.ui.require(["sap/base/util/Version"], (VersionUtil: VersionUtil) => {
+				if (VersionUtil(version).compareTo("1.116.0") >= 0) { // for versions since 1.116.0 and onward, use the Theming module
+					deps.push("sap/ui/core/Theming");
+				}
+
+				core.attachInit(() => {
+					window.sap.ui.require(deps, (Popup: OpenUI5Popup) => {
+						Popup.setInitialZIndex(getCurrentZIndex());
+						resolve();
+					});
 				});
 			});
 		});
@@ -80,7 +94,7 @@ class OpenUI5Support {
 			animationMode: config.getAnimationMode(),
 			language: config.getLanguage(),
 			theme: config.getTheme(),
-			themeRoot: Theming.getThemeRoot(),
+			themeRoot: config.getThemeRoot ? config.getThemeRoot() : Theming.getThemeRoot(), // Theming is the newer API, but not released yet (available on nightly snapshot). Remove "config.getThemeRoot" after Theming is released.
 			rtl: config.getRTL(),
 			timezone: config.getTimezone(),
 			calendarType: config.getCalendarType(),
