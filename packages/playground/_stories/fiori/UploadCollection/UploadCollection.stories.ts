@@ -21,9 +21,6 @@ export default {
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),
-			story: {
-				inline: false,
-			}
 		},
 	},
 	argTypes,
@@ -314,7 +311,7 @@ const handleDropEvent: Decorator = (story) => {
 export const DragAndDrop = Template.bind({});
 DragAndDrop.args = {
 	header: `<div slot="header" class="header">
-	<ui5-title>Uploaded (2)</ui5-title>
+	<ui5-title>Attachments</ui5-title>
 	<ui5-label show-colon>Add new files and press to start uploading pending files</ui5-label>
 	<ui5-button id="startUploading">Start</ui5-button>
 	<div class="spacer"></div>
