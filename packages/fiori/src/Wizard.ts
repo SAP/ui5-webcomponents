@@ -242,7 +242,7 @@ class Wizard extends UI5Element {
 	 * @name sap.ui.webc.fiori.Wizard.prototype.contentLayout
 	 * @defaultvalue "MultipleSteps"
 	 */
-	@property({ validator: String, defaultValue: WizardContentLayout.MultipleSteps })
+	@property({ type: WizardContentLayout, defaultValue: WizardContentLayout.MultipleSteps })
 	contentLayout?: WizardContentLayout
 
 	/**
