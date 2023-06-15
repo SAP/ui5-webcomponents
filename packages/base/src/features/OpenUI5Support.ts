@@ -62,7 +62,7 @@ class OpenUI5Support {
 		}
 
 		return new Promise<void>(resolve => {
-			const VersionUtil: VersionUtil = window.sap.ui.requireSync("sap/base/util/Version");
+			const VersionUtil: VersionUtil = window.sap.ui.require("sap/base/util/Version");
 			const deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
 			const version: string = window.sap.ui.version || "";
 
