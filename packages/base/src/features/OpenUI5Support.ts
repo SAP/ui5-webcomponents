@@ -19,6 +19,7 @@ type OpenUI5CoreConfiguration = {
 	getAnimationMode: () => string,
 	getLanguage: () => string,
 	getTheme: () => string,
+	getThemeRoot: () => string,
 	getRTL: () => string,
 	getTimezone: () => string,
 	getCalendarType: () => string,
@@ -80,7 +81,7 @@ class OpenUI5Support {
 			animationMode: config.getAnimationMode(),
 			language: config.getLanguage(),
 			theme: config.getTheme(),
-			themeRoot: Theming.getThemeRoot(),
+			themeRoot: config.getThemeRoot ? config.getThemeRoot() : Theming.getThemeRoot(), // Theming is the newer API, but not released yet (available on nightly snapshot). Remove "config.getThemeRoot" after Theming is released.
 			rtl: config.getRTL(),
 			timezone: config.getTimezone(),
 			calendarType: config.getCalendarType(),
