@@ -8,25 +8,7 @@
 
 /* No Files */
 .uc-no-files {
-	box-sizing: border-box;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	padding: 1rem;
 	background-color: var(--sapGroup_ContentBackground);
-}
-
-.uc-no-files .title {
-	font-size: var(--sapFontHeader2Size);
-	color: var(--sapGroup_TitleTextColor);
-	margin: 1rem 0;
-}
-
-.uc-no-files .subtitle {
-	font-size: var(--sapFontHeader5Size);
-	color: var(--sapContent_LabelColor);
-    margin-bottom: 2rem;
 }
 
 /* Drag and Drop */
