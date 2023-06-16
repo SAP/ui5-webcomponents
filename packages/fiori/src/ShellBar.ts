@@ -719,7 +719,7 @@ class ShellBar extends UI5Element {
 		const width = this.getBoundingClientRect().width;
 		const breakpoints = ShellBar.FIORI_3_BREAKPOINTS;
 
-		const size = breakpoints.find(bp1 => width < bp1) || ShellBar.FIORI_3_BREAKPOINTS[ShellBar.FIORI_3_BREAKPOINTS.length - 1];
+		const size = breakpoints.find(bp1 => width <= bp1) || ShellBar.FIORI_3_BREAKPOINTS[ShellBar.FIORI_3_BREAKPOINTS.length - 1];
 		const mappedSize = ShellBar.FIORI_3_BREAKPOINTS_MAP[size];
 
 		if (this.breakpointSize !== mappedSize) {
