@@ -987,7 +987,7 @@ class ShellBar extends UI5Element {
 		const items: Array<IShelBarItemInfo> = [
 			{
 				icon: "search",
-				text: "Search",
+				text: this._searchText,
 				classes: `${this.searchField.length ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-search-button ui5-shellbar-button`,
 				priority: 4,
 				domOrder: this.searchField.length ? (++domOrder) : -1,
@@ -1021,7 +1021,7 @@ class ShellBar extends UI5Element {
 			}),
 			{
 				icon: "bell",
-				text: "Notifications",
+				text: this._notificationsText,
 				classes: `${this.showNotifications ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-bell-button ui5-shellbar-button`,
 				priority: 3,
 				styles: {
@@ -1061,7 +1061,7 @@ class ShellBar extends UI5Element {
 			},
 			{
 				icon: "grid",
-				text: "Product Switch",
+				text: this._productsText,
 				classes: `${this.showProductSwitch ? "" : "ui5-shellbar-invisible-button"} ui5-shellbar-button ui5-shellbar-button-product-switch`,
 				priority: 2,
 				styles: {
