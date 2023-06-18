@@ -992,8 +992,12 @@ class ComboBox extends UI5Element {
 		const currentlyFocusedItem = this.items.find(item => item.focused);
 		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
 
+		const itemToBeSelected = this._filteredItems.find(item => {
+			return !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
+		});
+
 		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
+			item.selected = item === itemToBeSelected;
 			return item;
 		});
 	}
