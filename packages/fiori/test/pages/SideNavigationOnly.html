@@ -2,13 +2,13 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Side Navigation Dve</title>
+	<title>Side Navigation Only</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<script src="../../bundle.esm.js" type="module"></script>
 </head>
 
-<body class="sidenavigation1auto ui5-content-density-compact">
-	<ui5-side-navigation style="height: 90vh" id="sn1">
+<body style="background-color: var(--sapBackgroundColor)">
+	<ui5-side-navigation style="height: 90vh; " id="sn1">
 		<!-- Items -->
 		<ui5-side-navigation-item text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
 		<ui5-side-navigation-item text="People" expanded icon="group">
@@ -16,8 +16,8 @@
 			<ui5-side-navigation-sub-item text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
 		</ui5-side-navigation-item>
 		<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
-		<ui5-side-navigation-item text="Events.............................................................." icon="calendar" whole-item-toggleable>
-			<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+		<ui5-side-navigation-item expanded text="Events.............................................................." icon="calendar" whole-item-toggleable>
+			<ui5-side-navigation-sub-item text="Local.............................................................."></ui5-side-navigation-sub-item>
 			<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 		</ui5-side-navigation-item>
 
@@ -31,7 +31,7 @@
 
 	<div style="float: right">
 		<ui5-checkbox id="collapsed" text="Collapsed"></ui5-checkbox>
-		<ui5-checkbox id="density" text="Compact density" checked></ui5-checkbox>
+		<ui5-checkbox id="density" text="Compact density"></ui5-checkbox>
 	</div>
 
 	<script>
