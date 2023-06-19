@@ -24,7 +24,7 @@ const metadata = {
 		 * @public
 		 */
 		count: {
-			validator: Integer,
+			type: Integer,
 			defaultValue: 0,
 		},
 	},
