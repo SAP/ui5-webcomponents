@@ -15,7 +15,7 @@ h2 {
 	margin-bottom: 0.5rem;
 }
 
-.app, .app-first-component, .app-settings, .app-docs  {
+.app, .app-settings, .app-docs  {
 	display: flex;
 	align-items: center;
 	justify-content: center;

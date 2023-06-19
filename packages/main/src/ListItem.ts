@@ -65,6 +65,11 @@ type AccInfo = {
 	ariaOwns?: string;
 }
 
+type AccessibilityAttributes = {
+	ariaSetsize: number,
+	ariaPosinset: number,
+}
+
 /**
  * @class
  * A class to serve as a base
@@ -110,6 +115,30 @@ abstract class ListItem extends ListItemBase {
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
 	type!: `${ListItemType}`;
+
+	/**
+	 * An object of strings that defines several additional accessibility attribute values
+	 * for customization depending on the use case.
+	 *
+	 *  It supports the following fields:
+	 *
+	 * <ul>
+	 * 		<li><code>ariaSetsize</code>: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
+	 * 		The value of each <code>aria-setsize</code> is an integer reflecting number of items in the complete set.
+	 * 		<b>Note: </b> If the size of the entire set is unknown, set <code>aria-setsize="-1"</code>.
+	 * 		</li>
+	 * 		<li><code>ariaPosinset</code>: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
+	 * 		The value of each <code>aria-posinset</code> is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
+	 * 		</li>
+	 * </ul>
+	 *
+	 * @type {object}
+	 * @name sap.ui.webc.main.ListItem.prototype.accessibilityAttributes
+	 * @public
+	 * @since 1.15.0
+	 */
+	@property({ type: Object })
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	/**
 	 * The navigated state of the list item.
@@ -488,6 +517,8 @@ abstract class ListItem extends ListItemBase {
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
 			ariaHaspopup: this.ariaHaspopup || undefined,
+			setsize: this.accessibilityAttributes.ariaSetsize,
+			posinset: this.accessibilityAttributes.ariaPosinset,
 		};
 	}
 
