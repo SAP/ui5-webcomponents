@@ -51,7 +51,20 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
 	template: ProgressIndicatorTemplate,
 	dependencies: [Icon],
 })
+
 class ProgressIndicator extends UI5Element {
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.ProgressIndicator.prototype.accessibleName
+	 * @public
+	 * @since
+	*/
+	@property()
+	accessibleName!: string;
+
 	/**
 	 * Defines whether component is in disabled state.
 	 *
