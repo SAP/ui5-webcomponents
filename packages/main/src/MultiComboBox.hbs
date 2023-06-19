@@ -8,8 +8,10 @@
 
 	<ui5-tokenizer slot="_beginContent"
 		show-more
+		prevent-popover-open
 		class="ui5-multi-combobox-tokenizer"
 		?disabled="{{disabled}}"
+		@ui5-show-more-items-press="{{_showFilteredItems}}"
 		.morePopoverOpener={{this}}
 		.popoverMinWidth={{_inputWidth}}
 		@ui5-token-delete="{{_tokenDelete}}"

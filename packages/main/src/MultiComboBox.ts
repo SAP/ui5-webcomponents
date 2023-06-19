@@ -533,6 +533,13 @@ class MultiComboBox extends UI5Element {
 		this.allItemsPopover?.toggle(this);
 	}
 
+	_showFilteredItems() {
+		this.filterSelected = true;
+		this._showMorePressed = true;
+
+		this.togglePopover();
+	}
+
 	filterSelectedItems(e: MouseEvent) {
 		this.filterSelected = (e.target as ToggleButton).pressed;
 		const selectedItems = this._filteredItems.filter(item => item.selected);

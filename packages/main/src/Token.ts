@@ -237,7 +237,7 @@ class Token extends UI5Element implements ITabbable {
 	}
 
 	get isTruncatable() {
-		return this.textDom!.getBoundingClientRect().width < this.textDom!.scrollWidth;
+		return Math.ceil(this.textDom!.getBoundingClientRect().width) < Math.ceil(this.textDom!.scrollWidth);
 	}
 
 	static async onDefine() {

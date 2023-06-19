@@ -135,6 +135,14 @@ class Tokenizer extends UI5Element {
 	disabled!: boolean;
 
 	/**
+	 * Prevent opening of n-more Popover when label is clicked
+	 *
+	 * @private
+	 */
+	@property({ type: Boolean })
+	preventPopoverOpen!: boolean;
+
+	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
 	 *
 	 * @private
@@ -211,7 +219,10 @@ class Tokenizer extends UI5Element {
 	}
 
 	async _openMorePopoverAndFireEvent() {
-		await this.openMorePopover();
+		if (!this.preventPopoverOpen) {
+			await this.openMorePopover();
+		}
+
 		this.fireEvent("show-more-items-press");
 	}
 
