@@ -17,6 +17,7 @@ import debounce from "@ui5/webcomponents-base/dist/util/debounce.js";
 import { getFirstFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import Button from "@ui5/webcomponents/dist/Button.js";
 import ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js";
+import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import WizardContentLayout from "./types/WizardContentLayout.js";
 
 // Texts
@@ -203,7 +204,10 @@ type StepInfo = {
 	languageAware: true,
 	fastNavigation: true,
 	renderer: litRender,
-	styles: WizardCss,
+	styles: [
+		browserScrollbarCSS,
+		WizardCss,
+	],
 	staticAreaStyles: WizardPopoverCss,
 	template: WizardTemplate,
 	staticAreaTemplate: WizardPopoverTemplate,
@@ -242,7 +246,7 @@ class Wizard extends UI5Element {
 	 * @name sap.ui.webc.fiori.Wizard.prototype.contentLayout
 	 * @defaultvalue "MultipleSteps"
 	 */
-	@property({ validator: String, defaultValue: WizardContentLayout.MultipleSteps })
+	@property({ type: WizardContentLayout, defaultValue: WizardContentLayout.MultipleSteps })
 	contentLayout?: WizardContentLayout
 
 	/**

@@ -439,6 +439,17 @@ describe("List Tests", () => {
 		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");
 	});
 
+
+	it("tests aria-setsize and aria-posinset attributes", async () => {
+		const listItem = await browser.$("#listItem").shadow$("li");
+		const ariaSetSize = "200";
+		const ariaPosInSet = "3";
+
+		assert.strictEqual(await listItem.getAttribute("aria-setsize"), ariaSetSize, "The aria-setsize is correct.");
+		assert.strictEqual(await listItem.getAttribute("aria-posinset"), ariaPosInSet, "The aria-posinset is correct.");
+
+	});
+
 	it("tests title is updated, when initially empty", async () => {
 		const btnChangeEmptyItem = await browser.$("#changeEmptyItem");
 		const emptyItem = await browser.$("#emptyItem");

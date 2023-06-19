@@ -60,7 +60,7 @@ type ActionsWidthMap = {
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar
  * @public
- * @since 0.8.0
+ * @since 1.16.0
  */
 @customElement({
 	tag: "ui5-toolbar",
@@ -83,7 +83,8 @@ type ActionsWidthMap = {
 /**
  * Fired whenever the width of the content changes.
  * @param {Number} contentWidth the value of the new changed width.
- * @event
+ * @event sap.ui.webc.main.Toolbar.prototype.contentWidthChange
+
  * @public
  */
 @event("content-width-change", {
@@ -95,7 +96,7 @@ type ActionsWidthMap = {
  * Fired whenever the toolbar popup closes and opens.
  * @param {Boolean} open indicates the state of the popup.
  * @public
- * @event
+ * @event sap.ui.webc.main.Toolbar.prototype.overflowToggle
  */
 @event("overflow-toggle", {
 	detail: {
@@ -104,6 +105,55 @@ type ActionsWidthMap = {
 })
 
 class Toolbar extends UI5Element {
+	/**
+	 * Indicates if the Toolbar is in disabled state.
+	 * @type {boolean}
+	 * @public
+	 * @name sap.ui.webc.main.Toolbar.prototype.disabled
+	 */
+	 @property({ type: Boolean })
+	 disabled!: boolean;
+
+	/**
+	 * Defines the design of the toolbar background. It can be solid or transparent.
+	 * @type {sap.ui.webc.main.types.ToolbarDesign}
+	 * @public
+	 * @defaultvalue "Solid"
+	 * @name sap.ui.webc.main.Toolbar.prototype.design
+	 */
+	@property({ type: ToolbarDesign })
+	design!: string;
+
+	/**
+	 * Defines the styling of the toolbar. It can be standard or clear (no border applied).
+	 * @type {sap.ui.webc.main.types.ToolbarStyling}
+	 * @defaultvalue "Standard"
+	 * @name sap.ui.webc.main.Toolbar.prototype.styling
+	 * @public
+	 */
+	@property({ type: ToolbarStyling })
+	styling!: string;
+
+	/**
+	 * Defines if the toolbar overflow popup should close upon intereaction with the actions inside.
+	 * It will close by default.
+	 * @type {boolean}
+	 * @public
+	 * @name sap.ui.webc.main.Toolbar.prototype.preventOverflowClosing
+	 */
+	@property({ type: Boolean })
+	preventOverflowClosing!: boolean;
+
+	/**
+	 * Indicated the direction in which the Toolbar items will be aligned.
+	 * @type {sap.ui.webc.main.types.ToolbarAlign}
+	 * @public
+	 * @defaultvalue: "End"
+	 * @name sap.ui.webc.main.Toolbar.prototype.alignContent
+	 */
+	@property({ type: ToolbarAlign })
+	alignContent!: string;
+
 	/**
 	 * Actions, which will be displayed in the toolbar.
 	 * @type {Object}
@@ -139,50 +189,6 @@ class Toolbar extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	resizing!: boolean;
-
-	/**
-	 * Indicates if the Toolbar is in disabled state.
-	 * @type {boolean}
-	 * @public
-	 */
-	 @property({ type: Boolean })
-	 disabled!: boolean;
-
-	/**
-	 * Defines the design of the toolbar background. It can be solid or transparent.
-	 * @type {sap.ui.webc.main.types.ToolbarDesign}
-	 * @public
-	 * @defaultvalue ToolbarDesign.Solid
-	 */
-	@property({ type: ToolbarDesign })
-	design!: string;
-
-	/**
-	 * Defines the styling of the toolbar. It can be standard or clear (no border applied).
-	 * @type {sap.ui.webc.main.types.ToolbarStyling}
-	 * @defaultvalue ToolbarStyling.Standard,
-	 * @public
-	 */
-	@property({ type: ToolbarStyling })
-	styling!: string;
-
-	/**
-	 * Defines if the toolbar overflow popup should close upon intereaction with the actions inside.
-	 * It will close by default.
-	 * @type {boolean}
-	 * @public
-	 */
-	@property({ type: Boolean })
-	preventOverflowClosing!: boolean;
-
-	/**
-	 * Indicated the direction in which the Toolbar items will be aligned.
-	 * @type {sap.ui.webc.main.types.ToolbarAlign}
-	 * @public
-	 * @defaultvalue: ToolbarAlign.End
-	 */
-	@property({ type: ToolbarAlign })
-	alignContent!: string;
 
 	/**
 	* Calculated width of the whole toolbar.

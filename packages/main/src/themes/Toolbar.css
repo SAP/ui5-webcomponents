@@ -36,11 +36,11 @@
 	justify-content: flex-end;
 	align-items: center;
 	overflow: hidden;
+	pointer-events: none;
 }
 
-:host .ui5-tb-root:focus {
-	outline: 0.0625rem dotted var(--sapContent_FocusColor);
-	outline-offset: -0.1875rem;
+.ui5-tb-root > * {
+	pointer-events: all;
 }
 
 :host([no-padding]) .ui5-tb-root {
@@ -54,12 +54,6 @@
 :host([align-content="Start"]) .ui5-tb-root {
 	justify-content: flex-start;
 }
-
-:host([align-content="SpaceBetween"]) .ui5-tb-root {
-	justify-content: space-between;
-}
-
-
 
 .ui5-tb-root,
 .ui5-tb-actions {

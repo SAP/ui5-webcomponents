@@ -3,7 +3,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { StoryFn, Meta } from "@storybook/web-components";
 
-import type Toolbar from "@ui5/webcomponents/dist/Toolbar";
+import Toolbar from "@ui5/webcomponents/dist/Toolbar";
 
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
@@ -33,6 +33,7 @@ const Template: UI5StoryArgs<Toolbar, StoryArgsSlots> = (args) => {
 	return html` <ui5-toolbar
 		design="${ifDefined(args.design)}"
 		styling="${ifDefined(args.styling)}"
+		align-content="${ifDefined(args.alignContent)}"
 		?disabled="${ifDefined(args.disabled)}"
 		?reverse-overflow="${ifDefined(args.reverseOverflow)}"
 	>
@@ -136,6 +137,16 @@ ToolbarWithTransparentDesign.storyName = "Toolbar with transparent design";
 
 ToolbarWithTransparentDesign.args = {
   styling: ToolbarDesign.Transparent,
+  default: Basic.args.default
+};
+
+export const ToolbarWithStartAlignedElements = Template.bind({});
+
+
+ToolbarWithStartAlignedElements.storyName = "Toolbar with 'Start' aligned elements";
+
+ToolbarWithStartAlignedElements.args = {
+  alignContent: ToolbarAlign.Start,
   default: Basic.args.default
 };
 

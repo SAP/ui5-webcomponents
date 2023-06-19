@@ -12,11 +12,13 @@ enum ToolbarStyling {
 	/**
 	 * Design without bottom border
 	 * @public
+	 * @type {Clear}
 	 */
 	Clear = "Clear",
 
 	/**
 	 * @public
+	 * @type {Standard}
 	 */
 	Standard = "Standard",
 }
