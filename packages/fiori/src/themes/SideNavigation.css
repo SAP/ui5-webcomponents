@@ -9,11 +9,6 @@
 	width: var(--_ui5_side_navigation_collapsed_state_width);
 }
 
-:host(.ui5-side-navigation-in-popover) .ui5-sn-root {
-	border-right: none;
-	padding: var(--_ui5_side_navigation_container_padding_in_popover);
-}
-
 .ui5-sn-root {
 	height: 100%;
 	display: flex;
@@ -26,6 +21,11 @@
 	padding: var(--_ui5_side_navigation_container_padding);
 }
 
+:host(.ui5-side-navigation-in-popover) .ui5-sn-root {
+	border-inline-end: none;
+	padding: var(--_ui5_side_navigation_container_padding_in_popover);
+}
+
 .ui5-sn-tree {
 	--_ui5-tree-toggle-box-width: var(--_ui5_side_navigation_icon_padding_inline_start);
 	--_ui5_list_item_icon_padding-inline-end: var(--_ui5_side_navigation_icon_padding_inline_end);
@@ -36,6 +36,10 @@
 
 :host(.ui5-side-navigation-in-popover) .ui5-sn-tree {
 	--_ui5-tree-indent-step: var(--_ui5_side_navigation_indent_step_in_popover);
+}
+
+:host(.ui5-side-navigation-in-popover) [ui5-tree-item][level="1"]::part(native-li) {
+	margin-block-end: var(--_ui5_side_navigation_item_level_1_margin_bottom_in_popover);
 }
 
 .ui5-sn-items-tree {
@@ -111,20 +115,35 @@
 	--_ui5_side_navigation_item_gap: 0;
 }
 
+/* selection indicator */
 [ui5-tree-item][selected]::part(title) {
 	position: relative;
-	padding-inline-end: var(--_ui5_side_navigation_item_selection_indicator_reserved_space);
 }
 
 [ui5-tree-item][selected]::part(title)::after {
 	display: var(--_ui5_side_navigation_item_selection_indicator_display);
 	content: "";
 	position: absolute;
-	right: 0.4375rem;
-	top: 50%;
+	inset-block-start: 50%;
 	transform: translateY(-50%);
 	width: 0.5rem;
 	height: 0.5rem;
 	background-color: var(--sapList_SelectionBorderColor);
 	border-radius: 50%;
+}
+
+[ui5-tree-item][selected][has-children]::part(title) {
+	padding-inline-end: var(--_ui5_side_navigation_item_selection_indicator_reserved_space_has_children);
+}
+
+[ui5-tree-item][selected][has-children]::part(title)::after {
+	inset-inline-end: 0.4375rem;
+}
+
+[ui5-tree-item][selected]:not([has-children])::part(title) {
+	padding-inline-end: var(--_ui5_side_navigation_subitem_selection_indicator_reserved_space_no_children);
+}
+
+[ui5-tree-item][selected]:not([has-children])::part(title)::after {
+	inset-inline-end: 0;
 }
