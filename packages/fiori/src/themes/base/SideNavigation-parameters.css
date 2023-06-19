@@ -31,7 +31,6 @@
 	--_ui5_side_navigation_item_height: 2.75rem;
 	--_ui5_side_navigation_item_level_1_font: "72override", var(--sapFontFamily);
 	--_ui5_side_navigation_item_transition: none;
-	--_ui5_side_navigation_item_selection_indicator_color: var(--sapList_SelectionBorderColor);
 	--_ui5_side_navigation_item_selection_indicator_display: none;
 	--_ui5_side_navigation_item_selection_indicator_reserved_space: 0;
 }

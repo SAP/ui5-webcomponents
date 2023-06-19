@@ -111,11 +111,6 @@
 	--_ui5_side_navigation_item_gap: 0;
 }
 
-/* selected state */
-:host([collapsed]) [ui5-tree-item][selected] {
-	/* --_ui5_tree_item_selected_extra_background:  */
-}
-
 [ui5-tree-item][selected]::part(title) {
 	position: relative;
 	padding-inline-end: var(--_ui5_side_navigation_item_selection_indicator_reserved_space);
@@ -130,6 +125,6 @@
 	transform: translateY(-50%);
 	width: 0.5rem;
 	height: 0.5rem;
-	background-color: var(--_ui5_side_navigation_item_selection_indicator_color);
+	background-color: var(--sapList_SelectionBorderColor);
 	border-radius: 50%;
 }
