@@ -1416,6 +1416,10 @@ class MultiComboBox extends UI5Element {
 			this.fireSelectionChange();
 		}
 
+		if (!this.allowCustomValues) {
+			this.value = "";
+		}
+
 		this.togglePopover();
 	}
 
