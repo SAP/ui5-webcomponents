@@ -2,6 +2,8 @@
 
 :root {
 	--_ui5_side_navigation_width: 15rem;
+
+	--_ui5_side_navigation_box_shadow: var(--sapContent_Shadow0);
 	--_ui5_side_navigation_separator_backgound: var(--sapList_GroupHeaderBorderColor);
 	--_ui5_side_navigation_item_icon_color: var(--sapContent_IconColor);
 	--_ui5_side_navigation_icon_size: 1.125rem;

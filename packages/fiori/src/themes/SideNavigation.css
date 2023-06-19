@@ -18,11 +18,10 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	box-sizing: border-box;
 	background: var(--sapList_Background);
 	border-inline-end: var(--_ui5_side_navigation_border_inline_end);
 	border-radius: var(--_ui5_side_navigation_border_radius);
-	box-shadow: var(--sapContent_Shadow0);
+	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	box-sizing: border-box;
 	padding: var(--_ui5_side_navigation_container_padding);
 }
