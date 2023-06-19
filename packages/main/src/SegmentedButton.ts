@@ -105,7 +105,7 @@ class SegmentedButton extends UI5Element {
 	absoluteWidthSet: boolean // set to true whenever we set absolute width to the component
 	percentageWidthSet: boolean; // set to true whenever we set 100% width to the component
 	originalWidth!: string; // used to store the width of the component's parent before the resize
-	initialState!: boolean; // helper which indicates whether the stored width in the originalWidth is the initial one, since on change they change a few times and we want only the first one
+	initialState!: boolean; // indicates whether the stored width in the originalWidth is the initial one, since on change they change a few times and we want only the first one
 	hasPreviouslyFocusedItem: boolean;
 
 	_handleResizeBound: ResizeObserverCallback;
@@ -273,9 +273,7 @@ class SegmentedButton extends UI5Element {
 	 * @private
 	 */
 	async _doLayout(): Promise<void> {
-		const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize); // Gets the root font size in pixels in order to convert rem to pixels correctly
-		const itemMinWidth = 2.5; // Item minimum width in rem
-		const itemMinWidthPx = itemMinWidth * rootFontSize; // Converts rem to pixels
+		const itemMinWidthPx = parseInt(getComputedStyle(this.items[0]).minWidth); // gets the min-width of the items in px
 
 		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2);
 		if (!itemsHaveWidth) {
@@ -301,9 +299,7 @@ class SegmentedButton extends UI5Element {
 			const numItems = this.items.length;
 			let resultWidth = "";
 
-			if (inlineWidth && classWidth) {
-				resultWidth = inlineWidth;
-			} else if (inlineWidth) {
+			if (inlineWidth) {
 				resultWidth = inlineWidth;
 			} else if (classWidth) {
 				resultWidth = classWidth;
@@ -311,7 +307,7 @@ class SegmentedButton extends UI5Element {
 				resultWidth = defaultComponentWidth;
 			}
 
-			const widthValue = parseInt(resultWidth.replace("px", ""));
+			const widthValue = parseInt(resultWidth);
 			const minWidthAllowed = numItems * itemMinWidthPx;
 
 			if (widthValue < minWidthAllowed) {
@@ -337,12 +333,12 @@ class SegmentedButton extends UI5Element {
 		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
 			this.style.width = "100%";
 			this.percentageWidthSet = true;
-		} else if (parentWidth <= parseInt(this.originalWidth.replace("px", "")) && this.absoluteWidthSet) {
+		} else if (parentWidth <= parseInt(this.originalWidth) && this.absoluteWidthSet) {
 			this.style.width = "100%";
 			this.percentageWidthSet = true;
 		}
 
-		if (parentWidth > parseInt(this.originalWidth.replace("px", ""))) {
+		if (parentWidth > parseInt(this.originalWidth)) {
 			this.style.width = this.originalWidth;
 			this.absoluteWidthSet = true;
 		}
