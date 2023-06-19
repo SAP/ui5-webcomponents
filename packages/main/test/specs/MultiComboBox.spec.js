@@ -1,5 +1,14 @@
 import { assert } from "chai";
 
+const getTokenizerPopoverId = async (mcbId) => {
+	return await browser.executeAsync(async (mcbId, done) => {
+		const input = document.querySelector(`#${mcbId}`);
+		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
+
+		done(staticAreaItem.host.classList[0]);
+	}, mcbId);
+}
+
 describe("MultiComboBox general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
@@ -1478,15 +1487,15 @@ describe("MultiComboBox general interaction", () => {
 		it("should truncate token when single token is in the mcb and open popover on click", async () => {
 			const mcb = await $("#truncated-token");
 			const token = await mcb.shadow$("ui5-token");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#truncated-token");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover")
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
 			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
 			
 			await token.click();
 
-			assert.ok(await popover.getProperty("opened"), "More Popover should be open");
-		});
+			assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+	});
 	});
 
 	describe("ARIA attributes", () => {

@@ -13,16 +13,15 @@
 	{{#unless readonly}}
 		<div
 			class="ui5-token--icon"
-			@mousedown="{{_mousedown}}"
-			@click="{{_delete}}"
 		>
 			{{#if closeIcon.length}}
-				<slot name="closeIcon"></slot>
+				<slot name="closeIcon" @click="{{_delete}}"></slot>
 			{{else}}
 				<ui5-icon
 					name="{{iconURI}}"
 					accessible-name="{{tokenDeletableText}}"
 					show-tooltip
+					@click="{{_delete}}"
 				></ui5-icon>
 			{{/if}}
 		</div>

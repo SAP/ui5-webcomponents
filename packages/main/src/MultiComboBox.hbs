@@ -10,8 +10,10 @@
 		show-more
 		class="ui5-multi-combobox-tokenizer"
 		?disabled="{{disabled}}"
-		@ui5-show-more-items-press="{{_showFilteredItems}}"
+		.morePopoverOpener={{this}}
+		.popoverMinWidth={{_inputWidth}}
 		@ui5-token-delete="{{_tokenDelete}}"
+		@ui5-before-more-popover-open="{{handleBeforeTokenizerPopoverOpen}}"
 		@ui5-select="{{_onTokenSelect}}"
 		@focusout="{{_tokenizerFocusOut}}"
 		@focusin="{{_tokenizerFocusIn}}"

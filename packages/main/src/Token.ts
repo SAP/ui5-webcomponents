@@ -173,8 +173,10 @@ class Token extends UI5Element implements ITabbable {
 	static i18nBundle: I18nBundle;
 
 	_handleSelect() {
-		this.selected = !this.selected;
-		this.fireEvent("select");
+		if (!this.toBeDeleted) {
+			this.selected = !this.selected;
+			this.fireEvent("select");
+		}
 	}
 
 	_focusin() {
@@ -190,6 +192,7 @@ class Token extends UI5Element implements ITabbable {
 	}
 
 	_delete() {
+		this.toBeDeleted = true;
 		this.fireEvent("delete");
 	}
 

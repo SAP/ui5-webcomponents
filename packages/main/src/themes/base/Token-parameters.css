@@ -25,4 +25,5 @@
 	--_ui5_token_selected_internal_border_bottom_radius: 0;
 	--_ui5_token_selected_box_shadow: none;
 	--_ui5_token_text_icon_top: 0;
+	--_ui5_token_selected_focused_offset_bottom: var(--_ui5_token_focus_offset);
 }

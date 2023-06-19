@@ -82,6 +82,9 @@
 	font-family: "72override", var(--sapFontFamily);
 	user-select: none;
 }
+.ui5-token--wrapper {
+	position: relative;
+}
 
 :host([selected]) .ui5-token--wrapper {
 	font-family: var(--_ui5_token_selected_text_font_family);
@@ -103,6 +106,10 @@
 	bottom: var(--_ui5_token_focus_offset);
 	left: var(--_ui5_token_focus_offset);
 	right: var(--_ui5_token_focus_offset);
+}
+
+:host([focused][selected]) .ui5-token--wrapper:focus::after {
+	bottom: var(--_ui5_token_selected_focused_offset_bottom)
 }
 
 .ui5-token--text {

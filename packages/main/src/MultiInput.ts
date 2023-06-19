@@ -193,6 +193,10 @@ class MultiInput extends Input {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
 		}
+
+		if (e.relatedTarget === this.nativeInput) {
+			this.tokenizer.closeMorePopover();
+		}
 	}
 
 	valueHelpMouseUp() {
@@ -205,12 +209,16 @@ class MultiInput extends Input {
 		this.expandedTokenizer = true;
 		this.focused = true;
 		this.tokenizer.scrollToEnd();
+
+		this.tokenizer._getTokens().forEach(token => {
+			token.selected = false;
+		});
 	}
 
 	_onTokenSelect() {
 		if (this.tokens.length === 1 && this.tokens[0].isTruncatable) {
 			if (this.tokens[0].selected) {
-				this.tokenizer.openOverflowPopover();
+				this.tokenizer.openMorePopover();
 			} else {
 				this.tokenizer.closeMorePopover();
 			}

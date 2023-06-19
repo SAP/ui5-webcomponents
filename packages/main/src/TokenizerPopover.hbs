@@ -5,6 +5,8 @@
 	hide-arrow
 	placement-type="Bottom"
 	horizontal-align="Left"
+	@before-close={{handleBeforeClose}}
+	@before-open="{{handleBeforeOpen}}"
 >
 	<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
 		{{#if _isPhone}}
@@ -32,6 +34,7 @@
 		class="ui5-tokenizer-list"
 		mode="Delete"
 		@ui5-item-delete={{itemDelete}}
+		@focusout={{popoverListFocusOut}}
 	>
 		{{#each _tokens}}
 			<ui5-li .tokenRef={{this}}>

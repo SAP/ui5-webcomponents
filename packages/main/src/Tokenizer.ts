@@ -122,6 +122,11 @@ enum ClipboardDataOperation {
 		ref: { type: HTMLElement },
 	},
 })
+
+@event("before-more-popover-open", {
+	detail: {},
+})
+
 class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	showMore!: boolean;
@@ -156,6 +161,9 @@ class Tokenizer extends UI5Element {
 	@property({ validator: Integer })
 	_nMoreCount!: number;
 
+	@property({ validator: Integer })
+	_tokensCount!: number;
+
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
 	tokens!: Array<Token>;
 
@@ -187,6 +195,7 @@ class Tokenizer extends UI5Element {
 
 	onBeforeRendering() {
 		this._nMoreCount = this.overflownTokens.length;
+		this._tokensCount = this._getTokens().length;
 
 		this._tokens.forEach(token => {
 			token.singleToken = this._tokens.length === 1;
@@ -201,17 +210,13 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.contentDom, this._resizeHandler);
 	}
 
-	async _openOverflowPopoverAndFireEvent() {
-		await this.openOverflowPopover();
+	async _openMorePopoverAndFireEvent() {
+		await this.openMorePopover();
 		this.fireEvent("show-more-items-press");
 	}
 
-	async openOverflowPopover() {
-		if (this.showPopover) {
-			const popover = await this.getPopover();
-
-			popover.showAt(this.morePopoverOpener || this);
-		}
+	async openMorePopover() {
+		(await this.getPopover()).showAt(this.morePopoverOpener || this);
 	}
 
 	_getTokens() {
@@ -220,10 +225,6 @@ class Tokenizer extends UI5Element {
 
 	get _tokens() {
 		return this.getSlottedNodes<Token>("tokens");
-	}
-
-	get showPopover() {
-		return !!Object.keys(this.morePopoverOpener).length;
 	}
 
 	_getVisibleTokens() {
@@ -236,8 +237,14 @@ class Tokenizer extends UI5Element {
 		});
 	}
 
+	async popoverListFocusOut() {
+		if (this._tokens.length === 1) {
+			(await this.getPopover())?.close(false, false, true);
+		}
+	}
+
 	async onAfterRendering() {
-		if (this.showPopover && !this._getTokens().length) {
+		if (!this._getTokens().length) {
 			const popover = await this.getPopover();
 			popover.close();
 		}
@@ -258,6 +265,10 @@ class Tokenizer extends UI5Element {
 		const target = e.target as Token;
 		if (!e.detail) { // if there are no details, the event is triggered by a click
 			this._tokenClickDelete(e, target);
+
+			if (this._getTokens().length) {
+				this.closeMorePopover();
+			}
 			return;
 		}
 
@@ -329,6 +340,18 @@ class Tokenizer extends UI5Element {
 		const token = e.detail.item.tokenRef;
 
 		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+	}
+
+	handleBeforeClose() {
+		if (isPhone()) {
+			this._getTokens().forEach(token => {
+				token.selected = false;
+			});
+		}
+	}
+
+	handleBeforeOpen() {
+		this.fireEvent("before-more-popover-open");
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -570,9 +593,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	async closeMorePopover() {
-		const popover = await this.getPopover();
-
-		popover.close();
+		(await this.getPopover()).close(false, false, true);
 	}
 
 	get _nMoreText() {
@@ -618,10 +639,10 @@ class Tokenizer extends UI5Element {
 		return this._getTokens().filter(token => {
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = tokenRect.right;
-			const parentEnd = parentRect.right;
-			const tokenStart = tokenRect.left;
-			const parentStart = parentRect.left;
+			const tokenEnd = Number(tokenRect.right.toFixed(2));
+			const parentEnd = Number(parentRect.right.toFixed(2));
+			const tokenStart = Number(tokenRect.left.toFixed(2));
+			const parentStart = Number(parentRect.left.toFixed(2));
 
 			token.overflows = !this.expanded && ((tokenStart < parentStart) || (tokenEnd > parentEnd));
 
@@ -673,7 +694,7 @@ class Tokenizer extends UI5Element {
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-responsive-popover-header": this.showPopover,
+				"ui5-responsive-popover-header": true,
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
