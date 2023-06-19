@@ -48,7 +48,8 @@
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover, :host([_mode]:not([_mode="None"]):not([_mode="Delete"]):not([selected])) .ui5-li-root-tree:hover {
+:host([_toggle-button-end]) .ui5-li-root-tree:hover,
+:host([_mode]:not([_mode="None"]):not([_mode="Delete"]):not([selected])) .ui5-li-root-tree:hover {
 	background: var(--sapList_Hover_Background);
 	cursor: pointer;
 }
