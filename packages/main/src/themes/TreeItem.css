@@ -53,6 +53,10 @@
 	cursor: pointer;
 }
 
+:host([_toggle-button-end]) .ui5-li-root-tree:hover {
+	cursor: pointer;
+}
+
 :host(:not([level="1"]):not([selected])) .ui5-li-root-tree {
 	background: var(--sapList_AlternatingBackground);
 }
