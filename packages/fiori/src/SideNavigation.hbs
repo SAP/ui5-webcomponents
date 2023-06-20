@@ -4,7 +4,7 @@
 	{{#if items.length}}
 		<ui5-tree
 			id="ui5-sn-items-tree"
-			class="ui5-sn-items-tree"
+			class="ui5-sn-items-tree ui5-sn-tree"
 			mode="None"
 			.accessibleRoleDescription="{{ariaRoleDescNavigationList}}"
 			?_minimal="{{collapsed}}"
@@ -46,11 +46,12 @@
 
 	{{#if fixedItems.length}}
 		<div>
-			<div class="ui5-sn-bottom-content-border">
+			<div class="ui5-sn-divider">
 				<span></span>
 			</div>
 			<ui5-tree
 				id="ui5-sn-fixed-items-tree"
+				class="ui5-sn-tree"
 				mode="None"
 				?_minimal="{{collapsed}}"
 				_toggle-button-end

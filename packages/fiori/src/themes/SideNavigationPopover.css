@@ -1,5 +1,9 @@
 @import "./InvisibleTextStyles.css";
 
+.ui5-side-navigation-popover {
+	--_ui5_popover_box_shadow: var(--_ui5_side_navigation_popover_box_shadow);
+}
+
 .ui5-side-navigation-popover::part(content) {
 	padding: 0;
 }
@@ -15,7 +19,7 @@
 }
 
 .ui5-side-navigation-in-popover {
-    --_ui5-tree-toggle-box-width: 1rem;
-    --_ui5-tree-indent-step: 0;
+	--_ui5-tree-toggle-box-width: 1rem;
+	--_ui5-tree-indent-step: 0;
 	width: auto;
 }

@@ -725,10 +725,10 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		const separatedText = pastedText.split(/\r\n|\r|\n/g);
+		const separatedText = pastedText.split(/\r\n|\r|\n|\t/g);
 		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
 
-		if (matchingItems.length) {
+		if (separatedText.length > 1) {
 			matchingItems.forEach(item => {
 				item.selected = true;
 				this.value = "";
