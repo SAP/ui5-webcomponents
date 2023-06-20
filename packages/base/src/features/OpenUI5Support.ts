@@ -74,7 +74,7 @@ class OpenUI5Support {
 	}
 
 	static isLoaded() {
-		return !!window.sap?.ui?.core;
+		return typeof window.sap?.ui?.getCore === "function";
 	}
 
 	static init() {
