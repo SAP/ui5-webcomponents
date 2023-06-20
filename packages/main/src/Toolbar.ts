@@ -27,7 +27,6 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 
 import ToolbarButton from "./ToolbarButton.js";
 import ToolbarSpacer from "./ToolbarSpacer.js";
-import ToolbarSelect from "./ToolbarSelect.js";
 import ToolbarItem from "./ToolbarItem.js";
 import ToolbarSeparator from "./ToolbarSeparator.js";
 
@@ -74,7 +73,6 @@ type ActionsWidthMap = {
 		Popover,
 		Button,
 		ToolbarButton,
-		ToolbarSelect,
 		ToolbarSpacer,
 		ToolbarSeparator,
 	],
