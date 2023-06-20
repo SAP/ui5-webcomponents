@@ -14,6 +14,5 @@
 	--_ui5_slider_progress_background: var(--sapField_Background);
 	--_ui5_slider_tickmark_top: -0.2525rem;
 	--_ui5_slider_handle_active_border: 0.0625rem dotted var(--sapField_BorderColor);
-	--_ui5_range_slider_root_hover_handle_icon_display: none;
 	--_ui5_range_slider_handle_active_background: transparent;
 }
