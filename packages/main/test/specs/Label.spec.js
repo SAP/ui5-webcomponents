@@ -49,6 +49,23 @@ describe("General API", () => {
 		assert.strictEqual((await truncatingLabel.getSize()).height, 16, "truncated label should be single line");
 	});
 
+	it("colon symbol should be taken from the i18n bundle", async () => {
+		let actualSymbol;
+		let expectedSymbol;
+
+		actualSymbol = await browser.executeAsync(done => {
+			const label = document.getElementById("showColon-true");
+			done(window.getComputedStyle(label.shadowRoot.querySelector(".ui5-label-required-colon"), "::before").content);
+		});
+
+		expectedSymbol = await browser.executeAsync(done => {
+			const label = document.getElementById("showColon-true");
+			done(label.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.LABEL_COLON));
+		});
+
+		assert.strictEqual(actualSymbol, `"${expectedSymbol}"`, "Colon symbol should be taken from the i18n bundle");
+	});
+
 	describe("linked element with 'for' property", async () => {
 		it("should focus ui5-input on click", async () => {
 			const label = await browser.$("#label-for-ui5-input");

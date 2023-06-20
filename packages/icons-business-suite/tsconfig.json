@@ -9,8 +9,9 @@
 		"sourceMap": true,
 		"inlineSources": true,
 		"strict": true,
-		"module": "node16",
-      	"moduleResolution": "node16",
+		"module": "es2022",
+      	"moduleResolution": "node",
 		"resolveJsonModule": true,
+		"allowSyntheticDefaultImports": true,
 	},
 }

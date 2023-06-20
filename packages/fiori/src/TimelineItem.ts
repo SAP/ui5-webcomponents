@@ -120,7 +120,7 @@ class TimelineItem extends UI5Element implements ITabbable {
 	 * @private
 	 */
 	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
-	layout!: TimelineLayout;
+	layout!: `${TimelineLayout}`;
 
 	/**
 	 * Defines the indicator line width.

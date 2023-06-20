@@ -33,7 +33,7 @@ import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import List from "./List.js";
-import type { ClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail } from "./List.js";
 import {
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
@@ -144,6 +144,7 @@ interface IOption extends UI5Element {
  * Fired when the selected option changes.
  *
  * @event sap.ui.webc.main.Select#change
+ * @allowPreventDefault
  * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
@@ -221,7 +222,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Defines whether the component is required.
@@ -300,7 +301,7 @@ class Select extends UI5Element implements IFormElement {
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
 	selectedItem?: string | null;
-	popover?: Popover;
+	valueStatePopover?: Popover;
 	value!: string;
 
 	/**
@@ -605,7 +606,7 @@ class Select extends UI5Element implements IFormElement {
 	 * The user clicked on an item from the list
 	 * @private
 	 */
-	_handleItemPress(e: CustomEvent<ClickEventDetail>) {
+	_handleItemPress(e: CustomEvent<ListItemClickEventDetail>) {
 		const item = e.detail.item;
 		const selectedItemIndex = this._getSelectedItemIndex(item);
 
@@ -706,11 +707,15 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_fireChangeEvent(selectedOption: Option) {
-		this.fireEvent<SelectChangeEventDetail>("change", { selectedOption });
+		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
 		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
+		if (changePrevented) {
+			this.selectedItem = this._lastSelectedOption!.textContent;
+			this._select(this._selectedIndexBeforeOpen);
+		}
 	}
 
 	get valueStateTextMappings() {
@@ -871,14 +876,14 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	async openValueStatePopover() {
-		this.popover = await this._getPopover() as Popover;
-		if (this.popover) {
-			this.popover.showAt(this);
+		this.valueStatePopover = await this._getPopover() as Popover;
+		if (this.valueStatePopover) {
+			this.valueStatePopover.showAt(this);
 		}
 	}
 
 	closeValueStatePopover() {
-		this.popover && this.popover.close();
+		this.valueStatePopover && this.valueStatePopover.close();
 	}
 
 	toggleValueStatePopover(open: boolean) {

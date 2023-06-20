@@ -376,6 +376,8 @@
 ::slotted([ui5-icon][slot="icon"]) {
 	align-self: start;
 	padding: var(--_ui5_input_custom_icon_padding);
+	/* Normalize like libraries overrule the selector, thefore we need !important */
+	box-sizing: content-box !important;
 }
 
 :host([value-state="Error"]) [input-icon],

@@ -193,7 +193,7 @@ class IllustratedMessage extends UI5Element {
 	* @public
 	*/
 	@property({ type: IllustrationMessageType, defaultValue: IllustrationMessageType.BeforeSearch })
-	name!: IllustrationMessageType;
+	name!: `${IllustrationMessageType}`;
 
 	/**
 	* Determines which illustration breakpoint variant is used.
@@ -217,7 +217,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.5.0
 	*/
 	@property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
-	size!: IllustrationMessageSize;
+	size!: `${IllustrationMessageSize}`;
 
 	/**
 	* Defines the subtitle of the component.
@@ -517,7 +517,7 @@ class IllustratedMessage extends UI5Element {
 		return !!this.actions.length && this.media !== IllustratedMessage.MEDIA.BASE;
 	}
 
-	isValidIllustration(currentIllustration: IllustrationMessageType): boolean {
+	isValidIllustration(currentIllustration: `${IllustrationMessageType}`): boolean {
 		return currentIllustration in IllustrationMessageType;
 	}
 }

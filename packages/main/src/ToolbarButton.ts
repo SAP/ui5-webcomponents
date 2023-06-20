@@ -1,121 +1,22 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+
 import ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem from "./ToolbarItem.js";
-
 import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
 import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
 
-/**
- * @public
- */
-const metadata = {
+@customElement({
 	tag: "ui5-toolbar-button",
-	properties: {
-		/**
-		 * Defines if the action is disabled.
-		 * <br><br>
-		 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
-		 *
-		 * @type {boolean}
-		 * @defaultvalue false
-		 * @public
-		 */
-		disabled: {
-			type: Boolean,
-		},
+})
 
-		/**
-		 * Defines the action design.
-		 * <br><br>
-		 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
-		 * "Negative", and "Transparent".
-		 *
-		 * @type {ButtonDesign}
-		 * @defaultvalue "Transparent"
-		 * @public
-		 */
-		design: {
-			type: ButtonDesign,
-			defaultValue: ButtonDesign.Transparent,
-		},
-
-		/**
-		 * Defines the <code>icon</code> source URI.
-		 * <br><br>
-		 * <b>Note:</b>
-		 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
-		 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
-		 *
-		 * @type {string}
-		 * @defaultvalue ""
-		 * @public
-		 */
-		icon: {
-			type: String,
-		},
-
-		/**
-		 * Button text
-		 * @public
-		 */
-		text: {
-			type: String,
-		},
-
-		/**
-		 * Button width
-		 * @public
-		 */
-		width: {
-			type: String,
-		},
-
-		/**
-		 * Button image source
-		 * @public
-		 */
-		imageSrc: {
-			type: String,
-		},
-
-		/**
-		 * Button image alt
-		 * @public
-		 */
-		imageAlt: {
-			type: String,
-		},
-
-		/**
-		 * Button image width
-		 * @public
-		 */
-		imageWidth: {
-			type: Number,
-		},
-
-		/**
-		 * Button image height
-		 * @public
-		 */
-		imageHeight: {
-			type: Number,
-		},
-
-		/**
-		 * When set, moves the image after, rather than before, the text
-		 * @public
-		 */
-		imageLast: {
-			type: Boolean,
-		},
-	},
-	slots: {
-	},
-	events: {
-		click: {},
-	},
-};
+/**
+ * @event
+ */
+@event("click", {})
 
 /**
  * @class
@@ -129,15 +30,72 @@ const metadata = {
  * @public
  */
 class ToolbarButton extends ToolbarItem {
-	static get metadata() {
-		return metadata;
-	}
+	/**
+	 * Defines if the action is disabled.
+	 * <br><br>
+	 * <b>Note:</b> a disabled action can't be pressed or focused, and it is not in the tab chain.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
+	 * Defines the action design.
+	 * <br><br>
+	 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
+	 * "Negative", and "Transparent".
+	 *
+	 * @type {ButtonDesign}
+	 * @defaultvalue "Transparent"
+	 * @public
+	 */
+	@property({ type: ButtonDesign })
+	design!: ButtonDesign;
+
+	/**
+	 * Defines the <code>icon</code> source URI.
+	 * <br><br>
+	 * <b>Note:</b>
+	 * SAP-icons font provides numerous buil-in icons. To find all the available icons, see the
+	 * <ui5-link target="_blank" href="https://openui5.hana.ondemand.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property({ type: String })
+	icon!: string;
+
+	/**
+	 * Button text
+	 * @public
+	 */
+	@property({ type: String })
+	text!: string;
+
+	/**
+	 * Button width
+	 * @public
+	 */
+	@property({ type: String })
+	width!: string;
 
 	get styles() {
 		return {
 			width: this.width,
 			display: this.hidden ? "none" : "block",
 		};
+	}
+
+	get containsText() {
+		return this.text !== undefined;
+	}
+
+	get hasFlexibleWidth() {
+		return this.width !== undefined;
 	}
 
 	get toolbarTemplate() {

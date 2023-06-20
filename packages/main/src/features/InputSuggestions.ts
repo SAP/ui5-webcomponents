@@ -7,7 +7,7 @@ import encodeXML from "@ui5/webcomponents-base/dist/sap/base/security/encodeXML.
 import generateHighlightedMarkup from "@ui5/webcomponents-base/dist/util/generateHighlightedMarkup.js";
 import type ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import List from "../List.js";
-import type { ClickEventDetail, SelectionChangeEventDetail } from "../List.js";
+import type { ListItemClickEventDetail, ListSelectionChangeEventDetail } from "../List.js";
 import ResponsivePopover from "../ResponsivePopover.js";
 import SuggestionItem from "../SuggestionItem.js";
 import SuggestionGroupItem from "../SuggestionGroupItem.js";
@@ -43,9 +43,9 @@ type InputSuggestionText = {
 	description: string;
 	image?: string;
 	icon?: string;
-	type: ListItemType;
+	type: `${ListItemType}`;
 	additionalText?: string;
-	additionalTextState: ValueState;
+	additionalTextState: `${ValueState}`;
 	groupItem: boolean;
 	key: number;
 }
@@ -75,7 +75,7 @@ class Suggestions {
 	_handledPress?: boolean;
 	attachedAfterOpened?: boolean;
 	attachedAfterClose?: boolean;
-	fnOnSuggestionItemPress: (e: CustomEvent<ClickEventDetail | SelectionChangeEventDetail>) => void;
+	fnOnSuggestionItemPress: (e: CustomEvent<ListItemClickEventDetail | ListSelectionChangeEventDetail>) => void;
 	fnOnSuggestionItemMouseOver: (e: MouseEvent) => void;
 	fnOnSuggestionItemMouseOut: (e: MouseEvent) => void;
 	static i18nBundle: I18nBundle;
@@ -310,21 +310,21 @@ class Suggestions {
 
 	/* Private methods */
 	// Note: Split into two separate handlers
-	onItemPress(e: CustomEvent<ClickEventDetail | SelectionChangeEventDetail>) {
+	onItemPress(e: CustomEvent<ListItemClickEventDetail | ListSelectionChangeEventDetail>) {
 		let pressedItem: ListItemBase; // SuggestionListItem
 		const isPressEvent = e.type === "ui5-item-click";
 
 		// Only use the press e if the item is already selected, in all other cases we are listening for 'ui5-selection-change' from the list
 		// Also we have to check if the selection-change is fired by the list's 'item-click' event handling, to avoid double handling on our side
-		if ((isPressEvent && !(e.detail as ClickEventDetail).item.selected) || (this._handledPress && !isPressEvent)) {
+		if ((isPressEvent && !(e.detail as ListItemClickEventDetail).item.selected) || (this._handledPress && !isPressEvent)) {
 			return;
 		}
 
-		if (isPressEvent && (e.detail as ClickEventDetail).item.selected) {
-			pressedItem = (e.detail as ClickEventDetail).item;
+		if (isPressEvent && (e.detail as ListItemClickEventDetail).item.selected) {
+			pressedItem = (e.detail as ListItemClickEventDetail).item;
 			this._handledPress = true;
 		} else {
-			pressedItem = (e.detail as SelectionChangeEventDetail).selectedItems[0];
+			pressedItem = (e.detail as ListSelectionChangeEventDetail).selectedItems[0];
 		}
 
 		this.onItemSelected(pressedItem as SuggestionListItem, false /* keyboardUsed */);

@@ -1,27 +1,14 @@
 <ui5-button
-	class="ui5-tb-button ui5-tb-item"
+	class="ui5-tb-button ui5-tb-item {{this.classList.value}}"
+	id="{{this.id}}"
 	style="{{this.styles}}"
 	icon="{{this.icon}}"
 	design="{{this.design}}"
 	?disabled="{{this.disabled}}"
-	@click="{{this.press}}"
+	@click="{{this.click}}"
 	data-ui5-external-action-item-id="{{this._id}}"
 	.refItemId="{{this._id}}"
-	?always-overflow="{{alwaysOverflow}}"
+	?priority="{{priority}}"
 >
-	{{#if this.imageSrc}}
-		<div class="ui5-tb-action-content">
-			{{#if this.imageLast}}
-				<div class="ui5-tb-action-content-text ui5-tb-action-content-image-last">{{this.text}}</div>
-			{{/if}}
-
-			<img src="{{this.imageSrc}}" alt="{{imageAlt}}" width="{{imageWidth}}" height="{{imageHeight}}">
-
-			{{#unless this.imageLast}}
-				<div class="ui5-tb-action-content-text">{{this.text}}</div>
-			{{/unless}}
-		</div>
-	{{else}}
 		{{this.text}}
-	{{/if}}
 </ui5-button>

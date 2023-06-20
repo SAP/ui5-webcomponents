@@ -1,3 +1,5 @@
+@import "./FormComponents.css";
+
 :host {
 	display: inline-block;
 }
@@ -21,6 +23,7 @@
 
 .ui5-file-uploader-mask {
 	display: flex;
+	align-items: center;
 }
 
 .ui5-file-uploader-mask [ui5-input] {

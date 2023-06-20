@@ -3,6 +3,84 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.0...v1.15.0-rc.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* **ui5-table:** adjust samples ([#7181](https://github.com/SAP/ui5-webcomponents/issues/7181)) ([d384932](https://github.com/SAP/ui5-webcomponents/commit/d3849323f9821f6cc8509fd8c28fcb48c0053d64))
+
+
+
+
+
+
+
+
+# [1.15.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0...v1.15.0-rc.0) (2023-06-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.14.0](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.2...v1.14.0) (2023-06-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.1...v1.14.0-rc.2) (2023-06-01)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** aria-label added to initials ([#6967](https://github.com/SAP/ui5-webcomponents/issues/6967)) ([c89c5d3](https://github.com/SAP/ui5-webcomponents/commit/c89c5d30615308708c1d219264d3c4773fe5a825))
+
+
+### Features
+
+* **ui5-wizard:** introduce contentLayout property ([#7006](https://github.com/SAP/ui5-webcomponents/issues/7006)) ([66e9c3d](https://github.com/SAP/ui5-webcomponents/commit/66e9c3d83a945ae80e32d8614084b732cabd2bea))
+
+
+
+
+
+# [1.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.0...v1.14.0-rc.1) (2023-05-25)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.13.2...v1.14.0-rc.0) (2023-05-18)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+## [1.13.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.5...v1.13.1) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
 # [1.13.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.3...v1.13.0-rc.4) (2023-05-04)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

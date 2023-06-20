@@ -258,6 +258,8 @@
 	</div>
 
 	<div class="sample-container">
+		<h1>Create tokens on change and on paste</h1>
+
 		<ui5-multi-input show-suggestions id="token-unique" show-value-help-icon style="width: 50%">
 			<div slot="valueStateMessage" id="value-state-wrapper">Token is already in the list</div>
 			<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
@@ -413,30 +415,53 @@
 				const token = event.detail?.token;
 				token && token.remove();
 			});
-		
-			document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
-				if (!event.target.value) {
-					return;
+
+		document.getElementById("token-unique").addEventListener("paste", function (event) {
+			event.preventDefault();
+
+			let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;
+
+			if (!pastedText) {
+				return;
+			}
+
+			let separatedTexts = pastedText.split(/\r\n|\r|\n|\t/g).filter(t => !!t);
+
+			if (separatedTexts.length === 1) {
+				event.target.value = separatedTexts[0];
+				return;
+			}
+
+			separatedTexts.forEach((tokenText) => {
+				if (tokenText) {
+					event.target.appendChild(createTokenFromText(tokenText));
 				}
-		
-				var isDuplicate = event.target.tokens.some(function(token) {
-					return token.text === event.target.value
-				});
-		
-				if (isDuplicate) {
-					event.target.valueState = "Error";
-		
-					setTimeout(function () {
-						event.target.valueState = "None";
-					}, 2000);
-		
-					return;
-				}
-		
-				event.target.appendChild(createTokenFromText(event.target.value));
-		
-				event.target.value = "";
+			})
+		});
+
+		document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
+			if (!event.target.value) {
+				return;
+			}
+
+			var isDuplicate = event.target.tokens.some(function(token) {
+				return token.text === event.target.value
 			});
+
+			if (isDuplicate) {
+				event.target.valueState = "Error";
+
+				setTimeout(function () {
+					event.target.valueState = "None";
+				}, 2000);
+
+				return;
+			}
+
+			event.target.appendChild(createTokenFromText(event.target.value));
+
+			event.target.value = "";
+		});
 
 		document
 			.getElementById("token-unique")

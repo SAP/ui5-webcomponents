@@ -6,7 +6,6 @@
 	--_ui5_token_focus_outline_width: 0.0625rem;
 	--_ui5_token_outline_offset: -0.125rem;
 	--_ui5_token_text_color: var(--sapButton_TextColor);
-	--_ui5_token_hover_background: var(--sapButton_Hover_Background);
 	--_ui5_token_hover_border_color: var(--sapButton_Hover_BorderColor);
 	--_ui5_token_top_margin: 0.25rem;
 	--_ui5_token_bottom_margin: 0.25rem;
@@ -21,4 +20,9 @@
 	--_ui5_token_focused_selected_border: 1px solid var(--sapButton_Selected_BorderColor);
 	--ui5_token_focus_pseudo_element_content: none;
 	--_ui5_token_focus_offset: -0.25rem;
+	--_ui5_token_selected_text_font_family: "72override", var(--sapFontFamily);
+	--_ui5_token_selected_internal_border_bottom: none;
+	--_ui5_token_selected_internal_border_bottom_radius: 0;
+	--_ui5_token_selected_box_shadow: none;
+	--_ui5_token_text_icon_top: 0;
 }

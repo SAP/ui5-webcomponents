@@ -34,7 +34,37 @@ describe("Some settings can be set via SAP UI URL params", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getTheme());
 		});
-		assert.strictEqual(res, 'sap_belize_hcb', "Thems is HCB");
+		assert.strictEqual(res, 'sap_belize_hcb', "Theme is HCB");
+	});
+
+	it("Tests that theme root is applied", async () => {
+		let location;
+		let res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getThemeRoot());
+		});
+		assert.strictEqual(res, 'https://example.com/UI5/', "Theme root is https://example.com/UI5");
+
+		await browser.url("test/pages/Configuration.html?sap-ui-theme=sap_belize_hcb@https://another-example.com");
+
+		res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getThemeRoot());
+		});
+		location = await browser.executeAsync(done => {
+			done(window.location);
+		});
+
+		assert.strictEqual(res, `${location.origin}/UI5/`, `Theme root is ${location.origin}/UI5/`);
+
+		await browser.url("test/pages/Configuration.html?sap-ui-theme=sap_belize_hcb@./test");
+
+		res = await browser.executeAsync(done => {
+			const config = window['sap-ui-webcomponents-bundle'].configuration;
+			done(config.getThemeRoot());
+		});
+
+		assert.ok(res.endsWith("/test/UI5/"), `Theme root is set correctly with relative url`);
 	});
 
 	it("Tests that theme root is applied", async () => {
@@ -95,7 +125,7 @@ describe("Some settings can be set via SAP URL params", () => {
 			const config = window['sap-ui-webcomponents-bundle'].configuration;
 			done(config.getTheme());
 		});
-		assert.strictEqual(res, 'sap_fiori_3_dark', "Thems is Fiori Dark");
+		assert.strictEqual(res, 'sap_fiori_3_dark', "Theme is Fiori Dark");
 	});
 });
 

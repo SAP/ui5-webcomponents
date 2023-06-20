@@ -1,7 +1,7 @@
 :host(:not([hidden])) {
 	display: inline-block;
 	width: 100%;
-	height: var(--_ui5-toolbar_height);
+	height: 2.75rem;
 	background: var(--ui5-toolbar-Background);
 	border-bottom: 0.0625rem solid var(--sapGroup_ContentBorderColor);
 	flex-shrink: 1;
@@ -9,7 +9,7 @@
 }
 
 :host(:not([hidden])[data-ui5-compact-size]) {
-	height: var(--_ui5-toolbar_height_compact);
+	height: 2rem;
 }
 
 :host([disabled]) {
@@ -30,16 +30,11 @@
 }
 
 .ui5-tb-root {
-	min-width: 2.5rem;
 	width: 100%;
 	padding: 0 0.5rem;
 	justify-content: flex-end;
 	align-items: center;
-}
-
-:host .ui5-tb-root:focus {
-	outline: 0.0625rem dotted var(--sapContent_FocusColor);
-	outline-offset: -0.1875rem;
+	overflow: hidden;
 }
 
 :host([no-padding]) .ui5-tb-root {
@@ -53,12 +48,6 @@
 :host([align-content="Start"]) .ui5-tb-root {
 	justify-content: flex-start;
 }
-
-:host([align-content="SpaceBetween"]) .ui5-tb-root {
-	justify-content: space-between;
-}
-
-
 
 .ui5-tb-root,
 .ui5-tb-actions {
@@ -74,21 +63,16 @@
     width: 100%;
 }
 
-.ui5-tb-start {
-	display: flex;
-	flex-shrink: 0;
-}
-
 .ui5-tb-actions {
 	justify-content: flex-end;
 }
 
-ui5-button[design="Transparent"] {
+.ui5-tb-item[design="Transparent"] {
 	color: inherit;
 }
 
 
-.ui5-tb-button {
+.ui5-tb-item {
     flex-shrink: 0;
 }
 
@@ -101,22 +85,13 @@ ui5-button[design="Transparent"] {
 }
 
 .ui5-tb-separator {
-    height: var(--_ui5_button_base_height);
+    height: 2rem;
 	width: 0.0625rem;
-	background-color: var(--sapButton_TextColor);
+	height: 2rem;
+	background: var(--sapToolbar_SeparatorColor);
 	box-sizing: border-box;
 }
 
-.ui5-tb-action-content {
-    display: flex;
-    align-items: center;
-}
-
-.ui5-tb-action-content > .ui5-tb-action-content-text {
-    margin-left: 0.25rem;
-}
-
-.ui5-tb-action-content > .ui5-tb-action-content-text.ui5-tb-action-content-image-last {
-    margin-left: 0;
-    margin-right: 0.25rem;
+.ui5-tb-separator[data-ui5-compact-size] {
+	height: 1.5rem;
 }

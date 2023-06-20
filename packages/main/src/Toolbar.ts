@@ -9,8 +9,10 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
+import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "./Button.js";
+
 import Popover from "./Popover.js";
 
 import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
@@ -25,6 +27,7 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 
 import ToolbarButton from "./ToolbarButton.js";
 import ToolbarSpacer from "./ToolbarSpacer.js";
+import ToolbarSelect from "./ToolbarSelect.js";
 import ToolbarItem from "./ToolbarItem.js";
 import ToolbarSeparator from "./ToolbarSeparator.js";
 
@@ -37,13 +40,27 @@ type ActionsWidthMap = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui5-toolbar</code> component is used to create a horizontal layout with actions.
+ * The items can be overflowing in a popover, when the space is not enough to show all of them.
  *
+ * <h3>Keyboard Handling</h3>
+ * The <code>ui5-toolbar</code> provides advanced keyboard handling.
+ * <br>
+ * <ul>
+ * <li>The control is not interactive, but can contain of interactive elements </li>
+ * <li>[TAB] - iterates through elements</li>
+ * </ul>
+ * <br>
+ *
+ * <h3>ES6 Module Import</h3>
+ * <code>import "@ui5/webcomponents/dist/Toolbar";</code>
  * @constructor
  * @author SAP SE
- * @alias Toolbar
- * @extends UI5Element
+ * @alias sap.ui.webc.main.Toolbar
+ * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar
  * @public
+ * @since 1.16.0
  */
 @customElement({
 	tag: "ui5-toolbar",
@@ -57,23 +74,29 @@ type ActionsWidthMap = {
 		Popover,
 		Button,
 		ToolbarButton,
+		ToolbarSelect,
 		ToolbarSpacer,
 		ToolbarSeparator,
 	],
 })
 
 /**
- * @event
+ * Fired whenever the width of the content changes.
+ * @param {Number} contentWidth the value of the new changed width.
+ * @event sap.ui.webc.main.Toolbar.prototype.contentWidthChange
+
+ * @public
  */
-@event("contentWidthChange", {
+@event("content-width-change", {
 	detail: {
 		contentWidth: { type: Number },
 	},
 })
 /**
  * Fired whenever the toolbar popup closes and opens.
- * @param {Boolean} open indicates the state of the popup
- * @event
+ * @param {Boolean} open indicates the state of the popup.
+ * @public
+ * @event sap.ui.webc.main.Toolbar.prototype.overflowToggle
  */
 @event("overflow-toggle", {
 	detail: {
@@ -82,38 +105,30 @@ type ActionsWidthMap = {
 })
 
 class Toolbar extends UI5Element {
-	@property({ type: Object, multiple: true })
-	actionsToBar!: Array<ToolbarItem>;
-
-	@property({ type: Object, multiple: true })
-	actionsToOverflow!: Array<ToolbarItem>;
-
-	@property({ type: Object })
-	ACTIONS_WIDTH_MAP!: ActionsWidthMap;
-
-	@property({ type: Boolean })
-	actionsWidthMeasured!: boolean;
-
-	@property({ type: Boolean })
-	resizing!: boolean;
 	/**
+	 * Indicates if the Toolbar is in disabled state.
 	 * @type {boolean}
 	 * @public
+	 * @name sap.ui.webc.main.Toolbar.prototype.disabled
 	 */
-	@property({ type: Boolean })
-	disabled!: boolean;
+	 @property({ type: Boolean })
+	 disabled!: boolean;
 
 	/**
-	 * @type {string}
+	 * Defines the design of the toolbar background. It can be solid or transparent.
+	 * @type {sap.ui.webc.main.types.ToolbarDesign}
 	 * @public
-	 * defaultValue: ToolbarDesign.Solid
+	 * @defaultvalue "Solid"
+	 * @name sap.ui.webc.main.Toolbar.prototype.design
 	 */
 	@property({ type: ToolbarDesign })
 	design!: string;
 
 	/**
-	 * @type {string}
-	 * @defaultvalue ToolbarStyling.Standard,
+	 * Defines the styling of the toolbar. It can be standard or clear (no border applied).
+	 * @type {sap.ui.webc.main.types.ToolbarStyling}
+	 * @defaultvalue "Standard"
+	 * @name sap.ui.webc.main.Toolbar.prototype.styling
 	 * @public
 	 */
 	@property({ type: ToolbarStyling })
@@ -124,19 +139,59 @@ class Toolbar extends UI5Element {
 	 * It will close by default.
 	 * @type {boolean}
 	 * @public
+	 * @name sap.ui.webc.main.Toolbar.prototype.preventOverflowClosing
 	 */
 	@property({ type: Boolean })
 	preventOverflowClosing!: boolean;
 
 	/**
-	 *  @type {boolean}
-	 *  @public
-	 *  @defaultvalue: ToolbarAlign.End
+	 * Indicated the direction in which the Toolbar items will be aligned.
+	 * @type {sap.ui.webc.main.types.ToolbarAlign}
+	 * @public
+	 * @defaultvalue: "End"
+	 * @name sap.ui.webc.main.Toolbar.prototype.alignContent
 	 */
 	@property({ type: ToolbarAlign })
 	alignContent!: string;
 
 	/**
+	 * Actions, which will be displayed in the toolbar.
+	 * @type {Object}
+	 * @private
+	 */
+	@property({ type: Object, multiple: true })
+	actionsToBar!: Array<ToolbarItem>;
+	/**
+	 * Actions, that will be displayed inside overflow Popover.
+	 * @type {Object}
+	 * @private
+	 */
+	@property({ type: Object, multiple: true })
+	actionsToOverflow!: Array<ToolbarItem>;
+	/**
+	 * Cached actions width and the sum of all of them.
+	 * @type {Object}
+	 * @private
+	 */
+	@property({ type: Object })
+	ACTIONS_WIDTH_MAP!: ActionsWidthMap;
+	/**
+	 * Indicates the actions have been measured and the layout can be calculated.
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	actionsWidthMeasured!: boolean;
+	/**
+	 * Indicates the end of the resizing iteration.
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	resizing!: boolean;
+
+	/**
+	* Calculated width of the whole toolbar.
 	* @private
 	*/
 	@property({ type: Integer })
@@ -144,26 +199,28 @@ class Toolbar extends UI5Element {
 
 	/**
 	* @private
+	* Calculated width of all the Toolbar items.
 	*/
 	@property({ type: Integer })
 	contentWidth!: number;
 
 	/**
+	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
 	 * @private
+	 * @type {sap.ui.webc.main.types.ToolbarAlign}
 	 */
 	@property({ type: Boolean })
 	reverseOverflow!: boolean;
 
 	/**
-	* @type {HTMLElement[]}
-	* @slot
+ 	* Slotted Toolbar items
+	* @type {sap.ui.webc.main.IToolbarItem[]}
+	* @name sap.ui.webc.main.Toolbar.prototype.default
+	* @slot actions
 	* @public
 	*/
-
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	actions!: Array<ToolbarItem>
-	@slot({ type: HTMLElement })
-	startContent!: Array<HTMLElement>;
 
 	_onResize!: ResizeObserverCallback;
 
@@ -242,11 +299,10 @@ class Toolbar extends UI5Element {
 			this.displayAllActionsIntoBar();
 		}
 
-		this.width = containerWidth; // invalidating
-		// alwaysOverflowActionsHash = this.alwaysOverflowActions.reduce((acc, item: UI5Element) => `${acc}${item._id}`, "");// invalidating
+		this.width = containerWidth;
 
 		if (this.contentWidth !== contentWidth) {
-			this.contentWidth = contentWidth; // invalidating
+			this.contentWidth = contentWidth;
 			this.fireEvent("contentWidthChange", { contentWidth });
 		}
 	}
@@ -254,7 +310,7 @@ class Toolbar extends UI5Element {
 	storeActionsWidth() {
 		let totalWidth = 0;
 
-		this.movableActions.forEach((action: any) => {
+		this.movableActions.forEach((action: ToolbarItem) => {
 			const actionWidth = this.getActionWidth(action);
 			const id: string = action._id;
 			totalWidth += actionWidth;
@@ -277,13 +333,9 @@ class Toolbar extends UI5Element {
 
 		// distribute the rest of the actions, based on the available space
 		this.movableActions.reverse().forEach(action => {
-			if (overflowSpace > 0) {
-				if (action.getAttribute("priority") !== "Never") {
-					this.actionsToOverflow.unshift(action);
-					overflowSpace -= this.getCachedActionWidth(action._id);
-				} else {
-					this.actionsToBar.unshift(action);
-				}
+			if (overflowSpace > 0 && action.getAttribute("priority") !== "Never") {
+				this.actionsToOverflow.unshift(action);
+				overflowSpace -= this.getCachedActionWidth(action._id);
 			} else {
 				this.actionsToBar.unshift(action);
 			}
@@ -355,14 +407,15 @@ class Toolbar extends UI5Element {
 		this.openOverflow();
 	}
 
-	onCustomActionClick(e: any) {
-		const target = e.target.closest(".ui5-tb-item");
+	onCustomActionClick(e: MouseEvent) {
+		const target = e.target as HTMLElement;
+		const item = target.closest<ToolbarItem>(".ui5-external-action-item");
 
-		if (!target) {
+		if (!item) {
 			return;
 		}
 
-		const refItemId: string = target.getAttribute("data-ui5-ref-id");
+		const refItemId = target.getAttribute("data-ui5-ref-id");
 
 		if (refItemId) {
 			this.getActionByID(refItemId)!.fireEvent("click", {
@@ -387,7 +440,7 @@ class Toolbar extends UI5Element {
 	 * Returns if the overflow popup is open.
 	 *
 	 * @public
-	 * @return {Boolean}
+	 * @return { Promise<Boolean> }
 	 */
 	async isOverflowOpen(): Promise<boolean> {
 		const overflowPopover = await this.getOverflowPopover();
@@ -397,13 +450,13 @@ class Toolbar extends UI5Element {
 	/**
 	 * Read-only members
 	 */
-	get overflowActions(): Array<any> {
+	get overflowActions() {
 		const overflowActions = this.getActionsInfo(this.actionsToOverflow);
 		return this.reverseOverflow ? overflowActions.reverse() : overflowActions;
 	}
 
-	get standardActions(): Array<any> {
-		if (!this.actionsWidthMeasured && (JSON.stringify(this._actions) !== JSON.stringify(this.actionsToBar))) {
+	get standardActions() {
+		if (!this.actionsWidthMeasured && (!arraysAreEqual(this._actions, this.actionsToBar))) {
 			this.actionsToBar = this._actions.filter(action => action);
 		}
 
@@ -422,10 +475,6 @@ class Toolbar extends UI5Element {
 		return this.getSlottedNodes("actions");
 	}
 
-	get hasStartContent() {
-		return !!this.startContent.length;
-	}
-
 	/**
 	 * Toolbar Overflow Popover
 	 */
@@ -433,20 +482,16 @@ class Toolbar extends UI5Element {
 		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
 	}
 
-	get startContentDOM(): HTMLElement {
-		return this.shadowRoot!.querySelector(".ui5-tb-start")!;
-	}
-
 	get actionsDOM() {
 		return this.shadowRoot!.querySelector(".ui5-tb-actions");
 	}
 
 	get hasActionWithText(): boolean {
-		return this.overflowActions.some((action: any) => !!action.text);
+		return this.overflowActions.some((action: ToolbarItem) => action.containsText);
 	}
 
 	get hasFlexibleSpacers() {
-		return this.actions.some((action: any) => action.localName === "ui5-toolbar-spacer" && !action.width);
+		return this.actions.some((action: ToolbarItem) => action.localName === "ui5-toolbar-spacer" && !action.hasFlexibleWidth);
 	}
 
 	get classes() {
@@ -488,13 +533,13 @@ class Toolbar extends UI5Element {
 				toolbarPopoverTemplate: executeTemplate(action.toolbarPopoverTemplate, action),
 			};
 
-			return item;
+			return item as ToolbarItem;
 		});
 	}
 
-	getActionWidth(action: any): number {
+	getActionWidth(action: ToolbarItem): number {
 		// Spacer width - always 0 for flexible spacers, so that they shrink, otherwise - measure the width normally
-		if (action.ignoreSpace && !action.width) {
+		if (action.ignoreSpace && !action.hasFlexibleWidth) {
 			return 0;
 		}
 		const id: string = action._id;
@@ -521,11 +566,7 @@ class Toolbar extends UI5Element {
 	}
 
 	getContainerWidth() {
-		if (!this.startContentDOM) {
-			return this.offsetWidth;
-		}
-
-		return this.offsetWidth - this.startContentDOM.offsetWidth;
+		return this.offsetWidth;
 	}
 
 	getActionByID(id: string) {
@@ -536,13 +577,13 @@ class Toolbar extends UI5Element {
 		return this.actionsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
 	}
 
-	async getOverflowedActionByID(id: string): Promise<Element | null> {
+	async getOverflowedActionByID(id: string): Promise<UI5Element | null> {
 		const popover = await this.getOverflowPopover();
-		return popover!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
+		return popover!.querySelector<UI5Element>(`[data-ui5-external-action-item-id="${id}"]`);
 	}
 
-	async getActionDOMRefByID(id: string) {
-		return this.getToolbarActionByID(id) || (await this.getOverflowedActionByID(id)); // eslint-disable-line
+	getActionDOMRefByID(id: string) {
+		return this.getToolbarActionByID(id) || (this.getOverflowedActionByID(id));
 	}
 }
 

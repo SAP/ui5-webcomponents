@@ -38,7 +38,7 @@ import Button from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import type Tab from "./Tab.js";
-import type { ClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail } from "./List.js";
 import type CustomListItem from "./CustomListItem.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TabContainerTabsPlacement from "./types/TabContainerTabsPlacement.js";
@@ -64,7 +64,7 @@ interface ITab extends UI5Element {
 	getTabInStripDomRef: () => ITab | null;
 	stableDomRef: string;
 	additionalText?: string;
-	design?: SemanticColor;
+	design?: `${SemanticColor}`;
 	disabled?: boolean;
 	icon?: string;
 	isSingleClickArea?: boolean;
@@ -247,7 +247,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TabLayout, defaultValue: TabLayout.Standard })
-	tabLayout!: TabLayout;
+	tabLayout!: `${TabLayout}`;
 
 	/**
 	 * Defines the overflow mode of the header (the tab strip). If you have a large number of tabs, only the tabs that can fit on screen will be visible.
@@ -272,7 +272,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TabsOverflowMode, defaultValue: TabsOverflowMode.End })
-	tabsOverflowMode!: TabsOverflowMode;
+	tabsOverflowMode!: `${TabsOverflowMode}`;
 
 	/**
 	 * Sets the background color of the Tab Container's header as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
@@ -284,7 +284,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
-	headerBackgroundDesign!: TabContainerBackgroundDesign;
+	headerBackgroundDesign!: `${TabContainerBackgroundDesign}`;
 
 	/**
 	 * Sets the background color of the Tab Container's content as <code>Solid</code>, <code>Transparent</code>, or <code>Translucent</code>.
@@ -296,7 +296,7 @@ class TabContainer extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TabContainerBackgroundDesign, defaultValue: TabContainerBackgroundDesign.Solid })
-	contentBackgroundDesign!: TabContainerBackgroundDesign;
+	contentBackgroundDesign!: `${TabContainerBackgroundDesign}`;
 
 	/**
 	 * Defines the placement of the tab strip relative to the actual tabs' content.
@@ -319,7 +319,7 @@ class TabContainer extends UI5Element {
 	 * @private
 	 */
 	@property({ type: TabContainerTabsPlacement, defaultValue: TabContainerTabsPlacement.Top })
-	tabsPlacement!: TabContainerTabsPlacement;
+	tabsPlacement!: `${TabContainerTabsPlacement}`;
 
 	/**
 	 * Defines the current media query size.
@@ -489,7 +489,7 @@ class TabContainer extends UI5Element {
 	_setItemsPrivateProperties(items: Array<ITab>) {
 		// set real dom ref to all items, then return only the tabs for further processing
 		const allTabs = items.filter(item => {
-			item._getElementInStrip = () => this.getDomRef()!.querySelector(`*[data-ui5-stable=${item.stableDomRef}]`);
+			item._getElementInStrip = () => this.getDomRef()!.querySelector(`#${item._id}`);
 			return !item.isSeparator;
 		});
 
@@ -647,7 +647,7 @@ class TabContainer extends UI5Element {
 		}
 	}
 
-	async _onOverflowListItemClick(e: CustomEvent<ClickEventDetail>) {
+	async _onOverflowListItemClick(e: CustomEvent<ListItemClickEventDetail>) {
 		e.preventDefault(); // cancel the item selection
 
 		this._onItemSelect(e.detail.item.id.slice(0, -3)); // strip "-li" from end of id

@@ -3,6 +3,104 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.0...v1.15.0-rc.1) (2023-06-15)
+
+
+### Bug Fixes
+
+* **framework:** prioritize external fonts over locally installed ([#7184](https://github.com/SAP/ui5-webcomponents/issues/7184)) ([c527c70](https://github.com/SAP/ui5-webcomponents/commit/c527c70e47be84b663b6c40107737c25f91c9034)), closes [/github.com/SAP/openui5/blob/master/src/themelib_sap_horizon/src/sap/ui/core/themes/sap_horizon/shared.less#L259](https://github.com//github.com/SAP/openui5/blob/master/src/themelib_sap_horizon/src/sap/ui/core/themes/sap_horizon/shared.less/issues/L259) [#7177](https://github.com/SAP/ui5-webcomponents/issues/7177)
+* **ui5-static-area-item:** element additional properties ([#7166](https://github.com/SAP/ui5-webcomponents/issues/7166)) ([361ff95](https://github.com/SAP/ui5-webcomponents/commit/361ff9537dd6ed887e61d8fe2927e3eee0c952f8))
+
+
+### Features
+
+* **ui5-time-picker:** Redesign the Time Picker component according to the new design ([#6818](https://github.com/SAP/ui5-webcomponents/issues/6818)) ([1d910cf](https://github.com/SAP/ui5-webcomponents/commit/1d910cf47290fcd9986b0b9ced45c9c06e29d657))
+
+
+
+
+
+
+
+
+
+
+# [1.15.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0...v1.15.0-rc.0) (2023-06-08)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.14.0](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.2...v1.14.0) (2023-06-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.14.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.1...v1.14.0-rc.2) (2023-06-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.14.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.14.0-rc.0...v1.14.0-rc.1) (2023-05-25)
+
+
+### Bug Fixes
+
+* **framework:** store shared resources as `meta` tag within the `head` ([#7051](https://github.com/SAP/ui5-webcomponents/issues/7051)) ([90722da](https://github.com/SAP/ui5-webcomponents/commit/90722da24600e28f31864e9f2006d18e97c1e596))
+
+
+### Features
+
+* **framework:** add `setThemeRoot` public API ([#6970](https://github.com/SAP/ui5-webcomponents/issues/6970)) ([a0ad904](https://github.com/SAP/ui5-webcomponents/commit/a0ad904ea21578ada97dc0c990ec04dbb5072990))
+
+
+
+
+
+# [1.14.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.13.2...v1.14.0-rc.0) (2023-05-18)
+
+
+### Features
+
+* **framework:** add `ignoreCustomElements` public API ([#7027](https://github.com/SAP/ui5-webcomponents/issues/7027)) ([776f905](https://github.com/SAP/ui5-webcomponents/commit/776f9058de5b4e37489dd3ef388863edc2627eb3))
+* **framework:** use `template literal notation` for enum types ([#6856](https://github.com/SAP/ui5-webcomponents/issues/6856)) ([0de21e8](https://github.com/SAP/ui5-webcomponents/commit/0de21e8ba37c6a75fd3d2a29a16cc82661619cb1)), closes [#6636](https://github.com/SAP/ui5-webcomponents/issues/6636)
+
+
+
+
+
+## [1.13.2](https://github.com/SAP/ui5-webcomponents/compare/v1.13.1...v1.13.2) (2023-05-15)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+## [1.13.1](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.5...v1.13.1) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
+# [1.13.0-rc.5](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.4...v1.13.0-rc.5) (2023-05-11)
+
+**Note:** Version bump only for package @ui5/webcomponents-base
+
+
+
+
+
 # [1.13.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.13.0-rc.3...v1.13.0-rc.4) (2023-05-04)
 
 

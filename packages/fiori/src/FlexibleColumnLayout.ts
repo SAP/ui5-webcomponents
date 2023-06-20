@@ -53,8 +53,8 @@ enum BREAKPOINTS {
 
 type ColumnLayout = Array<string | number>;
 
-type FCLLayoutChangeEventDetail = {
-	layout: FCLLayout,
+type FlexibleColumnLayoutLayoutChangeEventDetail = {
+	layout: `${FCLLayout}`,
 	columnLayout: ColumnLayout,
 	startColumnVisible: boolean,
 	midColumnVisible: boolean,
@@ -194,7 +194,7 @@ class FlexibleColumnLayout extends UI5Element {
 	* @public
 	*/
 	@property({ type: FCLLayout, defaultValue: FCLLayout.OneColumn })
-	layout!: FCLLayout;
+	layout!: `${FCLLayout}`;
 
 	/**
 	* Defines the visibility of the arrows,
@@ -324,7 +324,7 @@ class FlexibleColumnLayout extends UI5Element {
 	initialRendering: boolean;
 	_handleResize: () => void;
 	static i18nBundle: I18nBundle;
-	_prevLayout: FCLLayout | null;
+	_prevLayout: `${FCLLayout}` | null;
 
 	constructor() {
 		super();
@@ -473,7 +473,7 @@ class FlexibleColumnLayout extends UI5Element {
 		(e.target as HTMLElement).classList.add("ui5-fcl-column--hidden");
 	}
 
-	nextLayout(layout: FCLLayout, arrowsInfo: { start: boolean, end: boolean }) {
+	nextLayout(layout: `${FCLLayout}`, arrowsInfo: { start: boolean, end: boolean }) {
 		if (!arrowsInfo) {
 			return;
 		}
@@ -487,7 +487,7 @@ class FlexibleColumnLayout extends UI5Element {
 		}
 	}
 
-	nextColumnLayout(layout: FCLLayout) {
+	nextColumnLayout(layout: `${FCLLayout}`) {
 		return this._effectiveLayoutsByMedia[this.media][layout].layout;
 	}
 
@@ -496,7 +496,7 @@ class FlexibleColumnLayout extends UI5Element {
 	}
 
 	fireLayoutChange(arrowUsed: boolean, resize: boolean) {
-		this.fireEvent<FCLLayoutChangeEventDetail>("layout-change", {
+		this.fireEvent<FlexibleColumnLayoutLayoutChangeEventDetail>("layout-change", {
 			layout: this.layout,
 			columnLayout: this._columnLayout!,
 			startColumnVisible: this.startColumnVisible,
@@ -813,4 +813,7 @@ FlexibleColumnLayout.define();
 
 export default FlexibleColumnLayout;
 
-export type { MEDIA };
+export type {
+	MEDIA,
+	FlexibleColumnLayoutLayoutChangeEventDetail,
+};

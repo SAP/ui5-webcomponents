@@ -53,7 +53,7 @@ import Label from "./dist/Label.js";
 import Link from "./dist/Link.js";
 import Menu from "./dist/Menu.js";
 import MenuItem from "./dist/MenuItem.js";
-import Toolbar from "./dist/Toolbar";
+import Toolbar from "./dist/Toolbar.js";
 import Popover from "./dist/Popover.js";
 import Panel from "./dist/Panel.js";
 import RadioButton from "./dist/RadioButton.js";
@@ -81,6 +81,8 @@ import TableCell from "./dist/TableCell.js";
 import TextArea from "./dist/TextArea.js";
 import TimeSelection from "./dist/TimeSelection.js";
 import TimePicker from "./dist/TimePicker.js";
+import TimePickerClock from "./dist/TimePickerClock.js";
+import TimeSelectionClocks from "./dist/TimeSelectionClocks.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";
@@ -107,6 +109,7 @@ window.URLListValidator = URLListValidator;
 
 import { getAnimationMode, setAnimationMode } from "@ui5/webcomponents-base/dist/config/AnimationMode.js";
 import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
 import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
 import { getEffectiveIconCollection } from "@ui5/webcomponents-base/config/Icons.js";
@@ -119,6 +122,9 @@ import { attachDirectionChange } from "@ui5/webcomponents-base/dist/locale/direc
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import * as defaultTexts from "./dist/generated/i18n/i18n-defaults.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import { ignoreCustomElements, shouldIgnoreCustomElement } from "@ui5/webcomponents-base/dist/IgnoreCustomElements.js";
+ignoreCustomElements("app-");
+ignoreCustomElements("my-");
 
 // SAP Icons
 import accept from "@ui5/webcomponents-icons/dist/accept.js";
@@ -132,6 +138,12 @@ import actorv3 from "@ui5/webcomponents-icons-tnt/dist/v3/actor.js";
 import icon_3d from "@ui5/webcomponents-icons-business-suite/dist/3d.js";
 import icon_3dv1 from "@ui5/webcomponents-icons-business-suite/dist/v1/3d.js";
 import icon_3dv2 from "@ui5/webcomponents-icons-business-suite/dist/v2/3d.js";
+import { setUseLinks, setPackageCSSRoot } from "@ui5/webcomponents-base/dist/CSP.js";
+// setUseLinks(true); // "true" to force all browsers to use links
+// setPackageCSSRoot("@ui5/webcomponents-base", "./resources/css/base/");
+// setPackageCSSRoot("@ui5/webcomponents-theming", "./resources/css/theming/");
+// setPackageCSSRoot("@ui5/webcomponents", "./resources/css/main/");
+// setPackageCSSRoot("@ui5/webcomponents-fiori", "./resources/css/fiori/");
 
 const icons = [accept, acceptv4, acceptv5, actor, actorv2, actorv3, icon_3d, icon_3dv1, icon_3dv2];
 
@@ -141,6 +153,8 @@ const testAssets = {
 		setAnimationMode,
 		getTheme,
 		setTheme,
+		getThemeRoot,
+		setThemeRoot,
 		isLegacyThemeFamily,
 		getLanguage,
 		setLanguage,
@@ -166,6 +180,8 @@ const testAssets = {
 	defaultTexts,
 	getExportedIconsValues: () => icons,
 	getEffectiveIconCollection,
+	ignoreCustomElements,
+	shouldIgnoreCustomElement,
 };
 
 // The SAP Icons V4 icon collection is set by default in sap_fiori_3,

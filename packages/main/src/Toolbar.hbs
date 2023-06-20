@@ -3,11 +3,6 @@
 	tabindex="{{tabIndex}}"
 	part="otb"
 >
-	{{#if hasStartContent}}
-		<div class="ui5-tb-start">
-			<slot name="startContent"></slot>
-		</div>
-	{{/if}}
 
 	<div class="{{classes.actions}}" @click="{{onCustomActionClick}}">
 		{{#each standardActions}}
@@ -20,7 +15,7 @@
 				design="Transparent"
 				?disabled="{{this.disabled}}"
 				@click="{{onBtnOverflowClick}}"
-				class="ui5-tb-overflow-btn"
+				class="ui5-tb-overflow-btn ui5-tb-item"
 			></ui5-button>
 		{{/if}}
 	</div>

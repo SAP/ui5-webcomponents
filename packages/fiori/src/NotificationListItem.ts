@@ -39,6 +39,8 @@ import NotificationListItemTemplate from "./generated/templates/NotificationList
 // Styles
 import NotificationListItemCss from "./generated/themes/NotificationListItem.css.js";
 
+import type { NotificationListItemBaseCloseEventDetail as NotificationListItemCloseEventDetail } from "./NotificationListItemBase.js";
+
 type NotificationListItemPressEventDetail = {
 	item: NotificationListItem,
 };
@@ -121,7 +123,7 @@ class NotificationListItem extends NotificationListItemBase {
 	* @since 1.0.0-rc.15
 	*/
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	* Defines the state of the <code>titleText</code> and <code>description</code>,
@@ -402,3 +404,7 @@ class NotificationListItem extends NotificationListItemBase {
 NotificationListItem.define();
 
 export default NotificationListItem;
+export type {
+	NotificationListItemPressEventDetail,
+	NotificationListItemCloseEventDetail,
+};

@@ -1,11 +1,16 @@
 :host {
-    border: 2px solid var(--my-component-border-color);
-    background-color: var(--sapBackgroundColor);
-    color: var(--sapTextColor);
-    display: block;
-    width: 24rem;
-    height: 3rem;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 3rem;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 2rem;
+	color: var(--sapAvatar_6_TextColor);
+	background-color: var(--sapAvatar_6_Background);
+	border: 2px solid var(--my-component-border-color);
+	border-radius: 0.5rem;
+	box-shadow: var(--sapContent_Shadow0);
+	text-align: center;
+	line-height: 3rem;
+	font-size: 1.25rem;
+	user-select: none;
 }

@@ -1,22 +1,17 @@
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import ToolbarPriority from "./types/ToolbarPriority.js";
 
-import ToolbarItemTemplate from "./generated/templates/ToolbarItemTemplate.lit.js";
+import ToolbarPriority from "./types/ToolbarPriority.js";
 
 @customElement({
 	tag: "ui5-tb-item",
-	languageAware: true,
-	renderer: litRender,
-	template: ToolbarItemTemplate,
 })
 
 /**
  * @class
- * The <code>ui5-tb-item</code> represents an abstract action,
+ * The <code>ui5-tb-item</code> represents an abstract class for items,
  * used in the <code>ui5-toolbar</code>.
  *
  * @constructor
@@ -27,15 +22,13 @@ import ToolbarItemTemplate from "./generated/templates/ToolbarItemTemplate.lit.j
  */
 class ToolbarItem extends UI5Element {
 	/**
-	 * When set, the button will be always part of the overflow part of the toolbar.
+	 * Property used to define the access of the item to the overflow Popover. If "Never" option is set,
+	 * the item never goes in the Popover, if "Always" - it never comes out of it.
 	 * @public
-	 * @defaultvalue ToolbarStyling.Default,
+	 * @defaultvalue ToolbarPriority.Default,
 	 */
 	@property({ type: ToolbarPriority })
 	priority!: string;
-
-	@property({ type: Integer })
-	width!: number;
 
 	/**
 	 * When set, the button will not be visible in the toolbar
@@ -44,16 +37,27 @@ class ToolbarItem extends UI5Element {
 	@property({ type: Boolean })
 	hidden!: boolean;
 
+	/*
+	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
+	*/
 	get ignoreSpace() {
 		return false;
 	}
 
-	get toolbarTemplate() {
-		return ToolbarItemTemplate;
+	get containsText() {
+		return false;
 	}
 
-	get toolbarPopoverTemplate() {
-		return ToolbarItemTemplate;
+	get hasFlexibleWidth() {
+		return false;
+	}
+
+	get toolbarTemplate(): TemplateFunction {
+		throw new Error("Template must be defined");
+	}
+
+	get toolbarPopoverTemplate(): TemplateFunction {
+		throw new Error("Template must be defined");
 	}
 }
 

@@ -73,6 +73,34 @@ describe("List Tests", () => {
 		assert.strictEqual(await secondItem.getProperty("id"), await selectionChangeResultPreviousItemsParameter.getProperty("value"));
 	});
 
+	it("selection is reverted if selectionChange event is prevented and the mode is SingleSelect", async () => {
+		const firstItem = await browser.$("#listPreventSelectionChangeSingleSelect #country1");
+		const thirdItem = await browser.$("#listPreventSelectionChangeSingleSelect #country3");
+
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is initially selected");
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected (prevented)");
+		assert.ok(await thirdItem.getAttribute("selected"), "Selection reverted to third item");
+	});
+
+	it("selection is reverted if selectionChange event is prevented  and the mode is MultiSelect", async () => {
+		const firstItem = await browser.$("#listPreventSelectionChangeMultiSelect #country1");
+		const secondItem = await browser.$("#listPreventSelectionChangeMultiSelect #country2");
+		const thirdItem = await browser.$("#listPreventSelectionChangeMultiSelect #country3");
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is initially not selected");
+		assert.ok(await secondItem.getAttribute("selected"), "The second item is initially selected");
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is initially selected");
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected (prevented)");
+		assert.ok(await secondItem.getAttribute("selected"), "The second item is still selected");
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is still selected");
+	});
+
 	it("No data text is shown", async () => {
 		const noDataText = await browser.$("#no-data-list").shadow$(".ui5-list-nodata-text");
 
@@ -409,6 +437,17 @@ describe("List Tests", () => {
 		assert.strictEqual(await listDelete.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_DELETABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listMultiSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");
+	});
+
+
+	it("tests aria-setsize and aria-posinset attributes", async () => {
+		const listItem = await browser.$("#listItem").shadow$("li");
+		const ariaSetSize = "200";
+		const ariaPosInSet = "3";
+
+		assert.strictEqual(await listItem.getAttribute("aria-setsize"), ariaSetSize, "The aria-setsize is correct.");
+		assert.strictEqual(await listItem.getAttribute("aria-posinset"), ariaPosInSet, "The aria-posinset is correct.");
+
 	});
 
 	it("tests title is updated, when initially empty", async () => {

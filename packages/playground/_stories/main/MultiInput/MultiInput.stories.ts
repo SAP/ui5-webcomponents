@@ -103,6 +103,28 @@ MultiInputTokenCreation.decorators = [
 		const token = event.detail?.token;
 		token && token.remove();
 	});
+	document.getElementById("multi-input-${index}").addEventListener("paste", function (event) {
+		event.preventDefault();
+
+		let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;
+
+		if (!pastedText) {
+			return;
+		}
+
+		let separatedTexts = pastedText.split(\/\\r\\n\|\\r\|\\n\|\\t\/g).filter(t => !!t);
+
+		if (separatedTexts.length === 1) {
+			event.target.value = separatedTexts[0];
+			return;
+		}
+
+		separatedTexts.forEach((tokenText) => {
+			if (tokenText) {
+				event.target.appendChild(createTokenFromText(tokenText));
+			}
+		})
+	});
 	document.getElementById("multi-input-${index}").addEventListener("change", function (event) {
 		if (!event.target.value) {
 			return;
@@ -123,4 +145,4 @@ MultiInputTokenCreation.decorators = [
 </script>`;
 	}
 ]
-MultiInputTokenCreation.storyName = "Multi Input and token creation onChange";
+MultiInputTokenCreation.storyName = "Multi Input and token creation onChange and onPaste";

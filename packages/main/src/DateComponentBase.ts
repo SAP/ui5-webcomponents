@@ -41,7 +41,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	primaryCalendarType?: CalendarType;
+	primaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Defines the secondary calendar type.
@@ -53,7 +53,7 @@ class DateComponentBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CalendarType })
-	secondaryCalendarType?: CalendarType;
+	secondaryCalendarType?: `${CalendarType}`;
 
 	/**
 	 * Determines the format, displayed in the input field.
@@ -143,27 +143,18 @@ class DateComponentBase extends UI5Element {
 	}
 
 	_getMinMaxCalendarDateFromString(date: string) {
-		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-		const utc = undefined as unknown as boolean;
-		const strict = undefined as unknown as boolean;
-
-		if (this.getFormat().parse(date, utc, strict)) {
+		if (this.getFormat().parse(date)) {
 			return this._getCalendarDateFromString(date);
 		}
 
-		const jsDate = this.getISOFormat().parse(date, utc, strict) as Date;
+		const jsDate = this.getISOFormat().parse(date) as Date;
 		if (jsDate) {
 			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
 		}
 	}
 
 	_getCalendarDateFromString(value: string) {
-		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-		const utc = undefined as unknown as boolean;
-		const strict = undefined as unknown as boolean;
-		const jsDate = this.getFormat().parse(value, utc, strict) as Date;
+		const jsDate = this.getFormat().parse(value) as Date;
 		if (jsDate) {
 			return CalendarDate.fromLocalJSDate(jsDate, this._primaryCalendarType);
 		}

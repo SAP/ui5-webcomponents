@@ -11,13 +11,43 @@
 	<script src="../../bundle.esm.js" type="module"></script>
 
 	<script>// delete Document.prototype.adoptedStyleSheets;</script>
+	<style>
+		body {
+			container: wrapper / inline-size;
+		}
+		.main-wrapper {
+			display:flex;
+			width: 100%;
+			flex-wrap: nowrap;
+		}
+		.first-toolbar-wrapper {
+			flex: 1;
+		}
+		.third-toolbar-wrapper,
+		.second-toolbar-wrapper {
+			flex: 0 1;
+		}
+		@container wrapper (max-width: 700px) {
+			.main-wrapper {
+				flex-wrap: wrap;
+			}
+			.first-toolbar-wrapper {
+				order: 2;
+			}
+			.third-toolbar-wrapper {
+				order: 1;
+				flex-basis: 100%;
+			}
+			.second-toolbar-wrapper {
+				display: none;
+			}
+		}
+	</style>
 </head>
 <body>
 	<a href="?sap-ui-theme=sap_horizon">SAP Horizon</a> |
 	<a href="?sap-ui-theme=sap_fiori_3">Fiori 3</a> |
-	<a href="?sap-ui-theme=sap_fiori_3_dark">Fiori 3 Dark</a> |
-	<a href="?sap-ui-theme=sap_belize">Belize</a> |
-	<a href="?sap-ui-theme=sap_belize_hcb">Belize High Contrast Black</a>
+	<a href="?sap-ui-theme=sap_fiori_3_dark">Fiori 3 Dark</a>
 	<br>
 	<span>or in the browser console, for example:</span>
 	<code>window['sap-ui-webcomponents-bundle'].configuration.setTheme("sap_belize_hcb")</code>
@@ -31,23 +61,40 @@
 
 	<br><br>
 
-	<ui5-title level="H1">Resize btns</ui5-title>
-
-	<div slot="startContent" style="display:flex; align-items: center;">
-		<ui5-toggle-button class="size" data-size="376">Small</ui5-toggle-button>
-		<ui5-toggle-button class="size" data-size="767">Meidum</ui5-toggle-button>
-		<ui5-toggle-button class="size" data-size="1024">Large</ui5-toggle-button>
-		<ui5-button id="btnRemove">Remove</ui5-button>
-	</div>
-	<br><br>
-
-	<ui5-title level="H1">Solid</ui5-title>
 	<section id="testSection">
-		<ui5-title level="H1">Use case</ui5-title>
+		<ui5-title level="H1">Toolbar Use cases</ui5-title>
 
-	<div style="display:flex;">
-		<div style="flex:1">
-		<ui5-toolbar id="otb_a" non-focusable design="Solid" prevent-overflow-closing>
+	<div class="main-wrapper">
+		<div class="first-toolbar-wrapper">
+			<ui5-toolbar id="otb_a" design="Solid" prevent-overflow-closing>
+				<ui5-toolbar-button icon="add" class="otb_button_1" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
+				<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>
+			</ui5-toolbar>
+		</div>
+		<div class="second-toolbar-wrapper">
+			<ui5-toolbar id="otb_b" design="Solid" prevent-overflow-closing>
+				<ui5-toolbar-separator priority="Never"></ui5-toolbar-separator>
+			</ui5-toolbar>
+		</div>
+		<div class="third-toolbar-wrapper">
+			<ui5-toolbar id="otb_c" design="Solid" prevent-overflow-closing>
+				<ui5-toolbar-button icon="decline" class="tb-button-decline" priority="Never" text="Left 2"></ui5-toolbar-button>
+				<ui5-toolbar-button icon="employee" priority="Never" text="Left 3"></ui5-toolbar-button>
+			</ui5-toolbar>
+		</div>
+	</div>
+
+	</section>
+
+	<section>
+		<ui5-toolbar design="Solid" id="otb_d" prevent-overflow-closing>
 			<ui5-toolbar-button image-width="100px" icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
@@ -56,23 +103,10 @@
 			<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
-			<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>
-		</ui5-toolbar>
-		</div>
-		<div style="flex:1">
-
-		<ui5-toolbar id="otb_b" design="Solid" prevent-overflow-closing>
 			<ui5-toolbar-separator></ui5-toolbar-separator>
-			<ui5-toolbar-button image-width="100px" icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
-			<ui5-toolbar-button icon="decline" priority="Never" text="Left 2"></ui5-toolbar-button>
-			<ui5-toolbar-button icon="employee" priority="Never" text="Left 3"></ui5-toolbar-button>
-			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Call me later" class="tb-button-employee" priority="Always"></ui5-toolbar-button>
 		</ui5-toolbar>
-		</div>
-	</div>
-
 	</section>
-
 	<ui5-popover id="myPopup" placement="Bottom">
 		<div slot="header" style="padding: 0.5rem">Hello World</div>
 		<div>
@@ -89,10 +123,6 @@
 	</ui5-popover>
 	<script>
 
-		document.getElementById("otb_a").addEventListener("overflow-toggle", e => {
-			console.log(e.detail.open);
-		});
-
 		Array.from(document.getElementsByClassName("size")).forEach(btn => {
 			btn.addEventListener("click", e => {
 				if (event.target.pressed) {
@@ -101,10 +131,6 @@
 					testSection.style.width = "auto";
 				}
 			});
-		});
-
-		btnRemove.addEventListener("click", e => {
-			otb.removeChild(otb.children[0]);
 		});
 
 		myOverflowBtn.addEventListener("click", e => {

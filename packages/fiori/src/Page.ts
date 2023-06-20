@@ -6,6 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -52,7 +53,10 @@ import PageCss from "./generated/themes/Page.css.js";
 	tag: "ui5-page",
 	languageAware: true,
 	renderer: litRender,
-	styles: PageCss,
+	styles: [
+		browserScrollbarCSS,
+		PageCss,
+	],
 	template: PageTemplate,
 })
 class Page extends UI5Element {
@@ -73,7 +77,7 @@ class Page extends UI5Element {
 	 * @public
 	 */
 	@property({ type: PageBackgroundDesign, defaultValue: PageBackgroundDesign.Solid })
-	backgroundDesign!: PageBackgroundDesign;
+	backgroundDesign!: `${PageBackgroundDesign}`;
 
 	/**
 	 * Disables vertical scrolling of page content.
