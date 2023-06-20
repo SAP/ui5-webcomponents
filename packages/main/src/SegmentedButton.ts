@@ -283,7 +283,7 @@ class SegmentedButton extends UI5Element {
 		const parentWidth = this.parentNode ? (this.parentNode as HTMLElement).offsetWidth : 0;
 
 		/**
-		 * Calculates the default width for the SegmentedButton component based on the items' widths, if there is no custom width set.
+		 * Calculated default width of the SegmentedButton component based on the items' widths, if there is no custom width set.
 		 */
 		const defaultComponentWidth = `${Math.max(...this.widths!) * this.items.length}px`;
 		const inlineWidth = this.style.width; // Inline style width
@@ -330,17 +330,14 @@ class SegmentedButton extends UI5Element {
 			item.style.width = "100%";
 		});
 
-		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
+		if ((parentWidth <= parseInt(this.originalWidth) || parentWidth <= this.offsetWidth) && this.absoluteWidthSet) {
 			this.style.width = "100%";
 			this.percentageWidthSet = true;
-		} else if (parentWidth <= parseInt(this.originalWidth) && this.absoluteWidthSet) {
-			this.style.width = "100%";
-			this.percentageWidthSet = true;
-		}
-
-		if (parentWidth > parseInt(this.originalWidth)) {
+			this.absoluteWidthSet = false;
+		} else if (parentWidth > parseInt(this.originalWidth)) {
 			this.style.width = this.originalWidth;
 			this.absoluteWidthSet = true;
+			this.percentageWidthSet = false;
 		}
 	}
 
