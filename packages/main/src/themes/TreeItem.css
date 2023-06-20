@@ -22,6 +22,7 @@
 }
 
 :host([_minimal][show-toggle-button])::after {
+	display: var(--_ui5-tree-item-minimal-children-indicator-display);
 	content: "";
 	width: 0;
 	height: 0;
@@ -115,6 +116,10 @@ is the .ui5-li-root and not the host. The host height expands to fill subtree */
 }
 :host([selected]) .ui5-li-root {
     background: var(--sapList_SelectionBackgroundColor);
+}
+
+:host([_minimal][selected]) .ui5-li-root {
+	background: var(--_ui5-tree-item-minimal-background);
 }
 
 :host([has-border]) {
