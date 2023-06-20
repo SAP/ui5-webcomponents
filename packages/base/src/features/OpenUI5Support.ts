@@ -156,15 +156,15 @@ class OpenUI5Support {
 			return;
 		}
 
+		const LocaleData = window.sap.ui.require("sap/ui/core/LocaleData") as LocaleData;
+
 		if (OpenUI5Support.isModularCore()) {
-			const LocaleData = window.sap.ui.require("sap/ui/core/LocaleData") as LocaleData;
 			const Localization = window.sap.ui.require("sap/base/i18n/Localization") as Localization;
 			return LocaleData.getInstance(Localization.getLanguageTag());
 		}
 
 		const Core = window.sap.ui.require("sap/ui/core/Core") as OpenUI5Core;
 		const config = Core.getConfiguration();
-		const LocaleData = window.sap.ui.require("sap/ui/core/LocaleData") as LocaleData;
 		return LocaleData.getInstance(config.getLocale())._get();
 	}
 
