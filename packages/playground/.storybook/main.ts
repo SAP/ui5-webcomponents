@@ -1,8 +1,12 @@
 import remarkGfm from 'remark-gfm';
 
-const isProd = process.env.NODE_ENV === "production";
 const config = {
   stories: ["../docs/**/*.mdx", "../_stories/**/*.stories.@(ts)"],
+  staticDirs: [
+    { from: "../assets", to: "../assets" }, // from /assets to /dist/assets
+    { from: "../docs/storybook-pages", to: "/" }, // from /docs/storybook-pages to /dist/playground
+    { from: "../docs/landing-page.html", to: "../index.html" }, // from /docs/landing-page.html to /dist/index.html
+  ],
   addons: [
     "@storybook/addon-links",
     {
@@ -36,12 +40,6 @@ const config = {
   typescript: {
     reactDocgen: 'react-docgen'
   },
-  env: (config: any) => ({
-    ...config,
-    // static assets loaded inside preview-head.html are located in the root
-    // of the gh-pages branch and not in the _playground folder
-    STORYBOOK_ASSETS_BASE: isProd ? "../" : "./"
-  }),
   docs: {
     autodocs: true
   }
