@@ -31,14 +31,10 @@
 
 .ui5-tb-root {
 	width: 100%;
-	padding: 0 0.5rem;
+	padding: 0 var(--_ui5-toolbar-padding-left) 0 var(--_ui5-toolbar-padding-right);
 	justify-content: flex-end;
 	align-items: center;
 	overflow: hidden;
-}
-
-:host([no-padding]) .ui5-tb-root {
-	padding: 0;
 }
 
 :host([align-content="End"]) .ui5-tb-root {
@@ -50,7 +46,7 @@
 }
 
 .ui5-tb-root,
-.ui5-tb-actions {
+.ui5-tb-items {
 	display: flex;
 	height: 100%;
 	white-space: nowrap;
@@ -59,11 +55,11 @@
 	box-sizing: border-box;
 }
 
-.ui5-tb-actions-full-width {
+.ui5-tb-items-full-width {
     width: 100%;
 }
 
-.ui5-tb-actions {
+.ui5-tb-items {
 	justify-content: flex-end;
 }
 
@@ -71,13 +67,13 @@
 	color: inherit;
 }
 
-
 .ui5-tb-item {
     flex-shrink: 0;
 }
 
 .ui5-tb-item:not(:last-child) {
-	margin-right: 0.25rem;
+	margin-inline-end: var(--_ui5-toolbar-item-margin-right);
+	margin-inline-start: var(--_ui5-toolbar-item-margin-left);
 }
 
 .ui5-tb-spacer {
@@ -85,13 +81,8 @@
 }
 
 .ui5-tb-separator {
-    height: 2rem;
+	height: var(--_ui5-toolbar-separator-height);
 	width: 0.0625rem;
-	height: 2rem;
 	background: var(--sapToolbar_SeparatorColor);
 	box-sizing: border-box;
-}
-
-.ui5-tb-separator[data-ui5-compact-size] {
-	height: 1.5rem;
 }

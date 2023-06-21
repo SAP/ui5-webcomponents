@@ -11,7 +11,7 @@
 }
 
 .ui5-overflow-list--alignleft .ui5-tb-popover-item[icon-only]{
-	margin-left: 0.625rem;
+	margin-inline-start: 0.625rem;
 }
 
 .ui5-tb-popover-item {
@@ -19,16 +19,6 @@
 	margin-bottom: 0.25rem;
 }
 
-.ui5-tb-action-content {
-	display: flex;
-	align-items: center;
-}
-
-.ui5-tb-action-content > .ui5-tb-action-content-text {
-	margin-left: 0.25rem;
-}
-
-.ui5-tb-action-content > .ui5-tb-action-content-text.ui5-tb-action-content-image-last {
-	margin-left: 0;
-	margin-right: 0.25rem;
+.ui5-tb-popover-button {
+	text-align: left;
 }

@@ -27,6 +27,7 @@ class ToolbarSpacer extends ToolbarItem {
 	/**
 	 * Spacer width
 	 * @public
+	 * @name sap.ui.webc.main.ToolbarSpacer.prototype.width
 	 */
 	@property({ type: String })
 	width!: string

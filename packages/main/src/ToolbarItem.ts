@@ -3,7 +3,7 @@ import { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeT
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
-import ToolbarPriority from "./types/ToolbarPriority.js";
+import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 @customElement({
 	tag: "ui5-tb-item",
@@ -16,26 +16,26 @@ import ToolbarPriority from "./types/ToolbarPriority.js";
  *
  * @constructor
  * @author SAP SE
- * @alias ToolbarItem
- * @extends UI5Element
+ * @alias sap.ui.webc.main.ToolbarItem
+ * @extends sap.ui.webc.base.UI5Element
  * @public
  */
 class ToolbarItem extends UI5Element {
 	/**
-	 * Property used to define the access of the item to the overflow Popover. If "Never" option is set,
-	 * the item never goes in the Popover, if "Always" - it never comes out of it.
+	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
+	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
+	 * Available options are:
+	 * <ul>
+	 * <li><code>NeverOverflow</code></li>
+	 * <li><code>AlwaysOverflow</code></li>
+	 * <li><code>Default</code></li>
+	 * </ul>
 	 * @public
-	 * @defaultvalue ToolbarPriority.Default,
+	 * @name sap.ui.webc.main.ToolbarItem.prototype.overflowPriority
+	 * @defaultvalue ToolbarItemOverflowBehavior.Default,
 	 */
-	@property({ type: ToolbarPriority })
-	priority!: string;
-
-	/**
-	 * When set, the button will not be visible in the toolbar
-	 * @private
-	 */
-	@property({ type: Boolean })
-	hidden!: boolean;
+	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
+	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
 
 	/*
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar

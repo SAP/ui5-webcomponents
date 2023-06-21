@@ -5,10 +5,11 @@
 	icon="{{this.icon}}"
 	design="{{this.design}}"
 	?disabled="{{this.disabled}}"
+	?hidden="{{this.hidden}}"
 	@click="{{this.click}}"
 	data-ui5-external-action-item-id="{{this._id}}"
 	.refItemId="{{this._id}}"
-	?priority="{{priority}}"
+	overflow-priority="{{this.overflowPriority}}"
 >
 		{{this.text}}
 </ui5-button>

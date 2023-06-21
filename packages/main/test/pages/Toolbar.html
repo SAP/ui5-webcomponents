@@ -22,6 +22,7 @@
 		}
 		.first-toolbar-wrapper {
 			flex: 1;
+			min-width: 1px;
 		}
 		.third-toolbar-wrapper,
 		.second-toolbar-wrapper {
@@ -45,57 +46,64 @@
 	</style>
 </head>
 <body>
-	<a href="?sap-ui-theme=sap_horizon">SAP Horizon</a> |
-	<a href="?sap-ui-theme=sap_fiori_3">Fiori 3</a> |
-	<a href="?sap-ui-theme=sap_fiori_3_dark">Fiori 3 Dark</a>
-	<br>
-	<span>or in the browser console, for example:</span>
-	<code>window['sap-ui-webcomponents-bundle'].configuration.setTheme("sap_belize_hcb")</code>
+	<div id="toolbars-container">
+	<br /><br />
 
-	<br><br>
-
-	<a href="?sap-ui-language=en">English</a> |
-	<a href="?sap-ui-language=de">German</a> |
-	<a href="?sap-ui-language=es">Spanish</a> |
-	<a href="?sap-ui-language=fr">French</a>
-
-	<br><br>
-
+	<ui5-title level="H3">Standard Toolbar</ui5-title>
+	<br />
+	<section>
+		<ui5-toolbar>
+			<ui5-toolbar-button icon="add" class="otb_button_1" text="Left 1 (long)"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Call me later"></ui5-toolbar-button>
+		</ui5-toolbar>
+	</section>
+	<br /><br />
+	<ui5-title level="H3">Two inline Toolbars with separator</ui5-title>
+	<br />
 	<section id="testSection">
-		<ui5-title level="H1">Toolbar Use cases</ui5-title>
-
-	<div class="main-wrapper">
-		<div class="first-toolbar-wrapper">
-			<ui5-toolbar id="otb_a" design="Solid" prevent-overflow-closing>
-				<ui5-toolbar-button icon="add" class="otb_button_1" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
-				<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>
-			</ui5-toolbar>
+		<div class="main-wrapper">
+			<div class="first-toolbar-wrapper">
+				<ui5-toolbar id="otb_a" design="Solid" prevent-overflow-closing>
+					<ui5-toolbar-button icon="add" class="otb_button_1" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
+					<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>
+				</ui5-toolbar>
+			</div>
+			<div class="second-toolbar-wrapper">
+				<ui5-toolbar id="otb_b" design="Solid" prevent-overflow-closing>
+					<ui5-toolbar-separator overflow-priority="NeverOverflow"></ui5-toolbar-separator>
+				</ui5-toolbar>
+			</div>
+			<div class="third-toolbar-wrapper">
+				<ui5-toolbar id="otb_c" design="Solid" prevent-overflow-closing>
+					<ui5-toolbar-button icon="decline" class="tb-button-decline" overflow-priority="NeverOverflow" text="Left 2"></ui5-toolbar-button>
+					<ui5-toolbar-button icon="employee" overflow-priority="NeverOverflow" text="Left 3"></ui5-toolbar-button>
+				</ui5-toolbar>
+			</div>
 		</div>
-		<div class="second-toolbar-wrapper">
-			<ui5-toolbar id="otb_b" design="Solid" prevent-overflow-closing>
-				<ui5-toolbar-separator priority="Never"></ui5-toolbar-separator>
-			</ui5-toolbar>
-		</div>
-		<div class="third-toolbar-wrapper">
-			<ui5-toolbar id="otb_c" design="Solid" prevent-overflow-closing>
-				<ui5-toolbar-button icon="decline" class="tb-button-decline" priority="Never" text="Left 2"></ui5-toolbar-button>
-				<ui5-toolbar-button icon="employee" priority="Never" text="Left 3"></ui5-toolbar-button>
-			</ui5-toolbar>
-		</div>
-	</div>
 
 	</section>
+	<br /><br />
+
+	<ui5-title level="H3">Toolbar with "AlwaysOverflow" overflow priority item (divided visually by internal separator)</ui5-title>
+	<br />
 
 	<section>
 		<ui5-toolbar design="Solid" id="otb_d" prevent-overflow-closing>
-			<ui5-toolbar-button image-width="100px" icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
@@ -104,9 +112,69 @@
 			<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
 			<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
 			<ui5-toolbar-separator></ui5-toolbar-separator>
-			<ui5-toolbar-button icon="employee" text="Call me later" class="tb-button-employee" priority="Always"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Call me later" class="tb-button-employee" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>
 		</ui5-toolbar>
 	</section>
+
+	<br /><br />
+
+	<ui5-title level="H3">Toolbar with "NeverOverflow" overflow priority item (divided visually by internal separator)</ui5-title>
+	<br />
+
+	<section>
+		<ui5-toolbar design="Solid" id="otb_e" prevent-overflow-closing>
+			<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 2"  overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Mid 1" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Mid 2" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Right 4" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-separator></ui5-toolbar-separator>
+			<ui5-toolbar-button icon="employee" text="Call me later" class="tb-button-employee" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		</ui5-toolbar>
+	</section>
+	<br /><br />
+
+	<ui5-title level="H3">Toolbar with flexible spacers</ui5-title>
+	<br />
+
+	<section>
+		<ui5-toolbar design="Solid" id="otb_e" prevent-overflow-closing>
+			<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 2"  overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+			<ui5-toolbar-spacer></ui5-toolbar-spacer>
+			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Mid 1" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Mid 2" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Right 4" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-spacer></ui5-toolbar-spacer>
+			<ui5-toolbar-button icon="employee" text="Call me later" class="tb-button-employee" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		</ui5-toolbar>
+	</section>
+	<br /><br />
+
+	<ui5-title level="H3">Toolbar with fixed spacers</ui5-title>
+	<br />
+
+	<section>
+		<ui5-toolbar design="Solid" id="otb_e" prevent-overflow-closing>
+			<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Left 2"  overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
+			<ui5-toolbar-spacer width="100px"></ui5-toolbar-spacer>
+			<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Mid 1" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="decline" text="Mid 2" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Right 4" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+			<ui5-toolbar-button icon="employee" text="Call me later" class="tb-button-employee" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		</ui5-toolbar>
+	</section>
+	</div>
 	<ui5-popover id="myPopup" placement="Bottom">
 		<div slot="header" style="padding: 0.5rem">Hello World</div>
 		<div>
@@ -121,21 +189,15 @@
 			<ui5-button>Hi!</ui5-button>
 		</div>
 	</ui5-popover>
+	<ui5-slider value="100" id="toolbarSlider"></ui5-slider>
 	<script>
-
-		Array.from(document.getElementsByClassName("size")).forEach(btn => {
-			btn.addEventListener("click", e => {
-				if (event.target.pressed) {
-					testSection.style.width = `${e.target.getAttribute("data-size")}px`;
-				} else {
-					testSection.style.width = "auto";
-				}
-			});
-		});
 
 		myOverflowBtn.addEventListener("click", e => {
 			myPopup.showAt(e.detail.targetRef);
 		});
+		toolbarSlider.addEventListener("change", e => {
+			document.getElementById("toolbars-container").setAttribute("style", "width:" + e.target.value + "%");
+		})
 	</script>
 	</body>
 </html>

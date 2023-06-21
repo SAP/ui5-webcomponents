@@ -99,10 +99,10 @@ ToolbarWithAlwaysOverflowElements.args = {
 		<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="decline" text="Mid 2" priority="always"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="add" text="Right 1" priority="Always"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="employee" text="Right 4" priority="Always"></ui5-toolbar-button>
-		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" priority="Always"></ui5-toolbar-button>`
+		<ui5-toolbar-button icon="decline" text="Mid 2" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="add" text="Right 1" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="employee" text="Right 4" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>`
 }
 
 export const ToolbarWithNeverOverflowElements: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
@@ -111,15 +111,15 @@ ToolbarWithNeverOverflowElements.storyName = "Toolbar with 'never overflow' elem
 
 ToolbarWithNeverOverflowElements.args = {
 	default: `
-		<ui5-toolbar-button icon="add" text="Left 1 (long)" priority="Never" width="150px" design="Default"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="decline" text="Left 2" priority="Never"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="add" text="Left 1 (long)" overflow-priority="NeverOverflow" width="150px" design="Default"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="decline" text="Left 2" overflow-priority="NeverOverflow"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="decline" text="Mid 2" priority="Never"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="add" text="Right 1" priority="Never"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="employee" text="Right 4" priority="Never"></ui5-toolbar-button>
-		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" priority="Never"></ui5-toolbar-button>`
+		<ui5-toolbar-button icon="decline" text="Mid 2" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="add" text="Right 1" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="employee" text="Right 4" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="NeverOverflow"></ui5-toolbar-button>`
 }
 
 export const ToolbarWithClearStyling = Template.bind({});

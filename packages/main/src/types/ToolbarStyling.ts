@@ -1,5 +1,5 @@
 /**
-* Defines the design of ui5-toolbar background.
+* Defines the design of ui5-toolbar.
  *
  * @readonly
  * @enum {string}

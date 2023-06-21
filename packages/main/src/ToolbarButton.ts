@@ -25,8 +25,8 @@ import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverBu
  *
  * @constructor
  * @author SAP SE
- * @alias ToolbarButton
- * @extends UI5Element
+ * @alias sap.ui.webc.main.ToolbarButton
+ * @extends sap.ui.webc.base.UI5Element
  * @public
  */
 class ToolbarButton extends ToolbarItem {
@@ -37,6 +37,7 @@ class ToolbarButton extends ToolbarItem {
 	 *
 	 * @type {boolean}
 	 * @defaultvalue false
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.disabled
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -44,16 +45,24 @@ class ToolbarButton extends ToolbarItem {
 
 	/**
 	 * Defines the action design.
-	 * <br><br>
-	 * <b>Note:</b> Available options are "Default", "Emphasized", "Positive",
-	 * "Negative", and "Transparent".
+	 * <b>The available values are:</b>
+	 *
+	 * <ul>
+	 * <li><code>Default</code></li>
+	 * <li><code>Emphasized</code></li>
+	 * <li><code>Positive</code></li>
+	 * <li><code>Negative</code></li>
+	 * <li><code>Transparent</code></li>
+	 * <li><code>Attention</code></li>
+	 * </ul>
 	 *
 	 * @type {ButtonDesign}
 	 * @defaultvalue "Transparent"
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.design
 	 * @public
 	 */
 	@property({ type: ButtonDesign })
-	design!: ButtonDesign;
+	design!: `${ButtonDesign}`;
 
 	/**
 	 * Defines the <code>icon</code> source URI.
@@ -64,6 +73,7 @@ class ToolbarButton extends ToolbarItem {
 	 *
 	 * @type {string}
 	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.icon
 	 * @public
 	 */
 	@property({ type: String })
@@ -72,12 +82,14 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Button text
 	 * @public
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.text
 	 */
 	@property({ type: String })
 	text!: string;
 
 	/**
 	 * Button width
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.width
 	 * @public
 	 */
 	@property({ type: String })
@@ -86,7 +98,7 @@ class ToolbarButton extends ToolbarItem {
 	get styles() {
 		return {
 			width: this.width,
-			display: this.hidden ? "none" : "block",
+			display: this.hidden ? "none" : "inline-block",
 		};
 	}
 

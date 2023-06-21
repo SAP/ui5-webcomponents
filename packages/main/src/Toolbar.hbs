@@ -1,11 +1,10 @@
 <div
 	class="ui5-tb-root"
-	tabindex="{{tabIndex}}"
-	part="otb"
+	tabindex="-1"
 >
 
-	<div class="{{classes.actions}}" @click="{{onCustomActionClick}}">
-		{{#each standardActions}}
+	<div class="{{classes.items}}" @click="{{onCustomItemClick}}">
+		{{#each standardItems}}
 			{{this.toolbarTemplate}}
 		{{/each}}
 
@@ -13,8 +12,6 @@
 			<ui5-button
 				icon="overflow"
 				design="Transparent"
-				?disabled="{{this.disabled}}"
-				@click="{{onBtnOverflowClick}}"
 				class="ui5-tb-overflow-btn ui5-tb-item"
 			></ui5-button>
 		{{/if}}
