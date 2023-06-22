@@ -215,16 +215,6 @@ class MultiInput extends Input {
 		});
 	}
 
-	_onTokenSelect() {
-		if (this.tokens.length === 1 && this.tokens[0].isTruncatable) {
-			if (this.tokens[0].selected) {
-				this.tokenizer.openMorePopover();
-			} else {
-				this.tokenizer.closeMorePopover();
-			}
-		}
-	}
-
 	_onkeydown(e: KeyboardEvent) {
 		super._onkeydown(e);
 
@@ -395,6 +385,14 @@ class MultiInput extends Input {
 
 	get ariaRoleDescription() {
 		return MultiInput.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);
+	}
+
+	get morePopoverOpener(): HTMLElement {
+		if (this.tokens.length === 1 && this.tokens[0].isTruncatable) {
+			return this.tokens[0];
+		}
+
+		return this;
 	}
 }
 

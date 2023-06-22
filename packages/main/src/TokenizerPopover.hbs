@@ -34,7 +34,6 @@
 		class="ui5-tokenizer-list"
 		mode="Delete"
 		@ui5-item-delete={{itemDelete}}
-		@focusout={{popoverListFocusOut}}
 	>
 		{{#each _tokens}}
 			<ui5-li .tokenRef={{this}}>
@@ -45,7 +44,8 @@
 	{{#if _isPhone}}
 		<div slot="footer" class="ui5-responsive-popover-footer">
 			<ui5-button
-				design="Transparent"
+				id="ui5-tokenizer-dialog-confirm-btn"
+				design="Emphasized"
 				@click="{{closeMorePopover}}"
 			>OK</ui5-button>
 		</div>

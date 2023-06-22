@@ -199,10 +199,16 @@ describe("MultiInput general interaction", () => {
 
 		assert.strictEqual(await innerInput.getProperty("value"), "", "Input's value should be empty");
 	});
+});
+
+describe("MultiInput Truncated Token", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/MultiInput.html`);
+	});
 
 	it("should truncate token when single token is in the multinput and open popover on click", async () => {
 		const mi = await $("#truncated-token");
-		const token = mi.$("ui5-token");
+		const token = await mi.$("ui5-token");
 		const rpoClassName = await getTokenizerPopoverId("truncated-token");
 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
 
@@ -211,6 +217,79 @@ describe("MultiInput general interaction", () => {
 		await token.click();
 
 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await token.getProperty("selected"), "Token should be selected");
+		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "First li should be focused");
+
+		await token.click();
+
+		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+		assert.ok(await token.getProperty("focused"), "Token should be focused");
+	});
+
+	it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
+		const mi = await $("#truncated-token");
+		const token = await mi.$("ui5-token");
+		const rpoClassName = await getTokenizerPopoverId("truncated-token");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+		
+		await token.click();
+
+		await $("#dummy-btn").click();
+
+		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+	});
+
+	it("should close truncation popover and deselect selected tokens when clicked in input field", async () => {
+		const mi = await $("#truncated-token");
+		const token = await mi.$("ui5-token");
+		const rpoClassName = await getTokenizerPopoverId("truncated-token");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const inner = await mi.shadow$("input");
+
+		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+		
+		await inner.click();
+
+		assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+		assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+	});
+
+	it("should truncate token when a long token is added", async () => {
+		const mi = await $("#token-unique");
+		const inner = await mi.shadow$("input");
+
+		await mi.scrollIntoView();
+
+		// populate new token
+		await inner.click();
+		await inner.setValue("Officia enim ullamco sunt sunt nisi ullamco cillum velit.");
+		await inner.keys("Enter");
+
+		const rpoClassName = await getTokenizerPopoverId("token-unique");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+		const token = await mi.$("ui5-token");
+
+		assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+		await token.click();
+
+		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+		assert.ok(await token.getProperty("selected"), "Token should be selected");
+		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "First li should be focused");
+
+		const deleteIcon = await token.shadow$("ui5-icon");
+
+		await deleteIcon.click();
+
+		const tokensCount = (await mi.$$("ui5-token")).length;
+
+		assert.strictEqual(tokensCount, 0, "No Tokens should be available");
+		assert.ok(await inner.isFocusedDeep(), "Inner input should be focused");
 	});
 });
 

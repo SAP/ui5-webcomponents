@@ -238,6 +238,18 @@ class Tokenizer extends UI5Element {
 		return this.getSlottedNodes<Token>("tokens");
 	}
 
+	onTokenSelect() {
+		const tokens = this._getTokens();
+
+		if (tokens.length === 1 && tokens[0].isTruncatable) {
+			if (tokens[0].selected) {
+				this.openMorePopover();
+			} else {
+				this.closeMorePopover();
+			}
+		}
+	}
+
 	_getVisibleTokens() {
 		if (this.disabled) {
 			return [];
@@ -246,12 +258,6 @@ class Tokenizer extends UI5Element {
 		return this._tokens.filter((token, index) => {
 			return index < (this._tokens.length - this._nMoreCount);
 		});
-	}
-
-	async popoverListFocusOut() {
-		if (this._tokens.length === 1) {
-			(await this.getPopover())?.close(false, false, true);
-		}
 	}
 
 	async onAfterRendering() {
@@ -509,16 +515,6 @@ class Tokenizer extends UI5Element {
 
 	_click(e: MouseEvent) {
 		this._handleTokenSelection(e);
-	}
-
-	_onmousedown(e: MouseEvent) {
-		if ((e.target as HTMLElement).hasAttribute("ui5-token")) {
-			const target = e.target as Token;
-			if (!target.toBeDeleted) {
-				this._itemNav.setCurrentItem(target);
-				this._scrollToToken(target);
-			}
-		}
 	}
 
 	_toggleTokenSelection(tokens: Array<Token>) {

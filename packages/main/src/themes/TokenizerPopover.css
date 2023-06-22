@@ -2,3 +2,8 @@
 [ui5-responsive-popover]::part(content) {
 	padding: 0;
 }
+
+#ui5-tokenizer-dialog-confirm-btn {
+	height: 100%;
+	min-width: 4rem;
+}

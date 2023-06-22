@@ -830,18 +830,6 @@ class MultiComboBox extends UI5Element {
 		this.allItemsPopover?.close();
 	}
 
-	_onTokenSelect() {
-		const tokens = this._tokenizer.tokens;
-
-		if (tokens.length === 1 && tokens[0].isTruncatable) {
-			if (tokens[0].selected) {
-				this._tokenizer.openMorePopover();
-			} else {
-				this._tokenizer.closeMorePopover();
-			}
-		}
-	}
-
 	_handleSelectAll() {
 		const filteredItems = this._filteredItems;
 		const allItemsSelected = filteredItems.every(item => item.selected);

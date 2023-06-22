@@ -6,8 +6,6 @@
 	color: var(--_ui5_token_text_color);
 	height: var(--_ui5_token_height);
 	box-sizing: border-box;
-	margin-top: var(--_ui5_token_top_margin);
-	margin-bottom: var(--_ui5_token_bottom_margin);
 }
 
 :host(:not([single-token])) {
