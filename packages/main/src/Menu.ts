@@ -43,6 +43,8 @@ type CurrentItem = {
 	ariaHasPopup: string | undefined,
 }
 
+type TimeoutIDMap = Record<string, number>;
+
 type MenuItemClickEventDetail = {
 	item: MenuItem,
 	text: string,
@@ -303,6 +305,8 @@ class Menu extends UI5Element {
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
+	hoverTimeouts: TimeoutIDMap = {};
+	unhoverTimeouts: TimeoutIDMap = {};
 
 	static async onDefine() {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -479,10 +483,6 @@ class Menu extends UI5Element {
 	}
 
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
-		const mainMenu = this._findMainMenu(item);
-		mainMenu.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
-			item,
-		});
 		item._subMenu!.showAt(opener);
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
@@ -535,6 +535,30 @@ class Menu extends UI5Element {
 		this._parentItemsStack.push(item);
 	}
 
+	startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem, hoverId: string) {
+		// If theres already a timeout, clears it
+		this.clearOpenTimeout(item);
+
+		// Sets the new timeout
+		this.hoverTimeouts[item.id] = window.setTimeout(() => {
+			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+		}, 300);
+	}
+
+	clearOpenTimeout(item: MenuItem) {
+		if (this.hoverTimeouts[item.id]) {
+			clearTimeout(this.hoverTimeouts[item.id]);
+			delete this.hoverTimeouts[item.id];
+		}
+	}
+
+	clearCloseTimeout(item: MenuItem) {
+		if (this.unhoverTimeouts[item.id]) {
+			clearTimeout(this.unhoverTimeouts[item.id]);
+			delete this.unhoverTimeouts[item.id];
+		}
+	}
+
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
@@ -543,7 +567,12 @@ class Menu extends UI5Element {
 			const hoverId = opener.getAttribute("id")!;
 
 			opener.focus();
-			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+
+			// If there is a pending close operation, cancel it
+			this.clearCloseTimeout(item);
+
+			// Opens submenu with 300ms delay
+			this.startOpenTimeout(item, opener, hoverId);
 		}
 	}
 
@@ -555,14 +584,17 @@ class Menu extends UI5Element {
 
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
-			// respect mouseover only on desktop
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
 
+			// If there is a pending open operation, cancel it
+			this.clearOpenTimeout(item);
+
+			// Close submenu with 400ms delay
 			if (item && item.hasSubmenu && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
-				this._closeItemSubMenu(item);
+				this.clearCloseTimeout(item);
 			}
 		}
 	}
