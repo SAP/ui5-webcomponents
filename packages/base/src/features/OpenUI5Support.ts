@@ -167,7 +167,7 @@ class OpenUI5Support {
 
 		if (OpenUI5Support.isModularCore()) {
 			const Localization = window.sap.ui.require("sap/base/i18n/Localization") as Localization;
-			return LocaleData.getInstance(Localization.getLanguageTag());
+			return LocaleData.getInstance(Localization.getLanguageTag())._get();
 		}
 
 		const Core = window.sap.ui.require("sap/ui/core/Core") as OpenUI5Core;
