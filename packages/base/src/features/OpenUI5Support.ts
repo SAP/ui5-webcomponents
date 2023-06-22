@@ -11,6 +11,7 @@ type OpenUI5Popup = {
 
 type OpenUI5Core = {
 	attachInit: (callback: () => void) => void,
+	ready: () => Promise<void>,
 	attachThemeChanged: (callback: () => Promise<void>) => void,
 	getConfiguration: () => OpenUI5CoreConfiguration,
 };
@@ -83,8 +84,8 @@ class OpenUI5Support {
 		}
 
 		return new Promise<void>(resolve => {
-			window.sap.ui.require(["sap/ui/core/Core"], (Core: OpenUI5Core) => {
-				Core.attachInit(() => {
+			window.sap.ui.require(["sap/ui/core/Core"], async (Core: OpenUI5Core) => {
+				const callback = () => {
 					let deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
 					if (OpenUI5Support.isModularCore()) { // for versions since 1.116.0 and onward, use the modular core
 						deps = [
@@ -100,7 +101,13 @@ class OpenUI5Support {
 						Popup.setInitialZIndex(getCurrentZIndex());
 						resolve();
 					});
-				});
+				};
+				if (OpenUI5Support.isModularCore()) {
+					await Core.ready();
+					callback();
+				} else {
+					Core.attachInit(callback);
+				}
 			});
 		});
 	}
