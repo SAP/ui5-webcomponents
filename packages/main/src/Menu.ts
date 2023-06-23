@@ -483,6 +483,10 @@ class Menu extends UI5Element {
 	}
 
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
+		const mainMenu = this._findMainMenu(item);
+		mainMenu.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
+			item,
+		});
 		item._subMenu!.showAt(opener);
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
@@ -545,6 +549,16 @@ class Menu extends UI5Element {
 		}, 300);
 	}
 
+	startCloseTimeout(item: MenuItem) {
+		// If theres already a timeout, clears it
+		this.clearCloseTimeout(item);
+
+		// Sets the new timeout
+		this.unhoverTimeouts[item.id] = window.setTimeout(() => {
+			this._closeItemSubMenu(item);
+		}, 400);
+	}
+
 	clearOpenTimeout(item: MenuItem) {
 		if (this.hoverTimeouts[item.id]) {
 			clearTimeout(this.hoverTimeouts[item.id]);
@@ -594,7 +608,7 @@ class Menu extends UI5Element {
 			if (item && item.hasSubmenu && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
-				this.clearCloseTimeout(item);
+				this.startCloseTimeout(item);
 			}
 		}
 	}
