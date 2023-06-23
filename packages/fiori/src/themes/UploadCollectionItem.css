@@ -119,6 +119,10 @@
 	display: none;
 }
 
+.ui5-li-deletebtn {
+	display: none;
+}
+
 .ui5-uci-edit-buttons {
 	pointer-events: all;
 	margin-inline-start: 1rem;

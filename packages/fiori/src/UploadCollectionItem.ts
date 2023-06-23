@@ -408,22 +408,8 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	get renderDeleteButton() {
+	get renderUploadCollectionDeleteButton() {
 		return !this.hideDeleteButton;
-	}
-
-	/**
-	 * @override
-	 */
-	get placeSelectionElementAfter() {
-		return true;
-	}
-
-	/**
-	 * @override
-	 */
-	get placeSelectionElementBefore() {
-		return false;
 	}
 
 	get _fileNameWithoutExtension() {
