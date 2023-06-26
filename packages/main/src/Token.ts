@@ -187,10 +187,6 @@ class Token extends UI5Element implements ITabbable {
 		this.focused = !this.focused;
 	}
 
-	_mousedown() {
-		this.toBeDeleted = true;
-	}
-
 	_delete() {
 		this.toBeDeleted = true;
 		this.fireEvent("delete");

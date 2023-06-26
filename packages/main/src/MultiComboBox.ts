@@ -531,6 +531,7 @@ class MultiComboBox extends UI5Element {
 	togglePopoverByDropdownIcon() {
 		this._shouldFilterItems = false;
 		this.allItemsPopover?.toggle(this);
+		this._tokenizer.closeMorePopover();
 	}
 
 	_showFilteredItems() {

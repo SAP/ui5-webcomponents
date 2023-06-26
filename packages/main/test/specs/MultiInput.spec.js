@@ -218,7 +218,8 @@ describe("MultiInput Truncated Token", () => {
 
 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
-		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "First li should be focused");
+		assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
+		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
 
 		await token.click();
 
@@ -280,7 +281,7 @@ describe("MultiInput Truncated Token", () => {
 
 		assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
 		assert.ok(await token.getProperty("selected"), "Token should be selected");
-		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "First li should be focused");
+		assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
 
 		const deleteIcon = await token.shadow$("ui5-icon");
 

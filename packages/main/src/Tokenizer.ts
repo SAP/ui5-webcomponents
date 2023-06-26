@@ -208,6 +208,10 @@ class Tokenizer extends UI5Element {
 		this._tokens.forEach(token => {
 			token.singleToken = this._tokens.length === 1;
 		});
+
+		if (!this._tokens.length) {
+			this.closeMorePopover();
+		}
 	}
 
 	onEnterDOM() {
@@ -353,10 +357,23 @@ class Tokenizer extends UI5Element {
 		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 	}
 
-	itemDelete(e: CustomEvent) {
+	async itemDelete(e: CustomEvent) {
 		const token = e.detail.item.tokenRef;
 
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+		// delay the token deletion in order to close the popover before removing token of the DOM
+		if (this._getTokens().length === 1 && this._getTokens()[0].isTruncatable) {
+			const morePopover = await this.getPopover();
+
+			morePopover.addEventListener("ui5-after-close", () => {
+				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+			}, {
+				once: true,
+			});
+
+			morePopover.close();
+		} else {
+			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+		}
 	}
 
 	handleBeforeClose() {
