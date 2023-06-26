@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.5](https://github.com/SAP/ui5-webcomponents/compare/v1.14.4...v1.14.5) (2023-06-26)
+
+
+### Bug Fixes
+
+* fix image in `create-webcomponent-package` ([#7253](https://github.com/SAP/ui5-webcomponents/issues/7253)) ([d8103d6](https://github.com/SAP/ui5-webcomponents/commit/d8103d62d4ae247ff7eaa56104a63bbe8a2a10ae))
+
+
+
+
+
 ## [1.14.4](https://github.com/SAP/ui5-webcomponents/compare/v1.14.3...v1.14.4) (2023-06-23)
 
 **Note:** Version bump only for package @ui5/create-webcomponents-package
