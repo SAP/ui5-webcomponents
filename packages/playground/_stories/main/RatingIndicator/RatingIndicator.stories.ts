@@ -73,7 +73,7 @@ RequiredRatingIndicatorWithLabel.args = {
 RequiredRatingIndicatorWithLabel.decorators = [
 	(story) => {
 	return html`
-	<ui5-label id="label-acc-name-ref" required="true" for="rating-indicator-${index+1}">Some ACC label</ui5-label>
+	<ui5-label id="label-acc-name-ref" required="true" for="rating-indicator-${index+1}">Rate us</ui5-label>
 	${story()}`;
 	}
 ]
