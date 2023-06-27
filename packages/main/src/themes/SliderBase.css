@@ -121,7 +121,7 @@
 	height: var(--_ui5_slider_handle_icon_size);
 }
 
-.ui5-slider-root:hover .ui5-slider-handle:not(:focus),
+.ui5-slider-progress-container:hover ~ .ui5-slider-handle:not(:focus),
 .ui5-slider-handle:hover {
 	background: var(--_ui5_slider_handle_hover_background);
 	border: var(--_ui5_slider_handle_hover_border);

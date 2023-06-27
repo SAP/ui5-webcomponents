@@ -10,6 +10,7 @@
 	--_ui5_slider_progress_border_radius: 0.25rem;
 	--_ui5_slider_progress_background: var(--sapActiveColor);
 	--_ui5_slider_handle_icon_display: none;
+	--_ui5_range_slider_root_hover_handle_icon_display: none;
 	--_ui5_slider_handle_height: 1.625rem;
 	--_ui5_slider_handle_width: 1.625rem;
 	--_ui5_slider_handle_border: solid 0.125rem var(--sapField_BorderColor);
