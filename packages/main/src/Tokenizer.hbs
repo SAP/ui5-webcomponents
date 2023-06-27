@@ -7,6 +7,7 @@
 		@click="{{_click}}"
 		@mousedown="{{_onmousedown}}"
 		@keydown="{{_onkeydown}}"
+		@ui5-select="{{onTokenSelect}}"
 		role="listbox"
 		aria-labelledby="{{_id}}-hiddenText"
 	>
@@ -17,7 +18,7 @@
 
 	{{#if showNMore}}
 		<span
-			@click="{{_openOverflowPopover}}"
+			@click="{{_openMorePopoverAndFireEvent}}"
 			class="ui5-tokenizer-more-text"
 			part="n-more-text"
 		>{{_nMoreText}}</span>

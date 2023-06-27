@@ -187,9 +187,15 @@ class MultiInput extends Input {
 	}
 
 	_tokenizerFocusOut(e: FocusEvent) {
-		if (!this.contains(e.relatedTarget as HTMLElement)) {
+		const isFocusingMorePopover = e.relatedTarget === this.tokenizer.staticAreaItem;
+
+		if (!this.contains(e.relatedTarget as HTMLElement) && !isFocusingMorePopover) {
 			this.tokenizer._tokens.forEach(token => { token.selected = false; });
 			this.tokenizer.scrollToStart();
+		}
+
+		if (e.relatedTarget === this.nativeInput) {
+			this.tokenizer.closeMorePopover();
 		}
 	}
 
@@ -203,6 +209,10 @@ class MultiInput extends Input {
 		this.expandedTokenizer = true;
 		this.focused = true;
 		this.tokenizer.scrollToEnd();
+
+		this.tokenizer._getTokens().forEach(token => {
+			token.selected = false;
+		});
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -375,6 +385,14 @@ class MultiInput extends Input {
 
 	get ariaRoleDescription() {
 		return MultiInput.i18nBundle.getText(MULTIINPUT_ROLEDESCRIPTION_TEXT);
+	}
+
+	get morePopoverOpener(): HTMLElement {
+		if (this.tokens.length === 1 && this.tokens[0].isTruncatable) {
+			return this.tokens[0];
+		}
+
+		return this;
 	}
 }
 
