@@ -242,6 +242,15 @@ class Tokenizer extends UI5Element {
 		return this.getSlottedNodes<Token>("tokens");
 	}
 
+	_onmousedown(e: MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-token")) {
+			const target = e.target as Token;
+			if (!target.toBeDeleted) {
+				this._itemNav.setCurrentItem(target);
+			}
+		}
+	}
+
 	onTokenSelect() {
 		const tokens = this._getTokens();
 

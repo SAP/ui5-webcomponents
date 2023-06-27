@@ -10,4 +10,5 @@
 
 [ui5-responsive-popover] {
 	margin-top: var(--_ui5_tokenizer-popover_offset);
+	margin-inline-start: calc(-1 * var(--_ui5_tokenizer_padding));
 }

@@ -1443,6 +1443,16 @@ class MultiComboBox extends UI5Element {
 		this._innerInput.focus();
 	}
 
+	get morePopoverOpener(): HTMLElement {
+		const tokens = this._tokenizer?.tokens;
+
+		if (tokens?.length === 1 && tokens[0].isTruncatable) {
+			return tokens[0];
+		}
+
+		return this;
+	}
+
 	async closePopover() {
 		(await this._getPopover())?.close();
 	}
