@@ -58,7 +58,7 @@ class TabSeparator extends UI5Element implements ITab {
 	 *
 	 * @function
 	 * @public
-     * @name sap.ui.webc.main.TabSeparator.prototype.getTabInStripDomRef
+	 * @name sap.ui.webc.main.TabSeparator.prototype.getTabInStripDomRef
 	 */
 	getTabInStripDomRef() {
 		if (this._getElementInStrip) {
