@@ -11,7 +11,8 @@ type OpenUI5Popup = {
 
 type OpenUI5Core = {
 	attachInit: (callback: () => void) => void,
-	attachThemeChanged: (callback: () => Promise<void>) => void,
+	ready: () => Promise<void>,
+	attachThemeChanged: (callback: () => void) => void,
 	getConfiguration: () => OpenUI5CoreConfiguration,
 };
 
@@ -29,12 +30,36 @@ type OpenUI5CoreConfiguration = {
 	}
 };
 
+type ControlBehavior = {
+	getAnimationMode: () => string,
+}
+
+type Localization = {
+	getLanguage: () => string,
+	getLanguageTag: () => string,
+	getRTL: () => string,
+	getTimezone: () => string,
+}
+
 type LocaleData = {
 	getInstance: (locale: string) => Locale,
 }
 
-type CoreTheming = {
-    getThemeRoot: () => string,
+type Theming = {
+	getThemeRoot: () => string,
+	getTheme: () => string,
+	attachApplied: (callback: () => void) => void,
+}
+
+type Formatting = {
+	getCalendarType: () => string,
+	getLegacyDateCalendarCustomizing: () => LegacyDateCalendarCustomizing,
+}
+
+type CalendarUtils = {
+	getWeekConfigurationValues: () => {
+		firstDayOfWeek: number | undefined,
+	},
 }
 
 type Locale = {
@@ -42,59 +67,90 @@ type Locale = {
 	_get: () => CLDRData,
 };
 
-type VersionUtil = (version: string) => {
-	compareTo: (version: string) => number,
-};
-
-const getCore = () => {
-	return window.sap?.ui?.getCore?.() as OpenUI5Core;
-};
-
 class OpenUI5Support {
-	static isLoaded() {
-		return !!getCore();
+	static isAtLeastVersion116() {
+		const version = window.sap.ui!.version as string;
+		const parts = version.split(".");
+		if (!parts || parts.length < 2) {
+			return false;
+		}
+		return parseInt(parts[0]) > 1 || parseInt(parts[1]) >= 116;
+	}
+
+	static isOpenUI5Detected() {
+		return typeof window.sap?.ui?.require === "function";
 	}
 
 	static init() {
-		const core = getCore();
-		if (!core) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return Promise.resolve();
 		}
 
 		return new Promise<void>(resolve => {
-			const deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
-			const version: string = window.sap.ui.version || "";
-
-			window.sap.ui.require(["sap/base/util/Version"], (VersionUtil: VersionUtil) => {
-				if (VersionUtil(version).compareTo("1.116.0") >= 0) { // for versions since 1.116.0 and onward, use the Theming module
-					deps.push("sap/ui/core/Theming");
-				}
-
-				core.attachInit(() => {
+			window.sap.ui.require(["sap/ui/core/Core"], async (Core: OpenUI5Core) => {
+				const callback = () => {
+					let deps: Array<string> = ["sap/ui/core/Popup", "sap/ui/core/LocaleData"];
+					if (OpenUI5Support.isAtLeastVersion116()) { // for versions since 1.116.0 and onward, use the modular core
+						deps = [
+							...deps,
+							"sap/base/i18n/Formatting",
+							"sap/base/i18n/Localization",
+							"sap/ui/core/ControlBehavior",
+							"sap/ui/core/Theming",
+							"sap/ui/core/date/CalendarUtils",
+						];
+					}
 					window.sap.ui.require(deps, (Popup: OpenUI5Popup) => {
 						Popup.setInitialZIndex(getCurrentZIndex());
 						resolve();
 					});
-				});
+				};
+				if (OpenUI5Support.isAtLeastVersion116()) {
+					await Core.ready();
+					callback();
+				} else {
+					Core.attachInit(callback);
+				}
 			});
 		});
 	}
 
 	static getConfigurationSettingsObject() {
-		const core = getCore();
-		if (!core) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
-		const config = core.getConfiguration();
-		const LocaleData = window.sap.ui.require("sap/ui/core/LocaleData");
-		const Theming: CoreTheming = window.sap.ui.require("sap/ui/core/Theming");
+		if (OpenUI5Support.isAtLeastVersion116()) {
+			const ControlBehavior = window.sap.ui.require("sap/ui/core/ControlBehavior") as ControlBehavior;
+			const Localization = window.sap.ui.require("sap/base/i18n/Localization") as Localization;
+			const Theming = window.sap.ui.require("sap/ui/core/Theming") as Theming;
+			const Formatting = window.sap.ui.require("sap/base/i18n/Formatting") as Formatting;
+			const CalendarUtils = window.sap.ui.require("sap/ui/core/date/CalendarUtils") as CalendarUtils;
+
+			return {
+				animationMode: ControlBehavior.getAnimationMode(),
+				language: Localization.getLanguage(),
+				theme: Theming.getTheme(),
+				themeRoot: Theming.getThemeRoot(),
+				rtl: Localization.getRTL(),
+				timezone: Localization.getTimezone(),
+				calendarType: Formatting.getCalendarType(),
+				formatSettings: {
+					firstDayOfWeek: CalendarUtils.getWeekConfigurationValues().firstDayOfWeek,
+					legacyDateCalendarCustomizing: Formatting.getLegacyDateCalendarCustomizing(),
+				},
+			};
+		}
+
+		const Core = window.sap.ui.require("sap/ui/core/Core") as OpenUI5Core;
+		const config = Core.getConfiguration();
+		const LocaleData = window.sap.ui.require("sap/ui/core/LocaleData") as LocaleData;
 
 		return {
 			animationMode: config.getAnimationMode(),
 			language: config.getLanguage(),
 			theme: config.getTheme(),
-			themeRoot: config.getThemeRoot ? config.getThemeRoot() : Theming.getThemeRoot(), // Theming is the newer API, but not released yet (available on nightly snapshot). Remove "config.getThemeRoot" after Theming is released.
+			themeRoot: config.getThemeRoot(),
 			rtl: config.getRTL(),
 			timezone: config.getTimezone(),
 			calendarType: config.getCalendarType(),
@@ -106,27 +162,39 @@ class OpenUI5Support {
 	}
 
 	static getLocaleDataObject() {
-		const core = getCore();
-		if (!core) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
-		const config = core.getConfiguration();
 		const LocaleData = window.sap.ui.require("sap/ui/core/LocaleData") as LocaleData;
+
+		if (OpenUI5Support.isAtLeastVersion116()) {
+			const Localization = window.sap.ui.require("sap/base/i18n/Localization") as Localization;
+			return LocaleData.getInstance(Localization.getLanguageTag())._get();
+		}
+
+		const Core = window.sap.ui.require("sap/ui/core/Core") as OpenUI5Core;
+		const config = Core.getConfiguration();
 		return LocaleData.getInstance(config.getLocale())._get();
 	}
 
 	static _listenForThemeChange() {
-		const core = getCore();
-		const config = core.getConfiguration();
-		core.attachThemeChanged(async () => {
-			await setTheme(config.getTheme());
-		});
+		if (OpenUI5Support.isAtLeastVersion116()) {
+			const Theming: Theming = window.sap.ui.require("sap/ui/core/Theming");
+			Theming.attachApplied(() => {
+				setTheme(Theming.getTheme());
+			});
+		} else {
+			const Core = window.sap.ui.require("sap/ui/core/Core") as OpenUI5Core;
+			const config = Core.getConfiguration();
+			Core.attachThemeChanged(() => {
+				setTheme(config.getTheme());
+			});
+		}
 	}
 
 	static attachListeners() {
-		const core = getCore();
-		if (!core) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
@@ -134,8 +202,7 @@ class OpenUI5Support {
 	}
 
 	static cssVariablesLoaded() {
-		const core = getCore();
-		if (!core) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
@@ -148,8 +215,7 @@ class OpenUI5Support {
 	}
 
 	static getNextZIndex() {
-		const core = getCore();
-		if (!core) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
@@ -158,8 +224,7 @@ class OpenUI5Support {
 	}
 
 	static setInitialZIndex() {
-		const core = getCore();
-		if (!core) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
