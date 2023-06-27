@@ -12,7 +12,7 @@ type OpenUI5Popup = {
 type OpenUI5Core = {
 	attachInit: (callback: () => void) => void,
 	ready: () => Promise<void>,
-	attachThemeChanged: (callback: () => Promise<void>) => void,
+	attachThemeChanged: (callback: () => void) => void,
 	getConfiguration: () => OpenUI5CoreConfiguration,
 };
 
@@ -48,7 +48,7 @@ type LocaleData = {
 type Theming = {
 	getThemeRoot: () => string,
 	getTheme: () => string,
-	attachApplied: (callback: () => Promise<void>) => void,
+	attachApplied: (callback: () => void) => void,
 }
 
 type Formatting = {
@@ -71,15 +71,18 @@ class OpenUI5Support {
 	static isAtLeastVersion116() {
 		const version = window.sap.ui!.version as string;
 		const parts = version.split(".");
-		return parts && parts[1] && parseInt(parts[1]) >= 116;
+		if (!parts || parts.length < 2) {
+			return false;
+		}
+		return parseInt(parts[0]) > 1 || parseInt(parts[1]) >= 116;
 	}
 
-	static OpenUI5Detected() {
+	static isOpenUI5Detected() {
 		return typeof window.sap?.ui?.require === "function";
 	}
 
 	static init() {
-		if (!OpenUI5Support.OpenUI5Detected()) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return Promise.resolve();
 		}
 
@@ -113,7 +116,7 @@ class OpenUI5Support {
 	}
 
 	static getConfigurationSettingsObject() {
-		if (!OpenUI5Support.OpenUI5Detected()) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
@@ -159,7 +162,7 @@ class OpenUI5Support {
 	}
 
 	static getLocaleDataObject() {
-		if (!OpenUI5Support.OpenUI5Detected()) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
@@ -178,20 +181,20 @@ class OpenUI5Support {
 	static _listenForThemeChange() {
 		if (OpenUI5Support.isAtLeastVersion116()) {
 			const Theming: Theming = window.sap.ui.require("sap/ui/core/Theming");
-			Theming.attachApplied(async () => {
-				await setTheme(Theming.getTheme());
+			Theming.attachApplied(() => {
+				setTheme(Theming.getTheme());
 			});
 		} else {
 			const Core = window.sap.ui.require("sap/ui/core/Core") as OpenUI5Core;
 			const config = Core.getConfiguration();
-			Core.attachThemeChanged(async () => {
-				await setTheme(config.getTheme());
+			Core.attachThemeChanged(() => {
+				setTheme(config.getTheme());
 			});
 		}
 	}
 
 	static attachListeners() {
-		if (!OpenUI5Support.OpenUI5Detected()) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
@@ -199,7 +202,7 @@ class OpenUI5Support {
 	}
 
 	static cssVariablesLoaded() {
-		if (!OpenUI5Support.OpenUI5Detected()) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
@@ -212,7 +215,7 @@ class OpenUI5Support {
 	}
 
 	static getNextZIndex() {
-		if (!OpenUI5Support.OpenUI5Detected()) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
@@ -221,7 +224,7 @@ class OpenUI5Support {
 	}
 
 	static setInitialZIndex() {
-		if (!OpenUI5Support.OpenUI5Detected()) {
+		if (!OpenUI5Support.isOpenUI5Detected()) {
 			return;
 		}
 
