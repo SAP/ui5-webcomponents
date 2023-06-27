@@ -20,8 +20,12 @@
 		</div>
 		{{#if hasTexts}}
 			<div class="ui5-wiz-step-texts">
-				<div class="ui5-wiz-step-title-text">{{titleText}}</div>
+			{{#if subtitleText}}
+				<div class="ui5-wiz-step-title-text ui5-wiz-step-title-text-optional">{{titleText}}</div>
 				<div class="ui5-wiz-step-subtitle-text">{{subtitleText}}</div>
+			{{else}}
+				<div class="ui5-wiz-step-title-text">{{titleText}}</div>
+			{{/if}}
 			</div>
 		{{/if}}
 	</div>
