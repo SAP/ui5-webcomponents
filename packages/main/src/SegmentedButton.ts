@@ -7,9 +7,6 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isSpace,
 	isEnter,
@@ -102,13 +99,7 @@ class SegmentedButton extends UI5Element {
 
 	_itemNavigation: ItemNavigation;
 
-	absoluteWidthSet: boolean // set to true whenever we set absolute width to the component
-	percentageWidthSet: boolean; // set to true whenever we set 100% width to the component
-	originalWidth!: string; // used to store the width of the component's parent before the resize
-	initialState!: boolean; // indicates whether the stored width in the originalWidth is the initial one, since on change they change a few times and we want only the first one
 	hasPreviouslyFocusedItem: boolean;
-
-	_handleResizeBound: ResizeObserverCallback;
 
 	widths?: Array<number>;
 	_selectedItem?: SegmentedButtonItem;
@@ -123,24 +114,7 @@ class SegmentedButton extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.getSlottedNodes<SegmentedButtonItem>("items"),
 		});
-
-		this.absoluteWidthSet = false; // true when component width is set to absolute
-		this.percentageWidthSet = false; // true when component width is set to 100%
-		this.initialState = false;
-		this.originalWidth = "";
 		this.hasPreviouslyFocusedItem = false;
-
-		this._handleResizeBound = this._doLayout.bind(this);
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this.parentNode as HTMLElement, this._handleResizeBound);
-	}
-
-	onExitDOM() {
-		if (this.parentNode) {
-			ResizeHandler.deregister(this.parentNode as HTMLElement, this._handleResizeBound);
-		}
 	}
 
 	onBeforeRendering() {
@@ -152,26 +126,8 @@ class SegmentedButton extends UI5Element {
 		});
 
 		this.normalizeSelection();
-	}
 
-	async onAfterRendering() {
-		await this._doLayout();
-	}
-
-	prepareToMeasureItems() {
-		this.items.forEach(item => {
-			item.style.width = "";
-		});
-	}
-
-	async measureItemsWidth() {
-		await renderFinished();
-		this.prepareToMeasureItems();
-
-		this.widths = this.items.map(item => {
-			// 1 is added because for width 100.44px the offsetWidth property is 100px and not 101px
-			return item.offsetWidth + 1;
-		});
+		this.style.setProperty("--colNum", `${items.length}`);
 	}
 
 	normalizeSelection() {
@@ -260,84 +216,6 @@ class SegmentedButton extends UI5Element {
 			this.selectedItem.focus();
 			this._itemNavigation.setCurrentItem(this._selectedItem!);
 			this.hasPreviouslyFocusedItem = true;
-		}
-	}
-
-	/**
-	 * Performs the layout for the SegmentedButton component.
-	 *
-	 * Calculates and sets the appropriate width for the component based on the inline style and/or CSS class.
-	 * Adjusts the responsiveness of the component based on the parent width.
-	 *
-	 * @returns {Promise<void>} A Promise that resolves once the layout is completed.
-	 * @private
-	 */
-	async _doLayout(): Promise<void> {
-		const itemMinWidthPx = parseInt(getComputedStyle(this.items[0]).minWidth); // gets the min-width of the items in px
-
-		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2);
-		if (!itemsHaveWidth) {
-			await this.measureItemsWidth();
-		}
-
-		const parentWidth = this.parentNode ? (this.parentNode as HTMLElement).offsetWidth : 0;
-
-		/**
-		 * Calculated default width of the SegmentedButton component based on the items' widths, if there is no custom width set.
-		 */
-		const defaultComponentWidth = `${Math.max(...this.widths!) * this.items.length}px`;
-		const inlineWidth = this.style.width; // Inline style width
-		const classWidth = this.getAttribute("class") ? getComputedStyle(this).width : ""; // Width defined by CSS class
-
-		/**
-		 * Calculates the width to be set for the SegmentedButton component based on the inline style and/or CSS class.
-		 *
-		 * @returns {string} The calculated width for the SegmentedButton component.
-		 * @private
-		 */
-		const calculateWidth = (): string => {
-			const numItems = this.items.length;
-			let resultWidth = "";
-
-			if (inlineWidth) {
-				resultWidth = inlineWidth;
-			} else if (classWidth) {
-				resultWidth = classWidth;
-			} else {
-				resultWidth = defaultComponentWidth;
-			}
-
-			const widthValue = parseInt(resultWidth);
-			const minWidthAllowed = numItems * itemMinWidthPx;
-
-			if (widthValue < minWidthAllowed) {
-				resultWidth = `${minWidthAllowed}px`;
-			}
-
-			return resultWidth;
-		};
-
-		const width = calculateWidth();
-
-		this.style.width = width;
-		this.absoluteWidthSet = true;
-		if (!this.initialState) {
-			this.originalWidth = width;
-			this.initialState = true;
-		}
-
-		this.items.forEach(item => {
-			item.style.width = "100%";
-		});
-
-		if ((parentWidth <= parseInt(this.originalWidth) || parentWidth <= this.offsetWidth) && this.absoluteWidthSet) {
-			this.style.width = "100%";
-			this.percentageWidthSet = true;
-			this.absoluteWidthSet = false;
-		} else if (parentWidth > parseInt(this.originalWidth)) {
-			this.style.width = this.originalWidth;
-			this.absoluteWidthSet = true;
-			this.percentageWidthSet = false;
 		}
 	}
 
