@@ -117,7 +117,7 @@ class OpenUI5Support {
 
 	static getConfigurationSettingsObject() {
 		if (!OpenUI5Support.isOpenUI5Detected()) {
-			return;
+			return {};
 		}
 
 		if (OpenUI5Support.isAtLeastVersion116()) {
@@ -208,7 +208,7 @@ class OpenUI5Support {
 
 		const link = [...document.head.children].find(el => el.id === "sap-ui-theme-sap.ui.core") as HTMLLinkElement; // more reliable than querySelector early
 		if (!link) {
-			return;
+			return false;
 		}
 
 		return !!link.href.match(/\/css(-|_)variables\.css/);
