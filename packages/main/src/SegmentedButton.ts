@@ -101,7 +101,6 @@ class SegmentedButton extends UI5Element {
 
 	hasPreviouslyFocusedItem: boolean;
 
-	widths?: Array<number>;
 	_selectedItem?: SegmentedButtonItem;
 
 	static async onDefine() {
@@ -127,7 +126,7 @@ class SegmentedButton extends UI5Element {
 
 		this.normalizeSelection();
 
-		this.style.setProperty("--colNum", `${items.length}`);
+		this.style.setProperty("--_ui5_segmented_btn_items_count", `${items.length}`);
 	}
 
 	normalizeSelection() {
