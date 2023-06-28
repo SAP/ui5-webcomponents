@@ -63,6 +63,15 @@
 			<ui5-menu-item text="Delete" icon="delete"></ui5-menu-item>
 		</ui5-menu>
 	</div>
+
+	<script>
+		const splitBtnWithMenuDefaultAction = document.getElementById("splitBtnWithMenuDefaultAction");
+		const menuInSplitBtn = document.getElementById("menuInSplitBtnDefaultAction");
+
+		splitBtnWithMenuDefaultAction.addEventListener("ui5-arrow-click", function () {
+			menuInSplitBtn.open ? menuInSplitBtn.close() : menuInSplitBtn.showAt(splitBtnWithMenuDefaultAction);
+		});
+	</script>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-split-button id="splitBtnWithMenuDefaultAction" design="Default">Open Menu</ui5-split-button>
 <ui5-menu id="menuInSplitBtnDefaultAction">
@@ -80,14 +89,7 @@
 </script>
 	</xmp></pre>
 
-	<script>
-		const splitBtnWithMenuDefaultAction = document.getElementById("splitBtnWithMenuDefaultAction");
-		const menuInSplitBtn = document.getElementById("menuInSplitBtnDefaultAction");
-
-		splitBtnWithMenuDefaultAction.addEventListener("ui5-arrow-click", function () {
-			menuInSplitBtn.open ? menuInSplitBtn.close() : menuInSplitBtn.showAt(splitBtnWithMenuDefaultAction);
-		});
-	</script>
+	
 </section>
 <section>
 	<h3>SplitButton with Menu and associated last action</h3>
@@ -99,7 +101,18 @@
 			<ui5-menu-item text="Delete" icon="delete"></ui5-menu-item>
 		</ui5-menu>
 	</div>
+	<script>
+		const splitBtnLastAction = document.getElementById("splitBtnWithMenuWithAssociatedLastAction")
+		const menuInSplitBtnLastAction = document.getElementById("menuInSplitBtnAssociatedLastAction")
 
+		splitBtnLastAction.addEventListener("ui5-arrow-click", function () {
+			menuInSplitBtnLastAction.open ? menuInSplitBtnLastAction.close() : menuInSplitBtnLastAction.showAt(splitBtnLastAction);
+		});
+
+		menuInSplitBtnLastAction.addEventListener("ui5-item-click", function(event) {
+			splitBtnLastAction.innerText = event.detail.text;
+		});
+	</script>
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-split-button id="splitBtnWithMenuWithAssociatedLastAction" design="Default">Open Menu</ui5-split-button>
 <ui5-menu id="menuInSplitBtnAssociatedLastAction">
@@ -122,17 +135,6 @@
 </script>
 	</xmp></pre>
 
-	<script>
-		const splitBtnLastAction = document.getElementById("splitBtnWithMenuWithAssociatedLastAction")
-		const menuInSplitBtnLastAction = document.getElementById("menuInSplitBtnAssociatedLastAction")
-
-		splitBtnLastAction.addEventListener("ui5-arrow-click", function () {
-			menuInSplitBtnLastAction.open ? menuInSplitBtnLastAction.close() : menuInSplitBtnLastAction.showAt(splitBtnLastAction);
-		});
-
-		menuInSplitBtnLastAction.addEventListener("ui5-item-click", function(event) {
-			splitBtnLastAction.innerText = event.detail.text;
-		});
-	</script>
+	
 </section>
 <!-- JSDoc marker -->
