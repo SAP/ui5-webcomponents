@@ -56,15 +56,14 @@ const detectExternalTheme = async (theme: string) => {
 
 	// If OpenUI5Support is enabled, try to find out if it loaded variables
 	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-	if (openUI5Support) {
-		const varsLoaded = openUI5Support.cssVariablesLoaded();
-		if (varsLoaded) {
-			return {
-				themeName: openUI5Support.getConfigurationSettingsObject()?.theme, // just themeName
-				baseThemeName: "", // baseThemeName is only relevant for custom themes
-			};
-		}
-	} else if (getThemeRoot()) {
+	if (openUI5Support && openUI5Support.cssVariablesLoaded()) {
+		return {
+			themeName: openUI5Support.getConfigurationSettingsObject()?.theme, // just themeName
+			baseThemeName: "", // baseThemeName is only relevant for custom themes
+		};
+	}
+
+	if (getThemeRoot()) {
 		await attachCustomThemeStylesToHead(theme);
 
 		return getThemeDesignerTheme();
