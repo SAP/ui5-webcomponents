@@ -4,7 +4,7 @@ import getThemeDesignerTheme from "./getThemeDesignerTheme.js";
 import { fireThemeLoaded } from "./ThemeLoaded.js";
 import { getFeature } from "../FeaturesRegistry.js";
 import { attachCustomThemeStylesToHead, getThemeRoot } from "../config/ThemeRoot.js";
-import type OpenUI5Support from "../features/OpenUI5Support.js";
+import OpenUI5Support from "../features/OpenUI5Support.js";
 import { DEFAULT_THEME } from "../generated/AssetParameters.js";
 import { getCurrentRuntimeIndex } from "../Runtimes.js";
 
@@ -56,14 +56,15 @@ const detectExternalTheme = async (theme: string) => {
 
 	// If OpenUI5Support is enabled, try to find out if it loaded variables
 	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-	if (openUI5Support && openUI5Support.cssVariablesLoaded()) {
-		return {
-			themeName: openUI5Support.getConfigurationSettingsObject()?.theme, // just themeName
-			baseThemeName: "", // baseThemeName is only relevant for custom themes
-		};
-	}
-
-	if (getThemeRoot()) {
+	if (openUI5Support && OpenUI5Support.isOpenUI5Detected()) {
+		const varsLoaded = openUI5Support.cssVariablesLoaded();
+		if (varsLoaded) {
+			return {
+				themeName: openUI5Support.getConfigurationSettingsObject()?.theme, // just themeName
+				baseThemeName: "", // baseThemeName is only relevant for custom themes
+			};
+		}
+	} else if (getThemeRoot()) {
 		await attachCustomThemeStylesToHead(theme);
 
 		return getThemeDesignerTheme();
