@@ -4,11 +4,10 @@ import type { InputType as IArgType } from "@storybook/types";
 
 class ArgUI5CustomDataGenerator implements IGenerator {
     isMatch(dataParsed: IComponentParsedAPI): boolean {
-        return ['methods', 'events'].includes(dataParsed.fieldName);
+        return ['methods', 'events'].includes(dataParsed.apiType);
     }
-    generate(dataParsed: IComponentParsedAPI, accumulator: IArgType = {}): IArgType {
+    generate(dataParsed: IComponentParsedAPI): IArgType {
         return {
-            ...accumulator[dataParsed.name],
             UI5CustomData: {
                 // if dataParsed.parameters is undefined, then it will be ignored
                 ...(dataParsed.parameters ? { parameters: dataParsed.parameters } : {}),

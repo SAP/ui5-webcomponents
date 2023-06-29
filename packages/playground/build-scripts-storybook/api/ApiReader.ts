@@ -10,7 +10,7 @@ export interface IComponentAPI {
 }
 
 export interface IComponentParsedAPI extends IComponentAPI, IComponentUI5CustomData {
-    fieldName: string;
+    apiType: string;
 }
 
 export interface IComponentUI5CustomData {

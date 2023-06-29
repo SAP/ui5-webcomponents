@@ -39,22 +39,22 @@ export class DataFacade implements IDataFacade {
 
         stories.forEach((storyName) => {
             let parsed: IComponentParsedAPI[] = [];
-            const data = apiReader.findApi(storyName);
+            const rawData = apiReader.findApi(storyName);
 
-            if (data) {
-                INCLUDE_API_LIST.forEach((fieldName) => {
-                    const fieldData = data[fieldName as keyof IComponentData] as IComponentAPI[];
+            if (rawData) {
+                INCLUDE_API_LIST.forEach((apiType) => {
+                    const fieldData = rawData[apiType as keyof IComponentData] as IComponentAPI[];
 
                     if (Array.isArray(fieldData)) {
                         parsed = [...parsed, ...fieldData
                             .filter((item) => !EXCLUDE_LIST.includes(item.name) && item.visibility === "public")
-                            .map((item) => ({ ...item, fieldName }))];
+                            .map((item) => ({ ...item, apiType }))];
                     }
                 });
 
-                if (data.extends) {
-                    const parentData = this.parse(apiReader, [data.extends]);
-                    parsed = [...parsed, ...parentData.get(data.extends) || []];
+                if (rawData.extends) {
+                    const parentData = this.parse(apiReader, [rawData.extends]);
+                    parsed = [...parsed, ...parentData.get(rawData.extends) || []];
                 }
             }
 

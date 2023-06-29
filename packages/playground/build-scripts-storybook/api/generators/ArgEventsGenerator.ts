@@ -4,7 +4,7 @@ import type { InputType as IArgType } from "@storybook/types";
 
 class ArgEventsGenerator implements IGenerator {
     isMatch(dataParsed: IComponentParsedAPI): boolean {
-        return dataParsed.fieldName === "events";
+        return dataParsed.apiType === "events";
     }
     generate(dataParsed: IComponentParsedAPI): IArgType {
         return {

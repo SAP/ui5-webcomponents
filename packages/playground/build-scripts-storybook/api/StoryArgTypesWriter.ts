@@ -26,24 +26,11 @@ export class StoryArgTypesWriter implements IStoryArgTypesWriter {
     ): Promise<void[]> {
         const packages = storyReader.getPackages();
         const argTypes = storyArgTypesGenerator.getArgTypes();
-        const promises = Object.keys(packages).map(async (packageName) => {
-            const stories = packages[packageName];
 
+        const promises = Object.entries(packages).map(async ([packageName, stories]) => {
             for (const story of stories) {
-                // write the argTypes to the story file
-                const storyPath = path.join(
-                    directory,
-                    packageName,
-                    story,
-                    StoryArgTypesWriter.STORIES_WRITE_FILE_NAME
-                );
-
-                const content = this.generateFile(
-                    apiReader,
-                    story,
-                    argTypes
-                );
-
+                const storyPath = path.join(directory, packageName, story, StoryArgTypesWriter.STORIES_WRITE_FILE_NAME);
+                const content = this.generateFile(apiReader, story, argTypes);
                 this.writeFile(storyPath, content, story);
             }
         });
@@ -55,23 +42,21 @@ export class StoryArgTypesWriter implements IStoryArgTypesWriter {
         apiReader: IApiReader,
         story: string,
         argTypes: Record<string, Record<string, IArgType[]>>
-    ) {
+    ): string {
         if (!argTypes[story]) {
             throw new Error(`No argTypes found for story ${story}`);
         }
 
-        const properties = argTypes[story].properties;
-        const methods = argTypes[story].methods;
-        const slots = argTypes[story].slots || {};
+        const { properties, methods, slots = {}, events = {} } = argTypes[story];
         const slotNames = Object.keys(slots);
 
         const info = JSON.stringify(apiReader.findInfo(story), null, 4);
-        const args = JSON.stringify({ ...properties, ...methods }, null, 4);
+        const args = JSON.stringify({ ...properties, ...methods, ...slots, ...events }, null, 4);
 
         const content = `export default ${args};
 export const componentInfo = ${info};
 export type StoryArgsSlots = {
-${slotNames.map((slotName) => `${slotName}: string;`).join("\n	")}
+${slotNames.map((slotName) => `    ${slotName}: string;`).join("\n")}
 }`;
         return content;
     }

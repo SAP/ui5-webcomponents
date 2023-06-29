@@ -4,7 +4,7 @@ import type { InputType as IArgType } from "@storybook/types";
 
 class ArgPropertiesGenerator implements IGenerator {
     isMatch(dataParsed: IComponentParsedAPI): boolean {
-        return dataParsed.fieldName === "properties";
+        return dataParsed.apiType === "properties";
     }
     generate(dataParsed: IComponentProperty, apiReader: IApiReader): IArgType {
         let result = {};

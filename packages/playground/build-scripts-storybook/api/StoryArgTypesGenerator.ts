@@ -12,7 +12,7 @@ type IArgsTypesResult = Record<string, Record<string, IArgType[]>>
 type IArgTypesFields = Record<string, IArgType>;
 
 export interface IStoryArgTypesGenerator {
-    generateArgTypes(data: Map<string, IComponentParsedAPI[]>): void;
+    generateArgTypes(apiCollection: Map<string, IComponentParsedAPI[]>): void;
     getArgTypes(): IArgsTypesResult;
 }
 
@@ -36,35 +36,40 @@ export class StoryArgTypesGenerator implements IStoryArgTypesGenerator {
         this.argTypes = {};
     }
 
-    public generateArgTypes(dataCollection: Map<string, IComponentParsedAPI[]>): void {
-        dataCollection.forEach((apiCollection, componentName) => {
-            this.argTypes[componentName] = this.generateArgTypesForComponent(apiCollection);;
+    public generateArgTypes(apiCollection: Map<string, IComponentParsedAPI[]>): void {
+        apiCollection.forEach((api, componentName) => {
+            this.argTypes[componentName] = this.generateArgTypesForComponent(api);;
         });
     }
 
-    generateArgTypesForComponent(apiCollection: IComponentParsedAPI[]): Record<string, IArgTypesFields> {
+    generateArgTypesForComponent(componentApi: IComponentParsedAPI[]): Record<string, IArgTypesFields> {
         const argTypesComponent: Record<string, IArgTypesFields> = {};
 
-        apiCollection.forEach((data) => {
-            const fields = argTypesComponent[data.fieldName] || {};
+        componentApi.forEach((apiData) => {
+            const accumulatedArgs = argTypesComponent[apiData.apiType] || {};
 
-            argTypesComponent[data.fieldName] = this.generateArgTypesForComponentField(data, fields);;
+            argTypesComponent[apiData.apiType] = this.generateArgTypesForComponentField(apiData, accumulatedArgs);
         });
 
         return argTypesComponent;
     }
 
-    private generateArgTypesForComponentField(data: IComponentParsedAPI, fields: IArgTypesFields): IArgTypesFields {
+    private generateArgTypesForComponentField(apiData: IComponentParsedAPI, accumulatedArgs: IArgTypesFields): IArgTypesFields {
         this.generators.forEach((generator) => {
-            if (generator.isMatch(data)) {
-                fields[data.name] = {
-                    ...fields[data.name],
-                    ...generator.generate(data, fields[data.name], this.apiReader),
-                };
+            if (generator.isMatch(apiData)) {
+                const args = generator.generate(apiData, this.apiReader);
+
+                // check if empty
+                if (Object.keys(args).length > 0) {
+                    accumulatedArgs[apiData.name] = {
+                        ...accumulatedArgs[apiData.name],
+                        ...args,
+                    };
+                }
             }
         });
 
-        return fields;
+        return accumulatedArgs;
     }
 
     public getArgTypes(): IArgsTypesResult {
