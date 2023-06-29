@@ -673,8 +673,8 @@ describe("Accessibility", async () => {
 		const arrow = await combo.shadow$("[input-icon]");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const itemAnnouncement1 = "Group Header A List item 1 of 17";
-		const itemAnnouncement2 = "Group Header Donut List item 6 of 17";
+		const itemAnnouncement1 = "Group Header A";
+		const itemAnnouncement2 = "Group Header Donut";
 
 		await arrow.click();
 
@@ -988,5 +988,30 @@ describe("Keyboard navigation", async () => {
 
 		await input.keys("PageDown");
 		assert.strictEqual(await input.getProperty("value"), "Chile", "The +10 item should be selected on PAGEDOWN");
+	});
+
+	it ("Should select first matching item",  async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#same-name-suggestions-cb");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#same-name-suggestions-cb");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// Opened picker
+		await input.click();
+		await input.keys("A");
+
+		await browser.waitUntil(() => popover.getProperty("opened"), {
+			timeout: 200,
+			timeoutMsg: "Popover should be displayed"
+		});
+
+		assert.strictEqual(await input.getProperty("value"), "Argentina", "Value should be Argentina");
+
+		const listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		assert.ok(await listItems[0].getProperty("selected"), "List Item should be selected");
+		assert.notOk(await listItems[1].getProperty("selected"), "List Item should not be selected");
 	});
 });

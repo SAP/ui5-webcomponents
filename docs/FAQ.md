@@ -8,7 +8,7 @@
 **Q: Where is the documentation?**
 
 **A:** There are several resources:
-- [Web Components APIs](https://sap.github.io/ui5-webcomponents/playground/components)
+- [Web Components APIs](https://sap.github.io/ui5-webcomponents/playground/)
 - [How to get started?](https://blogs.sap.com/2019/04/01/the-fastest-way-to-get-started-with-ui5-web-components/)
 
 **Q: Is there a CDN to load UI5 Web Components from?**
@@ -23,12 +23,12 @@
 
 **Q: Can I create my own UI5 Web Components?**
 
-**A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](https://github.com/SAP/ui5-webcomponents/blob/main/docs/5-development/01-custom-UI5-Web-Components-Packages.md)
+**A:** Yes, for more information see [Creating a Custom UI5 Web Components Package](./5-development/01-custom-UI5-Web-Components-Packages.md)
 
 
 **Q: How can I cancustomize UI5 Web Components' styles?**
 
-**A:** Read the [Styling UI5 Web Components](https://github.com/SAP/ui5-webcomponents/blob/main/docs/3-customizing/01-styles.md) article.
+**A:** Read the [Styling UI5 Web Components](./3-customizing/01-styles.md) article.
 
 
 **Q: How big is the runtime?**

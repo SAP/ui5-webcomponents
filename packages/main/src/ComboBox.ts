@@ -68,7 +68,7 @@ import Icon from "./Icon.js";
 import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
-import type { ClickEventDetail } from "./List.js";
+import type { ListItemClickEventDetail } from "./List.js";
 import BusyIndicator from "./BusyIndicator.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
@@ -992,8 +992,12 @@ class ComboBox extends UI5Element {
 		const currentlyFocusedItem = this.items.find(item => item.focused);
 		const shouldSelectionBeCleared = currentlyFocusedItem && currentlyFocusedItem.isGroupItem;
 
+		const itemToBeSelected = this._filteredItems.find(item => {
+			return !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
+		});
+
 		this._filteredItems = this._filteredItems.map(item => {
-			item.selected = !item.isGroupItem && (item.text === this.value) && !shouldSelectionBeCleared;
+			item.selected = item === itemToBeSelected;
 			return item;
 		});
 	}
@@ -1013,7 +1017,7 @@ class ComboBox extends UI5Element {
 		e.preventDefault();
 	}
 
-	_selectItem(e: CustomEvent<ClickEventDetail>) {
+	_selectItem(e: CustomEvent<ListItemClickEventDetail>) {
 		const listItem = e.detail.item as ComboBoxListItem;
 
 		this._selectedItemText = listItem.mappedItem.text;
@@ -1059,7 +1063,7 @@ class ComboBox extends UI5Element {
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
 		if (isGroupItem) {
-			announce(`${groupHeaderText} ${currentItem.text} ${itemPositionText}`, InvisibleMessageMode.Polite);
+			announce(`${groupHeaderText} ${currentItem.text}`, InvisibleMessageMode.Polite);
 		} else {
 			announce(`${currentItemAdditionalText} ${itemPositionText}`.trim(), InvisibleMessageMode.Polite);
 		}

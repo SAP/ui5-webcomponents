@@ -1,1 +1,3 @@
-module.exports = require("@ui5/webcomponents-tools/components-package/wdio.js");
+const wdio = require("@ui5/webcomponents-tools/components-package/wdio.js");
+wdio.config.services.push("devtools");
+module.exports = wdio;

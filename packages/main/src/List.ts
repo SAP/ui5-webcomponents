@@ -56,24 +56,34 @@ const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 const PAGE_UP_DOWN_SIZE = 10;
 
 // ListItemBase-based events
-type FocusEventDetail = {
+type ListItemFocusEventDetail = {
 	item: ListItemBase,
 }
-type SelectionChangeEventDetail = {
+
+type ListSelectionChangeEventDetail = {
 	selectedItems: Array<ListItemBase>;
 	previouslySelectedItems: Array<ListItemBase>;
 	selectionComponentPressed: boolean;
 	targetItem: ListItemBase;
 	key?: string;
 }
-type DeleteEventDetail = FocusEventDetail;
 
-// ListItem-based events
-type CloseEventDetail = {
+type ListItemDeleteEventDetail = {
 	item: ListItemBase,
 }
-type ToggleEventDetail = CloseEventDetail;
-type ClickEventDetail = CloseEventDetail;
+
+// ListItem-based events
+type ListItemCloseEventDetail = {
+	item: ListItemBase,
+}
+
+type ListItemToggleEventDetail = {
+	item: ListItemBase,
+}
+
+type ListItemClickEventDetail = {
+	item: ListItemBase,
+}
 
 /**
  * @class
@@ -718,7 +728,7 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			const changePrevented = !this.fireEvent<SelectionChangeEventDetail>("selection-change", {
+			const changePrevented = !this.fireEvent<ListSelectionChangeEventDetail>("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: e.detail.selectionComponentPressed,
@@ -760,7 +770,7 @@ class List extends UI5Element {
 	}
 
 	handleDelete(item: ListItemBase): boolean {
-		this.fireEvent<DeleteEventDetail>("item-delete", { item });
+		this.fireEvent<ListItemDeleteEventDetail>("item-delete", { item });
 
 		return true;
 	}
@@ -943,7 +953,7 @@ class List extends UI5Element {
 		e.stopPropagation();
 
 		this._itemNavigation.setCurrentItem(target);
-		this.fireEvent<FocusEventDetail>("item-focused", { item: target });
+		this.fireEvent<ListItemFocusEventDetail>("item-focused", { item: target });
 
 		if (this.mode === ListMode.SingleSelectAuto) {
 			const detail: SelectionRequestEventDetail = {
@@ -960,7 +970,7 @@ class List extends UI5Element {
 	onItemPress(e: CustomEvent<PressEventDetail>) {
 		const pressedItem = e.detail.item;
 
-		if (!this.fireEvent<ClickEventDetail>("item-click", { item: pressedItem }, true)) {
+		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem }, true)) {
 			return;
 		}
 
@@ -980,12 +990,12 @@ class List extends UI5Element {
 	}
 
 	// This is applicable to NotificationListItem
-	onItemClose(e: CustomEvent<CloseEventDetail>) {
-		this.fireEvent<CloseEventDetail>("item-close", { item: e.detail.item });
+	onItemClose(e: CustomEvent<ListItemCloseEventDetail>) {
+		this.fireEvent<ListItemCloseEventDetail>("item-close", { item: e.detail.item });
 	}
 
-	onItemToggle(e: CustomEvent<ToggleEventDetail>) {
-		this.fireEvent<ToggleEventDetail>("item-toggle", { item: e.detail.item });
+	onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
+		this.fireEvent<ListItemToggleEventDetail>("item-toggle", { item: e.detail.item });
 	}
 
 	onForwardBefore(e: CustomEvent) {
@@ -1141,10 +1151,10 @@ List.define();
 
 export default List;
 export type {
-	ClickEventDetail,
-	FocusEventDetail,
-	DeleteEventDetail,
-	CloseEventDetail,
-	ToggleEventDetail,
-	SelectionChangeEventDetail,
+	ListItemClickEventDetail,
+	ListItemFocusEventDetail,
+	ListItemDeleteEventDetail,
+	ListItemCloseEventDetail,
+	ListItemToggleEventDetail,
+	ListSelectionChangeEventDetail,
 };

@@ -110,7 +110,7 @@
 
 /* readonly */
 :host([checked][readonly]) .ui5-radio-svg-inner {
-	fill: var(--sapContent_NonInteractiveIconColor);
+	fill: var(--_ui5_radio_button_read_only_inner_ring_color);
 }
 
 :host([readonly]) .ui5-radio-root .ui5-radio-svg-outer {

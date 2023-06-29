@@ -9,10 +9,11 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
+import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import IllustratedMessage from "./IllustratedMessage.js";
-import "./illustrations/sapIllus-Scene-Tent.js";
+import "./illustrations/Tent.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
@@ -37,11 +38,11 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
-type SelectionChangeEventDetail = {
+type UploadCollectionSelectionChangeEventDetail = {
 	selectedItems: Array<UploadCollectionItem>,
 };
 
-type ItemDeleteEventDetail = {
+type UploadCollectionItemDeleteEventDetail = {
 	item: UploadCollectionItem,
 };
 
@@ -94,12 +95,10 @@ type ItemDeleteEventDetail = {
 @event("drop")
 
 /**
- * Fired when the Delete button of any item is pressed.
- * <br><br>
- * <b>Note:</b> A Delete button is displayed on each item,
- * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
+ * Fired when the delete button of any item is pressed.
+ *
  * @event sap.ui.webc.fiori.UploadCollection#item-delete
- * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
+ * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was deleted.
  * @public
  */
 @event("item-delete", {
@@ -130,8 +129,10 @@ class UploadCollection extends UI5Element {
 	 * <ul>
 	 * <li><code>None</code></li>
 	 * <li><code>SingleSelect</code></li>
+	 * <li><code>SingleSelectBegin</code></li>
+	 * <li><code>SingleSelectEnd</code></li>
 	 * <li><code>MultiSelect</code></li>
-	 * <li><code>Delete</code></li>
+	 * <li><code>Delete</code> - this mode has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem</li>
 	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.ListMode}
@@ -303,12 +304,12 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 	}
 
-	_onItemDelete(e: CustomEvent<ItemDeleteEventDetail>) {
-		this.fireEvent("item-delete", { item: e.detail.item });
+	_onItemDelete(e: CustomEvent) {
+		this.fireEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as UploadCollectionItem });
 	}
 
-	_onSelectionChange(e: CustomEvent<SelectionChangeEventDetail>) {
-		this.fireEvent("selection-change", { selectedItems: e.detail.selectedItems });
+	_onSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		this.fireEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
 	}
 
 	get classes() {
@@ -369,3 +370,7 @@ class UploadCollection extends UI5Element {
 UploadCollection.define();
 
 export default UploadCollection;
+export type {
+	UploadCollectionItemDeleteEventDetail,
+	UploadCollectionSelectionChangeEventDetail,
+};

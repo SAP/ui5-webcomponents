@@ -420,6 +420,8 @@ describe("Acc", () => {
 
 		await dialog.setAttribute("accessible-name", "text");
 		assert.notOk(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-labelledby"), "dialog does not have aria-labelledby.");
+		assert.notOk(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-describedby"), "dialog hasn't aria-describedby.");
+		assert.notOk(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-roledescription"), "dialog hasn't aria-roledescription.");
 		assert.ok(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), "dialog has aria-label.");
 	});
 
@@ -428,10 +430,73 @@ describe("Acc", () => {
 		await openDraggableDialog.click();
 
 		const dialog = await browser.$("#draggable-dialog");
+		const idOfTheHiddenText = await dialog.shadow$(".ui5-hidden-text").getAttribute("id");
+		const valueOfTheHiddenTextHTML = await dialog.shadow$(".ui5-hidden-text").getHTML(false);
+		const index = valueOfTheHiddenTextHTML.indexOf('>');
+		const valueOfTheHiddenText = valueOfTheHiddenTextHTML.substring(index + 1);
 		const accName = "Draggable" ;
+
+		let roleDescriptionHeader = await browser.executeAsync(done => {
+			done(dialog.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.DIALOG_HEADER_ARIA_ROLE_DESCRIPTION));
+		});
+
+		let ariaDescribedbyText = await browser.executeAsync(done => {
+			done(dialog.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE));
+		});
 
 		assert.strictEqual(await dialog.getAttribute("accessible-name"), accName, "dialog has correct attribute set");
 		assert.strictEqual(await dialog.shadow$(".ui5-popup-root").getAttribute("aria-label"), accName, "dialog has aria-label.");
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-describedby"), idOfTheHiddenText, "dialog has aria-describedby.");
+		assert.strictEqual(await valueOfTheHiddenText, ariaDescribedbyText, "dialog has aria-describedby with correct value.");
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-roledescription"), roleDescriptionHeader, "dialog has aria-roledescription.");
+
+		const closeDraggableDialog = await browser.$("#draggable-close");
+		await closeDraggableDialog.click();
+
+	});
+
+	it("tests aria-describedby for default header", async () => {
+		const openResizableDialog = await browser.$("#resizable-open");
+		await openResizableDialog.click();
+
+		const dialog = await browser.$("#resizable-dialog");
+		const idOfTheHiddenText = await dialog.shadow$(".ui5-hidden-text").getAttribute("id");
+		const valueOfTheHiddenTextHTML = await dialog.shadow$(".ui5-hidden-text").getHTML(false);
+		const index = valueOfTheHiddenTextHTML.indexOf('>');
+		const valueOfTheHiddenText = valueOfTheHiddenTextHTML.substring(index + 1);
+
+		let roleDescriptionHeader = await browser.executeAsync(done => {
+			done(dialog.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.DIALOG_HEADER_ARIA_ROLE_DESCRIPTION));
+		});
+
+		let ariaDescribedbyText = await browser.executeAsync(done => {
+			done(dialog.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.DIALOG_HEADER_ARIA_DESCRIBEDBY_RESIZABLE));
+		});
+
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-describedby"), idOfTheHiddenText, "dialog has aria-describedby.");
+		assert.strictEqual(await valueOfTheHiddenText, ariaDescribedbyText, "dialog has aria-describedby with correct value.");
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-roledescription"), roleDescriptionHeader, "dialog has aria-roledescription.");
+
+		const closeResizableDialog = await browser.$("#resizable-close");
+		await closeResizableDialog.click();
+	});
+
+	it("tests aria-describedby for slot header", async () => {
+		const openResizableDialog = await browser.$("#resizable-custom-header-open");
+		await openResizableDialog.click();
+
+		const dialog = await browser.$("#resizable-dialog-custom-header");
+		const idOfTheHiddenText = await dialog.shadow$(".ui5-hidden-text").getAttribute("id");
+
+		let roleDescriptionHeader = await browser.executeAsync(done => {
+			done(dialog.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.DIALOG_HEADER_ARIA_ROLE_DESCRIPTION));
+		});
+
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-describedby"), idOfTheHiddenText, "dialog has aria-describedby.");
+		assert.strictEqual(await dialog.shadow$(".ui5-popup-header-root").getAttribute("aria-roledescription"), roleDescriptionHeader, "dialog has aria-roledescription.");
+
+		const closeResizableDialog = await browser.$("#resizable-custom-header-close");
+		await closeResizableDialog.click();
 	});
 
 	it("tests accessible-name-ref", async () => {

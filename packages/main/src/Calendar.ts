@@ -45,7 +45,7 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
-type CalendarChangeEventDetail = {
+type CalendarSelectedDatesChangeEventDetail = {
 	values: Array<string>,
 	dates: Array<number>,
 	timestamp: number | undefined,
@@ -441,7 +441,7 @@ class Calendar extends CalendarPart {
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
@@ -517,5 +517,5 @@ Calendar.define();
 export default Calendar;
 export type {
 	ICalendarPicker,
-	CalendarChangeEventDetail,
+	CalendarSelectedDatesChangeEventDetail,
 };

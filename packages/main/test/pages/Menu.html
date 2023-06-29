@@ -106,6 +106,22 @@
 			menu.open = btnToggleOpen.pressed;
 		});
 
+		let fetched = false;
+
+		menu.addEventListener("ui5-before-open", function fetch(event) {
+			const item = event.detail.item;
+			if (item && item.text === "Open" && !fetched) {
+				setTimeout(function() {
+					let oneNode = document.createElement("ui5-menu-item");
+					oneNode.setAttribute("text", "One");
+					let twoNode = document.createElement("ui5-menu-item");
+					twoNode.setAttribute("text", "Two");
+					item.append(oneNode, twoNode);
+					fetched = true;
+				}, 0);
+			}
+		});
+
 		menu.addEventListener("ui5-item-click", function(event) {
 			selectionInput.value = event.detail.text;
 		});

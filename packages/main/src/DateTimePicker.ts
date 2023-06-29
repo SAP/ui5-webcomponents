@@ -12,8 +12,12 @@ import type ResponsivePopover from "./ResponsivePopover.js";
 import ToggleButton from "./ToggleButton.js";
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
-import type { CalendarChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
+import type {
+	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
+	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
+} from "./DatePicker.js";
 import TimeSelection from "./TimeSelection.js";
 import type { TimeSelectionChangeEventDetail, TimeSelectionSliderChangeEventDetail } from "./TimeSelection.js";
 
@@ -308,7 +312,7 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
 		e.preventDefault();
 		// @ts-ignore Needed for FF
 		const dateTimePickerContent = e.path ? e.path[1] : e.composedPath()[1];
@@ -386,12 +390,12 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	_modifyDateValue(amount: number, unit: string) {
+	_modifyDateValue(amount: number, unit: string, preserveDate: boolean) {
 		if (!this.dateValue) {
 			return;
 		}
 
-		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, this._minDate, this._maxDate);
+		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, preserveDate, this._minDate, this._maxDate);
 		const modifiedLocalDate = modifiedDate.toLocalJSDate();
 		modifiedLocalDate.setHours(this.dateValue.getHours());
 		modifiedLocalDate.setMinutes(this.dateValue.getMinutes());
@@ -429,3 +433,7 @@ class DateTimePicker extends DatePicker {
 DateTimePicker.define();
 
 export default DateTimePicker;
+export type {
+	DateTimePickerChangeEventDetail,
+	DateTimePickerInputEventDetail,
+};

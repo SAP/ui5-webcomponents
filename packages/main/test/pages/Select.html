@@ -31,6 +31,13 @@
 		<ui5-option selected>Condensed</ui5-option>
 	</ui5-select>
 
+	<h2>Change prevention</h2>
+	<ui5-select id="selectPrevent">
+		<ui5-option>Cozy</ui5-option>
+		<ui5-option>Compact</ui5-option>
+		<ui5-option selected>Condensed</ui5-option>
+	</ui5-select>
+
 	<h2>Error Select</h2>
 	<ui5-select id="errorSelect" value-state="Error">
 		<ui5-option selected>Cozy</ui5-option>
@@ -167,6 +174,11 @@
 	var counterClose = 0;
 
 	// Select
+
+	selectPrevent.addEventListener("ui5-change", function(e) {
+		e.preventDefault();
+	});
+
 	select.addEventListener("ui5-change", function(e) {
 		lbl.innerHTML = "selected item :: " + e.detail.selectedOption.textContent + " :: " + (++counter);
 		inputResult.value = counter;
