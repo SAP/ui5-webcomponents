@@ -524,12 +524,14 @@ class MultiComboBox extends UI5Element {
 	}
 
 	togglePopover() {
+		this._tokenizer.closeMorePopover();
 		this.allItemsPopover?.toggle(this);
 	}
 
 	togglePopoverByDropdownIcon() {
 		this._shouldFilterItems = false;
 		this.allItemsPopover?.toggle(this);
+		this._tokenizer.closeMorePopover();
 	}
 
 	_showFilteredItems() {
@@ -603,6 +605,7 @@ class MultiComboBox extends UI5Element {
 		this._deleting = true;
 		this._preventTokenizerToggle = true;
 
+		this.focus();
 		this.fireSelectionChange();
 	}
 
@@ -632,8 +635,11 @@ class MultiComboBox extends UI5Element {
 		const lastTokenBeingDeleted = tokensCount - 1 === 0 && this._deleting;
 		const allTokensAreBeingDeleted = selectedTokens === tokensCount && this._deleting;
 		const relatedTarget: HTMLElement | undefined = e.relatedTarget as HTMLElement;
+		const isFocusingPopover = this.staticAreaItem === relatedTarget;
+		const isFocusingInput = this._inputDom === relatedTarget;
+		const isFocusingMorePopover = e.relatedTarget === this._tokenizer.staticAreaItem;
 
-		if (!relatedTarget || !relatedTarget.hasAttribute("ui5-token")) {
+		if (!relatedTarget?.hasAttribute("ui5-token") && !isFocusingPopover && !isFocusingInput && !isFocusingMorePopover) {
 			this._tokenizer.tokens.forEach(token => {
 				token.selected = false;
 			});
@@ -1262,6 +1268,16 @@ class MultiComboBox extends UI5Element {
 		this._showMorePressed = false;
 	}
 
+	async handleBeforeTokenizerPopoverOpen() {
+		const tokens = this._tokenizer.tokens;
+		const hasTruncatedToken = tokens.length === 1 && tokens[0].isTruncatable;
+		const popover = (await this._getResponsivePopover());
+
+		if (hasTruncatedToken) {
+			popover?.close(false, false, true);
+		}
+	}
+
 	_afterClosePicker() {
 		// close device's keyboard and prevent further typing
 		if (isPhone()) {
@@ -1431,6 +1447,16 @@ class MultiComboBox extends UI5Element {
 		this._innerInput.focus();
 	}
 
+	get morePopoverOpener(): HTMLElement {
+		const tokens = this._tokenizer?.tokens;
+
+		if (tokens?.length === 1 && tokens[0].isTruncatable) {
+			return tokens[0];
+		}
+
+		return this;
+	}
+
 	async closePopover() {
 		(await this._getPopover())?.close();
 	}
@@ -1465,6 +1491,10 @@ class MultiComboBox extends UI5Element {
 		if (!isPhone() && (((e.relatedTarget as HTMLElement)?.tagName !== "UI5-STATIC-AREA-ITEM") || !e.relatedTarget)) {
 			this._innerInput.setSelectionRange(0, this.value.length);
 		}
+
+		this._tokenizer.tokens.forEach(token => {
+			token.selected = false;
+		});
 
 		this._lastValue = this.value;
 		this.valueBeforeAutoComplete = "";

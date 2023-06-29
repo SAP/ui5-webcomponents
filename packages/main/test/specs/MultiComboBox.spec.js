@@ -1,5 +1,14 @@
 import { assert } from "chai";
 
+const getTokenizerPopoverId = async (mcbId) => {
+	return await browser.executeAsync(async (mcbId, done) => {
+		const input = document.querySelector(`#${mcbId}`);
+		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
+
+		done(staticAreaItem.host.classList[0]);
+	}, mcbId);
+}
+
 describe("MultiComboBox general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
@@ -1473,6 +1482,66 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.click();
 			assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+		});
+	});
+
+	describe("MultiComboBox Truncated Token", () => {
+		beforeEach(async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+		});
+	
+		it("should truncate token when single token is in the multicombobox and open popover on click", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+			
+			await token.click();
+
+			assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+			assert.ok(await token.getProperty("selected"), "Token should be selected");
+			assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
+			assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
+			
+
+			await token.click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+			assert.ok(await token.getProperty("focused"), "Token should be focused");
+		});
+
+		it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+			await token.click();
+
+			await $("#dummy-btn").click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+		});
+
+		it("should close truncation popover and deselect selected tokens when clicked in input field", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const inner = await mcb.shadow$("input");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+			await inner.click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 		});
 	});
 
