@@ -43,6 +43,9 @@ type CurrentItem = {
 	ariaHasPopup: string | undefined,
 }
 
+const MENU_OPEN_DELAY = 300;
+const MENU_CLOSE_DELAY = 400;
+
 type TimeoutIDMap = Record<string, number>;
 
 type MenuItemClickEventDetail = {
@@ -546,7 +549,7 @@ class Menu extends UI5Element {
 		// Sets the new timeout
 		this.hoverTimeouts[item.id] = window.setTimeout(() => {
 			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
-		}, 300);
+		}, MENU_OPEN_DELAY);
 	}
 
 	startCloseTimeout(item: MenuItem) {
@@ -556,7 +559,7 @@ class Menu extends UI5Element {
 		// Sets the new timeout
 		this.unhoverTimeouts[item.id] = window.setTimeout(() => {
 			this._closeItemSubMenu(item);
-		}, 400);
+		}, MENU_CLOSE_DELAY);
 	}
 
 	clearOpenTimeout(item: MenuItem) {
