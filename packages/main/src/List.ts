@@ -992,7 +992,7 @@ class List extends UI5Element {
 	// This is applicable to NotificationListItem
 	onItemClose(e: CustomEvent<ListItemCloseEventDetail>) {
 		const target = e.target as UI5Element | null;
-		const shouldFireItemClose = target?.hasAttribute("ui5-li-notification");
+		const shouldFireItemClose = target?.hasAttribute("ui5-li-notification") || target?.hasAttribute("ui5-li-notification-group");
 
 		if (shouldFireItemClose) {
 			this.fireEvent<ListItemCloseEventDetail>("item-close", { item: e.detail?.item });
