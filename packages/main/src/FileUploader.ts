@@ -208,7 +208,8 @@ class FileUploader extends UI5Element implements IFormElement {
 	focused!: boolean;
 
 	/**
-	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
+	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information. <br>
+	 * <b>Note:</b> If no content is provided in this slot, the component will only consist of an input field and will not be interactable using the keyboard.
 	 *
 	 * @type {HTMLElement[]}
 	 * @name sap.ui.webc.main.FileUploader.prototype.default
