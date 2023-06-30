@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.1](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0...v1.15.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* **framework:** fix links in starting page of new pkg [ci skip] ([475fed5](https://github.com/SAP/ui5-webcomponents/commit/475fed55504f4a15e8b26aaf3c9e4d73b55976ec))
+
+
+
+
+
 # [1.15.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.2...v1.15.0) (2023-06-30)
 
 
