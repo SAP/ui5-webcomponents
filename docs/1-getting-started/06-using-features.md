@@ -16,6 +16,8 @@ Import the feature file from the respective NPM package:
 
 `import "@ui5/<PACKAGE-NAME>/dist/features/<FEATURE-NAME>.js`
 
+## Component features 
+
 Currently, only a few components offer additional features:
 
 | Package        | Affects                                           | Feature Import                                                       | Description                                                                                             |
@@ -24,10 +26,7 @@ Currently, only a few components offer additional features:
 | `main`         | `ui5-input`                                       | `@ui5/webcomponents/dist/features/InputSuggestions.js`               | Support for input suggestions while typing                                                              |
 | `main`         | Multiple (`ui5-input`, `ui5-date-picker`, etc...) | `@ui5/webcomponents/dist/features/InputElementsFormSupport.js`       | Support for using input components in forms                                                             |
 | `fiori`        | `ui5-shellbar`                                    | `@ui5/webcomponents-fiori/dist/features/CoPilotAnimation.js`         | Support for a better (but bigger in size) animation for the "co-pilot" button in the shellbar component |
-| `base`         | Framework                                         | `@ui5/webcomponents-base/dist/features/OpenUI5Support.js`            | Integration with the OpenUI5 framework, allowing synchronization and resources re-use                   |
-| `base`         | Multiple components within all libraries          | `@ui5/webcomponents-base/dist/features/F6Navigation.js`              | Support for F6 fast groups navigation                                                                   |
-| `base`         | Date related components                           | `@ui5/webcomponents-base/dist/features/LegacyDateFormats.js`         | Support for legacy date formats                                                                         |
-| `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js` | Buddhist calendar support                                                                               |
+ `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Buddhist.js` | Buddhist calendar support                                                                               |
 | `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Islamic.js`  | Islamic calendar support                                                                                |
 | `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Japanese.js` | Japanese calendar support                                                                               |
 | `localization` | Multiple (`ui5-date-picker`, etc...)              | `@ui5/webcomponents-localization/dist/features/calendar/Persian.js`  | Persian calendar support                                                                                |
@@ -36,6 +35,29 @@ For example:
 
 ```js
 import "@ui5/webcomponents/dist/features/ColorPaletteMoreColors.js;";
+```
+
+## Framework features 
+
+| Package        | Affects                                           | Feature Import                                                       | Description                                                                                             |
+|----------------|---------------------------------------------------|----------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------|
+| `base`         | Framework                                         | `@ui5/webcomponents-base/dist/features/OpenUI5Support.js`            | Integration with the OpenUI5 framework, allowing synchronization and resources re-use                   |
+| `base`         | Multiple components within all libraries          | `@ui5/webcomponents-base/dist/features/F6Navigation.js`              | Support for F6 fast groups navigation                                                                   |
+| `base`         | Date related components                           | `@ui5/webcomponents-base/dist/features/LegacyDateFormats.js`         | Support for legacy date formats                                                                         |
+|
+
+Framework-level features must be imported before all components modules,
+so that the feature is enabled upon framework boot, before the components' definition.
+
+For example:
+
+```js
+import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+import "@ui5/webcomponents-base/dist/features/F6Navigation.js";
+
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Link.js";
+import "@ui5/webcomponents/dist/Input.js";
 ```
 
 Next: [Typescript Support](./07-typescript-support)

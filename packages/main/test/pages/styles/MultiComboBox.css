@@ -47,3 +47,7 @@ ui5-multi-combobox:not(:defined) {
 	flex: 1;
 	margin-left: 2rem;
 }
+
+#truncated-token {
+	width: 240px;
+}

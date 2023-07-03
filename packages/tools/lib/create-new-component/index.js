@@ -83,7 +83,7 @@ const generateFiles = (componentName, tagName, library, packageName, isTypeScrip
 	// Change the color of the output
 	console.warn('\x1b[33m%s\x1b[0m', `
 	Make sure to import the component in your bundle by using:
-	import ${componentName} from "./dist/${componentName}.js";`);
+	import "./dist/${componentName}.js";`);
 }
 
 // Main function

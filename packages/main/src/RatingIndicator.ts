@@ -14,6 +14,7 @@ import {
 	isHome,
 	isEnd,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -21,6 +22,7 @@ import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import {
 	RATING_INDICATOR_TEXT,
 	RATING_INDICATOR_TOOLTIP_TEXT,
+	RATING_INDICATOR_ARIA_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import RatingIndicatorTemplate from "./generated/templates/RatingIndicatorTemplate.lit.js";
 import Icon from "./Icon.js";
@@ -160,6 +162,30 @@ class RatingIndicator extends UI5Element {
 	 */
 	@property()
 	accessibleName!: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.accessibleNameRef
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.15.0
+	 */
+	 @property({ defaultValue: "" })
+	 accessibleNameRef!: string;
+
+	 /**
+	 * Defines whether the component is required.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.required
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.15.0
+	 */
+	@property({ type: Boolean })
+	required!: boolean;
 
 	/**
 	 * @private
@@ -303,6 +329,14 @@ class RatingIndicator extends UI5Element {
 
 	get _ariaDisabled() {
 		return this.disabled || undefined;
+	}
+
+	get _ariaLabel() {
+		return getEffectiveAriaLabelText(this);
+	}
+
+	get _ariaDescription() {
+		return this.required ? RatingIndicator.i18nBundle.getText(RATING_INDICATOR_ARIA_DESCRIPTION) : undefined;
 	}
 
 	get ariaReadonly() {

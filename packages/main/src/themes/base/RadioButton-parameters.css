@@ -43,4 +43,5 @@
 	--_ui5_radio_button_inner_ring_color: var(--sapSelectedColor);
 	--_ui5_radio_button_information_border_width: var(--sapField_InformationBorderWidth);
 	--_ui5_radio_button_read_only_border_width: var(--sapField_BorderWidth);
+	--_ui5_radio_button_read_only_inner_ring_color: var(--sapContent_NonInteractiveIconColor);
 }

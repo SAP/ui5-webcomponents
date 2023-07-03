@@ -115,7 +115,11 @@ MultiInputTokenCreation.decorators = [
 		let separatedTexts = pastedText.split(\/\\r\\n\|\\r\|\\n\|\\t\/g).filter(t => !!t);
 
 		if (separatedTexts.length === 1) {
+<<<<<<< HEAD
 			event.target.value += separatedTexts[0];
+=======
+			event.target.value = separatedTexts[0];
+>>>>>>> main
 			return;
 		}
 
