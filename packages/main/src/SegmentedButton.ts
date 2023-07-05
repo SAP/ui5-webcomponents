@@ -7,9 +7,6 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isSpace,
 	isEnter,
@@ -127,13 +124,8 @@ class SegmentedButton extends UI5Element {
 
 	_itemNavigation: ItemNavigation;
 
-	absoluteWidthSet: boolean // set to true whenever we set absolute width to the component
-	percentageWidthSet: boolean; // set to true whenever we set 100% width to the component
 	hasPreviouslyFocusedItem: boolean;
 
-	_handleResizeBound: ResizeObserverCallback;
-
-	widths?: Array<number>;
 	_selectedItem?: SegmentedButtonItem;
 
 	static async onDefine() {
@@ -146,22 +138,7 @@ class SegmentedButton extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.getSlottedNodes<SegmentedButtonItem>("items"),
 		});
-
-		this.absoluteWidthSet = false; // true when component width is set to absolute
-		this.percentageWidthSet = false; // true when component width is set to 100%
 		this.hasPreviouslyFocusedItem = false;
-
-		this._handleResizeBound = this._doLayout.bind(this);
-	}
-
-	onEnterDOM() {
-		ResizeHandler.register(this.parentNode as HTMLElement, this._handleResizeBound);
-	}
-
-	onExitDOM() {
-		if (this.parentNode) {
-			ResizeHandler.deregister(this.parentNode as HTMLElement, this._handleResizeBound);
-		}
 	}
 
 	onBeforeRendering() {
@@ -173,27 +150,8 @@ class SegmentedButton extends UI5Element {
 		});
 
 		this.normalizeSelection();
-	}
 
-	async onAfterRendering() {
-		await this._doLayout();
-	}
-
-	prepareToMeasureItems() {
-		this.style.width = "";
-		this.items.forEach(item => {
-			item.style.width = "";
-		});
-	}
-
-	async measureItemsWidth() {
-		await renderFinished();
-		this.prepareToMeasureItems();
-
-		this.widths = this.items.map(item => {
-			// 1 is added because for width 100.44px the offsetWidth property is 100px and not 101px
-			return item.offsetWidth + 1;
-		});
+		this.style.setProperty("--_ui5_segmented_btn_items_count", `${items.length}`);
 	}
 
 	normalizeSelection() {
@@ -292,29 +250,6 @@ class SegmentedButton extends UI5Element {
 			this.selectedItems[0].focus();
 			this._itemNavigation.setCurrentItem(this.selectedItems[0]);
 			this.hasPreviouslyFocusedItem = true;
-		}
-	}
-
-	async _doLayout(): Promise<void> {
-		const itemsHaveWidth = this.widths && this.widths.some(itemWidth => itemWidth > 2); // 2 pixels added for rounding
-		if (!itemsHaveWidth) {
-			await this.measureItemsWidth();
-		}
-
-		const parentWidth = this.parentNode ? (this.parentNode as HTMLElement).offsetWidth : 0;
-
-		if (!this.style.width || this.percentageWidthSet) {
-			this.style.width = `${Math.max(...this.widths!) * this.items.length}px`;
-			this.absoluteWidthSet = true;
-		}
-
-		this.items.forEach(item => {
-			item.style.width = "100%";
-		});
-
-		if (parentWidth <= this.offsetWidth && this.absoluteWidthSet) {
-			this.style.width = "100%";
-			this.percentageWidthSet = true;
 		}
 	}
 

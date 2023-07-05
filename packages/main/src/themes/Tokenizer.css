@@ -32,8 +32,9 @@
 }
 
 :host([expanded]) .ui5-tokenizer--content {
-	display: inline-block;
+	display: inline-flex;
 	white-space: nowrap;
+	overflow: hidden;
 }
 
 .ui5-tokenizer--content {
@@ -42,6 +43,15 @@
 	align-items: center;
 	overflow: hidden;
 	padding-inline-start: var(--_ui5_tokenizer_padding);
+	height: 100%;
+	box-sizing: border-box;
+}
+
+:host([_tokens-count="1"]) .ui5-tokenizer--content {
+	padding-inline-end: 4px;
+	box-sizing: border-box;
+	max-width: 100%;
+	flex: 1;
 }
 
 .ui5-tokenizer-more-text {
@@ -52,9 +62,4 @@
 	font-size: var(--sapFontSize);
 	font-weight: normal;
 	color: var(--_ui5_tokenizer_n_more_text_color);
-}
-
-:host([expanded]) .ui5-tokenizer--content {
-	overflow: hidden;
-	justify-content: flex-end;
 }

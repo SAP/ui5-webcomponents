@@ -76,7 +76,8 @@
 	background: var(--_ui5_range_slider_handle_background);
 }
 
-.ui5-slider-root:hover .ui5-slider-handle:not(:focus) {
+.ui5-slider-progress-container:hover ~ .ui5-slider-handle:not(:focus),
+.ui5-slider-handle:hover  {
 	background: var(--_ui5_range_slider_root_hover_handle_bg);
 }
 

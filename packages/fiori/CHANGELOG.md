@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.15.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.2...v1.15.0) (2023-06-30)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** align notification counter badge ([#7208](https://github.com/SAP/ui5-webcomponents/issues/7208)) ([1ee67f5](https://github.com/SAP/ui5-webcomponents/commit/1ee67f570ac722983859690fb602c5b62498d6d5))
+* **ui5-shellbar:** overflow action text translated ([#7218](https://github.com/SAP/ui5-webcomponents/issues/7218)) ([31af59c](https://github.com/SAP/ui5-webcomponents/commit/31af59c6667149798f619cce5eba9d456c29f452))
+* **ui5-shellbar:** tweaked breakpoint size "S" responsive padding ([#7219](https://github.com/SAP/ui5-webcomponents/issues/7219)) ([af597d1](https://github.com/SAP/ui5-webcomponents/commit/af597d1bc9d3a8e1bd6e79a39eebd84e57416c70))
+* **ui5-view-settings-dialog:** fix footer buttons position ([#7270](https://github.com/SAP/ui5-webcomponents/issues/7270)) ([e569e6b](https://github.com/SAP/ui5-webcomponents/commit/e569e6b424cc186e22c5972c45d6f11c081505d5))
+
+
+
+
+
 # [1.15.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.1...v1.15.0-rc.2) (2023-06-22)
 
 
