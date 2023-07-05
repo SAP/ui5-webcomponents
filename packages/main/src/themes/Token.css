@@ -97,7 +97,7 @@
 	position: absolute;
 	pointer-events: none;
 	z-index: 2;
-	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--_ui5_token_focus_outline_color);
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--_ui5_token_focus_outline_border_radius);
 	top: var(--_ui5_token_focus_offset);
 	bottom: var(--_ui5_token_focus_offset);
