@@ -60,7 +60,7 @@ class ProgressIndicator extends UI5Element {
 	 * @defaultvalue ""
 	 * @name sap.ui.webc.main.ProgressIndicator.prototype.accessibleName
 	 * @public
-	 * @since 1.15.0
+	 * @since 1.16.0
 	*/
 	@property()
 	accessibleName!: string;
