@@ -250,8 +250,8 @@ slot[name="profile"] {
 	justify-content: flex-start;
 	margin-inline-end: 0.5rem;
 	max-width: 75%;
-	flex-shrink: 1;
-	flex-grow: 1;
+	flex-shrink: 0;
+	flex-grow: 0;
 }
 
 .ui5-shellbar-overflow-container-left > :nth-child(n) {
@@ -263,6 +263,9 @@ slot[name="profile"] {
 	max-width: calc(50% - 1.5rem);
 }
 
+:host([show-co-pilot]) .ui5-shellbar-title {
+	flex-grow: 0;
+}
 
 .ui5-shellbar-menu-button {
 	white-space: nowrap;
@@ -303,7 +306,7 @@ slot[name="profile"] {
 }
 
 :host(:not([show-search-field])) .ui5-shellbar-overflow-container-right {
-	margin-inline-start: 8rem;
+	padding-inline-start: 8rem;
 }
 
 .ui5-shellbar-overflow-container-right .ui5-shellbar-overflow-container-right-child {
@@ -330,7 +333,7 @@ slot[name="profile"] {
 }
 
 :host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-right {
-	margin-inline-start: 0;
+	padding-inline-start: 0;
 }
 
 .ui5-shellbar-overflow-button-shown {
@@ -349,11 +352,11 @@ slot[name="profile"] {
 }
 
 :host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
-	margin-inline-start: 1rem;
+	padding-inline-start: 1rem;
 }
 
 :host([breakpoint-size="XL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
-	margin-inline-start: 1rem;
+	padding-inline-start: 1rem;
 }
 
 :host(:not([notifications-count])) .ui5-shellbar-bell-button {

@@ -35,4 +35,25 @@ describe("API", () => {
 		assert.strictEqual(await valueShadowSpan.getText(), originalPercentageValue + "%",
 			"The value is row backed to the originally shown percentage value after the display value is set to empty string.");
 	});
+
+	it("tests accessibleName property", async () => {
+		// Arrange
+		const progressIndicator = await browser.$("#PI");
+		const progressIndicatorInternally = await browser.$("#PI").shadow$("div");;
+		const accName = "Hello world";
+		const accNameNew = "Hello world 2";
+
+		// Assert
+		assert.strictEqual(await progressIndicator.getProperty("accessibleName"), accName, "The aria-label is correctly set.");
+		assert.strictEqual(await progressIndicatorInternally.getAttribute("aria-label"), accName, "The aria-label is correctly set internally.");
+
+		//Act
+		await progressIndicator.setProperty("accessibleName", accNameNew);
+
+		// Assert
+		assert.strictEqual(await progressIndicator.getProperty("accessibleName"), accNameNew, "The aria-label is correctly changed.");
+		assert.strictEqual(await progressIndicatorInternally.getAttribute("aria-label"), accNameNew, "The aria-label is correctly changed internally.");
+
+
+	});
 });
