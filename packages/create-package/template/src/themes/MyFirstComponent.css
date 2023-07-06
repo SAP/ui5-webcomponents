@@ -1,4 +1,8 @@
 :host {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
 	padding: 0 2rem;
 	color: var(--sapAvatar_6_TextColor);
 	background-color: var(--sapAvatar_6_Background);

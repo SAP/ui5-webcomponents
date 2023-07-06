@@ -3,10 +3,13 @@
 
 :host(:not([hidden])) {
 	display: inline-block;
+	min-width: calc(var(--_ui5_segmented_btn_items_count) * 2.5rem);
 }
 
 .ui5-segmented-button-root {
-	display: flex;
+	width: inherit;
+	display: grid;
+	grid-template-columns: repeat(var(--_ui5_segmented_btn_items_count), minmax(2.5rem, 1fr));
 	margin: 0;
 	padding: 0;
 	background-color: var(--sapButton_Background);

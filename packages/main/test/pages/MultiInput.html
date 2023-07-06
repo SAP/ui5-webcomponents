@@ -226,8 +226,17 @@
 		<br>
 		<br>
 
-
 		<ui5-button id="add-to-multiple">Add more tokens</ui5-button>
+
+		<br>
+		<br>
+
+		<h1 class="sample-container-title">Multi Input with Truncated token</h1>
+		<ui5-multi-input id="truncated-token">
+			<ui5-token text="Enim do esse anim magna enim fugiat Lorem enim nostrud sit laborum ea." slot="tokens"></ui5-token>
+		</ui5-multi-input>
+
+		<ui5-button id="dummy-btn">dummy button</ui5-button>
 	</div>
 
 	<div class="sample-container">
@@ -258,6 +267,8 @@
 	</div>
 
 	<div class="sample-container">
+		<h1>Create tokens on change and on paste</h1>
+
 		<ui5-multi-input show-suggestions id="token-unique" show-value-help-icon style="width: 50%">
 			<div slot="valueStateMessage" id="value-state-wrapper">Token is already in the list</div>
 			<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
@@ -413,30 +424,53 @@
 				const token = event.detail?.token;
 				token && token.remove();
 			});
-		
-			document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
-				if (!event.target.value) {
-					return;
+
+		document.getElementById("token-unique").addEventListener("paste", function (event) {
+			event.preventDefault();
+
+			let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;
+
+			if (!pastedText) {
+				return;
+			}
+
+			let separatedTexts = pastedText.split(/\r\n|\r|\n|\t/g).filter(t => !!t);
+
+			if (separatedTexts.length === 1) {
+				event.target.value = separatedTexts[0];
+				return;
+			}
+
+			separatedTexts.forEach((tokenText) => {
+				if (tokenText) {
+					event.target.appendChild(createTokenFromText(tokenText));
 				}
-		
-				var isDuplicate = event.target.tokens.some(function(token) {
-					return token.text === event.target.value
-				});
-		
-				if (isDuplicate) {
-					event.target.valueState = "Error";
-		
-					setTimeout(function () {
-						event.target.valueState = "None";
-					}, 2000);
-		
-					return;
-				}
-		
-				event.target.appendChild(createTokenFromText(event.target.value));
-		
-				event.target.value = "";
+			})
+		});
+
+		document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
+			if (!event.target.value) {
+				return;
+			}
+
+			var isDuplicate = event.target.tokens.some(function(token) {
+				return token.text === event.target.value
 			});
+
+			if (isDuplicate) {
+				event.target.valueState = "Error";
+
+				setTimeout(function () {
+					event.target.valueState = "None";
+				}, 2000);
+
+				return;
+			}
+
+			event.target.appendChild(createTokenFromText(event.target.value));
+
+			event.target.value = "";
+		});
 
 		document
 			.getElementById("token-unique")

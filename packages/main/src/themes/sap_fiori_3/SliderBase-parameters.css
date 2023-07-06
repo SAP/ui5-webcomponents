@@ -10,7 +10,6 @@
 	--_ui5_slider_handle_background: var(--sapButton_Background);
 	--_ui5_slider_handle_hover_background: var(--sapButton_Hover_Background);
 	--_ui5_range_slider_root_hover_handle_bg: transparent;
-	--_ui5_range_slider_root_hover_handle_icon_display: none;
 	--_ui5_range_slider_root_active_handle_icon_display: none;
 	--_ui5_slider_handle_width: 1.875rem;
 	--_ui5_slider_handle_height: 1.875rem;

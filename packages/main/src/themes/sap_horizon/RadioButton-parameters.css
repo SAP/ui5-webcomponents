@@ -12,4 +12,8 @@
 	--_ui5_radio_button_outer_ring_hover_shadow_information: 0 0 0.125rem rgba(0, 112, 242, 0.72); /* need of parameter*/
 	--_ui5_radio_button_read_only_border_type: 4,2;
 	--_ui5_radio_button_inner_ring_color: var(--sapContent_Selected_ForegroundColor);
+	--_ui5_radio_button_checked_warning_fill: var(--sapField_WarningColor);
+	--_ui5_radio_button_read_only_inner_ring_color: var(--sapField_TextColor);
+	--_ui5_radio_button_read_only_border_width: var(--sapElement_BorderWidth);
+	--_ui5_radio_button_hover_fill: var(--sapContent_Selected_Hover_Background);
 }
