@@ -46,7 +46,7 @@ const boot = async (): Promise<void> => {
 		registerCurrentRuntime();
 
 		const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isLoaded() : false;
+		const isOpenUI5Loaded = openUI5Support ? openUI5Support.isOpenUI5Detected() : false;
 		const f6Navigation = getFeature<typeof F6Navigation>("F6Navigation");
 
 		if (openUI5Support) {

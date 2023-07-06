@@ -27,6 +27,7 @@ export default {
 
 const Template: UI5StoryArgs<SegmentedButton, StoryArgsSlots> = (args) => html`<ui5-segmented-button
 	accessible-name="${ifDefined(args.accessibleName)}"
+	mode="${ifDefined(args.mode)}"
 >
 	${unsafeHTML(args.default)}
 </ui5-segmented-button>`;

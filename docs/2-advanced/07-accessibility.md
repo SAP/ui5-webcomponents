@@ -44,7 +44,7 @@ The Invisible Messaging service is designed to be used both internally in the co
 * `InvisibleMessageMode.Polite` - indicates that updates to the region should be presented at the next graceful opportunity such as at the end of reading the current sentence, or when the user paused typing.
 
 According to the WAI-ARIA recommendations, the live regions should be initialised empty when the page is loaded. This way screen readers remember them and start to listen for changes of their value. Thus, we recommend to instantiate Invisible Message  as early as possible in the application. Then, you should specify the text, that has to be announced by the screen reader and the live region’s mode using the `announce` method.
-Here is an example usage of the invisible messaging service - [Dynamic MessageStrip Generator Sample](https://sap.github.io/ui5-webcomponents/playground/components/MessageStrip/)
+Here is an example usage of the invisible messaging service - [Dynamic MessageStrip Generator Sample](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-messagestrip--docs)
 
 
 ### **Keyboard Handling**
@@ -58,7 +58,7 @@ Support for standard keystrokes, based on the role of the component element is a
 
 Theming is an important aspect when it comes to a UI5 Web Components application. The different colors shown on the UI need to have a good contrast to each other in order to be easily distinguishable. We ensure that the requirements for color contrast are fulfilled in all themes. High Contrast White and High Contrast Black themes are also available to support people with visual impairments.
 
-For more information regarding the available themes and how to use them, see the [Configuration](https://sap.github.io/ui5-webcomponents/playground/advanced/configuration) section.
+For more information regarding the available themes and how to use them, see the [Configuration](../2-advanced/01-configuration.md) section.
 
 
 ## Accessibility APIs
@@ -96,20 +96,20 @@ Will result in the shadow DOM as:
 ```
 
 The `accessible-name` property is currently supported in:
-* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/playground/components/Dialog), [Popover](https://sap.github.io/ui5-webcomponents/playground/components/Popover)
-* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/playground/components/Input), [RadioButton](https://sap.github.io/ui5-webcomponents/playground/components/RadioButton))
-* [Panel](https://sap.github.io/ui5-webcomponents/playground/components/Panel) 
-* [Breadcrumbs](https://sap.github.io/ui5-webcomponents/playground/components/Breadcrumbs) 
-* [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
-* [Icon](https://sap.github.io/ui5-webcomponents/playground/components/Icon) 
-* [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
-* [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
-* [Rating Indicator](https://sap.github.io/ui5-webcomponents/playground/components/RatingIndicator)
-* [Slider](https://sap.github.io/ui5-webcomponents/playground/components/Slider), 
-[Range Slider](https://sap.github.io/ui5-webcomponents/playground/components/RangeSlider)
-* [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
-* [Tree](https://sap.github.io/ui5-webcomponents/playground/components/Tree)
-* [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
+* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-dialog--docs), [Popover](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-popover--docs)
+* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-input--docs), [RadioButton](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-radiobutton--docs))
+* [Panel](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-panel--docs) 
+* [Breadcrumbs](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-breadcrumbs--docs) 
+* [Button](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-button--docs)
+* [Icon](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-icon--docs) 
+* [List](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-list--docs) 
+* [CheckBox](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-checkbox--docs)
+* [Rating Indicator](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-ratingindicator--docs)
+* [Slider](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-slider--docs), 
+[Range Slider](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-rangeslider--docs)
+* [Table](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-table--docs)
+* [Tree](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-tree--docs)
+* [Card](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-card--docs)
 
 
 
@@ -129,21 +129,21 @@ Will result in the shadow DOM as:
 ```
 
 The `accessible-name-ref` property is currently supported in:
-* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/playground/components/Dialog), [Popover](https://sap.github.io/ui5-webcomponents/playground/components/Popover)
-* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/playground/components/Input), [RadioButton](https://sap.github.io/ui5-webcomponents/playground/components/RadioButton))
-* [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
-* [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
-* [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
-* [CheckBox](https://sap.github.io/ui5-webcomponents/playground/components/CheckBox)
-* [Table](https://sap.github.io/ui5-webcomponents/playground/components/Table)
-* [Tree](https://sap.github.io/ui5-webcomponents/playground/components/Tree)
-* [Card](https://sap.github.io/ui5-webcomponents/playground/components/Card)
+* Popups: [Dialog](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-dialog--docs), [Popover](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-popover--docs)
+* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-input--docs), [RadioButton](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-radiobutton--docs))
+* [Link](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-link--docs) 
+* [Button](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-button--docs)
+* [List](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-list--docs) 
+* [CheckBox](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-checkbox--docs)
+* [Table](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-table--docs)
+* [Tree](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-tree--docs)
+* [Card](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-card--docs)
 
 ---
 
 ### accessibilityTexts
 
-This property accepts `object` with property values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout). 
+This property accepts `object` with property values for different parts of the FlexibleColumnLayout elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-flexiblecolumnlayout--docs). 
 
 Setting the property on the custom element as:
 ```html
@@ -169,14 +169,14 @@ Will result in the shadow DOM as:
 ```
 
 The `accessibilityTexts` property is currently supported in:
-* [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout) 
-* [ShellBar](https://sap.github.io/ui5-webcomponents/playground/components/ShellBar)
+* [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-flexiblecolumnlayout--docs) 
+* [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-shellbar--docs)
 
 ---
 
 ### accessibilityAttributes
 
-This property accepts an `object` with property values, which will be used to generate additinal accessibility attributes to the root element. For more detailed information on every object property, read the API description in [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button/). 
+This property accepts an `object` with property values, which will be used to generate additinal accessibility attributes to the root element. For more detailed information on every object property, read the API description in [Button](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-button--docs/). 
 
 Setting the property on the custom element as:
 ```html
@@ -200,14 +200,14 @@ Will result in the shadow DOM as:
 ```
 
 The `accessibilityAttributes` property is currently supported in:
-* [Button](https://sap.github.io/ui5-webcomponents/playground/components/Button)
-* [Link](https://sap.github.io/ui5-webcomponents/playground/components/Link) 
+* [Button](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-button--docs)
+* [Link](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-link--docs) 
 
 ---
 
 ### accessibilityRoles
 
-This property accepts `object` with property values for different parts of the `FlexibleColumnLayout` elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout). 
+This property accepts `object` with property values for different parts of the `FlexibleColumnLayout` elements. For more detailed information on every object property, read the API description in [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-flexiblecolumnlayout--docs). 
 
 Setting the property on the custom element as:
 ```html
@@ -229,8 +229,8 @@ Results in the shadow DOM as:
 ```
 
 The `accessibilityRoles` property is currently supported in:
-* [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/playground/components/FlexibleColumnLayout)
-* [ShellBar](https://sap.github.io/ui5-webcomponents/playground/components/ShellBar) 
+* [FlexibleColumnLayout](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-flexiblecolumnlayout--docs)
+* [ShellBar](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-shellbar--docs) 
 
 ---
 
@@ -251,12 +251,12 @@ Will result in the shadow DOM as:
 ```
 
 The `accessible-role` property is currently supported in:
-* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/playground/components/Input), [RadioButton](https://sap.github.io/ui5-webcomponents/playground/components/RadioButton))
-* [Panel](https://sap.github.io/ui5-webcomponents/playground/components/Panel)
-* [List](https://sap.github.io/ui5-webcomponents/playground/components/List) 
-* [Icon](https://sap.github.io/ui5-webcomponents/playground/components/Icon) 
-* [Popover](https://sap.github.io/ui5-webcomponents/playground/components/Popover/)
-* [Dialog](https://sap.github.io/ui5-webcomponents/playground/components/Dialog/)
+* User input components (e.g. [Input](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-input--docs), [RadioButton](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-radiobutton--docs))
+* [Panel](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-panel--docs)
+* [List](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-list--docs) 
+* [Icon](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-icon--docs) 
+* [Popover](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-popover--docs/)
+* [Dialog](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-dialog--docs/)
 
 ---
 
@@ -283,10 +283,10 @@ Will result in the shadow DOM as:
 </div>
 ```
 The `level` property is currently supported in:
- * [Title](https://sap.github.io/ui5-webcomponents/playground/components/Title)
+ * [Title](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-title--docs)
 
 The `header-level` property is currently supported in:
- * [Panel](https://sap.github.io/ui5-webcomponents/playground/components/Panel)
+ * [Panel](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-panel--docs)
 
 ---
 
@@ -303,8 +303,8 @@ Will result in the shadow DOM as:
 ```
 
 The `interactive` property is currently supported in:
-* [Avatar](https://sap.github.io/ui5-webcomponents/playground/components/Avatar)
-* [Icon](https://sap.github.io/ui5-webcomponents/playground/components/Icon)
+* [Avatar](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-avatar--docs)
+* [Icon](https://sap.github.io/ui5-webcomponents/nightly/playground/?path=/docs/main-icon--docs)
 
 ---
 

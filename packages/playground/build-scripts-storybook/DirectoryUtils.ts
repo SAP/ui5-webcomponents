@@ -5,7 +5,7 @@ import glob from "glob";
 export interface IDirectoryUtils {
     assureDirectoryExistence(filePath: string): Promise<string | void>;
     cleanDirectory(dir: string): Promise<void>;
-    readFiles(src: string, ignore: string[]): Promise<string[]>;
+    readFiles(src: string, ignore?: string[]): Promise<string[]>;
     writeFile(filePath: string, content: string): Promise<void>;
     globToRelativePath(globStr: string, filePath: string): string;
     readContent(filePath: string): Promise<string>;

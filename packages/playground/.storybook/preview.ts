@@ -2,7 +2,7 @@ import "@ui5/webcomponents-fiori/bundle.esm.js";
 import getEffectiveContentDensity from "@ui5/webcomponents-base/dist/util/getEffectiveContentDensity.js";
 import customElements from "./custom-elements.json";
 import { setCustomElementsManifest } from "@storybook/web-components";
-import { useOptions, themes } from "./useOptions";
+import { useOptions, themes, usePreventKeys } from "./decorators";
 import type { Parameters, GlobalTypes, DecoratorFunction, ArgTypesEnhancer } from '@storybook/types';
 import { enhanceArgTypes } from "./args/enhanceArgTypes";
 
@@ -83,5 +83,5 @@ export const globalTypes: GlobalTypes = {
   },
 };
 
-export const decorators: DecoratorFunction[] = [useOptions];
+export const decorators: DecoratorFunction[] = [useOptions, usePreventKeys];
 export const argTypesEnhancers: ArgTypesEnhancer[] = [enhanceArgTypes];

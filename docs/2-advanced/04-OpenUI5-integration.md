@@ -2,10 +2,20 @@
 
 *[OpenUI5](https://openui5.org/) is an open-source framework in the same product family as UI5 Web Components.*
 
-To enable OpenUI5 support:
+To enable OpenUI5 support, import the following module:
 
 ```js
 import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+```
+
+Futhermore, the module must be imported before all components import, so that the feature is enabled upon framework boot.
+
+```js
+import "@ui5/webcomponents-base/dist/features/OpenUI5Support.js";
+
+import "@ui5/webcomponents/dist/Button.js";
+import "@ui5/webcomponents/dist/Link.js";
+import "@ui5/webcomponents/dist/Input.js";
 ```
 
 If your app uses both OpenUI5 and UI5 Web Components, UI5 Web Components can benefit
