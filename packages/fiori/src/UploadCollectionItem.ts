@@ -270,11 +270,6 @@ class UploadCollectionItem extends ListItem {
 		]);
 	}
 
-	onBeforeRendering() {
-		// In the base class the item can become "actionable",
-		// that's why we are overriding this method.
-	}
-
 	/**
 	 * @override
 	 */
