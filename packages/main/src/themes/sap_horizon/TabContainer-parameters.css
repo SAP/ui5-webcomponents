@@ -9,6 +9,10 @@
 	--_ui5_tc_overflowItem_default_color: var(--sapTextColor);
 	--_ui5_tc_overflowItem_current_color: CurrentColor;
 	--_ui5_tc_content_border_bottom: 0.0625rem solid var(--sapObjectHeader_BorderColor);
+	--_ui5_tc_headerItem_expand_button_margin_inline_start: 0rem;
+	--_ui5_tc_headerItem_single_click_expand_button_margin_inline_start: 0.25rem;
+	--_ui5_tc_headerItem_expand_button_border_radius: 0.25rem;
+	--_ui5_tc_headerItem_expand_button_separator_display: inline-block;
 
 	/* Focus & Hover */
 	--_ui5_tc_headerItem_focus_border: 0.125rem solid var(--sapContent_FocusColor);
@@ -28,4 +32,7 @@
 
 	/* Mixed Mode */
 	--_ui5_tc_mixedMode_itemText_color: var(--sapTextColor);
+
+	/* Overflow Buttons*/
+	--_ui5_tc_overflow_text_color: var(--sapTextColor);
 }

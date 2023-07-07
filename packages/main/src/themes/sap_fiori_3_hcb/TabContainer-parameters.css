@@ -35,7 +35,6 @@
 
 	/* Overflow Item */
 
-	--_ui5_tc_overflowItem_neutral_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_overflowItem_positive_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_overflowItem_negative_color: var(--sapGroup_TitleTextColor);
 	--_ui5_tc_overflowItem_critical_color: var(--sapGroup_TitleTextColor);
