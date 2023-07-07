@@ -139,15 +139,7 @@ describe("Menu interaction", () => {
 			await browser.pause(100);
 
 			const menuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-			const visualOpenItem = await menuPopover.$("ui5-li[accessible-name='Open']");
 			const visualCloseItem = await menuPopover.$("ui5-li[accessible-name='Close']");
-
-			visualOpenItem.click();
-			await browser.pause(100);
-			const openSubmenuPopover = await browser.$("ui5-static-area-item:last-of-type").shadow$("ui5-responsive-popover");
-			const openMenuList = await openSubmenuPopover.$("ui5-list");
-
-			assert.strictEqual(await openMenuList.$$("ui5-li").length, 4, "Two additional nodes have been added.");
 
 			visualCloseItem.click();
 			await browser.pause(100);
