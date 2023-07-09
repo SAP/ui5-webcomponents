@@ -308,8 +308,8 @@ class Menu extends UI5Element {
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
-	hoverTimeouts: TimeoutIDMap = {};
-	unhoverTimeouts: TimeoutIDMap = {};
+	_hoverTimeouts: TimeoutIDMap = {};
+	_unhoverTimeouts: TimeoutIDMap = {};
 
 	static async onDefine() {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -547,7 +547,7 @@ class Menu extends UI5Element {
 		this.clearOpenTimeout(item);
 
 		// Sets the new timeout
-		this.hoverTimeouts[item.id] = window.setTimeout(() => {
+		this._hoverTimeouts[item.id] = window.setTimeout(() => {
 			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
 		}, MENU_OPEN_DELAY);
 	}
@@ -557,22 +557,22 @@ class Menu extends UI5Element {
 		this.clearCloseTimeout(item);
 
 		// Sets the new timeout
-		this.unhoverTimeouts[item.id] = window.setTimeout(() => {
+		this._unhoverTimeouts[item.id] = window.setTimeout(() => {
 			this._closeItemSubMenu(item);
 		}, MENU_CLOSE_DELAY);
 	}
 
 	clearOpenTimeout(item: MenuItem) {
-		if (this.hoverTimeouts[item.id]) {
-			clearTimeout(this.hoverTimeouts[item.id]);
-			delete this.hoverTimeouts[item.id];
+		if (this._hoverTimeouts[item.id]) {
+			clearTimeout(this._hoverTimeouts[item.id]);
+			delete this._hoverTimeouts[item.id];
 		}
 	}
 
 	clearCloseTimeout(item: MenuItem) {
-		if (this.unhoverTimeouts[item.id]) {
-			clearTimeout(this.unhoverTimeouts[item.id]);
-			delete this.unhoverTimeouts[item.id];
+		if (this._unhoverTimeouts[item.id]) {
+			clearTimeout(this._unhoverTimeouts[item.id]);
+			delete this._unhoverTimeouts[item.id];
 		}
 	}
 
