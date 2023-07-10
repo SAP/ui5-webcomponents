@@ -1572,6 +1572,11 @@ class MultiComboBox extends UI5Element {
 			}
 		}
 	}
+	_revertSelection() {
+		this._filteredItems.forEach(item => {
+			item.selected = this._previouslySelectedItems.includes(item);
+		});
+	}
 
 	get editable() {
 		return !this.readonly;
