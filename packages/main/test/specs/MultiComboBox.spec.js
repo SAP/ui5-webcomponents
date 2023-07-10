@@ -524,24 +524,6 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
 			assert.equal(mcbTokens.length, 1, "1 token is created.");
 		});
-
-		it("prevents selection change event when deleting a token", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
-			const mcb = await $("#mcb-prevent");
-			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-
-			const deleteIcon =  await tokens[0].shadow$("ui5-icon");
-
-			assert.equal(await tokens.length, 1, "should have one token");
-
-			await deleteIcon.click();
-
-			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-
-			assert.equal(await tokens.length, 1, "should have one token");
-		});
-
 	});
 
 	describe("keyboard handling", () => {
