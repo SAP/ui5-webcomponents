@@ -31,7 +31,7 @@ class I18nBundle {
 	 * @param params Values for the placeholders
 	 * @returns {string}
 	 */
-	getText(textObj: I18nText, ...params: Array<number | string>): string {
+	getText(textObj: I18nText | string, ...params: Array<number | string>): string {
 		if (typeof textObj === "string") {
 			textObj = { key: textObj, defaultText: textObj };
 		}
