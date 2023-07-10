@@ -135,7 +135,7 @@
     overflow: hidden;
 }
 
-.ui5-wiz-step-title-text-optional {
+:host([subtitle-text]:not([subtitle-text=""])) .ui5-wiz-step-title-text {
     -webkit-line-clamp: 1;
 }
 
