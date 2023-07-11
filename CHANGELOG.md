@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.3](https://github.com/SAP/ui5-webcomponents/compare/v1.11.2...v1.11.3) (2023-07-11)
+
+
+### Bug Fixes
+
+* **ui5-avatar:** avatar initials correct display ([#6731](https://github.com/SAP/ui5-webcomponents/issues/6731)) ([a67057f](https://github.com/SAP/ui5-webcomponents/commit/a67057f72d186c4b536fb252d9fc059d4b95a1eb)), closes [#6642](https://github.com/SAP/ui5-webcomponents/issues/6642)
+
+
+
+
+
 ## [1.11.2](https://github.com/SAP/ui5-webcomponents/compare/v1.11.1...v1.11.2) (2023-06-20)
 
 
