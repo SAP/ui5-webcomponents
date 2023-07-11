@@ -268,6 +268,9 @@ describe("Wizard general interaction", () => {
 		const btnToStep4 = await browser.$("#toStep4");
 		const btnToStep5 = await browser.$("#toStep5");
 
+		const step4ScrollHeight = await wiz.shadow$(`[data-ui5-index="4"]`).shadow$(".ui5-wiz-step-title-text").getProperty("scrollHeight");
+		const step5ScrollHeight = await wiz.shadow$(`[data-ui5-index="5"]`).shadow$(".ui5-wiz-step-title-text").getProperty("scrollHeight");
+
 		// act - click on the steps in the header
 		await btnToStep4.click(); // click to enable step 4
 		await step5InHeader.click();
@@ -279,8 +282,7 @@ describe("Wizard general interaction", () => {
 			"Fifth step in the content is selected.");
 		assert.strictEqual(await step5InHeader.getAttribute("subtitle-text"), "(Optional)",
 			"Fifth step in the header is selected.");
-		assert.ok(step5.offsetWidth === step5.scrollWidth, "Fifth step scrollWidth should be equal to the offsetWidth");
-		assert.ok(step6.offsetWidth < step6.scrollWidth, "Sixths step scrollWidth should be bigger then the offsetWidth");
+		assert.ok(step4ScrollHeight < step5ScrollHeight, "Fifth step scrollWidth should be bigger then the fourth step because of the truncation");
 	});
 
 	it("tests no scrolling to step, if the step was not changed", async () => {
