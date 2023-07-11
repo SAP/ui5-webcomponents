@@ -259,8 +259,6 @@ describe("Wizard general interaction", () => {
 
 	it("Tests long text on wizard step to be truncated correctly", async () => {
 		const wiz = await browser.$("#wizTest");
-		const step5 = await browser.$("#st5");
-		const step6 = await browser.$("#st6");
 
 		const step5InHeader = await wiz.shadow$(`[data-ui5-index="5"]`);
 		const scrollMarker = await browser.$("#scrollMarkerSt5");
@@ -268,6 +266,7 @@ describe("Wizard general interaction", () => {
 		const btnToStep4 = await browser.$("#toStep4");
 		const btnToStep5 = await browser.$("#toStep5");
 
+		await browser.setWindowSize(1000, 1200);
 		const step4ScrollHeight = await wiz.shadow$(`[data-ui5-index="4"]`).shadow$(".ui5-wiz-step-title-text").getProperty("scrollHeight");
 		const step5ScrollHeight = await wiz.shadow$(`[data-ui5-index="5"]`).shadow$(".ui5-wiz-step-title-text").getProperty("scrollHeight");
 
