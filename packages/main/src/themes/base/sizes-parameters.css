@@ -269,11 +269,9 @@
 	--_ui5_panel_header_height: 2.5rem;
 
 	--_ui5_token_height: 1.25rem;
-	--_ui5_token_top_margin: 0.125rem;
-	--_ui5_token_bottom_margin: 0.125rem;
 	--_ui5_token_right_margin: 0.25rem;
 	--_ui5_token_left_padding: 0.25rem;
-	--_ui5_token_readonly_padding: 0.25rem;
+	--_ui5_token_readonly_padding: 0.125rem 0.25rem;
 	--_ui5_token_focus_offset: -0.125rem;
 	--_ui5_token_icon_size: .75rem;
 	--_ui5_token_icon_padding: 0.125rem 0.25rem;
@@ -297,8 +295,8 @@
 	--_ui5_tc_item_text_line_height: 1.325rem;
 	--_ui5_tc_item_icon_size: 1rem;
 	--_ui5_tc_item_add_text_margin_top: 0.3125rem;
-	--_ui5_tc_header_height: var(--_ui5_tc_header_height_compact);
 	--_ui5_tc_item_height: 4rem;
+	--_ui5_tc_header_height: var(--_ui5_tc_item_height);
 	--_ui5_tc_item_icon_circle_size: 2rem;
 	--_ui5_tc_item_icon_size: 1rem;
 

@@ -19,6 +19,6 @@
 	margin-bottom: 0.25rem;
 }
 
-.ui5-tb-popover-button {
-	text-align: left;
+.ui5-tb-popover-button::part(button) {
+	justify-content: start;
 }

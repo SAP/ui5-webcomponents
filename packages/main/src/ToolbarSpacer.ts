@@ -37,7 +37,7 @@ class ToolbarSpacer extends ToolbarItem {
 	}
 
 	get ignoreSpace() {
-		return true;
+		return this.width === undefined;
 	}
 
 	get toolbarTemplate() {

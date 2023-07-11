@@ -289,6 +289,18 @@
 		</ui5-li>
 	</ui5-list>
 
+	<ui5-list id="listWithCustomItems">
+		<ui5-li-custom id="liCustomWithSelect">
+			<ui5-select id="selectInLiCustom">
+				<ui5-option icon="iphone">Phone</ui5-option>
+				<ui5-option icon="ipad">Tablet</ui5-option>
+				<ui5-option icon="laptop" selected>Desktop</ui5-option>
+			</ui5-select>
+		</ui5-li-custom>
+	</ui5-list>
+
+	<input id="customListItemSelectResult" value="0"/>
+
 	<script>
 		'use strict';
 
@@ -388,6 +400,11 @@
 		growingScrollTest.addEventListener("ui5-loadMore", function(e) {
 			growingScrollTestCounter.value= ++groiwngScrollTestCounter;
 		});
+
+		listWithCustomItems.addEventListener("ui5-item-close", function(e) {
+			customListItemSelectResult.value = ++customListItemSelectResult.value
+		});
+		
 	</script>
 
 	<ui5-list growing="Scroll">

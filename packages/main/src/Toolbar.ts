@@ -20,15 +20,14 @@ import ToolbarCss from "./generated/themes/Toolbar.css.js";
 import ToolbarPopoverTemplate from "./generated/templates/ToolbarPopoverTemplate.lit.js";
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
-import ToolbarDesign from "./types/ToolbarDesign.js";
-import ToolbarStyling from "./types/ToolbarStyling.js";
 import ToolbarAlign from "./types/ToolbarAlign.js";
 
-import ToolbarButton from "./ToolbarButton.js";
-import ToolbarSpacer from "./ToolbarSpacer.js";
 import ToolbarItem from "./ToolbarItem.js";
-import ToolbarSeparator from "./ToolbarSeparator.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
+
+function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
+	return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
+}
 
 /**
  * @class
@@ -68,53 +67,10 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
 	dependencies: [
 		Popover,
 		Button,
-		ToolbarButton,
-		ToolbarSpacer,
-		ToolbarSeparator,
 	],
 })
 
 class Toolbar extends UI5Element {
-	/**
-	 * Defines the design of the toolbar background. It can be solid or transparent.
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Transparent</code></li>
-	 * <li><code>Solid</code></li>
-	 * </ul>
-	 * @type {sap.ui.webc.main.types.ToolbarDesign}
-	 * @public
-	 * @defaultvalue "Solid"
-	 * @name sap.ui.webc.main.Toolbar.prototype.design
-	 */
-	@property({ type: ToolbarDesign })
-	design!: `${ToolbarDesign}`;
-
-	/**
-	 * Defines the styling of the toolbar. It can be standard or clear (no border applied).
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Standard</code></li>
-	 * <li><code>Transparent</code></li>
-	 * </ul>
-	 * @type {sap.ui.webc.main.types.ToolbarStyling}
-	 * @defaultvalue "Standard"
-	 * @name sap.ui.webc.main.Toolbar.prototype.styling
-	 * @public
-	 */
-	@property({ type: ToolbarStyling, defaultValue: "Default" })
-	styling!: `${ToolbarStyling}`;
-
-	/**
-	 * Defines if the toolbar overflow popup should close upon intereaction with the items inside.
-	 * It will close by default.
-	 * @type {boolean}
-	 * @public
-	 * @name sap.ui.webc.main.Toolbar.prototype.preventOverflowClosing
-	 */
-	@property({ type: Boolean })
-	preventOverflowClosing!: boolean;
-
 	/**
 	 * Indicated the direction in which the Toolbar items will be aligned.
 	 * Available options are:
@@ -127,7 +83,7 @@ class Toolbar extends UI5Element {
 	 * @defaultvalue: "End"
 	 * @name sap.ui.webc.main.Toolbar.prototype.alignContent
 	 */
-	@property({ type: ToolbarAlign, defaultValue: "End" })
+	@property({ type: ToolbarAlign, defaultValue: ToolbarAlign.End })
 	alignContent!: `${ToolbarAlign}`;
 
 	/**
@@ -147,11 +103,11 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Cached the sum of all of items width.
-	 * @type {Object}
+	 * @type {sap.ui.webc.base.types.Integer}
 	 * @private
 	 */
-	 @property({ type: Integer })
-	 ITEMS_WIDTH: number;
+	 @property({ type: Integer, defaultValue: 0 })
+	 ITEMS_WIDTH!: number;
 
 	/**
 	 * Indicates the items have been measured and the layout can be calculated.
@@ -173,14 +129,14 @@ class Toolbar extends UI5Element {
 	* @private
 	*/
 	@property({ type: Integer })
-	width!: number;
+	width?: number;
 
 	/**
 	* @private
 	* Calculated width of all the Toolbar items.
 	*/
 	@property({ type: Integer })
-	contentWidth!: number;
+	contentWidth?: number;
 
 	/**
 	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
@@ -202,31 +158,24 @@ class Toolbar extends UI5Element {
 
 	_onResize!: ResizeObserverCallback;
 
-	ITEMS_WIDTH_MAP: Map<string, number>;
+	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
 
 	constructor() {
 		super();
-
-		// indicates if the bar is being reized at the moment
-		this.resizing = false;
-
-		this.ITEMS_WIDTH_MAP = new Map();
-
-		this.ITEMS_WIDTH = 0;
 
 		// resize handler
 		this._onResize = this.onResize.bind(this);
 	}
 
 	get OVERFLOW_BTN_SIZE(): number {
-		const toolbarOverflowButton = this.shadowRoot!.querySelector(".ui5-tb-overflow-btn")!;
+		const toolbarOverflowButton = this.overflowButtonDOM;
 		return toolbarOverflowButton ? toolbarOverflowButton.getBoundingClientRect().width : 0;
 	}
 
 	get PADDING(): number {
 		const toolbarComputedStyle = getComputedStyle(this.getDomRef()!);
-		return this.calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-left")
-		+ this.calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-right");
+		return calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-left")
+		+ calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-right");
 	}
 
 	/**
@@ -251,16 +200,12 @@ class Toolbar extends UI5Element {
 		this.processOverflowLayout();
 	}
 
-	calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
-		return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * 16;
-	}
-
 	/**
 	 * Layout management
 	 */
 	processOverflowLayout(forceLayout = false) {
-		const containerWidth = this.getContainerWidth();
-		const contentWidth: number = this.getAllItemsWidth();
+		const containerWidth = this.offsetWidth;
+		const contentWidth: number = this.ITEMS_WIDTH;
 		const contentOverflows = contentWidth + this.OVERFLOW_BTN_SIZE > containerWidth;
 
 		// skip calculation if the width has not been changed
@@ -278,7 +223,6 @@ class Toolbar extends UI5Element {
 
 		if (this.contentWidth !== contentWidth) {
 			this.contentWidth = contentWidth;
-			this.fireEvent("contentWidthChange", { contentWidth });
 		}
 	}
 
@@ -398,7 +342,7 @@ class Toolbar extends UI5Element {
 				targetRef: e.target,
 			}, true);
 
-			if (!this.preventOverflowClosing) {
+			if (item.getAttribute("prevent-overflow-closing") === "false") {
 				this.closeOverflow();
 			}
 		}
@@ -433,10 +377,6 @@ class Toolbar extends UI5Element {
 
 	get showOverflowBtn() {
 		return !!this.itemsToOverflow.length;
-	}
-
-	get tabIndex(): number {
-		return -1;
 	}
 
 	get _items(): Array<ToolbarItem> {
@@ -518,8 +458,8 @@ class Toolbar extends UI5Element {
 
 		if (renderedItem) {
 			const ItemCSSStyleSet = getComputedStyle(renderedItem);
-			itemWidth = renderedItem.offsetWidth + this.calculateCSSREMValue(ItemCSSStyleSet, "--_ui5-toolbar-item-margin-right")
-			+ this.calculateCSSREMValue(ItemCSSStyleSet, "--_ui5-toolbar-item-margin-left");
+			itemWidth = renderedItem.offsetWidth + calculateCSSREMValue(ItemCSSStyleSet, "--_ui5-toolbar-item-margin-right")
+			+ calculateCSSREMValue(ItemCSSStyleSet, "--_ui5-toolbar-item-margin-left");
 		} else {
 			itemWidth = this.getCachedItemWidth(id) || 0;
 		}
@@ -529,14 +469,6 @@ class Toolbar extends UI5Element {
 
 	getCachedItemWidth(id: string) {
 		return this.ITEMS_WIDTH_MAP.get(id);
-	}
-
-	getAllItemsWidth() {
-		return this.ITEMS_WIDTH;
-	}
-
-	getContainerWidth() {
-		return this.offsetWidth;
 	}
 
 	getItemByID(id: string) {

@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.1...v1.16.0-rc.0) (2023-07-06)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
+## [1.15.1](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0...v1.15.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* **framework:** fix links in starting page of new pkg [ci skip] ([475fed5](https://github.com/SAP/ui5-webcomponents/commit/475fed55504f4a15e8b26aaf3c9e4d73b55976ec))
+
+
+
+
+
+# [1.15.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.2...v1.15.0) (2023-06-30)
+
+
+### Bug Fixes
+
+* fix image in `create-webcomponent-package` ([#7253](https://github.com/SAP/ui5-webcomponents/issues/7253)) ([3317e64](https://github.com/SAP/ui5-webcomponents/commit/3317e64b911f992abf34b88a48e6003a723f7b9e))
+
+
+
+
+
+# [1.15.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.1...v1.15.0-rc.2) (2023-06-22)
+
+**Note:** Version bump only for package @ui5/create-webcomponents-package
+
+
+
+
+
 # [1.15.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.0...v1.15.0-rc.1) (2023-06-15)
 
 **Note:** Version bump only for package @ui5/create-webcomponents-package

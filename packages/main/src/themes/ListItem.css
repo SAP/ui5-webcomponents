@@ -146,7 +146,6 @@
 	font-size: 0.875rem;
 	min-width: 3.75rem;
 	text-align: end;
-	max-width: 40%;
 }
 
 :host([description]) .ui5-li-additional-text {

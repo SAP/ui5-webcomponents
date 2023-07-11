@@ -9,15 +9,6 @@ import ToolbarItem from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
 import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
 
-@customElement({
-	tag: "ui5-toolbar-button",
-})
-
-/**
- * @event
- */
-@event("click", {})
-
 /**
  * @class
  * The <code>ui5-toolbar-button</code> represents an abstract action,
@@ -29,6 +20,20 @@ import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverBu
  * @extends sap.ui.webc.base.UI5Element
  * @public
  */
+
+@customElement({
+	tag: "ui5-toolbar-button",
+})
+
+/**
+ * Fired when a toolbar button is clicked.
+ *
+ * @event sap.ui.webc.main.ToolbarButton#click
+ * @public
+ */
+
+ @event("click", {})
+
 class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines if the action is disabled.
@@ -57,11 +62,11 @@ class ToolbarButton extends ToolbarItem {
 	 * </ul>
 	 *
 	 * @type {ButtonDesign}
-	 * @defaultvalue "Transparent"
+	 * @defaultvalue "Default"
 	 * @name sap.ui.webc.main.ToolbarButton.prototype.design
 	 * @public
 	 */
-	@property({ type: ButtonDesign })
+	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
 	design!: `${ButtonDesign}`;
 
 	/**

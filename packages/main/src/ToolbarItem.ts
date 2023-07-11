@@ -32,11 +32,20 @@ class ToolbarItem extends UI5Element {
 	 * </ul>
 	 * @public
 	 * @name sap.ui.webc.main.ToolbarItem.prototype.overflowPriority
-	 * @defaultvalue ToolbarItemOverflowBehavior.Default,
+	 * @defaultvalue Default,
 	 */
 	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
 	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
 
+	/**
+	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
+	 * It will close by default.
+	 * @type {boolean}
+	 * @public
+	 * @name sap.ui.webc.main.Toolbar.prototype.preventOverflowClosing
+	 */
+	@property({ type: Boolean })
+	preventOverflowClosing!: boolean;
 	/*
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
 	*/

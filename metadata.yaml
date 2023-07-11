@@ -1,0 +1,6 @@
+kind: Component
+metadata:
+  displayName: ui5-webcomponents
+  description: The enterprise-flavored sugar on top of native APIs! Reference implementation of the Core Components of the SAP Design system!
+  tags:
+    - dxp-project-documentation

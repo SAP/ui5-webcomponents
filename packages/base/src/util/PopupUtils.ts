@@ -90,7 +90,7 @@ const getClosedPopupParent = (el: HTMLElement): HTMLElement => {
 
 const getNextZIndex = () => {
 	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-	if (openUI5Support && openUI5Support.isLoaded()) { // use OpenUI5 for getting z-index values, if loaded
+	if (openUI5Support && openUI5Support.isOpenUI5Detected()) { // use OpenUI5 for getting z-index values, if loaded
 		return openUI5Support.getNextZIndex();
 	}
 

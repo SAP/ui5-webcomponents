@@ -9,8 +9,6 @@ import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
-import ToolbarDesign from "@ui5/webcomponents/dist/types/ToolbarDesign.js";
-import ToolbarStyling from "@ui5/webcomponents/dist/types/ToolbarStyling.js";
 import ToolbarAlign from "@ui5/webcomponents/dist/types/ToolbarAlign.js";
 
 import { DocsPage } from "../../../.storybook/docs";
@@ -31,11 +29,7 @@ export default {
 
 const Template: UI5StoryArgs<Toolbar, StoryArgsSlots> = (args) => {
 	return html` <ui5-toolbar
-		design="${ifDefined(args.design)}"
-		styling="${ifDefined(args.styling)}"
 		align-content="${ifDefined(args.alignContent)}"
-		?disabled="${ifDefined(args.disabled)}"
-		?reverse-overflow="${ifDefined(args.reverseOverflow)}"
 	>
 		${unsafeHTML(args.default)}
 	</ui5-toolbar>`;
@@ -44,7 +38,7 @@ const Template: UI5StoryArgs<Toolbar, StoryArgsSlots> = (args) => {
 export const Basic = Template.bind({});
 
 Basic.args = {
-	design: ToolbarDesign.Solid,
+
 	default: `
   <ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
   <ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
@@ -121,24 +115,6 @@ ToolbarWithNeverOverflowElements.args = {
 		<ui5-toolbar-button icon="employee" text="Right 4" overflow-priority="NeverOverflow"></ui5-toolbar-button>
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="NeverOverflow"></ui5-toolbar-button>`
 }
-
-export const ToolbarWithClearStyling = Template.bind({});
-
-ToolbarWithClearStyling.storyName = "Toolbar with clear styling";
-
-ToolbarWithClearStyling.args = {
-  styling: ToolbarStyling.Clear,
-  default: Basic.args.default
-};
-
-export const ToolbarWithTransparentDesign = Template.bind({});
-
-ToolbarWithTransparentDesign.storyName = "Toolbar with transparent design";
-
-ToolbarWithTransparentDesign.args = {
-  styling: ToolbarDesign.Transparent,
-  default: Basic.args.default
-};
 
 export const ToolbarWithStartAlignedElements = Template.bind({});
 
