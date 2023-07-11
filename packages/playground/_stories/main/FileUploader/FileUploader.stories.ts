@@ -41,8 +41,12 @@ const Template: UI5StoryArgs<FileUploader, StoryArgsSlots> = (args) => html`<ui5
 
 export const Basic = Template.bind({});
 Basic.args = {
-	default: `<ui5-button icon="upload">Upload Single File</ui5-button>`,
+	default: `<ui5-button icon="upload" accessible-name-ref="upload-single-file-label">Upload Single File</ui5-button>`,
 };
+Basic.decorators = [
+	(story) => html`<ui5-label id="upload-single-file-label" style="display: none">File Uploader, which accepts only one file.</ui5-label>
+	${story()}`,
+];
 
 export const Custom = Template.bind({});
 Custom.storyName = "With Custom Design ";
@@ -56,11 +60,12 @@ Advanced.storyName = "Image Uploader";
 Advanced.args = {
 	id: "fileuploader",
 	accept: "image/*",
-	default: `<ui5-button icon="upload">Upload Images</ui5-button>`,
+	default: `<ui5-button icon="upload" accessible-name-ref="upload-img-label">Upload Images</ui5-button>`,
 	multiple: true,
 };
 Advanced.decorators = [
-	(story) => html`${story()}
+	(story) => html`<ui5-label id="upload-img-label" style="display: none">File Uploader, which accepts only images.</ui5-label>
+	${story()}
 	<div id="result"></div>
 	<script>
 		var fileUploader = document.querySelector("#fileuploader"),
