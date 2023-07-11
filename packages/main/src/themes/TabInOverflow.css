@@ -39,7 +39,6 @@
 	display: flex;
 	align-items: center;
 	position: relative;
-	padding-inline: 1rem 0.5rem;
 	height: var(--_ui5_tc_item_text);
 	pointer-events: none;
 	font-size: 0.875rem;
