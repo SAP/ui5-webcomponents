@@ -68,6 +68,13 @@
 	width: 100%;
 }
 
+.ui5-panel-heading-wrapper {
+    position: sticky;
+    top: 0px;
+	background-color: var(--_ui5_panel_header_background_color);
+	z-index: 100;
+}
+
 .ui5-panel-header-title {
 	width: calc(100% - var(--_ui5_panel_button_root_width));
 	overflow: hidden;
@@ -136,4 +143,10 @@
 .ui5-panel-header-icon-wrapper,
 [ui5-button].ui5-panel-header-button-with-icon [ui5-icon] {
 	pointer-events: none;
+}
+
+.ui5-panel-root {
+	height: 100%;
+    display: flex;
+    flex-direction: column;
 }

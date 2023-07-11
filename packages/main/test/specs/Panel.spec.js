@@ -124,6 +124,18 @@ describe("Panel general interaction", () => {
 		assert.notOk(await panelWithoutAnimationIcon.hasClass("ui5-panel-header-button-animated"), "Animation is turn off");
 	});
 
+	it("Test that the header is sticky", async () => {
+		const panel = await browser.$("#panel-fixed");
+		const title = await panel.shadow$(".ui5-panel-header-title");
+		const sExpected = "New text";
+
+		const panelHeader = panel.shadow$(".ui5-panel-heading-wrapper");
+		const isSticky = await browser.execute("return window.getComputedStyle(document.querySelector('#panel-fixed').shadowRoot.querySelector('.ui5-panel-heading-wrapper')).position");
+
+		assert.strictEqual(await title.getText(), sExpected, "Initially the text is the expected one");
+		assert.strictEqual(isSticky, "sticky", "Assert that the header has a sticky position");
+	});
+
 	describe("Accessibility", async () => {
 
 		it("tests whether aria attributes are set correctly with native header", async () => {
@@ -137,7 +149,6 @@ describe("Panel general interaction", () => {
 				const panel = document.getElementById("panel1");
 				done(panel.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.PANEL_ICON));
 			});
-
 
 			assert.strictEqual(await panelRoot.getAttribute("role"), "form", "The correct accessible role is applied");
 
@@ -161,7 +172,6 @@ describe("Panel general interaction", () => {
 			const fixedPanelHeader = await fixedPanel.shadow$(".ui5-panel-header");
 			const fixedPanelHeaderTitle = await fixedPanel.shadow$(".ui5-panel-header-title");
 			const fixedPanelHeaderTitleId = await fixedPanelHeaderTitle.getProperty("id");
-			
 
 			assert.strictEqual(await nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");

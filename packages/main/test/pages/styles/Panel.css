@@ -7,3 +7,7 @@
 .panel1auto {
     background-color: var(--sapBackgroundColor);
 }
+
+ui5-panel::part(content) {
+    height: 70px;
+}
