@@ -503,6 +503,8 @@ describe("MultiComboBox general interaction", () => {
 		});
 
 		it("prevents selection change event when clicking an item", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
 			const mcb = await $("#mcb-prevent");
 			const input = mcb.shadow$("#ui5-multi-combobox-input");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-prevent")
@@ -523,6 +525,40 @@ describe("MultiComboBox general interaction", () => {
 			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
 			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
 			assert.equal(mcbTokens.length, 1, "1 token is created.");
+		});
+
+		it("prevents selection change event when deleting a token", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await $("#mcb-prevent");
+            let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			const deleteIcon =  await tokens[0].shadow$("ui5-icon");
+
+			assert.equal(await tokens.length, 1, "should have one token");
+
+			await deleteIcon.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+            assert.equal(await tokens.length, 1, "should have one token");
+        });
+
+		it ("should prevent selection-change on CTRL+A", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = await browser.$("#mcb-prevent");
+			const input = await mcb.shadow$("input");
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 1, "Should have 1 token.");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 1, "Should have 1 token.");
 		});
 	});
 
