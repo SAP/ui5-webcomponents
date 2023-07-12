@@ -21,7 +21,7 @@
 		@touchstart={{_textButtonPress}}
 		@mousedown={{_textButtonPress}}
 		@mouseup={{_textButtonRelease}}
-		@focusin={{_setTabIndexValue}}
+		@focusin={{_singleButtonFocusIn}}
 		@focusout={{_onFocusOut}}
 	>
 		{{#if isTextButton}}
@@ -43,7 +43,7 @@
 			aria-expanded="{{accessibilityInfo.ariaExpanded}}"
 			aria-haspopup="{{accessibilityInfo.ariaHaspopup}}"
 			@click="{{_fireArrowClick}}"
-			@focusin={{_setTabIndexValue}}
+			@focusin={{_singleButtonFocusIn}}
 			@focusout={{_onFocusOut}}
 		>
 		</ui5-button>

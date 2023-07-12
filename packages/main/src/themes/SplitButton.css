@@ -45,6 +45,11 @@
 	outline: 0;
 }
 
+.ui5-split-arrow-button:focus,
+.ui5-split-text-button:focus {
+	outline: 0;
+}
+
 :host([focused]) .ui5-split-button-root:after {
 	content: "";
 	position: absolute;
@@ -181,30 +186,4 @@
 
 [dir="rtl"] .ui5-split-arrow-button {
 	border-radius: var(--_ui5_button_border_radius) 0 0 var(--_ui5_button_border_radius);
-}
-
-
-
-.ui5-split-arrow-button[focused]::part(button)::after {
-	border-top-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-bottom-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-}
-
-.ui5-split-text-button[focused]::part(button)::after {
-	border-top-right-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-bottom-right-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-}
-
-[dir="rtl"] .ui5-split-arrow-button[focused]::part(button)::after {
-	border-top-left-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
-	border-bottom-left-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
-	border-top-right-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-bottom-right-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-}
-
-.ui5-split-text-button[dir="rtl"][focused]::part(button)::after {
-	border-top-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-bottom-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
-	border-top-right-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
-	border-bottom-right-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
 }

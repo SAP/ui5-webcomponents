@@ -278,7 +278,6 @@ class SplitButton extends UI5Element {
 		const handleTouchStartEvent = () => {
 			this._textButtonActive = true;
 			this.focused = false;
-			this._setTabIndexValue();
 		};
 
 		this._textButtonPress = {
@@ -300,15 +299,22 @@ class SplitButton extends UI5Element {
 		}
 		this._shiftOrEscapePressed = false;
 		this.focused = false;
-		this._setTabIndexValue();
 	}
 
 	_onFocusIn(e: FocusEvent) {
 		if (this.disabled || getEventMark(e)) {
 			return;
 		}
+		if (!(e.target! as HTMLElement).classList.contains("ui5-split-button-root")) {
+			return;
+		}
 		this._shiftOrEscapePressed = false;
 		this.focused = true;
+	}
+
+	_singleButtonFocusIn(e: FocusEvent) {
+		e.preventDefault();
+		(e.target! as Button).focused = false;
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
@@ -329,8 +335,6 @@ class SplitButton extends UI5Element {
 			this._shiftOrEscapePressed = true;
 			this._textButtonActive = false;
 		}
-
-		this._setTabIndexValue();
 	}
 
 	_onKeyUp(e: KeyboardEvent) {
@@ -345,8 +349,6 @@ class SplitButton extends UI5Element {
 				this._spacePressed = false;
 			}
 		}
-
-		this._setTabIndexValue();
 	}
 
 	_fireClick(e?: Event) {
@@ -354,6 +356,7 @@ class SplitButton extends UI5Element {
 		if (!this._shiftOrEscapePressed) {
 			this.fireEvent("click");
 		}
+		this.textButton!.focused = false;
 		this._shiftOrEscapePressed = false;
 	}
 
@@ -363,18 +366,9 @@ class SplitButton extends UI5Element {
 	}
 
 	_textButtonRelease() {
+		this.textButton!.focused = false;
 		this._textButtonActive = false;
 		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
-		this._setTabIndexValue();
-	}
-
-	_setTabIndexValue() {
-		const textButton = this.textButton,
-			arrowButton = this.arrowButton,
-			buttonsAction = (textButton && (textButton.focused || textButton.active))
-						 || (arrowButton && (arrowButton.focused || arrowButton.active));
-
-		this._tabIndex = this.disabled || buttonsAction ? "-1" : "0";
 	}
 
 	get textButtonAccText() {
