@@ -10,6 +10,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { SWITCH_ARIA_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
@@ -188,6 +189,18 @@ class Switch extends UI5Element {
 	@property()
 	tooltip!: string;
 
+	/**
+	 * Defines whether the component is required.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Switch.prototype.required
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.16.0
+	 */
+	@property({ type: Boolean })
+	required!: boolean;
+
 	static i18nBundle: I18nBundle;
 
 	get sapNextIcon() {
@@ -245,6 +258,10 @@ class Switch extends UI5Element {
 
 	get effectiveTabIndex() {
 		return this.disabled ? undefined : "0";
+	}
+
+	get _ariaDescription() {
+		return this.required ? Switch.i18nBundle.getText(SWITCH_ARIA_DESCRIPTION) : undefined;
 	}
 
 	get classes(): ClassMap {
