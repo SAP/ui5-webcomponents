@@ -18,3 +18,7 @@
 .sapUiSizeCompact {
 	--_ui5_panel_header_button_wrapper_padding: .5625rem .375rem;
 }
+
+.ui5-panel-heading-wrapper {
+	--_ui5_panel_header_background_color: var(--sapGroup_TitleBackground);
+}

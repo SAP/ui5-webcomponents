@@ -3,7 +3,7 @@
 :root {
 	--_ui5_panel_header_padding_right: 1rem;
 	--_ui5_panel_header_height: 3rem;
-	--_ui5_panel_header_background_color: var(--sapList_HeaderBackground);
+	--_ui5_panel_header_background_color: var(--sapBackgroundColor);
 }
 
 [data-ui5-compact-size],

@@ -134,6 +134,12 @@ describe("Panel general interaction", () => {
 
 		assert.strictEqual(await title.getText(), sExpected, "Initially the text is the expected one");
 		assert.strictEqual(isSticky, "sticky", "Assert that the header has a sticky position");
+
+        let isPanelHeadeDisplayed = await panelHeader.isDisplayedInViewport();
+		assert.strictEqual(isPanelHeadeDisplayed, true, "Initially the panel header should be visible");
+        await browser.execute("window.scrollBy(0, 200)");
+        isPanelHeadeDisplayed = await panelHeader.isDisplayedInViewport();
+		assert.strictEqual(isPanelHeadeDisplayed, true, "Assert that the header is still visible after scroll - it's sticky");
 	});
 
 	describe("Accessibility", async () => {
