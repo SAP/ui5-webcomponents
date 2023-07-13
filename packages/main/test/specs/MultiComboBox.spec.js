@@ -1491,22 +1491,18 @@ describe("MultiComboBox general interaction", () => {
 			const tokenizerNMore = await mcNMore.shadow$("ui5-tokenizer");
 			const nItemsLabel = await tokenizerNItems.shadow$(".ui5-tokenizer-more-text");
 			const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
-			let resourceBundleTextItems = null;
-			let resourceBundleTextMore = null;
-			
-	
-			resourceBundleTextItems = await browser.executeAsync(done => {
+			let resourceBundleText = null;
+
+			resourceBundleText = await browser.executeAsync(done => {
 				const mi = document.getElementById("mc-items");
-				done(mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_SHOW_ALL_ITEMS, 2));
+				done({
+					mcItemsLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_SHOW_ALL_ITEMS, 2),
+					mcNMoreLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1)
+				});
 			});
 	
-			resourceBundleTextMore = await browser.executeAsync(done => {
-				const mi = document.getElementById("mc-more");
-				done(mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1));
-			});
-	
-			assert.strictEqual(await nItemsLabel.getText(), resourceBundleTextItems, "Text should be 2 Items");
-			assert.strictEqual(await nMoreLabel.getText(), resourceBundleTextMore, "Text should be 1 More");
+			assert.strictEqual(await nItemsLabel.getText(), resourceBundleText.mcItemsLabelText, "Text should be 2 Items");
+			assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.mcNMoreLabelText, "Text should be 1 More");
 		});
 	});
 
