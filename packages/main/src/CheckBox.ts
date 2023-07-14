@@ -321,7 +321,7 @@ class CheckBox extends UI5Element implements IFormElement {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
 			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
-				nativeInput.disabled = element.disabled || !element.checked;
+				nativeInput.disabled = element.disabled || (!element.required && !element.checked);
 				nativeInput.value = element.checked ? "on" : "";
 			});
 		} else if (this.name) {
