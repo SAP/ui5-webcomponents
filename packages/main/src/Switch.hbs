@@ -4,7 +4,7 @@
 	aria-label="{{ariaLabelText}}"
 	aria-checked="{{checked}}"
 	aria-disabled="{{effectiveAriaDisabled}}"
-	aria-description="{{_ariaDescription}}"
+	aria-required="{{required}}"
 	@click="{{_onclick}}"
 	@keyup="{{_onkeyup}}"
 	@keydown="{{_onkeydown}}"
@@ -48,4 +48,5 @@
 	</div>
 
 	<input type='checkbox' ?checked="{{checked}}" class="ui5-switch-input" data-sap-no-tab-ref/>
+	<slot name="formSupport"></slot>
 </div>

@@ -62,17 +62,9 @@ describe("Switch general interaction", async () => {
 		assert.strictEqual(await switchPrevented.getProperty("checked"), currentChecked, "The switch is not checked");
 	});
 
-	it("required property adds aria-description attribute", async () => {
-		const switchRoot = await browser.$("#requiredSwitch").shadow$(".ui5-switch-root");
-
-		let resourceBundleText = null;
-
-		resourceBundleText = await browser.executeAsync(done => {
-			const switchComponent = document.getElementById("requiredSwitch");
-			done(switchComponent.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.SWITCH_ARIA_DESCRIPTION));
-		})
-
-		assert.strictEqual(await switchRoot.getAttribute("aria-description"), resourceBundleText, "The aria-description attribute is set");
+	it("The 'required' attribute is propagated properly", async () => {
+		assert.strictEqual(await browser.$("#requiredSwitch").shadow$(".ui5-switch-root").getAttribute("aria-required"), "true", "The required attribute is set correctly");
+		assert.strictEqual(await browser.$("#switchprevented").shadow$(".ui5-switch-root").getAttribute("aria-required"), "false", "The required attribute is set correctly");
 	})
 
 });
