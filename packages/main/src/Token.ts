@@ -229,11 +229,15 @@ class Token extends UI5Element implements ITabbable {
 	}
 
 	get textDom() {
-		return this.getDomRef()!.querySelector(".ui5-token--text");
+		return this.getDomRef()?.querySelector(".ui5-token--text");
 	}
 
 	get isTruncatable() {
-		return Math.ceil(this.textDom!.getBoundingClientRect().width) < Math.ceil(this.textDom!.scrollWidth);
+		if (!this.textDom) {
+			return false;
+		}
+
+		return Math.ceil(this.textDom.getBoundingClientRect().width) < Math.ceil(this.textDom.scrollWidth);
 	}
 
 	static async onDefine() {
