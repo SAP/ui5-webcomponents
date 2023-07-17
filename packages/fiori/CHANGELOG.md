@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.0...v1.16.0-rc.1) (2023-07-13)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** primary and secondary titles alignment ([#7215](https://github.com/SAP/ui5-webcomponents/issues/7215)) ([9c32e30](https://github.com/SAP/ui5-webcomponents/commit/9c32e308ed5397ce40fd6ffa7c9b0e23573be75b)), closes [#7153](https://github.com/SAP/ui5-webcomponents/issues/7153) [#7107](https://github.com/SAP/ui5-webcomponents/issues/7107)
+
+
+
+
+
 # [1.16.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.1...v1.16.0-rc.0) (2023-07-06)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

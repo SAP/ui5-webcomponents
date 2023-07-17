@@ -564,4 +564,14 @@ describe("List Tests", () => {
 
 		await browser.url(`test/pages/List_test_page.html`);
 	});
+
+	it('should not try to fire item-close if a select is closed from custom list item', async () => {
+		const select = await browser.$("#selectInLiCustom");
+		const itemCloseResult = await browser.$("#customListItemSelectResult");
+
+		await select.click();
+		await select.keys("Escape");
+
+		assert.strictEqual(await itemCloseResult.getProperty("value"), "0", "item-close event is not fired when the button is pressed.");
+	});
 });

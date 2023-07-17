@@ -246,6 +246,10 @@ class Tab extends UI5Element implements ITab, ITabbable {
 		return this.subTabs.length > 0 && this._isTopLevelTab && !this._hasOwnContent;
 	}
 
+	get isTwoClickArea() {
+		return this.subTabs.length > 0 && this._isTopLevelTab && this._hasOwnContent;
+	}
+
 	get isOnSelectedTabPath(): boolean {
 		return this._realTab === this || this.tabs.some(subTab => subTab.isOnSelectedTabPath);
 	}
@@ -378,6 +382,10 @@ class Tab extends UI5Element implements ITab, ITabbable {
 
 		if (this.isSingleClickArea) {
 			classes.push(`ui5-tab-strip-item--singleClickArea`);
+		}
+
+		if (this.isTwoClickArea) {
+			classes.push(`ui5-tab-strip-item--twoClickArea`);
 		}
 
 		return {
