@@ -70,18 +70,34 @@ RequiredInForm.args = {
 	name: "mySwitch",
 	disabled: false,
 	design: SwitchDesign.Textual,
+	textOn: "Yes",
+	textOff: "No",
 };
 RequiredInForm.decorators = [
 	(story) => {
 		return html`
-		<form id="myForm">
-			<div style="width: fit-content; display: flex; flex-direction: column; justify-content: flex-start">
-				<div style="display: flex; flex-direction: column; justify-content: flex-start;">
-					<ui5-label for="mySwitch">The switch is required, and should be checked in order the form to be submit</ui5-label>
+		<style>
+			.switch-form {
+				max-width: fit-content;
+				border: 1px solid var(--sapList_BorderColor);
+				border-radius: 0.5rem;
+				padding: 1rem;
+			}
+		</style>
+		<form id="myForm" class="switch-form">
+			<h3 style="margin: 0 0 1rem 0">Switch in Registration form sample</h3>
+			<div style="display: flex; flex-direction: column;">
+				<ui5-input required type="Email" placeholder="Email" value="your@email.com"></ui5-input>
+				<ui5-input required type="Password" placeholder="Password" value="your@email.com"></ui5-input>
+			</div>
+			<div style="display: flex; flex-direction: column; justify-content: center;">
+				<ui5-label for="mySwitch" style="margin: 1rem 0 0 0">Please accept the terms and conditions, in order to proceed</ui5-label>
+				<div style="width: fit-content">
 					${story()}
 				</div>
-				<ui5-button type="Submit" style="width: fit-content">Submit</ui5-button>
 			</div>
+			<br>
+			<ui5-button type="Submit">Submit Form</ui5-button>
 		</form>`
 	}
 ];
