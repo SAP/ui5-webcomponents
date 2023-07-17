@@ -14,8 +14,12 @@
 	outline-offset: var(--_ui5_avatar_focus_offset);
 }
 
-:host([interactive]) {
+:host(:not([disabled])[interactive]) {
 	cursor: pointer;
+}
+
+:host([disabled]) {
+	opacity: var(--sapContent_DisabledOpacity);
 }
 
 :host {

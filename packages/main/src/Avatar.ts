@@ -70,13 +70,27 @@ import "@ui5/webcomponents-icons/dist/employee.js";
 })
 /**
 * Fired on mouseup, space and enter if avatar is interactive
-*
+* <b>Note:</b> The event will not be fired if the <code>disabled</code>
+* property is set to <code>true</code>.
 * @event
 * @private
 * @since 1.0.0-rc.11
 */
 @event("click")
 class Avatar extends UI5Element implements ITabbable {
+	/**
+	 * Defines whether the component is disabled.
+	 * A disabled component can't be pressed or
+	 * focused, and it is not in the tab chain.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Avatar.prototype.disabled
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
 	 * @type {boolean}
@@ -281,6 +295,7 @@ class Avatar extends UI5Element implements ITabbable {
 	_onclick?: (e: MouseEvent) => void;
 	static i18nBundle: I18nBundle;
 	_handleResizeBound: ResizeObserverCallback;
+	_interactive!: boolean;
 
 	constructor() {
 		super();
@@ -292,7 +307,7 @@ class Avatar extends UI5Element implements ITabbable {
 	}
 
 	get tabindex() {
-		return this._tabIndex || (this.interactive ? "0" : "-1");
+		return this._tabIndex || (this._interactive ? "0" : "-1");
 	}
 
 	/**
@@ -320,7 +335,7 @@ class Avatar extends UI5Element implements ITabbable {
 	}
 
 	get _role() {
-		return this.interactive ? "button" : undefined;
+		return this._interactive ? "button" : undefined;
 	}
 
 	get _ariaHasPopup() {
@@ -357,7 +372,8 @@ class Avatar extends UI5Element implements ITabbable {
 	 }
 
 	onBeforeRendering() {
-		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
+		this._interactive = this.interactive && !this.disabled;
+		this._onclick = this._interactive ? this._onClickHandler.bind(this) : undefined;
 	}
 
 	async onAfterRendering() {
@@ -407,7 +423,7 @@ class Avatar extends UI5Element implements ITabbable {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (!this.interactive) {
+		if (!this._interactive) {
 			return;
 		}
 
@@ -421,7 +437,7 @@ class Avatar extends UI5Element implements ITabbable {
 	}
 
 	_onkeyup(e: KeyboardEvent) {
-		if (this.interactive && !e.shiftKey && isSpace(e)) {
+		if (this._interactive && !e.shiftKey && isSpace(e)) {
 			this.fireEvent("click");
 		}
 	}
@@ -431,13 +447,13 @@ class Avatar extends UI5Element implements ITabbable {
 	}
 
 	_onfocusin() {
-		if (this.interactive) {
+		if (this._interactive) {
 			this.focused = true;
 		}
 	}
 
 	_getAriaHasPopup() {
-		if (!this.interactive || this.ariaHaspopup === "") {
+		if (!this._interactive || this.ariaHaspopup === "") {
 			return;
 		}
 
