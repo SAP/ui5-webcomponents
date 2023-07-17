@@ -602,8 +602,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
-		this._previouslySelectedItems = this._filteredItems.filter(item => item.selected).map(item => item);
-
+		this._previouslySelectedItems = this._getSelectedItems();
 		const token: Token = e.detail.ref;
 		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"))!;
 
@@ -745,8 +744,7 @@ class MultiComboBox extends UI5Element {
 		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
 
 		if (separatedText.length > 1) {
-			this._previouslySelectedItems = this._filteredItems.filter(item => item.selected).map(item => item);
-
+			this._previouslySelectedItems = this._getSelectedItems();
 			matchingItems.forEach(item => {
 				item.selected = true;
 				this.value = "";
@@ -1007,8 +1005,7 @@ class MultiComboBox extends UI5Element {
 		const currentItemIdx = Number(listItems?.indexOf(e.target as ListItemBase));
 		const nextItemIdx = currentItemIdx + 1;
 		const prevItemIdx = currentItemIdx - 1;
-		this._previouslySelectedItems = this._filteredItems.filter(item => item.selected).map(item => item);
-
+		this._previouslySelectedItems = this._getSelectedItems();
 		if (isDownShift(e) && items[nextItemIdx]) {
 			items[nextItemIdx].selected = items[currentItemIdx].selected;
 			items[nextItemIdx].focus();
@@ -1114,8 +1111,7 @@ class MultiComboBox extends UI5Element {
 					this._performingSelectionTwice = false;
 				});
 			} else {
-				this._previouslySelectedItems = this._filteredItems.filter(item => item.selected).map(item => item);
-
+				this._previouslySelectedItems = this._getSelectedItems();
 				matchingItem.selected = true;
 				this.value = "";
 				const changePrevented = this.fireSelectionChange();
@@ -1225,8 +1221,7 @@ class MultiComboBox extends UI5Element {
 			this.allItemsPopover?.focus();
 		}
 
-		this._previouslySelectedItems = this._filteredItems.filter(item => item.selected).map(item => item);
-
+		this._previouslySelectedItems = this._getSelectedItems();
 		this._isOpenedByKeyboard = false;
 	}
 
@@ -1243,7 +1238,10 @@ class MultiComboBox extends UI5Element {
 
 	_listSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		let changePrevented;
-		this._previouslySelectedItems = this._filteredItems.filter(item => item.selected).map(item => item);
+
+		if (!isPhone()) {
+			this._previouslySelectedItems = this._getSelectedItems();
+		}
 
 		// sync list items and cb items
 		this.syncItems((e.target as List).items);
