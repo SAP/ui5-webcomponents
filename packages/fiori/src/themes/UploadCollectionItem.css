@@ -183,3 +183,9 @@
 [ui5-button]:last-of-type {
 	margin-inline-end: var(--ui5_upload_collection_last_button_inline_end);
 }
+
+:host([active][actionable]) ::slotted([ui5-icon][slot="thumbnail"]),
+:host([active][actionable]) .ui5-uci-file-name,
+:host([active][actionable]) .ui5-uci-description {
+	color: var(--sapList_Active_TextColor);
+}
