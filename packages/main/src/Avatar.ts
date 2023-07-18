@@ -185,6 +185,12 @@ class Avatar extends UI5Element implements ITabbable {
 	_size!: AvatarSize;
 
 	/**
+	 * @private
+	 */
+	@property({ type: Boolean })
+	_interactive!: boolean;
+
+	/**
 	 * Defines the background color of the desired image.
 	 * <br><br>
 	 * Available options are:
@@ -295,7 +301,6 @@ class Avatar extends UI5Element implements ITabbable {
 	_onclick?: (e: MouseEvent) => void;
 	static i18nBundle: I18nBundle;
 	_handleResizeBound: ResizeObserverCallback;
-	_interactive!: boolean;
 
 	constructor() {
 		super();

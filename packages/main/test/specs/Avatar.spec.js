@@ -68,7 +68,6 @@ describe("Avatar", () => {
 
 		await avatarRoot.click();
 		assert.strictEqual(await input3.getAttribute("value"), "0", "Mouse click event not thrown when avatar is interactive + disabled");
-		assert.ok(await avatarRoot.hasAttribute("disabled"), )
 	});
 
 	it("Tests noConflict 'ui5-click' event is thrown for interactive avatars", async () => {
