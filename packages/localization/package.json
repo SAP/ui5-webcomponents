@@ -28,7 +28,7 @@
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
-    "@openui5/sap.ui.core": "1.112.0",
+    "@openui5/sap.ui.core": "1.116.0",
     "@ui5/webcomponents-tools": "1.16.0-rc.1",
     "chromedriver": "113.0.0",
     "mkdirp": "^1.0.4",
