@@ -248,7 +248,8 @@ class Switch extends UI5Element implements IFormElement {
 			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
 				const switchComponent = (element as Switch);
 				nativeInput.checked = !!switchComponent.checked;
-				nativeInput.disabled = !!switchComponent.disabled || switchComponent.checked;
+				nativeInput.disabled = !!switchComponent.disabled;
+				nativeInput.value = !!switchComponent.checked ? "on" : ""; // eslint-disable-line
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
@@ -284,9 +285,9 @@ class Switch extends UI5Element implements IFormElement {
 			this.checked = !this.checked;
 			const changePrevented = !this.fireEvent("change", null, true);
 			// Angular two way data binding;
-			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
 
-			if (changePrevented || valueChagnePrevented) {
+			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;
 			}
 		}
