@@ -194,9 +194,9 @@ const testAssets = {
 
 import {registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
 
-registerIconLoader("SAC-icons", () => {
+registerIconLoader("my-icons", () => {
 	return Promise.resolve([{
-		"collection": "SAC-icons-v4",
+		"collection": "my-icons-v4",
 		"packageName": "test",
 		"data": {
 			"mark": {
@@ -209,7 +209,7 @@ registerIconLoader("SAC-icons", () => {
 		},
 	},
 	{
-		"collection": "SAC-icons-v5",
+		"collection": "my-icons-v5",
 		"packageName": "test",
 		"themeFamily": "sap_horizon",
 		"data": {
