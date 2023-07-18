@@ -111,7 +111,7 @@ import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base
 import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
 import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
-import { getEffectiveIconCollection } from "@ui5/webcomponents-base/config/Icons.js";
+import getEffectiveIconCollection from "@ui5/webcomponents-base/dist/asset-registries/util/getIconCollectionByTheme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
@@ -193,10 +193,25 @@ const testAssets = {
 // setDefaultIconCollection("sap_fiori_3", "my-custom-icons");
 
 import {registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-registerIconLoader("my-custom-icons", () => {
-	return Promise.resolve({
-		"collection": "my-custom-icons",
+
+registerIconLoader("SAC-icons", () => {
+	return Promise.resolve([{
+		"collection": "SAC-icons-v4",
 		"packageName": "test",
+		"data": {
+			"mark": {
+				paths: [
+					`M257.6,6.4c138.3,0.2,250.5,113.1,250,251.6c-0.5,137.7-113.3,249.9-251.1,249.6C118.3,507.2,6,394.1,6.5,255.8
+					C7,117.9,119.5,6.2,257.6,6.4z M256.6,358.8c0.3,4.2,0.6,7.6,0.7,10.9c0.2,27.6,0.3,55.3,0.4,82.9c0,15.1-4.2,18.9-19.1,17.6
+					C127,461,41.4,366.1,42.9,253.3C44.3,141.9,133.4,49.1,244.6,43c102.4-5.6,194.8,61.7,219.9,160.4`,
+				],
+			},
+		},
+	},
+	{
+		"collection": "SAC-icons-v5",
+		"packageName": "test",
+		"themeFamily": "sap_horizon",
 		"data": {
 			"mark": {
 				paths: [
@@ -240,7 +255,7 @@ registerIconLoader("my-custom-icons", () => {
 				],
 			},
 		},
-	});
+	}]);
 });
 
 window["sap-ui-webcomponents-bundle"] = testAssets;

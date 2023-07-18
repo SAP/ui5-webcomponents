@@ -10,9 +10,9 @@ import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "./dist/conf
 import {
 	setDefaultIconCollection,
 	getDefaultIconCollection,
-	getEffectiveIconCollection,
-	RegisteredIconCollection,
 } from "./dist/config/Icons.js";
+import { RegisteredIconCollection } from "./dist/asset-registries/util/IconCollectionsByTheme.js";
+import getEffectiveIconCollection from "./dist/asset-registries/util/getIconCollectionsByTheme.js";
 import {
 	getLanguage,
 	setLanguage,
