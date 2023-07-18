@@ -364,7 +364,7 @@ class Panel extends UI5Element {
 			},
 			stickyHeaderClass: {
 				"ui5-panel-heading-wrapper-sticky": this.stickyHeader,
-			}
+			},
 		};
 	}
 
