@@ -8,6 +8,6 @@
     background-color: var(--sapBackgroundColor);
 }
 
-ui5-panel::part(content) {
+#panel-stickyHeader::part(content) {
     height: 70px;
 }
