@@ -249,7 +249,7 @@ class Switch extends UI5Element implements IFormElement {
 				const switchComponent = (element as Switch);
 				nativeInput.checked = !!switchComponent.checked;
 				nativeInput.disabled = !!switchComponent.disabled;
-				nativeInput.value = !!switchComponent.checked ? "on" : ""; // eslint-disable-line
+				nativeInput.value = switchComponent.checked ? "on" : "";
 			});
 		} else if (this.name) {
 			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
