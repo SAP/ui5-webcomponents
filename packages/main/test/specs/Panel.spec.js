@@ -174,6 +174,7 @@ describe("Panel general interaction", () => {
 				done(panel.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.PANEL_ICON));
 			});
 
+
 			assert.strictEqual(await panelRoot.getAttribute("role"), "form", "The correct accessible role is applied");
 
 			assert.strictEqual(await button.getTagName(), "ui5-icon", "ui5-icon should be rendered");
@@ -196,6 +197,7 @@ describe("Panel general interaction", () => {
 			const fixedPanelHeader = await fixedPanel.shadow$(".ui5-panel-header");
 			const fixedPanelHeaderTitle = await fixedPanel.shadow$(".ui5-panel-header-title");
 			const fixedPanelHeaderTitleId = await fixedPanelHeaderTitle.getProperty("id");
+
 
 			assert.strictEqual(await nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
