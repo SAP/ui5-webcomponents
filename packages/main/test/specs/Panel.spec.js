@@ -197,7 +197,7 @@ describe("Panel general interaction", () => {
 			const fixedPanelHeader = await fixedPanel.shadow$(".ui5-panel-header");
 			const fixedPanelHeaderTitle = await fixedPanel.shadow$(".ui5-panel-header-title");
 			const fixedPanelHeaderTitleId = await fixedPanelHeaderTitle.getProperty("id");
-
+			
 
 			assert.strictEqual(await nativeHeader.getAttribute("aria-labelledby"),
 				`${panelWithNativeHeaderId}-header-title`, "aria-labelledby is correct");
