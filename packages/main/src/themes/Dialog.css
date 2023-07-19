@@ -84,7 +84,7 @@
 	outline: none;
 }
 
-.ui5-popup-header-root:focus-visible:after {
+.ui5-popup-header-root:focus:after {
 	content: '';
 	position: absolute;
 	left: var(--_ui5_dialog_header_focus_left_offset);

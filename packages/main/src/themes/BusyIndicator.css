@@ -74,7 +74,7 @@
 	flex-direction: column;
 }
 
-.ui5-busy-indicator-busy-area:focus-visible {
+.ui5-busy-indicator-busy-area:focus {
 	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
     border-radius: var(--_ui5_busy_indicator_focus_border_radius);
