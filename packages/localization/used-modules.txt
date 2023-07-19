@@ -2,6 +2,10 @@
 
 sap/base/Log.js
 sap/base/assert.js
+sap/base/i18n/LanguageTag.js
+sap/base/i18n/date/CalendarWeekNumbering.js
+sap/base/i18n/date/TimezoneUtils.js
+sap/base/i18n/date/CalendarType.js
 sap/base/strings/formatMessage.js
 sap/base/util/ObjectPath.js
 sap/base/util/array/uniqueSort.js
