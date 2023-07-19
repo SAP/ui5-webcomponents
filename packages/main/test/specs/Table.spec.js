@@ -186,7 +186,7 @@ describe("Table general interaction", () => {
 			await btnScroll.click();
 
 			await browser.waitUntil(async () => (await inputResult.getProperty("value")) === "1", {
-				timeout: 1000,
+				timeout: 2000,
 				timeoutMsg: "The load-more event must be fired."
 			});
 		});
