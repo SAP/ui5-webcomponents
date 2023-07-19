@@ -486,7 +486,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
-			const mcb = await $("#mcb-long-token");
+			const mcb = $("#mcb-long-token");
 			const inner = mcb.shadow$("input");
 
 			await mcb.scrollIntoView();
@@ -505,10 +505,10 @@ describe("MultiComboBox general interaction", () => {
 		it("prevents selection change event when clicking an item", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const mcb = await $("#mcb-prevent");
+			const mcb = $("#mcb-prevent");
 			const input = mcb.shadow$("#ui5-multi-combobox-input");
 			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-prevent")
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
 			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
 			const mcbTokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
@@ -530,23 +530,23 @@ describe("MultiComboBox general interaction", () => {
 		it("prevents selection change event when deleting a token", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const mcb = await $("#mcb-prevent");
-            let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			const mcb = $("#mcb-prevent");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
-			const deleteIcon =  await tokens[0].shadow$("ui5-icon");
+			const deleteIcon = await tokens[0].shadow$("ui5-icon");
 
 			assert.equal(await tokens.length, 1, "should have one token");
 
 			await deleteIcon.click();
 
 			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-            assert.equal(await tokens.length, 1, "should have one token");
+			assert.equal(await tokens.length, 1, "should have one token");
         });
 
 		it ("should prevent selection-change on CTRL+A", async () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 
-			const mcb = await browser.$("#mcb-prevent");
+			const mcb = $("#mcb-prevent");
 			const input = await mcb.shadow$("input");
 
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
