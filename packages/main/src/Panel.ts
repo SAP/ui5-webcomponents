@@ -200,7 +200,7 @@ class Panel extends UI5Element {
 	 * Indicates whether the Panel header is sticky or not.
 	 * If stickyHeader is set to true, then whenever you scroll the content or
 	 * the application, the header of the panel will be always visible and
-	 * a solid color will be used for the design of it.
+	 * a solid color will be used for its design.
 	 * @type {boolean}
 	 * @name sap.ui.webc.main.Panel.prototype.stickyHeader
 	 * @defaultvalue false
