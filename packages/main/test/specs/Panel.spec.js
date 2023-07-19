@@ -149,6 +149,8 @@ describe("Panel general interaction", () => {
 		const panelHeader = panel.shadow$(".ui5-panel-heading-wrapper");
 		const isStickyCssPosition = await browser.execute("return window.getComputedStyle(document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-heading-wrapper')).position");
 
+		await browser.setWindowSize(1000, 1200);
+
 		assert.strictEqual(await title.getText(), sExpected, "Initially the text is the expected one");
 		assert.ok(await panelHeader.hasClass("ui5-panel-heading-wrapper-sticky"), "Assert that sticky css class is available");
 		assert.strictEqual(isStickyCssPosition, "sticky", "Assert that the header has a sticky position");
