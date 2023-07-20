@@ -67,7 +67,7 @@ Design.args = {
 export const RequiredInForm = Template.bind({});
 RequiredInForm.args = {
 	required: true,
-	name: "mySwitch",
+	name: "termsAndConditions",
 	disabled: false,
 	design: SwitchDesign.Textual,
 	textOn: "Yes",
