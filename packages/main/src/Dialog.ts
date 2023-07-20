@@ -233,7 +233,7 @@ class Dialog extends Popup {
 	/**
 	 * Defines the header HTML Element.
 	 * <br><br>
-	 * When a <code>ui5-bar</code> is used in the header, you should remove the default dialog's paddings.
+	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the header, you should remove the default dialog's paddings.
 	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
 	 * <code>accessibleName</code> should be used.
@@ -249,7 +249,7 @@ class Dialog extends Popup {
 	/**
 	 * Defines the footer HTML Element.
 	 * <br><br>
-	 * When a <code>ui5-bar</code> is used in the footer, you should remove the default dialog's paddings.
+	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the footer, you should remove the default dialog's paddings.
 	 *
 	 * @type {HTMLElement[]}
 	 * @name sap.ui.webc.main.Dialog.prototype.footer
