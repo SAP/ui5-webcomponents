@@ -73,7 +73,6 @@ PageWithFloatingFooter.args = {
 	footer: `
     <div slot="footer">
         <ui5-bar design="FloatingFooter">
-            <ui5-icon name="home" slot="startContent"></ui5-icon>
             <ui5-button design="Positive" slot="endContent">Agree</ui5-button>
             <ui5-button design="Negative" slot="endContent">Decline</ui5-button>
             <ui5-button design="Transparent" slot="endContent">Cancel</ui5-button>
