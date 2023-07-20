@@ -86,6 +86,9 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * <li>footer - Used to style the footer of the component</li>
  * </ul>
  *
+ * <b>Note:</b> When ui5-bar is used in the Header or in the Footer additional styling is needed. The default Dialog's paddings should be removed.
+ * For more information see sample "Bar in Header/Footer".
+ *
  * <h3>ES6 Module Import</h3>
  *
  * <code>import "@ui5/webcomponents/dist/Dialog";</code>
@@ -229,6 +232,8 @@ class Dialog extends Popup {
 	/**
 	 * Defines the header HTML Element.
 	 * <br><br>
+	 * When ui5-bar is used in the Header additional styling is needed. The default Dialog's paddings should be removed.
+	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
 	 * <code>accessibleName</code> should be used.
 	 *
@@ -242,6 +247,8 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the footer HTML Element.
+	 * <br><br>
+	 * When ui5-bar is used in the Footer additional styling is needed. The default Dialog's paddings should be removed.
 	 *
 	 * @type {HTMLElement[]}
 	 * @name sap.ui.webc.main.Dialog.prototype.footer
