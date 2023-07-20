@@ -85,7 +85,6 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * <li>content - Used to style the content of the component</li>
  * <li>footer - Used to style the footer of the component</li>
  * </ul>
- *
  * <b>Note:</b> When ui5-bar is used in the Header or in the Footer additional styling is needed. The default Dialog's paddings should be removed.
  * For more information see sample "Bar in Header/Footer".
  *
