@@ -88,7 +88,15 @@ describe("CheckBox general interaction", () => {
 		}
 	});
 
-	it("tests form submission when third checkbox is checked and button is clicked", async () => {
+	it("tests form submission when checkbox is required, but unchecked", async () => {
+		const submitButton = await browser.$("#cbSubmit");
+
+		await submitButton.click();
+
+		assert.strictEqual(await browser.$("#cbFormSubmitted").getValue(), "false", "Form is not submitted");
+	});
+
+	it("tests form submission when checkbox is checked and button is clicked", async () => {
 		const thirdCheckbox = await browser.$("#cbItem3");
 		const submitButton = await browser.$("#cbSubmit");
 
