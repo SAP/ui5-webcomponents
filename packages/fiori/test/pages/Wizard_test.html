@@ -160,6 +160,35 @@
 					</div>
 				</div>
 
+				<ui5-button id="toStep5" design="Emphasized">Step 5</ui5-button>
+			</ui5-wizard-step>
+
+			<ui5-wizard-step  id="st5" title-text="Optional step to finish the example with very long, long, long, long, long, long, long, long, long text" subtitle-text="(Optional)" disabled>
+				<div class="wizard_test6auto">
+					<ui5-title>5. Optional step</ui5-title><br>
+					<ui5-label wrapping-type="Normal">
+						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
+					</ui5-label>
+					<ui5-message-strip>
+						The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
+					</ui5-message-strip><br>
+				</div>
+				<span id="scrollMarkerSt5"></span>
+
+				<ui5-button id="toStep6" design="Emphasized">Step 6</ui5-button>
+			</ui5-wizard-step>
+			<ui5-wizard-step  id="st5" title-text="Final step to finish the example with very long, long, long, long, long, long, long, long, long text" disabled>
+				<div class="wizard_test6auto">
+					<ui5-title>6. Final step</ui5-title><br>
+					<ui5-label wrapping-type="Normal">
+						Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien
+					</ui5-label>
+					<ui5-message-strip>
+						The Wizard control is supposed to break down large tasks, into smaller steps, easier for the user to work with.
+					</ui5-message-strip><br>
+					<span id="scrollMarkerSt6"></span>
+				</div>
+
 				<ui5-button id="finalize" design="Emphasized">Finalize</ui5-button>
 			</ui5-wizard-step>
 		</ui5-wizard>
@@ -327,6 +356,14 @@
 		toStep4.addEventListener("click", function () {
 			deselectAll(wiz);
 			setStep(3, wiz);
+		});
+		toStep5.addEventListener("click", function () {
+			deselectAll(wiz);
+			setStep(4, wiz);
+		});
+		toStep6.addEventListener("click", function () {
+			deselectAll(wiz);
+			setStep(5, wiz);
 		});
 
 		toStep2InDialog.addEventListener("click", function () {

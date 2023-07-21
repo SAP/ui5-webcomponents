@@ -26,6 +26,7 @@ import TimePickerInternals from "./TimePickerInternals.js";
 import TimePickerClock from "./TimePickerClock.js";
 import ToggleSpinButton from "./ToggleSpinButton.js";
 import SegmentedButton from "./SegmentedButton.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
@@ -97,6 +98,7 @@ const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
 		TimePickerClock,
 		ToggleSpinButton,
 		SegmentedButton,
+		SegmentedButtonItem,
 	],
 })
 

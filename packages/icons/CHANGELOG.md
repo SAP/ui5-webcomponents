@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.1...v1.16.0-rc.2) (2023-07-20)
+
+
+### Features
+
+* update @ui5/webcomponents-icons to 5.05 & 4.17 ([#7315](https://github.com/SAP/ui5-webcomponents/issues/7315)) ([2c9730b](https://github.com/SAP/ui5-webcomponents/commit/2c9730b6d4d4a8445671b2b7e41c364d3abf32e2)), closes [#7210](https://github.com/SAP/ui5-webcomponents/issues/7210)
+
+
+
+
+
+# [1.16.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.0...v1.16.0-rc.1) (2023-07-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-icons
+
+
+
+
+
 # [1.16.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.1...v1.16.0-rc.0) (2023-07-06)
 
 **Note:** Version bump only for package @ui5/webcomponents-icons

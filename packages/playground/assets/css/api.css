@@ -98,21 +98,6 @@ body {
 	flex-direction: column;
 }
 
-.popover-content {
-	margin: 0.5rem;
-	height: 100px;
-	display: flex;
-	flex-direction:column;
-	justify-content: center;
-	align-items: center;
-}
-
-.popover-footer, .dialog-footer {
-	display: flex;
-	align-items: center;
-	padding: .5rem 0;
-}
-
 .login-form {
 	display: flex;
 	flex-direction: column;

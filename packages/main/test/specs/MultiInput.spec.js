@@ -313,6 +313,17 @@ describe("MultiInput Truncated Token", () => {
 		assert.strictEqual(tokensCount, 0, "No Tokens should be available");
 		assert.ok(await inner.isFocusedDeep(), "Inner input should be focused");
 	});
+
+	it("should not throw exception when MI with 1 token is added to the page", async () => {
+		const btn = await $("#add-single-token");
+
+		await btn.click();
+
+		const innerInput = await $("#added-mi").shadow$("input");
+		const html = await innerInput.getHTML();
+
+		assert.ok(await innerInput.getHTML(), "new MI should be displayed");
+	});
 });
 
 describe("ARIA attributes", () => {
