@@ -42,7 +42,7 @@ import PageCss from "./generated/themes/Page.css.js";
  * <br>
  * The <code>ui5-page</code> exposes the following CSS Shadow Parts:
  * <ul>
- * <li>title-text - Used to style the titleText of the notification list group item</li>
+ * <li>content - Used to style the content section of the component</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
