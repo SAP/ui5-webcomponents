@@ -18,6 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
@@ -45,8 +46,6 @@ type CurrentItem = {
 
 const MENU_OPEN_DELAY = 300;
 const MENU_CLOSE_DELAY = 400;
-
-type TimeoutIDMap = Record<string, number>;
 
 type MenuItemClickEventDetail = {
 	item: MenuItem,
@@ -308,8 +307,8 @@ class Menu extends UI5Element {
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
-	_hoverTimeouts: TimeoutIDMap = {};
-	_unhoverTimeouts: TimeoutIDMap = {};
+	_hoverTimeouts: WeakMap<MenuItem, Timeout> = new WeakMap();
+	_unhoverTimeouts: WeakMap<MenuItem, Timeout> = new WeakMap();
 
 	static async onDefine() {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -547,9 +546,9 @@ class Menu extends UI5Element {
 		this.clearOpenTimeout(item);
 
 		// Sets the new timeout
-		this._hoverTimeouts[item.id] = window.setTimeout(() => {
+		this._hoverTimeouts.set(item, setTimeout(() => {
 			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
-		}, MENU_OPEN_DELAY);
+		}, MENU_OPEN_DELAY));
 	}
 
 	startCloseTimeout(item: MenuItem) {
@@ -557,22 +556,22 @@ class Menu extends UI5Element {
 		this.clearCloseTimeout(item);
 
 		// Sets the new timeout
-		this._unhoverTimeouts[item.id] = window.setTimeout(() => {
+		this._unhoverTimeouts.set(item, setTimeout(() => {
 			this._closeItemSubMenu(item);
-		}, MENU_CLOSE_DELAY);
+		}, MENU_CLOSE_DELAY));
 	}
 
 	clearOpenTimeout(item: MenuItem) {
-		if (this._hoverTimeouts[item.id]) {
-			clearTimeout(this._hoverTimeouts[item.id]);
-			delete this._hoverTimeouts[item.id];
+		if (this._hoverTimeouts.has(item)) {
+			clearTimeout(this._hoverTimeouts.get(item));
+			this._hoverTimeouts.delete(item);
 		}
 	}
 
 	clearCloseTimeout(item: MenuItem) {
-		if (this._unhoverTimeouts[item.id]) {
-			clearTimeout(this._unhoverTimeouts[item.id]);
-			delete this._unhoverTimeouts[item.id];
+		if (this._unhoverTimeouts.has(item)) {
+			clearTimeout(this._unhoverTimeouts.get(item));
+			this._unhoverTimeouts.delete(item);
 		}
 	}
 
