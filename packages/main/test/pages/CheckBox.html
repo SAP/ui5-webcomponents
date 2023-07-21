@@ -70,6 +70,7 @@
 		<ui5-checkbox id="cbItem3" text="Option 3" required></ui5-checkbox>
 		<br><br>
 		<ui5-button id="cbSubmit" type="Submit">Submit</ui5-button>
+		<input type="hidden" id="cbFormSubmitted" value="false" />
 	</form>
 
 	<script>
@@ -78,6 +79,7 @@
 		var input = document.querySelector("#field");
 		var checkBox1 = document.querySelector("#cb1");
 		var checkBox2 = document.querySelector("#cb2");
+		var cbFormSubmitted = document.querySelector("#cbFormSubmitted");
 		var counter = 0;
 
 		[checkBox1, checkBox2].forEach(function(el) {
@@ -97,6 +99,7 @@
 
 		cbForm.addEventListener("submit", function(event) {
 			event.preventDefault();
+			cbFormSubmitted.value = true;
 			alert("Form submitted!");
 		});
 	</script>
