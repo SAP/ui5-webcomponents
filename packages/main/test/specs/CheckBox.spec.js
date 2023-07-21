@@ -87,4 +87,14 @@ describe("CheckBox general interaction", () => {
 			assert.strictEqual(await defaultPreventedCb.getProperty("indeterminate"), state.indeterminate, "The checkbox indeterminate is not changed");
 		}
 	});
+
+	it("tests form submission when third checkbox is checked and button is clicked", async () => {
+		const thirdCheckbox = await browser.$("#cbItem3");
+		const submitButton = await browser.$("#cbSubmit");
+
+		await thirdCheckbox.click();
+		await submitButton.click();
+
+		assert.strictEqual(await browser.$("#cbFormSubmitted").getValue(), "true", "Form is submitted");
+	});
 });

@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<title>ui5-checkbox</title>
 
@@ -62,11 +62,24 @@
 	<ui5-checkbox class="defaultPreventedCb" indeterminate></ui5-checkbox>
 	<ui5-checkbox class="defaultPreventedCb" indeterminate checked></ui5-checkbox>
 
+	<br />
+	<ui5-title>Form submission</ui5-title>
+	<form id="cbForm">
+		<ui5-checkbox id="cbItem1" text="Option 1" checked></ui5-checkbox>
+		<ui5-checkbox id="cbItem2" text="Option 2" checked></ui5-checkbox>
+		<ui5-checkbox id="cbItem3" text="Option 3" required></ui5-checkbox>
+		<br><br>
+		<ui5-button id="cbSubmit" type="Submit">Submit</ui5-button>
+		<input type="hidden" id="cbFormSubmitted" value="false" />
+	</form>
+
 	<script>
 		var hcb = false;
+		var cbForm = document.querySelector("#cbForm");
 		var input = document.querySelector("#field");
 		var checkBox1 = document.querySelector("#cb1");
 		var checkBox2 = document.querySelector("#cb2");
+		var cbFormSubmitted = document.querySelector("#cbFormSubmitted");
 		var counter = 0;
 
 		[checkBox1, checkBox2].forEach(function(el) {
@@ -83,6 +96,13 @@
 				event.preventDefault();
 			});
 		});
-</script>
+
+		cbForm.addEventListener("submit", function (event) {
+			event.preventDefault();
+			cbFormSubmitted.value = true;
+			alert("Form submitted!");
+		});
+	</script>
 </body>
+
 </html>
