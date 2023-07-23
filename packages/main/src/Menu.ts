@@ -52,6 +52,9 @@ type MenuItemClickEventDetail = {
 	text: string,
 }
 
+type MenuItemHoverTimeoutMap = WeakMap<MenuItem, Timeout>;
+type MenuItemUnhoverTimeoutMap = WeakMap<MenuItem, Timeout>;
+
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
@@ -307,8 +310,8 @@ class Menu extends UI5Element {
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
-	_hoverTimeouts: WeakMap<MenuItem, Timeout> = new WeakMap();
-	_unhoverTimeouts: WeakMap<MenuItem, Timeout> = new WeakMap();
+	_hoverTimeouts: MenuItemHoverTimeoutMap = new WeakMap();
+	_unhoverTimeouts:MenuItemUnhoverTimeoutMap = new WeakMap();
 
 	static async onDefine() {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
