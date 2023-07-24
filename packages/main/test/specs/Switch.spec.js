@@ -77,7 +77,7 @@ describe("Switch general interaction", async () => {
 
 		assert.strictEqual(formValidity, false, "The form could be submitted successfuly, when the 'required' switch is not checked");
 
-		requiredSwitch.setAttribute("checked", "");
+		requiredSwitch.click();
 		await browser.pause(1000);
 
 		formValidity = await browser.execute(() => {
