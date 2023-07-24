@@ -36,6 +36,14 @@ import PageCss from "./generated/themes/Page.css.js";
  * that there is enough space for the <code>ui5-page</code> to be rendered.
  * <b>Note:</b> In order for the <code>ui5-page</code> to be displayed, the parent element should have fixed height.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-page</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>content - Used to style the content section of the component</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
