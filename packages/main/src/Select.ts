@@ -633,6 +633,19 @@ class Select extends UI5Element implements IFormElement {
 		this._toggleRespPopover();
 	}
 
+	_scrollSelectedItem() {
+		if (this._isPickerOpen) {
+			const itemRef = this._currentlySelectedOption.getDomRef();
+			if (itemRef) {
+				itemRef.scrollIntoView({
+					behavior: "auto",
+					block: "nearest",
+					inline: "nearest",
+				});
+			}
+		}
+	}
+
 	_handleArrowNavigation(e: KeyboardEvent) {
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
@@ -652,6 +665,7 @@ class Select extends UI5Element implements IFormElement {
 			// The aria-activedescendents attribute can't be used,
 			// because listitem elements are in different shadow dom
 			this.itemSelectionAnnounce();
+			this._scrollSelectedItem();
 		}
 	}
 
@@ -689,6 +703,7 @@ class Select extends UI5Element implements IFormElement {
 		this.opened = true;
 		this.fireEvent<CustomEvent>("open");
 		this.itemSelectionAnnounce();
+		this._scrollSelectedItem();
 	}
 
 	_afterClose() {
