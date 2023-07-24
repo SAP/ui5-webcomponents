@@ -9,6 +9,10 @@
 	opacity: .7;
 }
 
+:host(:not([hidden]):hover) {
+	box-shadow: var(--ui5-avatar-hover-box-shadow-offset);
+}
+
 :host([focused]) {
 	outline: var(--_ui5_avatar_outline);
 	outline-offset: var(--_ui5_avatar_focus_offset);
@@ -208,6 +212,7 @@
 }
 
 :host([_has-image]) {
+	color: var(--ui5-avatar-accent10-color);
 	background-color: transparent;
 	vertical-align: middle;
 }
