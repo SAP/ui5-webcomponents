@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.1...v1.16.0-rc.2) (2023-07-20)
+
+
+### Features
+
+* **ui5-wizard:** progress navigator title and optional text truncation ([#7263](https://github.com/SAP/ui5-webcomponents/issues/7263)) ([74077d1](https://github.com/SAP/ui5-webcomponents/commit/74077d1f16cb01347b01d1d55ef333789f5601f0))
+
+
+
+
+
 # [1.16.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.0...v1.16.0-rc.1) (2023-07-13)
 
 
