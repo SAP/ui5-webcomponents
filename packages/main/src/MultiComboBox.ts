@@ -205,7 +205,7 @@ type MultiComboboxItemWithSelection = {
  * @event sap.ui.webc.main.MultiComboBox#change
  * @public
  */
- @event("change")
+@event("change")
 
 /**
  * Fired when the value of the component changes at each keystroke.
@@ -399,6 +399,9 @@ class MultiComboBox extends UI5Element {
 	@property({ type: Object, noAttribute: true, multiple: true })
 	_filteredItems!: Array<IMultiComboBoxItem>;
 
+	@property({ type: Object, noAttribute: true, multiple: true })
+	_previouslySelectedItems!: Array<IMultiComboBoxItem>;
+
 	@property({ type: Boolean })
 	filterSelected!: boolean;
 
@@ -494,6 +497,7 @@ class MultiComboBox extends UI5Element {
 		super();
 
 		this._filteredItems = [];
+		this._previouslySelectedItems = [];
 		this.selectedValues = [];
 		this._itemsBeforeOpen = [];
 		this._inputLastValue = "";
@@ -598,6 +602,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_tokenDelete(e: CustomEvent<TokenizerTokenDeleteEventDetail>) {
+		this._previouslySelectedItems = this._getSelectedItems();
 		const token: Token = e.detail.ref;
 		const deletingItem = this.items.find(item => item._id === token.getAttribute("data-ui5-id"))!;
 
@@ -606,7 +611,11 @@ class MultiComboBox extends UI5Element {
 		this._preventTokenizerToggle = true;
 
 		this.focus();
-		this.fireSelectionChange();
+		const changePrevented = this.fireSelectionChange();
+
+		if (changePrevented) {
+			this._revertSelection();
+		}
 	}
 
 	get _getPlaceholder(): string {
@@ -702,7 +711,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (
-				 e.key === "ArrowLeft"
+			e.key === "ArrowLeft"
 			|| e.key === "Show"
 			|| e.key === "PageUp"
 			|| e.key === "PageDown"
@@ -735,10 +744,16 @@ class MultiComboBox extends UI5Element {
 		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
 
 		if (separatedText.length > 1) {
+			this._previouslySelectedItems = this._getSelectedItems();
 			matchingItems.forEach(item => {
 				item.selected = true;
 				this.value = "";
-				this.fireSelectionChange();
+
+				const changePrevented = this.fireSelectionChange();
+
+				if (changePrevented) {
+					this._revertSelection();
+				}
 			});
 		} else {
 			this.value = pastedText;
@@ -834,12 +849,17 @@ class MultiComboBox extends UI5Element {
 	_handleSelectAll() {
 		const filteredItems = this._filteredItems;
 		const allItemsSelected = filteredItems.every(item => item.selected);
+		this._previouslySelectedItems = filteredItems.filter(item => item.selected).map(item => item);
 
 		filteredItems.forEach(item => {
 			item.selected = !allItemsSelected;
 		});
 
-		this.fireSelectionChange();
+		const changePrevented = this.fireSelectionChange();
+
+		if (changePrevented) {
+			this._revertSelection();
+		}
 	}
 
 	_onValueStateKeydown(e: KeyboardEvent) {
@@ -982,10 +1002,10 @@ class MultiComboBox extends UI5Element {
 	_handleItemRangeSelection(e: KeyboardEvent) {
 		const items = this.items;
 		const listItems = this.list?.items;
-		const currentItemIdx = listItems?.indexOf(e.target as ListItemBase) || -1;
+		const currentItemIdx = Number(listItems?.indexOf(e.target as ListItemBase));
 		const nextItemIdx = currentItemIdx + 1;
 		const prevItemIdx = currentItemIdx - 1;
-
+		this._previouslySelectedItems = this._getSelectedItems();
 		if (isDownShift(e) && items[nextItemIdx]) {
 			items[nextItemIdx].selected = items[currentItemIdx].selected;
 			items[nextItemIdx].focus();
@@ -996,7 +1016,11 @@ class MultiComboBox extends UI5Element {
 			items[prevItemIdx].focus();
 		}
 
-		this.fireSelectionChange();
+		const changePrevented = this.fireSelectionChange();
+
+		if (changePrevented) {
+			this._revertSelection();
+		}
 	}
 
 	_navigateToNextItem() {
@@ -1087,9 +1111,14 @@ class MultiComboBox extends UI5Element {
 					this._performingSelectionTwice = false;
 				});
 			} else {
+				this._previouslySelectedItems = this._getSelectedItems();
 				matchingItem.selected = true;
 				this.value = "";
-				this.fireSelectionChange();
+				const changePrevented = this.fireSelectionChange();
+
+				if (changePrevented) {
+					this._revertSelection();
+				}
 			}
 
 			innerInput.setSelectionRange(matchingItem.text.length, matchingItem.text.length);
@@ -1168,7 +1197,7 @@ class MultiComboBox extends UI5Element {
 	 *
 	 * @private
 	 */
-	 static _groupItemFilter(item: IMultiComboBoxItem, idx: number, allItems: Array<IMultiComboBoxItem>, filteredItems: Array<IMultiComboBoxItem>) {
+	static _groupItemFilter(item: IMultiComboBoxItem, idx: number, allItems: Array<IMultiComboBoxItem>, filteredItems: Array<IMultiComboBoxItem>) {
 		if (item.isGroupItem) {
 			let groupHasFilteredItems;
 
@@ -1192,6 +1221,7 @@ class MultiComboBox extends UI5Element {
 			this.allItemsPopover?.focus();
 		}
 
+		this._previouslySelectedItems = this._getSelectedItems();
 		this._isOpenedByKeyboard = false;
 	}
 
@@ -1207,12 +1237,23 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_listSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		let changePrevented;
+
+		if (!isPhone()) {
+			this._previouslySelectedItems = this._getSelectedItems();
+		}
+
 		// sync list items and cb items
 		this.syncItems((e.target as List).items);
 
 		// don't call selection change right after selection as user can cancel it on phone
 		if (!isPhone()) {
-			this.fireSelectionChange();
+			changePrevented = this.fireSelectionChange();
+
+			if (changePrevented) {
+				e.preventDefault();
+				this._revertSelection();
+			}
 		}
 
 		// casted to KeyboardEvent since isSpace and isSpaceCtrl accepts KeyboardEvent only
@@ -1224,7 +1265,11 @@ class MultiComboBox extends UI5Element {
 
 			// if the item (not checkbox) is clicked, call the selection change
 			if (isPhone()) {
-				this.fireSelectionChange();
+				changePrevented = this.fireSelectionChange();
+				if (changePrevented) {
+					e.preventDefault();
+					this._revertSelection();
+				}
 			}
 
 			this.fireEvent("input");
@@ -1244,9 +1289,14 @@ class MultiComboBox extends UI5Element {
 	}
 
 	fireSelectionChange() {
-		this.fireEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", { items: this._getSelectedItems() });
+		const changePrevented = !this.fireEvent<MultiComboBoxSelectionChangeEventDetail>("selection-change", {
+			items: this._getSelectedItems(),
+		}, true);
+
 		// Angular 2 way data binding
 		this.fireEvent("value-changed");
+
+		return changePrevented;
 	}
 
 	async _getRespPopover() {
@@ -1340,6 +1390,12 @@ class MultiComboBox extends UI5Element {
 		return Filters.StartsWith(str, this.items, "text");
 	}
 
+	_revertSelection() {
+		this._filteredItems.forEach(item => {
+			item.selected = this._previouslySelectedItems.includes(item);
+		});
+	}
+
 	onBeforeRendering() {
 		const input = this._innerInput;
 		const autoCompletedChars = input && (input.selectionEnd || 0) - (input.selectionStart || 0);
@@ -1429,7 +1485,11 @@ class MultiComboBox extends UI5Element {
 
 	handleOK() {
 		if (isPhone()) {
-			this.fireSelectionChange();
+			const changePrevented = this.fireSelectionChange();
+
+			if (changePrevented) {
+				this._revertSelection();
+			}
 		}
 
 		if (!this.allowCustomValues) {
@@ -1580,7 +1640,7 @@ class MultiComboBox extends UI5Element {
 	/**
 	 * This method is relevant for sap_horizon theme only
 	 */
-	 get _valueStateMessageIcon() {
+	get _valueStateMessageIcon() {
 		if (this.valueState === ValueState.None) {
 			return "";
 		}
