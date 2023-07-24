@@ -93,6 +93,8 @@ class Avatar extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines if the avatar is interactive (focusable and pressable).
+	 * <b>Note:</b> This property won't have effect if the <code>disabled</code>
+	 * property is set to <code>true</code>.
 	 * @type {boolean}
 	 * @name sap.ui.webc.main.Avatar.prototype.interactive
 	 * @defaultValue false
@@ -183,12 +185,6 @@ class Avatar extends UI5Element implements ITabbable {
 	 */
 	@property({ type: AvatarSize, defaultValue: AvatarSize.S })
 	_size!: AvatarSize;
-
-	/**
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_interactive!: boolean;
 
 	/**
 	 * Defines the background color of the desired image.
@@ -347,6 +343,10 @@ class Avatar extends UI5Element implements ITabbable {
 		return this._getAriaHasPopup();
 	}
 
+	get _interactive() {
+		return this.interactive && !this.disabled;
+	}
+
 	get validInitials() {
 		// initials should consist of only 1,2 or 3 latin letters
 		const validInitials = /^[a-zA-Zà-üÀ-Ü]{1,3}$/,
@@ -377,7 +377,6 @@ class Avatar extends UI5Element implements ITabbable {
 	 }
 
 	onBeforeRendering() {
-		this._interactive = this.interactive && !this.disabled;
 		this._onclick = this._interactive ? this._onClickHandler.bind(this) : undefined;
 	}
 
