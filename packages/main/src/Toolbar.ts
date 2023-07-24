@@ -29,6 +29,10 @@ function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: strin
 	return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
 }
 
+function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
+	return Number(styleSet.getPropertyValue(propertyName).replace("px", ""));
+}
+
 /**
  * @class
  *
@@ -204,7 +208,7 @@ class Toolbar extends UI5Element {
 	 * Layout management
 	 */
 	processOverflowLayout(forceLayout = false) {
-		const containerWidth = this.offsetWidth;
+		const containerWidth = this.offsetWidth - this.PADDING;
 		const contentWidth: number = this.ITEMS_WIDTH;
 		const contentOverflows = contentWidth + this.OVERFLOW_BTN_SIZE > containerWidth;
 
@@ -242,7 +246,6 @@ class Toolbar extends UI5Element {
 
 	distributeItems(overflowSpace = 0) {
 		overflowSpace += this.OVERFLOW_BTN_SIZE;
-		overflowSpace += this.PADDING;
 
 		this.itemsToBar = [];
 		this.itemsToOverflow = [];
@@ -252,7 +255,7 @@ class Toolbar extends UI5Element {
 
 		// distribute the rest of the items, based on the available space
 		this.movableItems.reverse().forEach(item => {
-			if (overflowSpace > 0 && item.getAttribute("overflowPriority") !== ToolbarItemOverflowBehavior.NeverOverflow) {
+			if (overflowSpace > 0 && item.getAttribute("overflow-priority") !== ToolbarItemOverflowBehavior.NeverOverflow) {
 				this.itemsToOverflow.unshift(item);
 				overflowSpace -= this.getCachedItemWidth(item._id)!;
 			} else {
@@ -458,8 +461,8 @@ class Toolbar extends UI5Element {
 
 		if (renderedItem) {
 			const ItemCSSStyleSet = getComputedStyle(renderedItem);
-			itemWidth = renderedItem.offsetWidth + calculateCSSREMValue(ItemCSSStyleSet, "--_ui5-toolbar-item-margin-right")
-			+ calculateCSSREMValue(ItemCSSStyleSet, "--_ui5-toolbar-item-margin-left");
+			itemWidth = renderedItem.offsetWidth + parsePxValue(ItemCSSStyleSet, "margin-inline-end")
+			+ parsePxValue(ItemCSSStyleSet, "margin-inline-start");
 		} else {
 			itemWidth = this.getCachedItemWidth(id) || 0;
 		}

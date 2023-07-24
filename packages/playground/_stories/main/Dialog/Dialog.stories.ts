@@ -90,7 +90,7 @@ Basic.args = {
 		<ui5-input id="address"></ui5-input>
 	</div>
 </section>`,
-	footer: `<div slot="footer" style="display: flex; align-items: center; padding: 0.5rem">
+	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
 	<div style="flex: 1;"></div>
 	<ui5-button class="dialogCloser" design="Emphasized">Register</ui5-button>
 </div>`,
@@ -104,7 +104,7 @@ DraggableAndResizable.args = {
 	default: `<p>Move this dialog around the screen by dragging it by its header.</p>
 <p>Resize this dialog by dragging it by its resize handle.</p>
 <p>These features are available only on Desktop.</p>`,
-	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
 	<ui5-button class="dialogCloser" design="Emphasized">OK</ui5-button>
 </div>`,
 };
@@ -136,7 +136,7 @@ export const WithState = Template.bind({});
 WithState.args = {
 	state: ValueState.Error,
 	default: "<p>Dialog with state</p>",
-	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; align-items: center;">
+	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
 	<ui5-button class="dialogCloser">Close</ui5-button>
 </div>`,
 };

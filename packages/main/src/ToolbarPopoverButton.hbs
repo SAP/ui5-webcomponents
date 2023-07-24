@@ -3,11 +3,12 @@
 	design="{{this.design}}"
 	?disabled="{{this.disabled}}"
 	?hidden="{{this.hidden}}"
-	?priority="{{this.priority}}"
+	?overflow-priority="{{this.overflowPriority}}"
 	@click="{{this.click}}"
 	prevent-overflow-closing="{{this.preventOverflowClosing}}"
-	class="ui5-tb-popover-button ui5-tb-popover-item {{this.classList.value}}"
+	class="ui5-tb-popover-button ui5-tb-popover-item"
 	data-ui5-external-action-item-id="{{this._id}}"
+	data-ui5-stable="{{this.stableDomRef}}"
 >
 	{{this.text}}
 </ui5-button>

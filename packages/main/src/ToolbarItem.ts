@@ -68,6 +68,10 @@ class ToolbarItem extends UI5Element {
 	get toolbarPopoverTemplate(): TemplateFunction {
 		throw new Error("Template must be defined");
 	}
+
+	get stableDomRef() {
+		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
+	}
 }
 
 ToolbarItem.define();

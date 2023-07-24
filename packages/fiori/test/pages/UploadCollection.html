@@ -62,7 +62,6 @@
 		<ui5-upload-collection-item
 			id="secondItem"
 			file-name=".gitignore"
-			type="Detail"
 			disable-delete-button
 			upload-state="Complete"
 		>
@@ -72,7 +71,6 @@
 		<ui5-upload-collection-item
 			id="latestReportsPdf"
 			file-name="latest.reports.pdf"
-			type="Detail"
 			upload-state="Complete"
 		>
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
@@ -81,7 +79,6 @@
 		<ui5-upload-collection-item
 			id="noFileExtension"
 			file-name="noextension"
-			type="Detail"
 			upload-state="Complete"
 		>
 			<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>
@@ -89,7 +86,6 @@
 		<ui5-upload-collection-item
 			id="keyboardNavigation"
 			file-name="Graph.docx"
-			type="Detail"
 			hide-delete-button
 			upload-state="Complete"
 		>
@@ -133,6 +129,17 @@
 		>
 			<img src="./img/HT-1000.jpg" slot="thumbnail">
 			uploadState="Uploading"
+		</ui5-upload-collection-item>
+		<ui5-upload-collection-item
+			id="hiddenFileName"
+			file-name=".gitignore"
+			type="Detail"
+			hide-terminate-button
+			upload-state="Error"
+			progress="89"
+		>
+			<img src="./img/HT-1000.jpg" slot="thumbnail">
+			uploadState="Uploading" with hidden terminate button
 		</ui5-upload-collection-item>
 		<ui5-upload-collection-item
 			file-name="Laptop (2).jpg"

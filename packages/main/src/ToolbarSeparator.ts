@@ -30,6 +30,10 @@ class ToolbarSeparator extends ToolbarItem {
 	get toolbarPopoverTemplate() {
 		return ToolbarSeparatorTemplate;
 	}
+
+	get ignoreSpace() {
+		return true;
+	}
 }
 
 ToolbarSeparator.define();

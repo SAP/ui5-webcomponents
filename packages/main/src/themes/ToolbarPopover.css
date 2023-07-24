@@ -19,6 +19,6 @@
 	margin-bottom: 0.25rem;
 }
 
-.ui5-tb-popover-button::part(button) {
+.ui5-tb-popover-button::part(button):not[icon-only] {
 	justify-content: start;
 }

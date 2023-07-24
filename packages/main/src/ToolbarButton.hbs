@@ -1,5 +1,5 @@
 <ui5-button
-	class="ui5-tb-button ui5-tb-item {{this.classList.value}}"
+	class="ui5-tb-button ui5-tb-item"
 	id="{{this.id}}"
 	style="{{this.styles}}"
 	icon="{{this.icon}}"
@@ -9,6 +9,7 @@
 	@click="{{this.click}}"
 	prevent-overflow-closing="{{this.preventOverflowClosing}}"
 	data-ui5-external-action-item-id="{{this._id}}"
+	data-ui5-stable="{{this.stableDomRef}}"
 	.refItemId="{{this._id}}"
 	overflow-priority="{{this.overflowPriority}}"
 >
