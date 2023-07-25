@@ -216,13 +216,16 @@ describe("TimePicker general interaction", () => {
 	});
 
 	it("the value 'now' returns the current time, instead of the string 'now'", async () => {
+		await browser.url(`test/pages/TimePicker.html`);
+
 		const timepicker = await browser.$("#timepicker");
 
 		// act
-		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		await timepicker.click();
 		await browser.keys("now");
+		await browser.keys("Enter");
 
 		// assert that the value in the input is different than the string 'now'
-		assert.notStrictEqual(await timepicker.shadow$("ui5-input").getValue(), "now", "the value is not 'now'");
+		assert.notStrictEqual(await timepicker.shadow$("ui5-input").getProperty("value"), "now", "the value is not 'now'");
 	});
 });
