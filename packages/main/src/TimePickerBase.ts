@@ -1,3 +1,4 @@
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -26,12 +27,14 @@ import {
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import "@ui5/webcomponents-icons/dist/time-entry-request.js";
 import Icon from "./Icon.js";
+import Popover from "./Popover.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js";
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
 import Button from "./Button.js";
 import TimeSelectionClocks from "./TimeSelectionClocks.js";
+import TimeSelectionInputs from "./TimeSelectionInputs.js";
 import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 import {
@@ -42,7 +45,9 @@ import {
 // Styles
 import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
+import PopoverCss from "./generated/themes/Popover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
+import TimePicker from "./TimePicker.js";
 
 type TimePickerBaseChangeInputEventDetail = {
 	value: string,
@@ -68,11 +73,13 @@ type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
 	template: TimePickerTemplate,
 	styles: TimePickerCss,
 	staticAreaTemplate: TimePickerPopoverTemplate,
-	staticAreaStyles: [ResponsivePopoverCommonCss, TimePickerPopoverCss],
+	staticAreaStyles: [ResponsivePopoverCommonCss, PopoverCss, TimePickerPopoverCss],
 	dependencies: [
 		Icon,
+		Popover,
 		ResponsivePopover,
 		TimeSelectionClocks,
+		TimeSelectionInputs,
 		Input,
 		Button,
 	],
@@ -174,6 +181,9 @@ class TimePickerBase extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	_isPickerOpen!: boolean;
 
+	@property({ type: Boolean, noAttribute: true })
+	_isInputsPopoverOpen!: boolean;
+
 	/**
 	 * Defines the value state message that will be displayed as pop up under the <code>ui5-time-picker</code>.
 	 * <br><br>
@@ -207,6 +217,13 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
+	 * TEST TEST TEST
+	 */
+	get _isPhone(): boolean {
+		return true;
+	}
+
+	/**
 	 * @abstract
 	 * @protected
 	 */
@@ -230,6 +247,10 @@ class TimePickerBase extends UI5Element {
 		return this.tempValue;
 	}
 
+	get _readonly() {
+		return this.readonly || this._isPhone;
+	}
+
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
@@ -239,13 +260,27 @@ class TimePickerBase extends UI5Element {
 		this.closePicker();
 	}
 
+	submitInputsPopover() {
+		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
+		this.closeInputsPopover();
+	}
+
 	onResponsivePopoverAfterClose() {
 		this._isPickerOpen = false;
 	}
 
-	async _handleInputClick() {
+	onPopoverAfterClose() {
+		this._isInputsPopoverOpen = false;
+	}
+
+	async _handleInputClick(evt: MouseEvent) {
+		const target = evt.target as HTMLElement;
 		if (this._isPickerOpen) {
 			return;
+		}
+
+		if (this._isPhone && target && !target.hasAttribute("ui5-icon")) {
+			this.toggleInputsPopover();
 		}
 
 		const inputField = await this._getInputField();
@@ -308,6 +343,17 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
+	 * Closes the Inputs popover
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#closeInputsPopover
+	 */
+	async closeInputsPopover() {
+		const popover = await this._getInputsPopover();
+		popover.close();
+	}
+
+	/**
 	 * Opens the picker.
 	 * @async
 	 * @public
@@ -322,11 +368,34 @@ class TimePickerBase extends UI5Element {
 		this._isPickerOpen = true;
 	}
 
+	/**
+	 * Opens the Inputs popover.
+	 * @async
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#openInputsPopover
+	 * @returns {Promise} Resolves when the picker is open
+	 */
+	async openInputsPopover() {
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
+		const popover = await this._getInputsPopover();
+		popover.showAt(this);
+		this._isInputsPopoverOpen = true;
+	}
+
 	togglePicker() {
 		if (this.isOpen()) {
 			this.closePicker();
 		} else if (this._canOpenPicker()) {
 			this.openPicker();
+		}
+	}
+
+	toggleInputsPopover() {
+		if (this.isInputsPopoverOpen()) {
+			this.closeInputsPopover();
+		} else if (this._canOpenInputsPopover()) {
+			this.openInputsPopover();
 		}
 	}
 
@@ -341,13 +410,33 @@ class TimePickerBase extends UI5Element {
 		return !!this._isPickerOpen;
 	}
 
+	/**
+	 * Checks if the inputs popover is open
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#isInputsPopoverOpen
+	 * @returns {boolean}
+	 */
+	isInputsPopoverOpen() {
+		return !!this._isInputsPopoverOpen;
+	}
+
 	_canOpenPicker() {
 		return !this.disabled && !this.readonly;
+	}
+
+	_canOpenInputsPopover() {
+		return !this.disabled && this._isPhone;
 	}
 
 	async _getPopover() {
 		const staticAreaItem = await this.getStaticAreaItemDomRef();
 		return staticAreaItem!.querySelector<ResponsivePopover>("[ui5-responsive-popover]")!;
+	}
+
+	async _getInputsPopover() {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem!.querySelector<Popover>("[ui5-popover]")!;
 	}
 
 	_getInput(): Input {
@@ -360,6 +449,10 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
+		if (this._isPhone) {
+			e.preventDefault();
+		}
+
 		if (isShow(e)) {
 			e.preventDefault();
 			this.togglePicker();
@@ -481,6 +574,18 @@ class TimePickerBase extends UI5Element {
 	 */
 	_handleWheel(e: WheelEvent) {
 		e.preventDefault();
+	}
+
+	_onfocusin(evt: FocusEvent) {
+		if (this._isPhone) {
+			evt.preventDefault();
+		}
+	}
+
+	_oninput(evt: CustomEvent) {
+		if (this._isPhone) {
+			evt.preventDefault();
+		}
 	}
 
 	get submitButtonLabel() {

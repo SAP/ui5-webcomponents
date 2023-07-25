@@ -64,8 +64,6 @@ type ToggleSpinButtonProperties = {
 	separator: string,
 }
 
-const TYPE_COOLDOWN_DELAY = 1000; // Cooldown delay; 0 = disabled cooldown
-
 /**
  * @class
  *
@@ -122,30 +120,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_spacePressed!: boolean;
-
-	/**
-	 * Buffer for entered by keyboard numbers
-	 *
-	 * @type {string}
-	 */
-	@property({ defaultValue: "", noAttribute: true })
-	_kbdBuffer!: string;
-
-	/**
-	 * Id of the cooldown interval
-	 *
-	 * @type {ReturnType}
-	 */
-	@property({ validator: Integer, noAttribute: true })
-	_typeCooldownId?: ReturnType<typeof setTimeout>;
-
-	/**
-	 * Exact match number buffer
-	 *
-	 * @type {integer}
-	 */
-	@property({ validator: Integer, noAttribute: true })
-	_exactMatch?: number;
 
 	onBeforeRendering() {
 		this._createComponents();
@@ -383,44 +357,15 @@ class TimeSelectionClocks extends TimePickerInternals {
 	}
 
 	/**
-	 * Clears the currently existing cooldown period and starts new one if requested.
-	 *
-	 * @param {boolean} startNewCooldown whether to start new cooldown period after clearing previous one
+	 * Sets the exact match value. Must be overriden.
 	 */
-	_resetCooldown(startNewCooldown: boolean) {
-		if (!TYPE_COOLDOWN_DELAY) {
-			return; // if delay is 0, cooldown is disabled
-		}
-
-		if (this._typeCooldownId) {
-			clearTimeout(this._typeCooldownId);
-		}
-		if (startNewCooldown) {
-			this._startCooldown();
-		}
+	_setExactMatch() {
+		const clock = this._clockComponent(this._activeIndex);
+		clock && this._exactMatch !== undefined && clock._setSelectedValue(this._exactMatch);
 	}
 
 	/**
-	 * Starts new cooldown period.
-	 */
-	_startCooldown() {
-		if (!TYPE_COOLDOWN_DELAY) {
-			return; // if delay is 0, cooldown is disabled
-		}
-
-		this._typeCooldownId = setTimeout(() => {
-			this._kbdBuffer = "";
-			this._typeCooldownId = undefined;
-			if (this._exactMatch) {
-				const clock = this._clockComponent(this._activeIndex);
-				clock && clock._setSelectedValue(this._exactMatch);
-				this._exactMatch = undefined;
-			}
-		}, TYPE_COOLDOWN_DELAY);
-	}
-
-	/**
-	 * Createss clock and button components according to the display format pattern.
+	 * Creates clock and button components according to the display format pattern.
 	 */
 	_createComponents() {
 		const time = {
@@ -434,6 +379,12 @@ class TimeSelectionClocks extends TimePickerInternals {
 		this._clocks = [];
 		this._buttons = [];
 		this._periods = [];
+
+		this._componentMap = {
+			hours: -1,
+			minutes: -1,
+			seconds: -1,
+		};
 
 		if (this._hasHoursComponent) {
 			// add Hours clock
@@ -648,21 +599,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 				button.focus();
 			}
 		}
-	}
-
-	/**
-	 * Shifts hours value with +/- 12 depending on hour value and day period.
-	 *
-	 * @param {number} hours current hours
-	 * @returns {number} shifted hours
-	 */
-	_shiftHours(hours: number) {
-		if (this._period === this.periodsArray[0]) { // AM
-			hours = hours === 12 ? 0 : hours;
-		} else if (this._period === this.periodsArray[1]) { // PM
-			hours = hours === 12 ? hours : hours + 12;
-		}
-		return hours;
 	}
 
 	/**
