@@ -108,7 +108,7 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired when an item is being clicked.
- * <b>Note:</b> Since 1.14.6 the event is also cancellable, which will prevent the menus from closing when an menu item is selected.
+ * <b>Note:</b> Since 1.14.6 the event is preventable, allowing the menu to remain open after an item is selected.
  *
  * @event sap.ui.webc.main.Menu#item-click
  * @allowPreventDefault
