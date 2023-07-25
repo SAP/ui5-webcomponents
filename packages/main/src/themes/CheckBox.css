@@ -12,6 +12,10 @@
 	border-radius: var(--_ui5_checkbox_border_radius);
 	transition: var(--_ui5_checkbox_transition);
 	cursor: pointer;
+	user-select: none;
+  	-moz-user-select: none;
+  	-webkit-user-select: none;
+  	-ms-user-select: none;
 }
 
 /* disabled */
@@ -235,8 +239,6 @@
 	text-overflow: ellipsis;
 	overflow: hidden;
 	pointer-events: none;
-	user-select: none;
-	-webkit-user-select: none;
 	color: var(--_ui5_checkbox_label_color);
 }
 
