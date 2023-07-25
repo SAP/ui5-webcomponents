@@ -215,4 +215,14 @@ describe("TimePicker general interaction", () => {
 		assert.notOk(await timepickerPopover.isDisplayed(), "the picker should be collapsed");
 	});
 
+	it("the value 'now' returns the current time, instead of the string 'now'", async () => {
+		const timepicker = await browser.$("#timepicker");
+
+		// act
+		await timepicker.shadow$("ui5-input").$(".ui5-time-picker-input-icon-button").click();
+		await browser.keys("now");
+
+		// assert that the value in the input is different than the string 'now'
+		assert.notStrictEqual(await timepicker.shadow$("ui5-input").getValue(), "now", "the value is not 'now'");
+	});
 });
