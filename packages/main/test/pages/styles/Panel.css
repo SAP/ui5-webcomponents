@@ -9,5 +9,5 @@
 }
 
 #panel-stickyHeader::part(content) {
-    height: 70px;
+    max-height: 70px;
 }
