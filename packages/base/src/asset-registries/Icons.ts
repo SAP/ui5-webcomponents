@@ -6,6 +6,8 @@ import { getI18nBundle } from "../i18nBundle.js";
 import type { I18nText } from "../i18nBundle.js";
 import type { TemplateFunction } from "../renderer/executeTemplate.js";
 
+const DEFAULT_THEME_FAMILY = "legacy"; // includes sap_belize_* and sap_fiori_*
+
 type IconLoader = (collectionName: string) => Promise<CollectionData | Array<CollectionData>>;
 
 type CollectionData = {
@@ -54,7 +56,7 @@ const _loadIconCollectionOnce = async (collectionName: string) => {
 	return iconCollectionPromises.get(collectionName);
 };
 
-const _fillRegistry = (bundleData: CollectionData, collectionThemeMap?: { collection: string, themeFamily: "legacy" | "sap_horizon" }) => {
+const _fillRegistry = (bundleData: CollectionData) => {
 	Object.keys(bundleData.data).forEach(iconName => {
 		const iconData = bundleData.data[iconName];
 
@@ -66,12 +68,6 @@ const _fillRegistry = (bundleData: CollectionData, collectionThemeMap?: { collec
 			packageName: bundleData.packageName,
 		});
 	});
-
-	if (collectionThemeMap) {
-		// registerIconCollectionForTheme("my-custom-icons", {"legacy": "my-custom-icons-v4"})
-		// registerIconCollectionForTheme("my-custom-icons", {"sap_horizon": "my-custom-icons-v5"})
-		registerIconCollectionForTheme(collectionThemeMap.collection, { [collectionThemeMap.themeFamily]: bundleData.collection });
-	}
 };
 
 // set
@@ -115,7 +111,7 @@ const processName = (name: string) => {
 
 const getIconDataSync = (iconName: string) => {
 	const { name, collection } = processName(iconName);
-	return getIconFromRegistry(collection, name);
+	return getRegisteredIconData(collection, name);
 };
 
 const getIconData = async (iconName: string) => {
@@ -133,21 +129,26 @@ const getIconData = async (iconName: string) => {
 		return iconData;
 	}
 
-	if (!getIconFromRegistry(collection, name)) {
-		// not filled by another await. many getters will await on the same loader, but fill only once
-		if (Array.isArray(iconData)) {
-			iconData.forEach(data => {
-				_fillRegistry(data, { collection, themeFamily: data.themeFamily || "legacy" });
-			});
-		} else {
-			_fillRegistry(iconData as CollectionData);
-		}
+	const registeredIconData = getRegisteredIconData(collection, name);
+
+	if (registeredIconData) {
+		return registeredIconData;
 	}
 
-	return getIconFromRegistry(collection, name);
+	// not filled by another await. many getters will await on the same loader, but fill only once
+	if (Array.isArray(iconData)) {
+		iconData.forEach(data => {
+			_fillRegistry(data);
+			registerIconCollectionForTheme(collection, { [data.themeFamily || DEFAULT_THEME_FAMILY]: data.collection });
+		});
+	} else {
+		_fillRegistry(iconData as CollectionData);
+	}
+
+	return getRegisteredIconData(collection, name);
 };
 
-const getIconFromRegistry = (collection: string, name: string) => {
+const getRegisteredIconData = (collection: string, name: string) => {
 	const registryKey = `${getEffectiveIconCollection(collection)}/${name}`;
 	return registry.get(registryKey);
 };
