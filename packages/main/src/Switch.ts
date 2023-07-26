@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
@@ -13,6 +14,9 @@ import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/Ari
 import "@ui5/webcomponents-icons/dist/accept.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/less.js";
+import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
+import type FormSupport from "./features/InputElementsFormSupport.js";
+import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import Icon from "./Icon.js";
 import SwitchDesign from "./types/SwitchDesign.js";
 
@@ -77,7 +81,7 @@ import switchCss from "./generated/themes/Switch.css.js";
  * @event sap.ui.webc.main.Switch#change
  */
 @event("change")
-class Switch extends UI5Element {
+class Switch extends UI5Element implements IFormElement {
 	/**
 	 * Defines the component design.
 	 * <br><br>
@@ -188,7 +192,69 @@ class Switch extends UI5Element {
 	@property()
 	tooltip!: string;
 
+	/**
+	 * Defines whether the component is required.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Switch.prototype.required
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.16.0
+	 */
+	@property({ type: Boolean })
+	required!: boolean;
+
+	/**
+	 * Determines the name with which the component will be submitted in an HTML form.
+	 *
+	 * <br><br>
+	 * <b>Important:</b> For the <code>name</code> property to have effect, you must add the following import to your project:
+	 * <code>import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";</code>
+	 *
+	 * <br><br>
+	 * <b>Note:</b> When set, a native <code>input</code> HTML element
+	 * will be created inside the component so that it can be submitted as
+	 * part of an HTML form. Do not use this property unless you need to submit a form.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.Switch.prototype.name
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.16.0
+	 */
+	@property()
+	name!: string;
+
+	/**
+	 * The slot is used to render native <code>input</code> HTML element within Light DOM to enable form submit, when <code>Switch</code> is a part of HTML form.
+	 *
+	 * @type {HTMLElement[]}
+	 * @slot
+	 * @private
+	 * @since 1.16.0
+	 */
+	@slot()
+	formSupport!: Array<HTMLElement>;
+
 	static i18nBundle: I18nBundle;
+
+	onBeforeRendering() {
+		this._enableFormSupport();
+	}
+
+	_enableFormSupport() {
+		const formSupport = getFeature<typeof FormSupport>("FormSupport");
+		if (formSupport) {
+			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
+				const switchComponent = (element as Switch);
+				nativeInput.checked = !!switchComponent.checked;
+				nativeInput.disabled = !!switchComponent.disabled;
+				nativeInput.value = switchComponent.checked ? "on" : "";
+			});
+		} else if (this.name) {
+			console.warn(`In order for the "name" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
+		}
+	}
 
 	get sapNextIcon() {
 		return this.checked ? "accept" : "less";
@@ -219,9 +285,9 @@ class Switch extends UI5Element {
 			this.checked = !this.checked;
 			const changePrevented = !this.fireEvent("change", null, true);
 			// Angular two way data binding;
-			const valueChagnePrevented = !this.fireEvent("value-changed", null, true);
+			const valueChangePrevented = !this.fireEvent("value-changed", null, true);
 
-			if (changePrevented || valueChagnePrevented) {
+			if (changePrevented || valueChangePrevented) {
 				this.checked = !this.checked;
 			}
 		}
