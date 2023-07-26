@@ -10,4 +10,5 @@
 	--_ui5_panel_icon_color: var(--sapButton_Lite_TextColor);
 	--_ui5_panel_focus_offset: -1px;
 	--_ui5_panel_content_padding: 0.625rem 1rem;
+	--_ui5_panel_header_background_color: var(--sapGroup_TitleBackground);
 }
