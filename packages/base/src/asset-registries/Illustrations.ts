@@ -75,7 +75,8 @@ const processName = (name: string) => {
 };
 
 const registerIllustration = (name: string, data: IllustrationData) => {
-	registry.set(`${data.set}/${data.collection}/${name}`, {
+	const collection = data.collection || getCollection();
+	registry.set(`${data.set}/${collection}/${name}`, {
 		dialogSvg: data.dialogSvg,
 		sceneSvg: data.sceneSvg,
 		spotSvg: data.spotSvg,

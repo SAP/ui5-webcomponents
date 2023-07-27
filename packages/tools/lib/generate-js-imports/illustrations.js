@@ -5,7 +5,7 @@ const generateDynamicImportLines = (fileNames, location, exclusionPatterns = [])
   return fileNames
     .filter((fileName) => !exclusionPatterns.some((pattern) => fileName.startsWith(pattern)))
     .map((fileName) => {
-      const illustrationPath = path.join(location, fileName.replace(".js", ""));
+      const illustrationPath = `${location}/${fileName.replace(".js", "")}`;
       return `\t\tcase "${fileName.replace('.js', '')}": return (await import("${illustrationPath}.js")).default;`;
     })
     .join("\n");
