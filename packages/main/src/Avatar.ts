@@ -111,6 +111,13 @@ class Avatar extends UI5Element implements ITabbable {
 	focused!: boolean;
 
 	/**
+	 * Indicates if the elements is pressed
+	 * @private
+	 */
+	@property({ type: Boolean })
+	pressed!: boolean;
+
+	/**
 	 * Defines the name of the UI5 Icon, that will be displayed.
 	 * <br>
 	 * <b>Note:</b> If <code>image</code> slot is provided, the property will be ignored.
@@ -423,7 +430,7 @@ class Avatar extends UI5Element implements ITabbable {
 	_onClickHandler(e: MouseEvent) {
 		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
 		e.stopPropagation();
-		this.fireEvent("click");
+		this._fireClick();
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -432,7 +439,7 @@ class Avatar extends UI5Element implements ITabbable {
 		}
 
 		if (isEnter(e)) {
-			this.fireEvent("click");
+			this._fireClick();
 		}
 
 		if (isSpace(e)) {
@@ -442,8 +449,13 @@ class Avatar extends UI5Element implements ITabbable {
 
 	_onkeyup(e: KeyboardEvent) {
 		if (this._interactive && !e.shiftKey && isSpace(e)) {
-			this.fireEvent("click");
+			this._fireClick();
 		}
+	}
+
+	_fireClick() {
+		this.fireEvent("click");
+		this.pressed = !this.pressed;
 	}
 
 	_onfocusout() {
