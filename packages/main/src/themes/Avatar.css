@@ -9,7 +9,11 @@
 	opacity: .7;
 }
 
-:host([focused]) {
+:host(:not([hidden]):not([pressed]):hover) {
+	box-shadow: var(--ui5-avatar-hover-box-shadow-offset);
+}
+
+:host(:not([hidden])[focused]:not([pressed])) {
 	outline: var(--_ui5_avatar_outline);
 	outline-offset: var(--_ui5_avatar_focus_offset);
 }
@@ -20,6 +24,18 @@
 
 :host([disabled]) {
 	opacity: var(--sapContent_DisabledOpacity);
+}
+
+:host(:not([hidden])[pressed]) {
+	background: var(--sapButton_Active_Background);
+	border-color: var(--sapButton_Active_BorderColor);
+	color: var(--sapButton_Active_TextColor);
+}
+
+:host(:not([hidden])[pressed]:hover) {
+	background: var(--sapButton_Selected_Hover_Background);
+	border-color: var(--sapButton_Selected_Hover_BorderColor);
+	color: var(--sapButton_Selected_TextColor);
 }
 
 :host {
@@ -212,6 +228,7 @@
 }
 
 :host([_has-image]) {
+	color: var(--ui5-avatar-accent10-color);
 	background-color: transparent;
 	vertical-align: middle;
 }
