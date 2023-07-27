@@ -75,7 +75,7 @@ const processName = (name: string) => {
 };
 
 const registerIllustration = (name: string, data: IllustrationData) => {
-	const collection = data.collection || getCollection();
+	const collection = data.collection || FALLBACK_COLLECTION;
 	registry.set(`${data.set}/${collection}/${name}`, {
 		dialogSvg: data.dialogSvg,
 		sceneSvg: data.sceneSvg,
