@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.16.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.2...v1.16.0-rc.3) (2023-07-27)
+
+
+### Bug Fixes
+
+* **ui5-upload-collection:** correct visualization of "mode" property ([#7252](https://github.com/SAP/ui5-webcomponents/issues/7252)) ([9ca02dd](https://github.com/SAP/ui5-webcomponents/commit/9ca02ddae31ca45dfc734906e1f0da2413ceac40)), closes [#7111](https://github.com/SAP/ui5-webcomponents/issues/7111)
+
+
+
+
+
 # [1.16.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.1...v1.16.0-rc.2) (2023-07-20)
 
 

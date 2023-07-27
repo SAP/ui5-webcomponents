@@ -115,6 +115,10 @@ class TimePicker extends TimePickerBase {
 	@property()
 	formatPattern!: string;
 
+	onBeforeRendering() {
+		this.value = this.normalizeValue(this.value!) || this.value;
+	}
+
 	get _formatPattern() {
 		const hasHours = !!this.formatPattern.match(/H/i);
 		const fallback = !this.formatPattern || !hasHours;

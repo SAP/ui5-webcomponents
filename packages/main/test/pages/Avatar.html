@@ -152,6 +152,15 @@
 	</section>
 
 	<section>
+		<h3>Avatar - interactive disabled</h3>
+		<ui5-avatar id="interactive-disabled" disabled aria-haspopup="menu" interactive initials="XS" size="XS" accessible-name="Interactive avatar"></ui5-avatar>
+		<br>
+		<ui5-input id="click-event-3"></ui5-input>
+		<h3>Avatar - non-interactive disabled</h3>
+		<ui5-avatar id="non-interactive-disabled" disabled initials="S" size="S"></ui5-avatar>
+	</section>
+
+	<section>
 		<h3>Avatar - interactive</h3>
 		<ui5-avatar id="interactive-avatar" aria-haspopup="menu" interactive initials="XS" size="XS" accessible-name="Interactive avatar"></ui5-avatar>
 		<ui5-avatar id="non-interactive-avatar" initials="S" size="S"></ui5-avatar>
@@ -216,15 +225,22 @@
 
 	<script>
 		var avatar = document.getElementById("interactive-avatar"),
+			interactiveDisabled = document.getElementById("interactive-disabled"),
 			myInteractiveAvatar = document.getElementById("myInteractiveAvatar"),
 			nonInteractiveAvatar = document.getElementById("non-interactive-avatar"),
 			input = document.getElementById("click-event"),
 			input2 = document.getElementById("click-event-2"),
+			input3 = document.getElementById("click-event-3"),
 			inputValue = 0;
 			inputValue2 = 0;
+			inputValue3 = 0;
 
 		avatar.addEventListener("ui5-click", function() {
 			input.value = ++inputValue;
+		});
+
+		interactiveDisabled.addEventListener("ui5-click", function() {
+			input3.value = ++inputValue3;
 		});
 
 		nonInteractiveAvatar.addEventListener("ui5-click", function() {
