@@ -217,13 +217,6 @@ class TimePickerBase extends UI5Element {
 	}
 
 	/**
-	 * TEST TEST TEST
-	 */
-	get _isPhone(): boolean {
-		return true;
-	}
-
-	/**
 	 * @abstract
 	 * @protected
 	 */
@@ -245,10 +238,6 @@ class TimePickerBase extends UI5Element {
 
 	get _timeSelectionValue() {
 		return this.tempValue;
-	}
-
-	get _readonly() {
-		return this.readonly || this._isPhone;
 	}
 
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
@@ -279,7 +268,7 @@ class TimePickerBase extends UI5Element {
 			return;
 		}
 
-		if (this._isPhone && target && !target.hasAttribute("ui5-icon")) {
+		if (isPhone() && target && !target.hasAttribute("ui5-icon")) {
 			this.toggleInputsPopover();
 		}
 
@@ -426,7 +415,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_canOpenInputsPopover() {
-		return !this.disabled && this._isPhone;
+		return !this.disabled && isPhone();
 	}
 
 	async _getPopover() {
@@ -449,7 +438,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (this._isPhone) {
+		if (isPhone() && !this.isInputsPopoverOpen()) {
 			e.preventDefault();
 		}
 
@@ -576,14 +565,24 @@ class TimePickerBase extends UI5Element {
 		e.preventDefault();
 	}
 
-	_onfocusin(evt: FocusEvent) {
-		if (this._isPhone) {
+	_hideMobileKeyboard() {
+		this._getInput().readonly = true;
+		setTimeout(() => { this._getInput().readonly = false; }, 0);
+	}
+
+	async _onfocusin(evt: FocusEvent) {
+		if (isPhone()) {
+			this._hideMobileKeyboard();
+			if (this._isInputsPopoverOpen) {
+				const popover = await this._getInputsPopover();
+				popover.applyFocus();
+			}
 			evt.preventDefault();
 		}
 	}
 
 	_oninput(evt: CustomEvent) {
-		if (this._isPhone) {
+		if (isPhone()) {
 			evt.preventDefault();
 		}
 	}

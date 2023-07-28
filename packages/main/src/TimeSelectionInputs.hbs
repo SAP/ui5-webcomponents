@@ -14,12 +14,12 @@
 			pattern="[0-9]*"
 			inputmode="numeric"
 			class="ui5-time-picker-numeric-input"
-			.value="{{this.value}}"
+			.value="{{this.stringValue}}"
 			.accessibleName="{{this.label}}"
 			._nativeInputAttributes={{this.attributes}}
 			@focusin={{../_onfocusin}}
 			@focusout={{../_onfocusout}}
-			@input={{../_oninput}}
+			@ui5-input={{../_oninput}}
 		></ui5-input>
 	{{/each}}
 	{{#if _periods.length}}

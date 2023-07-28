@@ -44,7 +44,8 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
 type TimePickerInputProperties = {
 	id: string,
 	label: string,
-	value: string,
+	value: number,
+	stringValue: string,
 	hasSeparator: boolean,
 	prependZero: boolean,
 	min: number,
@@ -95,6 +96,12 @@ class TimeSelectionInputs extends TimePickerInternals {
 	 */
 	@property({ type: Object, multiple: true })
 	_inputs!: Array<TimePickerInputProperties>;
+
+	@property({ validator: Integer, defaultValue: -1 })
+	_editedInput!: number;
+
+	@property()
+	_editedInputValue!: string;
 
 	get enterHoursLabel() {
 		return TimePickerInternals.i18nBundle.getText(TIMEPICKER_INPUTS_ENTER_HOURS);
@@ -177,6 +184,8 @@ class TimeSelectionInputs extends TimePickerInternals {
 	 * Creates clock and button components according to the display format pattern.
 	 */
 	_createComponents() {
+		let value;
+
 		this._inputs = [];
 		this._periods = [];
 
@@ -189,10 +198,12 @@ class TimeSelectionInputs extends TimePickerInternals {
 		if (this._hasHoursComponent) {
 			// add Hours input
 			this._componentMap.hours = this._inputs.length;
+			value = parseInt(this._hours);
 			this._inputs.push({
 				"id": `${this._id}_input_hours`,
 				"label": this.enterHoursLabel,
-				"value": this._hours,
+				"value": value,
+				"stringValue": this._editedInput === this._inputs.length ? this._editedInputValue : this._formatNumberToString(value, this._zeroPaddedHours),
 				"hasSeparator": this._inputs.length > 0,
 				"prependZero": this._zeroPaddedHours,
 				"min": this._hoursConfiguration.minHour,
@@ -208,10 +219,12 @@ class TimeSelectionInputs extends TimePickerInternals {
 		if (this._hasMinutesComponent) {
 			// add Minutes clock
 			this._componentMap.minutes = this._inputs.length;
+			value = parseInt(this._minutes);
 			this._inputs.push({
 				"id": `${this._id}_clock_minutes`,
 				"label": this.enterMinutesLabel,
-				"value": this._minutes,
+				"value": value,
+				"stringValue": this._editedInput === this._inputs.length ? this._editedInputValue : this._formatNumberToString(value, true),
 				"hasSeparator": this._inputs.length > 0,
 				"prependZero": true,
 				"min": 0,
@@ -227,10 +240,12 @@ class TimeSelectionInputs extends TimePickerInternals {
 		if (this._hasSecondsComponent) {
 			// add Seconds clock
 			this._componentMap.seconds = this._inputs.length;
+			value = parseInt(this._seconds);
 			this._inputs.push({
 				"id": `${this._id}_clock_seconds`,
 				"label": this.enterSecondsLabel,
-				"value": this._seconds,
+				"value": value,
+				"stringValue": this._editedInput === this._inputs.length ? this._editedInputValue : this._formatNumberToString(value, true),
 				"hasSeparator": this._inputs.length > 0,
 				"prependZero": true,
 				"min": 0,
@@ -243,15 +258,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 			});
 		}
 
-		if (this._hasPeriodsComponent) {
-			// add period item
-			this.periodsArray.forEach(item => {
-				this._periods.push({
-					"label": item,
-					"pressed": this._period === item,
-				});
-			});
-		}
+		this._createPeriodComponent();
 	}
 
 	/**
@@ -301,34 +308,17 @@ class TimeSelectionInputs extends TimePickerInternals {
 	 * @param {number} num A number to format
 	 * @param {boolean} prependZero Whether to prepend with zero or not
 	 * @param {number} max Max value of the number for this clock
-	 * @param {string} replacement A string to replace the maximum value
 	 * @returns {string} Formatted value
 	 * @private
 	 */
-	_formatNumberToString(num: number, prependZero: boolean, max: number, replacement: string) {
-		let numberStr;
-		if (prependZero && num < 10) {
-			numberStr = `0${num}`;
-		} else if (num === max && replacement !== "") {
-			numberStr = replacement;
-		} else {
-			numberStr = num.toString();
-		}
-		return numberStr;
+	_formatNumberToString(num: number, prependZero: boolean) {
+		return num < 10 && prependZero ? `0${num}` : num.toString();
 	}
-
-	/**
-	 * Sets the exact match value. Must be overriden.
-	 */
-	_setExactMatch() {}
 
 	_onkeydown(evt: KeyboardEvent) {
 		if (this._activeIndex === -1) {
 			return;
 		}
-
-		const input = this._inputComponent(this._activeIndex);
-		const innerInput = this._innerInput(input!);
 
 		if (isEnter(evt)) {
 			// Accept the time and close the popover
@@ -337,7 +327,6 @@ class TimeSelectionInputs extends TimePickerInternals {
 			const char = evt.key;
 			const buffer = this._kbdBuffer + char;
 			const bufferValue = parseInt(buffer);
-			let value;
 
 			evt.preventDefault();
 			this._resetCooldown(true);
@@ -345,20 +334,16 @@ class TimeSelectionInputs extends TimePickerInternals {
 			if (bufferValue > this._inputs[this._activeIndex].max) {
 				// value accumulated in the buffer (old entry + new entry) is greater than the input maximum value,
 				// so assign old entry to the current inut and then switch to the next input, and add new entry as an old value
-				value = this._formatNumberToString(parseInt(this._kbdBuffer), this._inputs[this._activeIndex].prependZero, this._inputs[this._activeIndex].max, "");
-				this._inputChange(value);
+				this._inputChange(parseInt(this._kbdBuffer));
 
 				this._switchNextInput();
 				this._kbdBuffer = char;
-				value = this._formatNumberToString(parseInt(char), this._inputs[this._activeIndex].prependZero, this._inputs[this._activeIndex].max, "");
-				this._inputChange(value);
+				this._inputChange(parseInt(char));
 				this._resetCooldown(true);
 			} else {
 				// value is less than clock's max value, so add new entry to the buffer
 				this._kbdBuffer = buffer;
-
-				value = this._formatNumberToString(parseInt(this._kbdBuffer), this._inputs[this._activeIndex].prependZero, this._inputs[this._activeIndex].max, "");
-				this._inputChange(value);
+				this._inputChange(parseInt(this._kbdBuffer));
 
 				if (this._kbdBuffer.length === 2 || parseInt(`${this._kbdBuffer}0`) > this._inputs[this._activeIndex].max) {
 					// if buffer length is 2, or buffer value + one more (any) number is greater than clock's max value
@@ -372,56 +357,20 @@ class TimeSelectionInputs extends TimePickerInternals {
 	}
 
 	/**
-	 * Hours 'change' handler.
-	 *
-	 * @param {hours} number new hours value
-	 */
-	_hoursChange(hours: number) {
-		if (this._hoursConfiguration.isTwelveHoursFormat) {
-			hours = this._shiftHours(hours);
-		}
-
-		const date = this.validDateValue;
-		date.setHours(hours);
-		this.setValue(date);
-	}
-
-	/**
-	 * Minutes 'change' handler.
-	 *
-	 * @param {minutes} number new minutes value
-	 */
-	_minutesChange(minutes: number) {
-		const date = this.validDateValue;
-		date.setMinutes(minutes);
-		this.setValue(date);
-	}
-
-	/**
-	 * Seconds 'change' handler.
-	 *
-	 * @param {seconds} number new seconds value
-	 */
-	_secondsChange(seconds: number) {
-		const date = this.validDateValue;
-		date.setSeconds(seconds);
-		this.setValue(date);
-	}
-
-	/**
 	 * Input 'change' event handler.
 	 *
-	 * @param {stringValue} string new value to set on active input
+	 * @param {value} number new value to set on active input
 	 */
-	_inputChange(stringValue: string) {
+	_inputChange(value: number) {
+		const stringValue = this._formatNumberToString(value, this._inputs[this._activeIndex].prependZero);
+
 		if (this._activeIndex === -1) {
 			return;
 		}
 
-		const value = parseInt(stringValue);
-		this._inputComponent(this._activeIndex)!.value = stringValue;
-
-		this._inputs[this._activeIndex].value = stringValue;
+		value = parseInt(stringValue);
+		this._inputs[this._activeIndex].value = value;
+		this._inputComponent(this._activeIndex)!.value = this._formatNumberToString(value, this._inputs[this._activeIndex].prependZero);
 
 		switch (this._activeIndex) {
 		case this._componentMap.hours:
@@ -439,28 +388,31 @@ class TimeSelectionInputs extends TimePickerInternals {
 	_onfocusin(e: FocusEvent) {
 		const input = e.target as Input;
 		const innerInput = this._innerInput(input);
+
+		this._editedInput = -1;
 		innerInput!.select();
 		this._activeIndex = this._getIndexFromId(input.id);
 	}
 
 	_onfocusout() {
-		let value = this._inputComponent(this._activeIndex)!.value === "" ? 0 : parseInt(this._inputs[this._activeIndex].value);
+		let value = this._inputComponent(this._activeIndex)!.value === "" ? 0 : this._inputs[this._activeIndex].value;
 
+		this._editedInput = -1;
 		if (this._isHoursInput && !this._is24HoursFormat && value === 0) {
 			value = 12;
 		}
-		const stringValue = value < 10 && this._inputs[this._activeIndex].prependZero ? `0${value}` : value.toString();
-		this._inputChange(stringValue);
+		this._inputChange(value);
 		this._activeIndex = -1;
 	}
 
 	_oninput() {
-		let stringValue = this._inputComponent(this._activeIndex)!.value;
+		const stringValue = this._inputComponent(this._activeIndex)!.value;
 		const value = stringValue === "" ? 0 : parseInt(stringValue);
 
-		stringValue = value < 10 && this._inputs[this._activeIndex].prependZero ? `0${value}` : value.toString();
-		if (stringValue !== this._inputs[this._activeIndex].value) {
-			this._inputChange(stringValue);
+		if (value !== this._inputs[this._activeIndex].value) {
+			this._editedInput = this._activeIndex;
+			this._editedInputValue = stringValue;
+			this._inputChange(value);
 			this._kbdBuffer = stringValue;
 		}
 	}

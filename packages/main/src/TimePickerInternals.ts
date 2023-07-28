@@ -434,8 +434,58 @@ class TimePickerInternals extends UI5Element {
 		}
 	}
 
+	/**
+	 * Changes hours value.
+	 *
+	 * @param {hours} number new hours value
+	 */
+	_hoursChange(hours: number) {
+		if (this._hoursConfiguration.isTwelveHoursFormat) {
+			hours = this._shiftHours(hours);
+		}
+
+		const date = this.validDateValue;
+		date.setHours(hours);
+		this.setValue(date);
+	}
+
+	/**
+	 * Changes minutes value.
+	 *
+	 * @param {minutes} number new minutes value
+	 */
+	_minutesChange(minutes: number) {
+		const date = this.validDateValue;
+		date.setMinutes(minutes);
+		this.setValue(date);
+	}
+
+	/**
+	 * Changes seconds value.
+	 *
+	 * @param {seconds} number new seconds value
+	 */
+	_secondsChange(seconds: number) {
+		const date = this.validDateValue;
+		date.setSeconds(seconds);
+		this.setValue(date);
+	}
+
 	_buttonAmPm() {
 		return this._hasPeriodsComponent ? this.shadowRoot?.querySelector<SegmentedButton>(`#${this._id}_AmPm`) : undefined;
+	}
+
+	_createPeriodComponent() {
+		if (this._hasPeriodsComponent) {
+			// add period item
+			this.periodsArray.forEach(item => {
+				this._periods.push({
+					"label": item,
+					"pressed": this._period === item,
+				});
+			});
+			this._amPmSeparator = this._nextSeparator;
+		}
 	}
 
 	_periodChange(evt: PointerEvent) {
@@ -508,7 +558,7 @@ class TimePickerInternals extends UI5Element {
 	}
 
 	/**
-	 * Sets the exact match value. Must be overriden.
+	 * Sets the exact match value. Override if necessary.
 	 */
 	_setExactMatch() {}
 }

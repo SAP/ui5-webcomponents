@@ -487,16 +487,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 			});
 		}
 
-		if (this._hasPeriodsComponent) {
-			// add period item
-			this.periodsArray.forEach(item => {
-				this._periods.push({
-					"label": item,
-					"pressed": this._period === item,
-				});
-			});
-			this._amPmSeparator = this._nextSeparator;
-		}
+		this._createPeriodComponent();
 
 		this._lastSeparator = this._nextSeparator;
 
@@ -582,13 +573,13 @@ class TimeSelectionClocks extends TimePickerInternals {
 
 		switch (index) {
 		case this._componentMap.hours:
-			this._hoursChange(evt);
+			this._hoursChange(value);
 			break;
 		case this._componentMap.minutes:
-			this._minutesChange(evt);
+			this._minutesChange(value);
 			break;
 		case this._componentMap.seconds:
-			this._secondsChange(evt);
+			this._secondsChange(value);
 			break;
 		}
 
@@ -599,47 +590,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 				button.focus();
 			}
 		}
-	}
-
-	/**
-	 * Hours 'change' event handler.
-	 *
-	 * @param {event} evt Event object
-	 */
-	_hoursChange(evt: CustomEvent<TimePickerClockChangeEventDetail>) {
-		let hours = evt.detail.value;
-
-		if (this._hoursConfiguration.isTwelveHoursFormat) {
-			hours = this._shiftHours(hours);
-		}
-
-		const date = this.validDateValue;
-		date.setHours(hours);
-		this.setValue(date);
-	}
-
-	/**
-	 * Minutes 'change' event handler.
-	 *
-	 * @param {event} evt Event object
-	 */
-	_minutesChange(evt: CustomEvent<TimePickerClockChangeEventDetail>) {
-		const minutes = evt.detail.value;
-		const date = this.validDateValue;
-		date.setMinutes(minutes);
-		this.setValue(date);
-	}
-
-	/**
-	 * Seconds 'change' event handler.
-	 *
-	 * @param {event} evt Event object
-	 */
-	_secondsChange(evt: CustomEvent<TimePickerClockChangeEventDetail>) {
-		const seconds = evt.detail.value;
-		const date = this.validDateValue;
-		date.setSeconds(seconds);
-		this.setValue(date);
 	}
 }
 
