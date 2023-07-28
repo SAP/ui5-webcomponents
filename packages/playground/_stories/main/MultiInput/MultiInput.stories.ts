@@ -93,7 +93,7 @@ MultiInputTokenCreation.decorators = [
 	return html`
 	${story()}
 <script>
-	let createTokenFromText = function (text) {
+	var createTokenFromText = function (text) {
 		let token = document.createElement("ui5-token");
 		token.setAttribute("text", text);
 		token.setAttribute("slot", "tokens");
@@ -115,7 +115,8 @@ MultiInputTokenCreation.decorators = [
 		let separatedTexts = pastedText.split(\/\\r\\n\|\\r\|\\n\|\\t\/g).filter(t => !!t);
 
 		if (separatedTexts.length === 1) {
-			event.target.value = separatedTexts[0];
+
+			event.target.value += separatedTexts[0];
 			return;
 		}
 

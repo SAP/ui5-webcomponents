@@ -125,6 +125,9 @@ class Token extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	overflows!: boolean;
 
+	@property({ type: Boolean })
+	singleToken!: boolean;
+
 	/**
 	 * Defines whether the component is focused or not.
 	 *
@@ -170,8 +173,10 @@ class Token extends UI5Element implements ITabbable {
 	static i18nBundle: I18nBundle;
 
 	_handleSelect() {
-		this.selected = !this.selected;
-		this.fireEvent("select");
+		if (!this.toBeDeleted) {
+			this.selected = !this.selected;
+			this.fireEvent("select");
+		}
 	}
 
 	_focusin() {
@@ -182,11 +187,8 @@ class Token extends UI5Element implements ITabbable {
 		this.focused = !this.focused;
 	}
 
-	_mousedown() {
-		this.toBeDeleted = true;
-	}
-
 	_delete() {
+		this.toBeDeleted = true;
 		this.fireEvent("delete");
 	}
 
@@ -224,6 +226,18 @@ class Token extends UI5Element implements ITabbable {
 		}
 
 		return "decline";
+	}
+
+	get textDom() {
+		return this.getDomRef()?.querySelector(".ui5-token--text");
+	}
+
+	get isTruncatable() {
+		if (!this.textDom) {
+			return false;
+		}
+
+		return Math.ceil(this.textDom.getBoundingClientRect().width) < Math.ceil(this.textDom.scrollWidth);
 	}
 
 	static async onDefine() {

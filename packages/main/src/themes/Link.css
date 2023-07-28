@@ -59,7 +59,7 @@
 }
 
 .ui5-link-root {
-	width: 100%;
+	max-width: 100%;
 	display: inline-block;
 	position: relative;
 	overflow: hidden;

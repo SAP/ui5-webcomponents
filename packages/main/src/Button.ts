@@ -407,6 +407,7 @@ class Button extends UI5Element implements IFormElement {
 		if (this.nonInteractive) {
 			return;
 		}
+
 		markEvent(e, "button");
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport && this._isSubmit) {
@@ -431,7 +432,12 @@ class Button extends UI5Element implements IFormElement {
 		activeButton = this; // eslint-disable-line
 	}
 
-	_ontouchend() {
+	_ontouchend(e: TouchEvent) {
+		if (this.disabled) {
+			e.preventDefault();
+			e.stopPropagation();
+		}
+
 		this.active = false;
 
 		if (activeButton) {

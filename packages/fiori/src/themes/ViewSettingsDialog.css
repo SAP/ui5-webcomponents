@@ -51,11 +51,12 @@
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;
+	align-items: center;
 	margin: 0.1875rem 0;
 }
 
 .ui5-vsd-footer [ui5-button]:first-child {
-	margin-right: 0.5rem;
+	margin-inline-end: 0.5rem;
 	min-width: 4rem;
 }
 
@@ -71,7 +72,7 @@
 [ui5-dialog]::part(content) {
 	padding-top: 0;
 	padding-bottom: 0;
-	padding-right: 0;
+	padding-inline-end: 0;
 }
 
 :host [ui5-li]::part(native-li) {

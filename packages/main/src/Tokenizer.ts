@@ -55,6 +55,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
+	TOKENIZER_SHOW_ALL_ITEMS,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -122,12 +123,25 @@ enum ClipboardDataOperation {
 		ref: { type: HTMLElement },
 	},
 })
+
+@event("before-more-popover-open", {
+	detail: {},
+})
+
 class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	showMore!: boolean;
 
 	@property({ type: Boolean })
 	disabled!: boolean;
+
+	/**
+	 * Prevent opening of n-more Popover when label is clicked
+	 *
+	 * @private
+	 */
+	@property({ type: Boolean })
+	preventPopoverOpen!: boolean;
 
 	/**
 	 * Indicates if the tokenizer should show all tokens or n more label instead
@@ -155,6 +169,9 @@ class Tokenizer extends UI5Element {
 
 	@property({ validator: Integer })
 	_nMoreCount!: number;
+
+	@property({ validator: Integer })
+	_tokensCount!: number;
 
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
 	tokens!: Array<Token>;
@@ -187,6 +204,15 @@ class Tokenizer extends UI5Element {
 
 	onBeforeRendering() {
 		this._nMoreCount = this.overflownTokens.length;
+		this._tokensCount = this._getTokens().length;
+
+		this._tokens.forEach(token => {
+			token.singleToken = this._tokens.length === 1;
+		});
+
+		if (!this._tokens.length) {
+			this.closeMorePopover();
+		}
 	}
 
 	onEnterDOM() {
@@ -197,14 +223,16 @@ class Tokenizer extends UI5Element {
 		ResizeHandler.deregister(this.contentDom, this._resizeHandler);
 	}
 
-	async _openOverflowPopover() {
-		if (this.showPopover) {
-			const popover = await this.getPopover();
-
-			popover.showAt(this.morePopoverOpener || this);
+	async _openMorePopoverAndFireEvent() {
+		if (!this.preventPopoverOpen) {
+			await this.openMorePopover();
 		}
 
 		this.fireEvent("show-more-items-press");
+	}
+
+	async openMorePopover() {
+		(await this.getPopover()).showAt(this.morePopoverOpener || this);
 	}
 
 	_getTokens() {
@@ -215,8 +243,25 @@ class Tokenizer extends UI5Element {
 		return this.getSlottedNodes<Token>("tokens");
 	}
 
-	get showPopover() {
-		return !!Object.keys(this.morePopoverOpener).length;
+	_onmousedown(e: MouseEvent) {
+		if ((e.target as HTMLElement).hasAttribute("ui5-token")) {
+			const target = e.target as Token;
+			if (!target.toBeDeleted) {
+				this._itemNav.setCurrentItem(target);
+			}
+		}
+	}
+
+	onTokenSelect() {
+		const tokens = this._getTokens();
+
+		if (tokens.length === 1 && tokens[0].isTruncatable) {
+			if (tokens[0].selected) {
+				this.openMorePopover();
+			} else {
+				this.closeMorePopover();
+			}
+		}
 	}
 
 	_getVisibleTokens() {
@@ -230,7 +275,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	async onAfterRendering() {
-		if (this.showPopover && !this._getTokens().length) {
+		if (!this._getTokens().length) {
 			const popover = await this.getPopover();
 			popover.close();
 		}
@@ -251,6 +296,10 @@ class Tokenizer extends UI5Element {
 		const target = e.target as Token;
 		if (!e.detail) { // if there are no details, the event is triggered by a click
 			this._tokenClickDelete(e, target);
+
+			if (this._getTokens().length) {
+				this.closeMorePopover();
+			}
 			return;
 		}
 
@@ -318,10 +367,35 @@ class Tokenizer extends UI5Element {
 		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
 	}
 
-	itemDelete(e: CustomEvent) {
+	async itemDelete(e: CustomEvent) {
 		const token = e.detail.item.tokenRef;
 
-		this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+		// delay the token deletion in order to close the popover before removing token of the DOM
+		if (this._getTokens().length === 1 && this._getTokens()[0].isTruncatable) {
+			const morePopover = await this.getPopover();
+
+			morePopover.addEventListener("ui5-after-close", () => {
+				this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+			}, {
+				once: true,
+			});
+
+			morePopover.close();
+		} else {
+			this.fireEvent<TokenizerTokenDeleteEventDetail>("token-delete", { ref: token });
+		}
+	}
+
+	handleBeforeClose() {
+		if (isPhone()) {
+			this._getTokens().forEach(token => {
+				token.selected = false;
+			});
+		}
+	}
+
+	handleBeforeOpen() {
+		this.fireEvent("before-more-popover-open");
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -470,16 +544,6 @@ class Tokenizer extends UI5Element {
 		this._handleTokenSelection(e);
 	}
 
-	_onmousedown(e: MouseEvent) {
-		if ((e.target as HTMLElement).hasAttribute("ui5-token")) {
-			const target = e.target as Token;
-			if (!target.toBeDeleted) {
-				this._itemNav.setCurrentItem(target);
-				this._scrollToToken(target);
-			}
-		}
-	}
-
 	_toggleTokenSelection(tokens: Array<Token>) {
 		if (!tokens || !tokens.length) {
 			return;
@@ -563,13 +627,15 @@ class Tokenizer extends UI5Element {
 	}
 
 	async closeMorePopover() {
-		const popover = await this.getPopover();
-
-		popover.close();
+		(await this.getPopover()).close(false, false, true);
 	}
 
 	get _nMoreText() {
-		return Tokenizer.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
+		if (this._getVisibleTokens().length) {
+			return Tokenizer.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
+		}
+
+		return Tokenizer.i18nBundle.getText(TOKENIZER_SHOW_ALL_ITEMS, this._nMoreCount);
 	}
 
 	get showNMore() {
@@ -611,10 +677,10 @@ class Tokenizer extends UI5Element {
 		return this._getTokens().filter(token => {
 			const parentRect = this.contentDom.getBoundingClientRect();
 			const tokenRect = token.getBoundingClientRect();
-			const tokenEnd = tokenRect.right;
-			const parentEnd = parentRect.right;
-			const tokenStart = tokenRect.left;
-			const parentStart = parentRect.left;
+			const tokenEnd = Number(tokenRect.right.toFixed(2));
+			const parentEnd = Number(parentRect.right.toFixed(2));
+			const tokenStart = Number(tokenRect.left.toFixed(2));
+			const parentStart = Number(parentRect.left.toFixed(2));
 
 			token.overflows = !this.expanded && ((tokenStart < parentStart) || (tokenEnd > parentEnd));
 
@@ -666,7 +732,7 @@ class Tokenizer extends UI5Element {
 			},
 			popoverValueState: {
 				"ui5-valuestatemessage-root": true,
-				"ui5-responsive-popover-header": this.showPopover,
+				"ui5-responsive-popover-header": true,
 				"ui5-valuestatemessage--success": this.valueState === ValueState.Success,
 				"ui5-valuestatemessage--error": this.valueState === ValueState.Error,
 				"ui5-valuestatemessage--warning": this.valueState === ValueState.Warning,
