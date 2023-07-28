@@ -47,7 +47,6 @@ import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import PopoverCss from "./generated/themes/Popover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
-import TimePicker from "./TimePicker.js";
 
 type TimePickerBaseChangeInputEventDetail = {
 	value: string,
@@ -238,6 +237,10 @@ class TimePickerBase extends UI5Element {
 
 	get _timeSelectionValue() {
 		return this.tempValue;
+	}
+
+	get _isPhone() {
+		return isPhone();
 	}
 
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {

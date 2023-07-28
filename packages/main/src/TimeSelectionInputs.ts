@@ -5,28 +5,13 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
-	isDown,
-	isUp,
-	isDownAlt,
-	isUpAlt,
-	isPageUp,
-	isPageDown,
-	isPageUpShift,
-	isPageDownShift,
-	isPageUpShiftCtrl,
-	isPageDownShiftCtrl,
-	isSpace,
 	isEnter,
-	isKeyA,
-	isKeyP,
 	isNumber,
-	isColon,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import TimePickerInternals from "./TimePickerInternals.js";
 import Input from "./Input.js";
 import SegmentedButton from "./SegmentedButton.js";
 
-import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 import InputType from "./types/InputType.js";
 
 import {
