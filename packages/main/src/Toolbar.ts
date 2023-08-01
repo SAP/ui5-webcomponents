@@ -22,7 +22,7 @@ import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
 import ToolbarAlign from "./types/ToolbarAlign.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import type { ToolbarItem } from "./ToolbarItem.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
@@ -58,7 +58,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar
  * @public
- * @since 1.16.0
+ * @since 1.17.0
  */
 @customElement({
 	tag: "ui5-toolbar",
@@ -234,7 +234,7 @@ class Toolbar extends UI5Element {
 		let totalWidth = 0;
 
 		this.movableItems.forEach((item: ToolbarItem) => {
-			const itemWidth = this.getitemWidth(item);
+			const itemWidth = this.getItemWidth(item);
 			const id: string = item._id;
 			totalWidth += itemWidth;
 			this.ITEMS_WIDTH_MAP.set(id, itemWidth);
@@ -255,7 +255,7 @@ class Toolbar extends UI5Element {
 
 		// distribute the rest of the items, based on the available space
 		this.movableItems.reverse().forEach(item => {
-			if (overflowSpace > 0 && item.getAttribute("overflow-priority") !== ToolbarItemOverflowBehavior.NeverOverflow) {
+			if (overflowSpace > 0 && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow) {
 				this.itemsToOverflow.unshift(item);
 				overflowSpace -= this.getCachedItemWidth(item._id)!;
 			} else {
@@ -301,15 +301,15 @@ class Toolbar extends UI5Element {
 	}
 
 	get alwaysOverflowItems() {
-		return this._items.filter((item: ToolbarItem) => item.getAttribute("overflow-priority") === ToolbarItemOverflowBehavior.AlwaysOverflow);
+		return this._items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.AlwaysOverflow);
 	}
 
 	get movableItems() {
-		return this._items.filter((item: ToolbarItem) => item.getAttribute("overflow-priority") !== ToolbarItemOverflowBehavior.AlwaysOverflow);
+		return this._items.filter((item: ToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow);
 	}
 
 	get neverOverflowItems() {
-		return this._items.filter((item: ToolbarItem) => item.getAttribute("overflow-priority") === ToolbarItemOverflowBehavior.NeverOverflow);
+		return this._items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow);
 	}
 
 	/**
@@ -325,7 +325,7 @@ class Toolbar extends UI5Element {
 		this.processOverflowLayout();
 	}
 
-	onCustomItemClick(e: MouseEvent) {
+	onItemClick(e: MouseEvent) {
 		const target = e.target as HTMLElement;
 		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
 
@@ -448,7 +448,7 @@ class Toolbar extends UI5Element {
 		});
 	}
 
-	getitemWidth(item: ToolbarItem): number {
+	getItemWidth(item: ToolbarItem): number {
 		// Spacer width - always 0 for flexible spacers, so that they shrink, otherwise - measure the width normally
 		if (item.ignoreSpace && !item.hasFlexibleWidth) {
 			return 0;

@@ -197,6 +197,20 @@ class Panel extends UI5Element {
 	accessibleName!: string;
 
 	/**
+	 * Indicates whether the Panel header is sticky or not.
+	 * If stickyHeader is set to true, then whenever you scroll the content or
+	 * the application, the header of the panel will be always visible and
+	 * a solid color will be used for its design.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Panel.prototype.stickyHeader
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.16.0-rc.1
+	 */
+	 @property({ type: Boolean })
+	 stickyHeader!: boolean;
+
+	/**
 	 * When set to <code>true</code>, the <code>accessibleName</code> property will be
 	 * applied not only on the panel root itself, but on its toggle button too.
 	 * <b>Note:</b> This property only has effect if <code>accessibleName</code> is set and a header slot is provided.
@@ -347,6 +361,9 @@ class Panel extends UI5Element {
 		return {
 			headerBtn: {
 				"ui5-panel-header-button-animated": !this.shouldNotAnimate(),
+			},
+			stickyHeaderClass: {
+				"ui5-panel-heading-wrapper-sticky": this.stickyHeader,
 			},
 		};
 	}

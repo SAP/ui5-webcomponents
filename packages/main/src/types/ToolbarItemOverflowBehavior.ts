@@ -11,7 +11,7 @@
 enum ToolbarItemOverflowBehavior {
 
 	/**
-	 * The item is presented inside the toolbar and goes in the popover, when there is enough space.
+	 * The item is presented inside the toolbar and goes in the popover, when there is not enough space.
 	 * @public
 	 * @type {Default}
 	 */

@@ -124,6 +124,44 @@ describe("Panel general interaction", () => {
 		assert.notOk(await panelWithoutAnimationIcon.hasClass("ui5-panel-header-button-animated"), "Animation is turn off");
 	});
 
+	it("Test that the header is sticky when inner content scrollable", async () => {
+		const panel = await browser.$("#panel-stickyHeader");
+		const content = await panel.shadow$(".ui5-panel-content");
+		const title = await panel.shadow$(".ui5-panel-header-title");
+		const sExpected = "Panel with sticky header";
+		const panelHeader = panel.shadow$(".ui5-panel-heading-wrapper");
+
+		assert.strictEqual(await title.getText(), sExpected, "Initially the text is the expected one");
+		assert.strictEqual((await content.getCSSProperty('overflow')).value, "auto", "Check if the overflow property is set to 'auto'");
+
+		const initialScrollPosition = await browser.execute("return document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollTop");
+		await browser.execute("document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollBy(0, 200)");
+		const finalScrollPosition = await browser.execute("return document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-content').scrollTop");
+		assert.ok(initialScrollPosition < finalScrollPosition, "Initial scroll position of the inner div should be less than the final");
+		assert.strictEqual(await panelHeader.isDisplayedInViewport(), true, "Assert that the header is still visible after scroll - it's sticky");
+	});
+
+	it("Test that the header is sticky", async () => {
+		const panel = await browser.$("#panel-stickyHeader");
+		const title = await panel.shadow$(".ui5-panel-header-title");
+		const sExpected = "Panel with sticky header";
+
+		const panelHeader = panel.shadow$(".ui5-panel-heading-wrapper");
+		const isStickyCssPosition = await browser.execute("return window.getComputedStyle(document.querySelector('#panel-stickyHeader').shadowRoot.querySelector('.ui5-panel-heading-wrapper')).position");
+
+		await browser.setWindowSize(1000, 1200);
+
+		assert.strictEqual(await title.getText(), sExpected, "Initially the text is the expected one");
+		assert.ok(await panelHeader.hasClass("ui5-panel-heading-wrapper-sticky"), "Assert that sticky css class is available");
+		assert.strictEqual(isStickyCssPosition, "sticky", "Assert that the header has a sticky position");
+
+        let isPanelHeaderDisplayed = await panelHeader.isDisplayedInViewport();
+		assert.strictEqual(isPanelHeaderDisplayed, true, "Initially the panel header should be visible");
+        await browser.execute("window.scrollBy(0, 500)");
+        isPanelHeaderDisplayed = await panelHeader.isDisplayedInViewport();
+		assert.strictEqual(isPanelHeaderDisplayed, true, "Assert that the header is still visible after scroll - it's sticky");
+	});
+
 	describe("Accessibility", async () => {
 
 		it("tests whether aria attributes are set correctly with native header", async () => {

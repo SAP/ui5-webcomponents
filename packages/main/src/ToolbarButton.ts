@@ -18,11 +18,13 @@ import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverBu
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarButton
  * @extends sap.ui.webc.base.UI5Element
+ * @since 1.17.0
  * @public
  */
 
 @customElement({
 	tag: "ui5-toolbar-button",
+	dependencies: [ToolbarItem],
 })
 
 /**
@@ -87,6 +89,8 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Button text
 	 * @public
+	 * @defaultvalue ""
+	 * @type {string}
 	 * @name sap.ui.webc.main.ToolbarButton.prototype.text
 	 */
 	@property({ type: String })
@@ -95,6 +99,8 @@ class ToolbarButton extends ToolbarItem {
 	/**
 	 * Button width
 	 * @name sap.ui.webc.main.ToolbarButton.prototype.width
+	 * @defaultvalue ""
+	 * @type {string}
 	 * @public
 	 */
 	@property({ type: String })

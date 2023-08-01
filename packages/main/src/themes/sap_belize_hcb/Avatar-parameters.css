@@ -1,6 +1,7 @@
 @import "../base/Avatar-parameters.css";
 
 :root {
+	--ui5-avatar-hover-box-shadow-offset: 0px;
 	--ui5-avatar-initials-color: #fff;
 	--ui5-avatar-initials-border: .0625rem solid #fff;
 	--ui5-avatar-accent1: #000;

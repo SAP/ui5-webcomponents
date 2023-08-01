@@ -1,15 +1,19 @@
 import getSharedResource from "../getSharedResource.js";
-import { getIconCollectionByAlias } from "../assets-meta/IconCollectionsAlias.js";
-import { getEffectiveIconCollection } from "../config/Icons.js";
+import { getIconCollectionByAlias } from "./util/IconCollectionsAlias.js";
+import { registerIconCollectionForTheme } from "./util/IconCollectionsByTheme.js";
+import getEffectiveIconCollection from "./util/getIconCollectionByTheme.js";
 import { getI18nBundle } from "../i18nBundle.js";
 import type { I18nText } from "../i18nBundle.js";
 import type { TemplateFunction } from "../renderer/executeTemplate.js";
 
-type IconLoader = (collectionName: string) => Promise<CollectionData>;
+const DEFAULT_THEME_FAMILY = "legacy"; // includes sap_belize_* and sap_fiori_*
+
+type IconLoader = (collectionName: string) => Promise<CollectionData | Array<CollectionData>>;
 
 type CollectionData = {
 	collection: string,
 	packageName: string,
+	themeFamily?: "legacy" | "sap_horizon",
 	version?: string,
 	data: Record<string, {
 		path?: string,
@@ -31,7 +35,7 @@ type IconData = {
 
 const loaders = new Map<string, IconLoader>();
 const registry = getSharedResource<Map<string, IconData>>("SVGIcons.registry", new Map());
-const iconCollectionPromises = getSharedResource<Map<string, Promise<CollectionData>>>("SVGIcons.promises", new Map());
+const iconCollectionPromises = getSharedResource<Map<string, Promise<CollectionData| Array<CollectionData>>>>("SVGIcons.promises", new Map());
 
 const ICON_NOT_FOUND = "ICON_NOT_FOUND";
 
@@ -82,12 +86,9 @@ const registerIcon = (name: string, iconData: IconData) => { // eslint-disable-l
 };
 
 /**
- * Processes the full icon name and splits it into - "name", "collection"
- * to form the proper registry key ("collection/name") under which the icon is registered:
- *
+ * Processes the full icon name and splits it into - "name", "collection".
  * - removes legacy protocol ("sap-icon://")
  * - resolves aliases (f.e "SAP-icons-TNT/actor" => "tnt/actor")
- * - determines theme dependant icon collection (f.e "home" => "SAP-icons-v4/home" in Quartz | "SAP-icons-v5/home" in Horizon)
  *
  * @param { string } name
  * @return { object }
@@ -102,27 +103,23 @@ const processName = (name: string) => {
 	[name, collection] = name.split("/").reverse();
 
 	name = name.replace("icon-", "");
-
 	if (collection) {
 		collection = getIconCollectionByAlias(collection);
 	}
-	collection = getEffectiveIconCollection(collection);
-
-	const registryKey = `${collection}/${name}`;
-	return { name, collection, registryKey };
+	return { name, collection };
 };
 
-const getIconDataSync = (name: string) => {
-	const { registryKey } = processName(name);
-	return registry.get(registryKey);
+const getIconDataSync = (iconName: string) => {
+	const { name, collection } = processName(iconName);
+	return getRegisteredIconData(collection, name);
 };
 
-const getIconData = async (name: string) => {
-	const { collection, registryKey } = processName(name);
+const getIconData = async (iconName: string) => {
+	const { name, collection } = processName(iconName);
 
-	let iconData: string | CollectionData = ICON_NOT_FOUND;
+	let iconData: string | CollectionData | Array<CollectionData> = ICON_NOT_FOUND;
 	try {
-		iconData = (await _loadIconCollectionOnce(collection))!;
+		iconData = (await _loadIconCollectionOnce(getEffectiveIconCollection(collection)))!;
 	} catch (error: unknown) {
 		const e = error as Error;
 		console.error(e.message); /* eslint-disable-line */
@@ -132,10 +129,27 @@ const getIconData = async (name: string) => {
 		return iconData;
 	}
 
-	if (!registry.has(registryKey)) {
-		// not filled by another await. many getters will await on the same loader, but fill only once
+	const registeredIconData = getRegisteredIconData(collection, name);
+
+	if (registeredIconData) {
+		return registeredIconData;
+	}
+
+	// not filled by another await. many getters will await on the same loader, but fill only once
+	if (Array.isArray(iconData)) {
+		iconData.forEach(data => {
+			_fillRegistry(data);
+			registerIconCollectionForTheme(collection, { [data.themeFamily || DEFAULT_THEME_FAMILY]: data.collection });
+		});
+	} else {
 		_fillRegistry(iconData as CollectionData);
 	}
+
+	return getRegisteredIconData(collection, name);
+};
+
+const getRegisteredIconData = (collection: string, name: string) => {
+	const registryKey = `${getEffectiveIconCollection(collection)}/${name}`;
 	return registry.get(registryKey);
 };
 

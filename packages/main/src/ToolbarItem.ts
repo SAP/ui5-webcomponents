@@ -5,9 +5,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
-@customElement({
-	tag: "ui5-tb-item",
-})
+@customElement("ui5-tb-item")
 
 /**
  * @class
@@ -18,6 +16,7 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarItem
  * @extends sap.ui.webc.base.UI5Element
+ * @since 1.17.0
  * @public
  */
 class ToolbarItem extends UI5Element {
@@ -32,7 +31,8 @@ class ToolbarItem extends UI5Element {
 	 * </ul>
 	 * @public
 	 * @name sap.ui.webc.main.ToolbarItem.prototype.overflowPriority
-	 * @defaultvalue Default,
+	 * @defaultvalue "Default"
+	 * @type {ToolbarItemOverflowBehavior}
 	 */
 	@property({ type: ToolbarItemOverflowBehavior, defaultValue: ToolbarItemOverflowBehavior.Default })
 	overflowPriority!: `${ToolbarItemOverflowBehavior}`;
@@ -41,6 +41,7 @@ class ToolbarItem extends UI5Element {
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
 	 * It will close by default.
 	 * @type {boolean}
+	 * @defaultvalue false
 	 * @public
 	 * @name sap.ui.webc.main.Toolbar.prototype.preventOverflowClosing
 	 */
@@ -76,4 +77,5 @@ class ToolbarItem extends UI5Element {
 
 ToolbarItem.define();
 
+export type { ToolbarItem };
 export default ToolbarItem;

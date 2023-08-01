@@ -30,8 +30,8 @@ describe("Toolbar general interaction", () => {
 
 		assert.strictEqual(await popover.getAttribute("open"), 'true', "overflow popover created and opened, because of 'always overflow' item is inside");
 
-		//const employee_button = await popover.shadow$(`[data-ui5-stable="tb-button-employee-d"]`);
-		//assert.ok(await employee_button.hasClass("ui5-tb-popover-item"), "'Employee' button is moved in overflow popover since it has 'Always' priority");
+		const employee_button = await popover.shadow$(`[data-ui5-stable="tb-button-employee-d"]`);
+		assert.ok(await employee_button.hasClass("ui5-tb-popover-item"), "'Employee' button is moved in overflow popover since it has 'Always' priority");
 	});
 
 	it("Should not move button with neverOverflow priority to overflow popover", async () => {
