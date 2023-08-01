@@ -52,9 +52,6 @@ type MenuItemClickEventDetail = {
 	text: string,
 }
 
-type MenuItemHoverTimeoutMap = WeakMap<MenuItem, Timeout>;
-type MenuItemUnhoverTimeoutMap = WeakMap<MenuItem, Timeout>;
-
 type MenuBeforeOpenEventDetail = { item?: MenuItem };
 type MenuBeforeCloseEventDetail = { escPressed: boolean };
 
@@ -310,8 +307,7 @@ class Menu extends UI5Element {
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
-	_hoverTimeouts: MenuItemHoverTimeoutMap = new WeakMap();
-	_unhoverTimeouts: MenuItemUnhoverTimeoutMap = new WeakMap();
+	_timeout?: Timeout;
 
 	static async onDefine() {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -544,37 +540,29 @@ class Menu extends UI5Element {
 		this._parentItemsStack.push(item);
 	}
 
-	startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem, hoverId: string) {
+	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem, hoverId: string) {
 		// If theres already a timeout, clears it
-		this.clearOpenTimeout(item);
+		this._clearTimeout();
 
 		// Sets the new timeout
-		this._hoverTimeouts.set(item, setTimeout(() => {
+		this._timeout = setTimeout(() => {
 			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
-		}, MENU_OPEN_DELAY));
+		}, MENU_OPEN_DELAY);
 	}
 
-	startCloseTimeout(item: MenuItem) {
+	_startCloseTimeout(item: MenuItem) {
 		// If theres already a timeout, clears it
-		this.clearCloseTimeout(item);
+		this._clearTimeout();
 
 		// Sets the new timeout
-		this._unhoverTimeouts.set(item, setTimeout(() => {
+		this._timeout = setTimeout(() => {
 			this._closeItemSubMenu(item);
-		}, MENU_CLOSE_DELAY));
+		}, MENU_CLOSE_DELAY);
 	}
 
-	clearOpenTimeout(item: MenuItem) {
-		if (this._hoverTimeouts.has(item)) {
-			clearTimeout(this._hoverTimeouts.get(item));
-			this._hoverTimeouts.delete(item);
-		}
-	}
-
-	clearCloseTimeout(item: MenuItem) {
-		if (this._unhoverTimeouts.has(item)) {
-			clearTimeout(this._unhoverTimeouts.get(item));
-			this._unhoverTimeouts.delete(item);
+	_clearTimeout() {
+		if (this._timeout) {
+			clearTimeout(this._timeout);
 		}
 	}
 
@@ -588,10 +576,10 @@ class Menu extends UI5Element {
 			opener.focus();
 
 			// If there is a pending close operation, cancel it
-			this.clearCloseTimeout(item);
+			this._clearTimeout();
 
 			// Opens submenu with 300ms delay
-			this.startOpenTimeout(item, opener, hoverId);
+			this._startOpenTimeout(item, opener, hoverId);
 		}
 	}
 
@@ -607,13 +595,13 @@ class Menu extends UI5Element {
 			const item = opener.associatedItem;
 
 			// If there is a pending open operation, cancel it
-			this.clearOpenTimeout(item);
+			this._clearTimeout();
 
 			// Close submenu with 400ms delay
 			if (item && item.hasSubmenu && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
-				this.startCloseTimeout(item);
+				this._startCloseTimeout(item);
 			}
 		}
 	}
