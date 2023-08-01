@@ -111,7 +111,7 @@ import { getTheme, setTheme, isLegacyThemeFamily } from "@ui5/webcomponents-base
 import { getThemeRoot, setThemeRoot } from "@ui5/webcomponents-base/dist/config/ThemeRoot.js";
 import { getTimezone, setTimezone } from "@ui5/webcomponents-base/dist/config/Timezone";
 import { getLanguage, setLanguage } from "@ui5/webcomponents-base/dist/config/Language.js";
-import { getEffectiveIconCollection } from "@ui5/webcomponents-base/config/Icons.js";
+import getEffectiveIconCollection from "@ui5/webcomponents-base/dist/asset-registries/util/getIconCollectionByTheme.js";
 import { setNoConflict } from "@ui5/webcomponents-base/dist/config/NoConflict.js";
 import { getRTL } from "@ui5/webcomponents-base/dist/config/RTL.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
@@ -193,10 +193,38 @@ const testAssets = {
 // setDefaultIconCollection("sap_fiori_3", "my-custom-icons");
 
 import {registerIconLoader } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-registerIconLoader("my-custom-icons", () => {
-	return Promise.resolve({
-		"collection": "my-custom-icons",
+
+registerIconLoader("my-icons", () => {
+	return Promise.resolve([{
+		"collection": "my-icons-v4",
 		"packageName": "test",
+		"data": {
+			"mark": {
+				paths: [
+					`M257.6,6.4c138.3,0.2,250.5,113.1,250,251.6c-0.5,137.7-113.3,249.9-251.1,249.6C118.3,507.2,6,394.1,6.5,255.8
+					C7,117.9,119.5,6.2,257.6,6.4z M256.6,358.8c0.3,4.2,0.6,7.6,0.7,10.9c0.2,27.6,0.3,55.3,0.4,82.9c0,15.1-4.2,18.9-19.1,17.6
+					C127,461,41.4,366.1,42.9,253.3C44.3,141.9,133.4,49.1,244.6,43c102.4-5.6,194.8,61.7,219.9,160.4
+					C490,303.1,441.8,406,348.6,450.5c-3.7,1.8-7.8,2.9-11,5.4c-1.9,1.5-3.8,5.5-3.1,7.4c0.7,1.8,5,3.7,7.2,3.2
+					c4.6-0.9,9-3.2,13.3-5.2C454,414,504.5,302,474.9,195.8C445.3,90,344.1,21.3,234.1,32.3C103.7,45.4,11.8,166.1,34.1,295.2
+					C51.8,397.9,133.3,472.6,238.6,483c4.9,0.5,10,3.2,14.2,6c7.2,4.9,14.2,5.7,20.5-0.2c6.4-6,5.9-12.9,1.2-20.3
+					c-2.5-4-4.7-9.1-4.8-13.7c-0.7-29.3-0.6-58.7-1.3-88c-0.2-8.2,2.4-12.5,10-16.3c25.9-13,39.5-40.1,35.9-68.8
+					c-3.6-28-23.8-50.9-51.4-57.2c-6.9-1.6-14.2-1.8-21.3-2.5c-29.7-3.1-50.5-27.4-49.2-57.7c1.1-27.7,24.6-50.7,52.7-51.4
+					c29.4-0.8,53.7,20.6,56.4,49.7c0.3,3.6,0.7,7.3,1.1,12c13.2,0,25.4-0.2,37.7,0c41.2,0.7,77.3,31.4,83.3,71
+					c6.5,42.3-17,81.8-56.6,95.6c-6.2,2.2-11.4,3.7-17.4-2.5c-6.8-7-18.6-4.6-24.4,3.1c-5.7,7.5-4.6,17.8,2.5,24
+					c7.1,6.1,17.1,5.2,24.3-0.9c4.9-4.1,10.5-8.1,16.5-10c40.8-13.1,69.4-51.2,69.7-93.9c0.3-42.2-27.1-81.6-67.6-94
+					c-13.7-4.2-28.8-4.7-43.4-5.2c-9-0.3-12.6-2.4-14.9-11.7c-9.4-37.2-47.8-58.3-84.7-47.5c-36,10.6-56.6,49.1-45.4,85.3
+					c8.9,29,32.5,45.8,67.7,48c23.5,1.5,42.5,16.3,49.3,38.3c6.8,21.9-0.6,45.7-18.8,59.6c-3,2.3-6.6,4-11.3,6.8
+					c-0.3-5.7-0.6-9.4-0.8-13c-1.7-27.1-21.1-50.3-47.4-56.2c-7-1.5-14.3-1.4-21.3-2.6c-21.4-3.4-38.3-13.7-49.2-32.9
+					c-3.2-5.7-3.7-10.4,1.4-16.5c3.4-4,4.5-12.6,2.5-17.5c-1.7-4.3-9.3-9-14-8.8c-5.3,0.2-10.6,5.4-15.3,9.2c-3.7,3-6,8.1-10,10.5
+					c-27.5,16.8-43.1,48.1-38.5,78c6.4,40.8,37.8,68,79.4,68.2C189.1,359,222.2,358.8,256.6,358.8z`,
+				],
+			},
+		},
+	},
+	{
+		"collection": "my-icons-v5",
+		"packageName": "test",
+		"themeFamily": "sap_horizon",
 		"data": {
 			"mark": {
 				paths: [
@@ -240,7 +268,7 @@ registerIconLoader("my-custom-icons", () => {
 				],
 			},
 		},
-	});
+	}]);
 });
 
 window["sap-ui-webcomponents-bundle"] = testAssets;
