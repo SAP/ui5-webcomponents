@@ -16,8 +16,9 @@ import ToolbarItem from "./ToolbarItem.js";
  * @alias sap.ui.webc.main.ToolbarSpacer
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar-spacer
+ * @abstract
+ * @since 1.17.0
  * @public
- * @since 1.16.0
  */
 @customElement({
 	tag: "ui5-toolbar-spacer",

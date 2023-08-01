@@ -15,8 +15,9 @@ import ToolbarItem from "./ToolbarItem.js";
  * @alias sap.ui.webc.main.ToolbarSeparator
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar-separator
+ * @since 1.17.0
+ * @abstract
  * @public
- * @since 1.16.0
  */
 @customElement({
 	tag: "ui5-toolbar-separator",

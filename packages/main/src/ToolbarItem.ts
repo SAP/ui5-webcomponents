@@ -17,6 +17,7 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
  * @alias sap.ui.webc.main.ToolbarItem
  * @extends sap.ui.webc.base.UI5Element
  * @since 1.17.0
+ * @abstract
  * @public
  */
 class ToolbarItem extends UI5Element {
@@ -47,6 +48,7 @@ class ToolbarItem extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	preventOverflowClosing!: boolean;
+
 	/*
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
 	*/

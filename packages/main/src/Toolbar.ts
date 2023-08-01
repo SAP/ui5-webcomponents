@@ -8,8 +8,6 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
-import arraysAreEqual from "@ui5/webcomponents-base/dist/util/arraysAreEqual.js";
-import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "./Button.js";
 
 import Popover from "./Popover.js";
@@ -32,6 +30,19 @@ function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: strin
 function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
 	return Number(styleSet.getPropertyValue(propertyName).replace("px", ""));
 }
+
+/**
+ * Fired when the component is activated either with a
+ * mouse/tap or by using the Enter or Space key.
+ * <br><br>
+ * <b>Note:</b> The event will not be fired if the <code>disabled</code>
+ * property is set to <code>true</code>.
+ *
+ * @event sap.ui.webc.main.Button#click
+ * @public
+ * @native
+ */
+//  @event("interact")
 
 /**
  * @class
@@ -91,64 +102,12 @@ class Toolbar extends UI5Element {
 	alignContent!: `${ToolbarAlign}`;
 
 	/**
-	 * Items, which will be displayed in the toolbar.
-	 * @type {Object}
-	 * @private
-	 */
-	@property({ type: Object, multiple: true })
-	itemsToBar!: Array<ToolbarItem>;
-	/**
-	 * Items, that will be displayed inside overflow Popover.
-	 * @type {Object}
-	 * @private
-	 */
-	@property({ type: Object, multiple: true })
-	itemsToOverflow!: Array<ToolbarItem>;
-
-	/**
-	 * Cached the sum of all of items width.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @private
-	 */
-	 @property({ type: Integer, defaultValue: 0 })
-	 ITEMS_WIDTH!: number;
-
-	/**
-	 * Indicates the items have been measured and the layout can be calculated.
-	 * @type {boolean}
-	 * @private
-	 */
-	@property({ type: Boolean })
-	itemsWidthMeasured!: boolean;
-	/**
 	 * Indicates the end of the resizing iteration.
 	 * @type {boolean}
 	 * @private
 	 */
-	@property({ type: Boolean })
-	resizing!: boolean;
-
-	/**
-	* Calculated width of the whole toolbar.
-	* @private
-	*/
-	@property({ type: Integer })
-	width?: number;
-
-	/**
-	* @private
-	* Calculated width of all the Toolbar items.
-	*/
-	@property({ type: Integer })
-	contentWidth?: number;
-
-	/**
-	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
-	 * @private
-	 * @type {Boolean}
-	 */
-	@property({ type: Boolean })
-	reverseOverflow!: boolean;
+	 @property({ type: Boolean })
+	 resizing!: boolean;
 
 	/**
  	* Slotted Toolbar items
@@ -163,6 +122,48 @@ class Toolbar extends UI5Element {
 	_onResize!: ResizeObserverCallback;
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
+
+	width = 0;
+
+	/**
+	* @private
+	* Calculated width of all the Toolbar items.
+	*/
+	contentWidth?: number = 0;
+
+	/**
+	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
+	 * @private
+	 * @type {Boolean}
+	 */
+	reverseOverflow!: boolean;
+
+	/**
+	 * Indicates the items have been measured and the layout can be calculated.
+	 * @type {boolean}
+	 * @private
+	 */
+	itemsWidthMeasured!: boolean;
+
+	/**
+	 * Cached the sum of all of items width.
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @private
+	 */
+	ITEMS_WIDTH!: number;
+
+	/**
+	 * Items, which will be displayed in the toolbar.
+	 * @type {Object}
+	 * @private
+	 */
+	itemsToBar: Array<ToolbarItem> = [];
+	/**
+	  * Items, that will be displayed inside overflow Popover.
+	  * @type {Object}
+	  * @private
+	  */
+	itemsToOverflow: Array<ToolbarItem> = [];
 
 	constructor() {
 		super();
@@ -201,7 +202,7 @@ class Toolbar extends UI5Element {
 
 		await renderFinished();
 		this.storeItemsWidth();
-		this.processOverflowLayout();
+		this.processOverflowLayout(true);
 	}
 
 	/**
@@ -341,7 +342,7 @@ class Toolbar extends UI5Element {
 		const refItemId = target.getAttribute("data-ui5-external-action-item-id");
 
 		if (refItemId) {
-			this.getItemByID(refItemId)!.fireEvent("click", {
+			this.getItemByID(refItemId)?.fireEvent("click", {
 				targetRef: e.target,
 			}, true);
 
@@ -371,9 +372,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get standardItems() {
-		if (!this.itemsWidthMeasured && (!arraysAreEqual(this._items, this.itemsToBar))) {
-			this.itemsToBar = this._items.filter(item => item);
-		}
+		this.itemsToBar = this._items.filter(item => this.itemsToOverflow.indexOf(item) === -1);
 
 		return this.getItemsInfo(this.itemsToBar);
 	}

@@ -147,12 +147,7 @@
 
 	/* Toolbar */
 	--_ui5-toolbar-separator-height: 2rem;
-
-	--_ui5-toolbar-padding-left: 0.5rem;
-	--_ui5-toolbar-padding-right: 0.5rem;
-
-	--_ui5-toolbar-item-margin-left: 0;
-	--_ui5-toolbar-item-margin-right: 0.25rem;
+	--_ui5-toolbar-height: 2.75rem;
 }
 
 [data-ui5-compact-size],
@@ -361,4 +356,5 @@
 
 	/* Toolbar */
 	--_ui5-toolbar-separator-height: 1.5rem;
+	--_ui5-toolbar-height: 2rem;
 }
