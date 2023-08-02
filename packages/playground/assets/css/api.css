@@ -84,20 +84,6 @@ body {
 	max-width: 100%;
 }
 
-.radio-button-group {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: flex-start;
-	height: fit-content;
-}
-
-.flex-column {
-	display: flex;
-	flex-direction: column;
-}
-
 .login-form {
 	display: flex;
 	flex-direction: column;

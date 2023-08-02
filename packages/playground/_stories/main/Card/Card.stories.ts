@@ -24,9 +24,15 @@ export default {
 
 const Template: UI5StoryArgs<Card, StoryArgsSlots> = (args) => {
 	return html`
+<style>
+	ui5-card {
+		width: 22rem;
+	}
+</style>
 <ui5-card
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
+	id="${args.id}"
 >
 	${unsafeHTML(args.header)}
 	${unsafeHTML(args.default)}
@@ -47,19 +53,6 @@ const header = (titleText: string, subtitleText: string, status?: string, action
 </ui5-card-header>`;
 };
 
-const setWidth = (width: string) => {
-	const style = html`
-		<style>
-			ui5-card {
-				width: ${width};
-			}
-		</style>`;
-
-	return (story: () => unknown) => html`
-		${style}
-		${story()}`;
-};
-
 export const InteractiveHeader = Template.bind({});
 InteractiveHeader.args = {
 	header: header("This header is interactive", "Click, press Enter or Space", "3 of 6", [], `<ui5-icon name="group" slot="avatar"></ui5-icon>`, true),
@@ -69,7 +62,6 @@ InteractiveHeader.args = {
 	<ui5-li image="../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
 </ui5-list>`
 };
-InteractiveHeader.decorators = [setWidth("22rem")];
 
 export const WithList = Template.bind({});
 WithList.args = {
@@ -80,10 +72,10 @@ WithList.args = {
 	<ui5-li image="../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Isabella Adams</ui5-li>
 </ui5-list>`,
 };
-WithList.decorators = [setWidth("22rem")];
 
 export const WithTable = Template.bind({});
 WithTable.args = {
+	id: "withTable",
 	header: header("New Purchase Orders", "Today", "3 of 15"),
 	default: `<style>
 	.status-error { color: #b00; }
@@ -149,7 +141,15 @@ WithTable.args = {
 	</ui5-table-row>
 </ui5-table>`
 };
-WithTable.decorators = [setWidth("40rem")];
+WithTable.decorators = [
+	(story) => html`
+<style>
+	ui5-card#withTable {
+		width: 40rem;
+	}
+</style>
+${story()}`
+];
 
 export const WithTimeline = Template.bind({});
 WithTimeline.args = {
@@ -164,7 +164,6 @@ WithTimeline.args = {
 	</ui5-timeline-item>
 </ui5-timeline>`
 };
-WithTimeline.decorators = [setWidth("22rem")];
 
 export const More = Template.bind({});
 const MoreCards = [{
