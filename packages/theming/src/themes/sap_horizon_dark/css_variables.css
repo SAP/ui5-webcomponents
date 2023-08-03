@@ -2,11 +2,11 @@
 * Copyright (c) 2012-2020 SAP SE or an SAP affiliate company. All rights reserved.
 *
 * Theming Engine 1.23071.0-20230727072504+103a4b0abd3804e9712812399620a8b1ef82147d
-* data:{"Path": "Base.baseLib.sap_horizon_dark.css_variables", "PathPattern": "/%frameworkId%/%libId%/%themeId%/%fileId%.css", "Extends": ["sap_horizon","baseTheme"], "Tags": ["Fiori_3","DarkColorScheme"], "FallbackThemeId": "sap_horizon", "Engine": {"Name": "theming-engine", "Version": "1.23071.0-20230727072504+103a4b0abd3804e9712812399620a8b1ef82147d"}, "Version": { "Build": "11.6.4.20230802145741", "Source": "11.6.4"}}
+* data:{"Path": "Base.baseLib.sap_horizon_dark.css_variables", "PathPattern": "/%frameworkId%/%libId%/%themeId%/%fileId%.css", "Extends": ["sap_horizon","baseTheme"], "Tags": ["Fiori_3","DarkColorScheme"], "FallbackThemeId": "sap_horizon", "Engine": {"Name": "theming-engine", "Version": "1.23071.0-20230727072504+103a4b0abd3804e9712812399620a8b1ef82147d"}, "Version": { "Build": "11.6.4.20230803094309", "Source": "11.6.4"}}
 */
 
-.sapThemeMetaData-Base-baseLib{background-image: url('data:text/plain;utf-8,{"Path": "Base.baseLib.sap_horizon_dark.css_variables", "PathPattern": "/%frameworkId%/%libId%/%themeId%/%fileId%.css", "Extends": ["sap_horizon","baseTheme"], "Tags": ["Fiori_3","DarkColorScheme"], "FallbackThemeId": "sap_horizon", "Engine": {"Name": "theming-engine", "Version": "1.23071.0-20230727072504+103a4b0abd3804e9712812399620a8b1ef82147d"}, "Version": { "Build": "11.6.4.20230802145741", "Source": "11.6.4"}}');}
-:root{--sapThemeMetaData-Base-baseLib:{"Path": "Base.baseLib.sap_horizon_dark.css_variables", "PathPattern": "/%frameworkId%/%libId%/%themeId%/%fileId%.css", "Extends": ["sap_horizon","baseTheme"], "Tags": ["Fiori_3","DarkColorScheme"], "FallbackThemeId": "sap_horizon", "Engine": {"Name": "theming-engine", "Version": "1.23071.0-20230727072504+103a4b0abd3804e9712812399620a8b1ef82147d"}, "Version": { "Build": "11.6.4.20230802145741", "Source": "11.6.4"}};}
+.sapThemeMetaData-Base-baseLib{background-image: url('data:text/plain;utf-8,{"Path": "Base.baseLib.sap_horizon_dark.css_variables", "PathPattern": "/%frameworkId%/%libId%/%themeId%/%fileId%.css", "Extends": ["sap_horizon","baseTheme"], "Tags": ["Fiori_3","DarkColorScheme"], "FallbackThemeId": "sap_horizon", "Engine": {"Name": "theming-engine", "Version": "1.23071.0-20230727072504+103a4b0abd3804e9712812399620a8b1ef82147d"}, "Version": { "Build": "11.6.4.20230803094309", "Source": "11.6.4"}}');}
+:root{--sapThemeMetaData-Base-baseLib:{"Path": "Base.baseLib.sap_horizon_dark.css_variables", "PathPattern": "/%frameworkId%/%libId%/%themeId%/%fileId%.css", "Extends": ["sap_horizon","baseTheme"], "Tags": ["Fiori_3","DarkColorScheme"], "FallbackThemeId": "sap_horizon", "Engine": {"Name": "theming-engine", "Version": "1.23071.0-20230727072504+103a4b0abd3804e9712812399620a8b1ef82147d"}, "Version": { "Build": "11.6.4.20230803094309", "Source": "11.6.4"}};}
 
 /**
 * Base.baseLib.baseTheme.base (Version 11.6.4)
@@ -462,12 +462,12 @@
   --sapButton_Handle_Positive_Hover_BorderColor: rgba(29,35,42,0.5);
   --sapButton_TokenBackground: #1c242c;
   --sapButton_TokenBorderColor: #3a4a5a;
-  --sapField_Background: #242e38;
+  --sapField_Background: #161c22;
   --sapField_BackgroundStyle: 0 100% / 100% .0625rem no-repeat linear-gradient(0deg, #a9b4be, #a9b4be) border-box;
   --sapField_TextColor: #fff;
   --sapField_PlaceholderTextColor: #8396A8;
   --sapField_BorderColor: #a9b4be;
-  --sapField_HelpBackground: #242e38;
+  --sapField_HelpBackground: #161c22;
   --sapField_BorderWidth: .0625rem;
   --sapField_BorderStyle: none;
   --sapField_BorderCornerRadius: .25rem;
@@ -485,11 +485,11 @@
   --sapField_Focus_Background: #1d232a;
   --sapField_Focus_BorderColor: #9ad3ff;
   --sapField_Focus_HelpBackground: #1d232a;
-  --sapField_ReadOnly_Background: transparent;
+  --sapField_ReadOnly_Background: #242e38;
   --sapField_ReadOnly_BackgroundStyle: 0 100% / 0.375rem .0625rem repeat-x linear-gradient(90deg, #a9b4be 0, #a9b4be 0.25rem, transparent 0.25rem) border-box;
   --sapField_ReadOnly_BorderColor: #a9b4be;
   --sapField_ReadOnly_BorderStyle: none;
-  --sapField_ReadOnly_HelpBackground: transparent;
+  --sapField_ReadOnly_HelpBackground: #242e38;
   --sapField_RequiredColor: #ff78a4;
   --sapField_InvalidColor: #fa6161;
   --sapField_InvalidBackground: #350000;
