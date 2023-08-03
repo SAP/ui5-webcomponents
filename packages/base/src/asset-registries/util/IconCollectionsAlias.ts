@@ -17,9 +17,8 @@ enum IconCollectionsAlias {
 }
 
 /**
- * Returns the mapped collection name for a given alias.
+ * Returns the collection name for a given alias:
  *
- * <b>For example</b>:
  * - "SAP-icons-TNT"resolves to "tnt"
  * - "BusinessSuiteInAppSymbols" resolves to "business-suite"
  * - "horizon" resolves to "SAP-icons-v5"
