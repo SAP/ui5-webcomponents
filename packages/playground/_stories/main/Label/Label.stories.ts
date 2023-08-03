@@ -65,7 +65,7 @@ export const WrappingText = Template.bind({});
 WrappingText.args = {
 	wrappingType: WrappingType.Normal,
 	showColon: true,
-	default: `Long labels can wrap if the text is too long. Set 'wrapping-type="None"' to test the opposite (truncation)`,
+	default: `Label that demonstrates how, if set to wrapping-type="Normal", the long labels could be wrapped. To test the truncation, use 'wrapping-type="None"`,
 };
 WrappingText.decorators = [
 	SetWidth200Px,
