@@ -247,9 +247,109 @@ class TimePickerBase extends UI5Element {
 		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
+	/**
+	 * Opens the picker.
+	 * @async
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#openPicker
+	 * @returns {Promise} Resolves when the picker is open
+	 */
+	async openPicker() {
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
+		const responsivePopover = await this._getPopover();
+		responsivePopover.showAt(this);
+	}
+
+	/**
+	 * Closes the picker
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#closePicker
+	 */
+	async closePicker() {
+		const responsivePopover = await this._getPopover();
+		responsivePopover.close();
+		this._isPickerOpen = false;
+	}
+
+	togglePicker() {
+		if (this.isOpen()) {
+			this.closePicker();
+		} else if (this._canOpenPicker()) {
+			this.openPicker();
+		}
+	}
+
+	/**
+	 * Checks if the picker is open
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#isOpen
+	 * @returns {boolean}
+	 */
+	isOpen() {
+		return !!this._isPickerOpen;
+	}
+
 	submitPickers() {
 		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
 		this.closePicker();
+	}
+
+	onResponsivePopoverAfterClose() {
+		this._isPickerOpen = false;
+	}
+
+	async onResponsivePopoverAfterOpen() {
+		this._isPickerOpen = true;
+		const responsivePopover = await this._getPopover();
+		responsivePopover.querySelector<TimeSelectionClocks>("[ui5-time-selection-clocks]")!._focusFirstButton();
+	}
+
+	/**
+	 * Opens the Inputs popover.
+	 * @async
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#openInputsPopover
+	 * @returns {Promise} Resolves when the picker is open
+	 */
+	async openInputsPopover() {
+		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
+		const popover = await this._getInputsPopover();
+		popover.showAt(this);
+		this._isInputsPopoverOpen = true;
+	}
+
+	/**
+	 * Closes the Inputs popover
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#closeInputsPopover
+	 */
+	async closeInputsPopover() {
+		const popover = await this._getInputsPopover();
+		popover.close();
+	}
+
+	toggleInputsPopover() {
+		if (this.isInputsPopoverOpen()) {
+			this.closeInputsPopover();
+		} else if (this._canOpenInputsPopover()) {
+			this.openInputsPopover();
+		}
+	}
+
+	/**
+	 * Checks if the inputs popover is open
+	 * @public
+	 * @method
+	 * @name sap.ui.webc.main.TimePickerBase#isInputsPopoverOpen
+	 * @returns {boolean}
+	 */
+	isInputsPopoverOpen() {
+		return !!this._isInputsPopoverOpen;
 	}
 
 	submitInputsPopover() {
@@ -257,11 +357,12 @@ class TimePickerBase extends UI5Element {
 		this.closeInputsPopover();
 	}
 
-	onResponsivePopoverAfterClose() {
-		this._isPickerOpen = false;
+	async onInputsPopoverAfterOpen() {
+		const popover = await this._getInputsPopover();
+		popover.querySelector<TimeSelectionInputs>("[ui5-time-selection-inputs]")!._addNumericAttributes();
 	}
 
-	onPopoverAfterClose() {
+	onInputsPopoverAfterClose() {
 		this._isInputsPopoverOpen = false;
 	}
 
@@ -288,10 +389,10 @@ class TimePickerBase extends UI5Element {
 		}
 
 		const valid = this.isValid(value);
+
 		if (value !== undefined && valid && normalizeValue) { // if value === undefined, valid is guaranteed to be falsy
 			value = this.normalizeValue(value); // transform valid values (in any format) to the correct format
 		}
-
 		if (!eventsNames.includes("input")) {
 			this.value = ""; // Do not remove! DurationPicker (an external component extending TimePickerBase) use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
 			this.value = value;
@@ -320,97 +421,6 @@ class TimePickerBase extends UI5Element {
 	_handleInputLiveChange(e: CustomEvent) {
 		const target = e.target as Input;
 		this._updateValueAndFireEvents(target.value, false, ["input"]);
-	}
-
-	/**
-	 * Closes the picker
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#closePicker
-	 */
-	async closePicker() {
-		const responsivePopover = await this._getPopover();
-		responsivePopover.close();
-		this._isPickerOpen = false;
-	}
-
-	/**
-	 * Closes the Inputs popover
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#closeInputsPopover
-	 */
-	async closeInputsPopover() {
-		const popover = await this._getInputsPopover();
-		popover.close();
-	}
-
-	/**
-	 * Opens the picker.
-	 * @async
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#openPicker
-	 * @returns {Promise} Resolves when the picker is open
-	 */
-	async openPicker() {
-		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
-		const responsivePopover = await this._getPopover();
-		responsivePopover.showAt(this);
-		this._isPickerOpen = true;
-	}
-
-	/**
-	 * Opens the Inputs popover.
-	 * @async
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#openInputsPopover
-	 * @returns {Promise} Resolves when the picker is open
-	 */
-	async openInputsPopover() {
-		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
-		const popover = await this._getInputsPopover();
-		popover.showAt(this);
-		this._isInputsPopoverOpen = true;
-	}
-
-	togglePicker() {
-		if (this.isOpen()) {
-			this.closePicker();
-		} else if (this._canOpenPicker()) {
-			this.openPicker();
-		}
-	}
-
-	toggleInputsPopover() {
-		if (this.isInputsPopoverOpen()) {
-			this.closeInputsPopover();
-		} else if (this._canOpenInputsPopover()) {
-			this.openInputsPopover();
-		}
-	}
-
-	/**
-	 * Checks if the picker is open
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#isOpen
-	 * @returns {boolean}
-	 */
-	isOpen() {
-		return !!this._isPickerOpen;
-	}
-
-	/**
-	 * Checks if the inputs popover is open
-	 * @public
-	 * @method
-	 * @name sap.ui.webc.main.TimePickerBase#isInputsPopoverOpen
-	 * @returns {boolean}
-	 */
-	isInputsPopoverOpen() {
-		return !!this._isInputsPopoverOpen;
 	}
 
 	_canOpenPicker() {
@@ -444,21 +454,19 @@ class TimePickerBase extends UI5Element {
 		if (isPhone() && !this.isInputsPopoverOpen()) {
 			e.preventDefault();
 		}
-
 		if (isShow(e)) {
 			e.preventDefault();
 			this.togglePicker();
 		}
 
 		const target = e.target as Node;
+
 		if ((this._getInput().isEqualNode(target) && this.isOpen()) && (isTabNext(e) || isTabPrevious(e) || isF6Next(e) || isF6Previous(e))) {
 			this.closePicker();
 		}
-
 		if (this.isOpen()) {
 			return;
 		}
-
 		if (isPageUpShiftCtrl(e)) {
 			e.preventDefault();
 			this._modifyValueBy(1, "second");
@@ -486,6 +494,7 @@ class TimePickerBase extends UI5Element {
 
 	getFormat() {
 		let dateFormat;
+
 		if (this._isPattern) {
 			dateFormat = DateFormat.getDateInstance({
 				pattern: this._formatPattern,
@@ -527,7 +536,6 @@ class TimePickerBase extends UI5Element {
 		if (value === "") {
 			return true;
 		}
-
 		return !!this.getFormat().parse(value as string);
 	}
 
@@ -535,7 +543,6 @@ class TimePickerBase extends UI5Element {
 		if (value === "") {
 			return value;
 		}
-
 		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
@@ -544,7 +551,6 @@ class TimePickerBase extends UI5Element {
 		if (!date) {
 			return;
 		}
-
 		if (unit === "hour") {
 			date.setHours(date.getHours() + amount);
 		} else if (unit === "minute") {
@@ -554,6 +560,7 @@ class TimePickerBase extends UI5Element {
 		}
 
 		const newValue = this.formatValue(date);
+
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
 
@@ -568,6 +575,9 @@ class TimePickerBase extends UI5Element {
 		e.preventDefault();
 	}
 
+	/**
+	 * Hides mobile device keyboard by temporary setting the input to readonly state.
+	 */
 	_hideMobileKeyboard() {
 		this._getInput().readonly = true;
 		setTimeout(() => { this._getInput().readonly = false; }, 0);

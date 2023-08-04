@@ -1,7 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js"; // default calendar for bundling
 import {
 	isDown,
@@ -25,7 +24,6 @@ import TimePickerInternals from "./TimePickerInternals.js";
 import TimePickerClock from "./TimePickerClock.js";
 import ToggleSpinButton from "./ToggleSpinButton.js";
 import SegmentedButton from "./SegmentedButton.js";
-
 import type { TimePickerClockChangeEventDetail } from "./TimePickerClock.js";
 
 // Template
@@ -33,35 +31,6 @@ import TimeSelectionClocksTemplate from "./generated/templates/TimeSelectionCloc
 
 // Styles
 import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.js";
-
-type TimePickerClockProperties = {
-	id: string,
-	label: string,
-	clock: string,
-	itemMin: number,
-	itemMax: number,
-	selectedValue: number,
-	displayStep: number,
-	valueStep: number,
-	lastItemReplacement: number,
-	showInnerCircle: boolean,
-	prependZero: boolean,
-	min: number,
-	max: number,
-	active: boolean,
-}
-
-type ToggleSpinButtonProperties = {
-	id: string,
-	valueMin: number,
-	valueMax: number,
-	valueNow: number,
-	valueString: string,
-	valueText: string,
-	accessibleName: string,
-	pressed: boolean,
-	separator: string,
-}
 
 /**
  * @class
@@ -99,22 +68,6 @@ type ToggleSpinButtonProperties = {
 
 class TimeSelectionClocks extends TimePickerInternals {
 	/**
-	 * Contains currently available Time Picker Clock components depending on time format.
-	 *
-	 * @type {Array}
-	 */
-	@property({ type: Object, multiple: true })
-	_clocks!: Array<TimePickerClockProperties>;
-
-	/**
-	 * Contains currently available Button components depending on time format.
-	 *
-	 * @type {Array}
-	 */
-	@property({ type: Object, multiple: true })
-	_buttons!: Array<ToggleSpinButtonProperties>;
-
-	/**
 	 * Flag for pressed Space key
 	 */
 	@property({ type: Boolean, noAttribute: true })
@@ -131,12 +84,9 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * @returns { ToggleSpinButton | undefined} component (if exists) or undefined
 	 */
 	_buttonComponent(indexOrName: number | string) {
-		if (typeof indexOrName === "string") {
-			const key = this._componentKey(indexOrName);
-			const index = this._componentMap[key];
-			return index !== undefined ? this.shadowRoot?.querySelector<ToggleSpinButton>(`#${this._buttons[index].id}`) : undefined;
-		}
-		return this.shadowRoot?.querySelector<ToggleSpinButton>(`#${this._buttons[indexOrName].id}`);
+		const index = typeof indexOrName === "string" ? this._indexFromName(indexOrName) : indexOrName;
+		const entity = this._entities[index].entity;
+		return entity ? this.shadowRoot?.querySelector<ToggleSpinButton>(`#${this._id}_button_${entity}`) : undefined;
 	}
 
 	/**
@@ -146,36 +96,9 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 * @returns { TimePickerClock | undefined} component (if exists) or undefined
 	 */
 	_clockComponent(indexOrName: number | string) {
-		if (typeof indexOrName === "string") {
-			const key = this._componentKey(indexOrName);
-			const index = this._componentMap[key];
-			return index !== undefined ? this.shadowRoot?.querySelector<TimePickerClock>(`#${this._clocks[index].id}`) : undefined;
-		}
-		return this.shadowRoot?.querySelector<TimePickerClock>(`#${this._clocks[indexOrName].id}`);
-	}
-
-	/**
-	 * Returns name of the clock or button from the id of the event target.
-	 *
-	 * @returns {string | undefined} name of the clock/button
-	 */
-	_getNameFromId(id: string) {
-		const parts = id.split("_");
-		return parts.length > 0 ? parts[parts.length - 1] : undefined;
-	}
-
-	/**
-	 * Returns index of the clock or button from the id of the event target.
-	 *
-	 * @returns {number} index of the clock/button
-	 */
-	_getIndexFromId(id: string) {
-		const name = this._getNameFromId(id);
-		if (name) {
-			const key = this._componentKey(name);
-			return this._componentMap[key];
-		}
-		return 0;
+		const index = typeof indexOrName === "string" ? this._indexFromName(indexOrName) : indexOrName;
+		const entity = this._entities[index].entity;
+		return entity ? this.shadowRoot?.querySelector<TimePickerClock>(`#${this._id}_clock_${entity}`) : undefined;
 	}
 
 	/**
@@ -198,7 +121,9 @@ class TimeSelectionClocks extends TimePickerInternals {
 	_buttonFocusIn(evt: Event) {
 		const target = evt.target as HTMLElement;
 		const name = this._getNameFromId(target.id);
-		name && this._switchTo(name);
+		if (name) {
+			this._switchTo(name);
+		}
 	}
 
 	/**
@@ -275,7 +200,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 			this._exactMatch = undefined;
 			this._resetCooldown(true);
 			this._switchNextClock(true);
-		} else if (isNumber(evt) && this._clocks[this._activeIndex]) {
+		} else if (isNumber(evt) && this._entities[this._activeIndex]) {
 			// Direct number entry
 			this._exactMatch = undefined;
 			this._resetCooldown(true);
@@ -292,15 +217,19 @@ class TimeSelectionClocks extends TimePickerInternals {
 		const char = evt.key;
 		const bufferStr = this._kbdBuffer + char;
 		const bufferNum = parseInt(bufferStr);
+		const entity = this._entities[this._activeIndex];
 		let indexStr = "";
 		let indexNum = 0;
 		let matching = 0;
 		let valueMatching = -1;
 		let activeClock = this._clockComponent(this._activeIndex);
 
-		if (this._clocks[this._activeIndex].valueStep === 1) {
+		if (!entity || !entity.attributes) {
+			return;
+		}
+		if (entity.attributes.step === 1) {
 			// when the step=1, there is "direct" approach - while typing, the exact value is selected
-			if (bufferNum > this._clocks[this._activeIndex].max) {
+			if (bufferNum > entity.attributes.max) {
 				// value accumulated in the buffer (old entry + new entry) is greater than the clock maximum value,
 				// so assign old entry to the current clock and then switch to the next clock, and add new entry as an old value
 				activeClock && activeClock._setSelectedValue(parseInt(this._kbdBuffer));
@@ -313,7 +242,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 				// value is less than clock's max value, so add new entry to the buffer
 				this._kbdBuffer = bufferStr;
 				activeClock && activeClock._setSelectedValue(parseInt(this._kbdBuffer));
-				if (this._kbdBuffer.length === 2 || parseInt(`${this._kbdBuffer}0`) > this._clocks[this._activeIndex].max) {
+				if (this._kbdBuffer.length === 2 || parseInt(`${this._kbdBuffer}0`) > entity.attributes.max) {
 					// if buffer length is 2, or buffer value + one more (any) number is greater than clock's max value
 					// there is no place for more entry - just set buffer as a value, and switch to the next clock
 					this._resetCooldown(this._kbdBuffer.length !== 2);
@@ -324,8 +253,8 @@ class TimeSelectionClocks extends TimePickerInternals {
 		} else {
 			// when the step is > 1, while typing, the exact match is searched, otherwise the first value that starts with entered value, is being selected
 			// find matches
-			for (indexNum = this._clocks[this._activeIndex].min; indexNum <= this._clocks[this._activeIndex].max; indexNum++) {
-				if (indexNum % this._clocks[this._activeIndex].valueStep === 0) {
+			for (indexNum = entity.attributes.min; indexNum <= entity.attributes.max; indexNum++) {
+				if (indexNum % entity.attributes.step === 0) {
 					indexStr = indexNum.toString();
 					if (bufferStr === indexStr.substr(0, bufferStr.length) || bufferNum === indexNum) {
 						matching++;
@@ -356,6 +285,14 @@ class TimeSelectionClocks extends TimePickerInternals {
 	}
 
 	/**
+	 * Focuses the first available button.
+	 */
+	_focusFirstButton() {
+		this._activeIndex = 0;
+		this._buttonComponent(0)!.focus();
+	}
+
+	/**
 	 * Sets the exact match value. Must be overriden.
 	 */
 	_setExactMatch() {
@@ -373,125 +310,87 @@ class TimeSelectionClocks extends TimePickerInternals {
 			seconds: parseInt(this._seconds),
 		};
 
-		this._getSeparators();
-
-		this._clocks = [];
-		this._buttons = [];
+		this._entities = [];
 		this._periods = [];
-
 		this._componentMap = {
 			hours: -1,
 			minutes: -1,
 			seconds: -1,
 		};
-
 		if (this._hasHoursComponent) {
 			// add Hours clock
-			this._componentMap.hours = this._clocks.length;
-			this._clocks.push({
-				"id": `${this._id}_clock_hours`,
+			this._componentMap.hours = this._entities.length;
+			this._entities.push({
 				"label": this.hoursLabel,
-				"clock": "hours",
+				"entity": "hours",
 				"itemMin": 1,
 				"itemMax": 12,
-				"selectedValue": time.hours,
+				"value": time.hours,
+				"stringValue": this._hours,
+				"textValue": `${time.hours} ${this.hoursLabel}`,
 				"displayStep": 1,
-				"valueStep": 1,
 				"lastItemReplacement": this._hoursConfiguration.isTwelveHoursFormat ? -1 : 0,
 				"showInnerCircle": !this._hoursConfiguration.isTwelveHoursFormat,
 				"prependZero": this._zeroPaddedHours,
-				"min": this._hoursConfiguration.minHour,
-				"max": this._hoursConfiguration.maxHour,
+				"hasSeparator": this._entities.length > 0,
 				"active": false,
-			});
-			// add Hours button
-			this._buttons.push({
-				"id": `${this._id}_button_hours`,
-				"valueMin": this._hoursConfiguration.minHour,
-				"valueMax": this._hoursConfiguration.maxHour,
-				"valueNow": time.hours,
-				"valueString": this._hours,
-				"valueText": `${time.hours} ${this.hoursLabel}`,
-				"accessibleName": this.hoursLabel,
-				"pressed": false,
-				"separator": this._nextSeparator,
+				"attributes": {
+					"min": this._hoursConfiguration.minHour,
+					"max": this._hoursConfiguration.maxHour,
+					"step": 1,
+				},
 			});
 		}
-
 		if (this._hasMinutesComponent) {
 			// add Minutes clock
-			this._componentMap.minutes = this._clocks.length;
-			this._clocks.push({
-				"id": `${this._id}_clock_minutes`,
+			this._componentMap.minutes = this._entities.length;
+			this._entities.push({
 				"label": this.minutesLabel,
-				"clock": "minutes",
+				"entity": "minutes",
 				"itemMin": 1,
 				"itemMax": 60,
-				"selectedValue": time.minutes,
+				"value": time.minutes,
+				"stringValue": this._minutes,
+				"textValue": `${time.minutes} ${this.minutesLabel}`, // possible concatenation
 				"displayStep": 5,
-				"valueStep": this.minutesStep,
 				"lastItemReplacement": 0,
 				"showInnerCircle": false,
 				"prependZero": false,
-				"min": 0,
-				"max": 59,
+				"hasSeparator": this._entities.length > 0,
 				"active": false,
-			});
-
-			// add Minutes button
-			this._buttons.push({
-				"id": `${this._id}_button_minutes`,
-				"valueMin": 0,
-				"valueMax": 59,
-				"valueNow": time.minutes,
-				"valueString": this._minutes,
-				"valueText": `${time.minutes} ${this.minutesLabel}`,
-				"accessibleName": this.minutesLabel,
-				"pressed": false,
-				"separator": this._nextSeparator,
+				"attributes": {
+					"min": 0,
+					"max": 59,
+					"step": this.minutesStep,
+				},
 			});
 		}
-
 		if (this._hasSecondsComponent) {
 			// add Seconds clock
-			this._componentMap.seconds = this._clocks.length;
-			this._clocks.push({
-				"id": `${this._id}_clock_seconds`,
+			this._componentMap.seconds = this._entities.length;
+			this._entities.push({
 				"label": this.secondsLabel,
-				"clock": "seconds",
+				"entity": "seconds",
 				"itemMin": 1,
 				"itemMax": 60,
-				"selectedValue": time.seconds,
+				"value": time.seconds,
+				"stringValue": this._seconds,
+				"textValue": `${time.seconds} ${this.secondsLabel}`, // possible concatenation
 				"displayStep": 5,
-				"valueStep": this.secondsStep,
 				"lastItemReplacement": 0,
 				"showInnerCircle": false,
 				"prependZero": false,
-				"min": 0,
-				"max": 59,
+				"hasSeparator": this._entities.length > 0,
 				"active": false,
-			});
-
-			// add Seconds button
-			this._buttons.push({
-				"id": `${this._id}_button_seconds`,
-				"valueMin": 0,
-				"valueMax": 59,
-				"valueNow": time.seconds,
-				"valueString": this._seconds,
-				"valueText": `${time.seconds} ${this.secondsLabel}`,
-				"accessibleName": this.secondsLabel,
-				"pressed": false,
-				"separator": this._nextSeparator,
+				"attributes": {
+					"min": 0,
+					"max": 59,
+					"step": this.secondsStep,
+				},
 			});
 		}
-
+		this._entities[this._activeIndex].active = true;
 		this._createPeriodComponent();
-
-		this._lastSeparator = this._nextSeparator;
-
-		this._clocks[this._activeIndex].active = true;
-		this._buttons[this._activeIndex].pressed = true;
 	}
 
 	/**
@@ -514,12 +413,10 @@ class TimeSelectionClocks extends TimePickerInternals {
 	_switchClock(clockIndex: number) {
 		const newButton = this._buttonComponent(clockIndex);
 
-		if (this._clocks.length > 0 && clockIndex < this._clocks.length && newButton) {
-			this._clocks[this._activeIndex].active = false;
-			this._buttons[this._activeIndex].pressed = false;
+		if (this._entities.length && clockIndex < this._entities.length && newButton) {
+			this._entities[this._activeIndex].active = false;
 			this._activeIndex = clockIndex;
-			this._clocks[this._activeIndex].active = true;
-			this._buttons[this._activeIndex].pressed = true;
+			this._entities[this._activeIndex].active = true;
 			newButton.focus();
 		}
 	}
@@ -532,19 +429,19 @@ class TimeSelectionClocks extends TimePickerInternals {
 	_switchNextClock(wrapAround = false) {
 		let activeIndex = this._activeIndex;
 		const startActiveIndex = activeIndex;
-		const clocksCount = this._clocks.length;
 		const activeClock = this._clockComponent(activeIndex);
 
 		do {
 			activeIndex++;
-			if (activeIndex >= clocksCount) {
-				activeIndex = wrapAround ? 0 : clocksCount - 1;
+			if (activeIndex >= this._entities.length) {
+				activeIndex = wrapAround ? 0 : this._entities.length - 1;
 			}
 		// false-positive finding of no-unmodified-loop-condition rule
 		// eslint-disable-next-line no-unmodified-loop-condition
-		} while (activeClock && activeClock.disabled && activeIndex !== startActiveIndex && (wrapAround || activeIndex < clocksCount - 1));
+		} while (activeClock && activeClock.disabled && activeIndex !== startActiveIndex && (wrapAround || activeIndex < this._entities.length - 1));
 
 		const newClock = this._clockComponent(activeIndex);
+
 		if (activeIndex !== startActiveIndex && newClock && !newClock.disabled) {
 			this._switchClock(activeIndex);
 		}
@@ -564,12 +461,9 @@ class TimeSelectionClocks extends TimePickerInternals {
 		if (!button) {
 			return;
 		}
-
-		this._buttons[index].valueString = stringValue;
-		this._buttons[index].valueNow = value;
-		this._buttons[index].valueText = `${value} ${this._buttons[index].accessibleName}`;
-		this._buttons = JSON.parse(JSON.stringify(this._buttons));
-
+		this._entities[index].stringValue = stringValue;
+		this._entities[index].value = value;
+		this._entities = JSON.parse(JSON.stringify(this._entities));
 		switch (index) {
 		case this._componentMap.hours:
 			this._hoursChange(value);
@@ -581,9 +475,8 @@ class TimeSelectionClocks extends TimePickerInternals {
 			this._secondsChange(value);
 			break;
 		}
-
 		if (evt.detail.finalChange) {
-			if (this._activeIndex < this._clocks.length - 1) {
+			if (this._activeIndex < this._entities.length - 1) {
 				this._switchNextClock();
 			} else {
 				button.focus();

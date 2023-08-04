@@ -2,12 +2,12 @@
 		class="ui5-time-picker-inputs"
 		@keydown="{{_onkeydown}}"
 	>
-	{{#each _inputs}}
+	{{#each _entities}}
 		{{#if this.hasSeparator}}
 		<span separator>:</span>
 		{{/if}}
 		<ui5-input
-			id="{{this.id}}"
+			id="{{../_id}}_input_{{this.entity}}"
 			type="{{../_numberType}}"
 			maxlength="2"
 			autocomplete="off"
