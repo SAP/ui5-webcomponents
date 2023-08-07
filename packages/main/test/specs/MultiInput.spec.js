@@ -312,12 +312,12 @@ describe("MultiInput Truncated Token", () => {
 
 		await mi.click();
 		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused MI - More Popover should be opened");
+		assert.ok(await rpo.getProperty("opened"), "Focused MI - Token Popover should be opened");
 
 		await mi.click();
 		await mi.keys("ArrowLeft");
 		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused Token - More Popover should be opened");
+		assert.ok(await rpo.getProperty("opened"), "Focused Token - Token Popover should be opened");
 	});
 
 	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
@@ -327,7 +327,7 @@ describe("MultiInput Truncated Token", () => {
 
 		await mi.click();
 		await mi.keys(["Control", "i"]);
-		assert.notOk(await rpo.getProperty("opened"), "More Popover shouldn't be opened since no tokens");
+		assert.notOk(await rpo.getProperty("opened"), "Token Popover shouldn't be opened since no tokens");
 	});
 });
 

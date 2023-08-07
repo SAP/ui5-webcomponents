@@ -674,7 +674,7 @@ class MultiComboBox extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		const isArrowDownCtrl: boolean = isDownCtrl(e);
-		const isCtrl = !!(e.metaKey || e.ctrlKey);
+		const isCtrl: boolean = e.metaKey || e.ctrlKey;
 
 		if (isShow(e) && !this.disabled) {
 			this._handleShow(e);

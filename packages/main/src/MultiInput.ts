@@ -220,7 +220,7 @@ class MultiInput extends Input {
 
 		const target = e.target as HTMLInputElement;
 		const isHomeInBeginning = isHome(e) && target.selectionStart === 0;
-		const isCtrl = !!(e.metaKey || e.ctrlKey);
+		const isCtrl: boolean = e.metaKey || e.ctrlKey;
 		const tokens = this.tokens;
 
 		if (isHomeInBeginning) {

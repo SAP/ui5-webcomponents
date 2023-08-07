@@ -1609,19 +1609,19 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
-			assert.ok(await rpo.getProperty("opened"), "Focused MCB - More Popover should be opened");
+			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened");
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - More Popover should be closed");
+			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed");
 
 			await mcb.click();
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Control", "i"]);
-			assert.ok(await rpo.getProperty("opened"), "Focused Token - More Popover should be opened");
+			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
 			await mcb.click();
 			await mcb.keys("ArrowLeft");
 			await mcb.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("opened"), "Focused Token - More Popover should be closed");
+			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed");
 		});
 
 		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {
@@ -1631,7 +1631,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.click();
 			await mcb.keys(["Control", "i"]);
-			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed since no tokens");
+			assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed since no tokens");
 
 		});
 	});

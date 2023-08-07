@@ -1,4 +1,3 @@
-
 exports.config = {
 	//
 	// ====================
@@ -8,6 +7,7 @@ exports.config = {
 	// WebdriverIO allows it to run your tests in arbitrary locations (e.g. locally or
 	// on a remote machine).
 	runner: 'local',
+
 	//
 	// ==================
 	// Specify Test Files
@@ -56,7 +56,16 @@ exports.config = {
 		'goog:chromeOptions': {
 			// to run chrome headless the following flags are required
 			// (see https://developers.google.com/web/updates/2017/04/headless-chrome)
-			args: ['--disable-gpu'],
+			args: [
+				'--headless',
+				'--start-maximized',
+				'--no-sandbox',
+				'--disable-gpu',
+				'--disable-infobars',
+				'--disable-extensions',
+				'--disable-dev-shm-usage',
+			],
+			// args: ['--disable-gpu'],
 		}
 	}],
 	//
@@ -119,12 +128,13 @@ exports.config = {
 	// The only one supported by default is 'dot'
 	// see also: https://webdriver.io/docs/dot-reporter.html
 	reporters: ['dot', 'spec'],
+
 	//
 	// Options to be passed to Mocha.
 	// See the full list at http://mochajs.org/
 	mochaOpts: {
 		ui: 'bdd',
-		timeout: 600000
+		timeout: 60000
 	},
 	//
 	// =====
@@ -160,6 +170,7 @@ exports.config = {
 		await browser.addCommand("isFocusedDeep", async function () {
 			return browser.executeAsync(function (elem, done) {
 				let activeElement = document.activeElement;
+
 				while (activeElement.shadowRoot) {
 					if (activeElement.shadowRoot.activeElement) {
 						activeElement = activeElement.shadowRoot.activeElement;
@@ -170,9 +181,11 @@ exports.config = {
 				done(elem === activeElement);
 			}, this);
 		}, true);
+
 		await browser.addCommand("isFocusedDeepElement", async function (element) {
 			return browser.executeAsync(function (elem, element, done) {
 				let activeElement = document.activeElement;
+
 				while (activeElement.shadowRoot) {
 					if (activeElement.shadowRoot.activeElement) {
 						activeElement = activeElement.shadowRoot.activeElement;
@@ -183,44 +196,52 @@ exports.config = {
 				done(element === activeElement);
 			}, this, element);
 		}, true);
+
 		await browser.addCommand("setProperty", async function(property, value) {
 			return browser.executeAsync((elem, property, value, done) => {
 				elem[property] = value;
 				done();
 			}, this, property, value);
 		}, true);
+
 		await browser.addCommand("setAttribute", async function(attribute, value) {
 			return browser.executeAsync((elem, attribute, value, done) => {
 				elem.setAttribute(attribute, value);
 				done();
 			}, this, attribute, value);
 		}, true);
+
 		await browser.addCommand("removeAttribute", async function(attribute) {
 			return browser.executeAsync((elem, attribute, done) => {
 				elem.removeAttribute(attribute);
 				done();
 			}, this, attribute);
 		}, true);
+
 		await browser.addCommand("hasClass", async function(className) {
 			return browser.executeAsync((elem, className, done) => {
 				done(elem.classList.contains(className));
 			}, this, className);
 		}, true);
+
 		await browser.addCommand("hasAttribute", async function(attrName) {
 			return browser.executeAsync((elem, attrName, done) => {
 				done(elem.hasAttribute(attrName));
 			}, this, attrName);
 		}, true);
+
 		await browser.addCommand("getStaticAreaItemClassName", async function(selector) {
 			return browser.executeAsync(async (selector, done) => {
 				const staticAreaItem = await document.querySelector(selector).getStaticAreaItemDomRef();
 				done(staticAreaItem.host.classList[0]);
 			}, selector);
 		}, false);
+
 		await browser.addLocatorStrategy('activeElement', (selector) => {
 			return document.querySelector(selector).shadowRoot.activeElement;
 		});
 	},
+
 	/**
 	 * Runs before a WebdriverIO command gets executed.
 	 * @param {String} commandName hook command name
@@ -292,6 +313,7 @@ exports.config = {
 	 */
 	// afterSuite: function (suite) {
 	// },
+
 	/**
 	 * Runs after a WebdriverIO command gets executed
 	 * @param {String} commandName hook command name
@@ -307,6 +329,7 @@ exports.config = {
 				done();
 			});
 		}
+
 		const waitFor = [
 			"addValue",
 			"clearValue",
@@ -323,9 +346,11 @@ exports.config = {
 			"touchAction",
 			"url",
 		];
+
 		const waitForWithDelay = [
 			"keys",
 		];
+
 		if (waitFor.includes(commandName)) {
 			await browser.executeAsync(function (done) {
 				window["sap-ui-webcomponents-bundle"].renderFinished().then(done);
