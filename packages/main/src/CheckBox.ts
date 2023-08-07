@@ -243,12 +243,7 @@ class CheckBox extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component text wraps when there is not enough space.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
-	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
-	 * </ul>
+	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
 	 * @type {sap.ui.webc.main.types.WrappingType}
 	 * @name sap.ui.webc.main.CheckBox.prototype.wrappingType
@@ -321,7 +316,8 @@ class CheckBox extends UI5Element implements IFormElement {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
 			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
-				nativeInput.disabled = element.disabled || !element.checked;
+				nativeInput.disabled = !!element.disabled;
+				nativeInput.checked = !!element.checked;
 				nativeInput.value = element.checked ? "on" : "";
 			});
 		} else if (this.name) {

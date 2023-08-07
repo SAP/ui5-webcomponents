@@ -21,6 +21,7 @@ import overflowCss from "./generated/themes/TabSeparatorInOverflow.css.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.TabSeparator
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-tab-separator
  * @implements sap.ui.webc.main.ITab
  * @public

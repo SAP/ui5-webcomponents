@@ -18,6 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
@@ -42,6 +43,9 @@ type CurrentItem = {
 	position: number,
 	ariaHasPopup: string | undefined,
 }
+
+const MENU_OPEN_DELAY = 300;
+const MENU_CLOSE_DELAY = 400;
 
 type MenuItemClickEventDetail = {
 	item: MenuItem,
@@ -305,6 +309,7 @@ class Menu extends UI5Element {
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
+	_timeout?: Timeout;
 
 	static async onDefine() {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -543,6 +548,32 @@ class Menu extends UI5Element {
 		this._parentItemsStack.push(item);
 	}
 
+	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem, hoverId: string) {
+		// If theres already a timeout, clears it
+		this._clearTimeout();
+
+		// Sets the new timeout
+		this._timeout = setTimeout(() => {
+			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+		}, MENU_OPEN_DELAY);
+	}
+
+	_startCloseTimeout(item: MenuItem) {
+		// If theres already a timeout, clears it
+		this._clearTimeout();
+
+		// Sets the new timeout
+		this._timeout = setTimeout(() => {
+			this._closeItemSubMenu(item);
+		}, MENU_CLOSE_DELAY);
+	}
+
+	_clearTimeout() {
+		if (this._timeout) {
+			clearTimeout(this._timeout);
+		}
+	}
+
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
@@ -551,7 +582,12 @@ class Menu extends UI5Element {
 			const hoverId = opener.getAttribute("id")!;
 
 			opener.focus();
-			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+
+			// If there is a pending close operation, cancel it
+			this._clearTimeout();
+
+			// Opens submenu with 300ms delay
+			this._startOpenTimeout(item, opener, hoverId);
 		}
 	}
 
@@ -563,14 +599,17 @@ class Menu extends UI5Element {
 
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
-			// respect mouseover only on desktop
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
 
+			// If there is a pending open operation, cancel it
+			this._clearTimeout();
+
+			// Close submenu with 400ms delay
 			if (item && item.hasSubmenu && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
-				this._closeItemSubMenu(item);
+				this._startCloseTimeout(item);
 			}
 		}
 	}
