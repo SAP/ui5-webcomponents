@@ -62,4 +62,29 @@ describe("Switch general interaction", async () => {
 		assert.strictEqual(await switchPrevented.getProperty("checked"), currentChecked, "The switch is not checked");
 	});
 
+	it("The 'required' attribute is propagated properly", async () => {
+		assert.strictEqual(await browser.$("#requiredSwitch").shadow$(".ui5-switch-root").getAttribute("aria-required"), "true", "The required attribute is set correctly");
+		assert.strictEqual(await browser.$("#switchprevented").shadow$(".ui5-switch-root").getAttribute("aria-required"), "false", "The required attribute is set correctly");
+	})
+
+	it("Form should submit only when the 'required' switch is checked", async () => {
+		const requiredSwitch = await browser.$("#requiredTestSwitch");
+
+		let formValidity = await browser.execute(() => {
+			const form = document.getElementById("switchForm");
+			return form.checkValidity();
+		});
+
+		assert.strictEqual(formValidity, false, "The form could be submitted successfuly, when the 'required' switch is not checked");
+
+		requiredSwitch.click();
+		await browser.pause(1000);
+
+		formValidity = await browser.execute(() => {
+			const form = document.getElementById("switchForm");
+			return form.checkValidity();
+		});
+
+		assert.strictEqual(formValidity, true, "The form could be submitted successfuly, because the 'required' switch is checked");
+	});
 });

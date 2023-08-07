@@ -124,16 +124,8 @@ class UploadCollection extends UI5Element {
 	/**
 	 * Defines the mode of the <code>ui5-upload-collection</code>.
 	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>SingleSelect</code></li>
-	 * <li><code>SingleSelectBegin</code></li>
-	 * <li><code>SingleSelectEnd</code></li>
-	 * <li><code>MultiSelect</code></li>
-	 * <li><code>Delete</code> - this mode has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem</li>
-	 * </ul>
+	 * <br><b>Note:</b>
+	 * Mode "Delete" has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem</li>
 	 *
 	 * @type {sap.ui.webc.main.types.ListMode}
 	 * @name sap.ui.webc.fiori.UploadCollection.prototype.mode

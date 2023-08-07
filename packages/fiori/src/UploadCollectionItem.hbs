@@ -1,7 +1,5 @@
 {{>include "../../main/src/ListItem.hbs"}}
 
-{{#*inline "selectionElement"}}{{/inline}}
-
 {{#*inline "listItemContent"}}
 	<div class="ui5-uci-thumbnail">
 		<slot name="thumbnail"></slot>
@@ -93,9 +91,9 @@
 					</ui5-button>
 				{{/if}}
 
-				{{#if renderDeleteButton}}
+				{{#if renderUploadCollectionDeleteButton}}
 					<ui5-button
-							class="ui5-li-deletebtn"
+							class="ui5-upload-collection-deletebtn"
 							tabindex="-1"
 							data-sap-no-tab-ref
 							id="{{_id}}-deleteSelectionElement"

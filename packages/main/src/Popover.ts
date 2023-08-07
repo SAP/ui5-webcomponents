@@ -112,14 +112,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines on which side the component is placed at.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Left</code></li>
-	 * <li><code>Right</code></li>
-	 * <li><code>Top</code></li>
-	 * <li><code>Bottom</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.PopoverPlacementType}
 	 * @name sap.ui.webc.main.Popover.prototype.placementType
@@ -131,14 +123,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines the horizontal alignment of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Center</code></li>
-	 * <li><code>Left</code></li>
-	 * <li><code>Right</code></li>
-	 * <li><code>Stretch</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.PopoverHorizontalAlign}
 	 * @name sap.ui.webc.main.Popover.prototype.horizontalAlign
@@ -150,14 +134,6 @@ class Popover extends Popup {
 
 	/**
 	 * Determines the vertical alignment of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Center</code></li>
-	 * <li><code>Top</code></li>
-	 * <li><code>Bottom</code></li>
-	 * <li><code>Stretch</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.PopoverVerticalAlign}
 	 * @name sap.ui.webc.main.Popover.prototype.verticalAlign

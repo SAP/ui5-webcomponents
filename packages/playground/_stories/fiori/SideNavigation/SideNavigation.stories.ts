@@ -14,7 +14,7 @@ import type SideNavigation from "@ui5/webcomponents-fiori/dist/SideNavigation.js
 const component = "ui5-side-navigation";
 
 export default {
-	title: "Fiori/SideNavigation",
+	title: "Fiori/Side Navigation",
 	component,
 	subcomponents: {
 		SideNavigationItem: "ui5-side-navigation-item",

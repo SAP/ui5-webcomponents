@@ -1542,6 +1542,27 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.click();
 			assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
 		});
+
+		it("Should apply correct text to the tokens overflow indicator", async () => {
+			const mcNItems = await $("#mc-items");
+			const mcNMore = await $("#mc-more");
+			const tokenizerNItems = await mcNItems.shadow$("ui5-tokenizer");
+			const tokenizerNMore = await mcNMore.shadow$("ui5-tokenizer");
+			const nItemsLabel = await tokenizerNItems.shadow$(".ui5-tokenizer-more-text");
+			const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
+			let resourceBundleText = null;
+
+			resourceBundleText = await browser.executeAsync(done => {
+				const mi = document.getElementById("mc-items");
+				done({
+					mcItemsLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_SHOW_ALL_ITEMS, 2),
+					mcNMoreLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1)
+				});
+			});
+	
+			assert.strictEqual(await nItemsLabel.getText(), resourceBundleText.mcItemsLabelText, "Text should be 2 Items");
+			assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.mcNMoreLabelText, "Text should be 1 More");
+		});
 	});
 
 	describe("MultiComboBox Truncated Token", () => {
