@@ -151,11 +151,6 @@ class Bar extends UI5Element {
 		};
 	}
 
-	onBeforeRendering() {
-		// Next row is specific for IE11. Please remove after stop support and edit css file
-		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"));
-	}
-
 	onEnterDOM() {
 		ResizeHandler.register(this, this._handleResizeBound);
 
