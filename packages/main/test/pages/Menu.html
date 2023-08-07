@@ -18,7 +18,7 @@
 
 		<ui5-menu-item text="New File" accessible-name="Opens a file explorer" additional-text="Ctrl+Alt+Shift+N" icon="add-document"></ui5-menu-item>
 		<ui5-menu-item text="New Folder with very long title for a menu item" additional-text="Ctrl+F" icon="add-folder" disabled></ui5-menu-item>
-		<ui5-menu-item text="Open" icon="open-folder" starts-section busy-delay="100" busy>
+		<ui5-menu-item text="Open" icon="open-folder" starts-section>
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K">
 				<ui5-menu-item text="Open from C"></ui5-menu-item>
 				<ui5-menu-item text="Open from D"></ui5-menu-item>
@@ -112,13 +112,15 @@
 			const item = event.detail.item;
 			if (item && item.text === "Open" && !fetched) {
 				setTimeout(function() {
+					item.removeAttribute("busy");
+					item.removeAttribute("busy-delay");
 					let oneNode = document.createElement("ui5-menu-item");
 					oneNode.setAttribute("text", "One");
 					let twoNode = document.createElement("ui5-menu-item");
 					twoNode.setAttribute("text", "Two");
 					item.append(oneNode, twoNode);
 					fetched = true;
-				}, 0);
+				}, 2000);
 			}
 		});
 
