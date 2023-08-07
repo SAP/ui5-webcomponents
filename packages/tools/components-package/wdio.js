@@ -241,7 +241,6 @@ exports.config = {
 			return document.querySelector(selector).shadowRoot.activeElement;
 		});
 	},
-
 	/**
 	 * Runs before a WebdriverIO command gets executed.
 	 * @param {String} commandName hook command name
@@ -277,6 +276,7 @@ exports.config = {
 			});
 		}
 	},
+
 	/**
 	 * Hook that gets executed before the suite starts
 	 * @param {Object} suite suite details
@@ -321,6 +321,7 @@ exports.config = {
 	 * @param {Number} result 0 - command success, 1 - command error
 	 * @param {Object} error error object if any
 	 */
+
 	afterCommand: async function (commandName, args, result, error) {
 		// url -> set configuration first
 		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
