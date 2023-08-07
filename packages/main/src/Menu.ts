@@ -342,7 +342,7 @@ class Menu extends UI5Element {
 	}
 
 	get isSubMenuOpened() {
-		return this._popover!.isOpen();
+		return !!this._parentMenuItem;
 	}
 
 	get menuHeaderTextPhone() {
