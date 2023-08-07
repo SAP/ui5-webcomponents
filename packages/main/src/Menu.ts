@@ -342,7 +342,7 @@ class Menu extends UI5Element {
 	}
 
 	get isSubMenuOpened() {
-		return !!this._parentMenuItem;
+		return this._popover!.isOpen();
 	}
 
 	get menuHeaderTextPhone() {
@@ -350,24 +350,32 @@ class Menu extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		!isPhone() && this._prepareCurrentItems(this.items);
+		this._syncMenusAndItems();
+	}
+
+	_syncMenusAndItems() {
+		if (!isPhone()) {
+			this._prepareCurrentItems(this.items);
+		}
 
 		const itemsWithChildren = this.itemsWithChildren;
 		const itemsWithIcon = this.itemsWithIcon;
 
 		this._currentItems.forEach(item => {
-			item.item._siblingsWithChildren = itemsWithChildren;
-			item.item._siblingsWithIcon = itemsWithIcon;
-			const subMenu = item.item._subMenu;
 			const menuItem = item.item;
-			if (subMenu && subMenu.busy) {
-				subMenu.innerHTML = "";
-				this._cloneItems(menuItem, subMenu);
-			}
+			const subMenu = menuItem._subMenu;
+			menuItem._siblingsWithChildren = itemsWithChildren;
+			menuItem._siblingsWithIcon = itemsWithIcon;
 
 			if (subMenu) {
-				subMenu.busy = item.item.busy;
-				subMenu.busyDelay = item.item.busyDelay;
+				if (subMenu.busy) {
+					subMenu.innerHTML = "";
+					this._cloneItems(menuItem, subMenu);
+				}
+
+				subMenu.busy = menuItem.busy;
+				subMenu.busyDelay = menuItem.busyDelay;
+				subMenu._syncMenusAndItems();
 			}
 		});
 	}
