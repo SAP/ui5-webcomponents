@@ -321,8 +321,8 @@ exports.config = {
 	 * @param {Number} result 0 - command success, 1 - command error
 	 * @param {Object} error error object if any
 	 */
-
 	afterCommand: async function (commandName, args, result, error) {
+
 		// url -> set configuration first
 		if (commandName === "url" && !args[0].includes("do-not-change-configuration")) {
 			await browser.executeAsync(function(done) {

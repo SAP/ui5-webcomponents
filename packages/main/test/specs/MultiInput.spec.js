@@ -324,32 +324,6 @@ describe("MultiInput Truncated Token", () => {
 
 		assert.ok(await innerInput.getHTML(), "new MI should be displayed");
 	});
-
-	it("should open popover on keyboard combination ctrl + i", async () => {
-		const mi = await $("#truncated-token");
-		const token = await mi.$("ui5-token");
-		const rpoClassName = await getTokenizerPopoverId("truncated-token");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
-
-		await mi.click();
-		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused MI - Token Popover should be opened");
-
-		await mi.click();
-		await mi.keys("ArrowLeft");
-		await mi.keys(["Control", "i"]);
-		assert.ok(await rpo.getProperty("opened"), "Focused Token - Token Popover should be opened");
-	});
-
-	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
-		const mi = await browser.$("#no-tokens");
-		const rpoClassName = await getTokenizerPopoverId("no-tokens");
-		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
-
-		await mi.click();
-		await mi.keys(["Control", "i"]);
-		assert.notOk(await rpo.getProperty("opened"), "Token Popover shouldn't be opened since no tokens");
-	});
 });
 
 describe("ARIA attributes", () => {
@@ -672,5 +646,43 @@ describe("Keyboard handling", () => {
 
 		await browser.pause(2500);
 		assert.strictEqual(await mi.getProperty("valueState"), "None", "Value state is None");
+	});
+
+	it("should open popover on keyboard combination ctrl + i", async () => {
+		const mi = await $("#truncated-token");
+		const token = await mi.$("ui5-token");
+		const rpoClassName = await getTokenizerPopoverId("truncated-token");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+		await mi.click();
+		await mi.keys(["Control", "i"]);
+		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
+
+		await mi.click();
+		await mi.keys("ArrowLeft");
+		await mi.keys(["Control", "i"]);
+		assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
+	});
+
+	it("shouldn't open popover on keyboard combination ctrl + i when there a no tokens", async () => {
+		const mi = await browser.$("#no-tokens");
+		const rpoClassName = await getTokenizerPopoverId("no-tokens");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+		await mi.click();
+		await mi.keys(["Control", "i"]);
+		assert.notOk(await rpo.getProperty("opened"), "n-more popover shouldn't be opened since no tokens");
+	});
+
+	it("should open popover with all tokens on keyboard combination ctrl + i", async () => {
+		const mi = await browser.$("#two-tokens");
+		const rpoClassName = await getTokenizerPopoverId("two-tokens");
+		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+		await mi.click();
+		await mi.keys(["Control", "i"]);
+		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
+		const listItems = await rpo.$("ui5-list").$$("ui5-li");
+		assert.strictEqual(listItems.length, 2, "All items are shown");
 	});
 });
