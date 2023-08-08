@@ -347,7 +347,7 @@ class Menu extends UI5Element {
 	}
 
 	get isSubMenuOpened() {
-		return !!this._parentMenuItem;
+		return this._popover!.isOpen();
 	}
 
 	get menuHeaderTextPhone() {
@@ -355,24 +355,34 @@ class Menu extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		!isPhone() && this._prepareCurrentItems(this.items);
+		this._syncMenusAndItems();
+	}
+
+	// This operation needs to be done recursicely as it's currently working only for the first level after the root menu
+	_syncMenusAndItems() {
+		if (!isPhone()) {
+			this._prepareCurrentItems(this.items);
+		}
 
 		const itemsWithChildren = this.itemsWithChildren;
 		const itemsWithIcon = this.itemsWithIcon;
 
 		this._currentItems.forEach(item => {
-			item.item._siblingsWithChildren = itemsWithChildren;
-			item.item._siblingsWithIcon = itemsWithIcon;
-			const subMenu = item.item._subMenu;
 			const menuItem = item.item;
-			if (subMenu && subMenu.busy) {
-				subMenu.innerHTML = "";
-				this._cloneItems(menuItem, subMenu);
-			}
+			const subMenu = menuItem._subMenu;
+			menuItem._siblingsWithChildren = itemsWithChildren;
+			menuItem._siblingsWithIcon = itemsWithIcon;
 
 			if (subMenu) {
-				subMenu.busy = item.item.busy;
-				subMenu.busyDelay = item.item.busyDelay;
+				if (subMenu.busy) {
+					subMenu.innerHTML = "";
+					const fragment = this._clonedItemsFragment(menuItem);
+					subMenu.appendChild(fragment);
+				}
+
+				subMenu.busy = menuItem.busy;
+				subMenu.busyDelay = menuItem.busyDelay;
+				subMenu._syncMenusAndItems();
 			}
 		});
 	}
@@ -463,17 +473,19 @@ class Menu extends UI5Element {
 	}
 
 	_createSubMenu(item: MenuItem, openerId: string) {
-		const ctor = this.constructor as typeof Menu;
-		const subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
-
-		subMenu._isSubMenu = true;
-		subMenu.setAttribute("id", `submenu-${openerId}`);
-		subMenu._parentMenuItem = item;
-		subMenu.busy = item.busy;
-		subMenu.busyDelay = item.busyDelay;
-		this._cloneItems(item, subMenu);
-		this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
-		item._subMenu = subMenu;
+		if (!item._subMenu) {
+			const ctor = this.constructor as typeof Menu;
+			const subMenu = document.createElement(ctor.getMetadata().getTag()) as Menu;
+			subMenu._isSubMenu = true;
+			subMenu.setAttribute("id", `submenu-${openerId}`);
+			subMenu._parentMenuItem = item;
+			subMenu.busy = item.busy;
+			subMenu.busyDelay = item.busyDelay;
+			const fragment = this._clonedItemsFragment(item);
+			subMenu.appendChild(fragment);
+			this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
+			item._subMenu = subMenu;
+		}
 	}
 
 	_cloneItems(item: MenuItem, menu: Menu) {
@@ -512,7 +524,6 @@ class Menu extends UI5Element {
 			if (forceClose || !parentItem._preventSubMenuClose) {
 				subMenu.close();
 				subMenu.remove();
-				parentItem._subMenu = undefined;
 				this._openedSubMenuItem = undefined;
 				this._subMenuOpenerId = "";
 			}
