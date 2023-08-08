@@ -355,34 +355,24 @@ class Menu extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._syncMenusAndItems();
-	}
-
-	// This operation needs to be done recursicely as it's currently working only for the first level after the root menu
-	_syncMenusAndItems() {
-		if (!isPhone()) {
-			this._prepareCurrentItems(this.items);
-		}
+		!isPhone() && this._prepareCurrentItems(this.items);
 
 		const itemsWithChildren = this.itemsWithChildren;
 		const itemsWithIcon = this.itemsWithIcon;
 
 		this._currentItems.forEach(item => {
+			item.item._siblingsWithChildren = itemsWithChildren;
+			item.item._siblingsWithIcon = itemsWithIcon;
+			const subMenu = item.item._subMenu;
 			const menuItem = item.item;
-			const subMenu = menuItem._subMenu;
-			menuItem._siblingsWithChildren = itemsWithChildren;
-			menuItem._siblingsWithIcon = itemsWithIcon;
+			if (subMenu && subMenu.busy) {
+				subMenu.innerHTML = "";
+				this._cloneItems(menuItem, subMenu);
+			}
 
 			if (subMenu) {
-				if (subMenu.busy) {
-					subMenu.innerHTML = "";
-					const fragment = this._clonedItemsFragment(menuItem);
-					subMenu.appendChild(fragment);
-				}
-
-				subMenu.busy = menuItem.busy;
-				subMenu.busyDelay = menuItem.busyDelay;
-				subMenu._syncMenusAndItems();
+				subMenu.busy = item.item.busy;
+				subMenu.busyDelay = item.item.busyDelay;
 			}
 		});
 	}
