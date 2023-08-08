@@ -148,6 +148,7 @@ describe("Menu interaction", () => {
 			const openMenuList = await openSubmenuPopover.$("ui5-list");
 
 			// assert.ok(await openMenuList.getProperty("busy"), "Busy property is properly propagated to the ui5-list component.");
+			await browser.pause(650);
 			assert.strictEqual(await openMenuList.$$("ui5-li").length, 4, "Two additional nodes have been added.");
 
 			visualCloseItem.click();
