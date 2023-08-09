@@ -30,6 +30,8 @@ const deleteThemeBase = () => {
 	removeStyle("data-ui5-theme-properties", BASE_THEME_PACKAGE);
 };
 
+let test: CSSStyleSheet;
+
 const loadComponentPackages = async (theme: string) => {
 	const registeredPackages = getRegisteredPackages();
 
@@ -41,10 +43,22 @@ const loadComponentPackages = async (theme: string) => {
 		const cssData = await getThemeProperties(packageName, theme);
 		if (cssData) {
 			createOrUpdateStyle(cssData, `data-ui5-component-properties-${getCurrentRuntimeIndex()}`, packageName);
+
+			if (document.adoptedStyleSheets) {
+				const content = typeof cssData === "string" ? cssData : cssData.content;
+				test = new CSSStyleSheet();
+				test.replaceSync(content);
+			} else {
+				createOrUpdateStyle(cssData, `data-ui5-component-properties-${getCurrentRuntimeIndex()}`, packageName);
+			}
 		}
 	});
 
 	return Promise.all(packagesStylesPromises);
+};
+
+const getCurrentStyles = (): CSSStyleSheet => {
+	return test;
 };
 
 const detectExternalTheme = async (theme: string) => {
@@ -89,3 +103,6 @@ const applyTheme = async (theme: string) => {
 };
 
 export default applyTheme;
+export {
+	getCurrentStyles,
+};

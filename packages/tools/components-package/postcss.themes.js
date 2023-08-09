@@ -22,28 +22,6 @@ module.exports = {
 					},
 				]
 			},),
-			modifySelectors({
-				enable: true,
-				suffix: [
-					{
-						match: '*',
-						with: '[_ui5host]', // Add suffix to each selector in the file (:root => :root [_ui5host])
-					},
-				],
-			}),
-			modifySelectors({
-				enable: true,
-				modify: [
-					{
-						match: (selector) => {
-							return selectors.some($ => selector.startsWith($));
-						},
-						with: (selector) => {
-							return `${selector.replace(" ", "")}, ${selector}`;
-						},
-					},
-				]
-			}),
 			postcssCSStoJSON({ toReplace: 'src', packageName }),
 			postcssCSStoESM({ toReplace: 'src', packageName }),
 		]
