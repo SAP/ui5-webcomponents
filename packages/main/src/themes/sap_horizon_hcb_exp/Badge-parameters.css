@@ -1,0 +1,43 @@
+@import "../base/Badge-parameters.css";
+
+:root {
+	--ui5-badge-color-scheme-1-background: #362401; /* Mango1 */
+	--ui5-badge-color-scheme-1-border: #FDA503; /* Mango11 */
+	--ui5-badge-color-scheme-1-color: #FDA503; /* Mango11 */
+
+	--ui5-badge-color-scheme-2-background: #550404; /* Red1 */
+	--ui5-badge-color-scheme-2-border: #FC9F9F; /* Red11 */
+	--ui5-badge-color-scheme-2-color: #FC9F9F; /* Red11 */
+
+	--ui5-badge-color-scheme-3-background: #520230; /* Raspberry1 */
+	--ui5-badge-color-scheme-3-border: #F79DCA; /* Raspberry11 */
+	--ui5-badge-color-scheme-3-color: #F79DCA; /* Raspberry11 */
+
+	--ui5-badge-color-scheme-4-background: #480057; /* Pink1 */
+	--ui5-badge-color-scheme-4-border: #F794FF; /* Pink11 */
+	--ui5-badge-color-scheme-4-color: #F794FF; /* Pink11 */
+
+	--ui5-badge-color-scheme-5-background: #240381; /* Indigo1 */
+	--ui5-badge-color-scheme-5-border: #BDADFF; /* Indigo11 */
+	--ui5-badge-color-scheme-5-color: #BDADFF; /* Indigo11 */
+
+	--ui5-badge-color-scheme-6-background: #002559; /* Blue1 */
+	--ui5-badge-color-scheme-6-border: #83BCFF; /* Blue11 */
+	--ui5-badge-color-scheme-6-color: #83BCFF; /* Blue11 */
+
+	--ui5-badge-color-scheme-7-background: #012D28; /* Teal1 */
+	--ui5-badge-color-scheme-7-border: #06CFAF; /* Teal11 */
+	--ui5-badge-color-scheme-7-color: #06CFAF; /* Teal11 */
+
+	--ui5-badge-color-scheme-8-background: #0F2D17; /* Green1 */
+	--ui5-badge-color-scheme-8-border: #26D526; /* Green11 */
+	--ui5-badge-color-scheme-8-color: #26D526; /* Green11 */
+
+	--ui5-badge-color-scheme-9-background: #032B37; /* Cyan1 */
+	--ui5-badge-color-scheme-9-border: #1BC8F2; /* Cyan11 */
+	--ui5-badge-color-scheme-9-color: #1BC8F2; /* Cyan11 */
+
+	--ui5-badge-color-scheme-10-background: #1C2834; /* Grey1 */
+	--ui5-badge-color-scheme-10-border: #A9BACB; /* Grey11 */
+	--ui5-badge-color-scheme-10-color: #A9BACB; /* Grey11 */
+}

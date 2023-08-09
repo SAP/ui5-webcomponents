@@ -1,0 +1,5 @@
+@import "../base/MessageStrip-parameters.css";
+
+:root{
+	--_ui5_message_strip_close_button_right: 0.1875rem;
+}
