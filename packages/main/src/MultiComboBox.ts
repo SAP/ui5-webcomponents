@@ -674,7 +674,7 @@ class MultiComboBox extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		const isArrowDownCtrl: boolean = isDownCtrl(e);
-		const isCtrl: boolean = navigator.platform.indexOf("Win") !== -1 ? e.ctrlKey : e.metaKey;
+		const isCtrl: boolean = e.metaKey || e.ctrlKey;
 
 		if (isShow(e) && !this.disabled) {
 			this._handleShow(e);
@@ -1142,7 +1142,7 @@ class MultiComboBox extends UI5Element {
 	}
 
 	_onTokenizerKeydown(e: KeyboardEvent) {
-		const isCtrl: boolean = navigator.platform.indexOf("Win") !== -1 ? e.ctrlKey : e.metaKey;
+		const isCtrl = !!(e.metaKey || e.ctrlKey);
 
 		if (isRight(e)) {
 			const lastTokenIndex = this._tokenizer.tokens.length - this._tokenizer.overflownTokens.length - 1;

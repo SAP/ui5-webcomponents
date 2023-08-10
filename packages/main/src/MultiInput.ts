@@ -220,7 +220,7 @@ class MultiInput extends Input {
 
 		const target = e.target as HTMLInputElement;
 		const isHomeInBeginning = isHome(e) && target.selectionStart === 0;
-		const isCtrl: boolean = navigator.platform.indexOf("Win") !== -1 ? e.ctrlKey : e.metaKey;
+		const isCtrl: boolean = e.metaKey || e.ctrlKey;
 		const tokens = this.tokens;
 
 		if (isHomeInBeginning) {
@@ -247,7 +247,7 @@ class MultiInput extends Input {
 
 	_onTokenizerKeydown(e: KeyboardEvent) {
 		const rightCtrl = isRightCtrl(e);
-		const isCtrl: boolean = navigator.platform.indexOf("Win") !== -1 ? e.ctrlKey : e.metaKey;
+		const isCtrl = !!(e.metaKey || e.ctrlKey);
 		const tokens = this.tokens;
 
 		if (isRight(e) || isEnd(e) || rightCtrl) {
