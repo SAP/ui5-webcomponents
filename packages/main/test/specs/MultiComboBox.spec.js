@@ -1458,21 +1458,22 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await $("#truncated-token");
 			const rpoClassName = await getTokenizerPopoverId("truncated-token");
 			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const isMac = process.platform === 'darwin';
 
 			await mcb.click();
-			await mcb.keys(["Control", "i"]);
+			await mcb.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened");
 			await mcb.click();
-			await mcb.keys(["Control", "i"]);
+			await mcb.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed");
 
 			await mcb.click();
 			await mcb.keys("ArrowLeft");
-			await mcb.keys(["Control", "i"]);
+			await mcb.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
 			await mcb.click();
 			await mcb.keys("ArrowLeft");
-			await mcb.keys(["Control", "i"]);
+			await mcb.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed");
 		});
 
@@ -1480,9 +1481,10 @@ describe("MultiComboBox general interaction", () => {
 			const mcb = await $("#mcb-no-typeahead");
 			const rpoClassName = await getTokenizerPopoverId("mcb-no-typeahead");
 			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const isMac = process.platform === 'darwin';
 
 			await mcb.click();
-			await mcb.keys(["Control", "i"]);
+			await mcb.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 			assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed since no tokens");
 
 		});

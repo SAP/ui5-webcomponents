@@ -653,14 +653,15 @@ describe("Keyboard handling", () => {
 		const token = await mi.$("ui5-token");
 		const rpoClassName = await getTokenizerPopoverId("truncated-token");
 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const isMac = process.platform === 'darwin';
 
 		await mi.click();
-		await mi.keys(["Control", "i"]);
+		await mi.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
 
 		await mi.click();
 		await mi.keys("ArrowLeft");
-		await mi.keys(["Control", "i"]);
+		await mi.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 		assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
 	});
 
@@ -668,9 +669,10 @@ describe("Keyboard handling", () => {
 		const mi = await browser.$("#no-tokens");
 		const rpoClassName = await getTokenizerPopoverId("no-tokens");
 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const isMac = process.platform === 'darwin';
 
 		await mi.click();
-		await mi.keys(["Control", "i"]);
+		await mi.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 		assert.notOk(await rpo.getProperty("opened"), "n-more popover shouldn't be opened since no tokens");
 	});
 
@@ -678,9 +680,10 @@ describe("Keyboard handling", () => {
 		const mi = await browser.$("#two-tokens");
 		const rpoClassName = await getTokenizerPopoverId("two-tokens");
 		const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+		const isMac = process.platform === 'darwin';
 
 		await mi.click();
-		await mi.keys(["Control", "i"]);
+		await mi.keys(isMac ? ['Meta', 'i'] : ['Control', 'i']);
 		assert.ok(await rpo.getProperty("opened"), "Focused MI - n-more popover should be opened");
 		const listItems = await rpo.$("ui5-list").$$("ui5-li");
 		assert.strictEqual(listItems.length, 2, "All items are shown");
