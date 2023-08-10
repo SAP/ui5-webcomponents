@@ -89,6 +89,7 @@ import Toolbar from "./dist/Toolbar.js";
 import ToolbarButton from "./dist/ToolbarButton.js";
 import ToolbarSeparator from "./dist/ToolbarSeparator.js";
 import ToolbarSpacer from "./dist/ToolbarSpacer.js";
+import ToolbarSelect from "./dist/ToolbarSelect.js";
 import Tree from "./dist/Tree.js";
 import TreeList from "./dist/TreeList.js";
 import TreeItem from "./dist/TreeItem.js";

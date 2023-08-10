@@ -27,6 +27,11 @@
 				<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
 				<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
 				<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
+				<ui5-toolbar-select id="toolbar-select">
+					<ui5-option>1</ui5-option>
+					<ui5-option>2</ui5-option>
+					<ui5-option>3</ui5-option>
+				</ui5-toolbar-select>
 				<ui5-toolbar-button icon="employee" text="Call me later"></ui5-toolbar-button>
 			</ui5-toolbar>
 		</section>
@@ -48,7 +53,7 @@
 			</ui5-toolbar>
 		</section>
 		<br /><br />
-		<ui5-title level="H3">Two inline Toolbars with separator</ui5-title>
+		<ui5-title level="H3">Two inline Toolbars with separator (with action on "User Menu" button)</ui5-title>
 		<br />
 		<section id="testSection">
 			<div class="main-wrapper">
@@ -62,7 +67,7 @@
 						<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
 						<ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
 						<ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
-						<ui5-toolbar-button id="myOverflowBtn"  prevent-overflow-closing icon="employee" text="Call me later"></ui5-toolbar-button>
+						<ui5-toolbar-button id="myOverflowBtn"  prevent-overflow-closing icon="employee" text="User Menu"></ui5-toolbar-button>
 					</ui5-toolbar>
 				</div>
 				<div class="second-toolbar-wrapper">
@@ -177,7 +182,7 @@
 						<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
 
 					</ui5-toolbar>
-				</div>
+		</div>
 				<div class="actions-wrapper">
 					<div class="first-toolbar-wrapper">
 						<ui5-toolbar>
@@ -223,6 +228,10 @@
 		myOverflowBtn.addEventListener("click", e => {
 			myPopup.showAt(e.detail.targetRef);
 		});
+
+		document.getElementById("toolbar-select").addEventListener("change", e => {
+			console.log(e);
+		})
 		toolbarSlider.addEventListener("change", e => {
 			document.getElementById("toolbars-container").setAttribute("style", "width:" + e.target.value + "%");
 		})

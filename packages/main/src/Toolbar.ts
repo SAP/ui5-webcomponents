@@ -3,6 +3,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
@@ -32,17 +33,13 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 }
 
 /**
- * Fired when the component is activated either with a
- * mouse/tap or by using the Enter or Space key.
- * <br><br>
- * <b>Note:</b> The event will not be fired if the <code>disabled</code>
- * property is set to <code>true</code>.
+ * Fired when an element inside the toolbar fires an event.
  *
- * @event sap.ui.webc.main.Button#click
+ * @event sap.ui.webc.main.Toolbar#interact
  * @public
  * @native
  */
-//  @event("interact")
+@event("interact")
 
 /**
  * @class
@@ -108,6 +105,14 @@ class Toolbar extends UI5Element {
 	 */
 	 @property({ type: Boolean })
 	 resizing!: boolean;
+
+	/**
+	 * TEST
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	invalidate!: boolean;
 
 	/**
  	* Slotted Toolbar items
@@ -194,14 +199,25 @@ class Toolbar extends UI5Element {
 		ResizeHandler.deregister(this, this._onResize);
 	}
 
+	onBeforeRendering(): void {
+		if (!this.itemsWidthMeasured) {
+			this.itemsToOverflow = [];
+		}
+	}
+
 	async onAfterRendering() {
 		if (this.resizing) {
 			this.resizing = false;
-			return;
 		}
 
 		await renderFinished();
-		this.storeItemsWidth();
+
+		if (!this.itemsWidthMeasured) {
+			this.storeItemsWidth();
+		} else {
+			this.itemsWidthMeasured = false;
+		}
+
 		this.processOverflowLayout(true);
 	}
 
@@ -243,6 +259,7 @@ class Toolbar extends UI5Element {
 
 		this.ITEMS_WIDTH = totalWidth;
 		this.itemsWidthMeasured = true;
+		this.invalidate = !this.invalidate;
 	}
 
 	distributeItems(overflowSpace = 0) {
@@ -317,7 +334,7 @@ class Toolbar extends UI5Element {
 	 * Event Handlers
 	 */
 	onResize() {
-		if (!this.itemsWidthMeasured) {
+		if (this.itemsWidthMeasured) {
 			return;
 		}
 
@@ -326,9 +343,10 @@ class Toolbar extends UI5Element {
 		this.processOverflowLayout();
 	}
 
-	onItemClick(e: MouseEvent) {
+	onInteract(e: MouseEvent) {
 		const target = e.target as HTMLElement;
 		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
+		const eventType: string = e.type;
 
 		if (target === this.overflowButtonDOM) {
 			this.openOverflow();
@@ -342,11 +360,9 @@ class Toolbar extends UI5Element {
 		const refItemId = target.getAttribute("data-ui5-external-action-item-id");
 
 		if (refItemId) {
-			this.getItemByID(refItemId)?.fireEvent("click", {
-				targetRef: e.target,
-			}, true);
+			this.getItemByID(refItemId)?.fireEvent(eventType, e, true);
 
-			if (item.getAttribute("prevent-overflow-closing") === "false") {
+			if (eventType === "click" && item.getAttribute("prevent-overflow-closing") === "false") {
 				this.closeOverflow();
 			}
 		}
@@ -401,7 +417,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get hasFlexibleSpacers() {
-		return this.items.some((item: ToolbarItem) => item.localName === "ui5-toolbar-spacer" && !item.hasFlexibleWidth);
+		return this.items.some((item: ToolbarItem) => item.localName === "ui5-toolbar-spacer" && item.hasFlexibleWidth);
 	}
 
 	get classes() {
@@ -449,7 +465,7 @@ class Toolbar extends UI5Element {
 
 	getItemWidth(item: ToolbarItem): number {
 		// Spacer width - always 0 for flexible spacers, so that they shrink, otherwise - measure the width normally
-		if (item.ignoreSpace && !item.hasFlexibleWidth) {
+		if (item.ignoreSpace) {
 			return 0;
 		}
 		const id: string = item._id;

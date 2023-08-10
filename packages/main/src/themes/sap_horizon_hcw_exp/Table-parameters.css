@@ -1,0 +1,9 @@
+@import "../base/Table-parameters.css";
+
+:root {
+	--ui5_table_header_row_outline_width: 0.125rem;
+	--ui5_table_header_row_font_weight: bold;
+	--ui5_table_header_row_border_bottom_color: var(--sapList_HeaderBorderColor);
+	--ui5_table_focus_outline_offset: -0.1875rem;
+	--ui5_table_header_row_border_width: 0.1875rem;
+}

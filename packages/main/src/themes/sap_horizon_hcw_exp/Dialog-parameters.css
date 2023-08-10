@@ -1,0 +1,10 @@
+@import "../base/Dialog-parameters.css";
+
+:root {
+	--_ui5_dialog_resize_handle_right: 3px;
+	--_ui5_dialog_resize_handle_bottom: 3px;
+	--_ui5_dialog_header_error_state_box_shadow: inset 0 -0.125rem var(--sapErrorBorderColor);
+	--_ui5_dialog_header_information_state_box_shadow: inset 0 -0.125rem var(--sapInformationBorderColor);
+	--_ui5_dialog_header_success_state_box_shadow: inset 0 -0.125rem var(--sapSuccessBorderColor);
+	--_ui5_dialog_header_warning_state_box_shadow: inset 0 -0.125rem var(--sapWarningBorderColor);
+}

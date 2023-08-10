@@ -38,7 +38,11 @@ class ToolbarSpacer extends ToolbarItem {
 	}
 
 	get ignoreSpace() {
-		return this.width === undefined;
+		return this.width === "";
+	}
+
+	get hasFlexibleWidth() {
+		return this.width === "";
 	}
 
 	get toolbarTemplate() {

@@ -12,7 +12,7 @@ import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 const component = "ui5-li-notification-group";
 
 export default {
-	title: "Fiori/NotificationListGroupItem",
+	title: "Fiori/Notification List Group Item",
 	component,
 	subcomponents: { 'NotificationAction': 'ui5-notification-action' },
 	parameters: {
@@ -164,9 +164,6 @@ actions: `<ui5-notification-action icon="accept" text="Accept All" slot="actions
 <ui5-notification-action icon="message-error" text="Reject All" slot="actions"></ui5-notification-action>`,
 };
 
-export const InShellBars: StoryFn = () => html`
-
-`;
 
 InShellBar.decorators = [
 	(story) => {

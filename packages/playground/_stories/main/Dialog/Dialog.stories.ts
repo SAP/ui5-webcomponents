@@ -96,6 +96,31 @@ Basic.args = {
 </div>`,
 };
 
+Basic.decorators = [
+	(story) => html`<style>
+	.login-form {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: flex-start;
+		margin: 3rem 6rem;
+	}
+	
+	.login-form > div {
+		display: grid;
+		width: 15rem;
+		margin-bottom: .5rem;
+	}
+
+	@media(max-width: 600px) {
+		.login-form {
+			margin: 3rem 1rem;
+		}
+	}
+</style>
+${story()}`
+];
+
 export const DraggableAndResizable = Template.bind({});
 DraggableAndResizable.args = {
 	resizable: true,
