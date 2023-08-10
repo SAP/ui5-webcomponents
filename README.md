@@ -20,7 +20,7 @@
  - **Elegant**: being *custom HTML elements*, they hide implementation complexity behind a single HTML tag, making them easily usable with the standard DOM APIs.
 
 ## Where can I see them in action?
-- [Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/components)
+- [Playground and API Reference](https://sap.github.io/ui5-webcomponents/playground/)
 
 ## More Resources
 - [UI5 Web Components Home Page](https://sap.github.io/ui5-webcomponents)
@@ -85,7 +85,7 @@ shortcomings when it comes to handling Custom Elements, namely the binding of `b
 
 ## Typescript Support
 Since 1.11 we are providing Typescript definitions for all public APIs.
-However, the **Typescript support is experimental and subject to change**. If you consume the web components via Typescript, you might have to adjust your code before the Typescript definitions become final and officially supported. 
+However, the **Typescript support is experimental and subject to change**. If you consume the web components via Typescript, you might have to adjust your code before the Typescript definitions become final and officially supported.
 Please, share any kind of feedback about the provided types in GitHub.
 
 ### Is there a CDN I can use?

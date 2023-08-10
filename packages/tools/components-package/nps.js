@@ -8,12 +8,12 @@ const getScripts = (options) => {
 
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
 	const illustrationsData = options.illustrationsData || [];
-	const illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
+	const illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath} ${illustration.collection}`);
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
-	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
-	const createIllustrationsLoadersScript = options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "";
+    const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.prefix || '\"\"'} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
+
 	const tsOption = options.typescript;
 	const tsCommand = tsOption ? "tsc" : "";
 	const tsWatchCommand = tsOption ? "tsc --watch" : "";

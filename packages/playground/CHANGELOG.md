@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0...v1.17.0-rc.0) (2023-08-10)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.16.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.4...v1.16.0) (2023-08-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.16.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.3...v1.16.0-rc.4) (2023-08-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.16.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.2...v1.16.0-rc.3) (2023-07-27)
+
+
+### Features
+
+* **ui5-avatar:** add disabled property ([#7335](https://github.com/SAP/ui5-webcomponents/issues/7335)) ([d84fc61](https://github.com/SAP/ui5-webcomponents/commit/d84fc61c7f41c6099c242dfdaad44cb3ebc9e1fa))
+* **ui5-panel:** panel sticky header implementation ([#7313](https://github.com/SAP/ui5-webcomponents/issues/7313)) ([18c0e4f](https://github.com/SAP/ui5-webcomponents/commit/18c0e4fcbf68acb42357f4f3e2941fffb7911a5d))
+* **ui5-switch:** add required property ([#7324](https://github.com/SAP/ui5-webcomponents/issues/7324)) ([0a01918](https://github.com/SAP/ui5-webcomponents/commit/0a019187bfeb52c4a2eacb5385d069034c68d34c))
+
+
+
+
+
+# [1.16.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.1...v1.16.0-rc.2) (2023-07-20)
+
+
+### Bug Fixes
+
+* **ui5-page:** adjust storybook sample ([#7355](https://github.com/SAP/ui5-webcomponents/issues/7355)) ([066c142](https://github.com/SAP/ui5-webcomponents/commit/066c1422edb4456f0ce27f67b238745e1af14896))
+
+
+
+
+
+# [1.16.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.0...v1.16.0-rc.1) (2023-07-13)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+# [1.16.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.1...v1.16.0-rc.0) (2023-07-06)
+
+**Note:** Version bump only for package @ui5/webcomponents-playground
+
+
+
+
+
+## [1.15.1](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0...v1.15.1) (2023-06-30)
+
+
+### Bug Fixes
+
+* **framework:** fix links in starting page of new pkg [ci skip] ([475fed5](https://github.com/SAP/ui5-webcomponents/commit/475fed55504f4a15e8b26aaf3c9e4d73b55976ec))
+
+
+
+
+
+# [1.15.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.2...v1.15.0) (2023-06-30)
+
+
+### Features
+
+* **ui5-rating-indicator:** add required and accessibleNameRef properties ([#7185](https://github.com/SAP/ui5-webcomponents/issues/7185)) ([3cb09c6](https://github.com/SAP/ui5-webcomponents/commit/3cb09c690d22d2c12eba8c6aa23bc60f70b6b890))
+
+
+
+
+
 # [1.15.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.15.0-rc.1...v1.15.0-rc.2) (2023-06-22)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

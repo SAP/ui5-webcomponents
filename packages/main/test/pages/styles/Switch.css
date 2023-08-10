@@ -75,3 +75,9 @@ ui5-switch {
     width: 200px;
     height: 200px;
 }
+
+.switch-form {
+    border: 1px solid var(--sapList_BorderColor);
+    border-radius: var(--sapElement_BorderCornerRadius);
+    padding: 1rem;
+}

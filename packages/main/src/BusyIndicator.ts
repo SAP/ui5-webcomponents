@@ -84,15 +84,6 @@ class BusyIndicator extends UI5Element {
 	/**
 	 * Defines the size of the component.
 	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 *
-	 * <ul>
-	 * <li><code>Small</code></li>
-	 * <li><code>Medium</code></li>
-	 * <li><code>Large</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.main.types.BusyIndicatorSize}
 	 * @name sap.ui.webc.main.BusyIndicator.prototype.size
 	 * @defaultvalue "Medium"

@@ -61,7 +61,7 @@ describe("Icon general interaction", () => {
 
 	it("Tests switch to sap_horizon", async () => {
 		const V4_PATH_START = "M118";
-		const V5_PATH_START = "M79.844";
+		const V5_PATH_START = "M486";
 
 		// assert - initial SVG path
 		const iconPath = await browser.$("#myIcon").shadow$(".ui5-icon-root path");

@@ -42,7 +42,7 @@
 }
 
 /* focused */
-:host(:not([disabled])) .ui5-radio-root:focus-visible:before {
+:host(:not([disabled])) .ui5-radio-root:focus:before {
 	content: "";
 	display: var(--_ui5_radio_button_focus_outline);
 	position: absolute;
@@ -56,11 +56,11 @@
 }
 
 /* horizon readonly focus */
-:host(:not([disabled])[readonly]) .ui5-radio-root:focus-visible:before {
+:host(:not([disabled])[readonly]) .ui5-radio-root:focus:before {
 	border: var(--_ui5_radio_button_border_width) var(--_ui5_radio_button_border_readonly_focus_style) var(--sapContent_FocusColor);
 }
 
-:host(:not([disabled])) .ui5-radio-root:focus-visible {
+:host(:not([disabled])) .ui5-radio-root:focus {
 	border-radius: var(--_ui5_radio_button_border_radius);
 	border: var(--_ui5_radio_button_focus_border);
 }
@@ -100,7 +100,7 @@
 }
 
 /* with label */
-:host([text]) .ui5-radio-root:focus-visible:before {
+:host([text]) .ui5-radio-root:focus:before {
 	inset-inline: var(--_ui5_radio_button_focus_dist) 0;
 }
 

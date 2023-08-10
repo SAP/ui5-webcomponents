@@ -57,9 +57,19 @@ const generate = async () => {
 	const illustrationsPrefix = process.argv[4];
 	const illustrationSet = process.argv[5];
 	const destPath = process.argv[6];
+	const collection = process.argv[7];
 	const fileNamePattern = new RegExp(`${illustrationsPrefix}-.+-(.+).svg`);
 // collect each illustration name because each one should have Sample.js file
 	const fileNames = new Set();
+
+	try {
+		await fs.access(srcPath);
+	} catch (error) {
+		console.log(`The path ${srcPath} does not exist.`);
+		return Promise.resolve(null);
+	}
+
+	console.log(`Generating illustrations from ${srcPath} to ${destPath}`)
 
 	const svgImportTemplate = svgContent => {
 		return `export default \`${svgContent}\`;`
@@ -95,6 +105,7 @@ import {
 
 const name = "${illustrationName}";
 const set = "${illustrationSet}";
+const collection = "${collection}";
 const title = IM_TITLE_${illustrationNameUpperCase};
 const subtitle = IM_SUBTITLE_${illustrationNameUpperCase};
 
@@ -105,6 +116,7 @@ registerIllustration(name, {
 	title,
 	subtitle,
 	set,
+	collection,
 });
 
 export {
@@ -119,12 +131,14 @@ import spotSvg from "./${illustrationsPrefix}-Spot-${illustrationName}.js";
 
 const name = "${illustrationName}";
 const set = "${illustrationSet}";
+const collection = "${collection}";
 
 registerIllustration(name, {
 	dialogSvg,
 	sceneSvg,
 	spotSvg,
 	set,
+	collection,
 });
 
 export {

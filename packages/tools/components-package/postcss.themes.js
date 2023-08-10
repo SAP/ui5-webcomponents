@@ -7,6 +7,7 @@ const modifySelectors = require("modify-selectors");
 const fs = require("fs");
 
 const packageName = JSON.parse(fs.readFileSync("./package.json")).name;
+const selectors = [".sapUiSizeCompact", ".ui5-content-density-compact", "[data-ui5-compact-size]", "[dir=\"rtl\"]", "[dir=\"ltr\"]"];
 
 module.exports = {
 		plugins: [
@@ -29,6 +30,19 @@ module.exports = {
 						with: '[_ui5host]', // Add suffix to each selector in the file (:root => :root [_ui5host])
 					},
 				],
+			}),
+			modifySelectors({
+				enable: true,
+				modify: [
+					{
+						match: (selector) => {
+							return selectors.some($ => selector.startsWith($));
+						},
+						with: (selector) => {
+							return `${selector.replace(" ", "")}, ${selector}`;
+						},
+					},
+				]
 			}),
 			postcssCSStoJSON({ toReplace: 'src', packageName }),
 			postcssCSStoESM({ toReplace: 'src', packageName }),

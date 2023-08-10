@@ -347,6 +347,27 @@ describe("Eventing", () => {
 		assert.strictEqual(await browser.$("#events-parameters").getValue(), "", "There are no parameters");
 		assert.strictEqual(await browser.$("#events-call-count").getValue(), "", "The called event count is empty");
 	});
+
+	it("Should prevent selection-change when item is selected in the picker and ok button is pressed", async () => {
+		const multiCombo = await browser.$("#mcb-prevent");
+		const mcbInput = await multiCombo.shadow$("#ui5-multi-combobox-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-prevent");
+
+		await multiCombo.scrollIntoView();
+		await mcbInput.click();
+
+		let tokens = await multiCombo.shadow$("ui5-tokenizer").$$("ui5-token");
+		assert.strictEqual(tokens.length, 1, "There should be only one token.");
+
+		const listItemCheckbox = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$$("ui5-li")[0].shadow$("ui5-checkbox");
+		await listItemCheckbox.click();
+
+		const dialogOkButton = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$(".ui5-responsive-popover-footer").$("ui5-button");
+		await dialogOkButton.click();
+
+		tokens = await multiCombo.shadow$("ui5-tokenizer").$$("ui5-token");
+		assert.strictEqual(tokens.length, 1, "There should be only one token.");
+	});
 });
 
 describe("Validation", () => {

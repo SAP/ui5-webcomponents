@@ -270,11 +270,6 @@ class UploadCollectionItem extends ListItem {
 		]);
 	}
 
-	onBeforeRendering() {
-		// In the base class the item can become "actionable",
-		// that's why we are overriding this method.
-	}
-
 	/**
 	 * @override
 	 */
@@ -408,22 +403,8 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	get renderDeleteButton() {
+	get renderUploadCollectionDeleteButton() {
 		return !this.hideDeleteButton;
-	}
-
-	/**
-	 * @override
-	 */
-	get placeSelectionElementAfter() {
-		return true;
-	}
-
-	/**
-	 * @override
-	 */
-	get placeSelectionElementBefore() {
-		return false;
 	}
 
 	get _fileNameWithoutExtension() {

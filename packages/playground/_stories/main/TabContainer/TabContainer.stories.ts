@@ -12,7 +12,7 @@ import TabLayout from "@ui5/webcomponents/dist/types/TabLayout.js";
 const component = "ui5-tabcontainer";
 
 export default {
-	title: "Main/TabContainer",
+	title: "Main/Tab Container",
 	component,
 	subcomponents: { "Tab": "ui5-tab", "TabSeparator": "ui5-tab-separator" },
 	parameters: {
@@ -95,16 +95,6 @@ TextOnlyEndOverflow.args = {
 <ui5-tab text="Tab 21"></ui5-tab>
 <ui5-tab text="Tab 22"></ui5-tab>
 <ui5-tab text="Tab 23"></ui5-tab>`,
-};
-
-export const WithAdditionalText = Template.bind({});
-WithAdditionalText.args = {
-	collapsed: true,
-	fixed: true,
-	default: `<ui5-tab text="Info" additional-text="3"></ui5-tab>
-<ui5-tab text="Attachments" additional-text="24" selected></ui5-tab>
-<ui5-tab text="Notes" additional-text="16"></ui5-tab>
-<ui5-tab text="People" additional-text="34"></ui5-tab>`,
 };
 
 export const InlineTabLayout = Template.bind({});

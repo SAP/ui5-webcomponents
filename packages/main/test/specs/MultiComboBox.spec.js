@@ -1,5 +1,14 @@
 import { assert } from "chai";
 
+const getTokenizerPopoverId = async (mcbId) => {
+	return await browser.executeAsync(async (mcbId, done) => {
+		const input = document.querySelector(`#${mcbId}`);
+		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
+
+		done(staticAreaItem.host.classList[0]);
+	}, mcbId);
+}
+
 describe("MultiComboBox general interaction", () => {
 	before(async () => {
 		await browser.url(`test/pages/MultiComboBox.html`);
@@ -477,7 +486,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
-			const mcb = await $("#mcb-long-token");
+			const mcb = $("#mcb-long-token");
 			const inner = mcb.shadow$("input");
 
 			await mcb.scrollIntoView();
@@ -491,6 +500,65 @@ describe("MultiComboBox general interaction", () => {
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.strictEqual(tokens.length, 0, "Long token should be deleted" );
+		});
+
+		it("prevents selection change event when clicking an item", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-prevent");
+			const input = mcb.shadow$("#ui5-multi-combobox-input");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-prevent")
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			const mcbTokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(mcbTokens.length, 1, "1 token is created.");
+
+			await input.click();
+			await input.keys("i");
+
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
+			assert.strictEqual(await input.getValue(), "Item 1", "Value is correct");
+
+			await firstItem.click();
+
+			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
+			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
+			assert.equal(mcbTokens.length, 1, "1 token is created.");
+		});
+
+		it("prevents selection change event when deleting a token", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-prevent");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			const deleteIcon = await tokens[0].shadow$("ui5-icon");
+
+			assert.equal(await tokens.length, 1, "should have one token");
+
+			await deleteIcon.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 1, "should have one token");
+        });
+
+		it ("should prevent selection-change on CTRL+A", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-prevent");
+			const input = await mcb.shadow$("input");
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 1, "Should have 1 token.");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 1, "Should have 1 token.");
 		});
 	});
 
@@ -1385,6 +1453,39 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 6, "6 Tokens are placed in the MCB");
 			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
 		});
+
+		it("should open/close popover on keyboard combination ctrl + i", async () => {
+			const mcb = await $("#truncated-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened");
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed");
+
+			await mcb.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Control", "i"]);
+			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
+			await mcb.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed");
+		});
+
+		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {
+			const mcb = await $("#mcb-no-typeahead");
+			const rpoClassName = await getTokenizerPopoverId("mcb-no-typeahead");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed since no tokens");
+
+		});
 	});
 
 	describe("General", () => {
@@ -1473,6 +1574,86 @@ describe("MultiComboBox general interaction", () => {
 
 			await mcb.click();
 			assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
+		});
+
+		it("Should apply correct text to the tokens overflow indicator", async () => {
+			const mcNItems = await $("#mc-items");
+			const mcNMore = await $("#mc-more");
+			const tokenizerNItems = await mcNItems.shadow$("ui5-tokenizer");
+			const tokenizerNMore = await mcNMore.shadow$("ui5-tokenizer");
+			const nItemsLabel = await tokenizerNItems.shadow$(".ui5-tokenizer-more-text");
+			const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
+			let resourceBundleText = null;
+
+			resourceBundleText = await browser.executeAsync(done => {
+				const mi = document.getElementById("mc-items");
+				done({
+					mcItemsLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_SHOW_ALL_ITEMS, 2),
+					mcNMoreLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1)
+				});
+			});
+	
+			assert.strictEqual(await nItemsLabel.getText(), resourceBundleText.mcItemsLabelText, "Text should be 2 Items");
+			assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.mcNMoreLabelText, "Text should be 1 More");
+		});
+	});
+
+	describe("MultiComboBox Truncated Token", () => {
+		beforeEach(async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+		});
+
+		it("should truncate token when single token is in the multicombobox and open popover on click", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+			await token.click();
+
+			assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+			assert.ok(await token.getProperty("selected"), "Token should be selected");
+			assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
+			assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
+
+			await token.click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+			assert.ok(await token.getProperty("focused"), "Token should be focused");
+		});
+
+		it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+			await token.click();
+
+			await $("#dummy-btn").click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+		});
+
+		it("should close truncation popover and deselect selected tokens when clicked in input field", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const inner = await mcb.shadow$("input");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+			await inner.click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
 		});
 	});
 
