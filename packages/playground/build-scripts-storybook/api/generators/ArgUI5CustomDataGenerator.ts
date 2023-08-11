@@ -1,5 +1,5 @@
-import { IApiReader, IComponentParsedAPI } from "../ApiReader";
-import { IGenerator } from "./ArgGenerator";
+import type { IComponentParsedAPI } from "../ApiReader";
+import type { IGenerator } from "./ArgGenerator";
 import type { InputType as IArgType } from "@storybook/types";
 
 class ArgUI5CustomDataGenerator implements IGenerator {

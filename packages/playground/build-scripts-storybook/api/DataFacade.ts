@@ -1,4 +1,4 @@
-import { IApiReader, IComponentAPI, IComponentData, IComponentParsedAPI } from "./ApiReader";
+import type { IApiReader, IComponentAPI, IComponentData, IComponentParsedAPI } from "./ApiReader";
 
 const EXCLUDE_LIST = [
     "effectiveDir",
@@ -34,12 +34,26 @@ export interface IDataFacade {
 }
 
 export class DataFacade implements IDataFacade {
+    /**
+     * Parses the API data and returns it in a format that is easier to work with.
+     * It also handles inheritance of API data.
+     * 
+     * @param {IApiReader} apiReader The API reader instance.
+     * @param {string[]} stories The list of stories to parse.
+     * @returns {Map<string, IComponentParsedAPI[]>} The parsed API data.
+     * @public
+     */
     parse(apiReader: IApiReader, stories: string[]): Map<string, IComponentParsedAPI[]> {
         let parsedStoriesData = new Map<string, IComponentParsedAPI[]>();
 
         stories.forEach((storyName) => {
             let parsed: IComponentParsedAPI[] = [];
             const rawData = apiReader.findApi(storyName);
+
+            if (rawData.extends) {
+                const parentData = this.parse(apiReader, [rawData.extends]);
+                parsed = [...parsed, ...parentData.get(rawData.extends) || []];
+            }
 
             if (rawData) {
                 INCLUDE_API_LIST.forEach((apiType) => {
@@ -51,11 +65,6 @@ export class DataFacade implements IDataFacade {
                             .map((item) => ({ ...item, apiType }))];
                     }
                 });
-
-                if (rawData.extends) {
-                    const parentData = this.parse(apiReader, [rawData.extends]);
-                    parsed = [...parsed, ...parentData.get(rawData.extends) || []];
-                }
             }
 
             parsedStoriesData.set(storyName, parsed);

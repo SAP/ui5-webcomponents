@@ -1,5 +1,5 @@
-import { IApiReader, IComponentParsedAPI } from "../ApiReader";
-import { IGenerator } from "./ArgGenerator";
+import type { IComponentParsedAPI } from "../ApiReader";
+import type { IGenerator } from "./ArgGenerator";
 import type { InputType as IArgType } from "@storybook/types";
 
 class ArgEventsGenerator implements IGenerator {
@@ -8,6 +8,7 @@ class ArgEventsGenerator implements IGenerator {
     }
     generate(dataParsed: IComponentParsedAPI): IArgType {
         return {
+            control: false,
             description: dataParsed.description,
             table: {
                 category: "Events",

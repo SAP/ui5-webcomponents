@@ -1,7 +1,7 @@
 import type { IApiReader, IComponentParsedAPI } from "./ApiReader";
 import type { InputType as IArgType } from "@storybook/types";
 
-import { IGenerator } from "./generators/ArgGenerator";
+import type { IGenerator } from "./generators/ArgGenerator";
 import { ArgSlotsGenerator } from "./generators/ArgSlotsGenerator";
 import { ArgEventsGenerator } from "./generators/ArgEventsGenerator";
 import { ArgMethodsGenerator } from "./generators/ArgMethodsGenerator";

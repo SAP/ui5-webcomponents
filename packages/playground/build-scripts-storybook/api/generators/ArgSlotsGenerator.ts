@@ -1,15 +1,20 @@
-import { IComponentParsedAPI } from "../ApiReader";
-import { IGenerator } from "./ArgGenerator";
-import type { InputType as IArgType } from "@storybook/types";
+import type { IComponentParsedAPI, IComponentSlot } from "../ApiReader";
+import type { IGenerator } from "./ArgGenerator";
+import type { InputType as IArgType, SBType } from "@storybook/types";
 
 class ArgSlotsGenerator implements IGenerator {
     isMatch(dataParsed: IComponentParsedAPI): boolean {
         return dataParsed.apiType === "slots";
     }
-    generate(dataParsed: IComponentParsedAPI): IArgType {
+    generate(dataParsed: IComponentSlot): IArgType {
         return {
-            "control": {
-                "type": "text"
+            type: dataParsed.type as unknown as SBType,
+            description: dataParsed.description,
+            control: {
+                type: "text"
+            },
+            table: {
+                category: "Slots",
             }
         };
     }
