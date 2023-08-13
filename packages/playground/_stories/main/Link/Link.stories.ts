@@ -17,7 +17,7 @@ const component = "ui5-link";
 
 export default {
 	title: "Main/Link",
-	component,
+	component: "Link",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

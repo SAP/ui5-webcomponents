@@ -15,7 +15,7 @@ const component = "ui5-color-palette-popover";
 
 export default {
 	title: "Main/ColorPalettePopover",
-	component,
+	component: "ColorPalettePopover",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
