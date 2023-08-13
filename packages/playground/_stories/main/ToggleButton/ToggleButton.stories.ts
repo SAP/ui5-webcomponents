@@ -16,7 +16,7 @@ const component = "ui5-toggle-button";
 
 export default {
 	title: "Main/ToggleButton",
-	component,
+	component: "ToggleButton",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

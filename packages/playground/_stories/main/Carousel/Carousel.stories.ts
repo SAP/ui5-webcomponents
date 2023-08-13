@@ -17,7 +17,7 @@ const component = "ui5-carousel";
 
 export default {
 	title: "Main/Carousel",
-	component,
+	component: "Carousel",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

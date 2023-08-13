@@ -14,10 +14,10 @@ const component = "ui5-side-navigation";
 
 export default {
 	title: "Fiori/Side Navigation",
-	component,
+	component: "SideNavigation",
 	subcomponents: {
-		SideNavigationItem: "ui5-side-navigation-item",
-		SideNavigationSubItem: "ui5-side-navigation-sub-item"
+		SideNavigationItem: "SideNavigationItem",
+		SideNavigationSubItem: "SideNavigationSubItem"
 	},
 	parameters: {
 		docs: {

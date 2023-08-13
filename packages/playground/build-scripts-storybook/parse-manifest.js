@@ -67,6 +67,8 @@ const parseMembers = (members) => {
 
 const parseModule = (module) => {
     module.declarations = module.declarations.map((declaration) => {
+        declaration.tagName = declaration.name;
+
         // remove attributes as they are duplicated with the properties
         if (declaration.attributes) {
             delete declaration.attributes;

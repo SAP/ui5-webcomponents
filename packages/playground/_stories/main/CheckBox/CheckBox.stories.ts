@@ -15,7 +15,7 @@ const component = "ui5-checkbox";
 
 export default {
     title: "Main/CheckBox",
-    component,
+    component: "CheckBox",
     parameters: {
         docs: {
             page: DocsPage({ ...componentInfo, component }),

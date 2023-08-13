@@ -14,7 +14,7 @@ const component = "ui5-slider";
 
 export default {
     title: "Main/Slider",
-    component,
+    component: "Slider",
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })

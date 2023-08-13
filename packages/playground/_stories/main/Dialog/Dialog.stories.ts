@@ -13,7 +13,7 @@ const component = "ui5-dialog";
 
 export default {
 	title: "Main/Dialog",
-	component,
+	component: "Dialog",
 	argTypes,
 	parameters: {
 		docs: {

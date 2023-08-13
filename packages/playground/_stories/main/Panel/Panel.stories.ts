@@ -19,7 +19,7 @@ let index = 0;
 
 export default {
     title: "Main/Panel",
-    component,
+    component: "Panel",
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })

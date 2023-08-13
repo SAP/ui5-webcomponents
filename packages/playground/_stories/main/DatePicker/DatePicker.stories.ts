@@ -17,7 +17,7 @@ const component = "ui5-date-picker";
 
 export default {
 	title: "Main/DatePicker",
-	component,
+	component: "DatePicker",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

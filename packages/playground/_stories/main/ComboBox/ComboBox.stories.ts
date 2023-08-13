@@ -18,10 +18,10 @@ const component = "ui5-combobox";
 
 export default {
 	title: "Main/ComboBox",
-	component,
+	component: "ComboBox",
 	subcomponents: {
-		ComboBoxItem: "ui5-cb-item",
-		ComboBoxGroupItem: "ui5-cb-group-item",
+		ComboBoxItem: "ComboBoxItem",
+		ComboBoxGroupItem: "ComboBoxGroupItem",
 	},
 	parameters: {
 		docs: {
