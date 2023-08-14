@@ -7,12 +7,11 @@
 			{{this.toolbarTemplate}}
 		{{/each}}
 
-		{{#if showOverflowBtn}}
-			<ui5-button
-				icon="overflow"
-				design="Transparent"
-				class="ui5-tb-overflow-btn ui5-tb-item"
-			></ui5-button>
-		{{/if}}
+		<ui5-button
+			aria-hidden="{{hideOverflowButton}}"
+			icon="overflow"
+			design="Transparent"
+			class="{{classes.overflowButton}}"
+		></ui5-button>
 	</div>
 </div>

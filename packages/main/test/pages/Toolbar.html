@@ -32,12 +32,14 @@
 					<ui5-option>2</ui5-option>
 					<ui5-option>3</ui5-option>
 				</ui5-toolbar-select>
+				<ui5-toolbar-separator></ui5-toolbar-separator>
+				<ui5-toolbar-separator></ui5-toolbar-separator>
 				<ui5-toolbar-button icon="employee" text="Call me later"></ui5-toolbar-button>
 			</ui5-toolbar>
 		</section>
 		<br /><br />
 
-		<ui5-title level="H3">Toolbar with start-aligned items</ui5-title>
+		<!-- <ui5-title level="H3">Toolbar with start-aligned items</ui5-title>
 		<br />
 		<section>
 			<ui5-toolbar align-content="Start">
@@ -232,9 +234,9 @@
 		document.getElementById("toolbar-select").addEventListener("change", e => {
 			console.log(e);
 		})
-		toolbarSlider.addEventListener("change", e => {
+		toolbarSlider.addEventListener("input", e => {
 			document.getElementById("toolbars-container").setAttribute("style", "width:" + e.target.value + "%");
 		})
-	</script>
+	</script> -->
 	</body>
 </html>

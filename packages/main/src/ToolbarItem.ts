@@ -5,6 +5,11 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
+interface IToolbarItem {
+	overflowPriority: `${ToolbarItemOverflowBehavior}`;
+	preventOverflowClosing: boolean;
+}
+
 @customElement("ui5-tb-item")
 
 /**
@@ -20,7 +25,7 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
  * @abstract
  * @public
  */
-class ToolbarItem extends UI5Element {
+class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
 	 * the item never goes in the Popover, if "AlwaysOverflow" - it never comes out of it.
@@ -41,7 +46,7 @@ class ToolbarItem extends UI5Element {
 	/**
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
 	 * It will close by default.
-	 * @type {boolean}
+	 * @type {Boolean}
 	 * @defaultvalue false
 	 * @public
 	 * @name sap.ui.webc.main.Toolbar.prototype.preventOverflowClosing
@@ -49,17 +54,34 @@ class ToolbarItem extends UI5Element {
 	@property({ type: Boolean })
 	preventOverflowClosing!: boolean;
 
-	/*
+	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
+	* @returns {Boolean}
+	* @protected
+	* @virtual
 	*/
 	get ignoreSpace() {
 		return false;
 	}
 
+	/**
+	 * Returns if the item contains text. Used to position the text properly inside the popover.
+	 * Aligned left if the item has text, default aligned otherwise.
+	 * @protected
+	 * @virtual
+	 * @returns {Boolean}
+	 */
 	get containsText() {
 		return false;
 	}
 
+	/**
+	 * Returns if the item is flexible. An item that is returning true for this property will make
+	 * the toolbar expand to fill the 100% width of its container.
+	 * @protected
+	 * @virtual
+	 * @returns {Boolean}
+	 */
 	get hasFlexibleWidth() {
 		return false;
 	}

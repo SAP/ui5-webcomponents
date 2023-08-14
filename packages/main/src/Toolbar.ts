@@ -9,6 +9,7 @@ import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Button from "./Button.js";
 
 import Popover from "./Popover.js";
@@ -99,20 +100,21 @@ class Toolbar extends UI5Element {
 	alignContent!: `${ToolbarAlign}`;
 
 	/**
-	 * Indicates the end of the resizing iteration.
-	 * @type {boolean}
-	 * @private
-	 */
-	 @property({ type: Boolean })
-	 resizing!: boolean;
+	* Calculated width of the whole toolbar.
+	* @private
+	* @type {Boolean}
+	* @defaultvalue false
+	*/
+	@property({ type: Integer })
+	width?: number;
 
 	/**
-	 * TEST
-	 * @type {boolean}
+	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
 	 * @private
+	 * @type {Boolean}
 	 */
 	@property({ type: Boolean })
-	invalidate!: boolean;
+	reverseOverflow!: boolean;
 
 	/**
  	* Slotted Toolbar items
@@ -125,64 +127,40 @@ class Toolbar extends UI5Element {
 	items!: Array<ToolbarItem>
 
 	_onResize!: ResizeObserverCallback;
+	_itemsObserver!: MutationObserver;
+	itemsToOverflow: Array<ToolbarItem> = [];
+	itemsWidth = 0;
+	itemsWidthMeasured = false;
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
-
-	width = 0;
-
-	/**
-	* @private
-	* Calculated width of all the Toolbar items.
-	*/
-	contentWidth?: number = 0;
-
-	/**
-	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
-	 * @private
-	 * @type {Boolean}
-	 */
-	reverseOverflow!: boolean;
-
-	/**
-	 * Indicates the items have been measured and the layout can be calculated.
-	 * @type {boolean}
-	 * @private
-	 */
-	itemsWidthMeasured!: boolean;
-
-	/**
-	 * Cached the sum of all of items width.
-	 * @type {sap.ui.webc.base.types.Integer}
-	 * @private
-	 */
-	ITEMS_WIDTH!: number;
-
-	/**
-	 * Items, which will be displayed in the toolbar.
-	 * @type {Object}
-	 * @private
-	 */
-	itemsToBar: Array<ToolbarItem> = [];
-	/**
-	  * Items, that will be displayed inside overflow Popover.
-	  * @type {Object}
-	  * @private
-	  */
-	itemsToOverflow: Array<ToolbarItem> = [];
 
 	constructor() {
 		super();
 
 		// resize handler
 		this._onResize = this.onResize.bind(this);
+
+		this._itemsObserver = new MutationObserver(() => {
+			// some items were added/removed/updated
+			// reset the cache and trigger a re-render
+			this.itemsToOverflow = [];
+			this.width = 0; // re-render
+		});
 	}
 
-	get OVERFLOW_BTN_SIZE(): number {
-		const toolbarOverflowButton = this.overflowButtonDOM;
-		return toolbarOverflowButton ? toolbarOverflowButton.getBoundingClientRect().width : 0;
+	_observeItems() {
+		this.movableItems.forEach(item => {
+			this._itemsObserver.observe(item, {
+				attributes: true,
+			});
+		});
 	}
 
-	get PADDING(): number {
+	get overflowButtonSize(): number {
+		return this.overflowButtonDOM?.getBoundingClientRect().width || 0;
+	}
+
+	get padding(): number {
 		const toolbarComputedStyle = getComputedStyle(this.getDomRef()!);
 		return calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-left")
 		+ calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-right");
@@ -196,55 +174,36 @@ class Toolbar extends UI5Element {
 	}
 
 	onExitDOM() {
+		this._itemsObserver.disconnect();
 		ResizeHandler.deregister(this, this._onResize);
 	}
 
-	onBeforeRendering(): void {
-		if (!this.itemsWidthMeasured) {
-			this.itemsToOverflow = [];
-		}
+	onBeforeRendering() {
+		this._observeItems();
 	}
 
 	async onAfterRendering() {
-		if (this.resizing) {
-			this.resizing = false;
-		}
-
 		await renderFinished();
 
-		if (!this.itemsWidthMeasured) {
-			this.storeItemsWidth();
-		} else {
-			this.itemsWidthMeasured = false;
-		}
-
-		this.processOverflowLayout(true);
+		this.storeItemsWidth();
+		this.processOverflowLayout();
 	}
 
 	/**
 	 * Layout management
 	 */
 	processOverflowLayout(forceLayout = false) {
-		const containerWidth = this.offsetWidth - this.PADDING;
-		const contentWidth: number = this.ITEMS_WIDTH;
-		const contentOverflows = contentWidth + this.OVERFLOW_BTN_SIZE > containerWidth;
+		const containerWidth = this.offsetWidth - this.padding;
+		const contentWidth = this.itemsWidth;
 
 		// skip calculation if the width has not been changed
 		if (!forceLayout && this.width === containerWidth) {
 			return;
 		}
 
-		if (contentOverflows) {
-			this.distributeItems(contentWidth - containerWidth);
-		} else {
-			this.displayAllItemsIntoBar();
-		}
+		this.distributeItems(contentWidth - containerWidth + this.overflowButtonSize);
 
 		this.width = containerWidth;
-
-		if (this.contentWidth !== contentWidth) {
-			this.contentWidth = contentWidth;
-		}
 	}
 
 	storeItemsWidth() {
@@ -252,58 +211,39 @@ class Toolbar extends UI5Element {
 
 		this.movableItems.forEach((item: ToolbarItem) => {
 			const itemWidth = this.getItemWidth(item);
-			const id: string = item._id;
 			totalWidth += itemWidth;
-			this.ITEMS_WIDTH_MAP.set(id, itemWidth);
+			this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
 		});
 
-		this.ITEMS_WIDTH = totalWidth;
-		this.itemsWidthMeasured = true;
-		this.invalidate = !this.invalidate;
+		this.itemsWidth = totalWidth;
 	}
 
 	distributeItems(overflowSpace = 0) {
-		overflowSpace += this.OVERFLOW_BTN_SIZE;
+		const movableItems = this.movableItems.reverse();
+		let index = 0;
+		let currentItem = movableItems[index];
 
-		this.itemsToBar = [];
 		this.itemsToOverflow = [];
 
 		// distribute items that always overflow
 		this.distributeItemsThatAlwaysOverflow();
 
-		// distribute the rest of the items, based on the available space
-		this.movableItems.reverse().forEach(item => {
-			if (overflowSpace > 0 && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow) {
-				this.itemsToOverflow.unshift(item);
-				overflowSpace -= this.getCachedItemWidth(item._id)!;
-			} else {
-				this.itemsToBar.unshift(item);
-			}
-		});
+		while (overflowSpace > 0 && currentItem) {
+			this.itemsToOverflow.unshift(currentItem);
+			overflowSpace -= this.getCachedItemWidth(currentItem?._id) || 0;
+			index++;
+			currentItem = movableItems[index];
+		}
 
 		// If the last bar item is a spacer, force it to the overflow even if there is enough space for it
-		if (this.itemsToBar.length) {
-			const lastItemToBar = this.itemsToBar[this.itemsToBar.length - 1];
-			if (lastItemToBar.ignoreSpace) {
-				const itemBar = this.itemsToBar.pop();
-				if (itemBar) {
-					this.itemsToOverflow.unshift(itemBar);
-				}
+		if (index < movableItems.length) {
+			let lastItem = movableItems[index];
+			while (lastItem?.ignoreSpace) {
+				this.itemsToOverflow.unshift(lastItem);
+				index++;
+				lastItem = movableItems[index];
 			}
 		}
-	}
-
-	displayAllItemsIntoBar() {
-		this.itemsToOverflow = [];
-
-		// distribute items that always overflow
-		this.distributeItemsThatAlwaysOverflow();
-
-		// distribute items that always overflow
-		this.distributeItemsThatNeverOverflow();
-
-		// distribute the rest of the items into the bar
-		this.itemsToBar = this.movableItems.map((item: ToolbarItem) => item);
 	}
 
 	distributeItemsThatAlwaysOverflow() {
@@ -312,18 +252,12 @@ class Toolbar extends UI5Element {
 		});
 	}
 
-	distributeItemsThatNeverOverflow() {
-		this.neverOverflowItems.forEach((item: ToolbarItem) => {
-			this.itemsToBar.push(item);
-		});
-	}
-
 	get alwaysOverflowItems() {
 		return this._items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.AlwaysOverflow);
 	}
 
 	get movableItems() {
-		return this._items.filter((item: ToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow);
+		return this._items.filter((item: ToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow);
 	}
 
 	get neverOverflowItems() {
@@ -334,11 +268,10 @@ class Toolbar extends UI5Element {
 	 * Event Handlers
 	 */
 	onResize() {
-		if (this.itemsWidthMeasured) {
+		if (!this.itemsWidth) {
 			return;
 		}
 
-		this.resizing = true;
 		this.closeOverflow();
 		this.processOverflowLayout();
 	}
@@ -383,18 +316,17 @@ class Toolbar extends UI5Element {
 	 * Read-only members
 	 */
 	get overflowItems() {
-		const overflowItems = this.getItemsInfo(this.itemsToOverflow);
+		// spacers and separators are ignored
+		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
 		return this.reverseOverflow ? overflowItems.reverse() : overflowItems;
 	}
 
 	get standardItems() {
-		this.itemsToBar = this._items.filter(item => this.itemsToOverflow.indexOf(item) === -1);
-
-		return this.getItemsInfo(this.itemsToBar);
+		return this.getItemsInfo(this._items.filter(item => this.itemsToOverflow.indexOf(item) === -1));
 	}
 
-	get showOverflowBtn() {
-		return !!this.itemsToOverflow.length;
+	get hideOverflowButton() {
+		return this.overflowItems.length === 0;
 	}
 
 	get _items(): Array<ToolbarItem> {
@@ -417,7 +349,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get hasFlexibleSpacers() {
-		return this.items.some((item: ToolbarItem) => item.localName === "ui5-toolbar-spacer" && item.hasFlexibleWidth);
+		return this.items.some((item: ToolbarItem) => item.hasFlexibleWidth);
 	}
 
 	get classes() {
@@ -428,6 +360,11 @@ class Toolbar extends UI5Element {
 			},
 			overflow: {
 				"ui5-overflow-list--alignleft": this.hasItemWithText,
+			},
+			overflowButton: {
+				"ui5-tb-item": true,
+				"ui5-tb-overflow-btn": true,
+				"ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
 			},
 		};
 	}

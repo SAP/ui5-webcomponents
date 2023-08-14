@@ -115,11 +115,7 @@ class ToolbarButton extends ToolbarItem {
 	}
 
 	get containsText() {
-		return this.text !== undefined;
-	}
-
-	get hasFlexibleWidth() {
-		return this.width !== undefined;
+		return true;
 	}
 
 	get toolbarTemplate() {

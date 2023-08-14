@@ -82,3 +82,8 @@
 	background: var(--sapToolbar_SeparatorColor);
 	box-sizing: border-box;
 }
+
+.ui5-tb-overflow-btn-hidden {
+	visibility: hidden;
+	position: absolute;
+}
