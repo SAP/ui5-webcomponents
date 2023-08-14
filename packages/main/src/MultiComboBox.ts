@@ -29,7 +29,6 @@ import {
 	isHomeCtrl,
 	isEndCtrl,
 	isCtrlA,
-	isCtrlV,
 	isDeleteShift,
 	isInsertShift,
 	isInsertCtrl,
