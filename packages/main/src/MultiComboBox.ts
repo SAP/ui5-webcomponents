@@ -1187,7 +1187,7 @@ class MultiComboBox extends UI5Element {
 		}
 
 		if (isInsertShift(e)) {
-			this._handleInsertPaste(e);
+			this._handleInsertPaste();
 		}
 
 		if (isHome(e)) {
