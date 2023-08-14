@@ -1,0 +1,6 @@
+@import "../base/PopupsCommon-parameters.css";
+
+:root {
+	--_ui5_popup_header_font_family: var(--sapFontHeaderFamily);
+	--_ui5_popup_border_radius: 0.5rem;
+}

@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0...v1.17.0-rc.0) (2023-08-10)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** support collection based illustration loading ([#7318](https://github.com/SAP/ui5-webcomponents/issues/7318)) ([6b52dbd](https://github.com/SAP/ui5-webcomponents/commit/6b52dbd157a3c8198e41c84157e3d9ae89e3386e))
+* **ui5-shellbar:** button focus outline adjustment ([#7389](https://github.com/SAP/ui5-webcomponents/issues/7389)) ([3b7c711](https://github.com/SAP/ui5-webcomponents/commit/3b7c711875303be0bb995c80545a9786b2ec511c)), closes [#7220](https://github.com/SAP/ui5-webcomponents/issues/7220)
+* **ui5-side-navigation:** allow overstyling of border-radius ([#7400](https://github.com/SAP/ui5-webcomponents/issues/7400)) ([16ca431](https://github.com/SAP/ui5-webcomponents/commit/16ca43197ee7e9d522c813933c660b7dfe2a6ea3)), closes [#7308](https://github.com/SAP/ui5-webcomponents/issues/7308)
+
+
+
+
+
+# [1.16.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.4...v1.16.0) (2023-08-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.16.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.3...v1.16.0-rc.4) (2023-08-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
 # [1.16.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.2...v1.16.0-rc.3) (2023-07-27)
 
 

@@ -15,9 +15,9 @@ import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
 const component = "ui5-upload-collection";
 
 export default {
-	title: "Fiori/UploadCollection",
-	component,
-	subcomponents: {'UploadCollectionItem' : 'ui5-upload-collection-item'},
+	title: "Fiori/Upload Collection",
+	component: "UploadCollection",
+	subcomponents: {'UploadCollectionItem' : 'UploadCollectionItem'},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),
@@ -129,8 +129,8 @@ const handleFileUpload: Decorator = (story) => {
 	});
 </script>`;
 };
-export const WithHeader = Template.bind({});
-WithHeader.args = {
+export const Basic = Template.bind({});
+Basic.args = {
 	mode: ListMode.Delete,
 	id: "uploadCollection",
 	accessibleName: "Uploaded (2)",
@@ -158,14 +158,14 @@ ${uploadCollectionItem(
 	`<ui5-icon name="document-text" slot="thumbnail"></ui5-icon>`,
 )}`,
 };
-WithHeader.parameters = {
+Basic.parameters = {
 	docs: {
 		story: {
 			iframeHeight: "500px",
 		},
 	},
 };
-WithHeader.decorators = [
+Basic.decorators = [
 	setHeaderStyles,
 	handleFileUpload,
 	handleItemDeleteEvent,

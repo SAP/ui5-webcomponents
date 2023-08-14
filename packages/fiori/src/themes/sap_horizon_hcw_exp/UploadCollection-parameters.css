@@ -1,0 +1,9 @@
+@import "../base/UploadCollection-parameters.css";
+
+:root {
+	--ui5_upload_collection_drag_overlay_border: 0.1875rem dashed var(--sapContent_ForegroundBorderColor);
+	--ui5_upload_collection_drop_overlay_border: 0.1875rem solid var(--sapContent_HelpColor);
+	--ui5_upload_collection_button_margin_block_end: 2px;
+	--ui5_upload_collection_last_button_inline_end: 2px;
+	--ui5_upload_collection_small_size_buttons_margin_block_start: 0.5rem;
+}

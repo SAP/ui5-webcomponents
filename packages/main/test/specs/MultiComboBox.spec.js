@@ -1453,6 +1453,39 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(tokens.length, 6, "6 Tokens are placed in the MCB");
 			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
 		});
+
+		it("should open/close popover on keyboard combination ctrl + i", async () => {
+			const mcb = await $("#truncated-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened");
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed");
+
+			await mcb.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Control", "i"]);
+			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
+			await mcb.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed");
+		});
+
+		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {
+			const mcb = await $("#mcb-no-typeahead");
+			const rpoClassName = await getTokenizerPopoverId("mcb-no-typeahead");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed since no tokens");
+
+		});
 	});
 
 	describe("General", () => {

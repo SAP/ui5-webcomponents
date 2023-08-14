@@ -1,5 +1,6 @@
 import getSharedResource from "../getSharedResource.js";
 import type { I18nText } from "../i18nBundle.js";
+import { getTheme } from "../config/Theme.js";
 
 type IllustrationLoader = (illustrationName: string) => Promise<IllustrationData>;
 
@@ -13,14 +14,69 @@ type IllustrationProperties = {
 
 type IllustrationData = IllustrationProperties & {
 	set: string,
+	collection: string,
 };
+
+enum IllustrationCollections {
+	"sap_horizon" = "V5",
+	"sap_horizon_dark" = "V5",
+	"sap_horizon_hcb" = "V5/HC",
+	"sap_horizon_hcw" = "V5/HC",
+}
+
+const FALLBACK_COLLECTION = "V4";
 
 const loaders = new Map<string, IllustrationLoader>();
 const registry = getSharedResource<Map<string, IllustrationProperties>>("SVGIllustration.registry", new Map());
 const illustrationPromises = getSharedResource<Map<string, Promise<IllustrationData>>>("SVGIllustration.promises", new Map());
 
+const getCollection = () => {
+	const theme = getTheme() as keyof typeof IllustrationCollections;
+
+	if (IllustrationCollections[theme]) {
+		return IllustrationCollections[theme];
+	}
+
+	return FALLBACK_COLLECTION;
+};
+
+/**
+ * Processes the name of the illustration
+ * The name is used to generate the registry key and the loader key
+ * The registry key is used to store and get the illustration data from the registry
+ * The loader key is used to store and get the illustration loader from the loaders map
+ * The function generates the correct registry key and loader key based on whether an loader exists for the illustration
+ * If there is no loader registered for the collection, it falls back to the default collection
+ */
+const processName = (name: string) => {
+	let collection = getCollection();
+	const isTnt = name.startsWith("Tnt");
+	const set = isTnt ? "tnt" : "fiori";
+
+	let registryKey = `${set}/${collection}/${name}`;
+	let loaderKey = `${collection}/${name}`;
+
+	if (!loaders.has(loaderKey) && collection !== FALLBACK_COLLECTION) {
+		collection = FALLBACK_COLLECTION;
+		loaderKey = `${collection}/${name}`;
+		registryKey = `${set}/${collection}/${name}`;
+	}
+
+	if (isTnt) {
+		name = name.replace(/^Tnt/, "");
+		registryKey = `${set}/${collection}/${name}`;
+	}
+
+	return {
+		registryKey,
+		loaderKey,
+		collection,
+	};
+};
+
 const registerIllustration = (name: string, data: IllustrationData) => {
-	registry.set(`${data.set}/${name}`, {
+	const collection = data.collection || FALLBACK_COLLECTION;
+	registry.set(`${data.set}/${collection}/${name}`, {
 		dialogSvg: data.dialogSvg,
 		sceneSvg: data.sceneSvg,
 		spotSvg: data.spotSvg,
@@ -33,38 +89,31 @@ const registerIllustrationLoader = (illustrationName: string, loader: Illustrati
 	loaders.set(illustrationName, loader);
 };
 
-const _loadIllustrationOnce = async (illustrationName: string) => {
-	if (!illustrationPromises.has(illustrationName)) {
-		if (!loaders.has(illustrationName)) {
+const _loadIllustrationOnce = (illustrationName: string) => {
+	const { loaderKey } = processName(illustrationName);
+
+	if (!illustrationPromises.has(loaderKey)) {
+		if (!loaders.has(loaderKey)) {
 			const illustrationPath = illustrationName.startsWith("Tnt") ? `tnt/${illustrationName.replace(/^Tnt/, "")}` : illustrationName;
 			throw new Error(`No loader registered for the ${illustrationName} illustration. Probably you forgot to import the "@ui5/webcomponents-fiori/dist/illustrations/${illustrationPath}.js" module. Or you can import the "@ui5/webcomponents-fiori/dist/illustrations/AllIllustrations.js" module that will make all illustrations available, but fetch only the ones used.`);
 		}
 
-		const loadIllustrations = loaders.get(illustrationName)!;
-		illustrationPromises.set(illustrationName, loadIllustrations(illustrationName));
+		const loadIllustrations = loaders.get(loaderKey)!;
+		illustrationPromises.set(loaderKey, loadIllustrations(loaderKey));
 	}
-	return illustrationPromises.get(illustrationName);
+	return illustrationPromises.get(loaderKey);
 };
 
 const getIllustrationDataSync = (illustrationName: string) => {
-	let set = "fiori";
-
-	if (illustrationName.startsWith("Tnt")) {
-		set = "tnt";
-		illustrationName = illustrationName.replace(/^Tnt/, "");
-	}
-	return registry.get(`${set}/${illustrationName}`);
+	const { registryKey } = processName(illustrationName);
+	return registry.get(registryKey);
 };
 
 const getIllustrationData = async (illustrationName: string) => {
-	let set = "fiori";
+	const { registryKey } = processName(illustrationName);
 
 	await _loadIllustrationOnce(illustrationName);
-	if (illustrationName.startsWith("Tnt")) {
-		set = "tnt";
-		illustrationName = illustrationName.replace(/^Tnt/, "");
-	}
-	return registry.get(`${set}/${illustrationName}`);
+	return registry.get(registryKey);
 };
 
 export {

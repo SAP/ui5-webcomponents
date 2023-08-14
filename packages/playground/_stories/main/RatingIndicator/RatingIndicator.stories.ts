@@ -15,7 +15,7 @@ let index = 0;
 
 export default {
     title: "Main/RatingIndicator",
-    component,
+    component: "RatingIndicator",
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })

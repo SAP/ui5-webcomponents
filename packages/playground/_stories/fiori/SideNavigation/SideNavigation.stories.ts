@@ -1,8 +1,7 @@
 import { html } from "lit";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import { ifDefined } from "lit/directives/if-defined.js";
-import type { Meta } from "@storybook/web-components";
-
+import type { Decorator, Meta } from "@storybook/web-components";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
@@ -14,11 +13,11 @@ import type SideNavigation from "@ui5/webcomponents-fiori/dist/SideNavigation.js
 const component = "ui5-side-navigation";
 
 export default {
-	title: "Fiori/SideNavigation",
-	component,
+	title: "Fiori/Side Navigation",
+	component: "SideNavigation",
 	subcomponents: {
-		SideNavigationItem: "ui5-side-navigation-item",
-		SideNavigationSubItem: "ui5-side-navigation-sub-item"
+		SideNavigationItem: "SideNavigationItem",
+		SideNavigationSubItem: "SideNavigationSubItem"
 	},
 	parameters: {
 		docs: {
@@ -37,14 +36,24 @@ const Template: UI5StoryArgs<SideNavigation, StoryArgsSlots> = (args) => {
 </ui5-side-navigation>`;
 };
 
+const setHeight: Decorator = (story) => {
+	return html`<style>
+	ui5-side-navigation {
+		height: 600px;
+	}
+</style>
+
+${story()}`;
+};
+
 export const Basic = Template.bind({});
 Basic.args = {
 	default: `<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
-	<ui5-side-navigation-item text="People" expanded="" icon="group">
+	<ui5-side-navigation-item text="People" expanded icon="group">
 		<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
 		<ui5-side-navigation-sub-item text="From Other Teams"></ui5-side-navigation-sub-item>
 	</ui5-side-navigation-item>
-	<ui5-side-navigation-item text="Locations" icon="locate-me" selected=""></ui5-side-navigation-item>
+	<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
 	<ui5-side-navigation-item text="Events" icon="calendar">
 		<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
 		<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
@@ -52,23 +61,98 @@ Basic.args = {
 	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link"></ui5-side-navigation-item>
 	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>`
 };
-Basic.decorators = [
+Basic.decorators = [setHeight];
+Basic.parameters = {
+	docs: {
+		story: {
+			iframeHeight: "700px",
+			// Opt-out of inline rendering in Docs page
+			inline: false,
+		},
+	}
+};
+
+export const ToolLayout = Template.bind({});
+ToolLayout.args = {
+	default: `<ui5-side-navigation-item text="Home" icon="home"></ui5-side-navigation-item>
+	<ui5-side-navigation-item text="People" expanded icon="group">
+		<ui5-side-navigation-sub-item text="From My Team"></ui5-side-navigation-sub-item>
+		<ui5-side-navigation-sub-item text="From Other Team"></ui5-side-navigation-sub-item>
+	</ui5-side-navigation-item>
+	<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
+	<ui5-side-navigation-item text="Events" icon="calendar">
+		<ui5-side-navigation-sub-item text="Local"></ui5-side-navigation-sub-item>
+		<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
+	</ui5-side-navigation-item>`,
+	fixedItems: `<ui5-side-navigation-item slot="fixedItems" text="Useful Links" icon="chain-link"></ui5-side-navigation-item>
+	<ui5-side-navigation-item slot="fixedItems" text="History" icon="history"></ui5-side-navigation-item>`
+};
+ToolLayout.decorators = [
+	setHeight,
 	(story) => {
 		return html`<style>
-	ui5-side-navigation {
-		height: 600px;
+	ui5-shellbar::part(root) {
+		padding-inline-start: 0.75rem;
+		padding-inline-end: 1.25rem;
+		border-radius: 0.5rem;
+		box-shadow:
+			0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+			0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
 	}
 
-	ui5-shellbar::part(root) {
-		padding-inline-start: 0.5rem;
+	.tool-layout {
+		padding: 0.5rem 0.5rem 0 0.5rem;
+		background: color-mix(in srgb, black 4%, var(--sapBackgroundColor));
+		display: grid;
+		gap: 0.5rem;
+		grid-template-rows: auto 1fr;
+		grid-template-columns: auto 1fr;
+	}
+
+	.tool-layout > * {
+		z-index: 1;
+	}
+
+	ui5-shellbar {
+		grid-column: 1 / span 2;
+		grid-row: 1 / 2;
+	}
+
+	ui5-side-navigation {
+		border-radius: 0.5rem 0.5rem 0 0.5rem;
+	}
+
+	.content {
+		background: var(--sapBackgroundColor);
+		border-radius: 0.5rem 0.5rem 0 0;
+		box-shadow:
+			0 0 0.125rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent),
+			0 0.5rem 1rem 0 color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
 	}
 </style>
 
-<ui5-shellbar primary-title="UI5 Web Components" secondary-title="The Best Run SAP" show-co-pilot>
-	<ui5-button icon="menu" slot="startButton" id="toggle"></ui5-button>
-</ui5-shellbar>
+<div class="tool-layout">
+	<ui5-shellbar
+		primary-title="Product Name"
+		secondary-title="Second Title"
+		notifications-count="1"
+		show-notifications>
+		<img slot="logo" src="../assets/images/sap-logo-svg.svg" />
+		<ui5-input slot="searchField"></ui5-input>
+		<ui5-button icon="menu" slot="startButton" id="toggle"></ui5-button>
+		<ui5-avatar slot="profile">
+			<img src="../assets/images/avatars/woman_avatar_5.png" />
+		</ui5-avatar>
+		<ui5-shellbar-item icon="source-code" text="Settings" title="Settings"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="background" text="Settings" title="Settings"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="activity-assigned-to-goal" text="Settings" title="Settings"></ui5-shellbar-item>
+		<ui5-shellbar-item icon="action-settings" text="Settings" title="Settings"></ui5-shellbar-item>
+	</ui5-shellbar>
 
-${story()}
+	${story()}
+
+	<div class="content"></div>
+</div>
 
 <script>
 	const sidenav = document.querySelector("ui5-side-navigation");
@@ -79,7 +163,8 @@ ${story()}
 	}
 ]
 
-Basic.parameters = {
+ToolLayout.parameters = {
+	layout: "fullscreen",
 	docs: {
 		story: {
 			iframeHeight: "700px",

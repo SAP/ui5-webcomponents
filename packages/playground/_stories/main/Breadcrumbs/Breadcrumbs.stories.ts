@@ -16,8 +16,8 @@ const component = "ui5-breadcrumbs";
 
 export default {
     title: "Main/Breadcrumbs",
-    component,
-    subcomponents: { BreadcrumbsItem: "ui5-breadcrumbs-item" },
+    component: "Breadcrumbs",
+    subcomponents: { BreadcrumbsItem: "BreadcrumbItem" },
     parameters: {
         docs: {
             page: DocsPage({ ...componentInfo, component }),

@@ -12,11 +12,15 @@ const component = "ui5-card";
 
 export default {
 	title: "Main/Card",
-	component,
-	subcomponents: { 'CardHeader': 'ui5-card-header' },
+	component: "Card",
+	subcomponents: { 'CardHeader': 'CardHeader' },
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component }),
+			story: {
+				iframeHeight: "370px",
+				inline: false,
+			},
 		},
 	},
 	argTypes,
@@ -150,6 +154,15 @@ WithTable.args = {
 </ui5-table>`
 };
 WithTable.decorators = [setWidth("40rem")];
+WithTable.parameters = {
+	docs: {
+		page: DocsPage({ ...componentInfo, component }),
+		story: {
+			iframeHeight: "250px",
+			inline: false,
+		},
+	},
+}
 
 export const WithTimeline = Template.bind({});
 WithTimeline.args = {
@@ -228,3 +241,13 @@ More.decorators = [
 			</div>`;
 	},
 ];
+
+More.parameters = {
+	docs: {
+		page: DocsPage({ ...componentInfo, component }),
+		story: {
+			iframeHeight: "680px",
+			inline: false,
+		},
+	},
+}

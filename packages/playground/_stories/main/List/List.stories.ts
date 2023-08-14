@@ -17,11 +17,11 @@ const component = "ui5-list";
 
 export default {
   title: "Main/List",
-  component,
+  component: "List",
   subcomponents: {
-    StandardListItem: "ui5-li",
-    CustomListItem: "ui5-li-custom",
-    GroupHeaderListItem: "ui5-li-groupheader",
+    StandardListItem: "StandardListItem",
+    CustomListItem: "CustomListItem",
+    GroupHeaderListItem: "GroupHeaderListItem",
   },
   parameters: {
     docs: {

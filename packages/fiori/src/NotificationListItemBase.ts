@@ -82,13 +82,7 @@ class NotificationListItemBase extends ListItemBase {
 
 	/**
 	 * Defines the <code>priority</code> of the item.
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Low</code></li>
-	 * <li><code>Medium</code></li>
-	 * <li><code>High</code></li>
-	 * </ul>
+	 *
 	 * @type {sap.ui.webc.main.types.Priority}
 	 * @defaultvalue "None"
 	 * @public

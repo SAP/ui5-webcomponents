@@ -3,6 +3,7 @@
 	width: var(--_ui5_side_navigation_width);
 	height: 100%;
 	transition: width .25s;
+	border-radius: var(--_ui5_side_navigation_border_radius);
 }
 
 :host([collapsed]) {
@@ -15,7 +16,7 @@
 	flex-direction: column;
 	background: var(--sapList_Background);
 	border-inline-end: var(--_ui5_side_navigation_border_inline_end);
-	border-radius: var(--_ui5_side_navigation_border_radius);
+	border-radius: inherit;
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
 	box-sizing: border-box;
 	padding: var(--_ui5_side_navigation_container_padding);

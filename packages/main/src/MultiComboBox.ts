@@ -674,6 +674,7 @@ class MultiComboBox extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		const isArrowDownCtrl: boolean = isDownCtrl(e);
+		const isCtrl: boolean = e.metaKey || e.ctrlKey;
 
 		if (isShow(e) && !this.disabled) {
 			this._handleShow(e);
@@ -704,6 +705,11 @@ class MultiComboBox extends UI5Element {
 		if (isInsertShift(e)) {
 			this._handleInsertPaste();
 			return;
+		}
+
+		if (isCtrl && e.key.toLowerCase() === "i" && this._tokenizer.tokens.length > 0) {
+			e.preventDefault();
+			this.togglePopover();
 		}
 
 		if (isSpaceShift(e)) {
@@ -1201,6 +1207,11 @@ class MultiComboBox extends UI5Element {
 		if (isShow(e) && !this.readonly && !this.disabled) {
 			this._preventTokenizerToggle = true;
 			this._handleShow(e);
+		}
+
+		if (isCtrl && e.key.toLowerCase() === "i" && this._tokenizer.tokens.length > 0) {
+			e.preventDefault();
+			this.togglePopover();
 		}
 	}
 

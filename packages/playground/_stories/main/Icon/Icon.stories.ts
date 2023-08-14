@@ -15,7 +15,7 @@ const component = "ui5-icon";
 
 export default {
 	title: "Main/Icon",
-	component,
+	component: "Icon",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),
