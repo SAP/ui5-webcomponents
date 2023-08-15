@@ -113,7 +113,6 @@ class SelectMenu extends UI5Element {
 		this.selectWidth = openerWidth;
 		this.hasValueState = !!opener.hasValueState;
 		this.hasValueStateSlot = opener.valueStateMessageText.length > 0;
-		debugger;
 		this.valueStateText = opener.valueStateText;
 		this.valueStateMessageText = opener.valueStateMessageText;
 		this.valueState = opener.valueState;
