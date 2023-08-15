@@ -1,3 +1,7 @@
+body {
+    background-color: var(--sapBackgroundColor);
+}
+
 #toolbars-container {
     container: wrapper / inline-size;
 }

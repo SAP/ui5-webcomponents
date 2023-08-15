@@ -75,6 +75,15 @@ class ToolbarSelect extends ToolbarItem {
 	get toolbarPopoverTemplate() {
 		return ToolbarPopoverSelectTemplate;
 	}
+
+	get subscribedEvents() {
+		const map = new Map();
+
+		map.set("click", { preventClosing: true });
+		map.set("change", { preventClosing: false });
+
+		return map;
+	}
 }
 
 ToolbarSelect.define();

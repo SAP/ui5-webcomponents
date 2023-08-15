@@ -17,7 +17,7 @@ import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverBu
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarButton
- * @extends sap.ui.webc.base.UI5Element
+ * @extends sap.ui.webc.main.ToolbarItem
  * @since 1.17.0
  * @abstract
  * @public

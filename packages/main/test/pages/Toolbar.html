@@ -39,7 +39,7 @@
 		</section>
 		<br /><br />
 
-		<!-- <ui5-title level="H3">Toolbar with start-aligned items</ui5-title>
+		<ui5-title level="H3">Toolbar with start-aligned items</ui5-title>
 		<br />
 		<section>
 			<ui5-toolbar align-content="Start">
@@ -226,17 +226,23 @@
 	</ui5-popover>
 	<ui5-slider value="100" id="toolbarSlider"></ui5-slider>
 	<script>
+		const items = document.querySelectorAll("ui5-toolbar-button");
+		const select = document.getElementById("toolbar-select");
+		const toolbarSlider = document.getElementById("toolbarSlider");
 
-		myOverflowBtn.addEventListener("click", e => {
-			myPopup.showAt(e.detail.targetRef);
+		items.forEach(item => {
+			item.addEventListener("ui5-click", e => {
+				console.log("Clicked on " + e.target.getAttribute("text"));
+			});
 		});
 
-		document.getElementById("toolbar-select").addEventListener("change", e => {
+		select.addEventListener("ui5-change", e => {
 			console.log(e);
 		})
+
 		toolbarSlider.addEventListener("input", e => {
 			document.getElementById("toolbars-container").setAttribute("style", "width:" + e.target.value + "%");
 		})
-	</script> -->
+	</script>
 	</body>
 </html>
