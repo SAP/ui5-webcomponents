@@ -34,6 +34,19 @@
 		padding-inline-end: 0.25rem;
 		font-size: 1rem;
 	}
+
+	.customOption {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width:100%;
+	}
+	.customOption--warning {
+		color: yellow;
+	}
+	.customOptionIcon {
+		color: yellow;
+	}
 </style>
 
 <body>
@@ -58,37 +71,39 @@
 				<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
 			</ui5-select>
 
-			<ui5-select menu="selectOptions2" value-state="Information"></ui5-select>
+			<ui5-select menu="selectOptions3" value-state="Information"></ui5-select>
 		</div>
 	</div>
 
 	<ui5-select-menu id="selectOptions">
 
 		<ui5-select-menu-option data-display-text="T-shirt [1]" data-additional-text="S">
-			<div>
+			<div class="customOption">
 				T-shirt [1]
-				<ui5-icon name="home"></ui5-icon>
-				<ui5-icon name="employee"></ui5-icon>
+				<div>
+					<ui5-icon name="accept" class="customOptionIcon"></ui5-icon>
+					<ui5-icon name="employee" class="customOptionIcon"></ui5-icon>
+				</div>
 			</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option data-display-text="Dress [2]" data-additional-text="M">
-			<div style="display: flex;
-			align-items: center;
-			background-color: red;
-			color: yellow;
-			width:100%">
+		<ui5-select-menu-option data-display-text="Dress [2]" data-additional-text="M" style="background-color: red">
+			<div class="customOption customOption--warning">
 				Dress [2]
-				<ui5-icon name="accept"></ui5-icon>
-				<ui5-icon name="employee"></ui5-icon>
+				<div>
+					<ui5-icon name="accept" class="customOptionIcon"></ui5-icon>
+					<ui5-icon name="employee" class="customOptionIcon"></ui5-icon>
+				</div>
 			</div>
 		</ui5-select-menu-option>
 
 		<ui5-select-menu-option data-display-text="Skirt [3]" data-additional-text="L" selected>
-			<div>
+			<div  class="customOption">
 				Skirt [3]
-				<ui5-icon name="home"></ui5-icon>
-				<ui5-icon name="employee"></ui5-icon>
+				<div>
+					<ui5-icon name="accept" class="customOptionIcon"></ui5-icon>
+					<ui5-icon name="employee" class="customOptionIcon"></ui5-icon>
+				</div>
 			</div>
 		</ui5-select-menu-option>
 	</ui5-select-menu>
@@ -97,30 +112,67 @@
 	<ui5-select-menu id="selectOptions2">
 
 		<ui5-select-menu-option display-text="item text [1]">
-			<div>
+			<div class="customOption">
 				Item 1 Text
-				<ui5-icon name="home"></ui5-icon>
-				<ui5-icon name="employee"></ui5-icon>
+				<div>
+					<ui5-icon name="accept"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
 			</div>
 		</ui5-select-menu-option>
 
 		<ui5-select-menu-option display-text="item text [2]">
-			<div style="display: flex;
-			align-items: center;
-			background-color: red;
-			color: yellow;
-			width:100%">
+			<div class="customOption">
 				Item 2 Text
-				<ui5-icon name="home"></ui5-icon>
-				<ui5-icon name="employee"></ui5-icon>
+				<div>
+					<ui5-icon name="accept"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
 			</div>
 		</ui5-select-menu-option>
 
 		<ui5-select-menu-option display-text="item text [3]">
-			<div>
+			<div class="customOption">
 				Item 3 Text
-				<ui5-icon name="home"></ui5-icon>
-				<ui5-icon name="employee"></ui5-icon>
+				<div>
+					<ui5-icon name="accept"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+	</ui5-select-menu>
+
+
+	<ui5-select-menu id="selectOptions3">
+
+		<ui5-select-menu-option display-text="item text [1]">
+			<div class="customOption">
+				Item 1 Text
+				<div>
+					<ui5-icon name="accept"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="item text [2]">
+			<div class="customOption">
+				Item 2 Text
+				<div>
+					<ui5-icon name="accept"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="item text [3]">
+			<div class="customOption">
+				Item 3 Text
+				<div>
+					<ui5-icon name="accept"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
 			</div>
 		</ui5-select-menu-option>
 
