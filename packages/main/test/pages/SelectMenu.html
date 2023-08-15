@@ -54,7 +54,11 @@
 				</div>
 			</ui5-select>
 
-			<ui5-select menu="selectOptions2" value-state="Error"></ui5-select>
+			<ui5-select menu="selectOptions2" value-state="Error">
+				<div slot="valueStateMessage">Information message. This is a <a href="#test1">Link</a>. Extra long text used as an information message. Extra long text used as an information message - 2. Extra long text used as an information message - 3.</div>
+			</ui5-select>
+
+			<ui5-select menu="selectOptions2" value-state="Information"></ui5-select>
 		</div>
 	</div>
 
@@ -87,7 +91,6 @@
 				<ui5-icon name="employee"></ui5-icon>
 			</div>
 		</ui5-select-menu-option>
-
 	</ui5-select-menu>
 
 
@@ -113,7 +116,7 @@
 			</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option display-text="item text [3]" selected>
+		<ui5-select-menu-option display-text="item text [3]">
 			<div>
 				Item 3 Text
 				<ui5-icon name="home"></ui5-icon>

@@ -57,6 +57,12 @@ type SelectMenuOptionClick = {
 	],
 })
 class SelectMenu extends UI5Element {
+	constructor() {
+		super();
+
+		this.valueStateMessageText = [];
+	}
+
 	/**
 	 * Defines the text of the component.
 	 *
@@ -85,11 +91,16 @@ class SelectMenu extends UI5Element {
 	@property({ type: Boolean })
 	hasValueState!: boolean;
 
+	@property({ type: Boolean })
+	hasValueStateSlot!: boolean;
+
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	valueState!: `${ValueState}`;
 
 	@property()
 	valueStateText!: string;
+
+	valueStateMessageText: Array<Node>;
 
 	select?: Select;
 
@@ -101,7 +112,11 @@ class SelectMenu extends UI5Element {
 		this.respPopover.opener = opener;
 		this.selectWidth = openerWidth;
 		this.hasValueState = !!opener.hasValueState;
+		this.hasValueStateSlot = opener.valueStateMessageText.length > 0;
+		debugger;
 		this.valueStateText = opener.valueStateText;
+		this.valueStateMessageText = opener.valueStateMessageText;
+		this.valueState = opener.valueState;
 	}
 
 	/**

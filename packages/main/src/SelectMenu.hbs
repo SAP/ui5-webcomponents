@@ -12,7 +12,7 @@
 		{{#if hasValueState}}
 				<div class="{{classes.popoverValueState}}" style={{styles.responsivePopoverHeader}}>
 					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
-					{{valueStateText}}
+					{{> valueStateMessage}}
 				</div>
 		{{/if}}
 
@@ -23,3 +23,14 @@
 					<slot></slot>
 		</ui5-list>
 </ui5-responsive-popover>
+
+
+{{#*inline "valueStateMessage"}}
+	{{#if hasValueStateSlot}}
+		{{#each valueStateMessageText}}
+			{{this}}
+		{{/each}}
+	{{else}}
+		{{ valueStateText }}
+	{{/if}}
+{{/inline}}
