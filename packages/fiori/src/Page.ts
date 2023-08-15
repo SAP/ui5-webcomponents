@@ -73,12 +73,7 @@ class Page extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b> When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
 	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Solid</code></li> (default)
-	 * <li><code>Transparent</code></li>
-	 * <li><code>List</code></li>
-	 * </ul>
+	 *
 	 * @type {sap.ui.webc.fiori.types.PageBackgroundDesign}
 	 * @name sap.ui.webc.fiori.Page.prototype.backgroundDesign
 	 * @defaultvalue "Solid"
