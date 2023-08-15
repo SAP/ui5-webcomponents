@@ -114,7 +114,7 @@ const getEffectiveScopingSuffixForTag = (tag: string) => {
  * @returns a variable name with the current version inserted as available at runtime
  */
 const getScopedVarName = (name: string) => {
-	const versionStr = VersionInfo.version.replaceAll(".", "-");
+	const versionStr = `v${VersionInfo.version.replaceAll(".", "-")}`;
 	const expr = /(--_?ui5)([^,:)\s]+)/g;
 	return name.replaceAll(expr, `$1-${versionStr}$2`);
 };
