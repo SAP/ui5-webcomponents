@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>ui5-select-menu</title>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+</head>
+
+<style>
+	:not(:defined) {
+		visibility: hidden;
+	}
+
+	.app {
+		transform: translate(300px, 200px);
+	}
+
+	ui5-select-menu-option[active] div,
+	ui5-select-menu-option[active] ui5-icon{
+		color: var(--sapList_Active_TextColor);
+	}
+
+	ui5-select-menu-option div {
+		pointer-events: none;
+	}
+
+	.selectLabel {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-inline-end: 0.25rem;
+		font-size: 1rem;
+	}
+</style>
+
+<body>
+	<div class="app">
+
+		<label id="lblOpt"></label><br>
+		<label id="lbl"></label><br>
+		<label id="lblLive"></label><br>
+		<label id="lblOpen"></label><br>
+		<label id="lblClose"></label><br>
+
+		<div class="app-inner">
+
+			<ui5-select id="sel" menu="selectOptions">
+				<div class="selectLabel" slot="label">
+					<span id="mainText">Skirt [3]</span>
+					<ui5-avatar id="avatar" size="XS" initials="L"></ui5-avatar>
+				</div>
+			</ui5-select>
+
+			<ui5-select menu="selectOptions2" value-state="Error"></ui5-select>
+		</div>
+	</div>
+
+	<ui5-select-menu id="selectOptions">
+
+		<ui5-select-menu-option data-display-text="T-shirt [1]" data-additional-text="S">
+			<div>
+				T-shirt [1]
+				<ui5-icon name="home"></ui5-icon>
+				<ui5-icon name="employee"></ui5-icon>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option data-display-text="Dress [2]" data-additional-text="M">
+			<div style="display: flex;
+			align-items: center;
+			background-color: red;
+			color: yellow;
+			width:100%">
+				Dress [2]
+				<ui5-icon name="accept"></ui5-icon>
+				<ui5-icon name="employee"></ui5-icon>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option data-display-text="Skirt [3]" data-additional-text="L" selected>
+			<div>
+				Skirt [3]
+				<ui5-icon name="home"></ui5-icon>
+				<ui5-icon name="employee"></ui5-icon>
+			</div>
+		</ui5-select-menu-option>
+
+	</ui5-select-menu>
+
+
+	<ui5-select-menu id="selectOptions2">
+
+		<ui5-select-menu-option display-text="item text [1]">
+			<div>
+				Item 1 Text
+				<ui5-icon name="home"></ui5-icon>
+				<ui5-icon name="employee"></ui5-icon>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="item text [2]">
+			<div style="display: flex;
+			align-items: center;
+			background-color: red;
+			color: yellow;
+			width:100%">
+				Item 2 Text
+				<ui5-icon name="home"></ui5-icon>
+				<ui5-icon name="employee"></ui5-icon>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="item text [3]" selected>
+			<div>
+				Item 3 Text
+				<ui5-icon name="home"></ui5-icon>
+				<ui5-icon name="employee"></ui5-icon>
+			</div>
+		</ui5-select-menu-option>
+
+	</ui5-select-menu>
+
+	<script>
+		let counter = 0;
+		let liveCounter = 0;
+		let closeCounter = 0;
+		let openCounter = 0;
+
+		sel.addEventListener("ui5-live-change", function(e) {
+			mainText.innerHTML = e.detail.selectedOption.getAttribute("data-display-text")
+			avatar.initials = e.detail.selectedOption.getAttribute("data-additional-text");
+			lblLive.innerHTML = "LIVE CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++liveCounter) + ">";
+		});
+
+		sel.addEventListener("ui5-change", function(e) {
+			mainText.innerHTML = e.detail.selectedOption.getAttribute("data-display-text")
+			avatar.initials = e.detail.selectedOption.getAttribute("data-additional-text");
+			lbl.innerHTML = "CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++counter) + ">";
+		});
+
+		sel.addEventListener("ui5-close", function(e) {
+			lblClose.innerHTML = "CLOSE EVENT :: counter :: <" + (++closeCounter) + ">";
+		});
+
+		sel.addEventListener("ui5-open", function(e) {
+			lblOpen.innerHTML = "OPEN EVENT :: counter :: <"+ (++openCounter) + ">";
+		});
+	</script>
+</html>

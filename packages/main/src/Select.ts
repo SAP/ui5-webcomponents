@@ -16,6 +16,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -67,21 +68,24 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
+import type SelectMenu from "./SelectMenu.js";
+import type { SelectMenuOptionClick } from "./SelectMenu.js";
 
 type SelectChangeEventDetail = {
-	selectedOption: Option,
+	selectedOption: IOption,
 }
 
 interface IOption extends UI5Element {
+	id: string,
 	selected: boolean,
 	_focused: boolean,
+	focused?: boolean,
 	icon?: string | undefined,
 	value: string,
 	textContent: string | null,
 	title: string,
-	additionalText: string,
-	id: string,
-	stableDomRef: string,
+	additionalText?: string,
+	stableDomRef?: string,
 }
 
 /**
@@ -169,6 +173,17 @@ interface IOption extends UI5Element {
 @event("close")
 class Select extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
+
+	/**
+	 * Defines a reference (ID or DOM element) of component's menu of options.
+	 *
+	 * @type {sap.ui.webc.base.types.DOMReference}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.Select.prototype.menu
+	 * @public
+	 */
+	@property({ validator: DOMReference })
+	menu?: HTMLElement | string;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -296,13 +311,15 @@ class Select extends UI5Element implements IFormElement {
 	_selectedIndex: number;
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
-	_lastSelectedOption: Option | null;
+	_lastSelectedOption: IOption | null;
 	_typedChars: string;
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
 	selectedItem?: string | null;
 	valueStatePopover?: Popover;
 	value!: string;
+
+	selectMenu?: SelectMenu;
 
 	/**
 	 * Defines the component options.
@@ -350,6 +367,14 @@ class Select extends UI5Element implements IFormElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
+	@slot()
+	label!: Array<HTMLElement>;
+
+	_onMenuClick: (e: CustomEvent<SelectMenuOptionClick>) => void;
+	_onMenuClose: () => void;
+	_onMenuOpen: () => void;
+	_onMenuBeforeOpen: () => void;
+
 	constructor() {
 		super();
 
@@ -359,10 +384,22 @@ class Select extends UI5Element implements IFormElement {
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
 		this._typedChars = "";
+
+		this._onMenuClick = this.onMenuClick.bind(this);
+		this._onMenuClose = this.onMenuClose.bind(this);
+		this._onMenuOpen = this.onMenuOpen.bind(this);
+		this._onMenuBeforeOpen = this.onMenuBeforeOpen.bind(this);
 	}
 
 	onBeforeRendering() {
-		this._syncSelection();
+		const menu = this._getSelectMenu();
+
+		if (menu) {
+			this._syncMenuSelection();
+		} else {
+			this._syncSelection();
+		}
+
 		this._enableFormSupport();
 
 		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
@@ -389,6 +426,12 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _isPickerOpen() {
+		const menu = this._getSelectMenu();
+
+		if (menu) {
+			return menu.open;
+		}
+
 		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
@@ -408,13 +451,67 @@ class Select extends UI5Element implements IFormElement {
 		return this._filteredItems.find(option => option.selected);
 	}
 
+	onMenuClick(e: CustomEvent<SelectMenuOptionClick>) {
+		const optionIndex: number = e.detail.optionIndex;
+		this._handleSelectionChange(optionIndex);
+	}
+
+	onMenuBeforeOpen() {
+		this._beforeOpen();
+	}
+
+	onMenuOpen() {
+		this._afterOpen();
+	}
+
+	onMenuClose() {
+		this._afterClose();
+	}
+
+	_toggleSelectMenu() {
+		const menu = this._getSelectMenu();
+
+		if (!menu) {
+			return;
+		}
+
+		if (menu.open) {
+			menu.close();
+		} else {
+			menu.showAt(this, this.offsetWidth);
+			// @ts-ignore
+			menu.addEventListener("ui5-option-click", this._onMenuClick);
+			menu.addEventListener("ui5-after-close", this._onMenuClose);
+			menu.addEventListener("ui5-after-open", this._onMenuOpen);
+			menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
+		}
+	}
+
+	onExitDOM(): void {
+		const menu = this._getSelectMenu();
+
+		if (menu) {
+			// @ts-ignore
+			menu.removeEventListener("ui5-option-click", this._onMenuClick);
+			menu.removeEventListener("ui5-after-close", this._onMenuClose);
+			menu.removeEventListener("ui5-after-open", this._onMenuOpen);
+			menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
+		}
+	}
 	async _toggleRespPopover() {
-		this._iconPressed = true;
-		this.responsivePopover = await this._respPopover();
 		if (this.disabled) {
 			return;
 		}
 
+		this._iconPressed = true;
+
+		const menu = this._getSelectMenu();
+		if (menu) {
+			this._toggleSelectMenu();
+			return;
+		}
+
+		this.responsivePopover = await this._respPopover();
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
@@ -480,6 +577,58 @@ class Select extends UI5Element implements IFormElement {
 		}
 
 		this._syncedOptions = syncOpts as Array<IOption>;
+	}
+
+	_syncMenuSelection() {
+		let lastSelectedOptionIndex = -1,
+			firstEnabledOptionIndex = -1;
+		const options = this._getSelectMenu()!.options;
+		options.forEach((opt, index) => {
+			if (opt.selected || opt.textContent === this.value) {
+				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
+				lastSelectedOptionIndex = index;
+			}
+			if (firstEnabledOptionIndex === -1) {
+				firstEnabledOptionIndex = index;
+			}
+
+			opt.focused = false;
+			return opt;
+		});
+
+		if (lastSelectedOptionIndex > -1) {
+			const lastSelectedOption = options[lastSelectedOptionIndex];
+			lastSelectedOption.selected = true;
+			lastSelectedOption.focused = true;
+			this._text = lastSelectedOption.displayText || lastSelectedOption.textContent;
+			this._selectedIndex = lastSelectedOptionIndex;
+		} else {
+			this._text = "";
+			this._selectedIndex = -1;
+			const firstSelectedOption = options[firstEnabledOptionIndex];
+			if (firstSelectedOption) {
+				firstSelectedOption.selected = true;
+				firstSelectedOption.focused = true;
+				this._selectedIndex = firstEnabledOptionIndex;
+				this._text = firstSelectedOption.displayText || firstSelectedOption.textContent;
+			}
+		}
+	}
+
+	_getSelectMenu(): SelectMenu | undefined {
+		let selectMenu;
+		if (this.menu instanceof HTMLElement) {
+			selectMenu = this.menu as SelectMenu;
+		} else if (typeof this.menu === "string") {
+			selectMenu = (this.getRootNode() as Document).getElementById(this.menu) as SelectMenu;
+		}
+
+		if (!selectMenu) {
+			console.warn("Valid 'menu' id is required."); // eslint-disable-line
+			return;
+		}
+
+		return selectMenu;
 	}
 
 	_enableFormSupport() {
@@ -593,13 +742,13 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_getSelectedItemIndex(item: ListItemBase) {
-		return this._filteredItems.findIndex(option => `${option._id}-li` === item.id);
+		return this.selectOptions.findIndex(option => `${option._id}-li` === item.id);
 	}
 
 	_select(index: number) {
-		this._filteredItems[this._selectedIndex].selected = false;
+		this.selectOptions[this._selectedIndex].selected = false;
 		this._selectedIndex = index;
-		this._filteredItems[index].selected = true;
+		this.selectOptions[index].selected = true;
 	}
 
 	/**
@@ -656,15 +805,24 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
-		const options = this._filteredItems;
+		const options: Array<IOption> = this.selectOptions;
 
 		options[oldIndex].selected = false;
 		options[oldIndex]._focused = false;
+		options[oldIndex].focused = false;
 
 		options[newIndex].selected = true;
 		options[newIndex]._focused = true;
+		options[newIndex].focused = true;
 
 		this._selectedIndex = newIndex;
+
+		const menu = this._getSelectMenu();
+		if (menu) {
+			this._syncMenuSelection();
+		}
+
+		this.fireEvent("live-change", { selectedOption: this.selectOptions[newIndex] });
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
@@ -673,6 +831,10 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_getNextOptionIndex() {
+		const menu = this._getSelectMenu();
+		if (menu) {
+			return this._selectedIndex === (menu.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
+		}
 		return this._selectedIndex === (this.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
 	}
 
@@ -682,7 +844,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
-		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		this._lastSelectedOption = this.selectOptions[this._selectedIndex];
 	}
 
 	_afterOpen() {
@@ -699,14 +861,26 @@ class Select extends UI5Element implements IFormElement {
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
-		} else if (this._lastSelectedOption !== this._filteredItems[this._selectedIndex]) {
-			this._fireChangeEvent(this._filteredItems[this._selectedIndex]);
-			this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		} else if (this._lastSelectedOption !== this.selectOptions[this._selectedIndex]) {
+			this._fireChangeEvent(this.selectOptions[this._selectedIndex]);
+			this._lastSelectedOption = this.selectOptions[this._selectedIndex];
 		}
 		this.fireEvent<CustomEvent>("close");
 	}
 
-	_fireChangeEvent(selectedOption: Option) {
+	get selectOptions() {
+		const menu = this._getSelectMenu();
+		if (menu) {
+			return menu.options;
+		}
+		return this._filteredItems;
+	}
+
+	get hasCustomLabel() {
+		return !!this.label.length;
+	}
+
+	_fireChangeEvent(selectedOption: IOption) {
 		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding

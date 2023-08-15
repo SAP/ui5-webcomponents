@@ -1,0 +1,25 @@
+<ui5-responsive-popover
+	class="ui5-select-menu"
+	placement-type="Bottom"
+	horizontal-align="Left"
+	@ui5-after-open="{{_onAfterOpen}}"
+	@ui5-after-close="{{_onAfterClose}}"
+	@ui5-before-open="{{_onBeforeOpen}}"
+	hide-arrow
+	_disable-initial-focus
+	style={{styles.responsivePopover}}>
+
+		{{#if hasValueState}}
+				<div class="{{classes.popoverValueState}}" style={{styles.responsivePopoverHeader}}>
+					<ui5-icon class="ui5-input-value-state-message-icon" name="{{_valueStateMessageInputIcon}}"></ui5-icon>
+					{{valueStateText}}
+				</div>
+		{{/if}}
+
+		<ui5-list 
+			mode="SingleSelectAuto"
+			separators="None"
+			@ui5-item-click="{{_onOptionClick}}">
+					<slot></slot>
+		</ui5-list>
+</ui5-responsive-popover>
