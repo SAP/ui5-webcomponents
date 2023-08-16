@@ -929,7 +929,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _currentlySelectedOption() {
-		return this._filteredItems[this._selectedIndex];
+		return this.selectOptions[this._selectedIndex];
 	}
 
 	get _effectiveTabIndex() {
@@ -1021,7 +1021,7 @@ class Select extends UI5Element implements IFormElement {
 
 	itemSelectionAnnounce() {
 		let text;
-		const optionsCount = this._filteredItems.length;
+		const optionsCount = this.selectOptions.length;
 		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
