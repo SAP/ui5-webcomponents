@@ -629,7 +629,7 @@ class Select extends UI5Element implements IFormElement {
 
 		if (isTab && this._isPickerOpen) {
 			this.responsivePopover.close();
-			this._getSelectMenu()?.close();
+			this._getSelectMenu()?.close(false, false, true /* preventFocusRestore */);
 		} else if (isShow(e)) {
 			e.preventDefault();
 			this._toggleRespPopover();
