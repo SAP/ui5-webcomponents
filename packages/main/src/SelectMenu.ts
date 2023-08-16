@@ -29,6 +29,11 @@ type SelectMenuOptionClick = {
 	optionIndex: number,
 };
 
+type SelectMenuChange = {
+	text: string,
+	selectedIndex: number,
+};
+
 /**
  * @class
  *
@@ -104,6 +109,9 @@ class SelectMenu extends UI5Element {
 	@property()
 	valueStateText!: string;
 
+	@property()
+	value!: string;
+
 	valueStateMessageText: Array<Node>;
 
 	_headerTitleText?: string;
@@ -131,6 +139,53 @@ class SelectMenu extends UI5Element {
 	 */
 	close() {
 		this.respPopover.open = false;
+	}
+
+	onBeforeRendering() {
+		this._syncSelection();
+	}
+
+	_syncSelection() {
+		let lastSelectedOptionIndex = -1,
+			firstEnabledOptionIndex = -1,
+			text,
+			selectedIndex;
+		const options = this.options;
+		options.forEach((opt, index) => {
+			if (opt.selected || opt.textContent === this.value) {
+				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
+				lastSelectedOptionIndex = index;
+			}
+			if (firstEnabledOptionIndex === -1) {
+				firstEnabledOptionIndex = index;
+			}
+
+			opt.focused = false;
+			return opt;
+		});
+
+		if (lastSelectedOptionIndex > -1) {
+			const lastSelectedOption = options[lastSelectedOptionIndex];
+			lastSelectedOption.selected = true;
+			lastSelectedOption.focused = true;
+			text = lastSelectedOption.displayText || String(lastSelectedOption.textContent);
+			selectedIndex = lastSelectedOptionIndex;
+		} else {
+			text = "";
+			selectedIndex = -1;
+			const firstSelectedOption = options[firstEnabledOptionIndex];
+			if (firstSelectedOption) {
+				firstSelectedOption.selected = true;
+				firstSelectedOption.focused = true;
+				selectedIndex = firstEnabledOptionIndex;
+				text = firstSelectedOption.displayText || String(firstSelectedOption.textContent);
+			}
+		}
+
+		this.fireEvent<SelectMenuChange>("menu-change", {
+			text,
+			selectedIndex,
+		});
 	}
 
 	_onOptionClick(e: CustomEvent) {
@@ -215,4 +270,5 @@ SelectMenu.define();
 export default SelectMenu;
 export type {
 	SelectMenuOptionClick,
+	SelectMenuChange,
 };

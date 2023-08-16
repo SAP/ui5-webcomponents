@@ -69,7 +69,7 @@ import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
 import type SelectMenu from "./SelectMenu.js";
-import type { SelectMenuOptionClick } from "./SelectMenu.js";
+import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
 
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
@@ -307,8 +307,14 @@ class Select extends UI5Element implements IFormElement {
 	@property({ type: Boolean })
 	focused!: boolean;
 
+	/**
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
+	_selectedIndex!: number;
+
 	_syncedOptions: Array<IOption>;
-	_selectedIndex: number;
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
 	_lastSelectedOption: IOption | null;
@@ -374,12 +380,12 @@ class Select extends UI5Element implements IFormElement {
 	_onMenuClose: () => void;
 	_onMenuOpen: () => void;
 	_onMenuBeforeOpen: () => void;
+	_onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
 
 	constructor() {
 		super();
 
 		this._syncedOptions = [];
-		this._selectedIndex = -1;
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
@@ -389,13 +395,14 @@ class Select extends UI5Element implements IFormElement {
 		this._onMenuClose = this.onMenuClose.bind(this);
 		this._onMenuOpen = this.onMenuOpen.bind(this);
 		this._onMenuBeforeOpen = this.onMenuBeforeOpen.bind(this);
+		this._onMenuChange = this.onMenuChange.bind(this);
 	}
 
 	onBeforeRendering() {
 		const menu = this._getSelectMenu();
 
 		if (menu) {
-			this._syncMenuSelection();
+			menu.value = this.value;
 		} else {
 			this._syncSelection();
 		}
@@ -444,7 +451,7 @@ class Select extends UI5Element implements IFormElement {
 	 * Currently selected <code>ui5-option</code> element.
 	 * @readonly
 	 * @type {sap.ui.webc.main.ISelectOption}
-     * @name sap.ui.webc.main.Select.prototype.selectedOption
+	 * @name sap.ui.webc.main.Select.prototype.selectedOption
 	 * @public
 	 */
 	get selectedOption() {
@@ -468,6 +475,11 @@ class Select extends UI5Element implements IFormElement {
 		this._afterClose();
 	}
 
+	onMenuChange(e: CustomEvent<SelectMenuChange>) {
+		this._text = e.detail.text;
+		this._selectedIndex = e.detail.selectedIndex;
+	}
+
 	_toggleSelectMenu() {
 		const menu = this._getSelectMenu();
 
@@ -484,6 +496,8 @@ class Select extends UI5Element implements IFormElement {
 			menu.addEventListener("ui5-after-close", this._onMenuClose);
 			menu.addEventListener("ui5-after-open", this._onMenuOpen);
 			menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
+			// @ts-ignore
+			menu.addEventListener("ui5-menu-change", this._onMenuChange);
 		}
 	}
 
@@ -496,6 +510,8 @@ class Select extends UI5Element implements IFormElement {
 			menu.removeEventListener("ui5-after-close", this._onMenuClose);
 			menu.removeEventListener("ui5-after-open", this._onMenuOpen);
 			menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
+			// @ts-ignore
+			menu.removeEventListener("ui5-menu-change", this._onMenuChange);
 		}
 	}
 	async _toggleRespPopover() {
@@ -577,42 +593,6 @@ class Select extends UI5Element implements IFormElement {
 		}
 
 		this._syncedOptions = syncOpts as Array<IOption>;
-	}
-
-	_syncMenuSelection() {
-		let lastSelectedOptionIndex = -1,
-			firstEnabledOptionIndex = -1;
-		const options = this._getSelectMenu()!.options;
-		options.forEach((opt, index) => {
-			if (opt.selected || opt.textContent === this.value) {
-				// The second condition in the IF statement is added because of Angular Reactive Forms Support(Two way data binding)
-				lastSelectedOptionIndex = index;
-			}
-			if (firstEnabledOptionIndex === -1) {
-				firstEnabledOptionIndex = index;
-			}
-
-			opt.focused = false;
-			return opt;
-		});
-
-		if (lastSelectedOptionIndex > -1) {
-			const lastSelectedOption = options[lastSelectedOptionIndex];
-			lastSelectedOption.selected = true;
-			lastSelectedOption.focused = true;
-			this._text = lastSelectedOption.displayText || lastSelectedOption.textContent;
-			this._selectedIndex = lastSelectedOptionIndex;
-		} else {
-			this._text = "";
-			this._selectedIndex = -1;
-			const firstSelectedOption = options[firstEnabledOptionIndex];
-			if (firstSelectedOption) {
-				firstSelectedOption.selected = true;
-				firstSelectedOption.focused = true;
-				this._selectedIndex = firstEnabledOptionIndex;
-				this._text = firstSelectedOption.displayText || firstSelectedOption.textContent;
-			}
-		}
 	}
 
 	_getSelectMenu(): SelectMenu | undefined {
@@ -816,11 +796,6 @@ class Select extends UI5Element implements IFormElement {
 		options[newIndex].focused = true;
 
 		this._selectedIndex = newIndex;
-
-		const menu = this._getSelectMenu();
-		if (menu) {
-			this._syncMenuSelection();
-		}
 
 		this.fireEvent("live-change", { selectedOption: this.selectOptions[newIndex] });
 
