@@ -14,7 +14,7 @@ const component = "ui5-label";
 
 export default {
 	title: "Main/Label",
-	component,
+	component: "Label",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

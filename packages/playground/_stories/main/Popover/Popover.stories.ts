@@ -12,7 +12,7 @@ const component = "ui5-popover";
 
 export default {
 	title: "Main/Popover",
-	component,
+	component: "Popover",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),

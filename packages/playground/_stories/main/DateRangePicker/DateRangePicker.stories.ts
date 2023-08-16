@@ -15,7 +15,7 @@ const component = "ui5-daterange-picker";
 
 export default {
 	title: "Main/DateRangePicker",
-	component,
+	component: "DateRangePicker",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

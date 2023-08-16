@@ -16,8 +16,8 @@ const component = "ui5-upload-collection";
 
 export default {
 	title: "Fiori/Upload Collection",
-	component,
-	subcomponents: {'UploadCollectionItem' : 'ui5-upload-collection-item'},
+	component: "UploadCollection",
+	subcomponents: {'UploadCollectionItem' : 'UploadCollectionItem'},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),

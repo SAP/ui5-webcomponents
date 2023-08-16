@@ -12,9 +12,9 @@ const component = "ui5-wizard";
 
 export default {
 	title: "Fiori/Wizard",
-	component,
+	component: "Wizard",
 	subcomponents: {
-		WizardStep: 'ui5-wizard-step',
+		WizardStep: 'WizardStep'
 	},
 	parameters: {
 		docs: {

@@ -112,8 +112,10 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired when an item is being clicked.
+ * <b>Note:</b> Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
  *
  * @event sap.ui.webc.main.Menu#item-click
+ * @allowPreventDefault
  * @param { HTMLElement } item The currently clicked menu item.
  * @param { string } text The text of the currently clicked menu item.
  * @public
@@ -367,7 +369,8 @@ class Menu extends UI5Element {
 			const menuItem = item.item;
 			if (subMenu && subMenu.busy) {
 				subMenu.innerHTML = "";
-				this._cloneItems(menuItem, subMenu);
+				const fragment = this._clonedItemsFragment(menuItem);
+				subMenu.appendChild(fragment);
 			}
 
 			if (subMenu) {
@@ -471,16 +474,21 @@ class Menu extends UI5Element {
 		subMenu._parentMenuItem = item;
 		subMenu.busy = item.busy;
 		subMenu.busyDelay = item.busyDelay;
-		this._cloneItems(item, subMenu);
+		const fragment = this._clonedItemsFragment(item);
+		subMenu.appendChild(fragment);
 		this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
 		item._subMenu = subMenu;
 	}
 
-	_cloneItems(item: MenuItem, menu: Menu) {
+	_clonedItemsFragment(item: MenuItem) {
+		const fragment = document.createDocumentFragment();
+
 		for (let i = 0; i < item.items.length; ++i) {
 			const clonedItem = item.items[i].cloneNode(true);
-			menu.appendChild(clonedItem);
+			fragment.appendChild(clonedItem);
 		}
+
+		return fragment;
 	}
 
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
@@ -637,15 +645,33 @@ class Menu extends UI5Element {
 					this._parentMenuItem = undefined;
 				}
 				// fire event if the click is on top-level menu item
-				this.fireEvent<MenuItemClickEventDetail>("item-click", {
+				const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
 					"item": item,
 					"text": item.text,
-				});
-				this._popover!.close();
+				}, true, false);
+
+				if (!prevented) {
+					this._popover!.close();
+				}
 			} else {
-				// find top-level menu and redirect event to it
 				const mainMenu = this._findMainMenu(item);
-				mainMenu._itemClick(e);
+				const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
+					"item": item,
+					"text": item.text,
+				}, true, false);
+
+				if (!prevented) {
+					let openerMenuItem = item;
+					let parentMenu = openerMenuItem.parentElement as Menu;
+					do {
+						openerMenuItem._preventSubMenuClose = false;
+						this._closeItemSubMenu(openerMenuItem);
+						parentMenu = openerMenuItem.parentElement as Menu;
+						openerMenuItem = parentMenu._parentMenuItem as MenuItem;
+					} while (parentMenu._parentMenuItem);
+
+					mainMenu._popover!.close();
+				}
 			}
 		} else if (isPhone()) {
 			// prepares and opens sub-menu on phone
@@ -659,8 +685,6 @@ class Menu extends UI5Element {
 	_findMainMenu(item: MenuItem) {
 		let parentMenu = item.parentElement as Menu;
 		while (parentMenu._parentMenuItem) {
-			parentMenu._parentMenuItem._preventSubMenuClose = false;
-			this._closeItemSubMenu(parentMenu._parentMenuItem);
 			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
 		}
 
