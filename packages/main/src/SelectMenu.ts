@@ -111,7 +111,6 @@ class SelectMenu extends UI5Element {
 		this.selectWidth = openerWidth;
 		this.respPopover.open = true;
 		this.respPopover.opener = opener;
-		this.respPopover.style.width = `${this.selectWidth}px`; // TODO: Find a better way!
 		this.hasValueState = !!opener.hasValueState;
 		this.hasValueStateSlot = opener.valueStateMessageText.length > 0;
 		this.valueStateText = opener.valueStateText;
@@ -148,10 +147,6 @@ class SelectMenu extends UI5Element {
 		this.fireEvent<CustomEvent>("after-close");
 	}
 
-	onAfterRendering(): void {
-		this.fireEvent<CustomEvent>("menu-rendered");
-	}
-
 	get open() {
 		return !!this.respPopover?.open;
 	}
@@ -180,6 +175,9 @@ class SelectMenu extends UI5Element {
 			responsivePopoverHeader: {
 				"display": this.options.length && this.respPopover?.offsetWidth === 0 ? "none" : "inline-block",
 				"width": `${this.options.length ? this.respPopover?.offsetWidth : this.selectWidth || "auto"}px`,
+			},
+			responsivePopover: {
+				"min-width": `${this.selectWidth!}px`,
 			},
 		};
 	}
