@@ -99,13 +99,22 @@ class Toolbar extends UI5Element {
 	alignContent!: `${ToolbarAlign}`;
 
 	/**
-	* Calculated width of the whole toolbar.
-	* @private
-	* @type {Boolean}
-	* @defaultvalue false
-	*/
+	 * Calculated width of the whole toolbar.
+	 * @private
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultvalue false
+	 */
 	@property({ type: Integer })
 	width?: number;
+
+	/**
+	 * Calculated width of the toolbar content.
+	 * @private
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultvalue 0
+	 */
+	@property({ type: Integer })
+	contentWidth?: number;
 
 	/**
 	 * Notifies the toolbar if it should show the items in a reverse way if Toolbar Popover needs to be placed on "Top" position.
@@ -116,7 +125,7 @@ class Toolbar extends UI5Element {
 	reverseOverflow!: boolean;
 
 	/**
-	  * Slotted Toolbar items
+	* Slotted Toolbar items
 	* @type {sap.ui.webc.main.IToolbarItem[]}
 	* @name sap.ui.webc.main.Toolbar.prototype.items
 	* @slot items
@@ -137,16 +146,11 @@ class Toolbar extends UI5Element {
 	constructor() {
 		super();
 
-		// resize handler
 		this._onResize = this.onResize.bind(this);
-
 		this._onInteract = this.onInteract.bind(this);
 
 		this._itemsObserver = new MutationObserver(() => {
-			// some items were added/removed/updated
-			// reset the cache and trigger a re-render
-			this.itemsToOverflow = [];
-			this.width = 0; // re-render
+			this.onObserverChange();
 		});
 	}
 
@@ -164,7 +168,6 @@ class Toolbar extends UI5Element {
 	 * Lifecycle methods
 	 */
 	onEnterDOM() {
-		this.attachListeners();
 		ResizeHandler.register(this, this._onResize);
 	}
 
@@ -190,18 +193,19 @@ class Toolbar extends UI5Element {
 	 * Layout management
 	 */
 
-	processOverflowLayout(forceLayout = false) {
+	processOverflowLayout() {
 		const containerWidth = this.offsetWidth - this.padding;
 		const contentWidth = this.itemsWidth;
+		const overflowSpace = contentWidth - containerWidth + this.overflowButtonSize;
 
-		// skip calculation if the width has not been changed
-		if (!forceLayout && this.width === containerWidth) {
+		// skip calculation if the width has not been changed or if the items width has not been changed
+		if (this.width === containerWidth && this.contentWidth === contentWidth) {
 			return;
 		}
 
-		this.distributeItems(contentWidth - containerWidth + this.overflowButtonSize);
-
+		this.distributeItems(overflowSpace);
 		this.width = containerWidth;
+		this.contentWidth = contentWidth;
 	}
 
 	storeItemsWidth() {
@@ -248,26 +252,6 @@ class Toolbar extends UI5Element {
 		this.alwaysOverflowItems.forEach((item: ToolbarItem) => {
 			this.itemsToOverflow.push(item);
 		});
-	}
-
-	get subscribedEvents() {
-		return this._items
-			.map((item: ToolbarItem) => Array.from(item.subscribedEvents.keys()))
-			.flat()
-			// remove duplicates
-			.filter((value, index, self) => self.indexOf(value) === index);
-	}
-
-	get alwaysOverflowItems() {
-		return this._items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.AlwaysOverflow);
-	}
-
-	get movableItems() {
-		return this._items.filter((item: ToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow);
-	}
-
-	get neverOverflowItems() {
-		return this._items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow);
 	}
 
 	/**
@@ -325,6 +309,32 @@ class Toolbar extends UI5Element {
 	/**
 	 * Read-only members
 	 */
+
+	get subscribedEvents() {
+		return this.items
+			.map((item: ToolbarItem) => Array.from(item.subscribedEvents.keys()))
+			.flat()
+			// remove duplicates
+			.filter((value, index, self) => self.indexOf(value) === index);
+	}
+
+	get alwaysOverflowItems() {
+		return this.items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.AlwaysOverflow);
+	}
+
+	get movableItems() {
+		return this.items.filter((item: ToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow);
+	}
+
+	get neverOverflowItems() {
+		return this.items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow);
+	}
+
+	get effectiveAriaLabelText(): undefined | string {
+		return "";
+		// return this.ariaLabelText || this.i18nBundle.getText("TOOLBAR_ARIA_LABEL");
+	}
+
 	get overflowItems() {
 		// spacers and separators are ignored
 		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
@@ -332,34 +342,11 @@ class Toolbar extends UI5Element {
 	}
 
 	get standardItems() {
-		return this.getItemsInfo(this._items.filter(item => this.itemsToOverflow.indexOf(item) === -1));
+		return this.getItemsInfo(this.items.filter(item => this.itemsToOverflow.indexOf(item) === -1));
 	}
 
 	get hideOverflowButton() {
 		return this.overflowItems.length === 0;
-	}
-
-	get _items(): Array<ToolbarItem> {
-		return this.getSlottedNodes("items");
-	}
-
-	/**
-	 * Toolbar Overflow Popover
-	 */
-	get overflowButtonDOM(): HTMLElement | null {
-		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
-	}
-
-	get itemsDOM() {
-		return this.shadowRoot!.querySelector(".ui5-tb-items");
-	}
-
-	get hasItemWithText(): boolean {
-		return this.overflowItems.some((item: ToolbarItem) => item.containsText);
-	}
-
-	get hasFlexibleSpacers() {
-		return this.items.some((item: ToolbarItem) => item.hasFlexibleWidth);
 	}
 
 	get classes() {
@@ -377,6 +364,26 @@ class Toolbar extends UI5Element {
 				"ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
 			},
 		};
+	}
+
+	/**
+	 * Toolbar Overflow Popover
+	 */
+
+	get overflowButtonDOM(): HTMLElement | null {
+		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
+	}
+
+	get itemsDOM() {
+		return this.shadowRoot!.querySelector(".ui5-tb-items");
+	}
+
+	get hasItemWithText(): boolean {
+		return this.overflowItems.some((item: ToolbarItem) => item.containsText);
+	}
+
+	get hasFlexibleSpacers() {
+		return this.items.some((item: ToolbarItem) => item.hasFlexibleWidth);
 	}
 
 	async openOverflow(): Promise<void> {
@@ -399,14 +406,6 @@ class Toolbar extends UI5Element {
 	 * Private members
 	 */
 
-	observeItems() {
-		this.movableItems.forEach(item => {
-			this._itemsObserver.observe(item, {
-				attributes: true,
-			});
-		});
-	}
-
 	async attachListeners() {
 		const popover = await this.getOverflowPopover();
 
@@ -423,6 +422,22 @@ class Toolbar extends UI5Element {
 			this.itemsDOM?.removeEventListener(e, this._onInteract);
 			popover?.removeEventListener(e, this._onInteract);
 		});
+	}
+
+	observeItems() {
+		this.movableItems.forEach(item => {
+			this._itemsObserver.observe(item, {
+				attributes: true,
+				childList: true,
+			});
+		});
+	}
+
+	onObserverChange() {
+		// some items were added/removed/updated
+		// reset the cache and trigger a re-render
+		this.itemsToOverflow = [];
+		this.contentWidth = 0; // re-render
 	}
 
 	getItemsInfo(items: Array<ToolbarItem>) {
@@ -464,20 +479,11 @@ class Toolbar extends UI5Element {
 	}
 
 	getItemByID(id: string) {
-		return this._items.find(item => item._id === id);
+		return this.items.find(item => item._id === id);
 	}
 
 	getToolbarItemByID(id: string): HTMLElement | null {
 		return this.itemsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
-	}
-
-	async getOverflowedItemByID(id: string): Promise<UI5Element | null> {
-		const popover = await this.getOverflowPopover();
-		return popover!.querySelector<UI5Element>(`[data-ui5-external-action-item-id="${id}"]`);
-	}
-
-	getItemDOMRefByID(id: string) {
-		return this.getToolbarItemByID(id) || (this.getOverflowedItemByID(id));
 	}
 }
 

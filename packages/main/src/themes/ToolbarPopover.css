@@ -6,14 +6,6 @@
 	padding: 0 0.5rem;
 }
 
-.ui5-overflow-list--alignleft .ui5-tb-popover-item {
-	justify-content: flex-start;
-}
-
-.ui5-overflow-list--alignleft .ui5-tb-popover-item[icon-only]{
-	margin-inline-start: 0.625rem;
-}
-
 .ui5-tb-popover-item {
 	width: 100%;
 	margin-bottom: 0.25rem;
