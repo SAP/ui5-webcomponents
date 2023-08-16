@@ -71,16 +71,6 @@ class Bar extends UI5Element {
 	/**
 	 * Defines the component's design.
 	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Header</code></li>
-	 * <li><code>Subheader</code></li>
-	 * <li><code>Footer</code></li>
-	 * <li><code>FloatingFooter</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.fiori.types.BarDesign}
 	 * @name sap.ui.webc.fiori.Bar.prototype.design
 	 * @defaultvalue "Header"

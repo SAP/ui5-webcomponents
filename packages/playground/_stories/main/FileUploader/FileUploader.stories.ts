@@ -48,13 +48,6 @@ Basic.decorators = [
 	${story()}`,
 ];
 
-export const Custom = Template.bind({});
-Custom.storyName = "With Custom Design ";
-Custom.args = {
-	hideInput: true,
-	default: `<ui5-badge>Upload File</ui5-badge>`,
-};
-
 export const Advanced = Template.bind({});
 Advanced.storyName = "Image Uploader";
 Advanced.args = {
@@ -97,4 +90,11 @@ Advanced.parameters = {
 			inline: false,
 		},
 	}
+};
+
+export const Custom = Template.bind({});
+Custom.storyName = "With Custom Design ";
+Custom.args = {
+	hideInput: true,
+	default: `<ui5-badge>Upload File</ui5-badge>`,
 };

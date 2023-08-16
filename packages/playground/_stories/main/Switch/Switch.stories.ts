@@ -38,30 +38,14 @@ const Template: UI5StoryArgs<Switch, StoryArgsSlots> = (args) => html`<ui5-switc
 ></ui5-switch>`;
 
 export const Basic = Template.bind({});
-
-export const WithText = Template.bind({});
-WithText.args = {
-	textOn: "On",
-	textOff: "Off",
+Basic.args = {
+	accessibleName: "Switch with Accessible Name",
 };
 
-export const Checked = Template.bind({});
-Checked.args = {
-	textOn: "Yes",
-	textOff: "No",
-	checked: true,
-};
-
-export const Disabled = Template.bind({});
-Disabled.args = {
-	disabled: true,
-	checked: true,
-};
-
-export const Design = Template.bind({});
-Design.args = {
+export const Graphical = Template.bind({});
+Graphical.args = {
 	design: SwitchDesign.Graphical,
-	accessibleName: "graphical",
+	checked: true,
 };
 
 export const RequiredInForm = Template.bind({});
