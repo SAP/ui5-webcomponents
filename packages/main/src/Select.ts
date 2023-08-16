@@ -627,11 +627,10 @@ class Select extends UI5Element implements IFormElement {
 	_onkeydown(e: KeyboardEvent) {
 		const isTab = (isTabNext(e) || isTabPrevious(e));
 
-		if (isTab && this.responsivePopover && this.responsivePopover.opened) {
+		if (isTab && this._isPickerOpen) {
 			this.responsivePopover.close();
-		}
-
-		if (isShow(e)) {
+			this._getSelectMenu()?.close();
+		} else if (isShow(e)) {
 			e.preventDefault();
 			this._toggleRespPopover();
 		} else if (isSpace(e)) {
