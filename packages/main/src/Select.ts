@@ -456,7 +456,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	get selectedOption() {
-		return this._filteredItems.find(option => option.selected);
+		return this.selectOptions.find(option => option.selected);
 	}
 
 	onMenuClick(e: CustomEvent<SelectMenuOptionClick>) {
