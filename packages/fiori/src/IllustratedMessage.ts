@@ -71,6 +71,7 @@ import IllustratedMessageTemplate from "./generated/templates/IllustratedMessage
 @customElement({
 	tag: "ui5-illustrated-message",
 	languageAware: true,
+	themeAware: true,
 	renderer: litRender,
 	styles: IllustratedMessageCss,
 	template: IllustratedMessageTemplate,

@@ -220,6 +220,8 @@ class MultiInput extends Input {
 
 		const target = e.target as HTMLInputElement;
 		const isHomeInBeginning = isHome(e) && target.selectionStart === 0;
+		const isCtrl: boolean = e.metaKey || e.ctrlKey;
+		const tokens = this.tokens;
 
 		if (isHomeInBeginning) {
 			this._skipOpenSuggestions = true; // Prevent input focus when navigating through the tokens
@@ -235,6 +237,11 @@ class MultiInput extends Input {
 
 		if (isShow(e)) {
 			this.valueHelpPress();
+		}
+
+		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
+			e.preventDefault();
+			this.tokenizer.openMorePopover();
 		}
 	}
 
@@ -276,6 +283,11 @@ class MultiInput extends Input {
 			}
 
 			return this.tokenizer._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
+		}
+
+		if (isCtrl && e.key.toLowerCase() === "i" && tokens.length > 0) {
+			e.preventDefault();
+			this.tokenizer.openMorePopover();
 		}
 	}
 

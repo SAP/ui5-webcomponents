@@ -17,7 +17,7 @@ const component = "ui5-toast";
 
 export default {
     title: "Main/Toast",
-    component,
+    component: "Toast",
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })

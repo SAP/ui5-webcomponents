@@ -14,7 +14,7 @@ const component = "ui5-title";
 
 export default {
 	title: "Main/Title",
-	component,
+	component: "Title",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

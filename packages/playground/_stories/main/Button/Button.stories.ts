@@ -16,7 +16,7 @@ const component = "ui5-button";
 
 export default {
 	title: "Main/Button",
-	component,
+	component: "Button",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

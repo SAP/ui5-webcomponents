@@ -16,7 +16,7 @@ const component = "ui5-step-input";
 
 export default {
 	title: "Main/StepInput",
-	component,
+	component: "StepInput",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

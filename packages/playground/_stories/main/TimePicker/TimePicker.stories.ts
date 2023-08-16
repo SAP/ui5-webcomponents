@@ -16,7 +16,7 @@ const component = "ui5-time-picker";
 
 export default {
 	title: "Main/TimePicker",
-	component,
+	component: "TimePicker",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

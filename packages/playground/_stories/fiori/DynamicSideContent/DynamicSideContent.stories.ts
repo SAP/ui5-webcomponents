@@ -18,7 +18,7 @@ const component = "ui5-dynamic-side-content";
 
 export default {
     title: "Fiori/DynamicSideContent",
-    component,
+    component: "DynamicSideContent",
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })

@@ -14,7 +14,7 @@ const component = "ui5-progress-indicator";
 
 export default {
     title: "Main/ProgressIndicator",
-    component,
+    component: "ProgressIndicator",
     parameters: {
         docs: {
             page: DocsPage({ ...componentInfo, component }),

@@ -13,7 +13,7 @@ const component = "ui5-busy-indicator";
 
 export default {
 	title: "Main/Busy Indicator",
-	component,
+	component: "BusyIndicator",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

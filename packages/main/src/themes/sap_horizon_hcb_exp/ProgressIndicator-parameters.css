@@ -1,0 +1,21 @@
+@import "../base/ProgressIndicator-parameters.css";
+@import "../sap_horizon/ProgressIndicatorLayout-parameters.css";
+
+
+:root {
+    --_ui5_progress_indicator_value_state_none: var(--sapHighlightColor);
+    --_ui5_progress_indicator_value_state_error: var(--sapHighlightColor);
+    --_ui5_progress_indicator_value_state_warning: var(--sapHighlightColor);
+    --_ui5_progress_indicator_value_state_success: var(--sapHighlightColor);
+    --_ui5_progress_indicator_value_state_information: var(--sapHighlightColor);
+    --_ui5_progress_indicator_bar_border_max: var(--_ui5_progress_indicator_border);
+
+    --_ui5_progress_indicator_value_state_none_border_color: var(--sapProgress_Value_BorderColor);
+    --_ui5_progress_indicator_value_state_error_border_color: var(--sapProgress_Value_NegativeBorderColor);
+    --_ui5_progress_indicator_value_state_warning_border_color: var(--sapProgress_Value_CriticalBorderColor);
+    --_ui5_progress_indicator_value_state_success_border_color: var(--sapProgress_Value_PositiveBorderColor);
+    --_ui5_progress_indicator_value_state_information_border_color: var(--sapProgress_Value_InformationBorderColor);
+
+    --_ui5_progress_indicator_bar_color: var(--sapProgress_TextColor);
+    --_ui5_progress_indicator_icon_size: var(--sapFontLargeSize);
+}

@@ -16,8 +16,8 @@ const component = "ui5-multi-combobox";
 
 export default {
     title: "Main/MultiComboBox",
-    component,
-    subcomponents: {'MultiComboBoxItem' : 'ui5-mcb-item', 'MultiComboBoxGroupItem' : 'ui5-mcb-group-item'},
+    component: "MultiComboBox",
+    subcomponents: {'MultiComboBoxItem' : 'MultiComboBoxItem', 'MultiComboBoxGroupItem' : 'MultiComboBoxGroupItem'},
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })
@@ -110,3 +110,10 @@ MultiComboBoxGroupingItems.args = {
 	<ui5-mcb-item text="United States"></ui5-mcb-item>`
 };
 MultiComboBoxGroupingItems.storyName = "Multi Combo Box with Grouping of Items";
+
+export const MultiComboBoxLongText = Template.bind({});
+MultiComboBoxLongText.args = {
+	placeholder: 'MultiComboBox with single long token',
+	default: `<ui5-mcb-item selected="" text="Very long long long long long long long text"></ui5-mcb-item>`
+};
+MultiComboBoxLongText.storyName = "Multi Combo Box with single long token";

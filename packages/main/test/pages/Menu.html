@@ -21,7 +21,7 @@
 		<ui5-menu-item text="Open" icon="open-folder" starts-section>
 			<ui5-menu-item text="Open Locally" icon="open-folder" additional-text="Ctrl+K" busy-delay="100" busy>
 			</ui5-menu-item>
-			<ui5-menu-item text="Open from Cloud" additional-text="Ctrl+L"></ui5-menu-item>
+			<ui5-menu-item text="Open from SAP Cloud" additional-text="Ctrl+L"></ui5-menu-item>
 		</ui5-menu-item>
 		<ui5-menu-item text="Save" icon="save">
 			<ui5-menu-item text="Save Locally" icon="save">
@@ -105,16 +105,16 @@
 
 		let fetched = false;
 
-		menu.addEventListener("ui5-before-open", function fetch(event) {
+		menu.addEventListener("ui5-before-open", function(event) {
 			const item = event.detail.item;
 			if (item && item.text === "Open Locally" && !fetched) {
 				setTimeout(function() {
 					item.removeAttribute("busy");
 					item.removeAttribute("busy-delay");
 					let oneNode = document.createElement("ui5-menu-item");
-					oneNode.setAttribute("text", "Open from C");
+					oneNode.setAttribute("text", "Open from Amazon Cloud");
 					let twoNode = document.createElement("ui5-menu-item");
-					twoNode.setAttribute("text", "Open from D");
+					twoNode.setAttribute("text", "Open from Google Cloud");
 					item.append(oneNode, twoNode);
 					fetched = true;
 				}, 1000);
@@ -122,7 +122,11 @@
 		});
 
 		menu.addEventListener("ui5-item-click", function(event) {
-			selectionInput.value = event.detail.text;
+			const item = event.detail.item;
+			selectionInput.value = item.text;
+			if (item && item.text === "New File") {
+				event.preventDefault();
+			}
 		});
 
 		menu.addEventListener("ui5-before-open", function(event) {

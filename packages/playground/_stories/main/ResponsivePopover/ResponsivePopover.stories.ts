@@ -12,7 +12,7 @@ const component = "ui5-responsive-popover";
 
 export default {
 	title: "Main/Responsive Popover",
-	component,
+	component: "ResponsivePopover",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),

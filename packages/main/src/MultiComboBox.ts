@@ -29,7 +29,6 @@ import {
 	isHomeCtrl,
 	isEndCtrl,
 	isCtrlA,
-	isCtrlV,
 	isDeleteShift,
 	isInsertShift,
 	isInsertCtrl,
@@ -43,6 +42,7 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import {
 	isPhone,
 	isAndroid,
+	isFirefox,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -674,6 +674,7 @@ class MultiComboBox extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		const isArrowDownCtrl: boolean = isDownCtrl(e);
+		const isCtrl: boolean = e.metaKey || e.ctrlKey;
 
 		if (isShow(e) && !this.disabled) {
 			this._handleShow(e);
@@ -701,9 +702,14 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (isCtrlV(e) || isInsertShift(e)) {
-			this._handlePaste();
+		if (isInsertShift(e)) {
+			this._handleInsertPaste();
 			return;
+		}
+
+		if (isCtrl && e.key.toLowerCase() === "i" && this._tokenizer.tokens.length > 0) {
+			e.preventDefault();
+			this.togglePopover();
 		}
 
 		if (isSpaceShift(e)) {
@@ -729,8 +735,24 @@ class MultiComboBox extends UI5Element {
 		this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(e) || isDelete(e) || isEscape(e) || isEnter(e));
 	}
 
-	async _handlePaste() {
-		if (this.readonly) {
+	_handlePaste(e:ClipboardEvent) {
+		e.preventDefault();
+
+		if (this.readonly || !e.clipboardData) {
+			return;
+		}
+
+		const pastedText = (e.clipboardData).getData("text/plain");
+
+		if (!pastedText) {
+			return;
+		}
+
+		this._createTokenFromText(pastedText);
+	}
+
+	async _handleInsertPaste() {
+		if (this.readonly || isFirefox()) {
 			return;
 		}
 
@@ -740,7 +762,11 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		const separatedText = pastedText.split(/\r\n|\r|\n|\t/g);
+		this._createTokenFromText(pastedText);
+	}
+
+	_createTokenFromText(pastedText: string) {
+		const separatedText = pastedText.split(/\r\n|\r|\n|\t/g).filter(t => !!t);
 		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
 
 		if (separatedText.length > 1) {
@@ -1166,8 +1192,8 @@ class MultiComboBox extends UI5Element {
 			return this._tokenizer._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
 		}
 
-		if (isCtrlV(e) || isInsertShift(e)) {
-			this._handlePaste();
+		if (isInsertShift(e)) {
+			this._handleInsertPaste();
 		}
 
 		if (isHome(e)) {
@@ -1181,6 +1207,11 @@ class MultiComboBox extends UI5Element {
 		if (isShow(e) && !this.readonly && !this.disabled) {
 			this._preventTokenizerToggle = true;
 			this._handleShow(e);
+		}
+
+		if (isCtrl && e.key.toLowerCase() === "i" && this._tokenizer.tokens.length > 0) {
+			e.preventDefault();
+			this.togglePopover();
 		}
 	}
 

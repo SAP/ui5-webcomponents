@@ -12,7 +12,7 @@ const component = "ui5-radio-button";
 
 export default {
 	title: "Main/Radio Button",
-	component,
+	component: "RadioButton",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
