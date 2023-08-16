@@ -729,6 +729,7 @@ class Select extends UI5Element implements IFormElement {
 		this.selectOptions[this._selectedIndex].selected = false;
 		this._selectedIndex = index;
 		this.selectOptions[index].selected = true;
+		this.fireEvent("preview-change", { option: this.selectOptions[index] });
 	}
 
 	/**
@@ -787,21 +788,23 @@ class Select extends UI5Element implements IFormElement {
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
 		const options: Array<IOption> = this.selectOptions;
 
-		options[oldIndex].selected = false;
-		options[oldIndex]._focused = false;
-		options[oldIndex].focused = false;
+		const previousOption = options[oldIndex];
+		previousOption.selected = false;
+		previousOption._focused = false;
+		previousOption.focused = false;
 
-		options[newIndex].selected = true;
-		options[newIndex]._focused = true;
-		options[newIndex].focused = true;
+		const nextOption = options[newIndex];
+		nextOption.selected = true;
+		nextOption._focused = true;
+		nextOption.focused = true;
 
 		this._selectedIndex = newIndex;
 
-		this.fireEvent("live-change", { selectedOption: this.selectOptions[newIndex] });
+		this.fireEvent("preview-change", { option: nextOption });
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
-			this._fireChangeEvent(options[newIndex]);
+			this._fireChangeEvent(nextOption);
 		}
 	}
 
@@ -861,6 +864,7 @@ class Select extends UI5Element implements IFormElement {
 		//  Angular two way data binding
 		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
+
 		if (changePrevented) {
 			this.selectedItem = this._lastSelectedOption!.textContent;
 			this._select(this._selectedIndexBeforeOpen);

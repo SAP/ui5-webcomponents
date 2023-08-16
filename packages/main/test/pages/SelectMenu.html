@@ -59,11 +59,10 @@
 		<label id="lblClose"></label><br>
 
 		<div class="app-inner">
-
 			<ui5-select id="sel" menu="selectOptions">
 				<div class="selectLabel" slot="label">
-					<span id="mainText">Skirt [3]</span>
-					<ui5-avatar id="avatar" size="XS" initials="L"></ui5-avatar>
+					<span id="mainText">N/A</span>
+					<ui5-avatar id="avatar" size="XS" initials="NA"></ui5-avatar>
 				</div>
 			</ui5-select>
 
@@ -97,7 +96,7 @@
 			</div>
 		</ui5-select-menu-option>
 
-		<ui5-select-menu-option data-display-text="Skirt [3]" data-additional-text="L" selected>
+		<ui5-select-menu-option data-display-text="Skirt [3]" data-additional-text="L">
 			<div  class="customOption">
 				Skirt [3]
 				<div>
@@ -107,7 +106,6 @@
 			</div>
 		</ui5-select-menu-option>
 	</ui5-select-menu>
-
 
 	<ui5-select-menu id="selectOptions2">
 
@@ -142,7 +140,6 @@
 		</ui5-select-menu-option>
 
 	</ui5-select-menu>
-
 
 	<ui5-select-menu id="selectOptions3">
 
@@ -184,16 +181,14 @@
 		let closeCounter = 0;
 		let openCounter = 0;
 
-		sel.addEventListener("ui5-live-change", function(e) {
-			mainText.innerHTML = e.detail.selectedOption.getAttribute("data-display-text")
-			avatar.initials = e.detail.selectedOption.getAttribute("data-additional-text");
-			lblLive.innerHTML = "LIVE CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++liveCounter) + ">";
+		sel.addEventListener("ui5-change", function(e) {
+			lbl.innerHTML = "CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++counter) + ">";
 		});
 
-		sel.addEventListener("ui5-change", function(e) {
-			mainText.innerHTML = e.detail.selectedOption.getAttribute("data-display-text")
-			avatar.initials = e.detail.selectedOption.getAttribute("data-additional-text");
-			lbl.innerHTML = "CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++counter) + ">";
+		sel.addEventListener("ui5-preview-change", function(e) {
+			lblLive.innerHTML = "PREVIEW CHANGE EVENT :: " + e.detail.option.localName + " :: <" + e.detail.option.textContent + "> :: event counter :: <" + (++liveCounter) + ">";
+			mainText.innerHTML = e.detail.option.getAttribute("data-display-text")
+			avatar.initials = e.detail.option.getAttribute("data-additional-text");
 		});
 
 		sel.addEventListener("ui5-close", function(e) {
