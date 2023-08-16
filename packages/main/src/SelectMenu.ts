@@ -5,6 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
 
 // Template
 import SelectMenuTemplate from "./generated/templates/SelectMenuTemplate.lit.js";
@@ -12,10 +13,12 @@ import SelectMenuTemplate from "./generated/templates/SelectMenuTemplate.lit.js"
 // Styles
 import SelectMenuCss from "./generated/themes/SelectMenu.css.js";
 import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
+import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 // Deps
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
+import Button from "./Button.js";
 
 // Types
 import type Select from "./Select.js";
@@ -49,11 +52,12 @@ type SelectMenuOptionClick = {
 @customElement({
 	tag: "ui5-select-menu",
 	renderer: litRender,
-	styles: [SelectMenuCss, ValueStateMessageCss],
+	styles: [SelectMenuCss, ValueStateMessageCss, ResponsivePopoverCommonCss],
 	template: SelectMenuTemplate,
 	dependencies: [
 		ResponsivePopover,
 		List,
+		Button,
 	],
 })
 class SelectMenu extends UI5Element {
@@ -102,6 +106,8 @@ class SelectMenu extends UI5Element {
 
 	valueStateMessageText: Array<Node>;
 
+	_headerTitleText?: string;
+
 	select?: Select;
 
 	/**
@@ -116,6 +122,8 @@ class SelectMenu extends UI5Element {
 		this.valueStateText = opener.valueStateText;
 		this.valueStateMessageText = opener.valueStateMessageText;
 		this.valueState = opener.valueState;
+
+		this._headerTitleText = opener._headerTitleText;
 	}
 
 	/**
@@ -145,6 +153,10 @@ class SelectMenu extends UI5Element {
 
 	_onAfterClose() {
 		this.fireEvent<CustomEvent>("after-close");
+	}
+
+	_onCloseBtnClick() {
+		this.close();
 	}
 
 	get open() {
@@ -191,6 +203,10 @@ class SelectMenu extends UI5Element {
 		};
 
 		return this.valueState !== ValueState.None ? iconPerValueState[this.valueState] : "";
+	}
+
+	get _isPhone() {
+		return isPhone();
 	}
 }
 

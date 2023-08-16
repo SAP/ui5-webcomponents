@@ -78,7 +78,7 @@ type SelectChangeEventDetail = {
 interface IOption extends UI5Element {
 	id: string,
 	selected: boolean,
-	_focused: boolean,
+	_focused?: boolean,
 	focused?: boolean,
 	icon?: string | undefined,
 	value: string,

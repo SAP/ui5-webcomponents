@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import type { IOption } from "./Select.js";
@@ -39,15 +38,6 @@ import CustomListItem from "./CustomListItem.js";
 	template: CustomListItemTemplate,
 	dependencies: [],
 })
-
-/**
- * Example custom event.
- * Please keep in mind that all public events should be documented in the API Reference as shown below.
- *
- * @event sap.ui.webc.main.SelectMenuOption#interact
- * @public
- */
-@event("interact", { detail: { /* event payload ( optional ) */ } })
 class SelectMenuOption extends CustomListItem implements IOption {
 	/**
 	 * Defines the text, displayed inside the <code>ui5-select</code> input filed
@@ -80,15 +70,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 */
 	@property()
 	value!: string;
-
-	/**
-	 * Defines the focused state of the component.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @private
-	 */
-	@property({ type: Boolean })
-	_focused!: boolean;
 
 	/**
 	 * Defines the content of the component.
