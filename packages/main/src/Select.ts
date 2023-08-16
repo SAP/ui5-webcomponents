@@ -86,6 +86,7 @@ interface IOption extends UI5Element {
 	title: string,
 	additionalText?: string,
 	stableDomRef?: string,
+	displayText?: string,
 }
 
 /**
@@ -682,7 +683,7 @@ class Select extends UI5Element implements IFormElement {
 		const itemToSelect = this._searchNextItemByText(text);
 
 		if (itemToSelect) {
-			const nextIndex = this._filteredItems.indexOf(itemToSelect);
+			const nextIndex = this.selectOptions.indexOf(itemToSelect);
 
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
@@ -693,13 +694,13 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_searchNextItemByText(text: string) {
-		let orderedOptions = this._filteredItems.slice(0);
+		let orderedOptions = this.selectOptions.slice(0);
 		const optionsAfterSelected = orderedOptions.splice(this._selectedIndex + 1, orderedOptions.length - this._selectedIndex);
 		const optionsBeforeSelected = orderedOptions.splice(0, orderedOptions.length - 1);
 
 		orderedOptions = optionsAfterSelected.concat(optionsBeforeSelected);
 
-		return orderedOptions.find(option => (option.textContent || "").toLowerCase().startsWith(text));
+		return orderedOptions.find(option => (option.displayText || option.textContent || "").toLowerCase().startsWith(text));
 	}
 
 	_handleHomeKey(e: KeyboardEvent) {
@@ -708,7 +709,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_handleEndKey(e: KeyboardEvent) {
-		const lastIndex = this._filteredItems.length - 1;
+		const lastIndex = this.selectOptions.length - 1;
 
 		e.preventDefault();
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
@@ -849,7 +850,7 @@ class Select extends UI5Element implements IFormElement {
 		this.fireEvent<CustomEvent>("close");
 	}
 
-	get selectOptions() {
+	get selectOptions(): Array<IOption> {
 		const menu = this._getSelectMenu();
 		if (menu) {
 			return menu.options;
