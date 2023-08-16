@@ -1,6 +1,8 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ToolbarSeparatorTemplate from "./generated/templates/ToolbarSeparatorTemplate.lit.js";
 
+import { registerToolbarItem } from "./features/ToolbarItems.js";
+
 import ToolbarItem from "./ToolbarItem.js";
 
 /**
@@ -24,18 +26,24 @@ import ToolbarItem from "./ToolbarItem.js";
 })
 
 class ToolbarSeparator extends ToolbarItem {
-	get toolbarTemplate() {
+	static get toolbarTemplate() {
 		return ToolbarSeparatorTemplate;
 	}
 
-	get toolbarPopoverTemplate() {
+	static get toolbarPopoverTemplate() {
 		return ToolbarSeparatorTemplate;
 	}
 
 	get ignoreSpace() {
 		return true;
 	}
+
+	get isInteractive() {
+		return false;
+	}
 }
+
+registerToolbarItem(ToolbarSeparator);
 
 ToolbarSeparator.define();
 

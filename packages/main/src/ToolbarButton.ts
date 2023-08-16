@@ -5,9 +5,11 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
 import ButtonDesign from "./types/ButtonDesign.js";
 
-import ToolbarItem from "./ToolbarItem.js";
+import ToolbarItem, { IEventOptions } from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
 import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
+
+import { registerToolbarItem } from "./features/ToolbarItems.js";
 
 /**
  * @class
@@ -118,14 +120,22 @@ class ToolbarButton extends ToolbarItem {
 		return true;
 	}
 
-	get toolbarTemplate() {
+	static get toolbarTemplate() {
 		return ToolbarButtonTemplate;
 	}
 
-	get toolbarPopoverTemplate() {
+	static get toolbarPopoverTemplate() {
 		return ToolbarPopoverButtonTemplate;
 	}
+
+	get subscribedEvents(): Map<string, IEventOptions> {
+		const map = new Map();
+		map.set("click", { preventClosing: false });
+		return map;
+	}
 }
+
+registerToolbarItem(ToolbarButton);
 
 ToolbarButton.define();
 

@@ -3,6 +3,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
+import { registerToolbarItem } from "./features/ToolbarItems.js";
+
 // Templates
 
 import ToolbarSelectTemplate from "./generated/templates/ToolbarSelectTemplate.lit.js";
@@ -68,11 +70,11 @@ class ToolbarSelect extends ToolbarItem {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	options!: Array<Option>;
 
-	get toolbarTemplate() {
+	static get toolbarTemplate() {
 		return ToolbarSelectTemplate;
 	}
 
-	get toolbarPopoverTemplate() {
+	static get toolbarPopoverTemplate() {
 		return ToolbarPopoverSelectTemplate;
 	}
 
@@ -85,6 +87,9 @@ class ToolbarSelect extends ToolbarItem {
 		return map;
 	}
 }
+
+registerToolbarItem(ToolbarSelect);
+
 
 ToolbarSelect.define();
 

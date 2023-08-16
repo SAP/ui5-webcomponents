@@ -23,6 +23,8 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 
 import type { ToolbarItem } from "./ToolbarItem.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
+import { getToolbarItem } from "./features/ToolbarItems.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 
 function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
 	return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
@@ -101,6 +103,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Calculated width of the whole toolbar.
 	 * @private
+	 * @name sap.ui.webc.main.Toolbar.prototype.width
 	 * @type {sap.ui.webc.base.types.Integer}
 	 * @defaultvalue false
 	 */
@@ -110,6 +113,7 @@ class Toolbar extends UI5Element {
 	/**
 	 * Calculated width of the toolbar content.
 	 * @private
+	 * @name sap.ui.webc.main.Toolbar.prototype.contentWidth
 	 * @type {sap.ui.webc.base.types.Integer}
 	 * @defaultvalue 0
 	 */
@@ -123,6 +127,28 @@ class Toolbar extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	reverseOverflow!: boolean;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.Toolbar.prototype.accessibleName
+	 * @defaultvalue: ""
+	 * @public
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the input.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.Toolbar.prototype.accessibleNameRef
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property({ defaultValue: "" })
+	accessibleNameRef!: string;
 
 	/**
 	* Slotted Toolbar items
@@ -330,11 +356,6 @@ class Toolbar extends UI5Element {
 		return this.items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow);
 	}
 
-	get effectiveAriaLabelText(): undefined | string {
-		return "";
-		// return this.ariaLabelText || this.i18nBundle.getText("TOOLBAR_ARIA_LABEL");
-	}
-
 	get overflowItems() {
 		// spacers and separators are ignored
 		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
@@ -366,6 +387,22 @@ class Toolbar extends UI5Element {
 		};
 	}
 
+	get interactiveItemsCount() {
+		return this.items.filter((item: ToolbarItem) => item.isInteractive).length;
+	}
+
+	get hasAriaSemantics() {
+		return this.interactiveItemsCount > 1;
+	}
+
+	get accessibleRole() {
+		return this.hasAriaSemantics ? "toolbar" : undefined;
+	}
+
+	get ariaLabelText() {
+		return this.hasAriaSemantics ? getEffectiveAriaLabelText(this) : undefined;
+	}
+
 	/**
 	 * Toolbar Overflow Popover
 	 */
@@ -379,7 +416,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get hasItemWithText(): boolean {
-		return this.overflowItems.some((item: ToolbarItem) => item.containsText);
+		return this.itemsToOverflow.some((item: ToolbarItem) => item.containsText);
 	}
 
 	get hasFlexibleSpacers() {
@@ -434,21 +471,25 @@ class Toolbar extends UI5Element {
 	}
 
 	onObserverChange() {
-		// some items were added/removed/updated
-		// reset the cache and trigger a re-render
+		// some items were updated reset the cache and trigger a re-render
 		this.itemsToOverflow = [];
 		this.contentWidth = 0; // re-render
 	}
 
 	getItemsInfo(items: Array<ToolbarItem>) {
 		return items.map((item: ToolbarItem) => {
-			// Item props
+			const ElementClass = getToolbarItem(item.constructor.name);
+
+			if (!ElementClass) {
+				return null;
+			}
+
 			const toolbarItem = {
-				toolbarTemplate: executeTemplate(item.toolbarTemplate, item),
-				toolbarPopoverTemplate: executeTemplate(item.toolbarPopoverTemplate, item),
+				toolbarTemplate: executeTemplate(ElementClass.toolbarTemplate, item),
+				toolbarPopoverTemplate: executeTemplate(ElementClass.toolbarPopoverTemplate, item),
 			};
 
-			return toolbarItem as ToolbarItem;
+			return toolbarItem;
 		});
 	}
 

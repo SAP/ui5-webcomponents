@@ -5,19 +5,16 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
-interface IEventOptions {
+export type IEventOptions = {
 	preventClosing: boolean;
 }
 
-interface IToolbarItem {
+export interface IToolbarItem {
 	overflowPriority: `${ToolbarItemOverflowBehavior}`;
 	preventOverflowClosing: boolean;
 	ignoreSpace?: boolean;
 	containsText?: boolean;
 	hasFlexibleWidth?: boolean;
-	toolbarTemplate: TemplateFunction;
-	toolbarPopoverTemplate: TemplateFunction;
-	subscribedEvents: Map<string, IEventOptions>;
 	stableDomRef: string;
 }
 
@@ -69,7 +66,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
 	* @returns {Boolean}
 	* @protected
-	* @abstract
 	*/
 	get ignoreSpace(): boolean {
 		return false;
@@ -79,7 +75,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * Returns if the item contains text. Used to position the text properly inside the popover.
 	 * Aligned left if the item has text, default aligned otherwise.
 	 * @protected
-	 * @abstract
 	 * @returns {Boolean}
 	 */
 	get containsText(): boolean {
@@ -90,7 +85,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * Returns if the item is flexible. An item that is returning true for this property will make
 	 * the toolbar expand to fill the 100% width of its container.
 	 * @protected
-	 * @abstract
 	 * @returns {Boolean}
 	 */
 	get hasFlexibleWidth(): boolean {
@@ -98,37 +92,41 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	}
 
 	/**
+	 * Returns if the item is interactive.
+	 * This value is used to determinate if the toolbar should have its accessibility role and attributes set.
+	 * At least two interactive items are needed for the toolbar to have the role="toolbar" attribute set.
+	 * @protected
+	 * @returns {Boolean}
+	 */
+	get isInteractive(): boolean {
+		return true;
+	}
+
+	/**
 	 * Returns the template for the toolbar item.
 	 * @protected
-	 * @abstract
 	 * @returns {TemplateFunction}
 	 */
-	get toolbarTemplate(): TemplateFunction {
+	static get toolbarTemplate(): TemplateFunction {
 		throw new Error("Template must be defined");
 	}
 
 	/**
 	 * Returns the template for the toolbar item popover.
 	 * @protected
-	 * @abstract
 	 * @returns {TemplateFunction}
 	 */
-	get toolbarPopoverTemplate(): TemplateFunction {
-		throw new Error("Template must be defined");
+	static get toolbarPopoverTemplate(): TemplateFunction {
+		throw new Error("Popover template must be defined");
 	}
 
 	/**
 	 * Returns the events that the item is subscribed to.
 	 * @protected
-	 * @abstract
-	 * @readonly
-	 * @name sap.ui.webc.main.ToolbarItem.prototype.subscribedEvents
-	 * @defaultvalue []
+	 * @returns {Map}
 	 */
 	get subscribedEvents(): Map<string, IEventOptions> {
-		const map = new Map();
-		map.set("click", { preventClosing: false });
-		return map;
+		return new Map();
 	}
 
 	get stableDomRef() {

@@ -1,19 +1,17 @@
-<div
-	class="ui5-tb-root"
-	role="toolbar"
-	aria-label="{{effectiveAriaLabelText}}"
+
+<div 
+	class="{{classes.items}}" 
+	role="{{accessibleRole}}"
+	aria-label="{{ariaLabelText}}"
 >
+	{{#each standardItems}}
+		{{this.toolbarTemplate}}
+	{{/each}}
 
-	<div class="{{classes.items}}">
-		{{#each standardItems}}
-			{{this.toolbarTemplate}}
-		{{/each}}
-
-		<ui5-button
-			aria-hidden="{{hideOverflowButton}}"
-			icon="overflow"
-			design="Transparent"
-			class="{{classes.overflowButton}}"
-		></ui5-button>
-	</div>
+	<ui5-button
+		aria-hidden="{{hideOverflowButton}}"
+		icon="overflow"
+		design="Transparent"
+		class="{{classes.overflowButton}}"
+	></ui5-button>
 </div>
