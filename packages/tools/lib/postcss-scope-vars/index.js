@@ -1,8 +1,6 @@
 const name = "postcss-scope-vars";
 
 module.exports = (options) => {
-	console.log({options});
-	options = Object.assign({}, options);
 	const versionStr = "v" + options?.version?.replaceAll(".", "-");
 	return {
 		postcssPlugin: name,

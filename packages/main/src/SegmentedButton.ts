@@ -7,7 +7,7 @@ import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScopeUtils.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import {
 	isSpace,
 	isEnter,
