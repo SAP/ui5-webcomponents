@@ -216,7 +216,7 @@ class Toolbar extends UI5Element {
 	storeItemsWidth() {
 		let totalWidth = 0;
 
-		this.movableItems.forEach((item: ToolbarItem) => {
+		this.items.forEach((item: ToolbarItem) => {
 			const itemWidth = this.getItemWidth(item);
 			totalWidth += itemWidth;
 			this.ITEMS_WIDTH_MAP.set(item._id, itemWidth);
