@@ -158,6 +158,22 @@ class Toolbar extends UI5Element {
 
 	ITEMS_WIDTH_MAP: Map<string, number> = new Map();
 
+	static get styles() {
+		const styles = getRegisteredStyles();
+		return [
+			ToolbarCss,
+			...styles,
+		];
+	}
+
+	static get staticAreaStyles() {
+		const styes = getRegisteredStaticAreaStyles();
+		return [
+			ToolbarPopoverCss,
+			...styes,
+		];
+	}
+
 	constructor() {
 		super();
 
@@ -167,6 +183,103 @@ class Toolbar extends UI5Element {
 		this._itemsObserver = new MutationObserver(() => {
 			this.onObserverChange();
 		});
+	}
+
+	/**
+	 * Read-only members
+	 */
+
+	get overflowButtonSize(): number {
+		return this.overflowButtonDOM?.getBoundingClientRect().width || 0;
+	}
+
+	get padding(): number {
+		const toolbarComputedStyle = getComputedStyle(this.getDomRef()!);
+		return calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-left")
+			+ calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-right");
+	}
+
+	get subscribedEvents() {
+		return this.items
+			.map((item: ToolbarItem) => Array.from(item.subscribedEvents.keys()))
+			.flat()
+			// remove duplicates
+			.filter((value, index, self) => self.indexOf(value) === index);
+	}
+
+	get alwaysOverflowItems() {
+		return this.items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.AlwaysOverflow);
+	}
+
+	get movableItems() {
+		return this.items.filter((item: ToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow);
+	}
+
+	get overflowItems() {
+		// spacers and separators are ignored
+		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
+		return this.reverseOverflow ? overflowItems.reverse() : overflowItems;
+	}
+
+	get standardItems() {
+		return this.getItemsInfo(this.items.filter(item => this.itemsToOverflow.indexOf(item) === -1));
+	}
+
+	get hideOverflowButton() {
+		return this.overflowItems.length === 0;
+	}
+
+	get classes() {
+		return {
+			items: {
+				"ui5-tb-items": true,
+				"ui5-tb-items-full-width": this.hasFlexibleSpacers,
+			},
+			overflow: {
+				"ui5-overflow-list--alignleft": this.hasItemWithText,
+			},
+			overflowButton: {
+				"ui5-tb-item": true,
+				"ui5-tb-overflow-btn": true,
+				"ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
+			},
+		};
+	}
+
+	get interactiveItemsCount() {
+		return this.items.filter((item: ToolbarItem) => item.isInteractive).length;
+	}
+
+	get hasAriaSemantics() {
+		return this.interactiveItemsCount > 1;
+	}
+
+	get accessibleRole() {
+		return this.hasAriaSemantics ? "toolbar" : undefined;
+	}
+
+	get ariaLabelText() {
+		return this.hasAriaSemantics ? getEffectiveAriaLabelText(this) : undefined;
+	}
+
+	/**
+	 * Toolbar Overflow Popover
+	 */
+
+	get overflowButtonDOM(): HTMLElement | null {
+		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
+	}
+
+	get itemsDOM() {
+		return this.shadowRoot!.querySelector(".ui5-tb-items");
+	}
+
+	get hasItemWithText(): boolean {
+		return this.itemsToOverflow.some((item: ToolbarItem) => item.containsText);
+	}
+
+	get hasFlexibleSpacers() {
+		return this.items.some((item: ToolbarItem) => item.hasFlexibleWidth);
 	}
 
 	/**
@@ -192,6 +305,33 @@ class Toolbar extends UI5Element {
 
 		this.storeItemsWidth();
 		this.processOverflowLayout();
+	}
+
+	/**
+	 * Returns if the overflow popup is open.
+	 *
+	 * @public
+	 * @return { Promise<Boolean> }
+	 */
+	async isOverflowOpen(): Promise<boolean> {
+		const overflowPopover = await this.getOverflowPopover();
+		return overflowPopover!.isOpen();
+	}
+
+	async openOverflow(): Promise<void> {
+		const overflowPopover = await this.getOverflowPopover();
+		overflowPopover!.showAt(this.overflowButtonDOM!);
+		this.reverseOverflow = overflowPopover!.actualPlacementType === "Top";
+	}
+
+	async closeOverflow() {
+		const overflowPopover = await this.getOverflowPopover();
+		overflowPopover!.close();
+	}
+
+	async getOverflowPopover(): Promise<Popover | null> {
+		const staticAreaItem = await this.getStaticAreaItemDomRef();
+		return staticAreaItem!.querySelector<Popover>(".ui5-overflow-popover");
 	}
 
 	/**
@@ -290,158 +430,13 @@ class Toolbar extends UI5Element {
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
-			abstractItem?.fireEvent(eventType, e, true);
+			const prevented = abstractItem?.fireEvent(eventType, e, true);
 			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
 
-			if (abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
-				return;
+			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
+				this.closeOverflow();
 			}
-			this.closeOverflow();
 		}
-	}
-
-	/**
-	 * Returns if the overflow popup is open.
-	 *
-	 * @public
-	 * @return { Promise<Boolean> }
-	 */
-	async isOverflowOpen(): Promise<boolean> {
-		const overflowPopover = await this.getOverflowPopover();
-		return overflowPopover!.isOpen();
-	}
-
-	/**
-	 * Read-only members
-	 */
-
-	static get styles() {
-		const styles = getRegisteredStyles();
-		return [
-			ToolbarCss,
-			...styles,
-		];
-	}
-
-	static get staticAreaStyles() {
-		const styes = getRegisteredStaticAreaStyles();
-		return [
-			ToolbarPopoverCss,
-			...styes,
-		];
-	}
-
-	get overflowButtonSize(): number {
-		return this.overflowButtonDOM?.getBoundingClientRect().width || 0;
-	}
-
-	get padding(): number {
-		const toolbarComputedStyle = getComputedStyle(this.getDomRef()!);
-		return calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-left")
-			+ calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-right");
-	}
-
-	get subscribedEvents() {
-		return this.items
-			.map((item: ToolbarItem) => Array.from(item.subscribedEvents.keys()))
-			.flat()
-			// remove duplicates
-			.filter((value, index, self) => self.indexOf(value) === index);
-	}
-
-	get alwaysOverflowItems() {
-		return this.items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.AlwaysOverflow);
-	}
-
-	get movableItems() {
-		return this.items.filter((item: ToolbarItem) => item.overflowPriority !== ToolbarItemOverflowBehavior.AlwaysOverflow && item.overflowPriority !== ToolbarItemOverflowBehavior.NeverOverflow);
-	}
-
-	get neverOverflowItems() {
-		return this.items.filter((item: ToolbarItem) => item.overflowPriority === ToolbarItemOverflowBehavior.NeverOverflow);
-	}
-
-	get overflowItems() {
-		// spacers and separators are ignored
-		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
-		return this.reverseOverflow ? overflowItems.reverse() : overflowItems;
-	}
-
-	get standardItems() {
-		return this.getItemsInfo(this.items.filter(item => this.itemsToOverflow.indexOf(item) === -1));
-	}
-
-	get hideOverflowButton() {
-		return this.overflowItems.length === 0;
-	}
-
-	get classes() {
-		return {
-			items: {
-				"ui5-tb-items": true,
-				"ui5-tb-items-full-width": this.hasFlexibleSpacers,
-			},
-			overflow: {
-				"ui5-overflow-list--alignleft": this.hasItemWithText,
-			},
-			overflowButton: {
-				"ui5-tb-item": true,
-				"ui5-tb-overflow-btn": true,
-				"ui5-tb-overflow-btn-hidden": this.hideOverflowButton,
-			},
-		};
-	}
-
-	get interactiveItemsCount() {
-		return this.items.filter((item: ToolbarItem) => item.isInteractive).length;
-	}
-
-	get hasAriaSemantics() {
-		return this.interactiveItemsCount > 1;
-	}
-
-	get accessibleRole() {
-		return this.hasAriaSemantics ? "toolbar" : undefined;
-	}
-
-	get ariaLabelText() {
-		return this.hasAriaSemantics ? getEffectiveAriaLabelText(this) : undefined;
-	}
-
-	/**
-	 * Toolbar Overflow Popover
-	 */
-
-	get overflowButtonDOM(): HTMLElement | null {
-		return this.shadowRoot!.querySelector(".ui5-tb-overflow-btn");
-	}
-
-	get itemsDOM() {
-		return this.shadowRoot!.querySelector(".ui5-tb-items");
-	}
-
-	get hasItemWithText(): boolean {
-		return this.itemsToOverflow.some((item: ToolbarItem) => item.containsText);
-	}
-
-	get hasFlexibleSpacers() {
-		return this.items.some((item: ToolbarItem) => item.hasFlexibleWidth);
-	}
-
-	async openOverflow(): Promise<void> {
-		const overflowPopover = await this.getOverflowPopover();
-		overflowPopover!.showAt(this.overflowButtonDOM!);
-		this.reverseOverflow = overflowPopover!.actualPlacementType === "Top";
-	}
-
-	async closeOverflow() {
-		const overflowPopover = await this.getOverflowPopover();
-		overflowPopover!.close();
-	}
-
-	async getOverflowPopover(): Promise<Popover | null> {
-		const staticAreaItem = await this.getStaticAreaItemDomRef();
-		return staticAreaItem!.querySelector<Popover>(".ui5-overflow-popover");
 	}
 
 	/**
@@ -467,7 +462,7 @@ class Toolbar extends UI5Element {
 	}
 
 	observeItems() {
-		this.movableItems.forEach(item => {
+		this.items.forEach(item => {
 			this._itemsObserver.observe(item, {
 				attributes: true,
 				childList: true,
