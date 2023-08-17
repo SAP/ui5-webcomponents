@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import type { StoryFn, Meta } from "@storybook/web-components";
+import type { Meta } from "@storybook/web-components";
 
 import Toolbar from "@ui5/webcomponents/dist/Toolbar";
 
@@ -47,10 +47,9 @@ Basic.args = {
   };
 Basic.storyName = "Basic";
 
-export const ToolbarWithSpacer: UI5StoryArgs<Toolbar, StoryArgsSlots> =  Template.bind({});
+export const WithSpacer: UI5StoryArgs<Toolbar, StoryArgsSlots> =  Template.bind({});
 
-ToolbarWithSpacer.storyName = "Toolbar with spacer";
-ToolbarWithSpacer.args = {
+WithSpacer.args = {
 	default: `
 	<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 	<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
@@ -64,11 +63,9 @@ ToolbarWithSpacer.args = {
 	<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>`
 }
 
-export const ToolbarWithSeparator: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
+export const WithSeparator: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
 
-ToolbarWithSeparator.storyName = "Toolbar with separator";
-
-ToolbarWithSeparator.args = {
+WithSeparator.args = {
 	default: `
 		<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
@@ -82,11 +79,11 @@ ToolbarWithSeparator.args = {
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>`
 }
 
-export const ToolbarWithAlwaysOverflowElements: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
+export const WithAlwaysOverflowElements: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
 
-ToolbarWithAlwaysOverflowElements.storyName = "Toolbar with 'always overflow' elements";
+WithAlwaysOverflowElements.storyName = "'AlwaysOverflow' elements";
 
-ToolbarWithAlwaysOverflowElements.args = {
+WithAlwaysOverflowElements.args = {
 	default: `
 		<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
@@ -99,29 +96,29 @@ ToolbarWithAlwaysOverflowElements.args = {
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>`
 }
 
-export const ToolbarWithNeverOverflowElements: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
+export const WithNeverOverflowElements: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
 
-ToolbarWithNeverOverflowElements.storyName = "Toolbar with 'never overflow' elements";
+WithNeverOverflowElements.storyName = "'NeverOverflow' elements";
 
-ToolbarWithNeverOverflowElements.args = {
+WithNeverOverflowElements.args = {
 	default: `
-		<ui5-toolbar-button icon="add" text="Left 1 (long)" overflow-priority="NeverOverflow" width="150px" design="Default"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="decline" text="Left 2" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="decline" text="Left 2" ></ui5-toolbar-button>
 		<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="decline" text="Mid 2" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="decline" text="Mid 2" ></ui5-toolbar-button>
 		<ui5-toolbar-button icon="add" text="Right 1" overflow-priority="NeverOverflow"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="employee" text="Right 4" overflow-priority="NeverOverflow"></ui5-toolbar-button>
+		<ui5-toolbar-button icon="employee" text="Right 4" ></ui5-toolbar-button>
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="NeverOverflow"></ui5-toolbar-button>`
 }
 
-export const ToolbarWithStartAlignedElements = Template.bind({});
+export const WithStartAlignedElements = Template.bind({});
 
 
-ToolbarWithStartAlignedElements.storyName = "Toolbar with 'Start' aligned elements";
+WithStartAlignedElements.storyName = "Toolbar with 'Start' aligned elements";
 
-ToolbarWithStartAlignedElements.args = {
+WithStartAlignedElements.args = {
   alignContent: ToolbarAlign.Start,
   default: Basic.args.default
 };
