@@ -40,7 +40,7 @@ describe("Toolbar general interaction", () => {
 		await browser.setWindowSize(100, 1080);
 
 		const overflowButton = await otb.shadow$(".ui5-tb-overflow-btn");
-		assert.strictEqual(await overflowButton.isExisting(), false, "Overflow button is not rendered, because all elements has priority 'Never'");
+		assert.strictEqual(await overflowButton.isDisplayed(), false, "Overflow button is not rendered, because all elements has priority 'Never'");
 		await browser.setWindowSize(1920, 1080);
 	});
 
