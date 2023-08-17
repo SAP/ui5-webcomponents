@@ -430,12 +430,14 @@ class Toolbar extends UI5Element {
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
-			const prevented = abstractItem?.fireEvent(eventType, e, true);
+			const prevented = !abstractItem?.fireEvent(eventType, e, true);
 			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
-				this.closeOverflow();
+				return;
 			}
+
+			this.closeOverflow();
 		}
 	}
 
