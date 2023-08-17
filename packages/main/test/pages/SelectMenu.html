@@ -59,6 +59,8 @@
 		<label id="lblClose"></label><br>
 
 		<div class="app-inner">
+			<h2>Select + SelectMenu + SelectMenuOption</h2>
+
 			<ui5-select id="sel" menu="selectOptions">
 				<div class="selectLabel" slot="label">
 					<span id="mainText">Skirt [3]</span>
@@ -71,6 +73,22 @@
 			</ui5-select>
 
 			<ui5-select menu="selectOptions3" value-state="Information"></ui5-select>
+
+			<div>
+				<h2>Select + Option</h2>
+
+				<ui5-select id="selectPrevent">
+					<ui5-option>Cozy</ui5-option>
+					<ui5-option>Compact</ui5-option>
+					<ui5-option selected>Condensed</ui5-option>
+				</ui5-select>
+			
+				<ui5-select id="errorSelect" value-state="Error">
+					<ui5-option selected>Cozy</ui5-option>
+					<ui5-option selected>Compact</ui5-option>
+					<ui5-option selected>Condensed</ui5-option>
+				</ui5-select>
+			</div>
 		</div>
 	</div>
 

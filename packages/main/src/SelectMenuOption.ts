@@ -80,6 +80,13 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @slot
 	 * @public
 	 */
+
+	get _accInfo() {
+		const accInfoSettings = {
+			ariaSelected: this.selected,
+		};
+		return { ...super._accInfo, ...accInfoSettings };
+	}
 }
 
 SelectMenuOption.define();
