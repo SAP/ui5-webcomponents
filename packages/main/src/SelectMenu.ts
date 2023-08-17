@@ -160,6 +160,7 @@ class SelectMenu extends UI5Element {
 				firstEnabledOptionIndex = index;
 			}
 
+			opt.selected = false;
 			opt.focused = false;
 			return opt;
 		});
