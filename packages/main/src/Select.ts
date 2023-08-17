@@ -325,6 +325,7 @@ class Select extends UI5Element implements IFormElement {
 	selectedItem?: string | null;
 	valueStatePopover?: Popover;
 	value!: string;
+	_menu: SelectMenu | undefined;
 
 	selectMenu?: SelectMenu;
 
@@ -492,13 +493,6 @@ class Select extends UI5Element implements IFormElement {
 			menu.close();
 		} else {
 			menu.showAt(this, this.offsetWidth);
-			// @ts-ignore
-			menu.addEventListener("ui5-option-click", this._onMenuClick);
-			menu.addEventListener("ui5-after-close", this._onMenuClose);
-			menu.addEventListener("ui5-after-open", this._onMenuOpen);
-			menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
-			// @ts-ignore
-			menu.addEventListener("ui5-menu-change", this._onMenuChange);
 		}
 	}
 
@@ -597,19 +591,28 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_getSelectMenu(): SelectMenu | undefined {
-		let selectMenu;
-		if (this.menu instanceof HTMLElement) {
-			selectMenu = this.menu as SelectMenu;
-		} else if (typeof this.menu === "string") {
-			selectMenu = (this.getRootNode() as Document).getElementById(this.menu) as SelectMenu;
+		if (this.menu === undefined) {
+			return; // no "menu" property - regular select usage
 		}
 
-		if (!selectMenu) {
-			console.warn("Valid 'menu' id is required."); // eslint-disable-line
-			return;
+		if (!this._menu) { // there is a "menu" property, but it hasn't been cached into "_menu" yet
+			if (this.menu instanceof HTMLElement) {
+				this._menu = this.menu as SelectMenu;
+			} else { // no need to check for string, the framework ensures HTMLElement|string
+				this._menu = (this.getRootNode() as Document).getElementById(this.menu) as SelectMenu;
+			}
+
+			// Add listeners to the menu once
+			this._menu.addEventListener("ui5-after-close", this._onMenuClose);
+			this._menu.addEventListener("ui5-after-open", this._onMenuOpen);
+			this._menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
+			// @ts-ignore
+			this._menu.addEventListener("ui5-option-click", this._onMenuClick);
+			// @ts-ignore
+			this._menu.addEventListener("ui5-menu-change", this._onMenuChange);
 		}
 
-		return selectMenu;
+		return this._menu;
 	}
 
 	_enableFormSupport() {
