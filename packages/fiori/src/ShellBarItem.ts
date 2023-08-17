@@ -32,7 +32,6 @@ type ShellBarItemClickEventDetail = {
  * @allowPreventDefault
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
- * @native
  */
 @event("click", {
 	detail: {
