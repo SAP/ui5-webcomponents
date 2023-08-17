@@ -87,12 +87,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 		};
 		return { ...super._accInfo, ...accInfoSettings };
 	}
-
-	/**
-	 * @override
-	 */
-	_onfocusin() {
-	}
 }
 
 SelectMenuOption.define();
