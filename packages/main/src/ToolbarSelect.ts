@@ -37,25 +37,18 @@ import Option from "./Option.js";
 })
 
 /**
- * Fired when the Toolbar Select is clicked.
+ * Fired when the selected option changes.
  *
- * @event sap.ui.webc.main.ToolbarSelect#click
+ * @event sap.ui.webc.main.ToolbarSelect#change
+ * @allowPreventDefault
+ * @param {HTMLElement} selectedOption the selected option.
  * @public
  */
-
- @event("click", {})
-
-/**
- * Fired when an item is selected.
- *
- * @event sap.ui.webc.main.ToolbarButton#change
- * @public
- */
-
- @event("change", {
-
- })
-
+@event("change", {
+	detail: {
+		selectedOption: { type: HTMLElement },
+	},
+})
 class ToolbarSelect extends ToolbarItem {
     @property({ type: String })
 	width!: string;

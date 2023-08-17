@@ -33,13 +33,17 @@ import { registerToolbarItem } from "./features/ToolbarRegistry.js";
 })
 
 /**
- * Fired when a toolbar button is clicked.
+ * Fired when the component is activated either with a
+ * mouse/tap or by using the Enter or Space key.
+ * <br><br>
+ * <b>Note:</b> The event will not be fired if the <code>disabled</code>
+ * property is set to <code>true</code>.
  *
  * @event sap.ui.webc.main.ToolbarButton#click
  * @public
+ * @native
  */
-
- @event("click", {})
+@event("click")
 
 class ToolbarButton extends ToolbarItem {
 	/**
