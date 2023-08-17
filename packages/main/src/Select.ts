@@ -570,6 +570,8 @@ class Select extends UI5Element implements IFormElement {
 		if (lastSelectedOptionIndex > -1) {
 			syncOpts[lastSelectedOptionIndex].selected = true;
 			syncOpts[lastSelectedOptionIndex]._focused = true;
+			options[lastSelectedOptionIndex].selected = true;
+			options[lastSelectedOptionIndex]._focused = true;
 			this._text = syncOpts[lastSelectedOptionIndex].textContent;
 			this._selectedIndex = lastSelectedOptionIndex;
 		} else {
@@ -578,6 +580,8 @@ class Select extends UI5Element implements IFormElement {
 			if (syncOpts[firstEnabledOptionIndex]) {
 				syncOpts[firstEnabledOptionIndex].selected = true;
 				syncOpts[firstEnabledOptionIndex]._focused = true;
+				options[firstEnabledOptionIndex].selected = true;
+				options[firstEnabledOptionIndex]._focused = true;
 				this._selectedIndex = firstEnabledOptionIndex;
 				this._text = options[firstEnabledOptionIndex].textContent;
 			}
