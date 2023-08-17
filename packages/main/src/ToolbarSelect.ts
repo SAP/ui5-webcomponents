@@ -3,7 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
-import { registerToolbarItem } from "./features/ToolbarItems.js";
+import { registerToolbarItem } from "./features/ToolbarRegistry.js";
 
 // Templates
 
@@ -89,7 +89,6 @@ class ToolbarSelect extends ToolbarItem {
 }
 
 registerToolbarItem(ToolbarSelect);
-
 
 ToolbarSelect.define();
 

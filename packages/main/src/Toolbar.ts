@@ -1,17 +1,15 @@
-import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
-import "@ui5/webcomponents-icons/dist/overflow.js";
+import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import Button from "./Button.js";
-import Popover from "./Popover.js";
+import "@ui5/webcomponents-icons/dist/overflow.js";
 
 import ToolbarTemplate from "./generated/templates/ToolbarTemplate.lit.js";
 import ToolbarCss from "./generated/themes/Toolbar.css.js";
@@ -20,11 +18,13 @@ import ToolbarPopoverTemplate from "./generated/templates/ToolbarPopoverTemplate
 import ToolbarPopoverCss from "./generated/themes/ToolbarPopover.css.js";
 
 import ToolbarAlign from "./types/ToolbarAlign.js";
+import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
 import type { ToolbarItem } from "./ToolbarItem.js";
-import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
-import { getToolbarItem } from "./features/ToolbarItems.js";
-import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
+import { getRegisteredToolbarItem, getRegisteredStyles, getRegisteredStaticAreaStyles } from "./features/ToolbarRegistry.js";
+
+import Button from "./Button.js";
+import Popover from "./Popover.js";
 
 function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
 	return Number(styleSet.getPropertyValue(propertyName).replace("rem", "")) * parseInt(getComputedStyle(document.body).getPropertyValue("font-size"));
@@ -33,15 +33,6 @@ function calculateCSSREMValue(styleSet: CSSStyleDeclaration, propertyName: strin
 function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): number {
 	return Number(styleSet.getPropertyValue(propertyName).replace("px", ""));
 }
-
-/**
- * Fired when an element inside the toolbar fires an event.
- *
- * @event sap.ui.webc.main.Toolbar#interact
- * @public
- * @native
- */
-@event("interact")
 
 /**
  * @class
@@ -76,8 +67,6 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	renderer: litRender,
 	template: ToolbarTemplate,
 	staticAreaTemplate: ToolbarPopoverTemplate,
-	styles: ToolbarCss,
-	staticAreaStyles: ToolbarPopoverCss,
 	dependencies: [
 		Popover,
 		Button,
@@ -178,16 +167,6 @@ class Toolbar extends UI5Element {
 		this._itemsObserver = new MutationObserver(() => {
 			this.onObserverChange();
 		});
-	}
-
-	get overflowButtonSize(): number {
-		return this.overflowButtonDOM?.getBoundingClientRect().width || 0;
-	}
-
-	get padding(): number {
-		const toolbarComputedStyle = getComputedStyle(this.getDomRef()!);
-		return calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-left")
-			+ calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-right");
 	}
 
 	/**
@@ -336,6 +315,32 @@ class Toolbar extends UI5Element {
 	 * Read-only members
 	 */
 
+	static get styles() {
+		const styles = getRegisteredStyles();
+		return [
+			ToolbarCss,
+			...styles,
+		];
+	}
+
+	static get staticAreaStyles() {
+		const styes = getRegisteredStaticAreaStyles();
+		return [
+			ToolbarPopoverCss,
+			...styes,
+		];
+	}
+
+	get overflowButtonSize(): number {
+		return this.overflowButtonDOM?.getBoundingClientRect().width || 0;
+	}
+
+	get padding(): number {
+		const toolbarComputedStyle = getComputedStyle(this.getDomRef()!);
+		return calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-left")
+			+ calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-right");
+	}
+
 	get subscribedEvents() {
 		return this.items
 			.map((item: ToolbarItem) => Array.from(item.subscribedEvents.keys()))
@@ -478,7 +483,7 @@ class Toolbar extends UI5Element {
 
 	getItemsInfo(items: Array<ToolbarItem>) {
 		return items.map((item: ToolbarItem) => {
-			const ElementClass = getToolbarItem(item.constructor.name);
+			const ElementClass = getRegisteredToolbarItem(item.constructor.name);
 
 			if (!ElementClass) {
 				return null;
@@ -500,7 +505,7 @@ class Toolbar extends UI5Element {
 		}
 		const id: string = item._id;
 		// Measure rendered width for spacers with width, and for normal items
-		const renderedItem = this.getToolbarItemByID(id);
+		const renderedItem = this.getRegisteredToolbarItemByID(id);
 
 		let itemWidth = 0;
 
@@ -523,7 +528,7 @@ class Toolbar extends UI5Element {
 		return this.items.find(item => item._id === id);
 	}
 
-	getToolbarItemByID(id: string): HTMLElement | null {
+	getRegisteredToolbarItemByID(id: string): HTMLElement | null {
 		return this.itemsDOM!.querySelector(`[data-ui5-external-action-item-id="${id}"]`);
 	}
 }

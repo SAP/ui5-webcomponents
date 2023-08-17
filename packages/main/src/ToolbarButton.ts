@@ -9,7 +9,9 @@ import ToolbarItem, { IEventOptions } from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
 import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
 
-import { registerToolbarItem } from "./features/ToolbarItems.js";
+import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
+
+import { registerToolbarItem } from "./features/ToolbarRegistry.js";
 
 /**
  * @class
@@ -108,6 +110,10 @@ class ToolbarButton extends ToolbarItem {
 	 */
 	@property({ type: String })
 	width!: string;
+
+	static get staticAreaStyles() {
+		return ToolbarButtonPopoverCss;
+	}
 
 	get styles() {
 		return {
