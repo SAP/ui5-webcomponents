@@ -593,9 +593,9 @@ class Select extends UI5Element implements IFormElement {
 
 	_getSelectMenu(): SelectMenu | undefined {
 		return connectToComponent({
-			component: this,
-			to: this.menu,
-			onConnect: menu => {
+			host: this,
+			propName: "menu",
+			onConnect: (menu: HTMLElement) => {
 				menu.addEventListener("ui5-after-close", this._onMenuClose);
 				menu.addEventListener("ui5-after-open", this._onMenuOpen);
 				menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
@@ -604,11 +604,12 @@ class Select extends UI5Element implements IFormElement {
 				// @ts-ignore
 				menu.addEventListener("ui5-menu-change", this._onMenuChange);
 			},
-			onDisconnect: menu => {
-				menu.removeEventListener("ui5-option-click", this._onMenuClick);
+			onDisconnect: (menu: HTMLElement) => {
 				menu.removeEventListener("ui5-after-close", this._onMenuClose);
 				menu.removeEventListener("ui5-after-open", this._onMenuOpen);
 				menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
+				// @ts-ignore
+				menu.removeEventListener("ui5-option-click", this._onMenuClick);
 				// @ts-ignore
 				menu.removeEventListener("ui5-menu-change", this._onMenuChange);
 			},
