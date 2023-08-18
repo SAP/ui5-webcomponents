@@ -13,11 +13,13 @@
 	margin: 0;
 	padding: 0;
 	background-color: var(--sapButton_Background);
+	border: var(--_ui5_segmented_btn_border); /* none for fiori_3 (all), belize, hc horizon themes || 0.0625rem solid var(--sapButton_BorderColor) for horizon themes */
 	border-radius: var(--_ui5_segmented_btn_outer_border_radius);
 }
 
 ::slotted([ui5-segmented-button-item]) {
 	border-radius: var(--_ui5_segmented_btn_inner_border_radius);
+	border-color: var(--_ui5_segmented_btn_item_border_color); /* transparent for horizon, horizon_exp, none for fiori_3, belize, hc horizon themes*/
 	height: var(--_ui5_button_base_height);
 	min-width: 2.5rem;
 	white-space: nowrap;
@@ -28,6 +30,7 @@
 
 ::slotted([ui5-segmented-button-item]:hover) {
 	z-index: 2;
+	box-shadow: var(--sapButton_Hover_BorderColor) 0px 0px 0px 0.03125rem; /* horizon exp var(--sapButton_Hover_BorderColor) 0px 0px 0px 0.03125rem; / transparent for horizon*/
 }
 
 ::slotted([ui5-segmented-button-item][pressed]),
@@ -57,7 +60,7 @@
 ::slotted([ui5-segmented-button-item]:last-child) {
 	border-start-end-radius: var(--_ui5_segmented_btn_border_radius);
 	border-end-end-radius: var(--_ui5_segmented_btn_border_radius);
-	border-inline-end: var(--_ui5_segmented_btn_inner_border);
+	border-inline-end: var(--_ui5_segmented_btn_item_lc_border_inline_start); /* none for horizon themes,0.0625rem solid var(--sapButton_Selected_BorderColor) in fiori */;
 }
 
 ::slotted([ui5-segmented-button-item][pressed]:last-child),
@@ -66,9 +69,9 @@
 }
 
 ::slotted([ui5-segmented-button-item]:first-child) {
-	border-start-start-radius: var(--_ui5_segmented_btn_border_radius);
-	border-end-start-radius: var(--_ui5_segmented_btn_border_radius);
-	border-inline-start: var(--_ui5_segmented_btn_inner_border);
+	border-start-start-radius: var(--_ui5_segmented_btn_border_radius); /* this parameter should be 0.5rem for horizon themes */
+	border-end-start-radius: var(--_ui5_segmented_btn_border_radius); /* this parameter should be 0.5rem for horizon themes */
+	border-inline-start: var(--_ui5_segmented_btn_item_fc_border_inline_start); /* none for horizon themes,0.0625rem solid var(--sapButton_Selected_BorderColor) in fiori */
 }
 
 ::slotted([ui5-segmented-button-item][pressed]:first-child),
