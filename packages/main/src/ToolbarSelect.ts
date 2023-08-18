@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
 import { registerToolbarItem } from "./features/ToolbarRegistry.js";
 
@@ -62,6 +63,39 @@ class ToolbarSelect extends ToolbarItem {
 
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	options!: Array<Option>;
+
+	/**
+	 * Defines the value state of the component.
+	 * <br><br>
+	 * Available options are:
+	 * <ul>
+	 * <li><code>None</code></li>
+	 * <li><code>Error</code></li>
+	 * <li><code>Warning</code></li>
+	 * <li><code>Success</code></li>
+	 * <li><code>Information</code></li>
+	 * </ul>
+	 *
+	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @defaultvalue "None"
+	 * @name sap.ui.webc.main.ToolbarSelect.prototype.valueState
+	 * @public
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	valueState!: `${ValueState}`;
+
+	/**
+	 * Defines whether the component is in disabled state.
+	 * <br><br>
+	 * <b>Note:</b> A disabled component is noninteractive.
+	 *
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.main.ToolbarSelect.prototype.disabled
+	 * @public
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
 
 	static get toolbarTemplate() {
 		return ToolbarSelectTemplate;
