@@ -326,7 +326,6 @@ class Select extends UI5Element implements IFormElement {
 	selectedItem?: string | null;
 	valueStatePopover?: Popover;
 	value!: string;
-	_menu: SelectMenu | undefined;
 
 	selectMenu?: SelectMenu;
 
@@ -384,6 +383,8 @@ class Select extends UI5Element implements IFormElement {
 	_onMenuOpen: () => void;
 	_onMenuBeforeOpen: () => void;
 	_onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
+	_onConnectToMenu: (menu: HTMLElement) => void;
+	_onDisconnectFromMenu: (menu: HTMLElement) => void;
 
 	constructor() {
 		super();
@@ -399,6 +400,8 @@ class Select extends UI5Element implements IFormElement {
 		this._onMenuOpen = this.onMenuOpen.bind(this);
 		this._onMenuBeforeOpen = this.onMenuBeforeOpen.bind(this);
 		this._onMenuChange = this.onMenuChange.bind(this);
+		this._onConnectToMenu = this.onConnectToMenu.bind(this);
+		this._onDisconnectFromMenu = this.onDisconnectFromMenu.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -499,17 +502,11 @@ class Select extends UI5Element implements IFormElement {
 
 	onExitDOM(): void {
 		const menu = this._getSelectMenu();
-
 		if (menu) {
-			// @ts-ignore
-			menu.removeEventListener("ui5-option-click", this._onMenuClick);
-			menu.removeEventListener("ui5-after-close", this._onMenuClose);
-			menu.removeEventListener("ui5-after-open", this._onMenuOpen);
-			menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
-			// @ts-ignore
-			menu.removeEventListener("ui5-menu-change", this._onMenuChange);
+			this._onDisconnectFromMenu(menu);
 		}
 	}
+
 	async _toggleRespPopover() {
 		if (this.disabled) {
 			return;
@@ -595,25 +592,29 @@ class Select extends UI5Element implements IFormElement {
 		return connectToComponent({
 			host: this,
 			propName: "menu",
-			onConnect: (menu: HTMLElement) => {
-				menu.addEventListener("ui5-after-close", this._onMenuClose);
-				menu.addEventListener("ui5-after-open", this._onMenuOpen);
-				menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
-				// @ts-ignore
-				menu.addEventListener("ui5-option-click", this._onMenuClick);
-				// @ts-ignore
-				menu.addEventListener("ui5-menu-change", this._onMenuChange);
-			},
-			onDisconnect: (menu: HTMLElement) => {
-				menu.removeEventListener("ui5-after-close", this._onMenuClose);
-				menu.removeEventListener("ui5-after-open", this._onMenuOpen);
-				menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
-				// @ts-ignore
-				menu.removeEventListener("ui5-option-click", this._onMenuClick);
-				// @ts-ignore
-				menu.removeEventListener("ui5-menu-change", this._onMenuChange);
-			},
+			onConnect: this._onConnectToMenu,
+			onDisconnect: this._onDisconnectFromMenu,
 		}) as SelectMenu;
+	}
+
+	onConnectToMenu(menu: HTMLElement) {
+		menu.addEventListener("ui5-after-close", this._onMenuClose);
+		menu.addEventListener("ui5-after-open", this._onMenuOpen);
+		menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
+		// @ts-ignore
+		menu.addEventListener("ui5-option-click", this._onMenuClick);
+		// @ts-ignore
+		menu.addEventListener("ui5-menu-change", this._onMenuChange);
+	}
+
+	onDisconnectFromMenu(menu: HTMLElement) {
+		menu.removeEventListener("ui5-after-close", this._onMenuClose);
+		menu.removeEventListener("ui5-after-open", this._onMenuOpen);
+		menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
+		// @ts-ignore
+		menu.removeEventListener("ui5-option-click", this._onMenuClick);
+		// @ts-ignore
+		menu.removeEventListener("ui5-menu-change", this._onMenuChange);
 	}
 
 	_enableFormSupport() {
