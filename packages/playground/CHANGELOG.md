@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.0...v1.17.0-rc.1) (2023-08-17)
+
+
+### Features
+
+* **ui5-multi-input, ui5-multi-combobox:** implement popover keyboard handling ([#7368](https://github.com/SAP/ui5-webcomponents/issues/7368)) ([3c047b4](https://github.com/SAP/ui5-webcomponents/commit/3c047b464fb6e6ece4c043531db239f991befd36))
+
+
+
+
+
 # [1.17.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0...v1.17.0-rc.0) (2023-08-10)
 
 **Note:** Version bump only for package @ui5/webcomponents-playground

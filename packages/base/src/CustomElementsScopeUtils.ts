@@ -1,3 +1,5 @@
+import VersionInfo from "./generated/VersionInfo.js";
+
 let suf: string;
 
 type Rules = {
@@ -105,6 +107,18 @@ const getEffectiveScopingSuffixForTag = (tag: string) => {
 	}
 };
 
+/**
+ * @public
+ * Used for getting a scoped name for a CSS variable using the same transformation used in the build
+ * @name the name of the css variable as written in the code
+ * @returns a variable name with the current version inserted as available at runtime
+ */
+const getScopedVarName = (name: string) => {
+	const versionStr = `v${VersionInfo.version.replaceAll(".", "-")}`;
+	const expr = /(--_?ui5)([^,:)\s]+)/g;
+	return name.replaceAll(expr, `$1-${versionStr}$2`);
+};
+
 export {
 	setCustomElementsScopingSuffix,
 	getCustomElementsScopingSuffix,
@@ -112,4 +126,5 @@ export {
 	getCustomElementsScopingRules,
 	shouldScopeCustomElement,
 	getEffectiveScopingSuffixForTag,
+	getScopedVarName,
 };

@@ -34,6 +34,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import {
@@ -435,7 +436,7 @@ class Select extends UI5Element implements IFormElement {
 
 		this._enableFormSupport();
 
-		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
+		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
 
 	onAfterRendering() {
