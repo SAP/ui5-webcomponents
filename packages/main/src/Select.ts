@@ -383,8 +383,8 @@ class Select extends UI5Element implements IFormElement {
 	_onMenuOpen: () => void;
 	_onMenuBeforeOpen: () => void;
 	_onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
-	_onConnectToMenu: (menu: HTMLElement) => void;
-	_onDisconnectFromMenu: (menu: HTMLElement) => void;
+	_attachMenuListeners: (menu: HTMLElement) => void;
+	_detachMenuListeners: (menu: HTMLElement) => void;
 
 	constructor() {
 		super();
@@ -400,8 +400,8 @@ class Select extends UI5Element implements IFormElement {
 		this._onMenuOpen = this.onMenuOpen.bind(this);
 		this._onMenuBeforeOpen = this.onMenuBeforeOpen.bind(this);
 		this._onMenuChange = this.onMenuChange.bind(this);
-		this._onConnectToMenu = this.onConnectToMenu.bind(this);
-		this._onDisconnectFromMenu = this.onDisconnectFromMenu.bind(this);
+		this._attachMenuListeners = this.attachMenuListeners.bind(this);
+		this._detachMenuListeners = this.detachMenuListeners.bind(this);
 	}
 
 	onBeforeRendering() {
@@ -503,7 +503,7 @@ class Select extends UI5Element implements IFormElement {
 	onExitDOM(): void {
 		const menu = this._getSelectMenu();
 		if (menu) {
-			this._onDisconnectFromMenu(menu);
+			this._detachMenuListeners(menu);
 		}
 	}
 
@@ -592,12 +592,12 @@ class Select extends UI5Element implements IFormElement {
 		return connectToComponent({
 			host: this,
 			propName: "menu",
-			onConnect: this._onConnectToMenu,
-			onDisconnect: this._onDisconnectFromMenu,
+			onConnect: this._attachMenuListeners,
+			onDisconnect: this._detachMenuListeners,
 		}) as SelectMenu;
 	}
 
-	onConnectToMenu(menu: HTMLElement) {
+	attachMenuListeners(menu: HTMLElement) {
 		menu.addEventListener("ui5-after-close", this._onMenuClose);
 		menu.addEventListener("ui5-after-open", this._onMenuOpen);
 		menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
@@ -607,7 +607,7 @@ class Select extends UI5Element implements IFormElement {
 		menu.addEventListener("ui5-menu-change", this._onMenuChange);
 	}
 
-	onDisconnectFromMenu(menu: HTMLElement) {
+	detachMenuListeners(menu: HTMLElement) {
 		menu.removeEventListener("ui5-after-close", this._onMenuClose);
 		menu.removeEventListener("ui5-after-open", this._onMenuOpen);
 		menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);

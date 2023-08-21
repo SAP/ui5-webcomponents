@@ -19,8 +19,8 @@ const connectToComponent = (options: ConnectOptions): HTMLElement | undefined =>
 	const friend = host[propName as keyof typeof host] as HTMLElement | string | undefined;
 
 	let connectedTo: HTMLElement | undefined;
-	if (friend === undefined) {
-		connectedTo = undefined;
+	if (friend === undefined || friend === "") {
+		connectedTo = undefined; // do not return early even if a "menu" property is not set - it may have been set before and cleanup must run
 	} else if (friend instanceof HTMLElement) {
 		connectedTo = friend;
 	} else {
