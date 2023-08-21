@@ -736,9 +736,13 @@ class Select extends UI5Element implements IFormElement {
 
 	_select(index: number) {
 		this.selectOptions[this._selectedIndex].selected = false;
+
+		if (this._selectedIndex !== index) {
+			this.fireEvent("preview-change", { option: this.selectOptions[index] });
+		}
+
 		this._selectedIndex = index;
 		this.selectOptions[index].selected = true;
-		this.fireEvent("preview-change", { option: this.selectOptions[index] });
 	}
 
 	/**
