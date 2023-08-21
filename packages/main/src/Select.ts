@@ -179,6 +179,9 @@ class Select extends UI5Element implements IFormElement {
 	/**
 	 * Defines a reference (ID or DOM element) of component's menu of options.
 	 *
+	 * <br><br>
+	 * <b>Note:</b> Usage of <code>ui5-select-menu</code> is recommended.
+	 *
 	 * @type {sap.ui.webc.base.types.DOMReference}
 	 * @defaultvalue false
 	 * @name sap.ui.webc.main.Select.prototype.menu
@@ -375,6 +378,23 @@ class Select extends UI5Element implements IFormElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
+	/**
+	 * Defines the HTML element that will be displayed in the component input part,
+	 * representing the selected option.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> If not specified and <code>ui5-select-menu-option</code> is used,
+	 * either the option's <code>display-text</code> or its textContent will be displayed.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> If not specified and <code>ui5-opton</code> is used,
+	 * the option's textContent will be displayed.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Select.prototype.label
+	 * @slot label
+	 * @public
+	*/
 	@slot()
 	label!: Array<HTMLElement>;
 
