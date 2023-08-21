@@ -536,4 +536,5 @@ export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
 	PressEventDetail,
+	AccessibilityAttributes,
 };

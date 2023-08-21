@@ -9,6 +9,8 @@ import CustomListItemTemplate from "./generated/templates/CustomListItemTemplate
 
 // Styles
 import CustomListItem from "./CustomListItem.js";
+import ListItemType from "./types/ListItemType.js";
+import type { AccessibilityAttributes } from "./ListItem.js";
 
 /**
  * @class
@@ -27,8 +29,8 @@ import CustomListItem from "./CustomListItem.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.SelectMenuOption
  * @extends sap.ui.webc.base.UI5Element
- * @implements sap.ui.webc.main.ISelectOption
- * @tagname select-menu-option
+ * @implements sap.ui.webc.main.ISelectMenuOption
+ * @tagname ui5-select-menu-option
  * @public
  */
 @customElement({
@@ -44,32 +46,56 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * when the option gets selected.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Option.prototype.value
+	 * @name sap.ui.webc.main.SelectMenuOption.prototype.displayText
 	 * @public
 	 */
 	@property()
 	displayText!: string;
 
 	/**
-	 * Defines the selected state of the component.
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.selected
-	 * @public
-	 */
-	@property({ type: Boolean })
-	selected!: boolean;
-
-	/**
 	 * Defines the value of the <code>ui5-select</code> inside an HTML Form element when this component is selected.
 	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Option.prototype.value
+	 * @name sap.ui.webc.main.SelectMenuOption.prototype.value
 	 * @public
 	 */
 	@property()
 	value!: string;
+
+	/**
+	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
+	 *
+	 * @type {sap.ui.webc.main.types.ListItemType}
+	 * @name sap.ui.webc.main.SelectMenuOption.prototype.type
+	 * @defaultvalue "Active"
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: ListItemType, defaultValue: ListItemType.Active })
+	type!: `${ListItemType}`;
+
+	/**
+	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
+	 *
+	 * @type {object}
+	 * @name sap.ui.webc.main.SelectMenuOption.prototype.accessibilityAttributes
+	 * @public
+	 * @deprecated
+	 */
+	@property({ type: Object })
+	accessibilityAttributes!: AccessibilityAttributes;
+
+	/**
+	 * <b>Note:</b> The property is inherited and not supported. If set, it won't take any effect.
+	 *
+	 * @public
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.SelectMenuOption.prototype.navigated
+	 * @deprecated
+	 */
+	@property({ type: Boolean })
+	navigated!: boolean;
 
 	/**
 	 * Defines the content of the component.

@@ -73,9 +73,9 @@ class SelectMenu extends UI5Element {
 	}
 
 	/**
-	 * Defines the text of the component.
+	 * Defines the options of the component.
 	 *
-	 * @type {Node[]}
+	 * @type {sap.ui.webc.main.ISelectMenuOption[]}
 	 * @name sap.ui.webc.main.SelectMenu.prototype.default
 	 * @slot
 	 * @public
