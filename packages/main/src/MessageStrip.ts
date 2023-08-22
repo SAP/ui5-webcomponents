@@ -100,9 +100,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 class MessageStrip extends UI5Element {
 	/**
 	 * Defines the component type.
-	 * <br><br>
-	 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
-	 * and <code>"Warning"</code>.
 	 *
 	 * @type {sap.ui.webc.main.types.MessageStripDesign}
 	 * @name sap.ui.webc.main.MessageStrip.prototype.design
