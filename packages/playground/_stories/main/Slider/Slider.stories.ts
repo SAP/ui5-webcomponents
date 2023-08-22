@@ -41,7 +41,7 @@ Basic.decorators = [
 	(story) => {
 		return html`
 			<div class="wrapper" style="margin-top:1rem;">
-			${story()}
+				${story()}
 			</div>
 		`;
 	}
@@ -61,7 +61,7 @@ WithTooltip.decorators = [
 	(story) => {
 		return html`
 			<div class="wrapper" style="margin-top:1rem;">
-			${story()}
+				${story()}
 			</div>
 		`;
 	}
@@ -78,7 +78,7 @@ TickmarksLabelTooltip.decorators = [
 	(story) => {
 		return html`
 			<div class="wrapper" style="margin-top:1rem;">
-			${story()}
+				${story()}
 			</div>
 		`;
 	}

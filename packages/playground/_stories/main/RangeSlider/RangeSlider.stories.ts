@@ -40,7 +40,7 @@ Basic.decorators = [
 	(story) => {
 		return html`
 			<div class="wrapper" style="margin-top:1rem;">
-			${story()}
+				${story()}
 			</div>
 		`;
 	}
@@ -62,7 +62,7 @@ WithTooltips.decorators = [
 	(story) => {
 		return html`
 			<div class="wrapper" style="margin-top:1rem;">
-			${story()}
+				${story()}
 			</div>
 		`;
 	}
@@ -78,7 +78,7 @@ RangeSliderTickmarksTooltipLabel.decorators = [
 	(story) => {
 		return html`
 			<div class="wrapper" style="margin-top:1rem;">
-			${story()}
+				${story()}
 			</div>
 		`;
 	}
