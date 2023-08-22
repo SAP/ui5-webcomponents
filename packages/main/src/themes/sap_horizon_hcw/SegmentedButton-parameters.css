@@ -8,6 +8,7 @@
 	--_ui5_segmented_btn_inner_border_radius: 0;
 	--_ui5_segmented_btn_border: none;
 	--_ui5_segmented_btn_item_border_color: none;
-	--_ui5_segmented_btn_item_fc_border_inline_start: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	--_ui5_segmented_btn_item_pressed_active_fc_border_inline_start: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	--_ui5_segmented_btn_item_fc_border_inline_start: 0.03125rem solid var(--sapButton_BorderColor);
 	--_ui5_segmented_btn_item_lc_border_inline_start: 0.0625rem solid var(--sapButton_Selected_BorderColor);
 }

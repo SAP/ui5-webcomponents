@@ -13,13 +13,13 @@
 	margin: 0;
 	padding: 0;
 	background-color: var(--sapButton_Background);
-	border: var(--_ui5_segmented_btn_border); /* none for fiori_3 (all), belize, hc horizon themes || 0.0625rem solid var(--sapButton_BorderColor) for horizon themes */
+	border: var(--_ui5_segmented_btn_border);
 	border-radius: var(--_ui5_segmented_btn_outer_border_radius);
 }
 
 ::slotted([ui5-segmented-button-item]) {
 	border-radius: var(--_ui5_segmented_btn_inner_border_radius);
-	border-color: var(--_ui5_segmented_btn_item_border_color); /* transparent for horizon, horizon_exp, none for fiori_3, belize, hc horizon themes*/
+	border-color: var(--_ui5_segmented_btn_item_border_color);
 	height: var(--_ui5_button_base_height);
 	min-width: 2.5rem;
 	white-space: nowrap;
@@ -30,20 +30,27 @@
 
 ::slotted([ui5-segmented-button-item]:hover) {
 	z-index: 2;
-	box-shadow: var(--sapButton_Hover_BorderColor) 0px 0px 0px 0.03125rem; /* horizon exp var(--sapButton_Hover_BorderColor) 0px 0px 0px 0.03125rem; / transparent for horizon*/
+	box-shadow: var(--_ui5_segmented_btn_item_hover_box_shadow);
+}
+
+::slotted([ui5-segmented-button-item][pressed]:hover),
+::slotted([ui5-segmented-button-item][active]:hover) {
+	border-color: var(--sapButton_Selected_BorderColor);
+}
+
+::slotted([ui5-segmented-button-item][pressed]:hover) {
+	border: 0.03125rem solid var(--sapButton_Selected_Hover_BorderColor);
+	background-color: var(--sapButton_Selected_Hover_Background);
+	color: var(--sapButton_Selected_TextColor);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]),
 ::slotted([ui5-segmented-button-item][active]) {
-	border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	border: 0.03125rem solid var(--sapButton_Selected_BorderColor);
+	box-shadow: var(--_ui5_segmented_btn_item_pressed_active_box_shadow);
 	background-color: var(--sapButton_Selected_Background);
 	color: var(--sapButton_Selected_TextColor);
-}
-
-::slotted([ui5-segmented-button-item][pressed]:hover) {
-	border: 0.0625rem solid var(--sapButton_Selected_Hover_BorderColor);
-	background-color: var(--sapButton_Selected_Hover_Background);
-	color: var(--sapButton_Selected_TextColor);
+	z-index: 3;
 }
 
 ::slotted([ui5-segmented-button-item]:nth-child(odd)) {
@@ -51,8 +58,8 @@
 	border-inline-start: var(--_ui5_segmented_btn_inner_border_odd_child);
 }
 
-::slotted([ui5-segmented-button-item][pressed]:nth-child(odd)),
-::slotted([ui5-segmented-button-item][active]:nth-child(odd)) {
+::slotted([ui5-segmented-button-item][pressed]:nth-child(odd):not(:first-child):not(:last-child)),
+::slotted([ui5-segmented-button-item][active]:nth-child(odd):not(:first-child):not(:last-child)) {
 	border-inline-end: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
 	border-inline-start: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
 }
@@ -60,29 +67,38 @@
 ::slotted([ui5-segmented-button-item]:last-child) {
 	border-start-end-radius: var(--_ui5_segmented_btn_border_radius);
 	border-end-end-radius: var(--_ui5_segmented_btn_border_radius);
-	border-inline-end: var(--_ui5_segmented_btn_item_lc_border_inline_start); /* none for horizon themes,0.0625rem solid var(--sapButton_Selected_BorderColor) in fiori */;
-}
-
-::slotted([ui5-segmented-button-item][pressed]:last-child),
-::slotted([ui5-segmented-button-item][active]:last-child) {
-	border-inline-end: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	border-inline-end: var(--_ui5_segmented_btn_item_lc_border_inline_end);
 }
 
 ::slotted([ui5-segmented-button-item]:first-child) {
-	border-start-start-radius: var(--_ui5_segmented_btn_border_radius); /* this parameter should be 0.5rem for horizon themes */
-	border-end-start-radius: var(--_ui5_segmented_btn_border_radius); /* this parameter should be 0.5rem for horizon themes */
-	border-inline-start: var(--_ui5_segmented_btn_item_fc_border_inline_start); /* none for horizon themes,0.0625rem solid var(--sapButton_Selected_BorderColor) in fiori */
+	border-start-start-radius: var(--_ui5_segmented_btn_border_radius);
+	border-end-start-radius: var(--_ui5_segmented_btn_border_radius);
+	border-inline-start: var(--_ui5_segmented_btn_item_fc_border_inline_start);
+	border-inline-end: none;
 }
 
 ::slotted([ui5-segmented-button-item][pressed]:first-child),
 ::slotted([ui5-segmented-button-item][active]:first-child) {
-	border-inline-start: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	border-inline-start: 0.03125rem solid var(--sapButton_Selected_BorderColor);
+	border-inline-end: var(--_ui5_segmented_btn_item_pressed_active_fc_border_inline_end);
+}
+
+::slotted([ui5-segmented-button-item][pressed]:last-child:not(:nth-last-child(even))),
+::slotted([ui5-segmented-button-item][active]:last-child:not(:nth-last-child(even))) {
+	border-inline-start: 0.03125rem solid var(--sapButton_Selected_BorderColor);
+	border-inline-end: 0.03125rem solid var(--sapButton_Selected_BorderColor);
+}
+
+::slotted([ui5-segmented-button-item][pressed]:last-child:not(:nth-last-child(odd))),
+::slotted([ui5-segmented-button-item][active]:last-child:not(:nth-last-child(odd))) {
+	border-inline-start: none;
 }
 
 ::slotted([ui5-segmented-button-item][active]:not([active]):hover) {
 	border-color: var(--sapButton_BorderColor);
 }
 
-::slotted([ui5-segmented-button-item][active]:hover) {
-	border-color: var(--sapButton_Selected_BorderColor);
+::slotted([ui5-segmented-button-item][active]:last-child:nth-child(odd)),
+::slotted([ui5-segmented-button-item][pressed]:last-child:nth-child(odd)) {
+	border-inline-start: var(--_ui5_segmented_btn_item_pressed_active_lc_ODD_border_inline_start);
 }
