@@ -47,13 +47,13 @@ const Template : UI5StoryArgs<Panel, StoryArgsSlots> = (args) => html`
 export const Basic = Template.bind({});
 Basic.decorators = [
 	(story) => {
-	return html`
-<style>
-	.content-color {
-		color: var(--sapField_TextColor);
-	}
-</style>
-	${story()}`;
+		return html`
+			<style>
+				.content-color {
+					color: var(--sapField_TextColor);
+				}
+			</style>
+			${story()}`;
 	}
 ]
 Basic.args = {
@@ -86,19 +86,19 @@ Fixed.args = {
 export const StickyHeader = Template.bind({});
 StickyHeader.decorators = [
 	(story) => {
-	return html`
-<style>
-	#panel-${index+1} {
-		width: 90%;
-		margin: 0 auto 0 auto;
-	}
-	.content-color {
-		color: var(--sapField_TextColor);
-	}
-</style>
-<div style="height: 250px; overflow: scroll;">
-	${story()}
-</div>`
+		return html`
+			<style>
+				#panel-${index+1} {
+					width: 90%;
+					margin: 0 auto 0 auto;
+				}
+				.content-color {
+					color: var(--sapField_TextColor);
+				}
+			</style>
+			<div style="height: 250px; overflow: scroll;">
+				${story()}
+			</div>`
 	}
 ]
 StickyHeader.args = {
@@ -153,9 +153,9 @@ CustomHeader.args = {
 	<div slot="header" class="header">
 		<ui5-title>Countries</ui5-title>
 		<div>
-			<ui5-button>Edit</ui5-button>
 			<ui5-button design="Emphasized">Add</ui5-button>
 			<ui5-button design="Negative">Remove</ui5-button>
+			<ui5-button>Edit</ui5-button>
 		</div>
 	</div>`,
 	default: `
