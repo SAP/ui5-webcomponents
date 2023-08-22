@@ -17,7 +17,7 @@ const component = "ui5-toast";
 
 export default {
     title: "Main/Toast",
-    component,
+    component: "Toast",
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })
@@ -48,17 +48,18 @@ const Template: UI5StoryArgs<Toast, StoryArgsSlots> = (args) => {
 
 export const Basic = Template.bind({});
 Basic.args = {
+	placement: ToastPlacement.BottomCenter,
 	default: "Basic Toast",
 };
 
-export const ToastDuration = Template.bind({});
-ToastDuration.args = {
-	default: "Long Toast",
+export const Duration = Template.bind({});
+Duration.args = {
 	duration: 4500,
+	default: "Long Toast",
 };
 
-export const ToastPlacements = Template.bind({});
-ToastPlacements.args = {
-	default: "Middle Center Toast",
+export const Placement = Template.bind({});
+Placement.args = {
 	placement: ToastPlacement.MiddleCenter,
+	default: "Middle Center Toast",
 };

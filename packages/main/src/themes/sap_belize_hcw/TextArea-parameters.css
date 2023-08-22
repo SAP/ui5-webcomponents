@@ -1,7 +1,7 @@
 @import "../base/TextArea-parameters.css";
 
 :root {
-	--__ui5_textarea_min_height: 2.5rem;
+	--_ui5_textarea_min_height: 2.5rem;
 	--_ui5_textarea_error_warning_border_style: dashed;
 	--_ui5_textarea_error_hover_background_color: var(--sapField_InvalidBackground);
 	--_ui5_textarea_information_border_width: var(--sapField_BorderWidth);

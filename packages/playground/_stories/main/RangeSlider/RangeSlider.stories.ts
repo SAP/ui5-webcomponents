@@ -14,7 +14,7 @@ const component = "ui5-range-slider";
 
 export default {
     title: "Main/RangeSlider",
-    component,
+    component: "RangeSlider",
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })

@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { isPhone } from "@ui5/webcomponents-base/dist/Device.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import {
 	isDown,
 	isUp,
@@ -212,7 +213,7 @@ class WheelSlider extends UI5Element {
 
 		if (this.shadowRoot!.querySelectorAll(".ui5-wheelslider-item").length) {
 			const itemComputedStyle = getComputedStyle(this.shadowRoot!.querySelector(".ui5-wheelslider-item")!);
-			const itemHeightValue = itemComputedStyle.getPropertyValue("--_ui5_wheelslider_item_height");
+			const itemHeightValue = itemComputedStyle.getPropertyValue(getScopedVarName("--_ui5_wheelslider_item_height"));
 			const onlyDigitsValue = itemHeightValue.replace("px", "");
 			return Number(onlyDigitsValue) || defaultSize;
 		}

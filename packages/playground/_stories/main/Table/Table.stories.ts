@@ -19,8 +19,8 @@ let index = 0;
 
 export default {
 	title: "Main/Table",
-	component,
-	subcomponents: {'TableColumn' : 'ui5-table-column', 'TableRow' : 'ui5-table-row', 'TableGroupRow' : 'ui5-table-group-row', 'TableCell' : 'ui5-table-cell'},
+	component: "Table",
+	subcomponents: {'TableColumn' : 'TableColumn', 'TableRow' : 'TableRow', 'TableGroupRow' : 'TableGroupRow', 'TableCell' : 'TableCell'},
 	parameters: {
 		docs: {
 		  page: DocsPage({ ...componentInfo, component })

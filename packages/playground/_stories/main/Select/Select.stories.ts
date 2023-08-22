@@ -15,8 +15,8 @@ const component = "ui5-select";
 
 export default {
   title: "Main/Select",
-  component,
-  subcomponents: { Option: "ui5-option" },
+  component: "Select",
+  subcomponents: { Option: "Option" },
   argTypes,
   parameters: {
     docs: {

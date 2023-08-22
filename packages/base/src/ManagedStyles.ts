@@ -2,25 +2,21 @@ import createStyleInHead from "./util/createStyleInHead.js";
 import createLinkInHead from "./util/createLinkInHead.js";
 import { shouldUseLinks, getUrl } from "./CSP.js";
 import { StyleData, StyleDataCSP } from "./types.js";
-import { getCurrentRuntimeIndex } from "./Runtimes.js";
+import { isSafari } from "./Device.js";
 
 const getStyleId = (name: string, value: string) => {
 	return value ? `${name}|${value}` : name;
 };
 
 const createStyle = (data: StyleData, name: string, value = "") => {
-	let content = typeof data === "string" ? data : data.content;
-
-	if (content.includes("[_ui5host]")) {
-		content = content.replaceAll("[_ui5host]", `[_ui5rt${getCurrentRuntimeIndex()}]`);
-	}
+	const content = typeof data === "string" ? data : data.content;
 
 	if (shouldUseLinks()) {
 		const attributes = {} as Record<string, any>;
 		attributes[name] = value;
 		const href = getUrl((data as StyleDataCSP).packageName, (data as StyleDataCSP).fileName);
 		createLinkInHead(href, attributes);
-	} else if (document.adoptedStyleSheets) {
+	} else if (document.adoptedStyleSheets && !isSafari()) {
 		const stylesheet = new CSSStyleSheet();
 		stylesheet.replaceSync(content);
 		(stylesheet as Record<string, any>)._ui5StyleId = getStyleId(name, value); // set an id so that we can find the style later
@@ -33,16 +29,12 @@ const createStyle = (data: StyleData, name: string, value = "") => {
 };
 
 const updateStyle = (data: StyleData, name: string, value = "") => {
-	let content = typeof data === "string" ? data : data.content;
-
-	if (content.includes("[_ui5host]")) {
-		content = content.replaceAll("[_ui5host]", `[_ui5rt${getCurrentRuntimeIndex()}]`);
-	}
+	const content = typeof data === "string" ? data : data.content;
 
 	if (shouldUseLinks()) {
 		const link = document.querySelector(`head>link[${name}="${value}"]`) as HTMLLinkElement;
 		link.href = getUrl((data as StyleDataCSP).packageName, (data as StyleDataCSP).fileName);
-	} else if (document.adoptedStyleSheets) {
+	} else if (document.adoptedStyleSheets && !isSafari()) {
 		const stylesheet = document.adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === getStyleId(name, value));
 		if (stylesheet) {
 			stylesheet.replaceSync(content || "");
@@ -60,7 +52,7 @@ const hasStyle = (name: string, value = "") => {
 		return !!document.querySelector(`head>link[${name}="${value}"]`);
 	}
 
-	if (document.adoptedStyleSheets) {
+	if (document.adoptedStyleSheets && !isSafari()) {
 		return !!document.adoptedStyleSheets.find(sh => (sh as Record<string, any>)._ui5StyleId === getStyleId(name, value));
 	}
 
@@ -71,7 +63,7 @@ const removeStyle = (name: string, value = "") => {
 	if (shouldUseLinks()) {
 		const linkElement = document.querySelector(`head>link[${name}="${value}"]`);
 		linkElement?.parentElement?.removeChild(linkElement);
-	} else if (document.adoptedStyleSheets) {
+	} else if (document.adoptedStyleSheets && !isSafari()) {
 		document.adoptedStyleSheets = document.adoptedStyleSheets.filter(sh => (sh as Record<string, any>)._ui5StyleId !== getStyleId(name, value));
 	} else {
 		const styleElement = document.querySelector(`head > style[${name}="${value}"]`);

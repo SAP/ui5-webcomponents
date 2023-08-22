@@ -15,8 +15,8 @@ const component = "ui5-menu";
 
 export default {
 	title: "Main/Menu",
-	component,
-	subcomponents: {'MenuItem' : 'ui5-menu-item'},
+	component: "Menu",
+	subcomponents: {'MenuItem' : 'MenuItem'},
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

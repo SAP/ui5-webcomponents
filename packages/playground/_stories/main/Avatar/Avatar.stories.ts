@@ -17,7 +17,7 @@ const component = "ui5-avatar";
 
 export default {
   title: "Main/Avatar",
-  component,
+  component: "Avatar",
   argTypes,
   parameters: {
     docs: {

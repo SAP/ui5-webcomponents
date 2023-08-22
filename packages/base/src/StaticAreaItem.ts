@@ -5,7 +5,6 @@ import getEffectiveContentDensity from "./util/getEffectiveContentDensity.js";
 import { getEffectiveScopingSuffixForTag } from "./CustomElementsScopeUtils.js";
 import getEffectiveDir from "./locale/getEffectiveDir.js";
 import type UI5Element from "./UI5Element.js";
-import { getCurrentRuntimeIndex } from "./Runtimes.js";
 
 const pureTagName = "ui5-static-area-item";
 const popupIntegrationAttr = "data-sap-ui-integration-popup-content";
@@ -79,8 +78,6 @@ class StaticAreaItem extends HTMLElement {
 	}
 
 	_updateAdditionalAttrs() {
-		this.setAttribute(`_ui5rt${getCurrentRuntimeIndex()}`, "");
-		this.setAttribute("_ui5host", "");
 		this.setAttribute(pureTagName, "");
 		this.setAttribute(popupIntegrationAttr, "");
 	}

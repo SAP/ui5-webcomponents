@@ -9,7 +9,7 @@
 	width: 100%;
 	min-width: 6rem;
 	color: var(--sapField_TextColor);
-	min-height: var(--__ui5_textarea_min_height);
+	min-height: var(--_ui5_textarea_min_height);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
@@ -40,7 +40,7 @@
 .ui5-textarea-root {
 	width: 100%;
 	height: inherit;
-	min-height: var(--__ui5_textarea_min_height);
+	min-height: var(--_ui5_textarea_min_height);
 	display: inline-flex;
 	vertical-align: top;
 	outline: none;
@@ -162,7 +162,7 @@
 :host([style*="height"]) .ui5-textarea-root,
 :host([growing][style*="height"]) .ui5-textarea-wrapper {
 	height: inherit;
-	min-height: var(--__ui5_textarea_min_height);
+	min-height: var(--_ui5_textarea_min_height);
 }
 
 :host([rows]) .ui5-textarea-inner, :host([rows]) .ui5-textarea-mirror {
