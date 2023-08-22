@@ -17,7 +17,7 @@ import ComboBoxFilter from "@ui5/webcomponents/dist/types/ComboBoxFilter.js";
 const component = "ui5-combobox";
 
 export default {
-	title: "Main/ComboBox",
+	title: "Main/Combo Box",
 	component: "ComboBox",
 	subcomponents: {
 		ComboBoxItem: "ComboBoxItem",
@@ -60,12 +60,6 @@ Basic.args = {
 	`,
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-	disabled: true,
-	value: "Disabled",
-};
-
 export const Filters = Template.bind({});
 Filters.args = {
 	placeholder: "Contains Filtering",
@@ -74,13 +68,14 @@ Filters.args = {
 		<ui5-cb-item text="Austria"></ui5-cb-item>
 		<ui5-cb-item text="Bulgaria"></ui5-cb-item>
 		<ui5-cb-item text="Germany"></ui5-cb-item>
-		<ui5-cb-item text="United Kingdom"></ui5-cb-item>
 		<ui5-cb-item text="Kazakhstan"></ui5-cb-item>
+		<ui5-cb-item text="The United Kingdom of Great Britain and Northern Ireland"></ui5-cb-item>
+		<ui5-cb-item text="United Kingdom"></ui5-cb-item>
 	`,
 };
 
-export const TwoColumns = Template.bind({});
-TwoColumns.args = {
+export const TwoColumnsLayout = Template.bind({});
+TwoColumnsLayout.args = {
 	placeholder: "Two-column layout",
 	default: `
 		<ui5-cb-item text="Austria" additional-text="AT"></ui5-cb-item>
@@ -88,16 +83,17 @@ TwoColumns.args = {
 		<ui5-cb-item text="Brazil" additional-text="BR"></ui5-cb-item>
 		<ui5-cb-item text="Bulgaria" additional-text="BG"></ui5-cb-item>
 		<ui5-cb-item text="Canada" additional-text="CA"></ui5-cb-item>
+		<ui5-cb-item text="The United Kingdom of Great Britain and Northern Ireland" additional-text="UK"></ui5-cb-item>
 	`,
 };
 
-export const GroupingItems = Template.bind({});
-GroupingItems.args = {
-	placeholder: "ComboBox with grouping of suggestions",
+export const Grouping = Template.bind({});
+Grouping.args = {
+	placeholder: "Grouping of suggestions",
 	default: `
 		<ui5-cb-group-item text="A"></ui5-cb-group-item>
 		<ui5-cb-item text="Argentina"></ui5-cb-item>
-		<ui5-cb-item text="Australia"></ui5-cb-item>
+		<ui5-cb-item text="Australia"></ui5-cb-item>	
 		<ui5-cb-item text="Austria"></ui5-cb-item>	
 		<ui5-cb-group-item text="B"></ui5-cb-group-item>
 		<ui5-cb-item text="Bahrain"></ui5-cb-item>
