@@ -305,13 +305,6 @@ class MultiComboBox extends UI5Element {
 	 * Defines the value state of the component.
 	 * <br><br>
 	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.MultiComboBox.prototype.valueState
@@ -377,7 +370,7 @@ class MultiComboBox extends UI5Element {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.MultiComboBox.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @defaultvalue ""
 	 * @public
 	 * @since 1.4.0
 	 */
