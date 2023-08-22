@@ -12,6 +12,7 @@ import ToolbarSelectTemplate from "./generated/templates/ToolbarSelectTemplate.l
 import ToolbarPopoverSelectTemplate from "./generated/templates/ToolbarPopoverSelectTemplate.lit.js";
 import ToolbarItem from "./ToolbarItem.js";
 import Option from "./Option.js";
+import { SelectChangeEventDetail } from "./Select.js";
 
 /**
  * @class
@@ -51,16 +52,23 @@ import Option from "./Option.js";
 	},
 })
 class ToolbarSelect extends ToolbarItem {
-    @property({ type: String })
+	@property({ type: String })
 	width!: string;
 
 	/**
-	 * When set, the button will not be visible in the toolbar
-	 * @private
+	 * Defines the component options.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Only one selected option is allowed.
+	 * If more than one option is defined as selected, the last one would be considered as the selected one.
+	 *
+	 * <br><br>
+	 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
+	 * @type {sap.ui.webc.main.ISelectOption[]}
+	 * @slot options
+	 * @name sap.ui.webc.main.ToolbarSelect.prototype.default
+	 * @public
 	 */
-	@property({ type: Boolean })
-	hidden!: boolean;
-
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	options!: Array<Option>;
 
@@ -97,6 +105,8 @@ class ToolbarSelect extends ToolbarItem {
 	@property({ type: Boolean })
 	disabled!: boolean;
 
+	_onEvent: EventListener
+
 	static get toolbarTemplate() {
 		return ToolbarSelectTemplate;
 	}
@@ -112,6 +122,47 @@ class ToolbarSelect extends ToolbarItem {
 		map.set("change", { preventClosing: false });
 
 		return map;
+	}
+
+	constructor() {
+		super();
+
+		this._onEvent = this._onEventHandler.bind(this);
+	}
+
+	onEnterDOM(): void {
+		this.attachEventListeners();
+	}
+
+	onExitDOM(): void {
+		this.detachEventListeners();
+	}
+
+	attachEventListeners(): void {
+		[...this.subscribedEvents.keys()].forEach(e => {
+			this.addEventListener(e, this._onEvent);
+		});
+	}
+
+	detachEventListeners(): void {
+		[...this.subscribedEvents.keys()].forEach(e => {
+			this.removeEventListener(e, this._onEvent);
+		});
+	}
+
+	_onEventHandler(e: Event): void {
+		if (e.type === "change") {
+			// update options
+			const selectedOption = (e as CustomEvent<SelectChangeEventDetail>).detail.selectedOption;
+			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
+			this.options.forEach((option: Option, index: number) => {
+				if (index === selectedOptionIndex) {
+					option.setAttribute("selected", "");
+				} else {
+					option.removeAttribute("selected");
+				}
+			});
+		}
 	}
 }
 

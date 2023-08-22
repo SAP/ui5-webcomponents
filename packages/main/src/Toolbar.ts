@@ -191,7 +191,7 @@ class Toolbar extends UI5Element {
 		super();
 
 		this._onResize = this.onResize.bind(this);
-		this._onInteract = this.onInteract.bind(this);
+		this._onInteract = (e: Event) => this.onInteract(e as CustomEvent);
 	}
 
 	/**
@@ -468,7 +468,7 @@ class Toolbar extends UI5Element {
 		this.processOverflowLayout();
 	}
 
-	onInteract(e: Event) {
+	onInteract(e: CustomEvent) {
 		const target = e.target as HTMLElement;
 		const item = target.closest<ToolbarItem>(".ui5-tb-item") || target.closest<ToolbarItem>(".ui5-tb-popover-item");
 		const eventType: string = e.type;
@@ -486,7 +486,7 @@ class Toolbar extends UI5Element {
 
 		if (refItemId) {
 			const abstractItem = this.getItemByID(refItemId);
-			const prevented = !abstractItem?.fireEvent(eventType, e, true);
+			const prevented = !abstractItem?.fireEvent(eventType, e.detail, true);
 			const eventOptions = abstractItem?.subscribedEvents.get(eventType);
 
 			if (prevented || abstractItem?.preventOverflowClosing || eventOptions?.preventClosing) {
