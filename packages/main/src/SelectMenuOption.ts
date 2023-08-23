@@ -1,5 +1,6 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 import type { IOption } from "./Select.js";
@@ -106,6 +107,17 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @slot
 	 * @public
 	 */
+
+	/**
+	 * <b>Note:</b> The slot is inherited and not supported. If set, it won't take any effect.
+	 *
+	 * @name sap.ui.webc.main.SelectMenuOption.prototype.deleteButton
+	 * @slot
+	 * @public
+	 * @deprecated
+	 */
+	@slot()
+	deleteButton!: Array<HTMLElement>;
 
 	get _accInfo() {
 		const accInfoSettings = {
