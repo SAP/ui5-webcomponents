@@ -237,8 +237,16 @@
 		});
 
 		select.addEventListener("ui5-change", e => {
-			console.log(e);
-		})
+			console.log("Selected " + e.detail.selectedOption.getAttribute("text"));
+		});
+
+		select.addEventListener("ui5-open", e => {
+			console.log("Opened", e);
+		});
+
+		select.addEventListener("ui5-close", e => {
+			console.log("Closed", e);
+		});
 
 		toolbarSlider.addEventListener("input", e => {
 			document.getElementById("toolbars-container").setAttribute("style", "width:" + e.target.value + "%");

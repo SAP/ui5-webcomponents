@@ -32,7 +32,7 @@ import { SelectChangeEventDetail } from "./Select.js";
  * @tagname ui5-toolbar-select
  * @appenddocs sap.ui.webc.main.Option
  * @public
- * @since 1.16.0
+ * @since 1.17.0
  */
 @customElement({
 	tag: "ui5-toolbar-select",
@@ -51,6 +51,22 @@ import { SelectChangeEventDetail } from "./Select.js";
 		selectedOption: { type: HTMLElement },
 	},
 })
+
+/**
+ * Fired after the component's dropdown menu opens.
+ *
+ * @event sap.ui.webc.ToolbarSelect#open
+ * @public
+ */
+@event("open")
+/**
+ * Fired after the component's dropdown menu closes.
+ *
+ * @event sap.ui.webc.ToolbarSelect#close
+ * @public
+ */
+@event("close")
+
 class ToolbarSelect extends ToolbarItem {
 	@property({ type: String })
 	width!: string;
@@ -75,14 +91,6 @@ class ToolbarSelect extends ToolbarItem {
 	/**
 	 * Defines the value state of the component.
 	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @defaultvalue "None"
@@ -105,6 +113,28 @@ class ToolbarSelect extends ToolbarItem {
 	@property({ type: Boolean })
 	disabled!: boolean;
 
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @public
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.ToolbarSelect.prototype.accessibleName
+	 */
+	@property()
+	accessibleName!: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the select.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.ToolbarSelect.prototype.accessibleNameRef
+	 * @public
+	 */
+	@property()
+	accessibleNameRef!: string;
+
 	_onEvent: EventListener
 
 	static get toolbarTemplate() {
@@ -120,6 +150,8 @@ class ToolbarSelect extends ToolbarItem {
 
 		map.set("click", { preventClosing: true });
 		map.set("change", { preventClosing: false });
+		map.set("open", { preventClosing: true });
+		map.set("close", { preventClosing: true });
 
 		return map;
 	}

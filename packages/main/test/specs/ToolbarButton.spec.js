@@ -7,12 +7,13 @@ describe("Toolbar general interaction", () => {
 
 	it("Should render the button with the correct text", async () => {
 		const toolbar = await browser.$("ui5-toolbar");
-		const buttonText = await toolbar.shadow$("ui5-button").getText();
-		const buttonDesign = await toolbar.shadow$("ui5-button").getAttribute("design");
-		const buttonDisabled = await toolbar.shadow$("ui5-button").getAttribute("disabled");
-		const buttonIcon = await toolbar.shadow$("ui5-button").getAttribute("icon");
-		const buttonIconEnd = await toolbar.shadow$("ui5-button").getAttribute("icon-end");
-		const buttonTooltip = await toolbar.shadow$("ui5-button").getAttribute("tooltip");
+		const button = await toolbar.shadow$("ui5-button")
+		const buttonText = await button.getText();
+		const buttonDesign = await button.getAttribute("design");
+		const buttonDisabled = await button.getAttribute("disabled");
+		const buttonIcon = await button.getAttribute("icon");
+		const buttonIconEnd = await button.getAttribute("icon-end");
+		const buttonTooltip = await button.getAttribute("tooltip");
 
 		assert.strictEqual(buttonText, "Back", "Button text is correct");
 		assert.strictEqual(buttonDesign, "Emphasized", "Button design is correct");
