@@ -1,5 +1,6 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
+import { unsafeHTML } from "lit/directives/unsafe-html.js";
 
 import type { Meta, StoryFn } from "@storybook/web-components";
 
@@ -42,7 +43,9 @@ const Template: UI5StoryArgs<TextArea, StoryArgsSlots> = (args) => html`
 	name="${ifDefined(args.name)}"
 	accessible-name="${ifDefined(args.accessibleName)}"
 	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
-></ui5-textarea>`;
+>
+	${unsafeHTML(args.valueStateMessage)}
+</ui5-textarea>`;
 
 export const Basic = Template.bind({});
 Basic.args = {
@@ -59,21 +62,8 @@ WithMaxLength.decorators = [
 			const textAreaMaxLength = document.getElementById("textArea-${index-1}");
 
 			textAreaMaxLength.addEventListener("input", function (event) {
-				let value = textAreaMaxLength.value.length;
-				let maxLength = textAreaMaxLength.maxlength;
-				let valueState = value > maxLength ? "Warning" : "None";
-				let valueStateMessage = document.getElementById("warningMessage");
-			
-				textAreaMaxLength.valueState = valueState;
-
-				if (valueState === "Warning" && !valueStateMessage) {
-					valueStateMessage = document.createElement("div");
-					valueStateMessage.id = "warningMessage"
-					valueStateMessage.slot="valueStateMessage";
-					valueStateMessage.textContent = "The characters limit is exceeded";
-
-					event.target.appendChild(valueStateMessage);
-				}
+				const { value, maxlength} = textAreaMaxLength;
+				textAreaMaxLength.valueState = value.length > maxlength ? "Warning" : "None";	
 			});
 		})()
 		</script>`
@@ -81,7 +71,8 @@ WithMaxLength.decorators = [
 WithMaxLength.args = {
 	placeholder: 'Enter text',
 	maxlength: 10,
-	showExceededText: true
+	showExceededText: true,
+	valueStateMessage: `<div id="warningMessage" slot="valueStateMessage">The characters limit is exceeded</div>`
 
 };
 
