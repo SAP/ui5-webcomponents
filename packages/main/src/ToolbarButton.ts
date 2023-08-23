@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-
+import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 
 import ToolbarItem, { IEventOptions } from "./ToolbarItem.js";
@@ -10,7 +10,7 @@ import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverBu
 
 import ToolbarButtonPopoverCss from "./generated/themes/ToolbarButtonPopover.css.js";
 
-import { registerToolbarItem } from "./features/ToolbarRegistry.js";
+import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 /**
  * @class
@@ -28,7 +28,7 @@ import { registerToolbarItem } from "./features/ToolbarRegistry.js";
 
 @customElement({
 	tag: "ui5-toolbar-button",
-	dependencies: [ToolbarItem],
+	dependencies: [Button],
 })
 
 /**

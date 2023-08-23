@@ -29,7 +29,12 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
 import HasPopup from "./types/HasPopup.js";
 
 import type { ToolbarItem } from "./ToolbarItem.js";
-import { getRegisteredToolbarItem, getRegisteredStyles, getRegisteredStaticAreaStyles } from "./features/ToolbarRegistry.js";
+import {
+	getRegisteredToolbarItem,
+	getRegisteredStyles,
+	getRegisteredStaticAreaStyles,
+	getRegisteredDependencies,
+} from "./ToolbarRegistry.js";
 
 import Button from "./Button.js";
 import Popover from "./Popover.js";
@@ -75,10 +80,6 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	renderer: litRender,
 	template: ToolbarTemplate,
 	staticAreaTemplate: ToolbarPopoverTemplate,
-	dependencies: [
-		Popover,
-		Button,
-	],
 })
 
 class Toolbar extends UI5Element {
@@ -181,6 +182,15 @@ class Toolbar extends UI5Element {
 		return [
 			ToolbarPopoverCss,
 			...styles,
+		];
+	}
+
+	static get dependencies() {
+		const deps = getRegisteredDependencies();
+		return [
+			Popover,
+			Button,
+			...deps,
 		];
 	}
 

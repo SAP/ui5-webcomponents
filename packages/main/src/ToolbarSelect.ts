@@ -4,15 +4,16 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 
-import { registerToolbarItem } from "./features/ToolbarRegistry.js";
+import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 // Templates
 
 import ToolbarSelectTemplate from "./generated/templates/ToolbarSelectTemplate.lit.js";
 import ToolbarPopoverSelectTemplate from "./generated/templates/ToolbarPopoverSelectTemplate.lit.js";
 import ToolbarItem from "./ToolbarItem.js";
+import Select from "./Select.js";
 import Option from "./Option.js";
-import { SelectChangeEventDetail } from "./Select.js";
+import type { SelectChangeEventDetail } from "./Select.js";
 
 /**
  * @class
@@ -36,6 +37,7 @@ import { SelectChangeEventDetail } from "./Select.js";
  */
 @customElement({
 	tag: "ui5-toolbar-select",
+	dependencies: [Select, Option],
 })
 
 /**

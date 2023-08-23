@@ -3,7 +3,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import ToolbarSpacerTemplate from "./generated/templates/ToolbarSpacerTemplate.lit.js";
 
 import ToolbarItem from "./ToolbarItem.js";
-import { registerToolbarItem } from "./features/ToolbarRegistry.js";
+import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 /**
  * @class

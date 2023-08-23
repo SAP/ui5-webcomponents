@@ -1,7 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ToolbarSeparatorTemplate from "./generated/templates/ToolbarSeparatorTemplate.lit.js";
 
-import { registerToolbarItem } from "./features/ToolbarRegistry.js";
+import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 import ToolbarItem from "./ToolbarItem.js";
 
