@@ -161,6 +161,19 @@ interface IOption extends UI5Element {
 	},
 })
 /**
+ * Fired when the option is previewed, but the selection is not finalized,
+ * when navigating between the option or pressing the ESC key that reverts back to the last selected option.
+ *
+ * @event sap.ui.webc.main.Select#preview-change
+ * @param {HTMLElement} option the previewed option.
+ * @public
+ */
+@event("preview-change", {
+	detail: {
+		option: { type: HTMLElement },
+	},
+})
+/**
  * Fired after the component's dropdown menu opens.
  *
  * @event sap.ui.webc.main.Select#open
