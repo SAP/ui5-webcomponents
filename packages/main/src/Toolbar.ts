@@ -12,6 +12,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import "@ui5/webcomponents-icons/dist/overflow.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 
 import {
 	TOOLBAR_OVERFLOW_BUTTON_ARIA_LABEL,
@@ -176,10 +177,10 @@ class Toolbar extends UI5Element {
 	}
 
 	static get staticAreaStyles() {
-		const styes = getRegisteredStaticAreaStyles();
+		const styles = getRegisteredStaticAreaStyles();
 		return [
 			ToolbarPopoverCss,
-			...styes,
+			...styles,
 		];
 	}
 
@@ -204,8 +205,8 @@ class Toolbar extends UI5Element {
 
 	get padding(): number {
 		const toolbarComputedStyle = getComputedStyle(this.getDomRef()!);
-		return calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-left")
-			+ calculateCSSREMValue(toolbarComputedStyle, "--_ui5-toolbar-padding-right");
+		return calculateCSSREMValue(toolbarComputedStyle, getScopedVarName("--_ui5-toolbar-padding-left"))
+			+ calculateCSSREMValue(toolbarComputedStyle, getScopedVarName("--_ui5-toolbar-padding-right"));
 	}
 
 	get subscribedEvents() {
