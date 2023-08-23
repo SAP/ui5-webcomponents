@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
@@ -94,6 +93,82 @@ class ToolbarButton extends ToolbarItem {
 	 */
 	@property({ type: String })
 	icon!: string;
+
+	/**
+	 * Defines whether the icon should be displayed after the component text.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.iconEnd
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	iconEnd!: boolean;
+
+	/**
+	 * Defines the tooltip of the component.
+	 * <br>
+	 * <b>Note:</b> A tooltip attribute should be provided for icon-only buttons, in order to represent their exact meaning/function.
+	 * @type {string}
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.tooltip
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	tooltip!: string;
+
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.accessibleName
+	 * @defaultvalue undefined
+	 * @public
+	 */
+	@property({ defaultValue: undefined })
+	accessibleName?: string;
+
+	/**
+	 * Receives id(or many ids) of the elements that label the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.accessibleNameRef
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property({ defaultValue: "" })
+	accessibleNameRef!: string;
+
+	/**
+	 * An object of strings that defines several additional accessibility attribute values
+	 * for customization depending on the use case.
+	 *
+	 * It supports the following fields:
+	 *
+	 * <ul>
+	 * 		<li><code>expanded</code>: Indicates whether the button, or another grouping element it controls, is currently expanded or collapsed. Accepts the following string values:
+	 *			<ul>
+	 *				<li><code>true</code></li>
+	 *				<li><code>false</code></li>
+	 *			</ul>
+	 * 		</li>
+	 * 		<li><code>hasPopup</code>: Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by the button. Accepts the following string values:
+	 * 			<ul>
+	 *				<li><code>Dialog</code></li>
+	 *				<li><code>Grid</code></li>
+	 *				<li><code>ListBox</code></li>
+	 *				<li><code>Menu</code></li>
+	 *				<li><code>Tree</code></li>
+	 * 			</ul>
+	 * 		</li>
+	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
+	 * </ul>
+	 * @type {object}
+	 * @name sap.ui.webc.main.ToolbarButton.prototype.accessibilityAttributes
+	 * @public
+	 */
+	@property({ type: Object })
+	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree", controls: string};
 
 	/**
 	 * Button text
