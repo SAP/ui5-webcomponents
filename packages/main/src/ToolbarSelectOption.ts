@@ -18,6 +18,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @tagname ui5-toolbar-select-option
  * @implements sap.ui.webc.main.IToolbarSelectOption
  * @public
+ * @since 1.17.0
  */
 @customElement("ui5-toolbar-select-option")
 class ToolbarSelectOption extends UI5Element {

@@ -22,7 +22,6 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * @alias sap.ui.webc.main.ToolbarButton
  * @extends sap.ui.webc.main.ToolbarItem
  * @since 1.17.0
- * @abstract
  * @public
  */
 
