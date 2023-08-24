@@ -167,6 +167,7 @@ interface IOption extends UI5Element {
  * @event sap.ui.webc.main.Select#preview-change
  * @param {HTMLElement} option the previewed option.
  * @public
+ * @since 1.17.0
  */
 @event("preview-change", {
 	detail: {
@@ -192,7 +193,7 @@ class Select extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines a reference (ID or DOM element) of component's menu of options.
-	 *
+	 * as alternative to define the select's dropdown.
 	 * <br><br>
 	 * <b>Note:</b> Usage of <code>ui5-select-menu</code> is recommended.
 	 *
@@ -200,6 +201,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @defaultvalue false
 	 * @name sap.ui.webc.main.Select.prototype.menu
 	 * @public
+	 * @since 1.17.0
 	 */
 	@property({ validator: DOMReference })
 	menu?: HTMLElement | string;
@@ -408,6 +410,7 @@ class Select extends UI5Element implements IFormElement {
 	 * @name sap.ui.webc.main.Select.prototype.label
 	 * @slot label
 	 * @public
+	 * @since 1.17.0
 	*/
 	@slot()
 	label!: Array<HTMLElement>;

@@ -39,10 +39,19 @@ type SelectMenuChange = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui5-select-menu</code> is meant to be used together with the <code>ui5-select</code> component as alternative
+ * to define the select's dropdown. It acts as a popover on desktop and tablet, and as a Dialog on phone.
+ * <br></br>
+ * The component gives the possibilty to the user to customize the <code>ui5-select</code>'s dropdown
+ * by slotting custom options and adding custom styles.
  *
  * <h3>Usage</h3>
  *
- * For the <code>select-menu</code>
+ * To use <code>ui5-select</code> with a <code>ui5-select-menu</code>,
+ * you need to set the <code>ui5-select</code> <code>menu</code> property to reference <code>ui5-select-menu</code> either by ID or DOM reference.
+ * <br></br>
+ *
+ * For the <code>ui5-select-menu</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/SelectMenu.js";</code>
@@ -51,8 +60,9 @@ type SelectMenuChange = {
  * @author SAP SE
  * @alias sap.ui.webc.main.SelectMenu
  * @extends sap.ui.webc.base.UI5Element
- * @tagname select-menu
+ * @tagname ui5-select-menu
  * @public
+ * @since 1.17.0
  */
 @customElement({
 	tag: "ui5-select-menu",

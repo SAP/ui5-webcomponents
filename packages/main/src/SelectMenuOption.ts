@@ -16,11 +16,11 @@ import type { AccessibilityAttributes } from "./ListItem.js";
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
- *
+ * The code>ui5-select-menu-option</code> component represents an option in the <code>ui5-select-menu</code>.
  *
  * <h3>Usage</h3>
  *
- * For the <code>select-menu-option</code>
+ * For the <code>ui5-select-menu-option</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/SelectMenuOption.js";</code>
@@ -32,6 +32,7 @@ import type { AccessibilityAttributes } from "./ListItem.js";
  * @implements sap.ui.webc.main.ISelectMenuOption
  * @tagname ui5-select-menu-option
  * @public
+ * @since 1.17.0
  */
 @customElement({
 	tag: "ui5-select-menu-option",
