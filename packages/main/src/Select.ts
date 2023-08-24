@@ -76,6 +76,9 @@ import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
 type SelectChangeEventDetail = {
 	selectedOption: IOption,
 }
+type SelectLiveChangeEventDetail = {
+	selectedOption: IOption,
+}
 
 interface IOption extends UI5Element {
 	id: string,
@@ -161,15 +164,15 @@ interface IOption extends UI5Element {
 	},
 })
 /**
- * Fired when the option is previewed, but the selection is not finalized,
- * when navigating between the option or pressing the ESC key that reverts back to the last selected option.
+ * Fired when the user navigates through the options, but the selection is not finalized,
+ * or when pressing the ESC key to revert the current selection.
  *
- * @event sap.ui.webc.main.Select#preview-change
- * @param {HTMLElement} option the previewed option.
+ * @event sap.ui.webc.main.Select#live-change
+ * @param {HTMLElement} selectedOption the selected option.
  * @public
  * @since 1.17.0
  */
-@event("preview-change", {
+@event("live-change", {
 	detail: {
 		option: { type: HTMLElement },
 	},
@@ -775,7 +778,7 @@ class Select extends UI5Element implements IFormElement {
 		this.selectOptions[this._selectedIndex].selected = false;
 
 		if (this._selectedIndex !== index) {
-			this.fireEvent("preview-change", { option: this.selectOptions[index] });
+			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.selectOptions[index] });
 		}
 
 		this._selectedIndex = index;
@@ -850,7 +853,7 @@ class Select extends UI5Element implements IFormElement {
 
 		this._selectedIndex = newIndex;
 
-		this.fireEvent("preview-change", { option: nextOption });
+		this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
 
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
@@ -1116,5 +1119,6 @@ Select.define();
 export default Select;
 export type {
 	SelectChangeEventDetail,
+	SelectLiveChangeEventDetail,
 	IOption,
 };

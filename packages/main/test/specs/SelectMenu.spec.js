@@ -49,7 +49,7 @@ describe("Select Menu general interaction", () => {
 		assert.strictEqual(await inpTestChange.getProperty("value"), "2", "Change event should have fired twice");
 	});
 
-	it("fires 'change' and 'preview-change' on click", async () => {
+	it("fires 'change' and 'live-change' on click", async () => {
 		const btnRest = await browser.$("#clearCounter");
 		await btnRest.click();
 
@@ -63,14 +63,14 @@ describe("Select Menu general interaction", () => {
 		await select.click();
 		await secondItem.click();
 
-		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "1", "Fired 'preview-change' event once.");
+		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "1", "Fired 'live-change' event once.");
 		assert.strictEqual(await inpTestChange.getProperty("value"), "1", "Fired 'change' event once.");
 
 		const selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT, "Select label is correct.");
 	});
 
-	it("fires 'change' and 'preview-change' on Arrow Down, Arrow Up", async () => {
+	it("fires 'change' and 'live-change' on Arrow Down, Arrow Up", async () => {
 		const btnRest = await browser.$("#clearCounter");
 		await btnRest.click();
 
@@ -87,7 +87,7 @@ describe("Select Menu general interaction", () => {
 		await select.keys("ArrowDown");
 		await select.keys("Enter");
 
-		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "1", "Fired 'preview-change' event once.");
+		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "1", "Fired 'live-change' event once.");
 		assert.strictEqual(await inpTestChange.getProperty("value"), "1", "Fired 'change' event once.");
 		let selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT1, "Select label is correct.");
@@ -96,7 +96,7 @@ describe("Select Menu general interaction", () => {
 		await select.keys("ArrowUp");
 		await select.keys("Space");
 
-		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "2", "Fired 'preview-change' once more.");
+		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "2", "Fired 'live-change' once more.");
 		assert.strictEqual(await inpTestChange.getProperty("value"), "2", "Fired 'change' event once more.");
 		selectTextHtml = await selectText.getHTML(false);
 		assert.include(selectTextHtml, EXPECTED_SELECTION_TEXT2, "Select label is correct.");
@@ -122,7 +122,7 @@ describe("Select Menu general interaction", () => {
 
 		assert.ok(await selectedOption.getProperty("selected"), "Initially selected item should remain selected");
 		assert.strictEqual(await inpTestChange.getProperty("value"), "0", "Change event is not fired");
-		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "2", "Fired 'preview-change' twice - ArrDown and ESC.");
+		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "2", "Fired 'live-change' twice - ArrDown and ESC.");
 		assert.strictEqual(selectTextAfterEscape, selectTextHtml, "Select label is correct.");
 	});
 
@@ -137,7 +137,7 @@ describe("Select Menu general interaction", () => {
 
 		await select.click();
 		await select.keys("ArrowUp");
-		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "1", "Fired preview-change event once.");
+		assert.strictEqual(await inpTestPreviewChange.getProperty("value"), "1", "Fired live-change event once.");
 
 		// focus out select
 		await btn.click();

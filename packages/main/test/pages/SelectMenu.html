@@ -41,7 +41,7 @@
 				<ui5-title>Select+ SelectMenu Test setup</ui5-title><br>
 		
 				<ui5-input id="testChange" placeholder="change fired 0"></ui5-input><br>
-				<ui5-input id="testPreview" placeholder="preview-change fired 0"></ui5-input><br>
+				<ui5-input id="testPreview" placeholder="live-change fired 0"></ui5-input><br>
 				<ui5-input id="testOpen" placeholder="open fired 0"></ui5-input><br>
 				<ui5-input id="testClose" placeholder="close fired 0"></ui5-input><br>
 		
@@ -195,10 +195,10 @@
 			lbl.innerHTML = "CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++counter) + ">";
 		});
 
-		sel.addEventListener("ui5-preview-change", function(e) {
-			lblLive.innerHTML = "PREVIEW CHANGE EVENT :: " + e.detail.option.localName + " :: <" + e.detail.option.textContent + "> :: event counter :: <" + (++liveCounter) + ">";
-			mainText.innerHTML = e.detail.option.getAttribute("data-display-text")
-			avatar.initials = e.detail.option.getAttribute("data-additional-text");
+		sel.addEventListener("ui5-live-change", function(e) {
+			lblLive.innerHTML = "PREVIEW CHANGE EVENT :: " + e.detail.selectedOption.localName + " :: <" + e.detail.selectedOption.textContent + "> :: event counter :: <" + (++liveCounter) + ">";
+			mainText.innerHTML = e.detail.selectedOption.getAttribute("data-display-text")
+			avatar.initials = e.detail.selectedOption.getAttribute("data-additional-text");
 		});
 
 		sel.addEventListener("ui5-close", function(e) {
@@ -218,7 +218,7 @@
 		selTest.addEventListener("ui5-change", function(e) {
 			testChange.value = ++testChangeCounter;
 		});
-		selTest.addEventListener("ui5-preview-change", function(e) {
+		selTest.addEventListener("ui5-live-change", function(e) {
 			testPreview.value = ++testPreviewCounter;
 		});
 		selTest.addEventListener("ui5-open", function(e) {
