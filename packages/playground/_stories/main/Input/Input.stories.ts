@@ -18,10 +18,10 @@ let index = 0;
 
 export default {
 	title: "Main/Input",
-	component,
+	component: "Input",
 	subcomponents: {
-		SuggestionItem: 'ui5-suggestion-item',
-		SuggestionGroupItem : 'ui5-suggestion-group-item'
+		SuggestionItem: 'SuggestionsItem',
+		SuggestionGroupItem : 'SuggestionsGroupItem'
 	},
 	parameters: {
 		docs: {

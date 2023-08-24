@@ -11,8 +11,8 @@ import type ResponsivePopover from "@ui5/webcomponents/dist/ResponsivePopover.js
 const component = "ui5-responsive-popover";
 
 export default {
-	title: "Main/ResponsivePopover",
-	component,
+	title: "Main/Responsive Popover",
+	component: "ResponsivePopover",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),

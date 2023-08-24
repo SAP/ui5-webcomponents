@@ -12,8 +12,8 @@ import BusyIndicatorSize from "@ui5/webcomponents/dist/types/BusyIndicatorSize.j
 const component = "ui5-busy-indicator";
 
 export default {
-	title: "Main/BusyIndicator",
-	component,
+	title: "Main/Busy Indicator",
+	component: "BusyIndicator",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

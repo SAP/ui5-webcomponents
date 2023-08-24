@@ -14,7 +14,7 @@ const component = "ui5-label";
 
 export default {
 	title: "Main/Label",
-	component,
+	component: "Label",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
@@ -51,16 +51,6 @@ Basic.decorators = [
 	addInput("myInputSimple")
 ];
 
-export const RequiredWithColon = Template.bind({});
-RequiredWithColon.args = {
-	showColon: true,
-	required: true,
-	default: "Required label with colon",
-};
-RequiredWithColon.decorators = [
-	addInput("myInputRequired")
-];
-
 const SetWidth200Px: Decorator = (story, { args }) => {
 	return html`
 <style>
@@ -71,21 +61,11 @@ const SetWidth200Px: Decorator = (story, { args }) => {
 ${story({ args: { ...args, className: "w200" } })}`;
 };
 
-export const Truncating = Template.bind({});
-Truncating.args = {
-	showColon: true,
-	default: "Long labels are truncated by default.",
-};
-Truncating.decorators = [
-	SetWidth200Px,
-	addInput("myInputTruncation")
-];
-
 export const WrappingText = Template.bind({});
 WrappingText.args = {
 	wrappingType: WrappingType.Normal,
 	showColon: true,
-	default: `Long labels can wrap if the text is too long. Set 'wrapping-type="Normal"'. Long labels can wrap if the text is too long`,
+	default: `Label that demonstrates how, if set to wrapping-type="Normal", the long labels could be wrapped. To test the truncation, use 'wrapping-type="None"`,
 };
 WrappingText.decorators = [
 	SetWidth200Px,

@@ -12,9 +12,9 @@ import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 const component = "ui5-li-notification";
 
 export default {
-	title: "Fiori/NotificationListItem",
-	component,
-	subcomponents: { 'NotificationAction': 'ui5-notification-action' },
+	title: "Fiori/Notification List Item",
+	component: "NotificationListItem",
+	subcomponents: { 'NotificationAction': 'NotificationAction' },
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),

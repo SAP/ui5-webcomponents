@@ -3,6 +3,60 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.1...v1.17.0-rc.2) (2023-08-24)
+
+
+### Bug Fixes
+
+* **ui5-input:** apply correct button's box-shadow on hover ([#7439](https://github.com/SAP/ui5-webcomponents/issues/7439)) ([b77db6b](https://github.com/SAP/ui5-webcomponents/commit/b77db6b04579cfa479fe0802406da691edca0b04))
+* **ui5-message-strip:** enhance storybook samples ([#7464](https://github.com/SAP/ui5-webcomponents/issues/7464)) ([0283e28](https://github.com/SAP/ui5-webcomponents/commit/0283e28b8993a37b98fc0acfb2e15d6fc6bc77f8))
+* **ui5-multi-combobox:** adjust storybook sample ([#7441](https://github.com/SAP/ui5-webcomponents/issues/7441)) ([52562ec](https://github.com/SAP/ui5-webcomponents/commit/52562ecb5f6c91a447210827c0ff27c9f726cf9b))
+* **ui5-toast:** enhance storybook samples ([#7451](https://github.com/SAP/ui5-webcomponents/issues/7451)) ([9298747](https://github.com/SAP/ui5-webcomponents/commit/92987476d2238f512bae871aa1b8559a31b0a450))
+
+
+
+
+
+# [1.17.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.0...v1.17.0-rc.1) (2023-08-17)
+
+
+### Bug Fixes
+
+* **ui5-date-picker:** align value state to react binding ([#7396](https://github.com/SAP/ui5-webcomponents/issues/7396)) ([c6e6a7b](https://github.com/SAP/ui5-webcomponents/commit/c6e6a7b5674e4934e590e66d391b731c29101e4a)), closes [#6993](https://github.com/SAP/ui5-webcomponents/issues/6993)
+* **ui5-multi-combobox:** adjust 'paste' handling ([#7440](https://github.com/SAP/ui5-webcomponents/issues/7440)) ([dd658c5](https://github.com/SAP/ui5-webcomponents/commit/dd658c561bfcf56a4634355d3ac1b0f0113f9b05)), closes [#7330](https://github.com/SAP/ui5-webcomponents/issues/7330)
+* **ui5-select:** fix header on phone & update items on options change ([#7455](https://github.com/SAP/ui5-webcomponents/issues/7455)) ([116594c](https://github.com/SAP/ui5-webcomponents/commit/116594c40fd9ba2800b325f15ab2de9fe10222c8))
+* **ui5-split-button:** add css variables for active state ([#7450](https://github.com/SAP/ui5-webcomponents/issues/7450)) ([2885a4d](https://github.com/SAP/ui5-webcomponents/commit/2885a4d276bce1420c4e1589bd1fdc7e98933d05))
+
+
+### Features
+
+* **framework:** scope css variables per runtime and version ([#7449](https://github.com/SAP/ui5-webcomponents/issues/7449)) ([d3f6c2e](https://github.com/SAP/ui5-webcomponents/commit/d3f6c2efba9cfda389ea4d700a375f75b3e2996b))
+* **ui5-menu:** make the item click event cancellable ([#7360](https://github.com/SAP/ui5-webcomponents/issues/7360)) ([18b21bf](https://github.com/SAP/ui5-webcomponents/commit/18b21bfdb90ba2672aeb055d9443f1875cf381c7)), closes [#5600](https://github.com/SAP/ui5-webcomponents/issues/5600)
+* **ui5-multi-input, ui5-multi-combobox:** implement popover keyboard handling ([#7368](https://github.com/SAP/ui5-webcomponents/issues/7368)) ([3c047b4](https://github.com/SAP/ui5-webcomponents/commit/3c047b464fb6e6ece4c043531db239f991befd36))
+
+
+
+
+
+# [1.17.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0...v1.17.0-rc.0) (2023-08-10)
+
+
+### Features
+
+* **ui5-menu:** add delay between opening and closing submenu and sub menu items ([#7246](https://github.com/SAP/ui5-webcomponents/issues/7246)) ([b46eda5](https://github.com/SAP/ui5-webcomponents/commit/b46eda5a6dccc9b783d40fc33353c6e08b4652e7))
+
+
+
+
+
+# [1.16.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.4...v1.16.0) (2023-08-03)
+
+**Note:** Version bump only for package @ui5/webcomponents
+
+
+
+
+
 # [1.16.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.3...v1.16.0-rc.4) (2023-08-03)
 
 

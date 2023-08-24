@@ -2494,10 +2494,10 @@
   resolved "https://registry.yarnpkg.com/@pkgjs/parseargs/-/parseargs-0.11.0.tgz#a77ea742fab25775145434eb1d2328cf5013ac33"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@sap-theming/theming-base-content@11.5.0":
-  version "11.5.0"
-  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.5.0.tgz#d83c172d1d03a3b845ca6ed737b192dd70e4610e"
-  integrity sha512-peN7VGjgcLj7gJTPlZWFgHV/0wkSEqu/yq2TYyZmMOcjqpIWeWI/mItGOFslfCmpyeVVp5lvrfWkbrRQrig/Kg==
+"@sap-theming/theming-base-content@11.6.4":
+  version "11.6.4"
+  resolved "https://registry.yarnpkg.com/@sap-theming/theming-base-content/-/theming-base-content-11.6.4.tgz#828b314c5036b054d4bae20243b382e1eb57c7cf"
+  integrity sha512-ub3W9qRO4Kt1nrXJBvTqUbQjpAhcQNGcIh1CTopVStpGGhEP1a2VPeXxJQPL37FCzIFeN898OBiQgCgQNpVqYQ==
 
 "@sigstore/protobuf-specs@^0.1.0":
   version "0.1.0"
@@ -10698,11 +10698,6 @@ mocha@^10.0.0:
     yargs "16.2.0"
     yargs-parser "20.2.4"
     yargs-unparser "2.0.0"
-
-modify-selectors@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/modify-selectors/-/modify-selectors-2.0.0.tgz#0834a1511ad291c81c58ef5f069b74640b3f5ecd"
-  integrity sha512-Hm32mqJ27AZ0AnpwyX3mXpvevAM9eAq0BsmNNVk2CSE8zqUW2bXk4ZNnA1nsjtm1z/cQJJlVmP6AGMqb/KQpKg==
 
 modify-values@^1.0.0:
   version "1.0.1"

@@ -1,0 +1,7 @@
+@import "../base/UploadCollection-parameters.css";
+
+:root {
+	--ui5_upload_collection_button_margin_block_end: 2px;
+	--ui5_upload_collection_last_button_inline_end: 2px;
+	--ui5_upload_collection_small_size_buttons_margin_block_start: 0.5rem;
+}

@@ -18,6 +18,7 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import type { ResponsivePopoverBeforeCloseEventDetail } from "./ResponsivePopover.js";
@@ -42,6 +43,9 @@ type CurrentItem = {
 	position: number,
 	ariaHasPopup: string | undefined,
 }
+
+const MENU_OPEN_DELAY = 300;
+const MENU_CLOSE_DELAY = 400;
 
 type MenuItemClickEventDetail = {
 	item: MenuItem,
@@ -108,8 +112,10 @@ type OpenerStandardListItem = StandardListItem & { associatedItem: MenuItem };
 
 /**
  * Fired when an item is being clicked.
+ * <b>Note:</b> Since 1.17.0 the event is preventable, allowing the menu to remain open after an item is pressed.
  *
  * @event sap.ui.webc.main.Menu#item-click
+ * @allowPreventDefault
  * @param { HTMLElement } item The currently clicked menu item.
  * @param { string } text The text of the currently clicked menu item.
  * @public
@@ -303,6 +309,7 @@ class Menu extends UI5Element {
 	items!: Array<MenuItem>;
 
 	static i18nBundle: I18nBundle;
+	_timeout?: Timeout;
 
 	static async onDefine() {
 		Menu.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -362,7 +369,8 @@ class Menu extends UI5Element {
 			const menuItem = item.item;
 			if (subMenu && subMenu.busy) {
 				subMenu.innerHTML = "";
-				this._cloneItems(menuItem, subMenu);
+				const fragment = this._clonedItemsFragment(menuItem);
+				subMenu.appendChild(fragment);
 			}
 
 			if (subMenu) {
@@ -466,16 +474,21 @@ class Menu extends UI5Element {
 		subMenu._parentMenuItem = item;
 		subMenu.busy = item.busy;
 		subMenu.busyDelay = item.busyDelay;
-		this._cloneItems(item, subMenu);
+		const fragment = this._clonedItemsFragment(item);
+		subMenu.appendChild(fragment);
 		this.staticAreaItem!.shadowRoot!.querySelector(".ui5-menu-submenus")!.appendChild(subMenu);
 		item._subMenu = subMenu;
 	}
 
-	_cloneItems(item: MenuItem, menu: Menu) {
+	_clonedItemsFragment(item: MenuItem) {
+		const fragment = document.createDocumentFragment();
+
 		for (let i = 0; i < item.items.length; ++i) {
 			const clonedItem = item.items[i].cloneNode(true);
-			menu.appendChild(clonedItem);
+			fragment.appendChild(clonedItem);
 		}
+
+		return fragment;
 	}
 
 	_openItemSubMenu(item: MenuItem, opener: HTMLElement, actionId: string) {
@@ -535,6 +548,32 @@ class Menu extends UI5Element {
 		this._parentItemsStack.push(item);
 	}
 
+	_startOpenTimeout(item: MenuItem, opener: OpenerStandardListItem, hoverId: string) {
+		// If theres already a timeout, clears it
+		this._clearTimeout();
+
+		// Sets the new timeout
+		this._timeout = setTimeout(() => {
+			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+		}, MENU_OPEN_DELAY);
+	}
+
+	_startCloseTimeout(item: MenuItem) {
+		// If theres already a timeout, clears it
+		this._clearTimeout();
+
+		// Sets the new timeout
+		this._timeout = setTimeout(() => {
+			this._closeItemSubMenu(item);
+		}, MENU_CLOSE_DELAY);
+	}
+
+	_clearTimeout() {
+		if (this._timeout) {
+			clearTimeout(this._timeout);
+		}
+	}
+
 	_itemMouseOver(e: MouseEvent) {
 		if (isDesktop()) {
 			// respect mouseover only on desktop
@@ -543,7 +582,12 @@ class Menu extends UI5Element {
 			const hoverId = opener.getAttribute("id")!;
 
 			opener.focus();
-			this._prepareSubMenuDesktopTablet(item, opener, hoverId);
+
+			// If there is a pending close operation, cancel it
+			this._clearTimeout();
+
+			// Opens submenu with 300ms delay
+			this._startOpenTimeout(item, opener, hoverId);
 		}
 	}
 
@@ -555,14 +599,17 @@ class Menu extends UI5Element {
 
 	_itemMouseOut(e: MouseEvent) {
 		if (isDesktop()) {
-			// respect mouseover only on desktop
 			const opener = e.target as OpenerStandardListItem;
 			const item = opener.associatedItem;
 
+			// If there is a pending open operation, cancel it
+			this._clearTimeout();
+
+			// Close submenu with 400ms delay
 			if (item && item.hasSubmenu && item._subMenu) {
 				// try to close the sub-menu
 				item._preventSubMenuClose = false;
-				this._closeItemSubMenu(item);
+				this._startCloseTimeout(item);
 			}
 		}
 	}
@@ -598,15 +645,33 @@ class Menu extends UI5Element {
 					this._parentMenuItem = undefined;
 				}
 				// fire event if the click is on top-level menu item
-				this.fireEvent<MenuItemClickEventDetail>("item-click", {
+				const prevented = !this.fireEvent<MenuItemClickEventDetail>("item-click", {
 					"item": item,
 					"text": item.text,
-				});
-				this._popover!.close();
+				}, true, false);
+
+				if (!prevented) {
+					this._popover!.close();
+				}
 			} else {
-				// find top-level menu and redirect event to it
 				const mainMenu = this._findMainMenu(item);
-				mainMenu._itemClick(e);
+				const prevented = !mainMenu.fireEvent<MenuItemClickEventDetail>("item-click", {
+					"item": item,
+					"text": item.text,
+				}, true, false);
+
+				if (!prevented) {
+					let openerMenuItem = item;
+					let parentMenu = openerMenuItem.parentElement as Menu;
+					do {
+						openerMenuItem._preventSubMenuClose = false;
+						this._closeItemSubMenu(openerMenuItem);
+						parentMenu = openerMenuItem.parentElement as Menu;
+						openerMenuItem = parentMenu._parentMenuItem as MenuItem;
+					} while (parentMenu._parentMenuItem);
+
+					mainMenu._popover!.close();
+				}
 			}
 		} else if (isPhone()) {
 			// prepares and opens sub-menu on phone
@@ -620,8 +685,6 @@ class Menu extends UI5Element {
 	_findMainMenu(item: MenuItem) {
 		let parentMenu = item.parentElement as Menu;
 		while (parentMenu._parentMenuItem) {
-			parentMenu._parentMenuItem._preventSubMenuClose = false;
-			this._closeItemSubMenu(parentMenu._parentMenuItem);
 			parentMenu = parentMenu._parentMenuItem.parentElement as Menu;
 		}
 

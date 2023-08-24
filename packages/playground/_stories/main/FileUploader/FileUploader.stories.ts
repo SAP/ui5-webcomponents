@@ -15,7 +15,7 @@ const component = "ui5-file-uploader";
 
 export default {
 	title: "Main/FileUploader",
-	component,
+	component: "FileUploader",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

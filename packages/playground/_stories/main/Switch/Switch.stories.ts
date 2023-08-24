@@ -15,7 +15,7 @@ const component = "ui5-switch";
 
 export default {
 	title: "Main/Switch",
-	component,
+	component: "Switch",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })

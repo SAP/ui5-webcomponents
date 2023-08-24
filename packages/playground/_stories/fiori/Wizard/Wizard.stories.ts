@@ -12,9 +12,9 @@ const component = "ui5-wizard";
 
 export default {
 	title: "Fiori/Wizard",
-	component,
+	component: "Wizard",
 	subcomponents: {
-		WizardStep: 'ui5-wizard-step',
+		WizardStep: 'WizardStep'
 	},
 	parameters: {
 		docs: {
@@ -26,7 +26,7 @@ export default {
 
 let index = 0;
 
-export const WizardOverview: StoryFn = () => html`
+export const Basic: StoryFn = () => html`
 	<ui5-wizard id="wiz-${++index}">
 		<ui5-wizard-step icon="product" title-text="Product type" selected="">
 			<div style="display: flex; min-height: 200px; flex-direction: column;">
@@ -137,7 +137,7 @@ export const WizardOverview: StoryFn = () => html`
 	</script>
 `;
 
-export const WizardPageMode: StoryFn = () => html`
+export const PageMode: StoryFn = () => html`
 	<ui5-dialog id="dialog${++index}" stretch header-heading="Wizard">
 		<ui5-wizard id="wiz-${index}" content-layout="SingleStep">
 			<ui5-wizard-step icon="product" title-text="Product type" selected="">
