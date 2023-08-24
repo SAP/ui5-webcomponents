@@ -196,6 +196,15 @@ const ITreeItem = "sap.ui.webc.main.ITreeItem";
  */
 const IToolbarItem = "sap.ui.webc.main.IToolbarItem";
 
+/**
+ * Interface for toolbar select items for the purpose of <code>ui5-toolbar-select</code>
+ *
+ * @name sap.ui.webc.main.IToolbarSelectOption
+ * @interface
+ * @public
+ */
+const IToolbarSelectOption = "sap.ui.webc.main.IToolbarSelectOption";
+
 export {
 	IAvatar,
 	IBreadcrumbsItem,
@@ -219,4 +228,5 @@ export {
 	IToken,
 	ITreeItem,
 	IToolbarItem,
+	IToolbarSelectOption,
 };

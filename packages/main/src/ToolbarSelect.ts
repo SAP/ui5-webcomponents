@@ -13,6 +13,7 @@ import ToolbarPopoverSelectTemplate from "./generated/templates/ToolbarPopoverSe
 import ToolbarItem from "./ToolbarItem.js";
 import Select from "./Select.js";
 import Option from "./Option.js";
+import "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
 /**
