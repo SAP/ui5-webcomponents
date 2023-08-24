@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.1...v1.17.0-rc.2) (2023-08-24)
+
+
+### Bug Fixes
+
+* **icons:** fix "employee-approvals" icon cutt-off ([#7461](https://github.com/SAP/ui5-webcomponents/issues/7461)) ([40eb99c](https://github.com/SAP/ui5-webcomponents/commit/40eb99c76c93229d43c79797dee970fa53e7c8ad)), closes [#7410](https://github.com/SAP/ui5-webcomponents/issues/7410)
+* **ui5-input:** apply correct button's box-shadow on hover ([#7439](https://github.com/SAP/ui5-webcomponents/issues/7439)) ([b77db6b](https://github.com/SAP/ui5-webcomponents/commit/b77db6b04579cfa479fe0802406da691edca0b04))
+* **ui5-message-strip:** enhance storybook samples ([#7464](https://github.com/SAP/ui5-webcomponents/issues/7464)) ([0283e28](https://github.com/SAP/ui5-webcomponents/commit/0283e28b8993a37b98fc0acfb2e15d6fc6bc77f8))
+* **ui5-multi-combobox:** adjust storybook sample ([#7441](https://github.com/SAP/ui5-webcomponents/issues/7441)) ([52562ec](https://github.com/SAP/ui5-webcomponents/commit/52562ecb5f6c91a447210827c0ff27c9f726cf9b))
+* **ui5-page:** enhance storybook samples ([#7448](https://github.com/SAP/ui5-webcomponents/issues/7448)) ([d0b8b01](https://github.com/SAP/ui5-webcomponents/commit/d0b8b01c053853915646b077860a247400cff691))
+* **ui5-panel:** enhance storybook samples ([#7403](https://github.com/SAP/ui5-webcomponents/issues/7403)) ([52be839](https://github.com/SAP/ui5-webcomponents/commit/52be839e70e1cb94b86e177ea3a1efc66fd7a981))
+* **ui5-rating-indicator:** enhance storybook samples ([#7446](https://github.com/SAP/ui5-webcomponents/issues/7446)) ([dfc18f3](https://github.com/SAP/ui5-webcomponents/commit/dfc18f375d45183b36be13c14d98f5fc5683fb84))
+* **ui5-slider:** enhance storybook samples ([#7460](https://github.com/SAP/ui5-webcomponents/issues/7460)) ([f942c9e](https://github.com/SAP/ui5-webcomponents/commit/f942c9eab70d9129624e306bb8a255b221f8db4c))
+* **ui5-toast:** enhance storybook samples ([#7451](https://github.com/SAP/ui5-webcomponents/issues/7451)) ([9298747](https://github.com/SAP/ui5-webcomponents/commit/92987476d2238f512bae871aa1b8559a31b0a450))
+* **ui5-wizard:** enhance storybook samples ([#7445](https://github.com/SAP/ui5-webcomponents/issues/7445)) ([62603b3](https://github.com/SAP/ui5-webcomponents/commit/62603b3e46061e1ccf761d58af5409aaad9f2a7c))
+
+
+
+
+
 # [1.17.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.0...v1.17.0-rc.1) (2023-08-17)
 
 
