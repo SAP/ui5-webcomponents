@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>ui5-select-menu</title>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+	<style>
+		:not(:defined) {
+			visibility: hidden;
+		}
+
+		ui5-select-menu-option[active] div,
+		ui5-select-menu-option[active] ui5-icon {
+			color: var(--sapList_Active_TextColor);
+		}
+
+		.selectLabel {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			padding-inline-end: 0.25rem;
+			font-size: 1rem;
+		}
+
+		.customOption {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			width:100%;
+		}
+		.customOption--warning {
+			color: yellow;
+		}
+		.customOptionIcon {
+			color: yellow;
+		}
+	</style>
+
+</head>
+
+<body>
+	<ui5-select id="sel1" menu="NO_MENU_WITH_THIS_ID"></ui5-select>
+
+	<ui5-select id="sel2" menu="menu2">
+		<ui5-option>Regular option 1</ui5-option>
+		<ui5-option selected>Regular option 2</ui5-option>
+		<ui5-option>Regular option 3</ui5-option>
+	</ui5-select>
+
+
+	<ui5-select-menu id="menu1">
+
+		<ui5-select-menu-option data-display-text="T-shirt [1]" data-additional-text="S" accessible-name="T-shirt size S">
+			<div class="customOption">
+				T-shirt [1]
+				<div>
+					<ui5-icon name="accept"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option data-display-text="Dress [2]" data-additional-text="M" accessible-name="Dress size M" style="background-color: red">
+			<div class="customOption customOption--warning">
+				Dress [2]
+				<div>
+					<ui5-icon name="accept" class="customOptionIcon"></ui5-icon>
+					<ui5-icon name="employee" class="customOptionIcon"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option data-display-text="Skirt [3]" data-additional-text="L" accessible-name="Skirt size L" selected>
+			<div  class="customOption">
+				Skirt [3]
+				<div>
+					<ui5-icon name="accept"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+	</ui5-select-menu>
+
+	<ui5-select-menu id="menu2">
+
+		<ui5-select-menu-option display-text="Phone">
+			<div class="customOption">
+				Phone
+				<div>
+					<ui5-icon name="phone"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="Tablet">
+			<div class="customOption">
+				Tablet
+				<div>
+					<ui5-icon name="ipad-2"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+		<ui5-select-menu-option display-text="Desktop">
+			<div class="customOption">
+				Desktop
+				<div>
+					<ui5-icon name="laptop"></ui5-icon>
+					<ui5-icon name="employee"></ui5-icon>
+				</div>
+			</div>
+		</ui5-select-menu-option>
+
+	</ui5-select-menu>
+</body>
+</html>

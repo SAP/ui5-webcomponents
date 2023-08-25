@@ -134,6 +134,15 @@ const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 const ISelectOption = "sap.ui.webc.main.ISelectOption";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
+ *
+ * @name sap.ui.webc.main.ISelectMenuOption
+ * @interface
+ * @public
+ */
+const ISelectMenuOption = "sap.ui.webc.main.ISelectMenuOption";
+
+/**
  * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>
  *
  * @name sap.ui.webc.main.ITab
@@ -221,6 +230,7 @@ export {
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	ISelectOption,
+	ISelectMenuOption,
 	ITab,
 	ITableCell,
 	ITableColumn,

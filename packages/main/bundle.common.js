@@ -60,6 +60,8 @@ import ResponsivePopover from "./dist/ResponsivePopover.js";
 import SegmentedButton from "./dist/SegmentedButton.js";
 import SegmentedButtonItem from "./dist/SegmentedButtonItem.js";
 import Select from "./dist/Select.js";
+import SelectMenu from "./dist/SelectMenu.js";
+import SelectMenuOption from "./dist/SelectMenuOption.js";
 import Slider from "./dist/Slider.js";
 import SplitButton from "./dist/SplitButton.js";
 import StepInput from "./dist/StepInput.js";
