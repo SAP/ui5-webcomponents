@@ -1,10 +1,19 @@
-@import "../base/SegmentedButtton-parameters.css";
+@import "../sap_horizon_exp/SegmentedButtton-parameters.css";
 
 :root {
-	--_ui5_segmented_btn_inner_border: 0.0625rem solid transparent;
-	--_ui5_segmented_btn_inner_border_odd_child: 0.0625rem solid transparent;
-	--_ui5_segmented_btn_inner_pressed_border_odd_child: 0.0625rem solid var(--sapButton_Selected_BorderColor);
-	--_ui5_segmented_btn_border_radius: 0.5rem;
-	--_ui5_segmented_btn_inner_border_radius: 0.5rem;
-	--_ui5_segmented_btn_outer_border_radius: 0.5rem;
+	--_ui5_segmented_btn_item_hover_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_segmented_btn_item_fc_hover_box_shadow: var(--sapContent_Interaction_Shadow);
+	--_ui5_segmented_btn_box_shadow: inset 0 0 0 0.0625rem var(--sapButton_Background);
+	--_ui5_segmented_btn_item_fc_box_shadow: 
+		inset 0 0.0625rem 0 0 transparent,
+		inset 0 -0.0625rem 0 0 transparent,
+		inset 0.0625rem 0 0 0 transparent,
+		inset -0.0625rem 0 0 0 transparent;
+	--_ui5_segmented_btn_item_box_shadow: var(--_ui5_segmented_btn_item_fc_box_shadow);
+	--_ui5_segmented_btn_item_lc_box_shadow: var(--_ui5_segmented_btn_item_box_shadow);
+	--_ui5_segmented_btn_item_lc_hover_box_shadow: var(--_ui5_segmented_btn_item_fc_hover_box_shadow);
+
+	--_ui5_segmented_btn_item_lc_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_box_shadow);
+	--_ui5_segmented_btn_item_fc_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_box_shadow);
+	--_ui5_segmented_btn_item_lc_hover_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_hover_box_shadow);
 }

@@ -13,11 +13,15 @@
 	margin: 0;
 	padding: 0;
 	background-color: var(--sapButton_Background);
-	border-radius: var(--_ui5_segmented_btn_outer_border_radius);
+	box-shadow: var(--_ui5_segmented_btn_box_shadow);
+	border-radius: var(--_ui5_segmented_btn_base_border_radius);
 }
 
 ::slotted([ui5-segmented-button-item]) {
-	border-radius: var(--_ui5_segmented_btn_inner_border_radius);
+	border: none;
+	box-shadow: var(--_ui5_segmented_btn_item_box_shadow);
+	padding: 1px;
+	border-radius: 0;
 	height: var(--_ui5_button_base_height);
 	min-width: 2.5rem;
 	white-space: nowrap;
@@ -28,17 +32,20 @@
 
 ::slotted([ui5-segmented-button-item]:hover) {
 	z-index: 2;
+	border-radius: var(--_ui5_segmented_btn_item_hover_border_radius);
+	box-shadow: var(--_ui5_segmented_btn_item_hover_box_shadow);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]),
 ::slotted([ui5-segmented-button-item][active]) {
-	border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	box-shadow: var(--_ui5_segmented_btn_item_pressed_active_box_shadow);
+	border-radius: var(--_ui5_segmented_btn_item_pressed_active_border_radius);
 	background-color: var(--sapButton_Selected_Background);
 	color: var(--sapButton_Selected_TextColor);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]:hover) {
-	border: 0.0625rem solid var(--sapButton_Selected_Hover_BorderColor);
+	border: var(--_ui5_segmented_btn_pressed_hover_border);
 	background-color: var(--sapButton_Selected_Hover_Background);
 	color: var(--sapButton_Selected_TextColor);
 }
@@ -50,30 +57,60 @@
 
 ::slotted([ui5-segmented-button-item][pressed]:nth-child(odd)),
 ::slotted([ui5-segmented-button-item][active]:nth-child(odd)) {
-	border-inline-end: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
-	border-inline-start: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
+	box-shadow: var(--_ui5_segmented_btn_item_pressed_active_ODD_box_shadow);
+	border-inline: 0;
 }
 
 ::slotted([ui5-segmented-button-item]:last-child) {
 	border-start-end-radius: var(--_ui5_segmented_btn_border_radius);
+	border-start-start-radius: var(--_ui5_segmented_btn_item_lc_border_start_start_radius);
+	border-end-start-radius: var(--_ui5_segmented_btn_item_lc_border_start_start_radius);
 	border-end-end-radius: var(--_ui5_segmented_btn_border_radius);
 	border-inline-end: var(--_ui5_segmented_btn_inner_border);
+	box-shadow: var(--_ui5_segmented_btn_item_lc_box_shadow);
+}
+
+::slotted([ui5-segmented-button-item]:last-child:hover) {
+	box-shadow: var(--_ui5_segmented_btn_item_lc_hover_box_shadow);
+	border-inline-end: var(--_ui5_segmented_btn_item_lc_hover_border_inline_end);
+	border-start-start-radius: var(--_ui5_segmented_btn_item_lc_hover_border_radius);
+	border-end-start-radius: var(--_ui5_segmented_btn_item_lc_hover_border_radius);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]:last-child),
 ::slotted([ui5-segmented-button-item][active]:last-child) {
-	border-inline-end: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	border-inline-start: 0;
+	box-shadow: var(--_ui5_segmented_btn_item_pressed_lc_box_shadow);
+	border-start-start-radius: var(--_ui5_segmented_btn_item_pressed_active_border_radius);
+	border-end-start-radius: var(--_ui5_segmented_btn_item_pressed_active_border_radius);
 }
 
 ::slotted([ui5-segmented-button-item]:first-child) {
-	border-start-start-radius: var(--_ui5_segmented_btn_border_radius);
-	border-end-start-radius: var(--_ui5_segmented_btn_border_radius);
-	border-inline-start: var(--_ui5_segmented_btn_inner_border);
+	border-start-start-radius: var(--_ui5_segmented_btn_base_border_radius);
+	border-end-start-radius: var(--_ui5_segmented_btn_base_border_radius);
+	border-inline-start: var(--_ui5_segmented_btn_item_fc_border_inline_start);
+	border-inline-end: var(--_ui5_segmented_btn_item_fc_border_inline_end);
+	box-shadow: var(--_ui5_segmented_btn_item_fc_box_shadow);
+	border-start-end-radius: var(--_ui5_segmented_btn_item_fc_border_start_end_radius);
+	border-end-end-radius: var(--_ui5_segmented_btn_item_fc_border_end_end_radius);
+}
+
+::slotted([ui5-segmented-button-item]:first-child:hover) {
+	box-shadow: var(--_ui5_segmented_btn_item_fc_hover_box_shadow);
+	border-inline-start: var(--_ui5_segmented_btn_item_fc_hover_border_inline);
+	border-inline-end: var(--_ui5_segmented_btn_item_fc_hover_border_inline);
+	border-radius: var(--_ui5_segmented_btn_item_fc_hover_border_radius);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]:first-child),
 ::slotted([ui5-segmented-button-item][active]:first-child) {
-	border-inline-start: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	border-radius: var(--_ui5_segmented_btn_item_fc_hover_border_radius);
+	box-shadow: var(--_ui5_segmented_btn_item_pressed_active_fc_box_shadow);
+}
+
+::slotted([ui5-segmented-button-item][pressed]:last-child:nth-child(odd)),
+::slotted([ui5-segmented-button-item][active]:last-child:nth-child(odd)) {
+	border-inline-start: var(--_ui5_segmented_btn_item_pressed_active_lc_ODD_border_inline_start);
 }
 
 ::slotted([ui5-segmented-button-item][active]:not([active]):hover) {
@@ -82,4 +119,58 @@
 
 ::slotted([ui5-segmented-button-item][active]:hover) {
 	border-color: var(--sapButton_Selected_BorderColor);
+}
+
+::slotted([ui5-segmented-button-item][size-of-set="1"][active]),
+::slotted([ui5-segmented-button-item][size-of-set="1"][pressed]) {
+	border-start-end-radius: var(--_ui5_segmented_btn_item_s_o_s_1_border_radius);
+	border-end-end-radius: var(--_ui5_segmented_btn_item_s_o_s_1_border_radius);
+}
+
+/* RTL */
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item]:last-child) {
+	box-shadow: var(--_ui5_segmented_btn_item_lc_box_shadow_rtl);
+}
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item]:last-child:hover) {
+	box-shadow: var(--_ui5_segmented_btn_item_lc_hover_box_shadow_rtl);
+}
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][pressed]:last-child),
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][active]:last-child) {
+	box-shadow: var(--_ui5_segmented_btn_item_pressed_lc_box_shadow_rtl);
+}
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item]:first-child) {
+	border-radius: var(--_ui5_segmented_btn_item_fc_border_radius_rtl);
+	box-shadow: var(--_ui5_segmented_btn_item_fc_box_shadow_rtl);
+}
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item]:first-child:hover) {
+	border-radius: var(--_ui5_segmented_btn_item_fc_hover_border_radius_rtl);
+	box-shadow: var(--_ui5_segmented_btn_item_fc_hover_box_shadow);
+}
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][pressed]:first-child),
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][active]:first-child) {
+	border-radius: var(--_ui5_segmented_btn_item_pressed_active_fc_hover_border_radius_rtl);
+	box-shadow: var(--_ui5_segmented_btn_item_pressed_active_fc_box_shadow);
+}
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][pressed]:last-child:nth-child(odd)),
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][active]:last-child:nth-child(odd)) {
+	border-inline-end: var(--_ui5_segmented_btn_item_pressed_active_lc_ODD_border_inline_start_rtl);
+}
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item]):hover {
+	box-shadow: var(--_ui5_segmented_btn_item_hover_box_shadow_rtl);
+	border-radius: var(--_ui5_segmented_btn_item_hover_border_radius);
+}
+
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][size-of-set="1"]),
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][size-of-set="1"]),
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][size-of-set="1"][pressed]),
+:host-context([dir="rtl"]) ::slotted([ui5-segmented-button-item][size-of-set="1"][active]) {
+	border-radius: var(--_ui5_segmented_btn_item_s_o_s_1_border_radius_rtl);
 }
