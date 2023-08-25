@@ -10,7 +10,7 @@
 	padding: 1rem;
 }
 
-.ui5-uci-edit-buttons {
+.ui5-uci-buttons {
 	display: flex;
 	pointer-events: all;
 	margin-inline-start: 1rem;
@@ -18,20 +18,20 @@
 
 /* Thumbnail */
 .ui5-uci-thumbnail {
-	width: 3rem;
-	height: 3rem;
-	margin-right: 0.75rem;
+	width: var(--ui5_upload_collection_thumbnail_size);
+	height: var(--ui5_upload_collection_thumbnail_size);
+	margin-inline-end: var(--ui5_upload_collection_thumbnail_margin_inline_end);
 }
 
 ::slotted([ui5-icon][slot="thumbnail"]) {
-	width: 3rem;
-	height: 3rem;
+	width: var(--ui5_upload_collection_thumbnail_size);
+	height: var(--ui5_upload_collection_thumbnail_size);
 	font-size: 2.5rem;
 }
 
 ::slotted(img[slot="thumbnail"]) {
-	width: 3rem;
-	height: 3rem;
+	width: var(--ui5_upload_collection_thumbnail_size);
+	height: var(--ui5_upload_collection_thumbnail_size);
 }
 
 :host([actionable]) ::slotted([ui5-icon][slot="thumbnail"]) {
@@ -55,9 +55,12 @@
 
 .ui5-uci-content {
 	flex: 1 1 auto;
-	margin-right: .5rem;
 	width: 100%;
 	min-width: 0; /* fixes chrome overflow issue */
+}
+
+.ui5-uci-progress-box {
+	margin-inline-start: 0.5rem;
 }
 
 .ui5-uci-file-name {
@@ -129,7 +132,6 @@
 	margin-right: 0.125rem;
 }
 
-/* TODO: check container queries support */
 :host {
 	container-type: inline-size;
 }
@@ -150,18 +152,19 @@
 	.ui5-uci-progress-box {
 		width: 100%;
 		margin-top: .5rem;
+		margin-inline-start: 0;
 	}
 
 	.ui5-uci-content {
 		width: 100%;
 	}
 
-	.ui5-uci-edit-buttons {
-		margin-inline-start: 0;
+	.ui5-uci-buttons {
+		margin-inline-start: var(--ui5_upload_collection_small_size_buttons_margin_inline_start);
 		margin-block-start: var(--ui5_upload_collection_small_size_buttons_margin_block_start);
 	}
 
-	.ui5-uci-edit-buttons [ui5-button] {
+	.ui5-uci-buttons [ui5-button] {
 		margin-block-end: var(--ui5_upload_collection_button_margin_block_end);
 	}
 }
