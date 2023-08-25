@@ -129,7 +129,12 @@
 	margin-right: 0.125rem;
 }
 
-@media(max-width: 30rem) {
+/* TODO: check container queries support */
+:host {
+	container-type: inline-size;
+}
+
+@container (max-width: 30rem) {
 	.ui5-li-content {
 		flex-wrap: wrap;
 	}
