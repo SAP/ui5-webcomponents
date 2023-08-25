@@ -26,8 +26,8 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  * <li>content - Used to style the content area of the list item</li>
  * <li>detail-button - Used to style the button rendered when the list item is of type detail</li>
  * <li>delete-button - Used to style the button rendered when the list item is in delete mode</li>
- * <li>radio - Used to style the radio button rendered when the list item is in multiple selection mode</li>
- * <li>checkbox - Used to style the checkbox rendered when the list item is in single selection mode</li>
+ * <li>radio - Used to style the radio button rendered when the list item is in single selection mode</li>
+ * <li>checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode</li>
  * </ul>
  *
  * @constructor
