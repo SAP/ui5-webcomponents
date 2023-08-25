@@ -38,6 +38,7 @@
 @import "../base/TableColumn-parameters.css";
 @import "./TableRow-parameters.css";
 @import "../base/TableGroupRow-parameters.css";
+@import "../base/Toolbar-parameters.css";
 @import "./GrowingButton-parameters.css";
 @import "./TextArea-parameters.css";
 @import "../base/Toast-parameters.css";

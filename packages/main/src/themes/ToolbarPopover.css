@@ -1,0 +1,12 @@
+.ui5-overflow-list {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 0 0.5rem;
+}
+
+.ui5-tb-popover-item {
+	width: 100%;
+	margin-bottom: 0.25rem;
+}
