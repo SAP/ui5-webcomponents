@@ -1,4 +1,5 @@
 @import "../base/TableGroupRow-parameters.css";
+@import "../base/Toolbar-parameters.css";
 
 :root {
 	--ui5_table_group_row_font-weight: bold;

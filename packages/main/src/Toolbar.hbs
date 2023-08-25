@@ -1,0 +1,20 @@
+
+<div 
+	class="{{classes.items}}" 
+	role="{{accInfo.root.role}}"
+	aria-label="{{accInfo.root.accessibleName}}"
+>
+	{{#each standardItems}}
+		{{this.toolbarTemplate}}
+	{{/each}}
+
+	<ui5-button
+		aria-hidden="{{hideOverflowButton}}"
+		icon="overflow"
+		design="Transparent"
+		class="{{classes.overflowButton}}"
+		tooltip="{{accInfo.overflowButton.tooltip}}"
+		accessible-name="{{accInfo.overflowButton.accessibleName}}"
+		.accessibilityAttributes={{accInfo.overflowButton.accessibilityAttributes}}
+	></ui5-button>
+</div>

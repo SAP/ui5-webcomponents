@@ -32,7 +32,6 @@ type ShellBarItemClickEventDetail = {
  * @allowPreventDefault
  * @param {HTMLElement} targetRef DOM ref of the clicked element
  * @public
- * @native
  */
 @event("click", {
 	detail: {
@@ -53,6 +52,8 @@ class ShellBarItem extends UI5Element {
 
 	/**
 	 * Defines the item text.
+     * <br><br>
+     * <b>Note:</b> The text is only displayed inside the overflow popover list view.
 	 * @type {string}
 	 * @defaultvalue ""
 	 * @name sap.ui.webc.fiori.ShellBarItem.prototype.text
