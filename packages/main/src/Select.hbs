@@ -27,7 +27,11 @@
 		@focusin="{{_onfocusin}}"
 		@focusout="{{_onfocusout}}"
 	>
-		{{_text}}
+		{{#if hasCustomLabel}}
+			<slot name="label"></slot>
+		{{else}}
+			{{_text}}
+		{{/if}}
 	</div>
 
 	<ui5-icon

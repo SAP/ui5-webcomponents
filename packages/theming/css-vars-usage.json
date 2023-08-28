@@ -424,6 +424,7 @@
   "--sapTile_SeparatorColor",
   "--sapTile_TextColor",
   "--sapTile_TitleTextColor",
+  "--sapToolbar_Background",
   "--sapToolbar_SeparatorColor",
   "--sapWarningBackground",
   "--sapWarningBorderColor"
