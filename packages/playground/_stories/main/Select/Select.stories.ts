@@ -111,3 +111,19 @@ export const TwoColumnLayout: StoryFn = () =>
     <ui5-option additional-text="CA">Canada</ui5-option>
   </ui5-select>`;
 TwoColumnLayout.storyName = "Two-column layout";
+
+export const CustomOptions: StoryFn = () =>
+  html`<ui5-select menu="selectMenu">
+  </ui5-select>
+
+  <ui5-select-menu id="selectMenu">
+    <ui5-select-menu-option display-text="AT">
+      <div class="customOption">
+        Austria
+      </div>
+    </ui5-select-menu-option>
+    <ui5-select-menu-option display-text="BE">Belgium</ui5-select-menu-option>
+    <ui5-select-menu-option display-text="BR">Brazil</ui5-select-menu-option>
+  </ui5-select-menu>`;
+
+CustomOptions.storyName = "Custom Options";
