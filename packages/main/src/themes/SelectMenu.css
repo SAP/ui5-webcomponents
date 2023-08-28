@@ -1,0 +1,16 @@
+.ui5-select-menu::part(content),
+.ui5-select-menu::part(header) {
+	padding: 0;
+}
+
+.ui5-select-menu [ui5-li-custom] {
+	height: var(--_ui5_list_item_dropdown_base_height);
+}
+
+.ui5-select-menu [ui5-li-custom]::part(native-li) {
+	padding: 0;
+}
+
+.ui5-select-menu [ui5-icon] {
+	color: var(--sapList_TextColor);
+}
