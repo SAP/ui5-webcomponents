@@ -460,7 +460,7 @@ class TextArea extends UI5Element implements IFormElement {
 
 	_onfocusout(e: FocusEvent) {
 		const eTarget = e.relatedTarget as HTMLElement;
-		const focusedOutToValueStateMessage = eTarget?.shadowRoot!.querySelector(".ui5-valuestatemessage-root");
+		const focusedOutToValueStateMessage = eTarget?.shadowRoot && eTarget?.shadowRoot.querySelector(".ui5-valuestatemessage-root");
 
 		this.focused = false;
 
