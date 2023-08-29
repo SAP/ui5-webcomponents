@@ -201,7 +201,7 @@ class Select extends UI5Element implements IFormElement {
 	 * <b>Note:</b> Usage of <code>ui5-select-menu</code> is recommended.
 	 *
 	 * @type {sap.ui.webc.base.types.DOMReference}
-	 * @defaultvalue false
+	 * @defaultvalue undefined
 	 * @name sap.ui.webc.main.Select.prototype.menu
 	 * @public
 	 * @since 1.17.0
