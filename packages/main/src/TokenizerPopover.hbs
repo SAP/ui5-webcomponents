@@ -36,7 +36,10 @@
 		@ui5-item-delete={{itemDelete}}
 	>
 		{{#each _tokens}}
-			<ui5-li .tokenRef={{this}}>
+			<ui5-li
+				.tokenRef={{this}}
+				wrapping-Type="Normal"
+			>
 				{{this.text}}
 			</ui5-li>
 		{{/each}}

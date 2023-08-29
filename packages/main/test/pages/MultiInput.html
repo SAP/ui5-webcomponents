@@ -97,6 +97,15 @@
 
 		<br>
 		<br>
+		<h1 class="sample-container-title">Multi Input with wrapping</h1>
+		<ui5-multi-input>
+			<ui5-token text="Token 1" slot="tokens"></ui5-token>
+			<ui5-token
+			  slot="tokens"
+			  text="Line breaks will always be visualized except when the wrapping property is set to false. In addition, tabs and whitespace can be preserved by setting the renderWhitespace property to true."
+			></ui5-token>
+			<ui5-token text="Enim do esse anim magna enim fugiat Lorem enim nostrud sit laborum ea." slot="tokens"></ui5-token>
+		  </ui5-multi-input>
 
 		<span id="basic-event-listener"></span>
 	</div>
@@ -284,6 +293,18 @@
 				<ui5-button>Cancel</ui5-button>
 			</div>
 		</ui5-dialog>
+	</div>
+
+	<div class="sample-container">
+		<h1>Suggestions + wrapping</h1>
+
+		<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-wrapping">
+			<ui5-suggestion-item text="Aute"></ui5-suggestion-item>
+			<ui5-suggestion-item text="ad"></ui5-suggestion-item>
+			<ui5-suggestion-item text="excepteur"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Line breaks will always be visualized except when the wrapping property is set to false. In addition, tabs and whitespace can be preserved by setting the renderWhitespace property to true."></ui5-suggestion-item>
+			<ui5-suggestion-item text="last"></ui5-suggestion-item>
+		</ui5-multi-input>
 	</div>
 
 	<div class="sample-container">

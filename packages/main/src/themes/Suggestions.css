@@ -11,8 +11,8 @@
 	padding: 0 1rem;
 }
 
-.ui5-suggestions-popover [ui5-li],
-.ui5-suggestions-popover [ui5-li-suggestion-item] {
+.ui5-suggestions-popover [ui5-li]:not([wrapping-type="Normal"]),
+.ui5-suggestions-popover [ui5-li-suggestion-item]:not([wrapping-type="Normal"]) {
 	height: var(--_ui5_list_item_dropdown_base_height);
 }
 
