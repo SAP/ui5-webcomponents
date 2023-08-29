@@ -24,7 +24,8 @@ const connectToComponent = (options: ConnectOptions): HTMLElement | undefined =>
 	} else if (friend instanceof HTMLElement) {
 		connectedTo = friend;
 	} else {
-		connectedTo = (host.getRootNode() as Document).getElementById(friend) || undefined;
+		const rootNode = host.getRootNode() as Document;
+		connectedTo = (rootNode.getElementById && rootNode.getElementById(friend)) || undefined;
 	}
 
 	const key = `${host._id}-${propName}`;
@@ -40,7 +41,9 @@ const connectToComponent = (options: ConnectOptions): HTMLElement | undefined =>
 		// if friend element not in DOM yet, start polling
 		if (typeof friend === "string" && friend && !intervals.has(key)) {
 			const interval = setInterval(() => {
-				const found = (host.getRootNode() as Document).getElementById(friend);
+				const rootNode = host.getRootNode() as Document;
+				const found = (rootNode.getElementById && rootNode.getElementById(friend));
+
 				if (found) {
 					clearInterval(intervals.get(key));
 					intervals.delete(key);
