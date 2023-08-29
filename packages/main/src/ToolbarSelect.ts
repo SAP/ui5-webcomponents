@@ -82,7 +82,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * If more than one option is defined as selected, the last one would be considered as the selected one.
 	 *
 	 * <br><br>
-	 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
+	 * <b>Note:</b> Use the <code>ui5-toolbar-select-option</code> component to define the desired options.
 	 * @type {sap.ui.webc.main.ISelectOption[]}
 	 * @slot options
 	 * @name sap.ui.webc.main.ToolbarSelect.prototype.default
