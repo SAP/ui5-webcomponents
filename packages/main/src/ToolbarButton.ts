@@ -4,7 +4,8 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 
-import ToolbarItem, { IEventOptions } from "./ToolbarItem.js";
+import ToolbarItem from "./ToolbarItem.js";
+import type { IEventOptions } from "./ToolbarItem.js";
 import ToolbarButtonTemplate from "./generated/templates/ToolbarButtonTemplate.lit.js";
 import ToolbarPopoverButtonTemplate from "./generated/templates/ToolbarPopoverButtonTemplate.lit.js";
 
@@ -14,17 +15,22 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 /**
  * @class
+ *
+ * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-toolbar-button</code> represents an abstract action,
  * used in the <code>ui5-toolbar</code>.
+ *
+ * <h3>ES6 Module Import</h3>
+ * <code>import "@ui5/webcomponents/dist/ToolbarButton";</code>
  *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarButton
  * @extends sap.ui.webc.main.ToolbarItem
- * @since 1.17.0
+ * @tagname ui5-toolbar-button
  * @public
+ * @since 1.17.0
  */
-
 @customElement({
 	tag: "ui5-toolbar-button",
 	dependencies: [Button],
@@ -39,10 +45,8 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  *
  * @event sap.ui.webc.main.ToolbarButton#click
  * @public
- * @native
  */
 @event("click")
-
 class ToolbarButton extends ToolbarItem {
 	/**
 	 * Defines if the action is disabled.
