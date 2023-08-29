@@ -23,14 +23,6 @@ describe("Rendering", () => {
 
 		assert.notOk(await readOnlyRadioButtonRoot.getAttribute("aria-readonly"), "aria-readonly is not set to the root level");
 		assert.strictEqual(await readOnlyRadioButtonInput.getAttribute("readonly"), "true", "internal input is readonly");
-
-		const requiredRadioButtonInput = await browser.$("#formRadioBtnRequired").shadow$("input");
-		const requiredRadioButtonFormSupportInputRequiredAttr = await browser.executeAsync(done => {
-			done(document.getElementById("formRadioBtnRequired").shadowRoot.querySelector("slot").assignedNodes()[0].getAttribute("required"));
-		});
-
-		assert.ok(await requiredRadioButtonInput.getAttribute("required"), "required attribute is set");
-		assert.strictEqual(requiredRadioButtonFormSupportInputRequiredAttr, "" ,"required attribute is set");
 	});
 });
 
@@ -245,6 +237,26 @@ describe("RadioButton general interaction", () => {
 		assert.strictEqual(await radioButtonsShadowRoots[0].getAttribute("tabindex"), "0", `first radio button has tabindex="0"`);
 		assert.strictEqual(await radioButtonsShadowRoots[1].getAttribute("tabindex"), "-1", `second radio button has tabindex="-1"`);
 		assert.strictEqual(await radioButtonsShadowRoots[2].getAttribute("tabindex"), "-1", `third radio button has tabindex="-1"`);
+	});
+	
+	it("tests form interaction", async () => {
+		const rb = await browser.$("#formRadioBtnRequired");
+		let validForm = await browser.executeAsync(done => {
+			done(document.getElementById("formWithRequiredRadio").checkValidity());
+		});
+
+		assert.ok(await rb.getProperty("required"), "radio button is required")
+		assert.notOk(await rb.getProperty("checked"), "required radio button is not checked")
+		assert.notOk(validForm, "form is not valid");
+
+		await rb.shadow$(".ui5-radio-root").click();
+
+		validForm = await browser.executeAsync(done => {
+			done(document.getElementById("formWithRequiredRadio").checkValidity());
+		});
+
+		assert.ok(await rb.getProperty("checked"), "required radio button is now checked")
+		assert.ok(validForm, "form is valid");
 	});
 });
 
