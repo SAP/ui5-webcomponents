@@ -32,10 +32,10 @@
 		inset -0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor);
 	--_ui5_segmented_btn_item_hover_box_shadow: var(--_ui5_segmented_btn_item_lc_hover_box_shadow_rtl);
 	--_ui5_segmented_btn_item_pressed_active_box_shadow:
-		inset 0 0.0625rem 0 0 var(--sapButton_Selected_BorderColor),
-		inset 0 -0.0625rem 0 0 var(--sapButton_Selected_BorderColor),
-		inset 0.0625rem 0 0 0 var(--sapButton_Selected_BorderColor),
-		inset -0.0625rem 0 0 0 var(--sapButton_Selected_BorderColor);
+		inset 0 0.0625rem 0 0 var(--sapButton_Active_BorderColor),
+		inset 0 -0.0625rem 0 0 var(--sapButton_Active_BorderColor),
+		inset 0.0625rem 0 0 0 var(--sapButton_Active_BorderColor),
+		inset -0.0625rem 0 0 0 var(--sapButton_Active_BorderColor);
 	--_ui5_segmented_btn_pressed_hover_border: none;
 	--_ui5_segmented_btn_item_pressed_active_ODD_box_shadow: var(--_ui5_segmented_btn_item_pressed_active_box_shadow);
 	--_ui5_segmented_btn_inner_border: none;
@@ -44,11 +44,11 @@
 		inset 0 -0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
 		inset -0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor),
 		inset 0.0625rem 0 0 0 transparent;
-		--_ui5_segmented_btn_item_fc_box_shadow: 
-			inset 0 0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
-			inset 0 -0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
-			inset 0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor),
-			inset -0.0625rem 0 0 0 transparent;
+	--_ui5_segmented_btn_item_fc_box_shadow: 
+		inset 0 0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
+		inset 0 -0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
+		inset 0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor),
+		inset -0.0625rem 0 0 0 transparent;
 	--_ui5_segmented_btn_item_lc_box_shadow_rtl: var(--_ui5_segmented_btn_item_fc_box_shadow);
 	--_ui5_segmented_btn_item_lc_border_start_start_radius: 0;
 	--_ui5_segmented_btn_item_lc_border_end_start_radius: 0;
