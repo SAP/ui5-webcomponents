@@ -13,7 +13,9 @@
 	--_ui5_segmented_btn_item_lc_box_shadow: var(--_ui5_segmented_btn_item_box_shadow);
 	--_ui5_segmented_btn_item_lc_hover_box_shadow: var(--_ui5_segmented_btn_item_fc_hover_box_shadow);
 
-	--_ui5_segmented_btn_item_lc_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_box_shadow);
-	--_ui5_segmented_btn_item_fc_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_box_shadow);
+	/* RTL Parameters */
+
 	--_ui5_segmented_btn_item_lc_hover_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_hover_box_shadow);
+	--_ui5_segmented_btn_item_fc_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_box_shadow);
+	--_ui5_segmented_btn_item_lc_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_box_shadow);
 }

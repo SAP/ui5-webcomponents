@@ -1,14 +1,11 @@
 @import "../base/SegmentedButtton-parameters.css";
 
 :root {
+	--_ui5_segmented_btn_item_background_color: var(--sapButton_Active_Background);
 	--_ui5_segmented_btn_base_border_radius: var(--sapButton_BorderCornerRadius);
-	--_ui5_segmented_btn_base_border_radius_rtl: 0 var(--sapButton_BorderCornerRadius) var(--sapButton_BorderCornerRadius) 0;
 	--_ui5_segmented_btn_item_s_o_s_1_border_radius: var(--sapButton_BorderCornerRadius);
-	--_ui5_segmented_btn_item_fc_border_radius_rtl: 0 var(--sapButton_BorderCornerRadius) var(--sapButton_BorderCornerRadius) 0;
-	--_ui5_segmented_btn_item_fc_hover_border_radius_rtl: var(--sapButton_BorderCornerRadius);
 	--_ui5_segmented_btn_item_fc_border_inline_start: none;
 	--_ui5_segmented_btn_item_fc_hover_border_radius: var(--sapButton_BorderCornerRadius);
-	--_ui5_segmented_btn_item_pressed_active_fc_hover_border_radius_rtl: var(--sapButton_BorderCornerRadius);
 	--_ui5_segmented_btn_item_pressed_active_border_radius: var(--sapButton_BorderCornerRadius);
 	--_ui5_segmented_btn_item_hover_border_radius: var(--sapButton_BorderCornerRadius);
 	--_ui5_segmented_btn_item_lc_hover_border_radius: var(--sapButton_BorderCornerRadius);
@@ -19,17 +16,12 @@
 	--_ui5_segmented_btn_item_pressed_active_lc_ODD_border_inline_start: 0;
 	--_ui5_segmented_btn_box_shadow: inset 0 0 0 0.0625rem var(--sapButton_Hover_BorderColor);	
 	--_ui5_segmented_btn_item_border: none;
-	--_ui5_segmented_btn_item_box_shadow: 		
+	--_ui5_segmented_btn_item_box_shadow:
 		inset 0 0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
 		inset 0 -0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
 		inset 0.0625rem 0 0 0 transparent,
 		inset -0.0625rem 0 0 0 transparent;
 	--_ui5_segmented_btn_item_border_radius: 0;
-	--_ui5_segmented_btn_item_lc_hover_box_shadow_rtl: 
-		inset 0 0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
-		inset 0 -0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
-		inset 0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor),
-		inset -0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor);
 	--_ui5_segmented_btn_item_hover_box_shadow: var(--_ui5_segmented_btn_item_lc_hover_box_shadow_rtl);
 	--_ui5_segmented_btn_item_pressed_active_box_shadow:
 		inset 0 0.0625rem 0 0 var(--sapButton_Active_BorderColor),
@@ -49,13 +41,11 @@
 		inset 0 -0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
 		inset 0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor),
 		inset -0.0625rem 0 0 0 transparent;
-	--_ui5_segmented_btn_item_lc_box_shadow_rtl: var(--_ui5_segmented_btn_item_fc_box_shadow);
 	--_ui5_segmented_btn_item_lc_border_start_start_radius: 0;
 	--_ui5_segmented_btn_item_lc_border_end_start_radius: 0;
 	--_ui5_segmented_btn_item_lc_hover_box_shadow: var(--_ui5_segmented_btn_item_hover_box_shadow);
 	--_ui5_segmented_btn_item_lc_hover_border_inline_end: none;
 	--_ui5_segmented_btn_item_pressed_lc_box_shadow: var(--_ui5_segmented_btn_item_pressed_active_box_shadow);
-	--_ui5_segmented_btn_item_fc_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_box_shadow);
 	--_ui5_segmented_btn_item_fc_border_start_end_radius: 0;
 	--_ui5_segmented_btn_item_fc_border_end_end_radius: 0;
 	--_ui5_segmented_btn_item_fc_hover_box_shadow: 
@@ -69,7 +59,43 @@
 		inset 0 -.0625rem 0 0 var(--sapButton_Active_BorderColor),
 		inset 0.0625rem 0 0 0 var(--sapButton_Active_BorderColor),
 		inset -0.0625rem 0 0 0 var(--sapButton_Active_BorderColor);
-	--_ui5_segmented_btn_item_hover_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_hover_box_shadow_rtl);
-	--_ui5_segmented_btn_item_pressed_lc_box_shadow_rtl: var(--_ui5_segmented_btn_item_pressed_active_box_shadow);
-	--_ui5_segmented_btn_item_s_o_s_1_border_radius_rtl: 0.5rem;
+
+	/* RTL Parameters */
+	--_ui5_segmented_btn_base_border_radius_rtl: 0 var(--sapButton_BorderCornerRadius) var(--sapButton_BorderCornerRadius) 0;
+	--_ui5_segmented_btn_item_fc_border_radius_rtl: 0 var(--sapButton_BorderCornerRadius) var(--sapButton_BorderCornerRadius) 0;
+	--_ui5_segmented_btn_item_fc_hover_border_radius_rtl: var(--sapButton_BorderCornerRadius);
+	--_ui5_segmented_btn_item_pressed_active_fc_hover_border_radius_rtl: var(--sapButton_BorderCornerRadius);
+	--_ui5_segmented_btn_item_lc_hover_box_shadow_rtl: 
+		inset 0 0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
+		inset 0 -0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
+		inset 0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor),
+		inset -0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor);
+	--_ui5_segmented_btn_item_lc_box_shadow_rtl: var(--_ui5_segmented_btn_item_fc_box_shadow);
+	--_ui5_segmented_btn_item_fc_box_shadow_rtl: 
+		inset 0 0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
+		inset 0 -0.0625rem 0 0 var(--sapButton_Hover_BorderColor),
+		inset 0.0625rem 0 0 0 var(--sapButton_Hover_BorderColor),
+		inset -0.0625rem 0 0 0 transparent;
+	--_ui5_segmented_btn_item_fc_hover_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_hover_box_shadow);
+	--_ui5_segmented_btn_item_pressed_active_fc_box_shadow_rtl: var(--_ui5_segmented_btn_item_pressed_active_box_shadow);
+	--_ui5_segmented_btn_item_pressed_active_lc_box_shadow_rtl: var(--_ui5_segmented_btn_item_pressed_active_box_shadow);
+	--_ui5_segmented_btn_item_pressed_active_lc_hover_border_inline_start_rtl: none;
+	--_ui5_segmented_btn_item_pressed_active_fc_hover_border_inline_end_rtl: none;
+	--_ui5_segmented_btn_item_fc_hover_border_inline_end_rtl: none;
+	--_ui5_segmented_btn_item_lc_hover_border_inline_end_rtl: none;
+	--_ui5_segmented_btn_item_pressed_active_fc_hover_border_inline_start_rtl: none;
+	--_ui5_segmented_btn_item_pressed_active_lc_hover_border_inline_end_rtl: none;
+	--_ui5_segmented_btn_item_lc_border_end_start_radius_rtl: 0;
+	--_ui5_segmented_btn_item_lc_border_start_start_radius_rtl: 0;
+	--_ui5_segmented_btn_item_fc_border_start_end_radius_rtl: 0;
+	--_ui5_segmented_btn_item_lc_border_start_end_radius_rtl: 0;
+	--_ui5_segmented_btn_item_lc_border_end_end_radius_rtl: 0;
+	--_ui5_segmented_btn_item_fc_border_end_end_radius_rtl: 0;
+	--_ui5_segmented_btn_item_fc_border_start_start_radius_rtl: 0;
+	--_ui5_segmented_btn_item_fc_border_end_start_radius_rtl: 0;
+	--_ui5_segmented_btn_item_pressed_active_fc_hover_border_radius_rtl: var(--sapButton_BorderCornerRadius);
+	--_ui5_segmented_btn_item_hover_box_shadow_rtl: var(--_ui5_segmented_btn_item_lc_hover_box_shadow);
+	--_ui5_segmented_btn_item_pressed_active_box_shadow_rtl: var(--_ui5_segmented_btn_item_pressed_active_box_shadow);
+	--_ui5_segmented_btn_item_hover_border_radius_rtl: var(--sapButton_BorderCornerRadius);
+	--_ui5_segmented_btn_item_lc_hover_border_radius_rtl: var(--sapButton_BorderCornerRadius);
 }
