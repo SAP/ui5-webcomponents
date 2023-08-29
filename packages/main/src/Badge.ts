@@ -52,7 +52,7 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the color scheme of the component.
 	 * There are 10 predefined schemes.
-	 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The default <code>colorScheme</code> will be dependent on the loaded theme.
+	 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
 	 * <br><br>
 	 * <b>Note:</b> Color schemes have no visual representation in High Contrast Black (sap_belize_hcb) theme.
 	 * @type {string}
