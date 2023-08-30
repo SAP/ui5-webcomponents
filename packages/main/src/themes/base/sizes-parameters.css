@@ -148,6 +148,7 @@
 	/* Toolbar */
 	--_ui5-toolbar-separator-height: 2rem;
 	--_ui5-toolbar-height: 2.75rem;
+	--_ui5_toolbar_overflow_padding: 0.25rem 0.5rem;
 }
 
 [data-ui5-compact-size],
@@ -357,4 +358,5 @@
 	/* Toolbar */
 	--_ui5-toolbar-separator-height: 1.5rem;
 	--_ui5-toolbar-height: 2rem;
+	--_ui5_toolbar_overflow_padding: 0.1875rem 0.375rem;
 }

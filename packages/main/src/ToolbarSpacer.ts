@@ -27,9 +27,15 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
 
 class ToolbarSpacer extends ToolbarItem {
 	/**
-	 * Spacer width
+	 * Defines the width of the spacer.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
+	 *
 	 * @public
+	 * @type {string}
 	 * @name sap.ui.webc.main.ToolbarSpacer.prototype.width
+	 * @defaultvalue ""
 	 */
 	@property({ type: String })
 	width!: string

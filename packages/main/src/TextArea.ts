@@ -176,15 +176,7 @@ class TextArea extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
-	 * <br><br>
+	 *
 	 * <b>Note:</b> If <code>maxlength</code> property is set,
 	 * the component turns into "Warning" state once the characters exceeds the limit.
 	 * In this case, only the "Error" state is considered and can be applied.

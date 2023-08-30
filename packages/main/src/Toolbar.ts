@@ -71,7 +71,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * @alias sap.ui.webc.main.Toolbar
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar
- * @appenddocs sap.ui.webc.main.ToolbarButton sap.ui.webc.main.ToolbarSelect
+ * @appenddocs sap.ui.webc.main.ToolbarButton sap.ui.webc.main.ToolbarSelect sap.ui.webc.main.ToolbarSelectOption sap.ui.webc.main.ToolbarSeparator sap.ui.webc.main.ToolbarSpacer
  * @public
  * @since 1.17.0
  */
