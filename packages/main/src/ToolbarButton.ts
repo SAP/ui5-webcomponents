@@ -24,6 +24,7 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * <code>import "@ui5/webcomponents/dist/ToolbarButton";</code>
  *
  * @constructor
+ * @abstract
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarButton
  * @extends sap.ui.webc.main.ToolbarItem
@@ -94,7 +95,7 @@ class ToolbarButton extends ToolbarItem {
 	 * @name sap.ui.webc.main.ToolbarButton.prototype.icon
 	 * @public
 	 */
-	@property({ type: String })
+	@property()
 	icon!: string;
 
 	/**
@@ -180,17 +181,21 @@ class ToolbarButton extends ToolbarItem {
 	 * @type {string}
 	 * @name sap.ui.webc.main.ToolbarButton.prototype.text
 	 */
-	@property({ type: String })
+	@property()
 	text!: string;
 
 	/**
-	 * Button width
+	 * Defines the width of the button.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
+	 *
 	 * @name sap.ui.webc.main.ToolbarButton.prototype.width
 	 * @defaultvalue ""
 	 * @type {string}
 	 * @public
 	 */
-	@property({ type: String })
+	@property()
 	width!: string;
 
 	static get staticAreaStyles() {
