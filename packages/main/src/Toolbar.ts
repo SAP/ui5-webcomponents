@@ -29,6 +29,8 @@ import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js"
 import HasPopup from "./types/HasPopup.js";
 
 import type ToolbarItem from "./ToolbarItem.js";
+import type ToolbarSeparator from "./ToolbarSeparator.js";
+
 import {
 	getRegisteredToolbarItem,
 	getRegisteredStyles,
@@ -237,7 +239,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get overflowItems() {
-		// spacers and separators are ignored
+		// spacers are ignored
 		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
 		return this.reverseOverflow ? overflowItems.reverse() : overflowItems;
 	}
@@ -247,7 +249,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get hideOverflowButton() {
-		return this.overflowItems.length === 0;
+		return this.itemsToOverflow.filter(item => !(item.ignoreSpace || item.isSeparator)).length === 0;
 	}
 
 	get classes() {
@@ -439,17 +441,27 @@ class Toolbar extends UI5Element {
 		// If the last bar item is a spacer, force it to the overflow even if there is enough space for it
 		if (index < movableItems.length) {
 			let lastItem = movableItems[index];
-			while (lastItem?.ignoreSpace) {
+			while (lastItem.isSeparator) {
 				this.itemsToOverflow.unshift(lastItem);
 				index++;
 				lastItem = movableItems[index];
 			}
 		}
+
+		this.setSeperatorVisibility();
 	}
 
 	distributeItemsThatAlwaysOverflow() {
 		this.alwaysOverflowItems.forEach((item: ToolbarItem) => {
 			this.itemsToOverflow.push(item);
+		});
+	}
+
+	setSeperatorVisibility() {
+		this.itemsToOverflow.forEach((item, idx, items) => {
+			if (item.isSeparator) {
+				(item as ToolbarSeparator).visible = idx > 0 && idx < items.length - 1;
+			}
 		});
 	}
 
@@ -556,7 +568,7 @@ class Toolbar extends UI5Element {
 
 	getItemWidth(item: ToolbarItem): number {
 		// Spacer width - always 0 for flexible spacers, so that they shrink, otherwise - measure the width normally
-		if (item.ignoreSpace) {
+		if (item.ignoreSpace || item.isSeparator) {
 			return 0;
 		}
 		const id: string = item._id;
