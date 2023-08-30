@@ -109,10 +109,8 @@ const flattenAPIsHierarchicalStructure = module => {
         }
 
         if (superclassDeclaration) {
-            console.log(declaration.name, declaration.superclass.name)
             processedDeclarations.set(declaration.name, mergeClassMembers(declaration, processedDeclarations.get(declaration.superclass.name)));
         } else {
-            console.log(declaration.name)
             processedDeclarations.set(declaration.name, declaration);
         }
     })
