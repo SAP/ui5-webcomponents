@@ -448,7 +448,7 @@ class Toolbar extends UI5Element {
 			}
 		}
 
-		this.setSeperatorVisibility();
+		this.setSeperatorsVisibility();
 	}
 
 	distributeItemsThatAlwaysOverflow() {
@@ -457,7 +457,7 @@ class Toolbar extends UI5Element {
 		});
 	}
 
-	setSeperatorVisibility() {
+	setSeperatorsVisibility() {
 		this.itemsToOverflow.forEach((item, idx, items) => {
 			if (item.isSeparator) {
 				(item as ToolbarSeparator).visible = idx > 0 && idx < items.length - 1;
