@@ -29,7 +29,6 @@ import {
 	isHomeCtrl,
 	isEndCtrl,
 	isCtrlA,
-	isCtrlV,
 	isDeleteShift,
 	isInsertShift,
 	isInsertCtrl,
@@ -43,6 +42,7 @@ import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import {
 	isPhone,
 	isAndroid,
+	isFirefox,
 } from "@ui5/webcomponents-base/dist/Device.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -305,13 +305,6 @@ class MultiComboBox extends UI5Element {
 	 * Defines the value state of the component.
 	 * <br><br>
 	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.MultiComboBox.prototype.valueState
@@ -377,7 +370,7 @@ class MultiComboBox extends UI5Element {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.MultiComboBox.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @defaultvalue ""
 	 * @public
 	 * @since 1.4.0
 	 */
@@ -702,8 +695,8 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		if (isCtrlV(e) || isInsertShift(e)) {
-			this._handlePaste();
+		if (isInsertShift(e)) {
+			this._handleInsertPaste();
 			return;
 		}
 
@@ -735,8 +728,24 @@ class MultiComboBox extends UI5Element {
 		this._shouldAutocomplete = !this.noTypeahead && !(isBackSpace(e) || isDelete(e) || isEscape(e) || isEnter(e));
 	}
 
-	async _handlePaste() {
-		if (this.readonly) {
+	_handlePaste(e:ClipboardEvent) {
+		e.preventDefault();
+
+		if (this.readonly || !e.clipboardData) {
+			return;
+		}
+
+		const pastedText = (e.clipboardData).getData("text/plain");
+
+		if (!pastedText) {
+			return;
+		}
+
+		this._createTokenFromText(pastedText);
+	}
+
+	async _handleInsertPaste() {
+		if (this.readonly || isFirefox()) {
 			return;
 		}
 
@@ -746,7 +755,11 @@ class MultiComboBox extends UI5Element {
 			return;
 		}
 
-		const separatedText = pastedText.split(/\r\n|\r|\n|\t/g);
+		this._createTokenFromText(pastedText);
+	}
+
+	_createTokenFromText(pastedText: string) {
+		const separatedText = pastedText.split(/\r\n|\r|\n|\t/g).filter(t => !!t);
 		const matchingItems = this.items.filter(item => separatedText.indexOf(item.text) > -1 && !item.selected);
 
 		if (separatedText.length > 1) {
@@ -1172,8 +1185,8 @@ class MultiComboBox extends UI5Element {
 			return this._tokenizer._fillClipboard(ClipboardDataOperation.copy, selectedTokens);
 		}
 
-		if (isCtrlV(e) || isInsertShift(e)) {
-			this._handlePaste();
+		if (isInsertShift(e)) {
+			this._handleInsertPaste();
 		}
 
 		if (isHome(e)) {

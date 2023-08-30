@@ -1,6 +1,6 @@
 {
   "name": "@ui5/webcomponents-tools",
-  "version": "1.17.0-rc.0",
+  "version": "1.17.0-rc.2",
   "description": "UI5 Web Components: webcomponents.tools",
   "author": "SAP SE (https://www.sap.com)",
   "license": "Apache-2.0",
@@ -51,7 +51,6 @@
     "jsdoc": "^3.6.6",
     "json-beautify": "^1.1.1",
     "mkdirp": "^1.0.4",
-    "modify-selectors": "^2.0.0",
     "nps": "^5.10.0",
     "postcss": "^8.4.5",
     "postcss-cli": "^9.1.0",

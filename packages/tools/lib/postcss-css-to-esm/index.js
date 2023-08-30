@@ -60,7 +60,7 @@ module.exports = function (opts) {
 
 	return {
 		postcssPlugin: 'postcss-css-to-esm',
-		Once (root) {
+		OnceExit(root) {
 			const tsMode = process.env.UI5_TS === "true";
 
 			let css = root.toString();

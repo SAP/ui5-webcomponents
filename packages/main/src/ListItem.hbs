@@ -33,7 +33,7 @@
 			{{> selectionElement}}
 		{{/if}}
 
-		<div id="{{_id}}-content" class="ui5-li-content">
+		<div part="content" id="{{_id}}-content" class="ui5-li-content">
 			{{> imageBegin}}
 			{{> iconBegin}}
 			{{> listItemContent}}
@@ -43,6 +43,7 @@
 		{{#if typeDetail}}
 			<div class="ui5-li-detailbtn">
 				<ui5-button
+					part="detail-button"
 					design="Transparent"
 					icon="edit"
 					@click="{{onDetailClick}}"
@@ -77,6 +78,7 @@
 {{#*inline "selectionElement"}}
 	{{#if modeSingleSelect}}
 		<ui5-radio-button
+				part="radio"
 				?disabled="{{isInactive}}"
 				accessible-name="{{_accInfo.ariaLabelRadioButton}}"
 				tabindex="-1"
@@ -89,6 +91,7 @@
 
 	{{#if modeMultiSelect}}
 		<ui5-checkbox
+				part="checkbox"
 				?disabled="{{isInactive}}"
 				?indeterminate={{indeterminate}}
 				tabindex="-1"
@@ -106,6 +109,7 @@
 				<slot name="deleteButton"></slot>
 			{{else}}
 			<ui5-button
+				part="delete-button"
 				tabindex="-1"
 				data-sap-no-tab-ref
 				id="{{_id}}-deleteSelectionElement"

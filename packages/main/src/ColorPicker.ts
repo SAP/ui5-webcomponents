@@ -9,6 +9,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import Float from "@ui5/webcomponents-base/dist/types/Float.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import {
 	getRGBColor,
 	HSLToRGB,
@@ -206,7 +207,7 @@ class ColorPicker extends UI5Element {
 		const tempColor = `rgba(${this._color.r}, ${this._color.g}, ${this._color.b}, 1)`;
 		this._setHex();
 		this._setValues();
-		this.style.setProperty("--ui5_Color_Picker_Progress_Container_Color", tempColor);
+		this.style.setProperty(getScopedVarName("--ui5_Color_Picker_Progress_Container_Color"), tempColor);
 	}
 
 	_handleMouseDown(e: MouseEvent) {
