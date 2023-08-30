@@ -144,6 +144,10 @@
 	/* SplitButton */
 	--_ui5_split_button_middle_separator_top: 0;
 	--_ui5_split_button_middle_separator_height: 2.25rem;
+
+	/* Toolbar */
+	--_ui5-toolbar-separator-height: 2rem;
+	--_ui5-toolbar-height: 2.75rem;
 }
 
 [data-ui5-compact-size],
@@ -349,4 +353,8 @@
 	--_ui5_vsd_sub_header_container_height: 2rem;
 	--_ui5_vsd_header_height: 4rem;
 	--_ui5_vsd_expand_content_height: 25.4375rem;
+
+	/* Toolbar */
+	--_ui5-toolbar-separator-height: 1.5rem;
+	--_ui5-toolbar-height: 2rem;
 }
