@@ -16,6 +16,8 @@ import Option from "./Option.js";
 import "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
+type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
+
 /**
  * @class
  *
@@ -28,6 +30,7 @@ import type { SelectChangeEventDetail } from "./Select.js";
  * <br>
  * <code>import "@ui5/webcomponents/dist/ToolbarSelectOption";</code> (comes with <code>ui5-toolbar-select</code>)
  * @constructor
+ * @abstract
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarSelect
  * @extends sap.ui.webc.base.UI5Element
@@ -71,7 +74,7 @@ import type { SelectChangeEventDetail } from "./Select.js";
 @event("close")
 
 class ToolbarSelect extends ToolbarItem {
-	@property({ type: String })
+	@property()
 	width!: string;
 
 	/**
@@ -188,7 +191,7 @@ class ToolbarSelect extends ToolbarItem {
 	_onEventHandler(e: Event): void {
 		if (e.type === "change") {
 			// update options
-			const selectedOption = (e as CustomEvent<SelectChangeEventDetail>).detail.selectedOption;
+			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
 			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
 			this.options.forEach((option: Option, index: number) => {
 				if (index === selectedOptionIndex) {
@@ -199,6 +202,12 @@ class ToolbarSelect extends ToolbarItem {
 			});
 		}
 	}
+
+	get styles() {
+		return {
+			width: this.width,
+		};
+	}
 }
 
 registerToolbarItem(ToolbarSelect);
@@ -206,3 +215,7 @@ registerToolbarItem(ToolbarSelect);
 ToolbarSelect.define();
 
 export default ToolbarSelect;
+
+export type {
+	ToolbarSelectChangeEventDetail,
+};

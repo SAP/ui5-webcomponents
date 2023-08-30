@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
@@ -32,7 +31,6 @@ interface IToolbarItem {
  * @public
  * @since 1.17.0
  */
-@customElement("ui5-tb-item")
 class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Property used to define the access of the item to the overflow Popover. If "NeverOverflow" option is set,
@@ -133,8 +131,6 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;
 	}
 }
-
-ToolbarItem.define();
 
 export type {
 	IToolbarItem,
