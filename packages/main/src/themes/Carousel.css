@@ -139,6 +139,10 @@
     box-shadow: var(--sapContent_Shadow1);
 }
 
+.ui5-carousel-navigation-arrows .ui5-carousel-navigation-button:active {
+    box-shadow: var(--ui5_carousel_navigation_button_active_box_shadow);
+}
+
 .ui5-carousel-navigation-button--hidden {
     visibility: hidden;
     padding: 0;
