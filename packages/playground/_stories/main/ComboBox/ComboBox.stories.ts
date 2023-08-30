@@ -54,9 +54,11 @@ export const Basic = Template.bind({});
 Basic.args = {
 	placeholder: "Enter value",
 	default: `
-		<ui5-cb-item text="Item 1"></ui5-cb-item>
-		<ui5-cb-item text="Item 2"></ui5-cb-item>
-		<ui5-cb-item text="Item 3"></ui5-cb-item>
+	<ui5-cb-item text="Austria"></ui5-cb-item>
+	<ui5-cb-item text="Bulgaria"></ui5-cb-item>
+	<ui5-cb-item text="Germany"></ui5-cb-item>
+	<ui5-cb-item text="Italy"></ui5-cb-item>
+	<ui5-cb-item text="Spain"></ui5-cb-item>
 	`,
 };
 
@@ -70,7 +72,6 @@ Filters.args = {
 		<ui5-cb-item text="Germany"></ui5-cb-item>
 		<ui5-cb-item text="Kazakhstan"></ui5-cb-item>
 		<ui5-cb-item text="The United Kingdom of Great Britain and Northern Ireland"></ui5-cb-item>
-		<ui5-cb-item text="United Kingdom"></ui5-cb-item>
 	`,
 };
 
@@ -89,7 +90,7 @@ TwoColumnsLayout.args = {
 
 export const Grouping = Template.bind({});
 Grouping.args = {
-	placeholder: "Grouping of suggestions",
+	placeholder: "Grouping of items",
 	default: `
 		<ui5-cb-group-item text="A"></ui5-cb-group-item>
 		<ui5-cb-item text="Argentina"></ui5-cb-item>
