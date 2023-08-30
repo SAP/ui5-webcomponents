@@ -74,6 +74,17 @@ type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
 @event("close")
 
 class ToolbarSelect extends ToolbarItem {
+	/**
+	 * Defines the width of the select.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
+	 *
+	 * @name sap.ui.webc.main.ToolbarSelect.prototype.width
+	 * @defaultvalue ""
+	 * @type {string}
+	 * @public
+	 */
 	@property()
 	width!: string;
 
