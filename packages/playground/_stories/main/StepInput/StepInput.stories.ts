@@ -10,7 +10,6 @@ import type { UI5StoryArgs } from "../../../types.js";
 import { DocsPage } from "../../../.storybook/docs";
 
 import type StepInput from "@ui5/webcomponents/dist/StepInput.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState";
 
 const component = "ui5-step-input";
 
@@ -87,6 +86,6 @@ Label.args = {
 	required: true,
 };
 Label.decorators = [
-	(story) => html`<ui5-label class="samples-big-margin-right" for="myStepInput">Number left alignment</ui5-label>
+	(story) => html`<ui5-label class="samples-big-margin-right" for="myStepInput">Number is left aligned</ui5-label>
 	${story()}`,
 ]

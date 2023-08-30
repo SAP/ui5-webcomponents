@@ -62,7 +62,7 @@ Advanced.decorators = [
 	<div id="result"></div>
 	<script>
 		var fileUploader = document.querySelector("#fileuploader"),
-			resultDiv = document.querySelector("#result");
+		resultDiv = document.querySelector("#result");
 		fileUploader.addEventListener("change", function(event) {
 			var files = event.target.files;
 			if (!files.length) {
@@ -93,7 +93,7 @@ Advanced.parameters = {
 };
 
 export const Custom = Template.bind({});
-Custom.storyName = "With Custom Design ";
+Custom.storyName = "Custom Design ";
 Custom.args = {
 	hideInput: true,
 	default: `<ui5-badge>Upload File</ui5-badge>`,

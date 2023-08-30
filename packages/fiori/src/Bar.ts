@@ -80,7 +80,7 @@ class Bar extends UI5Element {
 	design!: `${BarDesign}`
 
 	/**
-	* Defines the content at the start of the bar
+	* Defines the content at the start of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.startContent
 	* @slot
@@ -90,7 +90,7 @@ class Bar extends UI5Element {
 	startContent!: Array<HTMLElement>;
 
 	/**
-	* Defines the content in the middle of the bar
+	* Defines the content in the middle of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.default
 	* @slot middleContent
@@ -100,7 +100,7 @@ class Bar extends UI5Element {
 	middleContent!: Array<HTMLElement>
 
 	/**
-	* Defines the content at the end of the bar
+	* Defines the content at the end of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.endContent
 	* @slot
