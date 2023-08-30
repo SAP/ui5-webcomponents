@@ -406,7 +406,7 @@ class Select extends UI5Element implements IFormElement {
 	 * either the option's <code>display-text</code> or its textContent will be displayed.
 	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified and <code>ui5-option</code> is used,
+	 * <b>Note:</b> If not specified an <code>ui5-option</code> is used,
 	 * the option's textContent will be displayed.
 	 *
 	 * @type {HTMLElement[]}
