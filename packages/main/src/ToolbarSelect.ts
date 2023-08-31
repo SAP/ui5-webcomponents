@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
@@ -81,12 +82,12 @@ class ToolbarSelect extends ToolbarItem {
 	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
 	 * @name sap.ui.webc.main.ToolbarSelect.prototype.width
-	 * @defaultvalue ""
-	 * @type {string}
+	 * @defaultvalue undefined
+	 * @type { sap.ui.webc.base.types.CSSSize }
 	 * @public
 	 */
-	@property()
-	width!: string;
+	@property({ validator: CSSSize })
+	width?: string;
 
 	/**
 	 * Defines the component options.

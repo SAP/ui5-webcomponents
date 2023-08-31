@@ -21,6 +21,8 @@ export default {
 		ToolbarButton: "ToolbarButton",
 		ToolbarSelect: "ToolbarSelect",
 		ToolbarSelectOption: "ToolbarSelectOption",
+		ToolbarSeparator: "ToolbarSeparator",
+		ToolbarSpacer: "ToolbarSpacer",
 	},
 	argTypes,
 	parameters: {
