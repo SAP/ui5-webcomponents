@@ -441,14 +441,14 @@ class Toolbar extends UI5Element {
 		// If the last bar item is a spacer, force it to the overflow even if there is enough space for it
 		if (index < movableItems.length) {
 			let lastItem = movableItems[index];
-			while (lastItem.isSeparator) {
+			while (index <= movableItems.length - 1 && lastItem.isSeparator) {
 				this.itemsToOverflow.unshift(lastItem);
 				index++;
 				lastItem = movableItems[index];
 			}
 		}
 
-		this.setSeperatorsVisibility();
+		this.setSeperatorsVisibilityInOverflow();
 	}
 
 	distributeItemsThatAlwaysOverflow() {
@@ -457,12 +457,36 @@ class Toolbar extends UI5Element {
 		});
 	}
 
-	setSeperatorsVisibility() {
+	setSeperatorsVisibilityInOverflow() {
 		this.itemsToOverflow.forEach((item, idx, items) => {
 			if (item.isSeparator) {
-				(item as ToolbarSeparator).visible = idx > 0 && idx < items.length - 1;
+				(item as ToolbarSeparator).visible = this.shouldShowSeparatorInOverflow(idx, items);
 			}
 		});
+	}
+
+	shouldShowSeparatorInOverflow(separatorIdx: number, overflowItems: Array<ToolbarItem>) {
+		let foundPrevNonSeparatorItem = false;
+		let foundNextNonSeperatorItem = false;
+		let prevIdx = separatorIdx;
+		let nextIdx = separatorIdx;
+
+		// search for non-separator item before the seperator
+		while (prevIdx > 0 && !foundPrevNonSeparatorItem) {
+			prevIdx--;
+			if (!overflowItems[prevIdx].isSeparator) {
+				foundPrevNonSeparatorItem = true;
+			}
+		}
+		// search for non-separator item after the seperator
+		while (nextIdx < overflowItems.length - 1 && !foundNextNonSeperatorItem) {
+			nextIdx++;
+			if (!overflowItems[nextIdx].isSeparator) {
+				foundNextNonSeperatorItem = true;
+			}
+		}
+
+		return foundPrevNonSeparatorItem && foundNextNonSeperatorItem;
 	}
 
 	/**
