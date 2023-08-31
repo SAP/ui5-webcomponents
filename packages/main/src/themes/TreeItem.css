@@ -49,7 +49,8 @@
 	border-bottom: var(--ui5-listitem-selected-border-bottom);
 }
 
-:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover, :host([_mode]:not([_mode="None"]):not([_mode="Delete"]):not([selected])) .ui5-li-root-tree:hover {
+:host([_toggle-button-end]:not([selected])) .ui5-li-root-tree:hover,
+:host([_mode]:not([_mode="None"]):not([_mode="Delete"]):not([active]):not([selected])) .ui5-li-root-tree:hover {
 	background: var(--sapList_Hover_Background);
 	cursor: pointer;
 }
@@ -58,7 +59,7 @@
 	cursor: pointer;
 }
 
-:host(:not([level="1"]):not([selected])) .ui5-li-root-tree {
+:host(:not([level="1"]):not([active]):not([selected])) .ui5-li-root-tree {
 	background: var(--sapList_AlternatingBackground);
 }
 
@@ -70,7 +71,7 @@
 	background: var(--sapList_SelectionBackgroundColor);
 }
 
-:host([_mode]:not([_mode="None"]):not([_mode="Delete"])[selected]) .ui5-li-root-tree:hover {
+:host([_mode]:not([_mode="None"]):not([_mode="Delete"]):not([active]):not([selected])) .ui5-li-root-tree:hover {
 	background-color: var(--sapList_Hover_SelectionBackground);
 	cursor: pointer;
 }
@@ -148,4 +149,9 @@ is the .ui5-li-root and not the host. The host height expands to fill subtree */
     margin: 0;
     padding: 0;
     list-style: none;
+}
+
+/* focused & active */
+:host([focused][active]) .ui5-li-root-tree {
+	background: var(--sapList_Active_Background);
 }
