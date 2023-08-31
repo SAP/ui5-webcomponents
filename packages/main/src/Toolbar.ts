@@ -468,23 +468,16 @@ class Toolbar extends UI5Element {
 	shouldShowSeparatorInOverflow(separatorIdx: number, overflowItems: Array<ToolbarItem>) {
 		let foundPrevNonSeparatorItem = false;
 		let foundNextNonSeperatorItem = false;
-		let prevIdx = separatorIdx;
-		let nextIdx = separatorIdx;
 
-		// search for non-separator item before the seperator
-		while (prevIdx > 0 && !foundPrevNonSeparatorItem) {
-			prevIdx--;
-			if (!overflowItems[prevIdx].isSeparator) {
+		// search for non-separator item before and after the seperator
+		overflowItems.forEach((item, idx) => {
+			if (idx < separatorIdx && !item.isSeparator) {
 				foundPrevNonSeparatorItem = true;
 			}
-		}
-		// search for non-separator item after the seperator
-		while (nextIdx < overflowItems.length - 1 && !foundNextNonSeperatorItem) {
-			nextIdx++;
-			if (!overflowItems[nextIdx].isSeparator) {
+			if (idx > separatorIdx && !item.isSeparator) {
 				foundNextNonSeperatorItem = true;
 			}
-		}
+		});
 
 		return foundPrevNonSeparatorItem && foundNextNonSeperatorItem;
 	}
