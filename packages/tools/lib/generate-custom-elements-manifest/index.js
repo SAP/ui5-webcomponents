@@ -314,7 +314,7 @@ const generate = async () => {
 	};
 
 	file.symbols.forEach(entity => {
-		if (entity.tagname) {
+		if (entity.tagname || entity.kind === "class") {
 			customElementsManifest.modules.push(generateJavaScriptModule(entity));
 		}
 	});
