@@ -26,6 +26,7 @@ import AvatarColorScheme from "./types/AvatarColorScheme.js";
 
 // Icon
 import "@ui5/webcomponents-icons/dist/employee.js";
+import "@ui5/webcomponents-icons/dist/alert.js";
 
 /**
  * @class
@@ -138,6 +139,33 @@ class Avatar extends UI5Element implements ITabbable {
 	 */
 	@property()
 	icon!: string;
+
+	/**
+	 * Defines the name of the fallback icon, which should be displayed in the following cases:
+	 * <ul>
+	 * 	<li>If the initials are not valid (more than 3 letters, unsupported languages or empty initials).</li>
+	 * 	<li>If there are three initials and they do not fit in the shape (e.g. WWW for some of the sizes).</li>
+	 * 	<li>If the image src is wrong.</li>
+	 * </ul>
+	 *
+	 * <br>
+	 * <b>Note:</b> If not set, a default fallback icon "employee" is displayed.
+	 * <br>
+	 * <b>Note:</b> You should import the desired icon first, then use its name as "fallback-icon".
+	 * <br><br>
+	 * import "@ui5/webcomponents-icons/dist/{icon_name}.js"
+	 * <br>
+	 * <pre>&lt;ui5-avatar fallback-icon="alert"></pre>
+	 * <br>
+	 *
+	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
+	 * @type {string}
+	 * @name sap.ui.webc.main.Avatar.prototype.fallbackIcon
+	 * @defaultvalue ""
+	 * @public
+	 */
+	@property()
+	fallbackIcon!: string;
 
 	/**
 	 * Defines the displayed initials.
@@ -348,6 +376,14 @@ class Avatar extends UI5Element implements ITabbable {
 
 	get _ariaHasPopup() {
 		return this._getAriaHasPopup();
+	}
+
+	get _fallbackIcon() {
+		if (this.fallbackIcon === "") {
+			this.fallbackIcon = "employee";
+		}
+
+		return this.fallbackIcon;
 	}
 
 	get _interactive() {

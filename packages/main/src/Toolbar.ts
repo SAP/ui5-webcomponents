@@ -28,7 +28,7 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 import HasPopup from "./types/HasPopup.js";
 
-import type { ToolbarItem } from "./ToolbarItem.js";
+import type ToolbarItem from "./ToolbarItem.js";
 import {
 	getRegisteredToolbarItem,
 	getRegisteredStyles,
@@ -71,6 +71,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * @alias sap.ui.webc.main.Toolbar
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar
+ * @appenddocs sap.ui.webc.main.ToolbarButton sap.ui.webc.main.ToolbarSelect sap.ui.webc.main.ToolbarSelectOption sap.ui.webc.main.ToolbarSeparator sap.ui.webc.main.ToolbarSpacer
  * @public
  * @since 1.17.0
  */
@@ -81,7 +82,6 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	template: ToolbarTemplate,
 	staticAreaTemplate: ToolbarPopoverTemplate,
 })
-
 class Toolbar extends UI5Element {
 	static i18nBundle: I18nBundle;
 
@@ -151,12 +151,13 @@ class Toolbar extends UI5Element {
 	accessibleNameRef!: string;
 
 	/**
-	* Slotted Toolbar items
-	* @type {sap.ui.webc.main.IToolbarItem[]}
-	* @name sap.ui.webc.main.Toolbar.prototype.items
-	* @slot items
-	* @public
-	*/
+	 * Defines the items of the component.
+	 *
+	 * @type {sap.ui.webc.main.IToolbarItem[]}
+	 * @name sap.ui.webc.main.Toolbar.prototype.default
+	 * @slot items
+	 * @public
+	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<ToolbarItem>
 

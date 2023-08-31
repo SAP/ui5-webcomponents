@@ -149,6 +149,8 @@
 		</ui5-avatar>
 		<ui5-avatar id="myAvatar4" initials="SF" shape="Square" size="M"></ui5-avatar>
 		<ui5-avatar id="myAvatar5" initials="WWW" shape="Square" size="M"></ui5-avatar>
+		<ui5-avatar id="myAvatar7" fallback-icon="alert" initials="WWW" shape="Circle" size="L"></ui5-avatar>
+
 	</section>
 
 	<section>
@@ -267,9 +269,11 @@
 		<ui5-avatar id="myAvatar6" initials="ÌÒÙ" color-scheme="Accent1"></ui5-avatar>
 		<ui5-avatar initials="ABC" color-scheme="Accent2" size="XL"></ui5-avatar>
 
-		<h3>Avatar with three overflowing initials - icon should be shown</h3>
+		<h3>Avatar with three overflowing initials - default fallback icon should be shown</h3>
 		<ui5-avatar initials="WWW" color-scheme="Accent1" size="XS"></ui5-avatar>
-		<ui5-avatar initials="WWW" color-scheme="Accent2" size="XL"></ui5-avatar>
+
+		<h3>Avatar with three overflowing initials - custom fallback icon should be shown</h3>
+		<ui5-avatar initials="WWW" fallback-icon="alert" color-scheme="Accent2" size="XL"></ui5-avatar>
 
 	</section>
 

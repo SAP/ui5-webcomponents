@@ -123,7 +123,7 @@ interface IOption extends UI5Element {
  * @alias sap.ui.webc.main.Select
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-select
- * @appenddocs sap.ui.webc.main.Option
+ * @appenddocs sap.ui.webc.main.Option sap.ui.webc.main.SelectMenu sap.ui.webc.main.SelectMenuOption
  * @public
  * @since 0.8.0
  */
@@ -195,13 +195,13 @@ class Select extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
 
 	/**
-	 * Defines a reference (ID or DOM element) of component's menu of options.
+	 * Defines a reference (ID or DOM element) of component's menu of options
 	 * as alternative to define the select's dropdown.
 	 * <br><br>
 	 * <b>Note:</b> Usage of <code>ui5-select-menu</code> is recommended.
 	 *
 	 * @type {sap.ui.webc.base.types.DOMReference}
-	 * @defaultvalue false
+	 * @defaultvalue undefined
 	 * @name sap.ui.webc.main.Select.prototype.menu
 	 * @public
 	 * @since 1.17.0
@@ -406,7 +406,7 @@ class Select extends UI5Element implements IFormElement {
 	 * either the option's <code>display-text</code> or its textContent will be displayed.
 	 * <br><br>
 	 *
-	 * <b>Note:</b> If not specified and <code>ui5-opton</code> is used,
+	 * <b>Note:</b> If not specified and <code>ui5-option</code> is used,
 	 * the option's textContent will be displayed.
 	 *
 	 * @type {HTMLElement[]}

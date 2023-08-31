@@ -1,9 +1,12 @@
+.ui5-overflow-popover::part(content) {
+	padding: var(--_ui5_toolbar_overflow_padding);
+}
+
 .ui5-overflow-list {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding: 0 0.5rem;
 }
 
 .ui5-tb-popover-item {

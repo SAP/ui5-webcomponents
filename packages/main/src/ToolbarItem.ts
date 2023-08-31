@@ -1,15 +1,14 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
-export type IEventOptions = {
+type IEventOptions = {
 	preventClosing: boolean;
 }
 
-export interface IToolbarItem {
+interface IToolbarItem {
 	overflowPriority: `${ToolbarItemOverflowBehavior}`;
 	preventOverflowClosing: boolean;
 	ignoreSpace?: boolean;
@@ -18,10 +17,9 @@ export interface IToolbarItem {
 	stableDomRef: string;
 }
 
-@customElement("ui5-tb-item")
-
 /**
  * @class
+ *
  * The <code>ui5-tb-item</code> represents an abstract class for items,
  * used in the <code>ui5-toolbar</code>.
  *
@@ -29,9 +27,9 @@ export interface IToolbarItem {
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarItem
  * @extends sap.ui.webc.base.UI5Element
- * @since 1.17.0
  * @abstract
  * @public
+ * @since 1.17.0
  */
 class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
@@ -57,7 +55,7 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * @type {Boolean}
 	 * @defaultvalue false
 	 * @public
-	 * @name sap.ui.webc.main.Toolbar.prototype.preventOverflowClosing
+	 * @name sap.ui.webc.main.ToolbarItem.prototype.preventOverflowClosing
 	 */
 	@property({ type: Boolean })
 	preventOverflowClosing!: boolean;
@@ -134,7 +132,8 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	}
 }
 
-ToolbarItem.define();
-
-export type { ToolbarItem };
+export type {
+	IToolbarItem,
+	IEventOptions,
+};
 export default ToolbarItem;
