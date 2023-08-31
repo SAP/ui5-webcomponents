@@ -23,6 +23,8 @@ import PopoverCss from "./generated/themes/Popover.css.js";
 
 const ARROW_SIZE = 8;
 
+const followOfTolerance = 32;
+
 type PopoverSize = {
 	width: number;
 	height: number;
@@ -190,6 +192,19 @@ class Popover extends Popup {
 	 */
 	@property({ type: Boolean })
 	allowTargetOverlap!: boolean;
+
+	/**
+	 * Determines whether the component will
+	 * close automatically when the opener is moved on the page.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Popover.prototype.autoCloseOnScroll
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.18.0
+	 */
+	@property({ type: Boolean })
+	autoCloseOnScroll!: boolean;
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at
@@ -408,15 +423,25 @@ class Popover extends Popup {
 	_show() {
 		let placement;
 		const popoverSize = this.getPopoverSize();
+		const openerRect = this._opener!.getBoundingClientRect();
 
 		if (popoverSize.width === 0 || popoverSize.height === 0) {
 			// size can not be determined properly at this point, popover will be shown with the next reposition
 			return;
 		}
 
+		if (this.autoCloseOnScroll) {
+			if (Math.abs(this._openerRect!.left - openerRect.left) > followOfTolerance
+				|| Math.abs(this._openerRect!.top - openerRect.top) > followOfTolerance
+				|| Math.abs(this._openerRect!.right - openerRect.right) > followOfTolerance
+				|| Math.abs(this._openerRect!.bottom - openerRect.bottom) > followOfTolerance) {
+				return this.close();
+			}
+		}
+
 		if (this.isOpen()) {
 			// update opener rect if it was changed during the popover being opened
-			this._openerRect = this._opener!.getBoundingClientRect();
+			this._openerRect = openerRect;
 		}
 
 		if (this.shouldCloseDueToNoOpener(this._openerRect!) && this.isFocusWithin()) {
