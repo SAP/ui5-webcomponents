@@ -91,6 +91,21 @@ class RadioButtonGroup {
 		this.updateSelectionInGroup(nextItemToSelect, groupName);
 	}
 
+	static updateFormValidity(groupName: string) {
+		const group = this.getGroup(groupName);
+
+		if (!group) {
+			return;
+		}
+
+		group.forEach(r => r._resetFormValidity());
+
+		const groupRequiresValue = group.some(r => r.required) && group.every(r => !r.checked);
+		if (groupRequiresValue) {
+			group[0]._invalidateForm();
+		}
+	}
+
 	static updateTabOrder(groupName: string) {
 		const group = this.getGroup(groupName);
 
@@ -216,6 +231,7 @@ class RadioButtonGroup {
 		}
 
 		this.updateTabOrder(groupName);
+		this.updateFormValidity(groupName);
 	}
 
 	static get groups() {
