@@ -6,6 +6,9 @@ module.exports = defineConfig(async () => {
 		build: {
 			emptyOutDir: false,
 		},
+		server: {
+			hmr: false,
+		},
 		plugins: [await virtualIndex()],
 	}
 });
