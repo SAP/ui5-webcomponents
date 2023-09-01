@@ -33,6 +33,13 @@
 		<button id="toggleSticky" class="table3auto">Toggle Sticky Column Header</button>
 	</div>
 
+	<style>
+		.demo-table > [ui5-table-row]::part(popin-row) {
+			width: 100%;
+		}
+
+	</style>
+
 	<ui5-table class="demo-table" accessible-name-ref="tableLabel" id="tbl">
 		<!-- Columns -->
 		<ui5-table-column id="column-1" slot="columns" width="350px">

@@ -26,7 +26,9 @@
   "scripts": {
     "clean": "nps clean",
     "lint": "nps lint",
+    "prep": "nps prep",
     "start": "nps start",
+    "dev": "nps dev",
     "build": "nps build",
     "test": "nps test",
     "prepublishOnly": "npm run clean && npm run build"
