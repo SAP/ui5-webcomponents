@@ -22,7 +22,7 @@
 
 :host([size="Small"]) .ui5-busy-indicator-circle:first-child,
 :host([size="Small"]) .ui5-busy-indicator-circle:nth-child(2) {
-	margin-right: 1px;
+	margin-inline-end: 0.0625rem;
 }
 
 :host(:not([size])) .ui5-busy-indicator-root,
@@ -33,7 +33,7 @@
 
 :host([size="Medium"]) .ui5-busy-indicator-circle:first-child,
 :host([size="Medium"]) .ui5-busy-indicator-circle:nth-child(2) {
-	margin-right: 3px;
+	margin-inline-end: 0.1875rem;
 }
 
 :host(:not([size])[text]:not([text=""])) .ui5-busy-indicator-root,
@@ -54,7 +54,7 @@
 
 :host([size="Large"]) .ui5-busy-indicator-circle:first-child,
 :host([size="Large"]) .ui5-busy-indicator-circle:nth-child(2) {
-	margin-right: 4px;
+	margin-inline-end: 0.25rem;
 }
 
 :host([size="Large"][text]:not([text=""])) .ui5-busy-indicator-root {
