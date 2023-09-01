@@ -77,6 +77,24 @@ describe("Popover general interaction", () => {
 	// 	await browser.$("#btn").scrollIntoView();
 	// });
 
+	it("tests if popover auto closes on scroll", async () => {
+		const btnOpenPopover = await browser.$("#btnPopAutoCloseOnScroll");
+
+		await btnOpenPopover.click();
+
+		const popover = await browser.$("#popAutoCloseOnScroll");
+		assert.ok(await popover.isDisplayedInViewport(), "Popover is opened.");
+
+		const top = await browser.$("html").getProperty("scrollTop");
+		await browser.$("html").setProperty("scrollTop", top + 40);
+
+		await browser.pause(500);
+
+		assert.notOk(await popover.isDisplayedInViewport(), "Popover is closed.");
+
+		await browser.$("html").setProperty("scrollTop", top);
+	});
+
 	it("tests popover does not close with opener", async () => {
 		const popover = await browser.$("#quickViewCard");
 		const btnOpenPopover = await browser.$("#btnQuickViewCardOpener");
@@ -474,7 +492,7 @@ describe("Horizontal Alignment", () => {
 		await browser.$("#horizontalAlignBtn").click();
 		const popover = await browser.$("#popoverHorizontalAlign");
 		const opener = await browser.$("#targetOpener");
-	
+
 		assert.ok(await isHorizontallyCentered(popover, opener), `Popover should be centered`);
 	});
 
@@ -492,7 +510,7 @@ describe("Horizontal Alignment", () => {
 		await browser.$("#horizontalAlignBtn").click();
 		const popover = await browser.$("#popoverHorizontalAlign");
 		const opener = await browser.$("#targetOpener");
-	
+
 		assert.ok(await isHorizontallyRightAligned(popover, opener), `Popover should be right aligned`);
 	});
 

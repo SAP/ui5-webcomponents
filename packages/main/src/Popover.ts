@@ -198,13 +198,13 @@ class Popover extends Popup {
 	 * close automatically when the opener is moved on the page.
 	 *
 	 * @type {boolean}
-	 * @name sap.ui.webc.main.Popover.prototype.autoCloseOnScroll
+	 * @name sap.ui.webc.main.Popover.prototype.closeOnScroll
 	 * @defaultvalue false
 	 * @public
 	 * @since 1.18.0
 	 */
 	@property({ type: Boolean })
-	autoCloseOnScroll!: boolean;
+	closeOnScroll!: boolean;
 
 	/**
 	 * Defines the ID or DOM Reference of the element that the popover is shown at
@@ -423,6 +423,7 @@ class Popover extends Popup {
 	_show() {
 		let placement;
 		const popoverSize = this.getPopoverSize();
+		const prevOpenerRect = this._openerRect!;
 		const openerRect = this._opener!.getBoundingClientRect();
 
 		if (popoverSize.width === 0 || popoverSize.height === 0) {
@@ -430,11 +431,11 @@ class Popover extends Popup {
 			return;
 		}
 
-		if (this.autoCloseOnScroll) {
-			if (Math.abs(this._openerRect!.left - openerRect.left) > followOfTolerance
-				|| Math.abs(this._openerRect!.top - openerRect.top) > followOfTolerance
-				|| Math.abs(this._openerRect!.right - openerRect.right) > followOfTolerance
-				|| Math.abs(this._openerRect!.bottom - openerRect.bottom) > followOfTolerance) {
+		if (this.closeOnScroll) {
+			if (Math.abs(prevOpenerRect.left - openerRect.left) > followOfTolerance
+				|| Math.abs(prevOpenerRect.top - openerRect.top) > followOfTolerance
+				|| Math.abs(prevOpenerRect.right - openerRect.right) > followOfTolerance
+				|| Math.abs(prevOpenerRect.bottom - openerRect.bottom) > followOfTolerance) {
 				return this.close();
 			}
 		}
