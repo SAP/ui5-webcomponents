@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.2...v1.17.0) (2023-09-01)
+
+
+### Bug Fixes
+
+* **ui5-busy-indicator:** fixed text center alignment and wrapping ([f7bda6d](https://github.com/SAP/ui5-webcomponents/commit/f7bda6dc4ece2e8fd9c8682c5ffbb513b6c311cc)), closes [#7470](https://github.com/SAP/ui5-webcomponents/issues/7470)
+* **ui5-carousel:** remove outer outline of the arrow on "down" state ([#7511](https://github.com/SAP/ui5-webcomponents/issues/7511)) ([4774bc6](https://github.com/SAP/ui5-webcomponents/commit/4774bc6d684f08c670ae65bc73d3f3ee641c288f))
+* **ui5-combobox:** enhance storybook samples ([#7469](https://github.com/SAP/ui5-webcomponents/issues/7469)) ([0f54160](https://github.com/SAP/ui5-webcomponents/commit/0f54160423ef193a591ef748601e1738cc0ce030))
+* **ui5-input:** enhance storybook samples ([#7532](https://github.com/SAP/ui5-webcomponents/issues/7532)) ([e48da75](https://github.com/SAP/ui5-webcomponents/commit/e48da755758dc7cc26b0da4a4999d79ed98753ac))
+* **ui5-radio-button:** avoid nesting elements with tab-index within each other ([#7488](https://github.com/SAP/ui5-webcomponents/issues/7488)) ([5def83b](https://github.com/SAP/ui5-webcomponents/commit/5def83bb75b520cb57dbdd4c1bf4eb8a54d5990a)), closes [#7419](https://github.com/SAP/ui5-webcomponents/issues/7419)
+* **ui5-select:** scroll item into view on keyboard navigation ([#7370](https://github.com/SAP/ui5-webcomponents/issues/7370)) ([8ecd118](https://github.com/SAP/ui5-webcomponents/commit/8ecd1183c2a8b041f444cc8d0814f096e8b2dbd5)), closes [#7164](https://github.com/SAP/ui5-webcomponents/issues/7164)
+* **ui5-tabcontainer:** restore indentation in overflow ([#7506](https://github.com/SAP/ui5-webcomponents/issues/7506)) ([039d57e](https://github.com/SAP/ui5-webcomponents/commit/039d57e7f79df561fffdb94209169817cab83d20)), closes [#7505](https://github.com/SAP/ui5-webcomponents/issues/7505)
+* **ui5-tabcontainer:** thicken selection border in Horizon HCB/HCW ([#7477](https://github.com/SAP/ui5-webcomponents/issues/7477)) ([ad36491](https://github.com/SAP/ui5-webcomponents/commit/ad36491d6620a666e834812cc78580f4fabda404))
+* **ui5-table:** enhance storybook samples ([#7517](https://github.com/SAP/ui5-webcomponents/issues/7517)) ([4e6a56b](https://github.com/SAP/ui5-webcomponents/commit/4e6a56bfaa22fa7ce780f53c37e5e867e30b5507))
+* **ui5-textarea:** enhance storybook samples ([#7443](https://github.com/SAP/ui5-webcomponents/issues/7443)) ([e10575d](https://github.com/SAP/ui5-webcomponents/commit/e10575d2d500eb749464bc555e26da6530db73fb))
+* **ui5-textarea:** prevent console error on focus out ([#7504](https://github.com/SAP/ui5-webcomponents/issues/7504)) ([31a3608](https://github.com/SAP/ui5-webcomponents/commit/31a3608562ae457f66bb51f7310566664a76a39c))
+
+
+### Features
+
+* introduce SelectMenu(Option) components ([#7447](https://github.com/SAP/ui5-webcomponents/issues/7447)) ([b21db20](https://github.com/SAP/ui5-webcomponents/commit/b21db20cdedacd97de5d4372add6171f16f00316))
+* **ui5-avatar:** functionality for setting custom fallback icon ([#7463](https://github.com/SAP/ui5-webcomponents/issues/7463)) ([0368aab](https://github.com/SAP/ui5-webcomponents/commit/0368aab515f77ab52ede44c6bccaa5f7f80101c9))
+* **ui5-badge:** update visual design ([#7501](https://github.com/SAP/ui5-webcomponents/issues/7501)) ([208d992](https://github.com/SAP/ui5-webcomponents/commit/208d992b5707ba5f00de3c1311fcc2425916c2c4))
+* **ui5-toolbar:** web component introduced ([#7024](https://github.com/SAP/ui5-webcomponents/issues/7024)) ([2f329fe](https://github.com/SAP/ui5-webcomponents/commit/2f329fe2d237d24f05ed140658e39752d6d9d8ae))
+
+
+
+
+
 # [1.17.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.1...v1.17.0-rc.2) (2023-08-24)
 
 
