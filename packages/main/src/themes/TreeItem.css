@@ -155,3 +155,9 @@ is the .ui5-li-root and not the host. The host height expands to fill subtree */
 :host([focused][active]) .ui5-li-root-tree {
 	background: var(--sapList_Active_Background);
 }
+
+:host([focused][active]) .ui5-li-root-tree .ui5-li-tree-toggle-icon,
+:host([focused][active]) .ui5-li-root-tree .ui5-li-title,
+:host([focused][active]) .ui5-li-root-tree .ui5-li-additional-text {
+	color: var(--sapList_Active_TextColor);
+}
