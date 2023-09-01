@@ -540,6 +540,24 @@ describe("Select general interaction", () => {
 		await firstItem.click();
 		assert.notOk(await popover.getProperty("opened"), "Select is closed.");
 	});
+
+	it("Tests if currently selected option is visible in the viewport when keyboard navigation is used", async () => {
+		await browser.setWindowSize(600, 100);
+
+		const select = await browser.$("#warningSelect");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#warningSelect");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await select.click();
+		assert.ok(await popover.getProperty("opened"), "Select is opened.");
+
+		await select.keys("ArrowDown");
+		await select.keys("ArrowDown");
+		await select.keys("ArrowDown");
+
+		const selectedOption = await popover.$("ui5-list").$("ui5-li[selected]");
+		assert.ok(await selectedOption.isClickable(), "Selected option is visible in the viewport.");
+	});
 });
 
 describe("Attributes propagation", () => {
