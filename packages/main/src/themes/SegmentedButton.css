@@ -13,11 +13,14 @@
 	margin: 0;
 	padding: 0;
 	background-color: var(--sapButton_Background);
-	border-radius: var(--_ui5_segmented_btn_outer_border_radius);
+	border-radius: var(--sapButton_BorderCornerRadius);
+	box-shadow: inset 0 0 0 var(--sapButton_BorderWidth) var(--sapButton_BorderColor);
 }
 
 ::slotted([ui5-segmented-button-item]) {
 	border-radius: var(--_ui5_segmented_btn_inner_border_radius);
+	border-color: var(--_ui5_segmented_btn_border_color);
+	background-color: var(--_ui5_segmented_btn_background_color);
 	height: var(--_ui5_button_base_height);
 	min-width: 2.5rem;
 	white-space: nowrap;
@@ -28,7 +31,9 @@
 
 ::slotted([ui5-segmented-button-item]:hover) {
 	z-index: 2;
-	border-color: red;
+	box-shadow: var(--_ui5_segmented_btn_hover_box_shadow);
+	border-color: var(--sapButton_Hover_BorderColor);
+	background-color: var(--sapButton_Hover_Background);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]),
@@ -45,17 +50,17 @@
 }
 
 ::slotted([ui5-segmented-button-item]:last-child) {
-	border-start-end-radius: var(--_ui5_segmented_btn_border_radius);
-	border-end-end-radius: var(--_ui5_segmented_btn_border_radius);
+	border-start-end-radius: var(--sapButton_BorderCornerRadius);
+	border-end-end-radius: var(--sapButton_BorderCornerRadius);
 }
 
 ::slotted([ui5-segmented-button-item]:first-child) {
-	border-start-start-radius: var(--_ui5_segmented_btn_border_radius);
-	border-end-start-radius: var(--_ui5_segmented_btn_border_radius);
+	border-start-start-radius: var(--sapButton_BorderCornerRadius);
+	border-end-start-radius: var(--sapButton_BorderCornerRadius);
 }
 
 ::slotted([ui5-segmented-button-item]:not(:first-child)) {
-	border-left-width: var(--test1);
+	border-left-width: var(--_ui5_segmented_btn_item_border_left);
 }
 
 ::slotted([ui5-segmented-button-item][active]:not([active]):hover) {
