@@ -12,6 +12,7 @@ interface IToolbarItem {
 	overflowPriority: `${ToolbarItemOverflowBehavior}`;
 	preventOverflowClosing: boolean;
 	ignoreSpace?: boolean;
+	isSeparator?: boolean;
 	containsText?: boolean;
 	hasFlexibleWidth?: boolean;
 	stableDomRef: string;
@@ -52,7 +53,7 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
 	 * It will close by default.
-	 * @type {Boolean}
+	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
 	 * @name sap.ui.webc.main.ToolbarItem.prototype.preventOverflowClosing
@@ -62,7 +63,7 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
-	* @returns {Boolean}
+	* @returns {boolean}
 	* @protected
 	*/
 	get ignoreSpace(): boolean {
@@ -73,7 +74,7 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * Returns if the item contains text. Used to position the text properly inside the popover.
 	 * Aligned left if the item has text, default aligned otherwise.
 	 * @protected
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	get containsText(): boolean {
 		return false;
@@ -94,10 +95,19 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * This value is used to determinate if the toolbar should have its accessibility role and attributes set.
 	 * At least two interactive items are needed for the toolbar to have the role="toolbar" attribute set.
 	 * @protected
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	get isInteractive(): boolean {
 		return true;
+	}
+
+	/**
+	 * Returns if the item is separator.
+	 * @protected
+	 * @returns {boolean}
+	 */
+	get isSeparator() {
+		return false;
 	}
 
 	/**
