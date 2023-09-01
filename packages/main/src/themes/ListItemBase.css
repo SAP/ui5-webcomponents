@@ -87,7 +87,7 @@
 }
 
 :host([_is-last-item]) {
-	border-radius: var(--_ui5_last_item_border-radius);
+	/* border-radius: var(--_ui5_last_item_border-radius); */
 	border-bottom-right-radius: inherit;
 	border-bottom-left-radius: inherit;
 
