@@ -2,4 +2,5 @@
 
 :root {
 	--ui5-listitem-active-border-color: var(--sapContent_FocusColor);
+	/* --_ui5_last_item_border-radius: 0; */
 }
