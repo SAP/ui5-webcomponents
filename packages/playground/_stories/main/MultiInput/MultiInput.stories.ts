@@ -14,7 +14,7 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 const component = "ui5-multi-input";
 
 export default {
-    title: "Main/MultiInput",
+    title: "Main/Multi Input",
     component: "MultiInput",
     subcomponents: {'Token' : 'Token'},
     parameters: {
@@ -30,9 +30,21 @@ let index = 0;
 const Template: UI5StoryArgs<MultiInput, StoryArgsSlots> = (args) => html`
 <ui5-multi-input
 	id="multi-input-${++index}"
+	?disabled="${ifDefined(args.disabled)}"
+	placeholder="${ifDefined(args.placeholder)}"
+	?readonly="${ifDefined(args.readonly)}"
+	?required="${ifDefined(args.required)}"
+	?no-typeahead="${ifDefined(args.noTypeahead)}"
+	type="${ifDefined(args.type)}"
 	value="${ifDefined(args.value)}"
-	?show-value-help-icon="${ifDefined(args.showValueHelpIcon)}"
+	value-state="${ifDefined(args.valueState)}"
+	name="${ifDefined(args.name)}"
 	?show-suggestions="${ifDefined(args.showSuggestions)}"
+	maxlength="${ifDefined(args.maxlength)}"
+	accessible-name="${ifDefined(args.accessibleName)}"
+	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
+	?show-clear-icon="${ifDefined(args.showClearIcon)}"
+	?show-value-help-icon="${ifDefined(args.showValueHelpIcon)}"
 >
 	${unsafeHTML(args.default)}
 	${unsafeHTML(args.valueStateMessage)}
@@ -40,20 +52,13 @@ const Template: UI5StoryArgs<MultiInput, StoryArgsSlots> = (args) => html`
 	${unsafeHTML(args.tokens)}
 </ui5-multi-input>`;
 
-export const BasicMultiInput = Template.bind({});
-BasicMultiInput.args = {
+export const Basic = Template.bind({});
+Basic.args = {
 	value: "basic input"
 };
 
-export const BasicMultiInputVHDIcon = Template.bind({});
-BasicMultiInputVHDIcon.args = {
-	value: "value help icon",
-	showValueHelpIcon: true
-};
-BasicMultiInputVHDIcon.storyName = "Basic Multi Input with Value Help Dialog icon";
-
-export const MultiInputTokens = Template.bind({});
-MultiInputTokens.args = {
+export const WithTokens = Template.bind({});
+WithTokens.args = {
 	tokens: `
 	<ui5-token slot="tokens" text="Argentina"></ui5-token>
 	<ui5-token slot="tokens" text="Bulgaria"></ui5-token>
@@ -68,10 +73,11 @@ MultiInputTokens.args = {
 	<ui5-token slot="tokens" text="Sweden"></ui5-token>
 	<ui5-token slot="tokens" text="USA"></ui5-token>`
 };
-MultiInputTokens.storyName = "Multi Input with tokens";
 
-export const MultiInputTokenCreation = Template.bind({});
-MultiInputTokenCreation.args = {
+export const TokenCreation = Template.bind({});
+TokenCreation.args = {
+	placeholder: "Start typing country name",
+	showSuggestions: true,
 	default: `
 	<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
 	<ui5-suggestion-item text="Bulgaria"></ui5-suggestion-item>
@@ -86,9 +92,8 @@ MultiInputTokenCreation.args = {
 	<ui5-suggestion-item text="Sweden"></ui5-suggestion-item>
 	<ui5-suggestion-item text="USA"></ui5-suggestion-item>`,
 	valueStateMessage: '<div slot="valueStateMessage">Token is already in the list</div>',
-	showSuggestions: true
 };
-MultiInputTokenCreation.decorators = [
+TokenCreation.decorators = [
 	(story) => {
 	return html`
 	${story()}
@@ -146,4 +151,3 @@ MultiInputTokenCreation.decorators = [
 </script>`;
 	}
 ]
-MultiInputTokenCreation.storyName = "Multi Input and token creation onChange and onPaste";
