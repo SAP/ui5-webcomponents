@@ -1,4 +1,4 @@
-:host:not(::slotted([slot="header"])) {
+:host {
 	background-color: var(--sapPageHeader_Background);
 	height: var(--_ui5_bar_base_height);
 	width: 100%;
