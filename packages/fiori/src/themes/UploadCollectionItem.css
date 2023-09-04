@@ -1,9 +1,14 @@
 :host {
 	height: auto;
+	container-type: inline-size;
 }
 
 :host(:not([hidden])) {
 	display: block;
+}
+
+:host::part(content) {
+	overflow: visible; /* prevents buttons hover shadow clipping */
 }
 
 .ui5-li-root.ui5-uci-root {
@@ -132,12 +137,8 @@
 	margin-right: 0.125rem;
 }
 
-:host {
-	container-type: inline-size;
-}
-
 @container (max-width: 30rem) {
-	.ui5-li-content {
+	:host::part(content) {
 		flex-wrap: wrap;
 	}
 
