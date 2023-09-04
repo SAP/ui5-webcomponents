@@ -10,6 +10,7 @@
 	role="{{_role}}"
 	aria-haspopup="{{_ariaHasPopup}}"
 	aria-label="{{accessibleNameText}}"
+	fallback-icon="{{_fallbackIcon}}"
 >
 	{{#if hasImage}}
 		<slot></slot>
@@ -20,7 +21,7 @@
 
 		{{#if initials}}
 			<span class="ui5-avatar-initials">{{validInitials}}</span>
-			<ui5-icon class="ui5-avatar-icon ui5-avatar-icon-fallback" name="employee"></ui5-icon>
+			<ui5-icon class="ui5-avatar-icon ui5-avatar-icon-fallback" name="{{fallbackIcon}}"></ui5-icon>
 		{{/if}}
 
 	{{/if}}

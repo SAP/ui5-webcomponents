@@ -1,27 +1,26 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import { TemplateFunction } from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 
-export type IEventOptions = {
+type IEventOptions = {
 	preventClosing: boolean;
 }
 
-export interface IToolbarItem {
+interface IToolbarItem {
 	overflowPriority: `${ToolbarItemOverflowBehavior}`;
 	preventOverflowClosing: boolean;
 	ignoreSpace?: boolean;
+	isSeparator?: boolean;
 	containsText?: boolean;
 	hasFlexibleWidth?: boolean;
 	stableDomRef: string;
 }
 
-@customElement("ui5-tb-item")
-
 /**
  * @class
+ *
  * The <code>ui5-tb-item</code> represents an abstract class for items,
  * used in the <code>ui5-toolbar</code>.
  *
@@ -29,9 +28,9 @@ export interface IToolbarItem {
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarItem
  * @extends sap.ui.webc.base.UI5Element
- * @since 1.17.0
  * @abstract
  * @public
+ * @since 1.17.0
  */
 class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
@@ -54,17 +53,17 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	/**
 	 * Defines if the toolbar overflow popup should close upon intereaction with the item.
 	 * It will close by default.
-	 * @type {Boolean}
+	 * @type {boolean}
 	 * @defaultvalue false
 	 * @public
-	 * @name sap.ui.webc.main.Toolbar.prototype.preventOverflowClosing
+	 * @name sap.ui.webc.main.ToolbarItem.prototype.preventOverflowClosing
 	 */
 	@property({ type: Boolean })
 	preventOverflowClosing!: boolean;
 
 	/**
 	* Defines if the width of the item should be ignored in calculating the whole width of the toolbar
-	* @returns {Boolean}
+	* @returns {boolean}
 	* @protected
 	*/
 	get ignoreSpace(): boolean {
@@ -75,7 +74,7 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * Returns if the item contains text. Used to position the text properly inside the popover.
 	 * Aligned left if the item has text, default aligned otherwise.
 	 * @protected
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	get containsText(): boolean {
 		return false;
@@ -96,10 +95,19 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	 * This value is used to determinate if the toolbar should have its accessibility role and attributes set.
 	 * At least two interactive items are needed for the toolbar to have the role="toolbar" attribute set.
 	 * @protected
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 */
 	get isInteractive(): boolean {
 		return true;
+	}
+
+	/**
+	 * Returns if the item is separator.
+	 * @protected
+	 * @returns {boolean}
+	 */
+	get isSeparator() {
+		return false;
 	}
 
 	/**
@@ -134,7 +142,8 @@ class ToolbarItem extends UI5Element implements IToolbarItem {
 	}
 }
 
-ToolbarItem.define();
-
-export type { ToolbarItem };
+export type {
+	IToolbarItem,
+	IEventOptions,
+};
 export default ToolbarItem;

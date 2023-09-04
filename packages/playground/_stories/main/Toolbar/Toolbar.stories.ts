@@ -3,49 +3,66 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import type { Meta } from "@storybook/web-components";
 
-import Toolbar from "@ui5/webcomponents/dist/Toolbar";
+import type Toolbar from "@ui5/webcomponents/dist/Toolbar.js";
+import ToolbarAlign from "@ui5/webcomponents/dist/types/ToolbarAlign.js";
 
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
-
-import ToolbarAlign from "@ui5/webcomponents/dist/types/ToolbarAlign.js";
 
 import { DocsPage } from "../../../.storybook/docs";
 
 const component = "ui5-toolbar";
 
 export default {
-  title: "Main/Toolbar",
-  component,
-  subcomponents: { ToolbarItem: "ui5-toolbar-item" },
-  argTypes,
-  parameters: {
-    docs: {
-      page: DocsPage({ ...componentInfo, component })
-    },
-  },
+	title: "Main/Toolbar",
+	component: "Toolbar",
+	subcomponents: {
+		ToolbarButton: "ToolbarButton",
+		ToolbarSelect: "ToolbarSelect",
+		ToolbarSelectOption: "ToolbarSelectOption",
+		ToolbarSeparator: "ToolbarSeparator",
+		ToolbarSpacer: "ToolbarSpacer",
+	},
+	argTypes,
+	parameters: {
+		docs: {
+			page: DocsPage({ ...componentInfo, component })
+		},
+	},
 } as Meta<Toolbar>;
 
 const Template: UI5StoryArgs<Toolbar, StoryArgsSlots> = (args) => {
-	return html` <ui5-toolbar
+	return html`<ui5-toolbar
 		align-content="${ifDefined(args.alignContent)}"
 	>
 		${unsafeHTML(args.default)}
-	</ui5-toolbar>`;
+</ui5-toolbar>`;
 };
 
 export const Basic = Template.bind({});
-
-Basic.args = {
-
-	default: `
-  <ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
-  <ui5-toolbar-button icon="add" text="Right 1"></ui5-toolbar-button>
-  <ui5-toolbar-button icon="employee" text="Right 4"></ui5-toolbar-button>
-  <ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>`,
-  };
 Basic.storyName = "Basic";
+Basic.args = {
+	default: `
+	<ui5-toolbar-button 
+	icon="decline"
+	text="Mid 2">
+	</ui5-toolbar-button>
+	<ui5-toolbar-button
+  		icon="add"
+  		text="Right 1">
+	</ui5-toolbar-button>
+	<ui5-toolbar-button
+  		icon="employee"
+		text="Right 4">
+	</ui5-toolbar-button>
+	<ui5-toolbar-button
+		id="myOverflowBtn"
+		icon="employee"
+		text="Call me later">
+	</ui5-toolbar-button>`,
+};
+
 
 export const WithSpacer: UI5StoryArgs<Toolbar, StoryArgsSlots> =  Template.bind({});
 
@@ -54,7 +71,11 @@ WithSpacer.args = {
 	<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 	<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
 	<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
-	<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+	<ui5-toolbar-select>
+			<ui5-toolbar-select-option>1</ui5-toolbar-select-option>
+			<ui5-toolbar-select-option selected>2</ui5-toolbar-select-option>
+			<ui5-toolbar-select-option>3</ui5-toolbar-select-option>
+		</ui5-toolbar-select>
 	<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
 	<ui5-toolbar-spacer></ui5-toolbar-spacer>
 	<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
@@ -70,7 +91,11 @@ WithSeparator.args = {
 		<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+		<ui5-toolbar-select>
+			<ui5-toolbar-select-option>1</ui5-toolbar-select-option>
+			<ui5-toolbar-select-option selected>2</ui5-toolbar-select-option>
+			<ui5-toolbar-select-option>3</ui5-toolbar-select-option>
+		</ui5-toolbar-select>
 		<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
 		<ui5-toolbar-separator></ui5-toolbar-separator>
 		<ui5-toolbar-button icon="decline" text="Mid 2"></ui5-toolbar-button>
@@ -79,16 +104,20 @@ WithSeparator.args = {
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>`
 }
 
-export const WithAlwaysOverflowElements: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
+export const WithAlwaysOverflowItems: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
 
-WithAlwaysOverflowElements.storyName = "'AlwaysOverflow' elements";
+WithAlwaysOverflowItems.storyName = "With 'AlwaysOverflow' items";
 
-WithAlwaysOverflowElements.args = {
+WithAlwaysOverflowItems.args = {
 	default: `
 		<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+		<ui5-toolbar-select>
+			<ui5-toolbar-select-option>1</ui5-toolbar-select-option>
+			<ui5-toolbar-select-option selected>2</ui5-toolbar-select-option>
+			<ui5-toolbar-select-option>3</ui5-toolbar-select-option>
+		</ui5-toolbar-select>
 		<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Mid 2" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="add" text="Right 1" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>
@@ -96,16 +125,20 @@ WithAlwaysOverflowElements.args = {
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>`
 }
 
-export const WithNeverOverflowElements: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
+export const WithNeverOverflowItems: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
 
-WithNeverOverflowElements.storyName = "'NeverOverflow' elements";
+WithNeverOverflowItems.storyName = "With 'NeverOverflow' items";
 
-WithNeverOverflowElements.args = {
+WithNeverOverflowItems.args = {
 	default: `
 		<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 2" ></ui5-toolbar-button>
 		<ui5-toolbar-button icon="employee" text="Left 3"></ui5-toolbar-button>
-		<ui5-toolbar-button icon="decline" text="Left 4"></ui5-toolbar-button>
+		<ui5-toolbar-select>
+			<ui5-toolbar-select-option>1</ui5-toolbar-select-option>
+			<ui5-toolbar-select-option selected>2</ui5-toolbar-select-option>
+			<ui5-toolbar-select-option>3</ui5-toolbar-select-option>
+		</ui5-toolbar-select>
 		<ui5-toolbar-button icon="add" text="Mid 1"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Mid 2" ></ui5-toolbar-button>
 		<ui5-toolbar-button icon="add" text="Right 1" overflow-priority="NeverOverflow"></ui5-toolbar-button>
@@ -113,13 +146,13 @@ WithNeverOverflowElements.args = {
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="NeverOverflow"></ui5-toolbar-button>`
 }
 
-export const WithStartAlignedElements = Template.bind({});
+export const WithStartAlignedItems = Template.bind({});
 
 
-WithStartAlignedElements.storyName = "Toolbar with 'Start' aligned elements";
+WithStartAlignedItems.storyName = "With 'Start' aligned items";
 
-WithStartAlignedElements.args = {
-  alignContent: ToolbarAlign.Start,
-  default: Basic.args.default
+WithStartAlignedItems.args = {
+	alignContent: ToolbarAlign.Start,
+	default: Basic.args.default
 };
 
