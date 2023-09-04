@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.2...v1.17.0) (2023-09-01)
+
+
+### Bug Fixes
+
+* **ui5-combobox:** enhance storybook samples ([#7469](https://github.com/SAP/ui5-webcomponents/issues/7469)) ([0f54160](https://github.com/SAP/ui5-webcomponents/commit/0f54160423ef193a591ef748601e1738cc0ce030))
+* **ui5-input:** enhance storybook samples ([#7532](https://github.com/SAP/ui5-webcomponents/issues/7532)) ([e48da75](https://github.com/SAP/ui5-webcomponents/commit/e48da755758dc7cc26b0da4a4999d79ed98753ac))
+* **ui5-multi-input:** enhance storybook samples ([#7534](https://github.com/SAP/ui5-webcomponents/issues/7534)) ([1206df2](https://github.com/SAP/ui5-webcomponents/commit/1206df26ea6f0fc999e93055ca8e52170cd483fc))
+* **ui5-table:** enhance storybook samples ([#7517](https://github.com/SAP/ui5-webcomponents/issues/7517)) ([4e6a56b](https://github.com/SAP/ui5-webcomponents/commit/4e6a56bfaa22fa7ce780f53c37e5e867e30b5507))
+* **ui5-textarea:** enhance storybook samples ([#7443](https://github.com/SAP/ui5-webcomponents/issues/7443)) ([e10575d](https://github.com/SAP/ui5-webcomponents/commit/e10575d2d500eb749464bc555e26da6530db73fb))
+
+
+### Features
+
+* **ui5-toolbar:** web component introduced ([#7024](https://github.com/SAP/ui5-webcomponents/issues/7024)) ([2f329fe](https://github.com/SAP/ui5-webcomponents/commit/2f329fe2d237d24f05ed140658e39752d6d9d8ae))
+
+
+
+
+
 # [1.17.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.1...v1.17.0-rc.2) (2023-08-24)
 
 
