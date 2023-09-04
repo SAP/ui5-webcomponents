@@ -153,7 +153,13 @@ InShellBar.args = {
 
 InShellBar.decorators = [
 	(story) => {
-		return html`${story()}
+		return html`<style>
+		#popover-with-notifications::part(content) {
+			padding: 0;
+			max-width: 400px;
+		}
+	</style>
+	${story()}
 <ui5-li-notification
 	show-close
 	title-text="New order (#2525) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc."
@@ -195,7 +201,7 @@ InShellBar.decorators = [
 <ui5-popover
 	placement-type="Bottom"
 	horizontal-align="Right"
-	style="max-width: 400px"
+	id="popover-with-notifications"
 >
 	${wrapInList(story)}
 </ui5-popover>

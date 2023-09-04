@@ -168,8 +168,9 @@ actions: `<ui5-notification-action icon="accept" text="Accept All" slot="actions
 InShellBar.decorators = [
 	(story) => {
 		return html`<style>
-		#popover-with-notifications::part(content){
+		#popover-with-notifications::part(content) {
 			padding: 0;
+			max-width: 400px;
 		}
 	</style>
 	${story()}
@@ -220,7 +221,6 @@ InShellBar.decorators = [
 <ui5-popover
 	placement-type="Bottom"
 	horizontal-align="Right"
-	style="max-width: 400px"
 	id="popover-with-notifications"
 >
 	${wrapInList(story)}
