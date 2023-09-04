@@ -16,8 +16,6 @@
 		id="{{_id}}-time-sel"
 		value="{{_timeSelectionValue}}"
 		format-pattern="{{_formatPattern}}"
-		.minutesStep="{{minutesStep}}"
-		.secondsStep="{{secondsStep}}"
 		@ui5-change="{{onTimeSelectionChange}}"
 		@close-picker="{{submitPickers}}"
 	></ui5-time-selection-clocks>
@@ -47,8 +45,6 @@
 			id="{{_id}}-time-sel-inputs"
 			value="{{_timeSelectionValue}}"
 			format-pattern="{{_formatPattern}}"
-			.minutesStep="{{minutesStep}}"
-			.secondsStep="{{secondsStep}}"
 			@ui5-change="{{onTimeSelectionChange}}"
 			@close-inputs="{{submitInputsPopover}}"
 		></ui5-time-selection-inputs>

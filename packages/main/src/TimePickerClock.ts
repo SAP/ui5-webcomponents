@@ -51,7 +51,6 @@ type TimePickerClockSelectedItem = TimePickerClockItem & TimePickerClockSelectio
 
 const ANIMATION_DURATION_MAX = 200; // total animation duration, without the delay before firing the event
 const ANIMATION_DELAY_EVENT = 100; // delay before firing the event
-const LONG_TOUCH_DURATION = 1000; // duration for long-touch interaction
 const CLOCK_ANGLE_STEP = 6;
 const CLOCK_NUMBER_CLASS = "ui5-tp-clock-number";
 const CLOCK_NUMBER_HOVER_CLASS = "ui5-tp-clock-number-hover";
@@ -188,7 +187,6 @@ class TimePickerClock extends UI5Element {
 	 * If provided, this will replace the last item displayed. If there is only one (outer) circle,
 	 * the last item from outer circle will be replaced; if there is an inner circle too, the last
 	 * item of inner circle will be replaced. Usually, the last item '24' is replaced with '0'.
-	 * Do not replace the last item if <code>support2400</code> is set to <code>true</code>.
 	 *
 	 * @name sap.ui.webc.main.TimePickerClock.prototype.lastItemReplacement
 	 * @type {integer}
@@ -244,30 +242,6 @@ class TimePickerClock extends UI5Element {
 	valueStep!: number;
 
 	/**
-	 * Allows to set a value of 24:00, used to indicate the end of the day.
-	 * Works only with HH or H formats. Don't use it together with am/pm.
-	 *
-	 * When this property is set to <code>true</code>, the clock can display either 24 or 00 as last hour.
-	 * The change between 24 and 00 (and vice versa) can be done as follows:
-	 *
-	 * - on a desktop device: hold down the <code>Ctrl</code> key (this changes 24 to 00 and vice versa), and either
-	 * click with mouse on the 00/24 number, or navigate to this value using Arrow keys/PageUp/PageDown and press
-	 * <code>Space</code> key (Space key selects the highlighted value and switch to the next available clock).
-	 *
-	 * - on mobile/touch device: make a long touch on 24/00 value - this action toggles the value to the opposite one.
-	 *
-	 * - on both device types, if there is a keyboard attached: 24 or 00 can be typed directly.
-	 *
-	 * <b>Note:</b> Don't use it together with am/pm.
-	 *
-	 * @name sap.ui.webc.main.TimePickerClock.prototype.support2400
-	 * @type {boolean}
-	 * @defaultvalue false
-	 */
-	@property({ type: Boolean })
-	support2400!: boolean;
-
-	/**
 	 * Defines the currently available Time Picker Clock items depending on Clock setup.
 	 *
 	 * @type {Array}
@@ -308,15 +282,6 @@ class TimePickerClock extends UI5Element {
 	 */
 	@property({ type: Boolean, noAttribute: true })
 	_cancelTouchOut!: boolean;
-
-	/**
-	 * Visibility of '24' on Hours clock flag.
-	 *
-	 * @type {boolean}
-	 * @defaultvalue false
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_is24HoursVisible!: boolean;
 
 	/**
 	 * Calculated selected value of the clock during interactions.
@@ -363,15 +328,6 @@ class TimePickerClock extends UI5Element {
 	@property({ type: Boolean, noAttribute: true })
 	_animationInProgress!: boolean;
 
-	/**
-	 * Stores the ID of the long touch timeout.
-	 *
-	 * @type {integer}
-	 * @defaultvalue -1
-	 */
-	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
-	_longTouchId!: number;
-
 	_fnOnMouseOutUp: () => void;
 
 	constructor() {
@@ -416,13 +372,11 @@ class TimePickerClock extends UI5Element {
 		let realValue = value;
 		const maxValue = this.itemMax * (this.showInnerCircle ? 2 : 1);
 
-		if (!this.support2400)	{
-			if (realValue === 0) {
-				realValue = maxValue;
-			}
-			if (realValue === maxValue && this.lastItemReplacement !== -1) {
-				realValue = this.lastItemReplacement;
-			}
+		if (realValue === 0) {
+			realValue = maxValue;
+		}
+		if (realValue === maxValue && this.lastItemReplacement !== -1) {
+			realValue = this.lastItemReplacement;
 		}
 
 		return realValue;
@@ -485,7 +439,6 @@ class TimePickerClock extends UI5Element {
 				"innerItem": this.showInnerCircle ? (i + this.itemMax).toString() : undefined,
 			});
 		}
-
 		if (this.lastItemReplacement !== -1) {
 			if (this.showInnerCircle && this.prependZero) {
 				values[values.length - 1].innerItem = this.lastItemReplacement.toString().padStart(2, "0");
@@ -536,29 +489,6 @@ class TimePickerClock extends UI5Element {
 	}
 
 	/**
-	 * Returns the visibility of '24' hour value as a last clock item.
-	 *
-	 * @returns {boolean} Visibility of the '24' hour value
-	 */
-	_get24HoursVisible() {
-		return this.support2400 ? this._is24HoursVisible : false;
-	}
-
-	/**
-	 * Sets the visibility of '24' hour
-	 *
-	 * @param {boolean} isVisible visibility of the '24' hour item.
-	 */
-	_set24HoursVisible(isVisible: boolean) {
-		if (this.support2400) {
-			this._is24HoursVisible = isVisible;
-			this.lastItemReplacement = isVisible ? 24 : 0;
-		} else {
-			this._is24HoursVisible = false;
-		}
-	}
-
-	/**
 	 * Calculates the outer height of a HTML element.
 	 *
 	 * @param {HTMLElement} element The element which outer height to be calculated
@@ -570,6 +500,7 @@ class TimePickerClock extends UI5Element {
 		}
 
 		const style = window.getComputedStyle(element);
+
 		return element.offsetHeight + parseInt(style.marginTop) + parseInt(style.marginBottom);
 	}
 
@@ -583,7 +514,9 @@ class TimePickerClock extends UI5Element {
 		if (value === this._getMaxValue() && this.lastItemReplacement !== -1) {
 			value = this.lastItemReplacement;
 		}
+
 		const valueString = this.showInnerCircle && value === this.lastItemReplacement && this.prependZero ? value.toString().padStart(2, "0") : value.toString();
+
 		return `#${this._id}-${valueString}`;
 	}
 
@@ -651,7 +584,6 @@ class TimePickerClock extends UI5Element {
 		const isInner = this.showInnerCircle && radius <= this._dimensionParameters.innerMax && radius > this._dimensionParameters.innerMin;
 		const isOuterHover = radius <= this._dimensionParameters.outerMax && radius > this._dimensionParameters.outerMin;
 		const isInnerHover = isInner;
-		const is24HoursVisible = this._get24HoursVisible();
 		let finalAngle = Math.round((angle === 0 ? 360 : angle) / angleStep) * angleStep;
 
 		if (finalAngle === 0) {
@@ -664,45 +596,16 @@ class TimePickerClock extends UI5Element {
 			if (isInner) {
 				this._selectedValue += this.itemMax;
 			}
-			if (this.support2400 && !is24HoursVisible && this._selectedValue === 24) {
-				this._selectedValue = 0;
-			}
 		} else {
 			this._selectedValue = -1;
 		}
 
 		// hover simulation calculations
-		if (isInnerHover || isOuterHover) {
-			this._hoveredValue = this.support2400 && !is24HoursVisible && this._selectedValue === 0 ? 24 : this._selectedValue;
-		} else {
-			this._hoveredValue = -1;
-		}
+		this._hoveredValue = isInnerHover || isOuterHover ? this._selectedValue : -1;
 
 		if (this._selectedValue === this._getMaxValue() && this.lastItemReplacement !== -1) {
 			this._selectedValue = this.lastItemReplacement;
 		}
-	}
-
-	/**
-	 * Clears the currently existing long touch period and starts new one if requested.
-	 */
-	_resetLongTouch() {
-		if (this._longTouchId !== -1) {
-			clearTimeout(this._longTouchId);
-		}
-	}
-
-	/**
-	 * Starts new long touch period.
-	 */
-	_startLongTouch() {
-		this._longTouchId = window.setTimeout(() => {
-			const value = this._selectedValue;
-			this._longTouchId = -1;
-			if (value === 0 || value === 24) {
-				this._toggle2400();
-			}
-		}, LONG_TOUCH_DURATION);
 	}
 
 	/**
@@ -756,24 +659,12 @@ class TimePickerClock extends UI5Element {
 	 * @param {number} delay delay of the single step
 	 */
 	_selectNextNumber(firstSelected: number, lastSelected: number, direction: number, maxValue: number, newValue: number, delay: number) {
-		let current;
-		const is24HoursVisible = this._get24HoursVisible();
+		const current = firstSelected > maxValue ? firstSelected - maxValue : firstSelected;
 
 		if (firstSelected === lastSelected) {
 			this._animationInProgress = false;
 		}
-
-		current = firstSelected > maxValue ? firstSelected - maxValue : firstSelected;
-		if (this.support2400) {
-			if (current === 24 && !is24HoursVisible) {
-				current = 0;
-			} else if (current === 0 && is24HoursVisible) {
-				current = 24;
-			}
-		}
-
 		this._setSelectedValue(current);
-
 		if (firstSelected !== lastSelected) {
 			firstSelected += direction;
 			setTimeout(() => {
@@ -797,23 +688,17 @@ class TimePickerClock extends UI5Element {
 	 * @param {boolean} increase whether to increase or decrease the value
 	 */
 	_modifyValue(increase: boolean) {
-		let selectedValue: number = this.selectedValue;
-		let	replacementValue: number = this.lastItemReplacement;
-		let	minValue: number = this.itemMin;
-		let	maxValue: number = this.itemMax * (this.showInnerCircle ? 2 : 1);
-		let	step: number = this.valueStep;
-		let	newValue: number;
+		let selectedValue = this.selectedValue;
+		const replacementValue = this.lastItemReplacement;
+		const minValue = this.itemMin;
+		const maxValue = this.itemMax * (this.showInnerCircle ? 2 : 1);
+		let	step = this.valueStep;
+		let	newValue;
 
 		// fix step in order to change value to the nearest possible if step is > 1
 		if (selectedValue % step !== 0) {
 			newValue = increase ? Math.ceil(selectedValue / step) * step : Math.floor(selectedValue / step) * step;
 			step = Math.abs(selectedValue - newValue);
-		}
-
-		if (this.support2400 && !this._get24HoursVisible()) {
-			minValue = 0;
-			maxValue = 23;
-			replacementValue = -1;
 		}
 
 		if (selectedValue === replacementValue) {
@@ -822,7 +707,7 @@ class TimePickerClock extends UI5Element {
 		if (increase) {
 			selectedValue += step;
 			if (selectedValue > maxValue) {
-				selectedValue = this.support2400 ? minValue : selectedValue - maxValue;
+				selectedValue -= maxValue;
 			}
 		} else {
 			selectedValue -= step;
@@ -851,34 +736,12 @@ class TimePickerClock extends UI5Element {
 	}
 
 	/**
-	 * Toggles 24 and 0 values when a clock has <code>support2400</code> property set.
-	 *
-	 * @param {boolean} skipSelection Whether to skip the setting of the toggled value
-	 * @returns {this} the clock object for chaining
-	 */
-	_toggle2400(skipSelection = false) {
-		const bIs24HoursVisible: boolean = this._get24HoursVisible();
-		const value: number = bIs24HoursVisible ? 0 : 24;
-
-		this._cancelTouchOut = true;
-		this._set24HoursVisible(!bIs24HoursVisible);
-		this.lastItemReplacement = value;
-		if (!skipSelection) {
-			this._movSelectedValue = value;
-			this._setSelectedValue(value);
-		}
-
-		return this;
-	}
-
-	/**
 	 * TouchStart/MouseDown event handler.
 	 *
 	 * @param {event} evt Event object
 	 */
 	_onTouchStart(evt: Event) {
 		this._cancelTouchOut = false;
-
 		if (this.disabled || this._mouseOrTouchDown) {
 			return;
 		}
@@ -889,11 +752,6 @@ class TimePickerClock extends UI5Element {
 		this._movSelectedValue = this.selectedValue;
 		this._calculateDimensions();
 		this._calculatePosition(x, y);
-
-		if (this.support2400 && evt.type === "touchstart" && (this._selectedValue === 24 || this._selectedValue === 0)) {
-			this._resetLongTouch();
-			this._startLongTouch();
-		}
 		this._mouseOrTouchDown = true;
 	}
 
@@ -914,10 +772,6 @@ class TimePickerClock extends UI5Element {
 			if (!this.disabled && this._selectedValue !== -1 && this._selectedValue !== this._movSelectedValue) {
 				this._setSelectedValue(this._selectedValue);
 				this._movSelectedValue = 0 + this._selectedValue;
-				if (this.support2400 && evt.type === "touchmove" && (this._selectedValue === 24 || this._selectedValue === 0)) {
-					this._resetLongTouch();
-					this._startLongTouch();
-				}
 			}
 		} else if (evt.type === "mousemove") {
 			if (!this._dimensionParameters.radius) {
@@ -947,18 +801,11 @@ class TimePickerClock extends UI5Element {
 		if (!this._mouseOrTouchDown) {
 			return;
 		}
-
 		this._mouseOrTouchDown = false;
 		evt.preventDefault();
-
 		if (this.disabled || this._selectedValue === -1) {
 			return;
 		}
-
-		if (evt.type === "touchend") {
-			this._resetLongTouch();
-		}
-
 		if (!this._cancelTouchOut) {
 			this._changeValueAnimation(this._selectedValue);
 		}
@@ -971,8 +818,8 @@ class TimePickerClock extends UI5Element {
 	 */
 	_onMouseWheel(evt: WheelEvent) {
 		const increase = evt.detail ? (evt.detail > 0) : (evt.deltaY > 0 || evt.deltaX > 0);
-		evt.preventDefault();
 
+		evt.preventDefault();
 		if (!this._mouseOrTouchDown) {
 			this._modifyValue(increase);
 		}

@@ -361,7 +361,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 				"attributes": {
 					"min": 0,
 					"max": 59,
-					"step": this.minutesStep,
+					"step": 1,
 				},
 			});
 		}
@@ -385,7 +385,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 				"attributes": {
 					"min": 0,
 					"max": 59,
-					"step": this.secondsStep,
+					"step": 1,
 				},
 			});
 		}

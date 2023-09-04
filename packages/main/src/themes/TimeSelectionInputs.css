@@ -1,9 +1,9 @@
-.ui5-time-picker-numeric-input {
+.ui5-time-selection-numeric-input {
 	width: 2.875rem;
 	text-align: center;
 }
 
-.ui5-time-picker-inputs {
+.ui5-time-selection-inputs {
 	min-width: 12.5rem;
 	display: flex;
 	justify-content: center;

@@ -1,5 +1,5 @@
 	<div
-		class="ui5-time-picker-inputs"
+		class="ui5-time-selection-inputs"
 		@keydown="{{_onkeydown}}"
 	>
 	{{#each _entities}}
@@ -8,12 +8,13 @@
 		{{/if}}
 		<ui5-input
 			id="{{../_id}}_input_{{this.entity}}"
+			data-sap-input="{{this.entity}}"
 			type="{{../_numberType}}"
 			maxlength="2"
 			autocomplete="off"
 			pattern="[0-9]*"
 			inputmode="numeric"
-			class="ui5-time-picker-numeric-input"
+			class="ui5-time-selection-numeric-input"
 			.value="{{this.stringValue}}"
 			.accessibleName="{{this.label}}"
 			._nativeInputAttributes={{this.attributes}}

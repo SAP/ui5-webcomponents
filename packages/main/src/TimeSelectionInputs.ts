@@ -122,7 +122,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 	 * Returns the inner input element DOM reference.
 	 *
 	 * @param { Input } input the Input component
-	 * @returns
+	 * @returns { HTMLElement } inner input element
 	 */
 	_innerInput(input: Input) {
 		return input && input.getInputDOMRefSync();

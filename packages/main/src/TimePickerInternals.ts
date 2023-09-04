@@ -125,26 +125,6 @@ class TimePickerInternals extends UI5Element {
 	formatPattern!: string;
 
 	/**
-	 * Determines the minutes step. The minutes clock is populated only by multiples of the step.
-	 *
-	 * @type {integer}
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.secondsStep
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	minutesStep!: number;
-
-	/**
-	 * Determines the seconds step. The seconds clock is populated only by multiples of the step.
-	 *
-	 * @type {integer}
-	 * @name sap.ui.webc.main.TimePickerInternals.prototype.secondsStep
-	 * @public
-	 */
-	@property({ validator: Integer, defaultValue: 1 })
-	secondsStep!: number;
-
-	/**
 	 * The index of the active Clock/TogleSpinButton.
 	 *
 	 * @type {integer}

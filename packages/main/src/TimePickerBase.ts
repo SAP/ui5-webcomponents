@@ -372,7 +372,7 @@ class TimePickerBase extends UI5Element {
 			return;
 		}
 
-		if (isPhone() && target && !target.hasAttribute("ui5-icon")) {
+		if (this._isPhone && target && !target.hasAttribute("ui5-icon")) {
 			this.toggleInputsPopover();
 		}
 
@@ -428,7 +428,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_canOpenInputsPopover() {
-		return !this.disabled && isPhone();
+		return !this.disabled && this._isPhone;
 	}
 
 	async _getPopover() {
@@ -451,7 +451,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_onkeydown(e: KeyboardEvent) {
-		if (isPhone() && !this.isInputsPopoverOpen()) {
+		if (this._isPhone && !this.isInputsPopoverOpen()) {
 			e.preventDefault();
 		}
 		if (isShow(e)) {
@@ -584,7 +584,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	async _onfocusin(evt: FocusEvent) {
-		if (isPhone()) {
+		if (this._isPhone) {
 			this._hideMobileKeyboard();
 			if (this._isInputsPopoverOpen) {
 				const popover = await this._getInputsPopover();
@@ -595,7 +595,7 @@ class TimePickerBase extends UI5Element {
 	}
 
 	_oninput(evt: CustomEvent) {
-		if (isPhone()) {
+		if (this._isPhone) {
 			evt.preventDefault();
 		}
 	}
