@@ -47,8 +47,8 @@
 	position: absolute;
 	top: var(--_ui5_radio_button_focus_dist);
 	bottom: var(--_ui5_radio_button_focus_dist);
-	left: var(--_ui5_radio_button_focus_dist);
-	right: var(--_ui5_radio_button_focus_dist);
+	inset-inline-start: var(--_ui5_radio_button_focus_dist);
+	inset-inline-end: var(--_ui5_radio_button_focus_dist);
 	pointer-events: none;
 	border: var(--_ui5_radio_button_border_width) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	border-radius: var(--_ui5_radio_button_border_radius);
@@ -85,11 +85,11 @@
 
 /* with label */
 :host([text]) .ui5-radio-root {
-	padding-right: var(--_ui5_radio_button_border_width);
+	padding-inline-end: var(--_ui5_radio_button_border_width);
 }
 
 :host([text]) .ui5-radio-root:focus::before {
-	right: 0px;
+	inset-inline-end: 0px;
 }
 
 :host([text]) .ui5-radio-inner {
