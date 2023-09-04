@@ -8,4 +8,5 @@
     --ui5_carousel_inactive_dot_background: var(--sapContent_ForegroundBorderColor);
     --ui5_carousel_active_dot_border: 1px solid var(--sapContent_Selected_ForegroundColor);
     --ui5_carousel_active_dot_background: var(--sapContent_Selected_ForegroundColor);
+    --ui5_carousel_navigation_button_active_box_shadow: var(--sapContent_Shadow1);
 }

@@ -3,6 +3,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 
 import { registerToolbarItem } from "./ToolbarRegistry.js";
 
@@ -16,23 +17,26 @@ import Option from "./Option.js";
 import "./ToolbarSelectOption.js";
 import type { SelectChangeEventDetail } from "./Select.js";
 
+type ToolbarSelectChangeEventDetail = SelectChangeEventDetail;
+
 /**
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
  * The <code>ui5-toolbar-select</code> component is used to create a toolbar drop-down list.
- * The items inside the <code>ui5-toolbar-select</code> define the available options by using the <code>ui5-option</code> component.
+ * The items inside the <code>ui5-toolbar-select</code> define the available options by using the <code>ui5-toolbar-select-option</code> component.
  *
  * <h3>ES6 Module Import</h3>
- * <code>import "@ui5/webcomponents/dist/Select";</code>
+ * <code>import "@ui5/webcomponents/dist/ToolbarSelect";</code>
  * <br>
- * <code>import "@ui5/webcomponents/dist/Option";</code> (comes with <code>ui5-toolbar-select</code>)
+ * <code>import "@ui5/webcomponents/dist/ToolbarSelectOption";</code> (comes with <code>ui5-toolbar-select</code>)
  * @constructor
+ * @abstract
  * @author SAP SE
  * @alias sap.ui.webc.main.ToolbarSelect
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar-select
- * @appenddocs sap.ui.webc.main.Option
+ * @appenddocs sap.ui.webc.main.ToolbarSelectOption
  * @public
  * @since 1.17.0
  */
@@ -58,21 +62,32 @@ import type { SelectChangeEventDetail } from "./Select.js";
 /**
  * Fired after the component's dropdown menu opens.
  *
- * @event sap.ui.webc.ToolbarSelect#open
+ * @event sap.ui.webc.main.ToolbarSelect#open
  * @public
  */
 @event("open")
 /**
  * Fired after the component's dropdown menu closes.
  *
- * @event sap.ui.webc.ToolbarSelect#close
+ * @event sap.ui.webc.main.ToolbarSelect#close
  * @public
  */
 @event("close")
 
 class ToolbarSelect extends ToolbarItem {
-	@property({ type: String })
-	width!: string;
+	/**
+	 * Defines the width of the select.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
+	 *
+	 * @name sap.ui.webc.main.ToolbarSelect.prototype.width
+	 * @defaultvalue undefined
+	 * @type { sap.ui.webc.base.types.CSSSize }
+	 * @public
+	 */
+	@property({ validator: CSSSize })
+	width?: string;
 
 	/**
 	 * Defines the component options.
@@ -82,7 +97,7 @@ class ToolbarSelect extends ToolbarItem {
 	 * If more than one option is defined as selected, the last one would be considered as the selected one.
 	 *
 	 * <br><br>
-	 * <b>Note:</b> Use the <code>ui5-option</code> component to define the desired options.
+	 * <b>Note:</b> Use the <code>ui5-toolbar-select-option</code> component to define the desired options.
 	 * @type {sap.ui.webc.main.ISelectOption[]}
 	 * @slot options
 	 * @name sap.ui.webc.main.ToolbarSelect.prototype.default
@@ -188,7 +203,7 @@ class ToolbarSelect extends ToolbarItem {
 	_onEventHandler(e: Event): void {
 		if (e.type === "change") {
 			// update options
-			const selectedOption = (e as CustomEvent<SelectChangeEventDetail>).detail.selectedOption;
+			const selectedOption = (e as CustomEvent<ToolbarSelectChangeEventDetail>).detail.selectedOption;
 			const selectedOptionIndex = Number(selectedOption?.getAttribute("data-ui5-external-action-item-index"));
 			this.options.forEach((option: Option, index: number) => {
 				if (index === selectedOptionIndex) {
@@ -199,6 +214,12 @@ class ToolbarSelect extends ToolbarItem {
 			});
 		}
 	}
+
+	get styles() {
+		return {
+			width: this.width,
+		};
+	}
 }
 
 registerToolbarItem(ToolbarSelect);
@@ -206,3 +227,7 @@ registerToolbarItem(ToolbarSelect);
 ToolbarSelect.define();
 
 export default ToolbarSelect;
+
+export type {
+	ToolbarSelectChangeEventDetail,
+};

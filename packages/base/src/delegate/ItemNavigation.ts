@@ -381,7 +381,7 @@ class ItemNavigation {
 		}
 
 		if (currentItem.id) {
-			return currentItemDOMRef.querySelector(`#${currentItem.id}`) as HTMLElement;
+			return currentItemDOMRef.querySelector(`[id="${currentItem.id}"]`) as HTMLElement;
 		}
 	}
 }

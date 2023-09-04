@@ -43,7 +43,7 @@ type SelectMenuChange = {
  * The <code>ui5-select-menu</code> is meant to be used together with the <code>ui5-select</code> component as alternative
  * to define the select's dropdown. It acts as a popover on desktop and tablet, and as a Dialog on phone.
  * <br></br>
- * The component gives the possibilty to the user to customize the <code>ui5-select</code>'s dropdown
+ * The component gives the possibility to the user to customize the <code>ui5-select</code>'s dropdown
  * by slotting custom options and adding custom styles.
  *
  * <h3>Usage</h3>
@@ -268,7 +268,7 @@ class SelectMenu extends UI5Element {
 		return {
 			responsivePopoverHeader: {
 				"display": this.options.length && this.respPopover?.offsetWidth === 0 ? "none" : "inline-block",
-				"width": `${this.options.length ? this.respPopover?.offsetWidth : this.selectWidth || "auto"}px`,
+				"width": `${this.selectWidth!}px`,
 			},
 			responsivePopover: {
 				"min-width": `${this.selectWidth!}px`,
