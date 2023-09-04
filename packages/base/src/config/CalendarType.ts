@@ -27,7 +27,7 @@ const getCalendarType = (): CalendarType => {
 /**
  * Returns the configured secondary calendar type.
  * @public
- * @returns { CalendarType } the effective calendar type
+ * @returns { CalendarType | undefined } the effective calendar type
  * @since 1.18.0
  */
 const getSecondaryCalendarType = (): CalendarType | undefined => {
