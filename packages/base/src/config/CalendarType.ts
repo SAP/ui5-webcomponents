@@ -42,4 +42,7 @@ const getSecondaryCalendarType = (): CalendarType | undefined => {
 	return secondaryCalendarType;
 };
 
-export { getCalendarType, getSecondaryCalendarType }; // eslint-disable-line
+export {
+	getCalendarType,
+	getSecondaryCalendarType,
+};
