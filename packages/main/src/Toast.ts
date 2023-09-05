@@ -2,6 +2,8 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isMac } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ToastPlacement from "./types/ToastPlacement.js";
@@ -15,6 +17,33 @@ import ToastCss from "./generated/themes/Toast.css.js";
 // Constants
 const MIN_DURATION = 500;
 const MAX_DURATION = 1000;
+const openedToasts: Array<Toast> = [];
+let opener: HTMLElement | null;
+
+const handleGlobalKeydown = (e: KeyboardEvent) => {
+	const isCtrl = e.metaKey || (!isMac() && e.ctrlKey);
+	const isMKey = e.key.toLowerCase() === "m";
+	const isCombinationPressed = isCtrl && e.shiftKey && isMKey;
+	const hasOpenToast = openedToasts.length;
+
+	if (isCombinationPressed) {
+		e.preventDefault();
+
+		if (hasOpenToast) {
+			openedToasts[0].focusable = true;
+
+			if (openedToasts[0].focused) {
+				openedToasts[0].focused = false;
+				opener?.focus();
+			} else {
+				opener = (document.activeElement as HTMLElement);
+				openedToasts[0].focus();
+			}
+		}
+	}
+};
+
+document.addEventListener("keydown", handleGlobalKeydown);
 
 /**
  * @class
@@ -112,6 +141,24 @@ class Toast extends UI5Element {
 	domRendered!: boolean;
 
 	/**
+	 * Indicates whether the toast could be focused
+	 * This happens when ctr / command + shift + m is pressed
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focusable!: boolean;
+
+	/**
+	 * Indicates whether the toast is focused
+	 * This happens when ctr / command + shift + m is pressed
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
+
+	/**
 	 * Defines the text of the component.
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -154,6 +201,16 @@ class Toast extends UI5Element {
 		}
 	}
 
+	_onfocusin() {
+		if (this.focusable) {
+			this.focused = true;
+		}
+	}
+
+	_onfocusout() {
+		this.focused = false;
+	}
+
 	/**
 	 * If the minimum duration is lower than 500ms, we force
 	 * it to be 500ms, as described in the documentation.
@@ -178,7 +235,7 @@ class Toast extends UI5Element {
 				"transition-delay": this.open ? `${this.effectiveDuration - transitionDuration}ms` : "",
 
 				// We alter the opacity property, in order to trigger transition
-				"opacity": this.open && !this.hover ? "0" : "",
+				"opacity": this.open && !this.hover && !this.focused ? "0" : "",
 
 				"z-index": getNextZIndex(),
 			},
@@ -189,15 +246,20 @@ class Toast extends UI5Element {
 		this.domRendered = true;
 		requestAnimationFrame(() => {
 			this.open = true;
+			openedToasts.pop();
+			openedToasts.push(this);
 		});
 	}
 
 	_ontransitionend() {
-		if (this.hover) {
+		if (this.hover || this.focused) {
 			return;
 		}
 		this.domRendered = false;
 		this.open = false;
+		this.focusable = false;
+		this.focused = false;
+		openedToasts.pop();
 	}
 
 	_onmouseover() {
@@ -206,6 +268,17 @@ class Toast extends UI5Element {
 
 	_onmouseleave() {
 		this.hover = false;
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		if (isEscape(e)) {
+			this.focused = false;
+			opener?.focus();
+		}
+	}
+
+	get _tabindex() {
+		return this.focused ? "0" : "-1";
 	}
 }
 
