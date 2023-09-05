@@ -113,7 +113,6 @@ interface IOption extends UI5Element {
  *
  * 2. With SelectMenu (<code>ui5-select-menu</code>) and SelectMenuOption (<code>ui5-select-menu-option</code>) web components:
  * <br>
- *
  * The SelectMenu can be used as alternative to define the Select's dropdown
  * and can be used via the <code>menu</code> property of the Select to reference SelectMenu by its ID.
  * The component gives the possibility to customize the Select's dropdown
