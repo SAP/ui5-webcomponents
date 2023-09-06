@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.17.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.2...v1.17.0) (2023-09-01)
+
+
+### Bug Fixes
+
+* fix import in base/index.js ([#7496](https://github.com/SAP/ui5-webcomponents/issues/7496)) ([b0b542a](https://github.com/SAP/ui5-webcomponents/commit/b0b542a33e4685267731536114ff5d5f12c13210)), closes [#7493](https://github.com/SAP/ui5-webcomponents/issues/7493)
+* **framework:** fix OpenUI5Support usage in applyTheme ([#7485](https://github.com/SAP/ui5-webcomponents/issues/7485)) ([174f4b4](https://github.com/SAP/ui5-webcomponents/commit/174f4b462de254fd3eaab41a06d26c016c360d5d))
+
+
+### Features
+
+* introduce SelectMenu(Option) components ([#7447](https://github.com/SAP/ui5-webcomponents/issues/7447)) ([b21db20](https://github.com/SAP/ui5-webcomponents/commit/b21db20cdedacd97de5d4372add6171f16f00316))
+
+
+
+
+
 # [1.17.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.1...v1.17.0-rc.2) (2023-08-24)
 
 **Note:** Version bump only for package @ui5/webcomponents-base

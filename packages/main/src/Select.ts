@@ -818,7 +818,7 @@ class Select extends UI5Element implements IFormElement {
 
 	_scrollSelectedItem() {
 		if (this._isPickerOpen) {
-			const itemRef = this._currentlySelectedOption.getDomRef();
+			const itemRef = this._currentlySelectedOption?.getDomRef();
 			if (itemRef) {
 				itemRef.scrollIntoView({
 					behavior: "auto",

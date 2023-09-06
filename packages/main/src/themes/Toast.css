@@ -85,3 +85,10 @@
 	right: var(--_ui5_toast_horizontal_offset);
 	bottom: var(--_ui5_toast_vertical_offset);
 }
+
+:host([focused]) .ui5-toast-root {
+	outline-width: var(--sapContent_FocusWidth);
+	outline-style: var(--sapContent_FocusStyle);
+	outline-color: var(--sapContent_FocusColor);
+	outline-offset: var(--_ui5_toast_offset_width);
+}
