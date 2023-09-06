@@ -61,6 +61,7 @@
 
 ::slotted([ui5-segmented-button-item]:not(:first-child)) {
 	border-left-width: var(--_ui5_segmented_btn_item_border_left);
+	border-right-width: var(--_ui5_segmented_btn_item_border_right);
 }
 
 ::slotted([ui5-segmented-button-item][active]:not([active]):hover) {

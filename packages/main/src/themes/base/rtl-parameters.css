@@ -42,4 +42,7 @@
 	--_ui5-menu_item_icon_float: left;
 
 	--_ui5-shellbar-notification-btn-count-offset: unset;
+
+	--_ui5_segmented_btn_item_border_left: 0.0625rem;
+	--_ui5_segmented_btn_item_border_right: 0px;
 }
