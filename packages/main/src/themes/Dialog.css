@@ -46,64 +46,40 @@
 	position: relative;
 }
 
-:host([state="Error"]) ::slotted([slot="header"][ui5-bar]),
-:host([state="Error"]) .ui5-popup-header-root {
-	box-shadow: none;
-}
-
-:host([state="Error"]) .ui5-popup-header-root::before {
-	content: "";
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 0.0625rem;
-	background: var(--sapErrorBorderColor);
-}
-
-:host([state="Information"]) ::slotted([slot="header"][ui5-bar]),
-:host([state="Information"]) .ui5-popup-header-root {
-	box-shadow: none;
-}
-
-:host([state="Information"]) .ui5-popup-header-root::before {
-	content: "";
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 0.0625rem;
-	background: var(--sapInformationBorderColor);
-}
-
-:host([state="Success"]) ::slotted([slot="header"][ui5-bar]),
-:host([state="Success"]) .ui5-popup-header-root {
-	box-shadow: none;
-}
-
-:host([state="Success"]) .ui5-popup-header-root::before {
-	content: "";
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	height: 0.0625rem;
-	background: var(--sapSuccessBorderColor);
-}
-
-:host([state="Warning"]) ::slotted([slot="header"][ui5-bar]),
-:host([state="Warning"]) .ui5-popup-header-root {
-	box-shadow: none;
-}
-
+:host([state="Error"]) .ui5-popup-header-root::before,
+:host([state="Information"]) .ui5-popup-header-root::before,
+:host([state="Success"]) .ui5-popup-header-root::before,
 :host([state="Warning"]) .ui5-popup-header-root::before {
 	content: "";
 	position: absolute;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	inset-block-start: auto;
+	inset-block-end: 0;
+	inset-inline-start: 0;
+	inset-inline-end: 0;
 	height: 0.0625rem;
+}
+
+:host([state="Error"]) .ui5-popup-header-root::before {
+	background: var(--sapErrorBorderColor);
+}
+
+:host([state="Information"]) .ui5-popup-header-root::before {
+	background: var(--sapInformationBorderColor);
+}
+
+:host([state="Success"]) .ui5-popup-header-root::before {
+	background: var(--sapSuccessBorderColor);
+}
+
+:host([state="Warning"]) .ui5-popup-header-root::before {
 	background: var(--sapWarningBorderColor);
+}
+
+:host([state="Error"]) ::slotted([slot="header"][ui5-bar]),
+:host([state="Information"]) ::slotted([slot="header"][ui5-bar]),
+:host([state="Success"]) ::slotted([slot="header"][ui5-bar]),
+:host([state="Warning"]) ::slotted([slot="header"][ui5-bar]) {
+	box-shadow: none;
 }
 
 .ui5-dialog-value-state-icon {
