@@ -28,7 +28,9 @@ import ToolbarAlign from "./types/ToolbarAlign.js";
 import ToolbarItemOverflowBehavior from "./types/ToolbarItemOverflowBehavior.js";
 import HasPopup from "./types/HasPopup.js";
 
-import type { ToolbarItem } from "./ToolbarItem.js";
+import type ToolbarItem from "./ToolbarItem.js";
+import type ToolbarSeparator from "./ToolbarSeparator.js";
+
 import {
 	getRegisteredToolbarItem,
 	getRegisteredStyles,
@@ -71,6 +73,7 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
  * @alias sap.ui.webc.main.Toolbar
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-toolbar
+ * @appenddocs sap.ui.webc.main.ToolbarButton sap.ui.webc.main.ToolbarSelect sap.ui.webc.main.ToolbarSelectOption sap.ui.webc.main.ToolbarSeparator sap.ui.webc.main.ToolbarSpacer
  * @public
  * @since 1.17.0
  */
@@ -81,7 +84,6 @@ function parsePxValue(styleSet: CSSStyleDeclaration, propertyName: string): numb
 	template: ToolbarTemplate,
 	staticAreaTemplate: ToolbarPopoverTemplate,
 })
-
 class Toolbar extends UI5Element {
 	static i18nBundle: I18nBundle;
 
@@ -151,12 +153,13 @@ class Toolbar extends UI5Element {
 	accessibleNameRef!: string;
 
 	/**
-	* Slotted Toolbar items
-	* @type {sap.ui.webc.main.IToolbarItem[]}
-	* @name sap.ui.webc.main.Toolbar.prototype.items
-	* @slot items
-	* @public
-	*/
+	 * Defines the items of the component.
+	 *
+	 * @type {sap.ui.webc.main.IToolbarItem[]}
+	 * @name sap.ui.webc.main.Toolbar.prototype.default
+	 * @slot items
+	 * @public
+	 */
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<ToolbarItem>
 
@@ -236,7 +239,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get overflowItems() {
-		// spacers and separators are ignored
+		// spacers are ignored
 		const overflowItems = this.getItemsInfo(this.itemsToOverflow.filter(item => !item.ignoreSpace));
 		return this.reverseOverflow ? overflowItems.reverse() : overflowItems;
 	}
@@ -246,7 +249,7 @@ class Toolbar extends UI5Element {
 	}
 
 	get hideOverflowButton() {
-		return this.overflowItems.length === 0;
+		return this.itemsToOverflow.filter(item => !(item.ignoreSpace || item.isSeparator)).length === 0;
 	}
 
 	get classes() {
@@ -438,18 +441,45 @@ class Toolbar extends UI5Element {
 		// If the last bar item is a spacer, force it to the overflow even if there is enough space for it
 		if (index < movableItems.length) {
 			let lastItem = movableItems[index];
-			while (lastItem?.ignoreSpace) {
+			while (index <= movableItems.length - 1 && lastItem.isSeparator) {
 				this.itemsToOverflow.unshift(lastItem);
 				index++;
 				lastItem = movableItems[index];
 			}
 		}
+
+		this.setSeperatorsVisibilityInOverflow();
 	}
 
 	distributeItemsThatAlwaysOverflow() {
 		this.alwaysOverflowItems.forEach((item: ToolbarItem) => {
 			this.itemsToOverflow.push(item);
 		});
+	}
+
+	setSeperatorsVisibilityInOverflow() {
+		this.itemsToOverflow.forEach((item, idx, items) => {
+			if (item.isSeparator) {
+				(item as ToolbarSeparator).visible = this.shouldShowSeparatorInOverflow(idx, items);
+			}
+		});
+	}
+
+	shouldShowSeparatorInOverflow(separatorIdx: number, overflowItems: Array<ToolbarItem>) {
+		let foundPrevNonSeparatorItem = false;
+		let foundNextNonSeperatorItem = false;
+
+		// search for non-separator item before and after the seperator
+		overflowItems.forEach((item, idx) => {
+			if (idx < separatorIdx && !item.isSeparator) {
+				foundPrevNonSeparatorItem = true;
+			}
+			if (idx > separatorIdx && !item.isSeparator) {
+				foundNextNonSeperatorItem = true;
+			}
+		});
+
+		return foundPrevNonSeparatorItem && foundNextNonSeperatorItem;
 	}
 
 	/**
@@ -555,7 +585,7 @@ class Toolbar extends UI5Element {
 
 	getItemWidth(item: ToolbarItem): number {
 		// Spacer width - always 0 for flexible spacers, so that they shrink, otherwise - measure the width normally
-		if (item.ignoreSpace) {
+		if (item.ignoreSpace || item.isSeparator) {
 			return 0;
 		}
 		const id: string = item._id;

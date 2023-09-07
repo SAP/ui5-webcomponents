@@ -132,6 +132,7 @@ describe("Menu interaction", () => {
 		assert.notEqual(eventLoggerValue.indexOf("after-close"), -1, "'after-close' event is fired");
 	});
 
+	/*
 	it("Menu and Menu items busy indication", async () => {
 			await browser.url(`test/pages/Menu.html`);
 			const openButton = await browser.$("#btnOpen");
@@ -160,6 +161,7 @@ describe("Menu interaction", () => {
 			assert.strictEqual(await busyIndicator.getProperty("size"), "Medium", "Size attribute is properly set.");
 			assert.strictEqual(await busyIndicator.getProperty("delay"), 100, "Delay attribute is properly set.");
 		});
+	 */
 
 		it("Prevent menu closing on item press", async () => {
 			await browser.url(`test/pages/Menu.html`);

@@ -1,5 +1,7 @@
 import { assert } from "chai";
 
+const isMacOS = process.platform === 'darwin';
+const keyCtrlToPress = isMacOS ? 'Command' : 'Control';
 
 describe("Toast general interaction", () => {
 	before(async () => {
@@ -148,5 +150,54 @@ describe("Toast general interaction", () => {
 
 		assert.strictEqual(await toast.getProperty("effectiveDuration"), 500,
 				"Duration property is forced to be 500, when -1 is passed for duration attribute.");
+	});
+});
+
+describe("Keyboard handling", () => {
+	beforeEach(async () => {
+		await browser.url(`test/pages/Toast.html`);
+	});
+
+	it("focus should be correct toggling keyboard combination ctrl/command + shift + m and return the focus to the opener", async () => {
+		const button = await browser.$("#wcBtnShowToastTC");
+
+		await button.click();
+		await browser.keys([keyCtrlToPress, "Shift", "m"]);
+
+		let activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
+		assert.strictEqual(activeElementId, "wcToastTC", "Focus is on toast");
+
+		await browser.keys([keyCtrlToPress, "Shift", "m"]);
+		activeElementId = await browser.$(await browser.getActiveElement()).getAttribute("id");
+		assert.strictEqual(activeElementId, "wcBtnShowToastTC", "Focus is return on button");
+	});
+
+	it("toast should be closed on pressing esc key", async () => {
+		const button = await browser.$("#wcBtnShowToastTC");
+		const toast = await browser.$("#wcToastTC");
+
+		await button.click();
+		await browser.pause(1000);
+		await browser.keys([keyCtrlToPress, "Shift", "m"]);
+		await browser.pause(3000);
+		assert.ok(await toast.getProperty("open"), "Toast should stay open");
+
+		await toast.keys("Escape");
+		await browser.pause(5000);
+		assert.notOk(await toast.getProperty("open"), "Toast should be closed");
+	});
+
+	it("Opens two toasts in a row and focuses the last open", async () => {
+		const firstOpener = await browser.$("#wcBtnShowToastTS");
+		const secondOpener = await browser.$("#wcBtnShowToastTC");
+		const toast = await browser.$("#wcToastTC");
+
+		await firstOpener.click();
+		await secondOpener.click();
+
+		await browser.keys([keyCtrlToPress, "Shift", "m"]);
+		await browser.pause(3000);
+
+		assert.ok(await toast.getProperty("open"), "second Toast should stay open");
 	});
 });

@@ -110,6 +110,17 @@ class Link extends UI5Element implements ITabbable {
 	disabled!: boolean;
 
 	/**
+	 * Defines the tooltip of the component.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @private
+	 * @name sap.ui.webc.main.Link.prototype.title
+	 * @since 1.18.0
+	 */
+	 @property()
+	 title!: string;
+
+	/**
 	 * Defines the component href.
 	 * <br><br>
 	 * <b>Note:</b> Standard hyperlink behavior is supported.
