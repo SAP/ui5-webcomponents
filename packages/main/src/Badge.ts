@@ -6,10 +6,10 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
-import ValueState from "@ui5/webcomponents-base/dist/types/ValueState";
-import IndicatorColorType from "@ui5/webcomponents-base/dist/types/types/IndicatorColorType";
-import BadgeDesignType from "@ui5/webcomponents-base/dist/types/BadgeDesignType";
-import WrappingType from "@ui5/webcomponents-base/dist/types/types/WrappingType";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import IndicatorColorType from "@ui5/webcomponents-base/dist/types/types/IndicatorColorType.js";
+import BadgeDesignType from "@ui5/webcomponents-base/dist/types/BadgeDesignType.js";
+import WrappingType from "@ui5/webcomponents-base/dist/types/types/WrappingType.js";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
