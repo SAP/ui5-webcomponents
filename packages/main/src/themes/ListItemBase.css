@@ -44,7 +44,6 @@
 /* focused */
 :host([focused]) .ui5-li-root.ui5-li--focusable {
 	outline: none;
-	border-radius: inherit;
 }
 
 :host([focused]) .ui5-li-root.ui5-li--focusable:after {
@@ -52,7 +51,6 @@
 	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	position: absolute;
 	border-radius: var(--ui5-listitem-focus-border-radius);
-	/* border-radius: inherit; */
 	top: var(--ui5-listitem-focus-offset);
 	right: var(--ui5-listitem-focus-offset);
 	bottom: var(--ui5-listitem-focus-offset);
@@ -76,19 +74,12 @@
 }
 
 :host([disabled]) {
-    opacity: var(--_ui5-listitembase_disabled_opacity);
-    pointer-events: none;
+	opacity: var(--_ui5-listitembase_disabled_opacity);
+	pointer-events: none;
 }
 
 .ui5-li-content {
 	max-width: 100%;
 	font-family: "72override", var(--sapFontFamily);
 	color: var(--sapList_TextColor);
-}
-
-:host([_is-last-item]) {
-	/* border-radius: var(--_ui5_last_item_border-radius); */
-	border-bottom-right-radius: inherit;
-	border-bottom-left-radius: inherit;
-
 }

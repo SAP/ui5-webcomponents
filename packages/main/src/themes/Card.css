@@ -33,7 +33,7 @@
 }
 
 .ui5-card-root.ui5-card--nocontent .ui5-card-header-root  {
-    border-bottom: none;
+	border-bottom: none;
 }
 
 .ui5-card--nocontent ::slotted([ui5-card-header]) {
