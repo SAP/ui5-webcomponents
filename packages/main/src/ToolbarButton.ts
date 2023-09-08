@@ -1,6 +1,7 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
+import CSSSize from "@ui5/webcomponents-base/dist/types/CSSSize.js";
 import Button from "./Button.js";
 import ButtonDesign from "./types/ButtonDesign.js";
 
@@ -191,12 +192,12 @@ class ToolbarButton extends ToolbarItem {
 	 * <b>Note:</b> all CSS sizes are supported - 'percentage', 'px', 'rem', 'auto', etc.
 	 *
 	 * @name sap.ui.webc.main.ToolbarButton.prototype.width
-	 * @defaultvalue ""
-	 * @type {string}
+	 * @defaultvalue undefined
+	 * @type { sap.ui.webc.base.types.CSSSize }
 	 * @public
 	 */
-	@property()
-	width!: string;
+	@property({ validator: CSSSize })
+	width?: string;
 
 	static get staticAreaStyles() {
 		return ToolbarButtonPopoverCss;

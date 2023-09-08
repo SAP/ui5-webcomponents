@@ -2,6 +2,10 @@
 	<div class="ui5-toast-root"
 		role="alert"
 		style="{{styles.root}}"
+		tabindex="{{_tabindex}}"
+		@focusin="{{_onfocusin}}"
+		@focusout="{{_onfocusout}}"
+		@keydown="{{_onkeydown}}"
 		@mouseover="{{_onmouseover}}"
 		@mouseleave="{{_onmouseleave}}"
 		@transitionend="{{_ontransitionend}}">

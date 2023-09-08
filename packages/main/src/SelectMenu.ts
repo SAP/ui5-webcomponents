@@ -268,7 +268,7 @@ class SelectMenu extends UI5Element {
 		return {
 			responsivePopoverHeader: {
 				"display": this.options.length && this.respPopover?.offsetWidth === 0 ? "none" : "inline-block",
-				"width": `${this.options.length ? this.respPopover?.offsetWidth : this.selectWidth || "auto"}px`,
+				"width": `${this.selectWidth!}px`,
 			},
 			responsivePopover: {
 				"min-width": `${this.selectWidth!}px`,
