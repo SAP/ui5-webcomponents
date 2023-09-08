@@ -8,4 +8,5 @@
 	--_ui5_dialog_resize_handle_right: 3px;
 	--_ui5_dialog_resize_handle_bottom: 3px;
 	--_ui5_dialog_header_border_radius: var(--sapElement_BorderCornerRadius);
+	--_ui5_dialog_header_state_line_height: 0.0625rem;
 }

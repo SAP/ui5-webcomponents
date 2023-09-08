@@ -2,8 +2,8 @@
 	background-color: var(--sapPageHeader_Background);
 	height: var(--_ui5_bar_base_height);
 	width: 100%;
-	display: block;
 	box-shadow: var(--sapContent_HeaderShadow);
+	display: block;
 }
 
 .ui5-bar-root {

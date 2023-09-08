@@ -40,18 +40,15 @@
 
 	<ui5-button id="dialog-bar-state-open">Error Dialog with Bar in Header</ui5-button>
 	<ui5-dialog resizable id="dialog-bar-state" state="Error">
-		<ui5-bar slot="header" design="Header" data-sap-ui-fastnavgroup="true">
-			<ui5-title level="H5" slot="startContent" class="ui5-bar-content">
+		<ui5-bar slot="header" design="Header">
+			<ui5-title level="H5" slot="startContent">
 			  Bar used in Header
 			</ui5-title>
 			<ui5-button
-			  class="dialogCloser ui5-bar-content"
 			  design="Transparent"
 			  id="closeDialogStateButton"
 			  slot="endContent"
 			  icon="decline"
-			  icon-only=""
-			  has-icon=""
 			></ui5-button>
 		  </ui5-bar>	  
 		  <div>
