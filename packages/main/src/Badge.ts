@@ -6,6 +6,10 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
+import ValueState from "@ui5/webcomponents-base/dist/types/ValueState";
+import IndicatorColorType from "@ui5/webcomponents-base/dist/types/types/IndicatorColorType";
+import BadgeDesignType from "@ui5/webcomponents-base/dist/types/BadgeDesignType";
+import WrappingType from "@ui5/webcomponents-base/dist/types/types/WrappingType";
 
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
@@ -50,6 +54,16 @@ import badgeCss from "./generated/themes/Badge.css.js";
 })
 class Badge extends UI5Element {
 	/**
+	 * Defines the design type of the component.
+	 * @type {string}
+	 * @name sap.ui.webc.main.Badge.prototype.designType
+	 * @defaultvalue "ColorScheme"
+	 * @public
+	 */
+	@property({ defaultValue: BadgeDesignType.ColorScheme })
+	designType!: `${BadgeDesignType}`;
+
+	/**
 	 * Defines the color scheme of the component.
 	 * There are 10 predefined schemes.
 	 * To use one you can set a number from <code>"1"</code> to <code>"10"</code>. The <code>colorScheme</code> <code>"1"</code> will be set by default.
@@ -62,6 +76,60 @@ class Badge extends UI5Element {
 	 */
 	@property({ defaultValue: "1" })
 	colorScheme!: string;
+
+	/**
+	 * Defines the value state of the component.
+	 *
+	 * @type {sap.ui.webc.base.types.ValueState}
+	 * @defaultvalue "None"
+	 * @name sap.ui.webc.main.Badge.prototype.valueState
+	 * @public
+	 */
+	@property({ type: ValueState, defaultValue: ValueState.None })
+	valueState!: `${ValueState}`;
+
+	/**
+	 * Defines the indicator color type of the component.
+	 *
+	 * @type {sap.ui.webc.base.types.IndicatorColorType}
+	 * @defaultvalue "DarkRed"
+	 * @name sap.ui.webc.main.Badge.prototype.indicatorColor
+	 * @public
+	 */
+	@property({ type: ValueState, defaultValue: IndicatorColorType.DarkRed })
+	indicatorColor!: `${IndicatorColorType}`;
+
+	/**
+	 * Defines if the default state icon is shown.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Badge.prototype.showStateIcon
+	 * @defaultValue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	showStateIcon!: boolean;
+
+	/**
+	 * Defines if the component is interactive (focusable and pressable).
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Badge.prototype.interactive
+	 * @defaultValue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	interactive!: boolean;
+
+	/**
+	 * Defines how the text of a component will be displayed when there is not enough space.
+	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
+	 *
+	 * @name sap.ui.webc.main.Badge.prototype.wrappingType
+	 * @type {sap.ui.webc.main.types.WrappingType}
+	 * @defaultvalue "None"
+	 * @public
+	 */
+	@property({ type: WrappingType, defaultValue: WrappingType.None })
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	 * Defines if the badge has an icon.
