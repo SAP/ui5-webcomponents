@@ -46,7 +46,7 @@
 	position: relative;
 }
 
-:host([state]:not([state="None"])) .ui5-popup-header-root::before {
+.ui5-popup-header-root::before {
 	content: "";
 	position: absolute;
 	inset-block-start: auto;
@@ -54,6 +54,7 @@
 	inset-inline-start: 0;
 	inset-inline-end: 0;
 	height: var(--_ui5_dialog_header_state_line_height);
+	background: var(--sapObjectHeader_BorderColor);
 }
 
 :host([state="Error"]) .ui5-popup-header-root::before {
@@ -70,19 +71,6 @@
 
 :host([state="Warning"]) .ui5-popup-header-root::before {
 	background: var(--sapWarningBorderColor);
-}
-
-:host([state="None"]) .ui5-popup-header-root::before {
-	background: var(--sapObjectHeader_BorderColor);
-}
-
-:host([state]:not([state="None"])) ::slotted([slot="header"][ui5-bar]),
-:host([state]) .ui5-popup-root .ui5-popup-header-root {
-	box-shadow: none;
-}
-
-:host([state="None"]) .ui5-popup-root .ui5-popup-header-root {
-	padding-inline: 0;
 }
 
 .ui5-dialog-value-state-icon {
@@ -138,10 +126,14 @@
 	color: var(--_ui5_dialog_resize_handle_color);
 }
 
-:host ::slotted([slot="footer"]) {
+::slotted([slot="footer"]) {
 	height: var(--_ui5_dialog_footer_height);
 }
 
-:host ::slotted([slot="footer"][ui5-bar][design="Footer"]) {
+::slotted([slot="footer"][ui5-bar][design="Footer"]) {
 	border-top: none;
+}
+
+::slotted([slot="header"][ui5-bar]) {
+	box-shadow: none;
 }
