@@ -685,10 +685,6 @@ class List extends UI5Element {
 			}
 			item.hasBorder = showBottomBorder;
 		});
-
-		if (slottedItems.at(-1)) {
-			slottedItems.at(-1)!._isLastItem = true;
-		}
 	}
 
 	async observeListEnd() {
