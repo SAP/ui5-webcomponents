@@ -17,17 +17,40 @@
 	<link rel="stylesheet" type="text/css" href="./styles/Tokenizer.css">
 </head>
 
-<body>
-	<div class="wrapper">
+<body class="">
+	<!-- <div class="wrapper"> -->
 
-		<ui5-segmented-button id="theme-switch">
+		<!-- <ui5-segmented-button id="theme-switch">
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon" selected>Morning</ui5-segmented-button-item>
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_dark">Evening</ui5-segmented-button-item>
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcb">HCB</ui5-segmented-button-item>
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcw">HCW</ui5-segmented-button-item>
 		</ui5-segmented-button>
 
-		<div class="row">
+		<br><br> -->
+<!-- 
+		<ui5-tokenizer show-more style="width: 100%">
+			<ui5-token text="Token"></ui5-token>
+			<ui5-token text="Token 2"></ui5-token>
+			<ui5-token text="Token 3"></ui5-token>
+			<ui5-token text="Token 4"></ui5-token>
+			<ui5-token text="Token 5"></ui5-token>
+		</ui5-tokenizer> -->
+
+		<!-- <br>
+
+		<br>
+
+		<ui5-tokenizer show-more style="width: 100%" id="lazy-tokenizer"></ui5-tokenizer>
+
+		<br>
+		<br>
+
+
+
+		<ui5-multi-input id="lazy"></ui5-multi-input> -->
+
+		<!-- <div class="row">
 			<div class="col"></div>
 			<div class="col">Compact</div>
 			<div class="col">Cozy</div>
@@ -35,7 +58,7 @@
 
 		<div class="row">
 			<div class="col">Regular</div>
-			<div class="col sapUiSizeCompact">
+			<div class="col sapUiSizeCompact tokenizer-parent">
 				<ui5-tokenizer show-more>
 					<ui5-token text="Token"></ui5-token>
 					<ui5-token text="Token 2"></ui5-token>
@@ -44,7 +67,7 @@
 					<ui5-token text="Token 5"></ui5-token>
 				</ui5-tokenizer>
 			</div>
-			<div class="col">
+			<div class="col tokenizer-parent">
 				<ui5-tokenizer show-more>
 					<ui5-token text="Token"></ui5-token>
 					<ui5-token text="Token 2"></ui5-token>
@@ -57,7 +80,7 @@
 
 		<div class="row">
 			<div class="col">Selected on First Token</div>
-			<div class="col sapUiSizeCompact">
+			<div class="col sapUiSizeCompact tokenizer-parent">
 				<ui5-tokenizer show-more>
 					<ui5-token selected text="Token"></ui5-token>
 					<ui5-token text="Token 2"></ui5-token>
@@ -66,7 +89,7 @@
 					<ui5-token text="Token 5"></ui5-token>
 				</ui5-tokenizer>
 			</div>
-			<div class="col">
+			<div class="col tokenizer-parent">
 				<ui5-tokenizer show-more>
 					<ui5-token selected text="Token"></ui5-token>
 					<ui5-token text="Token 2"></ui5-token>
@@ -75,14 +98,47 @@
 					<ui5-token text="Token 5"></ui5-token>
 				</ui5-tokenizer>
 			</div>
-		</div>
-	</div>
+		</div> -->
+	<!-- </div> -->
 
+	<ui5-multi-input id="lazy"></ui5-multi-input>
 	<script>
 
-		document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
-			window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
-		});
+		// document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
+		// 	window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
+		// });
+
+		// const tokens = Array(25).fill("").map((el, index) => {
+		// 	const token = document.createElement("ui5-token");
+		// 	token.setAttribute("text", index + 1);
+		// 	token.setAttribute("slot", "tokens");
+		// 	return token;
+		// });
+
+		// setTimeout(() => {
+		// 	tokens.forEach(token => document.getElementById("lazy").appendChild(token));
+		// }, 2000);
+
+		// const tokens1 = Array(25).fill("").map((el, index) => {
+		// 	const token = document.createElement("ui5-token");
+		// 	token.setAttribute("text", index + 1);
+		// 	return token;
+		// });
+
+		// setTimeout(() => {
+		// 	tokens1.forEach(token => document.getElementById("lazy-tokenizer").appendChild(token));
+		// }, 2000);
+
+
+		const tokens = [];
+
+		for (let i = 0; i < 550; i++) {
+			const token = document.createElement("ui5-token");
+			token.setAttribute("text", `token${i + 1}`);
+			token.setAttribute("slot", "tokens");
+			tokens.push(token);
+			document.getElementById("lazy").appendChild(token);
+		}
 	</script>
 </body>
 

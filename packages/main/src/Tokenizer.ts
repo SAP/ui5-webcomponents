@@ -1,4 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -44,7 +45,7 @@ import List from "./List.js";
 import Title from "./Title.js";
 import Button from "./Button.js";
 import StandardListItem from "./StandardListItem.js";
-import type Token from "./Token.js";
+import Token from "./Token.js";
 import type { TokenDeleteEventDetail } from "./Token.js";
 import TokenizerTemplate from "./generated/templates/TokenizerTemplate.lit.js";
 import TokenizerPopoverTemplate from "./generated/templates/TokenizerPopoverTemplate.lit.js";
@@ -112,9 +113,13 @@ enum ClipboardDataOperation {
 	],
 })
 
+/**
+ * Fired when a token is deleted (delete icon, delete or bacspace is pressed)
+ * @public
+ */
 @event("token-delete", {
 	detail: {
-		ref: { type: HTMLElement },
+		ref: { type: Token },
 	},
 })
 
@@ -151,8 +156,8 @@ class Tokenizer extends UI5Element {
 	@property({ type: Boolean })
 	expanded!: boolean;
 
-	@property({ type: Object })
-	morePopoverOpener!: Tokenizer;
+	@property({ validator: DOMReference })
+	morePopoverOpener!: HTMLElement;
 
 	@property({ validator: Integer })
 	popoverMinWidth?: number;
@@ -210,6 +215,11 @@ class Tokenizer extends UI5Element {
 			token.singleToken = this._tokens.length === 1;
 		});
 
+		// we need to disable this in the context of Multi Input / ComboBox
+		if (this._tokens.length > 0) {
+			this._itemNav.setCurrentItem(this._tokens[0]);
+		}
+
 		if (!this._tokens.length) {
 			this.closeMorePopover();
 		}
@@ -232,7 +242,7 @@ class Tokenizer extends UI5Element {
 	}
 
 	async openMorePopover() {
-		(await this.getPopover()).showAt(this.morePopoverOpener || this);
+		(await this.getPopover()).showAt(this.morePopoverOpener || this.nMoreTextDom);
 	}
 
 	_getTokens() {
@@ -556,6 +566,15 @@ class Tokenizer extends UI5Element {
 	_handleTokenSelection(e: KeyboardEvent | MouseEvent, deselectAll = true) {
 		const target = e.target as Token;
 		if (target.hasAttribute("ui5-token")) {
+			if (e.shiftKey && (this.getSelectedTokensRange().length > 1)) {
+				const selectedTokenIndex = this.getSelectedTokensRange();
+
+				[...this._tokens.slice(selectedTokenIndex[0], selectedTokenIndex[1]), target].forEach(el => {
+					el.selected = true;
+				});
+
+				return;
+			}
 			const deselectTokens = deselectAll ? this._tokens : [];
 
 			deselectTokens.forEach(token => {
@@ -564,6 +583,10 @@ class Tokenizer extends UI5Element {
 				}
 			});
 		}
+	}
+
+	getSelectedTokensRange() {
+		return this._tokens.filter(token => token.selected).map(token => this._tokens.indexOf(token)).sort((a, b) => a - b);
 	}
 
 	_fillClipboard(shortcutName: ClipboardDataOperation, tokens: Array<Token>) {
@@ -652,6 +675,10 @@ class Tokenizer extends UI5Element {
 
 	get narrowContentDom() {
 		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer-nmore--content");
+	}
+
+	get nMoreTextDom() {
+		return this.shadowRoot!.querySelector<HTMLElement>(".ui5-tokenizer-more-text");
 	}
 
 	get tokenizerLabel() {

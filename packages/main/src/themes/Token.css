@@ -67,6 +67,10 @@
 	border: var(--_ui5_token_focused_selected_border);
 }
 
+:host([readonly]) .ui5-token--wrapper {
+	user-select: text;
+}
+
 .ui5-token--wrapper {
 	display: flex;
 	align-items: center;

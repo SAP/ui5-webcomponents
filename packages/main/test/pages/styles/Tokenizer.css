@@ -5,7 +5,7 @@
 	padding: 24px;
 	box-sizing: border-box;
 	border: 1px solid red;
-	width: 840px;
+	width: 100%;
 }
 
 .col {
@@ -15,6 +15,14 @@
 	align-items: center;
 	padding: 8px;
 	box-sizing: border-box;
+}
+
+.tokenizer-parent {
+	display: flex;
+}
+
+.tokenizer-parent ui5-tokenizer {
+	flex: 1;
 }
 
 .row {
