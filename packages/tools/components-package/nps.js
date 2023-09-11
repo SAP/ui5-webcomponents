@@ -54,6 +54,7 @@ const getScripts = (options) => {
 		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
+		proba: `cem analyze --dev --config  "${require.resolve("@ui5/webcomponents-tools/components-package/custom-elements-manifest.config.mjs")}"`,
 		prepare: {
 			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
@@ -130,9 +131,8 @@ const getScripts = (options) => {
 			bundle: `node ${LIB}/dev-server/dev-server.js ${viteConfig}`,
 		},
 		generateAPI: {
-			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.prepareManifest",
+			default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup proba",
 			prepare: `node "${LIB}/copy-and-watch/index.js" --silent "dist/**/*.js" jsdoc-dist/`,
-			prepareManifest: `node "${LIB}/generate-custom-elements-manifest/index.js" dist dist`,
 			preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/ src`,
 			jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
 			cleanup: "rimraf jsdoc-dist/"
