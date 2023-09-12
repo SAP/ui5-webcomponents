@@ -155,7 +155,7 @@ TokenCreation.decorators = [
 
 export const SuggestionsWrapping = Template.bind({});
 SuggestionsWrapping.args = {
-	placeholder: "Start typing",
+	placeholder: "Enter product",
 	showSuggestions: true,
 	default: `
 	<ui5-suggestion-item text="Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor incidunt ut labore et dolore magna aliquyam erat, diam nonumy eirmod tempor individunt ut labore et dolore magna aliquyam erat, sed justo et ea rebum."></ui5-suggestion-item>
