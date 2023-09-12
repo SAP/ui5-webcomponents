@@ -19,6 +19,7 @@
 	display: flex;
 	pointer-events: all;
 	margin-inline-start: 1rem;
+	gap: 0.5rem;
 }
 
 /* Thumbnail */
@@ -164,10 +165,6 @@
 		margin-inline-start: var(--ui5_upload_collection_small_size_buttons_margin_inline_start);
 		margin-block-start: var(--ui5_upload_collection_small_size_buttons_margin_block_start);
 	}
-
-	.ui5-uci-buttons [ui5-button] {
-		margin-block-end: var(--ui5_upload_collection_button_margin_block_end);
-	}
 }
 
 .ui5-uci-progress-indicator {
@@ -180,18 +177,6 @@
 .ui5-uci-progress-labels {
 	display: flex;
 	justify-content: space-between;
-}
-
-[ui5-button] {
-	margin-inline: 0.5rem;
-}
-
-[ui5-button]:first-of-type {
-	margin-inline-start: 0;
-}
-
-[ui5-button]:last-of-type {
-	margin-inline-end: var(--ui5_upload_collection_last_button_inline_end);
 }
 
 :host([active][actionable]) ::slotted([ui5-icon][slot="thumbnail"]),
