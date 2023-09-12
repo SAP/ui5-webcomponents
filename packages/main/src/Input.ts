@@ -336,8 +336,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the HTML type of the component.
-	 * Available options are: <code>Text</code>, <code>Email</code>,
-	 * <code>Number</code>, <code>Password</code>, <code>Tel</code>, and <code>URL</code>.
 	 * <br><br>
 	 * <b>Notes:</b>
 	 * <ul>
@@ -384,15 +382,6 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.Input.prototype.valueState

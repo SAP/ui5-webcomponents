@@ -49,6 +49,12 @@ const internals = {
 		}
 		return navigator.platform.indexOf("Win") !== -1;
 	},
+	get macOS() {
+		if (isSSR) {
+			return false;
+		}
+		return !!navigator.userAgent.match(/Macintosh|Mac OS X/i);
+	},
 	get iOS() {
 		if (isSSR) {
 			return false;
@@ -184,6 +190,10 @@ const isIOS = (): boolean => {
 	return internals.iOS;
 };
 
+const isMac = (): boolean => {
+	return internals.macOS;
+};
+
 const isAndroid = (): boolean => {
 	return internals.android || internals.androidPhone;
 };
@@ -200,4 +210,5 @@ export {
 	isCombi,
 	isIOS,
 	isAndroid,
+	isMac,
 };

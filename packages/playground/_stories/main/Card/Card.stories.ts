@@ -211,15 +211,15 @@ const MoreCards = [{
 <div class="content content-padding">
 	<ui5-title level="H5" style="padding-block-end: 1rem;">Contact details</ui5-title>
 	<div class="content-group">
-		<ui5-label>Company Name</ui5-label>
-		<ui5-title level="H6">Company A</ui5-title>
+		<ui5-label show-colon>Company Name</ui5-label>
+		<span>Company A</span>
 	</div>
 	<div class="content-group">
-		<ui5-label>Address</ui5-label>
-		<ui5-title level="H6">481 West Street, Anytown 45066, USA</ui5-title>
+		<ui5-label show-colon>Address</ui5-label>
+		<span>481 West Street, Anytown 45066, USA</span>
 	</div>
 	<div class="content-group">
-		<ui5-label>Website</ui5-label>
+		<ui5-label show-colon>Website</ui5-label>
 		<ui5-link target="_blank">www.company_a.example.com</ui5-link>
 	</div>
 </div>`

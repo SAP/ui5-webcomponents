@@ -381,13 +381,7 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the mode of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>MultiSelect</code></li>
-	 * <li><code>SingleSelect</code></li>
-	 * <li><code>None</code></li>
-	 * <ul>
+	 *
 	 * @type {sap.ui.webc.main.types.TableMode}
 	 * @name sap.ui.webc.main.Table.prototype.mode
 	 * @defaultvalue "None"

@@ -24,6 +24,7 @@ import {
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-up.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import {
@@ -812,8 +813,8 @@ class TabContainer extends UI5Element {
 			}
 
 			tab._style = {
-				"--_ui5-tab-indentation-level": level,
-				"--_ui5-tab-extra-indent": extraIndent ? 1 : null,
+				[getScopedVarName("--_ui5-tab-indentation-level")]: level,
+				[getScopedVarName("--_ui5-tab-extra-indent")]: extraIndent ? 1 : null,
 			};
 		});
 	}
