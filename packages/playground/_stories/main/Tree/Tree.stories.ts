@@ -96,8 +96,8 @@ export const DynamicContent: StoryFn = () => html`
     </script>
 `;
 
-export const TreeWithCustomItems = Template.bind({});
-TreeWithCustomItems.args = {
+export const WithCustomItems = Template.bind({});
+WithCustomItems.args = {
     header: `
 	<div slot="header">
 		<ui5-title>Tree with custom items</ui5-title>
@@ -131,4 +131,16 @@ TreeWithCustomItems.args = {
 			</ui5-tree-item-custom>
 		</ui5-tree-item-custom>
 	</ui5-tree-item-custom>`,
+};
+
+
+export const WithCustomIcon = Template.bind({});
+WithCustomIcon.args = {
+    default: `
+    <ui5-tree-item text="Tree 1" expanded>
+        <ui5-icon slot="customIcon" name="paste" accessible-name="Paste" show-tooltip></ui5-icon>
+        <ui5-tree-item text="Tree 1.2">
+            <ui5-icon slot="customIcon" name="paste" accessible-name="Paste" show-tooltip></ui5-icon>
+        </ui5-tree-item>
+    </ui5-tree-item>`
 };

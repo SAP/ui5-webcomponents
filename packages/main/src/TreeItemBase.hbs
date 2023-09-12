@@ -28,7 +28,9 @@
 {{#*inline "imageBegin"}}{{/inline}}
 
 {{#*inline "iconBegin"}}
-	{{#if icon}}
+	{{#if hasCustomIconSlot}}
+		<slot name="customIcon"></slot>
+	{{else if icon}}
 		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon"></ui5-icon>
 	{{/if}}
 {{/inline}}

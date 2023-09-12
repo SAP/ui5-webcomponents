@@ -171,6 +171,7 @@
 	object-fit: contain;
 }
 
+::slotted([ui5-icon][slot="customIcon"]),
 .ui5-li-icon {
 	min-width: var(--_ui5_list_item_icon_size);
 	min-height: var(--_ui5_list_item_icon_size);

@@ -257,6 +257,19 @@ abstract class ListItem extends ListItemBase {
 	@slot()
 	deleteButton!: Array<HTMLElement>;
 
+	/**
+	 * Defines the icon, displayed in the beginning or end of the list item.
+	 * If a custom icon is set, it will be rendered in place of the standard icon defined in the <code>icon</code> property.
+	 * <br><br>
+	 * @type {sap.ui.webc.main.IIcon}
+	 * @name sap.ui.webc.main.ListItem.prototype.customIcon
+	 * @since 1.18.0
+	 * @slot
+	 * @public
+	 */
+	@slot()
+	customIcon!: Array<HTMLElement>;
+
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
@@ -496,6 +509,10 @@ abstract class ListItem extends ListItemBase {
 
 	get hasDeleteButtonSlot() {
 		return !!this.deleteButton.length;
+	}
+
+	get hasCustomIconSlot() {
+		return !!this.customIcon.length;
 	}
 
 	get _accessibleNameRef(): string {

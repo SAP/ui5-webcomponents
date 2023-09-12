@@ -39,12 +39,20 @@
 
 {{#*inline "iconBegin"}}
 	{{#if displayIconBegin}}
-		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon" accessible-role="presentation" aria-hidden="true"></ui5-icon>
+		{{#if hasCustomIconSlot}}
+			<slot name="customIcon"></slot>
+		{{else}}
+			<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon" accessible-role="presentation" aria-hidden="true"></ui5-icon>
+		{{/if}}
 	{{/if}}
 {{/inline}}
 
 {{#*inline "iconEnd"}}
 	{{#if displayIconEnd}}
-		<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon" accessible-role="presentation" aria-hidden="true"></ui5-icon>
+		{{#if hasCustomIconSlot}}
+			<slot name="customIcon"></slot>
+		{{else}}
+			<ui5-icon part="icon" name="{{icon}}" class="ui5-li-icon" accessible-role="presentation" aria-hidden="true"></ui5-icon>
+		{{/if}}
 	{{/if}}
 {{/inline}}

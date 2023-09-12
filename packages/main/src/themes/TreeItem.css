@@ -9,6 +9,7 @@
 	min-width: 0;
 }
 
+:host([_minimal]) ::slotted([ui5-icon][slot="customIcon"]),
 :host([_minimal]) .ui5-li-icon {
 	padding: 0;
 }
