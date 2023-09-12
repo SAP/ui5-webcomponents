@@ -154,6 +154,8 @@ class Toolbar extends UI5Element {
 
 	/**
 	 * Defines the items of the component.
+     *
+     * <b>Note:</b> Currently only <code>ui5-toolbar-button</code>, <code>ui5-toolbar-select</code>, <code>ui5-toolbar-separator</code> and <code>ui5-toolbar-spacer</code> are allowed here.
 	 *
 	 * @type {sap.ui.webc.main.IToolbarItem[]}
 	 * @name sap.ui.webc.main.Toolbar.prototype.default
