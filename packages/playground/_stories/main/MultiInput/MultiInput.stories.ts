@@ -76,12 +76,21 @@ WithTokens.args = {
 
 export const TokenCreation = Template.bind({});
 TokenCreation.args = {
-	placeholder: "Start typing",
+	placeholder: "Start typing country name",
 	showSuggestions: true,
 	default: `
-	<ui5-suggestion-item text="Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor incidunt ut labore et dolore magna aliquyam erat, diam nonumy eirmod tempor individunt ut labore et dolore magna aliquyam erat, sed justo et ea rebum."></ui5-suggestion-item>
-	<ui5-suggestion-item text="Widescreen Portable DVD Player w MP3, consetetur sadipscing, sed diam nonumy eirmod tempor invidunt ut labore et dolore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergen, no sea takimata. Tortor pretium viverra suspendisse potenti nullam. Congue quisque egestas diam in arcu cursus.Rutrum tellus pellentesque eu tincidunt tortor. Nec tincidunt praesent semper feugiat nibh sed"></ui5-suggestion-item>
-	<ui5-suggestion-item text="Portable DVD Player with 9 inches LCD Monitor"></ui5-suggestion-item>`,
+	<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Bulgaria"></ui5-suggestion-item>
+	<ui5-suggestion-item text="England"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Finland"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Germany"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Hungary"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Italy"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Luxembourg"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Mexico"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Philippines"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Sweden"></ui5-suggestion-item>
+	<ui5-suggestion-item text="USA"></ui5-suggestion-item>`,
 	valueStateMessage: '<div slot="valueStateMessage">Token is already in the list</div>',
 };
 TokenCreation.decorators = [
@@ -142,3 +151,15 @@ TokenCreation.decorators = [
 </script>`;
 	}
 ]
+
+
+export const SuggestionsWrapping = Template.bind({});
+SuggestionsWrapping.args = {
+	placeholder: "Start typing",
+	showSuggestions: true,
+	default: `
+	<ui5-suggestion-item text="Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor incidunt ut labore et dolore magna aliquyam erat, diam nonumy eirmod tempor individunt ut labore et dolore magna aliquyam erat, sed justo et ea rebum."></ui5-suggestion-item>
+	<ui5-suggestion-item text="Widescreen Portable DVD Player w MP3, consetetur sadipscing, sed diam nonumy eirmod tempor invidunt ut labore et dolore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergen, no sea takimata. Tortor pretium viverra suspendisse potenti nullam. Congue quisque egestas diam in arcu cursus.Rutrum tellus pellentesque eu tincidunt tortor. Nec tincidunt praesent semper feugiat nibh sed"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Portable DVD Player with 9 inches LCD Monitor"></ui5-suggestion-item>`,
+	valueStateMessage: '<div slot="valueStateMessage">Token is already in the list</div>',
+};
