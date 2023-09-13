@@ -95,7 +95,7 @@
 	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
 	background-color: var(--sapButton_Hover_Background);
 	box-shadow: none;
-	border: var(--_ui5_split_text_button_hover_border); /* TODO: Add border-right + parameters */
+	border: var(--_ui5_split_text_button_hover_border);
 	border-right: var(--_ui5_split_text_button_hover_border_right);
 	border-left: var(--_ui5_split_text_button_hover_border_left);
 }
@@ -180,31 +180,29 @@
 	border-right: var(--_ui5_split_text_button_hover_border_right_rtl);
 }
 
-/* RTL with border-left for every design in RTL on hover */
-
 .ui5-split-text-button[design="Emphasized"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_emphasized_hover_border_left_rtl); /* 0.0625rem solid var(--sapButton_Emphasized_BorderColor) in all themes */
-	border-right: var(--_ui5_split_text_button_emphasized_hover_border_right_rtl); /* 0.0625rem solid var(--sapButton_Emphasized_BorderColor) in all themes */
+	border-left: var(--_ui5_split_text_button_emphasized_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_emphasized_hover_border_right_rtl);
 }
 
 .ui5-split-text-button[design="Positive"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_positive_hover_border_left_rtl); /* 0.0625rem solid var(--sapButton_Accept_BorderColor) хоризон, хоризон_еxp */
-	border-right: var(--_ui5_split_text_button_positive_hover_border_right_rtl); /* 0.0625rem solid var(--sapButton_Accept_BorderColor) хоризон, хоризон_еxp */
+	border-left: var(--_ui5_split_text_button_positive_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_positive_hover_border_right_rtl);
 }
 
 .ui5-split-text-button[design="Negative"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_negative_hover_border_left_rtl); /* 0.0625rem solid var(--sapButton_Reject_BorderColor) хоризон, хоризон_еxp */
-	border-right: var(--_ui5_split_text_button_negative_hover_border_right_rtl); /* 0.0625rem solid var(--sapButton_Reject_BorderColor) хоризон, хоризон_еxp */
+	border-left: var(--_ui5_split_text_button_negative_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_negative_hover_border_right_rtl);
 }
 
 .ui5-split-text-button[design="Attention"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_attention_hover_border_left_rtl); /* 0.0625rem solid var(--sapButton_Attention_BorderColor) хоризон, хоризон_еxp */
-	border-right: var(--_ui5_split_text_button_attention_hover_border_right_rtl); /* 0.0625rem solid var(--sapButton_Attention_BorderColor) хоризон, хоризон_еxp */
+	border-left: var(--_ui5_split_text_button_attention_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_attention_hover_border_right_rtl);
 }
 
 .ui5-split-text-button[design="Transparent"][dir="rtl"]:hover {
-	border-left: var(--_ui5_split_text_button_transparent_hover_border_left_rtl); /* 0.0625rem solid var(--sapButton_BorderColor) хоризон, хоризон_еxp */
-	border-right: var(--_ui5_split_text_button_transparent_hover_border_right_rtl); /* 0.0625rem solid var(--sapButton_BorderColor) хоризон, хоризон_еxp */
+	border-left: var(--_ui5_split_text_button_transparent_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_transparent_hover_border_right_rtl);
 }
 
 [dir="rtl"] .ui5-split-arrow-button:hover {
@@ -217,7 +215,7 @@
 	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
 	background-color: var(--sapButton_Hover_Background);
 	box-shadow: none;
-	border: var(--_ui5_split_arrow_button_hover_border); /* TODO: Add border-left + parameters */
+	border: var(--_ui5_split_arrow_button_hover_border);
 }
 
 .ui5-split-arrow-button[design="Emphasized"]:hover {
@@ -227,7 +225,7 @@
 }
 
 .ui5-split-arrow-button-wrapper[dir="rtl"] .ui5-split-arrow-button[design="Emphasized"]:hover {
-	border-left-width: var(--_ui5_split_arrow_button_wrapper_emphasized_hover_border_left_width_rtl); /* for base - 0.0625rem, 0.125rem for hc themes*/
+	border-left-width: var(--_ui5_split_arrow_button_wrapper_emphasized_hover_border_left_width_rtl);
 	border-right-width: var(--sapButton_BorderWidth);
 }
 
