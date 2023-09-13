@@ -24,7 +24,8 @@
 	background-color: var(--_ui5_input_background_color);
 }
 
-:host(:not([readonly])) {
+:host(:not([readonly])),
+:host([readonly][disabled]) {
 	box-shadow: var(--sapField_Shadow);
 }
 
@@ -210,7 +211,7 @@
 	border-radius: var(--_ui5_input_border_radius);
 }
 
-:host([readonly]) {
+:host([readonly]:not([disabled])) {
 	border-color: var(--_ui5_input_readonly_border_color);
 	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--_ui5_input_readonly_background);

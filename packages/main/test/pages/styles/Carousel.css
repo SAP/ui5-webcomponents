@@ -7,6 +7,10 @@ ui5-carousel {
     height: 100%;
 }
 
+[ui5-card] [ui5-list]:last-child {
+	margin-block-end: 0.75rem;
+}
+
 .carousel1auto {
     background-color: var(--sapBackgroundColor);
     padding: 1rem;
