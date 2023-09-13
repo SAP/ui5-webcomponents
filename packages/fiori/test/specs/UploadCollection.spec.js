@@ -22,7 +22,7 @@ describe("UploadCollection", () => {
 			await editButton.click();
 
 			assert.ok(await secondItem.shadow$(".ui5-uci-edit-container").isDisplayed(), "edit container should be rendered");
-			assert.ok(await secondItem.shadow$(".ui5-uci-edit-buttons").isDisplayed(), "edit buttons should be rendered");
+			assert.ok(await secondItem.shadow$(".ui5-uci-buttons").isDisplayed(), "buttons should be rendered");
 			assert.notOk(await secondItem.shadow$(".ui5-li-detailbtn").isDisplayed(), "detail button should be hidden");
 
 			// reset the item
