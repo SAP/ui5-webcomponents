@@ -135,9 +135,6 @@
 	--_ui5_timeline_tli_indicator_before_without_icon_bottom: -1.875rem;
 	--_ui5_timeline_tli_indicator_before_without_icon_right: -1.9375rem;
 
-	/* SegmentedButton */
-	--_ui5_segmented_btn_border_radius: 0.375rem;
-
 	/* SplitButton */
 	--_ui5_split_button_middle_separator_top: 0;
 	--_ui5_split_button_middle_separator_height: 2.25rem;

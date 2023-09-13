@@ -41,5 +41,7 @@
 	--_ui5_menu_submenu_placement_type_left_margin_offset: 0 0.25rem;
 	--_ui5-menu_item_icon_float: left;
 
+	--_ui5_segmented_btn_item_border_left: 0.0625rem;
+	--_ui5_segmented_btn_item_border_right: 0px;
 	--_ui5-shellbar-notification-btn-count-offset: auto;
 }

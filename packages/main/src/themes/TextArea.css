@@ -20,6 +20,7 @@
 
 :host([value-state][disabled]) .ui5-textarea-wrapper,
 :host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper,
+:host([readonly][disabled]) .ui5-textarea-wrapper,
 :host([value-state="None"]:not([readonly]):not([disabled]):not([focused])) .ui5-textarea-wrapper {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapField_Background);
@@ -72,7 +73,8 @@
 	pointer-events: none;
 }
 
-:host(:not([readonly])) .ui5-textarea-wrapper {
+:host(:not([readonly])) .ui5-textarea-wrapper,
+:host([readonly][disabled]) .ui5-textarea-wrapper {
 	box-shadow: var(--sapField_Shadow);
 }
 
@@ -231,15 +233,15 @@
 	min-height: var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_information);
 }
 
-:host([readonly]) {
+:host([readonly]:not([disabled])) {
 	border-color: var(--sapField_ReadOnly_BorderColor);
 }
 
-:host([readonly]) .ui5-textarea-inner {
+:host([readonly]:not([disabled])) .ui5-textarea-inner {
 	padding: var(--_ui5_textarea_padding_top_readonly) var(--_ui5_textarea_padding_right_and_left_readonly) var(--_ui5_textarea_padding_bottom_readonly);
 }
 
-:host([readonly]) .ui5-textarea-root .ui5-textarea-wrapper {
+:host([readonly]:not([disabled])) .ui5-textarea-root .ui5-textarea-wrapper {
 	background-color: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
 	border-style: var(--_ui5_textarea_readonly_border_style);
