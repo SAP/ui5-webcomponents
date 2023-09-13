@@ -17,6 +17,7 @@ type InitialConfig = {
 	rtl: boolean | undefined,
 	language: string | undefined,
 	calendarType: CalendarType | undefined,
+	secondaryCalendarType: CalendarType | undefined,
 	timezone: string | undefined,
 	noConflict: boolean,
 	formatSettings: FormatSettings,
@@ -31,6 +32,7 @@ let initialConfig: InitialConfig = {
 	language: undefined,
 	timezone: undefined,
 	calendarType: undefined,
+	secondaryCalendarType: undefined,
 	noConflict: false, // no URL
 	formatSettings: {},
 	fetchDefaultLanguage: false,
@@ -84,6 +86,11 @@ const getNoConflict = () => {
 const getCalendarType = () => {
 	initConfiguration();
 	return initialConfig.calendarType;
+};
+
+const getSecondaryCalendarType = () => {
+	initConfiguration();
+	return initialConfig.secondaryCalendarType;
 };
 
 /**
@@ -214,6 +221,7 @@ export {
 	getFetchDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
+	getSecondaryCalendarType,
 	getTimezone,
 	getFormatSettings,
 };

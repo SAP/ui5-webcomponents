@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0...v1.18.0-rc.0) (2023-09-07)
+
+
+### Bug Fixes
+
+* **ui5-busy-indicator:** fix spacing between dots ([#7523](https://github.com/SAP/ui5-webcomponents/issues/7523)) ([12f5419](https://github.com/SAP/ui5-webcomponents/commit/12f541994e51048326893a80635b8f4014013760))
+* **ui5-dialog:** adjust resize handle position for Horizon ([#7550](https://github.com/SAP/ui5-webcomponents/issues/7550)) ([4c1b7dd](https://github.com/SAP/ui5-webcomponents/commit/4c1b7dde33e7f86918e51565a8e408c37dded6f3))
+* **ui5-link:** add title to inner link ([#7537](https://github.com/SAP/ui5-webcomponents/issues/7537)) ([ebf6bdf](https://github.com/SAP/ui5-webcomponents/commit/ebf6bdf5a66d603553b925c9b74866f598972700)), closes [#7518](https://github.com/SAP/ui5-webcomponents/issues/7518)
+* **ui5-radio-button:** SAP Horizon theme updates ([#7482](https://github.com/SAP/ui5-webcomponents/issues/7482)) ([b20ee4d](https://github.com/SAP/ui5-webcomponents/commit/b20ee4d82f23423532e7692e88968a6967dcf9fc))
+* **ui5-shellbar:** align notification counter ([#7490](https://github.com/SAP/ui5-webcomponents/issues/7490)) ([f8975a6](https://github.com/SAP/ui5-webcomponents/commit/f8975a67f81b62d90db1e508a85c3c894e995e95)), closes [#7208](https://github.com/SAP/ui5-webcomponents/issues/7208)
+* **ui5-tree:** indentation correction ([#7541](https://github.com/SAP/ui5-webcomponents/issues/7541)) ([5e85b3a](https://github.com/SAP/ui5-webcomponents/commit/5e85b3ac3303ed01323e4f2b88cc745e02c90a1a))
+* **ui5-tree:** list item active state implemented ([#7527](https://github.com/SAP/ui5-webcomponents/issues/7527)) ([bbdde51](https://github.com/SAP/ui5-webcomponents/commit/bbdde5154bbe8af3029366aea6464b4a534157ac)), closes [#7121](https://github.com/SAP/ui5-webcomponents/issues/7121)
+
+
+### Features
+
+* **ui5-toast:** enable permanent visibility with KBH ([#7548](https://github.com/SAP/ui5-webcomponents/issues/7548)) ([5f8def0](https://github.com/SAP/ui5-webcomponents/commit/5f8def0f3e7a836f4ff7d68291ad94b0285b685d))
+
+
+
+
+
 # [1.17.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.2...v1.17.0) (2023-09-01)
 
 

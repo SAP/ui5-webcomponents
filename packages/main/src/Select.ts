@@ -98,8 +98,28 @@ interface IOption extends UI5Element {
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
+ *
  * The <code>ui5-select</code> component is used to create a drop-down list.
- * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
+ *
+ * <h3>Usage</h3>
+ *
+ * There are two main usages of the <code>ui5-select></code>.
+ *
+ * 1. With Option (<code>ui5-option</code>) web component:
+ * <br>
+ * The available options of the Select are defined by using the Option component.
+ * The Option comes with predefined design and layout, including <code>icon</code>, <code>text</code> and <code>additional-text</code>.
+ * <br><br>
+ *
+ * 2. With SelectMenu (<code>ui5-select-menu</code>) and SelectMenuOption (<code>ui5-select-menu-option</code>) web components:
+ * <br>
+ * The SelectMenu can be used as alternative to define the Select's dropdown
+ * and can be used via the <code>menu</code> property of the Select to reference SelectMenu by its ID.
+ * The component gives the possibility to customize the Select's dropdown
+ * by slotting entirely custom options (via the SelectMenuOption component) and adding custom styles.
+ *
+ * <b>Note:</b> SelectMenu is a popover and placing it top-level in the HTML page is recommended,
+ * because some page styles (for example transitions) can misplace the SelectMenu.
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
