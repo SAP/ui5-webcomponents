@@ -78,7 +78,7 @@ ValuePrecision.args = {
 };
 
 export const Label = Template.bind({});
-Label.storyName = "With Label and Text Alignment";
+Label.storyName = "With Text Alignment";
 Label.args = {
 	id: "myStepInput",
 	style: "text-align: left",
@@ -86,6 +86,6 @@ Label.args = {
 	required: true,
 };
 Label.decorators = [
-	(story) => html`<ui5-label class="samples-big-margin-right" for="myStepInput">Number is left aligned</ui5-label>
+	(story) => html`<ui5-label class="samples-big-margin-right" for="myStepInput">Number is left-aligned</ui5-label>
 	${story()}`,
 ]

@@ -42,12 +42,6 @@ Basic.args = {
 	accessibleName: "Switch with Accessible Name",
 };
 
-export const Graphical = Template.bind({});
-Graphical.args = {
-	design: SwitchDesign.Graphical,
-	checked: true,
-};
-
 export const RequiredInForm = Template.bind({});
 RequiredInForm.args = {
 	required: true,

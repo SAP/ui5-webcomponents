@@ -91,10 +91,3 @@ Advanced.parameters = {
 		},
 	}
 };
-
-export const Custom = Template.bind({});
-Custom.storyName = "Custom Design ";
-Custom.args = {
-	hideInput: true,
-	default: `<ui5-badge>Upload File</ui5-badge>`,
-};
