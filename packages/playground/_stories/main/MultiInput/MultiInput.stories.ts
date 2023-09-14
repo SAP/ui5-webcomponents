@@ -57,8 +57,8 @@ Basic.args = {
 	value: "basic input"
 };
 
-export const WithTokens = Template.bind({});
-WithTokens.args = {
+export const Tokens = Template.bind({});
+Tokens.args = {
 	tokens: `
 	<ui5-token slot="tokens" text="Argentina"></ui5-token>
 	<ui5-token slot="tokens" text="Bulgaria"></ui5-token>
