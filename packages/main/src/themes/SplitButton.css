@@ -43,7 +43,8 @@
 }
 
 :host([design="Transparent"]:not([hidden]):not([disabled]):hover) {
-	background-color: var(--_ui5_split_button_transparent_hover_background);
+	background-color: var(--_ui5_split_button_host_transparent_hover_background);
+	box-shadow: var(--_ui5_split_button_host_transparent_hover_box_shadow);
 }
 
 :host([design="Transparent"]:not([hidden]):not([disabled]):hover) .ui5-split-arrow-button:not(:hover),
@@ -155,6 +156,10 @@
 	color: var(--sapButton_Attention_Active_TextColor);
 }
 .ui5-split-text-button[active][design="Default"] {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
+}
+.ui5-split-text-button[active][design="Transparent"] {
 	background-color: var(--sapButton_Active_Background);
 	color: var(--sapButton_Active_TextColor);
 }
@@ -386,7 +391,7 @@
 	color: var(--sapButton_Active_TextColor);
 }
 
-.ui5-split-arrow-button[active][design="Tansparent"] {
+.ui5-split-arrow-button[active][design="Transparent"] {
 	background-color: var(--sapButton_Active_Background);
 	color: var(--sapButton_Active_TextColor);
 }
