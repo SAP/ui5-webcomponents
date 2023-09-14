@@ -49,7 +49,7 @@
 	flex: 1 1 auto;
 	min-width: 0; /* fixes chrome overflow issue */
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 }
 
 .ui5-uci-content-and-progress {
