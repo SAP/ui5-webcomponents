@@ -360,7 +360,7 @@ class Breadcrumbs extends UI5Element {
 			requiredWidth += this._dropdownArrowLinkWidth;
 		}
 
-		while ((requiredWidth > availableWidth) && (overflowSize < this._maxAllowedOverflowSize)) {
+		while ((requiredWidth >= availableWidth) && (overflowSize < this._maxAllowedOverflowSize)) {
 			const itemToOverflow = items[overflowSize];
 			let itemWidth = 0;
 

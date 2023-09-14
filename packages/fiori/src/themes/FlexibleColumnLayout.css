@@ -100,9 +100,3 @@
 .ui5-fcl-arrow:hover:after {
 	height: 7rem;
 }
-
-[aria-hidden] ::slotted([slot="startColumn"]),
-[aria-hidden] ::slotted([slot="midColumn"]),
-[aria-hidden] ::slotted([slot="endColumn"]){
-	visibility: hidden;
-}
