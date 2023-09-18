@@ -32,16 +32,16 @@ enum BadgeDesignType {
 	/**
 	 * First color set of indication colors design type.
 	 * @public
-	 * @type {IndicationColorsSet1}
+	 * @type {IndicationColorSet1}
 	 */
-	IndicationColorsSet1 = "IndicationColorsSet1",
+	IndicationColorSet1 = "IndicationColorSet1",
 
 	/**
 	 * Second color set of indication colors design type.
 	 * @public
-	 * @type {IndicationColorsSet2}
+	 * @type {IndicationColorSet2}
 	 */
-	IndicationColorsSet2 = "IndicationColorsSet2",
+	IndicationColorSet2 = "IndicationColorSet2",
 }
 
 export default BadgeDesignType;
