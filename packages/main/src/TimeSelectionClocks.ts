@@ -218,10 +218,6 @@ class TimeSelectionClocks extends TimePickerInternals {
 		const bufferStr = this._keyboardBuffer + char;
 		const bufferNum = parseInt(bufferStr);
 		const entity = this._entities[this._activeIndex];
-		// let indexStr = "";
-		// let indexNum = 0;
-		// let matching = 0;
-		// let valueMatching = -1;
 		let activeClock = this._clockComponent(this._activeIndex);
 
 		if (!entity || !entity.attributes) {
