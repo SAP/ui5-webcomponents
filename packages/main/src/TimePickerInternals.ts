@@ -191,7 +191,7 @@ class TimePickerInternals extends UI5Element {
 	 * @type {string}
 	 */
 	@property({ defaultValue: "", noAttribute: true })
-	_kbdBuffer!: string;
+	_keyboardBuffer!: string;
 
 	static i18nBundle: I18nBundle;
 
@@ -380,7 +380,7 @@ class TimePickerInternals extends UI5Element {
 	_getNameFromId(id: string) {
 		const parts = id.split("_");
 
-		return parts.length > 0 ? parts[parts.length - 1] : undefined;
+		return parts.length ? parts[parts.length - 1] : undefined;
 	}
 
 	/**
@@ -510,7 +510,7 @@ class TimePickerInternals extends UI5Element {
 			return; // if delay is 0, cooldown is disabled
 		}
 		this._typeCooldownId = setTimeout(() => {
-			this._kbdBuffer = "";
+			this._keyboardBuffer = "";
 			this._typeCooldownId = undefined;
 			if (this._exactMatch) {
 				this._setExactMatch();

@@ -152,7 +152,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 		} else if (isSpace(evt) && toggleSpinButtonTarget && !this._spacePressed) {
 			evt.preventDefault();
 			this._spacePressed = true;
-			this._kbdBuffer = "";
+			this._keyboardBuffer = "";
 			this._resetCooldown(true);
 			this._switchNextClock(true);
 		} else if ((isUp(evt) || isDown(evt)) && !isUpAlt(evt) && !isDownAlt(evt)) {
@@ -196,7 +196,7 @@ class TimeSelectionClocks extends TimePickerInternals {
 			evt.preventDefault();
 		} else if (isColon(evt)) {
 			// Colon (:) - Switch to next clock
-			this._kbdBuffer = "";
+			this._keyboardBuffer = "";
 			this._exactMatch = undefined;
 			this._resetCooldown(true);
 			this._switchNextClock(true);
@@ -215,71 +215,37 @@ class TimeSelectionClocks extends TimePickerInternals {
 	 */
 	_numbersInput(evt: KeyboardEvent) {
 		const char = evt.key;
-		const bufferStr = this._kbdBuffer + char;
+		const bufferStr = this._keyboardBuffer + char;
 		const bufferNum = parseInt(bufferStr);
 		const entity = this._entities[this._activeIndex];
-		let indexStr = "";
-		let indexNum = 0;
-		let matching = 0;
-		let valueMatching = -1;
+		// let indexStr = "";
+		// let indexNum = 0;
+		// let matching = 0;
+		// let valueMatching = -1;
 		let activeClock = this._clockComponent(this._activeIndex);
 
 		if (!entity || !entity.attributes) {
 			return;
 		}
-		if (entity.attributes.step === 1) {
-			// when the step=1, there is "direct" approach - while typing, the exact value is selected
-			if (bufferNum > entity.attributes.max) {
-				// value accumulated in the buffer (old entry + new entry) is greater than the clock maximum value,
-				// so assign old entry to the current clock and then switch to the next clock, and add new entry as an old value
-				activeClock && activeClock._setSelectedValue(parseInt(this._kbdBuffer));
-				this._switchNextClock();
-				this._kbdBuffer = char;
-				activeClock = this._clockComponent(this._activeIndex);
-				activeClock && activeClock._setSelectedValue(parseInt(char));
-				this._resetCooldown(true);
-			} else {
-				// value is less than clock's max value, so add new entry to the buffer
-				this._kbdBuffer = bufferStr;
-				activeClock && activeClock._setSelectedValue(parseInt(this._kbdBuffer));
-				if (this._kbdBuffer.length === 2 || parseInt(`${this._kbdBuffer}0`) > entity.attributes.max) {
-					// if buffer length is 2, or buffer value + one more (any) number is greater than clock's max value
-					// there is no place for more entry - just set buffer as a value, and switch to the next clock
-					this._resetCooldown(this._kbdBuffer.length !== 2);
-					this._kbdBuffer = "";
-					this._switchNextClock();
-				}
-			}
+		if (bufferNum > entity.attributes.max) {
+			// value accumulated in the buffer (old entry + new entry) is greater than the clock maximum value,
+			// so assign old entry to the current clock and then switch to the next clock, and add new entry as an old value
+			activeClock && activeClock._setSelectedValue(parseInt(this._keyboardBuffer));
+			this._switchNextClock();
+			this._keyboardBuffer = char;
+			activeClock = this._clockComponent(this._activeIndex);
+			activeClock && activeClock._setSelectedValue(parseInt(char));
+			this._resetCooldown(true);
 		} else {
-			// when the step is > 1, while typing, the exact match is searched, otherwise the first value that starts with entered value, is being selected
-			// find matches
-			for (indexNum = entity.attributes.min; indexNum <= entity.attributes.max; indexNum++) {
-				if (indexNum % entity.attributes.step === 0) {
-					indexStr = indexNum.toString();
-					if (bufferStr === indexStr.substr(0, bufferStr.length) || bufferNum === indexNum) {
-						matching++;
-						valueMatching = matching === 1 ? indexNum : -1;
-						if (bufferNum === indexNum) {
-							this._exactMatch = indexNum;
-						}
-					}
-				}
-			}
-			if (matching === 1) {
-				// only one item is matching
-				activeClock && activeClock._setSelectedValue(valueMatching);
-				this._exactMatch = undefined;
-				this._kbdBuffer = "";
-				this._resetCooldown(true);
+			// value is less than clock's max value, so add new entry to the buffer
+			this._keyboardBuffer = bufferStr;
+			activeClock && activeClock._setSelectedValue(parseInt(this._keyboardBuffer));
+			if (this._keyboardBuffer.length === 2 || parseInt(`${this._keyboardBuffer}0`) > entity.attributes.max) {
+				// if buffer length is 2, or buffer value + one more (any) number is greater than clock's max value
+				// there is no place for more entry - just set buffer as a value, and switch to the next clock
+				this._resetCooldown(this._keyboardBuffer.length !== 2);
+				this._keyboardBuffer = "";
 				this._switchNextClock();
-			} else if (bufferStr.length === 2) {
-				// no matches, but 2 numbers are entered, start again
-				this._exactMatch = undefined;
-				this._kbdBuffer = "";
-				this._resetCooldown(true);
-			} else {
-				// no match, add last number to buffer
-				this._kbdBuffer = bufferStr;
 			}
 		}
 	}

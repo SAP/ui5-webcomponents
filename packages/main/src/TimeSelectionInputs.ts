@@ -259,7 +259,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 			this.fireEvent("close-inputs");
 		} else if (isNumber(evt) && this._entities[this._activeIndex]) {
 			const char = evt.key;
-			const buffer = this._kbdBuffer + char;
+			const buffer = this._keyboardBuffer + char;
 			const bufferValue = parseInt(buffer);
 
 			evt.preventDefault();
@@ -267,20 +267,20 @@ class TimeSelectionInputs extends TimePickerInternals {
 			if (bufferValue > this._entities[this._activeIndex].attributes!.max) {
 				// value accumulated in the buffer (old entry + new entry) is greater than the input maximum value,
 				// so assign old entry to the current inut and then switch to the next input, and add new entry as an old value
-				this._inputChange(parseInt(this._kbdBuffer));
+				this._inputChange(parseInt(this._keyboardBuffer));
 				this._switchNextInput();
-				this._kbdBuffer = char;
+				this._keyboardBuffer = char;
 				this._inputChange(parseInt(char));
 				this._resetCooldown(true);
 			} else {
 				// value is less than clock's max value, so add new entry to the buffer
-				this._kbdBuffer = buffer;
-				this._inputChange(parseInt(this._kbdBuffer));
-				if (this._kbdBuffer.length === 2 || parseInt(`${this._kbdBuffer}0`) > this._entities[this._activeIndex].attributes!.max) {
+				this._keyboardBuffer = buffer;
+				this._inputChange(parseInt(this._keyboardBuffer));
+				if (this._keyboardBuffer.length === 2 || parseInt(`${this._keyboardBuffer}0`) > this._entities[this._activeIndex].attributes!.max) {
 					// if buffer length is 2, or buffer value + one more (any) number is greater than clock's max value
 					// there is no place for more entry - just set buffer as a value, and switch to the next clock
-					this._resetCooldown(this._kbdBuffer.length !== 2);
-					this._kbdBuffer = "";
+					this._resetCooldown(this._keyboardBuffer.length !== 2);
+					this._keyboardBuffer = "";
 					this._switchNextInput();
 				}
 			}
@@ -342,7 +342,7 @@ class TimeSelectionInputs extends TimePickerInternals {
 			this._editedInput = this._activeIndex;
 			this._editedInputValue = stringValue;
 			this._inputChange(value);
-			this._kbdBuffer = stringValue;
+			this._keyboardBuffer = stringValue;
 		}
 	}
 }

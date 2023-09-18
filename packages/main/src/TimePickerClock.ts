@@ -692,8 +692,8 @@ class TimePickerClock extends UI5Element {
 		const replacementValue = this.lastItemReplacement;
 		const minValue = this.itemMin;
 		const maxValue = this.itemMax * (this.showInnerCircle ? 2 : 1);
-		let	step = this.valueStep;
-		let	newValue;
+		let step = this.valueStep;
+		let newValue;
 
 		// fix step in order to change value to the nearest possible if step is > 1
 		if (selectedValue % step !== 0) {
