@@ -44,7 +44,7 @@ import TimeSelectionInputsCss from "./generated/themes/TimeSelectionInputs.css.j
  * @extends sap.ui.webc.main.TimePickerInternals
  * @abstract
  * @tagname ui5-time-selection-inputs
- * @since 1.17.0
+ * @since 1.18.0
  * @private
  */
 @customElement({
