@@ -7,10 +7,9 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
-import IndicatorColorType from "./types/IndicatorColorType.js";
-import BadgeDesignType from "./types/BadgeDesignType.js";
 import WrappingType from "./types/WrappingType.js";
-
+import BadgeIndicatorColorType from "./types/BadgeIndicatorColorType";
+import BadgeColorPaletteType from "./types/BadgeColorPaletteType.js";
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
@@ -56,12 +55,12 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the design type of the component.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Badge.prototype.designType
+	 * @name sap.ui.webc.main.Badge.prototype.colorPalette
 	 * @defaultvalue "ColorScheme"
 	 * @public
 	 */
-	@property({ defaultValue: BadgeDesignType.ColorScheme })
-	designType!: `${BadgeDesignType}`;
+	@property({ defaultValue: BadgeColorPaletteType.ColorScheme })
+	colorPalette!: `${BadgeColorPaletteType}`;
 
 	/**
 	 * Defines the color scheme of the component.
@@ -91,13 +90,13 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the indicator color type of the component.
 	 *
-	 * @type {sap.ui.webc.base.types.IndicatorColorType}
+	 * @type {sap.ui.webc.base.types.BadgeIndicatorColorType}
 	 * @defaultvalue "DarkRed"
 	 * @name sap.ui.webc.main.Badge.prototype.indicatorColor
 	 * @public
 	 */
-	@property({ type: ValueState, defaultValue: IndicatorColorType.DarkRed })
-	indicatorColor!: `${IndicatorColorType}`;
+	@property({ type: ValueState, defaultValue: BadgeIndicatorColorType.DarkRed })
+	indicatorColor!: `${BadgeIndicatorColorType}`;
 
 	/**
 	 * Defines if the default state icon is shown.

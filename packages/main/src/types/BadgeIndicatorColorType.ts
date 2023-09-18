@@ -5,9 +5,9 @@
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webc.main.types.IndicatorColorType
+ * @alias sap.ui.webc.main.types.BadgeIndicatorColorType
  */
-enum IndicatorColorType {
+enum BadgeIndicatorColorType {
 	/**
 	 * Dark red
 	 * @public
@@ -65,4 +65,4 @@ enum IndicatorColorType {
 	Grey = "Grey",
 }
 
-export default IndicatorColorType;
+export default BadgeIndicatorColorType;

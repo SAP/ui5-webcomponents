@@ -1,13 +1,13 @@
 /**
- * Defines badge design types.
+ * Defines badge color palette types.
  *
  * @readonly
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webc.main.types.BadgeDesignType
+ * @alias sap.ui.webc.main.types.BadgeColorPaletteType
  */
-enum BadgeDesignType {
+enum BadgeColorPaletteType {
 	/**
 	 * Color scheme design type.
 	 * @public
@@ -44,4 +44,4 @@ enum BadgeDesignType {
 	IndicationColorSet2 = "IndicationColorSet2",
 }
 
-export default BadgeDesignType;
+export default BadgeColorPaletteType;
