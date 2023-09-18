@@ -16,7 +16,7 @@
 	font-family: var(--_ui5-badge-font);
 	font-weight: var(--_ui5-badge-font-weight);
 	text-align: center;
-	letter-spacing: 0.0125em;
+	letter-spacing: var(--_ui5-badge-letter-spacing);
 }
 
 .ui5-badge-root {
@@ -40,7 +40,7 @@
 }
 
 :host([_icon-only]) {
-	padding: 0 0.1875em;
+	padding-inline: var(--_ui5-badge-padding-inline-icon-only);
 }
 
 ::slotted([ui5-icon]) {

@@ -135,18 +135,6 @@ class SplitButton extends UI5Element {
 	/**
 	 * Defines the component design.
 	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>Default</code></li>
-	 * <li><code>Emphasized</code></li>
-	 * <li><code>Positive</code></li>
-	 * <li><code>Negative</code></li>
-	 * <li><code>Transparent</code></li>
-	 * <li><code>Attention</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.main.types.ButtonDesign}
 	 * @name sap.ui.webc.main.SplitButton.prototype.design
 	 * @defaultvalue "Default"

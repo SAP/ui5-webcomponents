@@ -53,8 +53,8 @@ Basic.args = {
 };
 
 
-export const WithMaxLength = Template.bind({});
-WithMaxLength.decorators = [
+export const MaxLength = Template.bind({});
+MaxLength.decorators = [
 	(story) =>  html`
 		${story()}
 		<script>
@@ -68,7 +68,7 @@ WithMaxLength.decorators = [
 		})()
 		</script>`
 ];
-WithMaxLength.args = {
+MaxLength.args = {
 	placeholder: 'Enter text',
 	maxlength: 10,
 	showExceededText: true,
@@ -76,8 +76,8 @@ WithMaxLength.args = {
 
 };
 
-export const WithLabel = Template.bind({});
-WithLabel.decorators = [
+export const Label = Template.bind({});
+Label.decorators = [
 	(story) => {
 		return html`
 		<ui5-label for="textArea-${index}">Description</ui5-label>
@@ -85,7 +85,7 @@ WithLabel.decorators = [
 		`;
 	}
 ]
-WithLabel.args = {
+Label.args = {
 	placeholder: 'Enter description',
 	required: true
 };
