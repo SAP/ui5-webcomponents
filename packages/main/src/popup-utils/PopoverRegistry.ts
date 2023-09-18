@@ -38,11 +38,11 @@ const stopUpdateInterval = () => {
 };
 
 const attachGlobalScrollHandler = () => {
-	document.body.addEventListener("scroll", repositionPopovers, { capture: true });
+	document.addEventListener("scroll", repositionPopovers, { capture: true });
 };
 
 const detachGlobalScrollHandler = () => {
-	document.body.removeEventListener("scroll", repositionPopovers, { capture: true });
+	document.removeEventListener("scroll", repositionPopovers, { capture: true });
 };
 
 const attachScrollHandler = (popover: Popover) => {
