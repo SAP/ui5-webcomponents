@@ -9,7 +9,7 @@ import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.j
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import WrappingType from "./types/WrappingType.js";
 import BadgeIndicationColorType from "./types/BadgeIndicationColorType.js";
-import BadgeColorPaletteType from "./types/BadgeColorPaletteType.js";
+import BadgeDesignType from "./types/BadgeDesignType.js";
 // Template
 import BadgeTemplate from "./generated/templates/BadgeTemplate.lit.js";
 
@@ -55,12 +55,12 @@ class Badge extends UI5Element {
 	/**
 	 * Defines the design type of the component.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Badge.prototype.colorPalette
+	 * @name sap.ui.webc.main.Badge.prototype.designType
 	 * @defaultvalue "ColorScheme"
 	 * @public
 	 */
-	@property({ defaultValue: BadgeColorPaletteType.ColorScheme })
-	colorPalette!: `${BadgeColorPaletteType}`;
+	@property({ defaultValue: BadgeDesignType.ColorScheme })
+	designType!: `${BadgeDesignType}`;
 
 	/**
 	 * Defines the color scheme of the component.

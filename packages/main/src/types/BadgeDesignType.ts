@@ -1,47 +1,47 @@
 /**
- * Defines badge color palette types.
+ * Defines badge design types.
  *
  * @readonly
  * @enum {string}
  * @public
  * @author SAP SE
- * @alias sap.ui.webc.main.types.BadgeColorPaletteType
+ * @alias sap.ui.webc.main.types.BadgeDesignType
  */
-enum BadgeColorPaletteType {
+enum BadgeDesignType {
 	/**
-	 * Color scheme design type.
+	 * Color scheme palette.
 	 * @public
 	 * @type {ColorScheme}
 	 */
 	ColorScheme = "ColorScheme",
 
 	/**
-	 * Value state design type.
+	 * Value state palette.
 	 * @public
 	 * @type {ValueState}
 	 */
 	ValueState = "ValueState",
 
 	/**
-	 * Value state inverted design type.
+	 * Value state inverted palette.
 	 * @public
 	 * @type {ValueState}
 	 */
 	ValueStateInverted = "ValueStateInverted",
 
 	/**
-	 * First color set of indication colors design type.
+	 * First color set of indication colors palette.
 	 * @public
 	 * @type {IndicationColorSet1}
 	 */
 	IndicationColorSet1 = "IndicationColorSet1",
 
 	/**
-	 * Second color set of indication colors design type.
+	 * Second color set of indication colors palette.
 	 * @public
 	 * @type {IndicationColorSet2}
 	 */
 	IndicationColorSet2 = "IndicationColorSet2",
 }
 
-export default BadgeColorPaletteType;
+export default BadgeDesignType;
