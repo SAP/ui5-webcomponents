@@ -53,6 +53,19 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 	value!: string;
 
 	/**
+	 * Defines if the component is selected.
+	 * <br><br>
+	 * Only one item can be selected per <code>ui5-color-palette</code>.
+	 *
+	 * @public
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ColorPaletteItem.prototype.selected
+	 * @defaultvalue false
+	 */
+	@property({ type: Boolean })
+	selected!: boolean;
+
+	/**
 	 * Defines the tab-index of the element, helper information for the ItemNavigation.
 	 * @private
 	 */
@@ -106,6 +119,15 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 		return {
 			root: {
 				"background-color": this.value,
+			},
+		};
+	}
+
+	get classes() {
+		return {
+			root: {
+				"ui5-cp-item": true,
+				"selected": this.selected,
 			},
 		};
 	}

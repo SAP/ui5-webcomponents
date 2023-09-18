@@ -8,7 +8,8 @@
 	box-sizing: border-box;
 }
 
-:host(:not([_disabled]):hover) {
+:host(:not([_disabled]):hover),
+:host([selected]) {
 	height: var(--_ui5_color-palette-item-hover-height);
 	width: var(--_ui5_color-palette-item-hover-height);
 	margin: var(--_ui5_color-palette-item-hover-margin);
@@ -40,7 +41,8 @@
 	border-radius: 0.1875rem;
 }
 
-.ui5-cp-item:hover:not(:focus) {
+.ui5-cp-item:hover:not(:focus),
+.ui5-cp-item.selected {
 	border: 1px solid var(--sapGroup_ContentBackground);
 	border-radius: var(--_ui5_color-palette-item-hover-inner-border-radius);
 	box-sizing: border-box;

@@ -168,6 +168,7 @@ class ColorPalette extends UI5Element {
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
 	moreColorsFeature?: ColorPaletteMoreColors;
+	_previouslySelected?: ColorPaletteItem;
 
 	static i18nBundle: I18nBundle;
 
@@ -198,6 +199,8 @@ class ColorPalette extends UI5Element {
 	}
 
 	onBeforeRendering() {
+		this._filterSelectedItems();
+
 		this.displayedColors.forEach((item, index) => {
 			item.index = index + 1;
 		});
@@ -241,11 +244,56 @@ class ColorPalette extends UI5Element {
 		});
 	}
 
+	/**
+	 * In case multiple 'ui5-color-palette-item' elements are explicitly set to be selected,
+	 * this function ensures that only the last one remains active, preventing multiple selections.
+	 *
+	 * @private
+	 * @returns {void}
+	 */
+	_filterSelectedItems() {
+		const allColorPaletteItems = this.colors;
+
+		const selectedItems = allColorPaletteItems.filter(item => item.selected);
+		if (selectedItems.length > 1) {
+			for (let i = 0; i < selectedItems.length - 1; i++) {
+				(selectedItems[i]).selected = !(selectedItems[i]).selected;
+			}
+		}
+	}
+
+	/**
+	 * Deselects all items in the color palette.
+	 *
+	 * @private
+	 * @returns {void}
+	 */
+	_deselectAllItems(items: ColorPaletteItem[]) {
+		items.forEach(item => {
+			if (item.selected) {
+				item.selected = !item.selected;
+			}
+		});
+	}
+
 	_onclick(e: MouseEvent) {
 		const target = e.target as ColorPaletteItem;
-		if (target.hasAttribute("ui5-color-palette-item")) {
-			this.selectColor(target);
+
+		if (!target.hasAttribute("ui5-color-palette-item")) {
+			return;
 		}
+
+		if (this._previouslySelected === target) {
+			target.selected = !target.selected;
+			return;
+		}
+
+		this._deselectAllItems([...this.colors, ...this.recentColorsElements]);
+
+		this.selectColor(target);
+		target.selected = true;
+
+		this._previouslySelected = target;
 	}
 
 	_onkeyup(e: KeyboardEvent) {

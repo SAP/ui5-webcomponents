@@ -120,4 +120,19 @@ describe("ColorPalette interactions", () => {
 		assert.strictEqual(await colorPaletteRecentColorsWrapperEntries[3].getProperty("value"), "darkblue");
 		assert.strictEqual(await colorPaletteRecentColorsWrapperEntries[4].getProperty("value"), "pink");
 	});
+
+	it("Tests if selected state is properly set", async () => {
+		const colorPalette = await browser.$("#cp1");
+		const colorPaletteEntries = await colorPalette.$$("[ui5-color-palette-item]");
+
+		await colorPaletteEntries[0].click();
+		await colorPaletteEntries[1].click();
+		await colorPaletteEntries[2].click();
+
+		assert.strictEqual(await colorPaletteEntries[2].getProperty("selected"), true, "Check if selected state is set");
+
+		await colorPaletteEntries[2].click();
+
+		assert.strictEqual(await colorPaletteEntries[2].getProperty("selected"), false, "Check if selected state is removed, after clicking on the same item again");
+	});
 });
