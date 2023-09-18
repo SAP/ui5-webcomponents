@@ -71,8 +71,8 @@ Basic.args = {
 };
 
 
-export const WithFloatingFooter = Template.bind({});
-WithFloatingFooter.args = {
+export const FloatingFooter = Template.bind({});
+FloatingFooter.args = {
     backgroundDesign: PageBackgroundDesign.List,
     floatingFooter: true,
 	default: `
