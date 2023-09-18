@@ -34,7 +34,13 @@
 	<link rel="stylesheet" type="text/css" href="./styles/DatePicker.css">
 </head>
 <body class="datepicker1auto">
-	<div style='width:500px;'>
+	<div style='width:600px;'>
+		<div>
+			<h3> DatePicker with no format pattern & min-max dates in ISO format</h3>
+			<ui5-date-picker id="dpMinMax-dates" min-date="2019-09-01" max-date="2019-11-01"></ui5-date-picker>
+		</div>
+
+		<h3>Date picker with placeholder.</h3>
 		<ui5-date-picker id='ui5-datepicker--startDate'
 			placeholder='Delivery Date...'>
 		</ui5-date-picker>
@@ -58,6 +64,7 @@
 			placeholder='Delivery Date...'>
 		</ui5-date-picker>
 		<ui5-label id="lblChangePrevent">change: N/A</ui5-label><br/>
+		<ui5-label id="lblChangePreventTargetValue">target value on event fire : N/A</ui5-label><br/>
 		<ui5-label id="lblLiveChangePrevent">input: N/A</ui5-label><br/>
 
 		<h3>format-pattern - 'short'</h3>
@@ -138,6 +145,15 @@
 			<ui5-date-picker min-date="1/1/2021" max-date="31/1/2021" value="5/1/2021"></ui5-date-picker>
 		</section>
 
+		<h3>DatePicker with format `yyyy, dd/MM` should open picker on days</h3>
+		<ui5-date-picker id="dpCalendarModeDays" format-pattern="yyyy, dd/MM"></ui5-date-picker>
+
+		<h3>DatePicker with format `MMM y` should open picker on months</h3>
+		<ui5-date-picker id="dpCalendarModeMonths" format-pattern="MMM y"></ui5-date-picker>
+
+		<h3>DatePicker with format `yyyy` should open picker on years</h3>
+		<ui5-date-picker id="dpCalendarModeYears" format-pattern="yyyy"></ui5-date-picker>
+
 	</div>
 	<script>
 		var dp = document.getElementById('dp5');
@@ -161,11 +177,13 @@
 
 		var dpPrevent = document.getElementById('dpPrevent');
 		var labelChangePrevent = document.getElementById('lblChangePrevent');
+		var labelChangePreventTargetValue = document.getElementById('lblChangePreventTargetValue');
 		var labelLiveChangePrevent = document.getElementById('lblLiveChangePrevent');
 
 		dpPrevent.addEventListener('ui5-change', function(e) {
 			e.preventDefault();
 			console.log('change: ', e.detail);
+			labelChangePreventTargetValue.innerHTML = 'target value on event fire: ' + e.target.value;
 			labelChangePrevent.innerHTML = 'change: ' + JSON.stringify(e.detail);
 		});
 		dpPrevent.addEventListener('ui5-input', function(e) {

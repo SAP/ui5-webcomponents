@@ -332,6 +332,13 @@
 
 	<h3>Short Input With Centered Text</h3>
 	<ui5-input class="short" value="244"></ui5-input>
+
+	<h3>Input with suggestions: clear value on selection change</h3>
+	<ui5-input id="change-event-value" show-suggestions>
+		<ui5-li>Cozy</ui5-li>
+		<ui5-li>Compact</ui5-li>
+		<ui5-li>Condensed</ui5-li>
+	</ui5-input>
 	<link rel="stylesheet" type="text/css" href="./styles/Input.css">
 
 	<h3>Test Backspace</h3>
@@ -414,6 +421,12 @@
 	<ui5-input id="openPickerInput" show-suggestions show-clear-icon class="input3auto" placeholder="Click to show recent values...">
 		<ui5-suggestion-group-item>Recent Items</ui5-suggestion-group-item>
 		<ui5-suggestion-item type="Inactive">No recent users</ui5-suggestion-item>
+	</ui5-input>
+
+	<h3>Input - showing wrapping</h3>
+	<ui5-input show-suggestions id="input-change-wrapping">
+		<ui5-suggestion-item text="Item that does not wrap"></ui5-suggestion-item>
+		<ui5-suggestion-item text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"></ui5-suggestion-item>
 	</ui5-input>
 
 	<h3>Input - change event handling</h3>
@@ -715,6 +728,8 @@
 			const resultInput = document.getElementById("input-number35_eventValue");
 			resultInput.value = event.target.value;
 		});
+
+		document.getElementById("change-event-value").addEventListener("ui5-change", event => event.target.value = "");
 	</script>
 </body>
 </html>

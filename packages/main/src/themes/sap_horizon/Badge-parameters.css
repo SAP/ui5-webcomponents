@@ -1,43 +1,48 @@
 @import "../base/Badge-parameters.css";
 
 :root {
-	--ui5-badge-color-scheme-1-background: #FFF3B8; /* Mango2 */
-	--ui5-badge-color-scheme-1-border: #A93E00; /* Mango8 */
-	--ui5-badge-color-scheme-1-color: #A93E00; /* Mango8 */
+	--_ui5-badge-height: 1.375rem;
+	--_ui5-badge-border: none;
+	--_ui5-badge-border-radius: 0.25rem;
+	--_ui5-badge-padding-inline: 0.375em;
+	--_ui5-badge-padding-inline-icon-only: var(--_ui5-badge-padding-inline);
+	--_ui5-badge-text-transform: none;
+	--_ui5-badge-icon-gap: 0.25rem;
+	--_ui5-badge-font-size: var(--sapFontSize);
+	--_ui5-badge-font: "72override", var(--sapFontSemiboldDuplexFamily);
+	--_ui5-badge-font-weight: normal;
+	--_ui5-badge-default-border-color: transparent;
+	--_ui5-badge-default-background: var(--ui5-badge-color-scheme-1-background);
+	--_ui5-badge-default-color: var(--ui5-badge-color-scheme-1-color);
+	--_ui5-badge-letter-spacing: normal;
 
-	--ui5-badge-color-scheme-2-background: #FFD5EA; /* Red2*/
-	--ui5-badge-color-scheme-2-border: #AA0808; /* Red8 */
-	--ui5-badge-color-scheme-2-color: #AA0808; /* Red8 */
+	--ui5-badge-color-scheme-1-background: var(--sapAvatar_1_Background);
+	--ui5-badge-color-scheme-1-color: var(--sapAvatar_1_TextColor);
 
-	--ui5-badge-color-scheme-3-background: #FFDCE8; /* Raspberry2 */
-	--ui5-badge-color-scheme-3-border: #BA066C; /* Raspberry8 */
-	--ui5-badge-color-scheme-3-color: #BA066C; /* Raspberry8 */
+	--ui5-badge-color-scheme-2-background: var(--sapAvatar_2_Background);
+	--ui5-badge-color-scheme-2-color: var(--sapAvatar_2_TextColor);
 
-	--ui5-badge-color-scheme-4-background: #FFDCF3; /* Pink2 */
-	--ui5-badge-color-scheme-4-border: #A100C2; /* Pink8 */
-	--ui5-badge-color-scheme-4-color: #A100C2; /* Pink8 */
+	--ui5-badge-color-scheme-3-background: var(--sapAvatar_3_Background);
+	--ui5-badge-color-scheme-3-color: var(--sapAvatar_3_TextColor);
 
-	--ui5-badge-color-scheme-5-background: #E2D8FF; /* Indigo2*/
-	--ui5-badge-color-scheme-5-border: #470CED; /* Indigo8 */
-	--ui5-badge-color-scheme-5-color: #470CED; /* Indigo8 */
+	--ui5-badge-color-scheme-4-background: var(--sapAvatar_4_Background);
+	--ui5-badge-color-scheme-4-color: var(--sapAvatar_4_TextColor);
 
-	--ui5-badge-color-scheme-6-background: #D1EFFF; /* Blue2 */
-	--ui5-badge-color-scheme-6-border: #0057D2; /* Blue8 */
-	--ui5-badge-color-scheme-6-color: #0057D2; /* Blue8 */
+	--ui5-badge-color-scheme-5-background: var(--sapAvatar_5_Background);
+	--ui5-badge-color-scheme-5-color: var(--sapAvatar_5_TextColor);
 
-	--ui5-badge-color-scheme-7-background: #C2FCEE; /* Teal2 */
-	--ui5-badge-color-scheme-7-border: #046C7A; /* Teal8 */;
-	--ui5-badge-color-scheme-7-color: #046C7A; /* Teal8 */
+	--ui5-badge-color-scheme-6-background: var(--sapAvatar_6_Background);
+	--ui5-badge-color-scheme-6-color: var(--sapAvatar_6_TextColor);
 
-	--ui5-badge-color-scheme-8-background: #E5F2BD; /* Green2 */
-	--ui5-badge-color-scheme-8-border: #256F3A; /* Green8 */
-	--ui5-badge-color-scheme-8-color: #256F3A; /* Green8 */
+	--ui5-badge-color-scheme-7-background: var(--sapAvatar_7_Background);
+	--ui5-badge-color-scheme-7-color: var(--sapAvatar_7_TextColor);
 
-	--ui5-badge-color-scheme-9-background: #B8F3FF; /* Cyan2 */
-	--ui5-badge-color-scheme-9-border: #00709F; /* Cyan8 */
-	--ui5-badge-color-scheme-9-color: #00709F; /* Cyan8 */
+	--ui5-badge-color-scheme-8-background: var(--sapAvatar_8_Background);
+	--ui5-badge-color-scheme-8-color: var(--sapAvatar_8_TextColor);
 
-	--ui5-badge-color-scheme-10-background: #EAECEE; /* Grey2 */
-	--ui5-badge-color-scheme-10-border: #354A5F; /* Grey8 */
-	--ui5-badge-color-scheme-10-color: #354A5F; /* Grey8 */
+	--ui5-badge-color-scheme-9-background: var(--sapAvatar_9_Background);
+	--ui5-badge-color-scheme-9-color: var(--sapAvatar_9_TextColor);
+
+	--ui5-badge-color-scheme-10-background: var(--sapAvatar_10_Background);
+	--ui5-badge-color-scheme-10-color: var(--sapAvatar_10_TextColor);
 }

@@ -1,9 +1,9 @@
 /**
  * Different drag and drop overlay modes of UploadCollection.
  *
- * @class
+ * @readonly
  * @enum {string}
- * @public
+ * @private
  * @author SAP SE
  * @alias sap.ui.webc.fiori.types.UploadCollectionDnDOverlayMode
  */

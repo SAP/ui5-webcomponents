@@ -3,7 +3,7 @@ import CalendarDate from "./CalendarDate.js";
 
 const cache = new Map<string, CalendarDate>();
 
-const getMinCalendarDate = (primaryCalendarType: CalendarType) => {
+const getMinCalendarDate = (primaryCalendarType: `${CalendarType}`) => {
 	const key = `min ${primaryCalendarType}`;
 
 	if (!cache.has(key)) {
@@ -17,7 +17,7 @@ const getMinCalendarDate = (primaryCalendarType: CalendarType) => {
 	return cache.get(key)!;
 };
 
-const getMaxCalendarDate = (primaryCalendarType: CalendarType) => {
+const getMaxCalendarDate = (primaryCalendarType: `${CalendarType}`) => {
 	const key = `max ${primaryCalendarType}`;
 
 	if (!cache.has(key)) {

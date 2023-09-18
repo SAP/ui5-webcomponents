@@ -17,7 +17,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/TableGroupRow.css.js";
+import tableGroupRowStyles from "./generated/themes/TableGroupRow.css.js";
 
 /**
  * @class
@@ -44,7 +44,15 @@ import styles from "./generated/themes/TableGroupRow.css.js";
  * @implements sap.ui.webc.main.ITableRow
  * @public
  */
-@customElement("ui5-table-group-row")
+@customElement({
+	tag: "ui5-table-group-row",
+	styles: tableGroupRowStyles,
+	renderer: litRender,
+	template: TableGroupRowTemplate,
+	dependencies: [
+		CheckBox,
+	],
+})
 @event("_focused")
 class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	/**
@@ -63,7 +71,7 @@ class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	 * @private
 	 */
 	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: TableMode;
+	mode!: `${TableMode}`;
 
 	@property({ type: Object, multiple: true })
 	_columnsInfo!: Array<TableColumnInfo>;
@@ -92,24 +100,6 @@ class TableGroupRow extends UI5Element implements ITableRow, ITabbable {
 	 * @slot
 	 * @public
 	 */
-
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TableGroupRowTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			CheckBox,
-		];
-	}
 
 	static i18nBundle: I18nBundle;
 

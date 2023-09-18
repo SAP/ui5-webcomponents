@@ -1,7 +1,7 @@
 /**
  * Popover horizontal align types.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE
@@ -9,28 +9,28 @@
  */
 enum PopoverHorizontalAlign {
 	/**
-	 * Popover is centered
+	 * Popover is centered.
 	 * @public
 	 * @type {Center}
 	 */
 	Center = "Center",
 
 	/**
-	 * Popover opens on the left side of the target
+	 * Popover is aligned with the left side of the target. When direction is RTL, it is right aligned.
 	 * @public
 	 * @type {Left}
 	 */
 	Left = "Left",
 
 	/**
-	 * Popover opens on the right side of the target
+	 * Popover is aligned with the right side of the target. When direction is RTL, it is left aligned.
 	 * @public
 	 * @type {Right}
 	 */
 	Right = "Right",
 
 	/**
-	 * Popover is stretched
+	 * Popover is stretched.
 	 * @public
 	 * @type {Stretch}
 	 */

@@ -1,0 +1,51 @@
+<div
+	id="{{_id}}"
+	ondragstart="return false;"
+	ondrop="return false;"
+	aria-hidden="true"
+	class="{{classes.clock}}"
+>
+	<div
+		data-label="{{label}}"
+		class="ui5-tp-clock-dial"
+	>
+	</div>
+
+	<div>
+	{{#each _items}}
+		<div class="ui5-tp-clock-item" style="{{this.outerStyles}}">
+		{{#if this.item}}
+			<span class="ui5-tp-clock-dot"></span>
+			<span id="{{../_id}}-{{this.item}}" class="ui5-tp-clock-number" style="{{this.innerStyles}}">{{this.item}}</span>
+			{{#if this.innerItem}}
+			<span id="{{../_id}}-{{this.innerItem}}" class="ui5-tp-clock-number" style="{{this.innerStyles}}">{{this.innerItem}}</span>
+			{{/if}}
+		{{else unless ../hideFractions}}
+			<span class="ui5-tp-clock-mid-dot"></span>
+		{{/if}}
+		</div>
+	{{/each}}
+
+	{{#if _selectedItem.showMarker}}
+		<div class="ui5-tp-clock-item" style="{{_selectedItem.outerStyles}}" marker>
+			<div class="ui5-tp-clock-marker"></div>
+			<div class="{{_selectedItem.itemClasses}}" style="{{_selectedItem.innerStyles}}">{{_selectedItem.item}}</div>
+			<div id="{{_id}}-selected" class="{{_selectedItem.innerItemClasses}}" style="{{_selectedItem.innerStyles}}">{{_selectedItem.innerItem}}</div>
+		</div>
+	{{/if}}
+
+	</div>
+
+	<div
+		class="ui5-tp-clock-cover"
+		@touchstart="{{_onTouchStart}}"
+		@touchmove="{{_onTouchMove}}"
+		@touchend="{{_onTouchEnd}}"
+		@mousedown="{{_onTouchStart}}"
+		@mousemove="{{_onTouchMove}}"
+		@mouseup="{{_onTouchEnd}}"
+		@mouseout="{{_onMouseOut}}"
+		@mousewheel="{{_onMouseWheel}}"
+		@DOMMouseScroll="{{_onMouseWheel}}"
+	></div>
+</div>

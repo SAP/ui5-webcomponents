@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -61,21 +60,16 @@ import BarCss from "./generated/themes/Bar.css.js";
  * @public
  * @since 1.0.0-rc.11
  */
-@customElement("ui5-bar")
-@fastNavigation
+@customElement({
+	tag: "ui5-bar",
+	fastNavigation: true,
+	renderer: litRender,
+	styles: BarCss,
+	template: BarTemplate,
+})
 class Bar extends UI5Element {
 	/**
 	 * Defines the component's design.
-	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Header</code></li>
-	 * <li><code>Subheader</code></li>
-	 * <li><code>Footer</code></li>
-	 * <li><code>FloatingFooter</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.fiori.types.BarDesign}
 	 * @name sap.ui.webc.fiori.Bar.prototype.design
@@ -83,10 +77,10 @@ class Bar extends UI5Element {
 	 * @public
 	 */
 	@property({ type: BarDesign, defaultValue: BarDesign.Header })
-	design!: BarDesign
+	design!: `${BarDesign}`
 
 	/**
-	* Defines the content at the start of the bar
+	* Defines the content at the start of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.startContent
 	* @slot
@@ -96,7 +90,7 @@ class Bar extends UI5Element {
 	startContent!: Array<HTMLElement>;
 
 	/**
-	* Defines the content in the middle of the bar
+	* Defines the content in the middle of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.default
 	* @slot middleContent
@@ -106,7 +100,7 @@ class Bar extends UI5Element {
 	middleContent!: Array<HTMLElement>
 
 	/**
-	* Defines the content at the end of the bar
+	* Defines the content at the end of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.endContent
 	* @slot
@@ -116,18 +110,6 @@ class Bar extends UI5Element {
 	endContent!: Array<HTMLElement>
 
 	_handleResizeBound: () => void;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return BarCss;
-	}
-
-	static get template() {
-		return BarTemplate;
-	}
 
 	get accInfo() {
 		return {
@@ -157,11 +139,6 @@ class Bar extends UI5Element {
 				"ui5-bar-root": true,
 			},
 		};
-	}
-
-	onBeforeRendering() {
-		// Next row is specific for IE11. Please remove after stop support and edit css file
-		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"));
 	}
 
 	onEnterDOM() {

@@ -1,0 +1,14 @@
+<ui5-popover
+	class="ui5-overflow-popover"
+	placement-type="Bottom"
+	horizontal-align="Right"
+	@ui5-after-close="{{onOverflowPopoverClosed}}"
+	@ui5-after-open="{{onOverflowPopoverOpened}}"
+	hide-arrow
+>
+	<div class="ui5-overflow-list {{classes.overflow}}">
+		{{#each overflowItems}}
+			{{this.toolbarPopoverTemplate}}
+		{{/each}}
+	</div>
+</ui5-popover>

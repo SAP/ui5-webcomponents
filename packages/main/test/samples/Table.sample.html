@@ -98,31 +98,76 @@
 	</ui5-table-column>
 
 	<ui5-table-row>
-		<ui5-table-cell>Notebook Basic 15HT-1000</ui5-table-cell>
-		<ui5-table-cell>Very Best Screens</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">30 x 18 x 3cm</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">4.2KG</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">956EUR</ui5-table-cell>
+		<ui5-table-cell>
+			<div class="double-line-content">
+				<span><b>Notebook Basic 15</b></span>
+				<span style="margin-top: 0.5rem">HT-1000</span>
+			</div>
+		</ui5-table-cell>
+		<ui5-table-cell>
+			<span>Very Best Screens</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span>30 x 18 x 3cm</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span style="color: #2b7c2b"><b>4.2</b>KG</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span><b>956</b>EUR</span>
+		</ui5-table-cell>
 	</ui5-table-row>
 
 	<ui5-table-row>
-		<ui5-table-cell>Notebook Basic 17HT-1001</ui5-table-cell>
-		<ui5-table-cell>Very Best Screens</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">29 x 17 x 3.1cm</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">4.5KG</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">1249EUR</ui5-table-cell>
+		<ui5-table-cell>
+			<div class="double-line-content">
+				<span><b>Notebook Basic 175</b></span>
+				<span style="margin-top: 0.5rem">HT-1001</span>
+			</div>
+		</ui5-table-cell>
+		<ui5-table-cell>
+			<span>Very Best Screens</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span>29 x 17 x 3.1cm</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span style="color: #2b7c2b"><b>4.5</b>KG</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span><b>1249</b>EUR</span>
+		</ui5-table-cell>
 	</ui5-table-row>
 
 	<ui5-table-row>
-		<ui5-table-cell>Notebook Basic 18HT-1002</ui5-table-cell>
-		<ui5-table-cell>Very Best Screens</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">28 x 19 x 2.5cm</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">4.2KG</ui5-table-cell>
-		<ui5-table-cell style="text-align: right">1570EUR</ui5-table-cell>
+		<ui5-table-cell>
+			<div class="double-line-content">
+				<span><b>Notebook Basic 18</b></span>
+				<span style="margin-top: 0.5rem">HT-1002</span>
+			</div>
+		</ui5-table-cell>
+		<ui5-table-cell>
+			<span>Very Best Screens</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span>28 x 19 x 2.5cm</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span style="color: #2b7c2b"><b>4.2</b>KG</span>
+		</ui5-table-cell>
+		<ui5-table-cell style="text-align: right">
+			<span><b>1570</b>EUR</span>
+		</ui5-table-cell>
 	</ui5-table-row>
 
 	...
 </ui5-table>
+
+<style>
+	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
+		text-align: end;
+	}
+</style>
 	</xmp></pre>
 </section>
 
@@ -155,6 +200,12 @@
 
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-table mode="SingleSelect"></ui5-table>
+
+<style>
+	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
+		text-align: end;
+	}
+</style>
 	</xmp></pre>
 </section>
 
@@ -187,6 +238,12 @@
 
 	<pre class="prettyprint lang-html"><xmp>
 <ui5-table mode="MultiSelect"></ui5-table>
+
+<style>
+	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
+		text-align: end;
+	}
+</style>
 	</xmp></pre>
 </section>
 
@@ -249,6 +306,12 @@
 				<span>Price</span>
 			</ui5-table-column>
 		</ui5-table>
+
+		<style>
+			ui5-table ui5-table-column.table-header-text-alignment::part(column) {
+				text-align: end;
+			}
+		</style>
 	</xmp></pre>
 </section>
 
@@ -638,6 +701,12 @@
 		});
 	});
 </script>
+
+<style>
+	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
+		text-align: end;
+	}
+</style>
 	</xmp></pre>
 
 	<script>
@@ -964,6 +1033,12 @@
 		}, 500);
 	});
 </script>
+
+<style>
+	ui5-table ui5-table-column.table-header-text-alignment::part(column) {
+		text-align: end;
+	}
+</style>
 	</xmp></pre>
 
 	<script>

@@ -8,7 +8,7 @@
 
 	--_ui5_switch_with_label_width: 3.875rem;
 	--_ui5_switch_compact_with_label_width: 3.75rem;
-	
+
 	--_ui5_switch_focus_outline: none;
 	--_ui5_switch_root_after_outline: 0.125rem solid var(--sapContent_FocusColor);
 
@@ -120,11 +120,13 @@
 
 	--_ui5_switch_text_with_label_font_family: "72-Condensed-Bold" , "72" , "72full" , Arial, Helvetica, sans-serif;
 	--_ui5_switch_text_with_label_font_size: var(--sapFontSmallSize);
-	--_ui5_switch_text_with_label_width: 1.5rem;
+	--_ui5_switch_text_with_label_width: 1.75rem;
 
 	--_ui5_switch_text_inactive_left: 0.1875rem;
+	--_ui5_switch_text_inactive_left_alternate: 0.0625rem;
 	--_ui5_switch_text_inactive_right: auto;
 	--_ui5_switch_text_active_left: 0.1875rem;
+	--_ui5_switch_text_active_left_alternate: 0.0625rem;
 	--_ui5_switch_text_compact_active_left: 0.1875rem;
 	--_ui5_switch_text_active_right: auto;
 

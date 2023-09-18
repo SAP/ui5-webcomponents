@@ -1,0 +1,16 @@
+@import "../base/MonthPicker-parameters.css";
+
+:root {
+	--_ui5_monthpicker_item_border_radius: 0.5rem;
+	--_ui5_monthpicker_item_focus_after_border: none;
+	--_ui5_monthpicker_item_focus_after_border_radius: 0.5rem;
+	--_ui5_monthpicker_item_focus_after_width: calc(100% - 0.5rem);
+	--_ui5_monthpicker_item_focus_after_height: calc(100% - 0.5rem);
+	--_ui5_monthpicker_item_focus_after_offset: 0.25rem;
+	--_ui5_monthpicker_item_selected_text_color: var(--sapContent_Selected_TextColor);
+	--_ui5_monthpicker_item_selected_background_color:var(--sapLegend_WorkingBackground);
+	--_ui5_monthpicker_item_selected_hover_color: var(--sapList_Hover_Background);
+	--_ui5_monthpicker_item_selected_box_shadow: inset 0 0 0 0.15rem var(--sapSelectedColor);
+	--_ui5_monthpicker_item_focus_after_outline: 0.125rem  solid var(--sapSelectedColor);
+	--_ui5_monthpicker_item_selected_font_wieght: bold;
+}

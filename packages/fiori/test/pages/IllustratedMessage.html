@@ -30,6 +30,7 @@
 		<ui5-option>FilterTable</ui5-option>
 		<ui5-option>GroupTable</ui5-option>
 		<ui5-option>NoActivities</ui5-option>
+		<ui5-option>NoColumnsSet</ui5-option>
 		<ui5-option>NoData</ui5-option>
 		<ui5-option>NoEntries</ui5-option>
 		<ui5-option>NoFilterResults</ui5-option>
@@ -67,6 +68,7 @@
 		<ui5-option>SuccessCheckMark</ui5-option>
 		<ui5-option>SuccessHighFive</ui5-option>
 		<ui5-option>SuccessScreen</ui5-option>
+		<ui5-option>Survey</ui5-option>
 		<ui5-option>Tent</ui5-option>
 		<ui5-option>UnableToLoad</ui5-option>
 		<ui5-option>UnableToLoadImage</ui5-option>
@@ -168,11 +170,11 @@
 
 		illustratedMessage.style.width = `${sizes.scene}px`;
 
-		illustrationSelect.addEventListener("change", (event) => {
+		illustrationSelect.addEventListener("ui5-change", (event) => {
 			illustratedMessage.setAttribute("name", event.detail.selectedOption.textContent);
 		});
 
-		sizeSelect.addEventListener("change", (event) => {
+		sizeSelect.addEventListener("ui5-change", (event) => {
 			illustratedMessage.style.width = `${sizes[event.detail.selectedOption.textContent]}px`;
 		});
 

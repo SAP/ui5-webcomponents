@@ -1,5 +1,5 @@
-const list = require("../pageobjects/ListTestPage");
-const assert = require("chai").assert;
+import list from "../pageobjects/ListTestPage.js";
+import { assert } from "chai";
 
 /**
  *
@@ -36,12 +36,20 @@ describe("List Tests", () => {
 	it("itemClick and selectionChange events are fired in Single selection", async () => {
 		const itemClickResultField = await browser.$("#itemClickResultField");
 		const selectionChangeResultField = await browser.$("#selectionChangeResultField");
+		const selectionChangeResultFieldRadio = await browser.$("#selectionChangeResultFieldRadio");
 		const firstItem = await browser.$("#listEvents #country1");
+		const secondItemRadio = await browser.$("#listEvents #country2").shadow$("ui5-radio-button");
 
 		await firstItem.click();
 
 		assert.strictEqual(await itemClickResultField.getProperty("value"), "1", "itemClick event has been fired once");
 		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "1", "selectionChange event has been fired.");
+
+		await secondItemRadio.click();
+		assert.strictEqual(await itemClickResultField.getProperty("value"), "2", "itemClick event has been fired second time");
+		assert.strictEqual(await selectionChangeResultField.getProperty("value"), "2", "selectionChange event has been fired second time.");
+		assert.strictEqual(await selectionChangeResultFieldRadio.getProperty("value"), "true", "selectionChange event correct detail - selectionComponentPressed.");
+
 	});
 
 	it("itemClick and selectionChange events are fired in Multi selection", async () => {
@@ -63,6 +71,34 @@ describe("List Tests", () => {
 		await firstItem.click();
 
 		assert.strictEqual(await secondItem.getProperty("id"), await selectionChangeResultPreviousItemsParameter.getProperty("value"));
+	});
+
+	it("selection is reverted if selectionChange event is prevented and the mode is SingleSelect", async () => {
+		const firstItem = await browser.$("#listPreventSelectionChangeSingleSelect #country1");
+		const thirdItem = await browser.$("#listPreventSelectionChangeSingleSelect #country3");
+
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is initially selected");
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected (prevented)");
+		assert.ok(await thirdItem.getAttribute("selected"), "Selection reverted to third item");
+	});
+
+	it("selection is reverted if selectionChange event is prevented  and the mode is MultiSelect", async () => {
+		const firstItem = await browser.$("#listPreventSelectionChangeMultiSelect #country1");
+		const secondItem = await browser.$("#listPreventSelectionChangeMultiSelect #country2");
+		const thirdItem = await browser.$("#listPreventSelectionChangeMultiSelect #country3");
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is initially not selected");
+		assert.ok(await secondItem.getAttribute("selected"), "The second item is initially selected");
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is initially selected");
+
+		await firstItem.click();
+
+		assert.notOk(await firstItem.getAttribute("selected"), "The first item is not selected (prevented)");
+		assert.ok(await secondItem.getAttribute("selected"), "The second item is still selected");
+		assert.ok(await thirdItem.getAttribute("selected"), "The third item is still selected");
 	});
 
 	it("No data text is shown", async () => {
@@ -299,6 +335,25 @@ describe("List Tests", () => {
 		assert.ok(await afterBtn.isFocused(), "element outside of the list is focused");
 	});
 
+	it("keyboard handling on TAB when 2 level nested UI5Element is focused", async () => {
+		const list = await browser.$("#focusAfterList");
+		const breadcrumbsItem = await list.$(".breadcrumbsItem");
+		const breadcrumb = await list.$("ui5-breadcrumbs");
+		const afterBtn = await browser.$('#afterFocusListBtn');
+
+		// act: click on the item
+		await breadcrumbsItem.click();
+		assert.ok(await breadcrumbsItem.isFocused(), "breadcrumb is focused");
+
+		// act: Tab from list item to breadcrumbs
+		await breadcrumbsItem.keys("Tab");
+		assert.ok(await breadcrumb.isFocused(), "breadcrumb is focused");
+
+		// act: Tab to element outside of the list -> focus should go to after button
+		await breadcrumb.keys("Tab");
+		assert.ok(await afterBtn.isFocused(), "after button is focused");
+	});
+
 	it("does not focus next / prev item when right / left arrow is pressed", async () => {
 		const firstListItem = await browser.$("#country1");
 		const secondListItem = await browser.$("#country2");
@@ -382,6 +437,17 @@ describe("List Tests", () => {
 		assert.strictEqual(await listDelete.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_DELETABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listMultiSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_MULTISELECTABLE, "aria-label mode message is correct");
 		assert.strictEqual(await listSingleSelect.getProperty("ariaLabelModeText"), texts.ARIA_LABEL_LIST_SELECTABLE, "aria-label mode message is correct");
+	});
+
+
+	it("tests aria-setsize and aria-posinset attributes", async () => {
+		const listItem = await browser.$("#listItem").shadow$("li");
+		const ariaSetSize = "200";
+		const ariaPosInSet = "3";
+
+		assert.strictEqual(await listItem.getAttribute("aria-setsize"), ariaSetSize, "The aria-setsize is correct.");
+		assert.strictEqual(await listItem.getAttribute("aria-posinset"), ariaPosInSet, "The aria-posinset is correct.");
+
 	});
 
 	it("tests title is updated, when initially empty", async () => {
@@ -497,5 +563,15 @@ describe("List Tests", () => {
 		assert.strictEqual(url, "https://sap.github.io/ui5-webcomponents/playground/components", "Link target is accessible");
 
 		await browser.url(`test/pages/List_test_page.html`);
+	});
+
+	it('should not try to fire item-close if a select is closed from custom list item', async () => {
+		const select = await browser.$("#selectInLiCustom");
+		const itemCloseResult = await browser.$("#customListItemSelectResult");
+
+		await select.click();
+		await select.keys("Escape");
+
+		assert.strictEqual(await itemCloseResult.getProperty("value"), "0", "item-close event is not fired when the button is pressed.");
 	});
 });

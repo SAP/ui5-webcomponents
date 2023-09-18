@@ -2,11 +2,12 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { getIllustrationDataSync, getIllustrationData } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
-import I18nBundle, { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import IllustrationMessageSize from "./types/IllustrationMessageSize.js";
@@ -67,8 +68,15 @@ import IllustratedMessageTemplate from "./generated/templates/IllustratedMessage
  * @since 1.0.0-rc.15
  */
 
-@customElement("ui5-illustrated-message")
-@languageAware
+@customElement({
+	tag: "ui5-illustrated-message",
+	languageAware: true,
+	themeAware: true,
+	renderer: litRender,
+	styles: IllustratedMessageCss,
+	template: IllustratedMessageTemplate,
+	dependencies: [Title],
+})
 class IllustratedMessage extends UI5Element {
 	/**
 	* Defines the illustration name that will be displayed in the component.
@@ -88,6 +96,7 @@ class IllustratedMessage extends UI5Element {
 	* <li><code>FilterTable</code></li>
 	* <li><code>GroupTable</code></li>
 	* <li><code>NoActivities</code></li>
+	* <li><code>NoColumnsSet</code></li>
 	* <li><code>NoData</code></li>
 	* <li><code>NoEntries</code></li>
 	* <li><code>NoFilterResults</code></li>
@@ -125,6 +134,7 @@ class IllustratedMessage extends UI5Element {
 	* <li><code>SuccessCheckMark</code></li>
 	* <li><code>SuccessHighFive</code></li>
 	* <li><code>SuccessScreen</code></li>
+	* <li><code>Survey</code></li>
 	* <li><code>Tent</code></li>
 	* <li><code>UnableToLoad</code></li>
 	* <li><code>UnableToLoadImage</code></li>
@@ -184,7 +194,7 @@ class IllustratedMessage extends UI5Element {
 	* @public
 	*/
 	@property({ type: IllustrationMessageType, defaultValue: IllustrationMessageType.BeforeSearch })
-	name!: IllustrationMessageType;
+	name!: `${IllustrationMessageType}`;
 
 	/**
 	* Determines which illustration breakpoint variant is used.
@@ -208,7 +218,7 @@ class IllustratedMessage extends UI5Element {
 	* @since 1.5.0
 	*/
 	@property({ type: IllustrationMessageSize, defaultValue: IllustrationMessageSize.Auto })
-	size!: IllustrationMessageSize;
+	size!: `${IllustrationMessageSize}`;
 
 	/**
 	* Defines the subtitle of the component.
@@ -327,7 +337,7 @@ class IllustratedMessage extends UI5Element {
 	static i18nBundle: I18nBundle;
 	_lastKnownOffsetWidthForMedia: Record<string, number>;
 	_lastKnownMedia: string;
-	_handleResize: () => void;
+	_handleResize: ResizeObserverCallback;
 
 	constructor() {
 		super();
@@ -337,18 +347,6 @@ class IllustratedMessage extends UI5Element {
 		this._lastKnownOffsetWidthForMedia = {};
 		// this will store the last known media, in order to detect if IllustratedMessage has been hidden by expand/collapse container
 		this._lastKnownMedia = "base";
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return IllustratedMessageCss;
-	}
-
-	static get template() {
-		return IllustratedMessageTemplate;
 	}
 
 	static async onDefine() {
@@ -370,10 +368,6 @@ class IllustratedMessage extends UI5Element {
 			DIALOG: "dialog",
 			SCENE: "scene",
 		};
-	}
-
-	static get dependencies() {
-		return [Title];
 	}
 
 	async onBeforeRendering() {
@@ -524,7 +518,7 @@ class IllustratedMessage extends UI5Element {
 		return !!this.actions.length && this.media !== IllustratedMessage.MEDIA.BASE;
 	}
 
-	isValidIllustration(currentIllustration: IllustrationMessageType): boolean {
+	isValidIllustration(currentIllustration: `${IllustrationMessageType}`): boolean {
 		return currentIllustration in IllustrationMessageType;
 	}
 }

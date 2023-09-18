@@ -1,21 +1,23 @@
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import "@ui5/webcomponents-icons/dist/date-time.js";
-import { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import Button from "./Button.js";
 import type ResponsivePopover from "./ResponsivePopover.js";
-// @ts-ignore
 import ToggleButton from "./ToggleButton.js";
-// @ts-ignore
 import SegmentedButton from "./SegmentedButton.js";
 import Calendar from "./Calendar.js";
-import type { CalendarChangeEventDetail } from "./Calendar.js";
+import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 import DatePicker from "./DatePicker.js";
+import type {
+	DatePickerChangeEventDetail as DateTimePickerChangeEventDetail,
+	DatePickerInputEventDetail as DateTimePickerInputEventDetail,
+} from "./DatePicker.js";
 import TimeSelection from "./TimeSelection.js";
 import type { TimeSelectionChangeEventDetail, TimeSelectionSliderChangeEventDetail } from "./TimeSelection.js";
 
@@ -34,6 +36,7 @@ import DateTimePickerPopoverTemplate from "./generated/templates/DateTimePickerP
 // Styles
 import DateTimePickerCss from "./generated/themes/DateTimePicker.css.js";
 import DateTimePickerPopoverCss from "./generated/themes/DateTimePickerPopover.css.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 
 const PHONE_MODE_BREAKPOINT = 640; // px
 
@@ -69,7 +72,7 @@ type PreviewValues = {
  * The value entered by typing into the input field must fit to the used date/time format.
  * <br><br>
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see <ui5-link target="_blank" href="https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
+ * For more information, see <ui5-link target="_blank" href="https://unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
  * <br><br>
  * <b>Example:</b> the following format <code>dd/MM/yyyy, hh:mm:ss aa</code>
  * corresponds the <code>13/04/2020, 03:16:16 AM</code> value.
@@ -114,7 +117,26 @@ type PreviewValues = {
  * @since 1.0.0-rc.7
  * @public
  */
-@customElement("ui5-datetime-picker")
+@customElement({
+	tag: "ui5-datetime-picker",
+	staticAreaTemplate: DateTimePickerPopoverTemplate,
+	styles: [
+		DateTimePicker.styles,
+		DateTimePickerCss,
+	],
+	staticAreaStyles: [
+		DatePicker.staticAreaStyles,
+		DateTimePickerPopoverCss,
+	],
+	dependencies: [
+		...DatePicker.dependencies,
+		Calendar,
+		Button,
+		ToggleButton,
+		SegmentedButton,
+		TimeSelection,
+	],
+})
 class DateTimePicker extends DatePicker {
 	/**
 	 * Defines the visibility of the time view in <code>phoneMode</code>.
@@ -154,30 +176,7 @@ class DateTimePicker extends DatePicker {
 	@property({ defaultValue: "hours" })
 	_currentTimeSlider!: string;
 
-	_handleResizeBound: () => void;
-
-	static get staticAreaTemplate() {
-		return DateTimePickerPopoverTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [super.styles, DateTimePickerCss];
-	}
-
-	static get staticAreaStyles(): ComponentStylesData {
-		return [super.staticAreaStyles, DateTimePickerPopoverCss];
-	}
-
-	static get dependencies() {
-		return [
-			...DatePicker.dependencies,
-			Calendar,
-			Button,
-			ToggleButton,
-			SegmentedButton,
-			TimeSelection,
-		];
-	}
+	_handleResizeBound: ResizeObserverCallback;
 
 	constructor() {
 		super();
@@ -313,7 +312,7 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
 		e.preventDefault();
 		// @ts-ignore Needed for FF
 		const dateTimePickerContent = e.path ? e.path[1] : e.composedPath()[1];
@@ -391,12 +390,12 @@ class DateTimePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	_modifyDateValue(amount: number, unit: string) {
+	_modifyDateValue(amount: number, unit: string, preserveDate: boolean) {
 		if (!this.dateValue) {
 			return;
 		}
 
-		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, this._minDate, this._maxDate);
+		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, preserveDate, this._minDate, this._maxDate);
 		const modifiedLocalDate = modifiedDate.toLocalJSDate();
 		modifiedLocalDate.setHours(this.dateValue.getHours());
 		modifiedLocalDate.setMinutes(this.dateValue.getMinutes());
@@ -412,8 +411,8 @@ class DateTimePicker extends DatePicker {
 	}
 
 	getSelectedDateTime() {
-		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0], undefined as unknown as boolean, undefined as unknown as boolean) as Date;
-		const selectedTime = this.getFormat().parse(this._timeSelectionValue, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const selectedDate = this.getFormat().parse(this._calendarSelectedDates[0]) as Date;
+		const selectedTime = this.getFormat().parse(this._timeSelectionValue) as Date;
 		if (selectedTime) {
 			selectedDate.setHours(selectedTime.getHours());
 			selectedDate.setMinutes(selectedTime.getMinutes());
@@ -422,8 +421,19 @@ class DateTimePicker extends DatePicker {
 
 		return selectedDate;
 	}
+
+	/**
+	 * @override
+	 */
+	get _calendarPickersMode() {
+		return CalendarPickersMode.DAY_MONTH_YEAR;
+	}
 }
 
 DateTimePicker.define();
 
 export default DateTimePicker;
+export type {
+	DateTimePickerChangeEventDetail,
+	DateTimePickerInputEventDetail,
+};

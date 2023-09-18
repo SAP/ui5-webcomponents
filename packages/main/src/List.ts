@@ -1,13 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import {
 	isTabNext,
@@ -48,30 +48,42 @@ import {
 	ARIA_LABEL_LIST_MULTISELECTABLE,
 	ARIA_LABEL_LIST_DELETABLE,
 } from "./generated/i18n/i18n-defaults.js";
+import CheckBox from "./CheckBox.js";
+import RadioButton from "./RadioButton.js";
 
 const INFINITE_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 const PAGE_UP_DOWN_SIZE = 10;
 
 // ListItemBase-based events
-type FocusEventDetail = {
+type ListItemFocusEventDetail = {
 	item: ListItemBase,
 }
-type SelectionChangeEventDetail = {
+
+type ListSelectionChangeEventDetail = {
 	selectedItems: Array<ListItemBase>;
 	previouslySelectedItems: Array<ListItemBase>;
 	selectionComponentPressed: boolean;
 	targetItem: ListItemBase;
 	key?: string;
 }
-type DeleteEventDetail = FocusEventDetail;
 
-// ListItem-based events
-type CloseEventDetail = {
+type ListItemDeleteEventDetail = {
 	item: ListItemBase,
 }
-type ToggleEventDetail = CloseEventDetail;
-type ClickEventDetail = CloseEventDetail;
+
+// ListItem-based events
+type ListItemCloseEventDetail = {
+	item: ListItemBase,
+}
+
+type ListItemToggleEventDetail = {
+	item: ListItemBase,
+}
+
+type ListItemClickEventDetail = {
+	item: ListItemBase,
+}
 
 /**
  * @class
@@ -140,9 +152,14 @@ type ClickEventDetail = CloseEventDetail;
  * @appenddocs sap.ui.webc.main.StandardListItem sap.ui.webc.main.CustomListItem sap.ui.webc.main.GroupHeaderListItem
  * @public
  */
-@customElement("ui5-list")
-@fastNavigation
-
+@customElement({
+	tag: "ui5-list",
+	fastNavigation: true,
+	renderer: litRender,
+	template: ListTemplate,
+	styles: [browserScrollbarCSS, listCss],
+	dependencies: [BusyIndicator],
+})
 /**
  * Fired when an item is activated, unless the item's <code>type</code> property
  * is set to <code>Inactive</code>.
@@ -212,6 +229,7 @@ type ClickEventDetail = CloseEventDetail;
  * in <code>SingleSelect</code>, <code>SingleSelectBegin</code>, <code>SingleSelectEnd</code> and <code>MultiSelect</code> modes.
  *
  * @event sap.ui.webc.main.List#selection-change
+ * @allowPreventDefault
  * @param {Array} selectedItems An array of the selected items.
  * @param {Array} previouslySelectedItems An array of the previously selected items.
  * @public
@@ -292,7 +310,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Defines the text that is displayed when the component contains no items.
@@ -322,7 +340,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListSeparators, defaultValue: ListSeparators.All })
-	separators!: ListSeparators;
+	separators!: `${ListSeparators}`;
 
 	/**
 	 * Defines whether the component will have growing capability either by pressing a <code>More</code> button,
@@ -348,7 +366,7 @@ class List extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListGrowingMode, defaultValue: ListGrowingMode.None })
-	growing!: ListGrowingMode;
+	growing!: `${ListGrowingMode}`;
 
 	/**
 	 * Defines if the component would display a loading indicator over the list.
@@ -466,7 +484,7 @@ class List extends UI5Element {
 	_forwardingFocus: boolean;
 	resizeListenerAttached: boolean;
 	listEndObserved: boolean;
-	_handleResize: () => void;
+	_handleResize: ResizeObserverCallback;
 	initialIntersection: boolean;
 	_selectionRequested?: boolean;
 	growingIntersectionObserver?: IntersectionObserver | null;
@@ -474,24 +492,8 @@ class List extends UI5Element {
 	_beforeElement?: HTMLElement | null;
 	_afterElement?: HTMLElement | null;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return ListTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [browserScrollbarCSS, listCss];
-	}
-
 	static async onDefine() {
 		List.i18nBundle = await getI18nBundle("@ui5/webcomponents");
-	}
-
-	static get dependencies() {
-		return [BusyIndicator];
 	}
 
 	constructor() {
@@ -587,7 +589,7 @@ class List extends UI5Element {
 			ListMode.SingleSelectBegin,
 			ListMode.SingleSelectEnd,
 			ListMode.SingleSelectAuto,
-		].includes(this.mode);
+		].includes(this.mode as ListMode);
 	}
 
 	get isMultiSelect() {
@@ -726,13 +728,16 @@ class List extends UI5Element {
 		}
 
 		if (selectionChange) {
-			this.fireEvent<SelectionChangeEventDetail>("selection-change", {
+			const changePrevented = !this.fireEvent<ListSelectionChangeEventDetail>("selection-change", {
 				selectedItems: this.getSelectedItems(),
 				previouslySelectedItems,
 				selectionComponentPressed: e.detail.selectionComponentPressed,
 				targetItem: e.detail.item,
 				key: e.detail.key,
-			});
+			}, true);
+			if (changePrevented) {
+				this._revertSelection(previouslySelectedItems);
+			}
 		}
 	}
 
@@ -765,7 +770,7 @@ class List extends UI5Element {
 	}
 
 	handleDelete(item: ListItemBase): boolean {
-		this.fireEvent<DeleteEventDetail>("item-delete", { item });
+		this.fireEvent<ListItemDeleteEventDetail>("item-delete", { item });
 
 		return true;
 	}
@@ -783,11 +788,26 @@ class List extends UI5Element {
 	}
 
 	getItems(): Array<ListItemBase> {
-		return this.getSlottedNodes("items") as Array<ListItemBase>;
+		return this.getSlottedNodes<ListItemBase>("items");
 	}
 
 	getItemsForProcessing(): Array<ListItemBase> {
 		return this.getItems();
+	}
+
+	_revertSelection(previouslySelectedItems: Array<ListItemBase>) {
+		this.getItems().forEach((item: ListItemBase) => {
+			const oldSelection = previouslySelectedItems.indexOf(item) !== -1;
+			const multiSelectCheckBox = item.shadowRoot!.querySelector<CheckBox>(".ui5-li-multisel-cb");
+			const singleSelectRadioButton = item.shadowRoot!.querySelector<RadioButton>(".ui5-li-singlesel-radiobtn");
+
+			item.selected = oldSelection;
+			if (multiSelectCheckBox) {
+				multiSelectCheckBox.checked = oldSelection;
+			} else if (singleSelectRadioButton) {
+				singleSelectRadioButton.checked = oldSelection;
+			}
+		});
 	}
 
 	_onkeydown(e: KeyboardEvent) {
@@ -933,7 +953,7 @@ class List extends UI5Element {
 		e.stopPropagation();
 
 		this._itemNavigation.setCurrentItem(target);
-		this.fireEvent<FocusEventDetail>("item-focused", { item: target });
+		this.fireEvent<ListItemFocusEventDetail>("item-focused", { item: target });
 
 		if (this.mode === ListMode.SingleSelectAuto) {
 			const detail: SelectionRequestEventDetail = {
@@ -950,7 +970,7 @@ class List extends UI5Element {
 	onItemPress(e: CustomEvent<PressEventDetail>) {
 		const pressedItem = e.detail.item;
 
-		if (!this.fireEvent<ClickEventDetail>("item-click", { item: pressedItem }, true)) {
+		if (!this.fireEvent<ListItemClickEventDetail>("item-click", { item: pressedItem }, true)) {
 			return;
 		}
 
@@ -970,12 +990,17 @@ class List extends UI5Element {
 	}
 
 	// This is applicable to NotificationListItem
-	onItemClose(e: CustomEvent<CloseEventDetail>) {
-		this.fireEvent<CloseEventDetail>("item-close", { item: e.detail.item });
+	onItemClose(e: CustomEvent<ListItemCloseEventDetail>) {
+		const target = e.target as UI5Element | null;
+		const shouldFireItemClose = target?.hasAttribute("ui5-li-notification") || target?.hasAttribute("ui5-li-notification-group");
+
+		if (shouldFireItemClose) {
+			this.fireEvent<ListItemCloseEventDetail>("item-close", { item: e.detail?.item });
+		}
 	}
 
-	onItemToggle(e: CustomEvent<ToggleEventDetail>) {
-		this.fireEvent<ToggleEventDetail>("item-toggle", { item: e.detail.item });
+	onItemToggle(e: CustomEvent<ListItemToggleEventDetail>) {
+		this.fireEvent<ListItemToggleEventDetail>("item-toggle", { item: e.detail.item });
 	}
 
 	onForwardBefore(e: CustomEvent) {
@@ -1131,10 +1156,10 @@ List.define();
 
 export default List;
 export type {
-	ClickEventDetail,
-	FocusEventDetail,
-	DeleteEventDetail,
-	CloseEventDetail,
-	ToggleEventDetail,
-	SelectionChangeEventDetail,
+	ListItemClickEventDetail,
+	ListItemFocusEventDetail,
+	ListItemDeleteEventDetail,
+	ListItemCloseEventDetail,
+	ListItemToggleEventDetail,
+	ListSelectionChangeEventDetail,
 };

@@ -1,1 +1,4 @@
-import "@ui5/webcomponents-fiori/dist/generated/js-imports/Illustrations.js"; // eslint-disable-line
+import "../generated/js-imports/Illustrations.js";
+import "../generated/js-imports/IllustrationsTNT.js";
+import "../generated/js-imports/IllustrationsV5TNT.js";
+import "../generated/js-imports/IllustrationsV5TNTHC.js";

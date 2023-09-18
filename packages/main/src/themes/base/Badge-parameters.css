@@ -1,5 +1,18 @@
 :root {
-	--_ui5-badge-cursor: default;
+	--_ui5-badge-height: 1rem;
+	--_ui5-badge-border: 0.0625em solid;
+	--_ui5-badge-border-radius: 0.5rem;
+	--_ui5-badge-padding-inline: 0.3125em;
+	--_ui5-badge-padding-inline-icon-only: 0.1875rem;
+	--_ui5-badge-text-transform: uppercase;
+	--_ui5-badge-icon-gap: 0.125rem;
+	--_ui5-badge-font-size: var(--sapFontSmallSize);
+	--_ui5-badge-font: "72override", var(--sapFontFamily);
+	--_ui5-badge-font-weight: bold;
+	--_ui5-badge-default-border-color: var(--ui5-badge-color-scheme-1-border);
+	--_ui5-badge-default-background: var(--ui5-badge-color-scheme-1-background);
+	--_ui5-badge-default-color: var(--ui5-badge-color-scheme-1-color);
+	--_ui5-badge-letter-spacing: 0.0125em;
 
 	--ui5-badge-color-scheme-1-background: var(--sapLegendBackgroundColor1);
 	--ui5-badge-color-scheme-1-border: var(--sapAccentColor1);

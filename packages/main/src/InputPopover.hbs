@@ -23,7 +23,7 @@
 				</ui5-button>
 			</div>
 			<div class="row">
-				<div class="input-root-phone">
+				<div class="input-root-phone native-input-wrapper">
 					<ui5-input
 						class="ui5-input-inner-phone"
 						type="{{inputType}}"
@@ -31,7 +31,7 @@
 						?show-clear-icon={{showClearIcon}}
 						placeholder="{{placeholder}}"
 						@ui5-input="{{_handleInput}}"
-						@change="{{_handleChange}}"
+						@ui5-change="{{_handleChange}}"
 					></ui5-input>
 				</div>
 			</div>
@@ -99,6 +99,7 @@
 				<ui5-li-groupheader data-ui5-key="{{key}}">{{{ this.text }}}</ui5-li-groupheader>
 			{{else}}
 				<ui5-li-suggestion-item
+					wrapping-type="Normal"
 					image="{{this.image}}"
 					icon="{{this.icon}}"
 					additional-text="{{this.additionalText}}"

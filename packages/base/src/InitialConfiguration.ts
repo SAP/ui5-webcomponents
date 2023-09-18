@@ -2,7 +2,7 @@ import merge from "./thirdparty/merge.js";
 import { getFeature } from "./FeaturesRegistry.js";
 import { DEFAULT_THEME } from "./generated/AssetParameters.js";
 import validateThemeRoot from "./validateThemeRoot.js";
-import type OpenUI5Support from "./features/OpenUI5Support";
+import type OpenUI5Support from "./features/OpenUI5Support.js";
 import type { FormatSettings } from "./config/FormatSettings.js";
 import AnimationMode from "./types/AnimationMode.js";
 import CalendarType from "./types/CalendarType.js";
@@ -17,6 +17,8 @@ type InitialConfig = {
 	rtl: boolean | undefined,
 	language: string | undefined,
 	calendarType: CalendarType | undefined,
+	secondaryCalendarType: CalendarType | undefined,
+	timezone: string | undefined,
 	noConflict: boolean,
 	formatSettings: FormatSettings,
 	fetchDefaultLanguage: boolean,
@@ -28,7 +30,9 @@ let initialConfig: InitialConfig = {
 	themeRoot: undefined,
 	rtl: undefined,
 	language: undefined,
+	timezone: undefined,
 	calendarType: undefined,
+	secondaryCalendarType: undefined,
 	noConflict: false, // no URL
 	formatSettings: {},
 	fetchDefaultLanguage: false,
@@ -82,6 +86,20 @@ const getNoConflict = () => {
 const getCalendarType = () => {
 	initConfiguration();
 	return initialConfig.calendarType;
+};
+
+const getSecondaryCalendarType = () => {
+	initConfiguration();
+	return initialConfig.secondaryCalendarType;
+};
+
+/**
+ * Returns the configured IANA timezone ID.
+ * @returns { String } the configured IANA timezone ID, e.g. "America/New_York"
+ */
+const getTimezone = () => {
+	initConfiguration();
+	return initialConfig.timezone;
 };
 
 const getFormatSettings = () => {
@@ -169,7 +187,7 @@ const applyURLParam = (key: string, value: string, paramType: string) => {
 
 const applyOpenUI5Configuration = () => {
 	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
-	if (!openUI5Support || !openUI5Support.isLoaded()) {
+	if (!openUI5Support || !openUI5Support.isOpenUI5Detected()) {
 		return;
 	}
 
@@ -178,7 +196,7 @@ const applyOpenUI5Configuration = () => {
 };
 
 const initConfiguration = () => {
-	if (initialized) {
+	if (typeof document === "undefined" || initialized) {
 		return;
 	}
 
@@ -203,5 +221,7 @@ export {
 	getFetchDefaultLanguage,
 	getNoConflict,
 	getCalendarType,
+	getSecondaryCalendarType,
+	getTimezone,
 	getFormatSettings,
 };

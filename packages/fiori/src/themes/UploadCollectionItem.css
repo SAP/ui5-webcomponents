@@ -1,35 +1,43 @@
 :host {
 	height: auto;
+	container-type: inline-size;
 }
 
 :host(:not([hidden])) {
 	display: block;
 }
 
+:host::part(content) {
+	overflow: visible; /* prevents buttons hover shadow clipping */
+}
+
 .ui5-li-root.ui5-uci-root {
 	padding: 1rem;
 }
 
-.ui5-uci-edit-buttons {
+.ui5-uci-buttons {
 	display: flex;
+	pointer-events: all;
+	margin-inline-start: 1rem;
+	gap: 0.5rem;
 }
 
 /* Thumbnail */
 .ui5-uci-thumbnail {
-	width: 3rem;
-	height: 3rem;
-	margin-right: 0.75rem;
+	width: var(--ui5_upload_collection_thumbnail_size);
+	height: var(--ui5_upload_collection_thumbnail_size);
+	margin-inline-end: var(--ui5_upload_collection_thumbnail_margin_inline_end);
 }
 
 ::slotted([ui5-icon][slot="thumbnail"]) {
-	width: 3rem;
-	height: 3rem;
+	width: var(--ui5_upload_collection_thumbnail_size);
+	height: var(--ui5_upload_collection_thumbnail_size);
 	font-size: 2.5rem;
 }
 
 ::slotted(img[slot="thumbnail"]) {
-	width: 3rem;
-	height: 3rem;
+	width: var(--ui5_upload_collection_thumbnail_size);
+	height: var(--ui5_upload_collection_thumbnail_size);
 }
 
 :host([actionable]) ::slotted([ui5-icon][slot="thumbnail"]) {
@@ -37,11 +45,11 @@
 }
 
 /* Content */
-.ui5-uci-content-and-edit-container {
+.ui5-uci-thumbnail-and-content-container {
 	flex: 1 1 auto;
 	min-width: 0; /* fixes chrome overflow issue */
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 }
 
 .ui5-uci-content-and-progress {
@@ -53,9 +61,12 @@
 
 .ui5-uci-content {
 	flex: 1 1 auto;
-	margin-right: .5rem;
 	width: 100%;
 	min-width: 0; /* fixes chrome overflow issue */
+}
+
+.ui5-uci-progress-box {
+	margin-inline-start: 0.5rem;
 }
 
 .ui5-uci-file-name {
@@ -119,18 +130,21 @@
 	display: none;
 }
 
-.ui5-uci-edit-buttons {
-	pointer-events: all;
-	margin-inline-start: 1rem;
+.ui5-li-deletebtn {
+	display: none;
 }
 
 .ui5-uci-edit-rename-btn {
 	margin-right: 0.125rem;
 }
 
-@media(max-width: 30rem) {
-	.ui5-uci-content-and-edit-container {
-		display: block;
+@container (max-width: 30rem) {
+	:host::part(content) {
+		flex-wrap: wrap;
+	}
+
+	.ui5-uci-thumbnail-and-content-container {
+		width: 100%;
 	}
 
 	.ui5-uci-content-and-progress {
@@ -140,19 +154,16 @@
 	.ui5-uci-progress-box {
 		width: 100%;
 		margin-top: .5rem;
+		margin-inline-start: 0;
 	}
 
 	.ui5-uci-content {
 		width: 100%;
 	}
 
-	.ui5-uci-edit-buttons {
-		margin-inline-start: 0;
+	.ui5-uci-buttons {
+		margin-inline-start: var(--ui5_upload_collection_small_size_buttons_margin_inline_start);
 		margin-block-start: var(--ui5_upload_collection_small_size_buttons_margin_block_start);
-	}
-
-	.ui5-uci-edit-buttons [ui5-button] {
-		margin-block-end: var(--ui5_upload_collection_button_margin_block_end);
 	}
 }
 
@@ -168,14 +179,8 @@
 	justify-content: space-between;
 }
 
-[ui5-button] {
-	margin-inline: 0.5rem;
-}
-
-[ui5-button]:first-of-type {
-	margin-inline-start: 0;
-}
-
-[ui5-button]:last-of-type {
-	margin-inline-end: var(--ui5_upload_collection_last_button_inline_end);
+:host([active][actionable]) ::slotted([ui5-icon][slot="thumbnail"]),
+:host([active][actionable]) .ui5-uci-file-name,
+:host([active][actionable]) .ui5-uci-description {
+	color: var(--sapList_Active_TextColor);
 }

@@ -27,6 +27,12 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  * <li>description - Used to style the description of the list item</li>
  * <li>additional-text - Used to style the additionalText of the list item</li>
  * <li>icon - Used to style the icon of the list item</li>
+ * <li>native-li - Used to style the main li tag of the list item</li>
+ * <li>content - Used to style the content area of the list item</li>
+ * <li>detail-button - Used to style the button rendered when the list item is of type detail</li>
+ * <li>delete-button - Used to style the button rendered when the list item is in delete mode</li>
+ * <li>radio - Used to style the radio button rendered when the list item is in single selection mode</li>
+ * <li>checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode</li>
  * </ul>
  *
  * @constructor
@@ -37,7 +43,15 @@ import StandardListItemTemplate from "./generated/templates/StandardListItemTemp
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
-@customElement("ui5-li")
+@customElement({
+	tag: "ui5-li",
+	template: StandardListItemTemplate,
+	dependencies: [
+		...ListItem.dependencies,
+		Icon,
+		Avatar,
+	],
+})
 class StandardListItem extends ListItem implements IAccessibleListItem {
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
@@ -55,7 +69,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * <br><br>
 	 * <b>Note:</b>
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.StandardListItem.prototype.icon
@@ -110,7 +124,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: ValueState;
+	additionalTextState!: `${ValueState}`;
 
 	/**
 	 * Defines the text alternative of the component.
@@ -137,7 +151,7 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	 * @since 1.5.0
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	 * Indicates if the list item has text content.
@@ -176,10 +190,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 	@slot()
 	imageContent!: Array<HTMLElement>;
 
-	static get template() {
-		return StandardListItemTemplate;
-	}
-
 	onBeforeRendering() {
 		super.onBeforeRendering();
 		this.hasTitle = !!this.textContent;
@@ -200,14 +210,6 @@ class StandardListItem extends ListItem implements IAccessibleListItem {
 
 	get hasImageContent(): boolean {
 		return !!this.imageContent.length;
-	}
-
-	static get dependencies() {
-		return [
-			...ListItem.dependencies,
-			Icon,
-			Avatar,
-		];
 	}
 }
 

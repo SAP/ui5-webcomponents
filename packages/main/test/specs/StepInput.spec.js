@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Attributes propagation", () => {
 
@@ -433,6 +433,29 @@ describe("'change' event firing", () => {
 		assert.strictEqual(await siMinMax.getProperty("value"), 0, "Value is increased correctly to 1");
 		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
 	});
+
+	it("'change' event should be fired after changing value programatically and then manual entry of the previous value and focus out", async () => {
+		await browser.url(`test/pages/StepInput.html`);
+		const siChange1 = await browser.$("#stepInputChange1");
+		const siChange2 = await browser.$("#stepInputChange2");
+		const incButton = await siChange1.shadow$(".ui5-step-inc");
+		const initValue1 = await siChange1.getProperty("value");
+		const initValue2 = await siChange2.getProperty("value");
+		const changeResult = await browser.$("#changeResult");
+
+		await incButton.click();
+		const newValue1 = await siChange1.getProperty("value");
+		assert.strictEqual(await siChange1.getProperty("value"), initValue1 + 1000, "Value of the first step input is increased correctly to " + (initValue1 + 1000));
+		assert.strictEqual(await siChange2.getProperty("value"), newValue1 + 999, "Value of the second step input is increased correctly to " + (newValue1 + 999));
+		assert.strictEqual(Number(await changeResult.getProperty("value")), 1, "'change' event is fired 1 time");
+
+		await siChange2.doubleClick();
+		await siChange2.keys(initValue2.toString());
+		await siChange2.keys("Tab");
+		assert.strictEqual(await siChange2.getProperty("value"), initValue2, "Value of the second step input is set correctly to " + initValue2);
+		assert.strictEqual(Number(await changeResult.getProperty("value")), 2, "'change' event is fired 2 times");
+	});
+
 });
 
 describe("Accessibility related parameters", async () => {

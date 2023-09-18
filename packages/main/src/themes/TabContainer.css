@@ -1,3 +1,5 @@
+@import "./InvisibleTextStyles.css";
+
 /* ============================= */
 /* Global Base parameters        */
 /* ============================= */
@@ -72,13 +74,22 @@
 }
 
 .ui5-tc__overflow > [ui5-button] {
-	margin-top: 0.25rem;
 	border-radius: 0.75rem;
 	height: 1.5rem;
 }
 
+.ui5-tc__overflow > [ui5-button]:not([active]) {
+	color: var(--_ui5_tc_overflow_text_color);
+}
+
+.ui5-tc__overflow > [ui5-button]:not([active]):hover {
+	color: var(--_ui5_tc_overflow_text_color);
+}
+
 .ui5-tc__overflow > [ui5-button][focused] {
 	outline-offset: 0.125rem;
+	--_ui5_button_focused_border: none;
+	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 }
 
 .ui5-tc-root.ui5-tc--textOnly .ui5-tc__content {

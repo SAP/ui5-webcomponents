@@ -3,8 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import slideDown from "@ui5/webcomponents-base/dist/animations/slideDown.js";
 import slideUp from "@ui5/webcomponents-base/dist/animations/slideUp.js";
@@ -94,9 +92,15 @@ import panelCss from "./generated/themes/Panel.css.js";
  * @tagname ui5-panel
  * @public
  */
-@customElement("ui5-panel")
-@fastNavigation
-@languageAware
+@customElement({
+	tag: "ui5-panel",
+	fastNavigation: true,
+	languageAware: true,
+	renderer: litRender,
+	template: PanelTemplate,
+	styles: panelCss,
+	dependencies: [Button, Icon],
+})
 /**
  * Fired when the component is expanded/collapsed by user interaction.
  *
@@ -165,7 +169,7 @@ class Panel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: PanelAccessibleRole, defaultValue: PanelAccessibleRole.Form })
-	accessibleRole!: PanelAccessibleRole;
+	accessibleRole!: `${PanelAccessibleRole}`;
 
 	/**
 	 * Defines the "aria-level" of component heading,
@@ -178,7 +182,7 @@ class Panel extends UI5Element {
 	 * @public
 	*/
 	@property({ type: TitleLevel, defaultValue: TitleLevel.H2 })
-	headerLevel!: TitleLevel;
+	headerLevel!: `${TitleLevel}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -191,6 +195,20 @@ class Panel extends UI5Element {
 	 */
 	@property()
 	accessibleName!: string;
+
+	/**
+	 * Indicates whether the Panel header is sticky or not.
+	 * If stickyHeader is set to true, then whenever you scroll the content or
+	 * the application, the header of the panel will be always visible and
+	 * a solid color will be used for its design.
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.Panel.prototype.stickyHeader
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.16.0-rc.1
+	 */
+	 @property({ type: Boolean })
+	 stickyHeader!: boolean;
 
 	/**
 	 * When set to <code>true</code>, the <code>accessibleName</code> property will be
@@ -239,18 +257,6 @@ class Panel extends UI5Element {
 	 */
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return PanelTemplate;
-	}
-
-	static get styles() {
-		return panelCss;
-	}
 
 	onBeforeRendering() {
 		// If the animation is running, it will set the content expanded state at the end
@@ -356,6 +362,9 @@ class Panel extends UI5Element {
 			headerBtn: {
 				"ui5-panel-header-button-animated": !this.shouldNotAnimate(),
 			},
+			stickyHeaderClass: {
+				"ui5-panel-heading-wrapper-sticky": this.stickyHeader,
+			},
 		};
 	}
 
@@ -433,10 +442,6 @@ class Panel extends UI5Element {
 				display: this._contentExpanded ? "block" : "none",
 			},
 		};
-	}
-
-	static get dependencies() {
-		return [Button, Icon];
 	}
 
 	static async onDefine() {

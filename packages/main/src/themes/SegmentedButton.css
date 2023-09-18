@@ -1,19 +1,26 @@
+@import "./FormComponents.css";
 @import "./InvisibleTextStyles.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
+	min-width: calc(var(--_ui5_segmented_btn_items_count) * 2.5rem);
 }
 
 .ui5-segmented-button-root {
-	display: flex;
+	width: inherit;
+	display: grid;
+	grid-template-columns: repeat(var(--_ui5_segmented_btn_items_count), minmax(2.5rem, 1fr));
 	margin: 0;
 	padding: 0;
 	background-color: var(--sapButton_Background);
-	border-radius: var(--_ui5_segmented_btn_outer_border_radius);
+	border-radius: var(--sapButton_BorderCornerRadius);
+	box-shadow: inset 0 0 0 var(--sapButton_BorderWidth) var(--sapButton_BorderColor);
 }
 
 ::slotted([ui5-segmented-button-item]) {
 	border-radius: var(--_ui5_segmented_btn_inner_border_radius);
+	border-color: var(--_ui5_segmented_btn_border_color);
+	background-color: var(--_ui5_segmented_btn_background_color);
 	height: var(--_ui5_button_base_height);
 	min-width: 2.5rem;
 	white-space: nowrap;
@@ -24,52 +31,37 @@
 
 ::slotted([ui5-segmented-button-item]:hover) {
 	z-index: 2;
+	box-shadow: var(--_ui5_segmented_btn_hover_box_shadow);
+	border-color: var(--sapButton_Hover_BorderColor);
+	background-color: var(--sapButton_Hover_Background);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]),
 ::slotted([ui5-segmented-button-item][active]) {
-	border: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	border-color: var(--sapButton_Selected_BorderColor);
 	background-color: var(--sapButton_Selected_Background);
 	color: var(--sapButton_Selected_TextColor);
 }
 
 ::slotted([ui5-segmented-button-item][pressed]:hover) {
-	border: 0.0625rem solid var(--sapButton_Selected_Hover_BorderColor);
+	border-color: var(--sapButton_Selected_Hover_BorderColor);
 	background-color: var(--sapButton_Selected_Hover_Background);
 	color: var(--sapButton_Selected_TextColor);
 }
 
-::slotted([ui5-segmented-button-item]:nth-child(odd)) {
-	border-inline-end: var(--_ui5_segmented_btn_inner_border_odd_child);
-	border-inline-start: var(--_ui5_segmented_btn_inner_border_odd_child);
-}
-
-::slotted([ui5-segmented-button-item][pressed]:nth-child(odd)),
-::slotted([ui5-segmented-button-item][active]:nth-child(odd)) {
-	border-inline-end: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
-	border-inline-start: var(--_ui5_segmented_btn_inner_pressed_border_odd_child);
-}
-
 ::slotted([ui5-segmented-button-item]:last-child) {
-	border-start-end-radius: var(--_ui5_segmented_btn_border_radius);
-	border-end-end-radius: var(--_ui5_segmented_btn_border_radius);
-	border-inline-end: var(--_ui5_segmented_btn_inner_border);
-}
-
-::slotted([ui5-segmented-button-item][pressed]:last-child),
-::slotted([ui5-segmented-button-item][active]:last-child) {
-	border-inline-end: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+	border-start-end-radius: var(--sapButton_BorderCornerRadius);
+	border-end-end-radius: var(--sapButton_BorderCornerRadius);
 }
 
 ::slotted([ui5-segmented-button-item]:first-child) {
-	border-start-start-radius: var(--_ui5_segmented_btn_border_radius);
-	border-end-start-radius: var(--_ui5_segmented_btn_border_radius);
-	border-inline-start: var(--_ui5_segmented_btn_inner_border);
+	border-start-start-radius: var(--sapButton_BorderCornerRadius);
+	border-end-start-radius: var(--sapButton_BorderCornerRadius);
 }
 
-::slotted([ui5-segmented-button-item][pressed]:first-child),
-::slotted([ui5-segmented-button-item][active]:first-child) {
-	border-inline-start: 0.0625rem solid var(--sapButton_Selected_BorderColor);
+::slotted([ui5-segmented-button-item]:not(:first-child)) {
+	border-left-width: var(--_ui5_segmented_btn_item_border_left);
+	border-right-width: var(--_ui5_segmented_btn_item_border_right);
 }
 
 ::slotted([ui5-segmented-button-item][active]:not([active]):hover) {

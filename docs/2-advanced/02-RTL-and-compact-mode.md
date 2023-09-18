@@ -83,4 +83,4 @@ Example 2:
 
 Unlike RTL, compact mode does not require additional APIs when its markers are changed dynamically.
 
-Next: [Micro-Frontends and Custom Elements Scoping](../scoping)
+Next: [Micro-Frontends and Custom Elements Scoping](./03-scoping.md)

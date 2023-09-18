@@ -1,9 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import { isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import WrappingType from "./types/WrappingType.js";
+import { LABEL_COLON } from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import LabelTemplate from "./generated/templates/LabelTemplate.lit.js";
@@ -16,10 +18,9 @@ import labelCss from "./generated/themes/Label.css.js";
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-label</code> is a component used to represent a label,
- * providing valuable information to the user.
- * Usually it is placed next to a value holder, such as a text field.
- * It informs the user about what data is displayed or expected in the value holder.
+ * The <code>ui5-label</code> is a component used to represent a label for elements like input, textarea, select. <br><br>
+ * The <code>for</code> property of the <code>ui5-label</code> must be the same as the id attribute of the related input element.<br><br>
+ * Screen readers read out the label, when the user focuses the labelled control.
  * <br><br>
  * The <code>ui5-label</code> appearance can be influenced by properties,
  * such as <code>required</code> and <code>wrappingType</code>.
@@ -37,7 +38,12 @@ import labelCss from "./generated/themes/Label.css.js";
  * @tagname ui5-label
  * @public
  */
-@customElement("ui5-label")
+@customElement({
+	tag: "ui5-label",
+	renderer: litRender,
+	template: LabelTemplate,
+	styles: labelCss,
+})
 class Label extends UI5Element {
 	/**
 	 * Defines the labeled input by providing its ID.
@@ -81,11 +87,7 @@ class Label extends UI5Element {
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
-	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
-	 * </ul>
+	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
 	 * @name sap.ui.webc.main.Label.prototype.wrappingType
 	 * @type {sap.ui.webc.main.types.WrappingType}
@@ -93,7 +95,13 @@ class Label extends UI5Element {
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
+
+	static i18nBundle: I18nBundle;
+
+	static async onDefine() {
+		Label.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+	}
 
 	/**
 	 * Defines the text of the component.
@@ -105,27 +113,6 @@ class Label extends UI5Element {
 	 * @name sap.ui.webc.main.Label.prototype.default
 	 */
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return LabelTemplate;
-	}
-
-	static get styles() {
-		return labelCss;
-	}
-
-	get classes() {
-		return {
-			textWrapper: {
-				"ui5-label-text-wrapper": true,
-				"ui5-label-text-wrapper-safari": isSafari(),
-			},
-		};
-	}
-
 	_onclick() {
 		if (!this.for) {
 			return;
@@ -135,6 +122,10 @@ class Label extends UI5Element {
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
+	}
+
+	get _colonSymbol() {
+		return Label.i18nBundle.getText(LABEL_COLON);
 	}
 }
 

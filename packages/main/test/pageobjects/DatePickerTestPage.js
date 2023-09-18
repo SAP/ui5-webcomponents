@@ -86,6 +86,16 @@ class DatePickerTestPage {
 		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
 	}
 
+	async getPickerMonth(timestamp) {
+		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
+		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-monthpicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
+	}
+
+	async getPickerYear(timestamp) {
+		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
+		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-yearpicker`).shadow$(`div[data-sap-timestamp="${timestamp}"]`);
+	}
+
 	async getFirstDisplayedDate() {
 		const staticAreaItemClassName = await this.getStaticAreaItemClassName();
 		return browser.$(`.${staticAreaItemClassName}`).shadow$(`ui5-calendar`).shadow$(`ui5-daypicker`).shadow$(`div.ui5-dp-item`);
@@ -165,4 +175,4 @@ class DatePickerTestPage {
 	}
 }
 
-module.exports = new DatePickerTestPage();
+export default new DatePickerTestPage();

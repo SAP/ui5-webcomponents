@@ -1,7 +1,7 @@
 const fs = require("fs").promises;
 const path = require("path");
 
-const collectionName = process.argv[2] || "SAP-icons";
+const collectionName = process.argv[2] || "SAP-icons-v4";
 const collectionVersion = process.argv[3];
 const srcFile = collectionVersion ? path.normalize(`src/${collectionVersion}/${collectionName}.json`) : path.normalize(`src/${collectionName}.json`);
 const destDir = collectionVersion ? path.normalize(`dist/${collectionVersion}/`) : path.normalize("dist/");
@@ -38,13 +38,13 @@ export { pathData, ltr, accData };`;
 
 
 
-const collectionTemplate = (name) => `import { isThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
-import {pathData as pathDataV5, ltr, accData} from "./v5/${name}.js";
-import {pathData as pathDataV4} from "./v4/${name}.js";
+const collectionTemplate = (name, versions, fullName) => `import { isLegacyThemeFamily } from "@ui5/webcomponents-base/dist/config/Theme.js";
+import { pathData as pathData${versions[0]}, ltr, accData } from "./${versions[0]}/${name}.js";
+import { pathData as pathData${versions[1]} } from "./${versions[1]}/${name}.js";
 
-const pathData = isThemeFamily("sap_horizon") ? pathDataV5 : pathDataV4;
+const pathData = isLegacyThemeFamily() ? pathData${versions[0]} : pathData${versions[1]};
 
-export default "${name}";
+export default "${fullName}";
 export { pathData, ltr, accData };`;
 
 
@@ -80,20 +80,43 @@ const createIcons = async (file) => {
 		const pathData = iconData.path;
 		const ltr = !!iconData.ltr;
 		const acc = iconData.acc;
+		const packageName =  json.packageName;
+		const collection =  json.collection;
 
-		const content = acc ? iconAccTemplate(name, pathData, ltr, acc, json.collection, json.packageName) : iconTemplate(name, pathData, ltr, json.collection, json.packageName);
+		const content = acc ? iconAccTemplate(name, pathData, ltr, acc, collection, packageName) : iconTemplate(name, pathData, ltr, collection, packageName);
 
 		promises.push(fs.writeFile(path.join(destDir, `${name}.js`), content));
 		promises.push(fs.writeFile(path.join(destDir, `${name}.svg`), svgTemplate(pathData)));
-		promises.push(fs.writeFile(path.join(destDir, `${name}.d.ts`), typeDefinitionTemplate(name, acc, json.collection)));
+		promises.push(fs.writeFile(path.join(destDir, `${name}.d.ts`), typeDefinitionTemplate(name, acc, collection)));
+
+		// For versioned icons collections, the script creates top level (unversioned) module that internally imports the versioned ones.
+		// For example, the top level "@ui5/ui5-webcomponents-icons/dist/accept.js" imports:
+		// - "@ui5/ui5-webcomponents-icons/dist/v5/accept.js" 
+		// - "@ui5/ui5-webcomponents-icons/dist/v4/accept.js"
 
 		if (json.version) {
-			promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name)));
-            promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.d.ts`), collectionTypeDefinitionTemplate(name, acc)));
+			// The exported value from the top level (unversioned) icon module depends on whether the collection is the default,
+			// to add or not the collection name to the exported value:
+			// For the default collection (SAPIcons) we export just the icon name - "export default { 'accept' }"
+			// For non-default collections (SAPTNTIcons and SAPBSIcons) we export the full name - "export default { 'tnt/actor' }"
+			const effectiveName = isDefaultCollection(collection) ? name : getUnversionedFullIconName(name, collection);
+			promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.js`), collectionTemplate(name, json.versions, effectiveName)));
+            promises.push(fs.writeFile(path.join(path.normalize("dist/"), `${name}.d.ts`), collectionTypeDefinitionTemplate(effectiveName, acc)));
 		}
 	}
 
 	return Promise.all(promises);
+};
+
+const isDefaultCollection = collectionName => collectionName === "SAP-icons-v4"  || collectionName === "SAP-icons-v5";
+const getUnversionedFullIconName = (name, collection) => `${getUnversionedCollectionName(collection)}/${name}`;
+const getUnversionedCollectionName = collectionName => CollectionVersionedToUnversionedMap[collectionName] || collectionName;
+
+const CollectionVersionedToUnversionedMap = {
+	"tnt-v2": "tnt",
+	"tnt-v3": "tnt",
+	"business-suite-v1": "business-suite",
+	"business-suite-v2": "business-suite",
 };
 
 createIcons(srcFile).then(() => {

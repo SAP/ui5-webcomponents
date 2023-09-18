@@ -7,6 +7,7 @@
       "outDir": "dist",
       "skipLibCheck": true,
       "sourceMap": true,
+      "inlineSources": true,
       "strict": true,
       "moduleResolution": "node",
       "composite": true,

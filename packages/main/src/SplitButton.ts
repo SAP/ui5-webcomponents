@@ -64,7 +64,7 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * <ul>
  * <li><code>Space</code> or <code>Enter</code> - triggers the default action</li>
  * <li><code>Shift</code> or <code>Escape</code> - if <code>Space</code> is pressed, releases the default action button without triggering the click event.</li>
- * <li><code>Arrow Down</code>, <code>Arrow Up</code>, <code>Alt</code>+<code>Arrow Down</code>, <code>Alt</code>+<code>Arrow Up</code>, or <code>F4</code> - triggers the arrow action
+ * <li><code>Arrow Down</code>, <code>Arrow Up</code>, <code>Alt</code>+<code>Arrow Down</code>, <code>Alt</code>+<code>Arrow Up</code>, or <code>F4</code> - triggers the arrow action</li>
  * There are separate events that are fired on activating of <code>ui5-split-button</code> parts:
  * <ul>
  * <li><code>click</code> for the first button (default action)</li>
@@ -84,7 +84,13 @@ import SplitButtonCss from "./generated/themes/SplitButton.css.js";
  * @public
  * @since 1.1.0
  */
-@customElement("ui5-split-button")
+@customElement({
+	tag: "ui5-split-button",
+	renderer: litRender,
+	styles: SplitButtonCss,
+	template: SplitButtonTemplate,
+	dependencies: [Button],
+})
 /**
  * Fired when the user clicks on the default action.
  * @event sap.ui.webc.main.SplitButton#click
@@ -105,7 +111,7 @@ class SplitButton extends UI5Element {
 	 * <br><br>
 	 * Example:
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.SplitButton.prototype.icon
@@ -129,25 +135,13 @@ class SplitButton extends UI5Element {
 	/**
 	 * Defines the component design.
 	 *
-	 * <br><br>
-	 * <b>The available values are:</b>
-	 *
-	 * <ul>
-	 * <li><code>Default</code></li>
-	 * <li><code>Emphasized</code></li>
-	 * <li><code>Positive</code></li>
-	 * <li><code>Negative</code></li>
-	 * <li><code>Transparent</code></li>
-	 * <li><code>Attention</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.main.types.ButtonDesign}
 	 * @name sap.ui.webc.main.SplitButton.prototype.design
 	 * @defaultvalue "Default"
 	 * @public
 	 */
 	@property({ type: ButtonDesign, defaultValue: ButtonDesign.Default })
-	design!: ButtonDesign;
+	design!: `${ButtonDesign}`;
 
 	/**
 	 * Defines whether the component is disabled.
@@ -262,22 +256,6 @@ class SplitButton extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return SplitButtonCss;
-	}
-
-	static get template() {
-		return SplitButtonTemplate;
-	}
-
-	static get dependencies() {
-		return [Button];
-	}
-
 	static async onDefine() {
 		SplitButton.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -389,6 +367,10 @@ class SplitButton extends UI5Element {
 
 	get textButtonAccText() {
 		return this.textContent;
+	}
+
+	get isTextButton() {
+		return !!this.textContent;
 	}
 
 	get textButton() {

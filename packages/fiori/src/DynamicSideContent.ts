@@ -27,6 +27,13 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
 	L_XL_BREAKPOINT = 1440, // Breakpoint between L and XL screen sizes
 	MINIMUM_WIDTH_BREAKPOINT = 960; // Minimum width of the control where main and side contents are side by side
 
+type DynamicSideContentLayoutChangeEventDetail = {
+	currentBreakpoint: string,
+	previousBreakpoint: string,
+	mainContentVisible: boolean,
+	sideContentVisible: boolean,
+}
+
 /**
  * @class
  *
@@ -104,7 +111,12 @@ const S_M_BREAKPOINT = 720,	// Breakpoint between S and M screen sizes
  * @public
  * @since 1.1.0
  */
-@customElement("ui5-dynamic-side-content")
+@customElement({
+	tag: "ui5-dynamic-side-content",
+	renderer: litRender,
+	styles: DynamicSideContentCss,
+	template: DynamicSideContentTemplate,
+})
 /**
  * Fires when the current breakpoint has been changed.
  * @event sap.ui.webc.fiori.DynamicSideContent#layout-change
@@ -174,7 +186,7 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: SideContentPosition, defaultValue: SideContentPosition.End })
-	sideContentPosition!: SideContentPosition;
+	sideContentPosition!: `${SideContentPosition}`;
 
 	/**
 	 * Defines on which breakpoints the side content is visible.
@@ -197,7 +209,7 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: SideContentVisibility, defaultValue: SideContentVisibility.ShowAboveS })
-	sideContentVisibility!: SideContentVisibility;
+	sideContentVisibility!: `${SideContentVisibility}`;
 
 	/**
 	 * Defines on which breakpoints the side content falls down below the main content.
@@ -219,7 +231,7 @@ class DynamicSideContent extends UI5Element {
 	 *
 	 */
 	@property({ type: SideContentFallDown, defaultValue: SideContentFallDown.OnMinimumWidth })
-	sideContentFallDown!: SideContentFallDown;
+	sideContentFallDown!: `${SideContentFallDown}`;
 
 	/**
 	 * Defines whether the component is in equal split mode. In this mode, the side and
@@ -288,18 +300,6 @@ class DynamicSideContent extends UI5Element {
 	_handleResizeBound: () => void;
 
 	static i18nBundle: I18nBundle;
-
-	static get styles() {
-		return DynamicSideContentCss;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return DynamicSideContentTemplate;
-	}
 
 	static async onDefine() {
 		DynamicSideContent.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
@@ -522,7 +522,7 @@ class DynamicSideContent extends UI5Element {
 				mainContentVisible: mainSize !== this.span0,
 				sideContentVisible: sideSize !== this.span0,
 			};
-			this.fireEvent("layout-change", eventParams);
+			this.fireEvent<DynamicSideContentLayoutChangeEventDetail>("layout-change", eventParams);
 			this._currentBreakpoint = this.breakpoint;
 		}
 
@@ -542,3 +542,6 @@ class DynamicSideContent extends UI5Element {
 DynamicSideContent.define();
 
 export default DynamicSideContent;
+export type {
+	DynamicSideContentLayoutChangeEventDetail,
+};

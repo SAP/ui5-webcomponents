@@ -1,13 +1,10 @@
 {{>include "../../main/src/ListItem.hbs"}}
 
-{{#*inline "selectionElement"}}{{/inline}}
-
 {{#*inline "listItemContent"}}
-	<div class="ui5-uci-thumbnail">
-		<slot name="thumbnail"></slot>
-	</div>
-
-	<div class="ui5-uci-content-and-edit-container">
+	<div class="ui5-uci-thumbnail-and-content-container">
+		<div class="ui5-uci-thumbnail">
+			<slot name="thumbnail"></slot>
+		</div>
 		<div class="ui5-uci-content-and-progress">
 			<div class="ui5-uci-content">
 				{{#if _editing}}
@@ -48,65 +45,66 @@
 				</div>
 			{{/if}}
 		</div>
-		<div class="ui5-uci-edit-buttons">
-			{{#if _editing}}
-				<ui5-button
-						design="Transparent"
-						class="ui5-uci-edit-rename-btn"
-						@click="{{_onRename}}"
-						@keyup="{{_onRenameKeyup}}">{{_renameBtnText}}</ui5-button>
-				<ui5-button
-						design="Transparent"
-						id="ui5-uci-edit-cancel"
-						@click="{{_onRenameCancel}}"
-						@keyup="{{_onRenameCancelKeyup}}">{{_cancelRenameBtnText}}</ui5-button>
-			{{else}}
-				{{#if _showRetry}}
-					<ui5-button
-						icon="refresh"
-						design="Transparent"
-						tooltip="{{_retryButtonTooltip}}"
-						@click="{{_onRetry}}"
-						@keyup="{{_onRetryKeyup}}"
-					></ui5-button>
-				{{/if}}
-				{{#if _showTerminate}}
-					<ui5-button
-						icon="stop"
-						design="Transparent"
-						tooltip="{{_terminateButtonTooltip}}"
-						@click="{{_onTerminate}}"
-						@keyup="{{_onTerminateKeyup}}">
-					</ui5-button>
-				{{/if}}
+	</div>
 
-				{{#if showEditButton}}
-					<ui5-button
-						id="{{_id}}-editing-button"
-						design="Transparent"
-						tooltip="{{_editButtonTooltip}}"
-						icon="edit"
-						@click="{{onDetailClick}}"
-						@keyup="{{_onDetailKeyup}}"
-						class="ui5-li-detailbtn ui5-uci-edit"
-					>
-					</ui5-button>
-				{{/if}}
-
-				{{#if renderDeleteButton}}
-					<ui5-button
-							class="ui5-li-deletebtn"
-							tabindex="-1"
-							data-sap-no-tab-ref
-							id="{{_id}}-deleteSelectionElement"
-							design="Transparent"
-							icon="decline"
-							?disabled="{{disableDeleteButton}}"
-							@click="{{onDelete}}"
-							tooltip="{{deleteText}}"
-					></ui5-button>
-				{{/if}}
+	<div class="ui5-uci-buttons">
+		{{#if _editing}}
+			<ui5-button
+					design="Transparent"
+					class="ui5-uci-edit-rename-btn"
+					@click="{{_onRename}}"
+					@keyup="{{_onRenameKeyup}}">{{_renameBtnText}}</ui5-button>
+			<ui5-button
+					design="Transparent"
+					id="ui5-uci-edit-cancel"
+					@click="{{_onRenameCancel}}"
+					@keyup="{{_onRenameCancelKeyup}}">{{_cancelRenameBtnText}}</ui5-button>
+		{{else}}
+			{{#if _showRetry}}
+				<ui5-button
+					icon="refresh"
+					design="Transparent"
+					tooltip="{{_retryButtonTooltip}}"
+					@click="{{_onRetry}}"
+					@keyup="{{_onRetryKeyup}}"
+				></ui5-button>
 			{{/if}}
-		</div>
+			{{#if _showTerminate}}
+				<ui5-button
+					icon="stop"
+					design="Transparent"
+					tooltip="{{_terminateButtonTooltip}}"
+					@click="{{_onTerminate}}"
+					@keyup="{{_onTerminateKeyup}}">
+				</ui5-button>
+			{{/if}}
+
+			{{#if showEditButton}}
+				<ui5-button
+					id="{{_id}}-editing-button"
+					design="Transparent"
+					tooltip="{{_editButtonTooltip}}"
+					icon="edit"
+					@click="{{onDetailClick}}"
+					@keyup="{{_onDetailKeyup}}"
+					class="ui5-li-detailbtn ui5-uci-edit"
+				>
+				</ui5-button>
+			{{/if}}
+
+			{{#if renderUploadCollectionDeleteButton}}
+				<ui5-button
+						class="ui5-upload-collection-deletebtn"
+						tabindex="-1"
+						data-sap-no-tab-ref
+						id="{{_id}}-deleteSelectionElement"
+						design="Transparent"
+						icon="decline"
+						?disabled="{{disableDeleteButton}}"
+						@click="{{_onDelete}}"
+						tooltip="{{deleteText}}"
+				></ui5-button>
+			{{/if}}
+		{{/if}}
 	</div>
 {{/inline}}

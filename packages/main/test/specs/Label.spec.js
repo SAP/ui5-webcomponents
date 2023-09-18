@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("General API", () => {
 	before(async () => {
@@ -47,6 +47,23 @@ describe("General API", () => {
 
 		assert.isAbove((await wrappingLabel.getSize()).height, (await truncatingLabel.getSize()).height);
 		assert.strictEqual((await truncatingLabel.getSize()).height, 16, "truncated label should be single line");
+	});
+
+	it("colon symbol should be taken from the i18n bundle", async () => {
+		let actualSymbol;
+		let expectedSymbol;
+
+		actualSymbol = await browser.executeAsync(done => {
+			const label = document.getElementById("showColon-true");
+			done(window.getComputedStyle(label.shadowRoot.querySelector(".ui5-label-required-colon"), "::before").content);
+		});
+
+		expectedSymbol = await browser.executeAsync(done => {
+			const label = document.getElementById("showColon-true");
+			done(label.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.LABEL_COLON));
+		});
+
+		assert.strictEqual(actualSymbol, `"${expectedSymbol}"`, "Colon symbol should be taken from the i18n bundle");
 	});
 
 	describe("linked element with 'for' property", async () => {

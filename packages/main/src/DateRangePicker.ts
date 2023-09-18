@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
@@ -10,7 +9,13 @@ import { DATERANGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 // Styles
 import DateRangePickerCss from "./generated/themes/DateRangePicker.css.js";
 import DatePicker from "./DatePicker.js";
-import type { DatePickerChangeEventDetail } from "./DatePicker.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
+
+import type {
+	DatePickerChangeEventDetail as DateRangePickerChangeEventDetail,
+	DatePickerInputEventDetail as DateRangePickerInputEventDetail,
+} from "./DatePicker.js";
+import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
 
 /**
  * @class
@@ -51,7 +56,10 @@ import type { DatePickerChangeEventDetail } from "./DatePicker.js";
  * @since 1.0.0-rc.8
  * @public
  */
-@customElement("ui5-daterange-picker")
+@customElement({
+	tag: "ui5-daterange-picker",
+	styles: [DatePicker.styles, DateRangePickerCss],
+})
 class DateRangePicker extends DatePicker {
 	 /**
 	 * Determines the symbol which separates the dates.
@@ -74,10 +82,6 @@ class DateRangePicker extends DatePicker {
 	_tempValue!: string;
 
 	private _prevDelimiter: string | null;
-
-	static get styles(): ComponentStylesData {
-		return [DatePicker.styles, DateRangePickerCss];
-	}
 
 	constructor() {
 		super();
@@ -117,7 +121,7 @@ class DateRangePicker extends DatePicker {
 	}
 
 	get _tempTimestamp() {
-		return this._tempValue && (this.getFormat().parse(this._tempValue, true, undefined as unknown as boolean) as Date).getTime() / 1000;
+		return this._tempValue && (this.getFormat().parse(this._tempValue, true) as Date).getTime() / 1000;
 	}
 
 	/**
@@ -234,7 +238,7 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	onSelectedDatesChange(event: CustomEvent<DatePickerChangeEventDetail>) {
+	onSelectedDatesChange(event: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
 		event.preventDefault(); // never let the calendar update its own dates, the parent component controls them
 		const values = event.detail.values;
 
@@ -254,9 +258,9 @@ class DateRangePicker extends DatePicker {
 	/**
 	 * @override
 	 */
-	async _modifyDateValue(amount: number, unit: string) {
+	async _modifyDateValue(amount: number, unit: string, preserveDate?: boolean) {
 		if (!this._endDateTimestamp) { // If empty or only one date -> treat as datepicker entirely
-			return super._modifyDateValue(amount, unit);
+			return super._modifyDateValue(amount, unit, preserveDate);
 		}
 
 		const input = this._getInput();
@@ -264,14 +268,14 @@ class DateRangePicker extends DatePicker {
 		let newValue: string;
 
 		if (caretPos <= this.value.indexOf(this._effectiveDelimiter)) { // The user is focusing the first date -> change it and keep the second date
-			const startDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000), amount, unit, this._minDate, this._maxDate);
+			const startDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._startDateTimestamp! * 1000), amount, unit, preserveDate, this._minDate, this._maxDate);
 			const newStartDateTimestamp = startDateModified.valueOf() / 1000;
 			if (newStartDateTimestamp > this._endDateTimestamp) { // dates flipped -> move the caret to the same position but on the last date
 				caretPos += Math.ceil(this.value.length / 2);
 			}
 			newValue = this._buildValue(newStartDateTimestamp, this._endDateTimestamp); // the value will be normalized so we don't try to order them here
 		} else {
-			const endDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._endDateTimestamp * 1000), amount, unit, this._minDate, this._maxDate);
+			const endDateModified = modifyDateBy(CalendarDate.fromTimestamp(this._endDateTimestamp * 1000), amount, unit, preserveDate, this._minDate, this._maxDate);
 			const newEndDateTimestamp = endDateModified.valueOf() / 1000;
 			newValue = this._buildValue(this._startDateTimestamp, newEndDateTimestamp); // the value will be normalized so we don't try to order them here
 			if (newEndDateTimestamp < this._startDateTimestamp!) { // dates flipped -> move the caret to the same position but on the first date
@@ -294,7 +298,7 @@ class DateRangePicker extends DatePicker {
 		const partsArray = value.split(this._prevDelimiter || this._effectiveDelimiter);
 
 		// if format successfully parse the value, the value contains only single date
-		if (this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean)) {
+		if (this.getFormat().parse(value)) {
 			valuesArray[0] = partsArray.join(this._effectiveDelimiter);
 			valuesArray[1] = "";
 		} else {
@@ -316,7 +320,7 @@ class DateRangePicker extends DatePicker {
 
 		const dateStrings = this._splitValueByDelimiter(value); // at least one item guaranteed due to the checks above (non-empty and valid)
 
-		const parsedDate = this.getFormat().parse(dateStrings[0], true, undefined as unknown as boolean) as Date;
+		const parsedDate = this.getFormat().parse(dateStrings[0], true) as Date;
 		return parsedDate.getTime() / 1000;
 	}
 
@@ -331,7 +335,7 @@ class DateRangePicker extends DatePicker {
 
 		const dateStrings = this._splitValueByDelimiter(value);
 		if (dateStrings[1]) {
-			const parsedDate = this.getFormat().parse(dateStrings[1], true, undefined as unknown as boolean) as Date;
+			const parsedDate = this.getFormat().parse(dateStrings[1], true) as Date;
 			return parsedDate.getTime() / 1000;
 		}
 
@@ -357,8 +361,19 @@ class DateRangePicker extends DatePicker {
 
 		return "";
 	}
+
+	/**
+	 * @override
+	 */
+	get _calendarPickersMode() {
+		return CalendarPickersMode.DAY_MONTH_YEAR;
+	}
 }
 
 DateRangePicker.define();
 
 export default DateRangePicker;
+export type {
+	DateRangePickerChangeEventDetail,
+	DateRangePickerInputEventDetail,
+};

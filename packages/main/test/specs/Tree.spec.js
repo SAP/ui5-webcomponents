@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 async function getItemsCount(selector) {
 	const items = await getItems(selector);
@@ -79,6 +79,11 @@ describe("Tree proxies properties to list", () => {
 			await tree.setAttribute("mode", mode);
 			assert.strictEqual(await list.getAttribute("mode"), mode, "Mode applied");
 		});
+	});
+
+	it("Mode works recursively", async () => {
+		const lastItem = await browser.$(">>>#allItemsMultiSelect .lastItem");
+		assert.strictEqual(await lastItem.getAttribute("_mode"), "MultiSelect", "Mode applied to the last tree item");
 	});
 
 	it("headerText, footerText, noDataText work", async () => {

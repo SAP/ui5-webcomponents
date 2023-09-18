@@ -1,11 +1,13 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
-import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import { getTabbableElements } from "@ui5/webcomponents-base/dist/util/TabbableElements.js";
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
+import getActiveElement from "@ui5/webcomponents-base/dist/util/getActiveElement.js";
 
 // Styles
 import styles from "./generated/themes/ListItemBase.css.js";
@@ -21,6 +23,10 @@ import styles from "./generated/themes/ListItemBase.css.js";
  * @extends sap.ui.webc.base.UI5Element
  * @public
  */
+@customElement({
+	renderer: litRender,
+	styles,
+})
 @event("_focused")
 @event("_forward-after")
 @event("_forward-before")
@@ -65,14 +71,6 @@ class ListItemBase extends UI5Element implements ITabbable {
 	@property({ type: Boolean })
 	focused!: boolean;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles(): ComponentStylesData {
-		return styles;
-	}
-
 	_onfocusin(e: FocusEvent) {
 		if (e.target !== this.getFocusDomRef()) {
 			return;
@@ -99,9 +97,7 @@ class ListItemBase extends UI5Element implements ITabbable {
 	_onkeyup(e: KeyboardEvent) {} // eslint-disable-line
 
 	_handleTabNext(e: KeyboardEvent) {
-		const target = e.target as HTMLElement;
-
-		if (this.shouldForwardTabAfter(target)) {
+		if (this.shouldForwardTabAfter()) {
 			if (!this.fireEvent("_forward-after", {}, true)) {
 				e.preventDefault();
 			}
@@ -120,14 +116,10 @@ class ListItemBase extends UI5Element implements ITabbable {
 	* Determines if th current list item either has no tabbable content or
 	* [TAB] is performed onto the last tabbale content item.
 	*/
-	shouldForwardTabAfter(target: HTMLElement | UI5Element) {
+	shouldForwardTabAfter() {
 		const aContent = getTabbableElements(this.getFocusDomRef()!);
 
-		if (target instanceof UI5Element) {
-			target = target.getFocusDomRef()!;
-		}
-
-		return !aContent.length || (aContent[aContent.length - 1] === target);
+		return aContent.length === 0 || (aContent[aContent.length - 1] === getActiveElement());
 	}
 
 	/*

@@ -1,5 +1,4 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
@@ -15,7 +14,7 @@ import LinkDesign from "./types/LinkDesign.js";
 import WrappingType from "./types/WrappingType.js";
 
 // Template
-import LinkRederer from "./generated/templates/LinkTemplate.lit.js";
+import LinkTemplate from "./generated/templates/LinkTemplate.lit.js";
 
 import { LINK_SUBTLE, LINK_EMPHASIZED } from "./generated/i18n/i18n-defaults.js";
 
@@ -69,8 +68,13 @@ type LinkClickEventDetail = {
  * @tagname ui5-link
  * @public
  */
-@customElement("ui5-link")
-@languageAware
+@customElement({
+	tag: "ui5-link",
+	languageAware: true,
+	renderer: litRender,
+	template: LinkTemplate,
+	styles: linkCss,
+})
 /**
  * Fired when the component is triggered either with a mouse/tap
  * or by using the Enter key.
@@ -104,6 +108,17 @@ class Link extends UI5Element implements ITabbable {
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
+
+	/**
+	 * Defines the tooltip of the component.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @private
+	 * @name sap.ui.webc.main.Link.prototype.title
+	 * @since 1.18.0
+	 */
+	 @property()
+	 title!: string;
 
 	/**
 	 * Defines the component href.
@@ -152,15 +167,11 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: LinkDesign, defaultValue: LinkDesign.Default })
-	design!: LinkDesign;
+	design!: `${LinkDesign}`;
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
-	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
-	 * </ul>
+	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
 	 * @type {sap.ui.webc.main.types.WrappingType}
 	 * @name sap.ui.webc.main.Link.prototype.wrappingType
@@ -168,7 +179,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @public
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
-	wrappingType!: WrappingType;
+	wrappingType!: `${WrappingType}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -237,7 +248,7 @@ class Link extends UI5Element implements ITabbable {
 	 * @since 1.1.0
 	 */
 	@property({ type: Object })
-	accessibilityAttributes!: object;
+	accessibilityAttributes!: { expanded: "true" | "false", hasPopup: "Dialog" | "Grid" | "ListBox" | "Menu" | "Tree" };
 
 	@property({ noAttribute: true })
 	_rel: string | undefined;
@@ -269,18 +280,6 @@ class Link extends UI5Element implements ITabbable {
 	constructor() {
 		super();
 		this._dummyAnchor = document.createElement("a");
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return LinkRederer;
-	}
-
-	static get styles() {
-		return linkCss;
 	}
 
 	onBeforeRendering() {

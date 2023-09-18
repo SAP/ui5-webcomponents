@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 
 describe("BusyIndicator general interaction", () => {
@@ -6,7 +6,7 @@ describe("BusyIndicator general interaction", () => {
 		await browser.url(`test/pages/BusyIndicator.html`);
 	});
 
-	it.only("tests event propagation", async () => {
+	it("tests event propagation", async () => {
 		const dynamicItem = await browser.$(">>>#busy-tree [ui5-tree-item] ui5-icon.ui5-li-tree-toggle-icon");
 		const input = await browser.$("#tree-input");
 
@@ -104,5 +104,12 @@ describe("BusyIndicator general interaction", () => {
 		);
 
 		await browser.keys("Escape");
+	});
+
+	it("Height of the root element depends on the height of the Busy Indicator - issue 6668", async () => {
+		const busyIndicator = await browser.$("#busy-indicator-height");
+		const height = parseInt((await busyIndicator.shadow$(".ui5-busy-indicator-root").getCSSProperty("height")).value);
+
+		assert.equal(height, 144, "Height of the root element inherits the height of the Busy Indicator");
 	});
 });

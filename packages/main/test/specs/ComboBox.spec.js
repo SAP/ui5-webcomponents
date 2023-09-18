@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("General interaction", () => {
 
@@ -89,6 +89,31 @@ describe("General interaction", () => {
 		assert.strictEqual(await combo.getProperty("value"), "Bahrain", "Value should be changed to Bahrain");
 	});
 
+	it ("Should filter items based on input with filter='None' and lazy loading", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const combo = await browser.$("#cb-filter-none");
+		const input = await combo.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#cb-filter-none");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		// act
+		await input.click();
+
+		// act
+		await input.keys("I");
+
+		setTimeout(async () => {
+			listItems = await popover.$("ui5-list").$$("ui5-li");
+			const firstListItemText = await listItems[0].shadow$(".ui5-li-title").getText();
+
+			// assert
+			assert.strictEqual(listItems.length, 5, "Items should be 5");
+			assert.strictEqual(firstListItemText, "I #1", "First item should have text.");
+		}, 1000)
+	});
+
 	it ("Should filter items based on input", async () => {
 		await browser.url(`test/pages/ComboBox.html`);
 
@@ -120,7 +145,9 @@ describe("General interaction", () => {
 		// assert.strictEqual(listItems.length, 2, "Items should be 2");
 
 		// act
-		await input.keys("zzz");
+		await input.keys("z");
+		await input.keys("z");
+		await input.keys("z");
 		listItems = await popover.$("ui5-list").$$("ui5-li");
 
 		// assert
@@ -448,11 +475,29 @@ describe("General interaction", () => {
 
 		await arrow.click();
 
-		const listItem = listItems[8];
+		const listItem = listItems[7];
+		const listItemText = await listItem.shadow$(".ui5-li-title").getText();
 
 		await listItem.click();
 
-		assert.strictEqual(await label.getText(), await listItem.shadow$(".ui5-li-title").getText(), "event is fired correctly");
+		assert.strictEqual(await label.getText(), listItemText, "event is fired correctly");
+	});
+
+	it ("Tests selection-change event when type text after selection", async () => {
+		const combo = await browser.$("#combo");
+		let label = await browser.$("#selection-change-event-result");
+		const arrow = await combo.shadow$("[input-icon]");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+		let listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		await arrow.click();
+		await combo.keys("Backspace");
+		await combo.keys("A");
+
+		const fisrtListItem = listItems[0];
+
+		assert.strictEqual(await label.getText(), await fisrtListItem.shadow$(".ui5-li-title").getText(), "event is fired correctly");
 	});
 
 	it ("Tests focused property when clicking on the arrow", async () => {
@@ -628,8 +673,8 @@ describe("Accessibility", async () => {
 		const arrow = await combo.shadow$("[input-icon]");
 		const input = await combo.shadow$("#ui5-combobox-input");
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
-		const itemAnnouncement1 = "Group Header A List item 1 of 17";
-		const itemAnnouncement2 = "Group Header Donut List item 6 of 17";
+		const itemAnnouncement1 = "Group Header A";
+		const itemAnnouncement2 = "Group Header Donut";
 
 		await arrow.click();
 
@@ -686,7 +731,7 @@ describe("Accessibility", async () => {
 
 		await cbWarning.click();
 
-		let ariaHiddenText = await cbWarning.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+		let ariaHiddenText = await cbWarning.shadow$(`#value-state-description`).getHTML(false);
 		let valueStateText = await popover.$("div").getHTML(false);
 
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
@@ -720,7 +765,7 @@ describe("Accessibility", async () => {
 
 		const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
 		const valueStateText = await popoverHeader.$("div").getHTML(false);
-		const ariaHiddenText = await cbError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+		const ariaHiddenText = await cbError.shadow$(`#value-state-description`).getHTML(false);
 
 		assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		assert.strictEqual(valueStateText.includes("Custom error"), true, "Displayed value state message text is correct");
@@ -943,5 +988,30 @@ describe("Keyboard navigation", async () => {
 
 		await input.keys("PageDown");
 		assert.strictEqual(await input.getProperty("value"), "Chile", "The +10 item should be selected on PAGEDOWN");
+	});
+
+	it ("Should select first matching item",  async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#same-name-suggestions-cb");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#same-name-suggestions-cb");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		// Opened picker
+		await input.click();
+		await input.keys("A");
+
+		await browser.waitUntil(() => popover.getProperty("opened"), {
+			timeout: 200,
+			timeoutMsg: "Popover should be displayed"
+		});
+
+		assert.strictEqual(await input.getProperty("value"), "Argentina", "Value should be Argentina");
+
+		const listItems = await popover.$("ui5-list").$$("ui5-li");
+
+		assert.ok(await listItems[0].getProperty("selected"), "List Item should be selected");
+		assert.notOk(await listItems[1].getProperty("selected"), "List Item should not be selected");
 	});
 });

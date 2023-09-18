@@ -1,11 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
+import browserScrollbarCSS from "@ui5/webcomponents/dist/generated/themes/BrowserScrollbar.css.js";
 import PageBackgroundDesign from "./types/PageBackgroundDesign.js";
 
 // Template
@@ -33,7 +34,16 @@ import PageCss from "./generated/themes/Page.css.js";
  *
  * <b>Note:</b> <code>ui5-page</code> occipues the whole available space of its parent. In order to achieve the intended design you have to make sure
  * that there is enough space for the <code>ui5-page</code> to be rendered.
+ * <b>Note:</b> In order for the <code>ui5-page</code> to be displayed, the parent element should have fixed height.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-page</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>content - Used to style the content section of the component</li>
+ * </ul>
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -47,27 +57,30 @@ import PageCss from "./generated/themes/Page.css.js";
  * @since 1.0.0-rc.12
  * @public
  */
-@customElement("ui5-page")
-@languageAware
+@customElement({
+	tag: "ui5-page",
+	languageAware: true,
+	renderer: litRender,
+	styles: [
+		browserScrollbarCSS,
+		PageCss,
+	],
+	template: PageTemplate,
+})
 class Page extends UI5Element {
 	/**
 	 * Defines the background color of the <code>ui5-page</code>.
 	 * <br><br>
 	 * <b>Note:</b> When a ui5-list is placed inside the page, we recommend using “List” to ensure better color contrast.
 	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Solid</code></li> (default)
-	 * <li><code>Transparent</code></li>
-	 * <li><code>List</code></li>
-	 * </ul>
+	 *
 	 * @type {sap.ui.webc.fiori.types.PageBackgroundDesign}
 	 * @name sap.ui.webc.fiori.Page.prototype.backgroundDesign
 	 * @defaultvalue "Solid"
 	 * @public
 	 */
 	@property({ type: PageBackgroundDesign, defaultValue: PageBackgroundDesign.Solid })
-	backgroundDesign!: PageBackgroundDesign;
+	backgroundDesign!: `${PageBackgroundDesign}`;
 
 	/**
 	 * Disables vertical scrolling of page content.
@@ -147,19 +160,7 @@ class Page extends UI5Element {
 	@slot()
 	footer!: Array<HTMLElement>;
 
-	_updateMediaRange: () => void;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return PageCss;
-	}
-
-	static get template() {
-		return PageTemplate;
-	}
+	_updateMediaRange: ResizeObserverCallback;
 
 	constructor() {
 		super();

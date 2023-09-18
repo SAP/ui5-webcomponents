@@ -37,8 +37,6 @@
 						@change={{_inputChange}}
 						@keydown={{_onkeydown}}
 						aria-autocomplete="both"
-						aria-labelledby="{{_id}}-hiddenText-nMore"
-						aria-describedby="{{_id}}-valueStateDesc"
 						/>
 					</div>
 					<ui5-toggle-button
@@ -130,6 +128,7 @@
 
 {{#*inline "listItem"}}
 	<ui5-li
+		wrapping-type="Normal"
 		type="{{../_listItemsType}}"
 		additional-text={{this.additionalText}}
 		?selected={{this.selected}}

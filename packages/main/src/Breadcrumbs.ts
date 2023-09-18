@@ -1,7 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import type { ChangeInfo } from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
@@ -17,6 +16,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import BreadcrumbsDesign from "./types/BreadcrumbsDesign.js";
 import BreadcrumbsSeparatorStyle from "./types/BreadcrumbsSeparatorStyle.js";
@@ -32,10 +32,11 @@ import type { LinkClickEventDetail } from "./Link.js";
 import Label from "./Label.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import List from "./List.js";
-import type { SelectionChangeEventDetail } from "./List.js";
+import type { ListSelectionChangeEventDetail } from "./List.js";
 import StandardListItem from "./StandardListItem.js";
 import Icon from "./Icon.js";
 import Button from "./Button.js";
+import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 
 // Templates
 import BreadcrumbsTemplate from "./generated/templates/BreadcrumbsTemplate.lit.js";
@@ -93,9 +94,25 @@ type FocusAdaptor = ITabbable & {
  * @public
  * @since 1.0.0-rc.15
  */
-@customElement("ui5-breadcrumbs")
-@languageAware
-
+@customElement({
+	tag: "ui5-breadcrumbs",
+	languageAware: true,
+	renderer: litRender,
+	template: BreadcrumbsTemplate,
+	staticAreaTemplate: BreadcrumbsPopoverTemplate,
+	styles: breadcrumbsCss,
+	staticAreaStyles: breadcrumbsPopoverCss,
+	dependencies: [
+		BreadcrumbsItem,
+		Link,
+		Label,
+		ResponsivePopover,
+		List,
+		StandardListItem,
+		Icon,
+		Button,
+	],
+})
 /**
  * Fires when a <code>BreadcrumbsItem</code> is clicked.
  * <b>Note:</b> You can prevent browser location change by calling <code>event.preventDefault()</code>.
@@ -132,7 +149,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	*/
 	@property({ type: BreadcrumbsDesign, defaultValue: BreadcrumbsDesign.Standard })
-	design!: BreadcrumbsDesign;
+	design!: `${BreadcrumbsDesign}`;
 
 	/**
 	 * Determines the visual style of the separator between the breadcrumb items.
@@ -154,7 +171,7 @@ class Breadcrumbs extends UI5Element {
 	 * @public
 	 */
 	@property({ type: BreadcrumbsSeparatorStyle, defaultValue: BreadcrumbsSeparatorStyle.Slash })
-	separatorStyle!: BreadcrumbsSeparatorStyle;
+	separatorStyle!: `${BreadcrumbsSeparatorStyle}`;
 
 	/**
 	 * Holds the number of items in the overflow.
@@ -180,7 +197,7 @@ class Breadcrumbs extends UI5Element {
 	items!: Array<BreadcrumbsItem>;
 
 	_itemNavigation: ItemNavigation
-	_onResizeHandler: () => void;
+	_onResizeHandler: ResizeObserverCallback;
 
 	// maps items to their widths
 	_breadcrumbItemWidths = new WeakMap<BreadcrumbsItem, number>();
@@ -189,26 +206,6 @@ class Breadcrumbs extends UI5Element {
 	responsivePopover?: ResponsivePopover;
 	_labelFocusAdaptor: FocusAdaptor;
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return BreadcrumbsTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return BreadcrumbsPopoverTemplate;
-	}
-
-	static get styles() {
-		return breadcrumbsCss;
-	}
-
-	static get staticAreaStyles() {
-		return breadcrumbsPopoverCss;
-	}
 
 	constructor() {
 		super();
@@ -248,7 +245,7 @@ class Breadcrumbs extends UI5Element {
 	}
 
 	_getItems() {
-		return this.getSlottedNodes("items") as Array<BreadcrumbsItem>;
+		return this.getSlottedNodes<BreadcrumbsItem>("items");
 	}
 
 	onBeforeRendering() {
@@ -410,7 +407,7 @@ class Breadcrumbs extends UI5Element {
 	_onLinkPress(e: CustomEvent<LinkClickEventDetail>) {
 		const link = e.target as Link,
 			items = this._getItems(),
-			item = items.find(x => `${x._id}-link` === link.id),
+			item = items.find(x => `${x._id}-link` === link.id)!,
 			{
 				altKey,
 				ctrlKey,
@@ -418,7 +415,7 @@ class Breadcrumbs extends UI5Element {
 				shiftKey,
 			} = e.detail;
 
-		if (!this.fireEvent("item-click", {
+		if (!this.fireEvent<BreadcrumbsItemClickEventDetail>("item-click", {
 			item,
 			altKey,
 			ctrlKey,
@@ -448,7 +445,7 @@ class Breadcrumbs extends UI5Element {
 		});
 	}
 
-	_onOverflowListItemSelect(e: CustomEvent<SelectionChangeEventDetail>) {
+	_onOverflowListItemSelect(e: CustomEvent<ListSelectionChangeEventDetail>) {
 		const listItem = e.detail.selectedItems[0],
 			items = this._getItems(),
 			item = items.find(x => `${x._id}-li` === listItem.id)!;
@@ -658,19 +655,6 @@ class Breadcrumbs extends UI5Element {
 		return Breadcrumbs.i18nBundle.getText(BREADCRUMBS_CANCEL_BUTTON);
 	}
 
-	static get dependencies() {
-		return [
-			BreadcrumbsItem,
-			Link,
-			Label,
-			ResponsivePopover,
-			List,
-			StandardListItem,
-			Icon,
-			Button,
-		];
-	}
-
 	static async onDefine() {
 		Breadcrumbs.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -679,3 +663,6 @@ class Breadcrumbs extends UI5Element {
 Breadcrumbs.define();
 
 export default Breadcrumbs;
+export type {
+	BreadcrumbsItemClickEventDetail,
+};

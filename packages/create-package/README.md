@@ -6,17 +6,39 @@
 
 Provides an `npm init` script for creating new "UI5 Web Components" packages.
 
-## Usage
+## Usage with npm
 
-with `npm`
+```
+Usage:
 
-- `npm init @ui5/webcomponents-package` (the user will be asked for **name**, **port**, **tag**);
-- `npm init @ui5/webcomponents-package <NEW-PACKAGE-NAME>` (the user will be asked for **port** and **tag** only).
+# npm 6.x
+    npm init @ui5/webcomponents-package [OPTIONS]
+# npm 7+, an extra double-dash is needed:
+    npm init @ui5/webcomponents-package -- [OPTIONS]
 
-And with `yarn`
+Options:
+    --name <string>     - defines the package name
+    --component-name <string>      - defines the component class name that will be created in your new package
+    --tag <string>      - defines the tag name of the sample web component that will be created in your new package. The tag will be derived from the component name if not provided.
+    --enable-typescript - enables TypeScript support for the package
+    --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
+```
 
-- `yarn create @ui5/webcomponents-package`
-- `yarn create @ui5/webcomponents-package <NEW-PACKAGE-NAME>`.
+The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
+components package.
+
+## Usage with yarn
+
+```
+Usage:
+    yarn create @ui5/webcomponents-package [OPTIONS]
+Options:
+    --name <string>     - defines the package name
+    --component-name <string>      - defines the component class name that will be created in your new package
+    --tag <string>      - defines the tag name of the sample web component that will be created in your new package
+    --enable-typescript - enables TypeScript support for the package
+    --skip              - skips configuration and generates package with a default value for each parameter that wasn't passed
+```
 
 The script creates a new directory, and fills it with a `package.json` file and all necessary source files, and resources for a new
 components package.

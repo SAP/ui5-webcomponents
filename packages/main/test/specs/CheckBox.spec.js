@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("CheckBox general interaction", () => {
 	before(async () => {
@@ -62,5 +62,47 @@ describe("CheckBox general interaction", () => {
 		const checkboxChecked = await browser.$("#checkboxChecked").shadow$(".ui5-checkbox-icon");
 
 		assert.strictEqual(await checkboxChecked.getAttribute("aria-hidden"), "true", "aria-hidden is set");
+	});
+
+	it("tests change event - value is changed", async () => {
+		const defaultCb = await browser.$("#cb1");
+		const currentChecked = await defaultCb.getProperty("checked");
+
+		await defaultCb.click();
+
+		assert.strictEqual(await defaultCb.getProperty("checked"), !currentChecked, "The checkbox is checked");
+	});
+
+	it("tests change event preventDefault - value is not changed", async () => {
+		const defaultPreventedCbs = await browser.$$(".defaultPreventedCb");
+		for(const defaultPreventedCb of defaultPreventedCbs) {
+			const state = {
+				checked: await defaultPreventedCb.getProperty("checked"),
+				indeterminate: await defaultPreventedCb.getProperty("indeterminate"),
+			}
+
+			await defaultPreventedCb.click();
+
+			assert.strictEqual(await defaultPreventedCb.getProperty("checked"), state.checked, "The checkbox checked is not changed");
+			assert.strictEqual(await defaultPreventedCb.getProperty("indeterminate"), state.indeterminate, "The checkbox indeterminate is not changed");
+		}
+	});
+
+	it("tests form submission when checkbox is required, but unchecked", async () => {
+		const submitButton = await browser.$("#cbSubmit");
+
+		await submitButton.click();
+
+		assert.strictEqual(await browser.$("#cbFormSubmitted").getValue(), "false", "Form is not submitted");
+	});
+
+	it("tests form submission when checkbox is checked and button is clicked", async () => {
+		const thirdCheckbox = await browser.$("#cbItem3");
+		const submitButton = await browser.$("#cbSubmit");
+
+		await thirdCheckbox.click();
+		await submitButton.click();
+
+		assert.strictEqual(await browser.$("#cbFormSubmitted").getValue(), "true", "Form is submitted");
 	});
 });

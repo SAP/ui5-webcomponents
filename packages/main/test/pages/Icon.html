@@ -56,8 +56,6 @@
 		name="add-equipment"
 		class="icon3auto">
 	</ui5-icon>
-	<br>
-	<ui5-input id="click-event-2"></ui5-input>
 
 	<br>
 	<ui5-icon name="add-employee"></ui5-icon>
@@ -89,11 +87,15 @@
 
 	<br/><br/>
 
-	<ui5-icon id="interactive-icon" name="add-equipment" class="icon-blue icon-medium" interactive></ui5-icon>
-	<ui5-icon id="non-interactive-icon" name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
-	<ui5-input id="click-event" value="0"></ui5-input>
-
+	<ui5-title>Tests "click" and "ui5-click" events</ui5-title>
 	<br/>
+	<ui5-icon id="interactive-icon" name="add-equipment" class="icon-blue icon-medium" interactive></ui5-icon>
+	<ui5-label>"click"</ui5-label><ui5-input id="click-event" value="0"></ui5-input>
+	<ui5-label>"ui5-click"</ui5-label><ui5-input id="ui5-click-event" value="0"></ui5-input>
+	<br/>
+	<ui5-icon id="non-interactive-icon" name="add-equipment" class="icon-blue icon-medium"></ui5-icon>
+	<ui5-label>"click"</ui5-label><ui5-input id="click-event-2" value="0"></ui5-input>
+	<ui5-label>"ui5-click"</ui5-label><ui5-input id="ui5-click-event-2" value="0"></ui5-input>
 	<br/>
 
 	<ui5-button icon="overflow"></ui5-button>
@@ -117,7 +119,7 @@
 	<ui5-icon name="SAP-icons/slim-arrow-down"></ui5-icon>
 	<ui5-icon name="SAP-icons/accept"></ui5-icon>
 	<ui5-icon name="SAP-icons/resize-corner"></ui5-icon>
-	<ui5-icon show-tooltip name="SAP-icons/error"></ui5-icon>
+	<ui5-icon show-tooltip name="SAP-icons/error" id="iconError"></ui5-icon>
 	<ui5-icon show-tooltip name="SAP-icons/bookmark"></ui5-icon>
 	<ui5-icon show-tooltip name="SAP-icons/bookmark-2"></ui5-icon>
 
@@ -142,7 +144,7 @@
 
 	<h3>SAP business-suite Icons</h3>
 	<div class="snippet">
-		<ui5-icon class="samples-margin" name="business-suite/add-polygone"></ui5-icon>
+		<ui5-icon class="samples-margin" name="business-suite/add-polygon"></ui5-icon>
 		<ui5-icon class="samples-margin" name="business-suite/2x1-grid-layout"></ui5-icon>
 		<ui5-icon class="samples-margin" name="business-suite/activate"></ui5-icon>
 		<ui5-icon class="samples-margin" name="business-suite/3d"></ui5-icon>
@@ -150,23 +152,30 @@
 	</div>
 
 	<script>
-		var icon = document.getElementById("interactive-icon"),
+		var interactiveIcon = document.getElementById("interactive-icon"),
 			nonInteractiveIcon = document.getElementById("non-interactive-icon"),
-			input = document.getElementById("click-event"),
-			input2 = document.getElementById("click-event-2"),
-			inputValue = 0;
-			inputValue2 = 0;
+			inpClickEventIteractive = document.getElementById("click-event"),
+			inpUI5ClickEventIteractive = document.getElementById("ui5-click-event"),
+			inpClickEventNonIteractive = document.getElementById("click-event-2"),
+			inpUI5ClickEventNonIteractive = document.getElementById("ui5-click-event-2"),
+			interactiveIconClickCounter = 0,
+			interactiveIconUI5ClickCounter = 0,
+			nonInteractiveIconClickCounter = 0,
+			nonInteractiveIconUI5ClickCounter = 0;
 
-		icon.addEventListener("ui5-click", function() {
-			input.value = ++inputValue;
+		interactiveIcon.addEventListener("click", function() {
+			inpClickEventIteractive.value = ++interactiveIconClickCounter;
+		});
+		interactiveIcon.addEventListener("ui5-click", function() {
+			inpUI5ClickEventIteractive.value = ++interactiveIconUI5ClickCounter;
 		});
 
+
+		nonInteractiveIcon.addEventListener("click", function() {
+			inpClickEventNonIteractive.value = ++nonInteractiveIconClickCounter;
+		});
 		nonInteractiveIcon.addEventListener("ui5-click", function() {
-			input.value = ++inputValue;
-		});
-
-		myInteractiveIcon.addEventListener("click", function() {
-			input2.value = ++inputValue2;
+			inpUI5ClickEventNonIteractive.value = ++nonInteractiveIconUI5ClickCounter;
 		});
 	</script>
 

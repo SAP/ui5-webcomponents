@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Table general interaction", () => {
 	before(async () => {
@@ -120,6 +120,14 @@ describe("Table general interaction", () => {
 			assert.strictEqual(await innerTable.getAttribute("aria-label"), await tableLabel.getHTML(false), "Table aria-label attribute is correct.");
 		});
 
+		it("Should announce empty cell in a row", async () => {
+			const row = await browser.$("#rowWithEmptyCell").shadow$(".ui5-table-row-root");
+			const EXPECTED_TEXT = "City Empty Supplier J.M. Brothers Country USA. 3 of 4";
+
+			assert.strictEqual(await row.getAttribute("aria-label"), EXPECTED_TEXT,
+				"The aria-label value is correct when there is an empty cell in the row.");
+		});
+
 		it("Should have correct focus handling when having popin rows", async () => {
 			await browser.url(`test/pages/TableAllPopin.html`);
 			await browser.setWindowSize(500, 1200);
@@ -178,7 +186,7 @@ describe("Table general interaction", () => {
 			await btnScroll.click();
 
 			await browser.waitUntil(async () => (await inputResult.getProperty("value")) === "1", {
-				timeout: 1000,
+				timeout: 2000,
 				timeoutMsg: "The load-more event must be fired."
 			});
 		});

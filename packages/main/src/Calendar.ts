@@ -1,6 +1,5 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import transformDateToSecondaryType from "@ui5/webcomponents-localization/dist/dates/transformDateToSecondaryType.js";
@@ -25,6 +24,7 @@ import type { MonthPickerChangeEventDetail } from "./MonthPicker.js";
 import YearPicker from "./YearPicker.js";
 import type { YearPickerChangeEventDetail } from "./YearPicker.js";
 import CalendarSelectionMode from "./types/CalendarSelectionMode.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 
 // Default calendar for bundling
 import "@ui5/webcomponents-localization/dist/features/calendar/Gregorian.js";
@@ -45,7 +45,7 @@ interface ICalendarPicker {
 	_lastYear?: number,
 }
 
-type CalendarChangeEventDetail = {
+type CalendarSelectedDatesChangeEventDetail = {
 	values: Array<string>,
 	dates: Array<number>,
 	timestamp: number | undefined,
@@ -165,8 +165,19 @@ type CalendarChangeEventDetail = {
  * @public
  * @since 1.0.0-rc.11
  */
-@customElement("ui5-calendar")
-@fastNavigation
+@customElement({
+	tag: "ui5-calendar",
+	fastNavigation: true,
+	template: CalendarTemplate,
+	styles: calendarCSS,
+	dependencies: [
+		CalendarDateComponent.default,
+		CalendarHeader,
+		DayPicker,
+		MonthPicker,
+		YearPicker,
+	],
+})
 /**
  * Fired when the selected dates change.
  * <b>Note:</b> If you call <code>preventDefault()</code> for this event, the component will not
@@ -205,7 +216,7 @@ class Calendar extends CalendarPart {
 		type: CalendarSelectionMode,
 		defaultValue: CalendarSelectionMode.Single,
 	})
-	selectionMode!: CalendarSelectionMode;
+	selectionMode!: `${CalendarSelectionMode}`;
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -243,6 +254,9 @@ class Calendar extends CalendarPart {
 	@property()
 	_headerYearButtonTextSecType!: string;
 
+	@property({ type: CalendarPickersMode, defaultValue: CalendarPickersMode.DAY_MONTH_YEAR, noAttribute: true })
+	_pickersMode!: CalendarPickersMode;
+
 	/**
 	 * Defines the selected date or dates (depending on the <code>selectionMode</code> property)
 	 * for this calendar as instances of <code>ui5-date</code>.
@@ -255,23 +269,13 @@ class Calendar extends CalendarPart {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	dates!: Array<CalendarDateComponentT>;
 
-	static get template() {
-		return CalendarTemplate;
-	}
-
-	static get styles() {
-		return calendarCSS;
-	}
-
 	/**
 	 * @private
 	 */
 	get _selectedDatesTimestamps(): Array<number> {
 		return this.dates.map(date => {
 			const value = date.value;
-			// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-			// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-			const validValue = value && !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
+			const validValue = value && !!this.getFormat().parse(value);
 			return validValue ? this._getTimeStampFromString(value)! / 1000 : undefined;
 		}).filter((date): date is number => !!date);
 	}
@@ -296,6 +300,23 @@ class Calendar extends CalendarPart {
 		});
 	}
 
+	/**
+	 * Makes sure that _currentPicker is always set to a value, allowed by _pickersMode
+	 */
+	_normalizeCurrentPicker() {
+		if (this._currentPicker === "day" && this._pickersMode !== CalendarPickersMode.DAY_MONTH_YEAR) {
+			this._currentPicker = "month";
+		}
+
+		if (this._currentPicker === "month" && this._pickersMode === CalendarPickersMode.YEAR) {
+			this._currentPicker = "year";
+		}
+	}
+
+	onBeforeRendering() {
+		this._normalizeCurrentPicker();
+	}
+
 	async onAfterRendering() {
 		await renderFinished(); // Await for the current picker to render and then ask if it has previous/next pages
 		this._previousButtonDisabled = !this._currentPickerDOM._hasPreviousPage();
@@ -316,7 +337,7 @@ class Calendar extends CalendarPart {
 			this._headerYearButtonText = String(yearFormat.format(this._localDate, true));
 		}
 
-		this.secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
+		this._secondaryCalendarType && this._setSecondaryCalendarTypeButtonText();
 	}
 
 	/**
@@ -357,7 +378,7 @@ class Calendar extends CalendarPart {
 	}
 
 	_setSecondaryCalendarTypeButtonText() {
-		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
+		const yearFormatSecType = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
 
 		if (this._currentPicker === "year") {
 			const rangeStart = new CalendarDate(this._calendarDate, this._primaryCalendarType);
@@ -365,9 +386,9 @@ class Calendar extends CalendarPart {
 			rangeStart.setYear(this._currentPickerDOM._firstYear!);
 			rangeEnd.setYear(this._currentPickerDOM._lastYear!);
 
-			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeStart.valueOf() / 1000, true)
+			const rangeStartSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeStart.valueOf() / 1000, true)
 				.firstDate;
-			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this.secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
+			const rangeEndSecType = transformDateToSecondaryType(this.primaryCalendarType, this._secondaryCalendarType, rangeEnd.valueOf() / 1000, true)
 				.lastDate;
 			this._headerYearButtonTextSecType = `${yearFormatSecType.format(rangeStartSecType.toLocalJSDate(), true)} - ${yearFormatSecType.format(rangeEndSecType.toLocalJSDate(), true)}`;
 		} else {
@@ -376,14 +397,14 @@ class Calendar extends CalendarPart {
 	}
 
 	get secondaryCalendarTypeButtonText() {
-		if (!this.secondaryCalendarType) {
+		if (!this._secondaryCalendarType) {
 			return;
 		}
 
 		const localDate = new Date(this._timestamp * 1000);
-		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this.secondaryCalendarType });
-		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, this._timestamp);
-		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this.secondaryCalendarType);
+		const secondYearFormat = DateFormat.getDateInstance({ format: "y", calendarType: this._secondaryCalendarType });
+		const dateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this._secondaryCalendarType, this._timestamp);
+		const secondMonthInfo = convertMonthNumbersToMonthNames(dateInSecType.firstDate.getMonth(), dateInSecType.lastDate.getMonth(), this._secondaryCalendarType);
 		const secondYearText = secondYearFormat.format(localDate, true);
 
 		return {
@@ -414,30 +435,46 @@ class Calendar extends CalendarPart {
 		return this._currentPicker !== "year";
 	}
 
-	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
-		const timestamp = e.detail.timestamp;
-		const selectedDates = e.detail.dates;
-		const datesValues = selectedDates.map(ts => {
-			const calendarDate = CalendarDate.fromTimestamp(ts * 1000, this._primaryCalendarType);
+	_fireEventAndUpdateSelectedDates(selectedDates: Array<number>) {
+		const datesValues = selectedDates.map(timestamp => {
+			const calendarDate = CalendarDate.fromTimestamp(timestamp * 1000, this._primaryCalendarType);
 			return this.getFormat().format(calendarDate.toUTCJSDate(), true);
 		});
 
-		this.timestamp = timestamp;
-		const defaultPrevented = !this.fireEvent<CalendarChangeEventDetail>("selected-dates-change", { timestamp, dates: [...selectedDates], values: datesValues }, true);
+		const defaultPrevented = !this.fireEvent<CalendarSelectedDatesChangeEventDetail>("selected-dates-change", { timestamp: this.timestamp, dates: [...selectedDates], values: datesValues }, true);
 		if (!defaultPrevented) {
 			this._setSelectedDates(selectedDates);
 		}
 	}
 
+	onSelectedDatesChange(e: CustomEvent<DayPickerChangeEventDetail>) {
+		this.timestamp = e.detail.timestamp;
+		this._fireEventAndUpdateSelectedDates(e.detail.dates);
+	}
+
 	onSelectedMonthChange(e: CustomEvent<MonthPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		this._currentPicker = "day";
+
+		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
+			this._currentPicker = "day";
+		} else {
+			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+		}
+
 		this._currentPickerDOM._autoFocus = true;
 	}
 
 	onSelectedYearChange(e: CustomEvent<YearPickerChangeEventDetail>) {
 		this.timestamp = e.detail.timestamp;
-		this._currentPicker = "day";
+
+		if (this._pickersMode === CalendarPickersMode.DAY_MONTH_YEAR) {
+			this._currentPicker = "day";
+		} else if (this._pickersMode === CalendarPickersMode.MONTH_YEAR) {
+			this._currentPicker = "month";
+		} else {
+			this._fireEventAndUpdateSelectedDates([this.timestamp]);
+		}
+
 		this._currentPickerDOM._autoFocus = true;
 	}
 
@@ -473,16 +510,6 @@ class Calendar extends CalendarPart {
 	set selectedDates(selectedDates: Array<number>) {
 		this._setSelectedDates(selectedDates);
 	}
-
-	static get dependencies() {
-		return [
-			CalendarDateComponent.default,
-			CalendarHeader,
-			DayPicker,
-			MonthPicker,
-			YearPicker,
-		];
-	}
 }
 
 Calendar.define();
@@ -490,5 +517,5 @@ Calendar.define();
 export default Calendar;
 export type {
 	ICalendarPicker,
-	CalendarChangeEventDetail,
+	CalendarSelectedDatesChangeEventDetail,
 };

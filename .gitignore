@@ -20,6 +20,8 @@ packages/fiori/jsdoc-dist
 # scoping feature generated entry points for vite consumption
 packages/main/test/pages/scoped
 packages/fiori/test/pages/scoped
+packages/main/test/pages/resources/css
+packages/fiori/test/pages/resources/css
 
 # Ignore default target directory for the npm package 'ui5-codecompletion'
 .ui5
@@ -79,6 +81,13 @@ packages/playground/docs/development/
 packages/playground/docs/frameworks/
 packages/playground/docs/getting-started/
 packages/playground/docs/FAQ.md
+
+# Ignore the generated storybook related files
+packages/playground/_stories/**/*/argTypes.ts
+packages/playground/.storybook/custom-elements.json
+packages/playground/docs/storybook/**/*
+packages/playground/docs/storybook-pages/**/*
+!packages/playground/docs/storybook-pages/.gitkeep
 
 packages/main/test/pages/fix.js
 packages/fiori/test/pages/fix.js

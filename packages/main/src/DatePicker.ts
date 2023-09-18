@@ -4,7 +4,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type { ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat.js";
 import CalendarDate from "@ui5/webcomponents-localization/dist/dates/CalendarDate.js";
 import modifyDateBy from "@ui5/webcomponents-localization/dist/dates/modifyDateBy.js";
 import getRoundedTimestamp from "@ui5/webcomponents-localization/dist/dates/getRoundedTimestamp.js";
@@ -27,6 +27,7 @@ import {
 	isF6Previous,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
+import CalendarPickersMode from "./types/CalendarPickersMode.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import "@ui5/webcomponents-icons/dist/appointment-2.js";
@@ -38,8 +39,8 @@ import Icon from "./Icon.js";
 import Button from "./Button.js";
 import ResponsivePopover from "./ResponsivePopover.js";
 import Calendar from "./Calendar.js";
-import type { CalendarChangeEventDetail } from "./Calendar.js";
-import * as CalendarDateComponent from "./CalendarDate.js";
+import type { CalendarSelectedDatesChangeEventDetail } from "./Calendar.js";
+import CalendarDateComponent from "./CalendarDate.js";
 import Input from "./Input.js";
 import InputType from "./types/InputType.js";
 import DatePickerTemplate from "./generated/templates/DatePickerTemplate.lit.js";
@@ -54,9 +55,14 @@ import datePickerPopoverCss from "./generated/themes/DatePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
 type DatePickerChangeEventDetail = {
-	dates: Array<number>;
-	values: Array<string>
-};
+	value: string,
+	valid: boolean,
+}
+
+type DatePickerInputEventDetail = {
+	value: string,
+	valid: boolean,
+}
 
 /**
  * @class
@@ -85,7 +91,7 @@ type DatePickerChangeEventDetail = {
  * the input field, it must fit to the used date format.
  * <br><br>
  * Supported format options are pattern-based on Unicode LDML Date Format notation.
- * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table" class="api-table-content-cell-link">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
+ * For more information, see <ui5-link target="_blank" href="http://unicode.org/reports/tr35/#Date_Field_Symbol_Table">UTS #35: Unicode Locale Data Markup Language</ui5-link>.
  * <br><br>
  * For example, if the <code>format-pattern</code> is "yyyy-MM-dd",
  * a valid value string is "2015-07-30" and the same is displayed in the input.
@@ -146,7 +152,26 @@ type DatePickerChangeEventDetail = {
  * @tagname ui5-date-picker
  * @public
  */
-@customElement("ui5-date-picker")
+
+@customElement({
+	tag: "ui5-date-picker",
+	languageAware: true,
+	template: DatePickerTemplate,
+	staticAreaTemplate: DatePickerPopoverTemplate,
+	styles: datePickerCss,
+	staticAreaStyles: [
+		ResponsivePopoverCommonCss,
+		datePickerPopoverCss,
+	],
+	dependencies: [
+		Icon,
+		ResponsivePopover,
+		Calendar,
+		CalendarDateComponent,
+		Input,
+		Button,
+	],
+})
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -201,15 +226,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.DatePicker.prototype.valueState
@@ -217,7 +233,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Defines whether the component is required.
@@ -373,22 +389,6 @@ class DatePicker extends DateComponentBase implements IFormElement {
 
 	static i18nBundle: I18nBundle;
 
-	static get template() {
-		return DatePickerTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return DatePickerPopoverTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return datePickerCss;
-	}
-
-	static get staticAreaStyles(): ComponentStylesData {
-		return [ResponsivePopoverCommonCss, datePickerPopoverCss];
-	}
-
 	/**
 	 * @protected
 	 */
@@ -510,14 +510,15 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 *
 	 * @param { number } amount
 	 * @param { string } unit
+	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @protected
 	 */
-	_modifyDateValue(amount: number, unit: string) {
+	_modifyDateValue(amount: number, unit: string, preserveDate?: boolean) {
 		if (!this.dateValue) {
 			return;
 		}
 
-		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, this._minDate, this._maxDate);
+		const modifiedDate = modifyDateBy(CalendarDate.fromLocalJSDate(this.dateValue), amount, unit, preserveDate, this._minDate, this._maxDate);
 		const newValue = this.formatValue(modifiedDate.toUTCJSDate());
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
 	}
@@ -532,33 +533,38 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		let executeEvent = true;
 		this.liveValue = value;
 
+		const previousValue = this.value;
+
+		if (updateValue) {
+			this._getInput().value = value;
+			this.value = value;
+			this._updateValueState(); // Change the value state to Error/None, but only if needed
+		}
+
 		events.forEach((e: string) => {
-			if (!this.fireEvent(e, { value, valid }, true)) {
+			if (!this.fireEvent<DatePickerChangeEventDetail>(e, { value, valid }, true)) {
 				executeEvent = false;
 			}
 		});
 
-		if (!executeEvent) {
-			return;
-		}
+		if (!executeEvent && updateValue) {
+			if (this.value !== previousValue && this.value !== this._getInput().value) {
+				return; // If the value was changed in the change event, do not revert it
+			}
 
-		if (updateValue) {
-			this._getInput().getInputDOMRef().then((innerInput: Input | HTMLInputElement | null) => {
-				if (innerInput) {
-					innerInput.value = value;
-				}
-			});
-			this.value = value;
-			this._updateValueState(); // Change the value state to Error/None, but only if needed
+			this._getInput().value = previousValue;
+
+			this.value = previousValue;
 		}
 	}
 
 	_updateValueState() {
 		const isValid = this._checkValueValidity(this.value);
-		if (!isValid) { // If not valid - always set Error regardless of the current value state
-			this.valueState = ValueState.Error;
-		} else if (isValid && this.valueState === ValueState.Error) { // However if valid, change only Error (but not the others) to None
+
+		if (isValid && this.valueState === ValueState.Error) { // If not valid - always set Error regardless of the current value state
 			this.valueState = ValueState.None;
+		} else if (!isValid) { // However if valid, change only Error (but not the others) to None
+			this.valueState = ValueState.Error;
 		}
 	}
 
@@ -626,9 +632,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			return true;
 		}
 
-		// <b>Note:</b> Format#parse accepts only boolean type for 2nd and 3rd params,
-		// but has logic related to "undefined" value, so we're calling it with "undefined" and casting to "boolean".
-		return !!this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value);
 	}
 
 	/**
@@ -662,7 +666,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, true, undefined as unknown as boolean), true); // it is important to both parse and format the date as UTC
+		return this.getFormat().format(this.getFormat().parse(value, true), true); // it is important to both parse and format the date as UTC
 	}
 
 	get _displayFormat(): string {
@@ -740,12 +744,29 @@ class DatePicker extends DateComponentBase implements IFormElement {
 		return !this.disabled && !this.readonly;
 	}
 
+	get _calendarPickersMode() {
+		const format = this.getFormat() as DateFormat & { aFormatArray: Array<{type: string}> };
+		const patternSymbolTypes = format.aFormatArray.map(patternSymbolSettings => {
+			return patternSymbolSettings.type.toLowerCase();
+		});
+
+		if (patternSymbolTypes.includes("day")) {
+			return CalendarPickersMode.DAY_MONTH_YEAR;
+		}
+
+		if (patternSymbolTypes.includes("month") || patternSymbolTypes.includes("monthstandalone")) {
+			return CalendarPickersMode.MONTH_YEAR;
+		}
+
+		return CalendarPickersMode.YEAR;
+	}
+
 	/**
 	 * The user selected a new date in the calendar
 	 * @param event
 	 * @protected
 	 */
-	onSelectedDatesChange(e: CustomEvent<CalendarChangeEventDetail>) {
+	onSelectedDatesChange(e: CustomEvent<CalendarSelectedDatesChangeEventDetail>) {
 		e.preventDefault();
 		const newValue = e.detail.values && e.detail.values[0];
 		this._updateValueAndFireEvents(newValue, true, ["change", "value-changed"]);
@@ -773,7 +794,7 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.DatePicker#formatValue
-	 * @param {object} date A Java Script date object to be formatted as string
+	 * @param {Date} date A Java Script date object to be formatted as string
 	 * @returns {string} The date as string
 	 */
 	formatValue(date: Date) {
@@ -834,15 +855,11 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	 * @type { Date }
 	 */
 	get dateValue(): Date | null {
-		const utc = undefined as unknown as boolean;
-		const strict = undefined as unknown as boolean;
-		return this.liveValue ? this.getFormat().parse(this.liveValue, utc, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;
+		return this.liveValue ? this.getFormat().parse(this.liveValue) as Date : this.getFormat().parse(this.value) as Date;
 	}
 
 	get dateValueUTC(): Date | null {
-		const utc = undefined as unknown as boolean;
-		const strict = undefined as unknown as boolean;
-		return this.liveValue ? this.getFormat().parse(this.liveValue, true, strict) as Date : this.getFormat().parse(this.value, utc, strict) as Date;
+		return this.liveValue ? this.getFormat().parse(this.liveValue, true) as Date : this.getFormat().parse(this.value) as Date;
 	}
 
 	get styles() {
@@ -856,21 +873,12 @@ class DatePicker extends DateComponentBase implements IFormElement {
 	get type() {
 		return InputType.Text;
 	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			ResponsivePopover,
-			Calendar,
-			CalendarDateComponent.default,
-			Input,
-			Button,
-		];
-	}
 }
 
 DatePicker.define();
 
 export default DatePicker;
-
-export type { DatePickerChangeEventDetail };
+export type {
+	DatePickerChangeEventDetail,
+	DatePickerInputEventDetail,
+};

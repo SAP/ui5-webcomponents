@@ -116,7 +116,7 @@
 			mi.removeChild(event.detail.token);
 		});
 
-		document.getElementById("token-creation").addEventListener("change", function (event) {
+		document.getElementById("token-creation").addEventListener("ui5-change", function (event) {
 			event.target.appendChild(createTokenFromText(event.target.value));
 
 			event.target.value = "";
@@ -126,7 +126,7 @@
 			event.target.removeChild(event.detail.token);
 		});
 
-		document.getElementById("token-unique").addEventListener("change", function (event) {
+		document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
 			if (!event.target.value) {
 				return;
 			};

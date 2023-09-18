@@ -1,11 +1,12 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import { isChrome } from "@ui5/webcomponents-base/dist/Device.js";
+import { isChrome, isSafari } from "@ui5/webcomponents-base/dist/Device.js";
 import { getFirstFocusableElement, getLastFocusableElement } from "@ui5/webcomponents-base/dist/util/FocusableElements.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import getEffectiveScrollbarStyle from "@ui5/webcomponents-base/dist/util/getEffectiveScrollbarStyle.js";
@@ -13,6 +14,7 @@ import { hasStyle, createStyle } from "@ui5/webcomponents-base/dist/ManagedStyle
 import { isEnter, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getNextZIndex, getFocusedElement, isFocusedElementWithinNode } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import MediaRange from "@ui5/webcomponents-base/dist/MediaRange.js";
 import PopupTemplate from "./generated/templates/PopupTemplate.lit.js";
 import PopupBlockLayer from "./generated/templates/PopupBlockLayerTemplate.lit.js";
@@ -20,8 +22,8 @@ import PopupAccessibleRole from "./types/PopupAccessibleRole.js";
 import { addOpenedPopup, removeOpenedPopup } from "./popup-utils/OpenedPopupsRegistry.js";
 
 // Styles
-import styles from "./generated/themes/Popup.css.js";
-import staticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
+import popupStlyes from "./generated/themes/Popup.css.js";
+import popupStaticAreaStyles from "./generated/themes/PopupStaticAreaStyles.css.js";
 import globalStyles from "./generated/themes/PopupGlobal.css.js";
 
 const createBlockingStyle = (): void => {
@@ -76,7 +78,13 @@ type PopupBeforeCloseEventDetail = {
  * @extends sap.ui.webc.base.UI5Element
  * @public
  */
-
+@customElement({
+	renderer: litRender,
+	styles: popupStlyes,
+	template: PopupTemplate,
+	staticAreaTemplate: PopupBlockLayer,
+	staticAreaStyles: popupStaticAreaStyles,
+})
 /**
  * Fired before the component is opened. This event can be cancelled, which will prevent the popup from opening. <b>This event does not bubble.</b>
  *
@@ -190,12 +198,8 @@ abstract class Popup extends UI5Element {
 	accessibleNameRef!: string;
 
 	/**
-	 * Allows setting a custom role. Available options are:
-	 * <ul>
-	 * <li><code>Dialog</code></li>
-	 * <li><code>None</code></li>
-	 * <li><code>AlertDialog</code></li>
-	 * </ul>
+	 * Allows setting a custom role.
+	 *
 	 * @type {sap.ui.webc.main.types.PopupAccessibleRole}
 	 * @name sap.ui.webc.main.Popup.prototype.accessibleRole
 	 * @defaultvalue "Dialog"
@@ -203,7 +207,7 @@ abstract class Popup extends UI5Element {
 	 * @since 1.10.0
 	 */
 	@property({ type: PopupAccessibleRole, defaultValue: PopupAccessibleRole.Dialog })
-	accessibleRole!: PopupAccessibleRole;
+	accessibleRole!: `${PopupAccessibleRole}`;
 
 	/**
 	 * Defines the current media query size.
@@ -245,7 +249,7 @@ abstract class Popup extends UI5Element {
 	@slot({ type: HTMLElement, "default": true })
 	content!: Array<HTMLElement>
 
-	_resizeHandler: () => void;
+	_resizeHandler: ResizeObserverCallback;
 	_shouldFocusRoot?: boolean;
 	_zIndex?: number;
 	_focusedElementBeforeOpen?: HTMLElement | null;
@@ -254,26 +258,6 @@ abstract class Popup extends UI5Element {
 		super();
 
 		this._resizeHandler = this._resize.bind(this);
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles(): ComponentStylesData {
-		return styles;
-	}
-
-	static get template() {
-		return PopupTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return PopupBlockLayer;
-	}
-
-	static get staticAreaStyles() {
-		return staticAreaStyles;
 	}
 
 	onBeforeRendering() {
@@ -362,7 +346,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmousedown(e: MouseEvent) {
-		this._root.removeAttribute("tabindex");
+		if (!isSafari()) { // Remove when adopting native dialog
+			this._root.removeAttribute("tabindex");
+		}
 
 		if (this.shadowRoot!.contains(e.target as HTMLElement)) {
 			this._shouldFocusRoot = true;
@@ -372,7 +358,9 @@ abstract class Popup extends UI5Element {
 	}
 
 	_onmouseup() {
-		this._root.tabIndex = -1;
+		if (!isSafari()) { // Remove when adopting native dialog
+			this._root.tabIndex = -1;
+		}
 
 		if (this._shouldFocusRoot) {
 			if (isChrome()) {
@@ -390,7 +378,7 @@ abstract class Popup extends UI5Element {
 		const firstFocusable = await getFirstFocusableElement(this);
 
 		if (firstFocusable) {
-			firstFocusable.focus({ focusVisible: true } as FocusOptions);
+			firstFocusable.focus();
 		} else {
 			this._root.focus();
 		}
@@ -404,7 +392,7 @@ abstract class Popup extends UI5Element {
 		const lastFocusable = await getLastFocusableElement(this);
 
 		if (lastFocusable) {
-			lastFocusable.focus({ focusVisible: true } as FocusOptions);
+			lastFocusable.focus();
 		} else {
 			this._root.focus();
 		}
@@ -430,6 +418,10 @@ abstract class Popup extends UI5Element {
 	async applyFocus() {
 		await this._waitForDomRef();
 
+		if (this.getRootNode() === this) {
+			return;
+		}
+
 		const element = (this.getRootNode() as Document).getElementById(this.initialFocus)
 			|| document.getElementById(this.initialFocus)
 			|| await getFirstFocusableElement(this)
@@ -439,7 +431,7 @@ abstract class Popup extends UI5Element {
 			if (element === this._root) {
 				element.tabIndex = -1;
 			}
-			element.focus({ focusVisible: true } as FocusOptions);
+			element.focus();
 		}
 	}
 
@@ -482,16 +474,17 @@ abstract class Popup extends UI5Element {
 
 		this._show();
 
-		if (!this._disableInitialFocus && !preventInitialFocus) {
-			this.applyInitialFocus();
-		}
-
 		this._addOpenedPopup();
 
 		this.opened = true;
 		this.open = true;
 
 		await renderFinished();
+
+		if (!this._disableInitialFocus && !preventInitialFocus) {
+			await this.applyInitialFocus();
+		}
+
 		this.fireEvent("after-open", {}, false, false);
 	}
 
@@ -557,7 +550,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		this._focusedElementBeforeOpen.focus({ focusVisible: true } as FocusOptions);
+		this._focusedElementBeforeOpen.focus();
 		this._focusedElementBeforeOpen = null;
 	}
 

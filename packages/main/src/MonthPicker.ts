@@ -33,7 +33,7 @@ import type { ICalendarPicker } from "./Calendar.js";
 import MonthPickerTemplate from "./generated/templates/MonthPickerTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/MonthPicker.css.js";
+import monthPickerStyles from "./generated/themes/MonthPicker.css.js";
 
 const PAGE_SIZE = 12; // total months on a single page
 const ROW_SIZE = 3; // months per row (4 rows of 3 months each)
@@ -50,7 +50,7 @@ type Month = {
 	classes: string,
 }
 
-type MothInterval = Array<Array<Month>>;
+type MonthInterval = Array<Array<Month>>;
 
 type MonthPickerChangeEventDetail = {
 	timestamp: number,
@@ -74,7 +74,11 @@ type MonthPickerNavigateEventDetail = {
  * @tagname ui5-monthpicker
  * @public
  */
-@customElement("ui5-monthpicker")
+@customElement({
+	tag: "ui5-monthpicker",
+	template: MonthPickerTemplate,
+	styles: monthPickerStyles,
+})
 /**
  * Fired when the user selects a month via "Space", "Enter" or click.
  * @public
@@ -104,20 +108,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	selectedDates!: Array<number>;
 
 	@property({ type: Object, multiple: true })
-	_months!: MothInterval;
+	_months!: MonthInterval;
 
 	@property({ type: Boolean, noAttribute: true })
 	_hidden!: boolean;
 
 	static i18nBundle: I18nBundle;
-
-	static get template() {
-		return MonthPickerTemplate;
-	}
-
-	static get styles() {
-		return styles;
-	}
 
 	static async onDefine() {
 		MonthPicker.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -145,7 +141,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 		const localeData = getCachedLocaleDataInstance(getLocale());
 		const monthsNames = localeData.getMonthsStandAlone("wide", this._primaryCalendarType);
 
-		const months: MothInterval = [];
+		const months: MonthInterval = [];
 		const calendarDate = this._calendarDate; // store the value of the expensive getter
 		const minDate = this._minDate; // store the value of the expensive getter
 		const maxDate = this._maxDate; // store the value of the expensive getter
@@ -259,11 +255,12 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * Modifies timestamp by a given amount of months and,
 	 * if necessary, loads the prev/next page.
 	 * @param { number } amount
+	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number) {
+	_modifyTimestampBy(amount: number, preserveDate?: boolean) {
 		// Modify the current timestamp
-		this._safelyModifyTimestampBy(amount, "month");
+		this._safelyModifyTimestampBy(amount, "month", preserveDate);
 
 		// Notify the calendar to update its timestamp
 		this.fireEvent<MonthPickerNavigateEventDetail>("navigate", { timestamp: this.timestamp! });
@@ -316,7 +313,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampBy(-PAGE_SIZE);
+		this._modifyTimestampBy(-PAGE_SIZE, true);
 	}
 
 	/**
@@ -325,7 +322,7 @@ class MonthPicker extends CalendarPart implements ICalendarPicker {
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(PAGE_SIZE);
+		this._modifyTimestampBy(PAGE_SIZE, true);
 	}
 
 	_isOutOfSelectableRange(date: CalendarDate, minDate: CalendarDate, maxDate: CalendarDate): boolean {

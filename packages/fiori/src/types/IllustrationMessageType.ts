@@ -1,5 +1,7 @@
 /**
- * @class
+ * Different illustration types of Illustrated Message.
+ *
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE
@@ -18,6 +20,12 @@ enum IllustrationMessageType {
 	 * @type {NoActivities}
 	 */
 	NoActivities = "NoActivities",
+	/**
+	 * "No Columns Set" illustration type.
+	 * @public
+	 * @type {NoColumnsSet}
+	 */
+	NoColumnsSet = "NoColumnsSet",
 	/**
 	 * "No Data" illustration type.
 	 * @public
@@ -330,6 +338,12 @@ enum IllustrationMessageType {
 	 * @type {SuccessScreen}
 	 */
 	SuccessScreen = "SuccessScreen",
+	/**
+	 * "Survey" illustration type.
+	 * @public
+	 * @type {Survey}
+	 */
+	Survey = "Survey",
 	/**
 	 * "Tent" illustration type.
 	 * @public

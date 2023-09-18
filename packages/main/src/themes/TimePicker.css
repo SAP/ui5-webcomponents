@@ -1,3 +1,4 @@
+@import "./FormComponents.css";
 @import "./InvisibleTextStyles.css";
 @import "./InputIcon.css";
 
@@ -9,9 +10,11 @@
 }
 
 :host {
+	min-width: calc(var(--_ui5_input_min_width) + var(--_ui5_input_icon_width));
 	color: var(--sapField_TextColor);
 	background-color: var(--sapField_Background);
 	border-radius: var(--_ui5-time_picker_border_radius);
+	margin: var(--_ui5_input_margin_top_bottom) 0;
 }
 
 :host([value-state="Error"]) {
@@ -35,6 +38,7 @@
 	line-height: inherit;
 	letter-spacing: inherit;
 	word-spacing: inherit;
+	margin: inherit;
 }
 
 .ui5-time-picker-input-icon-button {

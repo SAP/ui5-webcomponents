@@ -29,7 +29,7 @@
 }
 
 /* cannot be combined with the above style, because :has selector breaks the whole style if FF */
-.ui5-card-header:not(.ui5-card-header-ff):not(.ui5-card-header-hide-focus):has(.ui5-card-header-focusable-element:focus-visible):before {
+.ui5-card-header:not(.ui5-card-header-ff):not(.ui5-card-header-hide-focus):has(.ui5-card-header-focusable-element:focus):before {
 	outline: none;
 	content: "";
 	position: absolute;

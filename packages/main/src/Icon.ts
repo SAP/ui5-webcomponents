@@ -3,10 +3,9 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
-import themeAware from "@ui5/webcomponents-base/dist/decorators/themeAware.js";
 import { getIconData, getIconDataSync, IconData } from "@ui5/webcomponents-base/dist/asset-registries/Icons.js";
-import { getI18nBundle, I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import executeTemplate from "@ui5/webcomponents-base/dist/renderer/executeTemplate.js";
 import IconTemplate from "./generated/templates/IconTemplate.lit.js";
@@ -38,16 +37,16 @@ const PRESENTATION_ROLE = "presentation";
  *
  * <ul>
  * <li>
- * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons" class="api-table-content-cell-link">@ui5/webcomponents-icons</ui5-link> represents the "SAP-icons" collection and includes the following
- * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons" class="api-table-content-cell-link">icons</ui5-link>.
+ * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons">@ui5/webcomponents-icons</ui5-link> represents the "SAP-icons" collection and includes the following
+ * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons">icons</ui5-link>.
  * </li>
  * <li>
- * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt" class="api-table-content-cell-link">@ui5/webcomponents-icons-tnt</ui5-link> represents the "tnt" collection and includes the following
- * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">icons</ui5-link>.
+ * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons-tnt">@ui5/webcomponents-icons-tnt</ui5-link> represents the "tnt" collection and includes the following
+ * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT">icons</ui5-link>.
  * </li>
  * <li>
- * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite" class="api-table-content-cell-link">@ui5/webcomponents-icons-icons-business-suite</ui5-link> represents the "business-suite" collection and includes the following
- * <ui5-link target="_blank" href="https://ui5.sap.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols" class="api-table-content-cell-link">icons</ui5-link>.
+ * <ui5-link target="_blank" href="https://www.npmjs.com/package/@ui5/webcomponents-icons-business-suite">@ui5/webcomponents-icons-icons-business-suite</ui5-link> represents the "business-suite" collection and includes the following
+ * <ui5-link target="_blank" href="https://ui5.sap.com/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/BusinessSuiteInAppSymbols">icons</ui5-link>.
  * </li>
  * </ul>
  *
@@ -90,6 +89,17 @@ const PRESENTATION_ROLE = "presentation";
  * <code>&lt;ui5-icon name="tnt/antenna">&lt;/ui5-icon></code><br>
  * <code>&lt;ui5-icon name="business-suite/ab-testing">&lt;/ui5-icon></code>
  *
+ * <br><br>
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-icon</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>root - Used to style the outermost wrapper of the <code>ui5-icon</code></li>
+ * </ul>
+ *
+ * <br><br>
  * <h3>Keyboard Handling</h3>
  *
  * <ul>
@@ -109,11 +119,18 @@ const PRESENTATION_ROLE = "presentation";
  * @implements sap.ui.webc.main.IIcon
  * @public
  */
-@customElement("ui5-icon")
-@languageAware
-@themeAware
+@customElement({
+	tag: "ui5-icon",
+	languageAware: true,
+	themeAware: true,
+	renderer: litRender,
+	template: IconTemplate,
+	styles: iconCss,
+})
 /**
- * Fired on mouseup, space and enter if icon is interactive
+ * Fired on mouseup, <code>SPACE</code> and <code>ENTER</code>.
+ * - on mouse click, the icon fires native <code>click</code> event
+ * - on <code>SPACE</code> and <code>ENTER</code>, the icon fires custom <code>click</code> event
  * @private
  * @since 1.0.0-rc.8
  */
@@ -143,7 +160,7 @@ class Icon extends UI5Element {
 	 * @since 1.9.2
 	 */
 	@property({ type: IconDesign, defaultValue: IconDesign.Default })
-	design!: IconDesign;
+	design!: `${IconDesign}`;
 
 	/**
 	 * Defines if the icon is interactive (focusable and pressable)
@@ -161,9 +178,9 @@ class Icon extends UI5Element {
 	 * <br>
 	 *
 	 * To browse all available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Icons</ui5-link>,
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT" class="api-table-content-cell-link">SAP Fiori Tools</ui5-link> and
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">SAP Business Suite</ui5-link> collections.
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">SAP Icons</ui5-link>,
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html#/overview/SAP-icons-TNT">SAP Fiori Tools</ui5-link> and
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">SAP Business Suite</ui5-link> collections.
 	 * <br>
 	 *
 	 * Example:
@@ -252,8 +269,8 @@ class Icon extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property({ type: Object, noAttribute: true })
-	accData!: I18nText;
+	@property({ type: Object, defaultValue: undefined, noAttribute: true })
+	accData?: I18nText;
 
 	/**
 	 * @private
@@ -278,21 +295,8 @@ class Icon extends UI5Element {
 	viewBox?: string;
 	customSvg?: object;
 
-	_onclick?: ((event: MouseEvent) => void) | undefined;
-	_onfocusout?: ((event: FocusEvent) => void) | undefined;
-	_onfocusin?: ((event: FocusEvent) => void) | undefined;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return IconTemplate;
-	}
-
-	static get styles() {
-		return iconCss;
-	}
+	_onfocusout?: ((event: FocusEvent) => void);
+	_onfocusin?: ((event: FocusEvent) => void);
 
 	_onFocusInHandler() {
 		if (this.interactive) {
@@ -322,12 +326,6 @@ class Icon extends UI5Element {
 		if (this.interactive && isSpace(e)) {
 			this.fireEvent("click");
 		}
-	}
-
-	_onClickHandler(e: MouseEvent) {
-		// prevent the native event and fire custom event to ensure the noConfict "ui5-click" is fired
-		e.stopPropagation();
-		this.fireEvent("click");
 	}
 
 	/**
@@ -407,7 +405,6 @@ class Icon extends UI5Element {
 		this.ltr = iconData.ltr;
 		this.packageName = iconData.packageName;
 
-		this._onclick = this.interactive ? this._onClickHandler.bind(this) : undefined;
 		this._onfocusout = this.interactive ? this._onFocusOutHandler.bind(this) : undefined;
 		this._onfocusin = this.interactive ? this._onFocusInHandler.bind(this) : undefined;
 
@@ -416,6 +413,8 @@ class Icon extends UI5Element {
 		} else if (this.accData) {
 			const i18nBundle = await getI18nBundle(this.packageName);
 			this.effectiveAccessibleName = i18nBundle.getText(this.accData) || undefined;
+		} else {
+			this.effectiveAccessibleName = undefined;
 		}
 	}
 

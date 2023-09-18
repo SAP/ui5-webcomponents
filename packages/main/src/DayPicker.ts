@@ -5,7 +5,7 @@ import getLocale from "@ui5/webcomponents-base/dist/locale/getLocale.js";
 import type LocaleData from "@ui5/webcomponents-localization/dist/LocaleData.js";
 import { getFirstDayOfWeek } from "@ui5/webcomponents-base/dist/config/FormatSettings.js";
 import getCachedLocaleDataInstance from "@ui5/webcomponents-localization/dist/getCachedLocaleDataInstance.js";
-import I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import {
 	isSpace,
 	isSpaceShift,
@@ -102,7 +102,11 @@ type DayPickerNavigateEventDetail = {
  * @tagname ui5-daypicker
  * @public
  */
-@customElement("ui5-daypicker")
+@customElement({
+	tag: "ui5-daypicker",
+	styles: dayPickerCSS,
+	template: DayPickerTemplate,
+})
 /**
  * Fired when the selected date(s) change
  * @public
@@ -143,7 +147,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @public
 	 */
 	@property({ type: CalendarSelectionMode, defaultValue: CalendarSelectionMode.Single })
-	selectionMode!: CalendarSelectionMode;
+	selectionMode!: `${CalendarSelectionMode}`;
 
 	/**
 	 * Defines the visibility of the week numbers column.
@@ -193,14 +197,6 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	_secondTimestamp?: number;
 
 	_autoFocus?: boolean;
-
-	static get template() {
-		return DayPickerTemplate;
-	}
-
-	static get styles() {
-		return dayPickerCSS;
-	}
 
 	static i18nBundle: I18nBundle;
 
@@ -377,6 +373,12 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	onAfterRendering() {
 		if (this._autoFocus && !this._hidden) {
 			this.focus();
+		}
+
+		const focusedDay = this.shadowRoot!.querySelector<HTMLElement>("[data-sap-focus-ref]");
+
+		if (focusedDay && document.activeElement !== focusedDay) {
+			focusedDay.focus();
 		}
 	}
 
@@ -571,13 +573,13 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 		} else if (isSpace(e) || isSpaceShift(e)) {
 			e.preventDefault();
 		} else if (isLeft(e)) {
-			this._modifyTimestampBy(-1, "day");
+			this._modifyTimestampBy(-1, "day", false);
 		} else if (isRight(e)) {
-			this._modifyTimestampBy(1, "day");
+			this._modifyTimestampBy(1, "day", false);
 		} else if (isUp(e)) {
-			this._modifyTimestampBy(-7, "day");
+			this._modifyTimestampBy(-7, "day", false);
 		} else if (isDown(e)) {
-			this._modifyTimestampBy(7, "day");
+			this._modifyTimestampBy(7, "day", false);
 		} else if (isPageUp(e)) {
 			this._modifyTimestampBy(-1, "month");
 		} else if (isPageDown(e)) {
@@ -668,31 +670,30 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> same as for "PageUp"
 	 * @protected
 	 */
 	_showPreviousPage() {
-		this._modifyTimestampBy(-1, "month");
+		this._modifyTimestampBy(-1, "month", false);
 	}
 
 	/**
 	 * Called by the Calendar component.
-	 * <b>Note:</b> same as for "PageDown"
 	 * @protected
 	 */
 	_showNextPage() {
-		this._modifyTimestampBy(1, "month");
+		this._modifyTimestampBy(1, "month", false);
 	}
 
 	/**
 	 * Modifies the timestamp by a certain amount of days/months/years.
 	 * @param { number } amount
 	 * @param { string } unit
+	 * @param { boolean } preserveDate whether to preserve the day of the month (f.e. 15th of March + 1 month = 15th of April)
 	 * @private
 	 */
-	_modifyTimestampBy(amount: number, unit: string) {
+	_modifyTimestampBy(amount: number, unit: string, preserveDate?: boolean) {
 		// Modify the current timestamp
-		this._safelyModifyTimestampBy(amount, unit);
+		this._safelyModifyTimestampBy(amount, unit, preserveDate);
 		this._updateSecondTimestamp();
 
 		// Notify the calendar to update its timestamp
@@ -716,7 +717,7 @@ class DayPicker extends CalendarPart implements ICalendarPicker {
 	 * @private
 	 */
 	_updateSecondTimestamp() {
-		if (this.selectionMode === CalendarSelectionMode.Range && this.selectedDates.length === 1) {
+		if (this.selectionMode === CalendarSelectionMode.Range && (this.selectedDates.length === 1 || this.selectedDates.length === 2)) {
 			this._secondTimestamp = this.timestamp;
 		}
 	}

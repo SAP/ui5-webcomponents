@@ -1,11 +1,11 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
@@ -36,6 +36,7 @@ import isElementInView from "@ui5/webcomponents-base/dist/util/isElementInView.j
 import TableGrowingMode from "./types/TableGrowingMode.js";
 import BusyIndicator from "./BusyIndicator.js";
 import type {
+	TableRowClickEventDetail,
 	TableRowSelectionRequestedEventDetail,
 	TableRowF7PressEventDetail,
 	TableRowForwardBeforeEventDetail,
@@ -59,14 +60,14 @@ import {
 import TableTemplate from "./generated/templates/TableTemplate.lit.js";
 
 // Styles
-import styles from "./generated/themes/Table.css.js";
+import tableStyles from "./generated/themes/Table.css.js";
 
 const GROWING_WITH_SCROLL_DEBOUNCE_RATE = 250; // ms
 
 const PAGE_UP_DOWN_SIZE = 20;
 
 interface ITableRow extends UI5Element {
-	mode: TableMode,
+	mode: `${TableMode}`,
 	selected: boolean,
 	_busy: boolean,
 	_tabIndex: string,
@@ -83,7 +84,7 @@ type TableColumnInfo = {
 	visible?: boolean,
 	demandPopin?: boolean,
 	popinText?: string,
-	popinDisplay?: TableColumnPopinDisplay,
+	popinDisplay?: `${TableColumnPopinDisplay}`,
 	popinDisplayInline?: boolean,
 	classes?: string,
 	minWidth?: number,
@@ -91,12 +92,12 @@ type TableColumnInfo = {
 
 type TableColumnHeaderInfo = ITabbable;
 
-type TableSelectionChangeEvent = {
+type TableSelectionChangeEventDetail = {
 	selectedRows: Array<ITableRow>,
 	previouslySelectedRows: Array<ITableRow>,
 }
 
-type TablePopinChangeEvent = {
+type TablePopinChangeEventDetail = {
 	poppedColumns: Array<TableColumnInfo>;
 }
 
@@ -112,7 +113,7 @@ enum TableFocusTargetElement {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
- * The <code>ui5-import type { table } from "./TableRow.js";/code> component provides a set of sophisticated and convenient functions for responsive table design.
+ * The <code>ui5-table</code> component provides a set of sophisticated and convenient functions for responsive table design.
  * It provides a comprehensive set of features for displaying and dealing with vast amounts of data.
  * <br><br>
  * To render the <code>Table</code> properly, the order of the <code>columns</code> should match with the
@@ -177,8 +178,14 @@ enum TableFocusTargetElement {
  * @appenddocs sap.ui.webc.main.TableColumn sap.ui.webc.main.TableRow sap.ui.webc.main.TableGroupRow sap.ui.webc.main.TableCell
  * @public
  */
-@customElement("ui5-table")
-@fastNavigation
+@customElement({
+	tag: "ui5-table",
+	fastNavigation: true,
+	styles: tableStyles,
+	renderer: litRender,
+	template: TableTemplate,
+	dependencies: [BusyIndicator, CheckBox],
+})
 /** Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
 *
 * @event sap.ui.webc.main.Table#row-click
@@ -314,7 +321,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TableGrowingMode, defaultValue: TableGrowingMode.None })
-	growing!: TableGrowingMode;
+	growing!: `${TableGrowingMode}`;
 
 	/**
 	 * Defines if the table is in busy state.
@@ -374,13 +381,7 @@ class Table extends UI5Element {
 
 	/**
 	 * Defines the mode of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>MultiSelect</code></li>
-	 * <li><code>SingleSelect</code></li>
-	 * <li><code>None</code></li>
-	 * <ul>
+	 *
 	 * @type {sap.ui.webc.main.types.TableMode}
 	 * @name sap.ui.webc.main.Table.prototype.mode
 	 * @defaultvalue "None"
@@ -388,7 +389,7 @@ class Table extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: TableMode;
+	mode!: `${TableMode}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -489,22 +490,6 @@ class Table extends UI5Element {
 	})
 	columns!: Array<TableColumn>;
 
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TableTemplate;
-	}
-
-	static get dependencies() {
-		return [BusyIndicator, CheckBox];
-	}
-
 	static async onDefine() {
 		Table.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -513,11 +498,11 @@ class Table extends UI5Element {
 
 	fnHandleF7: (e: CustomEvent) => void;
 	fnOnRowFocused: (e: CustomEvent) => void;
-	_handleResize: () => void;
+	_handleResize: ResizeObserverCallback;
 
 	moreDataText?: string;
 	tableEndObserved: boolean;
-	visibleColumns?: Array<TableColumn>
+	visibleColumns: Array<TableColumn>;
 	visibleColumnsCount?: number;
 	lastFocusedElement: HTMLElement | null;
 	growingIntersectionObserver?: IntersectionObserver | null;
@@ -533,6 +518,7 @@ class Table extends UI5Element {
 	constructor() {
 		super();
 
+		this.visibleColumns = []; // template loop should always have a defined array
 		// The ItemNavigation requires each item to 1) have a "_tabIndex" property and 2) be either a UI5Element, or have an id property (to find it in the component's shadow DOM by)
 		this._columnHeader = {
 			id: `${this._id}-columnHeader`,
@@ -743,7 +729,7 @@ class Table extends UI5Element {
 
 		const selectedRows = this.selectedRows;
 
-		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -775,7 +761,7 @@ class Table extends UI5Element {
 
 		const selectedRows: Array<ITableRow> = this.selectedRows;
 
-		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1029,7 +1015,7 @@ class Table extends UI5Element {
 				}
 			});
 			row.selected = true;
-			this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+			this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
 				selectedRows: [row],
 				previouslySelectedRows,
 			});
@@ -1054,7 +1040,7 @@ class Table extends UI5Element {
 			this._allRowsSelected = false;
 		}
 
-		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1083,7 +1069,7 @@ class Table extends UI5Element {
 
 		const selectedRows = bAllSelected ? this.rows : [];
 
-		this.fireEvent<TableSelectionChangeEvent>("selection-change", {
+		this.fireEvent<TableSelectionChangeEventDetail>("selection-change", {
 			selectedRows,
 			previouslySelectedRows,
 		});
@@ -1163,7 +1149,7 @@ class Table extends UI5Element {
 		if (hiddenColumnsChange) {
 			this._hiddenColumns = hiddenColumns;
 			if (hiddenColumns.length) {
-				this.fireEvent<TablePopinChangeEvent>("popin-change", {
+				this.fireEvent<TablePopinChangeEventDetail>("popin-change", {
 					poppedColumns: this._hiddenColumns,
 				});
 			}
@@ -1296,4 +1282,7 @@ export default Table;
 export type {
 	ITableRow,
 	TableColumnInfo,
+	TableRowClickEventDetail,
+	TableSelectionChangeEventDetail,
+	TablePopinChangeEventDetail,
 };

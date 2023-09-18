@@ -33,7 +33,7 @@
 
 				{{#if showMenuButton}}
 					<button class="{{classes.button}}"
-						@click="{{_header.press}}"
+						@click="{{_headerPress}}"
 						aria-haspopup="menu"
 						aria-expanded="{{_menuPopoverExpanded}}"
 						data-ui5-stable="menu"
@@ -120,7 +120,7 @@
 							class="ui5-shellbar-button"
 							data-ui5-stable="cancel-search"
 						>
-							Cancel
+							{{_cancelBtnText}}
 						</ui5-button>
 					</div>
 				{{/if}}

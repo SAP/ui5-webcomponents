@@ -1,4 +1,13 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
+
+const getTokenizerPopoverId = async (mcbId) => {
+	return await browser.executeAsync(async (mcbId, done) => {
+		const input = document.querySelector(`#${mcbId}`);
+		const staticAreaItem = await (input.shadowRoot.querySelector("ui5-tokenizer").getStaticAreaItemDomRef());
+
+		done(staticAreaItem.host.classList[0]);
+	}, mcbId);
+}
 
 describe("MultiComboBox general interaction", () => {
 	before(async () => {
@@ -477,7 +486,7 @@ describe("MultiComboBox general interaction", () => {
 			await browser.url(`test/pages/MultiComboBox.html`);
 			await browser.setWindowSize(1920, 1080);
 
-			const mcb = await $("#mcb-long-token");
+			const mcb = $("#mcb-long-token");
 			const inner = mcb.shadow$("input");
 
 			await mcb.scrollIntoView();
@@ -491,6 +500,65 @@ describe("MultiComboBox general interaction", () => {
 			const tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
 
 			assert.strictEqual(tokens.length, 0, "Long token should be deleted" );
+		});
+
+		it("prevents selection change event when clicking an item", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-prevent");
+			const input = mcb.shadow$("#ui5-multi-combobox-input");
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-prevent")
+			const popover = await $(`.${staticAreaItemClassName}`).shadow$(".ui5-multi-combobox-all-items-responsive-popover");
+			const firstItem = await popover.$(".ui5-multi-combobox-all-items-list > ui5-li");
+			const mcbTokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.equal(mcbTokens.length, 1, "1 token is created.");
+
+			await input.click();
+			await input.keys("i");
+
+			assert.ok(await popover.getProperty("opened"), "The popover should be opened");
+			assert.strictEqual(await input.getValue(), "Item 1", "Value is correct");
+
+			await firstItem.click();
+
+			assert.notOk(await popover.getProperty("opened"), "When the content is clicked, the popover should close");
+			assert.strictEqual(await input.getValue(), "", "When the content is clicked, the value should be the removed");
+			assert.equal(mcbTokens.length, 1, "1 token is created.");
+		});
+
+		it("prevents selection change event when deleting a token", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-prevent");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			const deleteIcon = await tokens[0].shadow$("ui5-icon");
+
+			assert.equal(await tokens.length, 1, "should have one token");
+
+			await deleteIcon.click();
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 1, "should have one token");
+        });
+
+		it ("should prevent selection-change on CTRL+A", async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+
+			const mcb = $("#mcb-prevent");
+			const input = await mcb.shadow$("input");
+
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 1, "Should have 1 token.");
+
+			await input.click();
+			await mcb.keys("F4");
+			await mcb.keys("ArrowDown");
+			await mcb.keys(["Control", "a"]);
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+			assert.equal(await tokens.length, 1, "Should have 1 token.");
 		});
 	});
 
@@ -1367,6 +1435,57 @@ describe("MultiComboBox general interaction", () => {
 
 			assert.equal(await listItem.getProperty("focused"), true, "The second item should be focused");
 		});
+
+		it ("Backspace deletes token and forwards the focus to the last token without collapsing the tokenizer", async () => {
+			const mcb = await $("#n-more-many-items");
+			const inner = await mcb.shadow$("input");
+			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			await inner.click();
+
+			assert.strictEqual(tokens.length, 7, "7 Tokens are placed in the MCB");
+
+			await inner.keys("Backspace");
+			await inner.keys("Backspace");
+
+			tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
+
+			assert.strictEqual(tokens.length, 6, "6 Tokens are placed in the MCB");
+			assert.ok(await tokens[tokens.length - 1].getProperty("focused"), "Last Token is focused");
+		});
+
+		it("should open/close popover on keyboard combination ctrl + i", async () => {
+			const mcb = await $("#truncated-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.ok(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be opened");
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "Focused MCB - n-more popover should be closed");
+
+			await mcb.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Control", "i"]);
+			assert.ok(await rpo.getProperty("opened"), "Focused Token - n-more popover should be opened");
+			await mcb.click();
+			await mcb.keys("ArrowLeft");
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "Focused Token - n-more popover should be closed");
+		});
+
+		it("shouldn't open popover on keyboard combination ctrl + i when there are no tokens", async () => {
+			const mcb = await $("#mcb-no-typeahead");
+			const rpoClassName = await getTokenizerPopoverId("mcb-no-typeahead");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			await mcb.click();
+			await mcb.keys(["Control", "i"]);
+			assert.notOk(await rpo.getProperty("opened"), "n-more popover should be closed since no tokens");
+
+		});
 	});
 
 	describe("General", () => {
@@ -1456,6 +1575,86 @@ describe("MultiComboBox general interaction", () => {
 			await mcb.click();
 			assert.notOk(await popover.getProperty("opened"), "Popover with valueStateMessage should not be opened.");
 		});
+
+		it("Should apply correct text to the tokens overflow indicator", async () => {
+			const mcNItems = await $("#mc-items");
+			const mcNMore = await $("#mc-more");
+			const tokenizerNItems = await mcNItems.shadow$("ui5-tokenizer");
+			const tokenizerNMore = await mcNMore.shadow$("ui5-tokenizer");
+			const nItemsLabel = await tokenizerNItems.shadow$(".ui5-tokenizer-more-text");
+			const nMoreLabel = await tokenizerNMore.shadow$(".ui5-tokenizer-more-text");
+			let resourceBundleText = null;
+
+			resourceBundleText = await browser.executeAsync(done => {
+				const mi = document.getElementById("mc-items");
+				done({
+					mcItemsLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.TOKENIZER_SHOW_ALL_ITEMS, 2),
+					mcNMoreLabelText: mi.constructor.i18nBundle.getText(window["sap-ui-webcomponents-bundle"].defaultTexts.MULTIINPUT_SHOW_MORE_TOKENS, 1)
+				});
+			});
+	
+			assert.strictEqual(await nItemsLabel.getText(), resourceBundleText.mcItemsLabelText, "Text should be 2 Items");
+			assert.strictEqual(await nMoreLabel.getText(), resourceBundleText.mcNMoreLabelText, "Text should be 1 More");
+		});
+	});
+
+	describe("MultiComboBox Truncated Token", () => {
+		beforeEach(async () => {
+			await browser.url(`test/pages/MultiComboBox.html`);
+		});
+
+		it("should truncate token when single token is in the multicombobox and open popover on click", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+			await token.click();
+
+			assert.ok(await rpo.getProperty("opened"), "More Popover should be open");
+			assert.ok(await token.getProperty("selected"), "Token should be selected");
+			assert.ok(await token.getProperty("singleToken"), "Token should be single (could be truncated)");
+			assert.ok(await rpo.$("ui5-li").getProperty("focused"), "Token's list item is focused");
+
+			await token.click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+			assert.ok(await token.getProperty("focused"), "Token should be focused");
+		});
+
+		it("should close truncation popover and deselect selected tokens when clicked outside the component", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+			await token.click();
+
+			await $("#dummy-btn").click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+		});
+
+		it("should close truncation popover and deselect selected tokens when clicked in input field", async () => {
+			const mcb = await $("#truncated-token");
+			const token = await mcb.shadow$("ui5-token");
+			const rpoClassName = await getTokenizerPopoverId("truncated-token");
+			const rpo = await browser.$(`.${rpoClassName}`).shadow$("ui5-responsive-popover");
+			const inner = await mcb.shadow$("input");
+
+			assert.ok(await token.getProperty("singleToken"), "Single token property should be set");
+
+			await inner.click();
+
+			assert.notOk(await rpo.getProperty("opened"), "More Popover should be closed");
+			assert.notOk(await token.getProperty("selected"), "Token should be deselected");
+		});
 	});
 
 	describe("ARIA attributes", () => {
@@ -1468,8 +1667,8 @@ describe("MultiComboBox general interaction", () => {
 			const innerInput = await mcb.shadow$("input");
 			const invisibleText = await mcb.shadow$(".ui5-hidden-text");
 			let tokens = await mcb.shadow$$(".ui5-multi-combobox-token");
-			const tokensCountITextId = `${await mcb.getProperty("_id")}-hiddenText-nMore`;
-			const valuestateITextId = `${await mcb.getProperty("_id")}-valueStateDesc`;
+			const tokensCountITextId = `ui5-multi-combobox-hiddenText-nMore`;
+			const valuestateITextId = `ui5-multi-combobox-valueStateDesc`;
 			const ariaDescribedBy = `${tokensCountITextId} ${valuestateITextId}`;
 
 			assert.strictEqual(tokens.length, 3, "should have three tokens");
@@ -1551,7 +1750,7 @@ describe("MultiComboBox general interaction", () => {
 
 			await mCbWarning.click();
 
-			let ariaHiddenText = await mCbWarning.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			let ariaHiddenText = await mCbWarning.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			let valueStateText = await popover.$("div").getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
@@ -1563,7 +1762,7 @@ describe("MultiComboBox general interaction", () => {
 			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-error");
 			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-popover");
 
-			ariaHiddenText = await mCbError.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			ariaHiddenText = await mCbError.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 			valueStateText = await popover.$("div").getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
@@ -1573,7 +1772,7 @@ describe("MultiComboBox general interaction", () => {
 			await mCbSuccess.click();
 
 			staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-success");
-			ariaHiddenText = await mCbSuccess.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			ariaHiddenText = await mCbSuccess.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 		});
@@ -1587,7 +1786,7 @@ describe("MultiComboBox general interaction", () => {
 
 			const popoverHeader = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover .ui5-valuestatemessage-header");
 			const valueStateText = await popoverHeader.$("div").getHTML(false);
-			const ariaHiddenText = await mCbInformation.shadow$(`#${staticAreaItemClassName}-valueStateDesc`).getHTML(false);
+			const ariaHiddenText = await mCbInformation.shadow$(`#ui5-multi-combobox-valueStateDesc`).getHTML(false);
 
 			assert.strictEqual(ariaHiddenText.includes("Value State"), true, "Hidden screen reader text is correct");
 			assert.strictEqual(valueStateText.includes("Extra long text used as an information message"), true, "Displayed value state message text is correct");
@@ -1693,174 +1892,6 @@ describe("MultiComboBox general interaction", () => {
 			assert.strictEqual(await input.getValue(), "Asia", "The value remains");
 			assert.strictEqual(tokens.length, 0, "The group header is not tokenized");
 			assert.strictEqual(selectionChangeFired, "", "SelectionChange event is not fired");
-		});
-	});
-
-	describe("Grouping", () => {
-		it ("Tests group filtering", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
-			const mcb = await browser.$("#mcb-grouping");
-			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			let groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
-			let listItems = await popover.$("ui5-list").$$("ui5-li");
-
-			await arrow.click();
-
-			assert.strictEqual(groupItems.length, 3, "Group items should be 3");
-			assert.strictEqual(listItems.length, 12, "Items should be 12");
-
-			await input.keys("B");
-
-			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
-			listItems = await popover.$("ui5-list").$$("ui5-li");
-
-			assert.strictEqual(groupItems.length, 1, "Filtered group items should be 1");
-			assert.strictEqual(listItems.length, 1, "Filtered items should be 1");
-
-			await input.keys("Backspace");
-			await input.keys(['E', 'u', 'r', 'o', 'p', 'e']);
-
-			assert.equal(await popover.getProperty("opened"), false, "Popover should not be open");
-		});
-
-		it ("Tests group item focusability", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
-			const mcb = await browser.$("#mcb-grouping");
-			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			let groupItem;
-
-			await arrow.click();
-			await input.keys("ArrowDown");
-
-			groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
-
-			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
-		});
-
-		it ("Group header keyboard handling", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
-			const mcb = await browser.$("#mcb-grouping");
-			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			let groupItem;
-
-			await arrow.click();
-			await input.keys("ArrowDown");
-
-
-			groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
-			await groupItem.keys("Enter");
-
-			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
-			assert.equal(await popover.getProperty("opened"), true, "Popover should not be open");
-			assert.strictEqual(await input.getValue(), "", "The value is not updated");
-
-			await groupItem.keys("Space");
-
-			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
-			assert.equal(await popover.getProperty("opened"), true, "Popover should not be open");
-			assert.strictEqual(await input.getValue(), "", "The value is not updated)");
-
-			await groupItem.keys("ArrowUp");
-
-			assert.equal(await groupItem.getProperty("focused"), false, "The first group header should be focused");
-			assert.equal(await mcb.getProperty("focused"), true, "The first group header should be focused");
-		});
-	});
-
-	describe("Grouping", () => {
-		it ("Tests group filtering", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
-			const mcb = await browser.$("#mcb-grouping");
-			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			let popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			let groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
-			let listItems = await popover.$("ui5-list").$$("ui5-li");
-
-			await arrow.click();
-
-			assert.strictEqual(groupItems.length, 3, "Group items should be 3");
-			assert.strictEqual(listItems.length, 12, "Items should be 12");
-
-			await input.keys("B");
-
-			popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			groupItems = await popover.$("ui5-list").$$("ui5-li-groupheader");
-			listItems = await popover.$("ui5-list").$$("ui5-li");
-
-			assert.strictEqual(groupItems.length, 1, "Filtered group items should be 1");
-			assert.strictEqual(listItems.length, 1, "Filtered items should be 1");
-
-			await input.keys("Backspace");
-			await input.keys(['E', 'u', 'r', 'o', 'p', 'e']);
-
-			assert.equal(await popover.getProperty("opened"), false, "Popover should not be open");
-		});
-
-		it ("Tests group item focusability", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
-			const mcb = await browser.$("#mcb-grouping");
-			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			let groupItem;
-
-			await arrow.click();
-			await input.keys("ArrowDown");
-
-			groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
-
-			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
-		});
-
-		it ("Group header keyboard handling", async () => {
-			await browser.url(`test/pages/MultiComboBox.html`);
-
-			const mcb = await browser.$("#mcb-grouping");
-			const input = await mcb.shadow$("#ui5-multi-combobox-input");
-			const arrow = await mcb.shadow$("[input-icon]");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#mcb-grouping");
-			const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
-			let groupItem;
-
-			await arrow.click();
-			await input.keys("ArrowDown");
-
-
-			groupItem = await popover.$("ui5-list").$$("ui5-li-groupheader")[0];
-			await groupItem.keys("Enter");
-
-			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
-			assert.equal(await popover.getProperty("opened"), true, "Popover should not be open");
-			assert.strictEqual(await input.getValue(), "", "The value is not updated");
-
-			await groupItem.keys("Space");
-
-			assert.equal(await groupItem.getProperty("focused"), true, "The first group header should be focused");
-			assert.equal(await popover.getProperty("opened"), true, "Popover should not be open");
-			assert.strictEqual(await input.getValue(), "", "The value is not updated)");
-
-			await groupItem.keys("ArrowUp");
-
-			assert.equal(await groupItem.getProperty("focused"), false, "The first group header should be focused");
-			assert.equal(await mcb.getProperty("focused"), true, "The first group header should be focused");
 		});
 	});
 });

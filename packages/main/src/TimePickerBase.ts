@@ -1,6 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -31,8 +31,8 @@ import TimePickerTemplate from "./generated/templates/TimePickerTemplate.lit.js"
 import TimePickerPopoverTemplate from "./generated/templates/TimePickerPopoverTemplate.lit.js";
 import Input from "./Input.js";
 import Button from "./Button.js";
-import TimeSelection from "./TimeSelection.js";
-import type { TimeSelectionChangeEventDetail } from "./TimeSelection.js";
+import TimeSelectionClocks from "./TimeSelectionClocks.js";
+import type { TimeSelectionChangeEventDetail } from "./TimePickerInternals.js";
 
 import {
 	TIMEPICKER_SUBMIT_BUTTON,
@@ -44,6 +44,14 @@ import TimePickerCss from "./generated/themes/TimePicker.css.js";
 import TimePickerPopoverCss from "./generated/themes/TimePickerPopover.css.js";
 import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverCommon.css.js";
 
+type TimePickerBaseChangeInputEventDetail = {
+	value: string,
+	valid: boolean,
+}
+
+type TimePickerBaseChangeEventDetail = TimePickerBaseChangeInputEventDetail;
+type TimePickerBaseInputEventDetail = TimePickerBaseChangeInputEventDetail;
+
 /**
  * @class
  *
@@ -54,24 +62,59 @@ import ResponsivePopoverCommonCss from "./generated/themes/ResponsivePopoverComm
  * @public
  * @since 1.0.0-rc.6
  */
-@languageAware
-
+@customElement({
+	languageAware: true,
+	renderer: litRender,
+	template: TimePickerTemplate,
+	styles: TimePickerCss,
+	staticAreaTemplate: TimePickerPopoverTemplate,
+	staticAreaStyles: [ResponsivePopoverCommonCss, TimePickerPopoverCss],
+	dependencies: [
+		Icon,
+		ResponsivePopover,
+		TimeSelectionClocks,
+		Input,
+		Button,
+	],
+})
 /**
  * Fired when the input operation has finished by clicking the "OK" button or
  * when the text in the input field has changed and the focus leaves the input field.
- *
- * @event sap.ui.webc.main.TimePickerBase#change
+*
+* @event sap.ui.webc.main.TimePickerBase#change
  * @public
- */
-@event("change")
+ * @param {string} value The submitted value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+*/
+@event("change", {
+	detail: {
+		value: {
+			type: String,
+		},
+		valid: {
+			type: Boolean,
+		},
+	},
+})
 
 /**
  * Fired when the value of the <code>ui5-time-picker</code> is changed at each key stroke.
  *
  * @event sap.ui.webc.main.TimePickerBase#input
  * @public
- */
-@event("input")
+ * @param {string} value The current value.
+ * @param {boolean} valid Indicator if the value is in correct format pattern and in valid range.
+*/
+@event("input", {
+	detail: {
+		value: {
+			type: String,
+		},
+		valid: {
+			type: Boolean,
+		},
+	},
+})
 class TimePickerBase extends UI5Element {
 	/**
 	 * Defines a formatted time value.
@@ -104,7 +147,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Determines whether the <code>ui5-time-picker</code> is displayed as disabled.
@@ -152,41 +195,11 @@ class TimePickerBase extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return TimePickerCss;
-	}
-
-	static get staticAreaTemplate() {
-		return TimePickerPopoverTemplate;
-	}
-
-	static get template() {
-		return TimePickerTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			ResponsivePopover,
-			TimeSelection,
-			Input,
-			Button,
-		];
-	}
-
 	static async onDefine() {
 		[TimePickerBase.i18nBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents"),
 			fetchCldr(getLocale().getLanguage(), getLocale().getRegion(), getLocale().getScript()),
 		]);
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, TimePickerPopoverCss];
 	}
 
 	constructor() {
@@ -218,11 +231,11 @@ class TimePickerBase extends UI5Element {
 	}
 
 	onTimeSelectionChange(e: CustomEvent<TimeSelectionChangeEventDetail>) {
-		this.tempValue = e.detail.value; // every time the user changes the sliders -> update tempValue
+		this.tempValue = e.detail.value; // every time the user changes the time selection -> update tempValue
 	}
 
 	submitPickers() {
-		this._updateValueAndFireEvents(this.tempValue, true, ["change", "value-changed"]);
+		this._updateValueAndFireEvents(this.tempValue!, true, ["change", "value-changed"]);
 		this.closePicker();
 	}
 
@@ -242,7 +255,7 @@ class TimePickerBase extends UI5Element {
 		}
 	}
 
-	_updateValueAndFireEvents(value: string | undefined, normalizeValue: boolean, eventsNames: Array<string>) {
+	_updateValueAndFireEvents(value: string, normalizeValue: boolean, eventsNames: Array<string>) {
 		if (value === this.value) {
 			return;
 		}
@@ -253,13 +266,13 @@ class TimePickerBase extends UI5Element {
 		}
 
 		if (!eventsNames.includes("input")) {
-			this.value = ""; // Do not remove! DurationPicker use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
+			this.value = ""; // Do not remove! DurationPicker (an external component extending TimePickerBase) use case -> value is 05:10, user tries 05:12, after normalization value is changed back to 05:10 so no invalidation happens, but the input still shows 05:12. Thus we enforce invalidation with the ""
 			this.value = value;
 		}
 		this.tempValue = value; // if the picker is open, sync it
 		this._updateValueState(); // Change the value state to Error/None, but only if needed
 		eventsNames.forEach(eventName => {
-			this.fireEvent(eventName, { value, valid });
+			this.fireEvent<TimePickerBaseChangeInputEventDetail>(eventName, { value, valid });
 		});
 	}
 
@@ -404,7 +417,7 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Formats a Java Script date object into a string representing a locale date and time
 	 * according to the <code>formatPattern</code> property of the TimePicker instance
-	 * @param {object} date A Java Script date object to be formatted as string
+	 * @param {Date} date A Java Script date object to be formatted as string
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#formatValue
@@ -430,7 +443,7 @@ class TimePickerBase extends UI5Element {
 			return true;
 		}
 
-		return !!this.getFormat().parse(value as string, undefined as unknown as boolean, undefined as unknown as boolean);
+		return !!this.getFormat().parse(value as string);
 	}
 
 	normalizeValue(value: string) {
@@ -438,11 +451,11 @@ class TimePickerBase extends UI5Element {
 			return value;
 		}
 
-		return this.getFormat().format(this.getFormat().parse(value, undefined as unknown as boolean, undefined as unknown as boolean));
+		return this.getFormat().format(this.getFormat().parse(value));
 	}
 
 	_modifyValueBy(amount: number, unit: string) {
-		const date = this.getFormat().parse(this._effectiveValue as string, undefined as unknown as boolean, undefined as unknown as boolean) as Date;
+		const date = this.getFormat().parse(this._effectiveValue as string) as Date;
 		if (!date) {
 			return;
 		}
@@ -487,3 +500,8 @@ class TimePickerBase extends UI5Element {
 }
 
 export default TimePickerBase;
+export type {
+	TimeSelectionChangeEventDetail,
+	TimePickerBaseChangeEventDetail,
+	TimePickerBaseInputEventDetail,
+};

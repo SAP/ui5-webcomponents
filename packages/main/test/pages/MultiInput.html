@@ -97,6 +97,11 @@
 
 		<br>
 		<br>
+		<h1 class="sample-container-title">Multi Input show wrapping</h1>
+		<ui5-multi-input>
+			<ui5-token slot="tokens" text="Item that does not wrap"></ui5-token>
+			<ui5-token slot="tokens" text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum" slot="tokens"></ui5-token>
+		</ui5-multi-input>
 
 		<span id="basic-event-listener"></span>
 	</div>
@@ -181,7 +186,7 @@
 		<br>
 	</div>
 
-	<div class="sample-container">
+	<div class="sample-container" id="token-samples">
 		<h1>Tokens</h1>
 
 		<h1 class="sample-container-title">Multi Input without tokens</h1>
@@ -226,8 +231,37 @@
 		<br>
 		<br>
 
-
 		<ui5-button id="add-to-multiple">Add more tokens</ui5-button>
+
+		<br>
+		<br>
+
+		<h1 class="sample-container-title">Multi Input with Truncated token</h1>
+		<ui5-multi-input id="truncated-token">
+			<ui5-token text="Enim do esse anim magna enim fugiat Lorem enim nostrud sit laborum ea." slot="tokens"></ui5-token>
+		</ui5-multi-input>
+
+		<ui5-button id="dummy-btn">dummy button</ui5-button>
+    <br>
+		<ui5-button id="add-single-token">Add MultiInput with single token</ui5-button>
+
+		<br>
+		<br>
+
+		<h1 class="sample-container-title">Multi Input with N-Items</h1>
+		<ui5-multi-input id="mi-items" style="width: 150px">
+			<ui5-token text="Lorem ipsum" slot="tokens"></ui5-token>
+			<ui5-token text="Lorem ipsum 1" slot="tokens"></ui5-token>
+		</ui5-multi-input>
+
+		<br>
+		<br>
+
+		<h1 class="sample-container-title">Multi Input with N-More</h1>
+		<ui5-multi-input id="mi-more">
+			<ui5-token text="Token 1" slot="tokens"></ui5-token>
+			<ui5-token text="Enim do esse anim magna enim fugiat Lorem enim nostrud sit laborum ea." slot="tokens"></ui5-token>
+		</ui5-multi-input>
 	</div>
 
 	<div class="sample-container">
@@ -258,7 +292,20 @@
 	</div>
 
 	<div class="sample-container">
-		<ui5-multi-input show-suggestions id="token-unique" style="width: 50%">
+		<h1>Suggestions + showing wrapping</h1>
+
+		<ui5-multi-input show-suggestions show-value-help-icon id="suggestion-wrapping">
+			<ui5-suggestion-item text="Lorem ipsum Text"></ui5-suggestion-item>
+			<ui5-suggestion-item text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam id justo sed nisl consequat tincidunt. Vivamus tincidunt, sapien a tincidunt consequat, leo libero lacinia justo, a lacinia orci enim vel justo. Integer ultricies ex eu eros luctus, eu cursus nisl volutpat."></ui5-suggestion-item>
+			<ui5-suggestion-item text="Enim do esse anim magna enim fugiat Lorem enim nostrud sit laborum ea."></ui5-suggestion-item>
+			<ui5-suggestion-item text="Longest text in the world" ></ui5-suggestion-item>
+		</ui5-multi-input>
+	</div>
+
+	<div class="sample-container">
+		<h1>Create tokens on change and on paste</h1>
+
+		<ui5-multi-input show-suggestions id="token-unique" show-value-help-icon style="width: 50%">
 			<div slot="valueStateMessage" id="value-state-wrapper">Token is already in the list</div>
 			<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
 		</ui5-multi-input>
@@ -413,30 +460,73 @@
 				const token = event.detail?.token;
 				token && token.remove();
 			});
-		
-			document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
-				if (!event.target.value) {
-					return;
+
+		document.getElementById("token-unique").addEventListener("paste", function (event) {
+			event.preventDefault();
+
+			let pastedText = (event.clipboardData || window.clipboardData).getData('text/plain');;
+
+			if (!pastedText) {
+				return;
+			}
+
+			let separatedTexts = pastedText.split(/\r\n|\r|\n|\t/g).filter(t => !!t);
+
+			if (separatedTexts.length === 1) {
+				event.target.value = separatedTexts[0];
+				return;
+			}
+
+			separatedTexts.forEach((tokenText) => {
+				if (tokenText) {
+					event.target.appendChild(createTokenFromText(tokenText));
 				}
-		
-				var isDuplicate = event.target.tokens.some(function(token) {
-					return token.text === event.target.value
-				});
-		
-				if (isDuplicate) {
-					event.target.valueState = "Error";
-		
-					setTimeout(function () {
-						event.target.valueState = "None";
-					}, 2000);
-		
-					return;
-				}
-		
-				event.target.appendChild(createTokenFromText(event.target.value));
-		
-				event.target.value = "";
+			})
+		});
+
+		document.getElementById("token-unique").addEventListener("ui5-change", function (event) {
+			if (!event.target.value) {
+				return;
+			}
+
+			var isDuplicate = event.target.tokens.some(function(token) {
+				return token.text === event.target.value
 			});
+
+			if (isDuplicate) {
+				event.target.valueState = "Error";
+
+				setTimeout(function () {
+					event.target.valueState = "None";
+				}, 2000);
+
+				return;
+			}
+
+			event.target.appendChild(createTokenFromText(event.target.value));
+
+			event.target.value = "";
+		});
+
+		document
+			.getElementById("token-unique")
+			.addEventListener("ui5-value-help-trigger", function (event) {
+				event.target.openPicker();
+			});
+
+		document.getElementById("add-single-token").addEventListener("click", event => {
+			const token = document.createElement('ui5-token');
+			const multiInput = document.createElement('ui5-multi-input');
+
+			multiInput.setAttribute("id", "added-mi");
+
+			token.setAttribute('text', "test");
+			token.setAttribute('slot', 'tokens');
+
+			document.getElementById("token-samples").appendChild(multiInput);
+
+			multiInput.appendChild(token);
+		});
 	</script>
 </body>
 

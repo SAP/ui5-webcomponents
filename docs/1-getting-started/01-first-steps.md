@@ -109,4 +109,4 @@ The contents of the `dist` folder is ready to be deployed for productive usage. 
 
 #### 4. Enjoy UI5 Web Components.
 
-Next: [Importing UI5 Web Components](../importing-components)
+Next: [Importing UI5 Web Components](./02-importing-components.md)

@@ -1,80 +1,30 @@
 const fs = require("fs");
-
-const jsFileContentTemplate = componentName => {
-	return `import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-import ${componentName}Template from "./generated/templates/${componentName}Template.lit.js";
-
-// Styles
-import ${componentName}Css from "./generated/themes/${componentName}.css.js";
+const path = require("path");
+const prompts = require("prompts");
+const jsFileContentTemplate = require("./jsFileContentTemplate.js");
+const tsFileContentTemplate = require("./tsFileContentTemplate.js");
 
 /**
- * @public
+ * Hyphanates the given PascalCase string, f.e.:
+ * Foo -> "my-foo" (adds preffix)
+ * FooBar -> "foo-bar"
  */
-const metadata = {
-	tag: "${tagName}",
-	properties: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
-		//
-	},
-	slots: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
-		//
-	},
-	events: /** @lends sap.ui.webc.${library}.${componentName}.prototype */ {
-		//
-	},
+const hyphaneteComponentName = (componentName) => {
+	const result = componentName.replace(/([a-z])([A-Z])/g, '$1-$2' ).toLowerCase();
+
+	return result.includes("-") ? result : `my-${result}`;
 };
 
 /**
- * @class
- *
- * <h3 class="comment-api-title">Overview</h3>
- *
- *
- * <h3>Usage</h3>
- *
- * For the <code>${tagName}</code>
- * <h3>ES6 Module Import</h3>
- *
- * <code>import ${packageName}/dist/${componentName}.js";</code>
- *
- * @constructor
- * @author SAP SE
- * @alias sap.ui.webc.${library}.${componentName}
- * @extends sap.ui.webc.base.UI5Element
- * @tagname ${tagName}
- * @public
+ * Capitalizes first letter of string.
  */
-class ${componentName} extends UI5Element {
-	static get metadata() {
-		return metadata;
-	}
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
 
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ${componentName}Css;
-	}
-
-	static get template() {
-		return ${componentName}Template;
-	}
-
-	static get dependencies() {
-		return [];
-	}
-
-	static async onDefine() {
-
-	}
-}
-
-${componentName}.define();
-
-export default ${componentName};
-`;
-};
+/**
+ * Validates component name, enforcing PascalCase pattern - Button, MyButton.
+ */
+const PascalCasePattern = /^[A-Z][A-Za-z0-9]+$/;
+const isNameValid = name => typeof name === "string" && PascalCasePattern.test(name);
 
 const getPackageName = () => {
 	if (!fs.existsSync("./package.json")) {
@@ -108,47 +58,64 @@ const getLibraryName = packageName => {
 	return packageName.substr("webcomponents-".length);
 };
 
-const camelToKebabCase = string => string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+const generateFiles = (componentName, tagName, library, packageName, isTypeScript) => {
+	componentName = capitalizeFirstLetter(componentName);
+	const filePaths = {
+		"main": isTypeScript 
+			? `./src/${componentName}.ts` 
+			: `./src/${componentName}.js`,
+		"css": `./src/themes/${componentName}.css`,
+		"template": `./src/${componentName}.hbs`,
+	};
 
-const packageName = getPackageName();
-const library = getLibraryName(packageName);
+	const FileContentTemplate = isTypeScript 
+		? tsFileContentTemplate(componentName, tagName, library, packageName) 
+		: jsFileContentTemplate(componentName, tagName, library, packageName);
 
-const consoleArguments = process.argv.slice(2);
-const componentName = consoleArguments[0];
+	fs.writeFileSync(filePaths.main, FileContentTemplate, { flag: "wx+" });
+	fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
+	fs.writeFileSync(filePaths.template, "<div>Hello World</div>", { flag: "wx+" });
 
-if (!componentName){
-	console.error("Please enter component name.");
-	return;
+	console.log(`Successfully generated ${filePaths.main}`);
+	console.log(`Successfully generated ${filePaths.css}`);
+	console.log(`Successfully generated ${filePaths.template}`);
+
+	// Change the color of the output
+	console.warn('\x1b[33m%s\x1b[0m', `
+	Make sure to import the component in your bundle by using:
+	import "./dist/${componentName}.js";`);
 }
 
-const tagName = `ui5-${camelToKebabCase(componentName)}`;
+// Main function
+const createWebComponent = async () => {
+	const packageName = getPackageName();
+	const library = getLibraryName(packageName);
 
-const filePaths = {
-	"js": `./src/${componentName}.js`,
-	"css": `./src/themes/${componentName}.css`,
-	"hbs": `./src/${componentName}.hbs`,
+	const consoleArguments = process.argv.slice(2);
+	let componentName = consoleArguments[0];
+
+	if (componentName && !isNameValid(componentName)) {
+		throw new Error(`${componentName} is invalid component name. Use only letters (at least two) and start with capital one:  Button, MyButton, etc.`);
+	}
+
+	if (!componentName) {
+		const response = await prompts({
+			type: "text",
+			name: "componentName",
+			message: "Please enter a component name:",
+			validate: (value) => isNameValid(value) ? true : "Component name should follow PascalCase naming convention (f.e. Button, MyButton, etc.).",
+		});
+		componentName = response.componentName;
+
+		if (!componentName) {
+			process.exit();
+		}
+	}
+
+	const isTypeScript = fs.existsSync(path.join(process.cwd(), "tsconfig.json"));
+	const tagName = hyphaneteComponentName(componentName);
+
+	generateFiles(componentName, tagName, library, packageName, isTypeScript);
 };
-const sJsFileContentTemplate = jsFileContentTemplate(componentName);
 
-fs.writeFileSync(filePaths.js, sJsFileContentTemplate, { flag: "wx+" });
-fs.writeFileSync(filePaths.css, "", { flag: "wx+" });
-fs.writeFileSync(filePaths.hbs, "<div>Hello World</div>", { flag: "wx+" });
-
-
-console.log(`Successfully generated ${componentName}.js`);
-console.log(`Successfully generated ${componentName}.css`);
-console.log(`Successfully generated ${componentName}.hbs`);
-
-const bundleLogger = fs.createWriteStream("./bundle.common.js", {
-	flags: "a" // appending
-});
-
-bundleLogger.write(`
-// TODO: Move this line in order to keep the file sorted alphabetically
-import ${componentName} from "./dist/${componentName}.js";`);
-
-// Change the color of the output
-	console.warn('\x1b[33m%s\x1b[0m', `
-Component is imported in bundle.common.js.
-Do NOT forget to sort the file in alphabeticall order.
-`);
+createWebComponent();

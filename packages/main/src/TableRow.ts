@@ -20,7 +20,6 @@ import { getLastTabbableElement } from "@ui5/webcomponents-base/dist/util/Tabbab
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import type TableCell from "./TableCell.js";
 import type { ITableRow, TableColumnInfo } from "./Table.js";
-
 import CheckBox from "./CheckBox.js";
 import TableMode from "./types/TableMode.js";
 import TableRowType from "./types/TableRowType.js";
@@ -33,7 +32,7 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
-import styles from "./generated/themes/TableRow.css.js";
+import tableRowStyles from "./generated/themes/TableRow.css.js";
 
 type TableRowClickEventDetail = {
 	row: TableRow,
@@ -80,7 +79,13 @@ type TableRowF7PressEventDetail = {
  * @implements sap.ui.webc.main.ITableRow
  * @public
  */
-@customElement("ui5-table-row")
+@customElement({
+	tag: "ui5-table-row",
+	styles: tableRowStyles,
+	renderer: litRender,
+	template: TableRowTemplate,
+	dependencies: [CheckBox],
+})
 /**
  * Fired when a row in <code>Active</code> mode is clicked or <code>Enter</code> key is pressed.
  *
@@ -126,7 +131,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * @public
 	 */
 	@property({ type: TableRowType, defaultValue: TableRowType.Inactive })
-	type!: TableRowType;
+	type!: `${TableRowType}`;
 
 	/**
 	 * Defines the row's selected state.
@@ -160,7 +165,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 * @private
 	 */
 	@property({ type: TableMode, defaultValue: TableMode.None })
-	mode!: TableMode;
+	mode!: `${TableMode}`;
 
 	/**
 	 * Indicates if the table row is active.
@@ -197,22 +202,6 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 	 */
 	@slot({ type: HTMLElement, "default": true, individualSlots: true })
 	cells!: Array<TableCell>;
-
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TableRowTemplate;
-	}
-
-	static get dependencies() {
-		return [CheckBox];
-	}
 
 	static i18nBundle: I18nBundle;
 
@@ -437,7 +426,7 @@ class TableRow extends UI5Element implements ITableRow, ITabbable {
 		const isRowSelectable = this.isSingleSelect || this.isMultiSelect;
 		const ariaLabel = this.cells.map((cell, index) => {
 			const columText = this.getColumnTextByIdx(index);
-			const cellText = this.getCellText(cell);
+			const cellText = cell.cellContent.length ? this.getCellText(cell) : cell.ariaLabelEmptyCellText;
 			return `${columText} ${cellText}`;
 		}).join(" ");
 

@@ -11,6 +11,7 @@ import {
 	getCustomElementsScopingRules,
 	shouldScopeCustomElement,
 	getEffectiveScopingSuffixForTag,
+	getScopedVarName,
 } from "./CustomElementsScopeUtils.js";
 import { registerFeature } from "./FeaturesRegistry.js";
 
@@ -30,4 +31,5 @@ export {
 	getCustomElementsScopingRules,
 	shouldScopeCustomElement,
 	getEffectiveScopingSuffixForTag,
+	getScopedVarName,
 };

@@ -19,7 +19,10 @@ import ListItemType from "./types/ListItemType.js";
  * @implements sap.ui.webc.main.IInputSuggestionItem
  * @public
  */
-@customElement("ui5-suggestion-item")
+@customElement({
+	tag: "ui5-suggestion-item",
+	dependencies: [SuggestionListItem],
+})
 class SuggestionItem extends UI5Element {
 	/**
 	 * Defines the text of the component.
@@ -46,7 +49,7 @@ class SuggestionItem extends UI5Element {
 	 * @since 1.0.0-rc.8
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: ListItemType
+	type!: `${ListItemType}`
 
 	/**
 	 * Defines the description displayed right under the item text, if such is present.
@@ -63,7 +66,7 @@ class SuggestionItem extends UI5Element {
 	 * <br><br>
 	 * <b>Note:</b>
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.SuggestionItem.prototype.icon
@@ -117,13 +120,7 @@ class SuggestionItem extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	additionalTextState!: ValueState
-
-	static get dependencies() {
-		return [
-			SuggestionListItem,
-		];
-	}
+	additionalTextState!: `${ValueState}`
 
 	get groupItem() {
 		return false;

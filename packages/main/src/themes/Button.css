@@ -1,3 +1,4 @@
+@import "./FormComponents.css";
 @import "./InvisibleTextStyles.css";
 
 :host(:not([hidden])) {
@@ -53,7 +54,6 @@
 :host(:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]):hover),
 :host(:not([hidden]):not([disabled]).ui5_hovered) {
 	background: var(--sapButton_Hover_Background);
-	box-shadow: var(--sapContent_Interaction_Shadow);
 	border: 1px solid var(--sapButton_Hover_BorderColor);
 	color: var(--sapButton_Hover_TextColor);
 }
@@ -106,6 +106,9 @@
 	/* calculating the minimum width by removing the icon size  */
 	min-width: calc(var(--_ui5_button_base_min_width) - var(--_ui5_button_base_icon_margin) - 1rem);
 }
+:host([disabled]:active) {
+	pointer-events: none;
+}
 
 :host([focused]) .ui5-button-root:after {
 	content: "";
@@ -116,7 +119,6 @@
 	right: 0.0625rem;
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_focused_border);
-	pointer-events: none;
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
 
@@ -133,7 +135,6 @@
 	right: 0.0625rem;
 	bottom: 0.0625rem;
 	border: var(--_ui5_button_emphasized_focused_border_before);
-	pointer-events: none;
 	border-radius: var(--_ui5_button_focused_border_radius);
 }
 
@@ -166,7 +167,6 @@ bdi {
 :host([design="Positive"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Accept_Hover_Background);
 	border-color: var(--sapButton_Accept_Hover_BorderColor);
-	box-shadow: var(--sapContent_Positive_Shadow);
 	color: var(--sapButton_Accept_Hover_TextColor);
 }
 
@@ -187,7 +187,6 @@ bdi {
 :host([design="Negative"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Reject_Hover_Background);
 	border-color: var(--sapButton_Reject_Hover_BorderColor);
-	box-shadow: var(--sapContent_Negative_Shadow);
 	color: var(--sapButton_Reject_Hover_TextColor);
 }
 
@@ -209,7 +208,6 @@ bdi {
 	background-color: var(--sapButton_Attention_Hover_Background);
 	border-color: var(--sapButton_Attention_Hover_BorderColor);
 	color: var(--sapButton_Attention_Hover_TextColor);
-	box-shadow: var(--sapContent_Critical_Shadow)
 }
 
 :host([ui5-button][design="Attention"][active]:not([non-interactive])) {
@@ -233,7 +231,6 @@ bdi {
 	border-color: var(--sapButton_Emphasized_Hover_BorderColor);
 	border-width: var(--_ui5_button_emphasized_border_width);
 	color: var(--sapButton_Emphasized_Hover_TextColor);
-	box-shadow: none;
 }
 
 :host([ui5-button][design="Empasized"][active]:not([non-interactive])) {
@@ -258,7 +255,6 @@ bdi {
 :host([design="Transparent"]:not([active]):not([non-interactive]):not([_is-touch]):not([disabled]).ui5_hovered) {
 	background-color: var(--sapButton_Lite_Hover_Background);
 	border-color: var(--sapButton_Lite_Hover_BorderColor);
-	box-shadow: var(--sapContent_Interaction_Shadow);
 	color: var(--sapButton_Lite_Hover_TextColor);
 }
 

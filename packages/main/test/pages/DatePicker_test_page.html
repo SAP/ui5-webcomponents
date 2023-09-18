@@ -63,6 +63,18 @@
 	<ui5-date-picker id="dp18"></ui5-date-picker>
 	<ui5-date-picker id="dp19" hide-week-numbers></ui5-date-picker>
 
+	<h3>DatePicker with format `yyyy, dd/MM` should open picker on days</h3>
+	<ui5-date-picker id="dpCalendarModeDays" format-pattern="yyyy, dd/MM"></ui5-date-picker>
+
+	<h3>DatePicker with format `MMM y` should open picker on months</h3>
+	<ui5-date-picker id="dpCalendarModeMonths" format-pattern="MMM y"></ui5-date-picker>
+
+	<h3>DatePicker with format `yyyy` should open picker on years</h3>
+	<ui5-date-picker id="dpCalendarModeYears" format-pattern="yyyy"></ui5-date-picker>
+
+	<h3> DatePicker with no format pattern & min-max dates in ISO format</h3>
+	<ui5-date-picker id="dpISOMinMaxDates" min-date="2019-09-01" max-date="2019-11-01"></ui5-date-picker>
+
 	<section>
 		<h3>Test accessibleName and accessibleNameRef</h3>
 		<ui5-date-picker id="dpAriaLabel" accessible-name="Hello World"></ui5-date-picker>

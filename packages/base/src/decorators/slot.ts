@@ -11,22 +11,22 @@ const slot = (slotData?: Slot): PropertyDecorator => {
 	return (target: any, slotKey: string | symbol) => {
 		const ctor = target.constructor as typeof UI5Element;
 
-		if (!Object.prototype.hasOwnProperty.call(ctor, "decoratorMetadata")) {
-			ctor.decoratorMetadata = {};
+		if (!Object.prototype.hasOwnProperty.call(ctor, "metadata")) {
+			ctor.metadata = {};
 		}
 
-		const decoratorMetadata = ctor.decoratorMetadata;
-		if (!decoratorMetadata.slots) {
-			decoratorMetadata.slots = {};
+		const metadata = ctor.metadata;
+		if (!metadata.slots) {
+			metadata.slots = {};
 		}
 
-		const slotMetadata = decoratorMetadata.slots;
+		const slotMetadata = metadata.slots;
 
-		if (slotData?.default && slotMetadata.default) {
+		if (slotData && slotData.default && slotMetadata.default) {
 			throw new Error("Only one slot can be the default slot.");
 		}
 
-		const key = slotData?.default ? "default" : slotKey as string;
+		const key = slotData && slotData.default ? "default" : slotKey as string;
 		slotData = slotData || { type: HTMLElement };
 
 		if (!slotData.type) {
@@ -42,7 +42,7 @@ const slot = (slotData?: Slot): PropertyDecorator => {
 			slotMetadata.default.propertyName = slotKey as string;
 		}
 
-		ctor.decoratorMetadata.managedSlots = true;
+		ctor.metadata.managedSlots = true;
 	};
 };
 

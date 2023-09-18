@@ -3,7 +3,6 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
@@ -35,6 +34,10 @@ import ValueStateMessageCss from "./generated/themes/ValueStateMessage.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 
+type FileUploaderChangeEventDetail = {
+	files: FileList | null,
+}
+
 /**
  * @class
  *
@@ -63,8 +66,20 @@ import type { IFormElement } from "./features/InputElementsFormSupport.js";
  * @tagname ui5-file-uploader
  * @public
  */
-@customElement("ui5-file-uploader")
-@languageAware
+@customElement({
+	tag: "ui5-file-uploader",
+	languageAware: true,
+	renderer: litRender,
+	styles: FileUploaderCss,
+	template: FileUploaderTemplate,
+	staticAreaTemplate: FileUploaderPopoverTemplate,
+	staticAreaStyles: [ResponsivePopoverCommonCss, ValueStateMessageCss],
+	dependencies: [
+		Input,
+		Popover,
+		Icon,
+	],
+})
 /**
  * Event is fired when the value of the file path has been changed.
  * <b>Note:</b> Keep in mind that because of the HTML input element of type file, the event is also fired in Chrome browser when the Cancel button of the uploads window is pressed.
@@ -168,23 +183,13 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.FileUploader.prototype.valueState
 	 * @defaultvalue "None"
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * @private
@@ -193,7 +198,9 @@ class FileUploader extends UI5Element implements IFormElement {
 	focused!: boolean;
 
 	/**
-	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information.
+	 * By default the component contains a single input field. With this slot you can pass any content that you wish to add. See the samples for more information. <br>
+	 * <b>Note:</b> If no content is provided in this slot, the component will only consist of an input field and will not be interactable using the keyboard.<br>
+	 * Also it is not recommended to use any non-interactable components, as it may lead to poor accessibility experience.
 	 *
 	 * @type {HTMLElement[]}
 	 * @name sap.ui.webc.main.FileUploader.prototype.default
@@ -238,26 +245,6 @@ class FileUploader extends UI5Element implements IFormElement {
 
 	static get formAssociated() {
 		return true;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return FileUploaderCss;
-	}
-
-	static get template() {
-		return FileUploaderTemplate;
-	}
-
-	static get staticAreaTemplate() {
-		return FileUploaderPopoverTemplate;
-	}
-
-	static get staticAreaStyles() {
-		return [ResponsivePopoverCommonCss, ValueStateMessageCss];
 	}
 
 	constructor() {
@@ -354,7 +341,7 @@ class FileUploader extends UI5Element implements IFormElement {
 		const changedFiles = (e.target as HTMLInputElement).files;
 
 		this._updateValue(changedFiles);
-		this.fireEvent("change", {
+		this.fireEvent<FileUploaderChangeEventDetail>("change", {
 			files: changedFiles,
 		});
 	}
@@ -510,10 +497,6 @@ class FileUploader extends UI5Element implements IFormElement {
 		return this.shadowRoot!.querySelector<Input>(".ui5-file-uploader-input");
 	}
 
-	static get dependencies() {
-		return [Input, Popover, Icon];
-	}
-
 	static async onDefine() {
 		FileUploader.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
@@ -522,3 +505,6 @@ class FileUploader extends UI5Element implements IFormElement {
 FileUploader.define();
 
 export default FileUploader;
+export type {
+	FileUploaderChangeEventDetail,
+};

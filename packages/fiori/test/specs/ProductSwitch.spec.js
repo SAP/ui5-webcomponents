@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("ProductSwitch general interaction", async () => {
 	before(async () => {
@@ -33,14 +33,20 @@ describe("ARIA attributes", () => {
 		assert.strictEqual(await productSwitchRoot.getAttribute("role"), "list", "should have role list");
 		assert.strictEqual(await productSwitchRoot.getAttribute("aria-label"), "Products", "aria-label reference is correct");
 	});
+});
 
-	it ("items attributes set correctly", async () => {
-		let items = $$("#productSwitchThreeColumn > ui5-product-switch-item");
+describe("ProductSwitch styles", async () => {
+	before(async () => {
+		await browser.url(`test/pages/ProductSwitch.html`);
+	});
 
-		items.forEach(async item => {
-			const itemDom = await item.shadow$(".ui5-product-switch-item-root");
+	it("tests root element inherit styles", async () => {
+		const productSwitch = await browser.$("#productSwitchFlex");
+		const productSwitchRoot = await productSwitch.shadow$(".ui5-product-switch-root");
+		const justifyContent = await productSwitchRoot.getCSSProperty("justify-content");
+		const alignItems = await productSwitchRoot.getCSSProperty("align-items");
 
-			assert.strictEqual(await itemDom.getAttribute("role"), "listitem", "should have role list");
-		})
+		assert.strictEqual(justifyContent.value, "center", "style is inherited");
+		assert.strictEqual(alignItems.value, "center", "style is inherited");
 	});
 });

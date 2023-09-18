@@ -3,7 +3,6 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type { I18nText } from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -37,7 +36,7 @@ enum DesignClassesMapping {
 	Warning = "ui5-message-strip-root--warning",
 }
 
-enum IconMappings {
+enum IconMapping {
 	Information = "information",
 	Positive = "sys-enter-2",
 	Negative = "error",
@@ -81,9 +80,14 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
  * @public
  * @since 0.9.0
  */
-@customElement("ui5-message-strip")
-@languageAware
-
+@customElement({
+	tag: "ui5-message-strip",
+	languageAware: true,
+	renderer: litRender,
+	template: MessageStripTemplate,
+	styles: messageStripCss,
+	dependencies: [Icon, Button],
+})
 /**
  * Fired when the close button is pressed either with a
  * click/tap or by using the Enter or Space key.
@@ -96,9 +100,6 @@ type DesignTypeAnnouncemnt = Record<MessageStripDesign, string>;
 class MessageStrip extends UI5Element {
 	/**
 	 * Defines the component type.
-	 * <br><br>
-	 * <b>Note:</b> Available options are <code>"Information"</code>, <code>"Positive"</code>, <code>"Negative"</code>,
-	 * and <code>"Warning"</code>.
 	 *
 	 * @type {sap.ui.webc.main.types.MessageStripDesign}
 	 * @name sap.ui.webc.main.MessageStrip.prototype.design
@@ -110,7 +111,7 @@ class MessageStrip extends UI5Element {
 		type: MessageStripDesign,
 		defaultValue: MessageStripDesign.Information,
 	})
-	design!: MessageStripDesign;
+	design!: `${MessageStripDesign}`;
 
 	/**
 	 * Defines whether the MessageStrip will show an icon in the beginning.
@@ -154,7 +155,7 @@ class MessageStrip extends UI5Element {
 	 * The SAP-icons font provides numerous options.
 	 * <br><br>
 	 *
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {sap.ui.webc.main.IIcon}
 	 * @name sap.ui.webc.main.MessageStrip.prototype.icon
@@ -166,24 +167,8 @@ class MessageStrip extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return MessageStripTemplate;
-	}
-
-	static get styles() {
-		return messageStripCss;
-	}
-
 	_closeClick() {
 		this.fireEvent("close");
-	}
-
-	static get dependencies() {
-		return [Icon, Button];
 	}
 
 	static async onDefine() {
@@ -231,7 +216,7 @@ class MessageStrip extends UI5Element {
 	}
 
 	get standardIconName() {
-		return IconMappings[this.design];
+		return IconMapping[this.design];
 	}
 
 	get designClasses() {

@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -15,7 +14,7 @@ import TimelineTemplate from "./generated/templates/TimelineTemplate.lit.js";
 import TimelineItem from "./TimelineItem.js";
 
 // Styles
-import styles from "./generated/themes/Timeline.css.js";
+import TimelineCss from "./generated/themes/Timeline.css.js";
 import TimelineLayout from "./types/TimelineLayout.js";
 
 const SHORT_LINE_WIDTH = "ShortLineWidth";
@@ -41,8 +40,14 @@ const LARGE_LINE_WIDTH = "LargeLineWidth";
  * @public
  * @since 0.8.0
  */
-@customElement("ui5-timeline")
-@languageAware
+@customElement({
+	tag: "ui5-timeline",
+	languageAware: true,
+	renderer: litRender,
+	styles: TimelineCss,
+	template: TimelineTemplate,
+	dependencies: [TimelineItem],
+})
 class Timeline extends UI5Element {
 	/**
 	 * Defines the items orientation.
@@ -62,7 +67,7 @@ class Timeline extends UI5Element {
 	 * @public
 	 */
 	@property({ type: TimelineLayout, defaultValue: TimelineLayout.Vertical })
-	layout!: TimelineLayout;
+	layout!: `${TimelineLayout}`;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -87,18 +92,6 @@ class Timeline extends UI5Element {
 	@slot({ type: HTMLElement, individualSlots: true, "default": true })
 	items!: Array<TimelineItem>;
 
-	static get styles() {
-		return styles;
-	}
-
-	static get render() {
-		return litRender;
-	}
-
-	static get template() {
-		return TimelineTemplate;
-	}
-
 	static i18nBundle: I18nBundle;
 
 	_itemNavigation: ItemNavigation;
@@ -109,10 +102,6 @@ class Timeline extends UI5Element {
 		this._itemNavigation = new ItemNavigation(this, {
 			getItemsCallback: () => this.items,
 		});
-	}
-
-	static get dependencies() {
-		return [TimelineItem];
 	}
 
 	static async onDefine() {

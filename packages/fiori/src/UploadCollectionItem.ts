@@ -1,5 +1,4 @@
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -57,8 +56,20 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  * @implements sap.ui.webc.fiori.IUploadCollectionItem
  * @since 1.0.0-rc.7
  */
-@customElement("ui5-upload-collection-item")
-@languageAware
+@customElement({
+	tag: "ui5-upload-collection-item",
+	languageAware: true,
+	styles: [ListItem.styles, UploadCollectionItemCss],
+	template: UploadCollectionItemTemplate,
+	dependencies: [
+		...ListItem.dependencies,
+		Button,
+		Input,
+		Link,
+		Label,
+		ProgressIndicator,
+	],
+})
 
 /**
  * Fired when the file name is clicked.
@@ -109,6 +120,10 @@ import UploadCollectionItemCss from "./generated/themes/UploadCollectionItem.css
  */
 @event("_focus-requested")
 
+/**
+ * @private
+ */
+@event("_uci-delete")
 class UploadCollectionItem extends ListItem {
 	/**
 	 * Holds an instance of <code>File</code> associated with this item.
@@ -155,12 +170,13 @@ class UploadCollectionItem extends ListItem {
 	disableDeleteButton!: boolean;
 
 	/**
-	 * By default, the Delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
+	 * By default, the delete button will always be shown, regardless of the <code>ui5-upload-collection</code>'s property <code>mode</code>.
 	 * Setting this property to <code>true</code> will hide the delete button.
 	 *
 	 * @type {boolean}
 	 * @name sap.ui.webc.fiori.UploadCollectionItem.prototype.hideDeleteButton
 	 * @defaultvalue false
+	 * @public
 	 */
 	@property({ type: Boolean })
 	hideDeleteButton!: boolean;
@@ -211,7 +227,7 @@ class UploadCollectionItem extends ListItem {
 	 * @public
 	 */
 	@property({ type: UploadState, defaultValue: UploadState.Ready })
-	uploadState!: UploadState;
+	uploadState!: `${UploadState}`;
 
 	/**
 	 * Indicates if editing.
@@ -247,35 +263,11 @@ class UploadCollectionItem extends ListItem {
 
 	static i18nFioriBundle: I18nBundle;
 
-	static get styles() {
-		return [ListItem.styles, UploadCollectionItemCss];
-	}
-
-	static get template() {
-		return UploadCollectionItemTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			...ListItem.dependencies,
-			Button,
-			Input,
-			Link,
-			Label,
-			ProgressIndicator,
-		];
-	}
-
 	static async onDefine() {
 		[UploadCollectionItem.i18nFioriBundle] = await Promise.all([
 			getI18nBundle("@ui5/webcomponents-fiori"),
 			super.onDefine(),
 		]);
-	}
-
-	onBeforeRendering() {
-		// In the base class the item can become "actionable",
-		// that's why we are overriding this method.
 	}
 
 	/**
@@ -384,6 +376,10 @@ class UploadCollectionItem extends ListItem {
 		}
 	}
 
+	_onDelete() {
+		this.fireEvent("_uci-delete");
+	}
+
 	getFocusDomRef() {
 		return this.getDomRef();
 	}
@@ -407,22 +403,8 @@ class UploadCollectionItem extends ListItem {
 	/**
 	 * @override
 	 */
-	get renderDeleteButton() {
+	get renderUploadCollectionDeleteButton() {
 		return !this.hideDeleteButton;
-	}
-
-	/**
-	 * @override
-	 */
-	get placeSelectionElementAfter() {
-		return true;
-	}
-
-	/**
-	 * @override
-	 */
-	get placeSelectionElementBefore() {
-		return false;
 	}
 
 	get _fileNameWithoutExtension() {

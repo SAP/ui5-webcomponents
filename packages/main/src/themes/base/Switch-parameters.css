@@ -2,14 +2,10 @@
 	/* switch */
 	--_ui5_switch_height: 2.75rem;
 	--_ui5_switch_width: 3.25rem;
-	--_ui5_switch_compact_height: 2rem;
-	--_ui5_switch_compact_width: 2.5rem;
 
 	--_ui5_switch_min_width: 3.875rem;
-	--_ui5_switch_compact_min_width: 3.5rem;
 
 	--_ui5_switch_with_label_width: 100%;
-	--_ui5_switch_compact_with_label_width: 100%;
 
 	--_ui5_switch_focus_outline: var(--_ui5_switch_foucs_border_size) dotted var(--sapContent_FocusColor);
 
@@ -17,9 +13,6 @@
 	--_ui5_switch_root_outline_bottom: 0.25rem;
 	--_ui5_switch_root_outline_left: 0;
 	--_ui5_switch_root_outline_right: 0;
-
-	--_ui5_switch_root_compact_outline_top: 0;
-	--_ui5_switch_root_compact_outline_bottom: 0;
 
 	--_ui5_switch_foucs_border_size: 1px;
 
@@ -31,25 +24,17 @@
 	--_ui5_switch_disabled_opacity: .4;
 
 	--_ui5_switch_transform: translateX(100%) translateX(-1.875rem);
-	--_ui5_switch_compact_transform: translateX(100%) translateX(-1.5rem);
 	--_ui5_switch_transform_with_label: translateX(100%) translateX(-1.875rem);
-	--_ui5_switch_compact_transform_with_label: translateX(100%) translateX( -1.5rem);
 
 	--_ui5_switch_rtl_transform: translateX(-100%) translateX(1.875rem);
-	--_ui5_switch_compact_rtl_transform: translateX(1.5rem) translateX(-100%);
 	--_ui5_switch_rtl_transform_with_label: translateX(-100%) translateX(1.875rem);
-	--_ui5_switch_compact_rtl_transform_with_label: translateX(1.5rem) translateX(-100%);
 
 	/* switch track */
 	--_ui5_switch_track_with_label_width: 100%;
-	--_ui5_switch_track_with_label_compact_width: 100%;
 	--_ui5_switch_track_with_label_height: 1.375rem;
-	--_ui5_switch_track_with_label_compact_height: 1.375rem;
 
 	--_ui5_switch_track_width: 100%;
-	--_ui5_switch_track_compact_width: 100%;
 	--_ui5_switch_track_height: 1.375rem;
-	--_ui5_switch_track_compact_height: 1.375rem;
 
 	--_ui5_switch_track_border_radius: 0.75rem;
 	--_ui5-switch-track-border: 1px solid;
@@ -79,16 +64,12 @@
 
 	/* switch handle */
 	--_ui5_switch_handle_width: 2rem;
-	--_ui5_switch_handle_compact_width: 1.625rem;
 
 	--_ui5_switch_handle_height: 2rem;
-	--_ui5_switch_handle_compact_height: 1.625rem;
 
 	--_ui5_switch_handle_with_label_width: 2rem;
-	--_ui5_switch_handle_with_label_compact_width: 1.625rem;
 
 	--_ui5_switch_handle_with_label_height: 2rem;
-	--_ui5_switch_handle_with_label_compact_height: 1.625rem;
 
 	--_ui5_switch_handle_border: var(--_ui5_switch_handle_border_width) solid var(--sapButton_Handle_BorderColor);
 	--_ui5_switch_handle_border_width: 0.0625rem;
@@ -126,7 +107,6 @@
 	/* switch text */
 	--_ui5_switch_text_font_family: "72override", var(--sapFontFamily);
 	--_ui5_switch_text_font_size: var(--sapFontSmallSize);
-	--_ui5_switch_text_compact_font_size: var(--sapFontSmallSize);
 
 	--_ui5_switch_text_with_label_font_family: "72override", var(--sapFontFamily);
 	--_ui5_switch_text_with_label_font_size: var(--sapFontSmallSize);
@@ -134,12 +114,13 @@
 	--_ui5_switch_text_with_label_width: none;
 
 	--_ui5_switch_text_width: none;
-	--_ui5_switch_text_compact_width: none;
 
 	--_ui5_switch_text_inactive_left: auto;
+	--_ui5_switch_text_inactive_left_alternate: auto;
 	--_ui5_switch_text_inactive_right: 0.125rem;
+	--_ui5_switch_text_inactive_right_alternate: 0.125rem;
 	--_ui5_switch_text_active_left: calc(-100% + 2rem);
-	--_ui5_switch_text_compact_active_left: calc(-100% + 1.625rem);
+	--_ui5_switch_text_active_left_alternate: calc(-100% + 2rem);
 	--_ui5_switch_text_active_right: auto;
 
 	--_ui5_switch_text_active_color: var(--sapButton_Track_Selected_TextColor);
@@ -155,4 +136,29 @@
 
 	--_ui5_switch_icon_width: 0.75rem;
 	--_ui5_switch_icon_height: 0.75rem;
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+	--_ui5_switch_height: 2rem;
+	--_ui5_switch_width: 2.5rem;
+	--_ui5_switch_with_label_width: 100%;
+	--_ui5_switch_root_outline_top: 0;
+	--_ui5_switch_root_outline_bottom: 0;
+	--_ui5_switch_transform: translateX(100%) translateX(-1.5rem);
+	--_ui5_switch_transform_with_label: translateX(100%) translateX( -1.5rem);
+	--_ui5_switch_rtl_transform: translateX(1.5rem) translateX(-100%);
+	--_ui5_switch_rtl_transform_with_label: translateX(1.5rem) translateX(-100%);
+	--_ui5_switch_track_with_label_width: 100%;
+	--_ui5_switch_track_with_label_height: 1.375rem;
+	--_ui5_switch_track_width: 100%;
+	--_ui5_switch_track_height: 1.375rem;
+	--_ui5_switch_handle_width: 1.625rem;
+	--_ui5_switch_handle_height: 1.625rem;
+	--_ui5_switch_handle_with_label_width: 1.625rem;
+	--_ui5_switch_handle_with_label_height: 1.625rem;
+	--_ui5_switch_text_font_size: var(--sapFontSmallSize);
+	--_ui5_switch_text_width: none;
+	--_ui5_switch_text_active_left: calc(-100% + 1.625rem);
 }

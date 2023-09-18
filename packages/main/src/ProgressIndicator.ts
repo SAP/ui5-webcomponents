@@ -44,8 +44,27 @@ import ProgressIndicatorCss from "./generated/themes/ProgressIndicator.css.js";
  * @public
  * @since 1.0.0-rc.8
  */
-@customElement("ui5-progress-indicator")
+@customElement({
+	tag: "ui5-progress-indicator",
+	renderer: litRender,
+	styles: ProgressIndicatorCss,
+	template: ProgressIndicatorTemplate,
+	dependencies: [Icon],
+})
+
 class ProgressIndicator extends UI5Element {
+	/**
+	 * Defines the accessible ARIA name of the component.
+	 *
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @name sap.ui.webc.main.ProgressIndicator.prototype.accessibleName
+	 * @public
+	 * @since 1.16.0
+	*/
+	@property()
+	accessibleName!: string;
+
 	/**
 	 * Defines whether component is in disabled state.
 	 *
@@ -115,27 +134,11 @@ class ProgressIndicator extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	static i18nBundle: I18nBundle;
 	_previousValue: number;
 	_transitionDuration: number;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return ProgressIndicatorCss;
-	}
-
-	static get template() {
-		return ProgressIndicatorTemplate;
-	}
-
-	static get dependencies() {
-		return [Icon];
-	}
 
 	constructor() {
 		super();
@@ -163,7 +166,7 @@ class ProgressIndicator extends UI5Element {
 			"Error": "status-negative",
 			"Warning": "status-critical",
 			"Success": "status-positive",
-			"Information": "hint",
+			"Information": "information",
 		};
 	}
 

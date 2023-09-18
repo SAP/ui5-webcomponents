@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Testing Range Slider interactions", () => {
 
@@ -82,8 +82,8 @@ describe("Testing Range Slider interactions", () => {
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		await rangeSlider.setProperty("endValue", 9);
-
 		await startHandle.dragAndDrop({ x: 90, y: 1 });
+		await browser.pause(100);
 
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 9, "startValue should swapped with the endValue and should be 9");
 		assert.strictEqual(await rangeSlider.getProperty("endValue"), 11, "endValue should swapped with the startValue and should be 11");
@@ -303,14 +303,50 @@ describe("Testing events", () => {
 		const rangeSlider = await browser.$("#test-slider");
 		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 
-		await rangeSlider.setProperty("endValue", 3);
-		await firstHandle.dragAndDrop({ x: 300, y: 1 });
+
+		await firstHandle.click();
+		await firstHandle.dragAndDrop({ x: 200, y: 0 });
+		await browser.pause(100);
 
 		const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
 		const changeEventEndValue = await browser.execute(() => document.querySelector("#change-event-endValue").innerText);
 
-		assert.strictEqual(changeEventStartValue, "3", "Values are swapped prior to the firing of change event");
-		assert.strictEqual(changeEventEndValue, "4", "Values are swapped prior to the firing of change event");
+		assert.strictEqual(changeEventStartValue, "2", "Values are swapped prior to the firing of change event");
+		assert.strictEqual(changeEventEndValue, "3", "Values are swapped prior to the firing of change event");
+	});
+
+	it("Should not fire change event if the values are the same after interaction", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
+		const rangeSlider = await browser.$("#test-slider");
+		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		await rangeSlider.setProperty("startValue", 0);
+		await firstHandle.click();
+		await firstHandle.keys("Home");
+
+		const changeEventStartValue = await browser.execute(() => document.querySelector("#change-event-startValue").innerText);
+
+		assert.strictEqual(changeEventStartValue, "", "Change event is not fired if no value is changed");
+	});
+
+	it("Should fire input event with correctly swiped values", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
+		const rangeSlider = await browser.$("#test-slider");
+		const rangeSliderProgressBar = await rangeSlider.shadow$(".ui5-slider-progress");
+		const firstHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+
+		await firstHandle.click();
+		await firstHandle.dragAndDrop({ x: 200, y: 0 });
+		await browser.pause(100);
+
+		const inputEventStartValue = await browser.execute(() => document.querySelector("#input-event-startValue").innerText);
+		const inputEventEndValue = await browser.execute(() => document.querySelector("#input-event-endValue").innerText);
+
+		assert.strictEqual(inputEventStartValue, "2", "The input event is fired with the correct values");
+		assert.strictEqual(inputEventEndValue, "3", "The input event is fired with the correct values");
+		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuenow"), "1", "aria-valuenow is set correctly");
 	});
 
 	it("Should not fire change event after user interaction is finished if the current value is the same as the one at the start of the action", async () => {
@@ -339,6 +375,7 @@ describe("Accessibility", async () => {
 			`${await rangeSlider.getProperty("max")}`, "aria-valuemax is set correctly");
 		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuetext"),
 			`From ${await rangeSlider.getProperty("startValue")} to ${await rangeSlider.getProperty("endValue")}`, "aria-valuetext is set correctly");
+		assert.strictEqual(await rangeSliderProgressBar.getAttribute("aria-valuenow"), "20", "aria-valuenow is set correctly");
 	});
 
 	it("Aria attributes of the start handle are set correctly", async () => {
@@ -380,6 +417,7 @@ describe("Accessibility", async () => {
 
 		await rangeSlider.setProperty("endValue", 9);
 		await startHandle.dragAndDrop({ x: 100, y: 1 });
+		await browser.pause(100);
 
 		assert.strictEqual(await rangeSliderStartHandleSpan.getText(), "Left handle", "Start Handle text is correct after swap");
 		assert.strictEqual(await rangeSliderEndHandleSpan.getText(), "Right handle", "End Handle text is correct after swap");
@@ -523,6 +561,8 @@ describe("Accessibility", async () => {
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 
 		await startHandle.dragAndDrop({ x: 400, y: 1 });
+		await browser.pause(100);
+
 		const innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
@@ -886,22 +926,36 @@ describe("Accessibility: Testing keyboard handling", async () => {
 	});
 
 	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
+
 		const rangeSlider = await browser.$("#basic-range-slider");
 		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
 		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
 
-		await rangeSlider.setProperty("endValue", 20);
 		await startHandle.click();
-		await browser.keys("End");
+		await startHandle.dragAndDrop({ x: 800, y: 0 });
+		await browser.pause(100);
 
 		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
-		assert.strictEqual(await rangeSlider.getProperty("endValue"), 100, "The original end-value is set to min and switched as a start-value");
+		assert.ok(await rangeSlider.getProperty("endValue") > await rangeSlider.getProperty("startValue"), "The original start-value is set to min and switched as a end-value");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await endHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");
+	});
 
-		await browser.keys("Home");
+	it("When one handle come across the other and the values are swapped the focus must be switched between the handles", async () => {
+		await browser.url(`test/pages/RangeSlider.html`);
 
-		innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
+		const rangeSlider = await browser.$("#basic-range-slider");
+		const startHandle = await rangeSlider.shadow$(".ui5-slider-handle--start");
+		const endHandle = await rangeSlider.shadow$(".ui5-slider-handle--end");
+
+		rangeSlider.setProperty("startValue", 10);
+
+		await endHandle.click();
+		await endHandle.dragAndDrop({ x: -300, y: 0 });
+		await browser.pause(100);
+
+		let innerFocusedElement = await browser.custom$("activeElement", "#basic-range-slider");
 
 		assert.strictEqual(await rangeSlider.getProperty("startValue"), 0, "The original end-value is set to min and switched as a start-value");
 		assert.strictEqual(await browser.$(innerFocusedElement).getAttribute("class"), await startHandle.getAttribute("class"), "Range Slider second handle now has the shadowDom focus");

@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
+import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import type Menu from "./Menu.js";
 
 /**
@@ -62,7 +63,7 @@ class MenuItem extends UI5Element {
 	 * The SAP-icons font provides numerous options.
 	 * <br><br>
 	 <b>* Example:</b>
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @name sap.ui.webc.main.MenuItem.prototype.icon
 	 * @type {string}
@@ -95,6 +96,32 @@ class MenuItem extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	disabled!: boolean;
+
+	/**
+	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
+	 *
+	 * Note: If set to <code>true</code> a <code>ui5-busy-indicator</code> component will be displayed into the related one to the current <code>ui5-menu-item</code> sub-menu popover.
+	 *
+	 * @name sap.ui.webc.main.MenuItem.prototype.busy
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.13.0
+	 */
+	@property({ type: Boolean })
+	busy!: boolean;
+
+	/**
+	 * Defines the delay in milliseconds, after which the busy indicator will be displayed inside the corresponding ui5-menu popover.
+	 *
+	 * @name sap.ui.webc.main.MenuItem.prototype.busyDelay
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @defaultValue 1000
+	 * @public
+	 * @since 1.13.0
+	 */
+	@property({ validator: Integer, defaultValue: 1000 })
+	busyDelay!: number;
 
 	/**
 	 * Defines the accessible ARIA name of the component.
@@ -143,8 +170,8 @@ class MenuItem extends UI5Element {
 	@slot({ "default": true, type: HTMLElement, invalidateOnChildChange: true })
 	items!: Array<MenuItem>;
 
-	get hasChildren() {
-		return !!this.items.length;
+	get hasSubmenu() {
+		return !!(this.items.length || this.busy);
 	}
 
 	get hasDummyIcon() {
@@ -156,7 +183,7 @@ class MenuItem extends UI5Element {
 	}
 
 	get _additionalText() {
-		return this.hasChildren ? "" : this.additionalText;
+		return this.hasSubmenu ? "" : this.additionalText;
 	}
 
 	get ariaLabelledByText() {

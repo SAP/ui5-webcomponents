@@ -10,7 +10,6 @@ import DataType from "./DataType.js";
  * @author SAP SE
  * @alias sap.ui.webc.base.types.Float
  * @public
- * @enum {number}
  */
 class Float extends DataType {
 	static override isValid(value: any) {

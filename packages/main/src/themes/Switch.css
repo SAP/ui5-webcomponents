@@ -158,12 +158,14 @@
 	visibility: var(--_ui5_switch_text_hidden);
 }
 
-.ui5-switch-root.ui5-switch--checked .ui5-switch-text--on {
+.ui5-switch-root.ui5-switch--checked.ui5-switch--semantic .ui5-switch-text--on, 
+.ui5-switch-root.ui5-switch--checked.ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--on {
 	left: var(--_ui5_switch_text_active_left);
 }
-.ui5-switch-root:not(.ui5-switch--checked) .ui5-switch-text--off {
+.ui5-switch-root:not(.ui5-switch--checked).ui5-switch--semantic .ui5-switch-text--off,
+.ui5-switch-root:not(.ui5-switch--checked).ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--off {
 	left: var(--_ui5_switch_text_inactive_left);
-	right: var(--_ui5_switch_text_inactive_right)
+	right: var(--_ui5_switch_text_inactive_right);
 }
 
 /* handle */
@@ -335,11 +337,14 @@
 	color: var(--_ui5_switch_text_active_color);
 	overflow: var(--_ui5_switch_text_overflow);
 	text-overflow: ellipsis;
+	left: var(--_ui5_switch_text_active_left_alternate);
 }
 .ui5-switch-root .ui5-switch-text--off {
 	color: var(--_ui5_switch_text_inactive_color);
 	overflow: var(--_ui5_switch_text_overflow);
 	text-overflow: ellipsis;
+	left: var(--_ui5_switch_text_inactive_left_alternate);
+	right: var(--_ui5_switch_text_inactive_right_alternate);
 }
 
 .ui5-switch-root .ui5-switch-no-label-icon-on,

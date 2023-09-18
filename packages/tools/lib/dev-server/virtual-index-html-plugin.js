@@ -1,6 +1,5 @@
-let path = require("path");
-
 const virtualIndexPlugin = async () => {
+	const path = await import("path");
 	const { globby } = await import("globby");
 	const files = await globby(["test/pages/**/*.html", "packages/*/test/pages/**/*.html"]);
 

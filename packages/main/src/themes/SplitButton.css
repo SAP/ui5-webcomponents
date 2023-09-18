@@ -1,3 +1,4 @@
+@import "./FormComponents.css";
 @import "./InvisibleTextStyles.css";
 
 :host(:not([hidden])) {
@@ -95,6 +96,21 @@
 	border-top-left-radius: var(--_ui5_split_button_hover_border_radius);
 	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
 	width: 2.25rem;
+}
+
+.ui5-split-arrow-button[active][design="Default"],
+.ui5-split-arrow-button[active][design="Emphasized"],
+.ui5-split-arrow-button[active][design="Transparent"] {
+	background-color: var(--sapButton_Selected_Background);
+}
+.ui5-split-arrow-button[active][design="Negative"] {
+	background-color: var(--sapButton_Reject_Selected_Background);
+}
+.ui5-split-arrow-button[active][design="Positive"] {
+	background-color: var(--sapButton_Accept_Selected_Background);
+}
+.ui5-split-arrow-button[active][design="Attention"] {
+	background-color: var(--sapButton_Attention_Selected_Background);
 }
 
 .ui5-split-text-button[dir="rtl"]:hover {

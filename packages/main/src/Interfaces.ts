@@ -26,6 +26,15 @@ const IBreadcrumbsItem = "sap.ui.webc.main.IBreadcrumbsItem";
 const IButton = "sap.ui.webc.main.IButton";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-card</code> as header
+ *
+ * @name sap.ui.webc.main.ICardHeader
+ * @interface
+ * @public
+ */
+const ICardHeader = "sap.ui.webc.main.ICardHeader";
+
+/**
  * Interface for components that may be used as dates inside <code>ui5-calendar</code>
  *
  * @name sap.ui.webc.main.ICalendarDate
@@ -125,6 +134,15 @@ const ISegmentedButtonItem = "sap.ui.webc.main.ISegmentedButtonItem";
 const ISelectOption = "sap.ui.webc.main.ISelectOption";
 
 /**
+ * Interface for components that may be slotted inside <code>ui5-select-menu</code> as options
+ *
+ * @name sap.ui.webc.main.ISelectMenuOption
+ * @interface
+ * @public
+ */
+const ISelectMenuOption = "sap.ui.webc.main.ISelectMenuOption";
+
+/**
  * Interface for components that may be slotted inside <code>ui5-tabcontainer</code>
  *
  * @name sap.ui.webc.main.ITab
@@ -178,10 +196,29 @@ const IToken = "sap.ui.webc.main.IToken";
  */
 const ITreeItem = "sap.ui.webc.main.ITreeItem";
 
+/**
+ * Interface for toolbar items for the purpose of <code>ui5-toolbar</code>
+ *
+ * @name sap.ui.webc.main.IToolbarItem
+ * @interface
+ * @public
+ */
+const IToolbarItem = "sap.ui.webc.main.IToolbarItem";
+
+/**
+ * Interface for toolbar select items for the purpose of <code>ui5-toolbar-select</code>
+ *
+ * @name sap.ui.webc.main.IToolbarSelectOption
+ * @interface
+ * @public
+ */
+const IToolbarSelectOption = "sap.ui.webc.main.IToolbarSelectOption";
+
 export {
 	IAvatar,
 	IBreadcrumbsItem,
 	IButton,
+	ICardHeader,
 	ICalendarDate,
 	IColorPaletteItem,
 	IComboBoxItem,
@@ -193,10 +230,13 @@ export {
 	IMultiComboBoxItem,
 	ISegmentedButtonItem,
 	ISelectOption,
+	ISelectMenuOption,
 	ITab,
 	ITableCell,
 	ITableColumn,
 	ITableRow,
 	IToken,
 	ITreeItem,
+	IToolbarItem,
+	IToolbarSelectOption,
 };

@@ -76,17 +76,7 @@
 			{{#if isGroupItem}}
 				<ui5-li-groupheader ?focused={{this.focused}}>{{ this.text }}</ui5-li-groupheader>
 			{{else}}
-				<ui5-li
-					type="Active"
-					additional-text={{this.additionalText}}
-					group-name={{this.groupName}}
-					._tabIndex={{itemTabIndex}}
-					.mappedItem={{this}}
-					?selected={{this.selected}}
-					?focused={{this.focused}}
-				>
-					{{this.text}}
-				</ui5-li>
+				{{> listItem}}
 			{{/if}}
 
 		{{/each}}
@@ -127,4 +117,19 @@
 			{{this}}
 		{{/each}}
 	{{/if}}
+{{/inline}}
+
+{{#*inline "listItem"}}
+	<ui5-li
+			type="Active"
+			wrapping-type="Normal"
+			additional-text={{this.additionalText}}
+			group-name={{this.groupName}}
+			._tabIndex={{itemTabIndex}}
+			.mappedItem={{this}}
+			?selected={{this.selected}}
+			?focused={{this.focused}}
+	>
+		{{this.text}}
+	</ui5-li>
 {{/inline}}

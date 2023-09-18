@@ -48,6 +48,11 @@
 		<ui5-product-switch-item title-text="S/4HANA" icon="batch-payments"></ui5-product-switch-item>
 	</ui5-product-switch>
 
+	<ui5-product-switch id="productSwitchFlex" style="display: flex; justify-content: center; align-items: center;">
+		<ui5-product-switch-item title-text="Home" subtitle-text="Central Home" icon="home"></ui5-product-switch-item>
+		<ui5-product-switch-item title-text="Analytics Cloud" subtitle-text="Analytics Cloud" icon="business-objects-experience"></ui5-product-switch-item>
+	</ui5-product-switch>
+
 	<ui5-input id="eventTest"></ui5-input>
 
 	<script>
@@ -55,7 +60,7 @@
 		var oInput = document.getElementById("eventTest");
 		var pressCount = 0;
 
-		oProductSwitch.addEventListener("click", function (oEvent) {
+		oProductSwitch.addEventListener("ui5-click", function (oEvent) {
 			pressCount += 1;
 			oInput.value = pressCount;
 		});

@@ -1,7 +1,7 @@
 /**
  * Panel accessible roles.
  *
- * @class
+ * @readonly
  * @enum {string}
  * @public
  * @author SAP SE

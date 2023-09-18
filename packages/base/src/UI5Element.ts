@@ -11,6 +11,7 @@ import EventProvider from "./EventProvider.js";
 import getSingletonElementInstance from "./util/getSingletonElementInstance.js";
 import StaticAreaItem from "./StaticAreaItem.js";
 import updateShadowRoot from "./updateShadowRoot.js";
+import { shouldIgnoreCustomElement } from "./IgnoreCustomElements.js";
 import { renderDeferred, renderImmediately, cancelRender } from "./Render.js";
 import { registerTag, isTagRegistered, recordTagRegistrationFailure } from "./CustomElementsRegistry.js";
 import { observeDOMNode, unobserveDOMNode } from "./DOMObserver.js";
@@ -23,13 +24,24 @@ import { getSlotName, getSlottedNodesList } from "./util/SlotsHelper.js";
 import arraysAreEqual from "./util/arraysAreEqual.js";
 import { markAsRtlAware } from "./locale/RTLAwareRegistry.js";
 import preloadLinks from "./theming/preloadLinks.js";
-import { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
-import { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
+import executeTemplate from "./renderer/executeTemplate.js";
+import type { TemplateFunction, TemplateFunctionResult } from "./renderer/executeTemplate.js";
+import type { PromiseResolve, ComponentStylesData, ClassMap } from "./types.js";
 
 let autoId = 0;
 
 const elementTimeouts = new Map<string, Promise<void>>();
 const uniqueDependenciesCache = new Map<typeof UI5Element, Array<typeof UI5Element>>();
+
+type Renderer = (templateResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: RendererOptions) => void;
+
+type RendererOptions = {
+	/**
+	 * An object to use as the `this` value for event listeners. It's often
+	 * useful to set this to the host component rendering a template.
+	 */
+	host?: object,
+}
 
 type ChangeInfo = {
 	type: "property" | "slot",
@@ -67,8 +79,6 @@ function _invalidate(this: UI5Element, changeInfo: ChangeInfo) {
 	this._eventProvider.fireEvent("invalidate", { ...changeInfo, target: this });
 }
 
-let metadata = {} as Metadata;
-
 /**
  * Base class for all UI5 Web Components
  *
@@ -99,7 +109,12 @@ abstract class UI5Element extends HTMLElement {
 	static template?: TemplateFunction;
 	static staticAreaTemplate?: TemplateFunction;
 	static _metadata: UI5ElementMetadata;
-	static render: (templateFunctionResult: TemplateFunctionResult, container: HTMLElement | DocumentFragment, styleStrOrHrefsArr: string | Array<string> | undefined, forStaticArea: boolean, options: { host: HTMLElement }) => void;
+
+	/**
+	 * @deprecated
+	 */
+	static render: Renderer;
+	static renderer?: Renderer;
 
 	constructor() {
 		super();
@@ -140,6 +155,16 @@ abstract class UI5Element extends HTMLElement {
 		}
 
 		return this.__id;
+	}
+
+	render() {
+		const template = (this.constructor as typeof UI5Element).template;
+		return executeTemplate(template!, this);
+	}
+
+	renderStatic() {
+		const template = (this.constructor as typeof UI5Element).staticAreaTemplate;
+		return executeTemplate(template!, this);
 	}
 
 	/**
@@ -309,8 +334,9 @@ abstract class UI5Element extends HTMLElement {
 			// Await for not-yet-defined custom elements
 			if (child instanceof HTMLElement) {
 				const localName = child.localName;
-				const isCustomElement = localName.includes("-");
-				if (isCustomElement) {
+				const shouldWaitForCustomElement = localName.includes("-") && !shouldIgnoreCustomElement(localName);
+
+				if (shouldWaitForCustomElement) {
 					const isDefined = window.customElements.get(localName);
 					if (!isDefined) {
 						const whenDefinedPromise = window.customElements.whenDefined(localName); // Class registered, but instances not upgraded yet
@@ -831,8 +857,8 @@ abstract class UI5Element extends HTMLElement {
 	 * Useful when there are transitive slots in nested component scenarios and you don't want to get a list of the slots, but rather of their content.
 	 * @public
 	 */
-	getSlottedNodes(slotName: string) {
-		return getSlottedNodesList((this as unknown as Record<string, Array<SlotValue>>)[slotName]);
+	getSlottedNodes<T = Node>(slotName: string) {
+		return getSlottedNodesList((this as unknown as Record<string, Array<SlotValue>>)[slotName]) as Array<T>;
 	}
 
 	/**
@@ -872,14 +898,14 @@ abstract class UI5Element extends HTMLElement {
 	 * @private
 	 */
 	static _needsShadowDOM() {
-		return !!this.template;
+		return !!this.template || Object.prototype.hasOwnProperty.call(this.prototype, "render");
 	}
 
 	/**
 	 * @private
 	 */
 	static _needsStaticArea() {
-		return !!this.staticAreaTemplate;
+		return !!this.staticAreaTemplate || Object.prototype.hasOwnProperty.call(this.prototype, "renderStatic");
 	}
 
 	/**
@@ -1014,17 +1040,7 @@ abstract class UI5Element extends HTMLElement {
 	 * Returns the metadata object for this UI5 Web Component Class
 	 * @protected
 	 */
-	static get metadata() {
-		return metadata;
-	}
-
-	/**
-	 * Sets a new metadata object for this UI5 Web Component Class
-	 * @protected
-	 */
-	static set metadata(newMetadata) {
-		metadata = newMetadata;
-	}
+	static metadata: Metadata = {};
 
 	/**
 	 * Returns the CSS for this UI5 Web Component Class
@@ -1126,21 +1142,17 @@ abstract class UI5Element extends HTMLElement {
 			return this._metadata;
 		}
 
-		const effectiveMetadata = Object.keys(this.metadata).length ? this.metadata : this.decoratorMetadata;
-		const metadataObjects = [effectiveMetadata];
+		const metadataObjects = [this.metadata];
 		let klass = this; // eslint-disable-line
 		while (klass !== UI5Element) {
 			klass = Object.getPrototypeOf(klass);
-			const effectiveKlassMetadata = Object.keys(klass.metadata).length ? klass.metadata : klass.decoratorMetadata;
-			metadataObjects.unshift(effectiveKlassMetadata);
+			metadataObjects.unshift(klass.metadata);
 		}
 		const mergedMetadata = merge({}, ...metadataObjects) as Metadata;
 
 		this._metadata = new UI5ElementMetadata(mergedMetadata);
 		return this._metadata;
 	}
-
-	static decoratorMetadata: Metadata = {};
 }
 
 /**
@@ -1153,4 +1165,8 @@ const instanceOfUI5Element = (object: any): object is UI5Element => {
 
 export default UI5Element;
 export { instanceOfUI5Element };
-export type { ChangeInfo };
+export type {
+	ChangeInfo,
+	Renderer,
+	RendererOptions,
+};

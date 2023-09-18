@@ -1,0 +1,6 @@
+@import "../base/Dialog-parameters.css";
+
+:root {
+	--_ui5_dialog_resize_handle_right: 0;
+	--_ui5_dialog_resize_handle_bottom: 3px;
+}

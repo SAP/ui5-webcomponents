@@ -5,6 +5,8 @@
 	hide-arrow
 	placement-type="Bottom"
 	horizontal-align="Left"
+	@before-close={{handleBeforeClose}}
+	@before-open="{{handleBeforeOpen}}"
 >
 	<div slot="header" class="ui5-responsive-popover-header" style="{{styles.popoverHeader}}">
 		{{#if _isPhone}}
@@ -34,7 +36,10 @@
 		@ui5-item-delete={{itemDelete}}
 	>
 		{{#each _tokens}}
-			<ui5-li .tokenRef={{this}}>
+			<ui5-li
+				.tokenRef={{this}}
+				wrapping-type="Normal"
+			>
 				{{this.text}}
 			</ui5-li>
 		{{/each}}
@@ -42,7 +47,8 @@
 	{{#if _isPhone}}
 		<div slot="footer" class="ui5-responsive-popover-footer">
 			<ui5-button
-				design="Transparent"
+				id="ui5-tokenizer-dialog-confirm-btn"
+				design="Emphasized"
 				@click="{{closeMorePopover}}"
 			>OK</ui5-button>
 		</div>

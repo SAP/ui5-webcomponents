@@ -41,11 +41,15 @@ class StaticAreaItem extends HTMLElement {
 	 */
 	update() {
 		if (this._rendered) {
-			this._updateAdditionalAttrs();
-			this._updateContentDensity();
-			this._updateDirection();
+			this.updateAdditionalProperties();
 			updateShadowRoot(this.ownerElement!, true);
 		}
+	}
+
+	updateAdditionalProperties() {
+		this._updateAdditionalAttrs();
+		this._updateContentDensity();
+		this._updateDirection();
 	}
 
 	/**
@@ -83,7 +87,7 @@ class StaticAreaItem extends HTMLElement {
 	 * Returns reference to the DOM element where the current fragment is added.
 	 */
 	async getDomRef() {
-		this._updateContentDensity();
+		this.updateAdditionalProperties();
 		if (!this._rendered) {
 			this._rendered = true;
 			updateShadowRoot(this.ownerElement!, true);

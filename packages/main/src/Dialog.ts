@@ -8,13 +8,23 @@ import {
 	isUpShift, isDownShift, isLeftShift, isRightShift,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Popup from "./Popup.js";
+import type { PopupBeforeCloseEventDetail as DialogBeforeCloseEventDetail } from "./Popup.js";
 import Icon from "./Icon.js";
 import "@ui5/webcomponents-icons/dist/resize-corner.js";
 import "@ui5/webcomponents-icons/dist/error.js";
 import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
+
+import {
+	DIALOG_HEADER_ARIA_ROLE_DESCRIPTION,
+	DIALOG_HEADER_ARIA_DESCRIBEDBY_RESIZABLE,
+	DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE,
+	DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE,
+} from "./generated/i18n/i18n-defaults.js";
 
 // Template
 import DialogTemplate from "./generated/templates/DialogTemplate.lit.js";
@@ -75,6 +85,10 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * <li>content - Used to style the content of the component</li>
  * <li>footer - Used to style the footer of the component</li>
  * </ul>
+ * <b>Note:</b> When a <code>ui5-bar</code> is used in the header or in the footer, you should remove the default dialog's paddings.
+ * <br>
+ * For more information see the sample "Bar in Header/Footer".
+
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -93,7 +107,18 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * @tagname ui5-dialog
  * @public
  */
-@customElement("ui5-dialog")
+@customElement({
+	tag: "ui5-dialog",
+	template: DialogTemplate,
+	styles: [
+		browserScrollbarCSS,
+		PopupsCommonCss,
+		dialogCSS,
+	],
+	dependencies: [
+		Icon,
+	],
+})
 class Dialog extends Popup {
 	/**
 	 * Defines the header text.
@@ -159,10 +184,7 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the state of the <code>Dialog</code>.
-	 * <br><br>
-	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-	 * <br><br>
-	 * <b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
+	 * <br><b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
 	 * accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.Dialog.prototype.state
@@ -171,7 +193,7 @@ class Dialog extends Popup {
 	 * @since 1.0.0-rc.15
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	state!: ValueState;
+	state!: `${ValueState}`;
 
 	/**
 	 * @private
@@ -203,9 +225,12 @@ class Dialog extends Popup {
 	_initialLeft?: number;
 	_minWidth?: number;
 	_cachedMinHeight?: number;
+	_draggedOrResized = false;
 
 	/**
 	 * Defines the header HTML Element.
+	 * <br><br>
+	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the header, you should remove the default dialog's paddings.
 	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
 	 * <code>accessibleName</code> should be used.
@@ -220,6 +245,8 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the footer HTML Element.
+	 * <br><br>
+	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the footer, you should remove the default dialog's paddings.
 	 *
 	 * @type {HTMLElement[]}
 	 * @name sap.ui.webc.main.Dialog.prototype.footer
@@ -229,10 +256,12 @@ class Dialog extends Popup {
 	@slot()
 	footer!: Array<HTMLElement>;
 
+	static i18nBundle: I18nBundle;
+
 	constructor() {
 		super();
 
-		this._screenResizeHandler = this._center.bind(this);
+		this._screenResizeHandler = this._screenResize.bind(this);
 
 		this._dragMouseMoveHandler = this._onDragMouseMove.bind(this);
 		this._dragMouseUpHandler = this._onDragMouseUp.bind(this);
@@ -243,18 +272,8 @@ class Dialog extends Popup {
 		this._dragStartHandler = this._handleDragStart.bind(this);
 	}
 
-	static get dependencies() {
-		return [
-			Icon,
-		];
-	}
-
-	static get template() {
-		return DialogTemplate;
-	}
-
-	static get styles() {
-		return [browserScrollbarCSS, PopupsCommonCss, dialogCSS];
+	static async onDefine() {
+		Dialog.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	static _isHeader(element: HTMLElement) {
@@ -291,6 +310,26 @@ class Dialog extends Popup {
 		}
 
 		return ariaLabelledById;
+	}
+
+	get ariaRoleDescriptionHeaderText() {
+		return (this.resizable || this.draggable) ? Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_ROLE_DESCRIPTION) : undefined;
+	}
+
+	get effectiveAriaDescribedBy() {
+		return (this.resizable || this.draggable) ? `${this._id}-descr` : undefined;
+	}
+
+	get ariaDescribedByHeaderTextResizable() {
+		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_RESIZABLE);
+	}
+
+	get ariaDescribedByHeaderTextDraggable() {
+		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE);
+	}
+
+	get ariaDescribedByHeaderTextDraggableAndResizable() {
+		return Dialog.i18nBundle.getText(DIALOG_HEADER_ARIA_DESCRIBEDBY_DRAGGABLE_RESIZABLE);
 	}
 
 	get _displayProp() {
@@ -393,9 +432,13 @@ class Dialog extends Popup {
 	_resize() {
 		super._resize();
 
-		if (this._screenResizeHandlerAttached) {
+		if (!this._draggedOrResized) {
 			this._center();
 		}
+	}
+
+	_screenResize() {
+		this._center();
 	}
 
 	_attachScreenResizeHandler() {
@@ -461,6 +504,7 @@ class Dialog extends Popup {
 		this._x = e.clientX;
 		this._y = e.clientY;
 
+		this._draggedOrResized = true;
 		this._attachMouseDragHandlers();
 	}
 
@@ -546,7 +590,7 @@ class Dialog extends Popup {
 	}
 
 	_resizeWithEvent(e: KeyboardEvent) {
-		this._detachScreenResizeHandler();
+		this._draggedOrResized = true;
 		this.addEventListener("ui5-before-close", this._revertSize, { once: true });
 
 		const { top, left } = this.getBoundingClientRect(),
@@ -583,8 +627,6 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseDragHandlers() {
-		this._detachScreenResizeHandler();
-
 		window.addEventListener("mousemove", this._dragMouseMoveHandler);
 		window.addEventListener("mouseup", this._dragMouseUpHandler);
 	}
@@ -625,6 +667,7 @@ class Dialog extends Popup {
 			left: `${left}px`,
 		});
 
+		this._draggedOrResized = true;
 		this._attachMouseResizeHandlers();
 	}
 
@@ -687,8 +730,6 @@ class Dialog extends Popup {
 	}
 
 	_attachMouseResizeHandlers() {
-		this._detachScreenResizeHandler();
-
 		window.addEventListener("mousemove", this._resizeMouseMoveHandler);
 		window.addEventListener("mouseup", this._resizeMouseUpHandler);
 		this.addEventListener("ui5-before-close", this._revertSize, { once: true });
@@ -703,3 +744,6 @@ class Dialog extends Popup {
 Dialog.define();
 
 export default Dialog;
+export type {
+	DialogBeforeCloseEventDetail,
+};

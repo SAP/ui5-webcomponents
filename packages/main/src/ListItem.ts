@@ -1,14 +1,13 @@
+import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import { isSpace, isEnter, isDelete } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
-import type { ComponentStylesData, PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
+import type { PassiveEventListenerObject } from "@ui5/webcomponents-base/dist/types.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/edit.js";
 import ListItemType from "./types/ListItemType.js";
@@ -50,6 +49,27 @@ type PressEventDetail = {
 	key: string,
 }
 
+type AccInfo = {
+	role: string;
+	ariaExpanded?: boolean;
+	ariaLevel?: number;
+	ariaLabel: string;
+	ariaLabelRadioButton: string;
+	ariaSelectedText?: string;
+	ariaHaspopup?: `${HasPopup}`;
+	posinset?: number;
+	setsize?: number;
+	ariaSelected?: boolean;
+	ariaChecked?: boolean;
+	listItemAriaLabel?: string;
+	ariaOwns?: string;
+}
+
+type AccessibilityAttributes = {
+	ariaSetsize: number,
+	ariaPosinset: number,
+}
+
 /**
  * @class
  * A class to serve as a base
@@ -61,7 +81,15 @@ type PressEventDetail = {
  * @extends sap.ui.webc.main.ListItemBase
  * @public
  */
-@languageAware
+@customElement({
+	languageAware: true,
+	styles: [ListItemBase.styles, styles],
+	dependencies: [
+		Button,
+		RadioButton,
+		CheckBox,
+	],
+})
 /**
  * Fired when the user clicks on the detail button when type is <code>Detail</code>.
  *
@@ -86,7 +114,31 @@ abstract class ListItem extends ListItemBase {
 	 * @public
 	*/
 	@property({ type: ListItemType, defaultValue: ListItemType.Active })
-	type!: ListItemType;
+	type!: `${ListItemType}`;
+
+	/**
+	 * An object of strings that defines several additional accessibility attribute values
+	 * for customization depending on the use case.
+	 *
+	 *  It supports the following fields:
+	 *
+	 * <ul>
+	 * 		<li><code>ariaSetsize</code>: Defines the number of items in the current set of listitems or treeitems when not all items in the set are present in the DOM.
+	 * 		The value of each <code>aria-setsize</code> is an integer reflecting number of items in the complete set.
+	 * 		<b>Note: </b> If the size of the entire set is unknown, set <code>aria-setsize="-1"</code>.
+	 * 		</li>
+	 * 		<li><code>ariaPosinset</code>: Defines an element's number or position in the current set of listitems or treeitems when not all items are present in the DOM.
+	 * 		The value of each <code>aria-posinset</code> is an integer greater than or equal to 1, and less than or equal to the size of the set when that size is known.
+	 * 		</li>
+	 * </ul>
+	 *
+	 * @type {object}
+	 * @name sap.ui.webc.main.ListItem.prototype.accessibilityAttributes
+	 * @public
+	 * @since 1.15.0
+	 */
+	@property({ type: Object })
+	accessibilityAttributes!: AccessibilityAttributes;
 
 	/**
 	 * The navigated state of the list item.
@@ -169,7 +221,7 @@ abstract class ListItem extends ListItemBase {
 	accessibleRole!: string;
 
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	_mode!: ListMode;
+	_mode!: `${ListMode}`;
 
 	/**
 	 * Defines the availability and type of interactive popup element that can be triggered by the component on which the property is set.
@@ -179,7 +231,7 @@ abstract class ListItem extends ListItemBase {
 	 * @private
 	 */
 	@property({ type: HasPopup, noAttribute: true })
-	ariaHaspopup?: HasPopup;
+	ariaHaspopup?: `${HasPopup}`;
 
 	@property({ type: Integer })
 	_level?: number;
@@ -208,20 +260,12 @@ abstract class ListItem extends ListItemBase {
 	deactivateByKey: (e: KeyboardEvent) => void;
 	deactivate: () => void;
 	_ontouchstart: PassiveEventListenerObject;
+	// used in template, implemented in TreeItemBase
+	accessibleName?: string;
+	// used in ListItem template but implemented in TreeItemBase
+	indeterminate?: boolean;
 
 	static i18nBundle: I18nBundle;
-
-	static get styles(): ComponentStylesData {
-		return [ListItemBase.styles, styles];
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-			RadioButton,
-			CheckBox,
-		] as Array<typeof UI5Element>;
-	}
 
 	constructor() {
 		super();
@@ -336,7 +380,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as HTMLInputElement).checked, selectionComponentPressed: true }); // Switch HTMLInputElement to CheckBox when ui5-check is migrated to TypeScript
+		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: (e.target as CheckBox).checked, selectionComponentPressed: true });
 	}
 
 	onSingleSelectionComponentPress(e: MouseEvent) {
@@ -344,7 +388,7 @@ abstract class ListItem extends ListItemBase {
 			return;
 		}
 
-		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as ListItemBase).selected, selectionComponentPressed: true });
+		this.fireEvent<SelectionRequestEventDetail>("_selection-requested", { item: this, selected: !(e.target as RadioButton).checked, selectionComponentPressed: true });
 	}
 
 	activate() {
@@ -390,7 +434,7 @@ abstract class ListItem extends ListItemBase {
 			ListMode.SingleSelectBegin,
 			ListMode.SingleSelectEnd,
 			ListMode.SingleSelect,
-		].includes(this._mode);
+		].includes(this._mode as ListMode);
 	}
 
 	get modeMultiSelect() {
@@ -464,7 +508,7 @@ abstract class ListItem extends ListItemBase {
 		return `${this._id}-content ${this._id}-invisibleText`;
 	}
 
-	get _accInfo() {
+	get _accInfo(): AccInfo {
 		return {
 			role: this.accessibleRole || this.role,
 			ariaExpanded: undefined,
@@ -473,6 +517,8 @@ abstract class ListItem extends ListItemBase {
 			ariaLabelRadioButton: ListItem.i18nBundle.getText(ARIA_LABEL_LIST_ITEM_RADIO_BUTTON),
 			ariaSelectedText: this.ariaSelectedText,
 			ariaHaspopup: this.ariaHaspopup || undefined,
+			setsize: this.accessibilityAttributes.ariaSetsize,
+			posinset: this.accessibilityAttributes.ariaPosinset,
 		};
 	}
 
@@ -490,4 +536,5 @@ export type {
 	IAccessibleListItem,
 	SelectionRequestEventDetail,
 	PressEventDetail,
+	AccessibilityAttributes,
 };

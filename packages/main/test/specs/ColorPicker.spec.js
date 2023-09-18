@@ -1,5 +1,4 @@
-const assert = require("chai").assert;
-
+import { assert } from "chai";
 
 describe("Color Picker general interaction", () => {
 	before(async () => {
@@ -46,9 +45,9 @@ describe("Color Picker general interaction", () => {
 
 		await alphaInput.click();
 		await browser.keys('Delete');
+		await browser.keys('Backspace');
 		await browser.keys("0");
 		await browser.keys("Tab");
-
 
 		assert.strictEqual(await colorPicker.getAttribute("color"), "rgba(100, 100, 100, 0)", "Alpha value propely changed");
 	});

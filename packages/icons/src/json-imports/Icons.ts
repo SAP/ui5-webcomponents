@@ -4,9 +4,9 @@ const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
     let iconData: CollectionData;
 
 	if (collection === "SAP-icons-v5") {
-		iconData = (await import(`../generated/assets/v5/SAP-icons.json`)).default;
+		iconData = (await import("../generated/assets/v5/SAP-icons.json")).default;
 	} else {
-		iconData = (await import(`../generated/assets/v4/SAP-icons.json`)).default;
+		iconData = (await import("../generated/assets/v4/SAP-icons.json")).default;
 	}
 
     if (typeof iconData === "string" && (iconData as string).endsWith(".json")) {
@@ -16,7 +16,7 @@ const loadIconsBundle = async (collection: string): Promise<CollectionData> => {
 }
 
 const registerLoaders = () => {
-	registerIconLoader("SAP-icons", loadIconsBundle);
+	registerIconLoader("SAP-icons-v4", loadIconsBundle);
 	registerIconLoader("SAP-icons-v5", loadIconsBundle);
 };
 

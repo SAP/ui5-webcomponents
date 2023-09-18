@@ -8,14 +8,26 @@ const getScripts = (options) => {
 
 	// The script creates all JS modules (dist/illustrations/{illustrationName}.js) out of the existing SVGs
 	const illustrationsData = options.illustrationsData || [];
-	illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath}`);
+	const illustrations = illustrationsData.map(illustration => `node "${LIB}/create-illustrations/index.js" ${illustration.path} ${illustration.defaultText} ${illustration.illustrationsPrefix} ${illustration.set} ${illustration.destinationPath} ${illustration.collection}`);
 	const createIllustrationsJSImportsScript = illustrations.join(" && ");
 
 	// The script creates the "dist/generated/js-imports/Illustration.js" file that registers loaders (dynamic JS imports) for each illustration
-	const illustrationDestinationPaths = illustrationsData.map(illustrations => illustrations.destinationPath);
-	const createIllustrationsLoadersScript = options.fioriPackage ? `node ${LIB}/generate-js-imports/illustrations.js ${illustrationDestinationPaths[0]} ${illustrationDestinationPaths[1]} dist/generated/js-imports` : "";
-	const tsCommand = options.typescript ? "tsc --build" : "";
-	const tsWatchCommand = options.typescript ? "tsc --watch" : "";
+    const createIllustrationsLoadersScript = illustrationsData.map(illustrations => `node ${LIB}/generate-js-imports/illustrations.js ${illustrations.destinationPath} ${illustrations.dynamicImports.outputFile} ${illustrations.collection} ${illustrations.dynamicImports.location} ${illustrations.dynamicImports.prefix || '\"\"'} ${illustrations.dynamicImports.filterOut.join(" ")}`).join(" && ");
+
+	const tsOption = options.typescript;
+	const tsCommand = tsOption ? "tsc --build" : "";
+	const tsWatchCommand = tsOption ? "tsc --watch" : "";
+	const tsCrossEnv = tsOption ? "cross-env UI5_TS=true" : "";
+	const copySrcGenerated = tsOption ? "" : "copy.srcGenerated";
+
+	if (tsOption) {
+		try {
+			require("typescript");
+		} catch(e) {
+			console.error(`TypeScript is not found. Try to install it by running \`npm install --save-dev typescript\` if you are using npm or by running \`yarn add --dev typescript\` if you are using yarn.`);
+			process.exit(e.code);
+		}
+	}
 
 	let viteConfig;
 	if (fs.existsSync("config/vite.config.js")) {
@@ -30,10 +42,7 @@ const getScripts = (options) => {
 	}
 
 	let eslintConfig;
-	if (fs.existsSync("config/.eslintrc.js")) {
-		// old project setup where config file is in separate folder
-		eslintConfig = "--config config/.eslintrc.js";
-	} else if (fs.existsSync(".eslintrc.js")) {
+	if (fs.existsSync(".eslintrc.js") || fs.existsSync(".eslintrc.cjs")) {
 		// preferred way of custom configuration in root project folder
 		eslintConfig = "";
 	} else {
@@ -44,18 +53,18 @@ const getScripts = (options) => {
 	const scripts = {
 		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
-		lintfix: `eslint . ${eslintConfig}`,
+		lintfix: `eslint . ${eslintConfig} --fix`,
 		prepare: {
-			default: "nps clean prepare.all typescript generateAPI",
+			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
 		typescript: tsCommand,
 		build: {
-			default: "nps prepare build.bundle2",
-			templates: `mkdirp dist/generated/templates && node "${LIB}/hbs2ui5/index.js" -d src/ -o dist/generated/templates`,
+			default: "nps prepare lint build.bundle", // build.bundle2
+			templates: `mkdirp dist/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
-				default: "nps build.styles.themes build.styles.components",
+				default: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
@@ -80,10 +89,11 @@ const getScripts = (options) => {
 		copy: {
 			default: "nps copy.src copy.props",
 			src: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.js" dist/`,
+			srcGenerated: `node "${LIB}/copy-and-watch/index.js" --silent "src/generated/**/*.js" dist/generated/`,
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: 'concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"',
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommand,

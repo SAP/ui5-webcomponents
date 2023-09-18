@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Attributes propagation", () => {
 	before(async () => {
@@ -499,7 +499,7 @@ describe("Input general interaction", () => {
 		const firstSuggestion = await respPopover.$("ui5-list").$("ui5-li-suggestion-item");
 		await firstSuggestion.click();
 
-		valueNotSelected = await browser.execute(() =>{
+		const valueNotSelected = await browser.execute(() =>{
 			const input = document.getElementById("myInput").shadowRoot.querySelector("input");
 			return input.selectionEnd - input.selectionStart === 0;
 		});
@@ -528,7 +528,7 @@ describe("Input general interaction", () => {
 		const secondSuggestion = await respPopover.$("ui5-list").$$("ui5-li-suggestion-item")[1];
 		await secondSuggestion.click();
 
-		valueNotSelected = await browser.execute(() =>{
+		const valueNotSelected = await browser.execute(() =>{
 			const input = document.getElementById("myInput").shadowRoot.querySelector("input");
 			return input.selectionEnd - input.selectionStart === 0;
 		});
@@ -906,6 +906,40 @@ describe("Input general interaction", () => {
 		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
 	});
 
+	it("Change event calling after clear icon is pressed", async () => {
+		await browser.url(`test/pages/Input.html`);
+
+		const input = await $("#clear-input");
+		const innerInput = await input.shadow$("input");
+		const changeCounter = await $("#clear-input-change-event-count");
+		const inputCounter = await $("#clear-input-input-event-count");
+
+		// type
+		await innerInput.click();
+		await innerInput.keys("a");
+		await changeCounter.click();
+
+		const clearIcon = await input.shadow$(".ui5-input-clear-icon-wrapper");
+
+		// press clear icon
+		await clearIcon.click();
+		await changeCounter.click();
+
+		assert.strictEqual(await changeCounter.getText(), "2", "Change event called second time");
+		assert.strictEqual(await inputCounter.getText(), "2", "Input event called when value is cleared by clear icon");
+
+		await innerInput.click();
+		await innerInput.keys("a");
+		await changeCounter.click();
+		await clearIcon.click();
+		await innerInput.keys("a");
+		await changeCounter.click();
+
+
+		assert.strictEqual(await changeCounter.getText(), "3", "Change event called three times");
+		assert.strictEqual(await inputCounter.getText(), "5", "Input event called when value is cleared by clear icon or typed in");
+	});
+
 	it("Setting readonly or disabled hides clear icon", async () => {
 		await browser.url(`test/pages/Input.html`);
 
@@ -999,6 +1033,25 @@ describe("Input general interaction", () => {
 
 		// Assert
 		assert.strictEqual(await changeValue.getHTML(false), "", "The change event should pass a correct value");
+	});
+
+	it("Changes text if cleared in change event handler", async () => {
+		const input = await $("#change-event-value");
+		const inner = await input.shadow$("input");
+
+		await input.scrollIntoView();
+
+		await browser.executeAsync((done) =>{
+			return done(document.getElementById("change-event-value").openPicker());
+		});
+
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#change-event-value");
+		const listItem = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover").$("ui5-li-suggestion-item");
+
+		await listItem.click();
+
+		assert.strictEqual(await input.getValue(), "", "Input's value should be empty");
+		assert.strictEqual(await inner.getValue(), "", "Inner input's value should be empty");
 	});
 });
 

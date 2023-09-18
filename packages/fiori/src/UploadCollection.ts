@@ -1,6 +1,5 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
@@ -10,8 +9,11 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import Icon from "@ui5/webcomponents/dist/Icon.js";
 import Label from "@ui5/webcomponents/dist/Label.js";
 import List from "@ui5/webcomponents/dist/List.js";
+import type { ListSelectionChangeEventDetail } from "@ui5/webcomponents/dist/List.js";
 import ListMode from "@ui5/webcomponents/dist/types/ListMode.js";
 import Title from "@ui5/webcomponents/dist/Title.js";
+import IllustratedMessage from "./IllustratedMessage.js";
+import "./illustrations/Tent.js";
 import "@ui5/webcomponents-icons/dist/upload-to-cloud.js";
 import "@ui5/webcomponents-icons/dist/document.js";
 import {
@@ -26,6 +28,7 @@ import {
 	detachBodyDnDHandler,
 	draggingFiles,
 } from "./upload-utils/UploadCollectionBodyDnD.js";
+import type UploadCollectionItem from "./UploadCollectionItem.js";
 import type { DnDEventListener, DnDEventListenerParam } from "./upload-utils/UploadCollectionBodyDnD.js";
 import UploadCollectionDnDOverlayMode from "./types/UploadCollectionDnDMode.js";
 
@@ -35,12 +38,12 @@ import UploadCollectionTemplate from "./generated/templates/UploadCollectionTemp
 // Styles
 import UploadCollectionCss from "./generated/themes/UploadCollection.css.js";
 
-type SelectionChangeEventDetail = {
-	selectedItems: Array<HTMLElement>, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more precise.
+type UploadCollectionSelectionChangeEventDetail = {
+	selectedItems: Array<UploadCollectionItem>,
 };
 
-type ItemDeleteEventDetail = {
-	item: HTMLElement, // Note: HTMLElement can be replaced with UploadCollectionItem (when migrated to TS) to be even more precise.
+type UploadCollectionItemDeleteEventDetail = {
+	item: UploadCollectionItem,
 };
 
 /**
@@ -64,8 +67,20 @@ type ItemDeleteEventDetail = {
  * @public
  * @since 1.0.0-rc.7
  */
-@customElement("ui5-upload-collection")
-@languageAware
+@customElement({
+	tag: "ui5-upload-collection",
+	languageAware: true,
+	renderer: litRender,
+	styles: UploadCollectionCss,
+	template: UploadCollectionTemplate,
+	dependencies: [
+		Icon,
+		Label,
+		List,
+		Title,
+		IllustratedMessage,
+	],
+})
 /**
  * Fired when an element is dropped inside the drag and drop overlay.
  * <br><br>
@@ -80,12 +95,10 @@ type ItemDeleteEventDetail = {
 @event("drop")
 
 /**
- * Fired when the Delete button of any item is pressed.
- * <br><br>
- * <b>Note:</b> A Delete button is displayed on each item,
- * when the <code>ui5-upload-collection</code> <code>mode</code> property is set to <code>Delete</code>.
+ * Fired when the delete button of any item is pressed.
+ *
  * @event sap.ui.webc.fiori.UploadCollection#item-delete
- * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was renamed.
+ * @param {HTMLElement} item The <code>ui5-upload-collection-item</code> which was deleted.
  * @public
  */
 @event("item-delete", {
@@ -111,14 +124,8 @@ class UploadCollection extends UI5Element {
 	/**
 	 * Defines the mode of the <code>ui5-upload-collection</code>.
 	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>SingleSelect</code></li>
-	 * <li><code>MultiSelect</code></li>
-	 * <li><code>Delete</code></li>
-	 * </ul>
+	 * <br><b>Note:</b>
+	 * Mode "Delete" has no effect. The delete button is controlled by the <code>hideDeleteButton</code> property of UploadCollectionItem</li>
 	 *
 	 * @type {sap.ui.webc.main.types.ListMode}
 	 * @name sap.ui.webc.fiori.UploadCollection.prototype.mode
@@ -126,7 +133,7 @@ class UploadCollection extends UI5Element {
 	 * @public
 	 */
 	@property({ type: ListMode, defaultValue: ListMode.None })
-	mode!: ListMode;
+	mode!: `${ListMode}`;
 
 	/**
 	 * Allows you to set your own text for the 'No data' description.
@@ -197,7 +204,7 @@ class UploadCollection extends UI5Element {
 	 * @public
 	 */
 	@slot({ type: HTMLElement, "default": true })
-	items!: Array<HTMLElement>;
+	items!: Array<UploadCollectionItem>;
 
 	/**
 	 * Defines the <code>ui5-upload-collection</code> header.
@@ -217,27 +224,6 @@ class UploadCollection extends UI5Element {
 	_bodyDnDHandler: DnDEventListener;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return UploadCollectionCss;
-	}
-
-	static get template() {
-		return UploadCollectionTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			Label,
-			List,
-			Title,
-		];
-	}
 
 	static async onDefine() {
 		UploadCollection.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
@@ -310,12 +296,12 @@ class UploadCollection extends UI5Element {
 		this._dndOverlayMode = UploadCollectionDnDOverlayMode.Drag;
 	}
 
-	_onItemDelete(e: CustomEvent<ItemDeleteEventDetail>) {
-		this.fireEvent("item-delete", { item: e.detail.item });
+	_onItemDelete(e: CustomEvent) {
+		this.fireEvent<UploadCollectionItemDeleteEventDetail>("item-delete", { item: e.target as UploadCollectionItem });
 	}
 
-	_onSelectionChange(e: CustomEvent<SelectionChangeEventDetail>) {
-		this.fireEvent("selection-change", { selectedItems: e.detail.selectedItems });
+	_onSelectionChange(e: CustomEvent<ListSelectionChangeEventDetail>) {
+		this.fireEvent<UploadCollectionSelectionChangeEventDetail>("selection-change", { selectedItems: e.detail.selectedItems as UploadCollectionItem[] });
 	}
 
 	get classes() {
@@ -376,3 +362,7 @@ class UploadCollection extends UI5Element {
 UploadCollection.define();
 
 export default UploadCollection;
+export type {
+	UploadCollectionItemDeleteEventDetail,
+	UploadCollectionSelectionChangeEventDetail,
+};

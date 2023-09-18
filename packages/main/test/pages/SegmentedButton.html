@@ -24,6 +24,63 @@
 	<section class="main">
 		<div class="samples">
 			<h2>Segmentedbutton example</h2>
+			<ui5-button>Default button</ui5-button>
+			<br />
+			<br />
+			<ui5-segmented-button>
+				<ui5-segmented-button-item>First</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Second</ui5-segmented-button-item>
+			</ui5-segmented-button>
+			<br />
+			<br />
+			<ui5-segmented-button>
+				<ui5-segmented-button-item>First</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Second</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Third</ui5-segmented-button-item>
+			</ui5-segmented-button>
+			<br />
+			<br />
+			<ui5-segmented-button>
+				<ui5-segmented-button-item>First</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Second</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Third</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Fourth</ui5-segmented-button-item>
+			</ui5-segmented-button>
+			<br />
+			<br />
+			<ui5-segmented-button>
+				<ui5-segmented-button-item>First</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Second</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Third</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Fourth</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Fifth</ui5-segmented-button-item>
+			</ui5-segmented-button>
+			<br />
+			<br />
+			<ui5-segmented-button>
+				<ui5-segmented-button-item>First</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Second</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Third</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Fourth</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Fifth</ui5-segmented-button-item>
+				<ui5-segmented-button-item>Sixth</ui5-segmented-button-item>
+			</ui5-segmented-button>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
 			<div class="sample" id="main-sample">
 				<ui5-segmented-button id="segButtonSingle">
 					<ui5-segmented-button-item>Item</ui5-segmented-button-item>
@@ -40,7 +97,7 @@
 				<section>
 					<h1>Example with 4 items</h1>
 
-					<ui5-segmented-button>
+					<ui5-segmented-button id="segButtonMulti" mode="MultiSelect">
 						<ui5-segmented-button-item>Item</ui5-segmented-button-item>
 						<ui5-segmented-button-item>Item</ui5-segmented-button-item>
 						<ui5-segmented-button-item>Click</ui5-segmented-button-item>
@@ -110,5 +167,40 @@
 			<ui5-segmented-button-item icon="accept"></ui5-segmented-button-item>
 		</ui5-segmented-button>
 	</section>
+
+	<section>
+		<h3>Programatical change test</h3>
+		<ui5-segmented-button id="segButtonProg">
+			<ui5-segmented-button-item id="sbpItem1" pressed>First</ui5-segmented-button-item>
+			<ui5-segmented-button-item id="sbpItem2">Second</ui5-segmented-button-item>
+			<ui5-segmented-button-item id="sbpItem3">Third</ui5-segmented-button-item>
+		</ui5-segmented-button>
+		<ui5-button id="progSetButton1">Press second item</ui5-button>
+		<ui5-button id="progSetButton2">Press multiple items</ui5-button>
+		<ui5-button id="progSetButton3">Press pressed item</ui5-button>
+		<ui5-button id="progSetButton4">Press first item</ui5-button>
+	</section>
+
+	<script>
+
+		progSetButton1.addEventListener("click", function() {
+			segButtonProg.items[1].pressed = true;
+		});
+
+		progSetButton2.addEventListener("click", function() {
+			segButtonProg.items[0].pressed = true;
+			segButtonProg.items[2].pressed = true;
+		});
+
+		progSetButton3.addEventListener("click", function() {
+			segButtonProg.selectedItem.pressed = true;
+		});
+
+		progSetButton4.addEventListener("click", function() {
+			segButtonProg.items[0].pressed = true;
+		});
+
+	</script>
+
 </body>
 </html>

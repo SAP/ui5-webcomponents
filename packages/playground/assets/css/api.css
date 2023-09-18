@@ -84,35 +84,6 @@ body {
 	max-width: 100%;
 }
 
-.radio-button-group {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: nowrap;
-	justify-content: center;
-	align-items: flex-start;
-	height: fit-content;
-}
-
-.flex-column {
-	display: flex;
-	flex-direction: column;
-}
-
-.popover-content {
-	margin: 0.5rem;
-	height: 100px;
-	display: flex;
-	flex-direction:column;
-	justify-content: center;
-	align-items: center;
-}
-
-.popover-footer, .dialog-footer {
-	display: flex;
-	align-items: center;
-	padding: .5rem 0;
-}
-
 .login-form {
 	display: flex;
 	flex-direction: column;
@@ -303,10 +274,6 @@ body {
 	font-size: 16px;
 }
 
-.api-table-content-cell-link {
-	vertical-align: top;
-}
-
 .api-table-event-param-cell {
 	padding: 8px 0 8px 64px;
 	font-family: "72-Regular";
@@ -473,4 +440,26 @@ body {
 	.api-table .row .cell:nth-child(2) {
 		flex: 1 100%;
 	}
+}
+
+.sb-ui5-title {
+    display: inline-block;
+}
+
+.sb-ui5-component-heading-since {
+    padding-inline-start: 0.5rem;
+    color: #008eff;
+}
+
+.sb-ui5-component-package {
+    color: #008eff;
+    padding-bottom: 1rem;
+}
+
+.sb-ui5-control-tag {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #666666;
+    padding-bottom: 1rem;
 }

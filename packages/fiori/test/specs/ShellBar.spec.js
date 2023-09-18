@@ -1,5 +1,5 @@
-const assert = require("chai").assert;
-HANDLE_RESIZE_DEBOUNCE_RATE_WAIT = 250; // ms
+import { assert } from "chai";
+const HANDLE_RESIZE_DEBOUNCE_RATE_WAIT = 250; // ms
 
 const getOverflowPopover = async id => {
 	const staticAreaItemClassName = await browser.getStaticAreaItemClassName(`#${id}`);
@@ -8,18 +8,16 @@ const getOverflowPopover = async id => {
 
 const getOverflowChildProp = async (id, pos, prop) => {
 	const popover = await getOverflowPopover(id);
+	const items = await popover.$$("ui5-li");
 
-	return browser.executeAsync((popover, pos, prop, done) => {
-		done([...popover.querySelectorAll("ui5-li")][pos].getAttribute(prop));
-	}, popover, pos, prop);
+	return [...items][pos].getAttribute(prop);
 }
 
 const getCustomActionProp = async (id, pos, prop) => {
 	const shellbar = await browser.$(`#${id}`);
+	const items = await shellbar.shadowRoot.querySelectorAll(".ui5-shellbar-custom-item");
 
-	return browser.executeAsync((shellbar, pos, prop, done) => {
-		done([...shellbar.shadowRoot.querySelectorAll(".ui5-shellbar-custom-item")][pos].getAttribute(prop));
-	}, shellbar, pos, prop);
+	return [...items][pos].getAttribute(prop);
 }
 
 describe("Component Behavior", () => {
@@ -54,7 +52,7 @@ describe("Component Behavior", () => {
 
 			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
 
-			// assert
+			// assertHANDLE_RESIZE_DEBOUNCE_RATE_WAIT
 			assert.strictEqual(await logoDOM.getAttribute("role"), "link",
 				"Logo has the correct custom role.");
 		});
@@ -416,7 +414,7 @@ describe("Component Behavior", () => {
 			it("tests if searchfield toggles when altering the showSearchField property", async () => {
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-field");
 				const shellBar = await browser.$("#shellbar");
-				
+
 				assert.strictEqual(await searchField.isDisplayed(), false, "Search is hidden by default");
 
 				await shellBar.setProperty('showSearchField', true);
@@ -517,12 +515,39 @@ describe("Component Behavior", () => {
 			it("tests if searchfield toggles when altering the showSearchField property", async () => {
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
 				const shellBar = await browser.$("#shellbar");
-				
+
 				assert.notOk(await searchField.isDisplayed(), "Search is hidden by default");
 
 				await shellBar.setProperty('showSearchField', true);
 				assert.ok(await searchField.isDisplayed(), "Search is visible after altering the showSearchField property of the ShellBar");
 				await shellBar.setProperty('showSearchField', false); // Clean Up
+			});
+
+			it("Shows translated label for predefined buttons, as button text when in Overflow Popover", async () => {
+				const shellBar = await browser.$("#shellbar");
+				const overflowButton = await shellBar.shadow$(".ui5-shellbar-overflow-button");
+				let psButtonText;
+
+				await browser.executeAsync(function(done) {
+					window['sap-ui-webcomponents-bundle'].configuration.setLanguage("de_DE");
+					done();
+				});
+				await browser.setWindowSize(500, 1080);
+
+				overflowButton.click();
+				const popover = await getOverflowPopover("shellbar");
+				const items = await popover.$$("ui5-li");
+
+				psButtonText = await [...items][4].getText();
+
+				assert.strictEqual(psButtonText, await shellBar.getProperty("_productsText"), "Product switch button text is translated in overflow popover");
+
+				await browser.setWindowSize(500, 1080);
+				await browser.executeAsync(function(done) {
+					window['sap-ui-webcomponents-bundle'].configuration.setLanguage("en_EN");
+					done();
+				});
+
 			});
 		});
 	});

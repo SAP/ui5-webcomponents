@@ -1,10 +1,8 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import languageAware from "@ui5/webcomponents-base/dist/decorators/languageAware.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
-import fastNavigation from "@ui5/webcomponents-base/dist/decorators/fastNavigation.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import {
@@ -19,6 +17,7 @@ import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ScrollEnablement from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import type { ScrollEnablementEventListenerParam } from "@ui5/webcomponents-base/dist/delegate/ScrollEnablement.js";
 import ResizeHandler from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
+import type { ResizeObserverCallback } from "@ui5/webcomponents-base/dist/delegate/ResizeHandler.js";
 import { renderFinished } from "@ui5/webcomponents-base/dist/Render.js";
 import { isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import AnimationMode from "@ui5/webcomponents-base/dist/types/AnimationMode.js";
@@ -31,6 +30,8 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import CarouselArrowsPlacement from "./types/CarouselArrowsPlacement.js";
 import CarouselPageIndicatorStyle from "./types/CarouselPageIndicatorStyle.js";
+import BackgroundDesign from "./types/BackgroundDesign.js";
+import BorderDesign from "./types/BorderDesign.js";
 import CarouselTemplate from "./generated/templates/CarouselTemplate.lit.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-left.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-right.js";
@@ -80,6 +81,16 @@ type CarouselNavigateEventDetail = {
  * When the <code>ui5-carousel</code> is focused the user can navigate between the items
  * with the following keyboard shortcuts:
  * <br>
+ * <ul>
+ * <li>[UP/DOWN] - Navigates to previous and next item</li>
+ * <li>[LEFT/RIGHT] - Navigates to previous and next item</li>
+ * </ul>
+ *
+ * <h3>Fast Navigation</h3>
+ * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
+ * In order to use this functionality, you need to import the following module:
+ * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
+ * <br><br>
  *
  * <h3>CSS Shadow Parts</h3>
  *
@@ -88,17 +99,6 @@ type CarouselNavigateEventDetail = {
  * The <code>ui5-carousel</code> exposes the following CSS Shadow Parts:
  * <ul>
  * <li>content - Used to style the content of the component</li>
- * </ul>
- *
- * * <h4>Fast Navigation</h4>
- * This component provides a build in fast navigation group which can be used via <code>F6 / Shift + F6</code> or <code> Ctrl + Alt(Option) + Down /  Ctrl + Alt(Option) + Up</code>.
- * In order to use this functionality, you need to import the following module:
- * <code>import "@ui5/webcomponents-base/dist/features/F6Navigation.js"</code>
- * <br><br>
- *
- * <ul>
- * <li>[UP/DOWN] - Navigates to previous and next item</li>
- * <li>[LEFT/RIGHT] - Navigates to previous and next item</li>
  * </ul>
  *
  * <h3>ES6 Module Import</h3>
@@ -113,10 +113,18 @@ type CarouselNavigateEventDetail = {
  * @since 1.0.0-rc.6
  * @public
  */
-@customElement("ui5-carousel")
-@languageAware
-@fastNavigation
-
+@customElement({
+	tag: "ui5-carousel",
+	languageAware: true,
+	fastNavigation: true,
+	renderer: litRender,
+	styles: CarouselCss,
+	template: CarouselTemplate,
+	dependencies: [
+		Button,
+		Label,
+	],
+})
 /**
  * Fired whenever the page changes due to user interaction,
  * when the user clicks on the navigation arrows or while resizing,
@@ -215,7 +223,40 @@ class Carousel extends UI5Element {
 	 * @public
 	 */
 	@property({ type: CarouselPageIndicatorStyle, defaultValue: CarouselPageIndicatorStyle.Default })
-	pageIndicatorStyle!: CarouselPageIndicatorStyle;
+	pageIndicatorStyle!: `${CarouselPageIndicatorStyle}`;
+
+	/**
+	 * Defines the carousel's background design.
+	 * @type {sap.ui.webc.main.types.BackgroundDesign}
+	 * @name sap.ui.webc.main.Carousel.prototype.backgroundDesign
+	 * @since 1.14
+	 * @defaultvalue "Translucent"
+	 * @public
+	 */
+	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Translucent })
+	backgroundDesign!: BackgroundDesign;
+
+	/**
+	 * Defines the page indicator background design.
+	 * @type {sap.ui.webc.main.types.BackgroundDesign}
+	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorBackgroundDesign
+	 * @since 1.14
+	 * @defaultvalue "Solid"
+	 * @public
+	 */
+	@property({ type: BackgroundDesign, defaultValue: BackgroundDesign.Solid })
+	pageIndicatorBackgroundDesign!: BackgroundDesign;
+
+	/**
+	 * Defines the page indicator border design.
+	 * @type {sap.ui.webc.main.types.BorderDesign}
+	 * @name sap.ui.webc.main.Carousel.prototype.pageIndicatorBorderDesign
+	 * @since 1.14
+	 * @defaultvalue "Solid"
+	 * @public
+	 */
+	@property({ type: BorderDesign, defaultValue: BorderDesign.Solid })
+	pageIndicatorBorderDesign!: BorderDesign;
 
 	/**
 	 * Defines the index of the initially selected item.
@@ -232,20 +273,16 @@ class Carousel extends UI5Element {
 	 * <br><br>
 	 * Available options are:
 	 * <ul>
-	 * <li><code>Content</code></li>
-	 * <li><code>Navigation</code></li>
+	 * <li><code>Content</code> - the arrows are placed on the sides of the current page.</li>
+	 * <li><code>Navigation</code> - the arrows are placed on the sides of the page indicator.</li>
 	 * </ul>
-	 * <br>
-	 * When set to "Content", the arrows are placed on the sides of the current page.
-	 * <br>
-	 * When set to "Navigation", the arrows are placed on the sides of the page indicator.
 	 * @type {sap.ui.webc.main.types.CarouselArrowsPlacement}
 	 * @name sap.ui.webc.main.Carousel.prototype.arrowsPlacement
 	 * @defaultvalue "Content"
 	 * @public
 	 */
 	@property({ type: CarouselArrowsPlacement, defaultValue: CarouselArrowsPlacement.Content })
-	arrowsPlacement!: CarouselArrowsPlacement;
+	arrowsPlacement!: `${CarouselArrowsPlacement}`;
 
 	/**
 	 * Defines the carousel width in pixels.
@@ -270,7 +307,7 @@ class Carousel extends UI5Element {
 	_visibleNavigationArrows!: boolean;
 
 	_scrollEnablement: ScrollEnablement;
-	_onResizeBound: () => void;
+	_onResizeBound: ResizeObserverCallback;
 	_resizing: boolean;
 	_lastFocusedElements: Array<HTMLElement>;
 	_orderOfLastFocusedPages: Array<number>;
@@ -286,18 +323,6 @@ class Carousel extends UI5Element {
 	content!: Array<HTMLElement>;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return CarouselCss;
-	}
-
-	static get template() {
-		return CarouselTemplate;
-	}
 
 	static get pageTypeLimit() {
 		return 9;
@@ -449,6 +474,10 @@ class Carousel extends UI5Element {
 		} else {
 			this.getDomRef()!.focus();
 		}
+	}
+
+	get _backgroundDesign() {
+		return this.backgroundDesign.toLowerCase();
 	}
 
 	get _getLastFocusedActivePageIndex() {
@@ -617,6 +646,8 @@ class Carousel extends UI5Element {
 			navigation: {
 				"ui5-carousel-navigation-wrapper": true,
 				"ui5-carousel-navigation-with-buttons": this.renderNavigation && this.arrowsPlacement === CarouselArrowsPlacement.Navigation && !this.hideNavigationArrows,
+				[`ui5-carousel-navigation-wrapper-bg-${this.pageIndicatorBackgroundDesign.toLowerCase()}`]: true,
+				[`ui5-carousel-navigation-wrapper-border-${this.pageIndicatorBorderDesign.toLowerCase()}`]: true,
 			},
 			navPrevButton: {
 				"ui5-carousel-navigation-button--hidden": !this.hasPrev,
@@ -701,6 +732,7 @@ class Carousel extends UI5Element {
 
 	/**
 	 * The indices of the currently visible items of the component.
+	 * @public
 	 * @readonly
 	 * @since 1.0.0-rc.15
 	 * @returns {Integer[]} the indices of the visible items
@@ -715,13 +747,6 @@ class Carousel extends UI5Element {
 		});
 
 		return visibleItemsIndices;
-	}
-
-	static get dependencies() {
-		return [
-			Button,
-			Label,
-		];
 	}
 
 	static async onDefine() {

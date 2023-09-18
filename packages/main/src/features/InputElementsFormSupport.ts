@@ -1,5 +1,5 @@
 import { registerFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
-import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element";
+import type UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 
 interface IFormElement extends UI5Element {
 	value?: string | number,
@@ -12,6 +12,17 @@ interface IFormElement extends UI5Element {
 
 type NativeInputUpdateCallback = (element: IFormElement, nativeInput: HTMLInputElement) => void;
 type NativeInputChangeCallback = (e: Event) => void;
+
+const findNearestFormElement = (element: IFormElement) => {
+	let currentElement = element.parentElement;
+	while (currentElement && currentElement.tagName.toLowerCase() !== "form") {
+		currentElement = currentElement.parentElement;
+	}
+
+	if (currentElement instanceof HTMLFormElement) {
+		return currentElement;
+	}
+};
 
 class FormSupport {
 	/**
@@ -97,19 +108,15 @@ class FormSupport {
 	}
 
 	static triggerFormSubmit(element: IFormElement) {
-		let currentElement = element.parentElement;
-		while (currentElement && currentElement.tagName.toLowerCase() !== "form") {
-			currentElement = currentElement.parentElement;
-		}
-
-		if (currentElement instanceof HTMLFormElement) {
-			if (!currentElement.checkValidity()) {
-				currentElement.reportValidity();
+		const formElement = findNearestFormElement(element);
+		if (formElement) {
+			if (!formElement.checkValidity()) {
+				formElement.reportValidity();
 				return;
 			}
 
 			// eslint-disable-next-line no-undef
-			const submitPrevented = !currentElement.dispatchEvent(new SubmitEvent("submit", {
+			const submitPrevented = !formElement.dispatchEvent(new SubmitEvent("submit", {
 				bubbles: true,
 				cancelable: true,
 				submitter: element,
@@ -119,7 +126,14 @@ class FormSupport {
 				return;
 			}
 
-			currentElement.submit();
+			formElement.submit();
+		}
+	}
+
+	static triggerFormReset(element: IFormElement) {
+		const formElement = findNearestFormElement(element);
+		if (formElement) {
+			formElement.reset();
 		}
 	}
 }

@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { IOption } from "./Select.js";
 
@@ -14,6 +15,7 @@ import type { IOption } from "./Select.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.Option
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-option
  * @implements sap.ui.webc.main.ISelectOption
  * @public
@@ -24,7 +26,7 @@ class Option extends UI5Element implements IOption {
 	 * Defines the selected state of the component.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Option.selected
+	 * @name sap.ui.webc.main.Option.prototype.selected
 	 * @public
 	 */
 	@property({ type: Boolean })
@@ -36,7 +38,7 @@ class Option extends UI5Element implements IOption {
 	 * <b>Note:</b> A disabled component is hidden.
 	 * @type {boolean}
 	 * @defaultvalue false
-	 * @name sap.ui.webc.main.Option.disabled
+	 * @name sap.ui.webc.main.Option.prototype.disabled
 	 * @public
 	 * @since 1.0.0-rc.12
 	 */
@@ -58,10 +60,10 @@ class Option extends UI5Element implements IOption {
 	 * <br><br>
 	 * <b>Note:</b>
 	 * SAP-icons font provides numerous built-in icons. To find all the available icons, see the
-	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html" class="api-table-content-cell-link">Icon Explorer</ui5-link>.
+	 * <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Option.icon
+	 * @name sap.ui.webc.main.Option.prototype.icon
 	 * @public
 	 */
 	@property({ defaultValue: null })
@@ -72,7 +74,7 @@ class Option extends UI5Element implements IOption {
 	 * For more information on HTML Form support, see the <code>name</code> property of <code>ui5-select</code>.
 	 *
 	 * @type {string}
-	 * @name sap.ui.webc.main.Option.value
+	 * @name sap.ui.webc.main.Option.prototype.value
 	 * @public
 	 */
 	@property()
@@ -81,7 +83,7 @@ class Option extends UI5Element implements IOption {
 	/**
 	 * Defines the additional text displayed at the end of the option element.
 	 * @type {string}
-	 * @name sap.ui.webc.main.Option.additionalText
+	 * @name sap.ui.webc.main.Option.prototype.additionalText
 	 * @public
 	 * @since 1.3.0
 	 */
@@ -108,6 +110,8 @@ class Option extends UI5Element implements IOption {
 	 * @slot
 	 * @public
 	 */
+	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
+	text!: Array<Node>;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;

@@ -1,4 +1,4 @@
-const assert = require("chai").assert;
+import { assert } from "chai";
 
 describe("Wizard general interaction", () => {
 	before(async () => {
@@ -29,12 +29,11 @@ describe("Wizard general interaction", () => {
 		const wizListDescribedbyId = "wiz-nav-descr";
 		const wizListText = "Wizard Steps";
 
-		const step1InHeader = await wiz.shadow$(`[data-ui5-index="1"]`)
+		const step1InHeader = await wiz.shadow$(`[data-ui5-index="1"]`);
 		const step1InHeaderRoot = await wiz.shadow$(`[data-ui5-index="1"]`).shadow$(`.ui5-wiz-step-root`);
-		const step2InHeaderRoot = await wiz.shadow$(`[data-ui5-index="2"]`).shadow$(`.ui5-wiz-step-root`);;
+		const step2InHeaderRoot = await wiz.shadow$(`[data-ui5-index="2"]`).shadow$(`.ui5-wiz-step-root`);
 		const step1Text = "Step 1 Product type Active";
 		const step2Text = "Step 2 Product Information Inactive";
-
 
 		assert.strictEqual(await wizRoot.getAttribute("role"), "region",
 			"Wizard has role set.");
@@ -213,8 +212,8 @@ describe("Wizard general interaction", () => {
 		const step2 = await browser.$("#st2");
 		const scrollMarker = await browser.$("#scrollMarkerSt2");
 		const step2InHeader = await wiz.shadow$(`[data-ui5-index="2"]`);
-		const inpStepChangeCounter =  await browser.$("#inpStepChangeCounter");
-		const inpStepChangeCause =  await browser.$("#inpStepChangeCause");
+		const inpStepChangeCounter = await browser.$("#inpStepChangeCounter");
+		const inpStepChangeCause = await browser.$("#inpStepChangeCause");
 
 		// act - scroll the 2nd step into view
 		// Note: scrollIntoView works in Chrome, but if we start executing the test on every browser,
@@ -256,6 +255,33 @@ describe("Wizard general interaction", () => {
 			"Third step in the header is selected.");
 		assert.strictEqual(await inpStepChangeCounter.getProperty("value"), "7",
 			"Event step-change fired once for 7th time due to scrolling.");
+	});
+
+	it("Tests long text on wizard step to be truncated correctly", async () => {
+		const wiz = await browser.$("#wizTest");
+
+		const step5InHeader = await wiz.shadow$(`[data-ui5-index="5"]`);
+		const scrollMarker = await browser.$("#scrollMarkerSt5");
+
+		const btnToStep4 = await browser.$("#toStep4");
+		const btnToStep5 = await browser.$("#toStep5");
+
+		await browser.setWindowSize(1000, 1200);
+		const step4ScrollHeight = await wiz.shadow$(`[data-ui5-index="4"]`).shadow$(".ui5-wiz-step-title-text").getProperty("scrollHeight");
+		const step5ScrollHeight = await wiz.shadow$(`[data-ui5-index="5"]`).shadow$(".ui5-wiz-step-title-text").getProperty("scrollHeight");
+
+		// act - click on the steps in the header
+		await btnToStep4.click(); // click to enable step 4
+		await step5InHeader.click();
+		await btnToStep5.click(); // click to enable step 5
+
+		await scrollMarker.scrollIntoView();
+
+		assert.strictEqual(await step5InHeader.getAttribute("selected"), "true",
+			"Fifth step in the content is selected.");
+		assert.strictEqual(await step5InHeader.getAttribute("subtitle-text"), "(Optional)",
+			"Fifth step in the header is selected.");
+		assert.ok(step4ScrollHeight < step5ScrollHeight, "Fifth step scrollWidth should be bigger then the fourth step because of the truncation");
 	});
 
 	it("tests no scrolling to step, if the step was not changed", async () => {
@@ -352,5 +378,53 @@ describe("Wizard general interaction", () => {
 		// resize window XL
 		await browser.setWindowSize(1600, 1000);
 		assert.strictEqual(await wizard.getProperty("_breakpoint"), "XL", "Extra Large breakpoint is enabled");
+	});
+
+	it("WizardPageMode: move to next step", async () => {
+		await browser.url(`test/pages/WizardPageMode_test.html`);
+
+		const btnOpenDialog = await browser.$("#button");
+
+		await btnOpenDialog.click();
+
+		const wiz = await browser.$("#wiz2");
+		const step1 = await browser.$("#dialogStep1");
+		const step2 = await browser.$("#dialogStep2");
+		const step1InHeader = await wiz.shadow$(`[data-ui5-index="1"]`);
+		const step2InHeader = await wiz.shadow$(`[data-ui5-index="2"]`);
+
+		const nextStepButton = await browser.$("#nextButton");
+		const previousStepButton = await browser.$("#prevButton");
+
+		// assert - that first step in the content and in the header are selected
+		assert.strictEqual(await step1.getAttribute("selected"), "true",
+			"First step in the content is selected.");
+		assert.strictEqual(await step1InHeader.getAttribute("selected"), "true",
+			"First step in the header is selected.");
+
+		// act - click on the first step in the header
+		await nextStepButton.click();
+
+		// assert - that second step in the content and in the header are not selected
+		assert.strictEqual(await step2.getAttribute("selected"), "true",
+			"Second step in the content is not selected.");
+		assert.strictEqual(await step2InHeader.getAttribute("selected"), "true",
+			"Second step in the header is not selected.");
+		assert.strictEqual(await step1.getAttribute("selected"), null,
+			"First step in the content is not selected.");
+		assert.strictEqual(await step1.isDisplayedInViewport(), false,
+			"First step should not be visible.");
+
+		await previousStepButton.click();
+
+		// assert - that second step in the content and in the header are not selected
+		assert.strictEqual(await step1.getAttribute("selected"), "true",
+			"First step in the content is not selected.");
+		assert.strictEqual(await step1InHeader.getAttribute("selected"), "true",
+			"First step in the header is not selected.");
+		assert.strictEqual(await step2.getAttribute("selected"), null,
+			"Second step in the content is not selected.");
+		assert.strictEqual(await step2.isDisplayedInViewport(), false,
+			"Second step should not be visible.");
 	});
 });

@@ -8,7 +8,7 @@ const insertFontFace = () => {
 	const openUI5Support = getFeature<typeof OpenUI5Support>("OpenUI5Support");
 
 	// Only set the main font if there is no OpenUI5 support, or there is, but OpenUI5 is not loaded
-	if (!openUI5Support || !openUI5Support.isLoaded()) {
+	if (!openUI5Support || !openUI5Support.isOpenUI5Detected()) {
 		insertMainFontFace();
 	}
 

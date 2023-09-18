@@ -1,5 +1,5 @@
 import { isTabNext, isTabPrevious } from "@ui5/webcomponents-base/dist/Keys.js";
-import type { ClassMap, ComponentStylesData } from "@ui5/webcomponents-base/dist/types.js";
+import type { ClassMap } from "@ui5/webcomponents-base/dist/types.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ListItem from "./ListItem.js";
@@ -16,6 +16,20 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  *
  * The component accepts arbitrary HTML content to allow full customization.
  *
+ * <h3>CSS Shadow Parts</h3>
+ *
+ * <ui5-link target="_blank" href="https://developer.mozilla.org/en-US/docs/Web/CSS/::part">CSS Shadow Parts</ui5-link> allow developers to style elements inside the Shadow DOM.
+ * <br>
+ * The <code>ui5-li-custom</code> exposes the following CSS Shadow Parts:
+ * <ul>
+ * <li>native-li - Used to style the main li tag of the list item</li>
+ * <li>content - Used to style the content area of the list item</li>
+ * <li>detail-button - Used to style the button rendered when the list item is of type detail</li>
+ * <li>delete-button - Used to style the button rendered when the list item is in delete mode</li>
+ * <li>radio - Used to style the radio button rendered when the list item is in single selection mode</li>
+ * <li>checkbox - Used to style the checkbox rendered when the list item is in multiple selection mode</li>
+ * </ul>
+ *
  * @constructor
  * @author SAP SE
  * @alias sap.ui.webc.main.CustomListItem
@@ -24,7 +38,11 @@ import customListItemCss from "./generated/themes/CustomListItem.css.js";
  * @implements sap.ui.webc.main.IListItem
  * @public
  */
-@customElement("ui5-li-custom")
+@customElement({
+	tag: "ui5-li-custom",
+	template: CustomListItemTemplate,
+	styles: [ListItem.styles, customListItemCss],
+})
 class CustomListItem extends ListItem {
 	/**
 	 * Defines the text alternative of the component.
@@ -46,14 +64,6 @@ class CustomListItem extends ListItem {
 	 * @slot
 	 * @public
 	 */
-
-	static get template() {
-		return CustomListItemTemplate;
-	}
-
-	static get styles(): ComponentStylesData {
-		return [ListItem.styles, customListItemCss];
-	}
 
 	_onkeydown(e: KeyboardEvent) {
 		const isTab = isTabNext(e) || isTabPrevious(e);

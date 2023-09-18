@@ -15,7 +15,7 @@ module.exports = function (opts) {
 
 	return {
 		postcssPlugin: 'postcss-css-to-json',
-		Once (root) {
+		OnceExit (root) {
 			let css = root.toString();
 			css = proccessCSS(css);
 

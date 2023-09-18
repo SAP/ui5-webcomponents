@@ -93,7 +93,16 @@ const INITIAL_SPEED = 120; // milliseconds
  * @since 1.0.0-rc.13
  * @public
  */
-@customElement("ui5-step-input")
+@customElement({
+	tag: "ui5-step-input",
+	renderer: litRender,
+	styles: StepInputCss,
+	template: StepInputTemplate,
+	dependencies: [
+		Icon,
+		Input,
+	],
+})
 /**
  * Fired when the input operation has finished by pressing Enter or on focusout.
  *
@@ -146,15 +155,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @name sap.ui.webc.main.StepInput.prototype.valueState
 	 * @type {sap.ui.webc.base.types.ValueState}
@@ -162,7 +162,7 @@ class StepInput extends UI5Element implements IFormElement {
 	 * @public
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
-	valueState!: ValueState;
+	valueState!: `${ValueState}`;
 
 	/**
 	 * Defines whether the component is required.
@@ -324,28 +324,9 @@ class StepInput extends UI5Element implements IFormElement {
 	@slot()
 	formSupport!: Array<HTMLElement>;
 
-	_initialValueState?: ValueState;
+	_initialValueState?: `${ValueState}`;
 
 	static i18nBundle: I18nBundle;
-
-	static get render() {
-		return litRender;
-	}
-
-	static get styles() {
-		return StepInputCss;
-	}
-
-	static get template() {
-		return StepInputTemplate;
-	}
-
-	static get dependencies() {
-		return [
-			Icon,
-			Input,
-		];
-	}
 
 	static async onDefine() {
 		StepInput.i18nBundle = await getI18nBundle("@ui5/webcomponents");
@@ -436,6 +417,9 @@ class StepInput extends UI5Element implements IFormElement {
 
 	_onInputFocusIn() {
 		this._inputFocused = true;
+		if (this.value !== this._previousValue) {
+			this._previousValue = this.value;
+		}
 	}
 
 	_onInputFocusOut() {
