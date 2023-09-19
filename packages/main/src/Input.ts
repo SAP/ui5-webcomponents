@@ -46,7 +46,7 @@ import "@ui5/webcomponents-icons/dist/alert.js";
 import "@ui5/webcomponents-icons/dist/sys-enter-2.js";
 import "@ui5/webcomponents-icons/dist/information.js";
 import type SuggestionItem from "./SuggestionItem.js";
-import type { InputSuggestionText, SuggestionComponent } from "./features/InputSuggestions.js";
+import type { InputSuggestion, SuggestionComponent } from "./features/InputSuggestions.js";
 import type InputSuggestions from "./features/InputSuggestions.js";
 import type FormSupportT from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
@@ -627,7 +627,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	typedInValue: string;
 	lastConfirmedValue: string
 	isTyping: boolean
-	suggestionsTexts: Array<InputSuggestionText>;
+	suggestionObjects: Array<InputSuggestion>;
 	_handleResizeBound: ResizeObserverCallback;
 	_keepInnerValue: boolean;
 	_shouldAutocomplete?: boolean;
@@ -677,7 +677,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 		this.isTyping = false;
 
 		// Suggestions array initialization
-		this.suggestionsTexts = [];
+		this.suggestionObjects = [];
 
 		this._handleResizeBound = this._handleResize.bind(this);
 
@@ -702,7 +702,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 		if (this.showSuggestions) {
 			this.enableSuggestions();
-			this.suggestionsTexts = this.Suggestions!.defaultSlotProperties(this.typedInValue);
+			this.suggestionObjects = this.Suggestions!.defaultSlotProperties(this.typedInValue);
 		}
 
 		this.effectiveShowClearIcon = (this.showClearIcon && !!this.value && !this.readonly && !this.disabled);
@@ -1493,11 +1493,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 	announceSelectedItem() {
 		const invisibleText = this.shadowRoot!.querySelector(`#${this._id}-selectionText`)!;
 
-		if (this.Suggestions && this.Suggestions._isItemOnTarget()) {
-			invisibleText.textContent = this.itemSelectionAnnounce;
-		} else {
-			invisibleText.textContent = "";
-		}
+		invisibleText.textContent = this.itemSelectionAnnounce;
 	}
 
 	get _readonly() {
@@ -1654,7 +1650,9 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 
 	get availableSuggestionsCount() {
 		if (this.showSuggestions && (this.value || this.Suggestions!.isOpened())) {
-			switch (this.suggestionsTexts.length) {
+			const nonGroupItems = this.suggestionObjects.filter(item => !item.groupItem);
+
+			switch (nonGroupItems.length) {
 			case 0:
 				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_NO_HIT);
 
@@ -1662,7 +1660,7 @@ class Input extends UI5Element implements SuggestionComponent, IFormElement {
 				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_ONE_HIT);
 
 			default:
-				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, this.suggestionsTexts.length);
+				return Input.i18nBundle.getText(INPUT_SUGGESTIONS_MORE_HITS, nonGroupItems.length);
 			}
 		}
 
