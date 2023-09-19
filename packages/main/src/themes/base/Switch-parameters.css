@@ -136,6 +136,10 @@
 
 	--_ui5_switch_icon_width: 0.75rem;
 	--_ui5_switch_icon_height: 0.75rem;
+
+	/* RTL Parameters */
+	--_ui5_switch_text_inactive_left_alternate_rtl: calc(-100% + 2rem);
+	--_ui5_switch_text_inactive_right_rtl: auto;
 }
 
 [data-ui5-compact-size],
@@ -161,4 +165,5 @@
 	--_ui5_switch_text_font_size: var(--sapFontSmallSize);
 	--_ui5_switch_text_width: none;
 	--_ui5_switch_text_active_left: calc(-100% + 1.625rem);
+	--_ui5_switch_text_inactive_left_alternate_rtl: -2.125rem;
 }

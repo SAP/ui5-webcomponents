@@ -142,6 +142,7 @@
 	height: 0;
 	margin: 0;
 	visibility: hidden;
+	appearance: none;
 	-webkit-appearance: none;
 }
 
@@ -372,11 +373,31 @@
 }
 
 [dir="rtl"].ui5-switch-root .ui5-switch-text--on {
-	right: var(--_ui5_switch_text_active_left);
+	right: var(--_ui5_switch_text_active_left_alternate);
 	left: var(--_ui5_switch_text_active_right);
 }
 
 [dir="rtl"].ui5-switch-root .ui5-switch-text--off {
 	right: var(--_ui5_switch_text_inactive_left);
 	left: var(--_ui5_switch_text_inactive_right);
+}
+
+[dir="rtl"].ui5-switch-root:not(.ui5-switch--checked).ui5-switch--semantic .ui5-switch-text--off,
+[dir="rtl"].ui5-switch-root:not(.ui5-switch--checked).ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--off {
+	left: var(--_ui5_switch_text_inactive_right);
+	right: var(--_ui5_switch_text_inactive_left);
+}
+
+[dir="rtl"].ui5-switch-root.ui5-switch--checked.ui5-switch--semantic .ui5-switch-text--on, 
+[dir="rtl"].ui5-switch-root.ui5-switch--checked.ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--on {
+	right: var(--_ui5_switch_text_active_left);
+	left: auto;
+}
+
+[dir="rtl"].ui5-switch-root:not(.ui5-switch--no-label):not(.ui5-switch--semantic) .ui5-switch-text--on {
+	right: var(--_ui5_switch_text_inactive_left_alternate_rtl);
+}
+
+[dir="rtl"].ui5-switch-root:not(.ui5-switch--no-label):not(.ui5-switch--semantic) .ui5-switch-text--off {
+	right: var(--_ui5_switch_text_inactive_right_rtl);
 }
