@@ -108,15 +108,6 @@ class SelectMenuOption extends CustomListItem implements IOption {
 	 * @public
 	 */
 
-	/**
-	 * <b>Note:</b> The slot is inherited and not supported. If set, it won't take any effect.
-	 *
-	 * @name sap.ui.webc.main.SelectMenuOption.prototype.deleteButton
-	 * @slot
-	 * @public
-	 * @deprecated
-	 */
-
 	get _accInfo() {
 		const accInfoSettings = {
 			ariaSelected: this.selected,
