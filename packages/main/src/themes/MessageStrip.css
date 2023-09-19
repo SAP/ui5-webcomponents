@@ -83,10 +83,8 @@
 
 /** Close button - always in compact mode **/
 .ui5-message-strip-close-button {
-	width: 2rem;
-	min-width: 2rem;
-	height: 1.65rem;
-	min-height: 1.65rem;
+	height: 1.625rem;
+	min-height: 1.625rem;
 	position: absolute;
 	top: var(--_ui5_message_strip_close_button_top);
 	inset-inline-end: var(--_ui5_message_strip_close_button_right);
