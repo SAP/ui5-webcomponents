@@ -33,7 +33,6 @@ type DirectionStart = "left" | "right";
  * @author SAP SE
  * @alias sap.ui.webc.main.SliderBase
  * @extends sap.ui.webc.base.UI5Element
- * @tagname ui5-slider
  * @public
  */
 @customElement({

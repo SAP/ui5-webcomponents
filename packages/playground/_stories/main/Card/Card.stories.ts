@@ -12,11 +12,15 @@ const component = "ui5-card";
 
 export default {
 	title: "Main/Card",
-	component,
-	subcomponents: { 'CardHeader': 'ui5-card-header' },
+	component: "Card",
+	subcomponents: { 'CardHeader': 'CardHeader' },
 	parameters: {
 		docs: {
-			page: DocsPage({ ...componentInfo, component })
+			page: DocsPage({ ...componentInfo, component }),
+			story: {
+				iframeHeight: "370px",
+				inline: false,
+			},
 		},
 	},
 	argTypes,
@@ -43,7 +47,7 @@ const header = (titleText: string, subtitleText: string, status?: string, action
 	${interactive ? "interactive" : ""}
 >
 	${avatar ? avatar : ""}
-	${actions?.map(a => `<ui5-button design="Transparent" slot="action">${a}</ui5-button>`)}
+	${actions ? actions.map(a => `<ui5-button design="Transparent" slot="action">${a}</ui5-button>`) : ""}
 </ui5-card-header>`;
 };
 
@@ -63,7 +67,7 @@ const setWidth = (width: string) => {
 export const InteractiveHeader = Template.bind({});
 InteractiveHeader.args = {
 	header: header("This header is interactive", "Click, press Enter or Space", "3 of 6", [], `<ui5-icon name="group" slot="avatar"></ui5-icon>`, true),
-	default: `<ui5-list separators="None" stye="margin-block-end: 0.75rem;">
+	default: `<ui5-list separators="None" style="margin-block-end: 0.75rem;">
 	<ui5-li image="../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
 	<ui5-li image="../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
 	<ui5-li image="../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
@@ -91,7 +95,7 @@ WithTable.args = {
 	.status-success { color: #107e3e; }
 </style>
 
-<ui5-table style="margin-block-end: .75rem">
+<ui5-table style="margin-block-end: 0.75rem;">
 	<ui5-table-column slot="columns">
 		<ui5-label>Sales Order</ui5-label>
 	</ui5-table-column>
@@ -150,6 +154,15 @@ WithTable.args = {
 </ui5-table>`
 };
 WithTable.decorators = [setWidth("40rem")];
+WithTable.parameters = {
+	docs: {
+		page: DocsPage({ ...componentInfo, component }),
+		story: {
+			iframeHeight: "250px",
+			inline: false,
+		},
+	},
+}
 
 export const WithTimeline = Template.bind({});
 WithTimeline.args = {
@@ -169,14 +182,14 @@ WithTimeline.decorators = [setWidth("22rem")];
 export const More = Template.bind({});
 const MoreCards = [{
 	header: header("David Williams", "Sales Manager"),
-	default: `<ui5-list separators="Inner">
+	default: `<ui5-list separators="Inner" style="margin-block-end: 0.75rem;">
 	<ui5-li icon="competitor" icon-end>Personal Development</ui5-li>
 	<ui5-li icon="wallet" icon-end>Finance</ui5-li>
 	<ui5-li icon="collaborate" icon-end>Communications Skills</ui5-li>
 </ui5-list>`
 }, {
 	header: header("Project Cloud Transformation", "Revenue per Product | EUR", "3 of 3"),
-	default: `<ui5-list separators="None">
+	default: `<ui5-list separators="None" style="margin-block-end: 0.75rem;">
 	<ui5-li description="ID234522566-D44" additional-text="27.25K EUR" additional-text-state="Success">Avantel</ui5-li>
 	<ui5-li description="ID7125852785-A51" additional-text="22.89K EUR" additional-text-state="Warning">Telecomunicaciones Star</ui5-li>
 	<ui5-li description="ID123555587-I05" additional-text="7.85K EUR" additional-text-state="Error">Talpa</ui5-li>
@@ -198,15 +211,15 @@ const MoreCards = [{
 <div class="content content-padding">
 	<ui5-title level="H5" style="padding-block-end: 1rem;">Contact details</ui5-title>
 	<div class="content-group">
-		<ui5-label>Company Name</ui5-label>
-		<ui5-title level="H6">Company A</ui5-title>
+		<ui5-label show-colon>Company Name</ui5-label>
+		<span>Company A</span>
 	</div>
 	<div class="content-group">
-		<ui5-label>Address</ui5-label>
-		<ui5-title level="H6">481 West Street, Anytown 45066, USA</ui5-title>
+		<ui5-label show-colon>Address</ui5-label>
+		<span>481 West Street, Anytown 45066, USA</span>
 	</div>
 	<div class="content-group">
-		<ui5-label>Website</ui5-label>
+		<ui5-label show-colon>Website</ui5-label>
 		<ui5-link target="_blank">www.company_a.example.com</ui5-link>
 	</div>
 </div>`
@@ -228,3 +241,13 @@ More.decorators = [
 			</div>`;
 	},
 ];
+
+More.parameters = {
+	docs: {
+		page: DocsPage({ ...componentInfo, component }),
+		story: {
+			iframeHeight: "680px",
+			inline: false,
+		},
+	},
+}

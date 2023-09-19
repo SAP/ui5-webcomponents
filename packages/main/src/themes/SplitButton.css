@@ -6,26 +6,36 @@
 	height: 100%;
 	border-radius: var(--_ui5_button_border_radius);
 	background-color: var(--sapButton_Background);
+	box-shadow: var(--_ui5_split_button_host_default_box_shadow);
+}
+
+:host([disabled]:not([hidden])) {
+	pointer-events: none;
 }
 
 :host([design="Positive"]:not([hidden])) {
 	background-color: var(--sapButton_Accept_Background);
+	box-shadow: var(--_ui5_split_button_host_positive_box_shadow);
 }
 
 :host([design="Negative"]:not([hidden])) {
 	background-color: var(--sapButton_Reject_Background);
+	box-shadow: var(--_ui5_split_button_host_negative_box_shadow);
 }
 
 :host([design="Attention"]:not([hidden])) {
 	background-color: var(--sapButton_Attention_Background);
+	box-shadow: var(--_ui5_split_button_host_attention_box_shadow);
 }
 
 :host([design="Emphasized"]:not([hidden])) {
 	background-color: var(--sapButton_Emphasized_Background);
+	box-shadow: var(--_ui5_split_button_host_emphasized_box_shadow);
 }
 
 :host([design="Transparent"]:not([hidden])) {
-	background-color: transparent;
+	background-color: var(--sapButton_Lite_Background);
+	box-shadow: var(--_ui5_split_button_host_transparent_box_shadow);
 }
 
 :host([design="Transparent"][disabled]:not([hidden])) {
@@ -33,7 +43,8 @@
 }
 
 :host([design="Transparent"]:not([hidden]):not([disabled]):hover) {
-	background-color: var(--_ui5_split_button_transparent_hover_background);
+	background-color: var(--_ui5_split_button_host_transparent_hover_background);
+	box-shadow: var(--_ui5_split_button_host_transparent_hover_box_shadow);
 }
 
 :host([design="Transparent"]:not([hidden]):not([disabled]):hover) .ui5-split-arrow-button:not(:hover),
@@ -71,8 +82,11 @@
 .ui5-split-text-button {
 	border-top-right-radius: var(--_ui5_split_button_hover_border_radius);
 	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
+	border-width: 0.0625rem;
 	border-right-width: var(--_ui5_split_button_text_button_right_border_width);
 	margin-right: var(--_ui5_split_button_text_button_width);
+	border-color: var(--_ui5_split_text_button_border_color);
+	background-color: var(--_ui5_split_text_button_background_color);
 	vertical-align: top;
 	width: inherit;
 }
@@ -80,10 +94,74 @@
 .ui5-split-text-button:hover {
 	border-top-right-radius: var(--_ui5_split_button_hover_border_radius);
 	border-bottom-right-radius: var(--_ui5_split_button_hover_border_radius);
+	background-color: var(--sapButton_Hover_Background);
+	box-shadow: none;
+	border: var(--_ui5_split_text_button_hover_border);
+	border-right: var(--_ui5_split_text_button_hover_border_right);
+	border-left: var(--_ui5_split_text_button_hover_border_left);
+}
+.ui5-split-text-button[design="Emphasized"] {
+	border: var(--_ui5_split_text_button_emphasized_border);
+	border-width: var(--_ui5_split_text_button_emphasized_border_width);
+}
+.ui5-split-text-button[design="Emphasized"]:hover {
+	background-color: var(--sapButton_Emphasized_Hover_Background);
+	border: var(--_ui5_split_text_button_emphasized_hover_border);
+	border-right: var(--_ui5_split_text_button_emphasized_hover_border_right);
+	border-left: var(--_ui5_split_text_button_emphasized_hover_border_left);
+}
+.ui5-split-text-button[design="Positive"]:hover {
+	background-color: var(--sapButton_Accept_Hover_Background);
+	border: var(--_ui5_split_text_button_positive_hover_border);
+	border-right: var(--_ui5_split_text_button_positive_hover_border_right);
+	border-left: var(--_ui5_split_text_button_positive_hover_border_left);
+}
+.ui5-split-text-button[design="Negative"]:hover {
+	background-color: var(--sapButton_Reject_Hover_Background);
+	border: var(--_ui5_split_text_button_negative_hover_border);
+	border-right: var(--_ui5_split_text_button_negative_hover_border_right);
+	border-left: var(--_ui5_split_text_button_negative_hover_border_left);
+}
+.ui5-split-text-button[design="Attention"]:hover {
+	background-color: var(--sapButton_Attention_Hover_Background);
+	border: var(--_ui5_split_text_button_attention_hover_border);
+	border-right: var(--_ui5_split_text_button_attention_hover_border_right);
+	border-left: var(--_ui5_split_text_button_attention_hover_border_left);
+}
+.ui5-split-text-button[design="Transparent"]:hover {
+	background-color: var(--_ui5_split_button_transparent_hover_background);
+	border: var(--_ui5_split_text_button_transparent_hover_border);
+	border-right: var(--_ui5_split_text_button_transparent_hover_border_right);
+	border-left: var(--_ui5_split_text_button_transparent_hover_border_left);
 }
 
 .ui5-split-text-button[active] {
 	outline: 0;
+}
+
+.ui5-split-text-button[active][design="Emphasized"] {
+	background-color: var(--sapButton_Selected_Background);
+	color: var(--sapButton_Emphasized_Active_TextColor);
+}
+.ui5-split-text-button[active][design="Negative"] {
+	background-color: var(--sapButton_Reject_Selected_Background);
+	color: var(--sapButton_Reject_Active_TextColor);
+}
+.ui5-split-text-button[active][design="Positive"] {
+	background-color: var(--sapButton_Accept_Selected_Background);
+	color: var(--sapButton_Accept_Active_TextColor);
+}
+.ui5-split-text-button[active][design="Attention"] {
+	background-color: var(--sapButton_Attention_Selected_Background);
+	color: var(--sapButton_Attention_Active_TextColor);
+}
+.ui5-split-text-button[active][design="Default"] {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
+}
+.ui5-split-text-button[active][design="Transparent"] {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
 }
 
 .ui5-split-arrow-button-wrapper {
@@ -96,13 +174,41 @@
 	border-top-left-radius: var(--_ui5_split_button_hover_border_radius);
 	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
 	width: 2.25rem;
+	border-color: var(--_ui5_split_text_button_border_color);
+	background-color: var(--_ui5_split_text_button_background_color);
 }
 
 .ui5-split-text-button[dir="rtl"]:hover {
 	border-top-left-radius: var(--_ui5_split_button_hover_border_radius);
 	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
+	border-left: var(--_ui5_split_text_button_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_hover_border_right_rtl);
 }
 
+.ui5-split-text-button[design="Emphasized"][dir="rtl"]:hover {
+	border-left: var(--_ui5_split_text_button_emphasized_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_emphasized_hover_border_right_rtl);
+}
+
+.ui5-split-text-button[design="Positive"][dir="rtl"]:hover {
+	border-left: var(--_ui5_split_text_button_positive_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_positive_hover_border_right_rtl);
+}
+
+.ui5-split-text-button[design="Negative"][dir="rtl"]:hover {
+	border-left: var(--_ui5_split_text_button_negative_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_negative_hover_border_right_rtl);
+}
+
+.ui5-split-text-button[design="Attention"][dir="rtl"]:hover {
+	border-left: var(--_ui5_split_text_button_attention_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_attention_hover_border_right_rtl);
+}
+
+.ui5-split-text-button[design="Transparent"][dir="rtl"]:hover {
+	border-left: var(--_ui5_split_text_button_transparent_hover_border_left_rtl);
+	border-right: var(--_ui5_split_text_button_transparent_hover_border_right_rtl);
+}
 
 [dir="rtl"] .ui5-split-arrow-button:hover {
 	border-top-right-radius: var(--_ui5_split_button_hover_border_radius);
@@ -112,9 +218,56 @@
 .ui5-split-arrow-button:hover {
 	border-top-left-radius: var(--_ui5_split_button_hover_border_radius);
 	border-bottom-left-radius: var(--_ui5_split_button_hover_border_radius);
+	background-color: var(--sapButton_Hover_Background);
+	box-shadow: none;
+	border: var(--_ui5_split_arrow_button_hover_border);
+}
+
+.ui5-split-arrow-button[design="Emphasized"]:hover {
+	background-color: var(--sapButton_Emphasized_Hover_Background);
+	border: var(--_ui5_split_arrow_button_emphasized_hover_border);
+	border-left-width: var(--sapButton_BorderWidth);
+}
+
+.ui5-split-arrow-button-wrapper[dir="rtl"] .ui5-split-arrow-button[design="Emphasized"]:hover {
+	border-left-width: var(--_ui5_split_arrow_button_wrapper_emphasized_hover_border_left_width_rtl);
+	border-right-width: var(--sapButton_BorderWidth);
+}
+
+.ui5-split-arrow-button[design="Positive"]:hover {
+	background-color: var(--sapButton_Accept_Hover_Background);
+	border: var(--_ui5_split_arrow_button_positive_hover_border);
+}
+
+.ui5-split-arrow-button[design="Negative"]:hover {
+	background-color: var(--sapButton_Reject_Hover_Background);
+	border: var(--_ui5_split_arrow_button_negative_hover_border);
+}
+
+.ui5-split-arrow-button[design="Attention"]:hover {
+	background-color: var(--sapButton_Attention_Hover_Background);
+	border: var(--_ui5_split_arrow_button_attention_hover_border);
+}
+
+.ui5-split-arrow-button[design="Transparent"]:hover {
+	background-color: var(--_ui5_split_button_transparent_hover_background);
+	border: var(--_ui5_split_arrow_button_transparent_hover_border);
 }
 
 .ui5-split-arrow-button:before {
+	content: "";
+	position: absolute;
+	box-sizing: border-box;
+	pointer-events: none;
+	left: var(--_ui5_split_button_middle_separator_left);
+	top: var(--_ui5_split_button_middle_separator_top);
+	right: 0;
+	height: var(--_ui5_split_button_middle_separator_height);
+	border: 0 solid var(--sapButton_TextColor);
+	border-left-width: 0.0625rem;
+}
+
+.ui5-split-arrow-button[design="Emphasized"]:before {
 	content: "";
 	position: absolute;
 	box-sizing: border-box;
@@ -169,9 +322,13 @@
 
 .ui5-split-text-button[dir="rtl"] {
 	border-radius: 0 var(--_ui5_button_border_radius) var(--_ui5_button_border_radius) 0;
-	border-width: 1px 1px 1px 0;
+	border-width: var(--sapButton_BorderWidth);
 	margin-right: 0;
 	margin-left: var(--_ui5_split_button_text_button_width);
+}
+
+.ui5-split-text-button[design="Emphasized"][dir="rtl"] {
+	border-width: var(--_ui5_split_text_button_emphasized_border_width_rtl);
 }
 
 .ui5-split-arrow-button-wrapper[dir="rtl"] {
@@ -207,4 +364,34 @@
 	border-bottom-left-radius: var(--_ui5_split_button_inner_focused_border_radius_inner);
 	border-top-right-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
 	border-bottom-right-radius: var(--_ui5_split_button_inner_focused_border_radius_outer);
+}
+
+.ui5-split-arrow-button[active][design="Emphasized"] {
+	background-color: var(--sapButton_Selected_Background);
+	color: var(--sapButton_Emphasized_Active_TextColor);
+}
+
+.ui5-split-arrow-button[active][design="Negative"] {
+	background-color: var(--sapButton_Reject_Selected_Background);
+	color: var(--sapButton_Reject_Active_TextColor);
+}
+
+.ui5-split-arrow-button[active][design="Positive"] {
+	background-color: var(--sapButton_Accept_Selected_Background);
+	color: var(--sapButton_Accept_Active_TextColor);
+}
+
+.ui5-split-arrow-button[active][design="Attention"] {
+	background-color: var(--sapButton_Attention_Selected_Background);
+	color: var(--sapButton_Attention_Active_TextColor);
+}
+
+.ui5-split-arrow-button[active][design="Default"] {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
+}
+
+.ui5-split-arrow-button[active][design="Transparent"] {
+	background-color: var(--sapButton_Active_Background);
+	color: var(--sapButton_Active_TextColor);
 }

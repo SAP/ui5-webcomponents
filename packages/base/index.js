@@ -1,7 +1,7 @@
 // animations/
 import scroll from "./dist/animations/scroll.js";
 import slideDown from "./dist/animations/slideDown.js";
-import slideUp from "./dist/animations/slideup.js";
+import slideUp from "./dist/animations/slideUp.js";
 
 // config/
 import { getAnimationMode, setAnimationMode } from "./dist/config/AnimationMode.js";
@@ -10,9 +10,9 @@ import { getFirstDayOfWeek, getLegacyDateCalendarCustomizing } from "./dist/conf
 import {
 	setDefaultIconCollection,
 	getDefaultIconCollection,
-	getEffectiveIconCollection,
-	RegisteredIconCollection,
 } from "./dist/config/Icons.js";
+import { RegisteredIconCollection } from "./dist/asset-registries/util/IconCollectionsByTheme.js";
+import getEffectiveIconCollection from "./dist/asset-registries/util/getIconCollectionsByTheme.js";
 import {
 	getLanguage,
 	setLanguage,

@@ -110,6 +110,17 @@ class Link extends UI5Element implements ITabbable {
 	disabled!: boolean;
 
 	/**
+	 * Defines the tooltip of the component.
+	 * @type {string}
+	 * @defaultvalue ""
+	 * @private
+	 * @name sap.ui.webc.main.Link.prototype.title
+	 * @since 1.18.0
+	 */
+	 @property()
+	 title!: string;
+
+	/**
 	 * Defines the component href.
 	 * <br><br>
 	 * <b>Note:</b> Standard hyperlink behavior is supported.
@@ -160,11 +171,7 @@ class Link extends UI5Element implements ITabbable {
 
 	/**
 	 * Defines how the text of a component will be displayed when there is not enough space.
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
-	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
-	 * </ul>
+	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
 	 * @type {sap.ui.webc.main.types.WrappingType}
 	 * @name sap.ui.webc.main.Link.prototype.wrappingType

@@ -15,7 +15,7 @@ const component = "ui5-file-uploader";
 
 export default {
 	title: "Main/FileUploader",
-	component,
+	component: "FileUploader",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
@@ -48,13 +48,6 @@ Basic.decorators = [
 	${story()}`,
 ];
 
-export const Custom = Template.bind({});
-Custom.storyName = "With Custom Design ";
-Custom.args = {
-	hideInput: true,
-	default: `<ui5-badge>Upload File</ui5-badge>`,
-};
-
 export const Advanced = Template.bind({});
 Advanced.storyName = "Image Uploader";
 Advanced.args = {
@@ -69,7 +62,7 @@ Advanced.decorators = [
 	<div id="result"></div>
 	<script>
 		var fileUploader = document.querySelector("#fileuploader"),
-			resultDiv = document.querySelector("#result");
+		resultDiv = document.querySelector("#result");
 		fileUploader.addEventListener("change", function(event) {
 			var files = event.target.files;
 			if (!files.length) {

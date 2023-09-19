@@ -2,6 +2,8 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getNextZIndex } from "@ui5/webcomponents-base/dist/util/PopupUtils.js";
+import { isEscape } from "@ui5/webcomponents-base/dist/Keys.js";
+import { isMac } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import ToastPlacement from "./types/ToastPlacement.js";
@@ -15,6 +17,33 @@ import ToastCss from "./generated/themes/Toast.css.js";
 // Constants
 const MIN_DURATION = 500;
 const MAX_DURATION = 1000;
+const openedToasts: Array<Toast> = [];
+let opener: HTMLElement | null;
+
+const handleGlobalKeydown = (e: KeyboardEvent) => {
+	const isCtrl = e.metaKey || (!isMac() && e.ctrlKey);
+	const isMKey = e.key.toLowerCase() === "m";
+	const isCombinationPressed = isCtrl && e.shiftKey && isMKey;
+	const hasOpenToast = openedToasts.length;
+
+	if (isCombinationPressed) {
+		e.preventDefault();
+
+		if (hasOpenToast) {
+			openedToasts[0].focusable = true;
+
+			if (openedToasts[0].focused) {
+				openedToasts[0].focused = false;
+				opener?.focus();
+			} else {
+				opener = (document.activeElement as HTMLElement);
+				openedToasts[0].focus();
+			}
+		}
+	}
+};
+
+document.addEventListener("keydown", handleGlobalKeydown);
 
 /**
  * @class
@@ -78,18 +107,6 @@ class Toast extends UI5Element {
 	/**
 	 * Defines the placement of the component.
 	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>TopStart</code></li>
-	 * <li><code>TopCenter</code></li>
-	 * <li><code>TopEnd</code></li>
-	 * <li><code>MiddleStart</code></li>
-	 * <li><code>MiddleCenter</code></li>
-	 * <li><code>MiddleEnd</code></li>
-	 * <li><code>BottomStart</code></li>
-	 * <li><code>BottomCenter</code></li>
-	 * <li><code>BottomEnd</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.main.types.ToastPlacement}
 	 * @name sap.ui.webc.main.Toast.prototype.placement
@@ -122,6 +139,24 @@ class Toast extends UI5Element {
 	 */
 	@property({ type: Boolean })
 	domRendered!: boolean;
+
+	/**
+	 * Indicates whether the toast could be focused
+	 * This happens when ctr / command + shift + m is pressed
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focusable!: boolean;
+
+	/**
+	 * Indicates whether the toast is focused
+	 * This happens when ctr / command + shift + m is pressed
+	 * @type {boolean}
+	 * @private
+	 */
+	@property({ type: Boolean })
+	focused!: boolean;
 
 	/**
 	 * Defines the text of the component.
@@ -166,6 +201,16 @@ class Toast extends UI5Element {
 		}
 	}
 
+	_onfocusin() {
+		if (this.focusable) {
+			this.focused = true;
+		}
+	}
+
+	_onfocusout() {
+		this.focused = false;
+	}
+
 	/**
 	 * If the minimum duration is lower than 500ms, we force
 	 * it to be 500ms, as described in the documentation.
@@ -190,7 +235,7 @@ class Toast extends UI5Element {
 				"transition-delay": this.open ? `${this.effectiveDuration - transitionDuration}ms` : "",
 
 				// We alter the opacity property, in order to trigger transition
-				"opacity": this.open && !this.hover ? "0" : "",
+				"opacity": this.open && !this.hover && !this.focused ? "0" : "",
 
 				"z-index": getNextZIndex(),
 			},
@@ -201,15 +246,20 @@ class Toast extends UI5Element {
 		this.domRendered = true;
 		requestAnimationFrame(() => {
 			this.open = true;
+			openedToasts.pop();
+			openedToasts.push(this);
 		});
 	}
 
 	_ontransitionend() {
-		if (this.hover) {
+		if (this.hover || this.focused) {
 			return;
 		}
 		this.domRendered = false;
 		this.open = false;
+		this.focusable = false;
+		this.focused = false;
+		openedToasts.pop();
 	}
 
 	_onmouseover() {
@@ -218,6 +268,17 @@ class Toast extends UI5Element {
 
 	_onmouseleave() {
 		this.hover = false;
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		if (isEscape(e)) {
+			this.focused = false;
+			opener?.focus();
+		}
+	}
+
+	get _tabindex() {
+		return this.focused ? "0" : "-1";
 	}
 }
 

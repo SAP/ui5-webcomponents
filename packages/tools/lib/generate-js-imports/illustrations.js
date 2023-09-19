@@ -1,72 +1,83 @@
 const fs = require("fs").promises;
-const path = require('path');
+const path = require("path");
 
-const generate = async () => {
-	const fioriInputFolder = path.normalize(process.argv[2]);
-	const tntInputFolder = path.normalize(process.argv[3]);
-	const outputFile = path.normalize(`${process.argv[4]}/Illustrations.js`);
-
-	const dir = await fs.readdir(fioriInputFolder);
-	const fioriIllustrationsOnFileSystem = dir.map(illustrationName => {
-		const fioriMatches = illustrationName.match(/.*\.js$/);
-		return fioriMatches ? illustrationName : undefined;
-	}).filter(key => !!key);
-
-	const tntDir = await fs.readdir(tntInputFolder);
-	const tntIllustrationsOnFileSystem = tntDir.map(illustrationName => {
-		const tntMatches = illustrationName.match(/.*\.js$/);
-		return tntMatches ? illustrationName : undefined;
-	}).filter(key => !!key);
-
-	// dynamic imports for Fiori illustrations
-	const fioriAvailableIllustrationsArray = `[${fioriIllustrationsOnFileSystem.filter(
-		// skipping the items starting with sapIllus-Dialog, sapIllus-Scene, sapIllus-Spot since they are included in the illustration's js file
-		line => !line.startsWith("sapIllus-Dialog") && !line.startsWith("sapIllus-Scene") && !line.startsWith("sapIllus-Spot") && !line.startsWith("AllIllustrations")).map(illustrationName => `"${illustrationName.replace('.js', '')}"`).join(", ")}]`;
-
-	const fioriDynamicImportLines = fioriIllustrationsOnFileSystem.map(illustrationName =>
-		`\t\tcase "${illustrationName.replace('.js', '')}": return (await import("../../illustrations/${illustrationName}")).default;`).filter(
-			// skipping the items starting with sapIllus-Dialog, sapIllus-Scene, sapIllus-Spot since they are included in the illustration's js file
-			line => !line.startsWith("\t\tcase \"sapIllus-Dialog") && !line.startsWith("\t\tcase \"sapIllus-Scene") && !line.startsWith("\t\tcase \"sapIllus-Spot") && !line.startsWith("\t\tcase \"AllIllustrations")).join("\n");
-
-	// dynamic imports for Tnt illustrations
-	const tntAvailableIllustrationsArray = `[${tntIllustrationsOnFileSystem.filter(
-		// skipping the items starting with tnt-Dialog, tnt-Scene, tnt-Spot since they are included in the illustration's js file
-		line => !line.startsWith("tnt-Dialog") && !line.startsWith("tnt-Scene") && !line.startsWith("tnt-Spot")).map(illustrationName => `"Tnt${illustrationName.replace('.js', '')}"`).join(", ")}]`;
-
-	const tntDynamicImportLines = tntIllustrationsOnFileSystem.map(illustrationName =>
-		`\t\tcase "Tnt${illustrationName.replace('.js', '')}": return (await import("../../illustrations/tnt/${illustrationName}")).default;`).filter(
-			// skipping the items starting with tnt-Dialog, tnt-Scene, tnt-Spot since they are included in the illustration's js file
-			line => !line.startsWith("\t\tcase \"Tnttnt-Dialog") && !line.startsWith("\t\tcase \"Tnttnt-Scene") && !line.startsWith("\t\tcase \"Tnttnt-Spot")).join("\n");
-
-
-	// dynamic imports file content
-	const contentDynamic = `import { registerIllustrationLoader } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
-
-const loadIllustration = async (illustrationName) => {
-	switch (illustrationName) {
-${fioriDynamicImportLines}
-${tntDynamicImportLines}
-		default: throw new Error("[Illustrations] Illustration not found: " + illustrationName);
-	}
-};
-	const loadAndCheck = async (illustrationName) => {
-		const data = await loadIllustration(illustrationName);
-		return data;
-	}
-
-
-	${fioriAvailableIllustrationsArray}.forEach(illustrationName => registerIllustrationLoader(illustrationName, loadAndCheck));
-	${tntAvailableIllustrationsArray}.forEach(illustrationName => registerIllustrationLoader(illustrationName, loadAndCheck));`;
-	
-
-	await fs.mkdir(path.dirname(outputFile), { recursive: true });
-	return Promise.all([fs.writeFile(outputFile, contentDynamic)]);
+const generateDynamicImportLines = (fileNames, location, exclusionPatterns = []) => {
+  return fileNames
+    .filter((fileName) => !exclusionPatterns.some((pattern) => fileName.startsWith(pattern)))
+    .map((fileName) => {
+      const illustrationPath = `${location}/${fileName.replace(".js", "")}`;
+      return `\t\tcase "${fileName.replace('.js', '')}": return (await import("${illustrationPath}.js")).default;`;
+    })
+    .join("\n");
 };
 
-generate().then(() => {
-	console.log("Generated Illustrations.js");
-})
-.catch(err => {
-	console.error(err);
-	process.exit(1);
+const generateAvailableIllustrationsArray = (fileNames, exclusionPatterns = []) => {
+  return JSON.stringify(
+    fileNames
+      .filter((fileName) => !exclusionPatterns.some((pattern) => fileName.startsWith(pattern)))
+      .map((fileName) => fileName.replace(".js", ""))
+  );
+};
+
+const generateDynamicImportsFileContent = (dynamicImports, availableIllustrations, collection, prefix = "") => {
+  return `import { registerIllustrationLoader } from "@ui5/webcomponents-base/dist/asset-registries/Illustrations.js";
+
+export const loadIllustration = async (illustrationName) => {
+  const collectionAndPrefix = "${collection}/${prefix}";
+  const cleanIllustrationName = illustrationName.startsWith(collectionAndPrefix) ? illustrationName.replace(collectionAndPrefix, "") : illustrationName;
+  switch (cleanIllustrationName) {
+${dynamicImports}
+    default:
+      throw new Error("[Illustrations] Illustration not found: " + illustrationName);
+  }
+};
+
+const loadAndCheck = async (illustrationName) => {
+  const data = await loadIllustration(illustrationName);
+  return data;
+};
+
+${availableIllustrations}.forEach((illustrationName) =>
+  registerIllustrationLoader(\`${collection}/${prefix}\${illustrationName}\`, loadAndCheck)
+);
+`;
+};
+
+const getMatchingFiles = async (folder, pattern) => {
+  const dir = await fs.readdir(folder);
+  return dir.filter((fileName) => fileName.match(pattern));
+};
+
+const generateIllustrations = async (config) => {
+  const { inputFolder, outputFile, collection, location, prefix, filterOut } = config;
+
+  const normalizedInputFolder = path.normalize(inputFolder);
+  const normalizedOutputFile = path.normalize(outputFile);
+
+  const illustrations = await getMatchingFiles(normalizedInputFolder, /^.*\.js$/);
+
+  const dynamicImports = generateDynamicImportLines(illustrations, location, filterOut);
+  const availableIllustrations = generateAvailableIllustrationsArray(illustrations, filterOut);
+
+  const contentDynamic = generateDynamicImportsFileContent(dynamicImports, availableIllustrations, collection, prefix);
+
+  await fs.mkdir(path.dirname(normalizedOutputFile), { recursive: true });
+  await fs.writeFile(normalizedOutputFile, contentDynamic);
+
+  console.log(`Generated ${normalizedOutputFile}`);
+};
+
+// Parse configuration from command-line arguments
+const config = {
+  inputFolder: process.argv[2],
+  outputFile: process.argv[3],
+  collection: process.argv[4],
+  location: process.argv[5],
+  prefix: process.argv[6],
+  filterOut: process.argv.slice(7),
+};
+
+// Run the generation process
+generateIllustrations(config).catch((error) => {
+  console.error("Error generating illustrations:", error);
 });

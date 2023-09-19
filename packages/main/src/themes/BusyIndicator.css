@@ -7,7 +7,7 @@
 }
 
 :host([size="Small"]) .ui5-busy-indicator-root {
-	min-width: 1.5rem;
+	min-width: 1.625rem; /*width of the dots plus the gap between them*/
 	min-height: .5rem;
 }
 
@@ -20,10 +20,20 @@
 	height: .5rem;
 }
 
+:host([size="Small"]) .ui5-busy-indicator-circle:first-child,
+:host([size="Small"]) .ui5-busy-indicator-circle:nth-child(2) {
+	margin-inline-end: 0.0625rem;
+}
+
 :host(:not([size])) .ui5-busy-indicator-root,
 :host([size="Medium"]) .ui5-busy-indicator-root {
-	min-width: 3rem;
+	min-width: 3.375rem; /*width of the dots plus the gap between them*/
 	min-height: 1rem;
+}
+
+:host([size="Medium"]) .ui5-busy-indicator-circle:first-child,
+:host([size="Medium"]) .ui5-busy-indicator-circle:nth-child(2) {
+	margin-inline-end: 0.1875rem;
 }
 
 :host(:not([size])[text]:not([text=""])) .ui5-busy-indicator-root,
@@ -38,8 +48,13 @@
 }
 
 :host([size="Large"]) .ui5-busy-indicator-root {
-	min-width: 6rem;
+	min-width: 6.5rem; /*width of the dots plus the gap between them*/
 	min-height: 2rem;
+}
+
+:host([size="Large"]) .ui5-busy-indicator-circle:first-child,
+:host([size="Large"]) .ui5-busy-indicator-circle:nth-child(2) {
+	margin-inline-end: 0.25rem;
 }
 
 :host([size="Large"][text]:not([text=""])) .ui5-busy-indicator-root {
@@ -74,7 +89,7 @@
 	flex-direction: column;
 }
 
-.ui5-busy-indicator-busy-area:focus-visible {
+.ui5-busy-indicator-busy-area:focus {
 	outline: var(--_ui5_busy_indicator_focus_outline);
 	outline-offset: -2px;
     border-radius: var(--_ui5_busy_indicator_focus_border_radius);

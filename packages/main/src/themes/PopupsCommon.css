@@ -21,8 +21,8 @@
 
 .ui5-popup-root .ui5-popup-header-root {
     color: var(--sapPageHeader_TextColor);
-    box-shadow: var(--sapContent_HeaderShadow);
-    margin-bottom: 0.125rem;
+    box-shadow: var(--_ui5_popup_header_shadow);
+    border-bottom: var(--_ui5_popup_header_border);
 }
 
 .ui5-popup-content {
@@ -96,7 +96,7 @@
 }
 
 .ui5-popup-header-root {
-	background: var(--sapPageHeader_Background);
+	background: var(--_ui5_popup_header_background);
 }
 
 /*** Responsive paddings for the Header and Footer ***/

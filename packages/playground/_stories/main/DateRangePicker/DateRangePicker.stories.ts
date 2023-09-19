@@ -15,7 +15,7 @@ const component = "ui5-daterange-picker";
 
 export default {
 	title: "Main/DateRangePicker",
-	component,
+	component: "DateRangePicker",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
@@ -46,7 +46,7 @@ const Template: UI5StoryArgs<DateRangePicker, StoryArgsSlots> = (args) => html`<
 export const Basic = Template.bind({});
 
 export const MinMax = Template.bind({});
-MinMax.storyName = "Min/Max Dates and Format Pattern";
+MinMax.storyName = "Formatted Date Range";
 MinMax.args = {
 	minDate: "1/1/2020",
 	maxDate: "4/5/2020",
@@ -54,7 +54,7 @@ MinMax.args = {
 };
 
 export const LongFormat = Template.bind({});
-LongFormat.storyName = "Value, Format Pattern, and Delimiter";
+LongFormat.storyName = "Formatted Value and Delimiter";
 LongFormat.args = {
 	value: "March 31, 2023 ~ April 9, 2023",
 	delimiter: "~",

@@ -3,6 +3,106 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0...v1.18.0-rc.0) (2023-09-07)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** align notification counter ([#7490](https://github.com/SAP/ui5-webcomponents/issues/7490)) ([f8975a6](https://github.com/SAP/ui5-webcomponents/commit/f8975a67f81b62d90db1e508a85c3c894e995e95)), closes [#7208](https://github.com/SAP/ui5-webcomponents/issues/7208)
+
+
+
+
+
+# [1.17.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.2...v1.17.0) (2023-09-01)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.17.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.1...v1.17.0-rc.2) (2023-08-24)
+
+
+### Bug Fixes
+
+* **ui5-page:** enhance storybook samples ([#7448](https://github.com/SAP/ui5-webcomponents/issues/7448)) ([d0b8b01](https://github.com/SAP/ui5-webcomponents/commit/d0b8b01c053853915646b077860a247400cff691))
+
+
+
+
+
+# [1.17.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.0...v1.17.0-rc.1) (2023-08-17)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.17.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0...v1.17.0-rc.0) (2023-08-10)
+
+
+### Bug Fixes
+
+* **ui5-illustrated-message:** support collection based illustration loading ([#7318](https://github.com/SAP/ui5-webcomponents/issues/7318)) ([6b52dbd](https://github.com/SAP/ui5-webcomponents/commit/6b52dbd157a3c8198e41c84157e3d9ae89e3386e))
+* **ui5-shellbar:** button focus outline adjustment ([#7389](https://github.com/SAP/ui5-webcomponents/issues/7389)) ([3b7c711](https://github.com/SAP/ui5-webcomponents/commit/3b7c711875303be0bb995c80545a9786b2ec511c)), closes [#7220](https://github.com/SAP/ui5-webcomponents/issues/7220)
+* **ui5-side-navigation:** allow overstyling of border-radius ([#7400](https://github.com/SAP/ui5-webcomponents/issues/7400)) ([16ca431](https://github.com/SAP/ui5-webcomponents/commit/16ca43197ee7e9d522c813933c660b7dfe2a6ea3)), closes [#7308](https://github.com/SAP/ui5-webcomponents/issues/7308)
+
+
+
+
+
+# [1.16.0](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.4...v1.16.0) (2023-08-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.16.0-rc.4](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.3...v1.16.0-rc.4) (2023-08-03)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.16.0-rc.3](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.2...v1.16.0-rc.3) (2023-07-27)
+
+
+### Bug Fixes
+
+* **ui5-upload-collection:** correct visualization of "mode" property ([#7252](https://github.com/SAP/ui5-webcomponents/issues/7252)) ([9ca02dd](https://github.com/SAP/ui5-webcomponents/commit/9ca02ddae31ca45dfc734906e1f0da2413ceac40)), closes [#7111](https://github.com/SAP/ui5-webcomponents/issues/7111)
+
+
+
+
+
+# [1.16.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.1...v1.16.0-rc.2) (2023-07-20)
+
+
+### Features
+
+* **ui5-wizard:** progress navigator title and optional text truncation ([#7263](https://github.com/SAP/ui5-webcomponents/issues/7263)) ([74077d1](https://github.com/SAP/ui5-webcomponents/commit/74077d1f16cb01347b01d1d55ef333789f5601f0))
+
+
+
+
+
+# [1.16.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.16.0-rc.0...v1.16.0-rc.1) (2023-07-13)
+
+
+### Bug Fixes
+
+* **ui5-shellbar:** primary and secondary titles alignment ([#7215](https://github.com/SAP/ui5-webcomponents/issues/7215)) ([9c32e30](https://github.com/SAP/ui5-webcomponents/commit/9c32e308ed5397ce40fd6ffa7c9b0e23573be75b)), closes [#7153](https://github.com/SAP/ui5-webcomponents/issues/7153) [#7107](https://github.com/SAP/ui5-webcomponents/issues/7107)
+
+
+
+
+
 # [1.16.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.15.1...v1.16.0-rc.0) (2023-07-06)
 
 **Note:** Version bump only for package @ui5/webcomponents-fiori

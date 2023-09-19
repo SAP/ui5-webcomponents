@@ -10,7 +10,6 @@
 	--_ui5_input_border_radius: var(--_ui5_shellbar_input_border_radius);
 	--_ui5_input_focus_border_radius: var(--_ui5_shellbar_input_focus_border_radius);
 	--_ui5_input_background_color: var(--_ui5_shellbar_input_background_color);
-	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
 }
 
 .ui5-shellbar-root {
@@ -216,6 +215,7 @@ slot[name="profile"] {
 }
 
 .ui5-shellbar-button {
+	--_ui5_button_focused_border: var(--_ui5_shellbar_button_focused_border);
 	width: 2.5rem;
 }
 
@@ -316,7 +316,7 @@ slot[name="profile"] {
 	align-items: center;
 }
 
-.ui5-shellbar-overflow-container-right-child .ui5-shellbar-button[data-count]:has(+ .ui5-shellbar-overflow-button)::before  {
+.ui5-shellbar-overflow-container-right-child .ui5-shellbar-button[data-count]:has(+ .ui5-shellbar-overflow-button)::before {
 	inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }
 
@@ -387,6 +387,7 @@ slot[name="profile"] {
 
 :host([notifications-count]:not([notifications-count=""])) .ui5-shellbar-bell-button::before {
 	content: attr(data-ui5-notifications-count);
+	inset-inline-end: var(--_ui5-shellbar-notification-btn-count-offset);
 }
 
 .ui5-shellbar-button[data-count]::before {

@@ -33,6 +33,7 @@ import {
 	VALUE_STATE_WARNING,
 	VALUE_STATE_SUCCESS,
 	VALUE_STATE_INFORMATION,
+	RADIO_BUTTON_GROUP_REQUIRED,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -162,15 +163,6 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @defaultvalue "None"
@@ -227,12 +219,7 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines whether the component text wraps when there is not enough space.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code> - The text will be truncated with an ellipsis.</li>
-	 * <li><code>Normal</code> - The text will wrap. The words will not be broken based on hyphenation.</li>
-	 * </ul>
+	 * <br><b>Note:</b> for option "Normal" the text will wrap and the words will not be broken based on hyphenation.
 	 *
 	 * @type {sap.ui.webc.main.types.WrappingType}
 	 * @defaultvalue "None"
@@ -290,11 +277,18 @@ class RadioButton extends UI5Element implements IFormElement {
 	_deactivate: () => void;
 	_name!: string;
 	_checked!: boolean;
+	_internals: ElementInternals;
+
+	static get formAssociated() {
+		return true;
+	}
 
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
+
+		this._internals = this.attachInternals();
 
 		this._deactivate = () => {
 			if (activeRadio) {
@@ -356,15 +350,28 @@ class RadioButton extends UI5Element implements IFormElement {
 
 	_enableFormSupport() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
+
 		if (formSupport) {
-			formSupport.syncNativeHiddenInput(this, (element: IFormElement, nativeInput: HTMLInputElement) => {
-				nativeInput.value = element.value as string;
-				nativeInput.type = "radio";
-				nativeInput.checked = element.checked!;
-			});
+			this._setFormValue();
 		} else if (this.value) {
 			console.warn(`In order for the "value" property to have effect, you should also: import "@ui5/webcomponents/dist/features/InputElementsFormSupport.js";`); // eslint-disable-line
 		}
+	}
+
+	_setFormValue() {
+		this._internals.setFormValue(this.checked ? this.value : null);
+	}
+
+	_resetFormValidity() {
+		this._internals.setValidity({});
+	}
+
+	_invalidateForm() {
+		this._internals.setValidity(
+			{ valueMissing: true },
+			this.radioButtonGroupRequiredText,
+			this.shadowRoot!.firstElementChild as HTMLElement,
+		);
 	}
 
 	_onclick() {
@@ -492,6 +499,10 @@ class RadioButton extends UI5Element implements IFormElement {
 		default:
 			return "";
 		}
+	}
+
+	get radioButtonGroupRequiredText(): string {
+		return RadioButton.i18nBundle.getText(RADIO_BUTTON_GROUP_REQUIRED);
 	}
 
 	get effectiveTabIndex() {

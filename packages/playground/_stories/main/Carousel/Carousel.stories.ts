@@ -17,7 +17,7 @@ const component = "ui5-carousel";
 
 export default {
 	title: "Main/Carousel",
-	component,
+	component: "Carousel",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
@@ -42,14 +42,14 @@ const Template: UI5StoryArgs<Carousel, StoryArgsSlots> = (args) => {
 </ui5-carousel>`;
 }
 
-export const SingleItemPerPage = Template.bind({});
-SingleItemPerPage.args = {
+export const Basic = Template.bind({});
+Basic.args = {
 	cyclic: true,
 	default: `<img src="../assets/images/sample1.jpg" alt="Landscape 1">
 	<img src="../assets/images/sample2.jpg" alt="Landscape 2">
 	<img src="../assets/images/sample3.jpg" alt="Bulb">`
 };
-SingleItemPerPage.decorators = [
+Basic.decorators = [
 	(story) => html`<style>
 	img {
 		max-height: 30rem;
@@ -86,25 +86,21 @@ MultipleItemsPerPage.args = {
 	<ui5-card-header slot="header" title-text="Team Dolphins" subtitle-text="Direct Reports" status="1 of 2">
 		<ui5-icon name="group" slot="avatar"></ui5-icon>
 	</ui5-card-header>
-	<div class="card-content">
-		<ui5-list separators="None" class="card-content-child" style="width: 100%">
-			<ui5-li image="../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
-			<ui5-li image="../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
-			<ui5-li image="../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
-		</ui5-list>
-	</div>
+	<ui5-list separators="None">
+		<ui5-li image="../assets/images/avatars/man_avatar_1.png" description="User Researcher">Alain Chevalier</ui5-li>
+		<ui5-li image="../assets/images/avatars/woman_avatar_1.png" description="Artist">Monique Legrand</ui5-li>
+		<ui5-li image="../assets/images/avatars/woman_avatar_2.png" description="UX Specialist">Michael Adams</ui5-li>
+	</ui5-list>
 </ui5-card>
 <ui5-card class="medium">
 	<ui5-card-header slot="header" title-text="Team Bears" subtitle-text="Direct Reports" interactive="" status="2 of 2">
 		<ui5-icon name="group" slot="avatar"></ui5-icon>
 	</ui5-card-header>
-	<div class="card-content">
-		<ui5-list separators="None" class="card-content-child" style="width: 100%">
-			<ui5-li image="../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
-			<ui5-li image="../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
-			<ui5-li image="../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
-		</ui5-list>
-	</div>
+	<ui5-list separators="None">
+		<ui5-li image="../assets/images/avatars/man_avatar_2.png" description="Software Architect">Richard Wilson</ui5-li>
+		<ui5-li image="../assets/images/avatars/woman_avatar_3.png" description="Visual Designer">Elena Petrova</ui5-li>
+		<ui5-li image="../assets/images/avatars/man_avatar_3.png" description="Quality Specialist">John Miller</ui5-li>
+	</ui5-list>
 </ui5-card>`
 };
 MultipleItemsPerPage.decorators = [
@@ -117,15 +113,12 @@ MultipleItemsPerPage.decorators = [
 		min-width: 18rem;
 	}
 
-	ui5-li::part(icon) {
-		padding-inline-end: 0;
+	ui5-card ui5-list:last-child {
+		margin-block-end: 0.75rem;
 	}
 
-	.card-content {
-		display: flex;
-		justify-content: space-around;
-		flex-wrap: wrap;
-		width: 100%;
+	ui5-li::part(icon) {
+		padding-inline-end: 0;
 	}
 </style>
 ${story()}`

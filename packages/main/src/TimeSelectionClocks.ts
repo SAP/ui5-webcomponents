@@ -63,6 +63,7 @@ import TimeSelectionClocksCss from "./generated/themes/TimeSelectionClocks.css.j
 		TimePickerClock,
 		ToggleSpinButton,
 		SegmentedButton,
+		SegmentedButtonItem,
 	],
 })
 

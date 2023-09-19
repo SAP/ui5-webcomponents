@@ -1,0 +1,10 @@
+@import "../base/Select-parameters.css";
+
+:root {
+	--_ui5_select_disabled_background: var(--sapHC_ReducedBackground);
+	--_ui5_select_disabled_border_color: var(--sapHC_ReducedForeground);
+	--_ui5_select_state_error_warning_border_style: dashed;
+	--_ui5_select_state_error_warning_border_width: 1px;
+	--_ui5_select_hover_icon_left_border: 0.0625rem solid var(--sapField_Hover_BorderColor);
+	--_ui5_select_focus_width: 0.125rem;
+}

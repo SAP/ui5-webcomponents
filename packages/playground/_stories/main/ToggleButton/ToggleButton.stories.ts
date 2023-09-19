@@ -16,7 +16,7 @@ const component = "ui5-toggle-button";
 
 export default {
 	title: "Main/ToggleButton",
-	component,
+	component: "ToggleButton",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
@@ -39,29 +39,19 @@ Basic.args = {
 	default: "Default",
 };
 
-export const Pressed = Template.bind({});
-Pressed.args = {
-	default: "Pressed",
-	pressed: true,
-};
+export const DifferentDesigns: StoryFn = () => html`
+	<ui5-toggle-button design="${ButtonDesign.Emphasized}"> Emphasized </ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Attention}"> Attention </ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Positive}"> Positive </ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Negative}"> Negative </ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Transparent}"> Transparent </ui5-toggle-button>
+`;
 
-export const DisabledAndPressed = Template.bind({});
-DisabledAndPressed.args = {
-	default: "ToggleButton",
-	pressed: true,
-	disabled: true,
-};
-
-export const IconOnly = Template.bind({});
-IconOnly.storyName = "Icon-Only ToggleButton";
-IconOnly.args = {
-	icon: "add",
-};
-
-export const WithIconAndDesign = Template.bind({});
-WithIconAndDesign.args = {
-	default: "ToggleButton",
-	design: ButtonDesign.Positive,
-	pressed: false,
-	icon: "add",
-};
+export const IconOnlyToggleButtons: StoryFn = () => html`
+	<ui5-toggle-button design="${ButtonDesign.Emphasized}" icon="business-suite/icon-target"></ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Attention}" icon="message-warning" tooltip="Warning Button"></ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Positive}" icon="business-suite/icon-completed" tooltip="Positive Button"></ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Negative}" icon="cancel" tooltip="Negative Button"></ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="account" tooltip="Transparent Button"></ui5-toggle-button>
+`;
+IconOnlyToggleButtons.storyName = "Icon-Only Toggle Buttons";

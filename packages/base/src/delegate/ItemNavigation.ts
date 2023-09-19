@@ -338,7 +338,7 @@ class ItemNavigation {
 	_focusCurrentItem() {
 		const currentItem = this._getCurrentItem();
 		if (currentItem) {
-			currentItem.focus({ focusVisible: true } as FocusOptions);
+			currentItem.focus();
 		}
 	}
 
@@ -381,7 +381,7 @@ class ItemNavigation {
 		}
 
 		if (currentItem.id) {
-			return currentItemDOMRef.querySelector(`#${currentItem.id}`) as HTMLElement;
+			return currentItemDOMRef.querySelector(`[id="${currentItem.id}"]`) as HTMLElement;
 		}
 	}
 }

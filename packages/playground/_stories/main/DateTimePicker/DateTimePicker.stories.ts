@@ -15,7 +15,7 @@ const component = "ui5-datetime-picker";
 
 export default {
 	title: "Main/DateTimePicker",
-	component,
+	component: "DateTimePicker",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
@@ -50,7 +50,7 @@ FormatPattern.args = {
 };
 
 export const MinMax = Template.bind({});
-MinMax.storyName = "Min/Max Dates and Format Pattern";
+MinMax.storyName = "Formatted Date Range";
 MinMax.args = {
 	value: "Jan 11, 2020, 11:11:11 AM",
 	minDate: "Jan 11, 2020, 00:00:00 AM",

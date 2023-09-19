@@ -4,6 +4,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
+import connectToComponent from "@ui5/webcomponents-base/dist/connectToComponent.js";
 import {
 	isSpace,
 	isUp,
@@ -16,6 +17,7 @@ import {
 	isTabNext,
 	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
+import DOMReference from "@ui5/webcomponents-base/dist/types/DOMReference.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
 import { getFeature } from "@ui5/webcomponents-base/dist/FeaturesRegistry.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
@@ -32,6 +34,7 @@ import "@ui5/webcomponents-icons/dist/decline.js";
 import type { Timeout } from "@ui5/webcomponents-base/dist/types.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import List from "./List.js";
 import type { ListItemClickEventDetail } from "./List.js";
 import {
@@ -67,29 +70,56 @@ import SelectPopoverCss from "./generated/themes/SelectPopover.css.js";
 import type FormSupport from "./features/InputElementsFormSupport.js";
 import type { IFormElement } from "./features/InputElementsFormSupport.js";
 import type ListItemBase from "./ListItemBase.js";
+import type SelectMenu from "./SelectMenu.js";
+import type { SelectMenuOptionClick, SelectMenuChange } from "./SelectMenu.js";
 
 type SelectChangeEventDetail = {
-	selectedOption: Option,
+	selectedOption: IOption,
+}
+type SelectLiveChangeEventDetail = {
+	selectedOption: IOption,
 }
 
 interface IOption extends UI5Element {
+	id: string,
 	selected: boolean,
-	_focused: boolean,
+	_focused?: boolean,
+	focused?: boolean,
 	icon?: string | undefined,
 	value: string,
 	textContent: string | null,
 	title: string,
-	additionalText: string,
-	id: string,
-	stableDomRef: string,
+	additionalText?: string,
+	stableDomRef?: string,
+	displayText?: string,
 }
 
 /**
  * @class
  *
  * <h3 class="comment-api-title">Overview</h3>
+ *
  * The <code>ui5-select</code> component is used to create a drop-down list.
- * The items inside the <code>ui5-select</code> define the available options by using the <code>ui5-option</code> component.
+ *
+ * <h3>Usage</h3>
+ *
+ * There are two main usages of the <code>ui5-select></code>.
+ *
+ * 1. With Option (<code>ui5-option</code>) web component:
+ * <br>
+ * The available options of the Select are defined by using the Option component.
+ * The Option comes with predefined design and layout, including <code>icon</code>, <code>text</code> and <code>additional-text</code>.
+ * <br><br>
+ *
+ * 2. With SelectMenu (<code>ui5-select-menu</code>) and SelectMenuOption (<code>ui5-select-menu-option</code>) web components:
+ * <br>
+ * The SelectMenu can be used as alternative to define the Select's dropdown
+ * and can be used via the <code>menu</code> property of the Select to reference SelectMenu by its ID.
+ * The component gives the possibility to customize the Select's dropdown
+ * by slotting entirely custom options (via the SelectMenuOption component) and adding custom styles.
+ *
+ * <b>Note:</b> SelectMenu is a popover and placing it top-level in the HTML page is recommended,
+ * because some page styles (for example transitions) can misplace the SelectMenu.
  *
  * <h3>Keyboard Handling</h3>
  * The <code>ui5-select</code> provides advanced keyboard handling.
@@ -113,7 +143,7 @@ interface IOption extends UI5Element {
  * @alias sap.ui.webc.main.Select
  * @extends sap.ui.webc.base.UI5Element
  * @tagname ui5-select
- * @appenddocs sap.ui.webc.main.Option
+ * @appenddocs sap.ui.webc.main.Option sap.ui.webc.main.SelectMenu sap.ui.webc.main.SelectMenuOption
  * @public
  * @since 0.8.0
  */
@@ -154,6 +184,20 @@ interface IOption extends UI5Element {
 	},
 })
 /**
+ * Fired when the user navigates through the options, but the selection is not finalized,
+ * or when pressing the ESC key to revert the current selection.
+ *
+ * @event sap.ui.webc.main.Select#live-change
+ * @param {HTMLElement} selectedOption the selected option.
+ * @public
+ * @since 1.17.0
+ */
+@event("live-change", {
+	detail: {
+		option: { type: HTMLElement },
+	},
+})
+/**
  * Fired after the component's dropdown menu opens.
  *
  * @event sap.ui.webc.main.Select#open
@@ -169,6 +213,21 @@ interface IOption extends UI5Element {
 @event("close")
 class Select extends UI5Element implements IFormElement {
 	static i18nBundle: I18nBundle;
+
+	/**
+	 * Defines a reference (ID or DOM element) of component's menu of options
+	 * as alternative to define the select's dropdown.
+	 * <br><br>
+	 * <b>Note:</b> Usage of <code>ui5-select-menu</code> is recommended.
+	 *
+	 * @type {sap.ui.webc.base.types.DOMReference}
+	 * @defaultvalue undefined
+	 * @name sap.ui.webc.main.Select.prototype.menu
+	 * @public
+	 * @since 1.17.0
+	 */
+	@property({ validator: DOMReference })
+	menu?: HTMLElement | string;
 
 	/**
 	 * Defines whether the component is in disabled state.
@@ -292,17 +351,25 @@ class Select extends UI5Element implements IFormElement {
 	@property({ type: Boolean })
 	focused!: boolean;
 
+	/**
+	 * @type {sap.ui.webc.base.types.Integer}
+	 * @private
+	 */
+	@property({ validator: Integer, defaultValue: -1, noAttribute: true })
+	_selectedIndex!: number;
+
 	_syncedOptions: Array<IOption>;
-	_selectedIndex: number;
 	_selectedIndexBeforeOpen: number;
 	_escapePressed: boolean;
-	_lastSelectedOption: Option | null;
+	_lastSelectedOption: IOption | null;
 	_typedChars: string;
 	_typingTimeoutID?: Timeout | number;
 	responsivePopover!: ResponsivePopover;
 	selectedItem?: string | null;
 	valueStatePopover?: Popover;
 	value!: string;
+
+	selectMenu?: SelectMenu;
 
 	/**
 	 * Defines the component options.
@@ -350,22 +417,65 @@ class Select extends UI5Element implements IFormElement {
 	@slot()
 	valueStateMessage!: Array<HTMLElement>;
 
+	/**
+	 * Defines the HTML element that will be displayed in the component input part,
+	 * representing the selected option.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> If not specified and <code>ui5-select-menu-option</code> is used,
+	 * either the option's <code>display-text</code> or its textContent will be displayed.
+	 * <br><br>
+	 *
+	 * <b>Note:</b> If not specified and <code>ui5-option</code> is used,
+	 * the option's textContent will be displayed.
+	 *
+	 * @type {HTMLElement[]}
+	 * @name sap.ui.webc.main.Select.prototype.label
+	 * @slot label
+	 * @public
+	 * @since 1.17.0
+	*/
+	@slot()
+	label!: Array<HTMLElement>;
+
+	_onMenuClick: (e: CustomEvent<SelectMenuOptionClick>) => void;
+	_onMenuClose: () => void;
+	_onMenuOpen: () => void;
+	_onMenuBeforeOpen: () => void;
+	_onMenuChange: (e: CustomEvent<SelectMenuChange>) => void;
+	_attachMenuListeners: (menu: HTMLElement) => void;
+	_detachMenuListeners: (menu: HTMLElement) => void;
+
 	constructor() {
 		super();
 
 		this._syncedOptions = [];
-		this._selectedIndex = -1;
 		this._selectedIndexBeforeOpen = -1;
 		this._escapePressed = false;
 		this._lastSelectedOption = null;
 		this._typedChars = "";
+
+		this._onMenuClick = this.onMenuClick.bind(this);
+		this._onMenuClose = this.onMenuClose.bind(this);
+		this._onMenuOpen = this.onMenuOpen.bind(this);
+		this._onMenuBeforeOpen = this.onMenuBeforeOpen.bind(this);
+		this._onMenuChange = this.onMenuChange.bind(this);
+		this._attachMenuListeners = this.attachMenuListeners.bind(this);
+		this._detachMenuListeners = this.detachMenuListeners.bind(this);
 	}
 
 	onBeforeRendering() {
-		this._syncSelection();
+		const menu = this._getSelectMenu();
+
+		if (menu) {
+			menu.value = this.value;
+		} else {
+			this._syncSelection();
+		}
+
 		this._enableFormSupport();
 
-		this.style.setProperty("--_ui5-input-icons-count", `${this.iconsCount}`);
+		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${this.iconsCount}`);
 	}
 
 	onAfterRendering() {
@@ -389,6 +499,12 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _isPickerOpen() {
+		const menu = this._getSelectMenu();
+
+		if (menu) {
+			return menu.open;
+		}
+
 		return !!this.responsivePopover && this.responsivePopover.opened;
 	}
 
@@ -401,20 +517,70 @@ class Select extends UI5Element implements IFormElement {
 	 * Currently selected <code>ui5-option</code> element.
 	 * @readonly
 	 * @type {sap.ui.webc.main.ISelectOption}
-     * @name sap.ui.webc.main.Select.prototype.selectedOption
+	 * @name sap.ui.webc.main.Select.prototype.selectedOption
 	 * @public
 	 */
 	get selectedOption() {
-		return this._filteredItems.find(option => option.selected);
+		return this.selectOptions.find(option => option.selected);
+	}
+
+	onMenuClick(e: CustomEvent<SelectMenuOptionClick>) {
+		const optionIndex: number = e.detail.optionIndex;
+		this._handleSelectionChange(optionIndex);
+	}
+
+	onMenuBeforeOpen() {
+		this._beforeOpen();
+	}
+
+	onMenuOpen() {
+		this._afterOpen();
+	}
+
+	onMenuClose() {
+		this._afterClose();
+	}
+
+	onMenuChange(e: CustomEvent<SelectMenuChange>) {
+		this._text = e.detail.text;
+		this._selectedIndex = e.detail.selectedIndex;
+	}
+
+	_toggleSelectMenu() {
+		const menu = this._getSelectMenu();
+
+		if (!menu) {
+			return;
+		}
+
+		if (menu.open) {
+			menu.close();
+		} else {
+			menu.showAt(this, this.offsetWidth);
+		}
+	}
+
+	onExitDOM(): void {
+		const menu = this._getSelectMenu();
+		if (menu) {
+			this._detachMenuListeners(menu);
+		}
 	}
 
 	async _toggleRespPopover() {
-		this._iconPressed = true;
-		this.responsivePopover = await this._respPopover();
 		if (this.disabled) {
 			return;
 		}
 
+		this._iconPressed = true;
+
+		const menu = this._getSelectMenu();
+		if (menu) {
+			this._toggleSelectMenu();
+			return;
+		}
+
+		this.responsivePopover = await this._respPopover();
 		if (this._isPickerOpen) {
 			this.responsivePopover.close();
 		} else {
@@ -482,6 +648,35 @@ class Select extends UI5Element implements IFormElement {
 		this._syncedOptions = syncOpts as Array<IOption>;
 	}
 
+	_getSelectMenu(): SelectMenu | undefined {
+		return connectToComponent({
+			host: this,
+			propName: "menu",
+			onConnect: this._attachMenuListeners,
+			onDisconnect: this._detachMenuListeners,
+		}) as SelectMenu;
+	}
+
+	attachMenuListeners(menu: HTMLElement) {
+		menu.addEventListener("ui5-after-close", this._onMenuClose);
+		menu.addEventListener("ui5-after-open", this._onMenuOpen);
+		menu.addEventListener("ui5-before-open", this._onMenuBeforeOpen);
+		// @ts-ignore
+		menu.addEventListener("ui5-option-click", this._onMenuClick);
+		// @ts-ignore
+		menu.addEventListener("ui5-menu-change", this._onMenuChange);
+	}
+
+	detachMenuListeners(menu: HTMLElement) {
+		menu.removeEventListener("ui5-after-close", this._onMenuClose);
+		menu.removeEventListener("ui5-after-open", this._onMenuOpen);
+		menu.removeEventListener("ui5-before-open", this._onMenuBeforeOpen);
+		// @ts-ignore
+		menu.removeEventListener("ui5-option-click", this._onMenuClick);
+		// @ts-ignore
+		menu.removeEventListener("ui5-menu-change", this._onMenuChange);
+	}
+
 	_enableFormSupport() {
 		const formSupport = getFeature<typeof FormSupport>("FormSupport");
 		if (formSupport) {
@@ -498,11 +693,14 @@ class Select extends UI5Element implements IFormElement {
 	_onkeydown(e: KeyboardEvent) {
 		const isTab = (isTabNext(e) || isTabPrevious(e));
 
-		if (isTab && this.responsivePopover && this.responsivePopover.opened) {
-			this.responsivePopover.close();
-		}
-
-		if (isShow(e)) {
+		if (isTab && this._isPickerOpen) {
+			const menu = this._getSelectMenu();
+			if (menu) {
+				menu.close(false, false, true /* preventFocusRestore */);
+			} else {
+				this.responsivePopover.close();
+			}
+		} else if (isShow(e)) {
 			e.preventDefault();
 			this._toggleRespPopover();
 		} else if (isSpace(e)) {
@@ -550,7 +748,7 @@ class Select extends UI5Element implements IFormElement {
 		const itemToSelect = this._searchNextItemByText(text);
 
 		if (itemToSelect) {
-			const nextIndex = this._filteredItems.indexOf(itemToSelect);
+			const nextIndex = this.selectOptions.indexOf(itemToSelect);
 
 			this._changeSelectedItem(this._selectedIndex, nextIndex);
 
@@ -561,13 +759,13 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_searchNextItemByText(text: string) {
-		let orderedOptions = this._filteredItems.slice(0);
+		let orderedOptions = this.selectOptions.slice(0);
 		const optionsAfterSelected = orderedOptions.splice(this._selectedIndex + 1, orderedOptions.length - this._selectedIndex);
 		const optionsBeforeSelected = orderedOptions.splice(0, orderedOptions.length - 1);
 
 		orderedOptions = optionsAfterSelected.concat(optionsBeforeSelected);
 
-		return orderedOptions.find(option => (option.textContent || "").toLowerCase().startsWith(text));
+		return orderedOptions.find(option => (option.displayText || option.textContent || "").toLowerCase().startsWith(text));
 	}
 
 	_handleHomeKey(e: KeyboardEvent) {
@@ -576,7 +774,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_handleEndKey(e: KeyboardEvent) {
-		const lastIndex = this._filteredItems.length - 1;
+		const lastIndex = this.selectOptions.length - 1;
 
 		e.preventDefault();
 		this._changeSelectedItem(this._selectedIndex, lastIndex);
@@ -593,13 +791,18 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	_getSelectedItemIndex(item: ListItemBase) {
-		return this._filteredItems.findIndex(option => `${option._id}-li` === item.id);
+		return this.selectOptions.findIndex(option => `${option._id}-li` === item.id);
 	}
 
 	_select(index: number) {
-		this._filteredItems[this._selectedIndex].selected = false;
+		this.selectOptions[this._selectedIndex].selected = false;
+
+		if (this._selectedIndex !== index) {
+			this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: this.selectOptions[index] });
+		}
+
 		this._selectedIndex = index;
-		this._filteredItems[index].selected = true;
+		this.selectOptions[index].selected = true;
 	}
 
 	/**
@@ -633,6 +836,19 @@ class Select extends UI5Element implements IFormElement {
 		this._toggleRespPopover();
 	}
 
+	_scrollSelectedItem() {
+		if (this._isPickerOpen) {
+			const itemRef = this._currentlySelectedOption?.getDomRef();
+			if (itemRef) {
+				itemRef.scrollIntoView({
+					behavior: "auto",
+					block: "nearest",
+					inline: "nearest",
+				});
+			}
+		}
+	}
+
 	_handleArrowNavigation(e: KeyboardEvent) {
 		let nextIndex = -1;
 		const currentIndex = this._selectedIndex;
@@ -652,27 +868,38 @@ class Select extends UI5Element implements IFormElement {
 			// The aria-activedescendents attribute can't be used,
 			// because listitem elements are in different shadow dom
 			this.itemSelectionAnnounce();
+			this._scrollSelectedItem();
 		}
 	}
 
 	_changeSelectedItem(oldIndex: number, newIndex: number) {
-		const options = this._filteredItems;
+		const options: Array<IOption> = this.selectOptions;
 
-		options[oldIndex].selected = false;
-		options[oldIndex]._focused = false;
+		const previousOption = options[oldIndex];
+		previousOption.selected = false;
+		previousOption._focused = false;
+		previousOption.focused = false;
 
-		options[newIndex].selected = true;
-		options[newIndex]._focused = true;
+		const nextOption = options[newIndex];
+		nextOption.selected = true;
+		nextOption._focused = true;
+		nextOption.focused = true;
 
 		this._selectedIndex = newIndex;
 
+		this.fireEvent<SelectLiveChangeEventDetail>("live-change", { selectedOption: nextOption });
+
 		if (!this._isPickerOpen) {
 			// arrow pressed on closed picker - do selection change
-			this._fireChangeEvent(options[newIndex]);
+			this._fireChangeEvent(nextOption);
 		}
 	}
 
 	_getNextOptionIndex() {
+		const menu = this._getSelectMenu();
+		if (menu) {
+			return this._selectedIndex === (menu.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
+		}
 		return this._selectedIndex === (this.options.length - 1) ? this._selectedIndex : (this._selectedIndex + 1);
 	}
 
@@ -682,13 +909,14 @@ class Select extends UI5Element implements IFormElement {
 
 	_beforeOpen() {
 		this._selectedIndexBeforeOpen = this._selectedIndex;
-		this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		this._lastSelectedOption = this.selectOptions[this._selectedIndex];
 	}
 
 	_afterOpen() {
 		this.opened = true;
 		this.fireEvent<CustomEvent>("open");
 		this.itemSelectionAnnounce();
+		this._scrollSelectedItem();
 	}
 
 	_afterClose() {
@@ -699,19 +927,32 @@ class Select extends UI5Element implements IFormElement {
 		if (this._escapePressed) {
 			this._select(this._selectedIndexBeforeOpen);
 			this._escapePressed = false;
-		} else if (this._lastSelectedOption !== this._filteredItems[this._selectedIndex]) {
-			this._fireChangeEvent(this._filteredItems[this._selectedIndex]);
-			this._lastSelectedOption = this._filteredItems[this._selectedIndex];
+		} else if (this._lastSelectedOption !== this.selectOptions[this._selectedIndex]) {
+			this._fireChangeEvent(this.selectOptions[this._selectedIndex]);
+			this._lastSelectedOption = this.selectOptions[this._selectedIndex];
 		}
 		this.fireEvent<CustomEvent>("close");
 	}
 
-	_fireChangeEvent(selectedOption: Option) {
+	get selectOptions(): Array<IOption> {
+		const menu = this._getSelectMenu();
+		if (menu) {
+			return menu.options;
+		}
+		return this._filteredItems;
+	}
+
+	get hasCustomLabel() {
+		return !!this.label.length;
+	}
+
+	_fireChangeEvent(selectedOption: IOption) {
 		const changePrevented = !this.fireEvent<SelectChangeEventDetail>("change", { selectedOption }, true);
 
 		//  Angular two way data binding
 		this.selectedItem = selectedOption.textContent;
 		this.fireEvent("selected-item-changed");
+
 		if (changePrevented) {
 			this.selectedItem = this._lastSelectedOption!.textContent;
 			this._select(this._selectedIndexBeforeOpen);
@@ -773,7 +1014,7 @@ class Select extends UI5Element implements IFormElement {
 	}
 
 	get _currentlySelectedOption() {
-		return this._filteredItems[this._selectedIndex];
+		return this.selectOptions[this._selectedIndex];
 	}
 
 	get _effectiveTabIndex() {
@@ -865,7 +1106,7 @@ class Select extends UI5Element implements IFormElement {
 
 	itemSelectionAnnounce() {
 		let text;
-		const optionsCount = this._filteredItems.length;
+		const optionsCount = this.selectOptions.length;
 		const itemPositionText = Select.i18nBundle.getText(LIST_ITEM_POSITION, this._selectedIndex + 1, optionsCount);
 
 		if (this.focused && this._currentlySelectedOption) {
@@ -913,5 +1154,6 @@ Select.define();
 export default Select;
 export type {
 	SelectChangeEventDetail,
+	SelectLiveChangeEventDetail,
 	IOption,
 };

@@ -53,12 +53,35 @@ describe("Avatar", () => {
 		assert.ok(await initials.isExisting(), "initials are rendered");
 	});
 
-	it("tests rendering of icon when initials are overflowing ", async () => {
+	it("tests rendering of default fallback icon when initials are overflowing ", async () => {
 		const avatar = await browser.$("#myAvatar5");
 		const icon = await avatar.shadow$(".ui5-avatar-icon");
+		const iconName = await icon.getAttribute("name");
 
 		// icon is rendered
 		assert.ok(await icon.isExisting(), "icon should be rendered, when the initials are overflowing");
+		assert.strictEqual(await iconName, "employee", "the default fallback icon is renderen");
+
+	});
+
+	it("tests rendering of custom fallback icon when initials are overflowing ", async () => {
+		const avatar = await browser.$("#myAvatar7");
+		const fbIcon = await avatar.shadow$(".ui5-avatar-icon-fallback");
+		const fbIconName = await fbIcon.getAttribute("name");
+
+		// icon is rendered
+		assert.ok(await fbIcon.isExisting(), "fallback icon should be rendered, when it is set and the initials are overflowing");
+		assert.strictEqual(await fbIconName, "alert", "the custom fallback icon is renderen");
+
+	});
+
+	it("tests clicking on interactive disabled avatar", async () => {
+
+		const avatarRoot = await browser.$("#interactive-disabled").shadow$(".ui5-avatar-root");
+		const input3 = await browser.$("#click-event");
+
+		await avatarRoot.click();
+		assert.strictEqual(await input3.getAttribute("value"), "0", "Mouse click event not thrown when avatar is interactive + disabled");
 	});
 
 	it("Tests noConflict 'ui5-click' event is thrown for interactive avatars", async () => {

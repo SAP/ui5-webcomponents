@@ -14,9 +14,9 @@ import { unsafeHTML } from "lit/directives/unsafe-html.js";
 const component = "ui5-multi-input";
 
 export default {
-    title: "Main/MultiInput",
-    component,
-    subcomponents: {'Token' : 'ui5-token'},
+    title: "Main/Multi Input",
+    component: "MultiInput",
+    subcomponents: {'Token' : 'Token'},
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })
@@ -30,9 +30,21 @@ let index = 0;
 const Template: UI5StoryArgs<MultiInput, StoryArgsSlots> = (args) => html`
 <ui5-multi-input
 	id="multi-input-${++index}"
+	?disabled="${ifDefined(args.disabled)}"
+	placeholder="${ifDefined(args.placeholder)}"
+	?readonly="${ifDefined(args.readonly)}"
+	?required="${ifDefined(args.required)}"
+	?no-typeahead="${ifDefined(args.noTypeahead)}"
+	type="${ifDefined(args.type)}"
 	value="${ifDefined(args.value)}"
-	?show-value-help-icon="${ifDefined(args.showValueHelpIcon)}"
+	value-state="${ifDefined(args.valueState)}"
+	name="${ifDefined(args.name)}"
 	?show-suggestions="${ifDefined(args.showSuggestions)}"
+	maxlength="${ifDefined(args.maxlength)}"
+	accessible-name="${ifDefined(args.accessibleName)}"
+	accessible-name-ref="${ifDefined(args.accessibleNameRef)}"
+	?show-clear-icon="${ifDefined(args.showClearIcon)}"
+	?show-value-help-icon="${ifDefined(args.showValueHelpIcon)}"
 >
 	${unsafeHTML(args.default)}
 	${unsafeHTML(args.valueStateMessage)}
@@ -40,20 +52,13 @@ const Template: UI5StoryArgs<MultiInput, StoryArgsSlots> = (args) => html`
 	${unsafeHTML(args.tokens)}
 </ui5-multi-input>`;
 
-export const BasicMultiInput = Template.bind({});
-BasicMultiInput.args = {
+export const Basic = Template.bind({});
+Basic.args = {
 	value: "basic input"
 };
 
-export const BasicMultiInputVHDIcon = Template.bind({});
-BasicMultiInputVHDIcon.args = {
-	value: "value help icon",
-	showValueHelpIcon: true
-};
-BasicMultiInputVHDIcon.storyName = "Basic Multi Input with Value Help Dialog icon";
-
-export const MultiInputTokens = Template.bind({});
-MultiInputTokens.args = {
+export const Tokens = Template.bind({});
+Tokens.args = {
 	tokens: `
 	<ui5-token slot="tokens" text="Argentina"></ui5-token>
 	<ui5-token slot="tokens" text="Bulgaria"></ui5-token>
@@ -68,10 +73,11 @@ MultiInputTokens.args = {
 	<ui5-token slot="tokens" text="Sweden"></ui5-token>
 	<ui5-token slot="tokens" text="USA"></ui5-token>`
 };
-MultiInputTokens.storyName = "Multi Input with tokens";
 
-export const MultiInputTokenCreation = Template.bind({});
-MultiInputTokenCreation.args = {
+export const TokenCreation = Template.bind({});
+TokenCreation.args = {
+	placeholder: "Start typing country name",
+	showSuggestions: true,
 	default: `
 	<ui5-suggestion-item text="Argentina"></ui5-suggestion-item>
 	<ui5-suggestion-item text="Bulgaria"></ui5-suggestion-item>
@@ -86,9 +92,8 @@ MultiInputTokenCreation.args = {
 	<ui5-suggestion-item text="Sweden"></ui5-suggestion-item>
 	<ui5-suggestion-item text="USA"></ui5-suggestion-item>`,
 	valueStateMessage: '<div slot="valueStateMessage">Token is already in the list</div>',
-	showSuggestions: true
 };
-MultiInputTokenCreation.decorators = [
+TokenCreation.decorators = [
 	(story) => {
 	return html`
 	${story()}
@@ -146,4 +151,15 @@ MultiInputTokenCreation.decorators = [
 </script>`;
 	}
 ]
-MultiInputTokenCreation.storyName = "Multi Input and token creation onChange and onPaste";
+
+
+export const SuggestionsWrapping = Template.bind({});
+SuggestionsWrapping.args = {
+	placeholder: "Enter product",
+	showSuggestions: true,
+	default: `
+	<ui5-suggestion-item text="Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor incidunt ut labore et dolore magna aliquyam erat, diam nonumy eirmod tempor individunt ut labore et dolore magna aliquyam erat, sed justo et ea rebum."></ui5-suggestion-item>
+	<ui5-suggestion-item text="Widescreen Portable DVD Player w MP3, consetetur sadipscing, sed diam nonumy eirmod tempor invidunt ut labore et dolore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergen, no sea takimata. Tortor pretium viverra suspendisse potenti nullam. Congue quisque egestas diam in arcu cursus.Rutrum tellus pellentesque eu tincidunt tortor. Nec tincidunt praesent semper feugiat nibh sed"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Portable DVD Player with 9 inches LCD Monitor"></ui5-suggestion-item>`,
+	valueStateMessage: '<div slot="valueStateMessage">Token is already in the list</div>',
+};

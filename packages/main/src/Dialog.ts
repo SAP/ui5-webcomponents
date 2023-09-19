@@ -85,6 +85,10 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  * <li>content - Used to style the content of the component</li>
  * <li>footer - Used to style the footer of the component</li>
  * </ul>
+ * <b>Note:</b> When a <code>ui5-bar</code> is used in the header or in the footer, you should remove the default dialog's paddings.
+ * <br>
+ * For more information see the sample "Bar in Header/Footer".
+
  *
  * <h3>ES6 Module Import</h3>
  *
@@ -180,10 +184,7 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the state of the <code>Dialog</code>.
-	 * <br><br>
-	 * Available options are: <code>"None"</code> (by default), <code>"Success"</code>, <code>"Warning"</code>, <code>"Information"</code> and <code>"Error"</code>.
-	 * <br><br>
-	 * <b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
+	 * <br><b>Note:</b> If <code>"Error"</code> and <code>"Warning"</code> state is set, it will change the
 	 * accessibility role to "alertdialog", if the accessibleRole property is set to <code>"Dialog"</code>.
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.Dialog.prototype.state
@@ -229,6 +230,8 @@ class Dialog extends Popup {
 	/**
 	 * Defines the header HTML Element.
 	 * <br><br>
+	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the header, you should remove the default dialog's paddings.
+	 * <br><br>
 	 * <b>Note:</b> If <code>header</code> slot is provided, the labelling of the dialog is a responsibility of the application developer.
 	 * <code>accessibleName</code> should be used.
 	 *
@@ -242,6 +245,8 @@ class Dialog extends Popup {
 
 	/**
 	 * Defines the footer HTML Element.
+	 * <br><br>
+	 * <b>Note:</b> When a <code>ui5-bar</code> is used in the footer, you should remove the default dialog's paddings.
 	 *
 	 * @type {HTMLElement[]}
 	 * @name sap.ui.webc.main.Dialog.prototype.footer

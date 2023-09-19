@@ -198,12 +198,8 @@ abstract class Popup extends UI5Element {
 	accessibleNameRef!: string;
 
 	/**
-	 * Allows setting a custom role. Available options are:
-	 * <ul>
-	 * <li><code>Dialog</code></li>
-	 * <li><code>None</code></li>
-	 * <li><code>AlertDialog</code></li>
-	 * </ul>
+	 * Allows setting a custom role.
+	 *
 	 * @type {sap.ui.webc.main.types.PopupAccessibleRole}
 	 * @name sap.ui.webc.main.Popup.prototype.accessibleRole
 	 * @defaultvalue "Dialog"
@@ -382,7 +378,7 @@ abstract class Popup extends UI5Element {
 		const firstFocusable = await getFirstFocusableElement(this);
 
 		if (firstFocusable) {
-			firstFocusable.focus({ focusVisible: true } as FocusOptions);
+			firstFocusable.focus();
 		} else {
 			this._root.focus();
 		}
@@ -396,7 +392,7 @@ abstract class Popup extends UI5Element {
 		const lastFocusable = await getLastFocusableElement(this);
 
 		if (lastFocusable) {
-			lastFocusable.focus({ focusVisible: true } as FocusOptions);
+			lastFocusable.focus();
 		} else {
 			this._root.focus();
 		}
@@ -435,7 +431,7 @@ abstract class Popup extends UI5Element {
 			if (element === this._root) {
 				element.tabIndex = -1;
 			}
-			element.focus({ focusVisible: true } as FocusOptions);
+			element.focus();
 		}
 	}
 
@@ -554,7 +550,7 @@ abstract class Popup extends UI5Element {
 			return;
 		}
 
-		this._focusedElementBeforeOpen.focus({ focusVisible: true } as FocusOptions);
+		this._focusedElementBeforeOpen.focus();
 		this._focusedElementBeforeOpen = null;
 	}
 

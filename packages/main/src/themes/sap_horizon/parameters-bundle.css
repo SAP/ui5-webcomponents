@@ -7,7 +7,7 @@
 @import "./Button-parameters.css";
 @import "../base/Card-parameters.css";
 @import "./Card-parameters.css";
-@import "../base/Carousel-parameters.css";
+@import "./Carousel-parameters.css";
 @import "./CheckBox-parameters.css";
 @import "./ColorPalette-parameters.css";
 @import "./ColorPicker-parameters.css";
@@ -58,7 +58,8 @@
 @import "./TableColumn-parameters.css";
 @import "./TableRow-parameters.css";
 @import "./TableGroupRow-parameters.css";
+@import "../base/Toolbar-parameters.css";
 @import "./StepInput-parameters.css";
 @import "./GrowingButton-parameters.css";
 @import "./sizes-parameters.css";
-@import "../base/rtl-parameters.css";
+@import "./rtl-parameters.css";

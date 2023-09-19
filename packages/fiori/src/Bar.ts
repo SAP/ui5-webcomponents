@@ -71,16 +71,6 @@ class Bar extends UI5Element {
 	/**
 	 * Defines the component's design.
 	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>Header</code></li>
-	 * <li><code>Subheader</code></li>
-	 * <li><code>Footer</code></li>
-	 * <li><code>FloatingFooter</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.fiori.types.BarDesign}
 	 * @name sap.ui.webc.fiori.Bar.prototype.design
 	 * @defaultvalue "Header"
@@ -90,7 +80,7 @@ class Bar extends UI5Element {
 	design!: `${BarDesign}`
 
 	/**
-	* Defines the content at the start of the bar
+	* Defines the content at the start of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.startContent
 	* @slot
@@ -100,7 +90,7 @@ class Bar extends UI5Element {
 	startContent!: Array<HTMLElement>;
 
 	/**
-	* Defines the content in the middle of the bar
+	* Defines the content in the middle of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.default
 	* @slot middleContent
@@ -110,7 +100,7 @@ class Bar extends UI5Element {
 	middleContent!: Array<HTMLElement>
 
 	/**
-	* Defines the content at the end of the bar
+	* Defines the content at the end of the bar.
 	* @type {HTMLElement[]}
 	* @name sap.ui.webc.fiori.Bar.prototype.endContent
 	* @slot
@@ -149,11 +139,6 @@ class Bar extends UI5Element {
 				"ui5-bar-root": true,
 			},
 		};
-	}
-
-	onBeforeRendering() {
-		// Next row is specific for IE11. Please remove after stop support and edit css file
-		[...this.startContent, ...this.middleContent, ...this.endContent].forEach(element => element.classList.add("ui5-bar-content"));
 	}
 
 	onEnterDOM() {

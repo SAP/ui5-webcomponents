@@ -16,7 +16,7 @@ const component = "ui5-bar";
 
 export default {
 	title: "Fiori/Bar",
-	component,
+	component: "Bar",
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component })
@@ -34,7 +34,7 @@ const Template: UI5StoryArgs<Bar, StoryArgsSlots> = (args) => html`<ui5-bar
 </ui5-bar>`;
 
 export const Basic = Template.bind({});
-Basic.storyName = "With Content and Design";
+Basic.storyName = "Basic";
 Basic.args = {
 	design: BarDesign.Header,
 	startContent: `<ui5-button icon="home" tooltip="Go home" design="Transparent" slot="startContent"></ui5-button>`,

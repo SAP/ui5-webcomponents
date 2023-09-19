@@ -12,9 +12,9 @@ import Priority from "@ui5/webcomponents/dist/types/Priority.js";
 const component = "ui5-li-notification-group";
 
 export default {
-	title: "Fiori/NotificationListGroupItem",
-	component,
-	subcomponents: { 'NotificationAction': 'ui5-notification-action' },
+	title: "Fiori/Notification List Group Item",
+	component: "NotificationListGroupItem",
+	subcomponents: { 'NotificationAction': 'NotificationAction' },
 	parameters: {
 		docs: {
 			page: DocsPage({ ...componentInfo, component }),
@@ -164,13 +164,16 @@ actions: `<ui5-notification-action icon="accept" text="Accept All" slot="actions
 <ui5-notification-action icon="message-error" text="Reject All" slot="actions"></ui5-notification-action>`,
 };
 
-export const InShellBars: StoryFn = () => html`
-
-`;
 
 InShellBar.decorators = [
 	(story) => {
-		return html`${story()}
+		return html`<style>
+		#popover-with-notifications::part(content) {
+			padding: 0;
+			max-width: 400px;
+		}
+	</style>
+	${story()}
 <ui5-li-notification-group show-close show-counter title-text="Deliveries" priority="Medium" collapsed>
 	<ui5-li-notification show-close title-text="New Delivery (#2900) With a very long title - Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat, turpis vel scelerisque pharetra, tellus odio vehicula dolor, nec elementum lectus turpis at nunc." priority="Medium">
 		<ui5-avatar icon="employee" size="XS" slot="avatar"></ui5-avatar>
@@ -218,7 +221,7 @@ InShellBar.decorators = [
 <ui5-popover
 	placement-type="Bottom"
 	horizontal-align="Right"
-	style="max-width: 400px"
+	id="popover-with-notifications"
 >
 	${wrapInList(story)}
 </ui5-popover>

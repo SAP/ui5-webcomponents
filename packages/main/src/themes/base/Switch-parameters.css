@@ -116,8 +116,11 @@
 	--_ui5_switch_text_width: none;
 
 	--_ui5_switch_text_inactive_left: auto;
+	--_ui5_switch_text_inactive_left_alternate: auto;
 	--_ui5_switch_text_inactive_right: 0.125rem;
+	--_ui5_switch_text_inactive_right_alternate: 0.125rem;
 	--_ui5_switch_text_active_left: calc(-100% + 2rem);
+	--_ui5_switch_text_active_left_alternate: calc(-100% + 2rem);
 	--_ui5_switch_text_active_right: auto;
 
 	--_ui5_switch_text_active_color: var(--sapButton_Track_Selected_TextColor);

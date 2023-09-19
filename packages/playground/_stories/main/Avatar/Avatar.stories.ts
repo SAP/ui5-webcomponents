@@ -17,7 +17,7 @@ const component = "ui5-avatar";
 
 export default {
   title: "Main/Avatar",
-  component,
+  component: "Avatar",
   argTypes,
   parameters: {
     docs: {
@@ -35,6 +35,7 @@ const Template: UI5StoryArgs<Avatar, StoryArgsSlots> = (args) =>
     initials="${ifDefined(args.initials)}"
     color-scheme="${ifDefined(args.colorScheme)}"
     ?interactive="${ifDefined(args.interactive)}"
+    ?disabled="${ifDefined(args.disabled)}"
     aria-haspopup="${ifDefined(args.ariaHaspopup)}"
     accessible-name="${ifDefined(args.accessibleName)}"
   >
@@ -46,6 +47,14 @@ Basic.args = {
   initials: "FJ",
   interactive: true,
   accessibleName: "Avatar with accessible name"
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+	size: AvatarSize.XL,
+	initials: "IP",
+	interactive: true,
+	disabled: true
 };
 
 export const WithImage = Template.bind({});

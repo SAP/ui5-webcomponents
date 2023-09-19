@@ -10,6 +10,7 @@ import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
 import InvisibleMessageMode from "@ui5/webcomponents-base/dist/types/InvisibleMessageMode.js";
 import { getEffectiveAriaLabelText } from "@ui5/webcomponents-base/dist/util/AriaLabelHelper.js";
 import announce from "@ui5/webcomponents-base/dist/util/InvisibleMessage.js";
+import { getScopedVarName } from "@ui5/webcomponents-base/dist/CustomElementsScope.js";
 import "@ui5/webcomponents-icons/dist/slim-arrow-down.js";
 import "@ui5/webcomponents-icons/dist/decline.js";
 import "@ui5/webcomponents-icons/dist/not-editable.js";
@@ -266,15 +267,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.ComboBox.prototype.valueState
@@ -322,7 +314,6 @@ class ComboBox extends UI5Element {
 
 	/**
 	 * Defines the filter type of the component.
-	 * Available options are: <code>StartsWithPerTerm</code>, <code>StartsWith</code>, <code>Contains</code> and <code>None</code>.
 	 *
 	 * @type {sap.ui.webc.main.types.ComboBoxFilter}
 	 * @name sap.ui.webc.main.ComboBox.prototype.filter
@@ -351,7 +342,7 @@ class ComboBox extends UI5Element {
 	 *
 	 * @type {string}
 	 * @name sap.ui.webc.main.ComboBox.prototype.accessibleName
-	 * @defaultvalue: ""
+	 * @defaultvalue ""
 	 * @public
 	 * @since 1.0.0-rc.15
 	 */
@@ -464,7 +455,7 @@ class ComboBox extends UI5Element {
 
 		const slottedIconsCount = this.icon.length || 0;
 		const arrowDownIconsCount = this.readonly ? 0 : 1;
-		this.style.setProperty("--_ui5-input-icons-count", `${slottedIconsCount + arrowDownIconsCount}`);
+		this.style.setProperty(getScopedVarName("--_ui5-input-icons-count"), `${slottedIconsCount + arrowDownIconsCount}`);
 	}
 
 	async onAfterRendering() {

@@ -15,9 +15,9 @@ import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 const component = "ui5-multi-combobox";
 
 export default {
-    title: "Main/MultiComboBox",
-    component,
-    subcomponents: {'MultiComboBoxItem' : 'ui5-mcb-item', 'MultiComboBoxGroupItem' : 'ui5-mcb-group-item'},
+    title: "Main/Multi-Combo Box",
+    component: "MultiComboBox",
+    subcomponents: {'MultiComboBoxItem' : 'MultiComboBoxItem', 'MultiComboBoxGroupItem' : 'MultiComboBoxGroupItem'},
     parameters: {
         docs: {
           page: DocsPage({ ...componentInfo, component })
@@ -47,32 +47,24 @@ const Template: UI5StoryArgs<MultiComboBox, StoryArgsSlots> = (args) => html`
 </ui5-multi-combobox>`;
 
 
-export const BasicMultiComboBox = Template.bind({});
-BasicMultiComboBox.args = {
+export const Basic = Template.bind({});
+Basic.args = {
 	placeholder: 'Type your value',
-	default: `<ui5-mcb-item selected="" text="UI5"></ui5-mcb-item>`
-};
-
-export const MultiComboBoxItems = Template.bind({});
-MultiComboBoxItems.args = {
-	placeholder: 'Choose your countries',
 	default: `
+	<ui5-mcb-item text="Albania"></ui5-mcb-item>
 	<ui5-mcb-item selected="" text="Argentina"></ui5-mcb-item>
 	<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
 	<ui5-mcb-item text="Denmark"></ui5-mcb-item>
 	<ui5-mcb-item text="England"></ui5-mcb-item>
-	<ui5-mcb-item text="Albania"></ui5-mcb-item>
-	<ui5-mcb-item text="Morocco"></ui5-mcb-item>
-	<ui5-mcb-item text="Portugal"></ui5-mcb-item>
 	<ui5-mcb-item text="Germany"></ui5-mcb-item>
 	<ui5-mcb-item text="Philippines"></ui5-mcb-item>
-	<ui5-mcb-item text="Paraguay"></ui5-mcb-item>`
+	<ui5-mcb-item text="Portugal"></ui5-mcb-item>
+	<ui5-mcb-item text="The United Kingdom of Great Britain and Northern Ireland"></ui5-mcb-item>
+	`
 };
 
-MultiComboBoxItems.storyName = "Multi Combo Box with items";
-
-export const MultiComboBoxFreeTextInput = Template.bind({});
-MultiComboBoxFreeTextInput.args = {
+export const MultiComboBoxCustomValue= Template.bind({});
+MultiComboBoxCustomValue.args = {
 	placeholder: 'Choose your state',
 	valueState: ValueState.Success,
 	allowCustomValues: true,
@@ -87,10 +79,10 @@ MultiComboBoxFreeTextInput.args = {
 	<ui5-mcb-item text="Error"></ui5-mcb-item>
 	<ui5-mcb-item text="Mistake"></ui5-mcb-item>`
 };
-MultiComboBoxFreeTextInput.storyName = "Multi Combo Box with free text input";
+MultiComboBoxCustomValue.storyName = "Custom Value";
 
-export const MultiComboBoxGroupingItems = Template.bind({});
-MultiComboBoxGroupingItems.args = {
+export const MultiComboBoxGrouping = Template.bind({});
+MultiComboBoxGrouping.args = {
 	placeholder: 'Select a country',
 	default: `
 	<ui5-mcb-group-item text="Asia"></ui5-mcb-group-item>
@@ -103,10 +95,27 @@ MultiComboBoxGroupingItems.args = {
 	<ui5-mcb-item text="Bulgaria"></ui5-mcb-item>
 	<ui5-mcb-item text="Germany"></ui5-mcb-item>
 	<ui5-mcb-item text="Italy"></ui5-mcb-item>
+	<ui5-mcb-item text="The United Kingdom of Great Britain and Northern Ireland"></ui5-mcb-item>
 	<ui5-mcb-group-item text="North America"></ui5-mcb-group-item>
 	<ui5-mcb-item text="Canada"></ui5-mcb-item>
 	<ui5-mcb-item text="Granada"></ui5-mcb-item>
 	<ui5-mcb-item text="Haiti"></ui5-mcb-item>
 	<ui5-mcb-item text="United States"></ui5-mcb-item>`
 };
-MultiComboBoxGroupingItems.storyName = "Multi Combo Box with Grouping of Items";
+MultiComboBoxGrouping.storyName = "Grouping";
+
+export const MultiComboBoxLongToken = Template.bind({});
+MultiComboBoxLongToken.args = {
+	placeholder: 'MultiComboBox with single long token',
+	default: `<ui5-mcb-item selected="" text="Very long long long long long long long text"></ui5-mcb-item>`
+};
+MultiComboBoxLongToken.storyName = "Single Long Token";
+
+export const SuggestionsWrapping = Template.bind({});
+SuggestionsWrapping.args = {
+	placeholder: 'Enter product',
+	default: `
+	<ui5-mcb-item text="Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor incidunt ut labore et dolore magna aliquyam erat, diam nonumy eirmod tempor individunt ut labore et dolore magna aliquyam erat, sed justo et ea rebum."></ui5-mcb-item>
+	<ui5-mcb-item text="Widescreen Portable DVD Player w MP3, consetetur sadipscing, sed diam nonumy eirmod tempor invidunt ut labore et dolore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergen, no sea takimata. Tortor pretium viverra suspendisse potenti nullam. Congue quisque egestas diam in arcu cursus.Rutrum tellus pellentesque eu tincidunt tortor. Nec tincidunt praesent semper feugiat nibh sed"></ui5-mcb-item>
+	<ui5-mcb-item text="Portable DVD Player with 9 inches LCD Monitor"></ui5-mcb-item>`
+};

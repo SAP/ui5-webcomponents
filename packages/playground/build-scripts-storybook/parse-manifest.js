@@ -67,6 +67,8 @@ const parseMembers = (members) => {
 
 const parseModule = (module) => {
     module.declarations = module.declarations.map((declaration) => {
+        declaration.tagName = declaration.name;
+
         // remove attributes as they are duplicated with the properties
         if (declaration.attributes) {
             delete declaration.attributes;
@@ -88,8 +90,60 @@ const mergeManifests = (target, source) => {
     return target;
 };
 
+
+const flattenAPIsHierarchicalStructure = module => {
+    if (!module) {
+        return;
+    }
+    const declarations = module.declarations;
+
+    declarations.forEach(declaration => {
+        let superclassDeclaration = processedDeclarations.get(declaration.superclass.name);
+
+        if (!superclassDeclaration) {
+            superclassDeclaration = customElements.modules.find(_m => _m.declarations.find(_d => _d.name === declaration.superclass?.name ));
+
+            if (superclassDeclaration) {
+                flattenAPIsHierarchicalStructure(superclassDeclaration);
+            }
+        }
+
+        if (superclassDeclaration) {
+            processedDeclarations.set(declaration.name, mergeClassMembers(declaration, processedDeclarations.get(declaration.superclass.name)));
+        } else {
+            processedDeclarations.set(declaration.name, declaration);
+        }
+    })
+}
+
+const mergeClassMembers = (declaration, superclassDeclaration) => {
+    const props = ["members", "slots", "events"];
+
+    props.forEach(prop => {
+        if (declaration[prop]?.length) {
+            declaration[prop] = (superclassDeclaration[prop] || []).reduce(mergeArraysWithoutDuplicates, declaration[prop])
+        } else if (superclassDeclaration[prop]?.length) {
+            declaration[prop] = superclassDeclaration[prop];
+        }
+    });
+
+    return declaration;
+}
+
+const mergeArraysWithoutDuplicates = (currentValues, newValue) => {
+    if (!currentValues.find(currentValue => currentValue.name === newValue.name)) {
+        currentValues.push(newValue);
+    }
+
+    return currentValues;
+}
+
+
 const { customElementsMain, customElementsFiori } = loadManifest();
-const customElements = mergeManifests(customElementsMain, customElementsFiori);
+const customElements = mergeManifests(customElementsMain, customElementsFiori );
+const processedDeclarations = new Map();
+
+customElements.modules.forEach(flattenAPIsHierarchicalStructure)
 
 fs.writeFileSync(
     path.join(__dirname, "../.storybook/custom-elements.json"),

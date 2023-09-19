@@ -18,10 +18,10 @@ let index = 0;
 
 export default {
 	title: "Main/Input",
-	component,
+	component: "Input",
 	subcomponents: {
-		SuggestionItem: 'ui5-suggestion-item',
-		SuggestionGroupItem : 'ui5-suggestion-group-item'
+		SuggestionItem: 'SuggestionsItem',
+		SuggestionGroupItem : 'SuggestionsGroupItem'
 	},
 	parameters: {
 		docs: {
@@ -55,14 +55,13 @@ const Template: UI5StoryArgs<Input, StoryArgsSlots> = (args) => html`
 </ui5-input>`;
 
 
-export const BasicInput = Template.bind({});
-BasicInput.args = {
-	showClearIcon: true,
+export const Basic = Template.bind({});
+Basic.args = {
 	value: "Input"
 };
 
-export const InputSuggestions = Template.bind({});
-InputSuggestions.decorators = [
+export const Suggestions = Template.bind({});
+Suggestions.decorators = [
 	(story) => {
 		return html`
 		${story()}
@@ -75,7 +74,7 @@ InputSuggestions.decorators = [
 		"Austria",  "Australia", "Bulgaria", "Canada", "Columbia", "Croatia", "Denmark",
 		"England", "Finland", "France", "Germany", "Hungary", "Ireland", "Italy", "Kuwait",
 		"Luxembourg", "Mexico", "Morocco", "Norway", "Paraguay", "Philippines", "Portugal",
-		"Spain", "Sweden", "Sri Lanka", "Senegal", "United Kingdom", "USA" ];
+		"Spain", "Sweden", "Sri Lanka", "Senegal", "Thailand", "The United Kingdom of Great Britain and Northern Ireland", "USA" ];
 
 		if (value) {
 			suggestionItems = ui5_database_entries.filter((item) => {
@@ -87,10 +86,6 @@ InputSuggestions.decorators = [
 		});
 		suggestionItems.forEach((item) => {
 			const li = document.createElement("ui5-suggestion-item");
-			li.icon = "world";
-			li.additionalText = "explore";
-			li.additionalTextState = "Success";
-			li.description = "travel the world";
 			li.text = item;
 			input${index}.appendChild(li);
 		});
@@ -98,15 +93,24 @@ InputSuggestions.decorators = [
 </script>`;
 	}
 ]
-InputSuggestions.args = {
+Suggestions.args = {
 	placeholder: "Start typing country name",
 	showSuggestions: true,
 	showClearIcon: true
 };
-InputSuggestions.storyName = "Input With Suggestions (note: the usage depends on the framework you are using)";
 
-export const InputSuggestionsValueStateMessage = Template.bind({});
-InputSuggestionsValueStateMessage.args = {
+export const SuggestionsWrapping = Template.bind({});
+SuggestionsWrapping.args = {
+	default: `<ui5-suggestion-item text="Wireless DSL/ Repeater and Print Server Lorem ipsum dolar st amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor incidunt ut labore et dolore magna aliquyam erat, diam nonumy eirmod tempor individunt ut labore et dolore magna aliquyam erat, sed justo et ea rebum."></ui5-suggestion-item>
+	<ui5-suggestion-item text="Widescreen Portable DVD Player w MP3, consetetur sadipscing, sed diam nonumy eirmod tempor invidunt ut labore et dolore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergen, no sea takimata. Tortor pretium viverra suspendisse potenti nullam. Congue quisque egestas diam in arcu cursus.Rutrum tellus pellentesque eu tincidunt tortor. Nec tincidunt praesent semper feugiat nibh sed"></ui5-suggestion-item>
+	<ui5-suggestion-item text="Portable DVD Player with 9 inches LCD Monitor"></ui5-suggestion-item>`,
+	placeholder: "Enter product",
+	showSuggestions: true,
+};
+
+
+export const ValueStateMessage = Template.bind({});
+ValueStateMessage.args = {
 	default: `
 	<ui5-li>Cozy</ui5-li>
 	<ui5-li>Compact</ui5-li>
@@ -116,10 +120,9 @@ InputSuggestionsValueStateMessage.args = {
 	valueState: ValueState.Error,
 	valueStateMessage: '<div slot="valueStateMessage">This is an error message. Extra long text used as an error message.</div>'
 };
-InputSuggestionsValueStateMessage.storyName = "Input with Suggestions and Value State Message";
 
-export const InputLabel = Template.bind({});
-InputLabel.decorators = [
+export const Label = Template.bind({});
+Label.decorators = [
 	(story) => {
 		return html`
 			<ui5-label class="samples-big-margin-right" for="input-${index + 1}" required="" show-colon="">Secret Code</ui5-label>
@@ -127,28 +130,21 @@ InputLabel.decorators = [
 		`;
 	}
 ]
-InputLabel.args = {
+Label.args = {
 	type: InputType.Password,
-	valueState: ValueState.Error,
 	placeholder: "Enter your Secret Code",
 	required: true
 };
-InputLabel.storyName = "Input with Label";
 
-export const InputWithVHD: StoryFn = () => html`
+export const ValueHelpDialog: StoryFn = () => html`
 <ui5-input id="valueHelpInput" placeholder="Enter product" show-suggestions="">
 	<ui5-icon id="valueHelpIcon" slot="icon" name="value-help"></ui5-icon>
 </ui5-input>
 <ui5-dialog id="dialog" accessible-name="Products Value Help">
 	<div slot="header" id="dialogHeader" style="width: 100%; padding: 0 1rem 0.5rem 1rem;">
-		<div id="titleBar" style="
-			display: flex;
-			justify-content: space-between;
-			align-items: center;">
+		<div id="titleBar" style="display: flex; justify-content: space-between; align-items: center;">
 			<h2 id="headerTitle" style="
-				margin-top: 1em !important;
-				font-size: 1rem;
-				font-weight: 500;">
+				margin-top: 1em !important; font-size: 1rem; font-weight: 500;">
 				Products
 			</h2>
 			<ui5-button design="Transparent" id="clearButton">Clear</ui5-button>
@@ -253,7 +249,7 @@ export const InputWithVHD: StoryFn = () => html`
 	itemsList${index}.addEventListener("item-click", handleItemClick);
 </script>
 `;
-InputWithVHD.parameters = {
+ValueHelpDialog.parameters = {
 	docs: {
 		story: {
 			// Opt-out of inline rendering
@@ -262,5 +258,3 @@ InputWithVHD.parameters = {
 		},
 	}
 };
-
-InputWithVHD.storyName = "Input With Value Help Dialog";

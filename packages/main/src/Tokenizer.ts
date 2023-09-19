@@ -55,6 +55,7 @@ import {
 	TOKENIZER_ARIA_CONTAIN_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_ONE_TOKEN,
 	TOKENIZER_ARIA_CONTAIN_SEVERAL_TOKENS,
+	TOKENIZER_SHOW_ALL_ITEMS,
 } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
@@ -630,7 +631,11 @@ class Tokenizer extends UI5Element {
 	}
 
 	get _nMoreText() {
-		return Tokenizer.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
+		if (this._getVisibleTokens().length) {
+			return Tokenizer.i18nBundle.getText(MULTIINPUT_SHOW_MORE_TOKENS, this._nMoreCount);
+		}
+
+		return Tokenizer.i18nBundle.getText(TOKENIZER_SHOW_ALL_ITEMS, this._nMoreCount);
 	}
 
 	get showNMore() {

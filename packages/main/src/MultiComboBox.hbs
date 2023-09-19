@@ -19,6 +19,7 @@
 		@focusout="{{_tokenizerFocusOut}}"
 		@focusin="{{_tokenizerFocusIn}}"
 		@click={{_click}}
+		@paste={{_handlePaste}}
 		@keydown="{{_onTokenizerKeydown}}"
 		?expanded="{{_tokenizerExpanded}}"
 	>
@@ -49,6 +50,7 @@
 		@click={{_click}}
 		@focusin={{inputFocusIn}}
 		@focusout={{inputFocusOut}}
+		@paste={{_handlePaste}}
 		role="combobox"
 		aria-haspopup="listbox"
 		aria-expanded="{{open}}"

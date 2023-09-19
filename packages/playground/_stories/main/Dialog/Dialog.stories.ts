@@ -13,7 +13,7 @@ const component = "ui5-dialog";
 
 export default {
 	title: "Main/Dialog",
-	component,
+	component: "Dialog",
 	argTypes,
 	parameters: {
 		docs: {
@@ -90,11 +90,36 @@ Basic.args = {
 		<ui5-input id="address"></ui5-input>
 	</div>
 </section>`,
-	footer: `<div slot="footer" style="display: flex; align-items: center; padding: 0.5rem">
+	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
 	<div style="flex: 1;"></div>
 	<ui5-button class="dialogCloser" design="Emphasized">Register</ui5-button>
 </div>`,
 };
+
+Basic.decorators = [
+	(story) => html`<style>
+	.login-form {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-evenly;
+		align-items: flex-start;
+		margin: 3rem 6rem;
+	}
+	
+	.login-form > div {
+		display: grid;
+		width: 15rem;
+		margin-bottom: .5rem;
+	}
+
+	@media(max-width: 600px) {
+		.login-form {
+			margin: 3rem 1rem;
+		}
+	}
+</style>
+${story()}`
+];
 
 export const DraggableAndResizable = Template.bind({});
 DraggableAndResizable.args = {
@@ -104,7 +129,7 @@ DraggableAndResizable.args = {
 	default: `<p>Move this dialog around the screen by dragging it by its header.</p>
 <p>Resize this dialog by dragging it by its resize handle.</p>
 <p>These features are available only on Desktop.</p>`,
-	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; padding: .25rem 1rem;">
+	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
 	<ui5-button class="dialogCloser" design="Emphasized">OK</ui5-button>
 </div>`,
 };
@@ -136,7 +161,7 @@ export const WithState = Template.bind({});
 WithState.args = {
 	state: ValueState.Error,
 	default: "<p>Dialog with state</p>",
-	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; align-items: center;">
+	footer: `<div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
 	<ui5-button class="dialogCloser">Close</ui5-button>
 </div>`,
 };

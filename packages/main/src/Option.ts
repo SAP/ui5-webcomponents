@@ -1,5 +1,6 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import type { IOption } from "./Select.js";
 
@@ -14,6 +15,7 @@ import type { IOption } from "./Select.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.Option
  * @extends sap.ui.webc.base.UI5Element
+ * @abstract
  * @tagname ui5-option
  * @implements sap.ui.webc.main.ISelectOption
  * @public
@@ -108,6 +110,8 @@ class Option extends UI5Element implements IOption {
 	 * @slot
 	 * @public
 	 */
+	@slot({ type: Node, "default": true, invalidateOnChildChange: true })
+	text!: Array<Node>;
 
 	get stableDomRef() {
 		return this.getAttribute("stable-dom-ref") || `${this._id}-stable-dom-ref`;

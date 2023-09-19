@@ -9,7 +9,7 @@
 	width: 100%;
 	min-width: 6rem;
 	color: var(--sapField_TextColor);
-	min-height: var(--__ui5_textarea_min_height);
+	min-height: var(--_ui5_textarea_min_height);
 	font-size: var(--sapFontSize);
 	font-family: "72override", var(--sapFontFamily);
 	font-style: normal;
@@ -20,6 +20,7 @@
 
 :host([value-state][disabled]) .ui5-textarea-wrapper,
 :host(:not([value-state]):not([readonly]):not([focused])) .ui5-textarea-wrapper,
+:host([readonly][disabled]) .ui5-textarea-wrapper,
 :host([value-state="None"]:not([readonly]):not([disabled]):not([focused])) .ui5-textarea-wrapper {
 	background: var(--sapField_BackgroundStyle);
 	background-color: var(--sapField_Background);
@@ -40,7 +41,7 @@
 .ui5-textarea-root {
 	width: 100%;
 	height: inherit;
-	min-height: var(--__ui5_textarea_min_height);
+	min-height: var(--_ui5_textarea_min_height);
 	display: inline-flex;
 	vertical-align: top;
 	outline: none;
@@ -72,7 +73,8 @@
 	pointer-events: none;
 }
 
-:host(:not([readonly])) .ui5-textarea-wrapper {
+:host(:not([readonly])) .ui5-textarea-wrapper,
+:host([readonly][disabled]) .ui5-textarea-wrapper {
 	box-shadow: var(--sapField_Shadow);
 }
 
@@ -162,7 +164,7 @@
 :host([style*="height"]) .ui5-textarea-root,
 :host([growing][style*="height"]) .ui5-textarea-wrapper {
 	height: inherit;
-	min-height: var(--__ui5_textarea_min_height);
+	min-height: var(--_ui5_textarea_min_height);
 }
 
 :host([rows]) .ui5-textarea-inner, :host([rows]) .ui5-textarea-mirror {
@@ -231,15 +233,15 @@
 	min-height: var(--_ui5_textarea_line_height) * var(--sapFontSize) + var(--_ui5_textarea_padding_top_error_warning) + var(--_ui5_textarea_padding_bottom_information);
 }
 
-:host([readonly]) {
+:host([readonly]:not([disabled])) {
 	border-color: var(--sapField_ReadOnly_BorderColor);
 }
 
-:host([readonly]) .ui5-textarea-inner {
+:host([readonly]:not([disabled])) .ui5-textarea-inner {
 	padding: var(--_ui5_textarea_padding_top_readonly) var(--_ui5_textarea_padding_right_and_left_readonly) var(--_ui5_textarea_padding_bottom_readonly);
 }
 
-:host([readonly]) .ui5-textarea-root .ui5-textarea-wrapper {
+:host([readonly]:not([disabled])) .ui5-textarea-root .ui5-textarea-wrapper {
 	background-color: var(--sapField_ReadOnly_Background);
 	border-color: var(--sapField_ReadOnly_BorderColor);
 	border-style: var(--_ui5_textarea_readonly_border_style);

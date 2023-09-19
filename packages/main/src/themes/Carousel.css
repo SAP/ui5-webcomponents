@@ -8,7 +8,7 @@
     height: 100%;
 }
 
-.ui5-carousel-root:focus-visible {
+.ui5-carousel-root:focus {
     outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 }
 
@@ -137,6 +137,10 @@
 
 .ui5-carousel-navigation-arrows .ui5-carousel-navigation-button {
     box-shadow: var(--sapContent_Shadow1);
+}
+
+.ui5-carousel-navigation-arrows .ui5-carousel-navigation-button:active {
+    box-shadow: var(--ui5_carousel_navigation_button_active_box_shadow);
 }
 
 .ui5-carousel-navigation-button--hidden {
