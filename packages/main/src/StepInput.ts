@@ -155,15 +155,6 @@ class StepInput extends UI5Element implements IFormElement {
 
 	/**
 	 * Defines the value state of the component.
-	 * <br><br>
-	 * Available options are:
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
 	 *
 	 * @name sap.ui.webc.main.StepInput.prototype.valueState
 	 * @type {sap.ui.webc.base.types.ValueState}

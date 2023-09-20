@@ -104,8 +104,10 @@
 	--_ui5_switch_text_with_label_width: 1.75rem;
 
 	--_ui5_switch_text_inactive_left: 0.1875rem;
+	--_ui5_switch_text_inactive_left_alternate: 0.0625rem;
 	--_ui5_switch_text_inactive_right: auto;
 	--_ui5_switch_text_active_left: 0.1875rem;
+	--_ui5_switch_text_active_left_alternate: 0.0625rem;
 	--_ui5_switch_text_active_right: auto;
 
 	--_ui5_switch_text_active_color: var(--sapButton_Handle_Selected_TextColor);
@@ -146,4 +148,5 @@
 	--_ui5_switch_text_font_size: var(--sapFontSize);
 	--_ui5_switch_text_width: 1rem;
 	--_ui5_switch_text_active_left: 0.1875rem;
+	--_ui5_switch_text_active_left_alternate: 0.0625rem;
 }
