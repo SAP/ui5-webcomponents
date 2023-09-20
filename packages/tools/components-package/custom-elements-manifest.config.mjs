@@ -18,7 +18,6 @@ function processClass(ts, classNode, moduleDoc) {
 
 		if (decoratorArg) {
 			if (decoratorArg.kind === ts.SyntaxKind.StringLiteral || decoratorArg.kind === ts.SyntaxKind.ObjectLiteralExpression) {
-				debugger
 				currClass.tagName = decoratorArg.text || (decoratorArg.properties.find(property => property.name.text === "tag")?.initializer?.text);
 			}
 		}
@@ -214,13 +213,7 @@ const processPublicAPI = object => {
 export default {
 	/** Globs to analyze */
 	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
-	// globs: ["src/Test1.ts", "src/Test2.ts", "src/Test3.ts", "src/Test4.ts", "src/Test5.ts"],
-	globs: ["src/Test1.ts", "src/ListItem.ts", "src/ListItemBase.ts"],
 	outdir: 'dist',
-	/** Run in dev mode, provides extra logging */
-	// dev: true,
-	/** Run in watch mode, runs on file changes */
-	watch: true,
 	plugins: [
 		{
 			name: 'my-plugin',
