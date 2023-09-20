@@ -98,7 +98,7 @@ const flattenAPIsHierarchicalStructure = module => {
     const declarations = module.declarations;
 
     declarations.forEach(declaration => {
-        let superclassDeclaration = processedDeclarations.get(declaration.superclass.name);
+        let superclassDeclaration = processedDeclarations.get(declaration.superclass?.name);
 
         if (!superclassDeclaration) {
             superclassDeclaration = customElements.modules.find(_m => _m.declarations.find(_d => _d.name === declaration.superclass?.name ));
@@ -109,7 +109,7 @@ const flattenAPIsHierarchicalStructure = module => {
         }
 
         if (superclassDeclaration) {
-            processedDeclarations.set(declaration.name, mergeClassMembers(declaration, processedDeclarations.get(declaration.superclass.name)));
+            processedDeclarations.set(declaration.name, mergeClassMembers(declaration, processedDeclarations.get(declaration.superclass?.name)));
         } else {
             processedDeclarations.set(declaration.name, declaration);
         }
@@ -143,7 +143,7 @@ const { customElementsMain, customElementsFiori } = loadManifest();
 const customElements = mergeManifests(customElementsMain, customElementsFiori );
 const processedDeclarations = new Map();
 
-customElements.modules.forEach(flattenAPIsHierarchicalStructure)
+customElements.modules.forEach(flattenAPIsHierarchicalStructure);
 
 fs.writeFileSync(
     path.join(__dirname, "../.storybook/custom-elements.json"),
