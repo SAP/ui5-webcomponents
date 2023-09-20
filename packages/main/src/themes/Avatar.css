@@ -9,7 +9,7 @@
 	opacity: .7;
 }
 
-:host(:not([hidden]):not([pressed]):hover) {
+:host([interactive]):not([hidden][pressed][disabled]):hover {
 	box-shadow: var(--ui5-avatar-hover-box-shadow-offset);
 }
 
