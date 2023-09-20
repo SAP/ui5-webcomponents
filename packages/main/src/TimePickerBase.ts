@@ -266,6 +266,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#closePicker
+	 * @returns {Promise} Resolves when the picker is closed
 	 */
 	async closePicker() {
 		const responsivePopover = await this._getPopover();
@@ -313,7 +314,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#openInputsPopover
-	 * @returns {Promise} Resolves when the picker is open
+	 * @returns {Promise} Resolves when the Inputs popover is open
 	 */
 	async openInputsPopover() {
 		this.tempValue = this.value && this.isValid(this.value) ? this.value : this.getFormat().format(new Date());
@@ -327,6 +328,7 @@ class TimePickerBase extends UI5Element {
 	 * @public
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#closeInputsPopover
+	 * @returns {Promise} Resolves when the Inputs popover is closed
 	 */
 	async closeInputsPopover() {
 		const popover = await this._getInputsPopover();
