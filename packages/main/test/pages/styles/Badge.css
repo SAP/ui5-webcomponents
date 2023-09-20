@@ -6,7 +6,7 @@ body {
 .group {
 	padding: 1rem;
 }
-.gaps > * {
+.gaps ui5-badge {
 	margin-bottom: 0.5rem;
 }
 
