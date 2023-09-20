@@ -21,6 +21,7 @@
     "lint:scope": "nps scope.lint",
     "start": "wc-dev start",
     "watch": "wc-dev watch",
+    "generate": "nps generate",
     "build": "wc-dev build",
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
@@ -47,6 +48,8 @@
   "dependencies": {
     "@ui5/webcomponents-base": "1.18.0-rc.0",
     "@ui5/webcomponents-icons": "1.18.0-rc.0",
+    "@ui5/webcomponents-icons-business-suite": "1.18.0-rc.0",
+    "@ui5/webcomponents-icons-tnt": "1.18.0-rc.0",
     "@ui5/webcomponents-localization": "1.18.0-rc.0",
     "@ui5/webcomponents-theming": "1.18.0-rc.0"
   },

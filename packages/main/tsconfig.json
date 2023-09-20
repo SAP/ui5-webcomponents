@@ -17,6 +17,10 @@
     },
     "references": [
       { "path": "../base" },
-      { "path": "../localization" }
+      { "path": "../localization" },
+      { "path": "../theming" },
+      { "path": "../icons" },
+      { "path": "../icons-business-suite" },
+      { "path": "../icons-tnt" },
     ]
 }

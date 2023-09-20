@@ -15,5 +15,6 @@
     "references": [
       { "path": "../base" },
       { "path": "../main" },
+      { "path": "../theming" },
     ]
 }

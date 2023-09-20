@@ -22,6 +22,7 @@ allThemes.forEach(theme => {
 module.exports = {
 	scripts: {
 		clean: "rimraf dist && rimraf src/generated",
+		generate: `cross-env UI5_TS=true nps clean build.src build.themes build.postcss build.jsonImports`,
 		build: {
 			default: `cross-env UI5_TS=true nps clean build.src build.themes build.postcss build.jsonImports build.typescript generateReport`,
 			src: `copy-and-watch "src/**/*.js" dist/`,

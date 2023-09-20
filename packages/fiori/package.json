@@ -32,6 +32,7 @@
     "start": "wc-dev start",
     "watch": "wc-dev watch",
     "build": "wc-dev build",
+    "generate": "nps generate",
     "bundle": "nps build.bundle",
     "test": "wc-dev test",
     "create-ui5-element": "wc-create-ui5-element",

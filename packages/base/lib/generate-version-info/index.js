@@ -23,8 +23,8 @@ const generate = async () => {
 };
 export default VersionInfo;`;
 
-	await fs.mkdir("dist/generated/", { recursive: true });
-	await fs.writeFile("dist/generated/VersionInfo.js", fileContent);
+	await fs.mkdir("src/generated/", { recursive: true });
+	await fs.writeFile("src/generated/VersionInfo.ts", fileContent);
 }
 
 generate().then(() => {

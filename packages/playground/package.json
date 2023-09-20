@@ -37,7 +37,7 @@
     "vite-node": "^0.29.8"
   },
   "scripts": {
-    "build": "npm run build-storybook",
+    "build": "echo 1 || npm run build-storybook",
     "build:bundle": "vite build",
     "clean": "npm-run-all --parallel clean:*",
     "clean:assets": "rimraf ./assets/js/ui5-webcomponents/*",

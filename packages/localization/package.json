@@ -25,6 +25,7 @@
     "lint": "nps lint",
     "start": "nps start",
     "build": "nps build",
+    "generate": "nps generate",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "devDependencies": {
