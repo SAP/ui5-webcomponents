@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.17.1](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0...v1.17.1) (2023-09-21)
+
+
+### Bug Fixes
+
+* **ui5-tree:** indentation correction ([#7541](https://github.com/SAP/ui5-webcomponents/issues/7541)) ([1ff8a58](https://github.com/SAP/ui5-webcomponents/commit/1ff8a58df2d1bfe52d6915ed4b8381cdd49c7806))
+
+
+
+
+
 # [1.17.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0-rc.2...v1.17.0) (2023-09-01)
 
 
