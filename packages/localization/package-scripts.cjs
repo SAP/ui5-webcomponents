@@ -26,7 +26,7 @@ const scripts = {
 		src: `copy-and-watch "src/**/*.js" dist/`,
 	},
 	watch: {
-		default: 'concurrently "nps watch.src" "nps watch.typescript" ',
+		"default": "nps watch.src",
 		typescript: "tsc --watch",
 		src: `nps "copy.src --watch --skip-initial-copy"`,
 	},

@@ -50,7 +50,7 @@ const scripts = {
 		cleanup: "rimraf jsdoc-dist/"
 	},
 	watch: {
-		default: 'concurrently "nps watch.src" "nps watch.styles" "nps watch.typescript"',
+		default: 'concurrently "nps watch.src" "nps watch.styles"',
 		withBundle: 'concurrently "nps watch.src" "nps watch.bundle" "nps watch.styles" "nps watch.typescript"',
 		src: 'nps "copy.src --watch --skip-initial-copy"',
 		typescript: 'tsc --watch',

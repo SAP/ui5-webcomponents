@@ -98,7 +98,7 @@ const getScripts = (options) => {
 			props: `node "${LIB}/copy-and-watch/index.js" --silent "src/**/*.properties" dist/`,
 		},
 		watch: {
-			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.typescript" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
+			default: `${tsCrossEnv} concurrently "nps watch.templates" "nps watch.api" "nps watch.src" "nps watch.styles" "nps watch.i18n" "nps watch.props"`,
 			devServer: 'concurrently "nps watch.default" "nps watch.bundle"',
 			src: 'nps "copy.src --watch --safe --skip-initial-copy"',
 			typescript: tsWatchCommand,
