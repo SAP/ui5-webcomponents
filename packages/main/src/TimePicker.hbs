@@ -21,7 +21,10 @@
 	>
 
 	{{#if valueStateMessage.length}}
-		<slot name="valueStateMessage"></slot>
+		<slot
+			name="valueStateMessage"
+			slot="valueStateMessage"
+		></slot>
 	{{/if}}
 
 	{{#unless readonly}}
