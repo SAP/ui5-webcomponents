@@ -1,10 +1,12 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
+import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
 import willShowContent from "@ui5/webcomponents-base/dist/util/willShowContent.js";
 import ValueState from "@ui5/webcomponents-base/dist/types/ValueState.js";
 import WrappingType from "./types/WrappingType.js";
@@ -51,6 +53,15 @@ import badgeCss from "./generated/themes/Badge.css.js";
 	template: BadgeTemplate,
 	styles: badgeCss,
 })
+
+/**
+ * Fired on mouseup, <code>SPACE</code> and <code>ENTER</code>.
+ * - on mouse click, the icon fires native <code>click</code> event
+ * - on <code>SPACE</code> and <code>ENTER</code>, the badge fires custom <code>click</code> event
+ * @private
+ * @since 1.19
+ */
+@event("click")
 class Badge extends UI5Element {
 	/**
 	 * Defines the design type of the component.
@@ -83,6 +94,7 @@ class Badge extends UI5Element {
 	 * @defaultvalue "None"
 	 * @name sap.ui.webc.main.Badge.prototype.valueState
 	 * @public
+	 * @since 1.19
 	 */
 	@property({ type: ValueState, defaultValue: ValueState.None })
 	valueState!: `${ValueState}`;
@@ -94,6 +106,7 @@ class Badge extends UI5Element {
 	 * @defaultvalue "DarkRed"
 	 * @name sap.ui.webc.main.Badge.prototype.indicationColor
 	 * @public
+	 * @since 1.19
 	 */
 	@property({ type: ValueState, defaultValue: BadgeIndicationColorType.DarkRed })
 	indicationColor!: `${BadgeIndicationColorType}`;
@@ -104,6 +117,7 @@ class Badge extends UI5Element {
 	 * @name sap.ui.webc.main.Badge.prototype.showStateIcon
 	 * @defaultValue false
 	 * @public
+	 * @since 1.19
 	 */
 	@property({ type: Boolean })
 	showStateIcon!: boolean;
@@ -114,6 +128,7 @@ class Badge extends UI5Element {
 	 * @name sap.ui.webc.main.Badge.prototype.interactive
 	 * @defaultValue false
 	 * @public
+	 * @since 1.19
 	 */
 	@property({ type: Boolean })
 	interactive!: boolean;
@@ -126,6 +141,7 @@ class Badge extends UI5Element {
 	 * @type {sap.ui.webc.main.types.WrappingType}
 	 * @defaultvalue "None"
 	 * @public
+	 * @since 1.19
 	 */
 	@property({ type: WrappingType, defaultValue: WrappingType.None })
 	wrappingType!: `${WrappingType}`;
@@ -192,6 +208,30 @@ class Badge extends UI5Element {
 
 	get badgeDescription() {
 		return Badge.i18nBundle.getText(BADGE_DESCRIPTION);
+	}
+
+	get _tabIndex() {
+		return this.interactive ? "0" : undefined;
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		if (!this.interactive) {
+			return;
+		}
+
+		if (isEnter(e)) {
+			this.fireEvent("click");
+		}
+
+		if (isSpace(e)) {
+			e.preventDefault(); // prevent scrolling
+		}
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		if (this.interactive && isSpace(e)) {
+			this.fireEvent("click");
+		}
 	}
 }
 

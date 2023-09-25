@@ -1,4 +1,8 @@
-<div class="ui5-badge-root">
+<div class="ui5-badge-root"
+	 tabindex="{{_tabIndex}}"
+	 @keydown={{_onkeydown}}
+	 @keyup={{_onkeyup}}
+>
 	<slot name="icon"></slot>
 
 	{{#if hasText}}

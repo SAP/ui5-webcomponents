@@ -41,7 +41,7 @@ function initializeBadges() {
 
 	const colorSchemeContent = document.querySelector("#colorSchemeContent");
 	colorSchemes.forEach((value) => {
-		colorSchemeContent.insertAdjacentHTML("beforeend", `<ui5-badge color-scheme="${value}">Color Scheme ${value}</ui5-badge><br>`);
+		colorSchemeContent.insertAdjacentHTML("beforeend", `<ui5-badge interactive color-scheme="${value}">Color Scheme ${value}</ui5-badge><br>`);
 		colorSchemeContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ColorScheme" color-scheme="${value}">Color Scheme ${value} - design type set</ui5-badge><br>`);
 
 		colorSchemeContent.insertAdjacentHTML("beforeend", `<ui5-badge color-scheme="${value}"><ui5-icon name="lab" slot="icon"></ui5-icon>Color Scheme ${value}</ui5-badge><br>`);
