@@ -42,8 +42,8 @@ Basic.args = {
 	`,
 };
 
-export const DesignNoCurrentPage = Template.bind({});
-DesignNoCurrentPage.args = {
+export const NoCurrentPage = Template.bind({});
+NoCurrentPage.args = {
     design: BreadcrumbsDesign.NoCurrentPage,
     default: `<ui5-breadcrumbs-item href="https://www.sap.com" target="_blank">Root Page
 </ui5-breadcrumbs-item>
