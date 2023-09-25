@@ -43,7 +43,7 @@
 
 .ui5-cp-item:hover:not(:focus),
 .ui5-cp-item.selected {
-	border: 1px solid var(--sapGroup_ContentBackground);
+	border: 0.0625rem solid var(--sapGroup_ContentBackground);
 	border-radius: var(--_ui5_color-palette-item-hover-inner-border-radius);
 	box-sizing: border-box;
 }
@@ -56,7 +56,7 @@
 
 :host(:not([_disabled])[phone]) .ui5-cp-item:focus {
 	scale: 1.277778; /* (2.875rem / 2.25rem) ~ 1.277778 */
-	box-shadow: 0 0 0 1px #FFF, 0 0 0 2px var(--sapContent_ForegroundBorderColor);
+	box-shadow: 0 0 0 0.0625rem #FFF, 0 0 0 0.125rem var(--sapContent_ForegroundBorderColor);
 	border: var(--_ui5_color-palette-item-phone-selected-focus);
 }
 
