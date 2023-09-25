@@ -11,9 +11,6 @@
 	--_ui5-badge-font-size: var(--sapFontSize);
 	--_ui5-badge-font: "72override", var(--sapFontSemiboldDuplexFamily);
 	--_ui5-badge-font-weight: normal;
-	--_ui5-badge-default-border-color: transparent;
-	--_ui5-badge-default-background: var(--ui5-badge-color-scheme-1-background);
-	--_ui5-badge-default-color: var(--ui5-badge-color-scheme-1-color);
 	--_ui5-badge-letter-spacing: normal;
 
 	--ui5-badge-color-scheme-1-background: var(--sapAvatar_1_Background);

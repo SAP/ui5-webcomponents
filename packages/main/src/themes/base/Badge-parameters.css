@@ -9,9 +9,6 @@
 	--_ui5-badge-font-size: var(--sapFontSmallSize);
 	--_ui5-badge-font: "72override", var(--sapFontFamily);
 	--_ui5-badge-font-weight: bold;
-	--_ui5-badge-default-border-color: var(--ui5-badge-color-scheme-1-border);
-	--_ui5-badge-default-background: var(--ui5-badge-color-scheme-1-background);
-	--_ui5-badge-default-color: var(--ui5-badge-color-scheme-1-color);
 	--_ui5-badge-letter-spacing: 0.0125em;
 
 	--ui5-badge-color-scheme-1-background: var(--sapLegendBackgroundColor1);
