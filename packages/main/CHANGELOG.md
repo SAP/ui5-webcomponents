@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.0...v1.18.0-rc.1) (2023-09-21)
+
+
+### Bug Fixes
+
+* **ui5-breadcrumbs:** infinite rerendering fixed ([#7589](https://github.com/SAP/ui5-webcomponents/issues/7589)) ([af8015b](https://github.com/SAP/ui5-webcomponents/commit/af8015b68a3a90cfec999863230d0f7b5298e206))
+* **ui5-button:** remove box shadows ([#7590](https://github.com/SAP/ui5-webcomponents/issues/7590)) ([555303a](https://github.com/SAP/ui5-webcomponents/commit/555303ab273fbe361c19de4ff5cf8dddddfd5e55))
+* **ui5-dialog:** fix background and shadow of slotted ui5-bar ([#7421](https://github.com/SAP/ui5-webcomponents/issues/7421)) ([2746460](https://github.com/SAP/ui5-webcomponents/commit/2746460ebd0d6517e8eedadde30b74e424c17a85)), closes [#7418](https://github.com/SAP/ui5-webcomponents/issues/7418)
+* **ui5-input,ui5-textarea:** adjust disabled readonly visualisation ([#7568](https://github.com/SAP/ui5-webcomponents/issues/7568)) ([e97e35f](https://github.com/SAP/ui5-webcomponents/commit/e97e35f4570125965788a2c134022d7e289e4f81))
+* **ui5-input:** adjust button's size ([#7597](https://github.com/SAP/ui5-webcomponents/issues/7597)) ([b32dba1](https://github.com/SAP/ui5-webcomponents/commit/b32dba1dd5ca2874c4735bda8879b6ee82f149a9))
+* **ui5-input:** improve item announcement ([#7585](https://github.com/SAP/ui5-webcomponents/issues/7585)) ([292d15a](https://github.com/SAP/ui5-webcomponents/commit/292d15a0a7fcf468ecdfbff3048083b7014bf7c7))
+* **ui5-popover:** improve positioning when scrolling ([#7593](https://github.com/SAP/ui5-webcomponents/issues/7593)) ([a1b3bf6](https://github.com/SAP/ui5-webcomponents/commit/a1b3bf63875c04870e01ff715f603293a233444f)), closes [#7173](https://github.com/SAP/ui5-webcomponents/issues/7173)
+* **ui5-segmented-button:** visual misalignments ([#7528](https://github.com/SAP/ui5-webcomponents/issues/7528)) ([d459fc2](https://github.com/SAP/ui5-webcomponents/commit/d459fc217bf6c63c1070743ea7d4447b08bdf2bc))
+* **ui5-switch:** fix text alignment in all themes ([#7416](https://github.com/SAP/ui5-webcomponents/issues/7416)) ([b4dea67](https://github.com/SAP/ui5-webcomponents/commit/b4dea675f5793c28ee9f0123d0e8bf6bd38c0b83))
+
+
+### Features
+
+* add `secondaryCalendarType` global config ([#7547](https://github.com/SAP/ui5-webcomponents/issues/7547)) ([c9111a3](https://github.com/SAP/ui5-webcomponents/commit/c9111a38fc2a6cc54bb696dbdcec66100e304906))
+* **ui5-checkbox:** update horizon theme paramaters ([#7576](https://github.com/SAP/ui5-webcomponents/issues/7576)) ([4d144dd](https://github.com/SAP/ui5-webcomponents/commit/4d144dd76001cd2eed284629b12de9d99b64f383))
+* **ui5-combobox, ui5-multi-combo-box, ui5-input, ui5-multi-input:** add wrapping in suggestions and n-more ([#7509](https://github.com/SAP/ui5-webcomponents/issues/7509)) ([21528a0](https://github.com/SAP/ui5-webcomponents/commit/21528a0ae5f3cec84d30362eba79bb6fa08a75d4))
+* **ui5-split-button:** adapt visual design with new parameters ([#7584](https://github.com/SAP/ui5-webcomponents/issues/7584)) ([28997c8](https://github.com/SAP/ui5-webcomponents/commit/28997c8468acf8e5b33a8c174cf9368c31310eb0))
+
+
+
+
+
 # [1.18.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0...v1.18.0-rc.0) (2023-09-07)
 
 

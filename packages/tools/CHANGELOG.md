@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.0...v1.18.0-rc.1) (2023-09-21)
+
+
+### Reverts
+
+* Revert "build: fix dev server page refresh" ([105db9f](https://github.com/SAP/ui5-webcomponents/commit/105db9f3c42e7434c2dc9b0eb967fb45cac9620d))
+
+
+
+
+
 # [1.18.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0...v1.18.0-rc.0) (2023-09-07)
 
 **Note:** Version bump only for package @ui5/webcomponents-tools
