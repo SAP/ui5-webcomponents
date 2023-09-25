@@ -277,8 +277,25 @@ class ColorPalette extends UI5Element {
 	}
 
 	_onclick(e: MouseEvent) {
-		const target = e.target as ColorPaletteItem;
+		this.handleSelection(e.target as ColorPaletteItem);
+	}
 
+	_onkeyup(e: KeyboardEvent) {
+		const target = e.target as ColorPaletteItem;
+		if (isSpace(e) && target.hasAttribute("ui5-color-palette-item")) {
+			e.preventDefault();
+			this.handleSelection(target);
+		}
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		const target = e.target as ColorPaletteItem;
+		if (isEnter(e) && target.hasAttribute("ui5-color-palette-item")) {
+			this.handleSelection(target);
+		}
+	}
+
+	handleSelection(target: ColorPaletteItem) {
 		if (!target.hasAttribute("ui5-color-palette-item")) {
 			return;
 		}
@@ -294,21 +311,6 @@ class ColorPalette extends UI5Element {
 		target.selected = true;
 
 		this._previouslySelected = target;
-	}
-
-	_onkeyup(e: KeyboardEvent) {
-		const target = e.target as ColorPaletteItem;
-		if (isSpace(e) && target.hasAttribute("ui5-color-palette-item")) {
-			e.preventDefault();
-			this.selectColor(target);
-		}
-	}
-
-	_onkeydown(e: KeyboardEvent) {
-		const target = e.target as ColorPaletteItem;
-		if (isEnter(e) && target.hasAttribute("ui5-color-palette-item")) {
-			this.selectColor(target);
-		}
 	}
 
 	_onDefaultColorKeyDown(e: KeyboardEvent) {
