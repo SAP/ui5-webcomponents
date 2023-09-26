@@ -1,7 +1,7 @@
 import { html } from "lit";
 import { ifDefined } from "lit/directives/if-defined.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
-import type { Meta } from "@storybook/web-components";
+import type { Meta, StoryFn } from "@storybook/web-components";
 
 import type Avatar from "@ui5/webcomponents/dist/Avatar.js";
 import AvatarSize from "@ui5/webcomponents/dist/types/AvatarSize.js";
@@ -10,6 +10,9 @@ import AvatarShape from "@ui5/webcomponents/dist/types/AvatarShape.js";
 import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
+
+import TemplateAvatarTypesandSizes from "./TemplateAvatarTypesandSizes.js";
+
 
 import { DocsPage } from "../../../.storybook/docs";
 
@@ -38,6 +41,7 @@ const Template: UI5StoryArgs<Avatar, StoryArgsSlots> = (args) =>
     ?disabled="${ifDefined(args.disabled)}"
     aria-haspopup="${ifDefined(args.ariaHaspopup)}"
     accessible-name="${ifDefined(args.accessibleName)}"
+    fallback-icon="${ifDefined(args.fallbackIcon)}"
   >
     ${unsafeHTML(args.default)}
   </ui5-avatar>`;
@@ -49,27 +53,7 @@ Basic.args = {
   accessibleName: "Avatar with accessible name"
 };
 
-export const Disabled = Template.bind({});
-Disabled.args = {
-	size: AvatarSize.XL,
-	initials: "IP",
-	interactive: true,
-	disabled: true
-};
-
-export const WithImage = Template.bind({});
-WithImage.args = {
-  default: `<img
-	alt="Woman 1"
-	src="../assets/images/avatars/man_avatar_1.png"
-/>`,
-};
-
-export const Size = Template.bind({});
-Size.args = {
-  size: AvatarSize.L,
-  icon: "home",
-};
+export const TypesAndSizes: StoryFn = TemplateAvatarTypesandSizes.bind({});
 
 export const Styles = Template.bind({});
 Styles.args = {

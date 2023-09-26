@@ -38,37 +38,11 @@ Basic.args = {
     value: 25,
 };
 
-export const DisplayValue = Template.bind({});
-DisplayValue.args = {
+export const Customesied = Template.bind({});
+Customesied.args = {
     value: 25,
     displayValue: "Custom Display Value",
-};
-
-export const CustomSize = Template.bind({});
-CustomSize.args = {
-    value: 25,
     style: "height: 50px; width: 200px;",
 };
 
-export const ValueStates: StoryFn = () => html`
-<ui5-progress-indicator
-    value-state="None"
-    value="25"
-></ui5-progress-indicator>
-<ui5-progress-indicator
-    value-state="Error"
-    value="50"
-></ui5-progress-indicator>
-<ui5-progress-indicator
-    value-state="Warning"
-    value="75"
-></ui5-progress-indicator>
-<ui5-progress-indicator
-    value-state="Success"
-    value="90"
-></ui5-progress-indicator>
-<ui5-progress-indicator
-    value-state="Information"
-    value="100"
-></ui5-progress-indicator>
-`;
+
