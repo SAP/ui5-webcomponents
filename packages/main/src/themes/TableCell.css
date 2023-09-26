@@ -4,7 +4,7 @@
 	font-size: 0.875rem;
 	height: var(--ui5_table_row_height);
 	box-sizing: border-box;
-	color: var(--sapContent_LabelColor);
+	color: var(--sapList_TextColor);
 	word-break: break-word;
 	vertical-align: middle;
 }
