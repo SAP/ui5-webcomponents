@@ -6,7 +6,7 @@ const STORIES_ROOT_FOLDER_NAME = '../_stories';
 // run the script to generate the argTypes for the stories available in the _stories folder
 const main = async () => {
 
-	const baseAPI = { symbols: [] }
+	const baseAPI = JSON.parse((await fs.readFile(`../base/dist/api.json`)).toString());
 
 	// read all directories inside _stories folder and create a list of components
 	const packages = await fs.readdir(path.join(__dirname, STORIES_ROOT_FOLDER_NAME));
