@@ -75,15 +75,6 @@ function initializeBadges() {
 		valueStateContent.insertAdjacentHTML("beforeend", "<br><br>");
 	});
 
-	const valueStateInvertedContent = document.querySelector("#valueStateInvertedContent");
-	valueStates.forEach((value) => {
-		valueStateInvertedContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ValueStateInverted" value-state="${value}">${value}</ui5-badge>`);
-		valueStateInvertedContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ValueStateInverted" value-state="${value}" show-state-icon>${value} default state icon</ui5-badge>`);
-		valueStateInvertedContent.insertAdjacentHTML("beforeend", `<ui5-badge design-type="ValueStateInverted" value-state="${value}" show-state-icon><ui5-icon name="lab" slot="icon"></ui5-icon>${value} custom icon</ui5-badge>`);
-
-		valueStateInvertedContent.insertAdjacentHTML("beforeend", "<br><br>");
-	});
-
 	const indicationColorSet1Content = document.querySelector("#indicationColorSet1Content");
 	indicationColor.forEach((value) => {
 		indicationColorSet1Content.insertAdjacentHTML("beforeend", `<ui5-badge design-type="IndicationColorSet1" indication-color="${value}">${value}</ui5-badge><br>`);

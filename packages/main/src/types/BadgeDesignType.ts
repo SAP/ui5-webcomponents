@@ -23,13 +23,6 @@ enum BadgeDesignType {
 	ValueState = "ValueState",
 
 	/**
-	 * Value state inverted palette.
-	 * @public
-	 * @type {ValueState}
-	 */
-	ValueStateInverted = "ValueStateInverted",
-
-	/**
 	 * First color set of indication colors palette.
 	 * @public
 	 * @type {IndicationColorSet1}
