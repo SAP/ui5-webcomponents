@@ -19,7 +19,6 @@ import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";
-import SemanticColor from "./types/SemanticColor";
 
 /**
  * @class
