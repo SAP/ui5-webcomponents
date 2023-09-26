@@ -371,7 +371,7 @@ class Avatar extends UI5Element implements ITabbable {
 	}
 
 	get _role() {
-		return this._interactive ? "button" : undefined;
+		return this._interactive ? "button" : "img";
 	}
 
 	get _ariaHasPopup() {
