@@ -1,5 +1,5 @@
-import processEvent from "./cem-plugin/event.mjs";
-import { getDeprecatedStatus, getSinceStatus, getPrivacyStatus, getType, getReference } from "./cem-plugin/utils.mjs";
+import processEvent from "./event.mjs";
+import { getDeprecatedStatus, getSinceStatus, getPrivacyStatus, getType, getReference } from "./utils.mjs";
 import { parse } from "comment-parser";
 
 function processClass(ts, classNode, moduleDoc) {
@@ -212,6 +212,7 @@ const processPublicAPI = object => {
 
 export default {
 	/** Globs to analyze */
+	watch: true,
 	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
 	outdir: 'dist',
 	plugins: [

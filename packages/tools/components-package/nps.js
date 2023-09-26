@@ -54,7 +54,7 @@ const getScripts = (options) => {
 		clean: 'rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port && nps "scope.testPages.clean"',
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
-		testCEM: `cem analyze --config  "${require.resolve("@ui5/webcomponents-tools/components-package/custom-elements-manifest.config.mjs")}"`,
+		testCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
 		prepare: {
 			default: `${tsCrossEnv} nps clean prepare.all typescript generateAPI`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
