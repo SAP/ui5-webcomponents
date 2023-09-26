@@ -36,6 +36,7 @@ import {
 	TABCONTAINER_SUBTABS_DESCRIPTION,
 } from "./generated/i18n/i18n-defaults.js";
 import Button from "./Button.js";
+import type { IButton } from "./Button.js";
 import Icon from "./Icon.js";
 import List from "./List.js";
 import type Tab from "./Tab.js";
@@ -363,7 +364,7 @@ class TabContainer extends UI5Element {
 	 * @name sap.ui.webc.main.TabContainer.prototype.overflowButton
 	 */
 	@slot()
-	overflowButton!: Array<Button>;
+	overflowButton!: Array<IButton>;
 
 	/**
 	 * Defines the button which will open the start overflow menu if available. If nothing is provided to this slot,
@@ -376,7 +377,7 @@ class TabContainer extends UI5Element {
 	 * @name sap.ui.webc.main.TabContainer.prototype.startOverflowButton
 	 */
 	@slot()
-	startOverflowButton!: Array<Button>;
+	startOverflowButton!: Array<IButton>;
 
 	_itemNavigation: ItemNavigation;
 	_allItemsAndSubItems?: Array<ITab>;
