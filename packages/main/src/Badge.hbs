@@ -5,6 +5,10 @@
 >
 	<slot name="icon"></slot>
 
+	{{#if this._semanticIconName}}
+		<ui5-icon class="ui5-badge-semantic-icon" name="{{_semanticIconName}}"></ui5-icon>
+	{{/if}}
+
 	{{#if hasText}}
 		<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
 	{{/if}}

@@ -19,6 +19,7 @@ import { BADGE_DESCRIPTION } from "./generated/i18n/i18n-defaults.js";
 
 // Styles
 import badgeCss from "./generated/themes/Badge.css.js";
+import SemanticColor from "./types/SemanticColor";
 
 /**
  * @class
@@ -190,7 +191,7 @@ class Badge extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._hasIcon = this.hasIcon;
+		this._hasIcon = this.hasIcon || !!this._semanticIconName;
 		this._iconOnly = this.iconOnly;
 	}
 
@@ -208,6 +209,25 @@ class Badge extends UI5Element {
 
 	get badgeDescription() {
 		return Badge.i18nBundle.getText(BADGE_DESCRIPTION);
+	}
+
+	get _semanticIconName() {
+		if (!this.showStateIcon || this.hasIcon || this.designType !== BadgeDesignType.ValueState) {
+			return null;
+		}
+
+		switch (this.valueState) {
+		case ValueState.Success:
+			return "sys-enter-2";
+		case ValueState.Error:
+			return "error";
+		case ValueState.Warning:
+			return "alert";
+		case ValueState.Information:
+			return "information";
+		default:
+			return null;
+		}
 	}
 
 	get _tabIndex() {
