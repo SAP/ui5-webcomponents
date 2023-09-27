@@ -135,4 +135,16 @@ describe("ColorPalette interactions", () => {
 
 		assert.strictEqual(await colorPaletteEntries[2].getProperty("selected"), false, "Check if selected state is removed, after clicking on the same item again");
 	});
+
+	it("Clicking on an empty color-palette-item in the Recent Colors wrapper, should not get selected", async () => {
+		await browser.url(`test/pages/ColorPalette.html`);
+
+		const colorPalette = await browser.$("#cp4");
+		const colorPaletteRecentColorsWrapper = await colorPalette.shadow$(".ui5-cp-recent-colors-wrapper");
+		const colorPaletteRecentColorsWrapperEntries = await colorPaletteRecentColorsWrapper.$$("[ui5-color-palette-item]");
+
+		await colorPaletteRecentColorsWrapperEntries[0].click();
+
+		assert.strictEqual(await colorPaletteRecentColorsWrapperEntries[0].getProperty("selected"), false, "Check if selected state is set");
+	})
 });

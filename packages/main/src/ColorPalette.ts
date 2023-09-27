@@ -288,7 +288,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	handleSelection(target: ColorPaletteItem) {
-		if (!target.hasAttribute("ui5-color-palette-item")) {
+		if (!target.hasAttribute("ui5-color-palette-item") || !target.value) {
 			return;
 		}
 
@@ -307,6 +307,11 @@ class ColorPalette extends UI5Element {
 
 	_onDefaultColorKeyDown(e: KeyboardEvent) {
 		if (isTabNext(e) && this.popupMode) {
+			e.preventDefault();
+			this._onDefaultColorClick();
+		}
+
+		if (isSpace(e) || isEnter(e)) {
 			e.preventDefault();
 			this._onDefaultColorClick();
 		}
