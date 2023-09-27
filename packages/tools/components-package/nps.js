@@ -55,7 +55,7 @@ const getScripts = (options) => {
 		lint: `eslint . ${eslintConfig}`,
 		lintfix: `eslint . ${eslintConfig} --fix`,
 		generate: {
-			default: `${tsCrossEnv} nps clean prepare.all`,
+			default: `${tsCrossEnv} nps prepare.all`,
 			all: 'concurrently "nps build.templates" "nps build.i18n" "nps prepare.styleRelated" "nps copy" "nps build.illustrations"',
 			styleRelated: "nps build.styles build.jsonImports build.jsImports",
 		},
@@ -69,7 +69,8 @@ const getScripts = (options) => {
 			default: "nps prepare lint build.bundle", // build.bundle2
 			templates: `mkdirp dist/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
-				default: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
+				default: `concurrently "nps build.styles.themes" "nps build.styles.components" ${copySrcGenerated}`,
+				default2: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},
