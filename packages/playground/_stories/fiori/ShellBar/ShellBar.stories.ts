@@ -56,8 +56,8 @@ Basic.args = {
     startButton: `<ui5-button icon="nav-back" slot="startButton"></ui5-button>`,
 };
 
-export const SearchAndNotifications = Template.bind({});
-SearchAndNotifications.args = {
+export const Search = Template.bind({});
+Search.args = {
     primaryTitle: "Corporate Portal",
     secondaryTitle: "secondary title",
 	showNotifications: true,
