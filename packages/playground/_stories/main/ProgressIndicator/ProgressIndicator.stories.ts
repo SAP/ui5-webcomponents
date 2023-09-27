@@ -13,7 +13,7 @@ import type ProgressIndicator from "@ui5/webcomponents/dist/ProgressIndicator.js
 const component = "ui5-progress-indicator";
 
 export default {
-    title: "Main/ProgressIndicator",
+    title: "Main/Progress Indicator",
     component: "ProgressIndicator",
     parameters: {
         docs: {
