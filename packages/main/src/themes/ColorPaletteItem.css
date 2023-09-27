@@ -55,7 +55,10 @@
 }
 
 :host(:not([_disabled])[phone]) .ui5-cp-item:focus {
-	scale: 1.277778; /* (2.875rem / 2.25rem) ~ 1.277778 */
+	width: 2.875rem; 
+	height: 2.875rem;
+	right: 0.125rem;
+	bottom: 0.125rem;
 	box-shadow: 0 0 0 0.0625rem #FFF, 0 0 0 0.125rem var(--sapContent_ForegroundBorderColor);
 	border: var(--_ui5_color-palette-item-phone-selected-focus);
 }
@@ -170,7 +173,10 @@
 
 :host([selected]:not([_disabled])[phone]) .ui5-cp-item.selected:not(:focus),
 :host([selected]:not([_disabled])[phone]) .ui5-cp-item.selected:not(:focus):not(:hover) {
-	scale: 1.277778; /* (2.875rem / 2.25rem) ~ 1.277778 */
+	width: 2.875rem; 
+	height: 2.875rem;
+	right: 0.125rem;
+	bottom: 0.125rem;
 	border: 0.0625rem solid var(--sapGroup_ContentBackground);
 	box-shadow: 0 0 0 0.0625rem var(--sapContent_ForegroundBorderColor); /* gap */
 }

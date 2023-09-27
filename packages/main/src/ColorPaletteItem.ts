@@ -55,7 +55,7 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines if the component is selected.
 	 * <br><br>
-	 * Only one item can be selected per <code>ui5-color-palette</code>.
+	 * <b>Note:</b> Only one item must be selected per <code>ui5-color-palette</code>.
 	 *
 	 * @public
 	 * @type {boolean}

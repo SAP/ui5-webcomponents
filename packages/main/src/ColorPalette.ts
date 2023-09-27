@@ -199,7 +199,7 @@ class ColorPalette extends UI5Element {
 	}
 
 	onBeforeRendering() {
-		this._filterSelectedItems();
+		this._ensureSingleSelectionOrDeselectAll();
 
 		this.displayedColors.forEach((item, index) => {
 			item.index = index + 1;
@@ -245,35 +245,27 @@ class ColorPalette extends UI5Element {
 	}
 
 	/**
-	 * In case multiple 'ui5-color-palette-item' elements are explicitly set to be selected,
-	 * this function ensures that only the last one remains active, preventing multiple selections.
+	 * Ensures that only one item is selected or only the last selected item remains active if more than one are explicitly set as 'selected'.
 	 *
+	 * @param {boolean} deselectAll - If true, will deselect all items. Otherwise, ensures only the last selected item remains active.
 	 * @private
 	 * @returns {void}
 	 */
-	_filterSelectedItems() {
-		const allColorPaletteItems = this.colors;
+	_ensureSingleSelectionOrDeselectAll(deselectAll = false) {
+		const allColorPaletteItems = [...this.colors, ...this.recentColorsElements];
 
-		const selectedItems = allColorPaletteItems.filter(item => item.selected);
-		if (selectedItems.length > 1) {
-			for (let i = 0; i < selectedItems.length - 1; i++) {
-				(selectedItems[i]).selected = !(selectedItems[i]).selected;
+		if (deselectAll) {
+			allColorPaletteItems.forEach(item => {
+				item.selected = false;
+			});
+		} else {
+			const selectedItems = allColorPaletteItems.filter(item => item.selected);
+			if (selectedItems.length > 1) {
+				for (let i = 0; i < selectedItems.length - 1; i++) {
+					selectedItems[i].selected = false;
+				}
 			}
 		}
-	}
-
-	/**
-	 * Deselects all items in the color palette.
-	 *
-	 * @private
-	 * @returns {void}
-	 */
-	_deselectAllItems(items: ColorPaletteItem[]) {
-		items.forEach(item => {
-			if (item.selected) {
-				item.selected = !item.selected;
-			}
-		});
 	}
 
 	_onclick(e: MouseEvent) {
@@ -282,7 +274,7 @@ class ColorPalette extends UI5Element {
 
 	_onkeyup(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
-		if (isSpace(e) && target.hasAttribute("ui5-color-palette-item")) {
+		if (isSpace(e)) {
 			e.preventDefault();
 			this.handleSelection(target);
 		}
@@ -290,7 +282,7 @@ class ColorPalette extends UI5Element {
 
 	_onkeydown(e: KeyboardEvent) {
 		const target = e.target as ColorPaletteItem;
-		if (isEnter(e) && target.hasAttribute("ui5-color-palette-item")) {
+		if (isEnter(e)) {
 			this.handleSelection(target);
 		}
 	}
@@ -305,7 +297,7 @@ class ColorPalette extends UI5Element {
 			return;
 		}
 
-		this._deselectAllItems([...this.colors, ...this.recentColorsElements]);
+		this._ensureSingleSelectionOrDeselectAll(true);
 
 		this.selectColor(target);
 		target.selected = true;
