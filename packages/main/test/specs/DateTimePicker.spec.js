@@ -4,19 +4,19 @@ const openPickerById = async (id, options) => {
 	await browser.$(`#${id}`).scrollIntoView();
 
 	return browser.executeAsync((id, options, done) => {
-		done(document.querySelector(`#${id}`).openPicker(options));
+		done(document.querySelector(`[id="${id}"]`).openPicker(options));
 	}, id, options);
 };
 
 const closePickerById = id => {
 	return browser.executeAsync((id, done) => {
-		done(document.querySelector(`#${id}`).closePicker());
+		done(document.querySelector(`[id="${id}"]`).closePicker());
 	}, id);
 };
 
 const isPickerOpen = id => {
 	return browser.executeAsync((id, done) => {
-		done(document.querySelector(`#${id}`).isOpen());
+		done(document.querySelector(`[id="${id}"]`).isOpen());
 	}, id);
 };
 
