@@ -93,7 +93,7 @@
 }
 
 .ui5-calheader-middlebtn {
-	font-family: var(--sapFontSemiboldDuplexFamily);
+	font-family: var(--_ui5_button_fontFamily);
 	width: var(--_ui5_calendar_header_middle_button_width);
 	flex: var(--_ui5_calendar_header_middle_button_flex);
 	position: relative;
