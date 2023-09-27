@@ -311,7 +311,7 @@ class TimePickerBase extends UI5Element {
 	/**
 	 * Opens the Inputs popover.
 	 * @async
-	 * @public
+	 * @private
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#openInputsPopover
 	 * @returns {Promise} Resolves when the Inputs popover is open
@@ -325,7 +325,7 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Closes the Inputs popover
-	 * @public
+	 * @private
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#closeInputsPopover
 	 * @returns {Promise} Resolves when the Inputs popover is closed
@@ -345,7 +345,7 @@ class TimePickerBase extends UI5Element {
 
 	/**
 	 * Checks if the inputs popover is open
-	 * @public
+	 * @private
 	 * @method
 	 * @name sap.ui.webc.main.TimePickerBase#isInputsPopoverOpen
 	 * @returns {boolean}
