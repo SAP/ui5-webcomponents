@@ -1,0 +1,12 @@
+{{>include "../../main/src/Popup.hbs"}}
+
+{{#*inline "beforeContent"}}
+<div id="ui5-confetti-title-text" class="{{classes.title}}" >{{titleText}}</div>
+{{/inline}}
+
+{{#*inline "afterContent"}}
+<div class="{{classes.actions}}">
+<ui5-button>My Learning Assignments</ui5-button>
+<ui5-button>Print Certificate</ui5-button>
+</div>
+{{/inline}}

@@ -1,0 +1,34 @@
+:host {
+  display: none;
+  position: fixed;
+  box-sizing: border-box;
+  width: 30%;
+  background-color: #05a9f0;
+  border-radius: .5rem;
+  background-position: right bottom;
+  background-repeat: no-repeat;
+}
+
+.ui5-confetti-title {
+  font-size: 3rem;
+  color: #FFF;
+  font-weight: 900;
+  margin: 2rem;
+}
+
+.ui5-popup-content {
+  font-size: 1rem;
+  color: #FFF;
+  font-weight: 400;
+  width: 60%;
+  margin: 2rem;
+}
+
+.ui5-confetti-actions {
+  margin: 2rem;
+}
+
+.ui5-confetti-actions [ui5-button] {
+  margin-right: 1rem;
+  --sapButton_TextColor: black
+}

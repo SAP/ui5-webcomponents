@@ -6,6 +6,7 @@ import "./dist/illustrations/AllIllustrations.js";
 
 // FIORI components
 import Bar from "./dist/Bar.js";
+import Confetti from "./dist/Confetti.js"
 import DynamicSideContent from "./dist/DynamicSideContent.js";
 import FilterItem from "./dist/FilterItem.js";
 import FilterItemOption from "./dist/FilterItemOption.js";
