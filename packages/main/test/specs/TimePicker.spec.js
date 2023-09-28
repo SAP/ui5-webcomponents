@@ -30,7 +30,7 @@ describe("TimePicker general interaction", () => {
 		// assert
 		assert.strictEqual(hoursClockValue, 11, "Hours are equal");
 		assert.strictEqual(minutesClockValue, 12, "Minutes are equal");
-		assert.strictEqual(secondsClockValue, 13, "Minutes are equal");
+		assert.strictEqual(secondsClockValue, 13, "Seconds are equal");
 	});
 
 	it("tests clocks submit value", async () => {
