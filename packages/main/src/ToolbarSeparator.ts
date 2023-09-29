@@ -20,6 +20,7 @@ import ToolbarItem from "./ToolbarItem.js";
  * @extends sap.ui.webc.main.ToolbarItem
  * @tagname ui5-toolbar-separator
  * @since 1.17.0
+ * @abstract
  * @implements sap.ui.webc.main.IToolbarItem
  * @public
  */
