@@ -43,12 +43,11 @@ function rotateRight() {
     }
 }
 
-
-fetch('https://unpkg.com/@ui5/webcomponents@latest/package.json').then(async (response) => {
-    const ui5wcPackageJSON = await response.json();
+fetch('https://registry.npmjs.org/@ui5/webcomponents').then(async (response) => {
+    const ui5wcPackageMetadata= await response.json();
     const versionAnchor = document.getElementById('dynamicVersion');
-    if (ui5wcPackageJSON?.version) {
-        const { version } = ui5wcPackageJSON;
+    if (ui5wcPackageMetadata?.["dist-tags"].latest) {
+        const version = ui5wcPackageMetadata["dist-tags"].latest;
         versionAnchor.textContent = version;
         versionAnchor.setAttribute('href', `https://github.com/SAP/ui5-webcomponents/releases/tag/v${version}`);
     }
