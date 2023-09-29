@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Message View</title>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <meta charset="utf-8" />
+
+        <script data-ui5-config type="application/json">
+            {
+                "language": "EN"
+            }
+        </script>
+        <script>
+            // delete Document.prototype.adoptedStyleSheets;
+        </script>
+
+        <script src="../../bundle.esm.js" type="module"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var messageView = document.getElementById("mv1");
+            });
+        </script>
+        <style>
+            article {
+                padding: 1rem;
+                margin: 1rem;
+                border: solid 1px #ccc;
+            }
+        </style>
+    </head>
+
+    <body class="messageview">
+        <!-- <link rel="stylesheet" type="text/css" href="./styles/MessageView.css"> -->
+
+        <article>
+            <h3>MessageView with all message types</h3>
+            <ui5-message-view id="mv1">
+                <ui5-message-view-item
+                    heading="The file could not be uploaded"
+                    subtitle="Cillum non officia dolor commodo ex Cillum non officia dolor commodo exCillum non officia dolor commodo exCillum non officia dolor commodo exCillum non officia dolor commodo ex Cillum non officia dolor commodo ex Cillum non officia dolor commodo ex"
+                    description="Fugiat minim id voluptate magna ea incididunt proident pariatur eu incididunt. Cillum non officia dolor commodo ex. Nulla consequat sunt proident ipsum adipisicing cupidatat. Nostrud labore officia quis ex sunt laborum reprehenderit ad et. Commodo dolore exercitation aute aute adipisicing amet adipisicing deserunt exercitation."
+                    type="Error"
+                ></ui5-message-view-item>
+                <ui5-message-view-item
+                    heading="Missing Configuration Object"
+                    subtitle="Cillum non officia dolor commodo ex"
+                    description="Nostrud labore officia quis ex sunt laborum reprehenderit ad et. Commodo dolore exercitation aute aute adipisicing amet adipisicing deserunt exercitation."
+                    type="Error"
+                ></ui5-message-view-item>
+                <ui5-message-view-item
+                    heading="Information item"
+                    type="Info"
+                ></ui5-message-view-item>
+                <ui5-message-view-item
+                    heading="Warning message item"
+                    description="This is the description of the warning item"
+                    type="Warning"
+                ></ui5-message-view-item>
+                <ui5-message-view-item
+                    heading="IT'S OK"
+                    description="This is the description of the succeess item"
+                    type="Success"
+                ></ui5-message-view-item>
+            </ui5-message-view>
+        </article>
+
+        <article>
+            <h3>MessageView with 2 message types</h3>
+            <ui5-message-view id="mv2">
+                <ui5-message-view-item
+                    heading="Warning message item"
+                    subtitle="Cillum non officia dolor commodo ex"
+                    description="This is the description of the warning item"
+                    type="Warning"
+                ></ui5-message-view-item>
+                <ui5-message-view-item
+                    heading="IT'S OK"
+                    subtitle="Cillum non officia dolor commodo ex"
+                    description="This is the description of the succeess item"
+                    type="Success"
+                ></ui5-message-view-item>
+            </ui5-message-view>
+        </article>
+
+        <article>
+            <h3>MessageView with 1 message type</h3>
+            <ui5-message-view id="mv3">
+                <ui5-message-view-item
+                    heading="Error message"
+                    subtitle="Cillum non officia dolor commodo ex"
+                    description="Error message 1"
+                    type="Error"
+                ></ui5-message-view-item>
+                <ui5-message-view-item
+                    heading="Error message"
+                    subtitle="Cillum non officia dolor commodo ex"
+                    description="Error message 2"
+                    type="Error"
+                ></ui5-message-view-item>
+            </ui5-message-view>
+        </article>
+
+        <article>
+            <h3>MessageView with one message types</h3>
+            <ui5-message-view id="mv4">
+                <ui5-message-view-item
+                    heading="Warning message item"
+                    subtitle="Cillum non officia dolor commodo ex"
+                    description="This is the description of the warning item"
+                    type="Warning"
+                ></ui5-message-view-item>
+            </ui5-message-view>
+        </article>
+    </body>
+</html>

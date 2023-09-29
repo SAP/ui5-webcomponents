@@ -1,0 +1,69 @@
+
+<div class="ui5-message-view-root">
+    {{#unless _hasSelectedMessage}}
+        <div id="message-view-list">
+            <div class="ui5-message-view-header">
+                 {{#unless _hasHeaderButtons}}
+                    {{#each messageItemsByType}}
+                        <div class="{{messageDesign}}">
+                            <ui5-icon name="{{messageIcon}}" part="icon"></ui5-icon>
+                            <span>{{messageType}}</span>
+                        </div>
+                    {{/each}}
+                {{/unless}}
+                {{#if _hasHeaderButtons}}
+                    <ui5-segmented-button @ui5-selection-change="{{_filterByMessageType}}" class="ui5-message-view-header-buttons">
+                        <ui5-segmented-button-item .messageType="">All</ui5-segmented-button-item>
+                        {{#each messageItemsByType}}
+                            <ui5-segmented-button-item
+                                class="{{messageDesign}}"
+                                icon="{{messageIcon}}"
+                                .messageType="{{messageType}}"
+                                ?pressed="{{pressed}}">{{messageCount}}
+                            </ui5-segmented-button-item>
+                        {{/each}}
+                    </ui5-segmented-button>
+                {{/if}}
+            </div> 
+            <div>
+                {{#if _messages}}
+                <ui5-list @ui5-item-click="{{_selectListItem}}">
+                    {{#each _filteredItems}}
+                        {{#if visible}}
+                        <ui5-li
+                            class="{{messageDesign}}"
+                            description={{message.subtitle}}
+                            icon="{{messageIcon}}"
+                            type="{{listItemType}}"
+                            .position="{{position}}">
+                                {{message.heading}}
+                        </ui5-li>
+                        {{/if}}
+                    {{/each}}
+                </ui5-list>
+                {{/if}}
+            </div>
+        </div>
+    {{/unless}}
+   
+    {{#if _hasSelectedMessage }}
+        <div id="message-view-details" >
+            <ui5-panel id="panel-7" fixed="true">
+                <div slot="header">
+                    {{#unless _isSingleMessage }}
+                        <ui5-icon name="navigation-left-arrow" @click="{{_headerClick}}" interactive></ui5-icon>
+                    {{/unless}}
+                    <ui5-title>{{_selectedMessage.type}}</ui5-title>
+                </div>
+                <ui5-label wrapping-type="Normal">{{_selectedMessage.heading}}</ui5-label>
+                <ui5-label wrapping-type="Normal">{{_selectedMessage.subtitle}}</ui5-label>
+                {{#if _selectedMessage.description}}
+                    <p class="content-color">{{_selectedMessage.description}}</p>
+                    <ui5-link href="https://google.bg" target="_blank">
+                        {{moreInformationText}}
+                    </ui5-link>
+                {{/if}}
+            </ui5-panel>
+        </div>
+    {{/if}}
+</div>

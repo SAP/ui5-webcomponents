@@ -100,6 +100,8 @@ import List from "./dist/List.js";
 import StandardListItem from "./dist/StandardListItem.js";
 import CustomListItem from "./dist/CustomListItem.js";
 import GroupHeaderListItem from "./dist/GroupHeaderListItem.js";
+import MessageView from "./dist/MessageView.js";
+import MessageViewItem from "./dist/MessageViewItem";
 
 // Features
 import "./dist/features/InputElementsFormSupport.js";

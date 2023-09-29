@@ -1,0 +1,31 @@
+:host(:not([hidden])) {
+	display: block;
+	min-height: 300px;
+	background-color: var(--sapGroup_TitleBackground);
+}
+
+.ui5-message-view--information::part(icon){
+	color: var(--sapNeutralColor);
+}
+
+.ui5-message-view--success::part(icon){
+	color: var(--sapPositiveColor);
+}
+
+.ui5-message-view--error::part(icon) {
+	color: var(--sapNegativeColor);
+}
+
+.ui5-message-view--warning::part(icon){
+	color: var(--sapCriticalColor);
+}
+
+.ui5-message-view-list-item{
+	padding: 0.5rem 0;
+	display: flex;
+	align-items: baseline;
+}
+
+.ui5-message-view-list-item::part(icon){
+	color: red;
+}
