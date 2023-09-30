@@ -252,20 +252,9 @@ class ColorPalette extends UI5Element {
 	 * @returns {void}
 	 */
 	_ensureSingleSelectionOrDeselectAll(deselectAll = false) {
-		const allColorPaletteItems = [...this.colors, ...this.recentColorsElements];
-
-		if (deselectAll) {
-			allColorPaletteItems.forEach(item => {
-				item.selected = false;
-			});
-		} else {
-			const selectedItems = allColorPaletteItems.filter(item => item.selected);
-			if (selectedItems.length > 1) {
-				for (let i = 0; i < selectedItems.length - 1; i++) {
-					selectedItems[i].selected = false;
-				}
-			}
-		}
+		const selectedItems = [...this.colors, ...this.recentColorsElements].filter(item => item.selected);
+		!deselectAll && selectedItems.pop();
+		selectedItems.forEach(item => { item.selected = false; });
 	}
 
 	_onclick(e: MouseEvent) {
@@ -298,6 +287,12 @@ class ColorPalette extends UI5Element {
 		}
 
 		this._ensureSingleSelectionOrDeselectAll(true);
+
+		if (this.recentColorsElements.includes(target)) {
+			target.selected = true;
+			this._selectedColor = target.value;
+			return;
+		}
 
 		this.selectColor(target);
 		target.selected = true;
