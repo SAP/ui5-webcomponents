@@ -167,8 +167,8 @@
 }
 .ui5-switch-root:not(.ui5-switch--checked).ui5-switch--semantic .ui5-switch-text--off,
 .ui5-switch-root:not(.ui5-switch--checked).ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--off {
-	left: var(--_ui5_switch_text_inactive_left); /* auto - rtl horizon */
-	right: var(--_ui5_switch_text_inactive_right); /* 0.125rem - rtl horizon */
+	left: var(--_ui5_switch_text_inactive_left);
+	right: var(--_ui5_switch_text_inactive_right);
 }
 
 /* handle */
