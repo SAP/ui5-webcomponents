@@ -123,9 +123,6 @@
 
 	--_ui5_switch_icon_width: 1rem;
 	--_ui5_switch_icon_height: 1rem;
-
-	/* RTL Parameters */
-	--_ui5_switch_text_inactive_left_alternate_rtl: 0.0625rem;
 }
 
 [data-ui5-compact-size],

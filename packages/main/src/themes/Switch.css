@@ -114,7 +114,8 @@
 
 .ui5-switch-handle,
 .ui5-switch-text {
-	left: var(--_ui5_switch_handle_left);
+	left: var(--_ui5_switch_handle_left); /* -0.0625rem rtl horizon */
+	right: var(--_ui5_switch_handle_right); /* 0.0625rem rtl horizon */
 	top: 50%;
 	transform: translateY(-50%);
 }
@@ -162,11 +163,12 @@
 .ui5-switch-root.ui5-switch--checked.ui5-switch--semantic .ui5-switch-text--on, 
 .ui5-switch-root.ui5-switch--checked.ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--on {
 	left: var(--_ui5_switch_text_active_left);
+	right: var(--_ui5_switch_text_active_right_alternate);
 }
 .ui5-switch-root:not(.ui5-switch--checked).ui5-switch--semantic .ui5-switch-text--off,
 .ui5-switch-root:not(.ui5-switch--checked).ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--off {
-	left: var(--_ui5_switch_text_inactive_left);
-	right: var(--_ui5_switch_text_inactive_right);
+	left: var(--_ui5_switch_text_inactive_left); /* auto - rtl horizon */
+	right: var(--_ui5_switch_text_inactive_right); /* 0.125rem - rtl horizon */
 }
 
 /* handle */
@@ -338,14 +340,15 @@
 	color: var(--_ui5_switch_text_active_color);
 	overflow: var(--_ui5_switch_text_overflow);
 	text-overflow: ellipsis;
-	left: var(--_ui5_switch_text_active_left_alternate);
+	left: var(--_ui5_switch_text_active_left_alternate); /* auto for rtl base, calc(-100% + 2rem) for normal base */
+	right: var(--_ui5_switch_text_active_right); /* calc(-100% + 2rem) for rtl base, auto for normal base */
 }
 .ui5-switch-root .ui5-switch-text--off {
 	color: var(--_ui5_switch_text_inactive_color);
 	overflow: var(--_ui5_switch_text_overflow);
 	text-overflow: ellipsis;
-	left: var(--_ui5_switch_text_inactive_left_alternate);
-	right: var(--_ui5_switch_text_inactive_right_alternate);
+	left: var(--_ui5_switch_text_inactive_left_alternate); /* auto rtl horizon */
+	right: var(--_ui5_switch_text_inactive_right_alternate); /* 0.0625rem rtl horizon */
 }
 
 .ui5-switch-root .ui5-switch-no-label-icon-on,
@@ -356,48 +359,4 @@
 .ui5-switch-root .ui5-switch-no-label-icon-off,
 .ui5-switch-root .ui5-switch-icon-off {
 	color: var(--_ui5_switch_text_inactive_color);
-}
-
-/* RTL */
-[dir="rtl"].ui5-switch-root.ui5-switch--checked:not(.ui5-switch--no-label):not(.ui5-switch--semantic) .ui5-switch-slider {
-	transform: var(--_ui5_switch_rtl_transform_with_label);
-}
-
-[dir="rtl"].ui5-switch-root.ui5-switch--checked .ui5-switch-slider {
-	transform: var(--_ui5_switch_rtl_transform);
-}
-
-[dir="rtl"].ui5-switch-root .ui5-switch-handle {
-	left: auto;
-	right: var(--_ui5_switch_handle_left);
-}
-
-[dir="rtl"].ui5-switch-root .ui5-switch-text--on {
-	right: var(--_ui5_switch_text_active_left_alternate);
-	left: var(--_ui5_switch_text_active_right);
-}
-
-[dir="rtl"].ui5-switch-root .ui5-switch-text--off {
-	right: var(--_ui5_switch_text_inactive_left);
-	left: var(--_ui5_switch_text_inactive_right);
-}
-
-[dir="rtl"].ui5-switch-root:not(.ui5-switch--checked).ui5-switch--semantic .ui5-switch-text--off,
-[dir="rtl"].ui5-switch-root:not(.ui5-switch--checked).ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--off {
-	left: var(--_ui5_switch_text_inactive_right);
-	right: var(--_ui5_switch_text_inactive_left);
-}
-
-[dir="rtl"].ui5-switch-root.ui5-switch--checked.ui5-switch--semantic .ui5-switch-text--on, 
-[dir="rtl"].ui5-switch-root.ui5-switch--checked.ui5-switch-desktop.ui5-switch--no-label .ui5-switch-text--on {
-	right: var(--_ui5_switch_text_active_left);
-	left: auto;
-}
-
-[dir="rtl"].ui5-switch-root:not(.ui5-switch--no-label):not(.ui5-switch--semantic) .ui5-switch-text--on {
-	right: var(--_ui5_switch_text_inactive_left_alternate_rtl);
-}
-
-[dir="rtl"].ui5-switch-root:not(.ui5-switch--no-label):not(.ui5-switch--semantic) .ui5-switch-text--off {
-	right: var(--_ui5_switch_text_inactive_right_rtl);
 }
