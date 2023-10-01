@@ -114,8 +114,8 @@
 
 .ui5-switch-handle,
 .ui5-switch-text {
-	left: var(--_ui5_switch_handle_left); /* -0.0625rem rtl horizon */
-	right: var(--_ui5_switch_handle_right); /* 0.0625rem rtl horizon */
+	left: var(--_ui5_switch_handle_left);
+	right: var(--_ui5_switch_handle_right);
 	top: 50%;
 	transform: translateY(-50%);
 }
@@ -340,15 +340,15 @@
 	color: var(--_ui5_switch_text_active_color);
 	overflow: var(--_ui5_switch_text_overflow);
 	text-overflow: ellipsis;
-	left: var(--_ui5_switch_text_active_left_alternate); /* auto for rtl base, calc(-100% + 2rem) for normal base */
-	right: var(--_ui5_switch_text_active_right); /* calc(-100% + 2rem) for rtl base, auto for normal base */
+	left: var(--_ui5_switch_text_active_left_alternate);
+	right: var(--_ui5_switch_text_active_right);
 }
 .ui5-switch-root .ui5-switch-text--off {
 	color: var(--_ui5_switch_text_inactive_color);
 	overflow: var(--_ui5_switch_text_overflow);
 	text-overflow: ellipsis;
-	left: var(--_ui5_switch_text_inactive_left_alternate); /* auto rtl horizon */
-	right: var(--_ui5_switch_text_inactive_right_alternate); /* 0.0625rem rtl horizon */
+	left: var(--_ui5_switch_text_inactive_left_alternate);
+	right: var(--_ui5_switch_text_inactive_right_alternate);
 }
 
 .ui5-switch-root .ui5-switch-no-label-icon-on,

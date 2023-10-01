@@ -60,14 +60,14 @@
 	--_ui5_split_text_button_transparent_hover_border_right: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
 
 	--_ui5_switch_handle_right: -0.0625rem;
-	--_ui5_switch_transform_with_label: translateX(-100%) translateX(1.875rem); /* translateX(1.5rem) translateX(-100%) compact mode base */
-	--_ui5_switch_transform: translateX(-100%) translateX(1.875rem); /* translateX(1.5rem) translateX(-100%) compact mode base - check --_ui5_switch_rtl_transform */
+	--_ui5_switch_transform_with_label: translateX(-100%) translateX(1.875rem);
+	--_ui5_switch_transform: translateX(-100%) translateX(1.875rem);
 	--_ui5_switch_text_active_right: calc(-100% + 2rem);
 	--_ui5_switch_text_active_left_alternate: auto;
-	--_ui5_switch_text_inactive_left_alternate: 0.125rem; /* auto for horizon rtl */
+	--_ui5_switch_text_inactive_left_alternate: 0.125rem;
 	--_ui5_switch_text_inactive_right_alternate: auto;
-	--_ui5_switch_text_inactive_left: 0.125rem; /* auto for horizon rtl */
-	--_ui5_switch_text_inactive_right: auto; /* 0.1875rem for horizon rtl */
+	--_ui5_switch_text_inactive_left: 0.125rem;
+	--_ui5_switch_text_inactive_right: auto;
 	--_ui5_switch_text_active_left: auto;
 	--_ui5_switch_text_active_right_alternate: calc(-100% + 2rem);
 }
