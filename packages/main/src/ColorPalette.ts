@@ -168,7 +168,7 @@ class ColorPalette extends UI5Element {
 	_itemNavigationRecentColors: ItemNavigation;
 	_recentColors: Array<string>;
 	moreColorsFeature?: ColorPaletteMoreColors;
-	_previouslySelected?: ColorPaletteItem;
+	_currentlySelected?: ColorPaletteItem;
 
 	static i18nBundle: I18nBundle;
 
@@ -281,23 +281,32 @@ class ColorPalette extends UI5Element {
 			return;
 		}
 
-		if (this._previouslySelected === target) {
+		if (this._currentlySelected === target) {
 			target.selected = !target.selected;
+			if (!target.selected) {
+				this._currentlySelected = undefined;
+				this._selectedColor = "";
+			}
 			return;
 		}
 
-		this._ensureSingleSelectionOrDeselectAll(true);
+		if (this._currentlySelected) {
+			this._currentlySelected.selected = false;
+			this._selectedColor = "";
+		}
 
 		if (this.recentColorsElements.includes(target)) {
 			target.selected = true;
 			this._selectedColor = target.value;
+			this._currentlySelected = target;
 			return;
 		}
 
+		this._ensureSingleSelectionOrDeselectAll(true);
 		this.selectColor(target);
 		target.selected = true;
 
-		this._previouslySelected = target;
+		this._currentlySelected = target;
 	}
 
 	_onDefaultColorKeyDown(e: KeyboardEvent) {
