@@ -5,11 +5,15 @@ import { getFirstFocusableElement } from "../util/FocusableElements.js";
 import getFastNavigationGroups from "../util/getFastNavigationGroups.js";
 import isElementClickable from "../util/isElementClickable.js";
 
+interface IModal extends HTMLElement {
+	isModal?: boolean;
+}
+
 class F6Navigation {
 	static _instance: F6Navigation;
 	keydownHandler: (event: KeyboardEvent) => void;
-	selectedGroup: HTMLElement | null = null;
-	groups: Array<HTMLElement> = [];
+	selectedGroup: IModal | null = null;
+	groups: Array<IModal> = [];
 
 	constructor() {
 		this.keydownHandler = this._keydownHandler.bind(this) as (event: KeyboardEvent) => void;
@@ -156,6 +160,14 @@ class F6Navigation {
 	updateGroups() {
 		this.setSelectedGroup();
 		this.groups = getFastNavigationGroups(document.body);
+
+		const scopedGroup = this.groups.find(group => {
+			return group.contains(this.selectedGroup) && group.isModal;
+		});
+
+		if (scopedGroup) {
+			this.groups = getFastNavigationGroups(scopedGroup);
+		}
 	}
 
 	setSelectedGroup(root: DocumentOrShadowRoot = window.document) {
@@ -193,3 +205,6 @@ class F6Navigation {
 registerFeature("F6Navigation", F6Navigation);
 
 export default F6Navigation;
+export type {
+	IModal,
+};

@@ -2,6 +2,7 @@ import { isPhone, isDesktop } from "@ui5/webcomponents-base/dist/Device.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import type { IModal } from "@ui5/webcomponents-base/dist/features/F6Navigation.js";
 import clamp from "@ui5/webcomponents-base/dist/util/clamp.js";
 import {
 	isUp, isDown, isLeft, isRight,
@@ -109,6 +110,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
  */
 @customElement({
 	tag: "ui5-dialog",
+	fastNavigation: true,
 	template: DialogTemplate,
 	styles: [
 		browserScrollbarCSS,
@@ -119,7 +121,7 @@ const ICON_PER_STATE: Record<ValueStateWithIcon, string> = {
 		Icon,
 	],
 })
-class Dialog extends Popup {
+class Dialog extends Popup implements IModal {
 	/**
 	 * Defines the header text.
 	 * <br><br>
