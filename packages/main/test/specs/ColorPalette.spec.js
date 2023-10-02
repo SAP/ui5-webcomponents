@@ -40,8 +40,6 @@ describe("ColorPalette interactions", () => {
 		await item.keys("ArrowLeft");
 		await item.keys("Space");
 
-		await colorPalette.keys("Space");
-
 		assert.strictEqual(await colorPalette.getProperty("selectedColor"), "#ff6699", "Check if selected value is #ff6699");
 	});
 
