@@ -405,4 +405,22 @@ describe("Calendar general interaction", () => {
 
 		assert.strictEqual(await year2024.hasClass("ui5-yp-item--disabled"), false, "Year 2024 is not disabled");
 	});
+
+	it("Apply secondaryCalendar class when primary and secondary calendar types are different", async () => {
+		await browser.url("test/pages/Calendar.html");
+
+		const calendar = await browser.$("#calendar5");
+		const dayPickerRoot = await calendar.shadow$("ui5-dp-root");
+
+		assert.strictEqual(await dayPickerRoot.hasClass("ui5-dp-twocalendartypes"), true, "Secondary Calendar class is applied correctly");
+	});
+
+	it("Apply secondaryCalendar class when primary and secondary calendar types are the same", async () => {
+		await browser.url("test/pages/Calendar.html");
+
+		const calendar = await browser.$("#calendar7");
+		const dayPickerRoot = await calendar.shadow$("ui5-dp-root");
+
+		assert.strictEqual(await dayPickerRoot.hasClass("ui5-dp-twocalendartypes"), false, "Secondary Calendar class is applied correctly");
+	});
 });

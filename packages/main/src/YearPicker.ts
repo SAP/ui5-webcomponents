@@ -126,12 +126,12 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 
 	_getPageSize() {
 		// Total years on a single page depending on using on one or two calendar type
-		return this.secondaryCalendarType ? 8 : 20;
+		return this.hasSecondaryCalendarType ? 8 : 20;
 	}
 
 	_getRowSize() {
 		// Years per row (5 rows of 4 years each) for one claendar type and (4 row of 2 years each) for two calendar type
-		return this.secondaryCalendarType ? 2 : 4;
+		return this.hasSecondaryCalendarType ? 2 : 4;
 	}
 
 	_buildYears() {
@@ -167,7 +167,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 			const isFocused = tempDate.getYear() === calendarDate.getYear();
 			const isDisabled = tempDate.getYear() < minDate.getYear() || tempDate.getYear() > maxDate.getYear();
 
-			if (this.secondaryCalendarType) {
+			if (this.hasSecondaryCalendarType) {
 				tempDateInSecType = transformDateToSecondaryType(this._primaryCalendarType, this.secondaryCalendarType, timestamp, true);
 				textInSecType = tempDateInSecType.firstDate.getYear() === tempDateInSecType.lastDate.getYear()
 					? `${oYearFormatInSecType.format(tempDateInSecType.firstDate.toLocalJSDate(), true)}`
@@ -181,7 +181,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				selected: isSelected,
 				ariaSelected: isSelected ? "true" : "false",
 				year: oYearFormat.format(tempDate.toLocalJSDate()),
-				yearInSecType: this.secondaryCalendarType && textInSecType,
+				yearInSecType: textInSecType,
 				disabled: isDisabled,
 				classes: "ui5-yp-item",
 			};
@@ -194,7 +194,7 @@ class YearPicker extends CalendarPart implements ICalendarPicker {
 				year.classes += " ui5-yp-item--disabled";
 			}
 
-			if (this.secondaryCalendarType) {
+			if (this.hasSecondaryCalendarType) {
 				year.classes += " ui5-yp-item-secondary-type";
 			}
 			const intervalIndex = Math.floor(i / this._getRowSize());
