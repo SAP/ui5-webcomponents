@@ -336,6 +336,7 @@ class IllustratedMessage extends UI5Element {
 
 	static i18nBundle: I18nBundle;
 	_lastKnownOffsetWidthForMedia: Record<string, number>;
+	_lastKnownOffsetHeightForMedia: Record<string, number>;
 	_lastKnownMedia: string;
 	_handleResize: ResizeObserverCallback;
 
@@ -345,6 +346,7 @@ class IllustratedMessage extends UI5Element {
 		this._handleResize = this.handleResize.bind(this);
 		// this will store the last known offsetWidth of the IllustratedMessage DOM node for a given media (e.g. "Spot")
 		this._lastKnownOffsetWidthForMedia = {};
+		this._lastKnownOffsetHeightForMedia = {};
 		// this will store the last known media, in order to detect if IllustratedMessage has been hidden by expand/collapse container
 		this._lastKnownMedia = "base";
 	}
@@ -358,6 +360,14 @@ class IllustratedMessage extends UI5Element {
 			DIALOG: 679,
 			SPOT: 319,
 			BASE: 259,
+		};
+	}
+
+	static get BREAKPOINTS_HEIGHT() {
+		return {
+			DIALOG: 451,
+			SPOT: 296,
+			BASE: 87,
 		};
 	}
 
@@ -407,31 +417,43 @@ class IllustratedMessage extends UI5Element {
 
 	handleResize() {
 		if (this.size !== IllustrationMessageSize.Auto) {
+			this._adjustHeightToFitContainer();
 			return;
 		}
 
 		this._applyMedia();
+		window.requestAnimationFrame(this._adjustHeightToFitContainer.bind(this));
 	}
 
-	_applyMedia() {
-		const currOffsetWidth = this.offsetWidth;
+	_applyMedia(heightChange?: boolean) {
+		const currOffsetWidth = this.offsetWidth,
+			currOffsetHeight = this.offsetHeight;
+
+		const size = heightChange ? currOffsetHeight : currOffsetWidth,
+			oBreakpounts = heightChange ? IllustratedMessage.BREAKPOINTS_HEIGHT : IllustratedMessage.BREAKPOINTS;
 		let newMedia = "";
 
-		if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.BASE) {
+		if (size <= oBreakpounts.BASE) {
 			newMedia = IllustratedMessage.MEDIA.BASE;
-		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.SPOT) {
+		} else if (size <= oBreakpounts.SPOT) {
 			newMedia = IllustratedMessage.MEDIA.SPOT;
-		} else if (this.offsetWidth <= IllustratedMessage.BREAKPOINTS.DIALOG) {
+		} else if (size <= oBreakpounts.DIALOG) {
 			newMedia = IllustratedMessage.MEDIA.DIALOG;
 		} else {
 			newMedia = IllustratedMessage.MEDIA.SCENE;
 		}
-		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia];
+		const lastKnownOffsetWidth = this._lastKnownOffsetWidthForMedia[newMedia],
+			lastKnownOffsetHeight = this._lastKnownOffsetHeightForMedia[newMedia];
 		 // prevents infinite resizing, when same width is detected for the same media,
 		 // excluding the case in which, the control is placed inside expand/collapse container
-		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth) || this._lastKnownOffsetWidthForMedia[this._lastKnownMedia] === 0) {
+		if (!(lastKnownOffsetWidth && currOffsetWidth === lastKnownOffsetWidth
+			&& lastKnownOffsetHeight && currOffsetHeight === lastKnownOffsetHeight)
+			|| this._lastKnownOffsetWidthForMedia[this._lastKnownMedia] === 0
+			|| this._lastKnownOffsetHeightForMedia[this._lastKnownMedia] === 0
+			|| this._lastKnownMedia !== newMedia) {
 			this.media = newMedia;
 			this._lastKnownOffsetWidthForMedia[newMedia] = currOffsetWidth;
+			this._lastKnownOffsetHeightForMedia[newMedia] = currOffsetHeight;
 			this._lastKnownMedia = newMedia;
 		}
 	}
@@ -445,6 +467,36 @@ class IllustratedMessage extends UI5Element {
 				svg.removeAttribute("aria-label");
 			}
 		}
+	}
+
+	_adjustHeightToFitContainer() {
+		const illustrationWrapper = <HTMLElement> this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration"),
+			illustration = illustrationWrapper.querySelector("svg");
+
+		if (illustration) {
+			illustrationWrapper.style.height = "";
+			if (this.getDomRef()!.scrollHeight > this.getDomRef()!.offsetHeight) {
+				// restrit the height of the svg to the available height for svg content
+				illustrationWrapper.style.height = `${this._getAvailableHeightForSvg()!}px`;
+				this._applyMedia(true /* height change */);
+			}
+		}
+	}
+
+	_getAvailableHeightForSvg() {
+		const illustrationWrapper = <HTMLElement> this.shadowRoot!.querySelector(".ui5-illustrated-message-illustration"),
+			illustration = illustrationWrapper.querySelector("svg");
+		let availableHeight;
+
+		if (illustration) {
+			illustration.classList.toggle("ui5-illustrated-message-illustration-svg-hidden", true);
+			// the available height for the illustration is the height of its empty wrapper,
+			// as the wrapper is already styled to take the space that remains after sizing
+			// all other contents of the <code>ui5-illustrated-message</code> component
+			availableHeight = illustrationWrapper.offsetHeight;
+			illustration.classList.toggle("ui5-illustrated-message-illustration-svg-hidden", false);
+		}
+		return availableHeight;
 	}
 
 	onAfterRendering() {
