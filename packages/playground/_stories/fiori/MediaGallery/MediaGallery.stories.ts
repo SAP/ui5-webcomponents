@@ -33,7 +33,7 @@ const stylesDecorator = (storyFn: PartialStoryFn) => html`
 `;
 
 export default {
-    title: "Fiori/MediaGallery",
+    title: "Fiori/Media Gallery",
     component: "MediaGallery",
     subcomponents: { MediaGalleryItem: "MediaGalleryItem" },
     parameters: {
@@ -85,8 +85,8 @@ Basic.args = {
 
 export const Types: StoryFn = TemplateMediaGalleryTypes.bind({});
 
-export const WithVideoContent = Template.bind({});
-WithVideoContent.args = {
+export const VideoContent = Template.bind({});
+VideoContent.args = {
     default: `
     <ui5-media-gallery-item layout="Wide">
         <iframe
@@ -104,8 +104,8 @@ WithVideoContent.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithThumbnailOverflow = Template.bind({});
-WithThumbnailOverflow.decorators = [
+export const ThumbnailOverflow = Template.bind({});
+ThumbnailOverflow.decorators = [
     (story) => html`
 <style>
     @media (min-width: 612px) {
@@ -201,7 +201,7 @@ WithThumbnailOverflow.decorators = [
 </script>`,
 ];
 
-WithThumbnailOverflow.args = {
+ThumbnailOverflow.args = {
     interactiveDisplayArea: true,
     default: `
     <ui5-media-gallery-item>
@@ -223,7 +223,7 @@ WithThumbnailOverflow.args = {
         <img src="../assets/images/HT-2026.jpg" />
     </ui5-media-gallery-item>`,
 };
-WithThumbnailOverflow.parameters = {
+ThumbnailOverflow.parameters = {
     docs: {
         story: {
             // Opt-out of inline rendering

@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.18.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.2...v1.18.0) (2023-10-02)
+
+**Note:** Version bump only for package @ui5/webcomponents
+
+
+
+
+
+# [1.18.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.1...v1.18.0-rc.2) (2023-09-28)
+
+
+### Bug Fixes
+
+* **ui5-button:** update font params ([#7625](https://github.com/SAP/ui5-webcomponents/issues/7625)) ([b2ea9aa](https://github.com/SAP/ui5-webcomponents/commit/b2ea9aac43d296b777d1fcf8c1611fe75fdfb46d))
+* **ui5-list:** update horizon theme parameters ([#7614](https://github.com/SAP/ui5-webcomponents/issues/7614)) ([b0b8359](https://github.com/SAP/ui5-webcomponents/commit/b0b83597596248732f4bc92f968391aa67bb0355))
+* **ui5-message-strip:** remove button's custom width ([#7606](https://github.com/SAP/ui5-webcomponents/issues/7606)) ([bb8241a](https://github.com/SAP/ui5-webcomponents/commit/bb8241a94b4af5588c4583663da0f88490778cf7))
+* **ui5-multi-combobox:** correct usage of css var ([#7616](https://github.com/SAP/ui5-webcomponents/issues/7616)) ([c59c3bc](https://github.com/SAP/ui5-webcomponents/commit/c59c3bc1ccd130d36d1835450d8c7aaff8418e9c))
+* **ui5-slider:** adjust Horizon themes ([#7615](https://github.com/SAP/ui5-webcomponents/issues/7615)) ([4540766](https://github.com/SAP/ui5-webcomponents/commit/4540766a76595751323e2d2704f9fde69b80c36d))
+* **ui5-table:** improve Horizon styles ([#7609](https://github.com/SAP/ui5-webcomponents/issues/7609)) ([092537e](https://github.com/SAP/ui5-webcomponents/commit/092537e5616e23b88c46b93dc237593096c5c882))
+
+
+### Features
+
+* **ui5-time-picker:** mobile input and code optimization ([#7549](https://github.com/SAP/ui5-webcomponents/issues/7549)) ([50499ac](https://github.com/SAP/ui5-webcomponents/commit/50499ac1378deb18c18c649090591c0c36d44567))
+
+
+
+
+
 # [1.18.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.0...v1.18.0-rc.1) (2023-09-21)
 
 

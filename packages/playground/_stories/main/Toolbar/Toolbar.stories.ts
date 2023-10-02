@@ -66,5 +66,3 @@ Basic.args = {
 
 export const Types: StoryFn = TemplateToolbarTypes.bind({});
 
-
-
