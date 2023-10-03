@@ -39,6 +39,7 @@ function processClass(ts, classNode, moduleDoc) {
 	currClass.deprecated = getDeprecatedStatus(ts, currClassJSdoc);
 	currClass._ui5since = getSinceStatus(ts, currClassJSdoc);
 	currClass.privacy = getPrivacyStatus(ts, currClassJSdoc);
+	currClass._ui5reference = getReference(ts, className, classNode);
 	currClass.description = currClassJSdoc?.tags?.find(tag => tag.kind === ts?.SyntaxKind?.JSDocClassTag)?.comment;
 	currClass._ui5implements = currClassJSdoc?.tags?.filter(tag => tag.tagName?.text === "implements")
 		.map(tag => getReference(ts, tag, classNode));
@@ -68,7 +69,6 @@ function processClass(ts, classNode, moduleDoc) {
 		}
 
 		if (member.kind === "field") {
-
 			const slotDecorator = classNodeMember?.decorators?.find(decorator => decorator?.expression?.expression?.text === "slot");
 
 			if (slotDecorator) {
@@ -120,6 +120,7 @@ function processInterface(ts, interfaceNode, moduleDoc) {
 		privacy: getPrivacyStatus(ts, interfaceJSdoc),
 		_ui5since: getSinceStatus(ts, interfaceJSdoc),
 		deprecated: getDeprecatedStatus(ts, interfaceJSdoc),
+		_ui5reference: getReference(ts, interfaceName, interfaceNode)
 	};
 
 	moduleDoc.declarations.push(result);
@@ -140,6 +141,7 @@ function processEnum(ts, enumNode, moduleDoc) {
 		privacy: getPrivacyStatus(ts, enumJSdoc),
 		_ui5since: getSinceStatus(ts, enumJSdoc),
 		deprecated: getDeprecatedStatus(ts, enumJSdoc),
+		_ui5reference: getReference(ts, enumName, enumNode)
 	};
 
 	result.members = (enumNode?.members || []).map(member => {
@@ -212,7 +214,7 @@ const processPublicAPI = object => {
 
 export default {
 	/** Globs to analyze */
-	watch: true,
+	// watch: true,
 	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
 	outdir: 'dist',
 	plugins: [

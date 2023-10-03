@@ -27,7 +27,7 @@ const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
         ts.SyntaxKind.TypeAliasDeclaration,
     ];
 
-    const isLocalDeclared = sourceFile.statements.find(statement => localStatements.includes(statement.kind))?.name?.text === typeName;
+    const isLocalDeclared = sourceFile.statements.find(statement => localStatements.includes(statement.kind) && statement?.name?.text === typeName);
 
     if (isLocalDeclared) {
         return packageJSON?.name;

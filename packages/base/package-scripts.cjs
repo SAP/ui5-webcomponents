@@ -31,7 +31,7 @@ const scripts = {
 		},
 	},
 	build: {
-		default: `nps prepare lint build.bundle`,
+		default: `nps prepare lint build.bundle testCEM`,
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
