@@ -231,12 +231,8 @@ class ColorPalette extends UI5Element {
 
 	_setColor(color: string) {
 		this._selectedColor = color;
-		if (this._recentColors[0] !== this._selectedColor) {
-			if (this._recentColors.includes(this._selectedColor)) {
-				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._selectedColor), 1)[0]);
-			} else {
-				this._recentColors.unshift(this._selectedColor);
-			}
+		if (this._recentColors[0] !== this._selectedColor && !this._recentColors.includes(this._selectedColor)) {
+			this._recentColors.unshift(this._selectedColor);
 		}
 
 		this.fireEvent<ColorPaletteItemClickEventDetail>("item-click", {
@@ -251,9 +247,9 @@ class ColorPalette extends UI5Element {
 	 * @private
 	 * @returns {void}
 	 */
-	_ensureSingleSelectionOrDeselectAll(deselectAll = false) {
+	_ensureSingleSelectionOrDeselectAll() {
 		const selectedItems = [...this.colors, ...this.recentColorsElements].filter(item => item.selected);
-		!deselectAll && selectedItems.pop();
+		selectedItems.pop();
 		selectedItems.forEach(item => { item.selected = false; });
 	}
 
@@ -283,26 +279,19 @@ class ColorPalette extends UI5Element {
 
 		if (this._currentlySelected === target) {
 			target.selected = !target.selected;
-			if (!target.selected) {
-				this._currentlySelected = undefined;
-				this._selectedColor = "";
-			}
 			return;
 		}
 
-		if (this._currentlySelected) {
-			this._currentlySelected.selected = false;
-			this._selectedColor = "";
-		}
+		[...this.colors, ...this.recentColorsElements].forEach(item => {
+			item.selected = item === target;
+		});
 
-		if (this.recentColorsElements.includes(target)) {
-			target.selected = true;
-			this._selectedColor = target.value;
-			this._currentlySelected = target;
-			return;
-		}
+		this._selectedColor = target.value;
+		this.selectColor(target);
 
-		this._ensureSingleSelectionOrDeselectAll(true);
+		this._currentlySelected = target;
+
+		this._ensureSingleSelectionOrDeselectAll();
 		this.selectColor(target);
 		target.selected = true;
 
