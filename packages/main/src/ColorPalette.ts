@@ -286,14 +286,7 @@ class ColorPalette extends UI5Element {
 			item.selected = item === target;
 		});
 
-		this._selectedColor = target.value;
 		this.selectColor(target);
-
-		this._currentlySelected = target;
-
-		this._ensureSingleSelectionOrDeselectAll();
-		this.selectColor(target);
-		target.selected = true;
 
 		this._currentlySelected = target;
 	}
