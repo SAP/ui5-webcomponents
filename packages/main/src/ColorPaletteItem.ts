@@ -56,11 +56,13 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 	 * Defines if the component is selected.
 	 * <br><br>
 	 * <b>Note:</b> Only one item must be selected per <code>ui5-color-palette</code>.
+	 * If more than one item is defined as selected, the last one would be considered as the selected one.
 	 *
 	 * @public
 	 * @type {boolean}
 	 * @name sap.ui.webc.main.ColorPaletteItem.prototype.selected
 	 * @defaultvalue false
+	 * @since 1.19.0
 	 */
 	@property({ type: Boolean })
 	selected!: boolean;
@@ -127,7 +129,7 @@ class ColorPaletteItem extends UI5Element implements ITabbable {
 		return {
 			root: {
 				"ui5-cp-item": true,
-				"selected": this.selected,
+				"ui5-cp-selected": this.selected,
 			},
 		};
 	}

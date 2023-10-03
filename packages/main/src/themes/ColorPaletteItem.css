@@ -42,13 +42,13 @@
 }
 
 .ui5-cp-item:hover:not(:focus),
-.ui5-cp-item.selected {
+.ui5-cp-item.ui5-cp-selected {
 	border: 0.0625rem solid var(--sapGroup_ContentBackground);
 	border-radius: var(--_ui5_color-palette-item-hover-inner-border-radius);
 	box-sizing: border-box;
 }
 
-.ui5-cp-item.selected:focus,
+.ui5-cp-item.ui5-cp-selected:focus,
 :host(:not([_disabled]):not([phone])) .ui5-cp-item:focus,
 :host(:not([_disabled])[phone]) .ui5-cp-item:focus {
 	outline: none;
@@ -122,13 +122,13 @@
 
 /* Specific styling for the selected state */
 
-:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.selected:focus:not(:hover)::after,
-:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.selected:focus:hover::after {
+:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::after,
+:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.ui5-cp-selected:focus:hover::after {
 	border: var(--_ui5_color-palette-item-selected-focused-border-after);
 }
 
-:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.selected:focus:not(:hover)::before,
-:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.selected:focus:hover::before {
+:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::before,
+:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.ui5-cp-selected:focus:hover::before {
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
@@ -143,8 +143,8 @@
 
 /* Phone specific styles for the selected state */
 
-:host([selected]:not([_disabled])[phone]) .ui5-cp-item.selected:focus:not(:hover)::after,
-:host([selected]:not([_disabled])[phone]) .ui5-cp-item.selected:focus:hover::after {
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::after,
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:focus:hover::after {
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
@@ -157,8 +157,8 @@
 	pointer-events: none;
 }
 
-:host([selected]:not([_disabled])[phone]) .ui5-cp-item.selected:focus:not(:hover)::before,
-:host([selected]:not([_disabled])[phone]) .ui5-cp-item.selected:focus:hover::before {
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::before,
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:focus:hover::before {
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
@@ -171,8 +171,8 @@
 	pointer-events: none;
 }
 
-:host([selected]:not([_disabled])[phone]) .ui5-cp-item.selected:not(:focus),
-:host([selected]:not([_disabled])[phone]) .ui5-cp-item.selected:not(:focus):not(:hover) {
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:not(:focus),
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:not(:focus):not(:hover) {
 	width: 2.875rem; 
 	height: 2.875rem;
 	right: 0.125rem;
