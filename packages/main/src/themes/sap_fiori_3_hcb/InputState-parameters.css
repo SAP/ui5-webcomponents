@@ -1,0 +1,5 @@
+@import "../base/InputState-parameters.css";
+
+:root {
+	--_ui5_input_information_border_width: .0625rem;
+}
