@@ -817,7 +817,7 @@ abstract class UI5Element extends HTMLElement {
 		const camelCaseEventName = kebabToCamelCase(name);
 
 		if (camelCaseEventName !== name) {
-			return eventResult && this._fireEvent(camelCaseEventName, data, cancelable);
+			return eventResult && this._fireEvent(camelCaseEventName, data, cancelable, bubbles);
 		}
 
 		return eventResult;
