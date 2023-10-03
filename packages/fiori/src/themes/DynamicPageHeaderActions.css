@@ -1,0 +1,32 @@
+.ui5-dynamic-page-header-actions-root {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	
+	.ui5-dynamic-page-header-actions--wrapper {
+		position: absolute;
+		display: flex;
+		gap: 0.5rem;
+
+		&:before,
+		&:after {
+			content: "";
+			position: absolute;
+			top: calc(50% - 0.02rem);
+			width: 8rem;
+			height: 0.04rem;
+		}
+	
+		&:before {
+			right: 100%;
+			background: linear-gradient(to right, transparent, black);
+		}
+	
+		&::after {
+			left: 100%;
+			background: linear-gradient(to left, transparent, black);
+		}
+	}
+}

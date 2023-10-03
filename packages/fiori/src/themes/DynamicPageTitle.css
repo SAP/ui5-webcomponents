@@ -1,0 +1,118 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: var(--sapObjectHeader_Background);
+    min-height: var(--_ui5_dynamic_page_title_min_height);
+    word-wrap: break-word;
+    padding-top: var(--_ui5_dynamic_page_title_padding_top);
+    padding-bottom: var(--_ui5_dynamic_page_title_padding_bottom);
+}
+
+:host .ui5-dynamic-page-title-root {
+    display: inherit;
+    flex-direction: inherit;
+    width: inherit;
+    height: inherit;
+}
+
+:host(:hover) {
+    background-color: var(--sapObjectHeader_Hover_Background);
+    cursor: pointer;
+}
+
+:host([snapped]) {
+    box-shadow: var(--sapContent_HeaderShadow);
+}
+
+/* breadcrumbs */
+::slotted([ui5-breadcrumbs][slot="breadcrumbs"]) {
+    padding: var(--_ui5_dynamic_page_title_breadcrumbs_padding_top) 0
+        var(--_ui5_dynamic_page_title_breadcrumbs_padding_bottom) 0;
+}
+
+/* heading */
+::slotted([ui5-title][slot="heading"]),
+::slotted([ui5-title][slot="expandedHeading"]),
+::slotted([ui5-title][slot="snappedHeading"]) {
+    font-family: var(--sapObjectHeader_Title_FontFamily);
+    color: var(--sapObjectHeader_Title_TextColor);
+    padding: var(--_ui5_dynamic_page_title_heading_padding_top) 0 0 0;
+}
+
+::slotted([ui5-title][slot="expandedHeading"]),
+::slotted([ui5-title][slot="heading"]) {
+    font-size: var(--sapObjectHeader_Title_FontSize);
+}
+
+::slotted([ui5-title][slot="snappedHeading"]),
+:host([snapped]) ::slotted([ui5-title][slot="heading"]) {
+    font-size: var(--sapObjectHeader_Title_SnappedFontSize);
+    text-overflow: ellipsis;
+}
+
+/* subheading / expanded & snapped content */
+::slotted([ui5-title][slot="expandedContent"]),
+::slotted([ui5-title][slot="snappedContent"]) {
+    color: var(--sapObjectHeader_Subtitle_TextColor);
+    font-size: var(--sapObjectHeader_Subtitle_FontSize);
+    margin-top: var(--_ui5_dynamic_page_title_subheading_margin_top);
+}
+
+/* actions */
+::slotted([ui5-toolbar][slot="actions"]) {
+    /* padding: 0 0 0 1rem; */
+}
+
+.ui5-dynamic-page-title--wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.ui5-dynamic-page-title--heading {
+    flex-shrink: 1;
+    min-width: 1px;
+}
+
+.ui5-dynamic-page-title--content {
+    flex-shrink: 1.6;
+    min-width: 3rem;
+    flex-grow: 1;
+}
+
+.ui5-dynamic-page-title--actions {
+    flex-shrink: 1.6;
+    min-width: 3rem;
+    flex-grow: 1;
+    display: flex;
+}
+
+.ui5-dynamic-page-title--actions ::slotted([slot="actions"]) {
+    border: none;
+    flex: 1;
+}
+
+.ui5-dynamic-page-title--actions .ui5-dynamic-page-title--actions-separator {
+    flex: 0 1;
+
+    &::before {
+        content: "";
+        display: inline-block;
+        height: var(--_ui5_dynamic_page_title_actions_separator_height);
+        width: 0.0625rem;
+        vertical-align: middle;
+        background: var(--sapToolbar_SeparatorColor);
+        margin: 0 0.5rem;
+    }
+}
+
+::slotted([slot="navigationActions"]) {
+    border: none;
+    flex: 0 1;
+}
+
+.ui5-dynamic-page-title--breadcrumbs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

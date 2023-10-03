@@ -1,0 +1,7 @@
+:host {
+    background: #fff;
+}
+
+.ui5-dynamic-page-header-root {
+    background: inherit;
+}

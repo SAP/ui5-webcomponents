@@ -1,0 +1,25 @@
+<div class="{{classes.root}}">
+  <div class="{{classes.headerWrapper}}">
+    <slot name="titleArea"></slot>
+    {{#unless headerSnapped}}
+      <slot name="headerArea"></slot>
+    {{/unless}}
+
+    <ui5-dynamic-page-header-actions
+      ?snapped="{{headerSnapped}}"
+      ?pinned="{{headerPinned}}"
+      @ui5-expand-button-click={{onExpandClick}}
+      @ui5-pin-button-click={{onPinClick}}
+    ></ui5-dynamic-page-header-actions>
+  </div>
+
+  <div class="{{classes.content}}">
+    <slot></slot>
+  </div>
+
+  {{#if showFooter}}
+    <div class="{{classes.footer}}">
+      <slot name="footer"></slot>
+    </div>
+  {{/if}}
+</div>

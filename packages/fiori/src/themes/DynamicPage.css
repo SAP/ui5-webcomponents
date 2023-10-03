@@ -1,0 +1,22 @@
+.ui5-dynamic-page-title-header-wrapper {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.ui5-dynamic-page-content {
+    padding: 0 0 0 var(--_ui5_dynamic_page_title_content_padding_left);
+}
+
+.ui5-dynamic-page-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+}
+
+::slotted([slot="footer"]) {
+    /* TODO css vars? */
+    border: 1px solid;
+    border-radius: 0.25rem;
+    background-color: #fff;
+}

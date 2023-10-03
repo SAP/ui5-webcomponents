@@ -1,0 +1,33 @@
+<div class="{{classes.root}}">
+  <div class="{{classes.breadcrumbs}}">
+    {{#if hasBreadcrumb}}
+      <div>
+        <slot name="breadcrumbs"></slot>
+      </div>
+    {{/if}}
+
+    {{#if mobileNavigationActions}}
+      <slot name="navigationActions"></slot>
+    {{/if}}
+  </div>
+
+  <div class="{{classes.wrapper}}">
+    <div class="{{classes.heading}}">
+      <slot name="{{headingSlotName}}"></slot>
+    </div>
+
+    <div class="{{classes.content}}">
+      <slot></slot>
+    </div>
+
+    <div class="{{classes.actions}}">
+      <slot name="actions"></slot>
+      {{#unless mobileNavigationActions}}
+        <div class="{{classes.actionsSeparator}}"></div>
+        <slot name="navigationActions"></slot>
+      {{/unless}}
+    </div>
+  </div>
+
+  <slot name="{{contentSlotName}}"></slot>
+</div>

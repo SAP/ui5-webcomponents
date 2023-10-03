@@ -1,4 +1,6 @@
 @import "../base/sizes-parameters.css";
+@import "../base/DynamicPage-parameters.css";
+@import "../base/DynamicPageTitle-parameters.css";
 @import "../base/Bar-parameters.css";
 @import "../base/FlexibleColumnLayout-parameters.css";
 @import "../base/IllustratedMessage-parameters.css";
