@@ -39,19 +39,14 @@ Basic.args = {
 	default: "Default",
 };
 
-export const DifferentDesigns: StoryFn = () => html`
-	<ui5-toggle-button design="${ButtonDesign.Emphasized}"> Emphasized </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Attention}"> Attention </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Positive}"> Positive </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Negative}"> Negative </ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Transparent}"> Transparent </ui5-toggle-button>
+export const Examples: StoryFn = () => html`
+	<ui5-toggle-button design="${ButtonDesign.Default}" icon="paper-plane"> Sent </ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Default}" icon="email-read"> Received </ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Default}" icon="favourite"> Starred </ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Default}" icon="email"> Unread </ui5-toggle-button>
+	</br>
+	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="italic-text" tooltip="Italic"></ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="bold-text" tooltip="Bold"></ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="underline-text" tooltip="Underline"></ui5-toggle-button>
+	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="strikethrough" tooltip="Strikethrough"></ui5-toggle-button>
 `;
-
-export const IconOnlyToggleButtons: StoryFn = () => html`
-	<ui5-toggle-button design="${ButtonDesign.Emphasized}" icon="business-suite/icon-target"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Attention}" icon="message-warning" tooltip="Warning Button"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Positive}" icon="business-suite/icon-completed" tooltip="Positive Button"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Negative}" icon="cancel" tooltip="Negative Button"></ui5-toggle-button>
-	<ui5-toggle-button design="${ButtonDesign.Transparent}" icon="account" tooltip="Transparent Button"></ui5-toggle-button>
-`;
-IconOnlyToggleButtons.storyName = "Icon-Only Toggle Buttons";
