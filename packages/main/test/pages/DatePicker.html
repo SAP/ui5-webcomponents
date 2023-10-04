@@ -21,7 +21,6 @@
             }
 		}
 	</script>
-
 	<link rel="stylesheet" type="text/css" href="./styles/DatePicker.css">
 </head>
 <body class="datepicker1auto">
@@ -182,12 +181,13 @@
 			labelLiveChangePrevent.innerHTML = 'input: ' + JSON.stringify(e.detail);
 		});
 
-		$('#ui5-datepicker--startDate').on('ui5-input change', (function(e) {
-			var dp = $('#ui5-datepicker--startDate')[0];
+		function datePickerInputChangeHandler(e) {
+			var dp = e.currentTarget;
 			dp.setAttribute('value-state', e.detail.valid ? 'None' : 'Error');
-			$('#startDate').val($('#ui5-datepicker--startDate').val());
-			$('#startDate').trigger('change');
-		}));
+		}
+
+		document.getElementById('ui5-datepicker--startDate').addEventListener('ui5-input change', datePickerInputChangeHandler);
+		document.getElementById('ui5-datepicker--startDate').addEventListener('change', datePickerInputChangeHandler);
 
 		var dp11 = document.getElementById('dp11');
 
