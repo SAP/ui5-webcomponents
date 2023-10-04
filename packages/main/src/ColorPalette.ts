@@ -231,8 +231,13 @@ class ColorPalette extends UI5Element {
 
 	_setColor(color: string) {
 		this._selectedColor = color;
-		if (this._recentColors[0] !== this._selectedColor && !this._recentColors.includes(this._selectedColor)) {
-			this._recentColors.unshift(this._selectedColor);
+
+		if (this._recentColors[0] !== this._selectedColor) {
+			if (this._recentColors.includes(this._selectedColor)) {
+				this._recentColors.unshift(this._recentColors.splice(this._recentColors.indexOf(this._selectedColor), 1)[0]);
+			} else {
+				this._recentColors.unshift(this._selectedColor);
+			}
 		}
 
 		this.fireEvent<ColorPaletteItemClickEventDetail>("item-click", {
@@ -243,7 +248,6 @@ class ColorPalette extends UI5Element {
 	/**
 	 * Ensures that only one item is selected or only the last selected item remains active if more than one are explicitly set as 'selected'.
 	 *
-	 * @param {boolean} deselectAll - If true, will deselect all items. Otherwise, ensures only the last selected item remains active.
 	 * @private
 	 * @returns {void}
 	 */
@@ -282,13 +286,19 @@ class ColorPalette extends UI5Element {
 			return;
 		}
 
-		[...this.colors, ...this.recentColorsElements].forEach(item => {
-			item.selected = item === target;
-		});
-
 		this.selectColor(target);
 
-		this._currentlySelected = target;
+		// Handle selection for items within the 'recentColorsElements'
+		if (this.recentColorsElements.includes(target)) {
+			this.recentColorsElements[0].selected = true;
+			this.recentColorsElements[0].focus();
+			this._currentlySelected = this.recentColorsElements[0];
+		} else {
+			[...this.colors, ...this.recentColorsElements].forEach(item => {
+				item.selected = item === target;
+			});
+			this._currentlySelected = target;
+		}
 	}
 
 	_onDefaultColorKeyDown(e: KeyboardEvent) {
