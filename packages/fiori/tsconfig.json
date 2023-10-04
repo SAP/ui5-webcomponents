@@ -11,6 +11,7 @@
       "strict": true,
       "moduleResolution": "node",
       "experimentalDecorators": true,
+      "preserveWatchOutput": true,
     },
     "references": [
       { "path": "../base" },

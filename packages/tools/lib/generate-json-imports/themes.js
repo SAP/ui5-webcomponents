@@ -1,4 +1,5 @@
 const fs = require("fs").promises;
+const existsSync = require("fs").existsSync;
 const path = require('path');
 const assets = require("../../assets-meta.js");
 
@@ -11,14 +12,18 @@ const generate = async () => {
 	const allThemes = assets.themes.all;
 
 // All themes present in the file system
-	const dirs = await fs.readdir(inputFolder);
-	const themesOnFileSystem = dirs.map(dir => {
-		const matches = dir.match(/sap_.*$/);
-		return matches ? dir : undefined;
-	}).filter(key => !!key && allThemes.includes(key));
+	console.log(inputFolder);
+	await Promise.all(allThemes.map(async (theme) => {
+		const themeFile = path.join(inputFolder, theme, "parameters-bundle.css.json");
+		if (!existsSync(themeFile)) {
+			// theme not built, create an empty json and let the vite plugin build the theme if the json is requested from the browser
+			await fs.mkdir(path.dirname(themeFile), {recursive: true});
+			fs.writeFile(themeFile, "{}");
+		}
+	}));
 
 	const packageName = JSON.parse(await fs.readFile("package.json")).name;
-
+	const themesOnFileSystem = allThemes;
 	const importLines = themesOnFileSystem.map(theme => `import ${theme} from "../assets/themes/${theme}/parameters-bundle.css.json";`).join("\n");
 	const themeUrlsByName = "{\n" + themesOnFileSystem.join(",\n") + "\n}";
 	const availableThemesArray = `[${themesOnFileSystem.map(theme => `"${theme}"`).join(", ")}]`;
