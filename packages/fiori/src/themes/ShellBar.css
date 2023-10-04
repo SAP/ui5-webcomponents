@@ -10,6 +10,7 @@
 	--_ui5_input_border_radius: var(--_ui5_shellbar_input_border_radius);
 	--_ui5_input_focus_border_radius: var(--_ui5_shellbar_input_focus_border_radius);
 	--_ui5_input_background_color: var(--_ui5_shellbar_input_background_color);
+	container-type: inline-size;
 }
 
 .ui5-shellbar-root {
@@ -162,37 +163,66 @@ slot[name="profile"] {
 	width: 3rem;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-menu-button {
+
+.ui5-shellbar-root {
+	padding: 0 1rem;
+}
+
+.ui5-shellbar-search-full-width-wrapper {
+	padding: 0 1rem;
+}
+
+.ui5-shellbar-secondary-title {
+	display: none;
+}
+
+.ui5-shellbar-overflow-container-right {
+	padding-inline-start: 0;
+}
+
+.ui5-shellbar-menu-button {
 	margin-inline-start: 0;
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-root {
-	padding: 0 1rem;
+@container (min-width: 600px) {
+	.ui5-shellbar-overflow-container-right {
+		padding-inline-start: 0.125rem;
+	}
+
+	.ui5-shellbar-menu-button {
+		margin-inline-start: 0.5rem;
+	}
+
+	.ui5-shellbar-root {
+		padding: 0 2rem;
+	}
+
+	.ui5-shellbar-search-full-width-wrapper {
+		padding: 0 2rem;
+	}
 }
 
-:host([breakpoint-size="S"]) .ui5-shellbar-search-full-width-wrapper {
-	padding: 0 1rem;
+@container (min-width: 1024px) {
+	.ui5-shellbar-secondary-title {
+		display: inline-block;
+	}
+
+	.ui5-shellbar-root {
+		padding: 0 2rem;
+	}
+
+
+	.ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
+	padding-inline-start: 1rem;
+}
 }
 
-:host([breakpoint-size="M"]) .ui5-shellbar-root {
-	padding: 0 2rem;
+@container (min-width: 1440px) {
+	.ui5-shellbar-root {
+		padding: 0 3rem;
+	}
 }
 
-:host([breakpoint-size="M"]) .ui5-shellbar-search-full-width-wrapper {
-	padding: 0 2rem;
-}
-
-:host([breakpoint-size="L"]) .ui5-shellbar-root {
-	padding: 0 2rem;
-}
-
-:host([breakpoint-size="XL"]) .ui5-shellbar-root {
-	padding: 0 3rem;
-}
-
-:host([breakpoint-size="XXL"]) .ui5-shellbar-root {
-	padding: 0 3rem;
-}
 
 .ui5-shellbar-logo {
 	cursor: pointer;
@@ -324,18 +354,6 @@ slot[name="profile"] {
 	display: none;
 }
 
-:host([breakpoint-size="M"]) .ui5-shellbar-secondary-title {
-	display: none;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-secondary-title {
-	display: none;
-}
-
-:host([breakpoint-size="S"]) .ui5-shellbar-overflow-container-right {
-	padding-inline-start: 0;
-}
-
 .ui5-shellbar-overflow-button-shown {
 	display: inline-block;
 }
@@ -349,14 +367,6 @@ slot[name="profile"] {
 	height: 100%;
 	background-color: transparent;
 	cursor: pointer;
-}
-
-:host([breakpoint-size="L"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
-	padding-inline-start: 1rem;
-}
-
-:host([breakpoint-size="XL"]) .ui5-shellbar-with-searchfield .ui5-shellbar-overflow-container-right {
-	padding-inline-start: 1rem;
 }
 
 :host(:not([notifications-count])) .ui5-shellbar-bell-button {
@@ -392,10 +402,6 @@ slot[name="profile"] {
 
 .ui5-shellbar-button[data-count]::before {
 	content: attr(data-count);
-}
-
-.ui5-shellbar-menu-button {
-	margin-inline-start: 0.5rem;
 }
 
 .ui5-shellbar-search-field {

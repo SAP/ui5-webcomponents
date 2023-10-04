@@ -118,6 +118,7 @@ interface IShelBarItemInfo {
 }
 
 const HANDLE_RESIZE_DEBOUNCE_RATE = 200; // ms
+const BREAKPOINT_S_SIZE = 600; // px
 
 /**
  * @class
@@ -414,12 +415,6 @@ class ShellBar extends UI5Element {
 	/**
 	 * @private
 	 */
-	@property()
-	breakpointSize!: string;
-
-	/**
-	 * @private
-	 */
 	@property({ type: Boolean })
 	coPilotActive!: boolean;
 
@@ -535,26 +530,6 @@ class ShellBar extends UI5Element {
 	_hiddenIcons?: Array<IShelBarItemInfo>;
 	_handleResize: ResizeObserverCallback;
 	_headerPress: () => Promise<void>;
-
-	static get FIORI_3_BREAKPOINTS() {
-		return [
-			599,
-			1023,
-			1439,
-			1919,
-			10000,
-		];
-	}
-
-	static get FIORI_3_BREAKPOINTS_MAP(): Record<string, string> {
-		return {
-			"599": "S",
-			"1023": "M",
-			"1439": "L",
-			"1919": "XL",
-			"10000": "XXL",
-		};
-	}
 
 	constructor() {
 		super();
@@ -715,18 +690,8 @@ class ShellBar extends UI5Element {
 		}
 	}
 
-	_handleBarBreakpoints() {
-		const width = this.getBoundingClientRect().width;
-		const breakpoints = ShellBar.FIORI_3_BREAKPOINTS;
-
-		const size = breakpoints.find(bp1 => width <= bp1) || ShellBar.FIORI_3_BREAKPOINTS[ShellBar.FIORI_3_BREAKPOINTS.length - 1];
-		const mappedSize = ShellBar.FIORI_3_BREAKPOINTS_MAP[size];
-
-		if (this.breakpointSize !== mappedSize) {
-			this.breakpointSize = mappedSize;
-		}
-
-		return mappedSize;
+	get _mobileView() {
+		return this.getBoundingClientRect().width < BREAKPOINT_S_SIZE;
 	}
 
 	_handleSizeS() {
@@ -798,9 +763,7 @@ class ShellBar extends UI5Element {
 	}
 
 	_overflowActions() {
-		const size = this._handleBarBreakpoints();
-
-		if (size === "S") {
+		if (this._mobileView) {
 			return this._handleSizeS();
 		}
 
@@ -1199,7 +1162,7 @@ class ShellBar extends UI5Element {
 	}
 
 	get showLogoInMenuButton() {
-		return this.hasLogo && this.breakpointSize === "S";
+		return this.hasLogo && this._mobileView;
 	}
 
 	get showTitleInMenuButton() {
@@ -1247,10 +1210,9 @@ class ShellBar extends UI5Element {
 	}
 
 	get _showFullWidthSearch() {
-		const size = this._handleBarBreakpoints();
 		const searchBtnHidden = !!this.shadowRoot!.querySelector<Button>(".ui5-shellbar-search-button.ui5-shellbar-hidden-button");
 
-		return ((size === "S") || searchBtnHidden);
+		return (this._mobileView || searchBtnHidden);
 	}
 
 	get _profileText() {
