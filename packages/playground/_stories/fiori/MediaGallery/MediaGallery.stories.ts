@@ -32,7 +32,7 @@ const stylesDecorator = (storyFn: PartialStoryFn) => html`
 `;
 
 export default {
-    title: "Fiori/MediaGallery",
+    title: "Fiori/Media Gallery",
     component: "MediaGallery",
     subcomponents: { MediaGalleryItem: "MediaGalleryItem" },
     parameters: {
@@ -82,8 +82,8 @@ Basic.args = {
 	</ui5-media-gallery-item>`,
 };
 
-export const WithVerticalLayout = Template.bind({});
-WithVerticalLayout.args = {
+export const VerticalLayout = Template.bind({});
+VerticalLayout.args = {
     showAllThumbnails: true,
     layout: MediaGalleryLayout.Vertical,
     default: `
@@ -107,8 +107,8 @@ WithVerticalLayout.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithThumbnailsOnTheRight = Template.bind({});
-WithThumbnailsOnTheRight.args = {
+export const ThumbnailsOnTheRight = Template.bind({});
+ThumbnailsOnTheRight.args = {
     showAllThumbnails: true,
     layout: MediaGalleryLayout.Horizontal,
     menuHorizontalAlign: MediaGalleryMenuHorizontalAlign.Right,
@@ -133,8 +133,8 @@ WithThumbnailsOnTheRight.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithSeparateImageThumbnail = Template.bind({});
-WithSeparateImageThumbnail.args = {
+export const SeparateImageThumbnail = Template.bind({});
+SeparateImageThumbnail.args = {
     default: `
     <ui5-media-gallery-item>
         <img src="../assets/images/HT-1000.jpg" />
@@ -145,8 +145,8 @@ WithSeparateImageThumbnail.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithVideoContent = Template.bind({});
-WithVideoContent.args = {
+export const VideoContent = Template.bind({});
+VideoContent.args = {
     default: `
     <ui5-media-gallery-item layout="Wide">
         <iframe
@@ -164,8 +164,8 @@ WithVideoContent.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithDisabledContent = Template.bind({});
-WithDisabledContent.args = {
+export const DisabledContent = Template.bind({});
+DisabledContent.args = {
     default: `
     <ui5-media-gallery-item disabled="">
         <img src="../assets/images/HT-1000.jpg" />
@@ -175,8 +175,8 @@ WithDisabledContent.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithInitiallySelected = Template.bind({});
-WithInitiallySelected.args = {
+export const InitiallySelected = Template.bind({});
+InitiallySelected.args = {
     default: `
     <ui5-media-gallery-item>
         <img src="../assets/images/HT-1000.jpg" />
@@ -186,8 +186,8 @@ WithInitiallySelected.args = {
     </ui5-media-gallery-item>`,
 };
 
-export const WithThumbnailOverflow = Template.bind({});
-WithThumbnailOverflow.decorators = [
+export const ThumbnailOverflow = Template.bind({});
+ThumbnailOverflow.decorators = [
     (story) => html`
 <style>
     @media (min-width: 612px) {
@@ -283,7 +283,7 @@ WithThumbnailOverflow.decorators = [
 </script>`,
 ];
 
-WithThumbnailOverflow.args = {
+ThumbnailOverflow.args = {
     interactiveDisplayArea: true,
     default: `
     <ui5-media-gallery-item>
@@ -305,7 +305,7 @@ WithThumbnailOverflow.args = {
         <img src="../assets/images/HT-2026.jpg" />
     </ui5-media-gallery-item>`,
 };
-WithThumbnailOverflow.parameters = {
+ThumbnailOverflow.parameters = {
     docs: {
         story: {
             // Opt-out of inline rendering

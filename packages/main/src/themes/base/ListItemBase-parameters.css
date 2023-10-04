@@ -1,6 +1,6 @@
 :root {
 	--ui5-listitem-background-color: var(--sapList_Background);
-	--ui5-listitem-border-bottom: 1px solid var(--sapList_BorderColor);
+	--ui5-listitem-border-bottom: var(--sapList_BorderWidth) solid var(--sapList_BorderColor);
 	--ui5-listitem-selected-border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 	--ui5-listitem-focused-selected-border-bottom: 1px solid var(--sapList_SelectionBorderColor);
 	--ui5-listitem-active-border-color: var(--sapContent_ContrastFocusColor);

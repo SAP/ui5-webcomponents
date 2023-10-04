@@ -46,19 +46,31 @@
 	position: relative;
 }
 
-:host([state="Error"]) .ui5-popup-header-root {
-	box-shadow: var(--_ui5_dialog_header_error_state_box_shadow);
+.ui5-popup-header-root::before {
+	content: "";
+	position: absolute;
+	inset-block-start: auto;
+	inset-block-end: 0;
+	inset-inline-start: 0;
+	inset-inline-end: 0;
+	height: var(--_ui5_dialog_header_state_line_height);
+	background: var(--sapObjectHeader_BorderColor);
 }
 
-:host([state="Information"]) .ui5-popup-header-root {
-	box-shadow: var(--_ui5_dialog_header_information_state_box_shadow);
-}
-:host([state="Success"]) .ui5-popup-header-root {
-	box-shadow: var(--_ui5_dialog_header_success_state_box_shadow);
+:host([state="Error"]) .ui5-popup-header-root::before {
+	background: var(--sapErrorBorderColor);
 }
 
-:host([state="Warning"]) .ui5-popup-header-root {
-	box-shadow: var(--_ui5_dialog_header_warning_state_box_shadow);
+:host([state="Information"]) .ui5-popup-header-root::before {
+	background: var(--sapInformationBorderColor);
+}
+
+:host([state="Success"]) .ui5-popup-header-root::before {
+	background: var(--sapSuccessBorderColor);
+}
+
+:host([state="Warning"]) .ui5-popup-header-root::before {
+	background: var(--sapWarningBorderColor);
 }
 
 .ui5-dialog-value-state-icon {
@@ -114,10 +126,14 @@
 	color: var(--_ui5_dialog_resize_handle_color);
 }
 
-:host ::slotted([slot="footer"]) {
+::slotted([slot="footer"]) {
 	height: var(--_ui5_dialog_footer_height);
 }
 
-:host ::slotted([slot="footer"][ui5-bar][design="Footer"]) {
+::slotted([slot="footer"][ui5-bar][design="Footer"]) {
 	border-top: none;
+}
+
+::slotted([slot="header"][ui5-bar]) {
+	box-shadow: none;
 }

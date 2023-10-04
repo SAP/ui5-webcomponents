@@ -56,8 +56,8 @@ Basic.args = {
 	labelInterval: 0
 };
 
-export const WithTooltip = Template.bind({});
-WithTooltip.decorators = [
+export const Tooltip = Template.bind({});
+Tooltip.decorators = [
 	(story) => {
 		return html`
 			<div class="wrapper" style="margin-top:1rem;">
@@ -66,7 +66,7 @@ WithTooltip.decorators = [
 		`;
 	}
 ]
-WithTooltip.args = {
+Tooltip.args = {
 	min: 0,
 	max: 20,
 	showTooltip: true,
@@ -92,4 +92,4 @@ TickmarksLabelTooltip.args = {
 	labelInterval: 2,
 	showTickmarks: true
 };
-TickmarksLabelTooltip.storyName = "With Tooltip, Tickmarks and Labels";
+TickmarksLabelTooltip.storyName = "Tooltip, Tickmarks and Labels";

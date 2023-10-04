@@ -7,6 +7,7 @@ th {
 	width: inherit;
 	font-weight: var(--ui5_table_header_row_font_weight);
 	font-size: var(--sapFontMediumSize);
+	font-family: var(--ui5_table_header_row_font_family);
 	padding: 0.5rem;
 	box-sizing: border-box;
 	text-align: start;
@@ -20,4 +21,5 @@ th {
 th ::slotted([ui5-label]) {
 	font-weight: var(--ui5_table_header_row_font_weight);
 	font-size: var(--sapFontMediumSize);
+	font-family: var(--ui5_table_header_row_font_family);
 }

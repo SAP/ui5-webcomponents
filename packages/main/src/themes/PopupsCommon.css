@@ -23,7 +23,6 @@
     color: var(--sapPageHeader_TextColor);
     box-shadow: var(--_ui5_popup_header_shadow);
     border-bottom: var(--_ui5_popup_header_border);
-    margin-bottom: 0.125rem;
 }
 
 .ui5-popup-content {

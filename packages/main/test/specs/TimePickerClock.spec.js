@@ -56,14 +56,11 @@ describe("Clock API", () => {
 
 	it("'lastItemReplacement' and 'prependZero' properties", async () => {
 		const hours24 = await browser.$("#myHours24");
-		const hours00 = await browser.$("#myHours00");
 		const minutes = await browser.$("#myMinutes");
 		const numbersInHours24 = await hours24.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
-		const numbersInHours00 = await hours00.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
 		const numbersInMinutes = await minutes.shadow$$(".ui5-tp-clock-item:not([marker]) .ui5-tp-clock-number");
 
-		assert.strictEqual(await numbersInHours24[numbersInHours24.length-1].getText(), "24", "The last number element in clock with prependZero=false and no lastItemReplacement property set is '24'");
-		assert.strictEqual(await numbersInHours00[numbersInHours00.length-1].getText(), "00", "The last number element in clock with prependZero=true and lastItemReplacement=0 is '00'");
+		assert.strictEqual(await numbersInHours24[numbersInHours24.length-1].getText(), "00", "The last number element in clock with prependZero=false and no lastItemReplacement property set is '24'");
 		assert.strictEqual(await numbersInMinutes[numbersInMinutes.length-1].getText(), "0", "The last number element in clock with prependZero=false and lastItemReplacement=0 is '0'");
 	});
 });

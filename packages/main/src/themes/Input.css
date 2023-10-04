@@ -24,7 +24,8 @@
 	background-color: var(--_ui5_input_background_color);
 }
 
-:host(:not([readonly])) {
+:host(:not([readonly])),
+:host([readonly][disabled]) {
 	box-shadow: var(--sapField_Shadow);
 }
 
@@ -210,7 +211,7 @@
 	border-radius: var(--_ui5_input_border_radius);
 }
 
-:host([readonly]) {
+:host([readonly]:not([disabled])) {
 	border-color: var(--_ui5_input_readonly_border_color);
 	background: var(--sapField_ReadOnly_BackgroundStyle);
 	background-color: var(--_ui5_input_readonly_background);
@@ -385,8 +386,17 @@
 	padding: var(--_ui5_input_error_warning_icon_padding);
 }
 
+:host([value-state="Error"][focused]) [input-icon],
+:host([value-state="Warning"][focused]) [input-icon]{
+	padding: var(--_ui5_input_error_warning_focused_icon_padding);
+}
+
 :host([value-state="Information"]) [input-icon] {
 	padding: var(--_ui5_input_information_icon_padding);
+}
+
+:host([value-state="Information"][focused]) [input-icon] {
+	padding: var(--_ui5_input_information_focused_icon_padding);
 }
 
 :host([value-state="Error"]) ::slotted([input-icon][ui5-icon]),
@@ -395,8 +405,18 @@
 	padding: var(--_ui5_input_error_warning_custom_icon_padding);
 }
 
+:host([value-state="Error"][focused]) ::slotted([input-icon][ui5-icon]),
+:host([value-state="Error"][focused]) ::slotted([ui5-icon][slot="icon"]),
+:host([value-state="Warning"][focused]) ::slotted([ui5-icon][slot="icon"]) {
+	padding: var(--_ui5_input_error_warning_custom_focused_icon_padding);
+}
+
 :host([value-state="Information"]) ::slotted([ui5-icon][slot="icon"]) {
 	padding: var(--_ui5_input_information_custom_icon_padding);
+}
+
+:host([value-state="Information"][focused]) ::slotted([ui5-icon][slot="icon"]) {
+	padding: var(--_ui5_input_information_custom_focused_icon_padding);
 }
 
 :host([value-state="Error"]) [input-icon]:active,

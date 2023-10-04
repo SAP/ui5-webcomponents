@@ -123,8 +123,10 @@
 	--_ui5_switch_text_with_label_width: 1.75rem;
 
 	--_ui5_switch_text_inactive_left: 0.1875rem;
+	--_ui5_switch_text_inactive_left_alternate: 0.0625rem;
 	--_ui5_switch_text_inactive_right: auto;
 	--_ui5_switch_text_active_left: 0.1875rem;
+	--_ui5_switch_text_active_left_alternate: 0.0625rem;
 	--_ui5_switch_text_compact_active_left: 0.1875rem;
 	--_ui5_switch_text_active_right: auto;
 
