@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0...v1.18.1-rc.0) (2023-10-05)
+
+
+### Bug Fixes
+
+* **framework:** stop bubbling of camel case events ([#7658](https://github.com/SAP/ui5-webcomponents/issues/7658)) ([6ce57f7](https://github.com/SAP/ui5-webcomponents/commit/6ce57f75684620021319edebb2d1f81f17ef2e57))
+* **ui5-calendar:** hide secondary type when same as primary ([#7650](https://github.com/SAP/ui5-webcomponents/issues/7650)) ([6ce7c33](https://github.com/SAP/ui5-webcomponents/commit/6ce7c3315c022c83d35b1121a50ef6fc4bb57dd7))
+* **ui5-label:** use correct i18n bundle & make component language aware ([#7652](https://github.com/SAP/ui5-webcomponents/issues/7652)) ([7b43587](https://github.com/SAP/ui5-webcomponents/commit/7b43587253e4873e49211a02a4a3923bc4a819f6))
+
+
+
+
+
 # [1.18.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.2...v1.18.0) (2023-10-02)
 
 **Note:** Version bump only for package ui5-webcomponents
