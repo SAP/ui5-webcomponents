@@ -5,7 +5,7 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ListItemType from "@ui5/webcomponents/dist/types/ListItemType.js";
+import ListItemType from "./types/ListItemType.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SegmentedButton, { SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
@@ -29,10 +29,10 @@ enum MessageType {
 }
 
 enum DesignClassesMapping {
-	Info = "ui5-message-view--information",
-	Success = "ui5-message-view--success",
-	Error = "ui5-message-view--error",
-	Warning = "ui5-message-view--warning",
+	Info = "information",
+	Success = "success",
+	Error = "error",
+	Warning = "warning",
 }
 
 enum MessageTypeIcon {
@@ -40,6 +40,12 @@ enum MessageTypeIcon {
 	Success = "status-positive",
 	Error = "error",
 	Warning = "status-critical"
+
+}
+
+enum MessageViewMode {
+	List = "list",
+	Details = "details"
 }
 
 type CurrentItem = {
@@ -87,7 +93,7 @@ type CurrentItem = {
  */
 @event("message-view-item-click", {
 	detail: {
-		position: { type: Integer },
+		item: { type: HTMLElement }
 	},
 })
 class MessageView extends UI5Element {
@@ -192,30 +198,38 @@ class MessageView extends UI5Element {
 	}
 
 	get _selectedMessage() {
-		return this._messages[this._selctedMessagePosition - 1].message;
+		return this._messages[this._selctedMessagePosition - 1];
+	}
+
+	closeSelectedMessage() {
+		if (this._selectedMessage) {
+			this._selectedMessage.message.fireEvent("view-change", { mode: MessageViewMode.List, item: this._selectedMessage });
+		}
+		this._selctedMessagePosition = 0;
 	}
 
 	_filterByMessageType(e: CustomEvent<SegmentedButtonSelectionChangeEventDetail>) {
 		if (e.detail.selectedItems && e.detail.selectedItems.length) {
-			this._selectedMessageType = e.detail.selectedItems[0].messageType;
+			this._selectedMessageType = e.detail.selectedItems[0].id;
 		}
 	}
 
 	_selectListItem(e: any) {
-		const position = e.detail.item.position ? e.detail.item.position : 0;
-		this.fireEvent("message-view-item-click", { position });
-		this.fireEvent("view-change", { type: "details" });
+		const item = e.detail.item;
+		this.fireEvent("message-view-item-click", { item });
 
-		this._selctedMessagePosition = position;
-	}
+		this._selctedMessagePosition = item.position ? item.position : 0;
 
-	_headerClick(e: any) {
-		this.fireEvent("view-change", { type: "list" });
-
-		this._selctedMessagePosition = 0;
+		if (this._selectedMessage) {
+			this._selectedMessage.message.fireEvent("view-change", { mode: MessageViewMode.Details, item: this._selectedMessage });
+		}
 	}
 }
 
 MessageView.define();
 
 export default MessageView;
+
+export {
+	MessageViewMode,
+};

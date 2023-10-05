@@ -272,6 +272,7 @@
   "--sapFontHeader5Size",
   "--sapFontHeader6Size",
   "--sapFontHeaderFamily",
+  "--sapFontHeaderWeight",
   "--sapFontLargeSize",
   "--sapFontMediumSize",
   "--sapFontSemiboldDuplexFamily",

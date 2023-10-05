@@ -6,6 +6,7 @@ import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Styles
 import MessageViewItemCss from "./generated/themes/MessageViewItem.css.js";
+import { MessageViewMode } from "./MessageView.js";
 
 /**
  * @class
@@ -45,7 +46,8 @@ import MessageViewItemCss from "./generated/themes/MessageViewItem.css.js";
  */
 @event("view-change", {
 	detail: {
-		viewType: { type: String },
+		mode: { type: String },
+		item: { type: HTMLElement },
 	},
 })
 class MessageViewItem extends UI5Element {
@@ -92,6 +94,10 @@ class MessageViewItem extends UI5Element {
 	 */
 	@property()
 	type!: string;
+
+	onDetailsClose() {
+		this.fireEvent("view-change", { mode: MessageViewMode.List });
+	}
 }
 
 MessageViewItem.define();

@@ -1,31 +1,128 @@
 :host(:not([hidden])) {
 	display: block;
-	min-height: 300px;
+	min-height: 200px;
 	background-color: var(--sapGroup_TitleBackground);
 }
 
-.ui5-message-view--information::part(icon){
+ui5-li-custom{
+	height: auto;
+}
+
+ui5-li-custom::part(native-li) {
+    padding: 0;
+}
+
+.ui5-message-view-list-header{
+	padding: 0.5rem 0;
+	height: var(--_ui5_bar_base_height);
+	width: 100%;
+	box-shadow: var(--sapContent_HeaderShadow);
+}
+
+ui5-icon.information,
+.information::part(icon), 
+.information ui5-icon{
 	color: var(--sapNeutralColor);
 }
 
-.ui5-message-view--success::part(icon){
+ui5-icon.success,
+.success::part(icon),
+.success ui5-icon,
+.ui5-message-view-list-item-icon--success{
 	color: var(--sapPositiveColor);
 }
 
-.ui5-message-view--error::part(icon) {
+ui5-icon.error,
+.error::part(icon),
+.error ui5-icon,
+.ui5-message-view-list-item-icon--error{
 	color: var(--sapNegativeColor);
 }
 
-.ui5-message-view--warning::part(icon){
+ui5-icon.warning,
+.warning::part(icon),
+.warning ui5-icon,
+.ui5-message-view-list-item-icon--warning {
 	color: var(--sapCriticalColor);
 }
 
-.ui5-message-view-list-item{
-	padding: 0.5rem 0;
-	display: flex;
-	align-items: baseline;
+.ui5-message-view-list-item-icon-wrapper ui5-icon{
+	width: 1rem; 
+	height: 1rem;
 }
 
-.ui5-message-view-list-item::part(icon){
-	color: red;
+/* List */
+.ui5-message-view-list-item {
+	display: flex; 
+	flex: 1 1 auto;
+	flex-direction: row; 
+	padding: 0.5rem 0;
+}
+
+.ui5-message-view-list-item-icon-wrapper {
+	width: 3rem; 
+	height:2.25rem; 
+	display: flex; 
+	align-items: center; 
+	justify-content: center;
+}
+
+.ui5-message-view-list-item-content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 2rem;
+
+	border:solid 1px salmon;
+}
+
+.ui5-message-view-list-item-content[data-ui5-message-view-subtitle]:not([data-ui5-message-view-subtitle=""]) {
+	height: 3.25rem;
+}
+
+.ui5-message-view-list-item-title{
+	font-family: var(--sapFontHeaderFamily); 
+	font-size: var(--sapFontHeader6Size); 
+	font-weight: var(--sapFontHeaderWeight); 
+	color: var(--sapGroup_TitleTextColor);
+}
+
+.ui5-message-view-list-item-subtitle {
+	margin-top: 0.25rem;
+	font-family: var(--sapFontFamily); 
+	font-size:  var(--sapFontSize); 
+	color: var(--sapContent_LabelColor);
+}
+
+/* Details */
+.ui5-message-view-details {
+	padding: 1rem;
+	display: flex;
+	flex-direction: row;
+}
+
+.ui5-message-view-details-icon-wrapper {
+	margin: 0 1rem 0 0.5rem; 
+	font-size: 1rem;
+}
+
+/* .ui5-message-view-details-icon::before {
+	content: attr(ui5-data-icon);
+} */
+
+.ui5-message-view-details-title{
+	font-family: var(--sapFontHeaderFamily); 
+	font-size: var(--sapFontHeader5Size); 
+	font-weight: var(--sapFontHeaderWeight); 
+	color: var(--sapGroup_TitleTextColor);
+	margin-bottom: 1rem; 
+
+}
+
+.ui5-message-view-details-description {
+	font-family: var(--sapFontFamily); 
+	font-size: var(--sapFontSize);
+	line-height: 1.4rem;
+	color: var(--sapTextColor);
+	margin-bottom: 1rem; 
 }

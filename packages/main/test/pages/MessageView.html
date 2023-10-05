@@ -13,17 +13,9 @@
                 "language": "EN"
             }
         </script>
-        <script>
-            // delete Document.prototype.adoptedStyleSheets;
-        </script>
-
+      
         <script src="../../bundle.esm.js" type="module"></script>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                var messageView = document.getElementById("mv1");
-            });
-        </script>
         <style>
             article {
                 padding: 1rem;
@@ -31,42 +23,85 @@
                 border: solid 1px #ccc;
             }
         </style>
+         <!-- <link rel="stylesheet" type="text/css" href="./styles/MessageView.css"> -->
     </head>
 
     <body class="messageview">
-        <!-- <link rel="stylesheet" type="text/css" href="./styles/MessageView.css"> -->
+       
+        <ui5-segmented-button id="theme-switch">
+            <ui5-segmented-button-item data-ui5-theme-name="sap_fiori_3" selected>Quartz Light</ui5-segmented-button-item>
+			<ui5-segmented-button-item data-ui5-theme-name="sap_fiori_3_dark">Quartz Dark</ui5-segmented-button-item>
+			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcb">HCB</ui5-segmented-button-item>
+			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcw">HCW</ui5-segmented-button-item>
+		</ui5-segmented-button>
 
         <article>
+            <div class="error"> Test text color </div>
             <h3>MessageView with all message types</h3>
-            <ui5-message-view id="mv1">
-                <ui5-message-view-item
-                    heading="The file could not be uploaded"
-                    subtitle="Cillum non officia dolor commodo ex Cillum non officia dolor commodo exCillum non officia dolor commodo exCillum non officia dolor commodo exCillum non officia dolor commodo ex Cillum non officia dolor commodo ex Cillum non officia dolor commodo ex"
-                    description="Fugiat minim id voluptate magna ea incididunt proident pariatur eu incididunt. Cillum non officia dolor commodo ex. Nulla consequat sunt proident ipsum adipisicing cupidatat. Nostrud labore officia quis ex sunt laborum reprehenderit ad et. Commodo dolore exercitation aute aute adipisicing amet adipisicing deserunt exercitation."
-                    type="Error"
-                ></ui5-message-view-item>
-                <ui5-message-view-item
-                    heading="Missing Configuration Object"
-                    subtitle="Cillum non officia dolor commodo ex"
-                    description="Nostrud labore officia quis ex sunt laborum reprehenderit ad et. Commodo dolore exercitation aute aute adipisicing amet adipisicing deserunt exercitation."
-                    type="Error"
-                ></ui5-message-view-item>
-                <ui5-message-view-item
-                    heading="Information item"
-                    type="Info"
-                ></ui5-message-view-item>
-                <ui5-message-view-item
-                    heading="Warning message item"
-                    description="This is the description of the warning item"
-                    type="Warning"
-                ></ui5-message-view-item>
-                <ui5-message-view-item
-                    heading="IT'S OK"
-                    description="This is the description of the succeess item"
-                    type="Success"
-                ></ui5-message-view-item>
-            </ui5-message-view>
+            <ui5-button id="dialogOpener">Messages</ui5-button>
+            <ui5-dialog id="dialog">
+                <ui5-bar slot="header" design="Header">
+                    <ui5-button id="btnBack" design="Transparent" slot="startContent" icon="navigation-left-arrow"></ui5-button>
+                    Messages
+                </ui5-bar>
+                <ui5-message-view id="mv1">
+                    <ui5-message-view-item
+                        heading="The file could not be uploaded"
+                        subtitle="Cillum non officia dolor commodo ex Cillum non officia dolor commodo exCillum non officia dolor commodo exCillum non officia dolor commodo exCillum non officia dolor commodo ex Cillum non officia dolor commodo ex Cillum non officia dolor commodo ex"
+                        description="Fugiat minim id voluptate magna ea incididunt proident pariatur eu incididunt. Cillum non officia dolor commodo ex. Nulla consequat sunt proident ipsum adipisicing cupidatat. Nostrud labore officia quis ex sunt laborum reprehenderit ad et. Commodo dolore exercitation aute aute adipisicing amet adipisicing deserunt exercitation."
+                        type="Error"
+                    ></ui5-message-view-item>
+                    <ui5-message-view-item
+                        heading="Missing Configuration Object"
+                        subtitle="Cillum non officia dolor commodo ex"
+                        description="Nostrud labore officia quis ex sunt laborum reprehenderit ad et. Commodo dolore exercitation aute aute adipisicing amet adipisicing deserunt exercitation."
+                        type="Error"
+                    ></ui5-message-view-item>
+                    <ui5-message-view-item
+                        heading="Information item"
+                        type="Info"
+                    ></ui5-message-view-item>
+                    <ui5-message-view-item
+                        heading="Warning message item"
+                        description="This is the description of the warning item"
+                        type="Warning"
+                    ></ui5-message-view-item>
+                    <ui5-message-view-item
+                        heading="IT'S OK"
+                        description="This is the description of the succeess item"
+                        type="Success"
+                    ></ui5-message-view-item>
+                </ui5-message-view>
+                <div slot="footer" style="display: flex; justify-content: flex-end; width: 100%; align-items: center">
+                <div style="flex: 1;"></div>
+                <ui5-button class="dialogCloser" design="Emphasized">Close</ui5-button>
+            </ui5-dialog>
         </article>
+
+        <script>
+            var dialogOpener = document.getElementById("dialogOpener");
+            var dialog = document.getElementById("dialog"); 
+            var dialogClosers = [...dialog.querySelectorAll(".dialogCloser")];
+            dialogOpener.accessibilityAttributes = {
+                hasPopup: "dialog",
+                controls: dialog.id,
+            };
+            dialogOpener.addEventListener("click", () => {
+                dialog.open = true;
+            });
+            dialogClosers.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    dialog.open = false;
+                });
+            })
+            mv1.addEventListener("message-view-item-click", (e) => { 
+                alert("message-view-item-click at position:" + e.detail.item.position);
+            })
+            var dialogCloseBtn = document.getElementById("btnBack");
+            dialogCloseBtn.onclick = () => {
+                mv1.closeSelectedMessage();
+            }
+        </script>
 
         <article>
             <h3>MessageView with 2 message types</h3>
@@ -115,5 +150,11 @@
                 ></ui5-message-view-item>
             </ui5-message-view>
         </article>
+
+        <script>
+            document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
+                window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
+            });
+        </script>
     </body>
 </html>
