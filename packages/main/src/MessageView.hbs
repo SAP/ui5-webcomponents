@@ -1,10 +1,10 @@
 
 <div class="ui5-message-view-root">
-    {{#unless _hasSelectedMessage}}
+    {{#unless hasSelectedMessage}}
         <div class="ui5-message-view-list">
+           {{#if _hasHeaderButtons}}
             <div class="ui5-message-view-list-header">
-                {{#if _hasHeaderButtons}}
-                    <ui5-segmented-button @ui5-selection-change="{{_filterByMessageType}}" class="ui5-message-view-header-buttons">
+               <ui5-segmented-button @ui5-selection-change="{{_filterByMessageType}}" class="ui5-message-view-header-buttons">
                         <ui5-segmented-button-item .id="">All</ui5-segmented-button-item>
                         {{#each messageItemsByType}}
                             <ui5-segmented-button-item
@@ -14,11 +14,11 @@
                                 ?pressed="{{pressed}}">{{messageCount}}
                             </ui5-segmented-button-item>
                         {{/each}}
-                    </ui5-segmented-button>
-                {{/if}}
-            </div> 
-            <div>
-                {{#if _messages}}
+               </ui5-segmented-button>
+           </div> 
+           {{/if}}
+           
+            {{#if _messages}}
                 <ui5-list @ui5-item-click="{{_selectListItem}}">
                     {{#each _filteredItems}}
                         {{#if visible}}
@@ -34,19 +34,18 @@
                                 </div>
                                 <div class="ui5-message-view-list-item-content" data-ui5-message-view-subtitle="{{message.subtitle}}">
                                     <span class="ui5-message-view-list-item-title">{{message.heading}}</span>
-                                    <div class="ui5-message-view-list-item-subtitle">{{message.subtitle}}</div>
+                                    <span class="ui5-message-view-list-item-subtitle">{{message.subtitle}}</span>
                                 </div>
                             </div>
                         </ui5-li-custom>
                         {{/if}}
                     {{/each}}
                 </ui5-list>
-                {{/if}}
-            </div>
+            {{/if}}
         </div>
     {{/unless}}
    
-    {{#if _hasSelectedMessage }}
+    {{#if hasSelectedMessage }}
         <div class="ui5-message-view-details">
             <span class="ui5-message-view-details-icon-wrapper" ui5-data-icon="{{_selectedMessage.messageIcon}}">
                 <ui5-icon name="{{_selectedMessage.messageIcon}}" class="{{_selectedMessage.messageDesign}}">
@@ -55,7 +54,7 @@
                 <div class="ui5-message-view-details-title">{{_selectedMessage.message.heading}}</div>
                 <div class="ui5-message-view-details-description">{{_selectedMessage.message.description}}</div>
                 <ui5-link href="https://google.bg" target="_blank">
-                    {{moreInformationText}}
+                    {{_moreInformationTextTranslation}}
                 </ui5-link>
             </div>   
         </div>

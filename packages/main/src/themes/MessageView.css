@@ -1,11 +1,6 @@
 :host(:not([hidden])) {
 	display: block;
-	min-height: 200px;
 	background-color: var(--sapGroup_TitleBackground);
-}
-
-ui5-li-custom{
-	height: auto;
 }
 
 ui5-li-custom::part(native-li) {
@@ -55,13 +50,18 @@ ui5-icon.warning,
 .ui5-message-view-list-item {
 	display: flex; 
 	flex: 1 1 auto;
-	flex-direction: row; 
-	padding: 0.5rem 0;
+	flex-direction: row;
+	align-items: center;
+	box-sizing: border-box;
+	margin:0;
+	padding: 0.5rem 0rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .ui5-message-view-list-item-icon-wrapper {
 	width: 3rem; 
-	height:2.25rem; 
+	height:inherit; /* by spec it is 2.25rem but it is not reasonable because in single line list the list item height is only 2rem */
 	display: flex; 
 	align-items: center; 
 	justify-content: center;
@@ -71,13 +71,12 @@ ui5-icon.warning,
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	height: 2rem;
-
-	border:solid 1px salmon;
+	height: 1rem;
 }
 
 .ui5-message-view-list-item-content[data-ui5-message-view-subtitle]:not([data-ui5-message-view-subtitle=""]) {
-	height: 3.25rem;
+	height: 2.25rem;
+	justify-content: space-around;
 }
 
 .ui5-message-view-list-item-title{
@@ -88,7 +87,6 @@ ui5-icon.warning,
 }
 
 .ui5-message-view-list-item-subtitle {
-	margin-top: 0.25rem;
 	font-family: var(--sapFontFamily); 
 	font-size:  var(--sapFontSize); 
 	color: var(--sapContent_LabelColor);
@@ -105,10 +103,6 @@ ui5-icon.warning,
 	margin: 0 1rem 0 0.5rem; 
 	font-size: 1rem;
 }
-
-/* .ui5-message-view-details-icon::before {
-	content: attr(ui5-data-icon);
-} */
 
 .ui5-message-view-details-title{
 	font-family: var(--sapFontHeaderFamily); 

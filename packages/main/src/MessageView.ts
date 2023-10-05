@@ -5,11 +5,11 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import ListItemType from "./types/ListItemType.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SegmentedButton, { SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
 import MessageViewItem from "./MessageViewItem.js";
+import ListItemType from "./types/ListItemType.js";
 
 import MessageViewTemplate from "./generated/templates/MessageViewTemplate.lit.js";
 
@@ -20,12 +20,22 @@ import MessageViewCss from "./generated/themes/MessageView.css.js";
 import {
 	MESSAGE_VIEW_MORE_INFORMATION,
 } from "./generated/i18n/i18n-defaults.js";
+import List from "./List.js";
+import Icon from "./Icon.js";
+import Dialog from "./Dialog.js";
 
 enum MessageType {
 	Error = "Error",
 	Warning = "Warning",
 	Success = "Success",
 	Info = "Info"
+}
+
+enum MessageTypeIcon {
+	Info = "information",
+	Success = "status-positive",
+	Error = "error",
+	Warning = "status-critical"
 }
 
 enum DesignClassesMapping {
@@ -35,20 +45,12 @@ enum DesignClassesMapping {
 	Warning = "warning",
 }
 
-enum MessageTypeIcon {
-	Info = "information",
-	Success = "status-positive",
-	Error = "error",
-	Warning = "status-critical"
-
-}
-
 enum MessageViewMode {
 	List = "list",
 	Details = "details"
 }
 
-type CurrentItem = {
+type MessageItem = {
 	message: MessageViewItem,
 	messageIcon: string,
 	messageDesign: string,
@@ -83,7 +85,7 @@ type CurrentItem = {
 	languageAware: true,
 	styles: MessageViewCss,
 	template: MessageViewTemplate,
-	dependencies: [SegmentedButton, MessageViewItem],
+	dependencies: [SegmentedButton, List, Icon, MessageViewItem],
 })
 /**
  * Fired when an item is being clicked.
@@ -93,7 +95,7 @@ type CurrentItem = {
  */
 @event("message-view-item-click", {
 	detail: {
-		item: { type: HTMLElement }
+		item: { type: HTMLElement },
 	},
 })
 class MessageView extends UI5Element {
@@ -109,16 +111,26 @@ class MessageView extends UI5Element {
 	items!: Array<MessageViewItem>;
 
 	/**
-	 * Stores id of a list item that opened sub-menu.
+	 * Stores the selected messge type
 	 * @type {string}
 	 * @private
 	 */
 	@property()
 	_selectedMessageType!: string;
 
+	/**
+	 * Stores the list of messages
+	 * @type {Array<MessageItem>}
+	 * @private
+	 */
 	@property({ type: Object, multiple: true })
-	_messages!: Array<CurrentItem>
+	_messages!: Array<MessageItem>
 
+	/**
+	 * Stores the selected message position if any
+	 * @type {Integer}
+	 * @private
+	 */
 	@property({ type: Integer })
 	_selctedMessagePosition!: number
 
@@ -171,7 +183,14 @@ class MessageView extends UI5Element {
 		return result;
 	}
 
-	get moreInformationText() {
+	get hasSelectedMessage() {
+		if (!this._messages.length) {
+			return false;
+		}
+		return this._selctedMessagePosition > 0;
+	}
+
+	get _moreInformationTextTranslation() {
 		return MessageView.i18nBundle.getText(MESSAGE_VIEW_MORE_INFORMATION);
 	}
 
@@ -190,15 +209,12 @@ class MessageView extends UI5Element {
 		return this._messages.map(m => m.message.type).filter((type, idx, self) => self.indexOf(type) === idx).length > 1;
 	}
 
-	get _hasSelectedMessage() {
-		if (!this._messages.length) {
-			return false;
-		}
-		return this._selctedMessagePosition > 0;
-	}
-
 	get _selectedMessage() {
 		return this._messages[this._selctedMessagePosition - 1];
+	}
+
+	isMessageDetailsOpen() {
+		return this.hasSelectedMessage;
 	}
 
 	closeSelectedMessage() {

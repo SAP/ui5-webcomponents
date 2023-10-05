@@ -22,6 +22,14 @@
                 margin: 1rem;
                 border: solid 1px #ccc;
             }
+            ui5-bar {
+                width: 100%;
+            }
+
+            ui5-dialog::part(content),
+            ui5-dialog::part(header){
+                padding:0.5rem;
+            }
         </style>
          <!-- <link rel="stylesheet" type="text/css" href="./styles/MessageView.css"> -->
     </head>
@@ -39,7 +47,7 @@
             <div class="error"> Test text color </div>
             <h3>MessageView with all message types</h3>
             <ui5-button id="dialogOpener">Messages</ui5-button>
-            <ui5-dialog id="dialog">
+            <ui5-dialog id="dialog" accessibleName="Messages">
                 <ui5-bar slot="header" design="Header">
                     <ui5-button id="btnBack" design="Transparent" slot="startContent" icon="navigation-left-arrow"></ui5-button>
                     Messages
@@ -94,11 +102,10 @@
                     dialog.open = false;
                 });
             })
-            mv1.addEventListener("message-view-item-click", (e) => { 
-                alert("message-view-item-click at position:" + e.detail.item.position);
-            })
-            var dialogCloseBtn = document.getElementById("btnBack");
-            dialogCloseBtn.onclick = () => {
+
+            var dialogBackButton = document.getElementById("btnBack");
+               
+            dialogBackButton.onclick = () => {
                 mv1.closeSelectedMessage();
             }
         </script>
@@ -114,8 +121,6 @@
                 ></ui5-message-view-item>
                 <ui5-message-view-item
                     heading="IT'S OK"
-                    subtitle="Cillum non officia dolor commodo ex"
-                    description="This is the description of the succeess item"
                     type="Success"
                 ></ui5-message-view-item>
             </ui5-message-view>
