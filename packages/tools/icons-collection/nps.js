@@ -47,7 +47,8 @@ const getScripts = (options) => {
 	const scripts = {
 		clean: "rimraf dist && rimraf src/generated",
 		copy: copyAssetsCmd,
-		generate: `${tsCrossEnv} nps clean copy build.i18n build.icons build.jsonImports`,
+		generate: `${tsCrossEnv} nps clean copy build.i18n build.icons build.jsonImports copyjson`,
+		copyjson: "copy-and-watch \"src/generated/**/*.json\" dist/generated/",
 		build: {
 			default: `${tsCrossEnv} nps clean copy build.i18n typescript build.icons build.jsonImports`,
 			i18n: {

@@ -1,0 +1,14 @@
+{
+    "jsc": {
+      "target": "es2021",
+      "parser": {
+        "syntax": "typescript",
+        "tsx": false,
+        "decorators": true,
+        "dynamicImport": true
+      },
+      "transform": {
+        "useDefineForClassFields": false,
+      }
+    }
+  }

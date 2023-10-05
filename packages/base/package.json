@@ -27,6 +27,7 @@
     "clean": "nps clean",
     "lint": "nps lint",
     "start": "nps start",
+    "swc": "swc src --out-dir dist",
     "build": "nps build",
     "generate": "nps generate",
     "bundle": "nps build.bundle",
