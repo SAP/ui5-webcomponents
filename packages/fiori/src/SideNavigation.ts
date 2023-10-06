@@ -14,6 +14,7 @@ import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
 import type { TreeItemClickEventDetail } from "@ui5/webcomponents/dist/Tree.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
@@ -29,7 +30,6 @@ import {
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
-import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 
 const PAGE_UP_DOWN_SIZE = 10;
 
