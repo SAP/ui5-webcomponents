@@ -1,0 +1,13 @@
+:root {
+	--_ui5_message_view_list_item_height:  2.75rem;
+    --_ui5_message_view_list_item_height_byline: 3.325rem;
+    --_ui5_message_view_list_item_title_font_size: var(--sapFontHeader5Size);
+}
+
+[data-ui5-compact-size],
+.ui5-content-density-compact,
+.sapUiSizeCompact {
+    --_ui5_message_view_list_item_height:  2rem;
+    --_ui5_message_view_list_item_height_byline: 3.25rem;
+    --_ui5_message_view_list_item_title_font_size: var( --sapFontHeader6Size );
+}

@@ -1,6 +1,5 @@
 :host(:not([hidden])) {
 	display: block;
-	background-color: var(--sapGroup_TitleBackground);
 }
 
 ui5-li-custom::part(native-li) {
@@ -15,27 +14,27 @@ ui5-li-custom::part(native-li) {
 }
 
 ui5-icon.information,
-.information::part(icon), 
+.information:not([pressed])::part(icon), 
 .information ui5-icon{
 	color: var(--sapNeutralColor);
 }
 
 ui5-icon.success,
-.success::part(icon),
+.success:not([pressed])::part(icon),
 .success ui5-icon,
 .ui5-message-view-list-item-icon--success{
 	color: var(--sapPositiveColor);
 }
 
 ui5-icon.error,
-.error::part(icon),
+.error:not([pressed])::part(icon),
 .error ui5-icon,
 .ui5-message-view-list-item-icon--error{
 	color: var(--sapNegativeColor);
 }
 
 ui5-icon.warning,
-.warning::part(icon),
+.warning:not([pressed])::part(icon),
 .warning ui5-icon,
 .ui5-message-view-list-item-icon--warning {
 	color: var(--sapCriticalColor);
@@ -71,17 +70,17 @@ ui5-icon.warning,
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	height: 1rem;
+	height: calc( var(--_ui5_message_view_list_item_height) -  1rem);
 }
 
 .ui5-message-view-list-item-content[data-ui5-message-view-subtitle]:not([data-ui5-message-view-subtitle=""]) {
-	height: 2.25rem;
-	justify-content: space-around;
+	height: calc( var(--_ui5_message_view_list_item_height_byline) - 1rem);
+	justify-content: space-between;
 }
 
 .ui5-message-view-list-item-title{
 	font-family: var(--sapFontHeaderFamily); 
-	font-size: var(--sapFontHeader6Size); 
+	font-size: var(--_ui5_message_view_list_item_title_font_size); 
 	font-weight: var(--sapFontHeaderWeight); 
 	color: var(--sapGroup_TitleTextColor);
 }

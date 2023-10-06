@@ -10,6 +10,8 @@ describe("MessageView general interaction", () => {
     });
 
     it("Clicking on an item should navigate to details page", async () => {
+        const messageView = await browser.$("#mv3");
+        let firstMessage = await messageView.shadow$(".ui5-list-custom");
         assert.ok(true);
     });
 

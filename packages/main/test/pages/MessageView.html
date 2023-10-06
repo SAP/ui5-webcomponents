@@ -20,7 +20,8 @@
             article {
                 padding: 1rem;
                 margin: 1rem;
-                border: solid 1px #ccc;
+                border: solid 1px #a9b4be;
+                width: 400px;
             }
             ui5-bar {
                 width: 100%;
@@ -35,7 +36,22 @@
     </head>
 
     <body class="messageview">
-       
+       <div>
+        <ui5-button id="btnToggleCompact">Compact mode</ui5-button>
+        <br />
+        <br />
+        <script>
+            const buttonToggleStyles = document.getElementById("btnToggleCompact");
+            buttonToggleStyles.addEventListener("click", (e) => { 
+                const article = e.srcElement.parentElement;
+                if (article.classList.length > 0 ) {
+                    article.classList = [];
+                } else {
+                    article.classList.add("sapUiSizeCompact")
+                }
+            });
+        </script>
+
         <ui5-segmented-button id="theme-switch">
             <ui5-segmented-button-item data-ui5-theme-name="sap_fiori_3" selected>Quartz Light</ui5-segmented-button-item>
 			<ui5-segmented-button-item data-ui5-theme-name="sap_fiori_3_dark">Quartz Dark</ui5-segmented-button-item>
@@ -43,11 +59,16 @@
 			<ui5-segmented-button-item data-ui5-theme-name="sap_horizon_hcw">HCW</ui5-segmented-button-item>
 		</ui5-segmented-button>
 
+        <script>
+            document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
+                window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
+            });
+        </script>
+
         <article>
-            <div class="error"> Test text color </div>
-            <h3>MessageView with all message types</h3>
+            <h3>MessageView with all message types in a dialog</h3>
             <ui5-button id="dialogOpener">Messages</ui5-button>
-            <ui5-dialog id="dialog" accessibleName="Messages">
+            <ui5-dialog id="dialog" accessibleName="Messages" stretch="false">
                 <ui5-bar slot="header" design="Header">
                     <ui5-button id="btnBack" design="Transparent" slot="startContent" icon="navigation-left-arrow"></ui5-button>
                     Messages
@@ -156,10 +177,6 @@
             </ui5-message-view>
         </article>
 
-        <script>
-            document.getElementById("theme-switch").addEventListener("ui5-selection-change", event => {
-                window["sap-ui-webcomponents-bundle"].configuration.setTheme(event.detail.selectedItem.getAttribute("data-ui5-theme-name"));
-            });
-        </script>
+        </div>
     </body>
 </html>

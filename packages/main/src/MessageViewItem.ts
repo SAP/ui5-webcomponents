@@ -5,7 +5,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 
 // Styles
-import MessageViewItemCss from "./generated/themes/MessageViewItem.css.js";
+
 import { MessageViewMode } from "./MessageView.js";
 
 /**
@@ -31,7 +31,6 @@ import { MessageViewMode } from "./MessageView.js";
 @customElement({
 	tag: "ui5-message-view-item",
 	renderer: litRender,
-	styles: MessageViewItemCss,
 	themeAware: true,
 	languageAware: true,
 	dependencies: [],
