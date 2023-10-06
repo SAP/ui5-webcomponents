@@ -7,6 +7,8 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
@@ -27,6 +29,9 @@ import {
 // Styles
 import SideNavigationCss from "./generated/themes/SideNavigation.css.js";
 import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.css.js";
+import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+
+const PAGE_UP_DOWN_SIZE = 10;
 
 type SideNavigationPopoverContents = {
 	mainItem: SideNavigationItem,
@@ -187,7 +192,19 @@ class SideNavigation extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	fixedItems!: Array<SideNavigationItem>;
 
+	_itemNavigation: ItemNavigation;
+
 	static i18nBundle: I18nBundle;
+
+	constructor() {
+		super();
+
+		this._itemNavigation = new ItemNavigation(this, {
+			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
+			navigationMode: NavigationMode.Vertical,
+			getItemsCallback: () => this.getEnabledItems(),
+		});
+	}
 
 	get _items() {
 		return this.items.map(this._createTreeItem);
@@ -333,6 +350,20 @@ class SideNavigation extends UI5Element {
 
 	get _fixedItemsTree() {
 		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-fixed-items-tree");
+	}
+
+	getEnabledItems() : Array<ITabbable> {
+		let items = new Array<ITabbable>();
+
+		this.items.forEach(item => {
+			items.push(item);
+
+			if (!this.collapsed) {
+				items = items.concat(item.items);
+			}
+		});
+
+		return items;
 	}
 
 	_walk(callback: (current: TSideNavigationItem) => void) {

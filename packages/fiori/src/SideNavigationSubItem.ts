@@ -2,6 +2,7 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 
 /**
  * @class
@@ -33,7 +34,7 @@ import property from "@ui5/webcomponents-base/dist/decorators/property.js";
  * @public
  */
 @event("click")
-class SideNavigationSubItem extends UI5Element {
+class SideNavigationSubItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text of the item.
 	 *
@@ -82,8 +83,23 @@ class SideNavigationSubItem extends UI5Element {
 	@property()
 	title!: string
 
+	@property({ defaultValue: "-1", noAttribute: true })
+	_tabIndex!: string;
+
 	get _tooltip() {
 		return this.title || this.text;
+	}
+
+	get _ariaCurrent() {
+		if (!this.selected) {
+			return undefined;
+		}
+
+		return "page";
+	}
+
+	getDomRef() {
+		return this.parentElement!.parentElement!.shadowRoot!.querySelector(`#${this._id}`) as HTMLElement;
 	}
 }
 

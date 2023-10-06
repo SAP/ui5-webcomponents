@@ -4,6 +4,7 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
+import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
 
@@ -38,7 +39,7 @@ import type SideNavigationSubItem from "./SideNavigationSubItem.js";
  * @public
  */
 @event("click")
-class SideNavigationItem extends UI5Element {
+class SideNavigationItem extends UI5Element implements ITabbable {
 	/**
 	 * Defines the text of the item.
 	 *
@@ -135,6 +136,9 @@ class SideNavigationItem extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
+	@property({ defaultValue: "-1", noAttribute: true })
+	_tabIndex!: string;
+
 	get _tooltip() {
 		return this.title || this.text;
 	}
@@ -145,6 +149,46 @@ class SideNavigationItem extends UI5Element {
 		}
 
 		return undefined;
+	}
+
+	get _ariaCurrent() {
+		if (!this.selected) {
+			return undefined;
+		}
+
+		return "page";
+	}
+
+	get _groupId() {
+		if (!this.items.length) {
+			return undefined;
+		}
+
+		return `${this._id}-group`;
+	}
+
+	get _expanded() {
+		if (!this.items.length) {
+			return undefined;
+		}
+
+		return this.expanded;
+	}
+
+	get _toggleIconName() {
+		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
+	}
+
+	get _collapsedClassName() {
+		return this.items.length && !this.expanded ? "ui5-sn-list-li-collapsed" : "";
+	}
+
+	getDomRef() {
+		return this.parentElement!.shadowRoot!.querySelector(`#${this._id}`) as HTMLElement;
+	}
+
+	_onToggleClick = () => {
+		this.expanded = !this.expanded;
 	}
 }
 
