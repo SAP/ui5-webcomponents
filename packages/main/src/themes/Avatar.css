@@ -4,38 +4,38 @@
 	position: relative;
 }
 
-/*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/
+/* The ui5_hovered class is set by FileUploader to indicate hover state of the control */
 :host(:not([hidden]).ui5_hovered) {
 	opacity: .7;
 }
 
-:host([interactive]):not([hidden][pressed][disabled]):hover {
-	box-shadow: var(--ui5-avatar-hover-box-shadow-offset);
-}
-
-:host(:not([hidden])[focused]:not([pressed])) {
-	outline: var(--_ui5_avatar_outline);
-	outline-offset: var(--_ui5_avatar_focus_offset);
-}
-
-:host(:not([disabled])[interactive]) {
+:host(:is([interactive]):not([disabled])) {
 	cursor: pointer;
 }
 
-:host([disabled]) {
-	opacity: var(--sapContent_DisabledOpacity);
-}
-
-:host(:not([hidden])[pressed]) {
+:host(:is([interactive][pressed]):not([hidden])) {
 	background: var(--sapButton_Active_Background);
 	border-color: var(--sapButton_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
 }
 
-:host(:not([hidden])[pressed]:hover) {
+:host(:is([interactive][pressed]):not([hidden]):hover) {
 	background: var(--sapButton_Selected_Hover_Background);
 	border-color: var(--sapButton_Selected_Hover_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
+}
+
+:host(:is([interactive]):not([hidden]):not([pressed]):not([disabled]):hover) {
+	box-shadow: var(--ui5-avatar-hover-box-shadow-offset);
+}
+
+:host(:is([interactive][focused]):not([hidden]):not([pressed])) {
+	outline: var(--_ui5_avatar_outline);
+	outline-offset: var(--_ui5_avatar_focus_offset);
+}
+
+:host(:is([disabled])) {
+	opacity: var(--sapContent_DisabledOpacity);
 }
 
 :host {
@@ -57,7 +57,6 @@
 }
 
 /* Sizes */
-
 :host([_size="XS"]),
 :host([size="XS"]) {
 	height: 2rem;
