@@ -41,12 +41,19 @@ export type StoryArgsSlots = {
 
 	function getAPIData(api, module, package) {
 		const moduleAPI = api.modules?.find(currModule => currModule.declarations?.find(s => s?._ui5reference?.name === module && s?._ui5reference?.package === `@ui5/webcomponents${package !== 'main' ? `-${package}` : ''}`));
-		const data = getArgsTypes(api, moduleAPI.declarations?.find(declaration => declaration._ui5reference?.name === module), package);
+		const data = getArgsTypes(api, moduleAPI.declarations?.find(declaration => declaration._ui5reference?.name === module && declaration._ui5reference?.package === `@ui5/webcomponents${package !== 'main' ? `-${package}` : ''}`), package);
+
+
+		const test = api.modules
+			?.find(currModule => currModule.declarations
+				?.find(s => s?._ui5reference?.name === module && s?._ui5reference?.package === `@ui5/webcomponents${package !== 'main' ? `-${package}` : ''}`))
+			?.declarations
+			?.find(s => s?._ui5reference?.name === module && s?._ui5reference?.package === `@ui5/webcomponents${package !== 'main' ? `-${package}` : ''}`);
 
 		return {
 			info: {
 				package: `@ui5/webcomponents${package !== 'main' ? `-${package}` : ''}`,
-				since: moduleAPI.since
+				since: test?._ui5since
 			},
 			slotNames: data.slotNames,
 			storyArgsTypes: JSON.stringify(data.args, null, "\t")
@@ -61,17 +68,18 @@ export type StoryArgsSlots = {
 			.forEach(prop => {
 				let typeEnum;
 
-				if (moduleAPI.name === "Select") debugger
-				if (typeof prop.type === "object") {
+				if (prop.type?.references?.length) {
 					for (let currModule of api.modules) {
 						for (let s of currModule.declarations) {
-							if (s?._ui5reference?.name === prop.type.text && s?._ui5reference?.package === `@ui5/webcomponents${package !== 'main' ? `-${package}` : ''}` && s.kind === "enum") {
+
+							if (s?._ui5reference?.name === prop.type?.references[0].name && s?._ui5reference?.package === prop.type?.references[0].package && s.kind === "enum") {
 								typeEnum = s;
 								break;
 							}
 						}
 					}
 				}
+
 
 				if (prop.readonly) {
 					args[prop.name] = {
@@ -87,7 +95,7 @@ export type StoryArgsSlots = {
 				}
 			});
 
-			moduleAPI?.slots?.forEach(prop => {
+		moduleAPI?.slots?.forEach(prop => {
 			args[prop.name] = {
 				control: {
 					type: "text"
@@ -139,7 +147,7 @@ export type StoryArgsSlots = {
 		// recursively merging the args from the parent/parents
 		const moduleAPIBeingExtended = moduleAPI.superclass && api.modules
 			?.find(currModule => currModule.declarations
-			?.find(s => s?._ui5reference?.name === moduleAPI.superclass?.name && s?._ui5reference?.package === moduleAPI.superclass?.package))
+				?.find(s => s?._ui5reference?.name === moduleAPI.superclass?.name && s?._ui5reference?.package === moduleAPI.superclass?.package))
 			?.declarations
 			?.find(s => s?._ui5reference?.name === moduleAPI.superclass?.name && s?._ui5reference?.package === moduleAPI.superclass?.package);
 
