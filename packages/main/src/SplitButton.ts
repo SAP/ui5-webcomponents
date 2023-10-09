@@ -133,6 +133,17 @@ class SplitButton extends UI5Element {
 	activeIcon!: string;
 
 	/**
+	 * Defines whether the arrow button should have the active state styles or not.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.SplitButton.prototype.arrowButtonActive
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	arrowButtonActive!: boolean;
+
+	/**
 	 * Defines the component design.
 	 *
 	 * @type {sap.ui.webc.main.types.ButtonDesign}
@@ -231,15 +242,6 @@ class SplitButton extends UI5Element {
 	_textButtonIcon!: string;
 
 	/**
-	 * Defines the active state of the arrow button
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @private
-	 */
-	@property({ type: Boolean, noAttribute: true })
-	_arrowButtonActive!: boolean;
-
-	/**
 	 * Defines the text of the component.
 	 * <br><br>
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
@@ -275,6 +277,20 @@ class SplitButton extends UI5Element {
 		};
 	}
 
+	/**
+	 * Function that makes sure the focus is properly managed.
+	 *
+	 * @private
+	 * @returns {void}
+	 */
+	_manageFocus(button?: Button | SplitButton) {
+		const buttons: Array<Button | SplitButton> = [this.textButton!, this.arrowButton!, this];
+
+		buttons.forEach(btn => {
+			if (btn) { btn.focused = btn === button; }
+		});
+	}
+
 	onBeforeRendering() {
 		this._textButtonIcon = this.textButton && this.activeIcon !== "" && (this._textButtonActive) && !this._shiftOrEscapePressed ? this.activeIcon : this.icon;
 		if (this.disabled) {
@@ -282,13 +298,27 @@ class SplitButton extends UI5Element {
 		}
 	}
 
+	_handleMouseClick(e: MouseEvent) {
+		let target = e.target as Button;
+		if (this.disabled) {
+			return;
+		}
+
+		if (e.target instanceof HTMLSlotElement) {
+			target = target.parentNode as Button;
+		}
+
+		this._manageFocus(target);
+		this._fireClick(e);
+	}
+
 	_onFocusOut(e: FocusEvent) {
 		if (this.disabled || getEventMark(e)) {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
-		this.focused = false;
 		this._setTabIndexValue();
+		this._manageFocus();
 	}
 
 	_onFocusIn(e: FocusEvent) {
@@ -296,41 +326,43 @@ class SplitButton extends UI5Element {
 			return;
 		}
 		this._shiftOrEscapePressed = false;
-		this.focused = true;
+		this._manageFocus(this);
+	}
+
+	_textButtonFocusIn(e?: FocusEvent) {
+		e?.stopPropagation();
+		this._manageFocus(this.textButton!);
+
+		this._setTabIndexValue();
 	}
 
 	_onKeyDown(e: KeyboardEvent) {
-		if (isDown(e) || isUp(e) || isDownAlt(e) || isUpAlt(e) || isF4(e)) {
-			e.preventDefault();
-			this._arrowButtonActive = true;
-			this._fireArrowClick();
-		} else if (isSpace(e) || isEnter(e)) {
-			e.preventDefault();
-			this._textButtonActive = true;
-			if (isEnter(e)) {
-				this._fireClick();
-			} else {
-				this._spacePressed = true;
-			}
+		if (this._isArrowKeyAction(e)) {
+			this._handleArrowButtonAction(e);
+		} else if (this._isDefaultAction(e)) {
+			this._handleDefaultAction(e);
 		}
-		if (this._spacePressed && (isEscape(e) || isShift(e))) {
-			this._shiftOrEscapePressed = true;
-			this._textButtonActive = false;
+
+		if (this._spacePressed && this._isShiftOrEscape(e)) {
+			this._handleShiftOrEscapePressed();
 		}
 
 		this._setTabIndexValue();
 	}
 
 	_onKeyUp(e: KeyboardEvent) {
-		if (isDown(e) || isUp(e) || isDownAlt(e) || isUpAlt(e) || isF4(e)) {
-			this._arrowButtonActive = false;
-		} else if (isSpace(e) || isEnter(e)) {
+		if (this._isArrowKeyAction(e)) {
+			e.preventDefault();
+			this.arrowButtonActive = false;
+		} else if (this._isDefaultAction(e)) {
 			this._textButtonActive = false;
+			this.arrowButtonActive = false;
 			if (isSpace(e)) {
 				e.preventDefault();
 				e.stopPropagation();
 				this._fireClick();
 				this._spacePressed = false;
+				this._textButtonActive = false;
 			}
 		}
 
@@ -363,6 +395,84 @@ class SplitButton extends UI5Element {
 						 || (arrowButton && (arrowButton.focused || arrowButton.active));
 
 		this._tabIndex = this.disabled || buttonsAction ? "-1" : "0";
+	}
+
+	/**
+	 * Checks if the pressed key is an arrow key.
+	 *
+	 * @param e - keyboard event
+	 * @returns {boolean}
+	 * @private
+	 */
+	_isArrowKeyAction(e: KeyboardEvent): boolean {
+		return isDown(e) || isUp(e) || isDownAlt(e) || isUpAlt(e) || isF4(e);
+	}
+
+	/**
+	 * Checks if the pressed key is a default action key (Space or Enter).
+	 *
+	 * @param e - keyboard event
+	 * @returns {boolean}
+	 * @private
+	 */
+	_isDefaultAction(e: KeyboardEvent): boolean {
+		return isSpace(e) || isEnter(e);
+	}
+
+	/**
+	 * Checks if the pressed key is an escape key or shift key.
+	 *
+	 * @param e - keyboard event
+	 * @returns {boolean}
+	 * @private
+	 */
+	_isShiftOrEscape(e: KeyboardEvent): boolean {
+		return isEscape(e) || isShift(e);
+	}
+
+	/**
+	 * Handles the click event and the focus on the arrow button.
+	 * @param e - keyboard event
+	 * @private
+	 */
+	_handleArrowButtonAction(e: KeyboardEvent) {
+		e.preventDefault();
+		this.arrowButtonActive = true;
+		this._fireArrowClick(e);
+
+		if (this.arrowButton) {
+			this._manageFocus(this.arrowButton);
+		}
+	}
+
+	/**
+	 * Handles the default action and the active state of the respective button.
+	 * @param e - keyboard event
+	 * @private
+	 */
+	_handleDefaultAction(e: KeyboardEvent) {
+		e.preventDefault();
+		const wasSpacePressed = isSpace(e);
+
+		if (this.focused || this.textButton?.focused) {
+			this._textButtonActive = true;
+			this._fireClick();
+			if (wasSpacePressed) {
+				this._spacePressed = true;
+			}
+		} else if (this.arrowButton && this.arrowButton.focused) {
+			this.arrowButtonActive = true;
+			this._fireArrowClick();
+			if (wasSpacePressed) {
+				this._spacePressed = true;
+				this._textButtonActive = false;
+			}
+		}
+	}
+
+	_handleShiftOrEscapePressed() {
+		this._shiftOrEscapePressed = true;
+		this._textButtonActive = false;
 	}
 
 	get textButtonAccText() {

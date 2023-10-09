@@ -55,11 +55,22 @@ OpeningMenu.decorators = [
 		</ui5-menu>
 	${story()}
 	<script>
-		var splitBtnWithMenuDefaultAction = document.querySelector("ui5-split-button");
-		var menuInSplitBtn = document.getElementById("menuInSplitBtnDefaultAction");
-		splitBtnWithMenuDefaultAction.addEventListener("ui5-arrow-click", function () {
-			menuInSplitBtn.open ? menuInSplitBtn.close() : menuInSplitBtn.showAt(splitBtnWithMenuDefaultAction);
-		});
+	const splitBtn = document.querySelector("ui5-split-button");
+	const menu = document.getElementById("menuInSplitBtnDefaultAction");
+	
+	splitBtn.addEventListener("ui5-arrow-click", function() {
+		if (menu.open) {
+			menu.close();
+			splitBtn.arrowButtonActive = false;
+		} else {
+			menu.showAt(splitBtn);
+			splitBtn.arrowButtonActive = true;
+		}
+	});
+	
+	menu.addEventListener("after-close", function() {
+		splitBtn.arrowButtonActive = false;
+	});
 	</script>`;}
 ];
 
