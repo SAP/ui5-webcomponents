@@ -32,8 +32,8 @@
 	height: 2.25rem;
 	padding: 0;
 	margin-inline-start: 0.5rem;
-	border: none;
-	background: transparent;
+	border: 0.0625rem solid var(--sapButton_Lite_BorderColor);
+	background: var(--sapButton_Lite_Background);
 	outline-color: var(--_ui5_shellbar_logo_outline_color);
 	color: var(--sapShell_TextColor);
 	box-sizing: border-box;
@@ -59,13 +59,8 @@
 .ui5-shellbar-button:hover,
 .ui5-shellbar-image-button:hover {
 	background: var(--sapShell_Hover_Background);
-}
-
-
-::slotted([ui5-button][slot="startButton"]:hover),
-.ui5-shellbar-button:hover,
-.ui5-shellbar-menu-button.ui5-shellbar-menu-button--interactive:hover {
-	box-shadow: var(--_ui5_shellbar_button_box_shadow);
+	border-color: var(--sapButton_Lite_Hover_BorderColor);
+	color: var(--sapShell_TextColor);
 }
 
 ::slotted([ui5-button][slot="startButton"][active]),
@@ -73,6 +68,7 @@
 .ui5-shellbar-button[active],
 .ui5-shellbar-image-button:active {
 	background: var(--sapShell_Active_Background);
+	border-color: var(--sapButton_Lite_Active_BorderColor);
 	color: var(--_ui5_shellbar_button_active_color);
 }
 

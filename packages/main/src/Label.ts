@@ -43,6 +43,7 @@ import labelCss from "./generated/themes/Label.css.js";
 	renderer: litRender,
 	template: LabelTemplate,
 	styles: labelCss,
+	languageAware: true,
 })
 class Label extends UI5Element {
 	/**
@@ -100,7 +101,7 @@ class Label extends UI5Element {
 	static i18nBundle: I18nBundle;
 
 	static async onDefine() {
-		Label.i18nBundle = await getI18nBundle("@ui5/webcomponents-fiori");
+		Label.i18nBundle = await getI18nBundle("@ui5/webcomponents");
 	}
 
 	/**
