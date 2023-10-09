@@ -229,28 +229,8 @@ class Badge extends UI5Element {
 		}
 	}
 
-	get _tabIndex() {
-		return this.interactive ? "0" : undefined;
-	}
-
-	_onkeydown(e: KeyboardEvent) {
-		if (!this.interactive) {
-			return;
-		}
-
-		if (isEnter(e)) {
-			this.fireEvent("click");
-		}
-
-		if (isSpace(e)) {
-			e.preventDefault(); // prevent scrolling
-		}
-	}
-
-	_onkeyup(e: KeyboardEvent) {
-		if (this.interactive && isSpace(e)) {
-			this.fireEvent("click");
-		}
+	_onclick() {
+		this.fireEvent("click");
 	}
 }
 

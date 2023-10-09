@@ -1,17 +1,35 @@
-<div class="ui5-badge-root"
-	 tabindex="{{_tabIndex}}"
-	 @keydown={{_onkeydown}}
-	 @keyup={{_onkeyup}}
->
-	<slot name="icon"></slot>
+{{#if interactive}}
+	<button class="ui5-badge-root"
+		 @onclick={{_onclick}}
+	>
+		<slot name="icon"></slot>
 
-	{{#if this._semanticIconName}}
-		<ui5-icon class="ui5-badge-semantic-icon" name="{{_semanticIconName}}"></ui5-icon>
-	{{/if}}
+		{{#if this._semanticIconName}}
+			<ui5-icon class="ui5-badge-semantic-icon" name="{{_semanticIconName}}"></ui5-icon>
+		{{/if}}
 
-	{{#if hasText}}
-		<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
-	{{/if}}
+		{{#if hasText}}
+			<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
+		{{/if}}
 
-	<span class="ui5-hidden-text">{{badgeDescription}}</span>
-</div>
+		<span class="ui5-hidden-text">{{badgeDescription}}</span>
+	</button>
+{{else}}
+	<div class="ui5-badge-root">
+		<slot name="icon"></slot>
+
+		{{#if this._semanticIconName}}
+			<ui5-icon class="ui5-badge-semantic-icon" name="{{_semanticIconName}}"></ui5-icon>
+		{{/if}}
+
+		{{#if hasText}}
+			<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
+		{{/if}}
+
+		<span class="ui5-hidden-text">{{badgeDescription}}</span>
+	</div>
+{{/if}}
+
+
+
+

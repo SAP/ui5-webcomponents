@@ -1,13 +1,50 @@
-@import "./InvisibleTextStyles.css";
+:root {
+	--_ui5-badge-height: 1.375rem;
+	--_ui5-badge-border: none;
+	--_ui5-badge-border-radius: 0.25rem;
+	--_ui5-badge-padding-inline: 0.375em;
+	--_ui5-badge-padding-inline-icon-only: var(--_ui5-badge-padding-inline);
+	--_ui5-badge-text-transform: none;
+	--_ui5-badge-icon-gap: 0.25rem;
+	--_ui5-badge-font-size: var(--sapFontSize);
+	--_ui5-badge-font: "72override", var(--sapFontSemiboldDuplexFamily);
+	--_ui5-badge-font-weight: normal;
+	--_ui5-badge-letter-spacing: normal;
 
-:host(:not([hidden])) {
-	display: inline-block;
+	--ui5-badge-color-scheme-1-background: var(--sapAvatar_1_Background);
+	--ui5-badge-color-scheme-1-color: var(--sapAvatar_1_TextColor);
+
+	--ui5-badge-color-scheme-2-background: var(--sapAvatar_2_Background);
+	--ui5-badge-color-scheme-2-color: var(--sapAvatar_2_TextColor);
+
+	--ui5-badge-color-scheme-3-background: var(--sapAvatar_3_Background);
+	--ui5-badge-color-scheme-3-color: var(--sapAvatar_3_TextColor);
+
+	--ui5-badge-color-scheme-4-background: var(--sapAvatar_4_Background);
+	--ui5-badge-color-scheme-4-color: var(--sapAvatar_4_TextColor);
+
+	--ui5-badge-color-scheme-5-background: var(--sapAvatar_5_Background);
+	--ui5-badge-color-scheme-5-color: var(--sapAvatar_5_TextColor);
+
+	--ui5-badge-color-scheme-6-background: var(--sapAvatar_6_Background);
+	--ui5-badge-color-scheme-6-color: var(--sapAvatar_6_TextColor);
+
+	--ui5-badge-color-scheme-7-background: var(--sapAvatar_7_Background);
+	--ui5-badge-color-scheme-7-color: var(--sapAvatar_7_TextColor);
+
+	--ui5-badge-color-scheme-8-background: var(--sapAvatar_8_Background);
+	--ui5-badge-color-scheme-8-color: var(--sapAvatar_8_TextColor);
+
+	--ui5-badge-color-scheme-9-background: var(--sapAvatar_9_Background);
+	--ui5-badge-color-scheme-9-color: var(--sapAvatar_9_TextColor);
+
+	--ui5-badge-color-scheme-10-background: var(--sapAvatar_10_Background);
+	--ui5-badge-color-scheme-10-color: var(--sapAvatar_10_TextColor);
 }
 
-.ui5-badge-root {
-	display: flex;
+.ui5-badge {
+	display: inline-flex;
 	align-items: center;
-	width: 100%;
 	height: var(--_ui5-badge-height);
 	min-width: 1.125em;
 	max-width: 100%;
@@ -19,13 +56,20 @@
 	font-weight: var(--_ui5-badge-font-weight);
 	text-align: center;
 	letter-spacing: var(--_ui5-badge-letter-spacing);
+
+	overflow: hidden;
+	white-space: nowrap;
+
+	text-overflow: ellipsis;
+	text-transform: var(--_ui5-badge-text-transform);
+	font-size: var(--_ui5-badge-font-size);
 }
 
-:host([interactive]) .ui5-badge-root {
+button.ui5-badge {
 	cursor: pointer;
 }
 
-:host([interactive]) .ui5-badge-root:focus {
+.ui5-badge[tabindex="0"]:focus {
 	outline: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
 	outline-offset: 1px;
 }
@@ -46,88 +90,84 @@
 	padding-inline: var(--_ui5-badge-padding-inline-icon-only);
 }
 
-[ui5-icon],
-::slotted([ui5-icon]) {
+.ui5-badge [ui5-icon] {
 	width: 0.75em;
 	height: 0.75em;
 	min-width: 0.75em;
 	min-height: 0.75em;
 	color: inherit;
 	pointer-events: none;
-}
-
-:host([_has-icon]) .ui5-badge-text {
-	padding-inline-start: var(--_ui5-badge-icon-gap);
+	padding-inline-end: var(--_ui5-badge-icon-gap);
 }
 
 /* Color Scheme Design Type */
 
 /* Scheme 1 */
-.ui5-badge-root,
-:host([color-scheme="1"]) .ui5-badge-root {
+.ui5-badge,
+.ui5-badge.ui5-badge-color-scheme-1 {
 	background-color: var(--ui5-badge-color-scheme-1-background);
 	border-color: var(--ui5-badge-color-scheme-1-border);
 	color: var(--ui5-badge-color-scheme-1-color);
 }
 
 /* Scheme 2 */
-:host([color-scheme="2"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-2 {
 	background-color: var(--ui5-badge-color-scheme-2-background);
 	border-color: var(--ui5-badge-color-scheme-2-border);
 	color: var(--ui5-badge-color-scheme-2-color);
 }
 
 /* Scheme 3 */
-:host([color-scheme="3"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-3 {
 	background-color: var(--ui5-badge-color-scheme-3-background);
 	border-color: var(--ui5-badge-color-scheme-3-border);
 	color: var(--ui5-badge-color-scheme-3-color);
 }
 
 /* Scheme 4 */
-:host([color-scheme="4"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-4 {
 	background-color: var(--ui5-badge-color-scheme-4-background);
 	border-color: var(--ui5-badge-color-scheme-4-border);
 	color: var(--ui5-badge-color-scheme-4-color);
 }
 
 /* Scheme 5 */
-:host([color-scheme="5"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-5 {
 	background-color: var(--ui5-badge-color-scheme-5-background);
 	border-color: var(--ui5-badge-color-scheme-5-border);
 	color: var(--ui5-badge-color-scheme-5-color);
 }
 
 /* Scheme 6 */
-:host([color-scheme="6"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-6 {
 	background-color: var(--ui5-badge-color-scheme-6-background);
 	border-color: var(--ui5-badge-color-scheme-6-border);
 	color: var(--ui5-badge-color-scheme-6-color);
 }
 
 /* Scheme 7 */
-:host([color-scheme="7"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-7 {
 	background-color: var(--ui5-badge-color-scheme-7-background);
 	border-color: var(--ui5-badge-color-scheme-7-border);
 	color: var(--ui5-badge-color-scheme-7-color);
 }
 
 /* Scheme 8 */
-:host([color-scheme="8"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-8 {
 	background-color: var(--ui5-badge-color-scheme-8-background);
 	border-color: var(--ui5-badge-color-scheme-8-border);
 	color: var(--ui5-badge-color-scheme-8-color);
 }
 
 /* Scheme 9 */
-:host([color-scheme="9"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-9 {
 	background-color: var(--ui5-badge-color-scheme-9-background);
 	border-color: var(--ui5-badge-color-scheme-9-border);
 	color: var(--ui5-badge-color-scheme-9-color);
 }
 
 /* Scheme 10 */
-:host([color-scheme="10"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-color-scheme-10 {
 	background-color: var(--ui5-badge-color-scheme-10-background);
 	border-color: var(--ui5-badge-color-scheme-10-border);
 	color: var(--ui5-badge-color-scheme-10-color);
@@ -135,98 +175,95 @@
 
 /* Value State Design Type */
 
-:host([design-type="ValueState"]) .ui5-badge-root {
+.ui5-badge[class*="ui5-badge-value-state"] {
 	border: var(--sapButton_BorderWidth) solid var(--sapButton_BorderColor);
 }
 
-:host([design-type="ValueState"]) .ui5-badge-root,
-:host([design-type="ValueState"]):host([value-state="None"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-value-state-none {
 	background-color: var(--sapNeutralBackground);
 	border-color: var(--sapNeutralBorderColor);
 	color: var(--sapTextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]) .ui5-badge-root:hover,
-:host([interactive]):host([design-type="ValueState"]):host([value-state="None"]) .ui5-badge-root:hover {
+button.ui5-badge.ui5-badge-value-state-none:hover {
 	background-color: var(--sapButton_Neutral_Hover_Background);
 	border-color: var(--sapButton_Neutral_Hover_BorderColor);
 	color: var(--sapButton_Neutral_Hover_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]) .ui5-badge-root:active,
-:host([interactive]):host([design-type="ValueState"]):host([value-state="None"]) .ui5-badge-root:active {
+button.ui5-badge.ui5-badge-value-state-none.ui5-badge:active {
 	background-color: var(--sapButton_Neutral_Active_Background);
 	border-color: var(--sapButton_Neutral_Active_BorderColor);
 	color: var(--sapButton_Active_TextColor);
 }
 
-:host([design-type="ValueState"]):host([value-state="Success"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-value-state-success {
 	background-color: var(--sapButton_Success_Background);
 	border-color: var(--sapButton_Success_BorderColor);
 	color: var(--sapButton_Success_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]):host([value-state="Success"]) .ui5-badge-root:hover {
+button.ui5-badge.ui5-badge-value-state-success:hover {
 	background-color: var(--sapButton_Success_Hover_Background);
 	border-color: var(--sapButton_Success_Hover_BorderColor);
 	color: var(--sapButton_Success_Hover_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]):host([value-state="Success"]) .ui5-badge-root:active {
+button.ui5-badge.ui5-badge-value-state-success:active {
 	background-color: var(--sapButton_Success_Active_Background);
 	border-color: var(--sapButton_Success_Active_BorderColor);
 	color: var(--sapButton_Accept_Selected_TextColor);
 }
 
-:host([design-type="ValueState"]):host([value-state="Error"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-value-state-error {
 	background-color: var(--sapButton_Negative_Background);
 	border-color: var(--sapButton_Negative_BorderColor);
 	color: var(--sapButton_Negative_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]):host([value-state="Error"]) .ui5-badge-root:hover {
+button.ui5-badge.ui5-badge-value-state-error .ui5-badge:hover {
 	background-color: var(--sapButton_Negative_Hover_Background);
 	border-color: var(--sapButton_Negative_Hover_BorderColor);
 	color: var(--sapButton_Negative_Hover_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]):host([value-state="Error"]) .ui5-badge-root:active {
+button.ui5-badge.ui5-badge-value-state-error:active {
 	background-color: var(--sapButton_Negative_Active_Background);
 	border-color: var(--sapButton_Negative_Active_BorderColor);
 	color: var(--sapButton_Reject_Selected_TextColor);
 }
 
-:host([design-type="ValueState"]):host([value-state="Warning"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-value-state-warning {
 	background-color: var(--sapButton_Critical_Background);
 	border-color: var(--sapButton_Critical_BorderColor);
 	color: var(--sapButton_Critical_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]):host([value-state="Warning"]) .ui5-badge-root:hover {
+button.ui5-badge.ui5-badge-value-state-warning:hover {
 	background-color: var(--sapButton_Critical_Hover_Background);
 	border-color: var(--sapButton_Critical_Hover_BorderColor);
 	color: var(--sapButton_Critical_Hover_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]):host([value-state="Warning"]) .ui5-badge-root:active {
+button.ui5-badge.ui5-badge-value-state-warning:active {
 	background-color: var(--sapButton_Critical_Active_Background);
 	border-color: var(--sapButton_Critical_Active_BorderColor);
 	color: var(--sapButton_Attention_Selected_TextColor);
 }
 
-:host([design-type="ValueState"]):host([value-state="Information"]) .ui5-badge-root {
+.ui5-badge.ui5-badge-value-state-information {
 	background-color: var(--sapButton_Information_Background);
 	border-color: var(--sapButton_Information_BorderColor);
 	color: var(--sapButton_Information_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]):host([value-state="Information"]) .ui5-badge-root:hover {
+button.ui5-badge.ui5-badge-value-state-information:hover {
 	background-color: var(--sapButton_Information_Hover_Background);
 	border-color: var(--sapButton_Information_Hover_BorderColor);
 	color: var(--sapButton_Information_Hover_TextColor);
 }
 
-:host([interactive]):host([design-type="ValueState"]):host([value-state="Information"]) .ui5-badge-root:active {
+button.ui5-badge.ui5-badge-value-state-information:active {
 	background-color: var(--sapButton_Information_Active_Background);
 	border-color: var(--sapButton_Information_Active_BorderColor);
 	color: var(--sapButton_Selected_TextColor);
@@ -234,164 +271,164 @@
 
 /* IndicationColorSet1 Design Type */
 
-:host([design-type="IndicationColorSet1"]) .ui5-badge-root,
-:host([design-type="IndicationColorSet1"]):host([indication-color="DarkRed"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]) .ui5-badge,
+:host([design-type="IndicationColorSet1"]):host([indication-color="DarkRed"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_1_Background);
 	border-color: var(--sapIndicationColor_1_BorderColor);
 	color: var(--sapIndicationColor_1_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]) .ui5-badge-root:hover,
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="DarkRed"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]) .ui5-badge:hover,
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="DarkRed"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_1_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]) .ui5-badge-root:active,
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="DarkRed"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]) .ui5-badge:active,
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="DarkRed"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_1_Active_Background);
 	border-color: var(--sapIndicationColor_1_Active_BorderColor);
 	color: var(--sapIndicationColor_1_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="Red"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="Red"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_2_Background);
 	border-color: var(--sapIndicationColor_2_BorderColor);
 	color: var(--sapIndicationColor_2_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Red"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Red"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_2_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Red"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Red"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_2_Active_Background);
 	border-color: var(--sapIndicationColor_2_Active_BorderColor);
 	color: var(--sapIndicationColor_2_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="Yellow"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="Yellow"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_3_Background);
 	border-color: var(--sapIndicationColor_3_BorderColor);
 	color: var(--sapIndicationColor_3_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Yellow"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Yellow"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_3_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Yellow"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Yellow"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_3_Active_Background);
 	border-color: var(--sapIndicationColor_3_Active_BorderColor);
 	color: var(--sapIndicationColor_3_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="Green"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="Green"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_4_Background);
 	border-color: var(--sapIndicationColor_4_BorderColor);
 	color: var(--sapIndicationColor_4_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Green"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Green"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_4_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Green"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Green"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_4_Active_Background);
 	border-color: var(--sapIndicationColor_4_Active_BorderColor);
 	color: var(--sapIndicationColor_4_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="Blue"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="Blue"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_5_Background);
 	border-color: var(--sapIndicationColor_5_BorderColor);
 	color: var(--sapIndicationColor_5_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Blue"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Blue"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_5_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Blue"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Blue"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_5_Active_Background);
 	border-color: var(--sapIndicationColor_5_Active_BorderColor);
 	color: var(--sapIndicationColor_5_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="Teal"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="Teal"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_6_Background);
 	border-color: var(--sapIndicationColor_6_BorderColor);
 	color: var(--sapIndicationColor_6_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Teal"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Teal"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_6_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Teal"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Teal"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_6_Active_Background);
 	border-color: var(--sapIndicationColor_6_Active_BorderColor);
 	color: var(--sapIndicationColor_6_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="Purple"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="Purple"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_7_Background);
 	border-color: var(--sapIndicationColor_7_BorderColor);
 	color: var(--sapIndicationColor_7_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Purple"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Purple"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_7_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Purple"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Purple"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_7_Active_Background);
 	border-color: var(--sapIndicationColor_7_Active_BorderColor);
 	color: var(--sapIndicationColor_7_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="Pink"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="Pink"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_8_Background);
 	border-color: var(--sapIndicationColor_8_BorderColor);
 	color: var(--sapIndicationColor_8_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Pink"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Pink"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_8_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Pink"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Pink"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_8_Active_Background);
 	border-color: var(--sapIndicationColor_8_Active_BorderColor);
 	color: var(--sapIndicationColor_8_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="BlackAndWhite"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="BlackAndWhite"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_9_Background);
 	border-color: var(--sapIndicationColor_9_BorderColor);
 	color: var(--sapIndicationColor_9_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="BlackAndWhite"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="BlackAndWhite"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_9_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="BlackAndWhite"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="BlackAndWhite"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_9_Active_Background);
 	border-color: var(--sapIndicationColor_9_Active_BorderColor);
 	color: var(--sapIndicationColor_9_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet1"]):host([indication-color="Grey"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet1"]):host([indication-color="Grey"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_10_Background);
 	border-color: var(--sapIndicationColor_10_BorderColor);
 	color: var(--sapIndicationColor_10_TextColor);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Grey"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Grey"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_10_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Grey"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet1"]):host([indication-color="Grey"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_10_Active_Background);
 	border-color: var(--sapIndicationColor_10_Active_BorderColor);
 	color: var(--sapIndicationColor_10_Active_TextColor);
@@ -399,168 +436,168 @@
 
 /* IndicationColorSet2 Design Type */
 
-:host([design-type="IndicationColorSet2"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]) .ui5-badge {
 	text-shadow: var(--sapContent_TextShadow);
 }
 
-:host([design-type="IndicationColorSet2"]) .ui5-badge-root,
-:host([design-type="IndicationColorSet2"]):host([indication-color="DarkRed"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]) .ui5-badge,
+:host([design-type="IndicationColorSet2"]):host([indication-color="DarkRed"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_1b);
 	border-color: var(--sapIndicationColor_1b_BorderColor);
 	color: var(--sapIndicationColor_1);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]) .ui5-badge-root:hover,
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="DarkRed"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]) .ui5-badge:hover,
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="DarkRed"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_1b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]) .ui5-badge-root:active,
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="DarkRed"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]) .ui5-badge:active,
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="DarkRed"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_1_Active_Background);
 	border-color: var(--sapIndicationColor_1_Active_BorderColor);
 	color: var(--sapIndicationColor_1_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="Red"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="Red"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_2b);
 	border-color: var(--sapIndicationColor_2b_BorderColor);
 	color: var(--sapIndicationColor_2);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Red"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Red"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_2b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Red"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Red"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_2_Active_Background);
 	border-color: var(--sapIndicationColor_2_Active_BorderColor);
 	color: var(--sapIndicationColor_2_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="Yellow"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="Yellow"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_3b);
 	border-color: var(--sapIndicationColor_3b_BorderColor);
 	color: var(--sapIndicationColor_3);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Yellow"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Yellow"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_3b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Yellow"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Yellow"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_3_Active_Background);
 	border-color: var(--sapIndicationColor_3_Active_BorderColor);
 	color: var(--sapIndicationColor_3_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="Green"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="Green"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_4b);
 	border-color: var(--sapIndicationColor_4b_BorderColor);
 	color: var(--sapIndicationColor_4);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Green"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Green"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_4b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Green"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Green"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_4_Active_Background);
 	border-color: var(--sapIndicationColor_4_Active_BorderColor);
 	color: var(--sapIndicationColor_4_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="Blue"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="Blue"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_5b);
 	border-color: var(--sapIndicationColor_5b_BorderColor);
 	color: var(--sapIndicationColor_5);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Blue"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Blue"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_5b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Blue"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Blue"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_5_Active_Background);
 	border-color: var(--sapIndicationColor_5_Active_BorderColor);
 	color: var(--sapIndicationColor_5_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="Teal"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="Teal"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_6b);
 	border-color: var(--sapIndicationColor_6b_BorderColor);
 	color: var(--sapIndicationColor_6);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Teal"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Teal"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_6b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Teal"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Teal"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_6_Active_Background);
 	border-color: var(--sapIndicationColor_6_Active_BorderColor);
 	color: var(--sapIndicationColor_6_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="Purple"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="Purple"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_7b);
 	border-color: var(--sapIndicationColor_7b_BorderColor);
 	color: var(--sapIndicationColor_7);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Purple"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Purple"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_7b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Purple"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Purple"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_7_Active_Background);
 	border-color: var(--sapIndicationColor_7_Active_BorderColor);
 	color: var(--sapIndicationColor_7_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="Pink"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="Pink"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_8b);
 	border-color: var(--sapIndicationColor_8b_BorderColor);
 	color: var(--sapIndicationColor_8);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Pink"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Pink"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_8b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Pink"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Pink"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_8_Active_Background);
 	border-color: var(--sapIndicationColor_8_Active_BorderColor);
 	color: var(--sapIndicationColor_8_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="BlackAndWhite"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="BlackAndWhite"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_9b);
 	border-color: var(--sapIndicationColor_9b_BorderColor);
 	color: var(--sapIndicationColor_9);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="BlackAndWhite"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="BlackAndWhite"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_9b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="BlackAndWhite"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="BlackAndWhite"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_9_Active_Background);
 	border-color: var(--sapIndicationColor_9_Active_BorderColor);
 	color: var(--sapIndicationColor_9_Active_TextColor);
 }
 
-:host([design-type="IndicationColorSet2"]):host([indication-color="Grey"]) .ui5-badge-root {
+:host([design-type="IndicationColorSet2"]):host([indication-color="Grey"]) .ui5-badge {
 	background-color: var(--sapIndicationColor_10b);
 	border-color: var(--sapIndicationColor_10b_BorderColor);
 	color: var(--sapIndicationColor_10);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Grey"]) .ui5-badge-root:hover {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Grey"]) .ui5-badge:hover {
 	background-color: var(--sapIndicationColor_10b_Hover_Background);
 }
 
-:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Grey"]) .ui5-badge-root:active {
+:host([interactive]):host([design-type="IndicationColorSet2"]):host([indication-color="Grey"]) .ui5-badge:active {
 	background-color: var(--sapIndicationColor_10_Active_Background);
 	border-color: var(--sapIndicationColor_10_Active_BorderColor);
 	color: var(--sapIndicationColor_10_Active_TextColor);
