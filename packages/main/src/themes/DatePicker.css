@@ -51,11 +51,6 @@
 	background-color: var(--_ui5-datepicker-hover-background);
 }
 
-[slot="icon"] {
-	border-top-right-radius: var(--_ui5-datepicker_icon_border_radius);
-    border-bottom-right-radius: var(--_ui5-datepicker_icon_border_radius);
-}
-
 :host([readonly]:not([disabled])) {
 	border-color: var(--_ui5_input_readonly_border_color);
 	background: var(--sapField_ReadOnly_BackgroundStyle);
@@ -139,4 +134,13 @@
 :host([value-state="Success"]) [input-icon][pressed] {
 	box-shadow: var(--_ui5_input_success_icon_box_shadow);
 	color: var(--_ui5_input_icon_success_pressed_color);
+}
+
+:host([value-state="Error"]) [input-icon],
+:host([value-state="Warning"]) [input-icon]{
+	padding: var(--_ui5_input_error_warning_icon_padding);
+}
+
+:host([value-state="Information"]) [input-icon] {
+	padding: var(--_ui5_input_information_icon_padding);
 }
