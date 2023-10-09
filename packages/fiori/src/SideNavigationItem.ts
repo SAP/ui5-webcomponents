@@ -92,10 +92,6 @@ class SideNavigationItem extends SideNavigationItemBase {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
 	}
 
-	get _collapsedClassName() {
-		return this.items.length && !this.expanded ? "ui5-sn-list-li-collapsed" : "";
-	}
-
 	getDomRef() {
 		return this.parentElement!.shadowRoot!.querySelector(`#${this._id}`) as HTMLElement;
 	}
