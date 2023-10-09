@@ -279,6 +279,11 @@ registerIconLoader("my-icons", () => {
 	}]);
 });
 
+
+import DateFormat from "@ui5/webcomponents-localization/dist/DateFormat";
+
 window["sap-ui-webcomponents-bundle"] = testAssets;
+
+window["sap-ui-webcomponents-bundle"].testss = DateFormat;
 
 export default testAssets;

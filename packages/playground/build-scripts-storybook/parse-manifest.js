@@ -31,10 +31,12 @@ const loadManifest = () => {
     try {
         const customElementsMain = require("@ui5/webcomponents/custom-elements.json");
         const customElementsFiori = require("@ui5/webcomponents-fiori/custom-elements.json");
+        const customElementsBase = require("@ui5/webcomponents-base/custom-elements.json");
 
         return {
             customElementsMain,
             customElementsFiori,
+            customElementsBase,
         };
     } catch (error) {
         console.log("Error while loading manifests. Did you run 'yarn build'?");
@@ -43,6 +45,7 @@ const loadManifest = () => {
             return {
                 customElementsMain: {},
                 customElementsFiori: {},
+                customElementsBase: {},
             };
         }
 
@@ -55,10 +58,6 @@ const parseMembers = (members) => {
     members.forEach((member) => {
         if (EXCLUDE_LIST.indexOf(member.name) > -1) {
             return;
-        }
-        if (member.kind === "method") {
-            // change kind to property as Storybook does not show methods from the custom-elements.json
-            member.kind = "field";
         }
         parsed.push(member);
     });
@@ -139,8 +138,8 @@ const mergeArraysWithoutDuplicates = (currentValues, newValue) => {
 }
 
 
-const { customElementsMain, customElementsFiori } = loadManifest();
-const customElements = mergeManifests(customElementsMain, customElementsFiori );
+const { customElementsMain, customElementsFiori, customElementsBase } = loadManifest();
+let customElements = mergeManifests(mergeManifests(customElementsMain, customElementsFiori), customElementsBase );
 const processedDeclarations = new Map();
 
 customElements.modules.forEach(flattenAPIsHierarchicalStructure);

@@ -8,13 +8,17 @@ export interface IArgTypeEnhancer {
 }
 
 export type ReturnValue = {
-    type: string;
+    type: {
+        text: string,
+    };
     description: string;
 };
 
 export type Parameter = {
     name: string;
-    type: string;
+    type: {
+        text: string
+    };
     description: string;
 };
 

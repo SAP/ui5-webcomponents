@@ -5,7 +5,7 @@ import { parse } from "comment-parser";
 function processClass(ts, classNode, moduleDoc) {
 	const className = classNode?.name?.text;
 	const currClass = moduleDoc?.declarations?.find(declaration => declaration?.name === className);
-	const currClassJSdoc = classNode?.jsDoc?.[0];
+	const currClassJSdoc = classNode?.jsDoc?.[0] || classNode?.jsDoc?.find(comment => comment.tags?.some(tag => tag.tagName?.text === "class"));
 
 	if (!currClassJSdoc) {
 		return;
@@ -95,6 +95,7 @@ function processClass(ts, classNode, moduleDoc) {
 			})
 
 			if (member.return?.type?.text) {
+				member.return.description = classNodeMember.jsDoc?.[0]?.tags?.find(tag => tag.tagName?.text === "returns")?.comment
 				member.return.type = getType(ts, member.return?.type?.text, classNode)
 			}
 		}
