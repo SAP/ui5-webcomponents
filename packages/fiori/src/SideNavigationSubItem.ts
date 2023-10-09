@@ -1,8 +1,5 @@
-import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
-import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import property from "@ui5/webcomponents-base/dist/decorators/property.js";
-import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import SideNavigationItemBase from "./SideNavigationItemBase.js";
 
 /**
  * @class
@@ -26,78 +23,7 @@ import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNaviga
  * @since 1.0.0-rc.8
  */
 @customElement("ui5-side-navigation-sub-item")
-/**
- * Fired when the component is activated either with a
- * click/tap or by using the Enter or Space key.
- *
- * @event sap.ui.webc.fiori.SideNavigationSubItem#click
- * @public
- */
-@event("click")
-class SideNavigationSubItem extends UI5Element implements ITabbable {
-	/**
-	 * Defines the text of the item.
-	 *
-	 * @public
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationSubItem.prototype.text
-	 */
-	@property()
-	text!: string;
-
-	/**
-	 * Defines whether the subitem is selected.
-	 *
-	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationSubItem.prototype.selected
-	 */
-	@property({ type: Boolean })
-	selected!: boolean;
-
-	/**
-	 * Defines the icon of the item.
-	 * <br><br>
-	 *
-	 * The SAP-icons font provides numerous options.
-	 * <br>
-	 * See all the available icons in the <ui5-link target="_blank" href="https://sdk.openui5.org/test-resources/sap/m/demokit/iconExplorer/webapp/index.html">Icon Explorer</ui5-link>.
-	 * @public
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationSubItem.prototype.icon
-	 */
-	@property()
-	icon!: string;
-
-	/**
-	 * Defines the tooltip of the component.
-	 * @type {string}
-	 * @defaultvalue ""
-	 * @name sap.ui.webc.fiori.SideNavigationSubItem.prototype.title
-	 * @private
-	 * @since 1.0.0-rc.16
-	 */
-	@property()
-	title!: string
-
-	@property({ defaultValue: "-1", noAttribute: true })
-	_tabIndex!: string;
-
-	get _tooltip() {
-		return this.title || this.text;
-	}
-
-	get _ariaCurrent() {
-		if (!this.selected) {
-			return undefined;
-		}
-
-		return "page";
-	}
-
+class SideNavigationSubItem extends SideNavigationItemBase {
 	getDomRef() {
 		return this.parentElement!.parentElement!.shadowRoot!.querySelector(`#${this._id}`) as HTMLElement;
 	}
