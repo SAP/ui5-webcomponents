@@ -9,6 +9,11 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import ItemNavigation from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import {
+	isPhone,
+	isTablet,
+	isCombi,
+} from "@ui5/webcomponents-base/dist/Device.js";
 import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
@@ -344,6 +349,10 @@ class SideNavigation extends UI5Element {
 		return this.hasHeader && !this.collapsed;
 	}
 
+	get hasFixedItems() {
+		return !!this.fixedItems.length;
+	}
+
 	get _itemsTree() {
 		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-items-tree");
 	}
@@ -352,7 +361,19 @@ class SideNavigation extends UI5Element {
 		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-fixed-items-tree");
 	}
 
+	get classes() {
+		return {
+			root: {
+				"ui5-sn-phone": isPhone(),
+				"ui5-sn-tablet": isTablet(),
+				"ui5-sn-combi": isCombi(),
+				"ui5-sn-collapsed": this.collapsed,
+			},
+		};
+	}
+
 	getEnabledItems() : Array<ITabbable> {
+		return [];
 		let items = new Array<ITabbable>();
 
 		this.items.forEach(item => {

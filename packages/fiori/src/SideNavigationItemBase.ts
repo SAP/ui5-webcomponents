@@ -128,7 +128,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	@property()
 	title!: string;
 
-	@property({ defaultValue: "-1", noAttribute: true })
+	@property({ defaultValue: "0", noAttribute: true })
 	_tabIndex!: string;
 
 	get _tooltip() {
