@@ -154,6 +154,30 @@
         ></ui5-illustrated-message>
     </ui5-panel>
 
+	<h2>Vertical responsiveness</h2>
+	Container height:
+	<ui5-select id="containerHeightSelect">
+		<ui5-option selected>auto</ui5-option>
+		<ui5-option>200px</ui5-option>
+		<ui5-option>300px</ui5-option>
+		<ui5-option>500px</ui5-option>
+		<ui5-option>700px</ui5-option>
+	</ui5-select>
+	Container width:
+	<ui5-select id="containerWidthSelect">
+		<ui5-option selected>auto</ui5-option>
+		<ui5-option>100%</ui5-option>
+		<ui5-option>200px</ui5-option>
+		<ui5-option>300px</ui5-option>
+		<ui5-option>500px</ui5-option>
+		<ui5-option>700px</ui5-option>
+	</ui5-select>
+	<div id="container" class="border">
+		<ui5-illustrated-message id="illustratedMsg5" class="border contentBox">
+			<ui5-button>Action 1</ui5-button>
+		</ui5-illustrated-message>
+	</div>
+
 	<script>
 		const illustrationSelect = document.getElementById("illustrationSelect");
 		const sizeSelect = document.getElementById("sizeSelect");
@@ -161,6 +185,9 @@
 		const dialogOpener = document.getElementById("openDialogButton");
 		const dialog = document.getElementById("hello-dialog");
 		const dialogCloser = document.getElementById("closeDialogButton");
+		const containerHeightSelect = document.getElementById("containerHeightSelect");
+		const containerWidthSelect = document.getElementById("containerWidthSelect");
+		const illustratedMessageContainer = document.getElementById("container");
 		const sizes = {
 			base: 250,
 			spot: 300,
@@ -184,6 +211,14 @@
 
 		dialogCloser.addEventListener("click", () => {
 			dialog.close();
+		});
+
+		containerHeightSelect.addEventListener("ui5-change", (event) => {
+			illustratedMessageContainer.style.height = event.detail.selectedOption.textContent;
+		});
+
+		containerWidthSelect.addEventListener("ui5-change", (event) => {
+			illustratedMessageContainer.style.width = event.detail.selectedOption.textContent;
 		});
 	</script>
 </body>
