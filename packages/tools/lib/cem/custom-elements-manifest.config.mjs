@@ -19,6 +19,7 @@ function processClass(ts, classNode, moduleDoc) {
 		if (decoratorArg) {
 			if (decoratorArg.kind === ts.SyntaxKind.StringLiteral || decoratorArg.kind === ts.SyntaxKind.ObjectLiteralExpression) {
 				currClass.tagName = decoratorArg.text || (decoratorArg.properties.find(property => property.name.text === "tag")?.initializer?.text);
+				currClass.customElement = true;
 			}
 		}
 	}
@@ -32,7 +33,6 @@ function processClass(ts, classNode, moduleDoc) {
 		currClass.superclass = getReference(ts, superclassTag.name, classNode)
 	}
 
-	currClass.customElement = !!currClass.tagName;
 	currClass.kind = "class";
 	currClass._ui5abstract = currClassJSdoc?.tags?.some(tag => tag.tagName?.text === "abstract");
 	const slotTag = currClassJSdoc?.tags?.some(tag => tag.tagName?.text === "slot");
@@ -61,14 +61,15 @@ function processClass(ts, classNode, moduleDoc) {
 		}
 
 
-		const type = classNodeMemberJSdoc?.tags?.find(tag => tag.kind === ts?.SyntaxKind?.JSDocTypeTag)
-		member.since = getSinceStatus(ts, classNodeMemberJSdoc);
-
-		if (!!type) {
-			member.type = getType(ts, type, classNode);
-		}
+		member._ui5since = getSinceStatus(ts, classNodeMemberJSdoc);
 
 		if (member.kind === "field") {
+			const type = classNodeMemberJSdoc?.tags?.find(tag => tag.kind === ts?.SyntaxKind?.JSDocTypeTag)
+
+			if (!!type) {
+				member.type = getType(ts, type, classNode);
+			}
+
 			const slotDecorator = classNodeMember?.decorators?.find(decorator => decorator?.expression?.expression?.text === "slot");
 
 			if (slotDecorator) {

@@ -25,6 +25,10 @@ const getParams = (ts, decoratorParams, commentParams, classNode) => {
 function processEvent(ts, event, classNode) {
 	const result = {
 		name: event?.expression?.arguments?.[0]?.text,
+		privacy: "private",
+		type: {
+			text: "CustomEvent"
+		}
 	};
 
 	const comment = event.getFullText?.().match(jsDocRegExp)?.[0];
@@ -35,15 +39,21 @@ function processEvent(ts, event, classNode) {
 		const privacy = parsedComment?.tags?.find(tag => ["private", "public", "protected"].includes(tag?.tag))?.tag || "private";
 		const sinceTag = parsedComment?.tags?.find(tag => tag?.tag === "since");
 		const commentParams = parsedComment?.tags?.filter(tag => tag?.tag === "param") || [];
-		const allowPreventDefault = !!parsedComment?.tags?.find(tag => tag?.tag === "allowPreventDefault");
+		const allowPreventDefault = !!parsedComment?.tags?.some(tag => tag?.tag === "allowPreventDefault");
 		const description = parsedComment?.description;
-		const native = !!parsedComment?.tags?.find(tag => tag?.tag === "native") ? "Event" : "CustomEvent";
+		const native = !!parsedComment?.tags?.some(tag => tag?.tag === "native") ? "Event" : "CustomEvent";
 		const decoratorParams = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
 
-		result.privacy = privacy;
 		result.description = description;
 		result._ui5allowPreventDefault = allowPreventDefault;
-		result.type = { text: native };
+
+		if (native) {
+			result.type = { text: "Event" };
+		}
+
+		if (privacy) {
+			result.privacy = privacy;
+		}
 
 		if (deprecatedTag?.name) {
 			result.deprecated = deprecatedTag?.description ? `${deprecatedTag.name} ${deprecatedTag.description}` : deprecatedTag.name;
