@@ -2,33 +2,24 @@
 	<button class="ui5-badge-root"
 		 @onclick={{_onclick}}
 	>
-		<slot name="icon"></slot>
-
-		{{#if this._semanticIconName}}
-			<ui5-icon class="ui5-badge-semantic-icon" name="{{_semanticIconName}}"></ui5-icon>
-		{{/if}}
-
-		{{#if hasText}}
-			<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
-		{{/if}}
-
-		<span class="ui5-hidden-text">{{badgeDescription}}</span>
+		{{> content}}
 	</button>
 {{else}}
 	<div class="ui5-badge-root">
-		<slot name="icon"></slot>
-
-		{{#if this._semanticIconName}}
-			<ui5-icon class="ui5-badge-semantic-icon" name="{{_semanticIconName}}"></ui5-icon>
-		{{/if}}
-
-		{{#if hasText}}
-			<label class="ui5-badge-text"><bdi><slot></slot></bdi></label>
-		{{/if}}
-
-		<span class="ui5-hidden-text">{{badgeDescription}}</span>
+		{{> content}}
 	</div>
 {{/if}}
+
+{{#*inline "content"}}
+	<slot name="icon"></slot>
+	{{#if this._semanticIconName}}
+		<ui5-icon class="ui5-badge-semantic-icon" name="{{_semanticIconName}}"></ui5-icon>
+	{{/if}}
+	{{#if hasText}}
+		<span class="ui5-badge-text"><bdi><slot></slot></bdi></span>
+	{{/if}}
+	<span class="ui5-hidden-text">{{badgeDescription}}</span>
+{{/inline}}
 
 
 
