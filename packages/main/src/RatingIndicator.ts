@@ -188,6 +188,18 @@ class RatingIndicator extends UI5Element {
 	required!: boolean;
 
 	/**
+	 * Defines the tooltip of the component.
+	 *
+	 * @type {string}
+	 * @name sap.ui.webc.main.RatingIndicator.prototype.tooltip
+	 * @defaultvalue ""
+	 * @public
+	 * @since 1.19.0
+	 */
+	@property({ defaultValue: "" })
+	tooltip!: string;
+
+	/**
 	 * @private
 	 */
 	@property({ type: Object, multiple: true })
@@ -315,8 +327,8 @@ class RatingIndicator extends UI5Element {
 		return this.disabled ? "-1" : tabindex || "0";
 	}
 
-	get tooltip() {
-		return this.getAttribute("title") || this.defaultTooltip;
+	get ratingTooltip() {
+		return this.tooltip || this.defaultTooltip;
 	}
 
 	get defaultTooltip() {
