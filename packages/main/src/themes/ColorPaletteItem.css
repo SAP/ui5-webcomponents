@@ -8,7 +8,8 @@
 	box-sizing: border-box;
 }
 
-:host(:not([_disabled]):hover) {
+:host(:not([_disabled]):hover),
+:host([selected]) {
 	height: var(--_ui5_color-palette-item-hover-height);
 	width: var(--_ui5_color-palette-item-hover-height);
 	margin: var(--_ui5_color-palette-item-hover-margin);
@@ -40,14 +41,26 @@
 	border-radius: 0.1875rem;
 }
 
-.ui5-cp-item:hover:not(:focus) {
-	border: 1px solid var(--sapGroup_ContentBackground);
+.ui5-cp-item:hover:not(:focus),
+.ui5-cp-item.ui5-cp-selected {
+	border: 0.0625rem solid var(--sapGroup_ContentBackground);
 	border-radius: var(--_ui5_color-palette-item-hover-inner-border-radius);
 	box-sizing: border-box;
 }
 
-:host(:not([_disabled]):not([phone])) .ui5-cp-item:focus{
+.ui5-cp-item.ui5-cp-selected:focus,
+:host(:not([_disabled]):not([phone])) .ui5-cp-item:focus,
+:host(:not([_disabled])[phone]) .ui5-cp-item:focus {
 	outline: none;
+}
+
+:host(:not([_disabled])[phone]) .ui5-cp-item:focus {
+	width: 2.875rem; 
+	height: 2.875rem;
+	right: 0.125rem;
+	bottom: 0.125rem;
+	box-shadow: 0 0 0 0.0625rem #FFF, 0 0 0 0.125rem var(--sapContent_ForegroundBorderColor);
+	border: var(--_ui5_color-palette-item-phone-selected-focus);
 }
 
 :host(:not([_disabled]):not([phone]):focus) .ui5-cp-item {
@@ -104,4 +117,66 @@
 	border: var(--_ui5_color-palette-item-after-focus-color);
 	border-radius: var(--_ui5_color-palette-item-after-focus-border-radius);
 	pointer-events: none;
+}
+
+
+/* Specific styling for the selected state */
+
+:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::after,
+:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.ui5-cp-selected:focus:hover::after {
+	border: var(--_ui5_color-palette-item-selected-focused-border-after);
+}
+
+:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::before,
+:host([selected]:not([_disabled]):not([phone])) .ui5-cp-item.ui5-cp-selected:focus:hover::before {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	left: var(--_ui5_color-palette-item-selected-focused-border-before);
+	top: var(--_ui5_color-palette-item-selected-focused-border-before);
+	right: var(--_ui5_color-palette-item-selected-focused-border-before);
+	bottom: var(--_ui5_color-palette-item-selected-focused-border-before);
+	border: var(--_ui5_color-palette-item-before-focus-color);
+	border-radius: var(--_ui5_color-palette-item-before-focus-border-radius);
+	pointer-events: none;
+}
+
+/* Phone specific styles for the selected state */
+
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::after,
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:focus:hover::after {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	left: var(--_ui5_color-palette-item-after-focus-offset);
+	top: var(--_ui5_color-palette-item-after-focus-offset);
+	right: var(--_ui5_color-palette-item-after-focus-offset);
+	bottom: var(--_ui5_color-palette-item-after-focus-offset);
+	border: var(--_ui5_color-palette-item-after-focus-color-phone);
+	border-radius: var(--_ui5_color-palette-item-after-focus-border-radius);
+	pointer-events: none;
+}
+
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:focus:not(:hover)::before,
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:focus:hover::before {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	left: var(--_ui5_color-palette-item-selected-focused-border-before);
+	top: var(--_ui5_color-palette-item-selected-focused-border-before);
+	right: var(--_ui5_color-palette-item-selected-focused-border-before);
+	bottom: var(--_ui5_color-palette-item-selected-focused-border-before);
+	border: var(--_ui5_color-palette-item-before-focus-color);
+	border-radius: .1875rem;
+	pointer-events: none;
+}
+
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:not(:focus),
+:host([selected]:not([_disabled])[phone]) .ui5-cp-item.ui5-cp-selected:not(:focus):not(:hover) {
+	width: 2.875rem; 
+	height: 2.875rem;
+	right: 0.125rem;
+	bottom: 0.125rem;
+	border: 0.0625rem solid var(--sapGroup_ContentBackground);
+	box-shadow: 0 0 0 0.0625rem var(--sapContent_ForegroundBorderColor); /* gap */
 }

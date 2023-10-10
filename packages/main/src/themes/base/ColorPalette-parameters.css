@@ -10,6 +10,7 @@
 	--_ui5_color-palette-item-before-focus-offset: 0.0625rem;
 	--_ui5_color-palette-item-before-focus-hover-offset: 0.0625rem;
 	--_ui5_color-palette-item-after-focus-color: 0.0625rem dotted black;
+	--_ui5_color-palette-item-selected-focused-border-after: var(--_ui5_color-palette-item-after-focus-color);
 	--_ui5_color-palette-item-after-focus-offset: 0.0625rem;
 	--_ui5_color-palette-item-after-focus-hover-offset: 0.0625rem;
 	--_ui5_color-palette-item-before-focus-border-radius: 0;
@@ -18,4 +19,7 @@
 	--_ui5_color-palette-item-inner-border-radius: 0.1875rem;
 	--_ui5_color-palette-item-hover-outer-border-radius: 0.25rem;
 	--_ui5_color-palette-item-hover-inner-border-radius: 0.1875rem;
+	--_ui5_color-palette-item-selected-focused-border-before: var(--_ui5_color-palette-item-before-focus-hover-offset);
+	--_ui5_color-palette-item-after-focus-color-phone: var(--_ui5_color-palette-item-after-focus-color);
+	--_ui5_color-palette-item-phone-selected-focus: none;
 }
