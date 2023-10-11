@@ -119,7 +119,7 @@ class Label extends UI5Element {
 			return;
 		}
 
-		const elementToFocus = (this.getRootNode() as HTMLElement).querySelector(`#${this.for}`) as HTMLElement;
+		const elementToFocus = (this.getRootNode() as HTMLElement).querySelector(`[id="${this.for}"]`) as HTMLElement;
 		if (elementToFocus) {
 			elementToFocus.focus();
 		}
