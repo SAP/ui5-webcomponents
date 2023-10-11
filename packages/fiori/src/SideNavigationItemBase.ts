@@ -157,8 +157,18 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.target || undefined;
 	}
 
-	get _disabledClass() {
-		return this.disabled ? "ui5-sn-item-disabled" : "";
+	get _classes() {
+		const classes = [];
+
+		if (this.disabled) {
+			classes.push("ui5-sn-item-disabled");
+		}
+
+		if (this.selected) {
+			classes.push("ui5-sn-item-selected");
+		}
+
+		return classes.join(" ");
 	}
 
 	get _ariaCurrent() {

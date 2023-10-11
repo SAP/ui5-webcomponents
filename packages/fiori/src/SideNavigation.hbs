@@ -51,7 +51,7 @@
 
 {{#*inline menuitem}}
 	<a id="{{_id}}"
-	   class="ui5-sn-item"
+	   class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
 	   role="menuitemradio"
 	   data-sap-focus-ref
 	   tabindex="{{_tabIndex}}"
@@ -68,7 +68,7 @@
 
 {{#*inline treeitem}}
 	<li id="{{_id}}" class="ui5-sn-list-li" role="none">
-		<a class="ui5-sn-item"
+		<a class="ui5-sn-item ui5-sn-item-level1 {{_classes}}"
 		   role="treeitem"
 		   data-sap-focus-ref
 		   tabindex="{{_tabIndex}}"
@@ -99,7 +99,7 @@
 			>
 				{{#each items}}
 					<li id="{{_id}}" class="ui5-sn-list-li" role="none">
-						<a class="ui5-sn-item {{_disabledClass}}"
+						<a class="ui5-sn-item ui5-sn-item-level2 {{_classes}}"
 						   role="treeitem"
 						   data-sap-focus-ref
 						   tabindex="{{_tabIndex}}"
