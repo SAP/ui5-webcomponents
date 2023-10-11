@@ -1,5 +1,5 @@
 import { parse } from "comment-parser";
-import { getPrivacyStatus, getDeprecatedStatus, getSinceStatus, getType } from "./utils.mjs";
+import { getPrivacyStatus, getDeprecatedStatus, getSinceStatus, getType, validateJSDocComment } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
 
@@ -10,6 +10,8 @@ const getParams = (ts, decoratorParams, commentParams, classNode) => {
 		if (!decoratorParam) {
 			return;
 		}
+
+		validateJSDocComment("eventParam", decoratorParam?.jsDoc?.[0], decoratorParam)
 
 		return {
 			type: getType(ts, commentParam?.type, classNode),
@@ -35,6 +37,9 @@ function processEvent(ts, event, classNode) {
 
 	if (comment) {
 		const parsedComment = parse(comment)[0];
+
+		validateJSDocComment("event", parsedComment, event?.expression?.arguments?.[0]?.text)
+
 		const deprecatedTag = parsedComment?.tags?.find(tag => tag?.tag === "deprecated");
 		const privacy = parsedComment?.tags?.find(tag => ["private", "public", "protected"].includes(tag?.tag))?.tag || "private";
 		const sinceTag = parsedComment?.tags?.find(tag => tag?.tag === "since");

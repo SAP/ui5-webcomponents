@@ -1,5 +1,5 @@
 import processEvent from "./event.mjs";
-import { getDeprecatedStatus, getSinceStatus, getPrivacyStatus, getType, getReference } from "./utils.mjs";
+import { getDeprecatedStatus, getSinceStatus, getPrivacyStatus, getType, getReference, validateJSDocComment } from "./utils.mjs";
 import { parse } from "comment-parser";
 
 function processClass(ts, classNode, moduleDoc) {
@@ -10,6 +10,8 @@ function processClass(ts, classNode, moduleDoc) {
 	if (!currClassJSdoc) {
 		return;
 	}
+
+	validateJSDocComment("class", currClassJSdoc, classNode)
 
 	const customElementDecorator = classNode?.decorators?.find(decorator => decorator?.expression?.expression?.text === "customElement");
 
@@ -92,6 +94,10 @@ function processClass(ts, classNode, moduleDoc) {
 
 				currClass.slots.push(slot);
 				i--;
+
+				validateJSDocComment("slot", classNodeMemberJSdoc, classNodeMember)
+			} else {
+				validateJSDocComment("field", classNodeMemberJSdoc,classNodeMember)
 			}
 		} else if (member.kind === "method") {
 			member.parameters?.forEach(param => {
@@ -105,6 +111,8 @@ function processClass(ts, classNode, moduleDoc) {
 				member.return.description = classNodeMember.jsDoc?.[0]?.tags?.find(tag => tag.tagName?.text === "returns")?.comment
 				member.return.type = getType(ts, member.return?.type?.text, classNode)
 			}
+
+			validateJSDocComment("method", classNodeMemberJSdoc, classNodeMember)
 		}
 	}
 
@@ -120,6 +128,8 @@ function processInterface(ts, interfaceNode, moduleDoc) {
 	if (!interfaceJSdoc) {
 		return;
 	}
+
+	validateJSDocComment("interface", interfaceJSdoc, interfaceNode)
 
 	const result = {
 		kind: "interface",
@@ -142,6 +152,8 @@ function processEnum(ts, enumNode, moduleDoc) {
 		return;
 	}
 
+	validateJSDocComment("enum", enumJSdoc, enumNode)
+
 	const result = {
 		kind: "enum",
 		name: enumName,
@@ -154,6 +166,8 @@ function processEnum(ts, enumNode, moduleDoc) {
 
 	result.members = (enumNode?.members || []).map(member => {
 		const memberJSdoc = member?.jsDoc?.[0];
+
+		validateJSDocComment("enum", memberJSdoc, member)
 
 		const memberResult = {
 			kind: "field",

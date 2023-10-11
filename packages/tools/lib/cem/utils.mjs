@@ -81,10 +81,41 @@ const getType = (ts, type, classNode) => {
         : { text: multiple ? `${name}[]` : name };
 };
 
+const commonTags = ["public", "protected", "private", "since", "deprecated"]
+
+const allowedTags = {
+    field: [...commonTags, "type", "default", "readonly"],
+    slot: [...commonTags, "type", "default"],
+    event: [...commonTags, "param", "allowPreventDefault", "native"],
+    eventParam: [...commonTags],
+    method: [...commonTags, "param", "returns"],
+    class: [...commonTags, "class", "abstract", "implements", "extends", "slot", "csspart"],
+    enum: [...commonTags],
+    enumMember: [...commonTags],
+    interface: [...commonTags],
+}
+
+const validateJSDocComment = (fieldType, jsdocComment, node) => {
+    const valid = !!jsdocComment.tags?.every(tag => {
+        if(allowedTags[fieldType]?.includes(fieldType === "event" ? tag.tag : tag.tagName?.text)) {
+            return true;
+        }
+
+        console.log(`=== ERROR: ${fieldType === "event" ? node : node.name?.text} has wrong tags. Following tags are wrong:`)
+        console.log(`         - @${fieldType === "event" ? tag.tag : tag.tagName?.text} is not part of ${fieldType} JSDoc tags`)
+        return false;
+    });
+
+    if (!valid) {
+        throw new Error(`Invalid JSDoc`)
+    }
+}
+
 export {
     getPrivacyStatus,
     getSinceStatus,
     getDeprecatedStatus,
     getType,
-    getReference
+    getReference,
+    validateJSDocComment
 }
