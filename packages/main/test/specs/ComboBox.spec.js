@@ -1014,4 +1014,13 @@ describe("Keyboard navigation", async () => {
 		assert.ok(await listItems[0].getProperty("selected"), "List Item should be selected");
 		assert.notOk(await listItems[1].getProperty("selected"), "List Item should not be selected");
 	});
+
+	it ("Tests disabled autocomplete(type-ahead)", async () => {
+		const input = await browser.$("#combo-without-type-ahead").shadow$("input");
+
+		await input.click();
+		await input.keys("b");
+
+		assert.strictEqual(await input.getProperty("value"), "b", "Value is not autocompleted");
+	});
 });
