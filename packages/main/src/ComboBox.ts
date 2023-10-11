@@ -233,6 +233,7 @@ class ComboBox extends UI5Element {
 	 * @name sap.ui.webc.main.ComboBox.prototype.noTypeahead
 	 * @defaultvalue false
 	 * @public
+	 * @since 1.19.0
 	 */
 	@property({ type: Boolean })
 	noTypeahead!: boolean;
