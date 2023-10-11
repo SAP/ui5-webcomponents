@@ -30,6 +30,7 @@
     "@wdio/mocha-framework": "^7.19.7",
     "@wdio/spec-reporter": "^7.19.7",
     "@wdio/static-server-service": "^7.19.5",
+    "ajv-cli": "^5.0.0",
     "chai": "^4.3.4",
     "child_process": "^1.0.2",
     "chokidar": "^3.5.1",

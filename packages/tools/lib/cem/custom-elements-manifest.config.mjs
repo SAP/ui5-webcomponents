@@ -22,6 +22,8 @@ function processClass(ts, classNode, moduleDoc) {
 				currClass.customElement = true;
 			}
 		}
+
+		currClass._ui5abstract = currClassJSdoc?.tags?.some(tag => tag.tagName?.text === "abstract");
 	}
 
 	const hasSuperclass = currClassJSdoc?.tags?.some(tag => tag.kind === ts?.SyntaxKind?.JSDocAugmentsTag);
@@ -34,7 +36,6 @@ function processClass(ts, classNode, moduleDoc) {
 	}
 
 	currClass.kind = "class";
-	currClass._ui5abstract = currClassJSdoc?.tags?.some(tag => tag.tagName?.text === "abstract");
 	const slotTag = currClassJSdoc?.tags?.some(tag => tag.tagName?.text === "slot");
 	currClass.deprecated = getDeprecatedStatus(ts, currClassJSdoc);
 	currClass._ui5since = getSinceStatus(ts, currClassJSdoc);
@@ -72,6 +73,10 @@ function processClass(ts, classNode, moduleDoc) {
 
 			const slotDecorator = classNodeMember?.decorators?.find(decorator => decorator?.expression?.expression?.text === "slot");
 
+			if (member.readonly) {
+				delete member.return;
+			}
+
 			if (slotDecorator) {
 				if (!currClass.slots) {
 					currClass.slots = [];
@@ -79,6 +84,7 @@ function processClass(ts, classNode, moduleDoc) {
 
 				const slot = currClass.members.splice(i, 1)[0];
 				const defaultProperty = slotDecorator.expression?.arguments?.[0]?.properties?.find(property => property.name.text === "default");
+				delete slot.kind;
 
 				if (defaultProperty && defaultProperty.initializer?.kind === ts.SyntaxKind.TrueKeyword) {
 					slot.name = "default";
