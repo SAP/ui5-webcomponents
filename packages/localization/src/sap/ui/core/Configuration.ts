@@ -18,6 +18,8 @@ const Configuration = {
 	getOriginInfo: emptyFn,
 	getFormatSettings: () => FormatSettings,
 	getTimezone: () => getConfigTimezone() || TimezoneUtil.getLocalTimezone() as string,
+	// Calculate calendar week numbering by active format locale
+	getCalendarWeekNumbering: () => "Default",
 };
 
 export default Configuration;
