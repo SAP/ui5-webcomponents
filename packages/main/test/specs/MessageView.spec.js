@@ -13,37 +13,29 @@ describe("MessageView general interaction", () => {
         );
 
         // Assert
-        assert.strictEqual(headerButtons.length, 3);
+        assert.strictEqual( headerButtons.length, 3, "3 buttons displayed" );
 
-        assert.strictEqual(await headerButtons[0].getText(), "All");
-        assert.strictEqual(await headerButtons[1].getText(), "1");
-        assert.strictEqual(await headerButtons[2].getText(), "1");
+        assert.strictEqual( await headerButtons[0].getText(), "All", "Fisrt button should show the text 'All'");
+        assert.strictEqual( await headerButtons[1].getText(), "1",  "Second button should show count 1" );
+        assert.strictEqual( await headerButtons[2].getText(),  "1", "Third button should show count 1" );
     });
 
     it("Clicking on an item should navigate to details page", async () => {
         // Arrange
         const messageView = await browser.$("#mv2");
 
-        assert.ok(
-            await messageView.shadow$(".ui5-message-view-list").isDisplayed()
-        );
-        assert.notOk(
-            await messageView.shadow$(".ui5-message-view-details").isDisplayed()
-        );
+        assert.ok( await messageView.shadow$(".ui5-message-view-list").isDisplayed() );
+        assert.notOk( await messageView.shadow$(".ui5-message-view-details").isDisplayed() );
 
         const items = await messageView.shadow$$("ui5-li-custom");
-        assert.strictEqual(items.length, 2);
+        assert.strictEqual(items.length, 2, "List should have 2 message items");
 
         // Act
         await items[0].click();
 
         // Assert
-        assert.notOk(
-            await messageView.shadow$(".ui5-message-view-list").isDisplayed()
-        );
-        assert.ok(
-            await messageView.shadow$(".ui5-message-view-details").isDisplayed()
-        );
+        assert.notOk( await messageView.shadow$(".ui5-message-view-list").isDisplayed() );
+        assert.ok( await messageView.shadow$(".ui5-message-view-details").isDisplayed() );
     });
 
     it("Clicking back should navigate to list view", async () => {
@@ -59,11 +51,7 @@ describe("MessageView general interaction", () => {
         }, btnBack);
 
         // Assert
-        assert.ok(
-            await messageView.shadow$(".ui5-message-view-list").isDisplayed()
-        );
-        assert.notOk(
-            await messageView.shadow$(".ui5-message-view-details").isDisplayed()
-        );
+        assert.ok( await messageView.shadow$(".ui5-message-view-list").isDisplayed() );
+        assert.notOk( await messageView.shadow$(".ui5-message-view-details").isDisplayed() );
     });
 });

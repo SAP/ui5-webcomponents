@@ -10,6 +10,11 @@ import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SegmentedButton, { SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
 import MessageViewItem from "./MessageViewItem.js";
 import ListItemType from "./types/ListItemType.js";
+import List from "./List.js";
+import Icon from "./Icon.js";
+import CustomListItem from "./CustomListItem.js";
+import Link from "./Link.js";
+import SegmentedButtonItem from "./SegmentedButtonItem.js";
 
 import MessageViewTemplate from "./generated/templates/MessageViewTemplate.lit.js";
 
@@ -17,13 +22,10 @@ import MessageViewTemplate from "./generated/templates/MessageViewTemplate.lit.j
 import MessageViewCss from "./generated/themes/MessageView.css.js";
 
 // Texts
-import {
-	MESSAGE_VIEW_MORE_INFORMATION,
-} from "./generated/i18n/i18n-defaults.js";
-import List from "./List.js";
-import Icon from "./Icon.js";
+import { MESSAGE_VIEW_MORE_INFORMATION } from "./generated/i18n/i18n-defaults.js";
 
 enum MessageType {
+	None = "None",
 	Error = "Error",
 	Warning = "Warning",
 	Success = "Success",
@@ -45,8 +47,7 @@ enum DesignClassesMapping {
 }
 
 enum MessageViewMode {
-	// eslint-disable-next-line @typescript-eslint/no-shadow
-	List = "list",
+	Messages = "messages",
 	Details = "details",
 }
 
@@ -56,6 +57,14 @@ type MessageItem = {
 	messageDesign: string,
 	position: number,
 	visible: boolean,
+}
+
+type MessageButtonDataType = {
+	messageType: string,
+	messageCount: number,
+	messageIcon: string,
+	messageDesign: string,
+	pressed: boolean
 }
 
 /**
@@ -72,7 +81,7 @@ type MessageItem = {
  * Although the message view can be embedded within various controls, we recommend that you use it only within a dialog.
  * Use the message view if you want to display multiple messages triggered by an action within a disruptive dialog.
  *
- * For the <code>message-view</code>
+ * For the <code>ui5-message-view</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/MessageView.js";</code>
@@ -81,17 +90,16 @@ type MessageItem = {
  * @author SAP SE
  * @alias sap.ui.webc.main.MessageView
  * @extends sap.ui.webc.base.UI5Element
- * @tagname message-view
+ * @tagname ui5-message-view
  * @public
  */
 @customElement({
 	tag: "ui5-message-view",
 	renderer: litRender,
-	themeAware: true,
 	languageAware: true,
 	styles: MessageViewCss,
 	template: MessageViewTemplate,
-	dependencies: [SegmentedButton, List, Icon, MessageViewItem],
+	dependencies: [SegmentedButton, SegmentedButtonItem, List, CustomListItem, Icon, Link],
 })
 /**
  * Fired when an item is being clicked.
@@ -117,7 +125,7 @@ class MessageView extends UI5Element {
 	items!: Array<MessageViewItem>;
 
 	/**
-	 * Stores the selected messge type
+	 * Stores the selected message type
 	 * @type {string}
 	 * @private
 	 */
@@ -137,8 +145,8 @@ class MessageView extends UI5Element {
 	 * @type {Integer}
 	 * @private
 	 */
-	@property({ type: Integer })
-	_selctedMessagePosition!: number
+	@property({ type: Integer, defaultValue: 0 })
+	_selectedMessagePosition!: number
 
 	static i18nBundle: I18nBundle;
 
@@ -148,12 +156,11 @@ class MessageView extends UI5Element {
 
 	constructor() {
 		super();
-		this._selctedMessagePosition = 0;
-		this._messages = [];
+		this._selectedMessageType = MessageType.None;
 	}
 
 	onBeforeRendering() {
-		// Enhance the message-view-items with proper message icon and design classes
+		// Enhance the ui5-message-view-item with proper message icon and design classes
 		this._messages = this.items.map((item, index) => {
 			return {
 				message: item,
@@ -166,28 +173,40 @@ class MessageView extends UI5Element {
 		});
 
 		if (this._messages.length === 1) {
-			this._selctedMessagePosition = 1;
+			this._selectedMessagePosition = 1;
 		}
 	}
 
+	/**
+	 * Closes the details message view and fires the view-change event of the underlying ui5-message-view-item
+	 * @public
+	*/
 	closeSelectedMessage() {
 		if (this.hasSelectedMessage) {
-			this._selectedMessage.message.onViewChange(MessageViewMode.List);
+			this._selectedMessage.message.onViewChange(MessageViewMode.Messages);
 		}
-		this._selctedMessagePosition = 0;
+		this._selectedMessagePosition = 0;
 	}
 
+	/**
+	 * @private
+	 */
 	_filterByMessageType(e: CustomEvent<SegmentedButtonSelectionChangeEventDetail>) {
-		if (e.detail.selectedItems && e.detail.selectedItems.length) {
-			this._selectedMessageType = e.detail.selectedItems[0].id;
+		if (e.detail.selectedItems.length) {
+			this._selectedMessageType = e.detail.selectedItems[0].getAttribute("data-message-type")!;
+		} else {
+			this._selectedMessageType = MessageType.None;
 		}
 	}
 
+	/**
+	 * @private
+	 */
 	_selectListItem(e: any) {
 		const item = e.detail.item;
 		this.fireEvent("item-click", { item });
 
-		this._selctedMessagePosition = item.position ? item.position : 0;
+		this._selectedMessagePosition = item.position ? item.position : 0;
 
 		if (this._selectedMessage) {
 			this._selectedMessage.message.onViewChange(MessageViewMode.Details);
@@ -195,7 +214,7 @@ class MessageView extends UI5Element {
 	}
 
 	get messageItemsByType() {
-		const result: { messageType: string, messageCount: number, messageIcon: string, messageDesign: string, pressed: boolean }[] = [];
+		const result: MessageButtonDataType[] = [];
 
 		Object.values(MessageType).forEach(mt => {
 			const count = this._messages.filter(i => i.message.type === mt).length;
@@ -214,7 +233,7 @@ class MessageView extends UI5Element {
 	}
 
 	get hasSelectedMessage() {
-		return this._selctedMessagePosition > 0;
+		return this._selectedMessagePosition > 0;
 	}
 
 	get moreInformationText() {
@@ -222,7 +241,7 @@ class MessageView extends UI5Element {
 	}
 
 	get _filteredItems() {
-		if (this._selectedMessageType && this._selectedMessageType !== "undefined") {
+		if (this._selectedMessageType !== MessageType.None) {
 			this._messages.forEach(item => { item.visible = item.message.type === this._selectedMessageType; });
 		}
 		return this._messages;
@@ -233,7 +252,7 @@ class MessageView extends UI5Element {
 	}
 
 	get _selectedMessage() {
-		return this._messages[this._selctedMessagePosition - 1];
+		return this._messages[this._selectedMessagePosition - 1];
 	}
 }
 

@@ -2,9 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import customElement from "@ui5/webcomponents-base/dist/decorators/customElement.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
-import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
-
-// Styles
 
 import { MessageViewMode } from "./MessageView.js";
 
@@ -17,7 +14,7 @@ import { MessageViewMode } from "./MessageView.js";
  *
  * <h3>Usage</h3>
  *
- * For the <code>message-view-item</code>
+ * For the <code>ui5-message-view-item</code>
  * <h3>ES6 Module Import</h3>
  *
  * <code>import @ui5/webcomponents/dist/MessageViewItem.js";</code>
@@ -26,17 +23,11 @@ import { MessageViewMode } from "./MessageView.js";
  * @author SAP SE
  * @alias sap.ui.webc.main.MessageViewItem
  * @extends sap.ui.webc.base.UI5Element
- * @tagname message-view-item
+ * @abstract
+ * @tagname ui5-message-view-item
  * @public
  */
-@customElement({
-	tag: "ui5-message-view-item",
-	renderer: litRender,
-	themeAware: true,
-	languageAware: true,
-	dependencies: [],
-})
-
+@customElement("ui5-message-view-item")
 /**
  * Example custom event.
  * Please keep in mind that all public events should be documented in the API Reference as shown below.
@@ -50,6 +41,7 @@ import { MessageViewMode } from "./MessageView.js";
 		item: { type: HTMLElement },
 	},
 })
+
 class MessageViewItem extends UI5Element {
 	/**
 	 * Defines the title of the component.

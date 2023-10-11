@@ -3,32 +3,32 @@
 }
 
 ui5-li-custom::part(native-li) {
-    padding: 0;
+	padding: 0;
 }
 
 ui5-icon.information,
-.information:not([pressed])::part(icon){
+.information:not([pressed])::part(icon) {
 	color: var(--sapNeutralColor);
 }
 
 ui5-icon.success,
-.success:not([pressed])::part(icon){
+.success:not([pressed])::part(icon) {
 	color: var(--sapPositiveColor);
 }
 
 ui5-icon.error,
-.error:not([pressed])::part(icon){
+.error:not([pressed])::part(icon) {
 	color: var(--sapNegativeColor);
 }
 
 ui5-icon.warning,
-.warning:not([pressed])::part(icon){
+.warning:not([pressed])::part(icon) {
 	color: var(--sapCriticalColor);
 }
 
 
 /* List */
-.ui5-message-view-list-header{
+.ui5-message-view-list-header {
 	padding: 0.5rem 0;
 	height: var(--_ui5_bar_base_height);
 	width: 100%;
@@ -36,27 +36,28 @@ ui5-icon.warning,
 }
 
 .ui5-message-view-list-item {
-	display: flex; 
+	display: flex;
 	flex: 1 1 auto;
 	flex-direction: row;
 	align-items: center;
 	box-sizing: border-box;
-	margin:0;
+	margin: 0;
 	padding: 0.5rem 0rem;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 }
 
 .ui5-message-view-list-item-icon-wrapper {
-	width: 3rem; 
-	height:inherit; /* by spec it is 2.25rem but it is not reasonable because in single line list the list item height is only 2rem */
-	display: flex; 
-	align-items: center; 
+	width: 3rem;
+	height: inherit;
+	/* by spec it is 2.25rem but it is not reasonable because in single line list the list item height is only 2rem */
+	display: flex;
+	align-items: center;
 	justify-content: center;
 }
 
-.ui5-message-view-list-item-icon-wrapper ui5-icon{
-	width: 1rem; 
+.ui5-message-view-list-item-icon-wrapper ui5-icon {
+	width: 1rem;
 	height: 1rem;
 }
 
@@ -64,24 +65,24 @@ ui5-icon.warning,
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	height: calc( var(--_ui5_message_view_list_item_height) -  1rem);
+	height: calc(var(--_ui5_message_view_list_item_height) - 1rem);
 }
 
 .ui5-message-view-list-item-content[data-ui5-message-view-subtitle]:not([data-ui5-message-view-subtitle=""]) {
-	height: calc( var(--_ui5_message_view_list_item_height_byline) - 1rem);
+	height: calc(var(--_ui5_message_view_list_item_height_byline) - 1rem);
 	justify-content: space-between;
 }
 
-.ui5-message-view-list-item-title{
-	font-family: var(--sapFontHeaderFamily); 
-	font-size: var(--_ui5_message_view_list_item_title_font_size); 
-	font-weight: var(--sapFontHeaderWeight); 
+.ui5-message-view-list-item-title {
+	font-family: var(--sapFontHeaderFamily);
+	font-size: var(--_ui5_message_view_list_item_title_font_size);
+	font-weight: var(--sapFontHeaderWeight);
 	color: var(--sapGroup_TitleTextColor);
 }
 
 .ui5-message-view-list-item-subtitle {
-	font-family: var(--sapFontFamily); 
-	font-size:  var(--sapFontSize); 
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 	color: var(--sapContent_LabelColor);
 }
 
@@ -93,23 +94,23 @@ ui5-icon.warning,
 }
 
 .ui5-message-view-details-icon-wrapper {
-	margin: 0 1rem 0 0.5rem; 
+	margin: 0 1rem 0 0.5rem;
 	font-size: 1rem;
 }
 
-.ui5-message-view-details-title{
-	font-family: var(--sapFontHeaderFamily); 
-	font-size: var(--sapFontHeader5Size); 
-	font-weight: var(--sapFontHeaderWeight); 
+.ui5-message-view-details-title {
+	font-family: var(--sapFontHeaderFamily);
+	font-size: var(--sapFontHeader5Size);
+	font-weight: var(--sapFontHeaderWeight);
 	color: var(--sapGroup_TitleTextColor);
-	margin-bottom: 1rem; 
+	margin-bottom: 1rem;
 
 }
 
 .ui5-message-view-details-description {
-	font-family: var(--sapFontFamily); 
+	font-family: var(--sapFontFamily);
 	font-size: var(--sapFontSize);
 	line-height: 1.4rem;
 	color: var(--sapTextColor);
-	margin-bottom: 1rem; 
+	margin-bottom: 1rem;
 }
