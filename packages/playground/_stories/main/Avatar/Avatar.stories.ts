@@ -11,7 +11,7 @@ import argTypes, { componentInfo } from "./argTypes.js";
 import type { StoryArgsSlots } from "./argTypes.js";
 import type { UI5StoryArgs } from "../../../types.js";
 
-import TemplateAvatarTypesandSizes from "./TemplateAvatarTypesandSizes.js";
+import TemplateAvatarTypesAndSizes from "./TemplateAvatarTypesandSizes.js"
 
 
 import { DocsPage } from "../../../.storybook/docs";
@@ -53,7 +53,7 @@ Basic.args = {
   accessibleName: "Avatar with accessible name"
 };
 
-export const TypesAndSizes: StoryFn = TemplateAvatarTypesandSizes.bind({});
+export const TypesAndSizes: StoryFn = TemplateAvatarTypesAndSizes.bind({});
 
 export const Styles = Template.bind({});
 Styles.args = {

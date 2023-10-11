@@ -38,8 +38,8 @@ Basic.args = {
     value: 25,
 };
 
-export const Customesied = Template.bind({});
-Customesied.args = {
+export const Customised = Template.bind({});
+Customised.args = {
     value: 25,
     displayValue: "Custom Display Value",
     style: "height: 50px; width: 200px;",
