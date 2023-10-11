@@ -46,12 +46,11 @@
 	--_ui5_side_navigation_selection_indicator_display: inline-block;
 }
 
-
-
 [data-ui5-compact-size],
 .ui5-content-density-compact,
 .sapUiSizeCompact {
 	--_ui5_side_navigation_navigation_separator_margin: var(--_ui5_side_navigation_navigation_separator_margin_collapsed);
 	--_ui5_side_navigation_padding: var(--_ui5_side_navigation_padding_compact);
 	--_ui5_side_navigation_item_bottom_margin: var(--_ui5_side_navigation_item_bottom_margin_compact);
+	--_ui5_side_navigation_item_height: 2rem;
 }

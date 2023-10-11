@@ -8,6 +8,8 @@
 	display: flex;
 	flex-direction: column;
 	box-sizing: border-box;
+	font-family: "72override", var(--sapFontFamily);
+	font-size: var(--sapFontSize);
 
 	background: var(--sapList_Background);
 	border-inline-end: var(--_ui5_side_navigation_border_right);
@@ -89,15 +91,30 @@
 	transition: var(--_ui5_side_navigation_item_transition);
 }
 
+/* borders are drawn using a pseudo element.
+in some themes, the border is drawn only on the bottom.
+in high contrast themes the border is on all sides and there is extra border on hover */
+.ui5-sn-item::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+}
+
+.ui5-sn-item.ui5-sn-item-disabled {
+	opacity: var(--sapContent_DisabledOpacity);
+	cursor: auto;
+}
+
 .ui5-sn-item-icon {
 	color: var(--_ui5_side_navigation_icon_color);
-	font-size: var(--_ui5_side_navigation_icon_font_size);
+	height: var(--_ui5_side_navigation_icon_font_size);
+	min-width: var(--_ui5_side_navigation_group_icon_width);
 }
 
 .ui5-sn-item-toggle-icon {
 	color: var(--_ui5_side_navigation_expand_icon_color);
 	min-width: 2rem;
-	font-size: 0.875rem;
+	height: 0.875rem;
 }
 
 .ui5-sn-collapsed .ui5-sn-list .ui5-sn-item {

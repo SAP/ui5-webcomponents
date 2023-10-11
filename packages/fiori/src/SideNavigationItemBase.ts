@@ -104,6 +104,20 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	target!: string;
 
 	/**
+	 * Defines whether the component is disabled.
+	 * A disabled component can't be pressed or
+	 * focused, and it is not in the tab chain.
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.SideNavigationItemBase.prototype.disabled
+	 * @defaultvalue false
+	 * @public
+	 * @since 1.19.0
+	 */
+	@property({ type: Boolean })
+	disabled!: boolean;
+
+	/**
 	 * Defines whether pressing the whole item or only pressing the icon will show/hide the items's sub items(if present).
 	 * If set to true, pressing the whole item will toggle the sub items, and it won't fire the <code>click</code> event.
 	 * By default, only pressing the arrow icon will toggle the sub items & the click event will be fired if the item is pressed outside of the icon.
@@ -141,6 +155,10 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 
 	get _target() {
 		return this.target || undefined;
+	}
+
+	get _disabledClass() {
+		return this.disabled ? "ui5-sn-item-disabled" : "";
 	}
 
 	get _ariaCurrent() {
