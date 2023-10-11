@@ -104,11 +104,11 @@ WithSeparator.args = {
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later"></ui5-toolbar-button>`
 }
 
-export const WithAlwaysOverflowItems: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
+export const AlwaysOverflowItems: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
 
-WithAlwaysOverflowItems.storyName = "With 'AlwaysOverflow' items";
+AlwaysOverflowItems.storyName = "'AlwaysOverflow' items";
 
-WithAlwaysOverflowItems.args = {
+AlwaysOverflowItems.args = {
 	default: `
 		<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 2"></ui5-toolbar-button>
@@ -125,11 +125,11 @@ WithAlwaysOverflowItems.args = {
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="AlwaysOverflow"></ui5-toolbar-button>`
 }
 
-export const WithNeverOverflowItems: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
+export const NeverOverflowItems: UI5StoryArgs<Toolbar, StoryArgsSlots> = Template.bind({});
 
-WithNeverOverflowItems.storyName = "With 'NeverOverflow' items";
+NeverOverflowItems.storyName = "'NeverOverflow' items";
 
-WithNeverOverflowItems.args = {
+NeverOverflowItems.args = {
 	default: `
 		<ui5-toolbar-button icon="add" text="Left 1 (long)" width="150px" design="Default"></ui5-toolbar-button>
 		<ui5-toolbar-button icon="decline" text="Left 2" ></ui5-toolbar-button>
@@ -146,12 +146,12 @@ WithNeverOverflowItems.args = {
 		<ui5-toolbar-button id="myOverflowBtn" icon="employee" text="Call me later" overflow-priority="NeverOverflow"></ui5-toolbar-button>`
 }
 
-export const WithStartAlignedItems = Template.bind({});
+export const StartAlignedItems = Template.bind({});
 
 
-WithStartAlignedItems.storyName = "With 'Start' aligned items";
+StartAlignedItems.storyName = "'Start' aligned items";
 
-WithStartAlignedItems.args = {
+StartAlignedItems.args = {
 	alignContent: ToolbarAlign.Start,
 	default: Basic.args.default
 };

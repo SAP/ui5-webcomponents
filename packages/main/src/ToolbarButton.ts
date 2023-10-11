@@ -31,6 +31,7 @@ import { registerToolbarItem } from "./ToolbarRegistry.js";
  * @extends sap.ui.webc.main.ToolbarItem
  * @tagname ui5-toolbar-button
  * @public
+ * @implements sap.ui.webc.main.IToolbarItem
  * @since 1.17.0
  */
 @customElement({

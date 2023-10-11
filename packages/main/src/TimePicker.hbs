@@ -1,4 +1,7 @@
-<div id="{{this._id}}" class="ui5-time-picker-root">
+<div
+	id="{{this._id}}"
+	class="ui5-time-picker-root"
+>
 	<ui5-input
 			id="{{_id}}-inner"
 			value="{{value}}"
@@ -11,12 +14,17 @@
 			@click="{{_handleInputClick}}"
 			@ui5-change="{{_handleInputChange}}"
 			@ui5-input="{{_handleInputLiveChange}}"
+			@focusin="{{_onfocusin}}"
+			@input="{{_oninput}}"
 			class="ui5-time-picker-input"
 			@keydown="{{_onkeydown}}"
 	>
 
 	{{#if valueStateMessage.length}}
-		<slot name="valueStateMessage" slot="valueStateMessage"></slot>
+		<slot
+			name="valueStateMessage"
+			slot="valueStateMessage"
+		></slot>
 	{{/if}}
 
 	{{#unless readonly}}

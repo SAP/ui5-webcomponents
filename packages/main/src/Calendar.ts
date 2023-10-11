@@ -397,7 +397,7 @@ class Calendar extends CalendarPart {
 	}
 
 	get secondaryCalendarTypeButtonText() {
-		if (!this._secondaryCalendarType) {
+		if (!this.hasSecondaryCalendarType) {
 			return;
 		}
 

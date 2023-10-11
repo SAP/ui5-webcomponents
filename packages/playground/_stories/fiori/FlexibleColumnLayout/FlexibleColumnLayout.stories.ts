@@ -14,7 +14,7 @@ import type FlexibleColumnLayout from "@ui5/webcomponents-fiori/dist/FlexibleCol
 const component = "ui5-flexible-column-layout";
 
 export default {
-  title: "Fiori/FlexibleColumnLayout",
+  title: "Fiori/Flexible Column Layout",
   component: "FlexibleColumnLayout",
   parameters: {
     docs: {

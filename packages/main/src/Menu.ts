@@ -495,7 +495,7 @@ class Menu extends UI5Element {
 		const mainMenu = this._findMainMenu(item);
 		mainMenu.fireEvent<MenuBeforeOpenEventDetail>("before-open", {
 			item,
-		});
+		}, false, false);
 		item._subMenu!.showAt(opener);
 		item._preventSubMenuClose = true;
 		this._openedSubMenuItem = item;
@@ -702,7 +702,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverOpen() {
 		this.open = true;
-		this.fireEvent("after-open");
+		this.fireEvent("after-open", {}, false, false);
 	}
 
 	_beforePopoverClose(e: CustomEvent<ResponsivePopoverBeforeCloseEventDetail>) {
@@ -722,7 +722,7 @@ class Menu extends UI5Element {
 
 	_afterPopoverClose() {
 		this.open = false;
-		this.fireEvent("after-close");
+		this.fireEvent("after-close", {}, false, false);
 	}
 }
 

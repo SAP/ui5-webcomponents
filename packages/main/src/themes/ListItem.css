@@ -115,7 +115,7 @@
 }
 
 .ui5-li-title {
-	color: var(--sapTextColor);
+	color: var(--sapList_TextColor);
 	font-size: var(--_ui5_list_item_title_size);
 }
 
@@ -143,7 +143,7 @@
 .ui5-li-additional-text {
 	margin: 0 0.25rem;
 	color: var(--sapNeutralTextColor);
-	font-size: 0.875rem;
+	font-size: var(--sapFontSize);
 	min-width: 3.75rem;
 	text-align: end;
 }

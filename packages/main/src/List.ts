@@ -1041,7 +1041,7 @@ class List extends UI5Element {
 	}
 
 	getGrowingButton() {
-		return this.shadowRoot!.querySelector(`#${this._id}-growing-btn`) as HTMLElement;
+		return this.shadowRoot!.querySelector(`[id="${this._id}-growing-btn"]`) as HTMLElement;
 	}
 
 	/**
@@ -1127,14 +1127,14 @@ class List extends UI5Element {
 
 	getAfterElement() {
 		if (!this._afterElement) {
-			this._afterElement = this.shadowRoot!.querySelector(`#${this._id}-after`) as HTMLElement;
+			this._afterElement = this.shadowRoot!.querySelector(`[id="${this._id}-after"]`) as HTMLElement;
 		}
 		return this._afterElement;
 	}
 
 	getBeforeElement() {
 		if (!this._beforeElement) {
-			this._beforeElement = this.shadowRoot!.querySelector(`#${this._id}-before`) as HTMLElement;
+			this._beforeElement = this.shadowRoot!.querySelector(`[id="${this._id}-before"]`) as HTMLElement;
 		}
 		return this._beforeElement;
 	}
