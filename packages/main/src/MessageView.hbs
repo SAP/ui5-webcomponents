@@ -19,7 +19,7 @@
            {{/if}}
            
             {{#if _messages}}
-                <ui5-list @ui5-item-click="{{_selectListItem}}">
+                <ui5-list @ui5-item-click="{{_selectListItem}}" growing="Scroll">
                     {{#each _filteredItems}}
                         {{#if visible}}
                         <ui5-li-custom
@@ -54,7 +54,7 @@
                 <div class="ui5-message-view-details-title">{{_selectedMessage.message.heading}}</div>
                 <div class="ui5-message-view-details-description">{{_selectedMessage.message.description}}</div>
                 <ui5-link href="https://google.bg" target="_blank">
-                    {{_moreInformationTextTranslation}}
+                    {{moreInformationText}}
                 </ui5-link>
             </div>   
         </div>

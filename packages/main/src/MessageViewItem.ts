@@ -13,6 +13,7 @@ import { MessageViewMode } from "./MessageView.js";
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui5-message-view-item/code> component is used to display a single message with status, title, subtitle and description
  *
  * <h3>Usage</h3>
  *
@@ -94,8 +95,8 @@ class MessageViewItem extends UI5Element {
 	@property()
 	type!: string;
 
-	onDetailsClose() {
-		this.fireEvent("view-change", { mode: MessageViewMode.List });
+	onViewChange(mode: MessageViewMode) {
+		this.fireEvent("view-change", { item: this, mode }, false, true);
 	}
 }
 

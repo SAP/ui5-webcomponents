@@ -6,16 +6,64 @@ describe("MessageView general interaction", () => {
     });
 
     it("Segmented button should shown correct count of any item type", async () => {
-        assert.ok(true);
+        // Arrange
+        const messageView = await browser.$("#mv2");
+        const headerButtons = await messageView.shadow$$(
+            "ui5-segmented-button-item"
+        );
+
+        // Assert
+        assert.strictEqual(headerButtons.length, 3);
+
+        assert.strictEqual(await headerButtons[0].getText(), "All");
+        assert.strictEqual(await headerButtons[1].getText(), "1");
+        assert.strictEqual(await headerButtons[2].getText(), "1");
     });
 
     it("Clicking on an item should navigate to details page", async () => {
-        const messageView = await browser.$("#mv3");
-        let firstMessage = await messageView.shadow$(".ui5-list-custom");
-        assert.ok(true);
+        // Arrange
+        const messageView = await browser.$("#mv2");
+
+        assert.ok(
+            await messageView.shadow$(".ui5-message-view-list").isDisplayed()
+        );
+        assert.notOk(
+            await messageView.shadow$(".ui5-message-view-details").isDisplayed()
+        );
+
+        const items = await messageView.shadow$$("ui5-li-custom");
+        assert.strictEqual(items.length, 2);
+
+        // Act
+        await items[0].click();
+
+        // Assert
+        assert.notOk(
+            await messageView.shadow$(".ui5-message-view-list").isDisplayed()
+        );
+        assert.ok(
+            await messageView.shadow$(".ui5-message-view-details").isDisplayed()
+        );
     });
 
     it("Clicking back should navigate to list view", async () => {
-        assert.ok(true);
+        // Arrange
+        const messageView = await browser.$("#mv2");
+        const btnBack = await browser.$("#btnBack2");
+
+        // Act
+        // Execute in async block because the button is enabled by listening to message view events that should happen beforehand
+        await browser.executeAsync(async (btnBack, done) => {
+            await btnBack.click();
+            done();
+        }, btnBack);
+
+        // Assert
+        assert.ok(
+            await messageView.shadow$(".ui5-message-view-list").isDisplayed()
+        );
+        assert.notOk(
+            await messageView.shadow$(".ui5-message-view-details").isDisplayed()
+        );
     });
 });

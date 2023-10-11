@@ -27,9 +27,28 @@
                 width: 100%;
             }
 
-            ui5-dialog::part(content),
+            ui5-dialog{
+                max-width: 500px;
+                max-height: 450px;
+            }
+
+         
             ui5-dialog::part(header){
                 padding:0.5rem;
+            } 
+            ui5-dialog::part(content){
+                padding:0 0.5rem;
+            }
+            .disabled{
+                display: none;
+                visibility: hidden;
+            }
+            .active{
+                display: inline-block;
+                visibility: visible;
+            }
+            .dialogTitle {
+                line-height: 2.25rem;
             }
         </style>
          <!-- <link rel="stylesheet" type="text/css" href="./styles/MessageView.css"> -->
@@ -70,8 +89,8 @@
             <ui5-button id="dialogOpener">Messages</ui5-button>
             <ui5-dialog id="dialog" accessibleName="Messages" stretch="false">
                 <ui5-bar slot="header" design="Header">
-                    <ui5-button id="btnBack" design="Transparent" slot="startContent" icon="navigation-left-arrow"></ui5-button>
-                    Messages
+                    <ui5-button id="btnBack1" design="Transparent" slot="startContent" icon="navigation-left-arrow" class="disabled"></ui5-button>
+                     <span class="dialogTitle">Messages </span>
                 </ui5-bar>
                 <ui5-message-view id="mv1">
                     <ui5-message-view-item
@@ -124,15 +143,20 @@
                 });
             })
 
-            var dialogBackButton = document.getElementById("btnBack");
+            var dialogBackButton = document.getElementById("btnBack1");
                
             dialogBackButton.onclick = () => {
                 mv1.closeSelectedMessage();
             }
+            mv1.addEventListener("view-change", (e) => {
+                dialogBackButton.disabled = e.detail.mode === "list";
+                dialogBackButton.className = e.detail.mode === "list" ? "disabled" : "active";
+            })
         </script>
 
         <article>
             <h3>MessageView with 2 message types</h3>
+            <ui5-button id="btnBack2">Close Details</ui5-button>
             <ui5-message-view id="mv2">
                 <ui5-message-view-item
                     heading="Warning message item"
@@ -146,9 +170,21 @@
                 ></ui5-message-view-item>
             </ui5-message-view>
         </article>
+        <script>
+            var closeButton = document.getElementById("btnBack2");
+            
+            window.addEventListener("load", () => closeButton.disabled = !mv2.hasSelectedMessage );
+            mv2.addEventListener("view-change", (e) => {
+                closeButton.disabled = e.detail.mode === "list";
+            });
+            closeButton.addEventListener("click",() => {
+               mv2.closeSelectedMessage();
+            });
+        </script>
 
         <article>
             <h3>MessageView with 1 message type</h3>
+            <ui5-link id="linkBack">Back</ui5-link>
             <ui5-message-view id="mv3">
                 <ui5-message-view-item
                     heading="Error message"
@@ -164,6 +200,17 @@
                 ></ui5-message-view-item>
             </ui5-message-view>
         </article>
+
+        <script>
+            var linkBack = document.getElementById("linkBack");
+            window.addEventListener("load", () => {
+                linkBack.disabled = !mv3.hasSelectedMessage;
+            })
+            mv3.addEventListener("view-change", (e) => {
+                linkBack.disabled = e.detail.mode === "list";
+            });
+            linkBack.addEventListener("click", () => mv3.closeSelectedMessage());
+       </script>
 
         <article>
             <h3>MessageView with one message types</h3>

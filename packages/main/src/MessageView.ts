@@ -5,8 +5,8 @@ import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import litRender from "@ui5/webcomponents-base/dist/renderer/LitRenderer.js";
 import Integer from "@ui5/webcomponents-base/dist/types/Integer.js";
-import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
+import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import SegmentedButton, { SegmentedButtonSelectionChangeEventDetail } from "./SegmentedButton.js";
 import MessageViewItem from "./MessageViewItem.js";
 import ListItemType from "./types/ListItemType.js";
@@ -22,7 +22,6 @@ import {
 } from "./generated/i18n/i18n-defaults.js";
 import List from "./List.js";
 import Icon from "./Icon.js";
-import Dialog from "./Dialog.js";
 
 enum MessageType {
 	Error = "Error",
@@ -46,8 +45,9 @@ enum DesignClassesMapping {
 }
 
 enum MessageViewMode {
+	// eslint-disable-next-line @typescript-eslint/no-shadow
 	List = "list",
-	Details = "details"
+	Details = "details",
 }
 
 type MessageItem = {
@@ -63,8 +63,14 @@ type MessageItem = {
  *
  * <h3 class="comment-api-title">Overview</h3>
  *
+ * The <code>ui5-message-view</code> component is used to display a summarized list of different types of messages (error, warning, success, and information messages).
  *
  * <h3>Usage</h3>
+ *
+ * You can use the message view to display messages that are not related to form or table fields.
+ * These messages are triggered in response to a user action.
+ * Although the message view can be embedded within various controls, we recommend that you use it only within a dialog.
+ * Use the message view if you want to display multiple messages triggered by an action within a disruptive dialog.
  *
  * For the <code>message-view</code>
  * <h3>ES6 Module Import</h3>
@@ -90,10 +96,10 @@ type MessageItem = {
 /**
  * Fired when an item is being clicked.
  *
- * @event sap.ui.webc.main.MessageView#message-view-item-click
+ * @event sap.ui.webc.main.MessageView#item-click
  * @public
  */
-@event("message-view-item-click", {
+@event("item-click", {
 	detail: {
 		item: { type: HTMLElement },
 	},
@@ -142,7 +148,7 @@ class MessageView extends UI5Element {
 
 	constructor() {
 		super();
-
+		this._selctedMessagePosition = 0;
 		this._messages = [];
 	}
 
@@ -161,6 +167,30 @@ class MessageView extends UI5Element {
 
 		if (this._messages.length === 1) {
 			this._selctedMessagePosition = 1;
+		}
+	}
+
+	closeSelectedMessage() {
+		if (this.hasSelectedMessage) {
+			this._selectedMessage.message.onViewChange(MessageViewMode.List);
+		}
+		this._selctedMessagePosition = 0;
+	}
+
+	_filterByMessageType(e: CustomEvent<SegmentedButtonSelectionChangeEventDetail>) {
+		if (e.detail.selectedItems && e.detail.selectedItems.length) {
+			this._selectedMessageType = e.detail.selectedItems[0].id;
+		}
+	}
+
+	_selectListItem(e: any) {
+		const item = e.detail.item;
+		this.fireEvent("item-click", { item });
+
+		this._selctedMessagePosition = item.position ? item.position : 0;
+
+		if (this._selectedMessage) {
+			this._selectedMessage.message.onViewChange(MessageViewMode.Details);
 		}
 	}
 
@@ -184,13 +214,10 @@ class MessageView extends UI5Element {
 	}
 
 	get hasSelectedMessage() {
-		if (!this._messages.length) {
-			return false;
-		}
 		return this._selctedMessagePosition > 0;
 	}
 
-	get _moreInformationTextTranslation() {
+	get moreInformationText() {
 		return MessageView.i18nBundle.getText(MESSAGE_VIEW_MORE_INFORMATION);
 	}
 
@@ -201,44 +228,12 @@ class MessageView extends UI5Element {
 		return this._messages;
 	}
 
-	get _isSingleMessage() {
-		return this._messages && this._messages.length === 1;
-	}
-
 	get _hasHeaderButtons() {
 		return this._messages.map(m => m.message.type).filter((type, idx, self) => self.indexOf(type) === idx).length > 1;
 	}
 
 	get _selectedMessage() {
 		return this._messages[this._selctedMessagePosition - 1];
-	}
-
-	isMessageDetailsOpen() {
-		return this.hasSelectedMessage;
-	}
-
-	closeSelectedMessage() {
-		if (this._selectedMessage) {
-			this._selectedMessage.message.fireEvent("view-change", { mode: MessageViewMode.List, item: this._selectedMessage });
-		}
-		this._selctedMessagePosition = 0;
-	}
-
-	_filterByMessageType(e: CustomEvent<SegmentedButtonSelectionChangeEventDetail>) {
-		if (e.detail.selectedItems && e.detail.selectedItems.length) {
-			this._selectedMessageType = e.detail.selectedItems[0].id;
-		}
-	}
-
-	_selectListItem(e: any) {
-		const item = e.detail.item;
-		this.fireEvent("message-view-item-click", { item });
-
-		this._selctedMessagePosition = item.position ? item.position : 0;
-
-		if (this._selectedMessage) {
-			this._selectedMessage.message.fireEvent("view-change", { mode: MessageViewMode.Details, item: this._selectedMessage });
-		}
 	}
 }
 
