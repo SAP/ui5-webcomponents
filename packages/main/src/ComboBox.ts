@@ -227,6 +227,17 @@ class ComboBox extends UI5Element {
 	value!: string;
 
 	/**
+	 * Defines whether the value will be autocompleted to match an item
+	 *
+	 * @type {boolean}
+	 * @name sap.ui.webc.main.ComboBox.prototype.noTypeahead
+	 * @defaultvalue false
+	 * @public
+	 */
+	@property({ type: Boolean })
+	noTypeahead!: boolean;
+
+	/**
 	 * Defines the "live" value of the component.
 	 * <br><br>
 	 * <b>Note:</b> If we have an item e.g. "Bulgaria", "B" is typed, "ulgaria" is typed ahead, value will be "Bulgaria", filterValue will be "B".
@@ -656,7 +667,7 @@ class ComboBox extends UI5Element {
 			"historyUndo",
 		];
 
-		return !allowedEventTypes.includes(eventType);
+		return !this.noTypeahead && !allowedEventTypes.includes(eventType);
 	}
 
 	_startsWithMatchingItems(str: string): Array<IComboBoxItem> {
