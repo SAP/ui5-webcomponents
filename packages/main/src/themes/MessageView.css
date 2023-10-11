@@ -6,6 +6,28 @@ ui5-li-custom::part(native-li) {
     padding: 0;
 }
 
+ui5-icon.information,
+.information:not([pressed])::part(icon){
+	color: var(--sapNeutralColor);
+}
+
+ui5-icon.success,
+.success:not([pressed])::part(icon){
+	color: var(--sapPositiveColor);
+}
+
+ui5-icon.error,
+.error:not([pressed])::part(icon){
+	color: var(--sapNegativeColor);
+}
+
+ui5-icon.warning,
+.warning:not([pressed])::part(icon){
+	color: var(--sapCriticalColor);
+}
+
+
+/* List */
 .ui5-message-view-list-header{
 	padding: 0.5rem 0;
 	height: var(--_ui5_bar_base_height);
@@ -13,39 +35,6 @@ ui5-li-custom::part(native-li) {
 	box-shadow: var(--sapContent_HeaderShadow);
 }
 
-ui5-icon.information,
-.information:not([pressed])::part(icon), 
-.information ui5-icon{
-	color: var(--sapNeutralColor);
-}
-
-ui5-icon.success,
-.success:not([pressed])::part(icon),
-.success ui5-icon,
-.ui5-message-view-list-item-icon--success{
-	color: var(--sapPositiveColor);
-}
-
-ui5-icon.error,
-.error:not([pressed])::part(icon),
-.error ui5-icon,
-.ui5-message-view-list-item-icon--error{
-	color: var(--sapNegativeColor);
-}
-
-ui5-icon.warning,
-.warning:not([pressed])::part(icon),
-.warning ui5-icon,
-.ui5-message-view-list-item-icon--warning {
-	color: var(--sapCriticalColor);
-}
-
-.ui5-message-view-list-item-icon-wrapper ui5-icon{
-	width: 1rem; 
-	height: 1rem;
-}
-
-/* List */
 .ui5-message-view-list-item {
 	display: flex; 
 	flex: 1 1 auto;
@@ -64,6 +53,11 @@ ui5-icon.warning,
 	display: flex; 
 	align-items: center; 
 	justify-content: center;
+}
+
+.ui5-message-view-list-item-icon-wrapper ui5-icon{
+	width: 1rem; 
+	height: 1rem;
 }
 
 .ui5-message-view-list-item-content {

@@ -5,15 +5,15 @@
            {{#if _hasHeaderButtons}}
             <div class="ui5-message-view-list-header">
                <ui5-segmented-button @ui5-selection-change="{{_filterByMessageType}}" class="ui5-message-view-header-buttons">
-                        <ui5-segmented-button-item .id="">All</ui5-segmented-button-item>
-                        {{#each messageItemsByType}}
-                            <ui5-segmented-button-item
-                                class="{{messageDesign}}"
-                                icon="{{messageIcon}}"
-                                .id="{{messageType}}"
-                                ?pressed="{{pressed}}">{{messageCount}}
-                            </ui5-segmented-button-item>
-                        {{/each}}
+                    <ui5-segmented-button-item .id="">All</ui5-segmented-button-item>
+                    {{#each messageItemsByType}}
+                        <ui5-segmented-button-item
+                            class="{{messageDesign}}"
+                            icon="{{messageIcon}}"
+                            .id="{{messageType}}"
+                            ?pressed="{{pressed}}">{{messageCount}}
+                        </ui5-segmented-button-item>
+                    {{/each}}
                </ui5-segmented-button>
            </div> 
            {{/if}}
