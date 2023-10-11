@@ -196,7 +196,7 @@ class RatingIndicator extends UI5Element {
 	 * @public
 	 * @since 1.19.0
 	 */
-	@property({ defaultValue: "" })
+	@property()
 	tooltip!: string;
 
 	/**
