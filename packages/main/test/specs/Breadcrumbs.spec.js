@@ -354,4 +354,12 @@ describe("Breadcrumbs general interaction", () => {
 		assert.strictEqual(await eventResult.getText(), 'CTRL:' + await link.getText(), "label for pressed link is correct");
 	});
 
+	it("Doesn't go in an endless rerendering cycle, when width is just enough", async () => {
+		const breadcrumbs = await browser.$("#breadcrumbsWithStyleWidth");
+
+		await breadcrumbs.setAttribute("style", "width: 191px");
+
+		assert.strictEqual(await breadcrumbs.getProperty("_overflowSize"), 1, "Max stack of calling not hit for invalidation of control");
+	});
+
 });

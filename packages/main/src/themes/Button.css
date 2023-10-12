@@ -221,7 +221,7 @@ bdi {
 	border-color: var(--sapButton_Emphasized_BorderColor);
 	border-width: var(--_ui5_button_emphasized_border_width);
 	color: var(--sapButton_Emphasized_TextColor);
-	font-weight: var(--_ui5_button_emphasized_font_weight);
+	font-weight: var(--sapButton_Emphasized_FontWeight);
 }
 
 /*The ui5_hovered class is set by FileUploader to indicate hover state of the control*/

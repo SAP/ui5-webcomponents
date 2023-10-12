@@ -3,6 +3,46 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.18.1-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0...v1.18.1-rc.0) (2023-10-05)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.18.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.2...v1.18.0) (2023-10-02)
+
+**Note:** Version bump only for package @ui5/webcomponents-fiori
+
+
+
+
+
+# [1.18.0-rc.2](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.1...v1.18.0-rc.2) (2023-09-28)
+
+
+### Bug Fixes
+
+* **ui5-media-gallery:** added new horizon theme parameters ([#7575](https://github.com/SAP/ui5-webcomponents/issues/7575)) ([25dbb4b](https://github.com/SAP/ui5-webcomponents/commit/25dbb4bd79890143021b9ecd3033665ea82cd6fa))
+
+
+
+
+
+# [1.18.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.18.0-rc.0...v1.18.0-rc.1) (2023-09-21)
+
+
+### Bug Fixes
+
+* **ui5-dialog:** fix background and shadow of slotted ui5-bar ([#7421](https://github.com/SAP/ui5-webcomponents/issues/7421)) ([2746460](https://github.com/SAP/ui5-webcomponents/commit/2746460ebd0d6517e8eedadde30b74e424c17a85)), closes [#7418](https://github.com/SAP/ui5-webcomponents/issues/7418)
+* **ui5-upload-collection-item:** align thumbnail to top ([#7582](https://github.com/SAP/ui5-webcomponents/issues/7582)) ([edeab49](https://github.com/SAP/ui5-webcomponents/commit/edeab49e3f7b63b3aee358983ea1fb9ff586ea3c)), closes [#7551](https://github.com/SAP/ui5-webcomponents/issues/7551)
+* **ui5-upload-collеction:** align buttons to avoid extra space when size is small ([#7491](https://github.com/SAP/ui5-webcomponents/issues/7491)) ([6594cd5](https://github.com/SAP/ui5-webcomponents/commit/6594cd5df91f31f31efc740846670df4a1c1933d))
+
+
+
+
+
 # [1.18.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.17.0...v1.18.0-rc.0) (2023-09-07)
 
 

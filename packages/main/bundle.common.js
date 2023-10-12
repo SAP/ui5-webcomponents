@@ -84,6 +84,7 @@ import TimeSelection from "./dist/TimeSelection.js";
 import TimePicker from "./dist/TimePicker.js";
 import TimePickerClock from "./dist/TimePickerClock.js";
 import TimeSelectionClocks from "./dist/TimeSelectionClocks.js";
+import TimeSelectionInputs from "./dist/TimeSelectionInputs.js";
 import Title from "./dist/Title.js";
 import Toast from "./dist/Toast.js";
 import ToggleButton from "./dist/ToggleButton.js";

@@ -469,7 +469,7 @@ class TabContainer extends UI5Element {
 	_setItemsPrivateProperties(items: Array<ITab>) {
 		// set real dom ref to all items, then return only the tabs for further processing
 		const allTabs = items.filter(item => {
-			item._getElementInStrip = () => this.getDomRef()!.querySelector(`#${item._id}`);
+			item._getElementInStrip = () => this.getDomRef()!.querySelector(`[id="${item._id}"]`);
 			return !item.isSeparator;
 		});
 

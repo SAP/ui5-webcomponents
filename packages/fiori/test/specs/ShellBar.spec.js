@@ -21,7 +21,7 @@ const getCustomActionProp = async (id, pos, prop) => {
 }
 
 describe("Component Behavior", () => {
-	before(async () => {
+	beforeEach(async () => {
 		await browser.url(`test/pages/ShellBar.html`);
 	});
 
@@ -38,8 +38,7 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests acc default roles", async () => {
-			let sb = await browser.$("#sbAcc");
-
+			const sb = await browser.$("#sbAcc");
 			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
 
 			// assert
@@ -48,8 +47,7 @@ describe("Component Behavior", () => {
 		});
 
 		it("tests acc custom roles", async () => {
-			let sb = await browser.$("#sbAccRoles");
-
+			const sb = await browser.$("#sbAccRoles");
 			const logoDOM = await sb.shadow$(".ui5-shellbar-logo");
 
 			// assertHANDLE_RESIZE_DEBOUNCE_RATE_WAIT
@@ -69,7 +67,7 @@ describe("Component Behavior", () => {
 	describe("ui5-shellbar menu", () => {
 		it("tests close on content click", async () => {
 			const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+			const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 			const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
 			const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
 
@@ -79,7 +77,6 @@ describe("Component Behavior", () => {
 			assert.strictEqual(await menuPopover.getProperty("opened"), false, "Count property propagates to ui5-button");
 		});
 	});
-
 
 	describe("ui5-shellbar-item", async () => {
 		it("tests the stable-dom-ref attribute", async () => {
@@ -321,13 +318,13 @@ describe("Component Behavior", () => {
 	describe("Events", () => {
 
 		describe("Big screen", () => {
-			before(async () => {
+			beforeEach(async () => {
 				await browser.setWindowSize(1920, 1080);
 			});
 
 			it("tests opening of menu", async () => {
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
 
 				await primaryTitle.click();
@@ -339,8 +336,6 @@ describe("Component Behavior", () => {
 				const input = await browser.$("#press-input");
 
 				await notificationsIcon.click();
-
-
 				assert.strictEqual(await input.getValue(), "Notifications", "Input value is set by click event of Notifications icon");
 			});
 
@@ -378,7 +373,7 @@ describe("Component Behavior", () => {
 
 			it("tests menuItemClick event", async () => {
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
 				const firstMenuItem = await menuPopover.$("ui5-list > ui5-li");
 				const secondMenuItem = await menuPopover.$("ui5-list > ui5-li:nth-child(2)");
@@ -390,6 +385,9 @@ describe("Component Behavior", () => {
 
 				assert.strictEqual(await input.getValue(), "Application 1", "Input value is set by click event of the first menu item");
 				assert.strictEqual(await inputData.getValue(), "key1", "The user defined attributes are available.");
+
+				await input.setProperty("value", "");
+				await inputData.setProperty("value", "");
 
 				await primaryTitle.click();
 				await secondMenuItem.click();
@@ -424,7 +422,7 @@ describe("Component Behavior", () => {
 		});
 
 		describe("Small screen", () => {
-			before(async () => {
+			beforeEach(async () => {
 				await browser.setWindowSize(510, 1080);
 			});
 
@@ -439,7 +437,7 @@ describe("Component Behavior", () => {
 
 			it("tests opening of menu", async () => {
 				const primaryTitle = await browser.$("#shellbar").shadow$(".ui5-shellbar-menu-button");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const menuPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-menu-popover");
 
 				await primaryTitle.click();
@@ -448,7 +446,7 @@ describe("Component Behavior", () => {
 
 			it("tests notificationsClick event", async () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const notificationListItem = await overflowPopover.$("ui5-list ui5-li:nth-child(4)");
 				const input = await browser.$("#press-input");
@@ -470,7 +468,7 @@ describe("Component Behavior", () => {
 
 			it("tests productSwitchClick event", async () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const productSwitchIcon = await overflowPopover.$("ui5-list ui5-li:nth-child(5)");
 				const input = await browser.$("#press-input");
@@ -483,7 +481,7 @@ describe("Component Behavior", () => {
 
 			it("tests preventDefault of productSwitchClick event", async () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const productSwitchIcon = await overflowPopover.$("ui5-list ui5-li:nth-child(5)");
 
@@ -497,7 +495,7 @@ describe("Component Behavior", () => {
 				const overflowButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-overflow-button");
 				const searchField = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper");
 				const cancelButton = await browser.$("#shellbar").shadow$(".ui5-shellbar-search-full-width-wrapper .ui5-shellbar-button");
-				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar")
+				const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#shellbar");
 				const overflowPopover = await browser.$(`.${staticAreaItemClassName}`).shadow$(".ui5-shellbar-overflow-popover");
 				const searchListItem = await overflowPopover.$("ui5-list ui5-li:nth-child(1)");
 
