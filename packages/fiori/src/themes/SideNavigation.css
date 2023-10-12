@@ -14,7 +14,7 @@
 	background: var(--sapList_Background);
 	border-inline-end: var(--_ui5_side_navigation_border_right);
 	box-shadow: var(--_ui5_side_navigation_box_shadow);
-	border-radius:  var(--_ui5_side_navigation_border_radius);
+	border-radius: var(--_ui5_side_navigation_border_radius);
 	min-width: var(--_ui5_side_navigation_width);
 	max-width: 100%;
 	width: var(--_ui5_side_navigation_width);
@@ -74,7 +74,6 @@
 	overflow: visible;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 }
 
 .ui5-sn-item {
@@ -92,9 +91,27 @@
 	transition: var(--_ui5_side_navigation_item_transition);
 }
 
-/* borders are drawn using a pseudo element.
-in some themes, the border is drawn only on the bottom.
-in high contrast themes the border is on all sides and there is extra border on hover */
+.ui5-sn-item:focus {
+	outline: none;
+}
+
+.ui5-sn-item:focus::after {
+	border: var(--sapContent_FocusWidth) var(--sapContent_FocusStyle) var(--sapContent_FocusColor);
+	position: absolute;
+	content: "";
+	inset: var(--_ui5_side_navigation_item_focus_border_offset);
+	z-index: 2;
+	pointer-events: none;
+	border-radius: var(--_ui5_side_navigation_item_focus_border_radius);
+}
+
+.ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:focus::before {
+	border: var(--_ui5_side_navigation_selected_and_focused_border_style_color);
+}
+
+	/* borders are drawn using a pseudo element.
+	in some themes, the border is drawn only on the bottom.
+	in high contrast themes the border is on all sides and there is extra border on hover */
 .ui5-sn-item::before {
 	content: "";
 	position: absolute;
@@ -104,6 +121,40 @@ in high contrast themes the border is on all sides and there is extra border on 
 .ui5-sn-item.ui5-sn-item-disabled {
 	opacity: var(--sapContent_DisabledOpacity);
 	cursor: auto;
+}
+
+.ui5-sn-item:not(.ui5-sn-item-disabled):hover {
+	background: var(--sapList_Hover_Background);
+}
+
+.ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected {
+	background: var(--sapList_SelectionBackgroundColor);
+}
+
+.ui5-sn-item:not(.ui5-sn-item-disabled):active .ui5-sn-item-text {
+	color: var(--sapList_Active_TextColor);
+}
+
+.ui5-sn-item:not(.ui5-sn-item-disabled):active [ui5-icon] {
+	color: var(--sapList_Active_TextColor);
+}
+
+.ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:hover {
+	background: var(--sapList_Hover_SelectionBackground);
+}
+
+.ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:active,
+.ui5-sn-item:not(.ui5-sn-item-disabled):active {
+	background: var(--sapList_Active_Background);
+}
+
+.ui5-sn-item::before {
+	border: var(--_ui5_side_navigation_group_border_style_color);
+	border-width: var(--_ui5_side_navigation_group_border_width);
+}
+
+.ui5-sn-collapsed .ui5-sn-item::before {
+	border-width: 0;
 }
 
 .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected::before {
@@ -116,22 +167,14 @@ in high contrast themes the border is on all sides and there is extra border on 
 	border-width: var(--_ui5_side_navigation_hover_border_width);
 }
 
-.ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected:focus::before {
-	border: var(--_ui5_side_navigation_selected_and_focused_border_style_color);
-}
-
-.ui5-sn-item::before {
-	border: var(--_ui5_side_navigation_group_border_style_color);
-	border-width: var(--_ui5_side_navigation_group_border_width);
-}
-
-.ui5-sn-collapsed .ui5-sn-item::before {
-	border-width: var(--_ui5_side_navigation_collapsed_group_border_width);
-}
-
 .ui5-sn-item.ui5-sn-item-level2::before {
 	border: var(--_ui5_side_navigation_item_border_style_color);
 	border-width: var(--_ui5_side_navigation_item_border_width);
+}
+
+.ui5-sn-collapsed .ui5-sn-item:not(.ui5-sn-item-disabled).ui5-sn-item-selected::before {
+	background: var(--_ui5_side_navigation_collapsed_selected_item_background);
+	border-radius: var(--_ui5_side_navigation_item_border_radius);
 }
 
 .ui5-sn-item-icon {
@@ -148,7 +191,6 @@ in high contrast themes the border is on all sides and there is extra border on 
 
 .ui5-sn-collapsed .ui5-sn-list .ui5-sn-item {
 	justify-content: center;
-	min-height: var(--_ui5_side_navigation_item_height) + var(--_ui5_side_navigation_item_bottom_margin);
 }
 
 .ui5-sn-collapsed .ui5-sn-list .ui5-sn-item-text {
@@ -159,8 +201,8 @@ in high contrast themes the border is on all sides and there is extra border on 
 	display: none;
 }
 
-.ui5-sn-item-group .ui5-sn-item {
-	padding-inline-start: 1rem;
+.ui5-sn-item-level2 {
+	padding-inline-start: var(--_ui5_side_navigation_group_icon_width);
 }
 
 .ui5-sn-item-text {
