@@ -22,7 +22,7 @@ const loadThemeBase = async (theme: string) => {
 
 	const cssData = await getThemeProperties(BASE_THEME_PACKAGE, theme);
 	if (cssData) {
-		createOrUpdateStyle(cssData, "data-ui5-theme-properties", BASE_THEME_PACKAGE);
+		createOrUpdateStyle(cssData, "data-ui5-theme-properties", BASE_THEME_PACKAGE, theme);
 	}
 };
 
@@ -40,7 +40,7 @@ const loadComponentPackages = async (theme: string) => {
 
 		const cssData = await getThemeProperties(packageName, theme);
 		if (cssData) {
-			createOrUpdateStyle(cssData, `data-ui5-component-properties-${getCurrentRuntimeIndex()}`, packageName);
+			createOrUpdateStyle(cssData, `data-ui5-component-properties-${getCurrentRuntimeIndex()}`, packageName, theme);
 		}
 	});
 
