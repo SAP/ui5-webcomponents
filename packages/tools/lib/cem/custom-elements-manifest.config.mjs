@@ -1,11 +1,24 @@
 import processEvent from "./event.mjs";
-import { getDeprecatedStatus, getSinceStatus, getPrivacyStatus, getType, getReference, validateJSDocComment } from "./utils.mjs";
+import {
+	getDeprecatedStatus,
+	getSinceStatus,
+	getPrivacyStatus,
+	getType,
+	getReference,
+	validateJSDocComment,
+	findDecorator,
+	findAllDecorators,
+	hasTag,
+	findTag,
+	findAllTags
+} from "./utils.mjs";
 import { parse } from "comment-parser";
+
 
 function processClass(ts, classNode, moduleDoc) {
 	const className = classNode?.name?.text;
 	const currClass = moduleDoc?.declarations?.find(declaration => declaration?.name === className);
-	const currClassJSdoc = classNode?.jsDoc?.[0] || classNode?.jsDoc?.find(comment => comment.tags?.some(tag => tag.tagName?.text === "class"));
+	const currClassJSdoc = classNode?.jsDoc?.[0] || classNode?.jsDoc?.find(jsDoc => hasTag(jsDoc, "class"));
 
 	if (!currClassJSdoc) {
 		return;
@@ -13,7 +26,7 @@ function processClass(ts, classNode, moduleDoc) {
 
 	validateJSDocComment("class", currClassJSdoc, classNode)
 
-	const customElementDecorator = classNode?.decorators?.find(decorator => decorator?.expression?.expression?.text === "customElement");
+	const customElementDecorator = findDecorator(classNode, "customElement");
 
 	if (customElementDecorator) {
 		const decoratorArg = customElementDecorator.expression?.arguments[0];
@@ -25,31 +38,31 @@ function processClass(ts, classNode, moduleDoc) {
 			}
 		}
 
-		currClass._ui5abstract = currClassJSdoc?.tags?.some(tag => tag.tagName?.text === "abstract");
+		currClass._ui5abstract = hasTag(currClassJSdoc, "abstract")
 	}
 
-	const hasSuperclass = currClassJSdoc?.tags?.some(tag => tag.kind === ts?.SyntaxKind?.JSDocAugmentsTag);
+	const hasSuperclass = hasTag(currClassJSdoc, "extends")
 
 	if (hasSuperclass) {
 		const parsedJsDoc = parse(currClassJSdoc?.getText())[0];
-		const superclassTag = parsedJsDoc?.tags?.find(tag => tag.tag === "extends");
+		const superclassTag = findTag(parsedJsDoc, "extends", true);
 
 		currClass.superclass = getReference(ts, superclassTag.name, classNode)
 	}
 
 	currClass.kind = "class";
-	const slotTag = currClassJSdoc?.tags?.some(tag => tag.tagName?.text === "slot");
+	const slotTag = hasTag(currClassJSdoc, "slot");
 	currClass.deprecated = getDeprecatedStatus(ts, currClassJSdoc);
 	currClass._ui5since = getSinceStatus(ts, currClassJSdoc);
 	currClass.privacy = getPrivacyStatus(ts, currClassJSdoc);
 	currClass._ui5reference = getReference(ts, className, classNode);
-	currClass.description = currClassJSdoc?.tags?.find(tag => tag.kind === ts?.SyntaxKind?.JSDocClassTag)?.comment;
-	currClass._ui5implements = currClassJSdoc?.tags?.filter(tag => tag.tagName?.text === "implements")
+	currClass.description = findTag(currClassJSdoc, "class")?.comment;
+	currClass._ui5implements = findAllTags(currClassJSdoc, "implements")
 		.map(tag => getReference(ts, tag, classNode));
 
 	if (slotTag && currClass.slots) {
 		const parsedJsDoc = parse(currClassJSdoc?.getText())[0];
-		const slotTag = parsedJsDoc?.tags?.find(tag => tag.tag === "slot");
+		const slotTag = findTag(parsedJsDoc, "slot", true);
 
 		currClass.slots[0].type = getType(ts, slotTag.type, classNode);
 	}
@@ -67,17 +80,8 @@ function processClass(ts, classNode, moduleDoc) {
 		member._ui5since = getSinceStatus(ts, classNodeMemberJSdoc);
 
 		if (member.kind === "field") {
-			const type = classNodeMemberJSdoc?.tags?.find(tag => tag.kind === ts?.SyntaxKind?.JSDocTypeTag)
-
-			if (!!type) {
-				member.type = getType(ts, type, classNode);
-			}
-
-			const slotDecorator = classNodeMember?.decorators?.find(decorator => decorator?.expression?.expression?.text === "slot");
-
-			if (member.readonly) {
-				delete member.return;
-			}
+			const slotDecorator = findDecorator(classNodeMember, "slot");
+			validateJSDocComment(slotDecorator ? "slot" : "field", classNodeMemberJSdoc, classNodeMember);
 
 			if (slotDecorator) {
 				if (!currClass.slots) {
@@ -86,39 +90,45 @@ function processClass(ts, classNode, moduleDoc) {
 
 				const slot = currClass.members.splice(i, 1)[0];
 				const defaultProperty = slotDecorator.expression?.arguments?.[0]?.properties?.find(property => property.name.text === "default");
-				delete slot.kind;
 
 				if (defaultProperty && defaultProperty.initializer?.kind === ts.SyntaxKind.TrueKeyword) {
 					slot.name = "default";
 				}
 
+				delete slot.kind;
+
 				currClass.slots.push(slot);
 				i--;
-
-				validateJSDocComment("slot", classNodeMemberJSdoc, classNodeMember)
 			} else {
-				validateJSDocComment("field", classNodeMemberJSdoc,classNodeMember)
+				const type = findTag(classNodeMemberJSdoc, "type");
+
+				if (!!type) {
+					member.type = getType(ts, type, classNode);
+				}
+
+				if (member.readonly) {
+					delete member.return;
+				}
 			}
 		} else if (member.kind === "method") {
+			validateJSDocComment("method", classNodeMemberJSdoc, classNodeMember)
+
 			member.parameters?.forEach(param => {
-				param.privacy = classNodeMemberJSdoc.tags?.some(tag => tag.name?.text === param.name) ? "public" : "private";
+				param.privacy = hasTag(classNodeMemberJSdoc, param.name) ? "public" : "private";
 				if (param.type?.text) {
 					param.type = getType(ts, param.type?.text, classNode);
 				}
 			})
 
 			if (member.return?.type?.text) {
-				member.return.description = classNodeMember.jsDoc?.[0]?.tags?.find(tag => tag.tagName?.text === "returns")?.comment
+				member.return.description = findTag(classNodeMemberJSdoc, "returns")?.comment
 				member.return.type = getType(ts, member.return?.type?.text, classNode)
 			}
-
-			validateJSDocComment("method", classNodeMemberJSdoc, classNodeMember)
 		}
 	}
 
-	currClass.events = classNode?.decorators
-		?.filter(decorator => decorator?.expression?.expression?.text === "event")
-		.map(event => processEvent(ts, event, classNode));
+	currClass.events = findAllDecorators(classNode, "event")
+		?.map(event => processEvent(ts, event, classNode));
 }
 
 function processInterface(ts, interfaceNode, moduleDoc) {
@@ -236,6 +246,7 @@ const processPublicAPI = object => {
 
 export default {
 	/** Globs to analyze */
+	// globs: ["src/Button.ts"],
 	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
 	outdir: 'dist',
 	plugins: [

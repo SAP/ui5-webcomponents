@@ -1,5 +1,13 @@
 import { parse } from "comment-parser";
-import { getPrivacyStatus, getDeprecatedStatus, getSinceStatus, getType, validateJSDocComment } from "./utils.mjs";
+import {
+	getPrivacyStatus,
+	getDeprecatedStatus,
+	getSinceStatus,
+	getType,
+	validateJSDocComment,
+	hasTag,
+	findTag,
+} from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
 
@@ -40,13 +48,13 @@ function processEvent(ts, event, classNode) {
 
 		validateJSDocComment("event", parsedComment, event?.expression?.arguments?.[0]?.text)
 
-		const deprecatedTag = parsedComment?.tags?.find(tag => tag?.tag === "deprecated");
-		const privacy = parsedComment?.tags?.find(tag => ["private", "public", "protected"].includes(tag?.tag))?.tag || "private";
-		const sinceTag = parsedComment?.tags?.find(tag => tag?.tag === "since");
-		const commentParams = parsedComment?.tags?.filter(tag => tag?.tag === "param") || [];
-		const allowPreventDefault = !!parsedComment?.tags?.some(tag => tag?.tag === "allowPreventDefault");
+		const deprecatedTag = findTag(parsedComment, "deprecated", true)
+		const privacy = findTag(parsedComment, ["public", "private", "protected"], true)?.tag || "private";
+		const sinceTag = findTag(parsedComment, "since", true);
+		const commentParams = findTag(parsedComment, "param", true);
+		const allowPreventDefault = hasTag(parsedComment, "allowPreventDefault", true);
 		const description = parsedComment?.description;
-		const native = !!parsedComment?.tags?.some(tag => tag?.tag === "native") ? "Event" : "CustomEvent";
+		const native = hasTag(parsedComment, "native", true) ? "Event" : "CustomEvent";
 		const decoratorParams = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
 
 		result.description = description;

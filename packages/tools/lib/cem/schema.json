@@ -110,7 +110,9 @@
             },
             "required": [
                 "kind",
-                "name"
+                "name",
+                "privacy",
+                "_ui5reference"
             ],
             "type": "object"
         },
@@ -175,7 +177,9 @@
             },
             "required": [
                 "kind",
-                "name"
+                "name",
+                "privacy",
+                "_ui5reference"
             ],
             "type": "object"
         },
@@ -233,7 +237,9 @@
             },
             "required": [
                 "kind",
-                "name"
+                "name",
+                "privacy",
+                "_ui5reference"
             ],
             "type": "object"
         },
@@ -293,7 +299,11 @@
             },
             "required": [
                 "kind",
-                "name"
+                "name",
+                "privacy",
+                "default",
+                "type",
+                "_ui5reference"
             ],
             "type": "object"
         },
@@ -365,7 +375,10 @@
             },
             "required": [
                 "kind",
-                "name"
+                "name",
+                "privacy",
+                "return",
+                "_ui5reference"
             ],
             "type": "object"
         },
@@ -562,7 +575,9 @@
             "required": [
                 "customElement",
                 "kind",
-                "name"
+                "name",
+                "privacy",
+                "_ui5reference"
             ],
             "type": "object"
         },
@@ -814,7 +829,8 @@
             },
             "required": [
                 "name",
-                "type"
+                "type",
+                "privacy"
             ],
             "type": "object"
         },
@@ -1138,7 +1154,9 @@
                 }
             },
             "required": [
-                "name"
+                "name",
+                "privacy",
+                "type"
             ],
             "type": "object"
         },
@@ -1207,7 +1225,9 @@
                 }
             },
             "required": [
-                "name"
+                "name",
+                "privacy",
+                "type"
             ],
             "type": "object"
         },
