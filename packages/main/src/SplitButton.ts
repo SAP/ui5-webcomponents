@@ -13,6 +13,8 @@ import {
 	isUpAlt,
 	isF4,
 	isShift,
+	isTabNext,
+	isTabPrevious,
 } from "@ui5/webcomponents-base/dist/Keys.js";
 import { getI18nBundle } from "@ui5/webcomponents-base/dist/i18nBundle.js";
 import type I18nBundle from "@ui5/webcomponents-base/dist/i18nBundle.js";
@@ -139,6 +141,7 @@ class SplitButton extends UI5Element {
 	 * @name sap.ui.webc.main.SplitButton.prototype.arrowButtonActive
 	 * @defaultvalue false
 	 * @public
+	 * @since 1.19.0
 	 */
 	@property({ type: Boolean })
 	arrowButtonActive!: boolean;
@@ -255,6 +258,7 @@ class SplitButton extends UI5Element {
 	text!: Array<Node>;
 
 	_textButtonPress: { handleEvent: () => void, passive: boolean };
+	_isDefaultActionPressed = false;
 
 	static i18nBundle: I18nBundle;
 
@@ -281,7 +285,6 @@ class SplitButton extends UI5Element {
 	 * Function that makes sure the focus is properly managed.
 	 *
 	 * @private
-	 * @returns {void}
 	 */
 	_manageFocus(button?: Button | SplitButton) {
 		const buttons: Array<Button | SplitButton> = [this.textButton!, this.arrowButton!, this];
@@ -341,10 +344,17 @@ class SplitButton extends UI5Element {
 			this._handleArrowButtonAction(e);
 		} else if (this._isDefaultAction(e)) {
 			this._handleDefaultAction(e);
+			this._isDefaultActionPressed = true;
 		}
 
 		if (this._spacePressed && this._isShiftOrEscape(e)) {
 			this._handleShiftOrEscapePressed();
+		}
+
+		// Handles button freeze issue when pressing Enter/Space and navigating with Tab/Shift+Tab simultaneously.
+		if (this._isDefaultActionPressed && (isTabNext(e) || isTabPrevious(e))) {
+			this.arrowButtonActive = false;
+			this._textButtonActive = false;
 		}
 
 		this._setTabIndexValue();
@@ -354,7 +364,9 @@ class SplitButton extends UI5Element {
 		if (this._isArrowKeyAction(e)) {
 			e.preventDefault();
 			this.arrowButtonActive = false;
+			this._textButtonActive = false;
 		} else if (this._isDefaultAction(e)) {
+			this._isDefaultActionPressed = false;
 			this._textButtonActive = false;
 			this.arrowButtonActive = false;
 			if (isSpace(e)) {
@@ -389,18 +401,17 @@ class SplitButton extends UI5Element {
 	}
 
 	_setTabIndexValue() {
-		const textButton = this.textButton,
-			arrowButton = this.arrowButton,
-			buttonsAction = (textButton && (textButton.focused || textButton.active))
-						 || (arrowButton && (arrowButton.focused || arrowButton.active));
+		this._tabIndex = this.disabled ? "-1" : "0";
 
-		this._tabIndex = this.disabled || buttonsAction ? "-1" : "0";
+		if (this._tabIndex === "-1" && (this.textButton?.focused || this.arrowButton?.focused)) {
+			this._tabIndex = "0";
+		}
 	}
 
 	/**
 	 * Checks if the pressed key is an arrow key.
 	 *
-	 * @param e - keyboard event
+	 * @param {KeyboardEvent} e - keyboard event
 	 * @returns {boolean}
 	 * @private
 	 */
@@ -411,7 +422,7 @@ class SplitButton extends UI5Element {
 	/**
 	 * Checks if the pressed key is a default action key (Space or Enter).
 	 *
-	 * @param e - keyboard event
+	 * @param {KeyboardEvent} e - keyboard event
 	 * @returns {boolean}
 	 * @private
 	 */
@@ -422,7 +433,7 @@ class SplitButton extends UI5Element {
 	/**
 	 * Checks if the pressed key is an escape key or shift key.
 	 *
-	 * @param e - keyboard event
+	 * @param {KeyboardEvent} e - keyboard event
 	 * @returns {boolean}
 	 * @private
 	 */
@@ -432,7 +443,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Handles the click event and the focus on the arrow button.
-	 * @param e - keyboard event
+	 * @param {KeyboardEvent} e - keyboard event
 	 * @private
 	 */
 	_handleArrowButtonAction(e: KeyboardEvent) {
@@ -447,7 +458,7 @@ class SplitButton extends UI5Element {
 
 	/**
 	 * Handles the default action and the active state of the respective button.
-	 * @param e - keyboard event
+	 * @param {KeyboardEvent} e - keyboard event
 	 * @private
 	 */
 	_handleDefaultAction(e: KeyboardEvent) {
