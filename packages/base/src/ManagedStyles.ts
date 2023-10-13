@@ -9,7 +9,14 @@ const getStyleId = (name: string, value: string) => {
 	return value ? `${name}|${value}` : name;
 };
 
-const createStyle = (data: StyleData, name: string, value = "", theme = undefined) => {
+const shouldUpdate = (runtimeIndex: string | undefined) => {
+	if (runtimeIndex === undefined) {
+		return true;
+	}
+	return compareRuntimes(getCurrentRuntimeIndex(), parseInt(runtimeIndex)) === 1; // 1 means the current is newer, 0 means the same, -1 means the resource's runtime is newer
+};
+
+const createStyle = (data: StyleData, name: string, value = "", theme: string | undefined = undefined) => {
 	const content = typeof data === "string" ? data : data.content;
 	const currentRuntimeIndex = getCurrentRuntimeIndex();
 
@@ -42,14 +49,7 @@ const createStyle = (data: StyleData, name: string, value = "", theme = undefine
 	}
 };
 
-const shouldUpdate = (runtimeIndex: string | undefined) => {
-	if (runtimeIndex === undefined) {
-		return true;
-	}
-	return compareRuntimes(getCurrentRuntimeIndex(), parseInt(runtimeIndex)) === 1; // 1 means the current is newer, 0 means the same, -1 means the resource's runtime is newer
-};
-
-const updateStyle = (data: StyleData, name: string, value = "", theme = undefined) => {
+const updateStyle = (data: StyleData, name: string, value = "", theme: string | undefined = undefined) => {
 	const content = typeof data === "string" ? data : data.content;
 	const currentRuntimeIndex = getCurrentRuntimeIndex();
 
@@ -129,7 +129,7 @@ const removeStyle = (name: string, value = "") => {
 	}
 };
 
-const createOrUpdateStyle = (data: StyleData, name: string, value = "", theme = undefined) => {
+const createOrUpdateStyle = (data: StyleData, name: string, value = "", theme: string | undefined = undefined) => {
 	if (hasStyle(name, value)) {
 		updateStyle(data, name, value, theme);
 	} else {
