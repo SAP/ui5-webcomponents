@@ -56,3 +56,18 @@ CalendarTypes.args = {
 	primaryCalendarType: CalendarType.Japanese,
 	secondaryCalendarType: CalendarType.Islamic,
 };
+
+export const CalendarWithLegend: StoryFn = () => html`
+	<ui5-calendar
+		selection-mode="${CalendarSelectionMode.Single}"
+		primary-calendar-type="${CalendarType.Gregorian}"
+		secondary-calendar-type="${CalendarType.Islamic}"
+	>
+	</ui5-calendar>
+
+	<ui5-calendar-legend>
+		<ui5-cal-legend-standard-item type="Today">Today</ui5-cal-legend-standard-item>
+		<ui5-cal-legend-standard-item type="NonWorking">Non-Working Day</ui5-cal-legend-standard-item>
+		<ui5-cal-legend-standard-item type="Selected">Selected Day</ui5-cal-legend-standard-item>
+	</ui5-calendar-legend>
+`;

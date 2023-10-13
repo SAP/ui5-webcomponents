@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Calendar Playground</title>
+
+	<script>
+		// delete Document.prototype.adoptedStyleSheets;
+	</script>
+
+	<script data-ui5-config type="application/json">
+		{
+			"language": "EN"
+		}
+	</script>
+
+	<script src="../../bundle.esm.js" type="module"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="./styles/Calendar.css">
+
+</head>
+<body class="calendar1auto">
+
+	<ui5-title level="H3">Calendar Legend with Standard Calendar Legend Items</ui5-title>
+
+	<ui5-calendar></ui5-calendar>
+
+	<ui5-calendar-legend id="calendarLegend">
+		<ui5-cal-legend-standard-item type="Today">Today</ui5-cal-legend-standard-item>
+		<ui5-cal-legend-standard-item type="Selected">Selected Day</ui5-cal-legend-standard-item>
+		<ui5-cal-legend-standard-item type="Working">Working Day</ui5-cal-legend-standard-item>
+		<ui5-cal-legend-standard-item type="NonWorking">Non-working day</ui5-cal-legend-standard-item>
+	</ui5-calendar-legend>
+
+</body>
+
+</html>

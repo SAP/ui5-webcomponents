@@ -1,0 +1,12 @@
+.ui5-calendar-legend-root {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	padding: var(--_ui5-calendar-legend-root-padding);
+	margin: 0.5rem 0; 
+	max-width: var(--_ui5-calendar-legend-root-width);
+	background-color: var(--sapList_Background);
+}

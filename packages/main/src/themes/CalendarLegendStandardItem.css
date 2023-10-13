@@ -1,0 +1,55 @@
+.ui5-cal-legend-standard-item-root {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 7.5rem;
+	gap: var(--_ui5-cal-legend-standard-item-root-gap);
+	vertical-align: middle;
+	white-space: pre-line;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	cursor: default;
+}
+
+.ui5-cal-legend-standard-item-box {
+	display: inline-block;
+	vertical-align: top;
+	box-sizing: border-box;
+	height: 1rem;
+	width: 1rem;
+	margin: var(--_ui5_cal-legend-standard-item-box-margin);
+}
+
+.ui5-cal-legend-standard-item-text {
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	color: var(--sapContent_LabelColor);
+	font-weight: normal;
+	font-family: var(--sapFontFamily);
+	font-size: var(--sapFontSmallSize);
+	vertical-align: middle;
+	white-space: pre-line;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	cursor: default;
+}
+
+:host([type="Today"]) .ui5-cal-legend-standard-item-box {
+	border-color: var(--sapLegend_CurrentDateTime);
+	border: 0.125rem solid var(--sapLegend_CurrentDateTime);
+}
+
+:host([type="Selected"]) .ui5-cal-legend-standard-item-box {
+	background: var(--sapContent_Selected_Background);
+	border: 0.0625rem solid var(--sapContent_FocusColor);
+}
+
+:host([type="Working"]) .ui5-cal-legend-standard-item-box {
+	background: var(--sapLegend_WorkingBackground);
+	border: 0.0625rem solid #758ca4;
+}
+
+:host([type="NonWorking"]) .ui5-cal-legend-standard-item-box {
+	background: var(--sapLegend_NonWorkingBackground);
+	border: 0.0625rem solid #758ca4;
+}
