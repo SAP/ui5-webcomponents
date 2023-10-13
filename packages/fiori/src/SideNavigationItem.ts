@@ -65,7 +65,7 @@ class SideNavigationItem extends SideNavigationItemBase {
 	items!: Array<SideNavigationSubItem>;
 
 	get _ariaHasPopup() {
-		if ((this.parentNode as SideNavigation).collapsed && this.items.length) {
+		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
 			return HasPopup.Tree;
 		}
 
@@ -94,6 +94,20 @@ class SideNavigationItem extends SideNavigationItemBase {
 
 	getDomRef() {
 		return this.parentElement!.shadowRoot!.querySelector(`#${this._id}`) as HTMLElement;
+	}
+
+	get classesArray() {
+		const classes = super.classesArray;
+
+		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
+			classes.push("ui5-sn-item-with-expander");
+		}
+
+		if (this._fixed) {
+			classes.push("ui5-sn-item-fixed");
+		}
+
+		return classes;
 	}
 
 	_onToggleClick = () => {

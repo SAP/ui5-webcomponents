@@ -189,6 +189,10 @@
 	height: 0.875rem;
 }
 
+.ui5-sn-item-fixed .ui5-sn-item-toggle-icon {
+	display: none;
+}
+
 .ui5-sn-collapsed .ui5-sn-list .ui5-sn-item {
 	justify-content: center;
 }
@@ -215,4 +219,26 @@
 
 .ui5-sn-item-level1 .ui5-sn-item-text {
 	font-weight: var(--_ui5_side_navigation_group_text_weight);
+}
+
+.ui5-sn-item-with-expander .ui5-sn-item-icon::after {
+	display: var(--_ui5_side_navigation_triangle_display);
+	content: "";
+	width: 0;
+	height: 0;
+	border-left: 0.375rem solid transparent;
+	border-bottom: 0.375rem solid var(--_ui5_side_navigation_triangle_color);
+	position: absolute;
+	right: 0.1875rem;
+	bottom: 0.125rem;
+}
+
+.ui5-sn-item-selection-icon {
+	display: none;
+	height: 0.5rem;
+	color: var(--sapList_SelectionBorderColor);
+}
+
+.ui5-sn-item-selected .ui5-sn-item-selection-icon {
+	display: var(--_ui5_side_navigation_selection_indicator_display);
 }

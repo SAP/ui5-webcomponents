@@ -157,7 +157,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.target || undefined;
 	}
 
-	get _classes() {
+	get classesArray() {
 		const classes = [];
 
 		if (this.disabled) {
@@ -168,7 +168,11 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 			classes.push("ui5-sn-item-selected");
 		}
 
-		return classes.join(" ");
+		return classes;
+	}
+
+	get _classes() {
+		return this.classesArray.join(" ");
 	}
 
 	get _ariaCurrent() {
