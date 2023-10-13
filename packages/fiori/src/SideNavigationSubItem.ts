@@ -24,8 +24,28 @@ import SideNavigationItemBase from "./SideNavigationItemBase.js";
  */
 @customElement("ui5-side-navigation-sub-item")
 class SideNavigationSubItem extends SideNavigationItemBase {
-	getDomRef() {
-		return this.parentElement!.parentElement!.shadowRoot!.querySelector(`#${this._id}`) as HTMLElement;
+	get isFixedItem() {
+		return this.parentElement?.slot === "fixedItems";
+	}
+
+	_onkeydown = (e: KeyboardEvent) => {
+		super._onkeydown(e);
+	}
+
+	_onkeyup = (e: KeyboardEvent) => {
+		super._onkeyup(e);
+	}
+
+	_onmousedown = (e: MouseEvent) => {
+		super._onmousedown(e);
+	}
+
+	_onfocusin = (e: FocusEvent) => {
+		super._onfocusin(e);
+	}
+
+	_onclick = () => {
+		super._onclick();
 	}
 }
 

@@ -1,7 +1,10 @@
 import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
+import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
+import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
+import SideNavigation from "./SideNavigation.js";
 
 /**
  * @class
@@ -142,7 +145,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	@property()
 	title!: string;
 
-	@property({ defaultValue: "0", noAttribute: true })
+	@property({ defaultValue: "-1", noAttribute: true })
 	_tabIndex!: string;
 
 	get _tooltip() {
@@ -157,6 +160,10 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		return this.target || undefined;
 	}
 
+	get _selected() {
+		return this.selected;
+	}
+
 	get classesArray() {
 		const classes = [];
 
@@ -164,7 +171,7 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 			classes.push("ui5-sn-item-disabled");
 		}
 
-		if (this.selected) {
+		if (this._selected) {
 			classes.push("ui5-sn-item-selected");
 		}
 
@@ -181,6 +188,76 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		}
 
 		return "page";
+	}
+
+	get _effectiveTabIndex() {
+		if (this.disabled) {
+			return undefined;
+		}
+
+		return this._tabIndex;
+	}
+
+	get sideNavigation() {
+		let parentElement = this.parentElement;
+
+		while (parentElement) {
+			if (parentElement instanceof SideNavigation) {
+				return parentElement;
+			}
+
+			parentElement = parentElement.parentElement;
+		}
+	}
+
+	getDomRef() {
+		return this.sideNavigation?.shadowRoot!.querySelector(`#${this._id}`) as HTMLElement;
+	}
+
+	_onkeydown(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			e.preventDefault();
+		}
+
+		if (isEnter(e)) {
+			this._activate();
+		}
+	}
+
+	_onkeyup(e: KeyboardEvent) {
+		if (isSpace(e)) {
+			this._activate();
+		}
+	}
+
+	_onmousedown(e: MouseEvent) {
+		if (getEventMark(e) === "button") {
+			return;
+		}
+
+		this._activate();
+	}
+
+	_onclick() {
+		this._activate();
+	}
+
+	get isFixedItem() {
+		return true;
+	}
+
+	_onfocusin(e: FocusEvent) {
+		if (e.target !== this.getFocusDomRef()) {
+			return;
+		}
+
+		e.stopPropagation();
+
+		this.sideNavigation?.focusItem(this);
+	}
+
+	_activate() {
+		this.sideNavigation?._selectItem(this);
 	}
 }
 

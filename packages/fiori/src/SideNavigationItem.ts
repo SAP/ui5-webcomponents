@@ -92,10 +92,6 @@ class SideNavigationItem extends SideNavigationItemBase {
 		return this.expanded ? "navigation-down-arrow" : "navigation-right-arrow";
 	}
 
-	getDomRef() {
-		return this.parentElement!.shadowRoot!.querySelector(`#${this._id}`) as HTMLElement;
-	}
-
 	get classesArray() {
 		const classes = super.classesArray;
 
@@ -110,8 +106,40 @@ class SideNavigationItem extends SideNavigationItemBase {
 		return classes;
 	}
 
+	get _selected() {
+		if (this.sideNavigation?.collapsed) {
+			return this.selected || this.items.some(item => item.selected);
+		}
+
+		return this.selected;
+	}
+
+	get isFixedItem() {
+		return this.slot === "fixedItems";
+	}
+
 	_onToggleClick = () => {
 		this.expanded = !this.expanded;
+	}
+
+	_onkeydown = (e: KeyboardEvent) => {
+		super._onkeydown(e);
+	}
+
+	_onkeyup = (e: KeyboardEvent) => {
+		super._onkeyup(e);
+	}
+
+	_onmousedown = (e: MouseEvent) => {
+		super._onmousedown(e);
+	}
+
+	_onfocusin = (e: FocusEvent) => {
+		super._onfocusin(e);
+	}
+
+	_onclick = () => {
+		super._onclick();
 	}
 }
 

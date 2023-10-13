@@ -20,6 +20,7 @@ import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
 import type { TreeItemClickEventDetail } from "@ui5/webcomponents/dist/Tree.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
+import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
 import SideNavigationSubItem from "./SideNavigationSubItem.js";
 import SideNavigationTemplate from "./generated/templates/SideNavigationTemplate.lit.js";
@@ -197,17 +198,25 @@ class SideNavigation extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	fixedItems!: Array<SideNavigationItem>;
 
-	_itemNavigation: ItemNavigation;
+	_flexibleItemNavigation: ItemNavigation;
+
+	_fixedItemNavigation: ItemNavigation;
 
 	static i18nBundle: I18nBundle;
 
 	constructor() {
 		super();
 
-		this._itemNavigation = new ItemNavigation(this, {
+		this._flexibleItemNavigation = new ItemNavigation(this, {
 			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
 			navigationMode: NavigationMode.Vertical,
-			getItemsCallback: () => this.getEnabledItems(),
+			getItemsCallback: () => this.getEnabledFlexibleItems(),
+		});
+
+		this._fixedItemNavigation = new ItemNavigation(this, {
+			skipItemsSize: PAGE_UP_DOWN_SIZE, // PAGE_UP and PAGE_DOWN will skip trough 10 items
+			navigationMode: NavigationMode.Vertical,
+			getItemsCallback: () => this.getEnabledFixedItems(),
 		});
 	}
 
@@ -372,19 +381,60 @@ class SideNavigation extends UI5Element {
 		};
 	}
 
-	getEnabledItems() : Array<ITabbable> {
-		return [];
-		let items = new Array<ITabbable>();
+	getEnabledFixedItems() : Array<ITabbable> {
+		return this.getEnabledItems(this.fixedItems);
+	}
 
-		this.items.forEach(item => {
-			items.push(item);
+	getEnabledFlexibleItems() : Array<ITabbable> {
+		return this.getEnabledItems(this.items);
+	}
 
-			if (!this.collapsed) {
-				items = items.concat(item.items);
+	getEnabledItems(items: Array<SideNavigationItem>) : Array<ITabbable> {
+		let result = new Array<ITabbable>();
+
+		items.forEach(item => {
+			if (!item.disabled) {
+				result.push(item);
+			}
+
+			if (!this.collapsed && item.expanded) {
+				result = result.concat(item.items.filter(el => !el.disabled));
 			}
 		});
 
-		return items;
+		return result;
+	}
+
+	focusItem(item: SideNavigationItemBase) {
+		if (item.isFixedItem) {
+			this._fixedItemNavigation.setCurrentItem(item);
+		} else {
+			this._flexibleItemNavigation.setCurrentItem(item);
+		}
+	}
+
+	_findSelectedItem(items: Array<SideNavigationItem>) : SideNavigationItemBase | null {
+		return items[0];
+	}
+
+	_selectItem(item: SideNavigationItemBase) {
+		if (item.disabled) {
+			return;
+		}
+
+		this._deselectItems(this.items);
+		this._deselectItems(this.fixedItems);
+
+		item.selected = true;
+	}
+
+	_deselectItems(items : Array<SideNavigationItem>) {
+		items.forEach(child => {
+			child.selected = false;
+			child.items.forEach(subChild => {
+				subChild.selected = false;
+			});
+		});
 	}
 
 	_walk(callback: (current: TSideNavigationItem) => void) {
