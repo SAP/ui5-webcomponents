@@ -67,6 +67,10 @@ type MessageButtonDataType = {
 	pressed: boolean
 }
 
+type MessageViewItemClickEventDetail = {
+	item: MessageItem
+}
+
 /**
  * @class
  *
@@ -183,38 +187,39 @@ class MessageView extends UI5Element {
 	*/
 	closeSelectedMessage() {
 		if (this.hasSelectedMessage) {
-			this._selectedMessage.message.onViewChange(MessageViewMode.Messages);
+			this.selectedMessage.message.onViewChange(MessageViewMode.Messages);
 		}
 		this._selectedMessagePosition = 0;
 	}
 
 	/**
+	 * Filters the messages by selected message type
 	 * @private
 	 */
 	_filterByMessageType(e: CustomEvent<SegmentedButtonSelectionChangeEventDetail>) {
 		if (e.detail.selectedItems.length) {
 			this._selectedMessageType = e.detail.selectedItems[0].getAttribute("data-message-type")!;
-		} else {
-			this._selectedMessageType = MessageType.None;
 		}
 	}
 
 	/**
+	 * Selects a message from the list and navigates to message detailed description
+	 * item-click event is fired and view-change event of the underlying message is fired
 	 * @private
 	 */
 	_selectListItem(e: any) {
 		const item = e.detail.item;
-		this.fireEvent("item-click", { item });
+		this.fireEvent<MessageViewItemClickEventDetail>("item-click", { item });
 
 		this._selectedMessagePosition = item.position ? item.position : 0;
 
-		if (this._selectedMessage) {
-			this._selectedMessage.message.onViewChange(MessageViewMode.Details);
+		if (this.selectedMessage) {
+			this.selectedMessage.message.onViewChange(MessageViewMode.Details);
 		}
 	}
 
 	get messageItemsByType() {
-		const result: MessageButtonDataType[] = [];
+		const result: Array<MessageButtonDataType> = [];
 
 		Object.values(MessageType).forEach(mt => {
 			const count = this._messages.filter(i => i.message.type === mt).length;
@@ -240,18 +245,18 @@ class MessageView extends UI5Element {
 		return MessageView.i18nBundle.getText(MESSAGE_VIEW_MORE_INFORMATION);
 	}
 
-	get _filteredItems() {
+	get filteredItems() {
 		if (this._selectedMessageType !== MessageType.None) {
 			this._messages.forEach(item => { item.visible = item.message.type === this._selectedMessageType; });
 		}
 		return this._messages;
 	}
 
-	get _hasHeaderButtons() {
+	get hasHeaderButtons() {
 		return this._messages.map(m => m.message.type).filter((type, idx, self) => self.indexOf(type) === idx).length > 1;
 	}
 
-	get _selectedMessage() {
+	get selectedMessage() {
 		return this._messages[this._selectedMessagePosition - 1];
 	}
 }

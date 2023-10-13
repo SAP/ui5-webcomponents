@@ -5,6 +5,11 @@ import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 
 import { MessageViewMode } from "./MessageView.js";
 
+type MessageViewItemViewChangeEventDetail = {
+	mode: string,
+	item: HTMLElement,
+}
+
 /**
  * @class
  *
@@ -88,7 +93,7 @@ class MessageViewItem extends UI5Element {
 	type!: string;
 
 	onViewChange(mode: MessageViewMode) {
-		this.fireEvent("view-change", { item: this, mode }, false, true);
+		this.fireEvent<MessageViewItemViewChangeEventDetail>("view-change", { item: this, mode }, false, true);
 	}
 }
 

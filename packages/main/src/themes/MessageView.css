@@ -2,26 +2,26 @@
 	display: block;
 }
 
-ui5-li-custom::part(native-li) {
+[ui5-li-custom]::part(native-li) {
 	padding: 0;
 }
 
-ui5-icon.information,
+[ui5-icon].information,
 .information:not([pressed])::part(icon) {
 	color: var(--sapNeutralColor);
 }
 
-ui5-icon.success,
+[ui5-icon].success,
 .success:not([pressed])::part(icon) {
 	color: var(--sapPositiveColor);
 }
 
-ui5-icon.error,
+[ui5-icon].error,
 .error:not([pressed])::part(icon) {
 	color: var(--sapNegativeColor);
 }
 
-ui5-icon.warning,
+[ui5-icon].warning,
 .warning:not([pressed])::part(icon) {
 	color: var(--sapCriticalColor);
 }
@@ -49,8 +49,7 @@ ui5-icon.warning,
 
 .ui5-message-view-list-item-icon-wrapper {
 	width: 3rem;
-	height: inherit;
-	/* by spec it is 2.25rem but it is not reasonable because in single line list the list item height is only 2rem */
+	height: inherit;/* by spec it is 2.25rem but it is not reasonable because in single line list the list item height is only 2rem */
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -104,7 +103,6 @@ ui5-icon.warning,
 	font-weight: var(--sapFontHeaderWeight);
 	color: var(--sapGroup_TitleTextColor);
 	margin-bottom: 1rem;
-
 }
 
 .ui5-message-view-details-description {

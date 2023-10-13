@@ -1,7 +1,7 @@
 <div class="ui5-message-view-root">
     {{#unless hasSelectedMessage}}
         <div class="ui5-message-view-list">
-           {{#if _hasHeaderButtons}}
+           {{#if hasHeaderButtons}}
             <div class="ui5-message-view-list-header">
                <ui5-segmented-button @ui5-selection-change="{{_filterByMessageType}}" class="ui5-message-view-header-buttons">
                     <ui5-segmented-button-item data-message-type="None">All</ui5-segmented-button-item>
@@ -19,7 +19,7 @@
            
             {{#if _messages}}
                 <ui5-list @ui5-item-click="{{_selectListItem}}" growing="Scroll">
-                    {{#each _filteredItems}}
+                    {{#each filteredItems}}
                         {{#if visible}}
                             <ui5-li-custom
                                 type="{{listItemType}}"
@@ -46,12 +46,12 @@
    
     {{#if hasSelectedMessage }}
         <div class="ui5-message-view-details">
-            <span class="ui5-message-view-details-icon-wrapper" ui5-data-icon="{{_selectedMessage.messageIcon}}">
-                <ui5-icon name="{{_selectedMessage.messageIcon}}" class="{{_selectedMessage.messageDesign}}">
+            <span class="ui5-message-view-details-icon-wrapper" ui5-data-icon="{{selectedMessage.messageIcon}}">
+                <ui5-icon name="{{selectedMessage.messageIcon}}" class="{{selectedMessage.messageDesign}}">
             </span>
             <div class="ui5-message-view-details-content">
-                <div class="ui5-message-view-details-title">{{_selectedMessage.message.heading}}</div>
-                <div class="ui5-message-view-details-description">{{_selectedMessage.message.description}}</div>
+                <div class="ui5-message-view-details-title">{{selectedMessage.message.heading}}</div>
+                <div class="ui5-message-view-details-description">{{selectedMessage.message.description}}</div>
                 <ui5-link href="https://google.bg" target="_blank">
                     {{moreInformationText}}
                 </ui5-link>
