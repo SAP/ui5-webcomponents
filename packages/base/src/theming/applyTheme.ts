@@ -40,7 +40,7 @@ const loadComponentPackages = async (theme: string) => {
 
 		const cssData = await getThemeProperties(packageName, theme);
 		if (cssData) {
-			createOrUpdateStyle(cssData, `data-ui5-component-properties-${getCurrentRuntimeIndex()}`, packageName, theme);
+			createOrUpdateStyle(cssData, `data-ui5-component-properties-${getCurrentRuntimeIndex()}`, packageName);
 		}
 	});
 
