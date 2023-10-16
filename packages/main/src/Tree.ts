@@ -198,18 +198,6 @@ class Tree extends UI5Element {
 	 * Defines the mode of the component. Since the tree uses a <code>ui5-list</code> to display its structure,
 	 * the tree modes are exactly the same as the list modes, and are all applicable.
 	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 *
-	 * <ul>
-	 * <li><code>None</code></li>
-	 * <li><code>SingleSelect</code></li>
-	 * <li><code>SingleSelectBegin</code></li>
-	 * <li><code>SingleSelectEnd</code></li>
-	 * <li><code>MultiSelect</code></li>
-	 * <li><code>Delete</code></li>
-	 * </ul>
-	 *
 	 * @public
 	 * @type {sap.ui.webc.main.types.ListMode}
 	 * @name sap.ui.webc.main.Tree.prototype.mode

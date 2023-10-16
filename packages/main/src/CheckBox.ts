@@ -222,17 +222,6 @@ class CheckBox extends UI5Element implements IFormElement {
 	/**
 	 * Defines the value state of the component.
 	 *
-	 * <br><br>
-	 * <b>Note:</b>
-	 *
-	 * <ul>
-	 * <li><code>Warning</code></li>
-	 * <li><code>Error</code></li>
-	 * <li><code>None</code>(default)</li>
-	 * <li><code>Success</code></li>
-	 * <li><code>Information</code></li>
-	 * </ul>
-	 *
 	 * @type {sap.ui.webc.base.types.ValueState}
 	 * @name sap.ui.webc.main.CheckBox.prototype.valueState
 	 * @defaultvalue "None"
