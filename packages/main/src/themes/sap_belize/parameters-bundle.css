@@ -4,6 +4,8 @@
 @import "./BrowserScrollbar-parameters.css";
 @import "../base/BusyIndicator-parameters.css";
 @import "../base/Button-parameters.css";
+@import "../base/CalendarLegend-parameters.css";
+@import "../base/CalendarLegendStandardItem-parameters.css";
 @import "../base/DatePicker-parameters.css";
 @import "./DayPicker-parameters.css";
 @import "./Dialog-parameters.css";

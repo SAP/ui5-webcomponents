@@ -57,7 +57,7 @@ class CalendarLegendStandardItem extends UI5Element {
 	get effectiveText() {
 		const typeExists = `${this.type}` in CalendarLegendStandardItemsType;
 
-		if ((typeExists && this.textContent === "") || (this.textContent === "" && typeExists)) {
+		if ((typeExists && this.textContent === "")) {
 			return this.type;
 		}
 

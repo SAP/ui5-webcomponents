@@ -3,7 +3,6 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	width: 7.5rem;
-	gap: var(--_ui5-cal-legend-standard-item-root-gap);
 	vertical-align: middle;
 	white-space: pre-line;
 	text-overflow: ellipsis;

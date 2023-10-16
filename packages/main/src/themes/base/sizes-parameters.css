@@ -167,7 +167,6 @@
 
 	/* Calendar Legend Standard Item */
 	--_ui5_cal-legend-standard-item-box-margin: 0.125rem 0.5rem 0.125rem 0.125rem;
-	--_ui5-cal-legend-standard-item-root-gap: 0;
 
 	/* CheckBox */
 	--_ui5_checkbox_root_side_padding: var(--_ui5_checkbox_wrapped_focus_padding);
