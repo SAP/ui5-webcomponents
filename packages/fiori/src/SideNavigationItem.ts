@@ -2,6 +2,7 @@ import customElement from "@ui5/webcomponents-base/dist/decorators/customElement
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import slot from "@ui5/webcomponents-base/dist/decorators/slot.js";
 import HasPopup from "@ui5/webcomponents/dist/types/HasPopup.js";
+import { isLeft, isRight } from "@ui5/webcomponents-base/dist/Keys.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import type SideNavigation from "./SideNavigation.js";
 import type SideNavigationSubItem from "./SideNavigationSubItem.js";
@@ -123,15 +124,21 @@ class SideNavigationItem extends SideNavigationItemBase {
 	}
 
 	_onkeydown = (e: KeyboardEvent) => {
+		if (isLeft(e)) {
+			this.expanded = false;
+			return;
+		}
+
+		if (isRight(e)) {
+			this.expanded = true;
+			return;
+		}
+
 		super._onkeydown(e);
 	}
 
 	_onkeyup = (e: KeyboardEvent) => {
 		super._onkeyup(e);
-	}
-
-	_onmousedown = (e: MouseEvent) => {
-		super._onmousedown(e);
 	}
 
 	_onfocusin = (e: FocusEvent) => {

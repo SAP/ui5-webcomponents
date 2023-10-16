@@ -2,7 +2,6 @@ import UI5Element from "@ui5/webcomponents-base/dist/UI5Element.js";
 import event from "@ui5/webcomponents-base/dist/decorators/event.js";
 import property from "@ui5/webcomponents-base/dist/decorators/property.js";
 import { isSpace, isEnter } from "@ui5/webcomponents-base/dist/Keys.js";
-import { getEventMark } from "@ui5/webcomponents-base/dist/MarkedEvents.js";
 import type { ITabbable } from "@ui5/webcomponents-base/dist/delegate/ItemNavigation.js";
 import SideNavigation from "./SideNavigation.js";
 
@@ -230,14 +229,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		}
 	}
 
-	_onmousedown(e: MouseEvent) {
-		if (getEventMark(e) === "button") {
-			return;
-		}
-
-		this._activate();
-	}
-
 	_onclick() {
 		this._activate();
 	}
@@ -257,7 +248,8 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	_activate() {
-		this.sideNavigation?._selectItem(this);
+		this.fireEvent("click");
+		this.sideNavigation?._handleItemClick(this);
 	}
 }
 

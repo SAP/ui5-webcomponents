@@ -260,9 +260,9 @@ class SideNavigation extends UI5Element {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
-		const tree = await this.getPickerTree();
-		const index = this._popoverContents.selectedSubItemIndex;
-		tree.focusItemByIndex(index);
+		// const tree = await this.getPickerTree();
+		// const index = this._popoverContents.selectedSubItemIndex;
+		// tree.focusItemByIndex(index);
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -285,36 +285,6 @@ class SideNavigation extends UI5Element {
 		}
 
 		return SideNavigation.i18nBundle.getText(key);
-	}
-
-	handleTreeItemClick(e: CustomEvent<InnerTreeClickEventDetail>) {
-		const treeItem = e.detail.item;
-		const item = treeItem.associatedItem;
-
-		if (item instanceof SideNavigationItem && !item.wholeItemToggleable) {
-			item.fireEvent("click");
-		} else if (item instanceof SideNavigationSubItem) {
-			item.fireEvent("click");
-		} else {
-			item.expanded = !item.expanded;
-		}
-
-		if (item.selected && !this.collapsed) {
-			return;
-		}
-
-		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
-			this._buildPopoverContent(item);
-
-			let tree = this._itemsTree;
-			if (tree !== e.target as Tree) {
-				tree = this._fixedItemsTree;
-			}
-
-			this.openPicker(tree!._getListItemForTreeItem(treeItem)!);
-		} else if (!item.selected) {
-			this._setSelectedItem(item);
-		}
 	}
 
 	handleInnerSelectionChange(e: CustomEvent<InnerSideNavigationSelectionChangeEventDetail>) {
@@ -408,6 +378,7 @@ class SideNavigation extends UI5Element {
 	focusItem(item: SideNavigationItemBase) {
 		if (item.isFixedItem) {
 			this._fixedItemNavigation.setCurrentItem(item);
+			this._flexibleItemNavigation.setCurrentItem(this.items[0]);
 		} else {
 			this._flexibleItemNavigation.setCurrentItem(item);
 		}
@@ -417,24 +388,34 @@ class SideNavigation extends UI5Element {
 		return items[0];
 	}
 
+	_handleItemClick(item: SideNavigationItemBase) {
+		if (item.selected && !this.collapsed) {
+			return;
+		}
+
+		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
+			this._buildPopoverContent(item);
+
+			this.openPicker(item.getFocusDomRef() as HTMLElement);
+		} else if (!item.selected) {
+			this._setSelectedItem(item);
+		}
+	}
+
 	_selectItem(item: SideNavigationItemBase) {
 		if (item.disabled) {
 			return;
 		}
 
-		this._deselectItems(this.items);
-		this._deselectItems(this.fixedItems);
+		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
+			return;
+		}
+
+		this._walk(current => {
+			current.selected = false;
+		});
 
 		item.selected = true;
-	}
-
-	_deselectItems(items : Array<SideNavigationItem>) {
-		items.forEach(child => {
-			child.selected = false;
-			child.items.forEach(subChild => {
-				subChild.selected = false;
-			});
-		});
 	}
 
 	_walk(callback: (current: TSideNavigationItem) => void) {

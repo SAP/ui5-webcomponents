@@ -36,10 +36,6 @@ class SideNavigationSubItem extends SideNavigationItemBase {
 		super._onkeyup(e);
 	}
 
-	_onmousedown = (e: MouseEvent) => {
-		super._onmousedown(e);
-	}
-
 	_onfocusin = (e: FocusEvent) => {
 		super._onfocusin(e);
 	}
