@@ -18,7 +18,6 @@ import List from "@ui5/webcomponents/dist/List.js";
 import StandardListItem from "@ui5/webcomponents/dist/StandardListItem.js";
 import Tree from "@ui5/webcomponents/dist/Tree.js";
 import TreeItem from "@ui5/webcomponents/dist/TreeItem.js";
-import type { TreeItemClickEventDetail } from "@ui5/webcomponents/dist/Tree.js";
 import NavigationMode from "@ui5/webcomponents-base/dist/types/NavigationMode.js";
 import SideNavigationItemBase from "./SideNavigationItemBase.js";
 import SideNavigationItem from "./SideNavigationItem.js";
@@ -40,27 +39,20 @@ import SideNavigationPopoverCss from "./generated/themes/SideNavigationPopover.c
 const PAGE_UP_DOWN_SIZE = 10;
 
 type SideNavigationPopoverContents = {
-	mainItem: SideNavigationItem,
-	mainItemSelected: boolean,
-	selectedSubItemIndex: number,
+	item: SideNavigationItem,
 	subItems: Array<SideNavigationSubItem>,
 };
 
-type TSideNavigationItem = SideNavigationItem | SideNavigationSubItem;
-
 type SideNavigationSelectionChangeEventDetail = {
-	item: TSideNavigationItem;
-};
-
-type ItemHasAssociatedItemField = {
-	item: {
-		associatedItem: TSideNavigationItem
-	}
+	item: SideNavigationItemBase;
 };
 
 // used for the inner side navigation used in the SideNavigationPopoverTemplate
-type InnerSideNavigationSelectionChangeEventDetail = SideNavigationSelectionChangeEventDetail & ItemHasAssociatedItemField;
-type InnerTreeClickEventDetail = TreeItemClickEventDetail & ItemHasAssociatedItemField;
+type InnerSideNavigationSelectionChangeEventDetail = {
+	item: {
+		associatedItem: SideNavigationItemBase
+	}
+};
 
 /**
  * @class
@@ -151,12 +143,6 @@ class SideNavigation extends UI5Element {
 	collapsed!: boolean;
 
 	/**
-	 * @private
-	 */
-	@property({ type: Object })
-	_popoverContents!: SideNavigationPopoverContents;
-
-	/**
 	 * Defines the main items of the <code>ui5-side-navigation</code>. Use the <code>ui5-side-navigation-item</code> component
 	 * for the top-level items, and the <code>ui5-side-navigation-sub-item</code> component for second-level items, nested
 	 * inside the items.
@@ -198,9 +184,18 @@ class SideNavigation extends UI5Element {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true })
 	fixedItems!: Array<SideNavigationItem>;
 
+	/**
+	 * @private
+	 */
+	@property({ type: Object })
+	_popoverContents!: SideNavigationPopoverContents;
+
 	_flexibleItemNavigation: ItemNavigation;
 
 	_fixedItemNavigation: ItemNavigation;
+
+	@property({ type: Boolean })
+	_inPopover!: boolean;
 
 	static i18nBundle: I18nBundle;
 
@@ -220,38 +215,9 @@ class SideNavigation extends UI5Element {
 		});
 	}
 
-	get _items() {
-		return this.items.map(this._createTreeItem);
-	}
-
-	get _fixedItems() {
-		return this.fixedItems.map(this._createTreeItem);
-	}
-
-	_createTreeItem = (item: SideNavigationItem): { item: SideNavigationItem, selected: boolean } => {
-		return {
-			item,
-			selected: (item.items.some(subItem => subItem.selected) && this.collapsed) || item.selected,
-		};
-	}
-
-	_setSelectedItem(item: TSideNavigationItem) {
-		if (!this.fireEvent<SideNavigationSelectionChangeEventDetail>("selection-change", { item }, true)) {
-			return;
-		}
-
-		this._walk(current => {
-			current.selected = false;
-		});
-		item.selected = true;
-	}
-
 	_buildPopoverContent(item: SideNavigationItem) {
 		this._popoverContents = {
-			mainItem: item,
-			mainItemSelected: item.selected && !item.items.some(subItem => subItem.selected),
-			// add one as the first item is the main item
-			selectedSubItemIndex: item.items.findIndex(subItem => subItem.selected) + 1,
+			item,
 			subItems: item.items,
 		};
 	}
@@ -260,9 +226,9 @@ class SideNavigation extends UI5Element {
 		// as the tree/list inside the popover is never destroyed,
 		// item navigation index should be managed, because items are
 		// dynamically recreated and tabIndexes are not updated
-		// const tree = await this.getPickerTree();
-		// const index = this._popoverContents.selectedSubItemIndex;
-		// tree.focusItemByIndex(index);
+		const tree = await this.getPickerTree();
+		const selectedItem = tree._findSelectedItem(tree.items);
+		selectedItem.focus();
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -288,15 +254,14 @@ class SideNavigation extends UI5Element {
 	}
 
 	handleInnerSelectionChange(e: CustomEvent<InnerSideNavigationSelectionChangeEventDetail>) {
-		const item = e.detail.item;
-		const { associatedItem } = item;
+		const { associatedItem } = e.detail.item;
 
 		associatedItem.fireEvent("click");
 		if (associatedItem.selected) {
 			return;
 		}
 
-		this._setSelectedItem(associatedItem);
+		this._selectItem(associatedItem);
 		this.closePicker();
 	}
 
@@ -316,8 +281,7 @@ class SideNavigation extends UI5Element {
 
 	async getPickerTree() {
 		const picker = await this.getPicker();
-		const sideNav = picker.querySelector<SideNavigation>("[ui5-side-navigation]")!;
-		return sideNav._itemsTree!;
+		return picker.querySelector<SideNavigation>("[ui5-side-navigation]")!;
 	}
 
 	get hasHeader() {
@@ -332,14 +296,6 @@ class SideNavigation extends UI5Element {
 		return !!this.fixedItems.length;
 	}
 
-	get _itemsTree() {
-		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-items-tree");
-	}
-
-	get _fixedItemsTree() {
-		return this.getDomRef()!.querySelector<Tree>("#ui5-sn-fixed-items-tree");
-	}
-
 	get classes() {
 		return {
 			root: {
@@ -347,6 +303,7 @@ class SideNavigation extends UI5Element {
 				"ui5-sn-tablet": isTablet(),
 				"ui5-sn-combi": isCombi(),
 				"ui5-sn-collapsed": this.collapsed,
+				"ui5-sn-in-popover": this._inPopover,
 			},
 		};
 	}
@@ -378,7 +335,7 @@ class SideNavigation extends UI5Element {
 	focusItem(item: SideNavigationItemBase) {
 		if (item.isFixedItem) {
 			this._fixedItemNavigation.setCurrentItem(item);
-			this._flexibleItemNavigation.setCurrentItem(this.items[0]);
+			// this._flexibleItemNavigation.setCurrentItem(this.items[0]);
 		} else {
 			this._flexibleItemNavigation.setCurrentItem(item);
 		}
@@ -390,6 +347,7 @@ class SideNavigation extends UI5Element {
 
 	_handleItemClick(item: SideNavigationItemBase) {
 		if (item.selected && !this.collapsed) {
+			item.fireEvent("click");
 			return;
 		}
 
@@ -397,8 +355,12 @@ class SideNavigation extends UI5Element {
 			this._buildPopoverContent(item);
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
-		} else if (!item.selected) {
-			this._setSelectedItem(item);
+		} else {
+			item.fireEvent("click");
+
+			if (!item.selected) {
+				this._selectItem(item);
+			}
 		}
 	}
 
@@ -418,7 +380,7 @@ class SideNavigation extends UI5Element {
 		item.selected = true;
 	}
 
-	_walk(callback: (current: TSideNavigationItem) => void) {
+	_walk(callback: (current: SideNavigationItemBase) => void) {
 		this.items.forEach(current => {
 			callback(current);
 

@@ -8,21 +8,21 @@
 	<span id="{{_id}}-sideNavigationPopoverText" class="ui5-hidden-text">{{accSideNavigationPopoverHiddenText}}</span>
 
 	<ui5-side-navigation
+		_in-popover
 		class="ui5-side-navigation-in-popover"
 		@ui5-selection-change="{{handleInnerSelectionChange}}"
 	>
 		<ui5-side-navigation-item
-			title="{{_popoverContents.mainItem._tooltip}}"
-			text="{{_popoverContents.mainItem.text}}"
+			text="{{_popoverContents.item.text}}"
+			?disabled="{{_popoverContents.item.disabled}}"
 			expanded="true"
 			_fixed="true"
-			?selected="{{_popoverContents.mainItem.selected}}"
-			.associatedItem="{{_popoverContents.mainItem}}"
+			?selected="{{_popoverContents.item.selected}}"
+			.associatedItem="{{_popoverContents.item}}"
 		>
-
 		{{#each _popoverContents.subItems}}
 			<ui5-side-navigation-sub-item
-				title="{{this._tooltip}}"
+				?disabled="{{this.disabled}}"
 				text="{{this.text}}"
 				?selected="{{this.selected}}"
 				.associatedItem="{{this}}"

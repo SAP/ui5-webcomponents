@@ -248,7 +248,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	_activate() {
-		this.fireEvent("click");
 		this.sideNavigation?._handleItemClick(this);
 	}
 }

@@ -242,3 +242,12 @@
 .ui5-sn-item-selected .ui5-sn-item-selection-icon {
 	display: var(--_ui5_side_navigation_selection_indicator_display);
 }
+
+.ui5-sn-in-popover .ui5-sn-list {
+	padding: var(--_ui5_side_navigation_parent_popup_padding);
+}
+
+.ui5-sn-in-popover .ui5-sn-item {
+	padding: var(--_ui5_side_navigation_popup_item_padding);
+	width: auto;
+}
