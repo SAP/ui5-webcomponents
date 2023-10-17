@@ -1,6 +1,6 @@
 @import "./InvisibleTextStyles.css";
 @import "./InputIcon.css";
-@import "./InputsValueState.css";
+@import "./InputSharedStyles.css";
 
 :host(:not([hidden])) {
 	display: inline-block;
