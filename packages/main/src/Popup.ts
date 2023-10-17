@@ -282,7 +282,7 @@ abstract class Popup extends UI5Element {
 	}
 
 	_resize() {
-		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
+		this._updateMediaRange();
 	}
 
 	/**
@@ -488,6 +488,10 @@ abstract class Popup extends UI5Element {
 		this.fireEvent("after-open", {}, false, false);
 	}
 
+	_updateMediaRange() {
+		this.mediaRange = MediaRange.getCurrentRange(MediaRange.RANGESETS.RANGE_4STEPS, this.getDomRef()!.offsetWidth);
+	}
+
 	/**
 	 * Adds the popup to the "opened popups registry"
 	 * @protected
@@ -560,6 +564,7 @@ abstract class Popup extends UI5Element {
 	 */
 	_show() {
 		this.style.display = this._displayProp;
+		this._updateMediaRange();
 	}
 
 	/**
