@@ -1,21 +1,29 @@
 import fs from "fs";
 
-const getDeprecatedStatus = (ts, jsdocComment) => {
-    const deprecatedTag = jsdocComment?.tags?.find(tag => tag?.kind === ts?.SyntaxKind?.JSDocDeprecatedTag);
+let JSDocErrors = [];
 
-    return deprecatedTag ? (deprecatedTag.comment || true) : false;
+const getDeprecatedStatus = (jsdocComment) => {
+    const deprecatedTag = findTag(jsdocComment, "deprecated");
+
+    if (deprecatedTag?.name){
+        return  deprecatedTag.description ? `${deprecatedTag.name} ${deprecatedTag.description}`: deprecatedTag.name;
+     }
+
+    return deprecatedTag ? true : false;
 }
 
-const getSinceStatus = (ts, jsdocComment) => {
+const getSinceStatus = (jsdocComment) => {
     const sinceTag = findTag(jsdocComment, "since");
 
-    return sinceTag?.comment;
+    if (sinceTag){
+       return  sinceTag.description ? `${sinceTag.name} ${sinceTag.description}`: sinceTag.name;
+    }
 }
 
-const getPrivacyStatus = (ts, jsdocComment) => {
+const getPrivacyStatus = (jsdocComment) => {
     const privacyTag = findTag(jsdocComment, ["public", "private", "protected"]);
 
-    return privacyTag?.tagName?.text || "private";
+    return privacyTag?.tag || "private";
 }
 
 const findPackageName = (ts, sourceFile, typeName, packageJSON) => {
@@ -66,7 +74,7 @@ const getReference = (ts, type, classNode) => {
 };
 
 const getType = (ts, type, classNode) => {
-    const typeName = typeof type === "string" ? type : type.class?.expression?.text || type.typeExpression?.type?.getText() || type.typeExpression?.type?.elementType?.typeName?.text;
+    const typeName = typeof type === "string" ? type : type.type;
 
     const multiple = typeName.endsWith("[]");
     const name = multiple ? typeName.replace("[]", "") : typeName;
@@ -94,8 +102,8 @@ const allowedTags = {
     interface: [...commonTags],
 }
 
-const tagMatchCallback = (tag, tagName, isParsedComment) => {
-    const currentTagName = isParsedComment ? tag.tagName?.text : tag.tag;
+const tagMatchCallback = (tag, tagName) => {
+    const currentTagName = tag.tag;
 
     return typeof tagName === "string" ? currentTagName === tagName : tagName.includes(currentTagName);
 }
@@ -108,41 +116,82 @@ const findAllDecorators = (node, decoratorName) => {
     return node?.decorators?.filter(decorator => decorator?.expression?.expression?.text === decoratorName) || [];
 }
 
-const hasTag = (jsDoc, tagName, isParsedComment) => {
+const hasTag = (jsDoc, tagName) => {
     if (!jsDoc) {
         return;
     }
 
-    return jsDoc?.tags?.some(tag => tagMatchCallback(tag, tagName, isParsedComment))
+    return jsDoc?.tags?.some(tag => tagMatchCallback(tag, tagName))
 }
 
-const findTag = (jsDoc, tagName, isParsedComment) => {
+const findTag = (jsDoc, tagName) => {
     if (!jsDoc) {
         return;
     }
 
-    return jsDoc?.tags?.find(tag => tagMatchCallback(tag, tagName, isParsedComment))
+    return jsDoc?.tags?.find(tag => tagMatchCallback(tag, tagName))
 }
 
-const findAllTags = (jsDoc, tagName, isParsedComment) => {
+const findAllTags = (jsDoc, tagName) => {
     if (!jsDoc) {
         return [];
     }
 
-    const foundTags = jsDoc?.tags?.filter(tag => tagMatchCallback(tag, tagName, isParsedComment))
+    const foundTags = jsDoc?.tags?.filter(tag => tagMatchCallback(tag, tagName))
 
     return foundTags || [];
 }
 
+const validateJSDocTag = (tag) => {
+    const booleanTags = ["private", "protected", "public", "abstract", "allowPreventDefault", "native"];
+    let tagName = tag.tag;
+
+    if (booleanTags.includes(tag.tag)) {
+        tagName = "boolean";
+    }
+
+    switch (tagName) {
+        case "boolean":
+            return !tag.name && !tag.type && !tag.description;
+        case "deprecated":
+            return !tag.type;
+        case "extends":
+            return !tag.type && tag.name && !tag.description;
+        case "implements":
+            return tag.type && !tag.name && !tag.description;
+        case "slot":
+            return tag.type && tag.name && tag.description;
+        case "csspart":
+            return !tag.type && tag.name && tag.description;
+        case "since":
+            return !tag.type && tag.name;
+        case "returns":
+            return tag.type && tag.name;
+        case "default":
+            return !tag.type;
+        case "class":
+            return !tag.type && !tag.name && tag.description;
+        case "type":
+            return tag.type && !tag.name && !tag.description;
+        default:
+            return false;
+    }
+}
+
 const validateJSDocComment = (fieldType, jsdocComment, node) => {
     return !!jsdocComment?.tags?.every(tag => {
-        if (allowedTags[fieldType]?.includes(fieldType === "event" ? tag.tag : tag.tagName?.text)) {
-            return true;
+        const isValid = allowedTags[fieldType]?.includes(tag.tag) && validateJSDocTag(tag);
+
+        if (!isValid) {
+            JSDocErrors.push(`=== ERROR: Problem found with ${node}'s JSDoc comment: \n\t- @${tag.tag} tag is being used wrong or it's not part of ${fieldType} JSDoc tags`)
         }
 
-        console.log(`=== ERROR: ${fieldType === "event" ? node : node.name?.text} has wrong tags. Following tags are wrong:`)
-        console.log(`         - @${fieldType === "event" ? tag.tag : tag.tagName?.text} is not part of ${fieldType} JSDoc tags`)
+        return !!isValid;
     });
+}
+
+const getJSDocErrors = () => {
+    return JSDocErrors;
 }
 
 export {
@@ -156,5 +205,6 @@ export {
     findAllDecorators,
     hasTag,
     findTag,
-    findAllTags
+    findAllTags,
+    getJSDocErrors,
 }

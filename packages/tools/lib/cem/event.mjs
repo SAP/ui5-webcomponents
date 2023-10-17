@@ -7,27 +7,30 @@ import {
 	validateJSDocComment,
 	hasTag,
 	findTag,
+	findAllTags,
 } from "./utils.mjs";
 
 const jsDocRegExp = /\/\*\*(.|\n)+?\s+\*\//;
 
-const getParams = (ts, decoratorParams, commentParams, classNode) => {
+const getParams = (ts, eventDetails, commentParams, classNode) => {
 	return commentParams?.map(commentParam => {
-		const decoratorParam = decoratorParams?.find(prop => prop?.name?.text === commentParam?.name);
+		const decoratorParam = eventDetails?.find(prop => prop?.name?.text === commentParam?.name);
 
-		if (!decoratorParam) {
+		if (!decoratorParam || !decoratorParam?.jsDoc?.[0]) {
 			return;
 		}
 
-		validateJSDocComment("eventParam", decoratorParam?.jsDoc?.[0], decoratorParam)
+		const decoratorParamParsedComment = parse(decoratorParam?.jsDoc?.[0]?.getText?.())[0];
+
+		validateJSDocComment("eventParam", decoratorParamParsedComment, decoratorParam.name?.text)
 
 		return {
 			type: getType(ts, commentParam?.type, classNode),
 			name: commentParam?.name,
-			privacy: getPrivacyStatus(ts, decoratorParam?.jsDoc?.[0]),
+			privacy: getPrivacyStatus(decoratorParamParsedComment),
 			description: commentParam?.description,
-			_ui5since: getSinceStatus(ts, decoratorParam?.jsDoc?.[0]),
-			deprecated: getDeprecatedStatus(ts, decoratorParam?.jsDoc?.[0]),
+			_ui5since: getSinceStatus(decoratorParamParsedComment),
+			deprecated: getDeprecatedStatus(decoratorParamParsedComment),
 		};
 	}).filter(pair => !!pair);
 };
@@ -43,42 +46,44 @@ function processEvent(ts, event, classNode) {
 
 	const comment = event.getFullText?.().match(jsDocRegExp)?.[0];
 
-	if (comment) {
-		const parsedComment = parse(comment)[0];
+	if (!comment) {
+		return result;
+	}
 
-		validateJSDocComment("event", parsedComment, event?.expression?.arguments?.[0]?.text)
+	const eventParsedComment = parse(comment)[0];
 
-		const deprecatedTag = findTag(parsedComment, "deprecated", true)
-		const privacy = findTag(parsedComment, ["public", "private", "protected"], true)?.tag || "private";
-		const sinceTag = findTag(parsedComment, "since", true);
-		const commentParams = findTag(parsedComment, "param", true);
-		const allowPreventDefault = hasTag(parsedComment, "allowPreventDefault", true);
-		const description = parsedComment?.description;
-		const native = hasTag(parsedComment, "native", true) ? "Event" : "CustomEvent";
-		const decoratorParams = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
+	validateJSDocComment("event", eventParsedComment, event?.expression?.arguments?.[0]?.text)
 
-		result.description = description;
-		result._ui5allowPreventDefault = allowPreventDefault;
+	const deprecatedTag = findTag(eventParsedComment, "deprecated")
+	const privacy = findTag(eventParsedComment, ["public", "private", "protected"])?.tag || "private";
+	const sinceTag = findTag(eventParsedComment, "since");
+	const commentParams = findAllTags(eventParsedComment, "param");
+	const allowPreventDefault = hasTag(eventParsedComment, "allowPreventDefault");
+	const description = eventParsedComment?.description;
+	const native = hasTag(eventParsedComment, "native") ? "Event" : "CustomEvent";
+	const eventDetails = event?.expression?.arguments?.[1]?.properties?.find(prop => prop?.name?.text === "detail")?.initializer?.properties;
 
-		if (native) {
-			result.type = { text: "Event" };
-		}
+	result.description = description;
+	result._ui5allowPreventDefault = allowPreventDefault;
 
-		if (privacy) {
-			result.privacy = privacy;
-		}
+	if (native) {
+		result.type = { text: "Event" };
+	}
 
-		if (deprecatedTag?.name) {
-			result.deprecated = deprecatedTag?.description ? `${deprecatedTag.name} ${deprecatedTag.description}` : deprecatedTag.name;
-		}
+	if (privacy) {
+		result.privacy = privacy;
+	}
 
-		if (sinceTag?.name) {
-			result._ui5since = sinceTag?.description ? `${sinceTag.name} ${sinceTag.description}` : sinceTag.name;
-		}
+	if (deprecatedTag?.name) {
+		result.deprecated = deprecatedTag?.description ? `${deprecatedTag.name} ${deprecatedTag.description}` : deprecatedTag.name;
+	}
 
-		if (commentParams && decoratorParams) {
-			result.params = getParams(ts, decoratorParams, commentParams, classNode);
-		}
+	if (sinceTag?.name) {
+		result._ui5since = sinceTag?.description ? `${sinceTag.name} ${sinceTag.description}` : sinceTag.name;
+	}
+
+	if (commentParams && eventDetails) {
+		result.params = getParams(ts, eventDetails, commentParams, classNode);
 	}
 
 	return result;

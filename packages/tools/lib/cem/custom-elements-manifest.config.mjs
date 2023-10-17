@@ -10,7 +10,8 @@ import {
 	findAllDecorators,
 	hasTag,
 	findTag,
-	findAllTags
+	findAllTags,
+	getJSDocErrors
 } from "./utils.mjs";
 import { parse } from "comment-parser";
 
@@ -18,15 +19,15 @@ import { parse } from "comment-parser";
 function processClass(ts, classNode, moduleDoc) {
 	const className = classNode?.name?.text;
 	const currClass = moduleDoc?.declarations?.find(declaration => declaration?.name === className);
-	const currClassJSdoc = classNode?.jsDoc?.[0] || classNode?.jsDoc?.find(jsDoc => hasTag(jsDoc, "class"));
+	const currClassJSdoc = classNode?.jsDoc?.[0] || classNode?.jsDoc?.find(jsDoc => jsDoc?.[0]?.getText?.()?.includes("@class"));
 
 	if (!currClassJSdoc) {
 		return;
 	}
 
-	validateJSDocComment("class", currClassJSdoc, classNode)
-
 	const customElementDecorator = findDecorator(classNode, "customElement");
+	const classParsedJsDoc = parse(currClassJSdoc?.getText())[0];
+	validateJSDocComment("class", classParsedJsDoc, classNode.name?.text)
 
 	if (customElementDecorator) {
 		const decoratorArg = customElementDecorator.expression?.arguments[0];
@@ -38,31 +39,27 @@ function processClass(ts, classNode, moduleDoc) {
 			}
 		}
 
-		currClass._ui5abstract = hasTag(currClassJSdoc, "abstract")
+		currClass._ui5abstract = hasTag(classParsedJsDoc, "abstract")
 	}
 
-	const hasSuperclass = hasTag(currClassJSdoc, "extends")
-
-	if (hasSuperclass) {
-		const parsedJsDoc = parse(currClassJSdoc?.getText())[0];
-		const superclassTag = findTag(parsedJsDoc, "extends", true);
+	if (hasTag(classParsedJsDoc, "extends")) {
+		const superclassTag = findTag(classParsedJsDoc, "extends");
 
 		currClass.superclass = getReference(ts, superclassTag.name, classNode)
 	}
 
 	currClass.kind = "class";
-	const slotTag = hasTag(currClassJSdoc, "slot");
-	currClass.deprecated = getDeprecatedStatus(ts, currClassJSdoc);
-	currClass._ui5since = getSinceStatus(ts, currClassJSdoc);
-	currClass.privacy = getPrivacyStatus(ts, currClassJSdoc);
+	currClass.deprecated = getDeprecatedStatus(classParsedJsDoc);
+	currClass._ui5since = getSinceStatus(classParsedJsDoc);
+	currClass.privacy = getPrivacyStatus(classParsedJsDoc);
 	currClass._ui5reference = getReference(ts, className, classNode);
 	currClass.description = findTag(currClassJSdoc, "class")?.comment;
-	currClass._ui5implements = findAllTags(currClassJSdoc, "implements")
+
+	currClass._ui5implements = findAllTags(classParsedJsDoc, "implements")
 		.map(tag => getReference(ts, tag, classNode));
 
-	if (slotTag && currClass.slots) {
-		const parsedJsDoc = parse(currClassJSdoc?.getText())[0];
-		const slotTag = findTag(parsedJsDoc, "slot", true);
+	if (hasTag(classParsedJsDoc, "slot") && currClass.slots) {
+		const slotTag = findTag(classParsedJsDoc, "slot");
 
 		currClass.slots[0].type = getType(ts, slotTag.type, classNode);
 	}
@@ -76,12 +73,13 @@ function processClass(ts, classNode, moduleDoc) {
 			continue;
 		}
 
+		const memberParsedJsDoc = parse(classNodeMemberJSdoc?.getText())[0];
 
-		member._ui5since = getSinceStatus(ts, classNodeMemberJSdoc);
+		member._ui5since = getSinceStatus(memberParsedJsDoc);
 
 		if (member.kind === "field") {
 			const slotDecorator = findDecorator(classNodeMember, "slot");
-			validateJSDocComment(slotDecorator ? "slot" : "field", classNodeMemberJSdoc, classNodeMember);
+			validateJSDocComment(slotDecorator ? "slot" : "field", memberParsedJsDoc, classNodeMember.name?.text);
 
 			if (slotDecorator) {
 				if (!currClass.slots) {
@@ -100,10 +98,8 @@ function processClass(ts, classNode, moduleDoc) {
 				currClass.slots.push(slot);
 				i--;
 			} else {
-				const type = findTag(classNodeMemberJSdoc, "type");
-
-				if (!!type) {
-					member.type = getType(ts, type, classNode);
+				if (hasTag(memberParsedJsDoc, "type")) {
+					member.type = getType(ts, findTag(memberParsedJsDoc, "type"), classNode);
 				}
 
 				if (member.readonly) {
@@ -111,17 +107,17 @@ function processClass(ts, classNode, moduleDoc) {
 				}
 			}
 		} else if (member.kind === "method") {
-			validateJSDocComment("method", classNodeMemberJSdoc, classNodeMember)
+			validateJSDocComment("method", memberParsedJsDoc, classNodeMember.name?.text)
 
 			member.parameters?.forEach(param => {
-				param.privacy = hasTag(classNodeMemberJSdoc, param.name) ? "public" : "private";
+				param.privacy = hasTag(memberParsedJsDoc, param.name) ? "public" : "private";
 				if (param.type?.text) {
 					param.type = getType(ts, param.type?.text, classNode);
 				}
 			})
 
 			if (member.return?.type?.text) {
-				member.return.description = findTag(classNodeMemberJSdoc, "returns")?.comment
+				member.return.description = findTag(memberParsedJsDoc, "returns")?.comment
 				member.return.type = getType(ts, member.return?.type?.text, classNode)
 			}
 		}
@@ -139,15 +135,17 @@ function processInterface(ts, interfaceNode, moduleDoc) {
 		return;
 	}
 
-	validateJSDocComment("interface", interfaceJSdoc, interfaceNode)
+	const interfaceParsedJsDoc = parse(interfaceJSdoc?.getText())[0];
+
+	validateJSDocComment("interface", interfaceParsedJsDoc, interfaceNode.name?.text)
 
 	const result = {
 		kind: "interface",
 		name: interfaceName,
-		description: interfaceJSdoc?.comment,
-		privacy: getPrivacyStatus(ts, interfaceJSdoc),
-		_ui5since: getSinceStatus(ts, interfaceJSdoc),
-		deprecated: getDeprecatedStatus(ts, interfaceJSdoc),
+		description: interfaceParsedJsDoc?.comment,
+		privacy: getPrivacyStatus(interfaceParsedJsDoc),
+		_ui5since: getSinceStatus(interfaceParsedJsDoc),
+		deprecated: getDeprecatedStatus(interfaceParsedJsDoc),
 		_ui5reference: getReference(ts, interfaceName, interfaceNode)
 	};
 
@@ -162,30 +160,38 @@ function processEnum(ts, enumNode, moduleDoc) {
 		return;
 	}
 
-	validateJSDocComment("enum", enumJSdoc, enumNode)
+	const enumParsedJsDoc = parse(enumJSdoc?.getText())[0];
+
+	validateJSDocComment("enum", enumParsedJsDoc, enumNode.name?.text)
 
 	const result = {
 		kind: "enum",
 		name: enumName,
 		description: enumJSdoc?.comment,
-		privacy: getPrivacyStatus(ts, enumJSdoc),
-		_ui5since: getSinceStatus(ts, enumJSdoc),
-		deprecated: getDeprecatedStatus(ts, enumJSdoc),
+		privacy: getPrivacyStatus(enumParsedJsDoc),
+		_ui5since: getSinceStatus(enumParsedJsDoc),
+		deprecated: getDeprecatedStatus(enumParsedJsDoc),
 		_ui5reference: getReference(ts, enumName, enumNode)
 	};
 
 	result.members = (enumNode?.members || []).map(member => {
 		const memberJSdoc = member?.jsDoc?.[0];
 
-		validateJSDocComment("enum", memberJSdoc, member)
+		if (!memberJSdoc) {
+			return;
+		}
+
+		const memberParsedJsDoc = parse(memberJSdoc?.getText())[0];
+
+		validateJSDocComment("enum", memberParsedJsDoc, member.name?.text)
 
 		const memberResult = {
 			kind: "field",
 			static: true,
-			privacy: getPrivacyStatus(ts, memberJSdoc),
-			_ui5since: getSinceStatus(ts, memberJSdoc),
+			privacy: getPrivacyStatus(memberParsedJsDoc),
+			_ui5since: getSinceStatus(memberParsedJsDoc),
 			description: memberJSdoc?.comment,
-			deprecated: getDeprecatedStatus(ts, memberJSdoc),
+			deprecated: getDeprecatedStatus(memberParsedJsDoc),
 			name: member.name?.text,
 		};
 
@@ -246,13 +252,12 @@ const processPublicAPI = object => {
 
 export default {
 	/** Globs to analyze */
-	// globs: ["src/Button.ts"],
 	globs: ["src/!(*generated)/*.ts", "src/*.ts"],
 	outdir: 'dist',
 	plugins: [
 		{
 			name: 'my-plugin',
-			analyzePhase({ ts, node, moduleDoc, context }) {
+			analyzePhase({ ts, node, moduleDoc }) {
 				switch (node.kind) {
 					case ts.SyntaxKind.ClassDeclaration:
 						processClass(ts, node, moduleDoc);
@@ -265,7 +270,7 @@ export default {
 						break;
 				}
 			},
-			moduleLinkPhase({ moduleDoc, context }) {
+			moduleLinkPhase({ moduleDoc }) {
 				for (let i = 0; i < moduleDoc.declarations.length; i++) {
 					const shouldRemove = processPublicAPI(moduleDoc.declarations[i])
 
@@ -275,6 +280,15 @@ export default {
 					}
 				}
 			},
+			packageLinkPhase() {
+				const JSDocErrors = getJSDocErrors();
+
+				if (JSDocErrors.length > 0) {
+					console.log(JSDocErrors.join("\n"));
+					console.log(`Invalid JSDoc. ${JSDocErrors.length} were found.`);
+					throw new Error(`Invalid JSDoc.`)
+				}
+			}
 		},
 	],
 };
