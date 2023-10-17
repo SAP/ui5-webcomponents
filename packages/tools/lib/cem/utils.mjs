@@ -135,7 +135,7 @@ const findAllTags = (jsDoc, tagName, isParsedComment) => {
 }
 
 const validateJSDocComment = (fieldType, jsdocComment, node) => {
-    return !!jsdocComment.tags?.every(tag => {
+    return !!jsdocComment?.tags?.every(tag => {
         if (allowedTags[fieldType]?.includes(fieldType === "event" ? tag.tag : tag.tagName?.text)) {
             return true;
         }
