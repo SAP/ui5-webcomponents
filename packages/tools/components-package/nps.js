@@ -63,10 +63,10 @@ const getScripts = (options) => {
 		},
 		typescript: tsCommand,
 		build: {
-			default: "nps prepare lint build.bundle",
+			default: "nps prepare lint build.bundle generateCEM",
 			templates: `mkdirp dist/generated/templates && ${tsCrossEnv} node "${LIB}/hbs2ui5/index.js" -d src/ -o src/generated/templates`,
 			styles: {
-				default: `nps build.styles.themes build.styles.components ${copySrcGenerated} testCEM`,
+				default: `nps build.styles.themes build.styles.components ${copySrcGenerated}`,
 				themes: `node "${LIB}/postcss-p/postcss-p.mjs"`,
 				components: "postcss src/themes/*.css --config config/postcss.components --base src --dir dist/css/", // When updating this, also update the new files script
 			},

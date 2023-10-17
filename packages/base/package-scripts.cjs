@@ -14,7 +14,7 @@ const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-p
 
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
-	testCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+	generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
 	lint: `eslint .`,
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
 	typescript: "tsc",
@@ -31,7 +31,7 @@ const scripts = {
 		},
 	},
 	build: {
-		default: `nps prepare lint build.bundle testCEM`,
+		default: `nps prepare lint build.bundle generateCEM`,
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
