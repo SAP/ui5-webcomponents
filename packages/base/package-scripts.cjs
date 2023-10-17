@@ -14,7 +14,6 @@ const viteConfig = `-c "${require.resolve("@ui5/webcomponents-tools/components-p
 
 const scripts = {
 	clean: "rimraf jsdoc-dist && rimraf src/generated && rimraf dist && rimraf .port",
-	generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
 	lint: `eslint .`,
 	prepare: "cross-env UI5_TS=true nps clean integrate copy generateAssetParameters generateVersionInfo generateStyles generateTemplates typescript generateAPI",
 	typescript: "tsc",
@@ -31,7 +30,7 @@ const scripts = {
 		},
 	},
 	build: {
-		default: `nps prepare lint build.bundle generateCEM`,
+		default: `nps prepare lint build.bundle`,
 		bundle: `vite build ${viteConfig}`,
 	},
 	copy: {
@@ -43,7 +42,9 @@ const scripts = {
 	generateStyles: `node "${stylesScript}"`,
 	generateTemplates: `mkdirp src/generated/templates && cross-env UI5_BASE=true UI5_TS=true node "${LIB}/hbs2ui5/index.js" -d test/elements -o src/generated/templates`,
 	generateAPI: {
-		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup",
+		default: "nps generateAPI.prepare generateAPI.preprocess generateAPI.jsdoc generateAPI.cleanup generateAPI.generateCEM",
+		generateCEM: `cem analyze --config  "${LIB}/cem/custom-elements-manifest.config.mjs"`,
+		validateCEM: `ajv validate -s ${LIB}/cem/schema.json -d dist/custom-elements.json --allow-union-types --all-errors`,
 		prepare: `copy-and-watch "dist/**/*.js" jsdoc-dist/`,
 		preprocess: `node "${preprocessJSDocScript}" jsdoc-dist/`,
 		jsdoc: `jsdoc -c "${LIB}/jsdoc/configTypescript.json"`,
