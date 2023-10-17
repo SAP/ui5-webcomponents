@@ -598,6 +598,10 @@ describe("Page scrolling", () => {
 	it("tests multiple dialogs page scrolling", async () => {
 		const preventButtonBefore = await browser.$("#prevent");
 
+		const {
+			height: oldScreenHeight,
+			width: oldScreenWidth
+		} = await browser.getWindowSize();
 		await browser.setWindowSize(400, 400);
 		await preventButtonBefore.scrollIntoView();
 
@@ -613,19 +617,31 @@ describe("Page scrolling", () => {
 		const offsetAfter = await preventButtonBefore.getLocation('y');
 
 		assert.strictEqual(offsetBefore,  offsetAfter, "No vertical page scrolling when multiple dialogs are closed");
+
+		await browser.setWindowSize(oldScreenWidth, oldScreenHeight);
 	});
 });
 
-describe("Responsive paddings", () => {
+describe("Responsive paddings", async () => {
+	let oldScreenHeight, oldScreenWidth;
+
 	before(async () => {
+		const browserSize = await browser.getWindowSize();
+		oldScreenHeight = browserSize.height;
+		oldScreenWidth = browserSize.width;
 		await browser.url(`test/pages/Dialog.html`);
+		await browser.setWindowSize(1000, 400);
+	});
+
+	after(async () => {
+		await browser.setWindowSize(oldScreenWidth, oldScreenHeight);
 	});
 
 	it("tests responsive paddings", async () => {
 		const openDialog = await browser.$("#btnOpenDialog");
 		await openDialog.click();
 
-		const expectedPadding = "16px";
+		const expectedPadding = "32px";
 		const dialog = await browser.$("#dialog");
 
 		// content
@@ -648,7 +664,7 @@ describe("Responsive paddings", () => {
 		const openDialog = await browser.$("#btnOpenDialogNoPaddings");
 		await openDialog.click();
 
-		const expectedPadding = "16px";
+		const expectedPadding = "32px";
 		const expectedContentPadding = "0px";
 		const dialog = await browser.$("#dialogNoPaddings");
 

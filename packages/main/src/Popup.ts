@@ -485,6 +485,7 @@ abstract class Popup extends UI5Element {
 			await this.applyInitialFocus();
 		}
 
+		this._updateMediaRange();
 		this.fireEvent("after-open", {}, false, false);
 	}
 
@@ -564,7 +565,6 @@ abstract class Popup extends UI5Element {
 	 */
 	_show() {
 		this.style.display = this._displayProp;
-		this._updateMediaRange();
 	}
 
 	/**
