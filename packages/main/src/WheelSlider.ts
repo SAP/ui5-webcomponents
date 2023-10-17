@@ -168,7 +168,7 @@ class WheelSlider extends UI5Element {
 
 	onAfterRendering() {
 		if (!this._scroller.scrollContainer) {
-			this._scroller.scrollContainer = this.shadowRoot!.querySelector(`#${this._id}--wrapper`)!;
+			this._scroller.scrollContainer = this.shadowRoot!.querySelector(`[id="${this._id}--wrapper"]`)!;
 		}
 
 		if (!this.expanded) {

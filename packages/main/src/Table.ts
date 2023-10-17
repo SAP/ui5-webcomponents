@@ -918,7 +918,7 @@ class Table extends UI5Element {
 
 	_getAfterForwardElement(): HTMLElement {
 		if (!this._afterElement) {
-			this._afterElement = this.shadowRoot!.querySelector(`#${this._id}-after`)!;
+			this._afterElement = this.shadowRoot!.querySelector(`[id="${this._id}-after"]`)!;
 		}
 
 		return this._afterElement;
@@ -926,7 +926,7 @@ class Table extends UI5Element {
 
 	_getBeforeForwardElement(): HTMLElement {
 		if (!this._beforeElement) {
-			this._beforeElement = this.shadowRoot!.querySelector(`#${this._id}-before`)!;
+			this._beforeElement = this.shadowRoot!.querySelector(`[id="${this._id}-before"]`)!;
 		}
 
 		return this._beforeElement;

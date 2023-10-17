@@ -1014,4 +1014,23 @@ describe("Keyboard navigation", async () => {
 		assert.ok(await listItems[0].getProperty("selected"), "List Item should be selected");
 		assert.notOk(await listItems[1].getProperty("selected"), "List Item should not be selected");
 	});
+
+	it ("Tests disabled autocomplete(type-ahead)", async () => {
+		await browser.url(`test/pages/ComboBox.html`);
+
+		const comboBox = await browser.$("#combo-without-type-ahead");
+		const input = await comboBox.shadow$("#ui5-combobox-input");
+		const staticAreaItemClassName = await browser.getStaticAreaItemClassName("#combo-without-type-ahead");
+		const popover = await browser.$(`.${staticAreaItemClassName}`).shadow$("ui5-responsive-popover");
+
+		await input.click();
+		await input.keys("b");
+
+		await browser.waitUntil(() => popover.getProperty("opened"), {
+			timeout: 200,
+			timeoutMsg: "Popover should be displayed"
+		});
+
+		assert.strictEqual(await input.getProperty("value"), "b", "Value is not autocompleted");
+	});
 });
