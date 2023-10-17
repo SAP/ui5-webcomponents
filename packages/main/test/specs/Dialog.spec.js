@@ -667,6 +667,16 @@ describe("Responsive paddings", () => {
 
 		await browser.$("#btnCloseDialogNoPaddings").click();
 	});
+
+	it("tests media-range", async () => {
+		const openDialog = await browser.$("#btnOpenDialog");
+		await openDialog.click();
+		const dialog = await browser.$("#dialog");
+
+		assert.strictEqual(await dialog.getAttribute("media-range"), "M", "dialog has correct media range");
+		
+		await browser.$("#btnCloseDialog").click();
+	});
 });
 
 describe("Dialog States", () => {
