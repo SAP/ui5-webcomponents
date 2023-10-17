@@ -10,13 +10,16 @@
 <body style="background-color: var(--sapBackgroundColor)">
 	<ui5-side-navigation style="height: 90vh; " id="sn1">
 		<!-- Items -->
-		<ui5-side-navigation-item text="Home" icon="home" title="Home tooltip"></ui5-side-navigation-item>
-		<ui5-side-navigation-item text="People" expanded icon="group">
-			<ui5-side-navigation-sub-item disabled text="Disabled" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
+		<ui5-side-navigation-item text="Home"
+								  icon="home"
+								  href="#home"
+								  title="Home tooltip"></ui5-side-navigation-item>
+		<ui5-side-navigation-item text="People" href="#people" expanded icon="group">
+			<ui5-side-navigation-sub-item href="#disabled" disabled text="Disabled" icon="employee-approvals" title="From My Team tooltip"></ui5-side-navigation-sub-item>
 			<ui5-side-navigation-sub-item text="From Other Teams" icon="employee-rejections"></ui5-side-navigation-sub-item>
 		</ui5-side-navigation-item>
-		<ui5-side-navigation-item text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
-		<ui5-side-navigation-item expanded text="Events.............................................................." icon="calendar" whole-item-toggleable>
+		<ui5-side-navigation-item href="#locations" text="Locations" icon="locate-me" selected></ui5-side-navigation-item>
+		<ui5-side-navigation-item href="#events" expanded text="Events.............................................................." icon="calendar" whole-item-toggleable>
 			<ui5-side-navigation-sub-item href="#page1" target="_self" text="Local.............................................................."></ui5-side-navigation-sub-item>
 			<ui5-side-navigation-sub-item text="Others"></ui5-side-navigation-sub-item>
 		</ui5-side-navigation-item>

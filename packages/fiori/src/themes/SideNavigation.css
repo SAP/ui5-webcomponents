@@ -116,6 +116,7 @@
 	content: "";
 	position: absolute;
 	inset: 0;
+	pointer-events: none;
 }
 
 .ui5-sn-item.ui5-sn-item-disabled {

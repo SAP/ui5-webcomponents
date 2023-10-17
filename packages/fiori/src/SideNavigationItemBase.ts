@@ -120,20 +120,6 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	disabled!: boolean;
 
 	/**
-	 * Defines whether pressing the whole item or only pressing the icon will show/hide the items's sub items(if present).
-	 * If set to true, pressing the whole item will toggle the sub items, and it won't fire the <code>click</code> event.
-	 * By default, only pressing the arrow icon will toggle the sub items & the click event will be fired if the item is pressed outside of the icon.
-	 *
-	 * @public
-	 * @type {boolean}
-	 * @defaultvalue false
-	 * @name sap.ui.webc.fiori.SideNavigationItemBase.prototype.wholeItemToggleable
-	 * @since 1.0.0-rc.11
-	 */
-	@property({ type: Boolean })
-	wholeItemToggleable!: boolean;
-
-	/**
 	 * Defines the tooltip of the component.
 	 * @type {string}
 	 * @defaultvalue ""
@@ -152,11 +138,11 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 	}
 
 	get _href() {
-		return this.href || undefined;
+		return (!this.disabled && this.href) ? this.href : undefined;
 	}
 
 	get _target() {
-		return this.target || undefined;
+		return (!this.target && this.target) ? this.target : undefined;
 	}
 
 	get _selected() {
@@ -219,18 +205,18 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		}
 
 		if (isEnter(e)) {
-			this._activate();
+			this._activate(e);
 		}
 	}
 
 	_onkeyup(e: KeyboardEvent) {
 		if (isSpace(e)) {
-			this._activate();
+			this._activate(e);
 		}
 	}
 
-	_onclick() {
-		this._activate();
+	_onclick(e: PointerEvent) {
+		this._activate(e);
 	}
 
 	get isFixedItem() {
@@ -247,8 +233,8 @@ class SideNavigationItemBase extends UI5Element implements ITabbable {
 		this.sideNavigation?.focusItem(this);
 	}
 
-	_activate() {
-		this.sideNavigation?._handleItemClick(this);
+	_activate(e: KeyboardEvent | PointerEvent) {
+		this.sideNavigation?._handleItemClick(e, this);
 	}
 }
 

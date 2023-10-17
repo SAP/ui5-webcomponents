@@ -65,6 +65,20 @@ class SideNavigationItem extends SideNavigationItemBase {
 	@slot({ type: HTMLElement, invalidateOnChildChange: true, "default": true })
 	items!: Array<SideNavigationSubItem>;
 
+	/**
+	 * Defines whether pressing the whole item or only pressing the icon will show/hide the items's sub items(if present).
+	 * If set to true, pressing the whole item will toggle the sub items, and it won't fire the <code>click</code> event.
+	 * By default, only pressing the arrow icon will toggle the sub items & the click event will be fired if the item is pressed outside of the icon.
+	 *
+	 * @public
+	 * @type {boolean}
+	 * @defaultvalue false
+	 * @name sap.ui.webc.fiori.SideNavigationItem.prototype.wholeItemToggleable
+	 * @since 1.0.0-rc.11
+	 */
+	@property({ type: Boolean })
+	wholeItemToggleable!: boolean;
+
 	get _ariaHasPopup() {
 		if (!this.disabled && (this.parentNode as SideNavigation).collapsed && this.items.length) {
 			return HasPopup.Tree;
@@ -119,7 +133,9 @@ class SideNavigationItem extends SideNavigationItemBase {
 		return this.slot === "fixedItems";
 	}
 
-	_onToggleClick = () => {
+	_onToggleClick = (e: PointerEvent) => {
+		e.stopPropagation();
+
 		this.expanded = !this.expanded;
 	}
 
@@ -145,8 +161,17 @@ class SideNavigationItem extends SideNavigationItemBase {
 		super._onfocusin(e);
 	}
 
-	_onclick = () => {
-		super._onclick();
+	_onclick = (e: PointerEvent) => {
+		if (!this.sideNavigation?.collapsed
+			&& this.wholeItemToggleable
+			&& e.pointerType === "mouse") {
+			e.preventDefault();
+			e.stopPropagation();
+			this.expanded = !this.expanded;
+			return;
+		}
+
+		super._onclick(e);
 	}
 }
 

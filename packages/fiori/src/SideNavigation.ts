@@ -228,7 +228,11 @@ class SideNavigation extends UI5Element {
 		// dynamically recreated and tabIndexes are not updated
 		const tree = await this.getPickerTree();
 		const selectedItem = tree._findSelectedItem(tree.items);
-		selectedItem.focus();
+		if (selectedItem) {
+			selectedItem.focus();
+		} else {
+			tree.items[0]?.focus();
+		}
 	}
 
 	get accSideNavigationPopoverHiddenText() {
@@ -335,7 +339,7 @@ class SideNavigation extends UI5Element {
 	focusItem(item: SideNavigationItemBase) {
 		if (item.isFixedItem) {
 			this._fixedItemNavigation.setCurrentItem(item);
-			// this._flexibleItemNavigation.setCurrentItem(this.items[0]);
+			this._flexibleItemNavigation.setCurrentItem(this.items[0]);
 		} else {
 			this._flexibleItemNavigation.setCurrentItem(item);
 		}
@@ -345,13 +349,14 @@ class SideNavigation extends UI5Element {
 		return items[0];
 	}
 
-	_handleItemClick(item: SideNavigationItemBase) {
+	_handleItemClick(e: KeyboardEvent | PointerEvent, item: SideNavigationItemBase) {
 		if (item.selected && !this.collapsed) {
 			item.fireEvent("click");
 			return;
 		}
 
 		if (this.collapsed && item instanceof SideNavigationItem && item.items.length) {
+			e.preventDefault();
 			this._buildPopoverContent(item);
 
 			this.openPicker(item.getFocusDomRef() as HTMLElement);
