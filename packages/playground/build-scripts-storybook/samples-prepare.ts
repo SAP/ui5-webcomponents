@@ -14,7 +14,7 @@ import type {
 	CustomElementMixinDeclaration,
 	MixinDeclaration,
 	VariableDeclaration
-} from "@ui5/webcomponents-tools/lib/cem/types.d.ts";
+} from "@ui5/webcomponents-tools/lib/cem/types.js";
 
 const STORIES_ROOT_FOLDER_NAME = '../_stories';
 
