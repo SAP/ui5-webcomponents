@@ -168,7 +168,7 @@ const validateJSDocTag = (tag) => {
         case "returns":
             return tag.type && tag.name;
         case "default":
-            return !tag.type;
+            return !tag.type && !tag.description;
         case "class":
             return !tag.type && !tag.name && tag.description;
         case "type":
