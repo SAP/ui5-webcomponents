@@ -13,7 +13,9 @@
 	--_ui5_side_navigation_border_right: 0;
 	--_ui5_side_navigation_border_radius: 0.5rem 0.5rem 0 0;
 	--_ui5_side_navigation_phone_border_radius: 0.5rem;
-	/*--_ui5_side_navigation_box_shadow: 0 0 0.125rem 0 fade(var(--sapContent_ShadowColor), 16), 0 0.5rem 1rem 0 fade(var(--sapContent_ShadowColor), 16);*/
+	--_ui5_side_navigation_shadow_color1: color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+	--_ui5_side_navigation_shadow_color2: color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+	--_ui5_side_navigation_box_shadow: 0 0 0.125rem 0 var(--_ui5_side_navigation_shadow_color1), 0 0.5rem 1rem 0 var(--_ui5_side_navigation_shadow_color2);
 	--_ui5_side_navigation_triangle_display: none;
 	--_ui5_side_navigation_phone_width: 100%;
 
@@ -41,8 +43,9 @@
 	--_ui5_side_navigation_parent_popup_border_radius: 0.75rem;
 	--_ui5_side_navigation_popup_item_padding: 0 0.5rem;
 	--_ui5_side_navigation_popup_icon_width: 0.5rem;
-	/*--_ui5_side_navigation_popup_box_shadow: 0 0 0.125rem 0 fade(var(--sapContent_ShadowColor), 48), 0 1rem 2rem 0 fade(var(--sapContent_ShadowColor), 16);*/
-	/*--_ui5_side_navigation_popup_arrow_box_shadow: 0 0 0.125rem 0 fade(var(--sapContent_ShadowColor), 48), 0 1rem 2rem 0 fade(var(--sapContent_ShadowColor), 16);;*/
+	--_ui5_side_navigation_popup_shadow_color1: color-mix(in srgb, var(--sapContent_ShadowColor) 48%, transparent);
+	--_ui5_side_navigation_popup_shadow_color2: color-mix(in srgb, var(--sapContent_ShadowColor) 16%, transparent);
+	--_ui5_side_navigation_popup_box_shadow: 0 0 0.125rem 0 var(--_ui5_side_navigation_popup_shadow_color1), 0 1rem 2rem 0 var(--_ui5_side_navigation_popup_shadow_color2);
 	--_ui5_side_navigation_popup_title_text_size: 1.25rem;
 	--_ui5_side_navigation_popup_title_line_height: 1.5rem;
 	--_ui5_side_navigation_selection_indicator_display: inline-block;

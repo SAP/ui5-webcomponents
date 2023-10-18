@@ -40,8 +40,8 @@ class SideNavigationSubItem extends SideNavigationItemBase {
 		super._onfocusin(e);
 	}
 
-	_onclick = () => {
-		super._onclick();
+	_onclick = (e: PointerEvent) => {
+		super._onclick(e);
 	}
 }
 
