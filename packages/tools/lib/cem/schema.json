@@ -246,6 +246,12 @@
         "ClassField": {
             "additionalProperties": false,
             "properties": {
+                "_ui5formProperty": {
+                    "type": "boolean"
+                },
+                "_ui5formEvents": {
+                    "type": "string"
+                },
                 "_ui5since": {
                     "description": "Marks when the field was introduced",
                     "type": "string"
@@ -302,8 +308,7 @@
                 "name",
                 "privacy",
                 "default",
-                "type",
-                "_ui5reference"
+                "type"
             ],
             "type": "object"
         },
@@ -377,8 +382,7 @@
                 "kind",
                 "name",
                 "privacy",
-                "return",
-                "_ui5reference"
+                "return"
             ],
             "type": "object"
         },

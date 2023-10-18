@@ -5,9 +5,9 @@ let JSDocErrors = [];
 const getDeprecatedStatus = (jsdocComment) => {
     const deprecatedTag = findTag(jsdocComment, "deprecated");
 
-    if (deprecatedTag?.name){
-        return  deprecatedTag.description ? `${deprecatedTag.name} ${deprecatedTag.description}`: deprecatedTag.name;
-     }
+    if (deprecatedTag?.name) {
+        return deprecatedTag.description ? `${deprecatedTag.name} ${deprecatedTag.description}` : deprecatedTag.name;
+    }
 
     return deprecatedTag ? true : false;
 }
@@ -15,8 +15,8 @@ const getDeprecatedStatus = (jsdocComment) => {
 const getSinceStatus = (jsdocComment) => {
     const sinceTag = findTag(jsdocComment, "since");
 
-    if (sinceTag){
-       return  sinceTag.description ? `${sinceTag.name} ${sinceTag.description}`: sinceTag.name;
+    if (sinceTag) {
+        return sinceTag.description ? `${sinceTag.name} ${sinceTag.description}` : sinceTag.name;
     }
 }
 
@@ -91,12 +91,12 @@ const getType = (ts, type, classNode) => {
 const commonTags = ["public", "protected", "private", "since", "deprecated"]
 
 const allowedTags = {
-    field: [...commonTags, "type", "default", "readonly"],
+    field: [...commonTags, "formEvents", "formProperty", "type", "default", "readonly"],
     slot: [...commonTags, "type", "default"],
     event: [...commonTags, "param", "allowPreventDefault", "native"],
     eventParam: [...commonTags],
     method: [...commonTags, "param", "returns"],
-    class: [...commonTags, "class", "abstract", "implements", "extends", "slot", "csspart"],
+    class: [...commonTags, "constructor", "class", "abstract", "implements", "extends", "slot", "csspart"],
     enum: [...commonTags],
     enumMember: [...commonTags],
     interface: [...commonTags],
@@ -143,7 +143,7 @@ const findAllTags = (jsDoc, tagName) => {
 }
 
 const validateJSDocTag = (tag) => {
-    const booleanTags = ["private", "protected", "public", "abstract", "allowPreventDefault", "native"];
+    const booleanTags = ["private", "protected", "public", "abstract", "allowPreventDefault", "native", "formProperty", "constructor"];
     let tagName = tag.tag;
 
     if (booleanTags.includes(tag.tag)) {
@@ -173,6 +173,8 @@ const validateJSDocTag = (tag) => {
             return !tag.type && !tag.name && tag.description;
         case "type":
             return tag.type && !tag.name && !tag.description;
+        case "formEvents":
+            return !tag.type && tag.name;
         default:
             return false;
     }

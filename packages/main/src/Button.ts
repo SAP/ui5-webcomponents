@@ -219,6 +219,7 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * 		</li>
 	 * 		<li><code>controls</code>: Identifies the element (or elements) whose contents or presence are controlled by the button element. Accepts a string value.</li>
 	 * </ul>
+	 * @default "{}"
 	 * @type {object}
 	 * @public
 	 * @since 1.2.0
@@ -306,7 +307,6 @@ class Button extends UI5Element implements IFormElement, IButton {
 	 * <b>Note:</b> Although this slot accepts HTML Elements, it is strongly recommended that you only use text in order to preserve the intended design.
 	 *
 	 * @type {Node[]}
-	 * @slot
 	 * @public
 	 */
 	@slot({ type: Node, "default": true })
