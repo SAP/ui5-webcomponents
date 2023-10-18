@@ -1060,9 +1060,10 @@ class ComboBox extends UI5Element {
 
 	_announceSelectedItem(indexOfItem: number) {
 		const currentItem = this._filteredItems[indexOfItem];
+		const nonGroupItems = this._filteredItems.filter(item => !item.isGroupItem);
 		const currentItemAdditionalText = currentItem.additionalText || "";
 		const isGroupItem = currentItem?.isGroupItem;
-		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, indexOfItem + 1, this._filteredItems.length);
+		const itemPositionText = ComboBox.i18nBundle.getText(LIST_ITEM_POSITION, nonGroupItems.indexOf(currentItem) + 1, nonGroupItems.length);
 		const groupHeaderText = ComboBox.i18nBundle.getText(LIST_ITEM_GROUP_HEADER);
 
 		if (isGroupItem) {

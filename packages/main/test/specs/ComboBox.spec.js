@@ -675,6 +675,7 @@ describe("Accessibility", async () => {
 		const invisibleMessageSpan = await browser.$(".ui5-invisiblemessage-polite");
 		const itemAnnouncement1 = "Group Header A";
 		const itemAnnouncement2 = "Group Header Donut";
+		const itemAnnouncement3 = "List item 1 of 13";
 
 		await arrow.click();
 
@@ -685,6 +686,9 @@ describe("Accessibility", async () => {
 		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement1, "Span value is correct.")
 
 		await input.keys("ArrowDown");
+
+		assert.strictEqual(await invisibleMessageSpan.getHTML(false), itemAnnouncement3, "Span value is correct.")
+
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
 		await input.keys("ArrowDown");
