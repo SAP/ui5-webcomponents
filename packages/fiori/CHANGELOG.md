@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.19.0-rc.1](https://github.com/SAP/ui5-webcomponents/compare/v1.19.0-rc.0...v1.19.0-rc.1) (2023-10-19)
+
+
+### Bug Fixes
+
+* **ui5-flexible-column-layout:** wrong focus fixed ([#7586](https://github.com/SAP/ui5-webcomponents/issues/7586)) ([721cc0b](https://github.com/SAP/ui5-webcomponents/commit/721cc0b312fb76142dea97712b21343b7b93337e))
+
+
+
+
+
 # [1.19.0-rc.0](https://github.com/SAP/ui5-webcomponents/compare/v1.18.1-rc.0...v1.19.0-rc.0) (2023-10-12)
 
 
